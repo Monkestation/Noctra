@@ -5,7 +5,8 @@
 /datum/keybinding/human/can_use(client/user)
 	return ishuman(user.mob)
 
-/datum/keybinding/human/quick_equip
+// Left commented because quick equip can put items into slots that are not in the UI, blame Roguetown.
+/* /datum/keybinding/human/quick_equip
 	hotkey_keys = list() // Keeping it empty lets the user set their own keybind since E is used
 	name = "quick_equip"
 	full_name = "Quick Equip"
@@ -14,7 +15,7 @@
 /datum/keybinding/human/quick_equip/down(client/user)
 	var/mob/living/carbon/human/H = user.mob
 	H.quick_equip()
-	return TRUE
+	return TRUE */
 
 /datum/keybinding/human/quick_equipbelt
 	hotkey_keys = list("ShiftB")
