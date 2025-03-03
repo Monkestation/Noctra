@@ -28,6 +28,7 @@
 	if(do_after(basic_mob, 10 SECONDS, target, extra_checks = CALLBACK(src, PROC_REF(is_dead), target)))
 		if(!is_dead(target))
 			finish_action(controller, FALSE)
+		add_abstract_elastic_data("combat", "eaten_bodies", 1)
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			var/obj/item/bodypart/limb
@@ -51,8 +52,8 @@
 			if(basic_mob.attack_sound)
 				playsound(basic_mob, pick(basic_mob.attack_sound), 100, TRUE, -1)
 			target.gib()
-			if(istype(basic_mob, /mob/living/simple_animal/hostile/retaliate/rogue))
-				var/mob/living/simple_animal/hostile/retaliate/rogue/mob = basic_mob
+			if(istype(basic_mob, /mob/living/simple_animal/hostile/retaliate))
+				var/mob/living/simple_animal/hostile/retaliate/mob = basic_mob
 				mob.food = mob.food_max // yummy
 			finish_action(controller, TRUE)
 	finish_action(controller, FALSE)

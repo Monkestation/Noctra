@@ -177,24 +177,6 @@
 				I.pixel_x = initial(I.pixel_x) + CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
 				I.pixel_y = initial(I.pixel_y) + CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
 				after_added_effects(I, user)
-				if(istype(I, /obj/item/rogue/instrument)) // SURPRISE SURPRISE, YET ANOTHER EXPLOIT PREVENTION.
-					var/obj/item/rogue/instrument/P = I
-					if(P.playing)
-						P.playing = FALSE
-						P.soundloop.stop()
-						for(var/mob/living/carbon/L in viewers(7))
-							var/mob/living/carbon/buffed = L
-							if(buffed.mind?.has_antag_datum(/datum/antagonist))
-								if(buffed.mind?.isactuallygood())
-									for(var/datum/status_effect/bardicbuff/b in L.status_effects)
-										buffed.remove_status_effect(b)
-										return TRUE
-								else
-									return TRUE
-							else
-								for(var/datum/status_effect/bardicbuff/b in L.status_effects)
-									buffed.remove_status_effect(b)
-									return TRUE
 				return TRUE
 
 	return ..()
@@ -460,8 +442,10 @@
 /obj/structure/rack
 	name = "rack"
 	desc = ""
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "rack"
+	climbable = TRUE
+	climb_offset = 10
 	layer = TABLE_LAYER
 	density = TRUE
 	anchored = TRUE
@@ -521,45 +505,38 @@
 	attack_hand(user)
 
 
-
-/obj/structure/rack/rogue
-	icon = 'icons/roguetown/misc/structure.dmi'
-	icon_state = "rack"
-	climbable = TRUE
-	climb_offset = 10
-
-/obj/structure/rack/rogue/deconstruct(disassembled = TRUE)
+/obj/structure/rack/deconstruct(disassembled = TRUE)
 	qdel(src)
 
-/obj/structure/rack/rogue/underworld
+/obj/structure/rack/underworld
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "rack_underworld"
 	climbable = TRUE
 	climb_offset = 10
 
-/obj/structure/rack/rogue/shelf
+/obj/structure/rack/shelf
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "shelf"
 	climbable = FALSE
 	dir = SOUTH
 	pixel_y = 32
 
-/obj/structure/rack/rogue/shelf/big
+/obj/structure/rack/shelf/big
 	icon_state = "shelf_big"
 	climbable = FALSE
 	dir = SOUTH
 	pixel_y = 16
 
-/obj/structure/rack/rogue/shelf/biggest
+/obj/structure/rack/shelf/biggest
 	icon_state = "shelf_biggest"
 	pixel_y = 0
 
-/obj/structure/rack/rogue/shelf/notdense // makes the wall mounted one less weird in a way, got downside of offset when loaded again tho
+/obj/structure/rack/shelf/notdense // makes the wall mounted one less weird in a way, got downside of offset when loaded again tho
 	density = FALSE
 	pixel_y = 24
 
 // Necessary to avoid a critical bug with disappearing weapons.
-/obj/structure/rack/rogue/attackby(obj/item/W, mob/user, params)
+/obj/structure/rack/attackby(obj/item/W, mob/user, params)
 	if(!user.cmode)
 		if(!(W.item_flags & ABSTRACT))
 			if(user.transferItemToLoc(W, drop_location(), silent = FALSE))

@@ -88,21 +88,25 @@
 
 /mob/living/proc/handle_random_events()
 	//random painstun
-	if(!stat && !HAS_TRAIT(src, TRAIT_NOPAINSTUN))
-		if(world.time > mob_timers["painstun"] + 600)
-			if(getBruteLoss() + getFireLoss() >= (STAEND * 10))
-				var/probby = 53 - (STAEND * 2)
-				if(!(mobility_flags & MOBILITY_STAND))
-					probby = probby - 20
-				if(prob(probby))
-					mob_timers["painstun"] = world.time
-					Immobilize(10)
-					emote("painscream")
-					visible_message("<span class='warning'>[src] freezes in pain!</span>",
-								"<span class='warning'>I'm frozen in pain!</span>")
-					sleep(10)
-					Stun(110)
-					Knockdown(110)
+	if(stat || HAS_TRAIT(src, TRAIT_NOPAINSTUN))
+		return
+	if(!MOBTIMER_FINISHED(src, MT_PAINSTUN, 60 SECONDS))
+		return
+	if((getBruteLoss() + getFireLoss()) < (STAEND * 10))
+		return
+
+	var/probby = 53 - (STAEND * 2)
+	if(!(mobility_flags & MOBILITY_STAND))
+		probby = probby - 20
+	if(prob(probby))
+		MOBTIMER_SET(src, MT_PAINSTUN)
+		Immobilize(10)
+		emote("painscream")
+		visible_message("<span class='warning'>[src] freezes in pain!</span>",
+					"<span class='warning'>I'm frozen in pain!</span>")
+		sleep(10)
+		Stun(110)
+		Knockdown(110)
 
 /mob/living/proc/handle_fire()
 	if(fire_stacks < 0) //If we've doused ourselves in water to avoid fire, dry off slowly
@@ -120,7 +124,7 @@
 		return TRUE //mob was put out, on_fire = FALSE via ExtinguishMob(), no need to update everything down the chain.
 	update_fire()
 	var/turf/location = get_turf(src)
-	location.hotspot_expose(700, 50, 1)
+	location?.hotspot_expose(700, 50, 1)
 
 /mob/living/proc/handle_wounds()
 	if(stat >= DEAD)
