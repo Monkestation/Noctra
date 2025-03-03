@@ -12,10 +12,15 @@
 
 /datum/outfit/job/roguetown/mercenary/underdweller/pre_equip(mob/living/carbon/human/H)
 	..()
+	var/shirt_type = pickweight(list(
+		/obj/item/clothing/suit/roguetown/armor/chainmail/iron = 1,//iron maille
+		/obj/item/clothing/suit/roguetown/armor/gambeson = 4,//gambeson
+		/obj/item/clothing/suit/roguetown/armor/gambeson/light = 4,//light gambeson
+		/obj/item/clothing/suit/roguetown/shirt/undershirt/sailor/red = 1))//sailor shirt
 	pants = /obj/item/clothing/under/roguetown/trou/leather
 	armor = /obj/item/clothing/suit/roguetown/armor/cuirass/iron
-	shirt = /obj/item/clothing/suit/roguetown/shirt/undershirt/sailor/red
-	shoes = /obj/item/clothing/shoes/roguetown/simpleshoes/buckle
+	shirt = shirt_type
+	shoes = /obj/item/clothing/shoes/roguetown/boots/armor/light
 	belt = /obj/item/storage/belt/rogue/leather/mercenary
 	beltr = /obj/item/rogueweapon/knife/hunting
 	neck = /obj/item/clothing/neck/roguetown/chaincoif/iron
@@ -49,6 +54,7 @@
 	else // No miner's helm for Delves as they haven nitevision now.
 		H.mind?.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
 
+		head = /obj/item/clothing/head/roguetown/helmet/ironpot
 		beltl = /obj/item/rogueweapon/sword/sabre // Dark elves get a sabre as their primary weapon and swords skill, who woulda thought
 
 	H.merctype = 3
