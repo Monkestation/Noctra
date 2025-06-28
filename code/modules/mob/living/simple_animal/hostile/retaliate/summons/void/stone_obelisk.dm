@@ -61,7 +61,7 @@
 	food = 0
 	dodgetime = 17
 	aggressive = 1
-
+	dontmakesentient = TRUE
 
 
 	ai_controller = /datum/ai_controller/void_obelisk

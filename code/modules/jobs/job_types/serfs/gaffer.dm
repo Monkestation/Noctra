@@ -1,11 +1,12 @@
 /datum/job/gaffer
 	title = "Gaffer"
 	flag = GAFFER
-	department_flag = SERFS
+	department_flag = MERCGUILD
 	faction = "Station"
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE )
 	total_positions = 1
 	spawn_positions = 1
+	selection_color = "#3b150e"
 
 	allowed_races = RACES_PLAYER_ALL
 	//I say we let all races be the gaffer, this is job concerns the adventurers and mercs, and those come in all types and sizes,
@@ -24,9 +25,6 @@
 	give_bank_account = 20
 	min_pq = 8
 	bypass_lastclass = TRUE
-	selection_color = "#3b150e"
-
-	spells = list(/obj/effect/proc_holder/spell/self/convertrole/mercenary)
 
 /datum/outfit/job/gaffer/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	..()
@@ -54,6 +52,7 @@
 	ADD_TRAIT(H, TRAIT_BURDEN, type)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, type)
 	ADD_TRAIT(H, TRAIT_OLDPARTY, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MERCGUILD, TRAIT_GENERIC)
 
 	H.change_stat("speed", 2)
 	H.change_stat("perception", 1)
@@ -84,12 +83,3 @@
 		H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
 		H.change_stat("perception", 1)
-
-/obj/effect/proc_holder/spell/self/convertrole/mercenary
-	name = "Recruit Mercenary"
-	new_role = "Mercenary"
-	overlay_state = "recruit_servant" //N/A change this to the correct sprite when its made
-	recruitment_faction = "Mercenaries"
-	recruitment_message = "Hey, %RECRUIT, you ever considered going full time?"
-	accept_message = "For coin and glory!"
-	refuse_message = "I refuse."

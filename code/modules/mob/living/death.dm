@@ -61,6 +61,9 @@
 /mob/living/death(gibbed)
 	var/was_dead_before = stat == DEAD
 	set_stat(DEAD)
+	if(isliving(fragger))
+		if(!fragger.ckey && !fragger.client)
+			//INVOKE_ASYNC(fragger.renown, TYPE_PROC_REF(/datum/renown, process_renown))
 	// SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, DEAD)
 	unset_machine()
 	timeofdeath = world.time

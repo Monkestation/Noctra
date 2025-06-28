@@ -406,6 +406,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.json")
 		GLOB.company_positions,
 		GLOB.youngfolk_positions,
 		GLOB.allmig_positions,
+		GLOB.mercguild_positions,
 	)
 
 	for(var/list/category in omegalist)
@@ -446,6 +447,8 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.json")
 					cat_name = "Young Folk"
 				if (OUTSIDERS)
 					cat_name = "Outsiders"
+				if (MERCGUILD)
+					cat_name = "Mercenary Guild"
 
 			dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
 			dat += "<legend align='center' style='font-weight: bold; color: [cat_color]'>[cat_name]</legend>"

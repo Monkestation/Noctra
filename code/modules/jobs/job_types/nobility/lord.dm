@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 1
-	min_pq = 25
+	min_pq = 0
 
 	spells = list(
 		/obj/effect/proc_holder/spell/self/grant_title,

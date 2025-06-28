@@ -307,8 +307,8 @@ Versioning
 		"job" = L.mind.assigned_role.title,
 		"special" = L.mind.special_role,
 		"pod" = get_area_name(L, TRUE),
-		"laname" = L.lastattacker,
-		"lakey" = L.lastattackerckey,
+		"laname" = L.last_attacker_name,
+		"lakey" = L.last_attacker_ckey,
 		"brute" = L.getBruteLoss(),
 		"fire" = L.getFireLoss(),
 		"brain" = L.getOrganLoss(ORGAN_SLOT_BRAIN) || BRAIN_DAMAGE_DEATH, //getOrganLoss returns null without a brain but a value is required for this column

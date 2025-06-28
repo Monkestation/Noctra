@@ -17,8 +17,9 @@
 	hud_possible = list(ANTAG_HUD)
 
 	var/resize = 1 //Badminnery resize
-	var/lastattacker = null
-	var/lastattackerckey = null
+	var/last_attacker_name = null
+	var/last_attacker_ckey = null
+	var/mob/living/fragger = null
 
 	//Health and life related vars
 	var/maxHealth = 100 //Maximum health that should be possible.

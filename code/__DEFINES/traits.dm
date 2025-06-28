@@ -112,6 +112,7 @@
 #define TRAIT_BURDEN "Burdened" //Gaffer stuff
 #define TRAIT_OLDPARTY "Old Party"
 #define TRAIT_EARGRAB "Ear Grab"
+#define TRAIT_MERCGUILD "Mercenary Guild Member"
 
 // PATRON CURSE TRAITS
 #define TRAIT_CURSE "Curse" //source
@@ -211,7 +212,8 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_HOLLOWBONES = span_danger("My bones are light as air, Its hard to wear armor."),
 	TRAIT_RECRUITED = "I have been recruited!",
 	TRAIT_EARGRAB = span_info("I can keep a tight grip on the ear of unruly children."),
-	TRAIT_KITTEN_MOM = span_info("Kittens love you, they see you are a parent.")
+	TRAIT_KITTEN_MOM = span_info("Kittens love you, they see you are a parent."),
+	TRAIT_MERCGUILD = span_info("I am a member of the mercenary guild!"),
 	))
 
 #define SIGNAL_ADDTRAIT(trait_ref) ("addtrait " + trait_ref)

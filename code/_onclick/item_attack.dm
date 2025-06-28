@@ -103,6 +103,7 @@
 	var/tempatarget = null
 	var/pegleg = 0			//Handles check & slowdown for peglegs. Fuckin' bootleg, literally, but hey it at least works.
 	var/pet_passive = FALSE
+	var/dontmakesentient = FALSE //checks if mob is legiable for sentience after killing enough players, mostly for bosses.
 
 /obj/item/proc/attack(mob/living/M, mob/living/user)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user) & COMPONENT_ITEM_NO_ATTACK)
@@ -116,8 +117,8 @@
 		to_chat(user, "<span class='warning'>I don't want to harm other living beings!</span>")
 		return
 
-	M.lastattacker = user.real_name
-	M.lastattackerckey = user.ckey
+	M.last_attacker_name = user.real_name
+	M.last_attacker_ckey = user.ckey
 	if(M.mind)
 		M.mind.attackedme[user.real_name] = world.time
 	if(force)
