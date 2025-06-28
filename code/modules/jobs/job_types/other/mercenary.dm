@@ -10,7 +10,7 @@
 	department_flag = MERCGUILD
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_MERCENARY
-	faction = FACTION_STATION
+	faction = FACTION_TOWN
 	total_positions = 4
 	spawn_positions = 4
 	min_pq = 5
@@ -25,8 +25,12 @@
 	advclass_cat_rolls = list(CTAG_MERCENARY = 20)
 	is_foreigner = TRUE
 
+/datum/outfit/job/mercenary // Reminder message
+	var/tutorial = "<br><br><font color='#855b14'><span class='bold'>The Gaffer, who feeds and houses you may have work for you todae, go see him at the office outside your lodgings.</span></font><br><br>"
+
 /datum/outfit/job/mercenary/post_equip(mob/living/carbon/human/H)
 	..()
+	to_chat(H, tutorial)
 	ADD_TRAIT(H, TRAIT_MERCGUILD, TRAIT_GENERIC)
 	for(var/C in GLOB.landmarks_list)
 		var/obj/effect/landmark/contracthole/merchole = C
