@@ -62,6 +62,9 @@
 	var/was_dead_before = stat == DEAD
 	set_stat(DEAD)
 	unset_machine()
+	if(isliving(fragger))
+		if(!fragger.ckey && !fragger.client)
+			//INVOKE_ASYNC(fragger.renown, TYPE_PROC_REF(/datum/renown, process_renown))
 	timeofdeath = world.time
 	tod = station_time_timestamp()
 
