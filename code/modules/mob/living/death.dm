@@ -63,8 +63,11 @@
 	set_stat(DEAD)
 	unset_machine()
 	if(isliving(fragger))
+		GLOB.mob_kill_count[fragger.mobid] += 1
+		if(src.ckey && src.client)
+			GLOB.mob_sentient_kill_count[fragger.mobid] += 1
 		if(!fragger.ckey && !fragger.client)
-			//INVOKE_ASYNC(fragger.renown, TYPE_PROC_REF(/datum/renown, process_renown))
+			INVOKE_ASYNC(fragger, PROC_REF(process_renown), FALSE)
 	timeofdeath = world.time
 	tod = station_time_timestamp()
 

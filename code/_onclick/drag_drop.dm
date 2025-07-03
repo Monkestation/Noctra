@@ -186,7 +186,6 @@
 	var/obj/effect/spell_rune/spell_rune
 	var/datum/intent/curplaying
 	var/accent = ACCENT_DEFAULT
-	var/datum/renown/renown
 
 /client/MouseUp(object, location, control, params)
 	var/mob/living/L = mob

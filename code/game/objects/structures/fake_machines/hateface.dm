@@ -11,16 +11,16 @@
 	var/budget = 0
 	var/static/list/paerpywork = list(
 		"Parchment" = list(
-			(type = /obj/item/paper),
-			cost = 10,
-			desc = "bo bo bo",
-		),
-		"bo hoo keey" = list(
-			(type = /obj/item/paper),
-			cost = 10,
-			desc = "bo bo bo",
-		),
-	)
+            "type" = /obj/item/paper,
+            "cost" = 10,
+            "desc" = "bo bo bo",
+        ),
+        "bo hoo keey" = list(
+            "type" = /obj/item/paper,
+            "cost" = 10,
+            "desc" = "bo bo bo",
+        ),
+    )
 
 /obj/structure/fake_machine/hateface/examine(mob/user)
 	. = ..()

@@ -155,9 +155,6 @@ GLOBAL_LIST_INIT(oldhc, sortList(list(
 		return FALSE
 	return TRUE
 
-/mob/living
-	var/dontmakesentient = FALSE
-
 //pass a list in the format list("health" = mob's health var) to check health during this
 /mob/living/break_do_after_checks(list/checked_health, check_clicks)
 	if(islist(checked_health))

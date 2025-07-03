@@ -1,5 +1,15 @@
 //ported codeword code from TG
 
+
+GLOBAL_VAR(legendary_name_evil)
+GLOBAL_VAR(legendary_name_maybeevil)
+
+
+GLOBAL_DATUM(legendary_name_evil_regex, /regex)
+GLOBAL_DATUM(legendary_name_maybeevil_regex, /regex)
+
+
+
 /datum/component/renown_hearing
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 

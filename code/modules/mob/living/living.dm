@@ -19,6 +19,8 @@
 		real_name = name
 	faction += "[REF(src)]"
 	GLOB.mob_living_list += src
+	GLOB.mob_kill_count[mobid] = 0
+	GLOB.mob_sentient_kill_count[mobid] = 0
 	init_faith()
 	if(has_reflection)
 		create_reflection()

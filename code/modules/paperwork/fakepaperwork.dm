@@ -58,6 +58,7 @@
 	. = ..()
 
 /obj/item/paper/merc_contract/update_icon_state()
+	. = ..()
 	if(mailer)
 		icon_state = "paper_prep"
 		name = "letter"
@@ -159,6 +160,7 @@
 	var/mob/living/signee = null
 
 /obj/item/paper/merc_worker_contract/update_icon_state()
+	. = ..()
 	if(mailer)
 		icon_state = "paper_prep"
 		name = "letter"

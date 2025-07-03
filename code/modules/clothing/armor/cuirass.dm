@@ -15,6 +15,7 @@
 	prevent_crits = ALL_EXCEPT_BLUNT
 	max_integrity = INTEGRITY_STRONG
 	item_weight = 7 * STEEL_MULTIPLIER
+	madeof = STEEL
 
 //................ Grenzelhoft Cuirass ............... //
 /obj/item/clothing/armor/cuirass/grenzelhoft
@@ -27,6 +28,8 @@
 
 	armor = ARMOR_PLATE_GOOD
 
+	madeof = BLACKSTEEL
+
 //................ Black Oak Cuirass ............... //
 /obj/item/clothing/armor/cuirass/elven
 	name = "elven guardian cuirass"
@@ -37,6 +40,7 @@
 	equip_delay_self = 2 SECONDS
 	unequip_delay_self = 2 SECONDS
 	sellprice = VALUE_SNOWFLAKE_STEEL
+	madeof = STEEL
 
 //................ Iron Breastplate ............... //	- A breastplate is a cuirass without its back plate.
 /obj/item/clothing/armor/cuirass/iron
@@ -51,6 +55,7 @@
 	body_parts_covered = COVERAGE_VEST
 	max_integrity = INTEGRITY_STANDARD
 	item_weight = 7 * IRON_MULTIPLIER
+	madeof = IRON
 
 //................ Rusted Breastplate ............... //
 /obj/item/clothing/armor/cuirass/iron/rust
@@ -64,6 +69,7 @@
 	sellprice = VALUE_IRON_ARMOR/2
 
 	max_integrity = INTEGRITY_POOR
+	madeof = null
 
 //................ Scourge Breastplate ............... //
 /obj/item/clothing/armor/cuirass/iron/shadowplate
@@ -72,6 +78,7 @@
 	icon_state = "shadowplate"
 	item_state = "shadowplate"
 	allowed_race = list("elf", "dark elf")
+	madeof = null
 
 /obj/item/clothing/armor/cuirass/copperchest
 	name = "heart protector"
@@ -87,6 +94,7 @@
 	prevent_crits = ONLY_VITAL_ORGANS
 	max_integrity = INTEGRITY_POOR
 	item_weight = 5.5 * COPPER_MULTIPLIER
+	madeof = COPPER
 
 /obj/item/clothing/armor/cuirass/vampire
 	name = "ancient plate"
@@ -98,3 +106,4 @@
 	body_parts_covered = COVERAGE_TORSO
 	prevent_crits = ALL_CRITICAL_HITS_VAMP
 	item_weight = 5.5 * IRON_MULTIPLIER
+	madeof = null

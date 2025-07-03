@@ -7,7 +7,7 @@
 	var/resize = 1 //Badminnery resize
 	var/last_attacker_name = null
 	var/last_attacker_ckey = null
-	var/mob/living/fragger = null
+	var/mob/fragger = null
 
 	//Health and life related vars
 	var/maxHealth = 100 //Maximum health that should be possible.
@@ -213,3 +213,5 @@
 	var/tempatarget = null
 	var/pegleg = 0			//Handles check & slowdown for peglegs. Fuckin' bootleg, literally, but hey it at least works.
 	var/pet_passive = FALSE
+
+	var/dontmakesentient = FALSE // to check if you should make the thing sentient if they get enough kills to earn it. used for bosses or shit that would suck to be a player on

@@ -546,3 +546,16 @@ BCLASS_TWIST)
 #define DENDOR_TAME_PROB_MEDIUM 50
 #define DENDOR_TAME_PROB_HIGH 75
 #define DENDOR_TAME_PROB_GURANTEED 100
+
+//defines for what material armor and weapons are, right now only used for the customizer kits
+
+#define LEATHER "leather"
+#define HIDE "hide" //from what?
+#define COPPER "copper"
+#define BRONZE "bronze"
+#define IRON "iron"
+#define STEEL "steel"
+#define BLACKSTEEL "black-steel"
+
+#define WOOD "wood"
+#define SILVER "silver"

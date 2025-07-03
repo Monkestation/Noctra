@@ -217,6 +217,7 @@
 #include "code\__HELPERS\math.dm"
 #include "code\__HELPERS\matrices.dm"
 #include "code\__HELPERS\medical.dm"
+#include "code\__HELPERS\mobs_renown.dm"
 #include "code\__HELPERS\mobs.dm"
 #include "code\__HELPERS\mouse_control.dm"
 #include "code\__HELPERS\names.dm"

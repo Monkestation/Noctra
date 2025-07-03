@@ -69,6 +69,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	GLOB.mob_directory[tag] = src
 	mobid = "mob[GLOB.mobids]"
 	GLOB.mobids++
+	GLOB.mob_renown_list[mobid] = 0
 	if(stat == DEAD)
 		GLOB.dead_mob_list += src
 	else
@@ -82,7 +83,6 @@ GLOBAL_VAR_INIT(mobids, 1)
 		AA.onNewMob(src)
 	set_nutrition(rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX))
 	set_hydration(rand(HYDRATION_LEVEL_START_MIN, HYDRATION_LEVEL_START_MAX))
-	renown = New()
 	. = ..()
 	update_config_movespeed()
 	update_movespeed(TRUE)

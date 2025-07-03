@@ -3,32 +3,27 @@
 #define TITLE_ADJECTIVE 3
 #define TITLE_NOUN_PEPHRASE 4
 #define TITLE_NOUN 5
-/*
-/datum/renown
-	var/mob/owner
-	var/rank = 0
-	var/killcount = 0
 
-/datum/renown/New()
-	if(owner.ckey && owner.client)
-		owner.AddComponent(/datum/component/renown_hearing, GLOB.legendary_name_evil_regex, "red", src)
-		owner.AddComponent(/datum/component/renown_hearing, GLOB.legendary_name_maybeevil_regex, "yellow", src)
-
-/datum/renown/proc/process_renown(sentient = TRUE)
+/mob/proc/process_renown(sentient = TRUE)
+	//var/renown = GLOB.mob_renown_list[src.mobid]
 	if(!sentient)
-		killcount++
-		rank = FLOOR(killcount / 2, 1)
-		if(killcount == 3)
-			give_beast_name()
-			//make_beast_sentient()
+		var/killcount = GLOB.mob_kill_count[src.mobid]
+		var/sentkillcount = GLOB.mob_sentient_kill_count[src.mobid]
+		GLOB.mob_renown_list[src.mobid] += FLOOR(killcount / 2, 1)
+		if(killcount == 1)
+			give_beast_name(src)
+		//var/list/humanoid = list(/mob/living/carbon/human/species/skeleton, /mob/living/carbon/human/species/goblin, /mob/living/carbon/human/species/orc, /mob/living/carbon/human/species/rousman, /mob/living/carbon/human/species/zizombie)
+		if(istype(src, /mob/living/carbon/human/species/skeleton) || istype(src, /mob/living/carbon/human/species/goblin) || istype(src, /mob/living/carbon/human/species/orc) || istype(src, /mob/living/carbon/human/species/rousman) || istype(src, /mob/living/carbon/human/species/zizombie))
+		//if(istype(src, humanoid))
+			var/renown = GLOB.mob_renown_list[src.mobid]
+			if(renown >= 1)
+				if(renown <= 4)
+					promote_beast(src)
+		if(sentkillcount == 1)
+			make_beast_sentient(src)
 
 
-	//if(HAS_TRAIT(owner, TRAIT))
-	if(HAS_TRAIT(owner, TRAIT_MERCGUILD)) //only guild members get renown for now, until party datum is added.
-		rank++
-
-
-/datum/renown/proc/give_beast_name()
+/mob/proc/give_beast_name(mob/owner)
 	var/previoustitle = owner.real_name
 	var/title = pick("Chax", "Gifflet", "Abigor", "Akar", "Tuwile", "Ernesh", "Leah", "Daghishat", "Nirnasha", "Azazel", "Heath", "Agrona", "Gorgon", "khazz", "Trurr", "Thekuax", "Gyrr", "Thruc", "Gengol", "Sryt", "Matirè", "Nikot", "Rithod", "Asmuk", "Cifano", "Sasmok", "Lebes", "Kök", "Rashgur", "Osp", "Geshak", "Zursmu", "Ber", "Metava", "Fer", "Suku", "Zewoth", "Imici", "Sinsot", "Rathi", "Vulo", "Disuth", "Mozfel", "Ogthrak", "Pushkrimp", "Golm") //bunch of fuck off names, mostly dwarf fortress words.
 	var/adjective = pick("Strong", "Weak", "Fast", "Slow", "Beast", "Wild", "Sophisticated", "Silent", "Savage", "Frenzied", "Brutal", "Bloodthirsty", "Unstoppable", "Vicious", "Puny", "Shy", "tricky", "Wicked", "Swift", "Reaper", "Heartless", "Timid", "Wastefull", "One-Word", "Biter", "One", "Blast", "Cannibal", "Itchy", "Smelly", "Fat", "Bewitched", "Handsome", "Charming", "Angry", "Bloated", "Agonizer", "Cruel", "Dead", "Gentle", "Friendly", "Greedy", "Funny", "Hungry", "Dumb", "Screamer", "Merciful", "Ever-Loving", "Stone-Gut", "Oblivious", "Poet", "Runt", "Messenger", "Prophet", "Whiner", "Teary-Eyed", "Shamed")
@@ -46,44 +41,51 @@
 		if(TITLE_NOUN) //title + noun, ie just john the destroyer
 			owner.real_name = "[title] the [noun]"
 
-/datum/renown/proc/promote_beast()
-	if(!owner.ckey && !owner.client)
-		var/promotionlegibrace = list(/mob/living/carbon/human/species/skeleton, /mob/living/carbon/human/species/goblin, /mob/living/carbon/human/species/orc)
-		var/promotionlegiable = istype(owner, promotionlegibrace)
-		if(promotionlegiable)
-			if(rank >= 0)
-				if(rank <= 4)
-					var/mob/living/O = owner
-					O.adjust_skillrank(/datum/skill/combat/polearms, rand(0,1), TRUE)
-					O.adjust_skillrank(/datum/skill/combat/swords, rand(0,1), TRUE)
-					O.adjust_skillrank(/datum/skill/combat/wrestling, rand(0,1), TRUE)
-					O.adjust_skillrank(/datum/skill/combat/unarmed, rand(0,1), TRUE)
-					O.adjust_skillrank(/datum/skill/combat/knives, rand(0,1), TRUE)
-					O.adjust_skillrank(/datum/skill/combat/axesmaces, rand(0,1), TRUE)
-					O.adjust_skillrank(/datum/skill/misc/athletics, rand(0,1), TRUE)
-					O.adjust_skillrank(/datum/skill/combat/shields, rand(0,1), TRUE)
-					O.adjust_skillrank(/datum/skill/misc/climbing, rand(0,1), TRUE)
-					O.STASTR += 1
-					O.STACON += 1
-					O.STASPD += 1
-					O.STAPER += 1
-					O.STAINT += 1
-					O.STAEND += 1
+/mob/proc/promote_beast(mob/owner)
+	if(isliving(owner))
+		var/mob/living/O = owner
+		O.adjust_skillrank(/datum/skill/combat/polearms, rand(0,1), TRUE)
+		O.adjust_skillrank(/datum/skill/combat/swords, rand(0,1), TRUE)
+		O.adjust_skillrank(/datum/skill/combat/wrestling, rand(0,1), TRUE)
+		O.adjust_skillrank(/datum/skill/combat/unarmed, rand(0,1), TRUE)
+		O.adjust_skillrank(/datum/skill/combat/knives, rand(0,1), TRUE)
+		O.adjust_skillrank(/datum/skill/combat/axesmaces, rand(0,1), TRUE)
+		O.adjust_skillrank(/datum/skill/misc/athletics, rand(0,1), TRUE)
+		O.adjust_skillrank(/datum/skill/combat/shields, rand(0,1), TRUE)
+		O.adjust_skillrank(/datum/skill/misc/climbing, rand(0,1), TRUE)
+		O.STASTR += 1
+		O.STACON += 1
+		O.STASPD += 1
+		O.STAPER += 1
+		O.STAINT += 1
+		O.STAEND += 1
 
-/datum/renown/proc/make_beast_sentient()
+/mob/proc/make_beast_sentient(mob/owner)
 	var/mob/living/bober = owner
 	if(!bober.dontmakesentient)
 		if(!bober.ckey)
 			var/name = bober.real_name
-			var/list/mob/dead/observer/candidates = pollCandidatesForMob("[name] HAS EARNED HIGHER INTELLIGENCE, WILL YOU CONTROL THEM?", ROLE_NECRO_SKELETON, null, null, 70, bober, POLL_IGNORE_SENTIENCE_POTION, TRUE)
+			var/list/mob/dead/observer/candidates = pollCandidatesForMob("[name] HAS EARNED HIGHER INTELLIGENCE, WILL YOU CONTROL THEM?", null, null, null, 150, bober, null, new_players = TRUE)
 			if(LAZYLEN(candidates))
 				var/mob/dead/observer/C = pick(candidates)
-				bober.visible_message("[name] cackles maniacally, their eyes flared with new found intelligence.")
-				message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(bober)]) as their sentience")
-				bober.key = C.key */
+				bober.ckey = C.key
+				bober.visible_message("[name] cackles maniacally, their eyes flared with newfound intelligence.")
+				log_game("[key_name(C)] has taken control of ([key_name(bober)]) as their sentience")
+
 
 #undef TITLE_PREVIOUSTITLE
 #undef ONLY_NEWTTITLE
 #undef TITLE_ADJECTIVE
 #undef TITLE_NOUN_PEPHRASE
 #undef TITLE_NOUN
+
+/datum/mob_quirks
+	abstract_type = /datum/mob_quirks
+	/// name of the trait
+	var/name
+	/// the text that is displayed to the user when they spawn in
+	var/greet_text
+	/// the chance this trait will be rolled, the lower this is - the rarer it will roll.
+	var/weight = 100
+	// these are self explanatory
+	var/list/restricted_races
