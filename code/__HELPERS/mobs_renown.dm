@@ -12,9 +12,7 @@
 		GLOB.mob_renown_list[src.mobid] += FLOOR(killcount / 2, 1)
 		if(killcount == 1)
 			give_beast_name(src)
-		//var/list/humanoid = list(/mob/living/carbon/human/species/skeleton, /mob/living/carbon/human/species/goblin, /mob/living/carbon/human/species/orc, /mob/living/carbon/human/species/rousman, /mob/living/carbon/human/species/zizombie)
-		if(istype(src, /mob/living/carbon/human/species/skeleton) || istype(src, /mob/living/carbon/human/species/goblin) || istype(src, /mob/living/carbon/human/species/orc) || istype(src, /mob/living/carbon/human/species/rousman) || istype(src, /mob/living/carbon/human/species/zizombie))
-		//if(istype(src, humanoid))
+		if(istype(src, /mob/living/carbon/human/species))
 			var/renown = GLOB.mob_renown_list[src.mobid]
 			if(renown >= 1)
 				if(renown <= 4)
