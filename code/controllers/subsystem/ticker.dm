@@ -210,12 +210,12 @@ SUBSYSTEM_DEF(ticker)
 				tipped = TRUE
 
 			if(timeLeft <= 0)
-				if(!checkreqroles())
+				/*if(!checkreqroles())
 					current_state = GAME_STATE_STARTUP
 					start_at = world.time + timeDelayAdd
 					timeLeft = null
 					Master.SetRunLevel(RUNLEVEL_LOBBY)
-				else
+				else*/
 					send2chat(new /datum/tgs_message_content("New round starting on Vanderlin!"), CONFIG_GET(string/chat_announce_new_game))
 					current_state = GAME_STATE_SETTING_UP
 					Master.SetRunLevel(RUNLEVEL_SETUP)
@@ -252,7 +252,7 @@ SUBSYSTEM_DEF(ticker)
 				if(world.time > last_vote_time + time_until_vote)
 					SSvote.initiate_vote("endround", "The Gods")
 
-/datum/controller/subsystem/ticker/proc/checkreqroles()
+/*/datum/controller/subsystem/ticker/proc/checkreqroles()
 	var/list/readied_jobs = list()
 	var/list/required_jobs = list("Monarch")
 #ifdef TESTING
@@ -277,7 +277,7 @@ SUBSYSTEM_DEF(ticker)
 		return FALSE
 
 	job_change_locked = TRUE
-	return TRUE
+	return TRUE */
 
 /datum/controller/subsystem/ticker/proc/setup()
 	message_admins(span_boldannounce("Starting game..."))
