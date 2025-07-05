@@ -397,9 +397,9 @@ GLOBAL_PROTECT(tracy_init_reason)
 
 /world/proc/update_status()
 	var/s = ""
-	s += "<center><a href=\"https://discord.gg/zNAGFDcQ\">"
-	s += "<big><b>Vanderlin - Now 24/7 (Hosted by Monkestation)</b></big></a><br>"
-	s += "<b>Dark Medieval Fantasy Roleplay<b><br>"
+	s += "<center><a href=\"https://discord.gg/RmMtw7Tpfj\">"
+	s += "<big><b>AQUELARRE | Servidor Hispano</b></big></a><br>"
+	s += "<b>Roleplay de Fantasía Oscura Medieval<b><br>"
 	s += "\["
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
 		s += "<b>GAME STATUS:</b> IN LOBBY"
