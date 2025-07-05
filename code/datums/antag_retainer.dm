@@ -67,7 +67,7 @@
 					if(lord_dead)
 						lord_dead = FALSE
 					break
-	if(lord_dead || !lord_found)
+	if(lord_dead && lord_found)
 		if(!SSticker.missing_lord_time)
 			SSticker.missing_lord_time = world.time
 		if(world.time > SSticker.missing_lord_time + 10 MINUTES)
