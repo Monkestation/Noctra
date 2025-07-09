@@ -1,4 +1,4 @@
-//ported codeword code from TG
+//ported codeword code from TG, this all literally means absolutely nothing to me
 
 
 GLOBAL_VAR(legendary_name_evil)

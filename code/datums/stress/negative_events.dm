@@ -417,3 +417,8 @@
 	timer = 5 MINUTES
 	stressadd = 4
 	desc = span_warning("The gods have not taken kindly to my deeds.")
+
+/datum/stressevent/merc_fired
+	timer = 5 MINUTES
+	stressadd = 2
+	desc = span_warning("I lost my job at the Mercenary Guild...")

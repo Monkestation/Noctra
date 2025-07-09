@@ -60,14 +60,19 @@
 
 /mob/living/death(gibbed)
 	var/was_dead_before = stat == DEAD
+	var/was_sentient = (src.ckey && src.client)
 	set_stat(DEAD)
 	unset_machine()
 	if(isliving(fragger))
-		GLOB.mob_kill_count[fragger.mobid] += 1 //N/A call seperate here it loops with other stuff
-		if(src.ckey && src.client)
+		GLOB.mob_kill_count[fragger.mobid] += 1
+		if(was_sentient)
 			GLOB.mob_sentient_kill_count[fragger.mobid] += 1
-		if(!fragger.ckey && !fragger.client)
-			addtimer(CALLBACK(fragger, PROC_REF(process_renown), FALSE), 0 SECONDS)
+		if(!fragger.ckey && !fragger.client) //this all just feels fucked
+			if(was_sentient)
+				INVOKE_ASYNC(fragger, PROC_REF(process_renown_beast), TRUE, TRUE)
+			else
+				INVOKE_ASYNC(fragger, PROC_REF(process_renown_beast), TRUE)
+
 	timeofdeath = world.time
 	tod = station_time_timestamp()
 

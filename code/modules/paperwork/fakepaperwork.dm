@@ -1,5 +1,7 @@
 //some of these aren't actual /paper with stuff to read on em because I am not feeling creative enough to write
-//actual legally binding contracts right now, feel free to add em if you want
+//actual legally binding contracts right now, feel free to add em if you want.
+
+//p.s if these all do get made into /paper tell me to make them into a /contract subtype
 
 /obj/item/merctoken
 	name = "mercenary token"
@@ -51,7 +53,7 @@
 	var/signed = FALSE
 	var/mob/living/signedmerc = null
 
-/obj/item/paper/merc_contract/Initialize(mapload, new_employee)
+/obj/item/paper/merc_contract/Initialize(new_employee)
 	if(new_employee)
 		signedmerc = new_employee
 		signed = TRUE
@@ -78,48 +80,41 @@
 			if(signed)
 				to_chat(user, span_warning("This contract has already been ratified."))
 				return
+			playsound(src, 'sound/items/write.ogg', 50, FALSE, ignore_walls = FALSE)
+			visible_message("[user] ratifies the contract")
+			signed = TRUE
 			if(signedmerc)
-				playsound(src, 'sound/items/write.ogg', 50, FALSE, ignore_walls = FALSE)
-				visible_message("[user] ratifies the contract")
-				signed = TRUE
 				ADD_TRAIT(signedmerc, TRAIT_MERCGUILD, type)
-				update_icon_state()
-			if(!signedmerc)
-				playsound(src, 'sound/items/write.ogg', 50, FALSE, ignore_walls = FALSE)
-				visible_message("[user] ratifies the contract")
-				signed = TRUE
-				update_icon_state()
+			update_icon_state()
+			return
 
 		if(signedmerc)
 			to_chat(user, span_warning("This contract has already been signed."))
 			return
+		if(!user.can_perform_action(src, NEED_LITERACY|FORBID_TELEKINESIS_REACH))
+			to_chat(user, span_warning("I don't know what I'm agreeing too..."))
+		playsound(src, 'sound/items/write.ogg', 50, FALSE, ignore_walls = FALSE)
+		visible_message("[user] signs the contract")
+		signedmerc = user
 		if(signed)
-			if(user.can_perform_action(src, NEED_LITERACY|FORBID_TELEKINESIS_REACH))
-				to_chat(user, span_warning("I don't know what I'm agreeing too..."))
-			playsound(src, 'sound/items/write.ogg', 50, FALSE, ignore_walls = FALSE)
-			visible_message("[user] signs the contract")
-			signedmerc = user
 			ADD_TRAIT(signedmerc, TRAIT_MERCGUILD, type)
-			update_icon_state()
-		if(!signed)
-			if(user.can_perform_action(src, NEED_LITERACY|FORBID_TELEKINESIS_REACH))
-				to_chat(user, span_warning("I don't know what I'm agreeing too..."))
-			playsound(src, 'sound/items/write.ogg', 50, FALSE, ignore_walls = FALSE)
-			visible_message("[user] signs the contract")
-			signedmerc = user
-			update_icon_state()
+		update_icon_state()
+
 
 /obj/item/paper/merc_contract/examine(mob/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_BURDEN))
-		if(signedmerc.stat == DEAD)
-			var/loldied = pick("Dirty", "Cold", "Scabby", "Stiff", "Limp", "Rotted", "Mutilated", "Pallid", "Withered")
-			. += "A weirdly [loldied] parchment, stained with ink. it is proof that [signedmerc.real_name] works for the guild."
-		if(signedmerc.stat == CONSCIOUS)
+		if(signedmerc)
+			if(signedmerc.stat == DEAD) //you may think we should also do a reading check here since we are doing .realname, I disagree.
+				var/loldied = pick("Dirty", "Cold", "Scabby", "Stiff", "Limp", "Rotted", "Mutilated", "Pallid", "Withered")
+				. += "A weirdly [loldied] parchment, stained with ink. it is proof that [signedmerc.real_name] works for the guild."
+				return
 			. += "A weirdly warm parchment, stained with ink. it is proof that [signedmerc.real_name] works for the guild."
-		else
-			. += "A lesser pact with the patron, whenever I dim my eyes and gaze again at the words, they change in some way, never enough to be noticable, never enough to be ignored."
-			user.add_stress(/datum/stressevent/ring_madness)
+			return
+		. += "A lesser pact with the HEADEATER, whenever I dim my eyes and gaze again at the words, they change in some way, never enough to be noticable, never enough to be ignored."
+		user.add_stress(/datum/stressevent/ring_madness)
+		return
+	. += "A parchment, written on it is an oddly worded contract telling that the signee works for the Mercenary Guild"
 
 /obj/item/paper/merc_contract/read(mob/user)
 	if(!user.client || !user.hud_used)
@@ -151,79 +146,19 @@
 	else
 		return "<span class='warning'>I'm too far away to read it.</span>"
 
-/obj/item/paper/merc_worker_contract
+/obj/item/paper/merc_contract/Destroy()
+	if(signedmerc)
+		REMOVE_TRAIT(signedmerc, TRAIT_MERCGUILD, type)
+		to_chat(signedmerc, "in a blink, it was as if the world's joy was dimmed. The songs of birds, The sounds of children playing, they grew distant, hard to notice. As if the monotony of life muffled the song of wonder... or maybe, I just became unemployed.")
+		signedmerc.add_stress(/datum/stressevent/merc_fired)
+	. = ..()
+
+
+/obj/item/paper/merc_contract/worker
 	name = "Covenant of Guild Commitments and Operational Service"
-	desc = ""
-	icon_state = "contractunsigned"
-	info = ""
-	var/signed = FALSE
-	var/mob/living/signee = null
 
-/obj/item/paper/merc_worker_contract/update_icon_state()
-	. = ..()
-	if(mailer)
-		icon_state = "paper_prep"
-		name = "letter"
-		throw_range = 7
-		return
-	name = initial(name)
-	throw_range = initial(throw_range)
-	if(signed)
-		icon_state = "contractsigned"
-		return
-	icon_state = "contractunsigned"
 
-/obj/item/paper/merc_worker_contract/attackby(obj/item/P, mob/living/user, params)
-	. = ..()
-	if(istype(P, /obj/item/natural/thorn) || istype(P, /obj/item/natural/feather))
-		if(HAS_TRAIT(user, TRAIT_BURDEN))
-			if(signed)
-				to_chat(user, span_warning("This contract has already been ratified."))
-				return
-			if(signee)
-				playsound(src, 'sound/items/write.ogg', 50, FALSE, ignore_walls = FALSE)
-				visible_message("[user] ratifies the contract")
-				signed = TRUE
-				ADD_TRAIT(signee, TRAIT_MERCGUILD, type)
-				update_icon_state()
-			if(!signee)
-				playsound(src, 'sound/items/write.ogg', 50, FALSE, ignore_walls = FALSE)
-				visible_message("[user] ratifies the contract")
-				signed = TRUE
-				update_icon_state()
-
-		if(signee)
-			to_chat(user, span_warning("This contract has already been signed."))
-			return
-		if(signed)
-			if(user.can_perform_action(src, NEED_LITERACY|FORBID_TELEKINESIS_REACH))
-				to_chat(user, span_warning("I don't know what I'm agreeing too..."))
-			playsound(src, 'sound/items/write.ogg', 50, FALSE, ignore_walls = FALSE)
-			visible_message("[user] signs the contract")
-			signee = user
-			ADD_TRAIT(signee, TRAIT_MERCGUILD, type)
-			update_icon_state()
-		if(!signed)
-			if(user.can_perform_action(src, NEED_LITERACY|FORBID_TELEKINESIS_REACH))
-				to_chat(user, span_warning("I don't know what I'm agreeing too..."))
-			playsound(src, 'sound/items/write.ogg', 50, FALSE, ignore_walls = FALSE)
-			visible_message("[user] signs the contract")
-			signee = user
-			update_icon_state()
-
-/obj/item/paper/merc_worker_contract/examine(mob/user)
-	. = ..()
-	if(HAS_TRAIT(user, TRAIT_BURDEN))
-		if(signee.stat == DEAD)
-			var/loldied = pick("Dirty", "Cold", "Scabby", "Stiff", "Limp", "Rotted", "Mutilated", "Pallid", "Withered")
-			. += "A weirdly [loldied] parchment, stained with ink. it is proof that [signee.real_name] works for the guild."
-		if(signee.stat == CONSCIOUS)
-			. += "A weirdly warm parchment, stained with ink. it is proof that [signee.real_name] works for the guild."
-		else
-			. += "A lesser pact with the patron, whenever I dim my eyes and gaze again at the words, they change in some way, never enough to be noticable, never enough to be ignored."
-			user.add_stress(/datum/stressevent/ring_madness)
-
-/obj/item/paper/merc_worker_contract/read(mob/user)
+/obj/item/paper/merc_contract/worker/read(mob/user)
 	if(!user.client || !user.hud_used)
 		return
 	if(!user.hud_used.reads)
@@ -232,13 +167,13 @@
 		to_chat(user, "Even if I could read, I don't think I would care to.")
 		return
 	if(in_range(user, src) || isobserver(user))
-		info += "THIS AGREEMENT IS MADE AND ENTERED INTO AS OF THE DATE OF LAST SIGNATURE BELOW, BY AND BETWEEN [signee.real_name] (HEREAFTER REFERRED TO AS OUR BENEFICIARY), \
+		info += "THIS AGREEMENT IS MADE AND ENTERED INTO AS OF THE DATE OF LAST SIGNATURE BELOW, BY AND BETWEEN [signedmerc.real_name] (HEREAFTER REFERRED TO AS OUR BENEFICIARY), \
         AND THE MERCENARY GUILD (HEREAFTER REFERRED TO AS THE SOVEREIGN BROTHERHOOD OF GLORY AND WEALTH)<BR>WITNESSETH:<BR>WHEREAS, OUR BENEFICIARY IS A NATURAL BORN HUMEN OR HUMENOID, POSSESSING SKILLS UPON WHICH HE/SHE/PREFERRED-IDENTITY-PROVIDE  CAN AID THE SOVEREIGN BROTHERHOOD OF GLORY AND WEALTH, \
         WHO SEEKS TO CONTRIBUTE IN THE SOVEREIGN BROTHERHOOD OF GLORY AND WEALTH.<BR>WHEREAS, THE SOVEREIGN BROTHERHOOD OF GLORY AND WEALTH AGREES TO UNCONDITIONALLY PROVIDE PAYMENT, AND BENEFITS, WORTHY AND ACCEPTABLE TO OUR BENEFICIARY, \
         IN EXCHANGE FOR CONTINIOUS COOPERATION.<BR>NOW THEREFORE IN CONSIDERATION OF THE MUTUAL COVENANTS HEREIN CONTAINED, AND OTHER GOOD AND VALUABLE CONSIDERATION, THE PARTIES HERETO MUTUALLY AGREE AS FOLLOWS:\
         <BR>IN EXCHANGE FOR PALTRY PAYMENTS AND BENEFITS, OUR BENEFICIARY AGREES TO KEEP THEIR WORK EXCLUSIVELY IN BENEFIT TO THE SOVEREIGN BROTHERHOOD OF GLORY AND WEALTH REPRESENTETIVE (REFERRED TO AS WHELP DESPITE LACK OF MENTION HEREAFTER), \
         FOR THE REMAINDER OF HIS OR HER OR PREFERRED-IDENTITY-PROVIDE CURRENT LIFE.  PROVIDED OUR BENEFICIARY REMAIN IN DESIRE TO WORK FOR  THE SOVEREIGN BROTHERHOOD OF GLORY AND WEALTH AND WITHOUT THE LAWFUL  EVISCERATION OF THE AGREEMENT STRUCK HEREIN THIS PARCHMENT.<BR> \
-        <BR>SIGNED,<BR><i>[signee.real_name]</i>" //still sucks. refer to above
+        <BR>SIGNED,<BR><i>[signedmerc.real_name]</i>" //still sucks. refer to above
 		user.hud_used.reads.icon_state = "scroll"
 		user.hud_used.reads.show()
 		var/dat = {"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
@@ -254,16 +189,20 @@
 		return "<span class='warning'>I'm too far away to read it.</span>"
 
 
-
-
-
-
-/obj/item/merc_work_onetime
+/obj/item/merc_work_onetime //this whole shpeal is unintuitive on purpose, we are laying the groundwork for people not paying their debt and having their assets siezed
 	name = "One-Time Service and Engagement Agreement"
-
+	desc = ""
+	icon_state = "contractunsigned"
+	var/signed = FALSE
+	var/jobsdone = FALSE
+	var/mob/living/jobber = null
+	var/mob/living/jobed = null
+ //browser_input_list
 
 /obj/item/merc_work_conti
 	name = "Continuous Engagement and Service Agreement"
+
+/obj/item/merc_asset_steal
 
 /obj/item/merc_will
 	name = "Mercenary Service Risk Mitigation and Final Testament Agreement"
@@ -280,3 +219,8 @@
 /obj/item/renown3
 	name = "The Record of Heroic Achievements and Mercenary's Esteem"
 
+/obj/item/political_pm/guild_tax_exempt
+
+/obj/item/political_pm/exemptfromlaw
+
+/obj/item/tournament
