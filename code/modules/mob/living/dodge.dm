@@ -55,7 +55,6 @@
 
 	//------------Duel Wielding------------
 	var/attacker_dualwielding = user.dual_wielding_check()
-	var/defender_dualwielding = dual_wielding_check()
 
 	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
