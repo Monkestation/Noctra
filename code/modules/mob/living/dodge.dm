@@ -87,16 +87,12 @@
 	var/second_dodgeroll = rand(1, 100)
 
 	if(client?.prefs.showrolls)
-		if(attacker_dualwielding && !defender_dualwielding)
-			to_chat(src, span_info("Roll under [dodge_score] to dodge... [dodgeroll]"))
-			if(dodgeroll > dodge_score)
-				return FALSE
+		to_chat(src, span_info("Roll under [dodge_score] to dodge... [dodgeroll]"))
+		if(dodgeroll > dodge_score)
+			return FALSE
+		if(attacker_dualwielding)
 			to_chat(src, span_info("Twice! Roll under [dodge_score] to dodge... [second_dodgeroll]"))
 			if(second_dodgeroll > dodge_score)
-				return FALSE
-		else
-			to_chat(src, span_info("Roll under [dodge_score] to dodge... [dodgeroll]"))
-			if(dodgeroll > dodge_score)
 				return FALSE
 
 	try_dodge_to(user, target_turf, dodge_speed)
