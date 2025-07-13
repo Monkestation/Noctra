@@ -140,6 +140,20 @@
 	passcrawl = FALSE
 	climb_offset = 6
 
+/obj/structure/fluff/railing/woodfence
+	name = "wooden fence"
+	desc = "A sturdy fence of wooden planks."
+	icon = 'icons/roguetown/misc/tallwoodenrailing.dmi'
+	icon_state = "tallwoodenrailing"
+	density = TRUE
+	opacity = FALSE
+	anchored = TRUE
+	layer = 2.91
+	climbable = FALSE
+	max_integrity = 500
+	passcrawl = FALSE
+	climb_offset = 6
+
 /obj/structure/fluff/railing/fence/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(get_dir(loc, target) == dir)
