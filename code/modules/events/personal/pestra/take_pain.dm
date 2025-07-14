@@ -47,8 +47,7 @@
 	var/datum/objective/take_pain/new_objective = new(owner = chosen_one.mind)
 	chosen_one.mind.add_personal_objective(new_objective)
 
-	var/obj/effect/proc_holder/spell/invoked/transfer_pain/pain_spell = new
-	chosen_one.mind.AddSpell(pain_spell)
+	chosen_one.add_spell(/datum/action/cooldown/spell/transfer_pain)
 
 	to_chat(chosen_one, span_userdanger("YOU ARE PESTRA'S CHOSEN!"))
 	to_chat(chosen_one, span_notice("Pestra calls you to ease the suffering of others! Find those in pain and take their suffering upon yourself."))

@@ -174,7 +174,6 @@
 	if(hud_used)
 		hud_used.throw_icon?.update_appearance()
 		hud_used.give_intent?.update_appearance()
-	givingto = null
 	if((istype(I, /obj/item/weapon) || istype(I, /obj/item/gun) || I.force >= 15) && !forced && client)
 		// is this the right hand?
 		var/right_hand = FALSE
@@ -309,6 +308,8 @@
 	if(atkswinging)
 		stop_attack(FALSE)
 	if(I)
+		if(IS_WEAKREF_OF(I, offered_item))
+			offered_item = null
 		if(client)
 			client.screen -= I
 		I.layer = initial(I.layer)
@@ -323,7 +324,6 @@
 	if(hud_used)
 		hud_used.throw_icon?.update_appearance()
 		hud_used.give_intent?.update_appearance()
-	givingto = null
 	update_a_intents()
 	SEND_SIGNAL(I, COMSIG_ITEM_POST_UNEQUIP, force, newloc, no_move, invdrop, silent)
 	SEND_SIGNAL(src, COMSIG_MOB_UNEQUIPPED_ITEM, I, force, newloc, no_move, invdrop, silent)

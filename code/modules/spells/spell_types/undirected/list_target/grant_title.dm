@@ -1,0 +1,54 @@
+/datum/action/cooldown/spell/undirected/list_target/grant_title
+	name = "Grant Title"
+	desc = "Grant someone a title of honor... Or shame."
+	button_icon_state = "recruit_titlegrant"
+
+	cooldown_time = 4 MINUTES
+
+	target_radius = 3
+
+	var/title
+
+/datum/action/cooldown/spell/undirected/list_target/grant_title/get_list_targets(atom/center, target_radius)
+	var/list/things = list()
+	if(target_radius)
+		for(var/mob/living/carbon/human/H in view(target_radius, center))
+			if(QDELETED(H))
+				return FALSE
+			if(!H.mind || H.stat != CONSCIOUS)
+				return FALSE
+			if(!H.get_face_name(null))
+				return FALSE
+			things += H
+
+	return things
+
+/datum/action/cooldown/spell/undirected/list_target/grant_title/before_cast(mob/living/carbon/human/cast_on)
+	. = ..()
+	if(. & SPELL_CANCEL_CAST)
+		return
+
+	var/prev_title = GLOB.lord_titles[cast_on.real_name]
+	if(prev_title)
+		var/answer = browser_alert(owner, "[cast_on] already has a title, strip it?", "[name]", DEFAULT_INPUT_CONFIRMATIONS)
+		if(QDELETED(src) || QDELETED(owner) || QDELETED(cast_on) || !can_cast_spell())
+			return . | SPELL_CANCEL_CAST
+		if(answer == CHOICE_CONFIRM)
+			owner.say("I HEREBY STRIP YOU, [uppertext(cast_on.name)], OF THE TITLE OF [uppertext(prev_title)]!")
+			GLOB.lord_titles -= cast_on.real_name
+		else
+			reset_spell_cooldown()
+		return . | SPELL_CANCEL_CAST
+
+	title = browser_input_text(owner, "What title do you wish to grant?", "[name]", max_length = 42)
+	if(QDELETED(src) || QDELETED(owner) || QDELETED(cast_on) || !can_cast_spell())
+		return . | SPELL_CANCEL_CAST
+
+	if(!title)
+		reset_spell_cooldown()
+		return . | SPELL_CANCEL_CAST
+
+/datum/action/cooldown/spell/undirected/list_target/grant_title/cast(mob/living/carbon/human/cast_on)
+	. = ..()
+	owner.say("I HEREBY GRANT YOU, [uppertext(cast_on.name)], THE TITLE OF [uppertext(title)]!")
+	GLOB.lord_titles[cast_on.real_name] = title

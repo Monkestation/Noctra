@@ -100,7 +100,7 @@
 		update_appearance(UPDATE_ICON_STATE)
 	return num_loaded
 
-/obj/item/ammo_box/attack_self(mob/user)
+/obj/item/ammo_box/attack_self(mob/user, params)
 	var/obj/item/ammo_casing/A = get_round()
 	if(A)
 		A.forceMove(drop_location())

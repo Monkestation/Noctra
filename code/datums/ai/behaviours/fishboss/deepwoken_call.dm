@@ -53,6 +53,7 @@
 	icon_state = "blessing" // Replace with appropriate icon_state
 
 /datum/status_effect/deep_blessing/on_apply()
+	. = ..()
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/H = owner
 		H.melee_damage_lower *= 1.3
@@ -65,6 +66,7 @@
 	return FALSE
 
 /datum/status_effect/deep_blessing/on_remove()
+	. = ..()
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/H = owner
 		H.melee_damage_lower /= 1.3

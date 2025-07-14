@@ -44,9 +44,12 @@
 		return
 	to_chat(user, span_notice("[I] twists cleanly in [src]."))
 
-/obj/item/customlock/attack_right(mob/user)
-	var/held = user.get_active_held_item()
-	if(istype(held, /obj/item/weapon/hammer))
+/obj/item/customlock/attackby_secondary(obj/item/I, mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(istype(I, /obj/item/weapon/hammer))
 		if(!length(lockids))
 			to_chat(user, span_notice("[src] is not ready, its pins are not set!"))
 			return
@@ -55,10 +58,10 @@
 		to_chat(user, span_notice("You finish [F]."))
 		qdel(src)
 		return
-	if(!copy_access(held))
-		to_chat(user, span_warning("I cannot base the pins on [held]!"))
+	if(!copy_access(I))
+		to_chat(user, span_warning("I cannot base the pins on [I]!"))
 		return
-	to_chat(user, span_notice("I set the pins based on [held]."))
+	to_chat(user, span_notice("I set the pins based on [I]."))
 
 //finished lock
 /obj/item/customlock/finished
@@ -73,7 +76,7 @@
 	if(holdname)
 		to_chat(user, span_notice("You label the [name] with [holdname]."))
 
-/obj/item/customlock/finished/attack_right(mob/user)//does nothing. probably better ways to do this but whatever
+/obj/item/customlock/finished/attackby_secondary(obj/item/I, mob/user, params)
 
 /obj/item/customlock/finished/attack_obj(obj/O, mob/living/user)
 	if(!O.can_add_lock)

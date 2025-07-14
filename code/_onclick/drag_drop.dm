@@ -12,8 +12,8 @@
 		return
 	if(!Adjacent(usr) || !over.Adjacent(usr))
 		return // should stop you from dragging through windows
-	var/list/L = params2list(params)
-	if (L["middle"])
+	var/list/modifiers = params2list(params)
+	if (LAZYACCESS(modifiers, MIDDLE_CLICK))
 		over.MiddleMouseDrop_T(src,usr)
 	else
 		if(over == src)
@@ -25,11 +25,10 @@
 		if(isdead(usr))
 			modifier = 16
 		if(!(I.item_flags & ABSTRACT))
-			var/list/click_params = params2list(params)
-			if(!click_params || !click_params["icon-x"] || !click_params["icon-y"])
+			if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 				return
-			I.pixel_x = round(CLAMP(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)/modifier, 1)
-			I.pixel_y = round(CLAMP(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)/modifier, 1)
+			I.pixel_x = round(CLAMP(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)/modifier, 1)
+			I.pixel_y = round(CLAMP(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)/modifier, 1)
 			return
 	return
 
@@ -46,11 +45,14 @@
 	var/list/atom/selected_target[2]
 	var/obj/item/active_mousedown_item = null
 	var/mouseParams = ""
-	var/mouseLocation = null
-	var/mouseObject = null
-	var/mouseControlObject = null
+	///Used in MouseDrag to preserve the last mouse-entered location. Weakref
+	var/datum/weakref/mouse_location_ref = null
+	///Used in MouseDrag to preserve the last mouse-entered object. Weakref
+	var/datum/weakref/mouse_object_ref
+	//Middle-mouse-button click dragtime control for aimbot exploit detection.
 	var/middragtime = 0
-	var/atom/middragatom
+	//Middle-mouse-button clicked object control for aimbot exploit detection. Weakref
+	var/datum/weakref/middle_drag_atom_ref
 	var/tcompare
 	var/charging = 0
 	var/chargedprog = 0
@@ -68,7 +70,9 @@
 /atom/movable/screen
 	blockscharging = TRUE
 
-/client/MouseDown(object, location, control, params)
+/client/MouseDown(datum/object, location, control, params)
+	if(!control || QDELETED(object))
+		return
 	if(mob.incapacitated(ignore_grab = TRUE))
 		return
 	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDOWN, object, location, control, params)
@@ -87,10 +91,9 @@
 	if(mob.stat != CONSCIOUS)
 		mob.atkswinging = null
 		charging = null
-		mouse_pointer_icon = 'icons/effects/mousemice/human.dmi'
 		return
 
-	if (mouse_down_icon)
+	if(mouse_down_icon)
 		mouse_pointer_icon = mouse_down_icon
 	var/delay = mob.CanMobAutoclick(object, location, params)
 
@@ -117,55 +120,29 @@
 	if(active_mousedown_item)
 		active_mousedown_item.onMouseDown(object, location, params, mob)
 
+	mob.face_atom(object)
 
-
-
-	var/list/L = params2list(params)
-	if (L["right"])
-		mob.face_atom(object, location, control, params)
-		if(L["left"])
-			return
-		mob.atkswinging = "right"
-		if(mob.oactive)
-			if(mob.active_hand_index == 2)
-				if(mob.next_lmove > world.time)
-					return
-			else
-				if(mob.next_rmove > world.time)
-					return
-			mob.cast_move = 0
-			mob.used_intent = mob.o_intent
-			if(mob.used_intent.get_chargetime() && !AD.blockscharging && !mob.in_throw_mode)
-				updateprogbar()
-			else
-				mouse_pointer_icon = 'icons/effects/mousemice/human_attack.dmi'
-			return
-		else
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, RIGHT_CLICK) || LAZYACCESS(modifiers, MIDDLE_CLICK))
+		if(!mouse_override_icon)
 			mouse_pointer_icon = 'icons/effects/mousemice/human_looking.dmi'
-			return
-	if (L["middle"]) //start charging a spell or readying a mmb intent
+
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK)) //start charging a spell or readying a mmb intent
 		if(mob.next_move > world.time)
 			return
 		mob.atkswinging = "middle"
 		if(mob.mmb_intent)
 			mob.cast_move = 0
 			mob.used_intent = mob.mmb_intent
-			if(mob.used_intent.type == INTENT_SPELL && mob.ranged_ability)
-				var/obj/effect/proc_holder/spell/S = mob.ranged_ability
-				if(!S.cast_check(TRUE,mob, mob.mmb_intent))
-					return
 		if(!mob.mmb_intent)
-			mouse_pointer_icon = 'icons/effects/mousemice/human_looking.dmi'
-		else
-			if(mob.mmb_intent.get_chargetime() && !AD.blockscharging)
-				updateprogbar()
-			else
-				mouse_pointer_icon = mob.mmb_intent.pointer
-		return
-	if (L["left"]) //start charging a lmb intent
-		mob.face_atom(object, location, control, params)
-		if(L["right"])
 			return
+		if(mob.mmb_intent.get_chargetime() && !AD.blockscharging)
+			updateprogbar()
+		else
+			mouse_pointer_icon = mob.mmb_intent.pointer
+		return
+
+	if(LAZYACCESS(modifiers, LEFT_CLICK)) //start charging a lmb intent
 		if(mob.active_hand_index == 1)
 			if(mob.next_lmove > world.time)
 				return
@@ -180,7 +157,6 @@
 				updateprogbar()
 			else
 				mouse_pointer_icon = 'icons/effects/mousemice/human_attack.dmi'
-		return
 
 /mob
 	var/obj/effect/spell_rune/spell_rune
@@ -188,19 +164,23 @@
 	var/accent = ACCENT_DEFAULT
 
 /client/MouseUp(object, location, control, params)
+	if(!control)
+		return
+	if(SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEUP, object, location, control, params) & COMPONENT_CLIENT_MOUSEUP_INTERCEPT)
+		click_intercept_time = world.time
+	if(mouse_up_icon)
+		mouse_pointer_icon = mouse_up_icon
+	else
+		mob?.update_mouse_pointer()
 	var/mob/living/L = mob
 	if(L)
 		update_to_mob(L)
 	charging = 0
 	last_charge_process = 0
-//	mob.update_warning()
-	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEUP, object, location, control, params)
 
 	if(istype(object, /obj/abstract/visual_ui_element/hoverable/movable))
 		var/obj/abstract/visual_ui_element/hoverable/movable/ui_object = object
 		ui_object.MouseUp(location, control, params)
-
-	mouse_pointer_icon = 'icons/effects/mousemice/human.dmi'
 
 	if(mob.curplaying)
 		mob.curplaying.on_mouse_up()
@@ -217,21 +197,14 @@
 		return
 
 	var/list/modifiers = params2list(params)
-	if(modifiers["left"])
+	if(LAZYACCESS(modifiers, LEFT_CLICK))
 		if(mob.atkswinging != "left")
 			mob.atkswinging = null
 			return
-	if(modifiers["right"])
-		if(mob.oactive)
-			if(mob.atkswinging != "right")
-				mob.atkswinging = null
-				return
 
 	if(mob.stat != CONSCIOUS)
 		chargedprog = 0
 		mob.atkswinging = null
-//		mob.update_warning()
-		mouse_pointer_icon = 'icons/effects/mousemice/human.dmi'
 		return
 
 	if (mouse_up_icon)
@@ -266,20 +239,15 @@
 		return
 	L.used_intent.prewarning()
 	if(!charging)
-		charging = 1
+		charging = TRUE
 		L.used_intent.on_charge_start()
 		L.update_charging_movespeed(L.used_intent)
-//		L.update_warning(L.used_intent)
 		progress = 0
-//		if(L.used_intent.charge_invocation)
-//			sections = 100/L.used_intent.charge_invocation.len
-//		else
-//			sections = null
 		sections = null //commented
 		goal = L.used_intent.get_chargetime()
 		part = 1
 		lastplayed = 0
-		doneset = 0
+		doneset = FALSE
 		chargedprog = 0
 		START_PROCESSING(SSmousecharge, src)
 
@@ -288,53 +256,56 @@
 	return ..()
 
 /client/process()
-	if(!isliving(mob))
+	if(!mob || !isliving(mob))
 		return PROCESS_KILL
 	var/mob/living/L = mob
-	if(!L?.client || !update_to_mob(L))
-		if(L.curplaying)
-			L.curplaying.on_mouse_up()
-		L.update_charging_movespeed()
+	if(!L.client)
 		return PROCESS_KILL
+	if(update_to_mob(L))
+		L.update_mouse_pointer()
+		return
+	if(L.curplaying)
+		L.curplaying.on_mouse_up()
+	L.update_charging_movespeed()
+	mouse_override_icon = null
+	L.update_mouse_pointer()
+	return PROCESS_KILL
 
 /client/proc/update_to_mob(mob/living/L)
-	if(charging)
-		if(progress < goal)
-			if(last_charge_process)
-				progress += world.time - last_charge_process
-			else
-				progress++
-			chargedprog = text2num("[((progress / goal) * 100)]")
-			last_charge_process = world.time
-// Here we start changing the mouse_pointer_icon
-			if(!(mob.used_intent.charge_pointer & mob.used_intent.charged_pointer))
-				var/mouseprog = clamp(round(((progress / goal)*100),5), 0, 100)
-				mouse_pointer_icon = file("icons/effects/mousemice/charge/default/[mouseprog].dmi")
-			else
-				mouse_pointer_icon = mob.used_intent.charge_pointer
-		else
-			if(!doneset)
-				doneset = 1
-				chargedprog = 100
-				if(!(mob.used_intent.charge_pointer & mob.used_intent.charged_pointer))
-					mouse_pointer_icon = 'icons/effects/mousemice/charge/default/100.dmi'
-				else
-					mouse_pointer_icon = mob.used_intent.charged_pointer
-// Now we are done messing with the mouse_pointer_icon
-//				if(sections)
-//					L.say(L.used_intent.charge_invocation[L.used_intent.charge_invocation.len])
-				if(L.curplaying && !L.used_intent.keep_looping)
-					playsound(L, 'sound/magic/charged.ogg', 100, TRUE)
-					L.curplaying.on_mouse_up()
-				if(istype(L.used_intent, /datum/intent/shield/block))
-					L.visible_message("<span class='danger'>[L] prepares to do a shield bash!</span>")
-					playsound(L, 'sound/combat/shieldraise.ogg', 100, TRUE)
-			else
-				if(!L.adjust_stamina(L.used_intent.chargedrain))
-					L.stop_attack()
-		return TRUE
-	else
+	if(!charging)
 		return FALSE
+	if(progress >= goal)
+		if(!L.adjust_stamina(L.used_intent.chargedrain))
+			L.stop_attack()
+			return FALSE
+		if(doneset)
+			return TRUE
+		doneset = TRUE
+		chargedprog = 100
+		if(mob.used_intent.charged_pointer)
+			mouse_override_icon = mob.used_intent.charged_pointer
+		else
+			mouse_override_icon = 'icons/effects/mousemice/charge/default/100.dmi'
+		if(L.curplaying && !L.used_intent.keep_looping)
+			playsound(L, 'sound/magic/charged.ogg', 100, TRUE)
+			L.curplaying.on_mouse_up()
+		if(istype(L.used_intent, /datum/intent/shield/block))
+			L.visible_message("<span class='danger'>[L] prepares to do a shield bash!</span>")
+			playsound(L, 'sound/combat/shieldraise.ogg', 100, TRUE)
+
+		return TRUE
+
+	if(last_charge_process)
+		progress += world.time - last_charge_process
+	last_charge_process = world.time
+	chargedprog = round((progress / goal) * 100)
+	if(mob.used_intent.charge_pointer)
+		mouse_override_icon = mob.used_intent.charge_pointer
+	else
+		var/mouseprog = clamp(round(chargedprog, 5), 0, 100)
+		mouse_override_icon = file("icons/effects/mousemice/charge/default/[mouseprog].dmi")
+
+	return TRUE
 
 /mob/proc/CanMobAutoclick(object, location, params)
 
@@ -377,37 +348,36 @@
 	. = 1
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
-
 	if(mob.incapacitated(ignore_grab = TRUE))
 		return
 
-	var/list/L = params2list(params)
-	if (L["middle"])
+	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 		if (src_object && src_location != over_location)
 			middragtime = world.time
-			middragatom = src_object
+			middle_drag_atom_ref = WEAKREF(src_object)
 		else
 			middragtime = 0
-			middragatom = null
-	else
-		mob.face_atom(over_object, over_location, over_control, params)
+			middle_drag_atom_ref = null
+
+	mob.face_atom(over_object)
 
 	mouseParams = params
-	mouseLocation = over_location
-	mouseObject = over_object
-	mouseControlObject = over_control
+	mouse_location_ref = WEAKREF(over_location)
+	mouse_object_ref = WEAKREF(over_object)
 	if(selected_target[1] && over_object && over_object.IsAutoclickable())
 		selected_target[1] = over_object
 		selected_target[2] = params
 	if(active_mousedown_item)
 		active_mousedown_item.onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
-
+	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDRAG, src_object, over_object, src_location, over_location, src_control, over_control, params)
+	return ..()
 
 /obj/item/proc/onMouseDrag(src_object, over_object, src_location, over_location, params, mob)
 	return
 
-/client/MouseDrop(src_object, over_object, src_location, over_location, src_control, over_control, params)
-	if (middragatom == src_object)
+/client/MouseDrop(atom/src_object, atom/over_object, atom/src_location, atom/over_location, src_control, over_control, params)
+	if (IS_WEAKREF_OF(src_object, middle_drag_atom_ref))
 		middragtime = 0
-		middragatom = null
+		middle_drag_atom_ref = null
 	..()

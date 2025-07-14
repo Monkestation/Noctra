@@ -69,7 +69,7 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/dryad
 
-
+	del_on_death = TRUE
 
 /mob/living/simple_animal/hostile/retaliate/fae/dryad/Initialize()
 	. = ..()
@@ -80,7 +80,6 @@
 	return
 
 /mob/living/simple_animal/hostile/retaliate/fae/dryad/death(gibbed)
-	..()
 	var/turf/deathspot = get_turf(src)
 	new /obj/item/natural/melded/t1(deathspot)
 	new /obj/item/natural/iridescentscale(deathspot)
@@ -89,6 +88,5 @@
 	new /obj/item/natural/heartwoodcore(deathspot)
 	new /obj/item/natural/fairydust(deathspot)
 	new /obj/item/natural/fairydust(deathspot)
-	update_appearance()
 	spill_embedded_objects()
-	qdel(src)
+	return ..()

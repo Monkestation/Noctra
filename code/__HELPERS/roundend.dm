@@ -126,7 +126,7 @@
 	var/list/key_list = list()
 	for(var/client/C in GLOB.clients)
 		if(C.mob)
-			SSdroning.kill_droning(C)
+			C.mob.cancel_looping_ambience()
 			C.mob.playsound_local(C.mob, 'sound/misc/roundend.ogg', 100, FALSE)
 		if(isliving(C.mob) && C.ckey)
 			key_list += C.ckey
@@ -534,7 +534,7 @@
 	name = "Show roundend report"
 	button_icon_state = "round_end"
 
-/datum/action/report/Trigger()
+/datum/action/report/Trigger(trigger_flags)
 	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
 		SSticker.show_roundend_report(owner.client, FALSE)
 

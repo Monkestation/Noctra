@@ -252,14 +252,15 @@
 		qdel(G)
 	playsound(loc, 'sound/foley/coins1.ogg', 100, TRUE, -2)
 
-/obj/item/coin/attack_right(mob/user)
-	if(user.get_active_held_item())
-		return ..()
+/obj/item/coin/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(quantity == 1)
 		if(HAS_TRAIT(user, TRAIT_BLACKLEG))
 			var/outcome = alert(user, "What will you rig the next coin flip to?","XYLIX","Heads","Tails","Play fair")
 			if(QDELETED(src) || !user.is_holding(src))
-				return
+				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 			switch(outcome)
 				if("Heads")
 					rigged_outcome = 1
@@ -267,13 +268,13 @@
 					rigged_outcome = 2
 				if("Play fair")
 					rigged_outcome = 0
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 	user.put_in_active_hand(new type(user.loc, 1))
 	set_quantity(quantity - 1)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-
-
-/obj/item/coin/attack_self(mob/living/user)
+/obj/item/coin/attack_self(mob/living/user, params)
 	if(quantity > 1 || !base_type)
 		return
 	if(world.time < flip_cd + 30)

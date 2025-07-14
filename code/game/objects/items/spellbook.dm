@@ -104,21 +104,24 @@
 					return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 
-/obj/item/book/granter/spellbook/attack_self(mob/user)
+/obj/item/book/granter/spellbook/attack_self(mob/user, params)
 	if(!open)
-		attack_right(user)
+		attack_hand_secondary(user, params)
 		return
 	..()
 	user.update_inv_hands()
 
-/obj/item/book/granter/spellbook/rmb_self(mob/user)
-	attack_right(user)
-	return
+/obj/item/book/granter/spellbook/attack_self_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	attack_hand_secondary(user, params)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/book/granter/spellbook/read(mob/user)
 	return FALSE
 
-/obj/item/book/granter/spellbook/attack_right(mob/user)
+/obj/item/book/granter/spellbook/attack_hand_secondary(mob/user, params)
 	if(!picked)
 		var/list/designlist = list("green", "yellow", "brown")
 		var/mob/living/carbon/human/gamer = user
@@ -194,7 +197,7 @@
 	qualityoflearn = qualityoflearn / 100
 	var/spellpoints = (src.bookquality * qualityoflearn)
 	spellpoints = CEILING(spellpoints, 1)
-	user.mind.adjust_spellpoints(spellpoints)
+	reader.adjust_spellpoints(spellpoints)
 	if(stored_attunement)
 		user.mana_pool?.adjust_attunement(stored_attunement, 0.1 * (spellpoints / 0.2))
 	user.log_message("successfully studied their spellbook and gained spellpoints", LOG_ATTACK, color="orange")

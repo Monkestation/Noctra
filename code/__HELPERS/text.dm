@@ -931,3 +931,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		if(is_lowercase_character(i_char))
 			return FALSE
 	return TRUE
+
+/proc/endswith(input_text, ending)
+	var/input_length = LAZYLEN(ending)
+	return !!findtext(input_text, ending, -input_length)

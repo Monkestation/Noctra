@@ -74,14 +74,16 @@
 
 	return prioritized
 
-/obj/machinery/essence/attack_right(mob/user, list/modifiers)
-	var/obj/item/essence_connector/held = user.get_active_held_item()
-	if(!istype(held))
-		return ..()
+/obj/machinery/essence/attackby_secondary(obj/item/weapon, mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!istype(weapon, /obj/item/essence_connector))
+		return
 	if(length(output_connections) || length(input_connections))
 		show_connection_menu(user)
-		return
-	return ..()
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/essence/proc/show_connection_menu(mob/user)
 	var/list/options = list()

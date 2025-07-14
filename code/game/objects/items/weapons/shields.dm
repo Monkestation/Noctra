@@ -93,7 +93,10 @@
 	coverage = 50
 	max_integrity = 150
 
-/obj/item/weapon/shield/wood/attack_right(mob/user)
+/obj/item/weapon/shield/wood/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(!overlays.len)
 		if(!('icons/roguetown/weapons/wood_heraldry.dmi' in GLOB.IconStates_cache))
 			var/icon/J = new('icons/roguetown/weapons/wood_heraldry.dmi')
@@ -112,8 +115,7 @@
 		add_overlay(MU)
 		if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
 			cut_overlays()
-	else
-		..()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/weapon/shield/wood/getonmobprop(tag)
 	. = ..()
@@ -232,7 +234,10 @@
 				return list("shrink" = 0.6,"sx" = 1,"sy" = 4,"nx" = 1,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = 0,"ey" = 2,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 	return ..()
 
-/obj/item/weapon/shield/tower/metal/attack_right(mob/user)
+/obj/item/weapon/shield/tower/metal/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(!overlays.len)
 		if(!('icons/roguetown/weapons/shield_heraldry.dmi' in GLOB.IconStates_cache))
 			var/icon/J = new('icons/roguetown/weapons/shield_heraldry.dmi')
@@ -250,8 +255,7 @@
 		add_overlay(MU)
 		if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
 			cut_overlays()
-	else
-		..()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 #undef SHIELD_BANG_COOLDOWN
 
@@ -300,7 +304,10 @@
 	parrysound = list('sound/combat/parry/shield/towershield (1).ogg','sound/combat/parry/shield/towershield (2).ogg','sound/combat/parry/shield/towershield (3).ogg')
 	max_integrity = 200
 
-/obj/item/weapon/shield/heater/attack_right(mob/user)
+/obj/item/weapon/shield/heater/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(!overlays.len)
 		var/icon/J = new('icons/roguetown/weapons/heater_heraldry.dmi')
 		var/list/istates = J.IconStates()
@@ -315,8 +322,7 @@
 		add_overlay(MU)
 		if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
 			cut_overlays()
-	else
-		..()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/weapon/shield/heater/getonmobprop(tag)
 	. = ..()

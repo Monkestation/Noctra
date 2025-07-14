@@ -4,8 +4,7 @@
 
 /datum/objective/ultimate_sacrifice/on_creation()
 	. = ..()
-	if(owner?.current)
-		owner.current.mind.AddSpell(new /obj/effect/proc_holder/spell/self/ultimate_sacrifice)
+	owner.current.add_spell(/datum/action/cooldown/spell/undirected/list_target/ultimate_sacrifice, source = src)
 	update_explanation_text()
 
 /datum/objective/ultimate_sacrifice/update_explanation_text()

@@ -28,22 +28,24 @@
 	else
 		return ..()
 
-/obj/item/natural/pre_attack_right(atom/A, mob/living/user, params)
+/obj/item/natural/pre_attack_secondary(atom/A, mob/living/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(istype(A, /obj/item/natural))
 		if(item_flags & IN_STORAGE)
 			to_chat(user, span_warning("It's hard to find [src] in my bag."))
-			return
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		var/obj/item/natural/B = A
 		if(bundletype && bundletype == B.bundletype)
 			if(!user.temporarilyRemoveItemFromInventory(src))
-				return TRUE
+				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 			var/obj/item/natural/bundle/N = new bundletype(loc)
 			to_chat(user, span_notice("You collect the [N.stackname] into a bundle."))
 			qdel(B)
 			qdel(src)
 			user.put_in_active_hand(N)
-			return TRUE
-	return ..()
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/natural/bundle
 	name = "bundle"
@@ -104,50 +106,56 @@
 	else
 		return ..()
 
-/obj/item/natural/bundle/attack_right(mob/user)
+/obj/item/natural/bundle/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(item_flags & IN_STORAGE)
+		to_chat(user, span_warning("I can't reach [src]!"))
 		return
 	if(amount <= 0) //how did you manage to do this
 		qdel(src)
 		return
-	var/atom/item = user.get_active_held_item()
-	if(item && item.type != stacktype)
-		return ..()
 	var/mob/living/carbon/human/H = user
 	switch(amount)
 		if(2)
 			if(!user.temporarilyRemoveItemFromInventory(src))
 				return
-			var/obj/F = new stacktype(src.loc)
-			var/obj/I = new stacktype(src.loc)
+			var/obj/F = new stacktype(get_turf(src))
+			new stacktype(get_turf(src))
 			H.put_in_hands(F)
-			H.put_in_hands(I)
 			qdel(src)
 			return
 		if(1)
 			if(!user.temporarilyRemoveItemFromInventory(src))
 				return
-			var/obj/F = new stacktype(src.loc)
+			var/obj/F = new stacktype(get_turf(src))
 			H.put_in_hands(F)
 			qdel(src)
 			return
 		else
 			amount -= 1
-			var/obj/F = new stacktype(src.loc)
+			var/obj/F = new stacktype(get_turf(src))
 			H.put_in_hands(F)
 			to_chat(user, span_notice("You remove \a [F] from [src]."))
+
 	update_bundle()
 
 /obj/item/natural/bundle/examine(mob/user)
 	. = ..()
 	. += span_notice("There are [amount] [stackname] in this bundle.")
 
-/obj/item/natural/bundle/pre_attack_right(atom/A, mob/living/user, params)
+/obj/item/natural/bundle/pre_attack_secondary(atom/A, mob/living/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(amount <= 0) //how did you manage to do this
 		qdel(src)
 		return
 	if(ismob(A))
-		return ..()
+		return SECONDARY_ATTACK_CALL_NORMAL
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(amount >= maxamount)
 		to_chat(user, span_warning("There's not enough space in [src]."))
@@ -181,7 +189,6 @@
 					amount += B.amount
 					qdel(B)
 		update_bundle()
-	return TRUE
 
 /obj/item/natural/bundle/proc/update_bundle()
 	if(firefuel != 0)

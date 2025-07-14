@@ -1,3 +1,6 @@
+GLOBAL_LIST_EMPTY(excommunicated_players)
+GLOBAL_LIST_EMPTY(heretical_players)
+
 /// DEFINITIONS ///
 #define CLERIC_T0 0
 #define CLERIC_T1 1
@@ -58,6 +61,7 @@
 /datum/devotion/cleric_holder/proc/update_devotion(dev_amt, prog_amt)
 	var/datum/patron/P = patron
 	devotion += dev_amt
+	SEND_SIGNAL(holder_mob, COMSIG_LIVING_DEVOTION_CHANGED, dev_amt)
 	//Max devotion limit
 	if(devotion > max_devotion)
 		devotion = max_devotion
@@ -71,35 +75,33 @@
 			if(progression >= CLERIC_REQ_1)
 				level = CLERIC_T1
 				if(P.t1)
-					usr.mind.AddSpell(new P.t1, silent = FALSE)
-				return
+					holder_mob.add_spell(P.t1, silent = FALSE, source = src)
 		if(CLERIC_T1)
 			if(progression >= CLERIC_REQ_2)
 				level = CLERIC_T2
 				if(P.t2)
-					usr.mind.AddSpell(new P.t2, silent = FALSE)
-				return
+					holder_mob.add_spell(P.t2, silent = FALSE, source = src)
 		if(CLERIC_T2)
 			if(progression >= CLERIC_REQ_3)
 				level = CLERIC_T3
 				if(P.t3)
-					usr.mind.AddSpell(new P.t3, silent = FALSE)
-				to_chat(usr, span_notice("All my Gods miracles are now open to me..."))
-				return
-		if(CLERIC_T3) // already maxed out
-			return
+					holder_mob.add_spell(P.t3, silent = FALSE, source = src)
 
+				to_chat(holder_mob, span_notice("All my Gods miracles are now open to me..."))
 
 /datum/devotion/cleric_holder/proc/grant_spells_churchling(mob/living/carbon/human/H)
 	if(!H || !H.mind || !patron)
 		return
 
-	var/list/spelllist = list(/obj/effect/proc_holder/spell/targeted/touch/orison/lesser, /obj/effect/proc_holder/spell/invoked/lesser_heal, /obj/effect/proc_holder/spell/invoked/diagnose) //This would have caused jank.
-	for(var/spell_type in spelllist)
-		if(!spell_type || H.mind.has_spell(spell_type))
-			continue
-		var/newspell = new spell_type
-		H.mind.AddSpell(newspell)
+	var/list/spells = list(
+		/datum/action/cooldown/spell/undirected/touch/orison/lesser,
+		/datum/action/cooldown/spell/healing/lesser,
+		/datum/action/cooldown/spell/diagnose/holy,
+	)
+
+	for(var/datum/action/cooldown/spell/spell as anything in spells)
+		H.add_spell(spell, source = src)
+
 	level = CLERIC_T0
 	max_devotion = CLERIC_REQ_1 //Max devotion limit - Churchlings only get diagnose and lesser miracle.
 	max_progression = CLERIC_REQ_1
@@ -110,11 +112,15 @@
 		return
 
 	var/datum/patron/A = H.patron
-	var/list/spelllist = list(/obj/effect/proc_holder/spell/targeted/touch/orison, A.t0, A.t1, A.t2, A.t3, /obj/effect/proc_holder/spell/invoked/cure_rot)
-	for(var/spell_type in spelllist)
-		if(!spell_type || H.mind.has_spell(spell_type))
-			continue
-		H.mind.AddSpell(new spell_type)
+	var/list/spells = list(
+		A.t0, A.t1, A.t2, A.t3,
+		/datum/action/cooldown/spell/undirected/touch/orison,
+		/datum/action/cooldown/spell/cure_rot,
+	)
+
+	for(var/datum/action/cooldown/spell/spell as anything in spells)
+		H.add_spell(spell, source = src)
+
 	level = CLERIC_T3
 	passive_devotion_gain = 1 //1 devotion per second
 	update_devotion(300, 900)
@@ -126,13 +132,14 @@
 		return
 
 	var/datum/patron/A = H.patron
-	var/list/spelllist = list(A.t0, A.t1)
+	var/list/spells = list(A.t0, A.t1)
+
 	if(istype(A, /datum/patron/divine/necra))
-		spelllist += /obj/effect/proc_holder/spell/invoked/avert
-	for(var/spell_type in spelllist)
-		if(!spell_type || H.mind.has_spell(spell_type))
-			continue
-		H.mind.AddSpell(new spell_type)
+		spells += /datum/action/cooldown/spell/avert
+
+	for(var/datum/action/cooldown/spell/spell as anything in spells)
+		H.add_spell(spell, source = src)
+
 	level = CLERIC_T1
 
 //Cleric Spell Spawner
@@ -141,13 +148,16 @@
 		return
 
 	var/datum/patron/A = H.patron
-	var/list/spelllist = list(/obj/effect/proc_holder/spell/targeted/abrogation, A.t0, A.t1)
+	var/list/spells = list(
+		/datum/action/cooldown/spell/aoe/abrogation,
+		A.t0, A.t1,
+	)
 	if(istype(A, /datum/patron/divine/necra))
-		spelllist += /obj/effect/proc_holder/spell/invoked/avert
-	for(var/spell_type in spelllist)
-		if(!spell_type || H.mind.has_spell(spell_type))
-			continue
-		H.mind.AddSpell(new spell_type)
+		spells += /datum/action/cooldown/spell/avert
+
+	for(var/datum/action/cooldown/spell/spell as anything in spells)
+		H.add_spell(spell, source = src)
+
 	level = CLERIC_T1
 	max_devotion = 180
 	max_progression = 180
@@ -160,21 +170,19 @@
 
 	var/datum/patron/A = H.patron
 	if(istype(A, /datum/patron/divine/necra))
-		var/list/spelllist = list(
-			/obj/effect/proc_holder/spell/targeted/churn = A.t3,
-			/obj/effect/proc_holder/spell/invoked/lesser_heal = A.t0
+		var/list/spells = list(
+			/datum/action/cooldown/spell/aoe/churn_undead,
+			/datum/action/cooldown/spell/healing,
 		)
-		//You need abrogation to get lesser_heal
-		for(var/spell_type in spelllist)
-			if(!spell_type || H.mind.has_spell(spell_type))
-				continue
-			H.mind.AddSpell(new spell_type)
+		for(var/datum/action/cooldown/spell/spell as anything in spells)
+			H.add_spell(spell, source = src)
 	else
-		var/list/spelllist = list(/obj/effect/proc_holder/spell/targeted/abrogation, A.t0)
-		for(var/spell_type in spelllist)
-			if(!spell_type || H.mind.has_spell(spell_type))
-				continue
-			H.mind.AddSpell(new spell_type)
+		var/list/spells = list(
+			/datum/action/cooldown/spell/aoe/abrogation,
+			A.t0,
+		)
+		for(var/datum/action/cooldown/spell/spell as anything in spells)
+			H.add_spell(spell, source = src)
 
 	level = CLERIC_T0
 	max_devotion = 230

@@ -143,13 +143,16 @@
 
 	begin_bulk_splitting(user)
 
-/obj/machinery/essence/splitter/attack_right(mob/user, params)
+/obj/machinery/essence/splitter/attack_hand_secondary(mob/user, params)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(processing)
 		to_chat(user, span_warning("The splitter is currently processing."))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	remove_all_items(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/essence/splitter/proc/remove_all_items(mob/user)
 	for(var/obj/item/I in current_items)

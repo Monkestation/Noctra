@@ -24,16 +24,31 @@
 	grid_width = 64
 	dropshrink = 0.9
 
-/obj/item/reagent_containers/glass/mortar/attack_right(mob/user)
+/obj/item/reagent_containers/glass/mortar/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	var/held_item = user.get_active_held_item()
-	if(istype(held_item, /obj/item/pestle))
+	if(to_grind)
+		var/obj/item/N = to_grind
+		N.forceMove(get_turf(user))
+		to_chat(user, span_notice("I remove [to_grind] from the mortar."))
+		to_grind = null
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	to_chat(user, span_notice("It's empty."))
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/reagent_containers/glass/mortar/attackby_secondary(obj/item/weapon, mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(istype(weapon, /obj/item/pestle))
 		if(!to_grind)
 			to_chat(user, span_warning("There's nothing to grind."))
-			return
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		if((!to_grind.grind_results && !to_grind.juice_results))
 			to_chat(user, span_warning("I cannot juice this ingredient."))
-			return
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		to_chat(user, span_notice("I start grinding..."))
 		if((do_after(user, 2.5 SECONDS, src)) && to_grind)
 			if(to_grind.juice_results) //prioritize juicing
@@ -43,21 +58,13 @@
 				if(to_grind.reagents) //food and pills
 					to_grind.reagents.trans_to(src, to_grind.reagents.total_volume, transfered_by = user)
 				QDEL_NULL(to_grind)
-				return
+				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 			to_grind.on_grind()
 			reagents.add_reagent_list(to_grind.grind_results)
 			to_chat(user, span_notice("I break [to_grind] into powder."))
 			QDEL_NULL(to_grind)
-			return
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	else
-		if(to_grind)
-			var/obj/item/N = to_grind
-			N.forceMove(get_turf(user))
-			to_chat(user, span_notice("I remove [to_grind] from the mortar."))
-			to_grind = null
-			return
-		to_chat(user, span_notice("It's empty."))
 
 /obj/item/reagent_containers/glass/mortar/AltClick(mob/user)
 	if(to_grind)

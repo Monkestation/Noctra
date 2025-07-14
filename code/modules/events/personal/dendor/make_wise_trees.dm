@@ -23,7 +23,7 @@
 			continue
 		if(!H.patron || !istype(H.patron, /datum/patron/divine/dendor))
 			continue
-		if(locate(/obj/effect/proc_holder/spell/invoked/transform_tree) in H.mind.spell_list)
+		if(H.get_spell(/datum/action/cooldown/spell/transfrom_tree))
 			continue
 		return TRUE
 
@@ -37,7 +37,7 @@
 			continue
 		if(!human_mob.patron || !istype(human_mob.patron, /datum/patron/divine/dendor))
 			continue
-		if(locate(/obj/effect/proc_holder/spell/invoked/transform_tree) in human_mob.mind.spell_list)
+		if(human_mob.get_spell(/datum/action/cooldown/spell/transfrom_tree))
 			continue
 		valid_targets += human_mob
 
@@ -49,8 +49,7 @@
 	var/datum/objective/wise_trees/new_objective = new(owner = chosen_one.mind)
 	chosen_one.mind.add_personal_objective(new_objective)
 
-	var/obj/effect/proc_holder/spell/invoked/transform_tree/tree_spell = new()
-	chosen_one.mind.AddSpell(tree_spell)
+	chosen_one.add_spell(/datum/action/cooldown/spell/transfrom_tree)
 
 	to_chat(chosen_one, span_userdanger("YOU ARE DENDOR'S CHOSEN!"))
 	to_chat(chosen_one, span_biginfo("Dendor wants you to choose suitable trees, which are to become guardians of the forest! [new_objective.explanation_text]"))

@@ -4,7 +4,7 @@
 	duration = -1
 
 /datum/status_effect/water_affected/on_apply()
-	return TRUE
+	. = ..()
 
 /datum/status_effect/water_affected/tick()
 	var/turf/owner_turf = get_turf(owner)

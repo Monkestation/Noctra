@@ -92,7 +92,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	return FALSE
 
 /turf/open/transparent/openspace/zPassOut(atom/movable/A, direction, turf/destination)
-	if(A.anchored)
+	if(A.anchored && !isprojectile(A))
 		return FALSE
 	if(HAS_TRAIT(A, TRAIT_I_AM_INVISIBLE_ON_A_BOAT))
 		return FALSE
@@ -157,14 +157,3 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	..()
 	if(!CanBuildHere())
 		return
-
-/turf/open/transparent/openspace/bullet_act(obj/projectile/P)
-	if(!P.arcshot)
-		return ..()
-	var/turf/target = get_step_multiz(src, DOWN)
-	if(target)
-		P.forceMove(target)
-		P.visible_message(span_danger("[P] flies down from above!"), vision_distance = COMBAT_MESSAGE_RANGE)
-		P.original = target
-		P.process_hit(target, P.select_target(target))
-		return BULLET_ACT_TURF

@@ -22,7 +22,7 @@
 			continue
 		if(!H.patron || !istype(H.patron, /datum/patron/divine/xylix))
 			continue
-		if(locate(/obj/effect/proc_holder/spell/invoked/mockery) in H.mind.spell_list)
+		if(H.get_spell(/datum/action/cooldown/spell/undirected/list_target/vicious_mockery))
 			continue
 		return TRUE
 
@@ -36,7 +36,7 @@
 			continue
 		if(!human_mob.patron || !istype(human_mob.patron, /datum/patron/divine/xylix))
 			continue
-		if(locate(/obj/effect/proc_holder/spell/invoked/mockery) in human_mob.mind.spell_list)
+		if(human_mob.get_spell(/datum/action/cooldown/spell/undirected/list_target/vicious_mockery))
 			continue
 		valid_targets += human_mob
 
@@ -52,8 +52,7 @@
 	to_chat(chosen_one, span_biginfo("Xylix demands great entertainment! Seek out and viciously mock the monarch to prove your devotion and earn Xylix's favor!"))
 	chosen_one.playsound_local(chosen_one, 'sound/misc/gods/xylix_omen_male_female.ogg', 100)
 
-	var/obj/effect/proc_holder/spell/invoked/mockery/mock_spell = new()
-	chosen_one.mind.AddSpell(mock_spell)
+	chosen_one.add_spell(/datum/action/cooldown/spell/undirected/list_target/vicious_mockery)
 	to_chat(chosen_one, span_notice("Xylix has granted you the gift of savage mockery! Use it to ridicule your target."))
 
 	chosen_one.mind.announce_personal_objectives()

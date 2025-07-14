@@ -40,7 +40,7 @@
 			qdel(src)
 			new /obj/structure/fluff/clodpile(T)
 
-/obj/item/natural/dirtclod/attack_self(mob/living/user)
+/obj/item/natural/dirtclod/attack_self(mob/living/user, params)
 	user.visible_message("<span class='warning'>[user] scatters [src].</span>")
 	qdel(src)
 

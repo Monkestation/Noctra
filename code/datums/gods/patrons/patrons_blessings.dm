@@ -29,9 +29,9 @@
 				/datum/status_effect/buff/clean_plus)
 		if("Special")
 			blessing_path = input("Choose Special Blessing") as null|anything in list( \
-				/datum/status_effect/buff/duration_modification/featherfall, \
-				/datum/status_effect/buff/duration_modification/darkvision, \
-				/datum/status_effect/buff/duration_modification/haste, \
+				/datum/status_effect/buff/featherfall, \
+				/datum/status_effect/buff/darkvision, \
+				/datum/status_effect/buff/haste, \
 				/datum/status_effect/buff/calm, \
 				/datum/status_effect/buff/barbrage)
 		if("Mending")
@@ -84,9 +84,6 @@
 
 		/// Set actual expiration if needed (manual override for duration_modification types)
 		if(duration > 0)
-			var/datum/status_effect/active = M.get_status_effect(blessing_path)
-			if(active && istype(active, /datum/status_effect/buff/duration_modification))
-				active.duration = world.time + duration
 			M.start_blessing_duration_timer(blessing_path, duration)
 
 		if(until_sleep)
@@ -171,9 +168,9 @@
 			/datum/status_effect/buff/craft_buff = "Abyssor echoes: \"Stone crumbles, but tha deep remembers yer craft.\"",
 			/datum/status_effect/buff/foodbuff = "Abyssor bubbles: \"Eat... but know tha sea waits to feast in turn.\"",
 			/datum/status_effect/buff/clean_plus = "Abyssor sighs: \"Saltwater cleanses shite from tha deck. Have a good wash.\"",
-			/datum/status_effect/buff/duration_modification/featherfall = "Abyssor murmurs: \"Float like a driftin' log.\"",
-			/datum/status_effect/buff/duration_modification/darkvision = "Abyssor growls: \"See through thickest of storms, lil'un.\"",
-			/datum/status_effect/buff/duration_modification/haste = "Abyssor growls: \"Flee if ya must... the sea is patient.\"",
+			/datum/status_effect/buff/featherfall = "Abyssor murmurs: \"Float like a driftin' log.\"",
+			/datum/status_effect/buff/darkvision = "Abyssor growls: \"See through thickest of storms, lil'un.\"",
+			/datum/status_effect/buff/haste = "Abyssor growls: \"Flee if ya must... the sea is patient.\"",
 			/datum/status_effect/buff/calm = "Abyssor whispers: \"Still yerself. Think of shiftin' waves.\"",
 			/datum/status_effect/buff/barbrage = "Abyssor bellows: \"Like the fockin' storm tide, break 'em'! Break tha bastards! Makin' mah blood boil!\""
 		),
@@ -188,9 +185,9 @@
 			/datum/status_effect/buff/craft_buff = "Astrata declareth: \"LET THINE HANDS BUILD THAT WHICH SHALL ENDURE.\"",
 			/datum/status_effect/buff/foodbuff = "Astrata blesseth: \"FEAST AND GROW STRONG BENEATH MINE EVER-WATCHFUL GAZE.\"",
 			/datum/status_effect/buff/clean_plus = "Astrata proclaims: \"THE LIGHT CLEANSETH ALL. DIRT SHALL NOT ENDURE.\"",
-			/datum/status_effect/buff/duration_modification/featherfall = "Astrata commandeth: \"ASCEND, FOR THOU ART WORTHY OF HEIGHT.\"",
-			/datum/status_effect/buff/duration_modification/darkvision = "Astrata scoffeth: \"SHADOWS ARE FOR THE FAINT. THOU NEEDST THEM NOT.\"",
-			/datum/status_effect/buff/duration_modification/haste = "Astrata ordereth: \"SWIFT BE THY FEET. DUTY BROOKETH NO DELAY.\"",
+			/datum/status_effect/buff/featherfall = "Astrata commandeth: \"ASCEND, FOR THOU ART WORTHY OF HEIGHT.\"",
+			/datum/status_effect/buff/darkvision = "Astrata scoffeth: \"SHADOWS ARE FOR THE FAINT. THOU NEEDST THEM NOT.\"",
+			/datum/status_effect/buff/haste = "Astrata ordereth: \"SWIFT BE THY FEET. DUTY BROOKETH NO DELAY.\"",
 			/datum/status_effect/buff/calm = "Astrata whispereth: \"BE STILL. THE SUN KEEPETH THEE SAFE.\"",
 			/datum/status_effect/buff/barbrage = "Astrata declareth: \"LET THY RIGHTEOUS FURY BURN AS MINE SUN DOES.\""
 		),
@@ -204,9 +201,9 @@
 			/datum/status_effect/buff/craft_buff = "Baotha snorts: \"Glue it wrong? Regardless of if it works, it’s ART!\"",
 			/datum/status_effect/buff/foodbuff = "Baotha hoots: \"Eat it, snort it! What could go wrong?\"",
 			/datum/status_effect/buff/clean_plus = "Baotha coughs: \"CLEAN? Hah! Let’s see how long it lasts, little neat freak. Have some fuuun!\"",
-			/datum/status_effect/buff/duration_modification/featherfall = "Baotha sings: \"Don't wanna live in fear and loathing; I wanna feel like I am floating.\"",
-			/datum/status_effect/buff/duration_modification/darkvision = "Baotha giggles: \"Oooo, secrets! Don’t blink or you’ll miss the eyes!\"",
-			/datum/status_effect/buff/duration_modification/haste = "Baotha screams: \"Dance like nobody cares! They don't! But I do. You're beautiful, darling. Beautiful.\"",
+			/datum/status_effect/buff/featherfall = "Baotha sings: \"Don't wanna live in fear and loathing; I wanna feel like I am floating.\"",
+			/datum/status_effect/buff/darkvision = "Baotha giggles: \"Oooo, secrets! Don’t blink or you’ll miss the eyes!\"",
+			/datum/status_effect/buff/haste = "Baotha screams: \"Dance like nobody cares! They don't! But I do. You're beautiful, darling. Beautiful.\"",
 			/datum/status_effect/buff/calm = "Baotha reassures: \"Sink into the serenity of mindlessness. I'm here for you, when no-one else is.\"",
 			/datum/status_effect/buff/barbrage = "Baotha squeals: \"BREAK SOMETHING BEAUTIFUL! Be someone beautiful. It’s therapeutic!\""
 		),
@@ -220,9 +217,9 @@
 			/datum/status_effect/buff/craft_buff = "Dendor states: \"Making something..? Don't hurt the trees, hm?\"",
 			/datum/status_effect/buff/foodbuff = "Dendor grunts: \"Eat. Eating good.\"",
 			/datum/status_effect/buff/clean_plus = "Dendor rasps: \"You wipe the rot... but it returns.\"",
-			/datum/status_effect/buff/duration_modification/featherfall = "Dendor chuckles: \"Fallin' leaves. Yah! You're like that. Heh.\"",
-			/datum/status_effect/buff/duration_modification/darkvision = "Dendor growls: \"See the dark roots..\"",
-			/datum/status_effect/buff/duration_modification/haste = "Dendor grumbles: \"Run fast. The wolves do.\"",
+			/datum/status_effect/buff/featherfall = "Dendor chuckles: \"Fallin' leaves. Yah! You're like that. Heh.\"",
+			/datum/status_effect/buff/darkvision = "Dendor growls: \"See the dark roots..\"",
+			/datum/status_effect/buff/haste = "Dendor grumbles: \"Run fast. The wolves do.\"",
 			/datum/status_effect/buff/calm = "Dendor breathes: \"Wind flows. Calming?\"",
 			/datum/status_effect/buff/barbrage = "Dendor growls: \"GRRR! It's dancing time!\""
 		),
@@ -236,9 +233,9 @@
 			/datum/status_effect/buff/craft_buff = "Eora hums: \"Hands that build with love make wonders eternal.\"",
 			/datum/status_effect/buff/foodbuff = "Eora sings: \"Eat well, my sweet. Love fuels you.\"",
 			/datum/status_effect/buff/clean_plus = "Eora beams: \"I wash away your hurts, my dear.\"",
-			/datum/status_effect/buff/duration_modification/featherfall = "Eora hums: \"Softly now. I hold you.\"",
-			/datum/status_effect/buff/duration_modification/darkvision = "Eora comforts: \"See even where light fears to go.\"",
-			/datum/status_effect/buff/duration_modification/haste = "Eora nudges: \"Hurry, beloved. They wait for you.\"",
+			/datum/status_effect/buff/featherfall = "Eora hums: \"Softly now. I hold you.\"",
+			/datum/status_effect/buff/darkvision = "Eora comforts: \"See even where light fears to go.\"",
+			/datum/status_effect/buff/haste = "Eora nudges: \"Hurry, beloved. They wait for you.\"",
 			/datum/status_effect/buff/calm = "Eora soothes: \"Hush... Breathe... You are safe.\"",
 			/datum/status_effect/buff/barbrage = "Eora whispers: \"Love rages too. Protect what’s yours.\""
 		),
@@ -252,9 +249,9 @@
 			/datum/status_effect/buff/craft_buff = "Graggar smirks: \"Build? HA! Smash it till 'tis strong!\"",
 			/datum/status_effect/buff/foodbuff = "Graggar snorts: \"Meat good. Git strong.\"",
 			/datum/status_effect/buff/clean_plus = "Graggar spits: \"Clean? Bah. Mud good fer ya.\"",
-			/datum/status_effect/buff/duration_modification/featherfall = "Graggar snorts: \"Pah! Drop faster next time.\"",
-			/datum/status_effect/buff/duration_modification/darkvision = "Graggar huffs: \"See 'em hidin'. Then kill 'em.\"",
-			/datum/status_effect/buff/duration_modification/haste = "Graggar yells: \"Fast now! Get killin'!\"",
+			/datum/status_effect/buff/featherfall = "Graggar snorts: \"Pah! Drop faster next time.\"",
+			/datum/status_effect/buff/darkvision = "Graggar huffs: \"See 'em hidin'. Then kill 'em.\"",
+			/datum/status_effect/buff/haste = "Graggar yells: \"Fast now! Get killin'!\"",
 			/datum/status_effect/buff/calm = "Graggar grumbles: \"Pff. Calm’s fer weaklings.\"",
 			/datum/status_effect/buff/barbrage = "Graggar roars: \"RAAAGH! Smash 'em flat!\""
 		),
@@ -268,9 +265,9 @@
 			/datum/status_effect/buff/craft_buff = "Malum orders: \"Work HARDER. Or break.\"",
 			/datum/status_effect/buff/foodbuff = "Malum grunts: \"Eat. FUEL the forge within.\"",
 			/datum/status_effect/buff/clean_plus = "Malum nods: \"Clean steel, good steel.\"",
-			/datum/status_effect/buff/duration_modification/featherfall = "Malum mutters: \"Floatin’s for feathers... not IRON.\"",
-			/datum/status_effect/buff/duration_modification/darkvision = "Malum growls: \"See what lurks. Strike it down.\"",
-			/datum/status_effect/buff/duration_modification/haste = "Malum commands: \"Faster. The FORGE waits not.\"",
+			/datum/status_effect/buff/featherfall = "Malum mutters: \"Floatin’s for feathers... not IRON.\"",
+			/datum/status_effect/buff/darkvision = "Malum growls: \"See what lurks. Strike it down.\"",
+			/datum/status_effect/buff/haste = "Malum commands: \"Faster. The FORGE waits not.\"",
 			/datum/status_effect/buff/calm = "Malum states: \"Temper your rage. FORGE it right.\"",
 			/datum/status_effect/buff/barbrage = "Malum snarls: \"Unleash it. Strike like the hammer.\""
 		),
@@ -284,9 +281,9 @@
 			/datum/status_effect/buff/craft_buff = "Matthios shrugs: \"Build fast. Sell faster.\"",
 			/datum/status_effect/buff/foodbuff = "Matthios grins: \"Eat now... pay later.\"",
 			/datum/status_effect/buff/clean_plus = "Matthios cackles: \"Cleaned up nice... for a mark.\"",
-			/datum/status_effect/buff/duration_modification/featherfall = "Matthios chuckles: \"Fall soft... means you live to steal again.\"",
-			/datum/status_effect/buff/duration_modification/darkvision = "Matthios winks: \"See the dark? Hide better.\"",
-			/datum/status_effect/buff/duration_modification/haste = "Matthios shouts: \"Quick hands win riches.\"",
+			/datum/status_effect/buff/featherfall = "Matthios chuckles: \"Fall soft... means you live to steal again.\"",
+			/datum/status_effect/buff/darkvision = "Matthios winks: \"See the dark? Hide better.\"",
+			/datum/status_effect/buff/haste = "Matthios shouts: \"Quick hands win riches.\"",
 			/datum/status_effect/buff/calm = "Matthios smirks: \"Calm? Nah, means they don’t see you comin'.\"",
 			/datum/status_effect/buff/barbrage = "Matthios yells: \"Break stuff. Blame someone else!\""
 		),
@@ -300,9 +297,9 @@
 			/datum/status_effect/buff/craft_buff = "Necra sighs: \"All things break. Make them, even so.\"",
 			/datum/status_effect/buff/foodbuff = "Necra croons: \"Feast whilst thou breathe. The hunger ends soon.\"",
 			/datum/status_effect/buff/clean_plus = "Necra sighs: \"Thou mayest wash flesh... but not its fate.\"",
-			/datum/status_effect/buff/duration_modification/featherfall = "Necra hums: \"Fall gently. The earth shall catch thee.\"",
-			/datum/status_effect/buff/duration_modification/darkvision = "Necra whispers: \"The dark is not empty. It welcomes.\"",
-			/datum/status_effect/buff/duration_modification/haste = "Necra murmurs: \"Quickly now. Time thins beneath thy feet.\"",
+			/datum/status_effect/buff/featherfall = "Necra hums: \"Fall gently. The earth shall catch thee.\"",
+			/datum/status_effect/buff/darkvision = "Necra whispers: \"The dark is not empty. It welcomes.\"",
+			/datum/status_effect/buff/haste = "Necra murmurs: \"Quickly now. Time thins beneath thy feet.\"",
 			/datum/status_effect/buff/calm = "Necra soothes: \"Rest... the silence shall come for all.\"",
 			/datum/status_effect/buff/barbrage = "Necra intones: \"Rage, if thy must. The dead are silent, but not still.\""
 		),
@@ -316,9 +313,9 @@
 			/datum/status_effect/buff/craft_buff = "Noc breatheth: \"Build in secret. None must know.\"",
 			/datum/status_effect/buff/foodbuff = "Noc museth: \"A shrewd mind requires healthy appetite.\"",
 			/datum/status_effect/buff/clean_plus = "Noc museth: \"Moonlight cleans better than the sun ever may.\"",
-			/datum/status_effect/buff/duration_modification/featherfall = "Noc whispereth: \"Float, like silver strands through the wind.\"",
-			/datum/status_effect/buff/duration_modification/darkvision = "Noc offereth: \"See through the nite.\"",
-			/datum/status_effect/buff/duration_modification/haste = "Noc murmureth: \"Move as quickly as the pages turn.\"",
+			/datum/status_effect/buff/featherfall = "Noc whispereth: \"Float, like silver strands through the wind.\"",
+			/datum/status_effect/buff/darkvision = "Noc offereth: \"See through the nite.\"",
+			/datum/status_effect/buff/haste = "Noc murmureth: \"Move as quickly as the pages turn.\"",
 			/datum/status_effect/buff/calm = "Noc sootheth: \"Calm thyself... think of gotes leaping over the moon.\"",
 			/datum/status_effect/buff/barbrage = "Noc commandeth: \"Feel the power of strengthened magick flow through thyself.\""
 		),
@@ -332,9 +329,9 @@
 			/datum/status_effect/buff/craft_buff = "Pestra giggles: \"Change is divine. One compound into another— chaos with purpose.\"",
 			/datum/status_effect/buff/foodbuff = "Pestra comments: \"Be nourished. Spoilage is just misunderstood fermentation.\"",
 			/datum/status_effect/buff/clean_plus = "Pestra scoffs: \"Cleanliness? Temporary at best. Let’s see how long it lasts.\"",
-			/datum/status_effect/buff/duration_modification/featherfall = "Pestra hiccups: \"You sink through water but fall through air. What if we reversed this?\"",
-			/datum/status_effect/buff/duration_modification/darkvision = "Pestra lectures: \"Germs are not limited by darkness.\"",
-			/datum/status_effect/buff/duration_modification/haste = "Pestra snaps: \"Faster now! Spores don’t wait to bloom.\"",
+			/datum/status_effect/buff/featherfall = "Pestra hiccups: \"You sink through water but fall through air. What if we reversed this?\"",
+			/datum/status_effect/buff/darkvision = "Pestra lectures: \"Germs are not limited by darkness.\"",
+			/datum/status_effect/buff/haste = "Pestra snaps: \"Faster now! Spores don’t wait to bloom.\"",
 			/datum/status_effect/buff/calm = "Pestra whispers: \"Stillness... Let the fever sleep awhile.\"",
 			/datum/status_effect/buff/barbrage = "Pestra shrieks: \"Destruction is yet another form of change.\""
 		),
@@ -348,9 +345,9 @@
 			/datum/status_effect/buff/craft_buff = "Ravox nods: \"Forge victory with your hands. Let each blow ring true.\"",
 			/datum/status_effect/buff/foodbuff = "Ravox grunts: \"Eat. Even the strong must endure the march.\"",
 			/datum/status_effect/buff/clean_plus = "Ravox commands: \"Clean your blade. We should not revel in blood we spill.\"",
-			/datum/status_effect/buff/duration_modification/featherfall = "Ravox comments: \"Even the bold must fall with grace.\"",
-			/datum/status_effect/buff/duration_modification/darkvision = "Ravox growls: \"See the coward. Bring them to justice.\"",
-			/datum/status_effect/buff/duration_modification/haste = "Ravox barks: \"Swift feet carry righteous blades.\"",
+			/datum/status_effect/buff/featherfall = "Ravox comments: \"Even the bold must fall with grace.\"",
+			/datum/status_effect/buff/darkvision = "Ravox growls: \"See the coward. Bring them to justice.\"",
+			/datum/status_effect/buff/haste = "Ravox barks: \"Swift feet carry righteous blades.\"",
 			/datum/status_effect/buff/calm = "Ravox grunts: \"Still your heart. The battle shall come.\"",
 			/datum/status_effect/buff/barbrage = "Ravox roars: \"BE FILLED WITH RIGHTEOUS ANGER!\""
 		),
@@ -364,9 +361,9 @@
 			/datum/status_effect/buff/craft_buff = "Xylix winks: \"Stack it wrong. Bet it still works!\"",
 			/datum/status_effect/buff/foodbuff = "Xylix giggles: \"Eat that. Could be poison!\"",
 			/datum/status_effect/buff/clean_plus = "Xylix chuckles: \"Clean now. Mess later.\"",
-			/datum/status_effect/buff/duration_modification/featherfall = "Xylix howls: \"Whee! Hope ya bounce!\"",
-			/datum/status_effect/buff/duration_modification/darkvision = "Xylix snickers: \"Ooo... spooky. Boo!\"",
-			/datum/status_effect/buff/duration_modification/haste = "Xylix screams: \"FAST! Trip 'em!\"",
+			/datum/status_effect/buff/featherfall = "Xylix howls: \"Whee! Hope ya bounce!\"",
+			/datum/status_effect/buff/darkvision = "Xylix snickers: \"Ooo... spooky. Boo!\"",
+			/datum/status_effect/buff/haste = "Xylix screams: \"FAST! Trip 'em!\"",
 			/datum/status_effect/buff/calm = "Xylix hums: \"Calm... until it ain’t.\"",
 			/datum/status_effect/buff/barbrage = "Xylix roars: \"Break it! Then break it twice!\""
 		),
@@ -380,9 +377,9 @@
 			/datum/status_effect/buff/craft_buff = "Zizo states: \"Strong. Flexible Show the craft is worthy. Weave flesh like linen.\"",
 			/datum/status_effect/buff/foodbuff = "Zizo smirks: \"Eat. Power grows.\"",
 			/datum/status_effect/buff/clean_plus = "Zizo sneers: \"Clean. Now you are worthy of gaze.\"",
-			/datum/status_effect/buff/duration_modification/featherfall = "Zizo hisses: \"Float above them. They are beneath us.\"",
-			/datum/status_effect/buff/duration_modification/darkvision = "Zizo purrs: \"See what they hide. See all.\"",
-			/datum/status_effect/buff/duration_modification/haste = "Zizo commands: \"Move. Do not stumble. Do not fail me.\"",
+			/datum/status_effect/buff/featherfall = "Zizo hisses: \"Float above them. They are beneath us.\"",
+			/datum/status_effect/buff/darkvision = "Zizo purrs: \"See what they hide. See all.\"",
+			/datum/status_effect/buff/haste = "Zizo commands: \"Move. Do not stumble. Do not fail me.\"",
 			/datum/status_effect/buff/calm = "Zizo whispers: \"Calm now. Wait for your opportunity to strike.\"",
 			/datum/status_effect/buff/barbrage = "Zizo roars: \"Rend them. Show this strength!\""
 		)

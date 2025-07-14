@@ -79,7 +79,7 @@
 			if(H == HU)
 				return
 
-			if(H.anti_magic_check())
+			if(H.can_block_magic(MAGIC_RESISTANCE))
 				return
 
 			if(!rod_jobs)
@@ -175,7 +175,7 @@
 	. = ..()
 	icon_state = "stunmace[on]"
 
-/obj/item/weapon/mace/stunmace/attack_self(mob/user)
+/obj/item/weapon/mace/stunmace/attack_self(mob/user, params)
 	if(on)
 		on = FALSE
 	else

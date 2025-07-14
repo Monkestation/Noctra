@@ -94,6 +94,10 @@
 		tmp_sound = sound(get_sfx(tmp_sound))
 	tmp_sound.frequency = pitch
 	if(tmp_sound && (!only_forced_audio || !intentional))
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.voice_type == VOICE_TYPE_ANDRO)
+				tmp_sound.frequency = pitch * 0.92
 		playsound(user, tmp_sound, snd_vol, FALSE, snd_range, soundping = soundping)
 	if(!nomsg)
 		for(var/mob/M in GLOB.dead_mob_list)
@@ -157,6 +161,15 @@
 				possible_sounds = H.dna.species.soundpack_f.get_sound(key,modifier)
 			else if(H.dna.species.soundpack_m)
 				possible_sounds = H.dna.species.soundpack_m.get_sound(key,modifier)
+			if(H.voice_type)
+				switch (H.voice_type)
+					if (VOICE_TYPE_MASC)
+						possible_sounds = H.dna.species.soundpack_m.get_sound(key, modifier)
+					if (VOICE_TYPE_FEM, VOICE_TYPE_ANDRO)
+						if (H.dna.species.soundpack_f)
+							possible_sounds = H.dna.species.soundpack_f.get_sound(key, modifier)
+						else
+							possible_sounds = H.dna.species.soundpack_m.get_sound(key, modifier)
 			if(possible_sounds)
 				if(islist(possible_sounds))
 					var/list/PS = possible_sounds

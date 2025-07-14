@@ -49,7 +49,7 @@
 
 	ai_controller = /datum/ai_controller/sprite
 
-
+	del_on_death = TRUE
 
 /mob/living/simple_animal/hostile/retaliate/fae/sprite/Initialize()
 	. = ..()
@@ -57,15 +57,7 @@
 	AddComponent(/datum/component/ai_aggro_system)
 
 /mob/living/simple_animal/hostile/retaliate/fae/sprite/death(gibbed)
-	..()
 	var/turf/deathspot = get_turf(src)
-	new /obj/item/natural/fairydust(deathspot)
-	new /obj/item/natural/fairydust(deathspot)
-	new /obj/item/natural/fairydust(deathspot)
-	update_appearance()
-	sleep(1)
-	qdel(src)
-
-/mob/living/simple_animal/hostile/retaliate/fae/sprite/taunted(mob/user)
-	emote("aggro")
-	return
+	for(var/i in 1 to 3)
+		new /obj/item/natural/fairydust(deathspot)
+	return ..()

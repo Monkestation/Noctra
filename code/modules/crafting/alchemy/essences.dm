@@ -13,7 +13,7 @@
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/item/essence_vial/attack_self(mob/user)
+/obj/item/essence_vial/attack_self(mob/user, params)
 	if(extract_amount == 10)
 		extract_amount = 1
 	else

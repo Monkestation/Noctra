@@ -51,7 +51,7 @@
 
 	ai_controller = /datum/ai_controller/sylph
 
-
+	del_on_death = TRUE
 
 /mob/living/simple_animal/hostile/retaliate/fae/sylph/Initialize()
 	. = ..()
@@ -65,7 +65,6 @@
 	speed = 6 //higher is slower
 
 /mob/living/simple_animal/hostile/retaliate/fae/sylph/death(gibbed)
-	..()
 	var/turf/deathspot = get_turf(src)
 	new /obj/item/natural/sylvanessence(deathspot)
 	new /obj/item/natural/fairydust(deathspot)
@@ -75,7 +74,5 @@
 	new /obj/item/natural/heartwoodcore(deathspot)
 	new /obj/item/natural/fairydust(deathspot)
 	new /obj/item/natural/fairydust(deathspot)
-
-	update_appearance()
 	spill_embedded_objects()
-	qdel(src)
+	return ..()

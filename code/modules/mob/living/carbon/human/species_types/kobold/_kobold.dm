@@ -30,6 +30,8 @@
 	specstats_m = list(STATKEY_STR = -4, STATKEY_PER = -2, STATKEY_INT = -2, STATKEY_CON = -4, STATKEY_END = 2, STATKEY_SPD = 2, STATKEY_LCK = 0)
 	specstats_f = list(STATKEY_STR = -4, STATKEY_PER = -2, STATKEY_INT = -2, STATKEY_CON = -4, STATKEY_END = 2, STATKEY_SPD = 2, STATKEY_LCK = 0)
 
+	allowed_pronouns = PRONOUNS_LIST_IT_ONLY
+
 	possible_ages = NORMAL_AGES_LIST
 	use_skintones = TRUE
 

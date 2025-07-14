@@ -17,7 +17,10 @@
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 
 	outfit = /datum/outfit/job/archivist
-	spells = list(/obj/effect/proc_holder/spell/self/learnspell, /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+	spells = list(
+		/datum/action/cooldown/spell/undirected/learn,
+		/datum/action/cooldown/spell/undirected/touch/prestidigitation,
+	)
 	give_bank_account = 100
 
 /datum/outfit/job/archivist
