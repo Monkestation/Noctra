@@ -639,13 +639,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	if(isobserver(usr))
-		var/list/dest = getpois(mobs_only = TRUE)
-		var/target = browser_input_list(usr, "Mob to jump to", "Jump to Mob", dest)
+		var/list/mobs = getpois(mobs_only = TRUE)
+		var/target = browser_input_list(usr, "Mob to jump to", "Jump to Mob", mobs)
 
 		if(!target)
 			return
 
-		var/mob/M = dest[target]
+		var/mob/M = mobs[target]
 		if(!M)
 			return
 
@@ -655,7 +655,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(T && isturf(T))
 			A.forceMove(T)
 		else
-			to_chat(A, "<span class='danger'>This mob is not located in the game world.</span>")
+			to_chat(A, span_warning("This mob is not located in the game world."))
 
 /mob/dead/observer/verb/change_view_range()
 	set category = "Spirit"

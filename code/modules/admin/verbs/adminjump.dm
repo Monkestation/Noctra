@@ -171,7 +171,7 @@
 		return
 
 	var/list/mobs = getpois(mobs_only = TRUE)
-	var/target = browser_input_list(usr, "Mob to send", "Send mob", mobs)
+	var/target = browser_input_list(usr, "Mob to send", "Send Mob", mobs)
 
 	if(!target)
 		return
