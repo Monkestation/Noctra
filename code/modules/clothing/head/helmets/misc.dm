@@ -330,6 +330,14 @@
 	armor = ARMOR_PLATE_BAD
 	max_integrity = INTEGRITY_STANDARD
 
+//................. Royal Knight's helmet .............. //
+/obj/item/clothing/head/helmet/visored/royalknight
+	name = "royal knights helmet"
+	desc = "A finely crafter and lightweight steel armet specifically made for the Royal Knight's of the Keep."
+	icon_state = "knightarmet"
+	emote_environment = 3
+	item_weight = 5.6 * STEEL_MULTIPLIER
+
 //................. Captain's Helmet .............. //
 /obj/item/clothing/head/helmet/visored/captain
 	name = "captain's helmet"
