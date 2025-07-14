@@ -10,7 +10,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(foodextracted && !user.get_active_held_item())
+	if(foodextracted)
 		to_chat(user, span_warning("I start to shuck [src]..."))
 		if(do_after(user, 4 SECONDS, src))
 			user.visible_message(span_notice("[user] shucks [src]."), \

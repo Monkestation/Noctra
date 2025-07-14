@@ -4,7 +4,7 @@
 	button_icon_state = "jaunt"
 	sound = 'sound/magic/ethereal_enter.ogg'
 
-	cooldown_time = 1 MINUTES
+	cooldown_time = 35 SECONDS
 
 	invocation = "VANISHIKA"
 	invocation_type = INVOCATION_SHOUT

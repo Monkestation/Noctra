@@ -12,14 +12,12 @@
 	invocation = "Let Abyssor's wrath be known!"
 	invocation_type = INVOCATION_SHOUT
 
-	charge_required = FALSE
-	cooldown_time = 30 SECONDS
+	cooldown_time = 1 MINUTES
 	spell_cost = 45
 
 	delete_old = TRUE
 	item_type = /obj/item/fishingrod/abyssor_trident
-	item_duration = 5 MINUTES
-	refresh_count = 4
+	item_duration = 0
 
 /obj/item/fishingrod/abyssor_trident
 	name = "trident of the depths"

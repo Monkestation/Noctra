@@ -89,6 +89,10 @@
 #define RANDOM_SPECIES "random_species"
 #define RANDOM_GENDER "random_gender"
 #define RANDOM_GENDER_ANTAG "random_gender_antag"
+#define RANDOM_PRONOUNS "random_pronouns"
+#define RANDOM_PRONOUNS_ANTAG "random_pronouns_antag"
+#define RANDOM_VOICETYPE "random_voicetype"
+#define RANDOM_VOICETYPE_ANTAG "random_voicetype_antag"
 #define RANDOM_AGE "random_age"
 #define RANDOM_AGE_ANTAG "random_age_antag"
 #define RANDOM_UNDERWEAR "random_underwear"
@@ -100,16 +104,18 @@
 // randomise_appearance_prefs() and randomize_human_appearance() proc flags
 #define RANDOMIZE_GENDER (1<<0)
 #define RANDOMIZE_SPECIES (1<<1)
-#define RANDOMIZE_NAME (1<<2)
-#define RANDOMIZE_AGE (1<<3)
-#define RANDOMIZE_UNDERWEAR (1<<4)
-#define RANDOMIZE_HAIRSTYLE (1<<5)
-#define RANDOMIZE_FACIAL_HAIRSTYLE (1<<6)
-#define RANDOMIZE_HAIR_COLOR (1<<7)
-#define RANDOMIZE_FACIAL_HAIR_COLOR (1<<8)
-#define RANDOMIZE_SKIN_TONE (1<<9)
-#define RANDOMIZE_EYE_COLOR (1<<10)
-#define RANDOMIZE_FEATURES (1<<11)
+#define RANDOMIZE_PRONOUNS (1<<2)
+#define RANDOMIZE_VOICETYPE (1<<3)
+#define RANDOMIZE_NAME (1<<4)
+#define RANDOMIZE_AGE (1<<5)
+#define RANDOMIZE_UNDERWEAR (1<<6)
+#define RANDOMIZE_HAIRSTYLE (1<<7)
+#define RANDOMIZE_FACIAL_HAIRSTYLE (1<<8)
+#define RANDOMIZE_HAIR_COLOR (1<<9)
+#define RANDOMIZE_FACIAL_HAIR_COLOR (1<<10)
+#define RANDOMIZE_SKIN_TONE (1<<11)
+#define RANDOMIZE_EYE_COLOR (1<<12)
+#define RANDOMIZE_FEATURES (1<<13)
 
 #define RANDOMIZE_HAIR_FEATURES (RANDOMIZE_HAIRSTYLE | RANDOMIZE_FACIAL_HAIRSTYLE)
 #define RANDOMIZE_HAIR_COLORS (RANDOMIZE_HAIR_COLOR | RANDOMIZE_HAIR_COLORS)
@@ -126,6 +132,27 @@
 #define NORMAL_AGES_LIST_CHILD		list(AGE_CHILD, AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
 #define ALL_AGES_LIST				list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
 #define ALL_AGES_LIST_CHILD			list(AGE_CHILD, AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
+
+// Pronouns
+#define HE_HIM			"he/him"
+#define SHE_HER			"she/her"
+#define THEY_THEM		"they/them"
+#define IT_ITS			"it/its"
+
+#define PRONOUNS_LIST list(HE_HIM, SHE_HER, THEY_THEM, IT_ITS)
+#define PRONOUNS_LIST_NO_IT list(HE_HIM, SHE_HER, THEY_THEM)
+#define PRONOUNS_LIST_IT_ONLY list(IT_ITS)
+
+// Voice types
+
+#define VOICE_TYPE_MASC		"Masculine"
+#define VOICE_TYPE_FEM		"Feminine"
+#define VOICE_TYPE_ANDRO	"Androgynous"
+
+#define VOICE_TYPES_LIST list(VOICE_TYPE_MASC, VOICE_TYPE_FEM, VOICE_TYPE_ANDRO)
+
+#define VOICE_TYPES_MASCANDRO list(VOICE_TYPE_MASC, VOICE_TYPE_ANDRO)
+#define VOICE_TYPES_FEMANDRO list(VOICE_TYPE_FEM, VOICE_TYPE_ANDRO)
 
 //alignment
 #define ALIGNMENT_LG		"Lawful Good"

@@ -80,16 +80,17 @@
 		return
 	return ..()
 
-/obj/structure/fake_machine/vendor/attack_hand_secondary(mob/user, params)
+/obj/structure/fake_machine/vendor/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(user.cmode)
+		return
 	if(!lock_check())
 		to_chat(user, span_notice("There is no lock on \the [src]! I won't be able to sell this!"))
-		return
-	var/held = user.get_active_held_item()
-	add_merchandise(held, user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	add_merchandise(weapon, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/fake_machine/vendor/proc/add_merchandise(obj/item/I, mob/user)
 	if(QDELETED(I) || !isitem(I))

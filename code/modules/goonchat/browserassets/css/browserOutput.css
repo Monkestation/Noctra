@@ -812,3 +812,49 @@ h1.alert, h2.alert	{color: #c9c1ba;font-family: Pterra, TrueType;}
 /* HELPER CLASSES */
 .text-normal {font-weight: normal;	font-style: normal;}
 .hidden {display: none;	visibility: hidden;}
+
+/* Tooltips */
+.tooltip-trigger {
+	position: relative;
+	cursor: help;
+	text-decoration: underline dotted;
+}
+/* Alt Tooltip (No Italics) */
+.tooltip-alt-trigger {
+	font-style: normal;
+}
+
+.tooltip-trigger::after,
+.tooltip-trigger::before {
+	content: '';
+	position: absolute;
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity 0.3s, visibility 0.3s;
+	pointer-events: none;
+}
+
+/* Tooltip content */
+.tooltip-trigger::after {
+	content: attr(data-tooltip);
+	background-color: rgba(0, 0, 0, 0.85);
+	color: #fff;
+	text-align: center;
+	border-radius: 5px;
+	padding: 8px 12px;
+	font-size: 0.9em;
+	white-space: nowrap;
+	z-index: 1000;
+
+	bottom: 120%;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+/* Show tooltip on hover */
+.tooltip-trigger:hover::after,
+.tooltip-trigger:hover::before {
+	visibility: visible;
+	opacity: 1;
+}
+

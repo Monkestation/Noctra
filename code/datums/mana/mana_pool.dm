@@ -385,8 +385,10 @@
 		SEND_SIGNAL(holder, COMSIG_LIVING_MANA_CHANGED, amount)
 		var/datum/hud/human/hud_used = holder.hud_used
 		if(hud_used?.mana)
-			var/filled = round((src.amount / get_softcap()) * 100, 20)
-			filled = min(filled, 120)
+			var/filled = round((src.amount / get_softcap()) * 100, 10)
+			if(filled < 10)
+				return
+			filled = clamp(filled, 0, 120)
 			hud_used.mana.icon_state = "mana[filled]"
 
 ///this takes a string and adds it to our halters creates the list if it doesn't exist

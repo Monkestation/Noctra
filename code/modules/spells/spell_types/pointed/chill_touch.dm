@@ -14,7 +14,7 @@
 	invocation = "Be torn apart!"
 	invocation_type = INVOCATION_SHOUT
 
-	charge_time = 4 SECONDS
+	charge_time = 2 SECONDS
 	charge_drain = 0
 	charge_slowdown = 0.3
 	cooldown_time = 60 SECONDS

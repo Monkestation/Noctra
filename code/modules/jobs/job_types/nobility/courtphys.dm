@@ -39,6 +39,7 @@
 	neck = /obj/item/clothing/neck/coif/cloth
 	belt = /obj/item/storage/belt/leather
 	beltl = /obj/item/storage/keyring/physician
+	beltr = /obj/item/weapon/whip/cane/physician
 	cloak = /obj/item/clothing/cloak/apron/brown
 	if(H.gender == FEMALE)
 		pants = /obj/item/clothing/pants/skirt/green

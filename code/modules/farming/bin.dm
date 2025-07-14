@@ -89,49 +89,60 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(kover)
-		if(kover)
-			user.visible_message("<span class='notice'>[user] starts to pick up [src]...</span>", \
-				"<span class='notice'>I start to pick up [src]...</span>")
-			if(do_after(user, 3 SECONDS, src))
-				kover = FALSE
-				update_appearance(UPDATE_ICON_STATE)
+		user.visible_message("<span class='notice'>[user] starts to pick up [src]...</span>", \
+			"<span class='notice'>I start to pick up [src]...</span>")
+		if(do_after(user, 3 SECONDS, src))
+			kover = FALSE
+			update_appearance(UPDATE_ICON_STATE)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(user.cmode)
+		return
+
+	try_wash(user, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/bin/attackby_secondary(obj/item/weapon, mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
+	if(user.cmode)
+		return
+
+	try_wash(weapon, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/bin/proc/try_wash(atom/to_wash, mob/user)
+	if(!reagents || !reagents.maximum_volume)
+		return
+	var/removereg = /datum/reagent/water
+	if(!reagents.has_reagent(/datum/reagent/water, 5))
+		removereg = /datum/reagent/water/gross
+		if(!reagents.has_reagent(/datum/reagent/water/gross, 5))
+			to_chat(user, "<span class='warning'>No water to wash these stains.</span>")
 			return
+
+	var/list/wash = list('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg')
+	if(to_wash == user)
+		user.visible_message("<span class='info'>[user] starts to wash in [src].</span>")
 	else
-		if(!reagents || !reagents.maximum_volume)
-			return
-		if(isliving(user))
-			var/mob/living/L = user
-			if(L.stat != CONSCIOUS)
-				return
-			var/removereg = /datum/reagent/water
-			if(!reagents.has_reagent(/datum/reagent/water, 5))
-				removereg = /datum/reagent/water/gross
-				if(!reagents.has_reagent(/datum/reagent/water/gross, 5))
-					to_chat(user, "<span class='warning'>No water to wash these stains.</span>")
-					return
-			reagents.remove_reagent(removereg, 5)
-			var/list/wash = list('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg')
-			playsound(user, pick_n_take(wash), 100, FALSE)
-			var/obj/item/item2wash = user.get_active_held_item()
-			if(!item2wash)
-				user.visible_message("<span class='info'>[user] starts to wash in [src].</span>")
-				if(do_after(L, 3 SECONDS, src))
-					user.wash(CLEAN_WASH)
-					playsound(user, pick(wash), 100, FALSE)
-			else
-				user.visible_message("<span class='info'>[user] starts to wash [item2wash] in [src].</span>")
-				if(do_after(L, 3 SECONDS, src))
-					item2wash.wash(CLEAN_WASH)
-					playsound(user, pick(wash), 100, FALSE)
-			var/datum/reagent/water_to_dirty = reagents.has_reagent(/datum/reagent/water, 5)
-			if(water_to_dirty)
-				var/amount_to_dirty = water_to_dirty.volume
-				if(amount_to_dirty)
-					reagents.remove_reagent(/datum/reagent/water, amount_to_dirty)
-					reagents.add_reagent(/datum/reagent/water/gross, amount_to_dirty)
-			return
+		user.visible_message("<span class='info'>[user] starts to wash [to_wash] in [src].</span>")
+
+	reagents.remove_reagent(removereg, 5)
+
+	playsound(user, pick_n_take(wash), 100, FALSE)
+	if(do_after(user, 3 SECONDS, src))
+		to_wash.wash(CLEAN_WASH)
+		playsound(user, pick(wash), 100, FALSE)
+
+	var/datum/reagent/water_to_dirty = reagents.has_reagent(/datum/reagent/water, 5)
+	if(water_to_dirty)
+		var/amount_to_dirty = water_to_dirty.volume
+		if(amount_to_dirty)
+			reagents.remove_reagent(/datum/reagent/water, amount_to_dirty)
+			reagents.add_reagent(/datum/reagent/water/gross, amount_to_dirty)
 
 //We need to use this or the object will be put in storage instead of attacking it
 /obj/item/bin/StorageBlock(obj/item/I, mob/user)

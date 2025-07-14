@@ -584,11 +584,6 @@
 					visible_message(span_warning("[src] pushes [AM]."))
 				return
 
-		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
-			if(uses_intents && used_intent.rmb_ranged)
-				used_intent.rmb_ranged(A, src) //get the message from the intent
-				return
-
 	A.attack_animal(src)
 
 /atom/proc/attack_animal(mob/user)

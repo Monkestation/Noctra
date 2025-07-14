@@ -70,6 +70,6 @@
 			to_chat(owner, span_warning("My devotion runs dry, the intercession fades from my lips!"))
 			break
 
-		invoke_cost(10)
+		invoke_cost(10, re_run = TRUE)
 
 	REMOVE_TRAIT(cast_on, TRAIT_NODEATH, "avert_spell")

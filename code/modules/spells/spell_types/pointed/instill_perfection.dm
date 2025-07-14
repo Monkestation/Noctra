@@ -14,7 +14,7 @@
 
 	charge_required = FALSE
 	cooldown_time = 2 MINUTES
-	spell_cost = 30
+	spell_cost = 20
 
 /datum/action/cooldown/spell/instill_perfection/is_valid_target(atom/cast_on)
 	. = ..()

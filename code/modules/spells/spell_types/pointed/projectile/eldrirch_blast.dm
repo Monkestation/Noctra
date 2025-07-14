@@ -12,11 +12,11 @@
 	invocation = "Eldritch blast!"
 	invocation_type = INVOCATION_SHOUT
 
-	charge_time = 3 SECONDS
+	charge_time = 1 SECONDS
 	charge_drain = 1
 	charge_slowdown = 0.7
 	cooldown_time = 15 SECONDS
-	spell_cost = 30
+	spell_cost = 25
 
 	projectile_type = /obj/projectile/magic/eldritchblast
 

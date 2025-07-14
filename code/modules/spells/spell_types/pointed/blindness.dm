@@ -3,17 +3,19 @@
 	desc = "Point at a target to blind them for few seconds."
 	button_icon_state = "blindness"
 	sound = 'sound/magic/churn.ogg'
-	self_cast_possible = FALSE
 
 	attunements = list(
 		/datum/attunement/arcyne = 0.1
 	)
 
-	charge_time = 2 SECONDS
+	charge_required = FALSE
 	cooldown_time = 2 MINUTES
 	spell_cost = 30
 
 /datum/action/cooldown/spell/blindness/is_valid_target(atom/cast_on)
+	. = ..()
+	if(!.)
+		return
 	return isliving(cast_on)
 
 /datum/action/cooldown/spell/blindness/cast(mob/living/cast_on)

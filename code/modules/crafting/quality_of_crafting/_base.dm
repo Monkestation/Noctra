@@ -384,14 +384,18 @@
  *
  * @param {list} copied_reagent_requirements - Current reagent requirements
  * @param {mob} user - The user performing the crafting
+ * @param {list} copied_containers - Key/Value list of original containers and associated holders
  * @return {boolean} - TRUE if successful, FALSE otherwise
  */
-/datum/repeatable_crafting_recipe/proc/handle_reagent_requirements(list/copied_reagent_requirements, mob/user)
+/datum/repeatable_crafting_recipe/proc/handle_reagent_requirements(list/copied_reagent_requirements, mob/user, list/copied_containers)
 	var/obj/item/inactive_held = user.get_inactive_held_item()
 
 	// First check storage
 	for(var/obj/item/reagent_containers/container in get_storage_contents(user))
-		if(!process_reagent_container(container, copied_reagent_requirements, user, inactive_held, TRUE))
+		if(!process_reagent_container(container, copied_reagent_requirements, user, inactive_held, TRUE, 0, 0, copied_containers))
+			for(var/obj/item/reagent_containers/key in copied_containers)
+				var/obj/item/reagent_containers/doomed = copied_containers[key]
+				qdel(doomed)
 			return FALSE
 
 	// Then check general area
@@ -400,7 +404,10 @@
 		var/stored_pixel_x = container.pixel_x
 		var/stored_pixel_y = container.pixel_y
 
-		if(!process_reagent_container(container, copied_reagent_requirements, user, container_loc, FALSE, stored_pixel_x, stored_pixel_y))
+		if(!process_reagent_container(container, copied_reagent_requirements, user, container_loc, FALSE, stored_pixel_x, stored_pixel_y, copied_containers))
+			for(var/obj/item/reagent_containers/key in copied_containers)
+				var/obj/item/reagent_containers/doomed = copied_containers[key]
+				qdel(doomed)
 			return FALSE
 
 	return TRUE
@@ -415,9 +422,15 @@
  * @param {boolean} is_storage - Whether the container is from storage
  * @param {number} stored_pixel_x - Original pixel_x of container
  * @param {number} stored_pixel_y - Original pixel_y of container
+ * @param {list} copied_containers - Key/Value list of original containers and associated holders
  * @return {boolean} - TRUE if successful, FALSE otherwise
  */
-/datum/repeatable_crafting_recipe/proc/process_reagent_container(obj/item/reagent_containers/container, list/copied_reagent_requirements, mob/user, atom/return_loc, is_storage, stored_pixel_x = 0, stored_pixel_y = 0)
+/datum/repeatable_crafting_recipe/proc/process_reagent_container(obj/item/reagent_containers/container, list/copied_reagent_requirements, mob/user, atom/return_loc, is_storage, stored_pixel_x = 0, stored_pixel_y = 0, list/copied_containers)
+	var/obj/item/reagent_containers/concopy = null
+	concopy = new /obj/item/reagent_containers() // We make a new container to pair with the original
+	concopy.loc = null // We banish the copy to nullspace before adding it to the copy list
+	copied_containers[container] += concopy
+
 	for(var/required_path as anything in copied_reagent_requirements)
 		var/list/reagent_paths = list(required_path)
 		if(reagent_subtypes_allowed)
@@ -451,12 +464,13 @@
 
 			playsound(get_turf(user), pick(container.poursounds), 100, TRUE)
 
+			// We transfer reagents to the copied container instead of deletion, so we can control reagent removal AFTER a successful crafting attempt
 			if(reagent_value < copied_reagent_requirements[required_path])
-				container.reagents.remove_reagent(possible_reagent_path, reagent_value)
+				container.reagents.trans_to(copied_containers[container], reagent_value)
 				copied_reagent_requirements[required_path] -= reagent_value
 				break
 			else
-				container.reagents.remove_reagent(possible_reagent_path, copied_reagent_requirements[required_path])
+				container.reagents.trans_to(copied_containers[container], copied_reagent_requirements[required_path])
 				copied_reagent_requirements -= required_path
 
 			if(put_items_in_hand)
@@ -617,6 +631,7 @@
 		var/list/copied_reagent_requirements = reagent_requirements.Copy()
 		var/list/copied_tool_usage = tool_usage.Copy()
 		var/list/to_delete = list()
+		var/list/copied_containers = list()
 
 		var/obj/item/active_item = user.get_active_held_item()
 
@@ -688,7 +703,7 @@
 
 		// Process reagents
 		if(crafting_success && length(copied_reagent_requirements))
-			crafting_success = handle_reagent_requirements(copied_reagent_requirements, user)
+			crafting_success = handle_reagent_requirements(copied_reagent_requirements, user, copied_containers)
 
 		// Process tools
 		if(crafting_success && length(copied_tool_usage))
@@ -698,6 +713,10 @@
 		if(crafting_success && !length(copied_requirements) && !length(copied_reagent_requirements) && !length(copied_tool_usage))
 			if(complete_crafting(to_delete, user))
 				successful_crafts++
+				// Crafting successful, delete unused copied reagent containers used for control
+				for(var/obj/item/reagent_containers/key in copied_containers)
+					var/obj/item/reagent_containers/doomed = copied_containers[key]
+					qdel(doomed)
 				// Let the user know about progress
 				to_chat(user, span_notice("Successfully crafted \a [name]. ([successful_crafts]/[requested_crafts])"))
 				continue
@@ -705,11 +724,24 @@
 		// Move items back if failed
 		move_items_back(to_delete, user)
 
-		// If we failed at some point in the process, ask if they want to continue trying
+		// If we failed at some point in the process, restore reagents and ask if they want to continue trying
 		if(!crafting_success && successful_crafts < requested_crafts)
+
+			// Crafting unsuccessful, transfer all reagents to the original containers then delete the container copies
+			for(var/obj/item/reagent_containers/key in copied_containers)
+				var/obj/item/reagent_containers/doomed = copied_containers[key]
+				doomed.reagents.trans_to(key, doomed.reagents.total_volume)
+				qdel(doomed)
+
 			var/continue_crafting = alert(user, "Crafting failed. Continue attempting to craft [requested_crafts - successful_crafts] more [name]?", "Continue Crafting?", "Yes", "No")
 			if(continue_crafting != "Yes")
 				break
+
+		// Crafting unsuccessful, transfer all reagents to the original containers then delete the container copies
+		for(var/obj/item/reagent_containers/key in copied_containers)
+			var/obj/item/reagent_containers/doomed = copied_containers[key]
+			doomed.reagents.trans_to(key, doomed.reagents.total_volume)
+			qdel(doomed)
 
 		// After each successful or failed craft, give the user a moment to react
 		sleep(0.5 SECONDS)

@@ -4,16 +4,17 @@
 	button_icon_state =  "arcane_bolt"
 	sound = 'sound/magic/vlightning.ogg'
 
+	cast_range = 12
 	point_cost = 2
 	attunements = list(
 		/datum/attunement/arcyne = 0.7,
 	)
 
-	charge_time = 3 SECONDS
+	charge_time = 1 SECONDS
 	charge_drain = 1
 	charge_slowdown = 1.3
-	cooldown_time = 20 SECONDS
-	spell_cost = 50
+	cooldown_time = 5 SECONDS
+	spell_cost = 20
 
 	projectile_type = /obj/projectile/magic/energy/rogue3
 
@@ -25,7 +26,7 @@
 /obj/projectile/magic/energy/rogue3
 	name = "arcyne bolt"
 	icon_state = "arcane_barrage"
-	damage = 12
+	damage = 30
 	damage_type = BRUTE
 	armor_penetration = 10
 	nodamage = FALSE

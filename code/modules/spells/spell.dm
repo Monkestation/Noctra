@@ -60,6 +60,8 @@
 	var/point_cost = 0
 	/// Cost to cast, mana or devotion
 	var/spell_cost = 0
+	/// Cost to stamina for casting the spell. Defaults to spell_cost / 2
+	var/stamina_cost
 
 	/// The sound played on cast
 	var/sound = 'sound/magic/whiteflame.ogg'
@@ -186,7 +188,7 @@
 
 /datum/action/cooldown/spell/Destroy()
 	if(charge_required && owner)
-		cancel_charging()
+		cancel_casting()
 	charge_sound_instance = null
 	return ..()
 
@@ -198,7 +200,7 @@
 	if(charge_drain)
 		if(!check_cost(charge_drain))
 			to_chat(owner, span_userdanger("I cannot uphold the channeling!"))
-			cancel_charging()
+			cancel_casting()
 			return PROCESS_KILL
 		invoke_cost(charge_drain)
 
@@ -207,7 +209,7 @@
 		// We don't want that mouseUp to end in sadness
 		if(!check_cost(charge_drain))
 			to_chat(owner, span_userdanger("I cannot uphold the channeling!"))
-			cancel_charging()
+			cancel_casting()
 			return PROCESS_KILL
 		owner.client.mouse_override_icon = 'icons/effects/mousemice/charge/spell_charged.dmi'
 		owner.update_mouse_pointer()
@@ -289,7 +291,7 @@
 		on_deactivation(on_who, refund_cooldown = refund_cooldown)
 
 		if(charge_required)
-			// If pointed we setup signals to override mouse down to call InterceptClickOn()
+			// Cleanup signal
 			UnregisterSignal(owner.client, COMSIG_CLIENT_MOUSEDOWN)
 
 	return ..()
@@ -305,7 +307,7 @@
 	if(charge_required)
 		tip = "<B>Hold Middle-click and release once charged to cast the spell on a target!</B>"
 
-	to_chat(on_who, span_notice("[active_msg] [tip]"))
+	to_chat(on_who, span_smallnotice("[active_msg] [tip]"))
 	build_all_button_icons()
 
 	return TRUE
@@ -316,17 +318,20 @@
 
 	if(refund_cooldown)
 		// Only send the "deactivation" message if they're willingly disabling the ability
-		to_chat(on_who, span_notice("[deactive_msg]"))
+		to_chat(on_who, span_smallnotice("[deactive_msg]"))
 	build_all_button_icons()
 
 	return TRUE
 
 /datum/action/cooldown/spell/InterceptClickOn(mob/living/clicker, params, atom/click_target)
+	if(!LAZYACCESS(params2list(params), MIDDLE_CLICK))
+		return
+
 	if(charge_required && !charged)
-		to_chat(owner, span_warning("I did not channel the spell enough!"))
-		cancel_charging()
+		end_charging()
 		RegisterSignal(owner.client, COMSIG_CLIENT_MOUSEDOWN, PROC_REF(start_casting))
 		return
+
 	var/atom/aim_assist_target
 	if(aim_assist && isturf(click_target))
 		// Find any human in the list. We aren't picky, it's aim assist after all
@@ -339,10 +344,12 @@
 
 // Where the cast chain starts
 /datum/action/cooldown/spell/PreActivate(atom/target)
-	if(!is_valid_target(target))
-		return FALSE
-
 	charged = FALSE
+	if(!is_valid_target(target))
+		if(charge_required && click_to_activate)
+			to_chat(owner, span_warning("I can't cast [src] on [target]!"))
+			RegisterSignal(owner.client, COMSIG_CLIENT_MOUSEDOWN, PROC_REF(start_casting))
+		return FALSE
 
 	return Activate(target)
 
@@ -359,30 +366,30 @@
 		new_time -= charge_time * INT * 0.02
 	else
 		new_time += charge_time * (10 - INT) * 0.02
-	var/encumbrance = L.get_encumbrance()
-	if(encumbrance > 0.4)
-		new_time += charge_time * (encumbrance * 0.5)
 
 	return clamp(new_time, 1 DECISECONDS, 30 SECONDS)
 
 /datum/action/cooldown/spell/proc/get_fatigue_drain()
-	if(!spell_cost)
-		return FALSE
 	if(!isliving(owner))
 		return
-	var/mob/living/L = owner
-	var/new_cost = spell_cost
-	new_cost -= spell_cost * L.get_skill_level(associated_skill) * 0.05
-	var/INT = L.STAINT
-	if(INT > 10)
-		new_cost -= spell_cost * INT * 0.02
-	else
-		new_cost -= spell_cost * (10 - INT) * 0.02
-	var/encumbrance = L.get_encumbrance()
-	if(encumbrance > 0.4)
-		new_cost += spell_cost * (encumbrance * 0.5)
+	var/mob/living/living_owner = owner
+	var/new_stamina_cost = spell_cost / 2
+	if(!isnull(stamina_cost))
+		new_stamina_cost = stamina_cost
+	var/base_cost = new_stamina_cost
 
-	return clamp(new_cost, 5, 200)
+	new_stamina_cost -= base_cost * (living_owner.get_skill_level(associated_skill) * 0.05)
+
+	var/owner_int = living_owner.STAINT
+	if(owner_int > 10)
+		new_stamina_cost -= (base_cost * (owner_int * 0.02))
+	else
+		new_stamina_cost += (base_cost * ((10-owner_int)) * 0.02)
+	var/owner_encumbrance = living_owner.get_encumbrance()
+	if(owner_encumbrance > 0.4)
+		new_stamina_cost += base_cost * (owner_encumbrance * 0.5)
+
+	return max(new_stamina_cost, 0)
 
 /// Do any attunement handling in here or any time after before_cast
 /datum/action/cooldown/spell/proc/handle_attunements()
@@ -408,7 +415,7 @@
 			continue
 		total_value += total_attunements[attunement] * attunements[attunement]
 
-	attuned_strength = total_value
+	attuned_strength = max(total_value, 0.5)
 
 /// Checks if the owner of the spell can currently cast it.
 /// Does not check anything involving potential targets.
@@ -507,7 +514,7 @@
 	var/precast_result = before_cast(target)
 	if(precast_result & SPELL_CANCEL_CAST)
 		if(charge_required)
-			cancel_charging()
+			cancel_casting()
 		return FALSE
 
 	// Extra safety
@@ -684,10 +691,13 @@
 	if(spell_requirements & SPELL_REQUIRES_NO_MOVE)
 		to_chat(owner, span_warning("I must be still while I channel [src]!"))
 
+	if(owner?.mmb_intent)
+		owner.mmb_intent_change(null)
+
 /// When finish charging the spell called from set_click_ability or try_casting
-/// This does not mean we succeeded in charging the spell just that we did mouseUp
+/// This does not mean we succeeded in charging the spell just that we did mouseUp/ended the do_after
 /datum/action/cooldown/spell/proc/on_end_charge(success)
-	cancel_charging()
+	end_charging()
 	. = success
 	if(success)
 		charged = TRUE
@@ -695,18 +705,15 @@
 	if(owner)
 		to_chat(owner, span_warning("My channeling of [src] was interrupted!"))
 
-/datum/action/cooldown/spell/proc/cancel_charging()
+/// End the charging cycle
+/datum/action/cooldown/spell/proc/end_charging()
 	UnregisterSignal(owner.client, list(COMSIG_CLIENT_MOUSEDOWN, COMSIG_CLIENT_MOUSEUP))
 	UnregisterSignal(owner, list(COMSIG_MOB_LOGOUT, COMSIG_MOVABLE_MOVED))
 	currently_charging = FALSE
 	charge_started_at = null
 	charge_target_time = null
-	charged = FALSE
 	STOP_PROCESSING(SSaction_charge, src)
 	build_all_button_icons(UPDATE_BUTTON_STATUS|UPDATE_BUTTON_BACKGROUND)
-
-	if(owner?.mmb_intent)
-		owner.mmb_intent_change(null)
 
 	if(charge_slowdown)
 		owner.remove_movespeed_modifier(MOVESPEED_ID_SPELL_CASTING)
@@ -722,6 +729,11 @@
 
 	owner.client?.mouse_override_icon = initial(owner.client?.mouse_override_icon)
 	owner.update_mouse_pointer()
+
+/// Cancel casting and all its effects.
+/datum/action/cooldown/spell/proc/cancel_casting()
+	charged = FALSE
+	end_charging()
 
 /// Checks if the current OWNER of the spell is in a valid state to say the spell's invocation
 /datum/action/cooldown/spell/proc/can_invoke(feedback = TRUE)
@@ -893,7 +905,10 @@
 		used_type = type_override
 
 	if(!re_run)
-		owner.adjust_stamina(-(used_cost / 2))
+		if(cost_override)
+			owner.adjust_stamina(-(used_cost / 2))
+		else
+			owner.adjust_stamina(get_fatigue_drain())
 
 	switch(used_type)
 		if(SPELL_MANA)
@@ -950,6 +965,8 @@
 	if(spell_requirements & SPELL_REQUIRES_NO_MOVE)
 		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(signal_cancel), TRUE)
 
+	// Cancel the next click with no timeout
+	source.click_intercept_time = INFINITY
 	source.mouse_override_icon = 'icons/effects/mousemice/charge/spell_charging.dmi'
 	owner.update_mouse_pointer()
 
@@ -962,11 +979,12 @@
 
 	// This can happen
 	if(!charge_started_at)
-		on_end_charge(FALSE)
+		cancel_casting()
 		return
 
 	var/success = world.time >= (charge_started_at + charge_target_time)
 	if(!on_end_charge(success))
+		RegisterSignal(owner.client, COMSIG_CLIENT_MOUSEDOWN, PROC_REF(start_casting))
 		return
 
 	if(!can_cast_spell(TRUE))
@@ -981,11 +999,11 @@
 		if(!_target)
 			CRASH("Failed to get the turf under clickcatcher")
 
-	source.click_intercept_time = null
 	// Call this directly to do all the relevant checks and aim assist
 	InterceptClickOn(owner, params, _target)
+	owner.client?.click_intercept_time = 0
 
 /datum/action/cooldown/spell/proc/signal_cancel()
 	SIGNAL_HANDLER
 
-	cancel_charging()
+	cancel_casting()

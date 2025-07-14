@@ -193,6 +193,11 @@
 		update_inv_hands()
 		return
 
+	if(!A.Adjacent(src) && LAZYACCESS(params2list(params), RIGHT_CLICK))
+		if(uses_intents && used_intent.rmb_ranged)
+			used_intent.rmb_ranged(A, src) //get the message from the intent
+			return
+
 	// operate three levels deep here (item in backpack in src; item in box in backpack in src, not any deeper)
 	if(!isturf(A) && A == loc || (A in contents) || (A.loc in contents) || (A.loc && (A.loc.loc in contents)))
 		// the above ensures adjacency
@@ -256,7 +261,7 @@
 						if(M.invisibility || M == src)
 							continue
 						mobs_here += M
-					if(mobs_here.len)
+					if(length(mobs_here))
 						var/mob/target = pick(mobs_here)
 						if(target)
 							if(target.Adjacent(src))
@@ -264,30 +269,8 @@
 								atkswinging = null
 								//update_warning()
 								return
-					if(cmode)
-						resolveAdjacentClick(T,W,params,used_hand) //hit the turf
-					if(!used_intent.noaa)
-						changeNext_move(CLICK_CD_MELEE)
-						if(get_dist(get_turf(src), T) <= used_intent.reach)
-							do_attack_animation(T, visual_effect_icon = used_intent.animname, used_intent = used_intent)
-						else
-							do_attack_animation(get_ranged_target_turf(src, get_dir(src, T), 1), visual_effect_icon = used_intent.animname)
-						if(W)
-							playsound(get_turf(src), pick(W.swingsound), 100, FALSE)
-							var/adf = used_intent.clickcd
-							if(istype(rmb_intent, /datum/rmb_intent/aimed))
-								adf = round(adf * 1.4)
-							if(istype(rmb_intent, /datum/rmb_intent/swift))
-								adf = round(adf * 0.6)
-							changeNext_move(adf)
-						else
-							playsound(get_turf(src), used_intent.miss_sound, 100, FALSE)
-							if(used_intent.miss_text)
-								visible_message("<span class='warning'>[src] [used_intent.miss_text]</span>", \
-												"<span class='warning'>I [used_intent.miss_text]</span>")
-					aftermiss()
-					atkswinging = null
-					//update_warning()
+
+					resolveAdjacentClick(T,W,params,used_hand)
 					return
 			else
 				resolveAdjacentClick(A,W,params,used_hand)

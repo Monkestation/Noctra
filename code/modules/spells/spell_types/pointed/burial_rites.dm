@@ -15,8 +15,8 @@
 	invocation_type = INVOCATION_WHISPER
 
 	charge_required = FALSE
-	cooldown_time = 30 SECONDS
-	spell_cost = 20
+	cooldown_time = 10 SECONDS
+	spell_cost = 15
 
 /datum/action/cooldown/spell/burial_rites/is_valid_target(atom/cast_on)
 	return istype(cast_on, /obj/item/weapon/knife/dagger/steel/profane) || isobj(cast_on)

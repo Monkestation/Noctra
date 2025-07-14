@@ -8,10 +8,10 @@
 		/datum/attunement/ice = 0.6,
 	)
 
-	charge_time = 4 SECONDS
+	charge_time = 2.5 SECONDS
 	charge_drain = 1
-	cooldown_time = 30 SECONDS
-	spell_cost = 40
+	cooldown_time = 20 SECONDS
+	spell_cost = 30
 
 	invocation = "Chill!"
 	invocation_type = INVOCATION_SHOUT

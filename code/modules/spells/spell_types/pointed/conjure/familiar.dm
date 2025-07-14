@@ -8,10 +8,10 @@
 
 	sound = 'sound/magic/whiteflame.ogg'
 
-	charge_time = 3 SECONDS
+	charge_time = 2 SECONDS
 	charge_drain = 1
 	charge_slowdown = 1.3
-	cooldown_time = 4 MINUTES
+	cooldown_time = 6 MINUTES
 	spell_cost = 30
 
 	summon_type = list(/mob/living/simple_animal/hostile/retaliate/wolf/familiar)

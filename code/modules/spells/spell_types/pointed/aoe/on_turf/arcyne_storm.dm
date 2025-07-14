@@ -5,7 +5,7 @@
 
 	point_cost = 8
 
-	charge_time = 8 SECONDS
+	charge_time = 4 SECONDS
 	charge_drain = 1
 	cooldown_time = 50 SECONDS
 	spell_cost = 40

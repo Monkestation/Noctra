@@ -9,7 +9,7 @@
 		/datum/attunement/life = 0.3,
 	)
 
-	charge_time = 5 SECONDS
+	charge_time = 3 SECONDS
 	charge_drain = 3
 	charge_slowdown = 1.4
 	cooldown_time = 60 SECONDS

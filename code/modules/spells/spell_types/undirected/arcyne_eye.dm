@@ -7,8 +7,8 @@
 	point_cost = 0
 
 	charge_required = FALSE
-	cooldown_time = 25 SECONDS
-	spell_cost = 30
+	cooldown_time = 15 SECONDS
+	spell_cost = 0
 
 	attunements = list(
 		/datum/attunement/arcyne = 0.1

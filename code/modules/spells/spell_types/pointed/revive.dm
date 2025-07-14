@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/revive
 	name = "Anastasis"
-	desc = "Return a soul from necra's grasp."
+	desc = "Return a soul from Necra's grasp with the light of Astrata."
 	button_icon_state = "revive"
 	sound = 'sound/magic/revive.ogg'
 	charge_sound = 'sound/magic/holycharging.ogg'
@@ -12,7 +12,6 @@
 	required_items = list(/obj/item/clothing/neck/psycross/silver/astrata)
 
 	charge_time = 5 SECONDS
-	charge_drain = 1
 	charge_slowdown = 0.7
 	cooldown_time = 2 MINUTES
 	spell_cost = 100

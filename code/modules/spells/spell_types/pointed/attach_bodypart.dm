@@ -5,7 +5,7 @@
 	sound = 'sound/gore/flesh_eat_03.ogg'
 	charge_sound = 'sound/magic/holycharging.ogg'
 
-	cast_range = 1
+	cast_range = 2
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	associated_skill = /datum/skill/magic/holy

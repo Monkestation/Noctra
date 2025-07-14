@@ -9,10 +9,10 @@
 		/datum/attunement/ice = 0.7,
 	)
 
-	charge_time = 3 SECONDS
+	charge_time = 2 SECONDS
 	charge_drain = 1
 	charge_slowdown = 0.7
-	cooldown_time = 25 SECONDS
+	cooldown_time = 20 SECONDS
 	spell_cost = 30
 
 	projectile_type = /obj/projectile/magic/frostbolt

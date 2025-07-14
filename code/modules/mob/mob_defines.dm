@@ -280,6 +280,9 @@
 	///how many tiles we can move while casting
 	var/cast_move = 0
 
+	/// pronouns of the mob, set in the character sheet.
+	var/pronouns = null
+
 	/// Weakref to the item we are offering
 	var/datum/weakref/offered_item
 
