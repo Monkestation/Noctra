@@ -97,12 +97,6 @@
 		UnregisterSignal(SSdcs, COMSIG_LORD_COLORS_SET)
 	return ..()
 
-// /obj/item/clothing/Topic(href, href_list)
-// 	. = ..()
-// 	if(href_list["inspect"])
-// 		if(!usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-// 			return
-
 /obj/item/clothing/get_inspect_entries(list/inspect_list)
 	. = ..()
 

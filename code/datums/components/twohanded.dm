@@ -184,7 +184,7 @@
 	wielded = TRUE
 	ADD_TRAIT(parent, TRAIT_WIELDED, REF(src))
 	RegisterSignal(user, COMSIG_MOB_SWAPPING_HANDS, PROC_REF(on_swapping_hands))
-	wield_callback?.InvokeAsync(parent, user)
+	wield_callback?.Invoke(parent, user)
 
 	// update item stats and name
 	var/obj/item/parent_item = parent
@@ -233,7 +233,7 @@
 	UnregisterSignal(user, COMSIG_MOB_SWAPPING_HANDS)
 	SEND_SIGNAL(parent, COMSIG_TWOHANDED_UNWIELD, user)
 	REMOVE_TRAIT(parent, TRAIT_WIELDED, REF(src))
-	unwield_callback?.InvokeAsync(parent, user)
+	unwield_callback?.Invoke(parent, user)
 
 	// update item stats
 	var/obj/item/parent_item = parent

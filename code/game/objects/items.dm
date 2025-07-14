@@ -1331,18 +1331,14 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	return
 
 /obj/item/proc/on_wield(obj/item/source, mob/living/carbon/user)
-	// wielded = TRUE
 	wdefense += 1
 	playsound(loc, pick('sound/combat/weaponr1.ogg','sound/combat/weaponr2.ogg'), 100, TRUE)
 	user.update_a_intents()
-	// user.update_inv_hands()
 
 /obj/item/proc/on_unwield(obj/item/source, mob/living/carbon/user)
-	// wielded = FALSE
 	wdefense -= 1
 	altgripped = FALSE
 	user.update_a_intents()
-	// user.update_inv_hands()
 
 /obj/item/proc/altgrip(mob/living/carbon/user)
 	altgripped = TRUE

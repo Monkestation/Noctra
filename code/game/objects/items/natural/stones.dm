@@ -335,6 +335,8 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 	destroy_sound = 'sound/foley/smash_rock.ogg'
 	attacked_sound = 'sound/foley/hit_rock.ogg'
 
+/obj/item/natural/rock/apply_components()
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 
 /obj/item/natural/rock/Initialize()
 	. = ..()
