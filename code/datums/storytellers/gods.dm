@@ -116,6 +116,7 @@
 	influence_sets = list(
 		"Set 1" = list(
 			STATS_FISH_CAUGHT = list("name" = "Fish caught:", "points" = 1.5, "capacity" = 85),
+			STATS_ALIVE_TRITONS = list("name" = "Number of tritons:", "points" = 8, "capacity" = 70),
 		),
 		"Set 2" = list(
 			STATS_WATER_CONSUMED = list("name" = "Water consumed:", "points" = 0.0125, "capacity" = 90),
@@ -125,7 +126,6 @@
 		),
 		"Set 4" = list(
 			STATS_LEECHES_EMBEDDED = list("name" = "Leeches embedded:", "points" = 0.165, "capacity" = 70),
-			STATS_ALIVE_TRITONS = list("name" = "Number of tritons:", "points" = 8, "capacity" = 70),
 		),
 		"Set 5" = list(
 			STATS_PEOPLE_DROWNED = list("name" = "People drowned:", "points" = 9, "capacity" = 75),
