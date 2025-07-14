@@ -11,10 +11,10 @@
 			STATS_LAWS_AND_DECREES_MADE = list("name" = "Laws and decrees:", "points" = 2.75, "capacity" = 45),
 		),
 		"Set 2" = list(
-			STATS_ALIVE_NOBLES = list("name" = "Number of nobles:", "points" = 3.1, "capacity" = 70),
+			STATS_ALIVE_NOBLES = list("name" = "Number of nobles:", "points" = 2.65, "capacity" = 65),
 		),
 		"Set 3" = list(
-			STATS_NOBLE_DEATHS = list("name" = "Noble deaths:", "points" = -4.5, "capacity" = -60),
+			STATS_NOBLE_DEATHS = list("name" = "Noble deaths:", "points" = -4, "capacity" = -60),
 			STATS_PEOPLE_SMITTEN = list("name" = "People smitten:", "points" = 4, "capacity" = 40),
 		),
 		"Set 4" = list(
@@ -23,7 +23,7 @@
 		),
 		"Set 5" = list(
 			STATS_TAXES_COLLECTED = list("name" = "Taxes collected:", "points" = 0.19, "capacity" = 90),
-			STATS_SLURS_SPOKEN = list("name" = "Slurs spoken:", "points" = 1.3, "capacity" = 80),
+			STATS_SLURS_SPOKEN = list("name" = "Slurs spoken:", "points" = 1.5, "capacity" = 80),
 		)
 	)
 
@@ -146,8 +146,8 @@
 	point_gains_multipliers = list(
 		EVENT_TRACK_MUNDANE = 1,
 		EVENT_TRACK_PERSONAL = 1,
-		EVENT_TRACK_MODERATE = 0,
-		EVENT_TRACK_INTERVENTION = 0,
+		EVENT_TRACK_MODERATE = 1,
+		EVENT_TRACK_INTERVENTION = 1,
 		EVENT_TRACK_CHARACTER_INJECTION = 0,
 		EVENT_TRACK_OMENS = 0,
 		EVENT_TRACK_RAIDS = 0,
@@ -203,7 +203,7 @@
 		),
 		"Set 3" = list(
 			STATS_GRAVES_ROBBED = list("name" = "Graves robbed:", "points" = -4, "capacity" = -40),
-			STATS_ALIVE_SNOW_ELVES = list("name" = "Number of elves:", "points" = 4, "capacity" = 50),
+			STATS_ALIVE_SNOW_ELVES = list("name" = "Number of elves:", "points" = 4.5, "capacity" = 50),
 		),
 		"Set 4" = list(
 			STATS_DEADITES_KILLED = list("name" = "Deadites killed:", "points" = 6, "capacity" = 90),
@@ -238,7 +238,7 @@
 			STATS_LUX_REVIVALS = list("name" = "Lux revivals:", "points" = 15, "capacity" = 70),
 		),
 		"Set 4" = list(
-			STATS_ANIMALS_BRED = list("name" = "Animals bred:", "points" = 5, "capacity" = 65),
+			STATS_ANIMALS_BRED = list("name" = "Animals bred:", "points" = 5.5, "capacity" = 65),
 		),
 		"Set 5" = list(
 			STATS_FOOD_ROTTED = list("name" = "Food rotted:", "points" = 0.175, "capacity" = 80),
@@ -535,7 +535,7 @@
 			STATS_ITEMS_PICKPOCKETED = list("name" = "Items pickpocketed:", "points" = 5, "capacity" = 85),
 		),
 		"Set 2" = list(
-			STATS_SHRINE_VALUE = list("name" = "Value offered to his idol:", "points" = 0.09, "capacity" = 70),
+			STATS_SHRINE_VALUE = list("name" = "Value offered to his idol:", "points" = 0.0875, "capacity" = 70),
 		),
 		"Set 3" = list(
 			STATS_GREEDY_PEOPLE = list("name" = "Number of greedy people:", "points" = 8, "capacity" = 70),
