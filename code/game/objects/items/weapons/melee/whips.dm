@@ -124,7 +124,7 @@
 
 /obj/item/weapon/whip/cane/physician
 	name = "physician's cane"
-	desc = "A prized cane. Embellished with a golden serpent, representing the Heartfelt university."
+	desc = "A prized cane. Embellished with a golden serpent, representing the Kingsfield university."
 	icon_state = "fancy_cane"
 	max_integrity = 100
 	sellprice = 30
