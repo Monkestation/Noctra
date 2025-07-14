@@ -48,7 +48,10 @@
 /turf/open/floor/hexstone,
 /area/rogue)
 "w" = (
-/obj/structure/dungeon_exit/center,
+/obj/structure/dungeon_exit{
+	dungeon_id = center;
+	entry_requirements = list("Time" = "day")
+	},
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue)
 "B" = (
