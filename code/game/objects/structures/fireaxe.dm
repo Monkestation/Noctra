@@ -23,7 +23,7 @@
 /obj/structure/fireaxecabinet/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/sword/long/heirloom) && !heirloom)
 		var/obj/item/weapon/sword/long/heirloom/F = I
-		if(F.wielded)
+		if(HAS_TRAIT(F, TRAIT_WIELDED))
 			to_chat(user, "<span class='warning'>Unwield the [F.name] first.</span>")
 			return
 		if(!user.transferItemToLoc(F, src))

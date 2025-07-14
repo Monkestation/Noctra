@@ -62,3 +62,4 @@
 		H.change_stat(STATKEY_END, 1)
 		H.change_stat(STATKEY_CON, 1)
 	backpack_contents = list(/obj/item/recipe_book/cooking)
+	ADD_TRAIT(H, TRAIT_BOOZE_SLIDER, TRAIT_GENERIC)

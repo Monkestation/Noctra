@@ -269,10 +269,10 @@
 		if(held_index)
 			if(!C.has_hand_for_held_index(held_index))
 				. += blocked_overlay
-			else if(!C.has_hand_for_held_index(held_index, TRUE))
-				. += fingerless_overlay
 			else if(C.check_arm_grabbed(held_index))
 				. += grabbed_overlay
+			else if(!C.has_hand_for_held_index(held_index, TRUE))
+				. += fingerless_overlay
 
 	if(held_index == hud.mymob.active_hand_index)
 		. += "hand_active"
@@ -1303,7 +1303,7 @@
 	if (ishuman(usr))
 		var/mob/living/carbon/human/H = usr
 		H.check_for_injuries(H)
-		to_chat(H, "I am [H.get_encumbrance() * 100]% Encumbered")
+		to_chat(H, "I am [H.get_encumbrance() * 100]% encumbered.")
 
 /atom/movable/screen/mood
 	name = "mood"
@@ -1322,7 +1322,7 @@
 		var/mob/living/carbon/human/H = usr
 		if(LAZYACCESS(modifiers, LEFT_CLICK))
 			H.check_for_injuries(H)
-			to_chat(H, "I am [H.get_encumbrance() * 100]% Encumbered")
+			to_chat(H, "I am [H.get_encumbrance() * 100]% encumbered.")
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			if(!H.mind)
 				return

@@ -98,6 +98,11 @@
 	owner = null
 	qdel(src)
 
+/// Called before being fully removed (before on_remove)
+/// Returning FALSE will cancel removal
+/datum/status_effect/proc/before_remove()
+	return TRUE
+
 /datum/status_effect/proc/refresh()
 	if(initial_duration == -1)
 		return
@@ -162,15 +167,24 @@
 	S1 = new effect(arguments)
 	. = S1
 
-/// Removes all of a given status effect from this mob, returning TRUE if at least one was removed
-/mob/living/proc/remove_status_effect(effect)
+/**
+ * Removes all instances of a given status effect from this mob
+ *
+ * removed_effect - TYPEPATH of a status effect to remove.
+ * Additional status effect arguments can be passed - these are passed into before_remove.
+ *
+ * Returns TRUE if at least one was removed.
+ */
+/mob/living/proc/remove_status_effect(datum/status_effect/removed_effect, ...)
+	var/list/arguments = args.Copy(2)
+
 	. = FALSE
-	if(status_effects)
-		var/datum/status_effect/S1 = effect
-		for(var/datum/status_effect/S in status_effects)
-			if(initial(S1.id) == S.id)
-				qdel(S)
-				. = TRUE
+	for(var/datum/status_effect/existing_effect as anything in status_effects)
+		if(existing_effect.id == initial(removed_effect.id) && existing_effect.before_remove(arglist(arguments)))
+			qdel(existing_effect)
+			. = TRUE
+
+	return .
 
 /// Returns the effect if the mob calling the proc owns the given status effect
 /mob/living/proc/has_status_effect(effect)

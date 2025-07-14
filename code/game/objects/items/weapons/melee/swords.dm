@@ -205,7 +205,10 @@
 	max_integrity = INTEGRITY_STRONG
 	sellprice = 45
 	last_used = 0
-	is_silver = TRUE
+
+/obj/item/weapon/sword/silver/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 /obj/item/weapon/sword/iron
 	force = DAMAGE_SWORD-1
@@ -470,7 +473,10 @@
 	max_integrity = 400 // .8 of base steel
 	sellprice = 45
 	last_used = 0
-	is_silver = TRUE
+
+/obj/item/weapon/sword/rapier/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 /obj/item/weapon/sword/rapier/eora
 	name = "The Heartstring"
@@ -575,7 +581,10 @@
 	sellprice = 363
 	static_price = TRUE
 	last_used = 0
-	is_silver = TRUE
+
+/obj/item/weapon/sword/long/judgement/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 /obj/item/weapon/sword/long/judgement/getonmobprop(tag)
 	. = ..()
@@ -648,7 +657,10 @@
 	wdefense = 4
 	sellprice = 90
 	last_used = 0
-	is_silver = TRUE
+
+/obj/item/weapon/sword/long/forgotten/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 
 /obj/item/weapon/sword/long/ravox
@@ -669,7 +681,10 @@
 	smeltresult = /obj/item/ingot/silver
 	sellprice = 100
 	last_used = 0
-	is_silver = TRUE
+
+/obj/item/weapon/sword/long/psydon/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 
 //................ Greatsword ............... //
@@ -707,7 +722,10 @@
 	smeltresult = /obj/item/ingot/silver
 	sellprice = 150
 	minstr = 11
-	is_silver = TRUE
+
+/obj/item/weapon/sword/long/greatsword/psydon/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 /obj/item/weapon/sword/long/greatsword/psydon/getonmobprop(tag)
 	. = ..()

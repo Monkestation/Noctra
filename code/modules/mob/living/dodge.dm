@@ -7,7 +7,7 @@
  */
 /mob/living/proc/attempt_dodge(datum/intent/intenty, mob/living/user)
 	// Early return conditions specifically for dodging
-	if((pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE) || pulling == user || (world.time < last_dodge + dodgetime && !istype(rmb_intent, /datum/rmb_intent/riposte)) ||  has_status_effect(/datum/status_effect/debuff/riposted) || src.loc == user.loc || (intenty && !intenty.candodge) || !candodge)
+	if((pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE) || pulling || (world.time < last_dodge + dodgetime && !istype(rmb_intent, /datum/rmb_intent/riposte)) ||  has_status_effect(/datum/status_effect/debuff/riposted) || src.loc == user.loc || (intenty && !intenty.candodge) || !candodge)
 		return FALSE
 	last_dodge = world.time
 
@@ -19,8 +19,7 @@
 
 	// Check if we can dodge
 	if(pulledby || !turfy)
-		to_chat(src, "<span class='boldwarning'>There's nowhere to dodge to!</span>")
-		return FALSE
+		turfy = get_turf(src)
 
 	if(do_dodge(user, turfy))
 		flash_fullscreen("blackflash2")
@@ -49,7 +48,7 @@
 		to_chat(src, span_boldwarning("There's nowhere to dodge to!"))
 		return FALSE
 
-	var/drained = 10
+	var/drained = 7
 	var/dodge_speed = floor(STASPD / 2)
 	var/dodge_score = calculate_dodge_score(user)
 
@@ -61,15 +60,15 @@
 		switch(H.worn_armor_class)
 			if(AC_LIGHT)
 				dodge_speed -= 10
-				drained += 5
+				drained += 3
 			if(AC_MEDIUM)
 				dodge_score *= 0.5
 				dodge_speed = floor(dodge_speed * 0.5)
-				drained += 10
+				drained += 7
 			if(AC_HEAVY)
 				dodge_score *= 0.2
 				dodge_speed = floor(dodge_speed * 0.25)
-				drained += 20
+				drained += 12
 
 
 
@@ -77,7 +76,12 @@
 			H.Knockdown(1)
 			return FALSE
 
-		if(!H.adjust_stamina(max(drained, 5)))
+		drained = max(drained, 5)
+
+		if(stamina + drained >= maximum_stamina)
+			to_chat(src, span_warning("I'm too tired to dodge!"))
+			return FALSE
+		if(!H.adjust_stamina(drained))
 			to_chat(src, span_warning("I'm too tired to dodge!"))
 			return FALSE
 

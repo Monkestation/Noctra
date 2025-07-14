@@ -524,7 +524,7 @@
 	var/obj/item/Masteritem = get_active_held_item()
 	if(Masteritem)
 		intents = Masteritem.possible_item_intents
-		if(Masteritem.wielded)
+		if(HAS_TRAIT(Masteritem, TRAIT_WIELDED) && LAZYLEN(Masteritem.gripped_intents))
 			intents = Masteritem.gripped_intents
 		if(Masteritem.altgripped)
 			intents = Masteritem.alt_intents
@@ -542,7 +542,7 @@
 	Masteritem = get_inactive_held_item()
 	if(Masteritem)
 		intents = Masteritem.possible_item_intents
-		if(Masteritem.wielded)
+		if(HAS_TRAIT(Masteritem, TRAIT_WIELDED))
 			intents = Masteritem.gripped_intents
 		if(Masteritem.altgripped)
 			intents = Masteritem.alt_intents

@@ -87,7 +87,6 @@
 	START_PROCESSING(SSobj, src)
 	AddComponent(/datum/component/steam_storage, 300, 0)
 
-
 /obj/item/weapon/pick/drill/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
@@ -97,9 +96,10 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_STEAM_USE, 5)
 
 /obj/item/weapon/pick/drill/process()
-	if(wielded)
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		if(!SEND_SIGNAL(src, COMSIG_ATOM_STEAM_USE, 1))
+			var/datum/component/two_handed/twohanded = GetComponent(/datum/component/two_handed)
 			if(ismob(loc))
-				ungrip(loc, FALSE)
+				twohanded.unwield(loc)
 			else
-				wielded = FALSE
+				twohanded.unwield()

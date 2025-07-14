@@ -1,8 +1,13 @@
 /mob/living/carbon/Life()
 	set invisibility = 0
 
-	if(grab_fatigue > 0 && !pulling)
-		grab_fatigue = max(0, grab_fatigue - 0.5)
+	if(grab_fatigue > 0)
+		if(!pulling)
+			// Exponential decay mostly
+			grab_fatigue -= max(grab_fatigue * 0.15, 0.5)
+		else
+			grab_fatigue -= 0.5
+		grab_fatigue = max(0, grab_fatigue)
 
 	if(notransform)
 		return

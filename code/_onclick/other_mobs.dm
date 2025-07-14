@@ -16,9 +16,10 @@
 		to_chat(src, span_warning("I can't move this hand."))
 		return
 
-	if(check_arm_grabbed(used_hand))
-		to_chat(src, "<span class='warning'>Someone is grabbing my arm!</span>")
-		resist_grab()
+	var/obj/item/grabbing/arm_grab = check_arm_grabbed(active_hand_index)
+	if(arm_grab)
+		// to_chat(src, span_warning("Someone is grabbing my arm!"))
+		grab_counter_attack(arm_grab.grabbee)
 		return
 
 	// Special glove functions:
@@ -171,7 +172,7 @@
 		to_chat(user, span_warning("Nothing to bite."))
 		return
 
-	user.do_attack_animation(src, ATTACK_EFFECT_BITE)
+	user.do_attack_animation(src, ATTACK_EFFECT_BITE, atom_bounce = TRUE)
 	next_attack_msg.Cut()
 
 	var/nodmg = FALSE
@@ -268,7 +269,7 @@
 					var/mob/living/M = A
 					if(src.used_intent)
 
-						src.do_attack_animation(M, visual_effect_icon = src.used_intent.animname)
+						do_attack_animation(M, visual_effect_icon = ATTACK_EFFECT_KICK, atom_bounce = TRUE)
 						playsound(src, pick(PUNCHWOOSH), 100, FALSE, -1)
 
 						sleep(src.used_intent.swingdelay)
@@ -512,6 +513,7 @@
 			jrange = 1
 
 	jump_action_resolve(A, jadded, jrange, jextra)
+	return TRUE
 
 #define FLIP_DIRECTION_CLOCKWISE 1
 #define FLIP_DIRECTION_ANTICLOCKWISE 0

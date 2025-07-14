@@ -155,6 +155,7 @@
 			used_limb = affecting.body_zone
 	return used_limb
 
+/// Checks which arm is grabbed using index. Returns the found grabbing item.
 /mob/proc/check_arm_grabbed(index)
 	return
 
@@ -168,11 +169,12 @@
 		if(BP)
 			for(var/obj/item/grabbing/G in src.grabbedby)
 				if(G.limb_grabbed == BP)
-					return TRUE
+					return G
 
 /mob/proc/check_leg_grabbed()
 	return
 
+/// Checks which leg is grabbed using index. Returns the found grabbing item.
 /mob/living/carbon/check_leg_grabbed(index)
 	if(pulledby)
 		var/obj/item/bodypart/BP
@@ -183,7 +185,7 @@
 		if(BP)
 			for(var/obj/item/grabbing/G in src.grabbedby)
 				if(G.limb_grabbed == BP)
-					return TRUE
+					return G
 
 
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user)

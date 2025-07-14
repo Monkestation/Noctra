@@ -433,7 +433,7 @@
 	no_attack = TRUE
 
 /obj/item/weapon/pitchfork/afterattack(obj/target, mob/user, proximity)
-	if((!proximity) || (!wielded))
+	if((!proximity) || (!HAS_TRAIT(src, TRAIT_WIELDED)))
 		return ..()
 	if(isopenturf(target))
 		if(forked.len)

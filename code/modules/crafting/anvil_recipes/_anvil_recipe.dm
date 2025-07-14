@@ -178,8 +178,11 @@
 	// Apply inherent weapon modifiers
 	if(istype(I, /obj/item/weapon))
 		var/obj/item/weapon/W = I
-		W.force *= modifier
-		W.force_wielded *= modifier
+		var/datum/component/two_handed/twohanded = I.GetComponent(/datum/component/two_handed)
+		if(twohanded)
+			twohanded.modify_base_force(multiplicative_modifier = FORCE_BLADE_FORCE)
+		else
+			W.force *= modifier
 		W.throwforce *= modifier
 		W.blade_int *= modifier
 		W.max_blade_int *= modifier

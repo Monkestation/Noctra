@@ -8,24 +8,18 @@
  * * [/obj/item/proc/afterattack]. The return value does not matter.
  */
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
-	// This should be somewhere else
-	if(user.check_arm_grabbed(user.active_hand_index))
-		var/mob/living/G = user.pulledby
-		var/mob/living/U = user
-		var/userskill = 1
-		if(U?.get_skill_level(/datum/skill/combat/wrestling))
-			userskill = ((U.get_skill_level(/datum/skill/combat/wrestling) * 0.1) + 1)
-		var/grabberskill = 1
-		if(G?.get_skill_level(/datum/skill/combat/wrestling))
-			grabberskill = ((G.get_skill_level(/datum/skill/combat/wrestling) * 0.1) + 1)
-		if(((U.STASTR + rand(1, 6)) * userskill) < ((G.STASTR + rand(1, 6)) * grabberskill))
-			to_chat(user, span_notice("I can't move my arm!"))
-			user.changeNext_move(CLICK_CD_GRABBING)
-			return TRUE
+	var/obj/item/grabbing/arm_grab = user.check_arm_grabbed(user.active_hand_index)
+	if(arm_grab)
+		to_chat(user, span_notice("I can't move my arm!"))
+		if(HAS_TRAIT(src, TRAIT_WIELDED))
+			if(iscarbon(user))
+				var/mob/living/carbon/carbon_user = user
+				carbon_user.dna?.species.disarm(user, arm_grab.grabbee)
 		else
 			user.resist_grab()
+		return TRUE
 	if(!user.has_hand_for_held_index(user.active_hand_index, TRUE)) //we obviously have a hand, but we need to check for fingers/prosthetics
-		to_chat(user, "<span class='warning'>I can't move the fingers of my [user.active_hand_index == 1 ? "left" : "right"] hand.</span>")
+		to_chat(user, span_warning("I can't move the fingers of my [user.active_hand_index == 1 ? "left" : "right"] hand.</span>"))
 		return TRUE
 	if(!istype(src, /obj/item/grabbing))
 		if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS))
@@ -90,15 +84,15 @@
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	interact(user)
-	if(twohands_required)
-		return
-	if(altgripped || wielded) //Trying to unwield it
-		ungrip(user)
-		return
-	if(alt_intents)
-		altgrip(user)
-	if(gripped_intents)
-		wield(user)
+	// if(twohands_required)
+	// 	return
+	// if(altgripped || wielded) //Trying to unwield it
+	// 	ungrip(user)
+	// 	return
+	// if(alt_intents)
+	// 	altgrip(user)
+	// if(gripped_intents)
+	// 	wield(user)
 
 /obj/item/proc/attack_self_secondary(mob/user, params)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF_SECONDARY, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
@@ -459,8 +453,8 @@
 
 	if(I.minstr)
 		var/effective = I.minstr
-		if(I.wielded)
-			effective = max(I.minstr / 2, 1)
+		if(HAS_TRAIT(I, TRAIT_WIELDED))
+			effective = I.minstr * 0.75
 		//Strength influence is reduced to 30%
 		if(effective > user.STASTR)
 			newforce = max(newforce*0.3, 1)

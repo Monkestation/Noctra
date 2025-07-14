@@ -170,7 +170,7 @@
 	gender = NEUTER
 	var/knockdown = 0
 
-/obj/item/net/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+/obj/item/net/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE)
 	if(!..())
 		return
 	playsound(src.loc,'sound/blank.ogg', 75, TRUE)
