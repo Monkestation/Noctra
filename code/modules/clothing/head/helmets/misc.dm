@@ -333,7 +333,7 @@
 //................. Royal Knight's helmet .............. //
 /obj/item/clothing/head/helmet/visored/royalknight
 	name = "royal knights helmet"
-	desc = "A finely crafter and lightweight steel armet specifically made for the Royal Knight's of the Keep."
+	desc = "A knightly armet that protects dreams of chivalry, fair maidens to rescue, and glorious feats of melee. Purpose made for the protector of the royal lineage. Its visor can be flipped over for higher visibility at the cost of eye protection."
 	icon_state = "knightarmet"
 	emote_environment = 3
 	item_weight = 5.6 * STEEL_MULTIPLIER
