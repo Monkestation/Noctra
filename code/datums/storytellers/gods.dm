@@ -11,19 +11,19 @@
 			STATS_LAWS_AND_DECREES_MADE = list("name" = "Laws and decrees:", "points" = 2.75, "capacity" = 45),
 		),
 		"Set 2" = list(
-			STATS_ALIVE_NOBLES = list("name" = "Number of nobles:", "points" = 2.65, "capacity" = 65),
+			STATS_ALIVE_NOBLES = list("name" = "Number of nobles:", "points" = 2.5, "capacity" = 60),
 		),
 		"Set 3" = list(
-			STATS_NOBLE_DEATHS = list("name" = "Noble deaths:", "points" = -4, "capacity" = -60),
+			STATS_NOBLE_DEATHS = list("name" = "Noble deaths:", "points" = -3.75, "capacity" = -60),
 			STATS_PEOPLE_SMITTEN = list("name" = "People smitten:", "points" = 4, "capacity" = 40),
 		),
 		"Set 4" = list(
 			STATS_ASTRATA_REVIVALS = list("name" = "Holy revivals:", "points" = 6, "capacity" = 75),
-			STATS_PRAYERS_MADE = list("name" = "Prayers made:", "points" = 2, "capacity" = 60),
+			STATS_PRAYERS_MADE = list("name" = "Prayers made:", "points" = 2.25, "capacity" = 65),
 		),
 		"Set 5" = list(
-			STATS_TAXES_COLLECTED = list("name" = "Taxes collected:", "points" = 0.19, "capacity" = 90),
-			STATS_SLURS_SPOKEN = list("name" = "Slurs spoken:", "points" = 1.5, "capacity" = 80),
+			STATS_TAXES_COLLECTED = list("name" = "Taxes collected:", "points" = 0.2, "capacity" = 80),
+			STATS_SLURS_SPOKEN = list("name" = "Slurs spoken:", "points" = 1.75, "capacity" = 80),
 		)
 	)
 
@@ -44,7 +44,7 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_BOOKS_PRINTED = list("name" = "Books printed:", "points" = 5, "capacity" = 40),
+			STATS_BOOKS_PRINTED = list("name" = "Books printed:", "points" = 6, "capacity" = 40),
 		),
 		"Set 2" = list(
 			STATS_LITERACY_TAUGHT = list("name" = "Literacy taught:", "points" = 15, "capacity" = 70),
