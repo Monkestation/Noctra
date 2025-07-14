@@ -41,7 +41,6 @@
 	neck = /obj/item/clothing/neck/feld
 	belt = /obj/item/storage/belt/leather
 	beltl = /obj/item/storage/keyring/feldsher
-	beltr = /obj/item/weapon/whip/cane/feldsher
 
 	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
