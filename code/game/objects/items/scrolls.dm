@@ -16,7 +16,7 @@
 
 
 
-/obj/item/teleportation_scroll/attack_self(mob/user)
+/obj/item/teleportation_scroll/attack_self(mob/user, params)
 	user.set_machine(src)
 	var/dat = "<B>Teleportation Scroll:</B><BR>"
 	dat += "Number of uses: [src.uses]<BR>"

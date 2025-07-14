@@ -80,7 +80,7 @@
 /mob/proc/ClickOn( atom/A, params )
 	var/list/modifiers = params2list(params)
 
-	if(LAZYACCESS(modifiers, RIGHT_CLICK) && LAZYACCESS(modifiers, "shift"))
+	if(LAZYACCESS(modifiers, RIGHT_CLICK) && LAZYACCESS(modifiers, SHIFT_CLICKED))
 		if(mind && mind.active_uis["quake_console"])
 			if(client.holder)
 				client.holder.marked_datum = A
@@ -107,7 +107,7 @@
 	if(next_move > world.time)
 		return
 
-	if(modifiers["middle"])
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 		if(atkswinging != "middle")
 			return
 		if(mmb_intent)
@@ -115,11 +115,8 @@
 				if(mmb_intent.no_early_release && client?.chargedprog < 100)
 					changeNext_move(mmb_intent.clickcd)
 					return
-		else if(client?.keys_held["Shift"])
-			spell_quickselect(A)
-			return
 
-	if(modifiers["left"])
+	if(LAZYACCESS(modifiers, LEFT_CLICK))
 		if(atkswinging != "left")
 			return
 		if(active_hand_index == 1)
@@ -140,49 +137,29 @@
 						adf = round(adf * 0.6)
 					changeNext_move(adf,used_hand)
 					return
-	if(modifiers["right"])
-		if(oactive)
-			if(atkswinging != "right")
-				return
-			if(active_hand_index == 1)
-				used_hand = 2
-				if(next_rmove > world.time)
-					return
-			else
-				used_hand = 1
-				if(next_lmove > world.time)
-					return
-			if(used_intent.get_chargetime())
-				if(used_intent.no_early_release && client?.chargedprog < 100)
-					changeNext_move(used_intent.clickcd,used_hand)
-					return
 
-	if(modifiers["shift"] && modifiers["right"])
+	if(LAZYACCESS(modifiers, SHIFT_CLICKED) && LAZYACCESS(modifiers, RIGHT_CLICK))
 		ShiftRightClickOn(A, params)
 		return
-	if(modifiers["ctrl"] && modifiers["right"])
+	if(LAZYACCESS(modifiers, CTRL_CLICKED) && LAZYACCESS(modifiers, RIGHT_CLICK))
 		CtrlRightClickOn(A, params)
 		return
-	if(modifiers["alt"] && modifiers["right"])
+	if(LAZYACCESS(modifiers, ALT_CLICKED) && LAZYACCESS(modifiers, RIGHT_CLICK))
 		face_atom(A)
 		AltRightClickOn(A, params)
 		return
-	if(modifiers["middle"])
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 		MiddleClickOn(A, params)
 		return
-	if(modifiers["shift"])
+	if(LAZYACCESS(modifiers, SHIFT_CLICKED))
 		ShiftClickOn(A)
 		return
-	if(modifiers["alt"]) // alt and alt-gr (rightalt)
+	if(LAZYACCESS(modifiers, ALT_CLICKED)) // alt and alt-gr (rightalt)
 		AltClickOn(A)
 		return
-	if(modifiers["ctrl"])
+	if(LAZYACCESS(modifiers, CTRL_CLICKED))
 		CtrlClickOn(A)
 		return
-	if(modifiers["right"])
-		if(!oactive)
-			RightClickOn(A, params)
-			return
 
 	if(incapacitated(ignore_restraints = TRUE, ignore_grab = TRUE))
 		return
@@ -202,22 +179,24 @@
 		return
 
 	if(in_throw_mode)
-		if(modifiers["right"])
-			if(oactive)
-				throw_item(A, TRUE)
-				return
 		throw_item(A)
 		return
 
 	var/obj/item/W = get_active_held_item()
-	if(modifiers["right"])
-		if(oactive)
-			W = get_inactive_held_item()
 
 	if(W == A)
-		W.attack_self(src)
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+			W.attack_self_secondary(src, params)
+			update_inv_hands()
+			return
+		W.attack_self(src, params)
 		update_inv_hands()
 		return
+
+	if(!A.Adjacent(src) && LAZYACCESS(params2list(params), RIGHT_CLICK))
+		if(uses_intents && used_intent.rmb_ranged)
+			used_intent.rmb_ranged(A, src) //get the message from the intent
+			return
 
 	// operate three levels deep here (item in backpack in src; item in box in backpack in src, not any deeper)
 	if(!isturf(A) && A == loc || (A in contents) || (A.loc in contents) || (A.loc && (A.loc.loc in contents)))
@@ -282,7 +261,7 @@
 						if(M.invisibility || M == src)
 							continue
 						mobs_here += M
-					if(mobs_here.len)
+					if(length(mobs_here))
 						var/mob/target = pick(mobs_here)
 						if(target)
 							if(target.Adjacent(src))
@@ -290,30 +269,8 @@
 								atkswinging = null
 								//update_warning()
 								return
-					if(cmode)
-						resolveAdjacentClick(T,W,params,used_hand) //hit the turf
-					if(!used_intent.noaa)
-						changeNext_move(CLICK_CD_MELEE)
-						if(get_dist(get_turf(src), T) <= used_intent.reach)
-							do_attack_animation(T, visual_effect_icon = used_intent.animname, used_intent = used_intent)
-						else
-							do_attack_animation(get_ranged_target_turf(src, get_dir(src, T), 1), visual_effect_icon = used_intent.animname)
-						if(W)
-							playsound(get_turf(src), pick(W.swingsound), 100, FALSE)
-							var/adf = used_intent.clickcd
-							if(istype(rmb_intent, /datum/rmb_intent/aimed))
-								adf = round(adf * 1.4)
-							if(istype(rmb_intent, /datum/rmb_intent/swift))
-								adf = round(adf * 0.6)
-							changeNext_move(adf)
-						else
-							playsound(get_turf(src), used_intent.miss_sound, 100, FALSE)
-							if(used_intent.miss_text)
-								visible_message("<span class='warning'>[src] [used_intent.miss_text]</span>", \
-												"<span class='warning'>I [used_intent.miss_text]</span>")
-					aftermiss()
-					atkswinging = null
-					//update_warning()
+
+					resolveAdjacentClick(T,W,params,used_hand)
 					return
 			else
 				resolveAdjacentClick(A,W,params,used_hand)
@@ -733,7 +690,7 @@
 
 /atom/movable/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr.client ? usr.client.eye : usr), usr.client)
+	var/turf/T = params2turf(LAZYACCESS(modifiers, SCREEN_LOC), get_turf(usr.client ? usr.client.eye : usr), usr.client)
 	params += "&catcher=1"
 	if(T)
 		T.Click(location, control, params)
@@ -741,7 +698,7 @@
 
 /atom/movable/screen/click_catcher/face_me(location, control, params)
 	var/list/modifiers = params2list(params)
-	var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr.client ? usr.client.eye : usr), usr.client)
+	var/turf/T = params2turf(LAZYACCESS(modifiers, SCREEN_LOC), get_turf(usr.client ? usr.client.eye : usr), usr.client)
 	if(T)
 		return T
 
@@ -753,7 +710,7 @@
 
 /mob/living/MouseWheelOn(atom/A, delta_x, delta_y, params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["shift"])
+	if(LAZYACCESS(modifiers, SHIFT_CLICKED))
 		if(delta_y > 0)
 			aimheight_change("up")
 		else
@@ -782,28 +739,6 @@
 			return TRUE
 
 	return FALSE
-
-/* RightClickOn */
-
-/atom/proc/rmb_self(mob/user)
-	return
-
-/mob/proc/rmb_on(atom/A, params)
-	return
-
-/mob/proc/RightClickOn(atom/A, params)
-	if(stat >= UNCONSCIOUS)
-		return
-	changeNext_move(CLICK_CD_MELEE)
-	if(A.Adjacent(src))
-		if(A.loc == src && (A == get_active_held_item()) )
-			A.rmb_self(src)
-		else
-			rmb_on(A, params)
-	else if(uses_intents && used_intent.rmb_ranged)
-		used_intent.rmb_ranged(A, src) //get the message from the intent
-	if(isturf(A.loc))
-		face_atom(A)
 
 /mob/proc/TargetMob(mob/target)
 	if(ismob(target))

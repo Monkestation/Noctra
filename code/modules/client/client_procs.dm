@@ -1094,6 +1094,16 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		if (menuitem)
 			menuitem.Load_checked(src)
 
+
+	if(byond_version >= 516) // Enable 516 compat browser storage mechanisms
+		winset(src, null, "browser-options=byondstorage,find,devtools")
+
+	//fullscreen()
+
+	view_size = new(src, getScreenSize())
+	view_size.resetFormat()
+	view_size.setZoomMode()
+	fit_viewport()
 	Master.UpdateTickRate()
 
 //////////////
@@ -1101,8 +1111,18 @@ GLOBAL_LIST_EMPTY(respawncounts)
 //////////////
 
 /client/Del()
-	log_access("Logout: [key_name(src)]")
+	if(!gc_destroyed)
+		gc_destroyed = world.time
+		if (!QDELING(src))
+			stack_trace("Client does not purport to be QDELING, this is going to cause bugs in other places!")
 
+		// Yes this is the same as what's found in qdel(). Yes it does need to be here
+		// Get off my back
+		SEND_SIGNAL(src, COMSIG_PARENT_QDELETING, TRUE)
+		Destroy() //Clean up signals and timers.
+	return ..()
+
+/client/Destroy()
 	if(holder)
 		for(var/I in GLOB.clients)
 			if(!I || I == src)
@@ -1114,41 +1134,29 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		adminGreet(1)
 		holder.owner = null
 		GLOB.admins -= src
-/*		if (!GLOB.admins.len && SSticker.IsRoundInProgress()) //Only report this stuff if we are currently playing.
-			var/cheesy_message = pick(
-				"I have no admins online!",\
-				"I'm all alone :(",\
-				"I'm feeling lonely :(",\
-				"I'm so lonely :(",\
-				"Why does nobody love me? :(",\
-				"I want a man :(",\
-				"Where has everyone gone?",\
-				"I need a hug :(",\
-				"Someone come hold me :(",\
-				"I need someone on me :(",\
-				"What happened? Where has everyone gone?",\
-				"Forever alone :("\
-			)
 
-//			send2irc("Server", "[cheesy_message] (No admins online)")
-*/
+	GLOB.clients -= src
+	GLOB.directory -= ckey
+
+	log_access("Logout: [key_name(src)]")
+	GLOB.ahelp_tickets.ClientLogout(src)
+
+	if(credits)
+		QDEL_LIST(credits)
+
 	if(player_details)
 		player_details.achievements.save()
 
-	GLOB.ahelp_tickets.ClientLogout(src)
-	GLOB.directory -= ckey
-	GLOB.clients -= src
-	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
-	Master.UpdateTickRate()
-	return ..()
 
-/client/Destroy()
-	. = ..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
-	QDEL_NULL(droning_sound)
-	last_droning_sound = null
+	QDEL_LIST_ASSOC_VAL(char_render_holders)
+
+	SSambience.remove_ambience_client(src)
+	seen_messages = null
+	Master.UpdateTickRate()
+	..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
 	return QDEL_HINT_HARDDEL_NOW
 
 /client/proc/set_client_age_from_db(connectiontopic)
@@ -1491,13 +1499,13 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		click_intercept_time = 0 //Just reset. Let's not keep re-checking forever.
 
 	var/ab = FALSE
-	var/list/L = params2list(params)
+	var/list/modifiers = params2list(params)
 
-	var/dragged = L["drag"]
-	if(dragged && !L[dragged])
+	var/dragged = LAZYACCESS(modifiers, BUTTON_DRAGGED)
+	if(dragged)
 		return
 
-	if (object && object == middragatom && L["left"])
+	if (object && IS_WEAKREF_OF(object, middle_drag_atom_ref) && LAZYACCESS(modifiers, LEFT_CLICK))
 		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
 
 	var/mcl = CONFIG_GET(number/minute_click_limit)
@@ -1551,6 +1559,8 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	else
 		winset(src, null, "input.focus=true command=activeInput input.background-color=[COLOR_INPUT_ENABLED] input.text-color = #EEEEEE")
 
+	SEND_SIGNAL(src, COMSIG_CLIENT_CLICK, object, location, control, params, usr)
+
 	..()
 
 /client/proc/add_verbs_from_config()
@@ -1603,7 +1613,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		if ("key")
 			return FALSE
 		if("view")
-			change_view(var_value)
+			view_size.setDefault(var_value)
 			return TRUE
 	. = ..()
 
@@ -1613,7 +1623,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	var/y = viewscale[2]
 	x = CLAMP(x+change, min, max)
 	y = CLAMP(y+change, min,max)
-	change_view("[x]x[y]")
+	view_size.setDefault("[x]x[y]")
 
 /client/proc/update_movement_keys()
 	if(!prefs?.key_bindings)
@@ -1635,12 +1645,9 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	if (isnull(new_size))
 		CRASH("change_view called without argument.")
 
-	if(prefs && !prefs.widescreenpref && new_size == CONFIG_GET(string/default_view))
-		new_size = CONFIG_GET(string/default_view_square)
-
 	view = new_size
 	apply_clickcatcher()
-	mob.reload_fullscreen()
+	mob?.reload_fullscreen()
 	if (isliving(mob))
 		var/mob/living/M = mob
 		M.update_damage_hud()
@@ -1694,10 +1701,6 @@ GLOBAL_LIST_EMPTY(respawncounts)
 
 /client/proc/fullscreen()
 	winset(src, "mainwindow", "statusbar=false")
-
-/client/New()
-	..()
-	fullscreen()
 
 /client/proc/give_award(achievement_type, mob/user)
 	return	player_details.achievements.unlock(achievement_type, mob/user)

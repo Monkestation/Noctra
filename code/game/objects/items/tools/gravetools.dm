@@ -247,7 +247,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/unfoldedbag_path = /obj/structure/closet/burial_shroud
 
-/obj/item/burial_shroud/attack_self(mob/user)
+/obj/item/burial_shroud/attack_self(mob/user, params)
 	deploy_bodybag(user, user.loc)
 
 /obj/item/burial_shroud/afterattack(atom/target, mob/user, proximity)
@@ -325,7 +325,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/unfoldedbag_path = /obj/structure/closet/body_bag
 
-/obj/item/bodybag/attack_self(mob/user)
+/obj/item/bodybag/attack_self(mob/user, params)
 	deploy_bodybag(user, user.loc)
 
 /obj/item/bodybag/afterattack(atom/target, mob/user, proximity)

@@ -70,8 +70,7 @@
 	var/datum/objective/adopt_orphan/new_objective = new(owner = chosen_one.mind)
 	chosen_one.mind.add_personal_objective(new_objective)
 
-	var/obj/effect/proc_holder/spell/invoked/adopt_child/adoption_spell = new
-	chosen_one.mind.AddSpell(adoption_spell)
+	chosen_one.add_spell(/datum/action/cooldown/spell/adopt_child)
 
 	to_chat(chosen_one, span_userdanger("YOU ARE EORA'S CHOSEN!"))
 	to_chat(chosen_one, span_notice("Eora weeps for the orphaned children! Find an orphan and adopt them as your own child to earn her favor!"))

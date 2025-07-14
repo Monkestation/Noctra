@@ -31,7 +31,10 @@
 	metalizer_result = /obj/machinery/light/fueledstreet
 	smeltresult = /obj/item/ore/coal
 
-/obj/structure/flora/tree/attack_right(mob/user)
+/obj/structure/flora/tree/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(user.mind && isliving(user))
 		if(user.mind.special_items && user.mind.special_items.len)
 			var/item = input(user, "What will I take?", "STASH") as null|anything in user.mind.special_items
@@ -42,6 +45,7 @@
 						user.mind.special_items -= item
 						var/obj/item/I = new path2item(user.loc)
 						user.put_in_hands(I)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/flora/tree/attacked_by(obj/item/I, mob/living/user)
 	var/was_destroyed = obj_destroyed
@@ -109,21 +113,21 @@
 	. = ..()
 	for(var/obj/structure/flora/tree/normal_tree in range(5, src))
 		if(normal_tree != src && !istype(normal_tree, /obj/structure/flora/tree/wise))
-			RegisterSignal(normal_tree, COMSIG_PARENT_ATTACKBY, TYPE_PROC_REF(/obj/structure/flora/tree/wise, protect_nearby_trees))
+			RegisterSignal(normal_tree, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/obj/structure/flora/tree/wise, protect_nearby_trees))
 			RegisterSignal(normal_tree, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/obj/structure/flora/tree/wise, cleanup_tree))
 	for(var/obj/structure/flora/newtree/new_tree in range(5, src))
 		if(!new_tree.burnt)
-			RegisterSignal(new_tree, COMSIG_PARENT_ATTACKBY, TYPE_PROC_REF(/obj/structure/flora/tree/wise, protect_nearby_trees))
+			RegisterSignal(new_tree, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/obj/structure/flora/tree/wise, protect_nearby_trees))
 			RegisterSignal(new_tree, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/obj/structure/flora/tree/wise, cleanup_tree))
 
 /obj/structure/flora/tree/wise/proc/cleanup_tree(datum/source)
-	UnregisterSignal(source, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(source, list(COMSIG_ATOM_ATTACKBY, COMSIG_PARENT_QDELETING))
 
 /obj/structure/flora/tree/wise/Destroy()
 	for(var/obj/structure/flora/tree/normal_tree in range(5, src))
-		UnregisterSignal(normal_tree, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(normal_tree, list(COMSIG_ATOM_ATTACKBY, COMSIG_PARENT_QDELETING))
 	for(var/obj/structure/flora/newtree/new_tree in range(5, src))
-		UnregisterSignal(new_tree, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(new_tree, list(COMSIG_ATOM_ATTACKBY, COMSIG_PARENT_QDELETING))
 	return ..()
 
 /obj/structure/flora/tree/wise/proc/protect_nearby_trees(datum/source, obj/item/I, mob/user)
@@ -275,7 +279,7 @@
 	sleepy = 0.2
 	pixel_x = -14
 	pixel_y = 7
-	pass_flags = PASSTABLE
+	pass_flags_self = PASSTABLE
 
 /obj/structure/chair/bench/ancientlog/Initialize()
 	. = ..()
@@ -414,16 +418,6 @@
 			if(!looty.len)
 				to_chat(user, "<span class='warning'>Picked clean.</span>")
 
-/obj/structure/flora/grass/bush/CanPass(atom/movable/mover, turf/target)
-	if(mover.throwing)
-		mover.visible_message(span_danger("[mover] gets caught in \a [src]!"))
-		return TRUE
-	if(mover.pass_flags & PASSGRILLE)
-		return TRUE
-	if(ismob(mover))
-		return TRUE
-	return FALSE
-
 // bush crossing
 /obj/structure/flora/grass/bush/Crossed(atom/movable/AM)
 	. = ..()
@@ -475,10 +469,10 @@
 	icon_state = "bushwall_tundra1"
 	base_icon_state = "bushwall_tundra"
 
-/obj/structure/flora/grass/bush/wall/CanPass(atom/movable/mover, turf/target)
+/obj/structure/flora/grass/bush/wall/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(ismob(mover))
 		return FALSE
-	return ..()
 
 /obj/structure/flora/grass/bush/wall/tall
 	icon = 'icons/roguetown/misc/foliagetall.dmi'
@@ -601,7 +595,10 @@
 	destroy_sound = 'sound/misc/woodhit.ogg'
 	static_debris = list(/obj/item/grown/log/tree/small = 1)
 
-/obj/structure/flora/shroom_tree/attack_right(mob/user)
+/obj/structure/flora/shroom_tree/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(user.mind && isliving(user))
 		if(user.mind.special_items && user.mind.special_items.len)
 			var/item = input(user, "What will I take?", "STASH") as null|anything in user.mind.special_items
@@ -612,7 +609,7 @@
 						user.mind.special_items -= item
 						var/obj/item/I = new path2item(user.loc)
 						user.put_in_hands(I)
-
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/flora/shroom_tree/Initialize()
 	. = ..()
@@ -622,12 +619,10 @@
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/structure/flora/shroom_tree/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
-		return 1
+/obj/structure/flora/shroom_tree/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(get_dir(loc, target) == dir)
-		return 0
-	return 1
+		return FALSE
 
 /obj/structure/flora/shroom_tree/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
 	SIGNAL_HANDLER

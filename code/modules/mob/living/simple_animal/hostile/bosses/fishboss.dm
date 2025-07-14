@@ -219,11 +219,13 @@
 	icon_state = "frozen"
 
 /datum/status_effect/abyssal_chill/on_apply()
+	. = ..()
 	owner.add_movespeed_modifier("abyssal_chill", 1.5)
 	owner.color = "#AADDFF"
 	return TRUE
 
 /datum/status_effect/abyssal_chill/on_remove()
+	. = ..()
 	owner.remove_movespeed_modifier("abyssal_chill")
 	owner.color = initial(owner.color)
 

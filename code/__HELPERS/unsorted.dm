@@ -15,30 +15,6 @@
 	var/textb = copytext(HTMLstring, 6, 8)
 	return rgb(255 - hex2num(textr), 255 - hex2num(textg), 255 - hex2num(textb))
 
-/proc/Get_Angle(atom/movable/start,atom/movable/end)//For beams.
-	if(!start || !end)
-		return 0
-	var/dy
-	var/dx
-	dy=(32*end.y+end.pixel_y)-(32*start.y+start.pixel_y)
-	dx=(32*end.x+end.pixel_x)-(32*start.x+start.pixel_x)
-	if(!dy)
-		return (dx>=0)?90:270
-	.=arctan(dx/dy)
-	if(dy<0)
-		.+=180
-	else if(dx<0)
-		.+=360
-
-/proc/Get_Pixel_Angle(y, x)//for getting the angle when animating something's pixel_x and pixel_y
-	if(!y)
-		return (x>=0)?90:270
-	.=arctan(x/y)
-	if(y<0)
-		.+=180
-	else if(x<0)
-		.+=360
-
 //Returns location. Returns null if no location was found.
 /proc/get_teleport_loc(turf/location,mob/target,distance = 1, density = FALSE, errorx = 0, errory = 0, eoffsetx = 0, eoffsety = 0)
 /*
@@ -290,68 +266,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 	for(var/mob/M as anything in mobs)
 		if(M.ckey == key)
 			return M
-
-//Returns the atom sitting on the turf.
-//For example, using this on a disk, which is in a bag, on a mob, will return the mob because it's on the turf.
-//Optional arg 'type' to stop once it reaches a specific type instead of a turf.
-/proc/get_atom_on_turf(atom/movable/M, stop_type)
-	var/atom/loc = M
-	while(loc && loc.loc && !isturf(loc.loc))
-		loc = loc.loc
-		if(stop_type && istype(loc, stop_type))
-			break
-	return loc
-
-// returns the turf located at the map edge in the specified direction relative to A
-// used for mass driver
-/proc/get_edge_target_turf(atom/A, direction)
-	var/turf/target = locate(A.x, A.y, A.z)
-	if(!A || !target)
-		return 0
-		//since NORTHEAST == NORTH|EAST, etc, doing it this way allows for diagonal mass drivers in the future
-		//and isn't really any more complicated
-
-	var/x = A.x
-	var/y = A.y
-	if(direction & NORTH)
-		y = world.maxy
-	else if(direction & SOUTH) //you should not have both NORTH and SOUTH in the provided direction
-		y = 1
-	if(direction & EAST)
-		x = world.maxx
-	else if(direction & WEST)
-		x = 1
-	if(direction in GLOB.diagonals) //let's make sure it's accurately-placed for diagonals
-		var/lowest_distance_to_map_edge = min(abs(x - A.x), abs(y - A.y))
-		return get_ranged_target_turf(A, direction, lowest_distance_to_map_edge)
-	return locate(x,y,A.z)
-
-// returns turf relative to A in given direction at set range
-// result is bounded to map size
-// note range is non-pythagorean
-// used for disposal system
-/proc/get_ranged_target_turf(atom/A, direction, range)
-
-	var/x = A.x
-	var/y = A.y
-	if(direction & NORTH)
-		y = min(world.maxy, y + range)
-	else if(direction & SOUTH)
-		y = max(1, y - range)
-	if(direction & EAST)
-		x = min(world.maxx, x + range)
-	else if(direction & WEST) //if you have both EAST and WEST in the provided direction, then you're gonna have issues
-		x = max(1, x - range)
-
-	return locate(x,y,A.z)
-
-
-// returns turf relative to A offset in dx and dy tiles
-// bound to map limits
-/proc/get_offset_target_turf(atom/A, dx, dy)
-	var/x = min(world.maxx, max(1, A.x + dx))
-	var/y = min(world.maxy, max(1, A.y + dy))
-	return locate(x,y,A.z)
 
 /*
 	Gets all contents of contents and returns them all in a list.
@@ -987,49 +901,6 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		)
 
 	return pick(subtypesof(/obj/item/reagent_containers/food/snacks) - blocked)
-
-//For these two procs refs MUST be ref = TRUE format like typecaches!
-/proc/weakref_filter_list(list/things, list/refs)
-	if(!islist(things) || !islist(refs))
-		return
-	if(!refs.len)
-		return things
-	if(things.len > refs.len)
-		var/list/f = list()
-		for(var/i in refs)
-			var/datum/weakref/r = i
-			var/datum/d = r.resolve()
-			if(d)
-				f |= d
-		return things & f
-
-	else
-		. = list()
-		for(var/i in things)
-			if(!refs[WEAKREF(i)])
-				continue
-			. |= i
-
-/proc/weakref_filter_list_reverse(list/things, list/refs)
-	if(!islist(things) || !islist(refs))
-		return
-	if(!refs.len)
-		return things
-	if(things.len > refs.len)
-		var/list/f = list()
-		for(var/i in refs)
-			var/datum/weakref/r = i
-			var/datum/d = r.resolve()
-			if(d)
-				f |= d
-
-		return things - f
-	else
-		. = list()
-		for(var/i in things)
-			if(refs[WEAKREF(i)])
-				continue
-			. |= i
 
 /proc/special_list_filter(list/L, datum/callback/condition)
 	if(!islist(L) || !length(L) || !istype(condition))

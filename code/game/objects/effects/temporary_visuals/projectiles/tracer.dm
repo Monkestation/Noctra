@@ -2,10 +2,11 @@
 	if(!istype(starting) || !istype(ending) || !ispath(beam_type))
 		return
 	var/datum/point/midpoint = point_midpoint_points(starting, ending)
-	var/obj/effect/projectile/tracer/PB = new beam_type
+	var/obj/effect/projectile/tracer/PB = new beam_type(midpoint.return_turf())
 	if(isnull(light_color_override))
 		light_color_override = color
 	PB.apply_vars(angle_between_points(starting, ending), midpoint.return_px(), midpoint.return_py(), color, pixel_length_between_points(starting, ending) / world.icon_size, midpoint.return_turf(), 0)
+	PB.plane = GAME_PLANE_UPPER
 	. = PB
 	if(light_outer_range > 0 && light_intensity > 0)
 		var/list/turf/line = getline(starting.return_turf(), ending.return_turf())

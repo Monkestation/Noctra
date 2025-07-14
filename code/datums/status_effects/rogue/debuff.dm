@@ -407,11 +407,6 @@
 	duration = 85
 	alert_type = null
 
-/datum/status_effect/eorapacify/on_creation(mob/living/new_owner, set_duration)
-	if(isnum(set_duration))
-		duration = set_duration
-	. = ..()
-
 /datum/status_effect/eorapacify/on_apply()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, "[type]")
 	return ..()

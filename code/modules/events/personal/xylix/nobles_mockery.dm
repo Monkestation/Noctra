@@ -19,7 +19,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(!istype(H) || H.stat == DEAD || !H.client || !istype(H.patron, /datum/patron/divine/xylix) || H.is_noble())
 			continue
-		if(locate(/obj/effect/proc_holder/spell/invoked/mockery) in H.mind.spell_list)
+		if(H.get_spell(/datum/action/cooldown/spell/undirected/list_target/vicious_mockery))
 			return TRUE
 	return FALSE
 
@@ -29,7 +29,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(!istype(H) || H.stat == DEAD || !H.client || !istype(H.patron, /datum/patron/divine/xylix) || H.is_noble())
 			continue
-		if(locate(/obj/effect/proc_holder/spell/invoked/mockery) in H.mind.spell_list)
+		if(H.get_spell(/datum/action/cooldown/spell/undirected/list_target/vicious_mockery))
 			valid_targets += H
 
 	if(!length(valid_targets))

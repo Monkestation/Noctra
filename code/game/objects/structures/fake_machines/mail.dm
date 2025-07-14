@@ -31,10 +31,11 @@
 			show_inquisitor_shop(user)
 			return
 
-/obj/structure/fake_machine/mail/attack_right(mob/user)
+/obj/structure/fake_machine/mail/attack_hand_secondary(mob/user, params)
 	. = ..()
-	if(.)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(!coin_loaded)
 		to_chat(user, "<span class='warning'>The machine doesn't respond. It needs a coin.</span>")

@@ -18,8 +18,12 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	//game-preferences
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
+	/// color of the players text in OOC messages
 	var/ooccolor = null
+	/// color of admin's asay messages
 	var/asaycolor = "#ff4500"			//This won't change the color for current admins, only incoming ones.
+	/// pronouns that will be shown when hovering over the users name in OOC messages
+	var/oocpronouns = ""
 	/// the ghost icon this admin ghost will get when becoming an aghost.
 	var/admin_ghost_icon = null
 	var/ui_theme = UI_PREFERENCE_LIGHT_MODE
@@ -63,27 +67,68 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/uses_glasses_colour = 0
 
 	//character preferences
-	var/slot_randomized					//keeps track of round-to-round randomization of the character slot, prevents overwriting
-	var/real_name						//our character's name
-	var/gender = MALE					//gender of character (well duh)
-	var/age = AGE_ADULT						//age of character
+	/// Keeps track of round-to-round randomization of the character slot, prevents overwriting.
+	var/slot_randomized
+
+	/// The character's real name.
+	var/real_name
+
+	/// Gender of character (used for masculine or feminine model selection).
+	var/gender = MALE
+
+	/// Character's pronouns.
+	var/pronouns = HE_HIM
+
+	/// The type of voice soundpack the mob should use.
+	var/voice_type = VOICE_TYPE_MASC
+
+	/// Age of character.
+	var/age = AGE_ADULT
+
+	/// Character's origin.
 	var/origin = "Default"
-	var/underwear = "Nude"				//underwear type
-	var/underwear_color = null			//underwear color
-	var/undershirt = "Nude"				//undershirt type
+
+	/// Underwear type.
+	var/underwear = "Nude"
+
+	/// Underwear color.
+	var/underwear_color = null
+
+	/// Undershirt type.
+	var/undershirt = "Nude"
+
+	/// Accessory type.
 	var/accessory = "Nothing"
+
+	/// Detail type.
 	var/detail = "Nothing"
-	var/socks = "Nude"					//socks type
-	var/skin_tone = "caucasian1"		//Skin color
-	var/eye_color = "000"				//Eye color
+
+	/// Socks type.
+	var/socks = "Nude"
+
+	/// Skin color.
+	var/skin_tone = "caucasian1"
+
+	/// Eye color.
+	var/eye_color = "000"
+
+	/// Voice color.
 	var/voice_color = "a0a0a0"
+
+	/// Detail color.
 	var/detail_color = "000"
+
 	/// link to a page containing your headshot image
 	var/headshot_link
+
 	/// text of your flavor
 	var/flavortext
+
+	/// The species this character is.
 	var/datum/species/pref_species = new /datum/species/human/northern()	//Mutant race
+	/// The patron/god/diety this character worships
 	var/datum/patron/selected_patron
+	/// The default patron to use if none is selected
 	var/static/datum/patron/default_patron = /datum/patron/divine/astrata
 	var/list/features = MANDATORY_FEATURE_LIST
 	var/list/randomise = list(
@@ -95,6 +140,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		(RANDOM_SKIN_TONE) = FALSE,
 		(RANDOM_EYE_COLOR) = FALSE
 	)
+
 	var/phobia = "spiders"
 
 	var/list/custom_names = list()
@@ -105,7 +151,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		// Want randomjob if preferences already filled - Donkie
 	var/joblessrole = RETURNTOLOBBY  //defaults to 1 for fewer assistants
 
-	// 0 = character settings, 1 = game preferences
+	/// 0 = character settings, 1 = game preferences
 	var/current_tab = 0
 
 	var/unlock_content = 0
@@ -117,8 +163,14 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/parallax
 
 	var/ambientocclusion = TRUE
+	///Should we automatically fit the viewport?
 	var/auto_fit_viewport = FALSE
+	///Should we be in the widescreen mode set by the config?
 	var/widescreenpref = TRUE
+	///What size should pixels be displayed as? 0 is strech to fit
+	var/pixel_size = 0
+	///What scaling method should we use?
+	var/scaling_method = "normal"
 
 	var/musicvol = 50
 	var/mastervol = 50
@@ -139,7 +191,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/alignment = ALIGNMENT_TN
 	var/datum/charflaw/charflaw
 
-	//Family system
+	/// Family system
 	var/family = FAMILY_NONE
 	var/setspouse = ""
 
@@ -160,6 +212,9 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/selected_accent = ACCENT_DEFAULT
 	/// If our owner has patreon access
 	var/patreon = FALSE
+
+	/// If the user clicked "Don't ask again" on the randomize character prompt
+	var/randomize_shutup = FALSE
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -304,18 +359,19 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	dat += "<BR>"
 	dat += "<b>Species:</b> <a href='?_src_=prefs;preference=species;task=input'>[pref_species.name]</a>[spec_check() ? "" : " (!)"]<BR>"
+	dat += "<b>Pronouns:</b> <a href='?_src_=prefs;preference=pronouns;task=input'>[pronouns]</a><BR>"
 
 	if(!(AGENDER in pref_species.species_traits))
 		var/dispGender
 		if(gender == MALE)
-			dispGender = "Man"
+			dispGender = "Masculine" // repurpose gender as bodytype, display accordingly
 		else if(gender == FEMALE)
-			dispGender = "Woman"
+			dispGender = "Feminine" // repurpose gender as bodytype, display accordingly
 		else
 			dispGender = "Other"
-		dat += "<b>Sex:</b> <a href='?_src_=prefs;preference=gender'>[dispGender]</a><BR>"
+		dat += "<b>Body Type:</b> <a href='?_src_=prefs;preference=gender'>[dispGender]</a><BR>"
 		if(randomise[RANDOM_BODY] || randomise[RANDOM_BODY_ANTAG]) //doesn't work unless random body
-			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_GENDER]'>Always Random Gender: [(randomise[RANDOM_GENDER]) ? "Yes" : "No"]</A>"
+			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_GENDER]'>Always Random Bodytype: [(randomise[RANDOM_GENDER]) ? "Yes" : "No"]</A>"
 			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_GENDER_ANTAG]'>When Antagonist: [(randomise[RANDOM_GENDER_ANTAG]) ? "Yes" : "No"]</A>"
 
 	if(AGE_IMMORTAL in pref_species.possible_ages)
@@ -355,7 +411,9 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		//dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_SKIN_TONE]'>[(randomise[RANDOM_SKIN_TONE]) ? "Lock" : "Unlock"]</A>"
 		dat += "<br>"
 
-	dat += "<b>Voice Color: </b><a href='?_src_=prefs;preference=voice;task=input'>Change</a>"
+	dat += "<br>"
+	dat += "<b>Voice Type:</b> <a href='?_src_=prefs;preference=voicetype;task=input'>[voice_type]</a>"
+	dat += "<br><b>Voice Color:</b> <a href='?_src_=prefs;preference=voice;task=input'>Change</a>"
 	dat += "<br><b>Accent:</b> <a href='?_src_=prefs;preference=selected_accent;task=input'>[selected_accent]</a>"
 	dat += "<br>"
 	dat += "<br><b>Features:</b> <a href='?_src_=prefs;preference=customizers;task=menu'>Change</a>"
@@ -379,13 +437,10 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		dat += "<a href='?_src_=prefs;preference=save'>Save</a><br>"
 		dat += "<a href='?_src_=prefs;preference=load'>Undo</a><br>"
 
-	dat += "<br></td>"
-	dat += "<a href='?_src_=prefs;preference=loreprimer'>LORE PRIMER</a><br>"
-
 	// well.... one empty slot here for something I suppose lol
 	dat += "<table width='100%'>"
 	dat += "<tr>"
-	dat += "<td width='33%' align='left'></td>"
+	dat += "<td width='33%' align='left'><a href='?_src_=prefs;preference=loreprimer'>LORE PRIMER</a></td>"
 	dat += "<td width='33%' align='center'>"
 	var/mob/dead/new_player/N = user
 	if(istype(N))
@@ -1007,7 +1062,43 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					if(new_age)
 						age = new_age
 						ResetJobs(user)
+				if ("pronouns")
+					var/list/allowed_pronouns = pref_species.allowed_pronouns
+					if(!allowed_pronouns || !length(allowed_pronouns))
+						// fallback to the default pronouns list
+						allowed_pronouns = PRONOUNS_LIST
 
+					if(length(allowed_pronouns) == 1)
+						pronouns = allowed_pronouns[1]
+						to_chat(user, span_warning("This species can only use [pronouns]."))
+						return
+
+					var/pronouns_input = browser_input_list(user, "CHOOSE HOW MORTALS REFER TO YOUR HERO", "DISOBEY SOCIAL NORMS", allowed_pronouns)
+					if(pronouns_input)
+						pronouns = pronouns_input
+						to_chat(user, span_warning("Your character's pronouns are now [pronouns]."))
+				if ("voicetype")
+					var/list/allowed_voices
+					if(gender == MALE)
+						allowed_voices = pref_species.allowed_voicetypes_m
+					else if(gender == FEMALE)
+						allowed_voices = pref_species.allowed_voicetypes_f
+					else
+						allowed_voices = VOICE_TYPES_LIST
+					if(!allowed_voices || !length(allowed_voices))
+						allowed_voices = VOICE_TYPES_LIST
+					if(length(allowed_voices) == 1)
+						voice_type = allowed_voices[1]
+						to_chat(user, span_warning("This species can only use the [voice_type] voice type."))
+						return
+
+					var/voicetype_input = browser_input_list(user, "CHOOSE YOUR HERO'S VOICE TYPE", "DISCARD SOCIETY'S EXPECTATIONS", allowed_voices)
+					if(voicetype_input)
+						voice_type = voicetype_input
+						// TODO: remove the notice when we have a sound pack for androgynous voices
+						if(voicetype_input == VOICE_TYPE_ANDRO)
+							to_chat(user, span_warning("Heads up, we don't have a soundpack for androgynous voices, so it will use the fem voicepack by default, pitched down a bit to achieve a more androgynous sound."))
+						to_chat(user, span_warning("Your character will now vocalize with a [lowertext(voice_type)] affect."))
 				if("faith")
 					var/list/faiths_named = list()
 					for(var/path as anything in GLOB.preference_faiths)
@@ -1080,6 +1171,14 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						to_chat(user, "<em>[pref_species.name]</em>")
 						if(pref_species.desc)
 							to_chat(user, "[pref_species.desc]")
+
+						if(!length(pref_species.allowed_pronouns))
+							to_chat(user, span_warning("This species does not have any allowed pronouns. Please contact a coder to add them."))
+						else if (length(pref_species.allowed_pronouns) == 1)
+							pronouns = pref_species.allowed_pronouns[1]
+						else
+							if(!(pronouns in pref_species.allowed_pronouns))
+								pronouns = pref_species.allowed_pronouns[1]
 
 						//Now that we changed our species, we must verify that the mutant colour is still allowed.
 						real_name = pref_species.random_name(gender,1)
@@ -1332,7 +1431,31 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 				if("widescreenpref")
 					widescreenpref = !widescreenpref
-					user.client.change_view(CONFIG_GET(string/default_view))
+					user.client.view_size.setDefault(getScreenSize(widescreenpref))
+
+				if("pixel_size")
+					switch(pixel_size)
+						if(PIXEL_SCALING_AUTO)
+							pixel_size = PIXEL_SCALING_1X
+						if(PIXEL_SCALING_1X)
+							pixel_size = PIXEL_SCALING_1_2X
+						if(PIXEL_SCALING_1_2X)
+							pixel_size = PIXEL_SCALING_2X
+						if(PIXEL_SCALING_2X)
+							pixel_size = PIXEL_SCALING_3X
+						if(PIXEL_SCALING_3X)
+							pixel_size = PIXEL_SCALING_AUTO
+					user.client.view_size.apply() //Let's winset() it so it actually works
+
+				if("scaling_method")
+					switch(scaling_method)
+						if(SCALING_METHOD_NORMAL)
+							scaling_method = SCALING_METHOD_DISTORT
+						if(SCALING_METHOD_DISTORT)
+							scaling_method = SCALING_METHOD_BLUR
+						if(SCALING_METHOD_BLUR)
+							scaling_method = SCALING_METHOD_NORMAL
+					user.client.view_size.setZoomMode()
 
 				if("schizo_voice")
 					toggles ^= SCHIZO_VOICE
@@ -1397,6 +1520,13 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 							save_character()
 
 				if("randomiseappearanceprefs")
+					if (!randomize_shutup)
+						var/alert_response = browser_alert(user, "Are you sure you want to randomise your appearance preferences? This will overwrite your current preferences.", "Randomise Appearance Preferences", list("Yes", "No", "Don't Ask Again This Round (Yes)"))
+						if(alert_response != "Yes")
+							if(alert_response == "Don't Ask Again This Round (Yes)")
+								randomize_shutup = TRUE
+							else
+								return
 					randomise_appearance_prefs(include_patreon = patreon)
 					customizer_entries = list()
 					validate_customizer_entries()
@@ -1466,6 +1596,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	character.headshot_link = headshot_link
 	character.flavortext = flavortext
+	character.pronouns = pronouns
+	character.voice_type = voice_type
 
 	character.domhand = domhand
 	character.voice_color = voice_color

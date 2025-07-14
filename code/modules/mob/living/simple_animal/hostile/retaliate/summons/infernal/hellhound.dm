@@ -48,14 +48,13 @@
 
 	ai_controller = /datum/ai_controller/hellhound
 
-
+	del_on_death = TRUE
 
 /mob/living/simple_animal/hostile/retaliate/infernal/hellhound/Initialize()
 	. = ..()
 	AddComponent(/datum/component/ai_aggro_system)
 
 /mob/living/simple_animal/hostile/retaliate/infernal/hellhound/death(gibbed)
-	..()
 	var/turf/deathspot = get_turf(src)
 	new /obj/item/natural/hellhoundfang(deathspot)
 	new /obj/item/natural/hellhoundfang(deathspot)
@@ -64,6 +63,5 @@
 	new /obj/item/natural/infernalash(deathspot)
 	new /obj/item/natural/infernalash(deathspot)
 	new /obj/item/natural/infernalash(deathspot)
-	update_appearance()
 	spill_embedded_objects()
-	qdel(src)
+	return ..()

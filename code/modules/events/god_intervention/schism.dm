@@ -47,7 +47,9 @@ GLOBAL_LIST_EMPTY(tennite_schisms)
 	if(!istype(H) || H.stat == DEAD || !H.mind)
 		return
 
-	H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/choose_schism_side)
+	var/datum/action/innate/choose_schism_side/choose = new(src)
+	choose.Grant(H)
+
 	if(!is_tennite(H))
 		to_chat(H, span_notice("Even though you are not a tennite and won't matter in the ultimate resolution of this conflict, you may pretend to be one and use the schism to further your own goals..."))
 
@@ -79,8 +81,9 @@ GLOBAL_LIST_EMPTY(tennite_schisms)
 		for(var/datum/weakref/supporter_ref in supporters_astrata)
 			var/mob/living/carbon/human/supporter = supporter_ref.resolve()
 			if(supporter && supporter.patron == astrata)
-				for(var/obj/effect/proc_holder/spell/self/choose_schism_side/spell in supporter.mind.spell_list)
-					if(spell.chose_early)
+
+				for(var/datum/action/innate/choose_schism_side/choose in supporter.actions)
+					if(choose.chose_early)
 						to_chat(supporter, span_notice("Astrata's light prevails! Your steadfast devotion is rewarded with many triumphs."))
 						supporter.adjust_triumphs(3)
 					else
@@ -106,16 +109,16 @@ GLOBAL_LIST_EMPTY(tennite_schisms)
 		for(var/datum/weakref/supporter_ref in supporters_challenger)
 			var/mob/living/carbon/human/supporter = supporter_ref.resolve()
 			if(supporter && supporter.patron == challenger)
-				for(var/obj/effect/proc_holder/spell/self/choose_schism_side/spell in supporter.mind.spell_list)
-					if(spell.chose_early)
+				for(var/datum/action/innate/choose_schism_side/choose in supporter.actions)
+					if(choose.chose_early)
 						to_chat(supporter, span_notice("[challenger.name]'s challenge succeeds! Your persistent faith is rewarded with triumphs."))
 						supporter.adjust_triumphs(2)
 					else
 						to_chat(supporter, span_notice("[challenger.name] succeeds, but your late support goes unrewarded."))
 					break
 			else if(supporter)
-				for(var/obj/effect/proc_holder/spell/self/choose_schism_side/spell in supporter.mind.spell_list)
-					if(spell.chose_early)
+				for(var/datum/action/innate/choose_schism_side/choose in supporter.actions)
+					if(choose.chose_early)
 						to_chat(supporter, span_notice("[challenger.name]'s challenge succeeds against Astrata's tyranny! Your support is rewarded with a triumph."))
 						supporter.adjust_triumphs(1)
 					else
@@ -193,11 +196,6 @@ GLOBAL_LIST_EMPTY(tennite_schisms)
 	cleanup_schism()
 
 /datum/tennite_schism/proc/cleanup_schism()
-	for(var/mob/living/carbon/human/H in GLOB.human_list)
-		if(!H.mind)
-			continue
-		H.mind.RemoveSpell(/obj/effect/proc_holder/spell/self/choose_schism_side)
-
 	qdel(src)
 
 /// Announces the current standings in the schism
@@ -246,24 +244,25 @@ GLOBAL_LIST_EMPTY(tennite_schisms)
 			neutrals += WEAKREF(user)
 			to_chat(user, span_notice("You have declared neutrality in the schism."))
 
-/obj/effect/proc_holder/spell/self/choose_schism_side
+/datum/action/innate/choose_schism_side
 	name = "Choose your side"
-	overlay_state = "limb_attach"
-	recharge_time = 20 SECONDS
+	button_icon_state = "limb_attach"
+
 	var/chose_early = FALSE
 	var/uses_remaining = 2
 
-/obj/effect/proc_holder/spell/self/choose_schism_side/cast(mob/living/carbon/human/user)
+/datum/action/innate/choose_schism_side/Activate()
+	. = ..()
 	if(!length(GLOB.tennite_schisms))
-		to_chat(user, span_warning("There is no active schism to participate in."))
+		to_chat(owner, span_warning("There is no active schism to participate in."))
+		return
+
+	if(uses_remaining <= 0)
+		to_chat(owner, span_warning("You've already finalized your allegiance in the schism."))
 		return
 
 	var/datum/tennite_schism/current_schism = GLOB.tennite_schisms[1]
 	var/datum/patron/challenger = current_schism.challenger_god.resolve()
-
-	if(uses_remaining <= 0)
-		to_chat(user, span_warning("You've already finalized your allegiance in the schism."))
-		return
 
 	var/list/options = list()
 	options["Astrata"] = "astrata"
@@ -271,12 +270,12 @@ GLOBAL_LIST_EMPTY(tennite_schisms)
 	if(challenger)
 		options["[challenger.name]"] = "challenger"
 
-	var/choice = input(user, "Choose your allegiance in the schism, you can change your side [uses_remaining] more time\s", "Choose your side") as null|anything in options
+	var/choice = input(owner, "Choose your allegiance in the schism, you can change your side [uses_remaining] more time\s", "Choose your side") as null|anything in options
 	if(!choice || !current_schism)
 		return
 
 	var/current_side
-	var/datum/weakref/user_ref = WEAKREF(user)
+	var/datum/weakref/user_ref = WEAKREF(owner)
 	if(user_ref in current_schism.supporters_astrata)
 		current_side = "astrata"
 	else if(user_ref in current_schism.supporters_challenger)
@@ -285,20 +284,17 @@ GLOBAL_LIST_EMPTY(tennite_schisms)
 		current_side = "neutral"
 
 	if(options[choice] == current_side)
-		to_chat(user, span_notice("You're already supporting this side!"))
+		to_chat(owner, span_notice("You're already supporting this side!"))
 		return
 
 	uses_remaining--
-	current_schism.change_side(user, options[choice])
+	current_schism.change_side(owner, options[choice])
 
 	if(!current_schism.halfway_passed)
 		chose_early = TRUE
 
 	if(uses_remaining <= 0)
-		if(action)
-			action.UpdateButtonIcon()
-		to_chat(user, span_boldnotice("Your allegiance in the schism is now final."))
-	return ..()
+		to_chat(owner, span_boldnotice("Your allegiance in the schism is now final."))
 
 /datum/round_event_control/schism_within_ten
 	name = "Schism within the Ten"

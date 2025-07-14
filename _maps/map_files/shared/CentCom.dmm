@@ -1724,10 +1724,6 @@
 /obj/structure/irrigation_channel,
 /turf/open/floor/grass/yel,
 /area/rogue/outdoors)
-"hQ" = (
-/obj/effect/proc_holder/spell/invoked/heal,
-/turf/open/floor/carpet,
-/area/rogue/indoors)
 "hR" = (
 /obj/item/weapon/thresher,
 /obj/item/weapon/thresher,
@@ -3028,18 +3024,6 @@
 /obj/item/book/tales1,
 /turf/open/floor/herringbone,
 /area/rogue/indoors/vampire_manor)
-"qX" = (
-/obj/item/clothing/neck/mercator,
-/obj/item/clothing/neck/shalal,
-/obj/item/clothing/neck/psycross/silver/astrata,
-/obj/item/clothing/neck/psycross/silver/dendor,
-/obj/item/clothing/neck/psycross/silver/eora,
-/obj/item/clothing/neck/psycross/g,
-/obj/item/clothing/neck/psycross/silver/necra,
-/obj/item/clothing/neck/psycross/noc,
-/obj/item/clothing/neck/psycross/silver/ravox,
-/turf/open/floor/wood,
-/area/rogue/indoors)
 "qY" = (
 /obj/structure/fluff/railing/border{
 	pixel_y = 24
@@ -3071,6 +3055,18 @@
 /obj/structure/flora/grass/water/reeds,
 /turf/open/water/swamp/deep,
 /area/rogue/outdoors/bog/inhumen_camp)
+"rf" = (
+/obj/item/clothing/neck/mercator,
+/obj/item/clothing/neck/shalal,
+/obj/item/clothing/neck/psycross/silver/astrata,
+/obj/item/clothing/neck/psycross/silver/dendor,
+/obj/item/clothing/neck/psycross/silver/eora,
+/obj/item/clothing/neck/psycross/g,
+/obj/item/clothing/neck/psycross/silver/necra,
+/obj/item/clothing/neck/psycross/noc,
+/obj/item/clothing/neck/psycross/silver/ravox,
+/turf/open/floor/wood,
+/area/rogue/indoors)
 "ri" = (
 /obj/structure/fluff/walldeco/painting/skull{
 	pixel_y = 32
@@ -17727,7 +17723,7 @@ UN
 Tk
 fy
 Eg
-hQ
+fy
 fy
 fy
 fy
@@ -21480,7 +21476,7 @@ ag
 aw
 sP
 iu
-qX
+rf
 ba
 ba
 ba

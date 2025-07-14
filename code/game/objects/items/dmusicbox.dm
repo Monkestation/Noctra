@@ -60,13 +60,18 @@
 			return
 	return ..()
 
-/obj/item/dmusicbox/rmb_self(mob/user)
-	attack_right(user)
-
-/obj/item/dmusicbox/attack_right(mob/user)
+/obj/item/dmusicbox/attack_self_secondary(mob/user, params)
 	. = ..()
-	if(.)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
+	attack_hand_secondary(user, params)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/dmusicbox/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(loc != user)
 		return
 	if(!user.ckey)
@@ -107,7 +112,7 @@
 	loaded = FALSE
 	update_appearance(UPDATE_ICON_STATE)
 
-/obj/item/dmusicbox/attack_self(mob/living/user)
+/obj/item/dmusicbox/attack_self(mob/living/user, params)
 	. = ..()
 	if(.)
 		return

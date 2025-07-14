@@ -151,12 +151,14 @@
 	. = ..()
 	AddComponent(/datum/component/storage/concrete/grid/cloak/lord)
 
-/obj/item/clothing/cloak/cape/crusader/attack_right(mob/user)
+/obj/item/clothing/cloak/cape/crusader/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	var/datum/component/storage/CP = GetComponent(/datum/component/storage)
 	if(CP)
 		CP.rmb_show(user)
-		return TRUE
-	..()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/cloak/cape/crusader/dropped(mob/living/carbon/human/user)
 	..()

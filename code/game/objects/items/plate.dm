@@ -102,7 +102,7 @@
 		scattered_item.pixel_y = scatter_vector[2]
 		scattered_item.throw_impact(hit_atom, throwingdatum)
 
-/obj/item/plate/attack_self(mob/user)
+/obj/item/plate/attack_self(mob/user, params)
 	. = ..()
 	if(contents.len) // If the tray isn't empty
 		for(var/obj/item/scattered_item as anything in contents)

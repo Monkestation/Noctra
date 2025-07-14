@@ -33,8 +33,9 @@
 		return
 	var/list/filtered = list()
 	for(var/area/A as anything in get_sorted_areas())
-		if(!A.hidden)
-			filtered += A
+		if(A.area_flags & (HIDDEN_AREA|NO_TELEPORT))
+			continue
+		filtered += A
 	var/area/thearea  = input("Area to jump to", "VANDERLIN") as null|anything in filtered
 
 	if(!thearea)
@@ -144,10 +145,6 @@
 	Moved(oldloc, direct)
 
 /mob/proc/scry(can_reenter_corpse = 1, force_respawn = FALSE, drawskip)
-	stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
-	SSdroning.kill_rain(client)
-	SSdroning.kill_loop(client)
-	SSdroning.kill_droning(client)
 	stop_sound_channel(CHANNEL_HEARTBEAT) //Stop heartbeat sounds because You Are A Ghost Now
 	var/mob/dead/observer/rogue/arcaneeye/eye = new(src)	// Transfer safety to observer spawning proc.
 	SStgui.on_transfer(src, eye) // Transfer NanoUIs.

@@ -14,7 +14,7 @@
 	hitsound = 'sound/items/bsmith1.ogg'
 	COOLDOWN_DECLARE(bell_ring)
 
-/obj/item/handheld_bell/attack_self(mob/user)
+/obj/item/handheld_bell/attack_self(mob/user, params)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, bell_ring))
 		return

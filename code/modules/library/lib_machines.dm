@@ -91,7 +91,11 @@
 		to_chat(user, span_warning("[src] is empty."))
 		return
 
-/obj/machinery/printingpress/attack_right(mob/user)
+/obj/machinery/printingpress/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(printing)
 		to_chat(user, span_warning("[src] is currently printing. Please wait."))
 		return

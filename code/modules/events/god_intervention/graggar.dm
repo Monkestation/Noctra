@@ -130,7 +130,7 @@ GLOBAL_LIST_EMPTY(graggar_cullings)
 
 		// Notify first chosen
 		first_chosen.add_stress(/datum/stressevent/graggar_culling_unfinished)
-		first_chosen.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/extract_heart)
+		first_chosen.add_spell(/datum/action/cooldown/spell/extract_heart)
 		first_chosen.verbs |= /mob/living/carbon/human/proc/remember_culling
 		to_chat(first_chosen, span_userdanger("YOU ARE GRAGGAR'S CONTESTANT!"))
 		to_chat(first_chosen, span_red("Weak should feed the strong, that is Graggar's will. Prove that you are not weak by eating the heart of [span_notice(second_chosen.real_name)], the [second_chosen.job] and gain unimaginable power in turn. Fail, and you will be the one eaten."))
@@ -141,7 +141,7 @@ GLOBAL_LIST_EMPTY(graggar_cullings)
 
 		// Notify second chosen
 		second_chosen.add_stress(/datum/stressevent/graggar_culling_unfinished)
-		second_chosen.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/extract_heart)
+		second_chosen.add_spell(/datum/action/cooldown/spell/extract_heart)
 		second_chosen.verbs |= /mob/living/carbon/human/proc/remember_culling
 		to_chat(second_chosen, span_userdanger("YOU ARE GRAGGAR'S CONTESTANT!"))
 		to_chat(second_chosen, span_red("Weak should feed the strong, that is Graggar's will. Prove that you are not weak by eating the heart of [span_notice(first_chosen.real_name)], the [first_chosen.job] and gain unimaginable power in turn. Fail, and you will be the one eaten."))

@@ -179,7 +179,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		return ..()
 	else
 		if(try_tame(O, user))
-			SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, O, user, params) // for udder functionality
+			SEND_SIGNAL(src, COMSIG_ATOM_ATTACKBY, O, user, params) // for udder functionality
 			return TRUE
 	. = ..()
 

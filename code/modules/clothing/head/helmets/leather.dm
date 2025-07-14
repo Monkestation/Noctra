@@ -92,7 +92,6 @@
 	desc = "Boiled leather kettle-like helmet with a headlamp, fueled by magiks."
 	icon_state = "minerslamp"
 	item_state = "minerslamp"
-	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	sellprice = VALUE_LEATHER_HELMET+BONUS_VALUE_MODEST
 
 	armor = ARMOR_PADDED
@@ -106,7 +105,7 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 	return ..()
 
-/obj/item/clothing/head/helmet/leather/minershelm/attack_self(mob/living/user)
+/obj/item/clothing/head/helmet/leather/minershelm/attack_self(mob/living/user, params)
 	toggle_helmet_light(user)
 
 /obj/item/clothing/head/helmet/leather/minershelm/proc/toggle_helmet_light(mob/living/user)
@@ -116,8 +115,6 @@
 	else
 		turn_off(user)
 	update_appearance(UPDATE_ICON_STATE)
-	for(var/datum/action/A as anything in actions)
-		A.UpdateButtonIcon(force = TRUE)
 
 /obj/item/clothing/head/helmet/leather/minershelm/update_icon_state()
 	. = ..()

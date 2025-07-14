@@ -107,7 +107,7 @@
 	grid_width = 32
 	grid_height = 32
 
-/obj/item/harlequinn_disguise_kit/attack_self(mob/user)
+/obj/item/harlequinn_disguise_kit/attack_self(mob/user, params)
 	var/list/options = list(
 		"Quick Disguise" = "quick",
 		"Detailed Disguise" = "detailed",

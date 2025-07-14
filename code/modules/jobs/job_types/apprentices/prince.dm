@@ -20,7 +20,7 @@
 	)
 
 	spells = list(
-		/obj/effect/proc_holder/spell/self/grant_title,
+		/datum/action/cooldown/spell/undirected/list_target/grant_title,
 	)
 
 	allowed_sexes = list(MALE, FEMALE)

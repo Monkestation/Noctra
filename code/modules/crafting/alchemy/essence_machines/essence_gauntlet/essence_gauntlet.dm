@@ -15,53 +15,53 @@
 
 	// Single essence spells
 	essence_spell_mapping = list(
-		/datum/thaumaturgical_essence/air = list(/obj/effect/proc_holder/spell/invoked/utility/breeze, /obj/effect/proc_holder/spell/invoked/utility/air_walk),
-		/datum/thaumaturgical_essence/water = list(/obj/effect/proc_holder/spell/invoked/utility/cleanse, /obj/effect/proc_holder/spell/invoked/utility/water_breathing),
-		/datum/thaumaturgical_essence/fire = list(/obj/effect/proc_holder/spell/invoked/utility/spark, /obj/effect/proc_holder/spell/invoked/utility/warmth),
-		/datum/thaumaturgical_essence/earth = list(/obj/effect/proc_holder/spell/invoked/utility/mend, /obj/effect/proc_holder/spell/invoked/utility/stone_shape),
-		/datum/thaumaturgical_essence/frost = list(/obj/effect/proc_holder/spell/invoked/utility/chill, /obj/effect/proc_holder/spell/invoked/utility/preserve),
-		/datum/thaumaturgical_essence/light = list(/obj/effect/proc_holder/spell/invoked/utility/illuminate, /obj/effect/proc_holder/spell/invoked/utility/daylight),
-		/datum/thaumaturgical_essence/motion = list(/obj/effect/proc_holder/spell/invoked/utility/haste, /obj/effect/proc_holder/spell/invoked/utility/phase_step),
-		/datum/thaumaturgical_essence/life = list(/obj/effect/proc_holder/spell/invoked/utility/refresh, /obj/effect/proc_holder/spell/invoked/utility/vigor),
-		/datum/thaumaturgical_essence/order = list(/obj/effect/proc_holder/spell/invoked/utility/stabilize),
-		/datum/thaumaturgical_essence/chaos = list(/obj/effect/proc_holder/spell/invoked/utility/randomize),
-		/datum/thaumaturgical_essence/void = list(/obj/effect/proc_holder/spell/invoked/utility/silence),
-		/datum/thaumaturgical_essence/poison = list(/obj/effect/proc_holder/spell/invoked/utility/neutralize, /obj/effect/proc_holder/spell/invoked/utility/detect_poison),
-		/datum/thaumaturgical_essence/crystal = list(/obj/effect/proc_holder/spell/invoked/utility/gem_detect),
-		/datum/thaumaturgical_essence/magic = list(/obj/effect/proc_holder/spell/invoked/utility/arcane_mark),
-		/datum/thaumaturgical_essence/energia = list(/obj/effect/proc_holder/spell/invoked/utility/energize, /obj/effect/proc_holder/spell/invoked/utility/power_surge),
-		/datum/thaumaturgical_essence/cycle = list(/obj/effect/proc_holder/spell/invoked/utility/seasonal_attune)
+		/datum/thaumaturgical_essence/air = list(/datum/action/cooldown/spell/essence/breeze, /datum/action/cooldown/spell/essence/air_walk),
+		/datum/thaumaturgical_essence/water = list(/datum/action/cooldown/spell/essence/cleanse, /datum/action/cooldown/spell/essence/water_breathing),
+		/datum/thaumaturgical_essence/fire = list(/datum/action/cooldown/spell/essence/spark, /datum/action/cooldown/spell/essence/warmth),
+		/datum/thaumaturgical_essence/earth = list(/datum/action/cooldown/spell/essence/mend, /datum/action/cooldown/spell/essence/stone_shape),
+		/datum/thaumaturgical_essence/frost = list(/datum/action/cooldown/spell/essence/chill, /datum/action/cooldown/spell/essence/preserve),
+		/datum/thaumaturgical_essence/light = list(/datum/action/cooldown/spell/essence/illuminate, /datum/action/cooldown/spell/essence/daylight),
+		/datum/thaumaturgical_essence/motion = list(/datum/action/cooldown/spell/essence/haste, /datum/action/cooldown/spell/essence/phase_step),
+		/datum/thaumaturgical_essence/life = list(/datum/action/cooldown/spell/essence/refresh, /datum/action/cooldown/spell/essence/vigor),
+		/datum/thaumaturgical_essence/order = list(/datum/action/cooldown/spell/essence/stabilize),
+		/datum/thaumaturgical_essence/chaos = list(/datum/action/cooldown/spell/essence/randomize),
+		/datum/thaumaturgical_essence/void = list(/datum/action/cooldown/spell/essence/silence),
+		/datum/thaumaturgical_essence/poison = list(/datum/action/cooldown/spell/essence/neutralize, /datum/action/cooldown/spell/essence/detect_poison),
+		/datum/thaumaturgical_essence/crystal = list(/datum/action/cooldown/spell/essence/gem_detect),
+		/datum/thaumaturgical_essence/magic = list(/datum/action/cooldown/spell/essence/arcane_mark),
+		/datum/thaumaturgical_essence/energia = list(/datum/action/cooldown/spell/essence/energize, /datum/action/cooldown/spell/essence/power_surge),
+		/datum/thaumaturgical_essence/cycle = list(/datum/action/cooldown/spell/essence/seasonal_attune)
 	)
 
 	// Combo spells - require two different essences
 	combo_spell_mapping = list(
-		list(/datum/thaumaturgical_essence/fire, /datum/thaumaturgical_essence/air) = list(/obj/effect/proc_holder/spell/invoked/utility/flame_jet),
-		list(/datum/thaumaturgical_essence/water, /datum/thaumaturgical_essence/earth) = list(/obj/effect/proc_holder/spell/invoked/utility/mud_shape, /obj/effect/proc_holder/spell/invoked/utility/fertile_soil),
-		list(/datum/thaumaturgical_essence/fire, /datum/thaumaturgical_essence/earth) = list(/obj/effect/proc_holder/spell/invoked/utility/forge_heat),
-		list(/datum/thaumaturgical_essence/frost, /datum/thaumaturgical_essence/water) = list(/obj/effect/proc_holder/spell/invoked/utility/ice_bridge, /obj/effect/proc_holder/spell/invoked/utility/frozen_storage),
-		list(/datum/thaumaturgical_essence/light, /datum/thaumaturgical_essence/fire) = list(/obj/effect/proc_holder/spell/invoked/utility/brilliant_flame, /obj/effect/proc_holder/spell/invoked/utility/solar_focus),
-		list(/datum/thaumaturgical_essence/life, /datum/thaumaturgical_essence/water) = list(/obj/effect/proc_holder/spell/invoked/utility/healing_spring, /obj/effect/proc_holder/spell/invoked/utility/purify_water),
-		list(/datum/thaumaturgical_essence/earth, /datum/thaumaturgical_essence/crystal) = list(/obj/effect/proc_holder/spell/invoked/utility/gem_growth, /obj/effect/proc_holder/spell/invoked/utility/mineral_sense),
-		list(/datum/thaumaturgical_essence/motion, /datum/thaumaturgical_essence/air) = list(/obj/effect/proc_holder/spell/invoked/utility/wind_step, /obj/effect/proc_holder/spell/invoked/utility/aerial_dash),
-		list(/datum/thaumaturgical_essence/order, /datum/thaumaturgical_essence/light) = list(/obj/effect/proc_holder/spell/invoked/utility/divine_order, /obj/effect/proc_holder/spell/invoked/utility/sacred_geometry),
-		list(/datum/thaumaturgical_essence/chaos, /datum/thaumaturgical_essence/void) = list(/obj/effect/proc_holder/spell/invoked/utility/reality_shift, /obj/effect/proc_holder/spell/invoked/utility/probability_warp),
-		list(/datum/thaumaturgical_essence/poison, /datum/thaumaturgical_essence/water) = list(/obj/effect/proc_holder/spell/invoked/utility/toxic_cleanse),
-		list(/datum/thaumaturgical_essence/magic, /datum/thaumaturgical_essence/crystal) = list(/obj/effect/proc_holder/spell/invoked/utility/spell_crystal, /obj/effect/proc_holder/spell/invoked/utility/arcane_focus),
-		list(/datum/thaumaturgical_essence/energia, /datum/thaumaturgical_essence/motion) = list(/obj/effect/proc_holder/spell/invoked/utility/kinetic_burst, /obj/effect/proc_holder/spell/invoked/utility/momentum_transfer),
-		list(/datum/thaumaturgical_essence/cycle, /datum/thaumaturgical_essence/life) = list(/obj/effect/proc_holder/spell/invoked/utility/regeneration_cycle, /obj/effect/proc_holder/spell/invoked/utility/growth_acceleration)
+		list(/datum/thaumaturgical_essence/fire, /datum/thaumaturgical_essence/air) = list(/datum/action/cooldown/spell/essence/flame_jet),
+		list(/datum/thaumaturgical_essence/water, /datum/thaumaturgical_essence/earth) = list(/datum/action/cooldown/spell/essence/mud_shape, /datum/action/cooldown/spell/essence/fertile_soil),
+		list(/datum/thaumaturgical_essence/fire, /datum/thaumaturgical_essence/earth) = list(/datum/action/cooldown/spell/essence/forge_heat),
+		list(/datum/thaumaturgical_essence/frost, /datum/thaumaturgical_essence/water) = list(/datum/action/cooldown/spell/essence/ice_bridge, /datum/action/cooldown/spell/essence/frozen_storage),
+		list(/datum/thaumaturgical_essence/light, /datum/thaumaturgical_essence/fire) = list(/datum/action/cooldown/spell/essence/brilliant_flame, /datum/action/cooldown/spell/essence/solar_focus),
+		list(/datum/thaumaturgical_essence/life, /datum/thaumaturgical_essence/water) = list(/datum/action/cooldown/spell/essence/healing_spring, /datum/action/cooldown/spell/essence/purify_water),
+		list(/datum/thaumaturgical_essence/earth, /datum/thaumaturgical_essence/crystal) = list(/datum/action/cooldown/spell/essence/gem_growth, /datum/action/cooldown/spell/essence/mineral_sense),
+		list(/datum/thaumaturgical_essence/motion, /datum/thaumaturgical_essence/air) = list(/datum/action/cooldown/spell/essence/wind_step, /datum/action/cooldown/spell/essence/aerial_dash),
+		list(/datum/thaumaturgical_essence/order, /datum/thaumaturgical_essence/light) = list(/datum/action/cooldown/spell/essence/divine_order, /datum/action/cooldown/spell/essence/sacred_geometry),
+		list(/datum/thaumaturgical_essence/chaos, /datum/thaumaturgical_essence/void) = list(/datum/action/cooldown/spell/essence/reality_shift, /datum/action/cooldown/spell/essence/probability_warp),
+		list(/datum/thaumaturgical_essence/poison, /datum/thaumaturgical_essence/water) = list(/datum/action/cooldown/spell/essence/toxic_cleanse),
+		list(/datum/thaumaturgical_essence/magic, /datum/thaumaturgical_essence/crystal) = list(/datum/action/cooldown/spell/essence/spell_crystal, /datum/action/cooldown/spell/essence/arcane_focus),
+		list(/datum/thaumaturgical_essence/energia, /datum/thaumaturgical_essence/motion) = list(/datum/action/cooldown/spell/essence/kinetic_burst, /datum/action/cooldown/spell/essence/momentum_transfer),
+		list(/datum/thaumaturgical_essence/cycle, /datum/thaumaturgical_essence/life) = list(/datum/action/cooldown/spell/essence/regeneration_cycle, /datum/action/cooldown/spell/essence/growth_acceleration)
 	)
 
 	// Racial combo spells
 	racial_combo_mapping = list(
 		"dwarf" = list(
-			list(/datum/thaumaturgical_essence/earth, /datum/thaumaturgical_essence/water) = list(/obj/effect/proc_holder/spell/invoked/utility/create_beer),
-			list(/datum/thaumaturgical_essence/fire, /datum/thaumaturgical_essence/earth) = list(/obj/effect/proc_holder/spell/invoked/utility/master_forge, /obj/effect/proc_holder/spell/invoked/utility/ancestral_smithing)
+			list(/datum/thaumaturgical_essence/earth, /datum/thaumaturgical_essence/water) = list(/datum/action/cooldown/spell/essence/create_beer),
+			list(/datum/thaumaturgical_essence/fire, /datum/thaumaturgical_essence/earth) = list(/datum/action/cooldown/spell/essence/master_forge, /datum/action/cooldown/spell/essence/ancestral_smithing)
 		),
 		"elf" = list(
-			list(/datum/thaumaturgical_essence/life, /datum/thaumaturgical_essence/light) = list(/obj/effect/proc_holder/spell/invoked/utility/elven_grace)
+			list(/datum/thaumaturgical_essence/life, /datum/thaumaturgical_essence/light) = list(/datum/action/cooldown/spell/essence/elven_grace)
 		),
 		"human" = list(
-			list(/datum/thaumaturgical_essence/order, /datum/thaumaturgical_essence/chaos) = list(/obj/effect/proc_holder/spell/invoked/utility/balanced_mind)
+			list(/datum/thaumaturgical_essence/order, /datum/thaumaturgical_essence/chaos) = list(/datum/action/cooldown/spell/essence/balanced_mind)
 		)
 	)
 
@@ -74,16 +74,19 @@
 	. = ..()
 	remove_essence_spells(user)
 
-
-/obj/item/clothing/gloves/essence_gauntlet/attack_right(mob/user)
-	if(!stored_vials.len)
+/obj/item/clothing/gloves/essence_gauntlet/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!length(stored_vials))
 		to_chat(user, span_warning("[src] has no vials to remove!"))
 		return
 
 	// Create radial menu for vial selection
 	var/list/radial_options = list()
 	var/list/vial_mapping = list()
-	for(var/i in 1 to stored_vials.len)
+	for(var/i in 1 to length(stored_vials))
 		var/obj/item/essence_vial/vial = stored_vials[i]
 		var/vial_desc = "Vial [i]"
 		var/display_name = "Vial [i]"
@@ -137,7 +140,7 @@
 			to_chat(user, span_warning("[vial] is empty!"))
 			return
 
-		if(stored_vials.len >= max_vials)
+		if(length(stored_vials) >= max_vials)
 			to_chat(user, span_warning("[src] cannot hold any more essence vials!"))
 			return
 
@@ -158,7 +161,7 @@
 /obj/item/clothing/gloves/essence_gauntlet/proc/can_consume_essence(required_amount, list/required_attunements)
 	var/total_available = 0
 
-	if(!required_attunements || !required_attunements.len)
+	if(!required_attunements || !length(required_attunements))
 		for(var/obj/item/essence_vial/vial in stored_vials)
 			if(vial.contained_essence && vial.essence_amount > 0)
 				total_available += vial.essence_amount
@@ -175,7 +178,7 @@
 /obj/item/clothing/gloves/essence_gauntlet/proc/consume_essence(amount, list/required_attunements)
 	var/remaining_to_consume = amount
 
-	if(!required_attunements || !required_attunements.len)
+	if(!required_attunements || !length(required_attunements))
 		for(var/obj/item/essence_vial/vial in stored_vials)
 			if(remaining_to_consume <= 0)
 				break
@@ -243,7 +246,7 @@
 	return TRUE
 
 /obj/item/clothing/gloves/essence_gauntlet/proc/update_granted_spells()
-	granted_spells.Cut()
+	granted_spells = list()
 	var/list/available_essences = get_available_essence_types()
 
 	// Add single essence spells
@@ -273,11 +276,11 @@
 	var/user_race = get_user_race(user)
 
 	// Grant single essence and combo spells
-	for(var/spell_type in granted_spells)
-		var/obj/effect/proc_holder/spell/essence_spell = new spell_type()
-		if(istype(essence_spell))
-			essence_spell.spell_flag |= SPELL_ESSENCE
-			living_user.mind?.AddSpell(essence_spell)
+	for(var/datum/action/spell_type as anything in granted_spells)
+		var/datum/action/cooldown/spell/spell = new spell_type
+		spell.spell_type = SPELL_ESSENCE
+		spell.link_to(src)
+		spell.Grant(living_user)
 
 	// Grant racial combo spells
 	if(user_race && (user_race in racial_combo_mapping))
@@ -285,11 +288,11 @@
 		for(var/list/combo_requirements in racial_combos)
 			if(check_combo_requirements(combo_requirements, available_essences))
 				var/list/racial_spells = racial_combos[combo_requirements]
-				for(var/spell_type in racial_spells)
-					var/obj/effect/proc_holder/spell/racial_spell = new spell_type()
-					if(istype(racial_spell))
-						racial_spell.spell_flag |= SPELL_ESSENCE
-						living_user.mind?.AddSpell(racial_spell)
+				for(var/datum/action/spell_type as anything in racial_spells)
+					var/datum/action/cooldown/spell/spell = new spell_type
+					spell.spell_type = SPELL_ESSENCE
+					spell.link_to(src)
+					spell.Grant(living_user)
 
 /obj/item/clothing/gloves/essence_gauntlet/proc/remove_essence_spells(mob/user)
 	if(!isliving(user) || !user.mind)
@@ -298,9 +301,7 @@
 	var/mob/living/living_user = user
 
 	// Remove all essence-flagged spells
-	for(var/obj/effect/proc_holder/spell/spell in living_user.mind.spell_list)
-		if(spell.spell_flag & SPELL_ESSENCE)
-			living_user.mind.RemoveSpell(spell)
+	living_user.remove_spells(source = src)
 
 /obj/item/clothing/gloves/essence_gauntlet/proc/essence_failure_feedback(mob/user)
 	to_chat(user, span_warning("[src] lacks sufficient essence to cast that spell!"))
@@ -312,9 +313,9 @@
 /obj/item/clothing/gloves/essence_gauntlet/examine(mob/user)
 	. = ..()
 
-	. += span_notice("Essence Vials ([stored_vials.len]/[max_vials]):")
+	. += span_notice("Essence Vials ([length(stored_vials)]/[max_vials]):")
 
-	if(!stored_vials.len)
+	if(!length(stored_vials))
 		. += span_notice("- No vials inserted")
 		. += span_notice("Right-click to remove vials when available")
 		return
@@ -334,7 +335,7 @@
 	. += span_notice("Right-click to remove vials")
 
 	// Show available combo spells
-	if(available_essences.len >= 2)
+	if(length(available_essences) >= 2)
 		. += span_notice("\nCombo Spells Available:")
 		var/combo_count = 0
 		for(var/list/combo_requirements in combo_spell_mapping)

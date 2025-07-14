@@ -28,7 +28,7 @@
 	icon_state ="scryeye"
 	cooldown = 5 MINUTES
 
-/obj/item/scrying/attack_self(mob/user)
+/obj/item/scrying/attack_self(mob/user, params)
 	. = ..()
 	if(world.time < last_scry + cooldown)
 		to_chat(user, "<span class='warning'>I look into the ball but only see inky smoke. Maybe I should wait.</span>")
@@ -78,7 +78,7 @@
 
 /////////////////////////////////////////Crystal ball ghsot vision///////////////////
 
-/obj/item/crystalball/attack_self(mob/user)
+/obj/item/crystalball/attack_self(mob/user, params)
 	user.visible_message("<span class='danger'>[user] stares into [src], their eyes rolling back into their head.</span>")
 	user.ghostize(1)
 

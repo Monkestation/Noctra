@@ -262,14 +262,15 @@
 		return
 	. = ..()
 
-/obj/structure/soil/attack_right(mob/user)
+/obj/structure/soil/attackby_secondary(obj/item/weapon, mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	user.changeNext_move(CLICK_CD_FAST)
-	var/obj/item = user.get_active_held_item()
-	if(try_handle_deweed(item, user, null))
-		return
-	if(try_handle_flatten(item, user, null))
-		return
-	return ..()
+	if(try_handle_deweed(weapon, user, null))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(try_handle_flatten(weapon, user, null))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/soil/attackby(obj/item/attacking_item, mob/user, params)
 	user.changeNext_move(CLICK_CD_FAST)

@@ -457,12 +457,12 @@
 /turf/open/floor/churchbrick,
 /area/rogue/under/tomb/indoors/magic)
 "sn" = (
-/obj/structure/forcefield_weak,
+/obj/structure/forcefield,
 /obj/effect/waterfall/acid,
 /turf/open/lava/acid,
 /area/rogue/under/tomb/cave/wet)
 "so" = (
-/obj/structure/forcefield_weak,
+/obj/structure/forcefield,
 /turf/closed/mineral/bedrock,
 /area/rogue/under/tomb/cave/wet)
 "sI" = (
@@ -531,7 +531,7 @@
 /turf/open/floor/tile,
 /area/rogue/under/tomb/indoors/magic)
 "uh" = (
-/obj/structure/forcefield_weak,
+/obj/structure/forcefield,
 /turf/open/lava/acid,
 /area/rogue/under/tomb/cave/wet)
 "uo" = (
@@ -627,7 +627,7 @@
 /turf/open/floor/carpet,
 /area/rogue/under/tomb/indoors/magic)
 "xc" = (
-/obj/structure/forcefield_weak,
+/obj/structure/forcefield,
 /obj/machinery/light/fueled/wallfire/candle/blue,
 /turf/open/lava/acid,
 /area/rogue/under/tomb/cave/wet)
@@ -762,7 +762,7 @@
 /turf/open/floor/blocks,
 /area/rogue/under/tomb/indoors/magic)
 "Cq" = (
-/obj/structure/forcefield_weak,
+/obj/structure/forcefield,
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb/cave/wet)
 "Ct" = (
@@ -907,7 +907,7 @@
 /turf/open/floor/naturalstone,
 /area/rogue/under/tomb/cave/wet)
 "JA" = (
-/obj/structure/forcefield_weak,
+/obj/structure/forcefield,
 /turf/open/floor/naturalstone,
 /area/rogue/under/tomb/cave/wet)
 "JE" = (
@@ -1031,7 +1031,7 @@
 /area/rogue/under/tomb/indoors/magic)
 "On" = (
 /obj/item/natural/rock/random_ore,
-/obj/structure/forcefield_weak,
+/obj/structure/forcefield,
 /turf/open/floor/naturalstone,
 /area/rogue/under/tomb/cave/wet)
 "Or" = (
@@ -1078,8 +1078,8 @@
 /turf/open/floor/churchmarble,
 /area/rogue/under/tomb/indoors/magic)
 "OL" = (
-/obj/structure/forcefield_weak,
-/obj/structure/forcefield_weak,
+/obj/structure/forcefield,
+/obj/structure/forcefield,
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb/cave/wet)
 "OM" = (
@@ -1316,7 +1316,7 @@
 /turf/closed/wall/mineral/stonebrick,
 /area/rogue/under/tomb/indoors/magic)
 "Wi" = (
-/obj/structure/forcefield_weak,
+/obj/structure/forcefield,
 /obj/machinery/light/fueled/wallfire/candle/blue,
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb/cave/wet)

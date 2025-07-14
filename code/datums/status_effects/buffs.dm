@@ -20,10 +20,10 @@
 	owner.adjustFireLoss(-15)
 
 /datum/status_effect/shadow_mend/on_remove()
+	. = ..()
 	owner.visible_message("<span class='warning'>The violet light around [owner] glows black!</span>", "<span class='warning'>The tendrils around you cinch tightly and reap their toll...</span>")
 	playsound(owner, 'sound/blank.ogg', 50, TRUE)
 	owner.apply_status_effect(STATUS_EFFECT_VOID_PRICE)
-
 
 /datum/status_effect/void_price
 	id = "void_price"
@@ -47,7 +47,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/power_regen
 	var/power_to_give = 0 //how much power is gained each tick
 
-/datum/status_effect/cyborg_power_regen/on_creation(mob/living/new_owner, new_power_per_tick)
+/datum/status_effect/cyborg_power_regen/on_creation(mob/living/new_owner, duration_override, new_power_per_tick)
 	. = ..()
 	if(. && isnum(new_power_per_tick))
 		power_to_give = new_power_per_tick
@@ -68,6 +68,7 @@
 	return ..()
 
 /datum/status_effect/wish_granters_gift/on_remove()
+	. = ..()
 	owner.revive(full_heal = TRUE, admin_revive = TRUE)
 	owner.visible_message("<span class='warning'>[owner] appears to wake from the dead, having healed all wounds!</span>", "<span class='notice'>I have regenerated.</span>")
 
@@ -103,8 +104,8 @@
 		slashy.attack(M, owner)
 
 /datum/status_effect/sword_spin/on_remove()
+	. = ..()
 	owner.visible_message("<span class='warning'>[owner]'s inhuman strength dissipates and the sword's runes grow cold!</span>")
-
 
 //Used by changelings to rapidly heal
 //Heals 10 brute and oxygen damage every second, and 5 fire
@@ -134,7 +135,7 @@
 	duration = 1200
 	alert_type = null
 
-/datum/status_effect/exercised/on_creation(mob/living/new_owner, ...)
+/datum/status_effect/exercised/on_creation(mob/living/new_owner, duration_override, ...)
 	. = ..()
 	STOP_PROCESSING(SSfastprocess, src)
 	START_PROCESSING(SSprocessing, src) //this lasts 20 minutes, so SSfastprocess isn't needed.
@@ -169,6 +170,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/regenerative_core
 
 /datum/status_effect/regenerative_core/on_apply()
+	. = ..()
 	ADD_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, id)
 	owner.adjustBruteLoss(-25)
 	owner.adjustFireLoss(-25)
@@ -177,6 +179,7 @@
 	return TRUE
 
 /datum/status_effect/regenerative_core/on_remove()
+	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, id)
 
 /datum/status_effect/antimagic
@@ -192,5 +195,6 @@
 	return ..()
 
 /datum/status_effect/antimagic/on_remove()
+	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_ANTIMAGIC, MAGIC_TRAIT)
 	owner.visible_message("<span class='warning'>[owner]'s dull aura fades away...</span>")
