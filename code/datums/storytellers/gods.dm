@@ -87,7 +87,7 @@
 			STATS_COMBAT_SKILLS = list("name" = "Combat skills learned:", "points" = 1.15, "capacity" = 100),
 		),
 		"Set 2" = list(
-			STATS_PARRIES = list("name" = "Parries made:", "points" = 0.053, "capacity" = 100),
+			STATS_PARRIES = list("name" = "Parries made:", "points" = 0.0525, "capacity" = 100),
 		),
 		"Set 3" = list(
 			STATS_WARCRIES = list("name" = "Warcries made:", "points" = 0.375, "capacity" = 50),
@@ -158,8 +158,8 @@
 			STATS_LAUGHS_MADE = list("name" = "Laughs had:", "points" = 0.25, "capacity" = 85),
 		),
 		"Set 2" = list(
-			STATS_GAMES_RIGGED = list("name" = "Games rigged:", "points" = 3.5, "capacity" = 35),
-			STATS_MOAT_FALLERS = list("name" = "Moat fallers:", "points" = 5, "capacity" = 45),
+			STATS_GAMES_RIGGED = list("name" = "Games rigged:", "points" = 3.75, "capacity" = 40),
+			STATS_MOAT_FALLERS = list("name" = "Moat fallers:", "points" = 4.25, "capacity" = 45),
 		),
 		"Set 3" = list(
 			STATS_PEOPLE_MOCKED = list("name" = "People mocked:", "points" = 6, "capacity" = 60),
@@ -538,7 +538,7 @@
 			STATS_SHRINE_VALUE = list("name" = "Value offered to his idol:", "points" = 0.0875, "capacity" = 70),
 		),
 		"Set 3" = list(
-			STATS_GREEDY_PEOPLE = list("name" = "Number of greedy people:", "points" = 8, "capacity" = 70),
+			STATS_GREEDY_PEOPLE = list("name" = "Number of greedy people:", "points" = 7, "capacity" = 70),
 			STATS_KLEPTOMANIACS = list("name" = "Number of kleptomaniacs:", "points" = 12, "capacity" = 70),
 		),
 		"Set 4" = list(
