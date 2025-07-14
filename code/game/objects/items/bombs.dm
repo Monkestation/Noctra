@@ -1,4 +1,3 @@
-
 /obj/item/bomb
 	name = "bottle bomb"
 	desc = "Dangerous explosion, in a bottle."
@@ -120,3 +119,78 @@
 	if(prob(25))
 		new /obj/item/ash(T)
 	qdel(src)
+
+/obj/item/bomb/holy_grenade
+	name = "\improper The Holy Hand Grenade of Antioch"
+	desc = "A sacred relic of Brother Maynard."
+	//icon_state = "holy_grenade"
+
+	/// How many lines have been heard
+	var/scripture_heard = 0
+	/// The next wanted scripture
+	var/scripture_wanted
+	/// The required scripture
+	var/list/scripture_required = list(
+		"And Saint Attila raised the Hand Grenade up on high, saying,",
+		"'O Lord, bless this Thy Hand Grenade that, with it, Thou mayest blow Thine enemies into tiny bits in Thy mercy.'",
+		"And the Lord did grin, and the people did feast upon the lambs and sloths and carp and anchovies and orangutans and breakfeast cereals and fruit bats and large chu--",
+		"Skip a bit, Brother.",
+		"And the Lord spake, saying, 'First shalt thou take out the Holy Pin. Then, shalt thou count to three. No more. No less.",
+		"Three shalt be the number thou shalt count, and the number of the counting shall be three.",
+		"Four shalt thou not count, nor either count thou two, excepting that thou then proceed to three. Five is right out.",
+		"Once the number three, being the third number, be reached, then, lobbest thou thy Holy Hand Grenade of Antioch towards thy foe, who, being naughty in My sight, shall snuff it.'",
+		"Amen",
+		"Right!",
+		"One!...",
+		"Two!...",
+		"Five!",
+		"Three, sir!",
+		"Three!",
+	)
+
+/obj/item/bomb/holy_grenade/Initialize(mapload, ...)
+	. = ..()
+	become_hearing_sensitive()
+	scripture_wanted = LAZYACCESS(scripture_required, 1)
+
+/obj/item/bomb/holy_grenade/Destroy()
+	lose_hearing_sensitivity()
+	return ..()
+
+/obj/item/bomb/holy_grenade/light()
+	return
+
+/obj/item/bomb/holy_grenade/equipped(mob/user, slot, initial)
+	. = ..()
+	to_chat(user, span_nicegreen("You hear a chant: \"Pie lesu domine, dona eis requiem.\""))
+
+/obj/item/bomb/holy_grenade/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, original_message)
+	if(findtext(html_decode(original_message), scripture_wanted))
+		scripture_heard++
+		if(scripture_heard > length(scripture_required))
+			lose_hearing_sensitivity()
+			return
+		scripture_wanted = scripture_required[scripture_heard++]
+
+/obj/item/bomb/holy_grenade/attack_self(mob/user, params)
+	. = ..()
+	if(scripture_heard < length(scripture_required))
+		to_chat(user, span_notice("I pull the holy pin... but it doesn't release! Bring forth the Book of Armaments!"))
+		return
+	to_chat(user, span_userdanger("I pull the holy pin!"))
+	playsound(get_turf(user), 'sound/foley/industrial/clunk.ogg', 40, FALSE, -1)
+	START_PROCESSING(SSfastprocess, src)
+
+/obj/item/bomb/holy_grenade/explode()
+	STOP_PROCESSING(SSfastprocess, src)
+	var/turf/T = get_turf(src)
+	explosion(T, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 4, flash_range = 6, flame_range = 1, soundin = pick('sound/magic/holyshield.ogg'))
+	qdel(src)
+
+/obj/item/bomb/holy_grenade/ready
+	scripture_heard = 1
+	scripture_required = list()
+
+/obj/item/bomb/holy_grenade/ready/Initialize(mapload, ...)
+	. = ..()
+	lose_hearing_sensitivity()
