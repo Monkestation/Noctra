@@ -1316,3 +1316,15 @@
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 
+/obj/structure/fluff/steamvent
+	name = "steam vent"
+	desc = "An underground heating pipe outlet."
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "steam_vent"
+	density = FALSE
+	anchored = TRUE
+	max_integrity = 300
+
+/obj/structure/fluff/steamvent/Initialize()
+	. = ..()
+	MakeParticleEmitter(/particles/smoke/cig/big)
