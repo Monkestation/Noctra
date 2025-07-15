@@ -199,3 +199,8 @@
 	name = "fur pelt"
 	desc = "Pelt of a young animal, made into a mat."
 	icon_state = "fur_alt"
+
+/obj/structure/giantfur/smaller
+	name = "fur pelt"
+	desc = "Pelt of some foreign creachur."
+	icon_state = "fur_alt2"
