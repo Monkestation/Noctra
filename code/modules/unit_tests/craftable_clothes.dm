@@ -1,21 +1,30 @@
 // this unit test makes sure every piece of clothing is craftable
 /datum/unit_test/craftable_clothes
 
-/datum/unit_test/reagent_id_typos/Run()
-	var/list/obj/item/clothes_list = subtypesof(/obj/item/clothing)
-	var/list/datum/repeatable_crafting_recipe/repeatables_list = subtypesof(/datum/repeatable_crafting_recipe)
-	var/list/datum/orderless_slapcraft/orderless_list = subtypesof(/datum/orderless_slapcraft)
+/datum/unit_test/craftable_clothes/Run()
+	var/list/obj/clothes_list = subtypesof(/obj/item/clothing)
+	var/list/overall_recipe_typepaths = list()
 
-	for(var/obj/item/piece_of_clothe as anything in clothes_list)
-		for(var/datum/repeatable_crafting_recipe/recipe as anything in repeatables_list)
-			if(recipe.output == piece_of_clothe.type)
-				clothes_list -= piece_of_clothe
-				break
+	for(var/datum/repeatable_crafting_recipe/recipe as anything in subtypesof(/datum/repeatable_crafting_recipe))
+		if(isclothing(recipe.output))
+			overall_recipe_typepaths += recipe.output
 
-	for(var/obj/item/piece_of_clothe as anything in clothes_list)
-		for(var/datum/repeatable_crafting_recipe/recipe as anything in repeatables_list)
-			if(recipe.output == piece_of_clothe.type)
-				clothes_list -= piece_of_clothe
+	for(var/datum/orderless_slapcraft/recipe as anything in subtypesof(/datum/orderless_slapcraft))
+		if(isclothing(recipe.output_item))
+			overall_recipe_typepaths += recipe.output_item
+
+	for(var/datum/anvil_recipe/recipe as anything in subtypesof(/datum/anvil_recipe))
+		if(isclothing(recipe.created_item))
+			overall_recipe_typepaths += recipe.created_item
+
+	for(var/datum/crafting_recipe/recipe as anything in subtypesof(/datum/crafting_recipe))
+		if(isclothing(recipe.result))
+			overall_recipe_typepaths += recipe.result
+
+	for(var/recipe as anything in overall_recipe_typepaths)
+		for(var/obj/piece_of_clothing as anything in clothes_list)
+			if(ispath(piece_of_clothing, recipe))
+				clothes_list -= piece_of_clothing
 				break
 
 	if(!clothes_list.len)
