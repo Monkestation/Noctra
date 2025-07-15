@@ -7,68 +7,6 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "imbuement2"
 
-//adapted from forcefields.dm, this needs to be destructible
-/obj/structure/arcyne_wall
-	desc = "A wall of pure arcyne force."
-	name = "Arcyne Wall"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "arcynewall"
-	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
-	attacked_sound = list('sound/combat/hits/onstone/wallhit.ogg', 'sound/combat/hits/onstone/wallhit2.ogg', 'sound/combat/hits/onstone/wallhit3.ogg')
-	opacity = 0
-	density = TRUE
-	max_integrity = 200
-	CanAtmosPass = ATMOS_PASS_DENSITY
-	climbable = TRUE
-	climb_time = 0
-
-/obj/structure/arcyne_wall/Initialize()
-	. = ..()
-
-/obj/structure/arcyne_wall/caster
-	var/mob/caster
-
-/obj/structure/arcyne_wall/caster/Initialize(mapload, mob/summoner)
-	. = ..()
-	caster = summoner
-
-/obj/structure/arcyne_wall/caster/CanPass(atom/movable/mover, turf/target)	//only the caster can move through this freely
-	if(mover == caster)
-		return TRUE
-	if(ismob(mover))
-		var/mob/M = mover
-		if(M.anti_magic_check(chargecost = 0) || structureclimber == M)
-			return TRUE
-	return FALSE
-
-/obj/structure/arcyne_wall/greater
-	desc = "An immensely strong wall of pure arcyne force."
-	name = "Greater Arcyne Wall"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "arcynewall"
-	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
-	attacked_sound = list('sound/combat/hits/onstone/wallhit.ogg', 'sound/combat/hits/onstone/wallhit2.ogg', 'sound/combat/hits/onstone/wallhit3.ogg')
-	max_integrity = 1100
-	CanAtmosPass = ATMOS_PASS_DENSITY
-	climbable = TRUE
-	climb_time = 0
-
-/obj/structure/arcyne_wall/greater/caster
-	var/mob/caster
-
-/obj/structure/arcyne_wall/greater/caster/Initialize(mapload, mob/summoner)
-	. = ..()
-	caster = summoner
-
-/obj/structure/arcyne_wall/greater/caster/CanPass(atom/movable/mover, turf/target)	//only the caster can move through this freely
-	if(mover == caster)
-		return TRUE
-	if(ismob(mover))
-		var/mob/M = mover
-		if(M.anti_magic_check(chargecost = 0) || structureclimber == M)
-			return TRUE
-	return FALSE
-
 /obj/structure/door/arcyne
 	name = "arcyne door"
 	icon_state = "arcyne"
@@ -94,23 +32,14 @@
 	. = ..()
 	caster = summoner
 
-/obj/structure/door/arcyne/bolt/caster/attack_right(mob/user)
+/obj/structure/door/arcyne/bolt/caster/attack_hand_secondary(mob/user, params)
 	if(user != caster)
 		to_chat(user, span_warning("A magical force prevents me from interacting with [src]!"))
-		return
-	..()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
 
 /atom/movable
 	var/list/mana_beams
-
-/atom/proc/BeamBroken(atom/movable/target)
-	return
-
-/atom/movable/BeamBroken(atom/movable/target)
-	if(!length(mana_beams))
-		return
-	if(target in mana_beams)
-		mana_beams -= target
 
 /atom/movable/proc/draw_mana_beams(atom/movable/find_type, max_distance = 3)
 	for(var/atom/movable/movable in range(max_distance, src))
@@ -121,8 +50,25 @@
 		if(!istype(movable, find_type))
 			continue
 
-		LeyBeam(movable, "drain_life", time = INFINITY, maxdistance = max_distance, layer = LOWER_LEYLINE_LAYER)
+		var/datum/beam/mana = Beam(
+			movable,
+			icon_state = "drain_life",
+			max_distance = max_distance,
+			time = INFINITY,
+			beam_layer = LOWER_LEYLINE_LAYER,
+			beam_plane = LEYLINE_PLANE,
+			invisibility = INVISIBILITY_LEYLINES,
+		)
+
+		RegisterSignal(mana, COMSIG_PARENT_QDELETING, PROC_REF(beam_ended), movable)
+
 		LAZYADD(mana_beams, movable)
+
+/atom/movable/proc/beam_ended(atom/movable/target)
+	if(!length(mana_beams))
+		return
+	if(target in mana_beams)
+		mana_beams -= target
 
 /atom/movable/proc/draw_mana_beams_from_list(list/found_types, max_distance = 3)
 	for(var/atom/movable/movable in found_types)
@@ -131,7 +77,18 @@
 		if(movable in mana_beams)
 			continue
 
-		LeyBeam(movable, "drain_life", time = INFINITY, maxdistance = max_distance, layer = LOWER_LEYLINE_LAYER)
+		var/datum/beam/mana = Beam(
+			movable,
+			icon_state = "drain_life",
+			max_distance = max_distance,
+			time = INFINITY,
+			beam_layer = LOWER_LEYLINE_LAYER,
+			beam_plane = LEYLINE_PLANE,
+			invisibility = INVISIBILITY_LEYLINES,
+		)
+
+		RegisterSignal(mana, COMSIG_PARENT_QDELETING, PROC_REF(beam_ended), movable)
+
 		LAZYADD(mana_beams, movable)
 
 /obj/structure/well/fountain/mana

@@ -65,7 +65,7 @@
 	)
 	attacked_atom = /obj/item/reagent_containers/food/snacks/cake
 	starting_atom = /obj/item/reagent_containers/food/snacks/raisins
-	output = /obj/item/reagent_containers/food/snacks/chescake_poison
+	output = /obj/item/reagent_containers/food/snacks/chescake
 	uses_attacked_atom = TRUE
 	required_table = TRUE
 	craft_time = 6 SECONDS
@@ -95,7 +95,7 @@
 
 /datum/repeatable_crafting_recipe/cooking/cake_pear
 	category = "Cakes"
-	name = "Zybantu Cake Base"
+	name = "Zaladin Cake Base"
 
 	requirements = list(
 		/obj/item/reagent_containers/food/snacks/produce/fruit/pear = 1,
@@ -204,7 +204,7 @@
 
 /datum/repeatable_crafting_recipe/cooking/unbaked_zybcake
 	category = "Cakes"
-	name = "Unbaked Zybantu Cake"
+	name = "Unbaked Zaladin Cake"
 
 	requirements = list(
 		/obj/item/reagent_containers/food/snacks/spiderhoney = 1,

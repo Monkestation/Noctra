@@ -173,7 +173,7 @@
 	else if(card_num == 0)
 		icon_state = "deck_[deckstyle]_empty"
 
-/obj/item/toy/cards/deck/attack_self(mob/user)
+/obj/item/toy/cards/deck/attack_self(mob/user, params)
 	if(cooldown < world.time - 50)
 		if(HAS_TRAIT(user, TRAIT_BLACKLEG))
 			var/outcome = alert(user, "How do you want to shuffle the deck?","XYLIX","False Shuffle","Force Top Card","Play fair")
@@ -282,7 +282,7 @@
 	var/choice = null
 
 
-/obj/item/toy/cards/cardhand/attack_self(mob/user)
+/obj/item/toy/cards/cardhand/attack_self(mob/user, params)
 	user.set_machine(src)
 	interact(user)
 
@@ -446,7 +446,7 @@
 	else
 		return ..()
 
-/obj/item/toy/cards/singlecard/attack_self(mob/living/carbon/human/user)
+/obj/item/toy/cards/singlecard/attack_self(mob/living/carbon/human/user, params)
 	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
 		return
 	Flip()

@@ -213,7 +213,7 @@
 	blood_storage = BLOOD_VOLUME_SURVIVE
 	blood_maximum = BLOOD_VOLUME_BAD
 
-/obj/item/natural/worms/leech/parasite/attack_self(mob/user)
+/obj/item/natural/worms/leech/parasite/attack_self(mob/user, params)
 	. = ..()
 	giving = !giving
 	if(giving)

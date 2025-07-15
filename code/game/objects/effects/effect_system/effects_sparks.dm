@@ -23,7 +23,6 @@
 	light_outer_range =  MINIMUM_USEFUL_LIGHT_RANGE
 	light_color = LIGHT_COLOR_FIRE
 	SET_BASE_PIXEL(-16, -16)
-	layer = ABOVE_LIGHTING_LAYER
 	plane = ABOVE_LIGHTING_PLANE
 
 	var/silent = TRUE

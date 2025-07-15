@@ -6,10 +6,9 @@
 	outfit = /datum/outfit/job/adventurer/assassin
 	category_tags = list(CTAG_PILGRIM)
 	maximum_possible_slots = 2
-	min_pq = 0
 	pickprob = 100
 	displays_adv_job = FALSE //this prevents advjob from being set back to "Assassin" in equipme
-	min_pq = 10
+	min_pq = 6
 
 /datum/outfit/job/adventurer/assassin/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -38,7 +37,7 @@
 	H.become_blind("TRAIT_GENERIC")
 	H.advjob = "Assassin"
 	// Assassin now spawns disguised as one of the non-combat drifters. You never know who will stab you in the back.
-	var/disguises = list("Bard", "Beggar", "Fisher", "Hunter", "Miner", "Noble", "Peasant", "Carpenter", "Thief", "Ranger", "Servant", "Assassin", "Faceless One")
+	var/disguises = list("Bard", "Beggar", "Fisher", "Hunter", "Miner", "Noble", "Peasant", "Carpenter", "Thief", "Ranger", "Servant", "Faceless One")
 	var/disguisechoice = input("Choose your cover", "Available disguises") as anything in disguises
 
 	if(disguisechoice)

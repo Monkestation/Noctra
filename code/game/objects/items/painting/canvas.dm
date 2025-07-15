@@ -64,15 +64,16 @@
 			anchored = FALSE
 			to_chat(user, "I unmount [src].")
 
-/obj/item/canvas/attack_right(mob/user)
+/obj/item/canvas/attack_hand_secondary(mob/user, params)
 	. = ..()
-	if(user.get_active_held_item())
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 	if(user in showers)
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user?.client.screen += used_canvas
 	showers |= user
 	RegisterSignal(user, COMSIG_MOVABLE_TURF_ENTERED, PROC_REF(remove_shower))
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/canvas/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -180,15 +181,15 @@
 	var/current_color = brush.current_color
 	if(!current_color)
 		return
-	var/list/param_list = params2list(params)
 
-	var/x = text2num(param_list["icon-x"])
-	var/y = text2num(param_list["icon-y"])
+	var/list/modifiers = params2list(params)
+	var/x = text2num(LAZYACCESS(modifiers, ICON_X))
+	var/y = text2num(LAZYACCESS(modifiers, ICON_Y))
 
 	y = min(FLOOR(y / host.canvas_divider_y, 1), host.canvas_size_y-1)
 	x = min(FLOOR(x / host.canvas_divider_x, 1), host.canvas_size_x-1)
 
-	if(param_list["right"])
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		var/original_color = base_icon.GetPixel(x, y)
 		current_color = original_color
 		modified_areas -= "[x][y]"

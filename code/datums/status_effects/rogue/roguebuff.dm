@@ -1,34 +1,6 @@
 /datum/status_effect/buff
 	status_type = STATUS_EFFECT_REFRESH
 
-/datum/status_effect/buff/duration_modification
-	var/duration_modification = 0
-
-/datum/status_effect/buff/duration_modification/on_creation(mob/living/new_owner, duration_increase)
-	if(new_owner)
-		owner = new_owner
-	if(owner)
-		LAZYADD(owner.status_effects, src)
-	if(!owner || !on_apply())
-		qdel(src)
-		return
-	if(duration != -1)
-		duration = world.time + duration + duration_increase
-	duration_modification = duration_increase
-	tick_interval = world.time + tick_interval
-	if(alert_type)
-		var/atom/movable/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
-		A?.attached_effect = src //so the alert can reference us, if it needs to
-		linked_alert = A //so we can reference the alert, if we need to
-	START_PROCESSING(SSfastprocess, src)
-	return TRUE
-
-/datum/status_effect/buff/duration_modification/refresh()
-	var/original_duration = initial(duration)
-	if(original_duration == -1)
-		return
-	duration = world.time + original_duration + duration_modification
-
 /datum/status_effect/buff/drunk
 	id = "drunk"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/drunk
@@ -230,22 +202,22 @@
 	desc = "I am somewhat protected against falling from heights."
 	icon_state = "buff"
 
-/datum/status_effect/buff/duration_modification/featherfall
+/datum/status_effect/buff/featherfall
 	id = "featherfall"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/featherfall
 	duration = 1 MINUTES
 
-/datum/status_effect/buff/duration_modification/featherfall/on_apply()
+/datum/status_effect/buff/featherfall/on_apply()
 	. = ..()
 	to_chat(owner, span_warning("I feel lighter."))
 	ADD_TRAIT(owner, TRAIT_NOFALLDAMAGE1, MAGIC_TRAIT)
 
-/datum/status_effect/buff/duration_modification/featherfall/on_remove()
+/datum/status_effect/buff/featherfall/on_remove()
 	. = ..()
 	to_chat(owner, span_warning("The feeling of lightness fades."))
 	REMOVE_TRAIT(owner, TRAIT_NOFALLDAMAGE1, MAGIC_TRAIT)
 
-/datum/status_effect/buff/duration_modification/darkvision
+/datum/status_effect/buff/darkvision
 	id = "darkvision"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/darkvision
 	duration = 10 MINUTES
@@ -255,7 +227,7 @@
 	desc = span_nicegreen("I can see in the dark.")
 	icon_state = "buff"
 
-/datum/status_effect/buff/duration_modification/darkvision/on_apply()
+/datum/status_effect/buff/darkvision/on_apply()
 	. = ..()
 	var/mob/living/carbon/human/H = owner
 	var/obj/item/organ/eyes/eyes = H.getorgan(/obj/item/organ/eyes)
@@ -264,7 +236,7 @@
 	ADD_TRAIT(owner, TRAIT_DARKVISION, MAGIC_TRAIT)
 	owner.update_sight()
 
-/datum/status_effect/buff/duration_modification/darkvision/on_remove()
+/datum/status_effect/buff/darkvision/on_remove()
 	. = ..()
 	to_chat(owner, span_warning("Darkness shrouds your senses once more."))
 	REMOVE_TRAIT(owner, TRAIT_DARKVISION, MAGIC_TRAIT)
@@ -275,7 +247,7 @@
 	desc = "I am magically hastened."
 	icon_state = "buff"
 
-/datum/status_effect/buff/duration_modification/haste
+/datum/status_effect/buff/haste
 	id = "haste"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/haste
 	effectedstats = list(STATKEY_SPD = 3)
@@ -304,13 +276,11 @@
 		var/mob/living/carbon/C = owner
 		C.remove_stress(/datum/stressevent/calm)
 
-
-
 /datum/status_effect/buff/barbrage
 	id = "barbrage"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/barbrage
 	effectedstats = list(STATKEY_STR = 1, STATKEY_END = 2, STATKEY_PER = -2, STATKEY_INT = -2) //endurance to boost pain treshold, not powerful enough to warrant total painkilling
-	duration = 15 SECONDS
+	duration = 30 SECONDS
 
 /atom/movable/screen/alert/status_effect/buff/barbrage
 	name = "Barbaric Rage"
@@ -322,8 +292,6 @@
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
 		C.apply_status_effect(/datum/status_effect/debuff/barbfalter)
-
-
 
 //============================================================================
 /*--------------\
@@ -367,6 +335,7 @@
 /datum/status_effect/buff/beastsense
 	id = "beastsense"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/beastsense
+	effectedstats = list(STATKEY_PER = 2)
 	duration = 10 MINUTES
 
 /atom/movable/screen/alert/status_effect/buff/beastsense
@@ -378,7 +347,7 @@
 	. = ..()
 	var/mob/living/carbon/human/H = owner
 	var/obj/item/organ/eyes/eyes = H.getorgan(/obj/item/organ/eyes)
-	if (!eyes || eyes.lighting_alpha)
+	if(!eyes)
 		return
 	ADD_TRAIT(owner, TRAIT_BESTIALSENSE, REF(src))
 	owner.update_sight()
@@ -388,19 +357,6 @@
 	to_chat(owner, span_warning("Darkness shrouds your senses once more."))
 	REMOVE_TRAIT(owner, TRAIT_BESTIALSENSE, REF(src))
 	owner.update_sight()
-
-/datum/status_effect/buff/beastsense_elf
-	id = "beastsenself"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/beastsenself
-	effectedstats = list(STATKEY_PER = 2)
-	duration = 10 MINUTES
-
-/atom/movable/screen/alert/status_effect/buff/beastsenself
-	name = "Bestial Sense"
-	desc = span_nicegreen("No scent too faint, no shadow too dark...")
-	icon_state = "bestialsense"
-
-
 
 // ---------------------- TROLL SHAPE ( DENDOR ) ----------------------------
 /datum/status_effect/buff/trollshape
@@ -515,6 +471,7 @@
 	duration = 50 // Sanity, so that people outside the bard buff listening area lose the buff after a few seconds
 
 /datum/status_effect/bardicbuff/on_apply()
+	. = ..()
 	if(owner.mind?.has_antag_datum(/datum/antagonist)) // Check if antag datum present
 		if(owner.mind?.isactuallygood()) // Then check if they're actually a "good" antag (purishep, prisoner)
 			for(var/stat in effectedstats)
@@ -760,33 +717,6 @@
 	name = "Cold"
 	desc = "Something has chilled me to the bone! It's hard to move."
 	icon_state = "muscles"
-
-/datum/status_effect/buff/frostbite
-	id = "frostbite"
-	alert_type = /atom/movable/screen/alert/status_effect/buff/frostbite
-	duration = 20 SECONDS
-	effectedstats = list("speed" = -2)
-
-/atom/movable/screen/alert/status_effect/buff/frostbite
-	name = "Frostbite"
-	desc = "I can feel myself slowing down."
-	icon_state = "debuff"
-	color = "#00fffb"
-
-/datum/status_effect/buff/frostbite/on_apply()
-	. = ..()
-	var/mob/living/target = owner
-	target.update_vision_cone()
-	var/newcolor = rgb(136, 191, 255)
-	target.add_atom_colour(newcolor, TEMPORARY_COLOUR_PRIORITY)
-	addtimer(CALLBACK(target, TYPE_PROC_REF(/atom, remove_atom_colour), TEMPORARY_COLOUR_PRIORITY, newcolor), 20 SECONDS)
-	target.add_movespeed_modifier(MOVESPEED_ID_ADMIN_VAREDIT, update=TRUE, priority=100, multiplicative_slowdown=4, movetypes=GROUND)
-
-/datum/status_effect/buff/frostbite/on_remove()
-	var/mob/living/target = owner
-	target.update_vision_cone()
-	target.remove_movespeed_modifier(MOVESPEED_ID_ADMIN_VAREDIT, TRUE)
-	. = ..()
 
 /datum/status_effect/buff/nocblessing
 	id = "nocblessing"

@@ -34,6 +34,6 @@
 
 /// Clear the controller's movement target only if it was us who last set it
 /datum/ai_behavior/proc/clear_movement_target(datum/ai_controller/controller)
-	if (controller.movement_target_source != type)
+	if(controller.movement_target_source != type || QDELETED(controller.pawn))
 		return
 	controller.set_movement_target(type, controller.pawn.loc)

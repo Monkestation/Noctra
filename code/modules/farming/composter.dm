@@ -1,5 +1,6 @@
 #define MAXIMUM_TOTAL_COMPOST 2000
 #define COMPOST_PER_PRODUCED_ITEM 100
+#define COMPOST_PROCESS_RATE 300 / (1 MINUTES)
 
 /obj/structure/composter
 	name = "composter"
@@ -38,8 +39,6 @@
 	STOP_PROCESSING(SSprocessing, src)
 	. = ..()
 
-#define COMPOST_PROCESS_RATE 300 / (1 MINUTES)
-
 /obj/structure/composter/process()
 	var/dt = 10
 	var/compost_to_process = min(dt * COMPOST_PROCESS_RATE, flipped_compost)
@@ -66,8 +65,8 @@
 		apply_farming_fatigue(user, fatigue)
 		if(using_tool)
 			playsound(src,'sound/items/dig_shovel.ogg', 100, TRUE)
-		sleep(10)
-		flip_compost()
+		addtimer(CALLBACK(src, PROC_REF(flip_compost)), 1 SECONDS)
+
 	return TRUE
 
 /obj/structure/composter/proc/flip_compost()
@@ -147,12 +146,21 @@
 		return
 	. = ..()
 
-/obj/structure/composter/attack_right(mob/user)
-	user.changeNext_move(CLICK_CD_FAST)
-	var/obj/item = user.get_active_held_item()
-	if(try_handle_flipping_compost(item, user, null))
+/obj/structure/composter/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	return ..()
+	user.changeNext_move(CLICK_CD_FAST)
+	if(try_handle_flipping_compost(null, user, params))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/structure/composter/attackby_secondary(obj/item/weapon, mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	user.changeNext_move(CLICK_CD_FAST)
+	if(try_handle_flipping_compost(weapon, user, params))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/composter/update_overlays()
 	. = ..()
@@ -171,9 +179,12 @@
 		. += "pre_compost_low"
 
 	if(show_dry && unprocesed_dry_overlay_name)
-		var/mutable_appearance/dry_ma = mutable_appearance(icon, unprocesed_dry_overlay_name)
-		dry_ma.color = "#ffbb6d"
-		dry_ma.alpha = 40
+		var/mutable_appearance/dry_ma = mutable_appearance(\
+			icon,\
+			unprocesed_dry_overlay_name,\
+			color = "#ffbb6d",\
+			alpha = 40,\
+		)
 		. += dry_ma
 
 	if(total_processed >= MAXIMUM_TOTAL_COMPOST * 0.60)
@@ -191,3 +202,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	grid_width = 32
 	grid_height = 32
+
+#undef MAXIMUM_TOTAL_COMPOST
+#undef COMPOST_PER_PRODUCED_ITEM
+#undef COMPOST_PROCESS_RATE

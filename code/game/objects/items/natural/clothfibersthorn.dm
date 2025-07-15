@@ -166,17 +166,17 @@
 		else
 			return ..()
 
-/obj/item/natural/cloth/attack_self(mob/user)
-	attack_right(user)
-	return
-
-/obj/item/natural/cloth/rmb_self(mob/user)
-	attack_right(user)
-	return
-
-/obj/item/natural/cloth/attack_right(mob/user)
+/obj/item/natural/cloth/attack_self(mob/user, params)
 	wring_cloth(user.loc, user)
-	return
+
+/obj/item/natural/cloth/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
+	wring_cloth(user.loc, user)
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/natural/cloth/proc/soak_cloth(atom/target, mob/living/user)
 	if(reagents.total_volume == reagents.maximum_volume)
@@ -284,7 +284,7 @@
 	embedding = list("embedded_unsafe_removal_time" = 20, "embedded_pain_chance" = 10, "embedded_pain_multiplier" = 1, "embed_chance" = 35, "embedded_fall_chance" = 0)
 	resistance_flags = FLAMMABLE
 	max_integrity = 20
-/obj/item/natural/thorn/attack_self(mob/living/user)
+/obj/item/natural/thorn/attack_self(mob/living/user, params)
 	user.visible_message("<span class='warning'>[user] snaps [src].</span>")
 	playsound(user,'sound/items/seedextract.ogg', 100, FALSE)
 	qdel(src)

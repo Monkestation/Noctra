@@ -115,7 +115,7 @@
 	playsound(loc, 'sound/blank.ogg', 50, TRUE, -1)
 	return (BRUTELOSS)
 
-/obj/item/restraints/legcuffs/beartrap/attack_self(mob/user)
+/obj/item/restraints/legcuffs/beartrap/attack_self(mob/user, params)
 	. = ..()
 	if(!ishuman(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return

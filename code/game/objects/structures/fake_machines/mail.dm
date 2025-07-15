@@ -31,10 +31,11 @@
 			show_inquisitor_shop(user)
 			return
 
-/obj/structure/fake_machine/mail/attack_right(mob/user)
+/obj/structure/fake_machine/mail/attack_hand_secondary(mob/user, params)
 	. = ..()
-	if(.)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(!coin_loaded)
 		to_chat(user, "<span class='warning'>The machine doesn't respond. It needs a coin.</span>")
@@ -155,6 +156,8 @@
 				new /obj/item/clothing/neck/mercmedal/anthrax(drop_location)
 			if(8)
 				new /obj/item/clothing/neck/mercmedal/duelist(drop_location)
+			if(9)
+				new /obj/item/clothing/neck/mercmedal(drop_location)
 
 	if(istype(P, /obj/item/paper/confession))
 		if(is_inquisitor_job(user.mind.assigned_role) || is_adept_job(user.mind.assigned_role)) // Only Inquisitors and Adepts can sumbit confessions.

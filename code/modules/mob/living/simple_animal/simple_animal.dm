@@ -1,5 +1,3 @@
-#define MAX_FARM_ANIMALS 20
-
 GLOBAL_VAR_INIT(farm_animals, FALSE)
 
 /mob/living/simple_animal
@@ -186,7 +184,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		return ..()
 	else
 		if(try_tame(O, user))
-			SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, O, user, params) // for udder functionality
+			SEND_SIGNAL(src, COMSIG_ATOM_ATTACKBY, O, user, params) // for udder functionality
 			return TRUE
 	. = ..()
 
@@ -413,6 +411,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 				if(rotstuff && istype(I,/obj/item/reagent_containers/food/snacks))
 					var/obj/item/reagent_containers/food/snacks/F = I
 					F.become_rotten()
+	SEND_SIGNAL(user, COMSIG_MOB_BUTCHERED, src)
 	gib()
 
 /mob/living/simple_animal/spawn_dust(just_ash = FALSE)
@@ -596,12 +595,10 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		var/obj/item/l_hand = get_item_for_held_index(1)
 		var/obj/item/r_hand = get_item_for_held_index(2)
 		if(r_hand)
-			r_hand.layer = ABOVE_HUD_LAYER
 			r_hand.plane = ABOVE_HUD_PLANE
 			r_hand.screen_loc = ui_hand_position(get_held_index_of_item(r_hand))
 			client.screen |= r_hand
 		if(l_hand)
-			l_hand.layer = ABOVE_HUD_LAYER
 			l_hand.plane = ABOVE_HUD_PLANE
 			l_hand.screen_loc = ui_hand_position(get_held_index_of_item(l_hand))
 			client.screen |= l_hand

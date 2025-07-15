@@ -72,12 +72,15 @@
 	to_chat(user, span_notice("You set the key ID to [input]."))
 	access2add = list("[input]")
 
-/obj/item/key/custom/attack_right(mob/user)
+/obj/item/key/custom/attackby_secondary(obj/item/I, mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(lockids)
 		to_chat(user, span_warning("[src] has been finished, it cannot be adjusted again!"))
 		return
-	var/held = user.get_active_held_item()
-	if(istype(held, /obj/item/weapon/hammer))
+	if(istype(I, /obj/item/weapon/hammer))
 		if(!access2add)
 			to_chat(user, span_warning("[src] is not ready, its teeth are not set!"))
 			return
@@ -85,10 +88,10 @@
 		access2add = null
 		to_chat(user, span_notice("You finish [src]."))
 		return
-	if(!copy_access(held))
-		to_chat(user, span_warning("I cannot forge a key from [held]!"))
+	if(!copy_access(I))
+		to_chat(user, span_warning("I cannot forge a key from [I]!"))
 		return
-	to_chat(user, span_notice("I forge the key based on the workings of [held]."))
+	to_chat(user, span_notice("I forge the key based on the workings of [I]."))
 
 /obj/item/key/lord
 	name = "master key"

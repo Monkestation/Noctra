@@ -3,13 +3,14 @@
 	desc = "A wild "
 	icon_state = "tea2"
 	icon = 'icons/roguetown/misc/crops.dmi'
+	abstract_type = /obj/structure/wild_plant
 	var/datum/plant_def/plant_type
 	var/spread_chance = 75
 
 /obj/structure/wild_plant/Initialize(mapload, ...)
 	. = ..()
 
-	if(!plant_type || !istype(plant_type))
+	if(!plant_type || !ispath(plant_type))
 		return
 
 	plant_type = new plant_type(src)

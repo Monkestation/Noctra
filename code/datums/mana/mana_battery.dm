@@ -44,27 +44,28 @@
 		var/drawn_mana = mana_to_draw
 		to_chat(user, "drawing mana....")
 		mana_pool.transfer_specific_mana(user.mana_pool, drawn_mana, decrement_budget = TRUE)
-// when we hit ourself with right click, however, we send mana TO the battery.
-/obj/item/mana_battery/attack_right(mob/user)
-	. = ..()
-	if (.)
-		return TRUE
 
-	if (!user.mana_pool)
-		return FALSE
+// when we hit ourself with right click, however, we send mana TO the battery.
+/obj/item/mana_battery/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!user.mana_pool)
+		return SECONDARY_ATTACK_CALL_NORMAL
 	var/already_transferring = (user in mana_pool.transferring_to)
-	if (already_transferring)
+	if(already_transferring)
 		user.mana_pool.stop_transfer(mana_pool)
-	else
-		if(!user.is_holding(src))
-			return
-		var/mana_to_send = input(user, "How much mana do you want to send to the battery? Max Capacity: [mana_pool.maximum_mana_capacity]", "Send Mana") as num
-		mana_to_send = CLAMP(mana_to_send, mana_pool.maximum_mana_capacity, 0)
-		if(!mana_to_send || QDELETED(user) || QDELETED(src) || !user.is_holding(src))
-			return
-		var/sent_mana = mana_to_send
-		to_chat(user, "sending mana....")
-		user.mana_pool.transfer_specific_mana(mana_pool, sent_mana, decrement_budget = TRUE)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!user.is_holding(src))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	var/mana_to_send = input(user, "How much mana do you want to send to the battery? Max Capacity: [mana_pool.maximum_mana_capacity]", "Send Mana") as num
+	mana_to_send = CLAMP(mana_to_send, mana_pool.maximum_mana_capacity, 0)
+	if(!mana_to_send || QDELETED(user) || QDELETED(src) || !user.is_holding(src))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	var/sent_mana = mana_to_send
+	to_chat(user, "sending mana....")
+	user.mana_pool.transfer_specific_mana(mana_pool, sent_mana, decrement_budget = TRUE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/mana_battery/mana_crystal
 	name = MAGIC_MATERIAL_NAME + " crystal"

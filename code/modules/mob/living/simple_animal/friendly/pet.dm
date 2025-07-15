@@ -5,7 +5,7 @@
 	blood_volume = BLOOD_VOLUME_NORMAL
 	var/unique_pet = FALSE // if the mob can be renamed
 	density = FALSE
-	pass_flags = PASSTABLE
+	//pass_flags = PASSTABLE
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"

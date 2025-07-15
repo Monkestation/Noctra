@@ -101,6 +101,15 @@
 	craftsound = null
 	skillcraft = /datum/skill/craft/masonry
 
+/datum/crafting_recipe/structure/pottery_lathe
+	name = "potter's lathe"
+	result = /obj/structure/pottery_lathe
+	reqs = list(/obj/item/natural/stone = 2,
+				/obj/item/grown/log/tree/small = 1)
+	verbage = "mason"
+	verbage_tp = "masons"
+	skillcraft = /datum/skill/craft/masonry
+
 /datum/crafting_recipe/structure/torchholder
 	name = "sconce"
 	result = /obj/machinery/light/fueled/torchholder

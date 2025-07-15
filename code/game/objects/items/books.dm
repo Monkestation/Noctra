@@ -110,9 +110,9 @@
 		base_icon_state = "book[rand(1,8)]"
 		icon_state = "[base_icon_state]_0"
 
-/obj/item/book/attack_self(mob/user)
+/obj/item/book/attack_self(mob/user, params)
 	if(!open)
-		attack_right(user)
+		attack_hand_secondary(user, params)
 		return
 	if(!user.can_read(src))
 		return
@@ -123,9 +123,12 @@
 	read(user)
 	user.update_inv_hands()
 
-/obj/item/book/rmb_self(mob/user)
-	attack_right(user)
-	return
+/obj/item/book/attack_self_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	attack_hand_secondary(user, params)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/book/proc/read(mob/user)
 	if(!open)
@@ -189,10 +192,10 @@
 		playsound(loc, 'sound/items/book_page.ogg', 100, TRUE, -1)
 		read(usr)
 
-/obj/item/book/attackby(obj/item/I, mob/user, params)
-	return
-
-/obj/item/book/attack_right(mob/user)
+/obj/item/book/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(!open)
 		slot_flags &= ~ITEM_SLOT_HIP
 		open = TRUE
@@ -204,6 +207,7 @@
 	curpage = 1
 	update_appearance(UPDATE_ICON_STATE)
 	user.update_inv_hands()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/book/update_icon_state()
 	. = ..()
@@ -233,7 +237,7 @@
 		if(!PA.contraband) // You can add a var to control whether to show contraband
 			types += PA
 
-/obj/item/book/secret/ledger/attack_self(mob/user)
+/obj/item/book/secret/ledger/attack_self(mob/user, params)
 	. = ..()
 	current_reader = user
 	current_reader << browse(generate_html(user),"window=ledger;size=800x810")
@@ -778,7 +782,7 @@
 	base_icon_state = "pellbookmimic"
 	bookfile = "xylix.json"
 
-/obj/item/book/xylix/attack_self(mob/user)
+/obj/item/book/xylix/attack_self(mob/user, params)
 	user.update_inv_hands()
 	to_chat(user, "<span class='notice'>You feel laughter echo in your head.</span>")
 
@@ -1056,7 +1060,7 @@
 	if(href_list["read"])
 		read(usr)
 
-/obj/item/manuscript/attack_self(mob/user)
+/obj/item/manuscript/attack_self(mob/user, params)
 	read(user)
 
 /obj/item/manuscript/proc/read(mob/user)
@@ -1094,17 +1098,22 @@
 	onclose(user, "reading", src)
 
 
-/obj/item/manuscript/attack_right(mob/user)
+/obj/item/manuscript/attackby_secondary(obj/item/I, mob/user, params)
 	. = ..()
-	var/obj/item/P = user.get_active_held_item()
-	if(istype(P, /obj/item/natural/feather))
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
+	if(istype(I, /obj/item/natural/feather))
+		if(written)
+			to_chat(user, "<span class='notice'>The manuscript has already been authored and titled.</span>")
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		// Prompt user to populate manuscript fields
 		var/newtitle = dd_limittext(sanitize_hear_message(input(user, "Enter the title of the manuscript:") as text|null), MAX_CHARTER_LEN)
 		var/newauthor = dd_limittext(sanitize_hear_message(input(user, "Enter the author's name:") as text|null), MAX_CHARTER_LEN)
 		var/newcategory = input(user, "Select the category of the manuscript:") in list("Apocrypha & Grimoires", "Myths & Tales", "Legends & Accounts", "Thesis", "Eoratica")
 		var/newicon = book_icons[input(user, "Choose a book style", "Book Style") as anything in book_icons]
 
-		if (newtitle && newauthor && newcategory)
+		if(newtitle && newauthor && newcategory)
 			name = newtitle
 			author = newauthor
 			category = newcategory
@@ -1112,16 +1121,13 @@
 			select_icon = newicon
 			icon_state = "paperwrite"
 			to_chat(user, "<span class='notice'>You have successfully authored and titled the manuscript.</span>")
-			var/complete = input(user, "Is the manuscript finished?") in list("Yes", "No")
-			if(complete == "Yes" && compiled_pages)
+			var/complete = browser_alert(user, "Is the manuscript finished?", "WORDS OF NOC", DEFAULT_INPUT_CHOICES)
+			if(complete == CHOICE_YES && compiled_pages)
 				written = TRUE
 		else
 			to_chat(user, "<span class='notice'>You must fill out all fields to complete the manuscript.</span>")
-		return
-	else if(istype(P, /obj/item/natural/feather) && written)
-		to_chat(user, "<span class='notice'>The manuscript has already been authored and titled.</span>")
-		return
-	return ..()
+
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/manuscript/update_icon_state()
 	. = ..()

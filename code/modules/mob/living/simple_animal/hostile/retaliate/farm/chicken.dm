@@ -9,7 +9,7 @@
 
 	density = FALSE
 	gender = FEMALE
-	pass_flags = PASSTABLE | PASSMOB
+	pass_flags = PASSMOB
 	mob_size = MOB_SIZE_SMALL
 	ventcrawler = VENTCRAWLER_ALWAYS
 	emote_see = list("pecks at the ground.","flaps its wings viciously.")
@@ -149,7 +149,7 @@
 
 	density = FALSE
 	gender = FEMALE
-	pass_flags = PASSTABLE | PASSMOB
+	pass_flags = PASSMOB
 
 	botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/poultry/cutlet = 1)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/fat = 1,

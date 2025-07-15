@@ -35,11 +35,6 @@
 				qdel(S)
 			else
 				S.be_replaced()
-	for(var/obj/effect/proc_holder/spell/S as anything in mob_spell_list)
-		QDEL_NULL(S)
-	mob_spell_list.Cut()
-	if(ranged_ability)
-		QDEL_NULL(ranged_ability)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 
@@ -49,8 +44,7 @@
 		S.ownerDies(FALSE)
 		qdel(s) //If the owner is destroy()'d, the soullink is destroy()'d
 	ownedSoullinks = null
-	for(var/s in sharedSoullinks)
-		var/datum/soullink/S = s
+	for(var/datum/soullink/S as anything in sharedSoullinks)
 		S.sharerDies(FALSE)
 		S.removeSoulsharer(src) //If a sharer is destroy()'d, they are simply removed
 	sharedSoullinks = null
@@ -64,25 +58,18 @@
 
 /mob/living/proc/create_reflection()
 	//Add custom reflection image
-	var/mutable_appearance/MAM = new()
-	//appearance stuff
-	MAM.appearance = appearance
+	reflective_icon = copy_appearance_filter_overlays(appearance)
 	if(render_target)
-		MAM.render_source = render_target
-	MAM.plane = REFLECTION_PLANE
-	//transform stuff
-	var/matrix/n_transform = MAM.transform
-	n_transform.Scale(1, -1)
-	MAM.transform = n_transform
-	MAM.vis_flags = VIS_INHERIT_DIR
+		reflective_icon.render_source = render_target
+	reflective_icon.plane = REFLECTION_PLANE
+	reflective_icon.pixel_y = -32
+	reflective_icon.transform = matrix().Scale(1, -1)
+	reflective_icon.vis_flags = VIS_INHERIT_DIR
 	//filters
 	var/icon/I = icon('icons/turf/overlays.dmi', "whiteOverlay")
 	I.Flip(NORTH)
-	MAM.filters += filter(type = "alpha", icon = I)
-	reflective_icon = MAM
-	reflective_icon.pixel_y = -32
+	reflective_icon.filters += filter(type = "alpha", icon = I)
 	add_overlay(reflective_icon)
-	update_vision_cone()
 
 /mob/living/carbon/human/dummy
 	has_reflection = FALSE
@@ -96,22 +83,17 @@
 	if(!reflective_icon)
 		create_reflection()
 	cut_overlay(reflective_icon)
-	reflective_icon.appearance = appearance
+	reflective_icon = copy_appearance_filter_overlays(appearance)
 	if(render_target)
 		reflective_icon.render_source = render_target
 	reflective_icon.plane = REFLECTION_PLANE
 	reflective_icon.pixel_y = -32
-	//transform stuff
-	var/matrix/n_transform = reflective_icon.transform
-	n_transform.Scale(1, -1)
-	reflective_icon.transform = n_transform
+	reflective_icon.transform = matrix().Scale(1, -1)
 	reflective_icon.vis_flags = VIS_INHERIT_DIR
-	//filters
-	var/icon/I = icon('icons/turf/overlays.dmi', "partialOverlay")
+	var/icon/I = icon('icons/turf/overlays.dmi', "whiteOverlay")
 	I.Flip(NORTH)
 	reflective_icon.filters += filter(type = "alpha", icon = I)
 	add_overlay(reflective_icon)
-	update_vision_cone()
 
 /mob/living/onZImpact(turf/T, levels)
 	if(HAS_TRAIT(src, TRAIT_NOFALLDAMAGE2))
@@ -871,9 +853,6 @@
 		remove_client_colour(/datum/client_colour/monochrome/death)
 		. = TRUE
 		if(mind)
-			for(var/S in mind.spell_list)
-				var/obj/effect/proc_holder/spell/spell = S
-				spell.updateButtonIcon()
 			mind.remove_antag_datum(/datum/antagonist/zombie)
 		if(ishuman(src))
 			var/mob/living/carbon/human/human = src
@@ -1681,11 +1660,6 @@
 			to_chat(src, span_warning("You are too far away!"))
 			return FALSE
 
-		// var/datum/dna/mob_DNA = has_dna()
-		// if(!mob_DNA || !mob_DNA.check_mutation(/datum/mutation/human/telekinesis) || !tkMaxRangeCheck(src, target))
-		to_chat(src, span_warning("You are too far away!"))
-		return FALSE
-
 	if((action_bitflags & NEED_DEXTERITY) && !IsAdvancedToolUser()) // !ISADVANCEDTOOLUSER(src)
 		to_chat(src, span_warning("You don't have the dexterity to do this!"))
 		return FALSE
@@ -1740,13 +1714,6 @@
 		mind.transfer_to(new_mob)
 	else
 		new_mob.key = key
-
-/mob/living/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)
-	. = ..()
-	if(.)
-		return
-	if((magic && HAS_TRAIT(src, TRAIT_ANTIMAGIC)) || (holy && HAS_TRAIT(src, TRAIT_HOLY)))
-		return src
 
 /mob/living/proc/fakefireextinguish()
 	return
@@ -1845,22 +1812,6 @@
 /mob/living/proc/fall(forced)
 	if(!(mobility_flags & MOBILITY_USE))
 		drop_all_held_items()
-
-/mob/living/proc/AddAbility(obj/effect/proc_holder/A)
-	abilities.Add(A)
-	A.on_gain(src)
-	if(A.has_action)
-		A.action.Grant(src)
-
-/mob/living/proc/RemoveAbility(obj/effect/proc_holder/A)
-	abilities.Remove(A)
-	A.on_lose(src)
-	if(A.action)
-		A.action.Remove(src)
-
-/mob/living/proc/add_abilities_to_panel()
-	for(var/obj/effect/proc_holder/A in abilities)
-		statpanel("[A.panel]",A.get_panel_text(),A)
 
 /// Called when mob changes from a standing position into a prone while lacking the ability to stand up at the moment.
 /mob/living/proc/on_fall()
@@ -2001,11 +1952,6 @@
 			AT.get_remote_view_fullscreens(src)
 		else
 			clear_fullscreen("remote_view", 0)
-
-/mob/living/update_mouse_pointer()
-	..()
-	if (client && ranged_ability && ranged_ability.ranged_mousepointer)
-		client.mouse_pointer_icon = ranged_ability.ranged_mousepointer
 
 /mob/living/vv_get_dropdown()
 	. = ..()
@@ -2212,6 +2158,7 @@
 		return
 	. = body_position
 	body_position = new_value
+	SEND_SIGNAL(src, COMSIG_LIVING_SET_BODY_POSITION, new_value, .)
 	if(new_value == LYING_DOWN) // From standing to lying down.
 		on_lying_down()
 	else // From lying down to standing up.
@@ -2259,12 +2206,12 @@
 		return
 	changeNext_move(CLICK_CD_EXHAUSTED)
 	if(m_intent != MOVE_INTENT_SNEAK)
-		visible_message("<span class='info'>[src] looks around.</span>")
+		visible_message(span_info("[src] looks around."), span_info("I look around."))
 	var/looktime = 5 SECONDS - (STAPER * 2)
 	if(do_after(src, looktime))
 		// var/huhsneak
-		SEND_GLOBAL_SIGNAL(COMSIG_MOB_ACTIVE_PERCEPTION,src)
-		for(var/mob/living/M in oview(7,src))
+		SEND_GLOBAL_SIGNAL(COMSIG_MOB_ACTIVE_PERCEPTION, src)
+		for(var/mob/living/M in oview(7, src))
 			if(see_invisible < M.invisibility)
 				continue
 			if(HAS_TRAIT(M, TRAIT_IMPERCEPTIBLE)) // Check if the mob is affected by the invisibility spell
@@ -2304,17 +2251,12 @@
 			found_ping(get_turf(potential_track), client, "hidden")
 			potential_track.handle_revealing(src)
 
-
 /proc/found_ping(atom/A, client/C, state)
 	if(!A || !C || !state)
 		return
-	var/image/I = image(icon = 'icons/effects/effects.dmi', loc = A, icon_state = state, layer = 19)
-	I.layer = 19
-	I.plane = 19
-	if(!I)
-		return
-	I.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	flick_overlay(I, list(C), 30)
+	var/image/I = image('icons/effects/effects.dmi', A, state)
+	I.plane = ABOVE_LIGHTING_PLANE
+	flick_overlay(I, list(C), 3 SECONDS)
 
 /**
  * look_up Changes the perspective of the mob to any openspace turf above the mob
@@ -2487,6 +2429,9 @@
 			log_combat(src, src, "lost consciousness")
 		if(DEAD)
 			log_combat(src, src, "died")
+	if(!can_hear())
+		stop_sound_channel(CHANNEL_AMBIENCE)
+	refresh_looping_ambience()
 
 /mob/living/set_pulledby(new_pulledby)
 	. = ..()
@@ -2562,3 +2507,99 @@
 
 /mob/proc/get_punch_dmg()
 	return
+
+/// Check if mob knows spell
+/mob/living/proc/get_spell(datum/action/cooldown/spell/spell_type, specific = FALSE)
+	if(!length(actions))
+		return
+	if(istype(spell_type, /datum/action/cooldown/spell))
+		spell_type = spell_type.type
+	if(!specific)
+		return locate(spell_type) in actions
+	for(var/datum/action/cooldown/spell/spell in actions)
+		if(spell.type == spell_type)
+			return spell
+
+/// Add a spell to the mob via typepath
+/mob/living/proc/add_spell(datum/action/cooldown/spell/spell_type, silent = TRUE, source)
+	if(QDELETED(src))
+		return
+	if(get_spell(spell_type))
+		return
+	if(!source)
+		source = src
+	var/datum/action/spell = new spell_type(source)
+	if(!silent)
+		to_chat(src, span_nicegreen("I learnt [spell.name]!"))
+	spell.Grant(src)
+
+/mob/living/proc/remove_spell(datum/action/cooldown/spell/spell, return_skill_points = FALSE, silent = TRUE)
+	if(QDELETED(src))
+		return
+	var/datum/action/cooldown/spell/real_spell = get_spell(spell)
+	if(!real_spell)
+		return
+	if(return_skill_points)
+		used_spell_points = max(used_spell_points - real_spell.point_cost, 0)
+		spell_points = max(spell_points + real_spell.point_cost, 0)
+		check_learnspell()
+	if(!silent)
+		to_chat(src, span_boldwarning("I forgot [real_spell.name]!"))
+	qdel(real_spell)
+
+/**
+ * purges all spells known by the mob
+ * Vars:
+ ** return_skill_points - do we return the skillpoints for the spells?
+ ** silent - do we notify the player of this change?
+*/
+/mob/living/proc/remove_spells(return_skill_points = FALSE, silent = TRUE, source)
+	if(QDELETED(src))
+		return
+	for(var/datum/action/cooldown/spell/spell in actions)
+		if(source && (spell.target != source))
+			continue
+		remove_spell(spell, return_skill_points, silent)
+	if(!silent)
+		to_chat(src, span_boldwarning("I forget all my spells!"))
+
+/mob/living/proc/purge_all_spellpoints(silent = TRUE)
+	if(QDELETED(src))
+		return
+	spell_points = 0
+	used_spell_points = 0
+	if(!silent)
+		to_chat(src, span_boldwarning("I lose all my spellpoints!"))
+
+/**
+ * adjusts the amount of available spellpoints
+ * Vars:
+ ** points - amount of points to grant or reduce
+*/
+/mob/living/proc/adjust_spellpoints(points)
+	if(QDELETED(src))
+		return
+	spell_points += points
+	check_learnspell()
+
+/mob/living/proc/check_learnspell()
+	if(QDELETED(src))
+		return
+	var/datum/action/cooldown/spell/undirected/learn/spell = LAZYACCESS(actions, /datum/action/cooldown/spell/undirected/learn)
+	if(((spell_points - used_spell_points) > 0))
+		if(!spell)
+			spell = /datum/action/cooldown/spell/undirected/learn
+			add_spell(spell)
+		return
+	if(spell)
+		remove_spell(spell)
+
+/**
+ * purges all spells and skills
+ * Vars:
+ ** silent - do we notify the player of this change?
+*/
+/mob/living/proc/purge_combat_knowledge(silent = TRUE)
+	purge_all_skills(silent)
+	remove_spells(silent = silent)
+	purge_all_spellpoints(silent)

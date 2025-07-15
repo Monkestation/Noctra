@@ -7,6 +7,11 @@
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
+	appearance_flags = TILE_BOUND
+
+	/// pass_flags that we are. If any of this matches a pass_flag on a moving thing, by default, we let them through.
+	var/pass_flags_self = NONE
+
 	var/level = 2
 
 	///If non-null, overrides a/an/some in all cases
@@ -253,7 +258,7 @@
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
 	LAZYCLEARLIST(overlays)
-	LAZYCLEARLIST(priority_overlays)
+	managed_overlays = null
 
 	QDEL_NULL(light)
 	QDEL_NULL(ai_controller)
@@ -268,7 +273,22 @@
 
 ///Can the mover object pass this atom, while heading for the target turf
 /atom/proc/CanPass(atom/movable/mover, turf/target)
+	SHOULD_CALL_PARENT(TRUE)
+	if(mover.movement_type & PHASING)
+		return TRUE
+	. = CanAllowThrough(mover, target)
+	// This is cheaper than calling the proc every time since most things dont override CanPassThrough
+	if(!mover.generic_canpass)
+		return mover.CanPassThrough(src, target, .)
+
+/// Returns true or false to allow the mover to move through src
+/atom/proc/CanAllowThrough(atom/movable/mover, turf/target)
+	SHOULD_CALL_PARENT(TRUE)
 	if(istype(mover, /mob/camera))
+		return TRUE
+	if(mover.pass_flags & pass_flags_self)
+		return TRUE
+	if(mover.throwing && (pass_flags_self & LETPASSTHROW))
 		return TRUE
 	return !density
 
@@ -386,11 +406,16 @@
 /**
  * React to a hit by a projectile object
  *
- * Default behaviour is to send the COMSIG_ATOM_BULLET_ACT and then call on_hit() on the projectile
+ * Default behaviour is to send the [COMSIG_ATOM_BULLET_ACT] and then call [on_hit][/obj/projectile/proc/on_hit] on the projectile
+ *
+ * @params
+ * P - projectile
+ * def_zone - zone hit
+ * piercing_hit - is this hit piercing or normal?
  */
-/atom/proc/bullet_act(obj/projectile/P, def_zone)
+/atom/proc/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
 	SEND_SIGNAL(src, COMSIG_ATOM_BULLET_ACT, P, def_zone)
-	. = P.on_hit(src, 0, def_zone)
+	. = P.on_hit(src, 0, def_zone, piercing_hit)
 
 ///Return true if we're inside the passed in atom
 /atom/proc/in_contents_of(container)//can take class or object instance as argument
@@ -540,7 +565,10 @@
 			cut_overlay(managed_overlays)
 			managed_overlays = null
 		if(length(new_overlays))
-			managed_overlays = new_overlays
+			if(length(new_overlays) == 1)
+				managed_overlays = new_overlays[1]
+			else
+				managed_overlays = new_overlays
 			add_overlay(new_overlays)
 		. |= UPDATE_OVERLAYS
 
@@ -1201,14 +1229,13 @@
 	defender.log_message(message, LOG_ATTACK, color="red")
 	attacker.log_message(reverse_message, LOG_ATTACK, "red", FALSE) // log it in the attacker's personal log too, but not log globally because it was already done.
 
-/atom/movable/proc/add_filter(name,priority,list/params)
+/atom/movable/proc/add_filter(name, priority, list/params)
 	if(!filter_data)
 		filter_data = list()
 	var/list/p = params.Copy()
 	p["priority"] = priority
 	filter_data[name] = p
 	update_filters()
-
 
 /atom/movable/proc/remove_filter(name_or_names)
 	if(!filter_data)
@@ -1226,6 +1253,11 @@
 		update_filters()
 	return .
 
+/atom/movable/proc/clear_filters()
+	var/atom/atom_cast = src // filters only work with images or atoms.
+	filter_data = null
+	atom_cast.filters = null
+
 /proc/cmp_filter_data_priority(list/A, list/B)
 	return A["priority"] - B["priority"]
 
@@ -1240,6 +1272,10 @@
 		arguments -= "priority"
 		atom_cast.filters += filter(arglist(arguments))
 	UNSETEMPTY(filter_data)
+
+/obj/item/update_filters()
+	. = ..()
+	update_item_action_buttons()
 
 /atom/movable/proc/get_filter(name)
 	if(filter_data && filter_data[name])

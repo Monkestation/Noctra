@@ -135,6 +135,20 @@
 	craftdiff = 0
 	uses_attacked_atom = FALSE
 
+/datum/repeatable_crafting_recipe/crafting/caningstick
+	name = "caning stick"
+	requirements = list(
+		/obj/item/grown/log/tree/stick= 2,
+	)
+	tool_usage = list(
+		/obj/item/weapon/knife = list(span_notice("starts to whittle"), span_notice("start to whittle"), 'sound/items/wood_sharpen.ogg'),
+	)
+	attacked_atom = /obj/item/grown/log/tree/stick
+	starting_atom  = /obj/item/weapon/knife
+	output = /obj/item/weapon/whip/cane
+	craftdiff = 0
+	uses_attacked_atom = FALSE
+
 /datum/repeatable_crafting_recipe/crafting/spoon
 	name = "wooden spoon"
 	requirements = list(
@@ -586,18 +600,3 @@
 	attacked_atom = /obj/item/natural/cloth
 	uses_attacked_atom = TRUE
 	subtypes_allowed = TRUE
-
-/datum/repeatable_crafting_recipe/crafting/manabloom_powder
-	name = "manabloom powder"
-	reagent_requirements = list()
-	tool_usage = list()
-	requirements = list(
-		/obj/item/reagent_containers/food/snacks/produce/manabloom = 1,
-	)
-	tool_usage = list(
-		/obj/item/weapon/hammer = list("starts to crush the manabloom", "start to crush the manabloom")
-	)
-	output = /obj/item/reagent_containers/powder/manabloom
-	attacked_atom = /obj/item/reagent_containers/food/snacks/produce/manabloom
-	starting_atom = /obj/item/weapon/hammer
-	uses_attacked_atom = FALSE

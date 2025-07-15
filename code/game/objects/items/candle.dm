@@ -94,7 +94,7 @@
 	update_appearance(UPDATE_ICON_STATE)
 	open_flame()
 
-/obj/item/candle/attack_self(mob/user)
+/obj/item/candle/attack_self(mob/user, params)
 	if(put_out_candle())
 		user.visible_message("<span class='notice'>[user] snuffs [src].</span>")
 

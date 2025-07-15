@@ -412,7 +412,7 @@
 	if(!(flags & SHOCK_ILLUSION))
 		adjustFireLoss(shock_damage)
 	visible_message(
-		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
+		"<span class='danger'>[src] was shocked by [source ? "\the [source]" : "something"]!</span>", \
 		"<span class='danger'>I feel a powerful shock coursing through my body!</span>", \
 		"<span class='hear'>I hear a heavy electrical crack.</span>" \
 	)

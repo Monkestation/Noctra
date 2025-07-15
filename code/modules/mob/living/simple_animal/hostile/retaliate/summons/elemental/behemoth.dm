@@ -48,21 +48,19 @@
 
 	ai_controller = /datum/ai_controller/behemoth
 
-
+	del_on_death = TRUE
 
 /mob/living/simple_animal/hostile/retaliate/elemental/behemoth/Initialize()
 	. = ..()
 	AddComponent(/datum/component/ai_aggro_system)
 
 /mob/living/simple_animal/hostile/retaliate/elemental/behemoth/death(gibbed)
-	..()
 	var/turf/deathspot = get_turf(src)
 	new /obj/item/natural/elementalfragment(deathspot)
 	new /obj/item/natural/elementalmote(deathspot)
 	new /obj/item/natural/elementalmote(deathspot)
-	update_appearance()
 	spill_embedded_objects()
-	qdel(src)
+	return ..()
 
 /obj/effect/temp_visual/marker
 	icon = 'icons/effects/effects.dmi'

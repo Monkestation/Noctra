@@ -217,7 +217,7 @@
 /obj/item/paper/proc/reset_spamflag()
 	spam_flag = FALSE
 
-/obj/item/paper/attack_self(mob/user)
+/obj/item/paper/attack_self(mob/user, params)
 	if(mailer)
 		user.visible_message("<span class='notice'>[user] opens the letter from [mailer].</span>")
 		cached_mailer = mailer

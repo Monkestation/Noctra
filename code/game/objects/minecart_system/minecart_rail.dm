@@ -98,15 +98,19 @@
 	secondary_direction = dir
 	setDir(last_direction)
 
-/obj/structure/minecart_rail/attack_right(mob/user)
+/obj/structure/minecart_rail/attackby_secondary(obj/item/I, mob/user, params)
 	. = ..()
-	var/obj/item/held_item = user.get_active_held_item()
-	if(held_item?.tool_behaviour == TOOL_MULTITOOL)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(I?.tool_behaviour == TOOL_MULTITOOL)
 		rotate_direction(user)
 		return
 
 	var/choice = browser_input_list(user, "Choose a direction to cycle to when activated by a trigger.", src, list("Downwards Left Turn", "Downwards Right Turn", "Upwards Left Turn", "Upwards Right Turn", "Up and Down", "Left and Right"))
-	if(!choice)
+	if(!choice || QDELETED(user) || QDELETED(src))
 		return
 
 	secondary_direction = directions[choice]

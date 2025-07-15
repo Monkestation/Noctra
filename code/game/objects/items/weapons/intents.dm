@@ -1,9 +1,3 @@
-////click cooldowns, in tenths of a second, used for various combat actions
-//#define CLICK_CD_EXHAUSTED 35
-//#define CLICK_CD_MELEE 12
-//#define CLICK_CD_RANGE 4
-//#define CLICK_CD_RAPID 2
-
 /datum/intent
 	var/name = "intent"
 	var/desc = ""
@@ -130,13 +124,6 @@
 		return chargetime
 	else
 		return 0
-
-/datum/intent/proc/spell_cannot_activate()
-	var/mob/master = get_master_mob()
-	if(master)
-		to_chat(master, span_warning("I am too drained for this."))
-		cancel_spell_visual_effects(master)
-	return FALSE
 
 /datum/intent/proc/get_chargedrain()
 	if(chargedrain)
@@ -300,17 +287,6 @@
 	chargetime = 0
 	noaa = TRUE
 
-/datum/intent/spell
-	name = "spell"
-	tranged = 1
-	chargedrain = 0
-	chargetime = 0
-	warnie = "aimwarn"
-	warnoffset = 0
-	move_limit = 6
-	charge_pointer = 'icons/effects/mousemice/charge/spell_charging.dmi'
-	charged_pointer = 'icons/effects/mousemice/charge/spell_charged.dmi'
-
 /datum/looping_sound/invokegen
 	mid_sounds = list('sound/magic/charging.ogg')
 	mid_length = 130
@@ -414,6 +390,7 @@
 
 /datum/intent/proc/arc_check()
 	return FALSE
+
 /datum/intent/arc/arc_check()
 	return TRUE
 

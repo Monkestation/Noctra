@@ -17,7 +17,10 @@
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 
 	outfit = /datum/outfit/job/archivist
-	spells = list(/obj/effect/proc_holder/spell/self/learnspell, /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+	spells = list(
+		/datum/action/cooldown/spell/undirected/learn,
+		/datum/action/cooldown/spell/undirected/touch/prestidigitation,
+	)
 	give_bank_account = 100
 
 /datum/outfit/job/archivist
@@ -51,7 +54,7 @@
 
 	H.grant_language(/datum/language/elvish)
 	H.grant_language(/datum/language/dwarvish)
-	H.grant_language(/datum/language/zybantine)
+	H.grant_language(/datum/language/zalad)
 	H.grant_language(/datum/language/celestial)
 	H.grant_language(/datum/language/hellspeak)
 	H.grant_language(/datum/language/oldpsydonic)

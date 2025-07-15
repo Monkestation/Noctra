@@ -18,6 +18,7 @@
 	var/blocks_air = FALSE
 
 	flags_1 = CAN_BE_DIRTY_1
+	var/turf_flags = NONE
 
 	var/list/image/blueprint_data //for the station blueprints, images of objects eg: pipes
 
@@ -249,8 +250,10 @@
 			M.take_overall_damage(A.fall_damage()*2)
 	A.onZImpact(src, levels)
 	if(isobj(A))
-		for(var/mob/living/mob in contents)
-			A:on_fall_impact(mob, levels * 0.75)
+		var/obj/O = A
+		for(var/mob/living/mob in O.contents)
+			O.on_fall_impact(mob, levels * 0.75)
+
 	return TRUE
 
 /atom/movable/proc/fall_damage()
@@ -286,17 +289,6 @@
 	A.atom_flags &= ~Z_FALLING
 	target.zImpact(A, levels, src)
 	return TRUE
-
-/turf/CanPass(atom/movable/mover, turf/target)
-	if(!target)
-		return FALSE
-	if(iscameramob(mover))
-		return TRUE
-	if(istype(mover)) // turf/Enter(...) will perform more advanced checks
-		return !density
-
-	stack_trace("Non movable passed to turf CanPass : [mover]")
-	return FALSE
 
 //There's a lot of QDELETED() calls here if someone can figure out how to optimize this but not runtime when something gets deleted by a Bump/CanPass/Cross call, lemme know or go ahead and fix this mess - kevinz000
 /turf/Enter(atom/movable/mover, atom/oldloc)

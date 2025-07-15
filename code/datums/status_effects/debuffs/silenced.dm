@@ -1,17 +1,16 @@
 /datum/status_effect/silenced
 	id = "silent"
 	alert_type = null
-
-/datum/status_effect/silenced/on_creation(mob/living/new_owner, duration = 10 SECONDS)
-	src.duration = duration
-	return ..()
+	duration = 10 SECONDS
 
 /datum/status_effect/silenced/on_apply()
+	. = ..()
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(clear_silence))
 	ADD_TRAIT(owner, TRAIT_MUTE, id)
 	return TRUE
 
 /datum/status_effect/silenced/on_remove()
+	. = ..()
 	UnregisterSignal(owner, COMSIG_LIVING_DEATH)
 	REMOVE_TRAIT(owner, TRAIT_MUTE, id)
 

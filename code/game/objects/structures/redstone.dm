@@ -88,7 +88,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		user.log_message("pulled the lever with redstone id \"[redstone_id]\"", LOG_GAME)
 		if(do_after(user, used_time))
 			for(var/obj/structure/O in redstone_attached)
-				spawn(0) O.redstone_triggered(user)
+				INVOKE_ASYNC(O, TYPE_PROC_REF(/obj/structure, redstone_triggered), user)
 			toggled = !toggled
 			icon_state = "leverfloor[toggled]"
 			playsound(src, 'sound/foley/lever.ogg', 100, extrarange = 3)
@@ -102,7 +102,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		playsound(src, 'sound/combat/hits/onwood/woodimpact (1).ogg', 100)
 		if(prob(L.STASTR * 4))
 			for(var/obj/structure/O in redstone_attached)
-				spawn(0) O.redstone_triggered(user)
+				INVOKE_ASYNC(O, TYPE_PROC_REF(/obj/structure, redstone_triggered), user)
 			toggled = !toggled
 			icon_state = "leverfloor[toggled]"
 			playsound(src, 'sound/foley/lever.ogg', 100, extrarange = 3)
@@ -120,7 +120,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 		user.visible_message("<span class='warning'>[user] presses a hidden button.</span>")
 		user.log_message("pulled the lever with redstone id \"[redstone_id]\"", LOG_GAME)
 		for(var/obj/structure/O in redstone_attached)
-			spawn(0) O.redstone_triggered(user)
+			INVOKE_ASYNC(O, TYPE_PROC_REF(/obj/structure, redstone_triggered), user)
 		toggled = !toggled
 		playsound(src, 'sound/foley/lever.ogg', 100, extrarange = 3)
 
@@ -258,7 +258,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 /obj/structure/pressure_plate/proc/triggerplate()
 	playsound(src, 'sound/misc/pressurepad_up.ogg', 65, extrarange = 2)
 	for(var/obj/structure/O in redstone_attached)
-		spawn(0) O.redstone_triggered()
+		INVOKE_ASYNC(O, TYPE_PROC_REF(/obj/structure, redstone_triggered))
 
 /obj/structure/pressure_plate/attack_hand(mob/user)
 	. = ..()

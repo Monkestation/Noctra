@@ -94,6 +94,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	//general preferences
 	S["asaycolor"]			>> asaycolor
 	S["ooccolor"]			>> ooccolor
+	S["oocpronouns"]		>> oocpronouns
 	S["admin_ghost_icon"]	>> admin_ghost_icon
 	S["ui_theme"]			>> ui_theme
 	S["lastchangelog"]		>> lastchangelog
@@ -111,7 +112,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["triumphs"]			>> triumphs
 	S["musicvol"]			>> musicvol
 	S["anonymize"]			>> anonymize
-	S["crt"]			>> crt
+	S["crt"]				>> crt
 	S["mastervol"]			>> mastervol
 	S["lastclass"]			>> lastclass
 
@@ -160,7 +161,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	buttons_locked	= sanitize_integer(buttons_locked, 0, 1, initial(buttons_locked))
 	windowflashing	= sanitize_integer(windowflashing, 0, 1, initial(windowflashing))
 	default_slot	= sanitize_integer(default_slot, 1, max_save_slots, initial(default_slot))
-	toggles			= sanitize_integer(toggles, 0, 65535, initial(toggles))
+	toggles			= sanitize_integer(toggles, 0, SHORT_REAL_LIMIT, initial(toggles))
 	clientfps		= sanitize_integer(clientfps, 0, 1000, 0)
 	parallax		= sanitize_integer(parallax, PARALLAX_INSANE, PARALLAX_DISABLE, null)
 	ambientocclusion	= sanitize_integer(ambientocclusion, 0, 1, initial(ambientocclusion))
@@ -224,6 +225,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["ghost_accs"], ghost_accs)
 	WRITE_FILE(S["ghost_others"], ghost_others)
 	WRITE_FILE(S["preferred_map"], preferred_map)
+	WRITE_FILE(S["oocpronouns"], oocpronouns)
 	WRITE_FILE(S["ignoring"], ignoring)
 	WRITE_FILE(S["ghost_hud"], ghost_hud)
 	WRITE_FILE(S["inquisitive_ghost"], inquisitive_ghost)
@@ -332,6 +334,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!is_valid_headshot_link(null, headshot_link, TRUE))
 		headshot_link = null
 
+	S["pronouns"] >> pronouns
+	S["voice_type"] >> voice_type
+
 	//Load flavor text
 	S["flavortext"] >> flavortext
 
@@ -357,6 +362,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	age = sanitize_inlist(age, pref_species.possible_ages)
 	eye_color = sanitize_hexcolor(eye_color, 3, 0)
 	voice_color = voice_color
+	pronouns = sanitize_text(pronouns, THEY_THEM)
+	voice_type = sanitize_text(voice_type, VOICE_TYPE_MASC)
 	skin_tone = skin_tone
 	family = family
 	setspouse = setspouse
@@ -412,6 +419,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["detail"]				, detail)
 	WRITE_FILE(S["socks"]				, socks)
 	WRITE_FILE(S["randomise"]		, randomise)
+	WRITE_FILE(S["pronouns"]		, pronouns)
+	WRITE_FILE(S["voice_type"]		, voice_type)
 	WRITE_FILE(S["species"]			, pref_species.name)
 	WRITE_FILE(S["charflaw"]			, charflaw.type)
 	WRITE_FILE(S["family"]			, 	family)

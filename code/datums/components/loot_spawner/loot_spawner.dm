@@ -42,13 +42,13 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(handle_loot_attempt))
 	if(resetting_item)
-		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(handle_reset_attempt))
+		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_reset_attempt))
 
 /datum/component/loot_spawner/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, COMSIG_ATOM_ATTACK_HAND)
 	if(resetting_item)
-		UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
+		UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 
 
 /datum/component/loot_spawner/proc/handle_loot_attempt(atom/source, mob/user)
@@ -63,7 +63,7 @@
 		SEND_SIGNAL(parent, COMSIG_LOOT_SPAWNER_EMPTY)
 		return NONE
 	INVOKE_ASYNC(src, PROC_REF(start_loot), source, user)
-	return COMPONENT_NO_ATTACK_HAND
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/component/loot_spawner/proc/handle_reset_attempt(atom/source, obj/item/L, mob/living/user)
 	if(!needs_reset)

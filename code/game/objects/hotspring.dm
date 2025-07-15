@@ -163,6 +163,7 @@
 	icon = 'icons/obj/structures/hotspring.dmi'
 	icon_state = "stonelantern1"
 	base_state = "stonelantern"
+	shows_empty = FALSE
 
 /obj/machinery/light/fueled/torchholder/hotspring/standing
 	name = "standing stone lantern"

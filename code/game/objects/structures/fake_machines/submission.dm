@@ -78,7 +78,11 @@
 		attemptsell(P, user, TRUE, TRUE)
 		return TRUE
 
-/obj/structure/fake_machine/submission/attack_right(mob/user)
+/obj/structure/fake_machine/submission/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(ishuman(user))
 		for(var/obj/I in get_turf(src))
 			attemptsell(I, user, FALSE, FALSE)
