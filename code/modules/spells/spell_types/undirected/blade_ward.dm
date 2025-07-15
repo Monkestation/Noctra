@@ -32,7 +32,7 @@
 		return
 
 	for(var/mob/living/extra_target in orange(FLOOR(attuned_strength, 1), owner))
-		extra_target.apply_status_effect(/datum/status_effect/buff/bladeward, duration_increase)
+		extra_target.apply_status_effect(status, initial(status.duration) + duration_increase)
 		extra_target.visible_message(
 			span_info("[extra_target] has a sigil of warding appear over them."),
 			span_notice("I see a sigil of warding floating over me."),
