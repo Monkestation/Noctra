@@ -35,7 +35,7 @@
 	for(var/recipe as anything in overall_recipe_typepaths)
 		for(var/obj/piece_of_clothing as anything in clothes_list)
 			if(piece_of_clothing.type == recipe)
-				clothes_list -= piece_of_clothing
+				clothes_list -= piece_of_clothing.type
 				break
 
 	if(!clothes_list.len)
