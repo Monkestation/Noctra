@@ -61,9 +61,9 @@
 	. = ..()
 	if(dir in CORNERDIRS)
 		return TRUE
+	if(mover.throwing || mover.pass_flags & (FLOATING|FLYING))
+		return TRUE
 	if(get_dir(loc, target) == dir)
-		if(mover.throwing || mover.pass_flags & (FLOATING|FLYING))
-			return TRUE
 		if(!passcrawl || !isliving(mover))
 			return FALSE
 		var/mob/living/M = mover
@@ -144,6 +144,7 @@
 	. = ..()
 	if(get_dir(loc, target) == dir)
 		return FALSE
+	return TRUE
 
 /obj/structure/bars
 	name = "bars"

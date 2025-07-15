@@ -634,28 +634,28 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Jump to Mob"
 	set desc = ""
 	set hidden = 1
+
 	if(!check_rights(0))
 		return
-	if(isobserver(usr)) //Make sure they're an observer!
 
+	if(isobserver(usr))
+		var/list/mobs = getpois(mobs_only = TRUE)
+		var/target = browser_input_list(usr, "Mob to jump to", "Jump to Mob", mobs)
 
-		var/list/dest = list() //List of possible destinations (mobs)
-		var/target = null	   //Chosen target.
-
-		dest += getpois(mobs_only=1) //Fill list, prompt user with list
-		target = input("Please, select a player!", "Jump to Mob", null, null) as null|anything in dest
-
-		if (!target)//Make sure we actually have a target
+		if(!target)
 			return
-		else
-			var/mob/M = dest[target] //Destination mob
-			var/mob/A = src			 //Source mob
-			var/turf/T = get_turf(M) //Turf of the destination mob
 
-			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
-				A.forceMove(T)
-			else
-				to_chat(A, "<span class='danger'>This mob is not located in the game world.</span>")
+		var/mob/M = mobs[target]
+		if(!M)
+			return
+
+		var/mob/A = src
+		var/turf/T = get_turf(M)
+
+		if(T && isturf(T))
+			A.forceMove(T)
+		else
+			to_chat(A, span_warning("This mob is not located in the game world."))
 
 /mob/dead/observer/verb/change_view_range()
 	set category = "Spirit"

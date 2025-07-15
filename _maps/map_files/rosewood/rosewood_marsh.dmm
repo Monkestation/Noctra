@@ -3122,7 +3122,7 @@
 /obj/item/weapon/sword/sabre/stalker{
 	name = "Murder"
 	},
-/obj/item/coin/silver/pile/xylix,
+/obj/item/coin/silver/pile,
 /obj/item/ingot/silver,
 /obj/item/ingot/silver,
 /obj/item/clothing/ring/gold/dorpel,
@@ -7580,7 +7580,7 @@
 /obj/item/ingot/gold,
 /obj/structure/closet/crate/chest/neu_fancy,
 /obj/item/coin/gold/pile,
-/obj/item/coin/silver/pile/xylix,
+/obj/item/coin/silver/pile,
 /obj/item/ingot/silver,
 /obj/item/clothing/ring/silver/blortz,
 /obj/item/gem/yellow,

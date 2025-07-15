@@ -14,8 +14,7 @@
 	invocation_type = INVOCATION_SHOUT
 
 	charge_time = 2 SECONDS
-	charge_drain = 1
-	charge_slowdown = 1.3
+	cooldown_time = 2.5 MINUTES
 	spell_cost = 30
 
 	status_effect = /datum/status_effect/buff/craft_buff

@@ -13,10 +13,8 @@
 	invocation_type = INVOCATION_WHISPER
 
 	charge_time = 2 SECONDS
-	charge_drain = 0
-	charge_slowdown = 0.3
-	cooldown_time = 40 SECONDS
-	spell_cost = 35
+	cooldown_time = 30 SECONDS
+	spell_cost = 55
 
 	projectile_type = /obj/projectile/magic/eora
 

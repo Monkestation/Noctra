@@ -9,7 +9,7 @@
 	associated_skill = /datum/skill/magic/holy
 	required_items = list(/obj/item/clothing/neck/psycross/silver/ravox)
 
-	invocation = "Ravox guides my strike against the unjust!"
+	invocation = "Ravox deems your persistence worthy!"
 	invocation_type = INVOCATION_SHOUT
 
 	charge_required = FALSE

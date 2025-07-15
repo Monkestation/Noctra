@@ -138,6 +138,8 @@ DEFINE_BITFIELD(antimagic_flags, list(
 ))
 
 // Spell types, fallback to mana if not possible i.e non vampire with blood magic
+/// Doesn't have any sort of magical cost
+#define SPELL_NONE 0
 /// Uses mana, normal behaviour
 #define SPELL_MANA 1
 /// Casted with the essence gauntlet

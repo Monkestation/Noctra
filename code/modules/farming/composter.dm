@@ -65,8 +65,8 @@
 		apply_farming_fatigue(user, fatigue)
 		if(using_tool)
 			playsound(src,'sound/items/dig_shovel.ogg', 100, TRUE)
-		sleep(10)
-		flip_compost()
+		addtimer(CALLBACK(src, PROC_REF(flip_compost)), 1 SECONDS)
+
 	return TRUE
 
 /obj/structure/composter/proc/flip_compost()
@@ -146,12 +146,20 @@
 		return
 	. = ..()
 
+/obj/structure/composter/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	user.changeNext_move(CLICK_CD_FAST)
+	if(try_handle_flipping_compost(null, user, params))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/structure/composter/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 	user.changeNext_move(CLICK_CD_FAST)
-	if(try_handle_flipping_compost(weapon, user, null))
+	if(try_handle_flipping_compost(weapon, user, params))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/composter/update_overlays()

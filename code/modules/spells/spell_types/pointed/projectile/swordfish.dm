@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/projectile/swordfish
 	name = "Abyssor's Rage"
-	desc = "Summon a trident from Abyssor's domain."
+	desc = "Throw a swordfish from Abyssor's domain."
 	button_icon_state = "curse2"
 	sound = 'sound/magic/whiteflame.ogg'
 
@@ -12,11 +12,9 @@
 	invocation = "Feel Abyssor's rage!"
 	invocation_type = INVOCATION_SHOUT
 
-	charge_time = 1.5 SECONDS
-	charge_drain = 1
-	charge_slowdown = 0.3
-	cooldown_time = 20 SECONDS
-	spell_cost = 25
+	charge_time = 2 SECONDS
+	cooldown_time = 15 SECONDS
+	spell_cost = 35
 
 	projectile_type = /obj/projectile/magic/swordfish
 

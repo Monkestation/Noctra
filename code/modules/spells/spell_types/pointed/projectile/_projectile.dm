@@ -29,6 +29,7 @@
 	if(!click_to_activate)
 		stack_trace("Projectile spell [type] created without having (click_to_activate = TRUE), this won't work.")
 		qdel(src)
+		return
 	if(projectile_amount > 1)
 		unset_after_click = FALSE
 
@@ -80,7 +81,7 @@
 /datum/action/cooldown/spell/projectile/proc/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)
 	to_fire.firer = owner
 	to_fire.fired_from = get_turf(owner)
-	to_fire.scale = attuned_strength
+	to_fire.scale = clamp(attuned_strength, 0.5, 1.5)
 	to_fire.preparePixelProjectile(target, owner)
 
 	RegisterSignal(to_fire, COMSIG_PROJECTILE_ON_HIT, PROC_REF(on_cast_hit))

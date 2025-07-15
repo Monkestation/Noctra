@@ -4,6 +4,7 @@
 	button_icon_state = "invisibility"
 	sound = 'sound/misc/stings/generic.ogg'
 
+	cast_range = 3
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	associated_skill = /datum/skill/magic/holy

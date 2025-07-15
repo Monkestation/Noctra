@@ -4,7 +4,6 @@
 	button_icon_state = "sacredflame"
 	sound = 'sound/magic/heal.ogg'
 	charge_sound = 'sound/magic/holycharging.ogg'
-	self_cast_possible = FALSE
 
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
@@ -14,11 +13,9 @@
 	invocation = "Cleansing flames, kindle!"
 	invocation_type = INVOCATION_SHOUT
 
-	charge_time = 1 SECONDS
-	charge_drain = 1
-	charge_slowdown = 0.7
+	charge_required = FALSE
 	cooldown_time = 10 SECONDS
-	spell_cost = 30
+	spell_cost = 40
 
 	var/stacks_to_add = 3
 
@@ -40,8 +37,8 @@
 		return
 	var/mob/living/heretic = cast_on
 	owner.visible_message(
-		"<font color='yellow'>[owner] points at [heretic]!</font>",
-		"<font color='yellow'>I point at [heretic]!</font>",
+		"<font color='yellow'>[owner] points at [heretic], igniting [heretic.p_them()] with sacred flames!!</font>",
+		"<font color='yellow'>I point at [heretic], igniting  [heretic.p_them()] with sacred flames!!</font>",
 	)
 	playsound(heretic, 'sound/items/flint.ogg', 150, FALSE)
 	heretic.adjust_divine_fire_stacks(stacks_to_add)

@@ -61,7 +61,9 @@
 			if(SECONDARY_ATTACK_CALL_NORMAL)
 				attackby_result = target.attackby(src, user, params)
 			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-				// Pass
+				return TRUE
+			if(SECONDARY_ATTACK_CONTINUE_CHAIN)
+				// Normal behavior
 			else
 				CRASH("attackby_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 	else
@@ -237,6 +239,8 @@
 		return result
 
 	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(weapon.item_flags & ABSTRACT)
+		return
 	if(src == user)
 		if(offered_item)
 			offered_item = null
@@ -248,7 +252,7 @@
 			to_chat(user, span_warning("I can't offer myself an item!"))
 		return
 	var/obj/item/offer_attempt = user.get_active_held_item()
-	if(HAS_TRAIT(offer_attempt, TRAIT_NODROP) || offer_attempt.item_flags & ABSTRACT)
+	if(HAS_TRAIT(offer_attempt, TRAIT_NODROP))
 		to_chat(user, span_warning("I can't offer this."))
 		return
 	user.offered_item = WEAKREF(offer_attempt)

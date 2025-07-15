@@ -192,10 +192,9 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
+	if(user.cmode)
+		return SECONDARY_ATTACK_CALL_NORMAL
 	user.changeNext_move(CLICK_CD_FAST)
-	if((has_bolt || has_viewport))
-		to_chat(user, span_warning("I need a free hand."))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(has_bolt)
 		if(obj_broken)
 			to_chat(user, span_warning("The bolt has nothing to latch to!"))

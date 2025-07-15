@@ -125,7 +125,7 @@
 	icon_state = "together"
 	baseturfs = /turf/open/transparent/openspace
 
-/turf/open/water/river/creatable/handle_water()
+/turf/open/water/river/handle_water()
 	if(water_volume < 10)
 		dryup()
 	else if(water_volume)

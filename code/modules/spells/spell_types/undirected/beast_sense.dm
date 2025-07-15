@@ -16,7 +16,7 @@
 	invocation_type = INVOCATION_WHISPER
 
 	charge_required = FALSE
-	cooldown_time = 12 MINUTES
+	cooldown_time = 10 MINUTES
 	spell_cost = 20
 
 /datum/action/cooldown/spell/undirected/beast_sense/can_cast_spell(feedback)

@@ -3,7 +3,6 @@
 	desc = ""
 	button_icon_state = "heatmetal"
 	sound = 'sound/items/bsmithfail.ogg'
-	self_cast_possible = FALSE
 
 	cast_range = 2
 	spell_type = SPELL_MIRACLE
@@ -15,7 +14,6 @@
 	invocation_type = INVOCATION_SHOUT
 
 	charge_time = 2 SECONDS
-	charge_drain = 1
 	charge_slowdown = 1.3
 	cooldown_time = 2 MINUTES
 	spell_cost = 40
