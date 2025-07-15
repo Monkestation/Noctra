@@ -341,11 +341,10 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/indoors/town/shop)
 "alu" = (
-/obj/structure/fluff/railing/border{
-	dir = 8
+/obj/structure/lever/hidden/keep{
+	redstone_id = "CaptainPassage"
 	},
-/obj/structure/fluff/clock,
-/turf/open/floor/tile/checkeralt,
+/turf/closed/wall/mineral/decorstone,
 /area/rogue/indoors/town/manor)
 "amf" = (
 /obj/structure/window/openclose,
@@ -2428,9 +2427,20 @@
 /turf/open/floor/dirt,
 /area/rogue/outdoors/town)
 "btA" = (
-/obj/structure/table/wood/plain_alt,
-/obj/item/clothing/face/spectacles,
-/turf/open/floor/tile/checkeralt,
+/obj/structure/closet/crate/drawer,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/paper/scroll,
+/obj/item/natural/feather,
+/obj/item/natural/feather,
+/obj/machinery/light/fueled/wallfire/candle/l,
+/obj/machinery/light/fueled/wallfire/candle,
+/turf/open/floor/herringbone,
 /area/rogue/indoors/town/manor)
 "btC" = (
 /obj/machinery/light/fueled/wallfire/candle/blue{
@@ -4466,11 +4476,6 @@
 "cJW" = (
 /turf/closed/wall/mineral/wooddark/end,
 /area/rogue/indoors/town)
-"cKd" = (
-/obj/structure/bed/wool,
-/obj/item/bedsheet/fabric,
-/turf/open/floor/carpet/red,
-/area/rogue/indoors/town/manor)
 "cKj" = (
 /obj/structure/fake_machine/mail{
 	pixel_x = 32;
@@ -6419,13 +6424,6 @@
 	},
 /turf/open/floor/cobblerock,
 /area/rogue/outdoors/town)
-"dSo" = (
-/obj/machinery/light/fueled/wallfire/candle{
-	pixel_x = 32;
-	pixel_y = 0
-	},
-/turf/open/floor/carpet/red,
-/area/rogue/indoors/town/manor)
 "dSp" = (
 /obj/structure/bars,
 /turf/open/water/sewer,
@@ -9604,6 +9602,7 @@
 	name = "Keep Entrance"
 	},
 /obj/effect/mapping_helpers/access/keyset/manor/general,
+/obj/effect/mapping_helpers/access/locker,
 /turf/open/floor/wood,
 /area/rogue/indoors/town/manor)
 "fWF" = (
@@ -11152,12 +11151,7 @@
 /turf/open/floor/cobble,
 /area/rogue/indoors/town/magician)
 "gUF" = (
-/obj/effect/mapping_helpers/secret_door_creator/keep{
-	floor_turf = /turf/open/floor/ruinedwood/spiral;
-	override_floor = 1;
-	redstone_id = 516
-	},
-/turf/closed/wall/mineral/decorstone,
+/turf/closed/wall/mineral/decostone/center,
 /area/rogue/indoors/town/manor)
 "gUK" = (
 /obj/machinery/light/fueled/wallfire/candle/l,
@@ -12056,19 +12050,7 @@
 /turf/open/floor/naturalstone,
 /area/rogue/under/cave)
 "hCo" = (
-/obj/structure/closet/crate/drawer,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll,
-/obj/item/natural/feather,
-/obj/item/natural/feather,
-/obj/machinery/light/fueled/wallfire/candle/l,
-/turf/open/floor/herringbone,
+/turf/closed/basic,
 /area/rogue/indoors/town/manor)
 "hCq" = (
 /turf/open/floor/dirt/road,
@@ -14120,10 +14102,11 @@
 /turf/open/floor/cobble,
 /area/rogue/outdoors/rtfield/safe)
 "iSg" = (
-/obj/structure/fluff/railing/border{
-	dir = 10
+/obj/structure/fluff/walldeco/moon{
+	pixel_x = 0;
+	pixel_y = -32
 	},
-/turf/open/floor/tile/checkeralt,
+/turf/open/floor/greenstone,
 /area/rogue/indoors/town/manor)
 "iSk" = (
 /turf/open/transparent/openspace,
@@ -16116,16 +16099,23 @@
 /area/rogue/under/cave)
 "kbJ" = (
 /obj/structure/table/wood/plain_alt,
-/obj/item/paper/scroll,
-/obj/item/paper/scroll{
-	pixel_x = -1;
-	pixel_y = 3
+/obj/item/paper{
+	pixel_x = 4;
+	pixel_y = 10
 	},
-/obj/item/paper/scroll{
-	pixel_x = -3;
-	pixel_y = 6
+/obj/item/candle/yellow{
+	pixel_x = -7;
+	pixel_y = -5
 	},
-/turf/open/floor/tile/checkeralt,
+/obj/item/candle/yellow{
+	pixel_x = -11;
+	pixel_y = 11
+	},
+/obj/item/natural/feather{
+	pixel_x = 7;
+	pixel_y = 0
+	},
+/turf/open/floor/greenstone,
 /area/rogue/indoors/town/manor)
 "kbO" = (
 /obj/structure/closet/crate/crafted_closet,
@@ -16838,10 +16828,8 @@
 /turf/open/floor/hexstone,
 /area/rogue/indoors/town/magician)
 "ktq" = (
-/obj/structure/stairs{
-	dir = 1
-	},
-/turf/open/floor/tile/checkeralt,
+/obj/structure/chair/stool,
+/turf/open/floor/greenstone,
 /area/rogue/indoors/town/manor)
 "ktr" = (
 /obj/structure/bars/pipe{
@@ -18538,10 +18526,12 @@
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/orphanage)
 "lDc" = (
-/obj/structure/fluff/railing/border{
-	dir = 8
+/obj/structure/table/wood/plain_alt,
+/obj/item/paper/scroll{
+	pixel_x = -1;
+	pixel_y = 8
 	},
-/turf/open/floor/tile/checkeralt,
+/turf/open/floor/greenstone,
 /area/rogue/indoors/town/manor)
 "lDg" = (
 /obj/machinery/light/fueled/wallfire/candle/blue,
@@ -34327,12 +34317,10 @@
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/clocktower)
 "vGf" = (
-/obj/structure/door/violet{
-	name = "Archivist's Chambers"
+/obj/effect/mapping_helpers/secret_door_creator/keep{
+	redstone_id = "CaptainPassage"
 	},
-/obj/effect/mapping_helpers/access/keyset/manor/general,
-/obj/effect/mapping_helpers/access/locker,
-/turf/open/floor/woodturned/nosmooth,
+/turf/closed/wall/mineral/decorstone,
 /area/rogue/indoors/town/manor)
 "vGv" = (
 /obj/structure/plough,
@@ -38096,10 +38084,11 @@
 /turf/closed/wall/mineral/decowood,
 /area/rogue/indoors/town)
 "ycR" = (
-/obj/structure/lever/hidden/keep{
-	redstone_id = 516
+/obj/structure/fluff/walldeco/moon{
+	pixel_x = 0;
+	pixel_y = 32
 	},
-/turf/closed/wall/mineral/decorstone,
+/turf/open/floor/greenstone,
 /area/rogue/indoors/town/manor)
 "ycS" = (
 /obj/effect/spawner/map_spawner/loot/potion_vitals,
@@ -98582,13 +98571,13 @@ vwo
 gOl
 bET
 nMZ
-gOl
-kMD
-mwT
-uAO
-ktq
-cGL
-cGL
+bET
+bET
+alu
+btA
+jkj
+aEH
+yaB
 gOl
 gOl
 sJo
@@ -98784,13 +98773,13 @@ ozw
 gOl
 bET
 nMZ
-gOl
+rDr
+bET
+vGf
+gfm
 mwT
 mwT
-qrM
-iSg
-lDc
-alu
+diF
 gOl
 jnv
 hAh
@@ -98986,13 +98975,13 @@ ozw
 gOl
 bET
 rDr
+rDr
+bET
 gOl
-cKd
-oyf
-khk
-sru
-sru
-btA
+wIO
+buk
+mwT
+jkj
 gOl
 fUh
 mfQ
@@ -99188,13 +99177,13 @@ gOl
 gOl
 bET
 bET
+bET
+bET
 gOl
-vxR
+aWc
+ipQ
 mwT
-dSo
-sru
-sru
-kbJ
+bxY
 gOl
 gOl
 sJo
@@ -99395,7 +99384,7 @@ gOl
 gOl
 gOl
 gOl
-vGf
+tXc
 gOl
 gOl
 grN
@@ -102437,9 +102426,9 @@ kUh
 gOl
 jSN
 gOl
-cIN
-jSN
-jSN
+gUF
+gUF
+gUF
 gOl
 kTV
 sWL
@@ -102641,7 +102630,7 @@ lmE
 gOl
 gOl
 gOl
-cIN
+gOl
 gOl
 kTV
 cKJ
@@ -103236,7 +103225,7 @@ qIB
 qIB
 qyM
 gOl
-ndk
+ycR
 gOP
 ndk
 gOP
@@ -103439,13 +103428,13 @@ rUE
 gOl
 gOl
 ncW
-ndk
 oGw
 ndk
 uyz
-ndk
 qIC
-ndk
+lDc
+ktq
+iSg
 gOl
 gOl
 gOl
@@ -103641,12 +103630,12 @@ bas
 gOl
 jug
 hgg
-ndk
 oGw
 ndk
 uyz
-ndk
 qIC
+kbJ
+ktq
 kAI
 nwO
 nwO
@@ -103840,7 +103829,7 @@ qSc
 idR
 bas
 bas
-gOl
+mOJ
 ndk
 ndk
 cos
@@ -136556,8 +136545,8 @@ rDr
 iKJ
 guQ
 gOl
-ycR
-gUF
+gOl
+gOl
 gOl
 kon
 kon
@@ -136759,9 +136748,9 @@ guQ
 gOl
 gOl
 hCo
-jkj
-aEH
-yaB
+hCo
+hCo
+hCo
 gOl
 tLc
 ofb
@@ -136960,10 +136949,10 @@ rDr
 snf
 gOl
 gOl
-gfm
-mwT
-mwT
-diF
+hCo
+hCo
+hCo
+hCo
 gOl
 dBT
 ajo
@@ -137162,10 +137151,10 @@ rDr
 guQ
 gOl
 gOl
-wIO
-buk
-mwT
-jkj
+hCo
+hCo
+hCo
+hCo
 gOl
 uSH
 ajo
@@ -137364,10 +137353,10 @@ rDr
 guQ
 gOl
 gOl
-aWc
-ipQ
-mwT
-bxY
+hCo
+hCo
+hCo
+hCo
 gOl
 rgb
 lcD
@@ -137568,7 +137557,7 @@ gOl
 gOl
 gOl
 gOl
-tXc
+gOl
 gOl
 gOl
 gOl
