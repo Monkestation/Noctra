@@ -336,6 +336,12 @@
 	pixel_x = 0
 	pixel_y = 32
 
+/obj/structure/fluff/walldeco/bath/wallpipes/innie
+	icon_state = "wallpipe_innie"
+
+/obj/structure/fluff/walldeco/bath/wallpipes/outie
+	icon_state = "wallpipe_outie"
+
 /obj/structure/fluff/walldeco/bath/random
 	icon_state = "bath"
 	pixel_y = 32

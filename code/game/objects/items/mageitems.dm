@@ -67,8 +67,9 @@
 /obj/item/chalk
 	name = "stick of chalk"
 	desc = "A stark-white stick of chalk, possibly made from quicksilver. "
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/roguetown/misc/rituals.dmi'
 	icon_state = "chalk"
+	dropshrink = 0.7
 	throw_speed = 2
 	throw_range = 5
 	throwforce = 5
