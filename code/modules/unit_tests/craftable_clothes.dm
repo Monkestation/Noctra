@@ -23,7 +23,7 @@
 
 	for(var/recipe as anything in overall_recipe_typepaths)
 		for(var/obj/piece_of_clothing as anything in clothes_list)
-			if(ispath(piece_of_clothing, recipe))
+			if(piece_of_clothing == recipe)
 				clothes_list -= piece_of_clothing
 				break
 
