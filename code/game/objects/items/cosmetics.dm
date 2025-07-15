@@ -2,7 +2,7 @@
 	gender = PLURAL
 	name = "red lipstick"
 	desc = ""
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/roguetown/items/perfume.dmi'
 	icon_state = "lipstick"
 	w_class = WEIGHT_CLASS_TINY
 	var/colour = "red"

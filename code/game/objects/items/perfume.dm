@@ -65,6 +65,7 @@
 /obj/item/perfume/random/Initialize()
 	fragrance_type = pick(subtypesof(/datum/pollutant/fragrance))
 	name = fragrance_type.name + " perfume"
+	icon_state = MAP_SWITCH("perfume-bottle-empty", "random_perfume")
 	. = ..()
 
 /obj/item/perfume/lavender
