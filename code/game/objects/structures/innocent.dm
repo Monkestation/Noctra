@@ -4,7 +4,7 @@
 	desc = "These large bushes are known to be well-liked by silkworms who make their nests in their dark depths."
 	icon = 'icons/mob/creacher/trolls/troll.dmi'
 	icon_state = "troll_hide"
-	pixel_x = -16
+	SET_BASE_PIXEL(-16, 0)
 	layer = ABOVE_ALL_MOB_LAYER
 	max_integrity = 500
 	density = TRUE
@@ -37,7 +37,7 @@
 	desc = "These large mana crystals deposit are known to bring fortune to miners who ventures into the deep dark depths of the world."
 	icon = 'icons/mob/creacher/trolls/troll_cave.dmi'
 	icon_state = "troll_hide"
-	pixel_x = -16
+	SET_BASE_PIXEL(-16, 0)
 	layer = ABOVE_ALL_MOB_LAYER
 	max_integrity = 500
 	density = TRUE
