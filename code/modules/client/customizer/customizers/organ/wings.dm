@@ -148,7 +148,7 @@
 	if(owner.can_zTravel(direction = UP))
 		if(isopenspace(GET_TURF_ABOVE(turf)))
 			turf = GET_TURF_ABOVE(turf)
-	owner.movement_type |= FLYING
+	ADD_TRAIT(owner, TRAIT_MOVE_FLYING, ORGAN_TRAIT)
 	flying = TRUE
 	to_chat(owner, span_notice("I start flying."))
 	if(turf != get_turf(owner))
@@ -178,7 +178,6 @@
 	RegisterSignal(owner, list(
 		SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED),
 		SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT),
-		SIGNAL_ADDTRAIT(TRAIT_FLOORED),
 	), PROC_REF(fall))
 
 // Stop flying normally
@@ -202,7 +201,7 @@
 	remove_signals()
 
 /datum/action/item_action/organ_action/use/flight/proc/remove_signals()
-	owner.movement_type &= ~FLYING
+	REMOVE_TRAIT(owner, TRAIT_MOVE_FLYING, ORGAN_TRAIT)
 	flying = FALSE
 
 	// The fact we have to do this is awful

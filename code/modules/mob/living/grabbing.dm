@@ -33,6 +33,11 @@
 	alert_type = /atom/movable/screen/alert/status_effect/oiled
 	var/slip_chance = 15 // chance to slip when moving
 
+/atom/movable/screen/alert/status_effect/oiled
+	name = "Oiled"
+	desc = "I'm covered in oil, making me slippery and harder to grab!"
+	icon_state = "oiled"
+
 /datum/status_effect/buff/oiled/on_apply()
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
@@ -51,46 +56,35 @@
 			else
 				mover.oil_slip(total_time = 0.8 SECONDS, stun_duration = 0.8 SECONDS, height = 12, flip_count = 0)
 
-/atom/movable/screen/alert/status_effect/oiled
-	name = "Oiled"
-	desc = "I'm covered in oil, making me slippery and harder to grab!"
-	icon_state = "oiled"
-
-/atom/proc/oil_slip(dir=null, total_time = 0.5 SECONDS, height = 16, stun_duration = 1 SECONDS, flip_count = 1)
-	animate(src) // cleanse animations as funny as a ton of stacked flips would be it would be an eye sore
-	var/matrix/M = transform
+/atom/proc/oil_slip(total_time = 0.8 SECONDS, stun_duration = 0.8 SECONDS, height = 12, flip_count = 0)
 	var/turn = 90
-	if(isnull(dir))
-		if(dir == EAST)
-			turn = 90
-		else if(dir == WEST)
-			turn = -90
-		else
-			if(prob(50))
-				turn = -90
-
-
-	var/flip_anim_step_time = total_time / (1 + 4 * flip_count)
-	animate(src, transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time, flags = ANIMATION_PARALLEL)
-	for(var/i in 1 to flip_count)
-		animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
-		animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
-		animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
-		animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
-	var/matrix/M2 = transform
-	animate(transform = matrix(M, 1.2, 0.7, MATRIX_SCALE | MATRIX_MODIFY), time = total_time * 0.125)
-	animate(transform = M2, time = total_time * 0.125)
-
-	animate(src, pixel_y=height, time= total_time * 0.5, flags=ANIMATION_PARALLEL)
-	animate(pixel_y=-4, time= total_time * 0.5)
+	if(dir == EAST)
+		turn = 90
+	else if(dir == WEST)
+		turn = -90
+	else if(prob(50))
+		turn = -90
 
 	if(isliving(src))
 		var/mob/living/living = src
-		living.Knockdown(stun_duration)
-		animate(src, pixel_x = 0, pixel_y = 0, transform = src.transform.Turn(-turn), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
-	else
-		spawn(stun_duration + total_time)
-			animate(src, pixel_x = 0, pixel_y = 0, transform = src.transform.Turn(-turn), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		living.Immobilize(total_time)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living, Knockdown), total_time), stun_duration)
+
+	var/flip_anim_step_time = total_time / (1 + 4 * flip_count)
+
+	animate(src, transform = transform.Turn(turn), time = flip_anim_step_time, flags = ANIMATION_PARALLEL)
+
+	if(flip_count)
+		do_spin_animation(flip_anim_step_time, flip_count, 4)
+
+	var/matrix/transform_before = transform
+	animate(src, transform = matrix().Scale(1.2, 0.7), time = total_time * 0.125, flags = ANIMATION_PARALLEL)
+	animate(transform = transform_before, time = total_time * 0.125)
+
+	animate(src, pixel_z = height, time = total_time * 0.5, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
+	animate(pixel_z = -height, time = total_time * 0.5, flags = ANIMATION_RELATIVE)
+
+	animate(src, transform = transform.Turn(-turn), time = 3, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)
 
 ///////////OFFHAND///////////////
 /obj/item/grabbing
