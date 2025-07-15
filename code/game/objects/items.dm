@@ -1285,7 +1285,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /obj/item/proc/on_wield(obj/item/source, mob/living/carbon/user)
 	wdefense += 1
-	playsound(loc, pick('sound/combat/weaponr1.ogg','sound/combat/weaponr2.ogg'), 100, TRUE)
+	playsound(loc, pick('sound/combat/weaponr1.ogg','sound/combat/weaponr2.ogg'), 50, TRUE)
 	user.update_a_intents()
 
 /obj/item/proc/on_unwield(obj/item/source, mob/living/carbon/user)

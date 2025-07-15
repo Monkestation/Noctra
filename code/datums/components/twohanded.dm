@@ -5,18 +5,28 @@
  *
  */
 /datum/component/two_handed
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS // Only one of the component can exist on an item
-	var/wielded = FALSE /// Are we holding the two handed item properly
-	var/force_multiplier = 0 /// The multiplier applied to force when wielded, does not work with force_wielded, and force_unwielded
-	var/force_wielded = 0 /// The force of the item when weilded
-	var/force_unwielded = 0 /// The force of the item when unweilded
-	var/wieldsound = FALSE /// Play sound when wielded
-	var/unwieldsound = FALSE /// Play sound when unwielded
-	var/attacksound = FALSE /// Play sound on attack when wielded
-	var/require_twohands = FALSE /// Does it have to be held in both hands
-	var/icon_wielded = FALSE /// The icon that will be used when wielded
-	var/obj/item/offhand/offhand_item = null /// Reference to the offhand created for the item
-	// var/sharpened_increase = 0 /// The amount of increase recived from sharpening the item
+	/// Only one of the component can exist on an item
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+	/// Are we holding the two handed item properly
+	var/wielded = FALSE
+	/// The multiplier applied to force when wielded, does not work with force_wielded, and force_unwielded
+	var/force_multiplier = 0
+	/// The force of the item when wielded
+	var/force_wielded = 0
+	/// The force of the item when unwielded
+	var/force_unwielded = 0
+	/// Play sound when wielded
+	var/wieldsound = FALSE
+	/// Play sound when unwielded
+	var/unwieldsound = FALSE
+	/// Play sound on attack when wielded
+	var/attacksound = FALSE
+	/// Does it have to be held in both hands
+	var/require_twohands = FALSE
+	/// The icon that will be used when wielded
+	var/icon_wielded = FALSE
+	/// Reference to the offhand created for the item
+	var/obj/item/offhand/offhand_item = null
 	/// A callback on the parent to be called when the item is wielded
 	var/datum/callback/wield_callback
 	/// A callback on the parent to be called when the item is unwielded
@@ -200,8 +210,12 @@
 		user.update_inv_hands()
 
 	// Play sound if one is set
-	if(wieldsound)
-		playsound(parent_item.loc, wieldsound, 50, TRUE)
+	var/sound_to_play = wieldsound
+	if(islist(sound_to_play))
+		sound_to_play = pick(sound_to_play)
+
+	if(isfile(sound_to_play))
+		playsound(parent_item.loc, sound_to_play, 50, TRUE)
 
 	// Let's reserve the other hand
 	offhand_item = new(user)
