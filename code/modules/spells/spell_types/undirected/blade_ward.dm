@@ -18,7 +18,7 @@
 
 /datum/action/cooldown/spell/undirected/blade_ward/cast(atom/cast_on)
 	. = ..()
-	var/duration_increase = min(0, attuned_strength * 1.5 MINUTES)
+	var/duration_increase = max(0, attuned_strength * 1.5 MINUTES)
 	if(isliving(owner))
 		var/mob/living/L = owner
 		L.apply_status_effect(/datum/status_effect/buff/bladeward, duration_increase)
