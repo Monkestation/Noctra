@@ -4,6 +4,13 @@
 /datum/unit_test/craftable_clothes/Run()
 	var/list/obj/clothes_list = subtypesof(/obj/item/clothing)
 	var/list/overall_recipe_typepaths = list()
+	var/list/excluded_types = list(
+
+	)
+	var/list/excluded_types_with_their_subtypes = list(
+
+
+	)
 
 	for(var/datum/repeatable_crafting_recipe/recipe as anything in subtypesof(/datum/repeatable_crafting_recipe))
 		if(isclothing(recipe.output))
@@ -21,9 +28,13 @@
 		if(isclothing(recipe.result))
 			overall_recipe_typepaths += recipe.result
 
+	for(var/datum/artificer_recipe/recipe as anything in subtypesof(/datum/artificer_recipe))
+		if(isclothing(recipe.created_item))
+			overall_recipe_typepaths += recipe.created_item
+
 	for(var/recipe as anything in overall_recipe_typepaths)
 		for(var/obj/piece_of_clothing as anything in clothes_list)
-			if(piece_of_clothing == recipe)
+			if(piece_of_clothing.type == recipe)
 				clothes_list -= piece_of_clothing
 				break
 
