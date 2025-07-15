@@ -237,6 +237,8 @@
 		return result
 
 	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(weapon.item_flags & ABSTRACT)
+		return
 	if(src == user)
 		if(offered_item)
 			offered_item = null
@@ -248,7 +250,7 @@
 			to_chat(user, span_warning("I can't offer myself an item!"))
 		return
 	var/obj/item/offer_attempt = user.get_active_held_item()
-	if(HAS_TRAIT(offer_attempt, TRAIT_NODROP) || offer_attempt.item_flags & ABSTRACT)
+	if(HAS_TRAIT(offer_attempt, TRAIT_NODROP))
 		to_chat(user, span_warning("I can't offer this."))
 		return
 	user.offered_item = WEAKREF(offer_attempt)
