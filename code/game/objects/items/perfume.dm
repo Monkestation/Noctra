@@ -62,10 +62,12 @@
 	playsound(user.loc, 'sound/items/perfume.ogg', 100, TRUE)
 	target.AddComponent(/datum/component/temporary_pollution_emission, fragrance_type, 5, 10 MINUTES)
 
+/obj/item/perfume/random
+	icon_state = MAP_SWITCH("perfume-bottle-empty", "random-perfume")
+
 /obj/item/perfume/random/Initialize()
 	fragrance_type = pick(subtypesof(/datum/pollutant/fragrance))
 	name = fragrance_type.name + " perfume"
-	icon_state = MAP_SWITCH("perfume-bottle-empty", "random_perfume")
 	. = ..()
 
 /obj/item/perfume/lavender
