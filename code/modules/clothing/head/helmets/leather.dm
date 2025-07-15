@@ -98,6 +98,8 @@
 	prevent_crits = list(BCLASS_LASHING, BCLASS_BITE, BCLASS_TWIST, BCLASS_BLUNT)
 	item_weight = 3 * IRON_MULTIPLIER
 
+	actions_types = list(/datum/action/item_action/toggle_light)
+
 	var/brightness_on = 4 //less than a torch; basically good for one person.
 	var/on = FALSE
 
