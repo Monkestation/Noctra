@@ -180,7 +180,7 @@ GLOBAL_LIST_INIT(ghost_verbs, list(
 				var/image/MA = new(body)
 				MA.transform = null //so we are standing
 				appearance = MA
-				layer = GHOST_LAYER
+				plane = GHOST_PLANE
 				pixel_x = base_pixel_x
 				pixel_y = base_pixel_y
 				invisibility = INVISIBILITY_OBSERVER
