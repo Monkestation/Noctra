@@ -297,6 +297,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item/proc/get_detail_color() //this is for extra layers on clothes
 	return detail_color
 
+/// Handles sprite changes and decals
 /obj/item/proc/update_transform()
 	transform = null
 	if(dropshrink)
@@ -582,9 +583,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(alt_intents)
 		inspect_list += "\n<b>ALT-GRIP</b>"
 
-	if(gripped_intents)
-		inspect_list += "\n<b>TWO-HANDED</b>"
-
 	if(can_parry)
 		inspect_list += "\n<b>DEFENSE:</b> [wdefense]"
 
@@ -771,12 +769,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			var/oldy = pixel_y
 			pixel_y = pixel_y+5
 			animate(src, pixel_y = oldy, time = 0.5)
-	// if(altgripped || wielded)
-	// 	ungrip(user, FALSE)
 	item_flags &= ~IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
 	if(!silent)
 		playsound(src, drop_sound, DROP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
+	toggle_altgrip(user, FALSE)
 	user.update_equipment_speed_mods()
 	if(isliving(user))
 		user:encumbrance_to_speed()
@@ -825,17 +822,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 					playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE)
 	user.update_equipment_speed_mods()
 
-	// if(!user.is_holding(src))
-	// 	if(altgripped || wielded)
-	// 		ungrip(user, FALSE)
-	// if(twohands_required)
-	// 	if(slot & ITEM_SLOT_HANDS)
-	// 		wield(user)
-	// 	else
-	// 		ungrip(user)
-
-	// update_transform()
-
 /// Gives one of our item actions to a mob, when equipped to a certain slot
 /obj/item/proc/give_item_action(datum/action/action, mob/to_who, slot)
 	// Some items only give their actions buttons when in a specific slot.
@@ -863,15 +849,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to TRUE if you wish it to not give you outputs.
 /obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
-	// pretty sure this isn't needed, the reason this is disabled is so harpoon guns can be equipped to hips.
-	// if it causes issues - reenable it and seek a different fix.
-	/*
-	if(twohands_required)
-		if(!disable_warning)
-			to_chat(M, "<span class='warning'>[src] is too bulky to carry with anything but my hands!</span>")
-		return 0
-	*/
-
 	if(!M)
 		return FALSE
 
@@ -1306,30 +1283,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	. = ..()
 	update_transform()
 
-/obj/item/proc/ungrip(mob/living/carbon/user, show_message = TRUE)
-	if(!user)
-		return
-	// if(twohands_required)
-	// 	if(!wielded)
-	// 		return
-	// 	if(show_message)
-	// 		to_chat(user, "<span class='notice'>I drop [src].</span>")
-	// 	show_message = FALSE
-	// if(wielded)
-	// 	wielded = FALSE
-	// 	if(force_wielded)
-	// 		force = initial(force)
-	// 	wdefense = wdefense - 1
-	if(altgripped)
-		altgripped = FALSE
-	update_transform()
-	user.update_inv_hands()
-	if(show_message)
-		to_chat(user, "<span class='notice'>I wield [src] normally.</span>")
-	if(user.get_active_held_item() == src)
-		user.update_a_intents()
-	return
-
 /obj/item/proc/on_wield(obj/item/source, mob/living/carbon/user)
 	wdefense += 1
 	playsound(loc, pick('sound/combat/weaponr1.ogg','sound/combat/weaponr2.ogg'), 100, TRUE)
@@ -1337,48 +1290,22 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /obj/item/proc/on_unwield(obj/item/source, mob/living/carbon/user)
 	wdefense -= 1
-	altgripped = FALSE
 	user.update_a_intents()
 
-/obj/item/proc/altgrip(mob/living/carbon/user)
-	altgripped = TRUE
+/obj/item/proc/toggle_altgrip(mob/user, override_state)
+	if(!alt_intents)
+		return
+	var/new_state = !isnull(override_state) ? override_state : !altgripped
+	if(altgripped == new_state)
+		return
+	altgripped = new_state
 	update_transform()
-	to_chat(user, span_notice("I wield [src] with an alternate grip."))
 	if(user.get_active_held_item() == src)
 		user.update_a_intents()
-
-// /obj/item/proc/altgrip(mob/living/carbon/user)
-// 	if(altgripped)
-// 		return
-// 	altgripped = TRUE
-// 	update_transform()
-// 	to_chat(user, "<span class='notice'>I wield [src] with an alternate grip</span>")
-// 	if(user.get_active_held_item() == src)
-// 		if(alt_intents)
-// 			user.update_a_intents()
-
-// /obj/item/proc/wield(mob/living/carbon/user)
-// 	if(wielded)
-// 		return
-// 	if(user.get_inactive_held_item())
-// 		to_chat(user, "<span class='warning'>I need a free hand first.</span>")
-// 		return
-// 	if(user.usable_hands < 2)
-// 		to_chat(user, "<span class='warning'>I don't have enough hands.</span>")
-// 		return
-// 	wielded = TRUE
-// 	if(force_wielded)
-// 		force = force_wielded
-// 	wdefense = wdefense + 1
-// 	update_transform()
-// 	to_chat(user, "<span class='notice'>I wield [src] with both hands.</span>")
-// 	playsound(loc, pick('sound/combat/weaponr1.ogg','sound/combat/weaponr2.ogg'), 100, TRUE)
-// 	if(twohands_required)
-// 		if(!wielded)
-// 			user.dropItemToGround(src)
-// 			return
-// 	user.update_a_intents()
-// 	user.update_inv_hands()
+		if(altgripped)
+			to_chat(user, span_notice("I wield [src] with an alternate grip."))
+		else
+			to_chat(user, span_notice("I wield [src] normally."))
 
 /obj/item/on_fall_impact(mob/living/impactee, fall_speed)
 	. = ..()
@@ -1394,23 +1321,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	add_blood_DNA(GET_ATOM_BLOOD_DNA(impactee))
 	impactee.visible_message(span_danger("[src] crashes into [impactee]'s [target_zone]!"), span_danger("A [src] hits you in your [target_zone]!"))
 	impactee.apply_damage(item_weight * fall_speed, BRUTE, target_zone, impactee.run_armor_check(target_zone, "blunt", damage = item_weight * fall_speed))
-
-// /obj/item/attack_self(mob/user)
-// 	. = ..()
-// 	if(twohands_required)
-// 		return
-// 	if(altgripped || wielded) //Trying to unwield it
-// 		ungrip(user)
-// 		return
-// 	if(alt_intents)
-// 		altgrip(user)
-// 	if(gripped_intents)
-// 		wield(user)
-
-// /obj/item/equip_to_best_slot(mob/M)
-// 	if(..())
-// 		if(altgripped || wielded)
-// 			ungrip(M, FALSE)
 
 /obj/item/proc/on_consume(mob/living/eater)
 	return

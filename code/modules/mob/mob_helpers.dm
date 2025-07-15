@@ -460,7 +460,9 @@
 			else
 				to_examine = possible_a_intents[numb]
 	if(to_examine)
-		to_examine.examine(src)
+		var/list/result = to_examine.examine(src)
+		result += "<br>----------------------"
+		to_chat(src, "[result.Join()]")
 
 /mob/verb/rog_intent_change(numb as num,offhand as num)
 	set name = "intent-change"

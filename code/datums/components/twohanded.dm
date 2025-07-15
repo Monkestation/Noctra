@@ -99,9 +99,6 @@
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_ICON, PROC_REF(on_update_icon))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(parent, COMSIG_TOPIC_INSPECT, PROC_REF(on_inspect))
-	// RegisterSignal(parent, COMSIG_ITEM_SHARPEN_ACT, PROC_REF(on_sharpen))
-	// RegisterSignal(parent, COMSIG_ITEM_APPLY_FANTASY_BONUSES, PROC_REF(apply_fantasy_bonuses))
-	// RegisterSignal(parent, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, PROC_REF(remove_fantasy_bonuses))
 
 	var/obj/item/item = parent
 	if(require_twohands)
@@ -321,6 +318,8 @@
 
 	if(require_twohands)
 		inspect_list += "\n<b>BULKY</b>"
+	else
+		inspect_list += "\n<b>TWO-HANDED</b>"
 
 /**
  * on_swap_hands Triggers on swapping hands, blocks swap if the other hand is busy
@@ -348,30 +347,6 @@
 		unwield(parent_item.loc)
 
 /**
- * on_sharpen Triggers on usage of a sharpening stone on the item
- */
-// /datum/component/two_handed/proc/on_sharpen(obj/item/item, amount, max_amount)
-// 	SIGNAL_HANDLER
-
-// 	if(!item)
-// 		return COMPONENT_BLOCK_SHARPEN_BLOCKED
-// 	if(sharpened_increase)
-// 		return COMPONENT_BLOCK_SHARPEN_ALREADY
-// 	var/wielded_val = 0
-// 	if(force_multiplier)
-// 		var/obj/item/parent_item = parent
-// 		if(wielded)
-// 			wielded_val = parent_item.force
-// 		else
-// 			wielded_val = parent_item.force * force_multiplier
-// 	else
-// 		wielded_val = force_wielded
-// 	if(wielded_val > max_amount)
-// 		return COMPONENT_BLOCK_SHARPEN_MAXED
-// 	sharpened_increase = min(amount, (max_amount - wielded_val))
-// 	return COMPONENT_BLOCK_SHARPEN_APPLIED
-
-/**
  * The offhand dummy item for two handed items
  *
  */
@@ -382,21 +357,16 @@
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT
 	resistance_flags = EVERYTHING_PROOF
-	// var/wielded = FALSE // Off Hand tracking of wielded status
 	layer = OBJ_LAYER - 1
 	alpha = 120
+	experimental_inhand = FALSE
 
 /obj/item/offhand/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
 
-// /obj/item/offhand/Destroy()
-// 	wielded = FALSE
-// 	return ..()
-
 /obj/item/offhand/equipped(mob/user, slot)
 	. = ..()
-	// if(wielded && !user.is_holding(src) && !QDELETED(src))
-	// 	qdel(src)
 	if(!user.is_holding(src) && !QDELETED(src))
 		qdel(src)
+

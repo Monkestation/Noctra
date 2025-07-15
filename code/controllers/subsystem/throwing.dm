@@ -108,21 +108,6 @@ SUBSYSTEM_DEF(throwing)
 	src.callback = callback
 	src.target_zone = target_zone
 
-/datum/thrownthing/New(thrownthing, target, target_turf, init_dir, maxrange, speed, thrower, diagonals_first, force, callback, target_zone)
-	. = ..()
-	src.thrownthing = thrownthing
-	RegisterSignal(thrownthing, COMSIG_PARENT_QDELETING, PROC_REF(on_thrownthing_qdel))
-	src.target = target
-	src.target_turf = target_turf
-	src.init_dir = init_dir
-	src.maxrange = maxrange
-	src.speed = speed
-	src.thrower = thrower
-	src.diagonals_first = diagonals_first
-	src.force = force
-	src.callback = callback
-	src.target_zone = target_zone
-
 /datum/thrownthing/Destroy()
 	SSthrowing.processing -= thrownthing
 	SSthrowing.currentrun -= thrownthing

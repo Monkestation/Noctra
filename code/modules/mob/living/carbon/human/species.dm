@@ -1777,6 +1777,13 @@ GLOBAL_LIST_EMPTY(patreon_races)
 					user.put_in_hands(I)
 					H.emote("pain", TRUE)
 					playsound(H.loc, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)
+			if(istype(user.used_intent, /datum/intent/effect) && selzone)
+				var/datum/intent/effect/effect_intent = user.used_intent
+				if(LAZYLEN(effect_intent.target_parts))
+					if(selzone in effect_intent.target_parts)
+						H.apply_status_effect(effect_intent.intent_effect)
+				else
+					H.apply_status_effect(effect_intent.intent_effect)
 //		if(H.used_intent.blade_class == BCLASS_BLUNT && I.force >= 15 && affecting.body_zone == "chest")
 //			var/turf/target_shove_turf = get_step(H.loc, get_dir(user.loc,H.loc))
 //			H.throw_at(target_shove_turf, 1, 1, H, spin = FALSE)

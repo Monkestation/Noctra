@@ -445,7 +445,7 @@
 		return
 	return ..()
 
-/obj/item/weapon/pitchfork/ungrip(mob/living/carbon/user, show_message = TRUE)
+/obj/item/weapon/pitchfork/on_unwield(obj/item/source, mob/living/carbon/user)
 	. = ..()
 	if(forked.len)
 		var/turf/T = get_turf(user)

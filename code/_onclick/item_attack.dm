@@ -84,19 +84,11 @@
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	interact(user)
-	// if(twohands_required)
-	// 	return
-	// if(altgripped || wielded) //Trying to unwield it
-	// 	ungrip(user)
-	// 	return
-	// if(alt_intents)
-	// 	altgrip(user)
-	// if(gripped_intents)
-	// 	wield(user)
 
 /obj/item/proc/attack_self_secondary(mob/user, params)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF_SECONDARY, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
+	toggle_altgrip(user)
 
 /**
  * Called on the item before it hits something

@@ -109,15 +109,13 @@
 	if(misscost)
 		inspec += "\n<b>Drain On Miss:</b> [misscost]"
 	if(clickcd != CLICK_CD_MELEE)
-		inspec += "\n<b>Recovery Time:</b> "
+		inspec += "\n<b>Recovery Time: </b> "
 		if(clickcd < CLICK_CD_MELEE)
 			inspec += "Quick"
 		if(clickcd > CLICK_CD_MELEE)
 			inspec += "Slow"
 
-	inspec += "<br>----------------------"
-
-	to_chat(user, "[inspec.Join()]")
+	return inspec
 
 /datum/intent/proc/get_chargetime()
 	if(chargetime)

@@ -9,6 +9,7 @@
 	slot_flags = ITEM_SLOT_HIP
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust)
 	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust)
+	alt_intents = list(/datum/intent/effect/daze, /datum/intent/sword/strike, /datum/intent/sword/bash)
 	name = "sword"
 	desc = "A trustworthy blade design, the first dedicated tool of war since before the age of history."
 	icon_state = "sword1"
@@ -35,136 +36,12 @@
 		switch(tag)
 			if("gen")
 				return list("shrink" = 0.6,"sx" = -10,"sy" = -8,"nx" = 13,"ny" = -8,"wx" = -8,"wy" = -7,"ex" = 7,"ey" = -8,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -80,"eturn" = 81,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("altgrip")
+				return list("shrink" = 0.6,"sx" = -10,"sy" = -8,"nx" = 13,"ny" = -8,"wx" = -8,"wy" = -7,"ex" = 7,"ey" = -8,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 270,"sturn" = 90,"wturn" = 100,"eturn" = 261,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 			if("wielded")
 				return list("shrink" = 0.6,"sx" = 3,"sy" = 4,"nx" = -1,"ny" = 4,"wx" = -8,"wy" = 3,"ex" = 7,"ey" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 15,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 			if("onbelt")
 				return list("shrink" = 0.5,"sx" = -4,"sy" = -6,"nx" = 5,"ny" = -6,"wx" = 0,"wy" = -6,"ex" = -1,"ey" = -6,"nturn" = 100,"sturn" = 156,"wturn" = 90,"eturn" = 180,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
-
-/*-----------\
-| Cut intent |
-\-----------*/
-/datum/intent/sword/cut
-	name = "cut"
-	icon_state = "incut"
-	attack_verb = list("cuts", "slashes")
-	animname = "cut"
-	blade_class = BCLASS_CUT
-	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
-	misscost = 4
-	item_damage_type = "slash"
-
-/datum/intent/sword/cut/zwei
-	name = "cut"
-	damfactor = 0.8
-	reach = 1
-	swingdelay = 1
-	item_damage_type = "slash"
-
-/datum/intent/sword/cut/rapier
-	chargetime = 0
-	damfactor = 0.8
-	item_damage_type = "slash"
-
-/datum/intent/sword/cut/short
-	clickcd = 10
-	damfactor = 0.85
-	item_damage_type = "slash"
-
-/datum/intent/sword/cut/guts
-	reach = 2
-	swingdelay = 2
-	misscost = 90
-
-/*------------\
-| Chop intent |
-\------------*/
-/datum/intent/sword/chop
-	name = "chop"
-	icon_state = "inchop"
-	attack_verb = list("chops", "hacks")
-	animname = "chop"
-	blade_class = BCLASS_CHOP
-	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
-	penfactor = AP_SWORD_CHOP
-	damfactor = 1.1
-	swingdelay = 1
-	misscost = 8
-	item_damage_type = "slash"
-
-/datum/intent/sword/chop/long
-	damfactor = 1.1
-	chargetime = 1.2
-	swingdelay = 1.5
-	misscost = 12
-	warnie = "mobwarning"
-	item_damage_type = "slash"
-
-/datum/intent/sword/chop/long/guts
-	reach = 2 // BIG SWORD
-	swingdelay = 3
-	misscost = 90
-
-/*------------\
-| Stab intent |
-\------------*/
-/datum/intent/sword/thrust
-	name = "stab"
-	icon_state = "instab"
-	attack_verb = list("stabs")
-	animname = "stab"
-	blade_class = BCLASS_STAB
-	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	penfactor = AP_SWORD_THRUST
-	misscost = 5
-	item_damage_type = "stab"
-
-/datum/intent/sword/thrust/curved
-	penfactor = AP_SWORD_THRUST-2
-
-/datum/intent/sword/thrust/short
-	clickcd = 10
-	penfactor = AP_SWORD_THRUST+2
-
-/datum/intent/sword/thrust/rapier
-	penfactor = AP_SWORD_THRUST+5
-
-/datum/intent/sword/thrust/zwei
-	name = "thrust"
-	reach = 1
-	chargetime = 1
-	warnie = "mobwarning"
-	swingdelay = 1
-
-/datum/intent/sword/thrust/long
-	reach = 2
-	misscost = 10
-
-/datum/intent/sword/thrust/guts
-	reach = 2
-	swingdelay = 3
-	misscost = 90
-
-/*--------------\
-| Strike intent |	Pommel strike, some AP
-\--------------*/
-/datum/intent/sword/strike
-	name = "pommel strike"
-	icon_state = "instrike"
-	attack_verb = list("bashes", "clubs")
-	animname = "strike"
-	blade_class = BCLASS_BLUNT
-	hitsound = list('sound/combat/hits/blunt/metalblunt (1).ogg', 'sound/combat/hits/blunt/metalblunt (2).ogg', 'sound/combat/hits/blunt/metalblunt (3).ogg')
-	chargetime = 0
-	penfactor = AP_CLUB_SMASH
-	swingdelay = 1
-	damfactor = 0.8
-	item_damage_type = "slash"
-
-/datum/intent/sword/strike/guts
-	reach = 2
-	swingdelay = 3
-	misscost = 90
-
 
 /*-----------------\
 | Onehanded Swords |
@@ -945,9 +822,9 @@
 	name = "Terminus Est"
 
 /obj/item/weapon/sword/long/exe/cloth/attack_self_secondary(mob/user, params)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
+	// . = ..()
+	// if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+	// 	return
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(user, "clothwipe", 100, TRUE)
 	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_SCRUB)
@@ -1110,28 +987,6 @@
 					"wflip" = 8,
 					"eflip" = 0,
 					)
-
-/datum/intent/sword/thrust/estoc
-	name = "thrust"
-	penfactor = AP_SWORD_THRUST+10 //30 total
-	recovery = 20
-	clickcd = 10
-
-
-/datum/intent/sword/lunge
-	name = "lunge"
-	icon_state = "inimpale"
-	attack_verb = list("lunges")
-	animname = "stab"
-	blade_class = BCLASS_STAB
-	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
-	reach = 2
-	penfactor = AP_SWORD_THRUST+30 //50 total
-	chargetime = 5
-	no_early_release = TRUE
-	recovery = 20
-	clickcd = 10
-
 
 /obj/item/weapon/sword/gladius
 	force = 22

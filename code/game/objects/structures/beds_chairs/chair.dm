@@ -148,7 +148,7 @@
 	var/obj/structure/chair/origin_type = /obj/structure/chair/wood/alt
 
 /obj/item/chair/apply_components()
-	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE, wield_callback = CALLBACK(src, PROC_REF(on_wield)), unwield_callback = CALLBACK(src, PROC_REF(on_unwield)))
 
 /obj/item/chair/getonmobprop(tag)
 	. = ..()

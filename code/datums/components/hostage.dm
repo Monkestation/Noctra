@@ -1,3 +1,5 @@
+// Repurposed gunpoint.dm component from tgstation
+
 /// How long it takes from the gunpoint is initiated to reach stage 2
 #define DELAY_STAGE_2 (2.5 SECONDS)
 /// How long it takes from stage 2 starting to move up to stage 3
