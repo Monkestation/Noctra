@@ -1353,3 +1353,12 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 		var/icon/my_icon = icon(icon_path)
 		GLOB.icon_dimensions[icon_path] = list("width" = my_icon.Width(), "height" = my_icon.Height())
 	return GLOB.icon_dimensions[icon_path]
+
+/// Generates a headshot icon of a mob and returns it as base64 HTML
+/proc/get_headshot_icon(mob/living/target, size = 64, crop_height = 32)
+	if(!target || !istype(target))
+		return ""
+	var/icon/headshot = getFlatIcon(target, SOUTH, no_anim = TRUE)
+	headshot.Scale(size, size)
+	headshot.Crop(1, size - crop_height + 1, size, size)
+	return "<img src='data:image/png;base64,[icon2base64(headshot)]' style='width:[size]px;height:[crop_height]px;image-rendering:pixelated;'>"
