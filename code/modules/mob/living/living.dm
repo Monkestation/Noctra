@@ -125,7 +125,7 @@
 	if(!density) //lets cats and similar avoid death by falling
 		visible_message("<span class='notice'>The creature lands unharmed...</span>")
 		return
-	var/encumberance_multiplier = 0.5 * get_encumbrance() // half base falling damage. scale up to 100% based on encumberance
+	var/encumberance_multiplier = 0.5 * (get_encumbrance() + 1) // half base falling damage. scale up to 100% based on encumberance
 	adjustBruteLoss(((levels * 10) * encumberance_multiplier) ** 1.5)
 	AdjustStun(levels * 2 SECONDS * encumberance_multiplier)
 	AdjustKnockdown(levels * 2 SECONDS * encumberance_multiplier)
