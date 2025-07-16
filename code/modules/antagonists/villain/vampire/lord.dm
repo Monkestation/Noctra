@@ -26,8 +26,8 @@
 	remove_job()
 	owner.current?.roll_mob_stats()
 	owner.current?.purge_combat_knowledge()
-	owner.current.mana_pool.ethereal_recharge_rate += 0.2
 	. = ..()
+	owner.current?.mana_pool.ethereal_recharge_rate += 0.2
 	owner.special_role = span_redtext("[name]")
 	var/datum/action/cooldown/spell/undirected/mansion_portal/portal = new(src)
 	portal.Grant(owner.current)
