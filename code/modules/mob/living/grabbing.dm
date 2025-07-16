@@ -311,6 +311,9 @@
 					if(!chokehold)
 						to_chat(U, span_warning("You need to have a chokehold first!"))
 						return
+					if(U.GetComponent(/datum/component/hostage))
+						to_chat(U, span_warning("You already have someone hostage!"))
+						return
 					var/obj/item/offhand_item = U.get_inactive_held_item()
 					if(!isitem(offhand_item) || !offhand_item.force)
 						to_chat(U, span_warning("You need to hold a weapon in the other hand!"))
