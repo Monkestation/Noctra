@@ -4,7 +4,6 @@
 	antag_datum = /datum/antagonist/purishep
 	outfit = /datum/outfit/job/specialinquisitor
 	allowed_races = RACES_PLAYER_GRENZ
-	is_foreigner = TRUE
 
 /datum/outfit/job/specialinquisitor/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
@@ -65,7 +64,6 @@
 	greet_text = "Crusader of the true faith, you came from Grenzelhoft under the command of the Inquisitor. Obey them as they lead you to smite the heathens."
 	outfit = /datum/outfit/job/adventurer/crusader/grenzel
 	allowed_races = RACES_PLAYER_GRENZ
-	is_foreigner = TRUE
 
 /datum/outfit/job/adventurer/crusader/grenzel
 	allowed_patrons = list(/datum/patron/psydon)
