@@ -31,12 +31,11 @@
 	id = "oiled"
 	duration = 5 MINUTES
 	alert_type = /atom/movable/screen/alert/status_effect/oiled
-	var/slip_chance = 15 // chance to slip when moving
 
 /atom/movable/screen/alert/status_effect/oiled
 	name = "Oiled"
 	desc = "I'm covered in oil, making me slippery and harder to grab!"
-	icon_state = "oiled"
+	icon_state = "debuff"
 
 /datum/status_effect/buff/oiled/on_apply()
 	. = ..()
