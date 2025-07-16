@@ -1430,7 +1430,7 @@
 		if(G.chokehold)
 			combat_modifier -= 0.1 // BUFF: Reduced chokehold penalty (was 0.15)
 
-	resist_chance += ((((STASTR - L.STASTR)/2) + wrestling_diff) * 6.5 + rand(-5, 5))
+	resist_chance += ((((STASTR - L.STASTR)/2) + wrestling_diff) * 6 + rand(-5, 5))
 	resist_chance *= combat_modifier * stamina_factor * positioning_modifier
 	resist_chance = clamp(resist_chance, 8, 90)
 
@@ -1442,16 +1442,19 @@
 		client?.move_delay = world.time + 20
 
 	adjust_stamina(rand(3,7))
-	pulledby.adjust_stamina(rand(3,6))
+	pulledby.adjust_stamina(rand(2,6))
 	if(iscarbon(pulledby))
 		var/mob/living/carbon/carbon_pulledby = pulledby
 		carbon_pulledby.add_grab_fatigue(0.5)
 
 	MOBTIMER_SET(pulledby, MT_RESIST_GRAB)
 
+	var/shitte = ""
+	if(client?.prefs.showrolls)
+		shitte = " ([resist_chance]%)"
 	if(prob(resist_chance))
 		visible_message("<span class='warning'>[src] breaks free of [pulledby]'s grip!</span>", \
-						"<span class='notice'>I break free of [pulledby]'s grip!</span>", null, null, pulledby)
+						"<span class='notice'>I break free of [pulledby]'s grip![shitte]</span>", null, null, pulledby)
 		to_chat(pulledby, "<span class='danger'>[src] breaks free of my grip!</span>")
 		log_combat(pulledby, src, "broke grab")
 		pulledby.stop_pulling()
@@ -1463,9 +1466,6 @@
 		playsound(src.loc, 'sound/combat/grabbreak.ogg', 50, TRUE, -1)
 		return FALSE
 	else
-		var/shitte = ""
-		if(client?.prefs.showrolls)
-			shitte = " ([resist_chance]%)"
 		visible_message("<span class='warning'>[src] struggles to break free from [pulledby]'s grip!</span>", \
 						"<span class='warning'>I struggle against [pulledby]'s grip![shitte]</span>", null, null, pulledby)
 		to_chat(pulledby, "<span class='warning'>[src] struggles against my grip!</span>")
@@ -2464,6 +2464,10 @@
 			ADD_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT)
 	else if(. && stat == SOFT_CRIT)
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT)
+
+	for(var/hand in hud_used?.hand_slots)
+		var/atom/movable/screen/inventory/hand/H = hud_used.hand_slots[hand]
+		H?.update_appearance()
 
 /// Proc for giving a mob a new 'friend', generally used for AI control and targeting. Returns false if already friends.
 /mob/living/proc/befriend(mob/living/new_friend)

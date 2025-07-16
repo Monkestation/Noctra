@@ -151,7 +151,7 @@
 	dodge_score *= encumbrance_to_dodge()
 
 	if(user)
-		dodge_score -= user.STASPD * 7.5
+		dodge_score -= user.STASPD * 9
 
 	if(attacking_item)
 		if(attacking_human?.mind)

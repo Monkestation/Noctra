@@ -382,12 +382,9 @@
 	if(pulling)
 		if(pulling != src)
 			pulling.set_pulledby(null)
-			var/mob/living/ex_pulled = pulling
+			var/atom/movable/old_pulling = pulling
 			pulling = null
-			SEND_SIGNAL(ex_pulled, COMSIG_ATOM_NO_LONGER_PULLED, src)
-			for(var/hand in ex_pulled.hud_used?.hand_slots)
-				var/atom/movable/screen/inventory/hand/H = ex_pulled.hud_used.hand_slots[hand]
-				H?.update_appearance()
+			SEND_SIGNAL(old_pulling, COMSIG_ATOM_NO_LONGER_PULLED, src)
 	setGrabState(GRAB_PASSIVE)
 
 /atom/movable/proc/Move_Pulled(atom/A)
