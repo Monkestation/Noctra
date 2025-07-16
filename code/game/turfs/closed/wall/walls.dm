@@ -26,7 +26,7 @@
 	opacity = FALSE
 	max_integrity = 800
 	explosion_block = 2
-	pass_flags_self = PASSTABLE|PASSGRILLE
+	pass_flags_self = PASSGRILLE
 
 /turf/closed/wall/mineral/stone/window/Initialize()
 	. = ..()
@@ -168,7 +168,7 @@
 	icon_state = "wood"
 	opacity = FALSE
 	max_integrity = 550
-	pass_flags_self = PASSTABLE|PASSGRILLE
+	pass_flags_self = PASSGRILLE
 
 /turf/closed/wall/mineral/wood/window/Initialize()
 	. = ..()
@@ -241,7 +241,7 @@
 	icon_state = "subwindow"
 	opacity = FALSE
 	explosion_block = 1
-	pass_flags_self = PASSTABLE|PASSGRILLE
+	pass_flags_self = PASSGRILLE
 
 /turf/closed/wall/mineral/wooddark/window/OnCrafted(dirin, mob/user)
 	SHOULD_CALL_PARENT(FALSE)
