@@ -7,6 +7,7 @@
 
 	// Navigation buttons
 	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>CHRONICLE</a>"
 	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>STATISTICS</a>"
 	data += "<a href='byond://?src=[REF(src)];viewinfluences=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>INFLUENCES</a>"
 	data += "</div>"
@@ -214,8 +215,114 @@
 		data += "<font color='#93cac7'><span class='bold'>No confessions!</span></font>"
 	data += "</div>"
 
-	src.mob << browse(null, "window=vanderlin_influences")
-	var/datum/browser/popup = new(src.mob, "vanderlin_stats", "<center>End Round Statistics</center>", 1050, 770)
+	src << browse(null, "window=vanderlin_influences")
+	var/datum/browser/popup = new(src, "vanderlin_round_end", "<center>Round Statistics</center>", 1050, 770)
+	popup.set_content(data.Join())
+	popup.open()
+
+/// Shows chronicle page
+/client/proc/show_chronicle(tab = "The Realm")
+	if(SSticker.current_state != GAME_STATE_FINISHED && !check_rights(R_ADMIN|R_DEBUG))
+		return
+
+	var/list/data = list()
+
+	// Navigation buttons
+	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>CHRONICLE</a>"
+	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>STATISTICS</a>"
+	data += "<a href='byond://?src=[REF(src)];viewinfluences=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>INFLUENCES</a>"
+	data += "</div>"
+
+	// Divider
+	data += "<div style='text-align: center; margin: 25px auto; width: 80%; max-width: 800px;'>"
+	data += "<div style='border-top: 1.5px solid #444; margin: 15px auto; width: 100%;'></div>"
+	data += "</div>"
+
+	// Sub-tabs
+	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Messages' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a1a, #1a120a); border: 1px solid #5a4a3a; border-bottom: 2px solid #8a7a6a; color: #d4c4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>MESSAGES</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=The Realm' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #2a2a3a, #0a0a1a); border: 1px solid #4a4a5a; border-bottom: 2px solid #7a7a8a; color: #c4c4d4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>THE REALM</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Heroes' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a1a1a, #1a0a0a); border: 1px solid #5a3a3a; border-bottom: 2px solid #8a6a6a; color: #d4b4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>HEROES</a>"
+	data += "</div>"
+
+	// Content
+	data += "<div style='margin: 25px;'>"
+	switch(tab)
+		if("Messages")
+			data += "<div style='display: table; width: 100%; table-layout: fixed;'>"
+			data += "<div style='display: table-row;'>"
+
+			// Last Words Column (50%)
+			data += "<div style='display: table-cell; width: 50%; vertical-align: top; padding: 0 15px;'>"
+			data += "<div style='color: #bd1717; font-size: 1.2em; font-weight: bold; text-align: center; margin-bottom: 10px;'>LAST WORDS</div>"
+			data += "<div style='border-top: 1px solid #bd1717; width: 80%; margin: 0 auto 15px auto;'></div>"
+
+			if(length(GLOB.last_words))
+				for(var/entry in GLOB.last_words)
+					data += "<div style='color: #ff6b6b; margin: 0 0 12px 0; padding: 8px; background: rgba(189, 23, 23, 0.08); border-left: 3px solid #bd1717; border-radius: 0 3px 3px 0;'>"
+					data += "[entry]"
+					data += "</div>"
+			else
+				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>No last words recorded</div>"
+			data += "</div>"
+
+			// Vertical Divider
+			data += "<div style='display: table-cell; width: 1px; background-color: #444; height: 100%;'></div>"
+
+			// Correspondence Column (50%)
+			data += "<div style='display: table-cell; width: 50%; vertical-align: top; padding: 0 15px;'>"
+			data += "<div style='color: #e6b327; font-size: 1.2em; font-weight: bold; text-align: center; margin-bottom: 10px;'>CORRESPONDENCE</div>"
+			data += "<div style='border-top: 1px solid #e6b327; width: 80%; margin: 0 auto 15px auto;'></div>"
+
+			if(length(GLOB.letters_sent))
+				for(var/entry in GLOB.letters_sent)
+					data += "<div style='color: #f5d76e; margin: 0 0 12px 0; padding: 8px; background: rgba(230, 179, 39, 0.08); border-left: 3px solid #e6b327; border-radius: 0 3px 3px 0;'>"
+					data += "[entry]"
+					data += "</div>"
+			else
+				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>No correspondence recorded</div>"
+			data += "</div>"
+
+			data += "</div></div>"
+
+		if("The Realm")
+			data += "<div style='text-align: center; color: #bd1717; font-size: 1.2em; margin-bottom: 15px;'>World Events</div>"
+
+		if("Heroes")
+			data += "<div style='text-align: center; color: #bd1717; font-size: 1.2em; margin-bottom: 15px;'>HEROES</div>"
+			data += "<div style='border-top: 1.5px solid #444; margin: 0 auto 20px auto; width: 65%;'></div>"
+
+			if(length(GLOB.personal_objective_minds))
+				data += "<div style='display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 20px;'>"
+
+				for(var/datum/mind/mind as anything in GLOB.personal_objective_minds)
+					if(!mind.personal_objectives || !length(mind.personal_objectives))
+						continue
+
+					data += "<div style='background: #2a2a2a; border: 1px solid #444; padding: 12px; border-radius: 4px;'>"
+					data += "<div style='color: #e6b327; font-weight: bold; margin-bottom: 8px;'>"
+					data += mind.current ? printplayer(mind) : "<span style='color: #999;'>Unknown Champion</span>"
+					data += "</div>"
+
+					var/obj_count = 1
+					for(var/datum/objective/objective as anything in mind.personal_objectives)
+						var/result = objective.check_completion() ? "<span style='color: #5cb85c;'>✓ TRIUMPH</span>" : "<span style='color: #d9534f;'>✗ FAILED</span>"
+						data += "<div style='margin-bottom: 6px; padding-left: 8px; border-left: 2px solid #555;'>"
+						data += "<b>Quest #[obj_count]:</b> [objective.explanation_text]<br>"
+						data += "<div style='text-align: right;'>[result]</div>"
+						data += "</div>"
+						obj_count++
+
+					data += "</div>"
+
+				data += "</div>"
+			else
+				data += "<div style='text-align: center; color: #999; font-style: italic;'>The Realm has no heroes</div>"
+	data += "</div>"
+
+	src << browse(null, "window=vanderlin_influences")
+	var/datum/browser/popup = new(src, "vanderlin_round_end", "<center>The Chronicle</center>", 1050, 770)
 	popup.set_content(data.Join())
 	popup.open()
 
@@ -227,10 +334,13 @@
 	var/list/data = list()
 
 	// Navigation buttons
-	data += "<div style='width: 91.5%; margin: 0 auto 30px; display: flex; justify-content: center; gap: 20px;'>"
-	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='padding: 12px 24px; background: #282828; border: 2px solid #404040; color: #d0d0d0; font-weight: bold; text-decoration: none; border-radius: 4px;'>STATISTICS</a>"
-	data += "<a href='byond://?src=[REF(src)];viewinfluences=1' style='padding: 12px 24px; background: #282828; border: 2px solid #404040; color: #d0d0d0; font-weight: bold; text-decoration: none; border-radius: 4px;'>INFLUENCES</a>"
+	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>CHRONICLE</a>"
+	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>STATISTICS</a>"
+	data += "<a href='byond://?src=[REF(src)];viewinfluences=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>INFLUENCES</a>"
 	data += "</div>"
+
+	data += "<div style='margin-bottom: 25px'></div>"
 
 	if(debug && check_rights(R_DEBUG))
 		data += "<div style='text-align: center; margin: 10px 0;'>"
@@ -239,9 +349,9 @@
 
 	// Psydon Section
 	var/psydonite_user = FALSE
-	if(src.mob)
-		if(isliving(src.mob))
-			var/mob/living/living_user_mob = src.mob
+	if(mob)
+		if(isliving(mob))
+			var/mob/living/living_user_mob = mob
 			if(istype(living_user_mob.patron, /datum/patron/psydon))
 				psydonite_user = TRUE
 
@@ -352,8 +462,8 @@
 
 	data += "</div></div>"
 
-	src.mob << browse(null, "window=vanderlin_stats")
-	var/datum/browser/popup = new(src.mob, "vanderlin_influences", "<center>Gods influences</center>", 1325, 875)
+	src << browse(null, "window=vanderlin_round_end")
+	var/datum/browser/popup = new(src, "vanderlin_influences", "<center>Gods Influences</center>", 1325, 875)
 	popup.set_content(data.Join())
 	popup.open()
 

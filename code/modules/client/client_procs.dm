@@ -142,6 +142,11 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		show_influences(debug_mode)
 		return
 
+	if(href_list["viewchronicle"])
+		var/tab = href_list["chronicletab"] || "The Realm"
+		show_chronicle(tab)
+		return
+
 	switch(href_list["_src_"])
 		if("holder")
 			hsrc = holder
