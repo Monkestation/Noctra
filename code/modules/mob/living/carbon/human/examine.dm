@@ -4,20 +4,25 @@
 	if(!HAS_TRAIT(src, TRAIT_TOLERANT))
 		if(!isdarkelf(user) && !ishalfdrow(user) && isdarkelf(src))
 			if(isgrenzel(user))
-				user.add_stress(/datum/stressevent/delf/major)
+				user.add_stress(/datum/stressevent/elf/major/dark)
 			else
-				user.add_stress(/datum/stressevent/delf)
+				user.add_stress(/datum/stressevent/elf/dark)
 		if(!ishalfdrow(user) && !isdarkelf(user) && ishalfdrow(src))
 			if(isgrenzel(user))
-				user.add_stress(/datum/stressevent/halfdrow/major)
+				user.add_stress(/datum/stressevent/elf/major/halfdrow)
 			else
-				user.add_stress(/datum/stressevent/halfdrow)
+				user.add_stress(/datum/stressevent/elf/halfdrow)
 		if(!ishalfelf(user) && !issnowelf(user) && ishalfelf(src))
 			if(isgrenzel(user))
-				user.add_stress(/datum/stressevent/helf)
-		if(!issnowelf(user) && ishalfelf(user) && issnowelf(src))
+				user.add_stress(/datum/stressevent/elf/half)
+		if(!issnowelf(user) && issnowelf(src))
 			if(isgrenzel(user))
 				user.add_stress(/datum/stressevent/elf/major)
+			else if(isdwarfmountain(user))
+				user.add_stress(/datum/stressevent/elf)
+		if(!isdwarf(user) && isdwarf(src))
+			if(issnowelf(user))
+				user.add_stress(/datum/stressevent/dwarf)
 		if(!istiefling(user) && istiefling(src))
 			user.add_stress(/datum/stressevent/tieb)
 		if(!ishalforc(user) && ishalforc(src))
@@ -29,10 +34,6 @@
 				user.add_stress(/datum/stressevent/paraforeigner)
 			else
 				user.add_stress(/datum/stressevent/foreigner)
-		if(isantigrenzel(user) && !isgrenzel(user) && isgrenzel(src))
-			user.add_stress(/datum/stressevent/evilgrenzel)
-		if(isgrenzel(user) && isgrenzel(src) && user != src)
-			user.add_stress(/datum/stressevent/fellowgrenzel)
 
 	if(HAS_TRAIT(src, TRAIT_BEAUTIFUL))
 		if(user == src)
@@ -166,12 +167,6 @@
 
 		if(HAS_TRAIT(src, TRAIT_FOREIGNER) && !HAS_TRAIT(user, TRAIT_FOREIGNER))
 			. += span_phobia("A foreigner...")
-
-		if(HAS_TRAIT(src, TRAIT_GRENZEL) && HAS_TRAIT(user, TRAIT_GRENZEL) && user != src)
-			. += span_notice("A fellow Grenzelhoftian!")
-
-		if(isantigrenzel(user) && !HAS_TRAIT(user, TRAIT_GRENZEL) && HAS_TRAIT(src, TRAIT_GRENZEL))
-			. += span_phobia("A grenzel...")
 
 		if(real_name in GLOB.excommunicated_players)
 			. += span_userdanger("EXCOMMUNICATED!")
