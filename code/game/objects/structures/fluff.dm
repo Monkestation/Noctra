@@ -61,7 +61,7 @@
 	. = ..()
 	if(dir in CORNERDIRS)
 		return TRUE
-	if(mover.throwing || mover.pass_flags & (FLOATING|FLYING))
+	if(mover.throwing || mover.movement_type & (FLOATING|FLYING))
 		return TRUE
 	if(get_dir(loc, target) == dir)
 		if(!passcrawl || !isliving(mover))
