@@ -1,6 +1,6 @@
 #define DO_FLOATING_ANIM(target) \
-	animate(target, pixel_z = 2, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE); \
-	animate(pixel_z = -2, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
+	animate(target, pixel_z = 4, time = 1 SECONDS, loop = -1, flags = ANIMATION_RELATIVE); \
+	animate(pixel_z = -4, time = 1 SECONDS, flags = ANIMATION_RELATIVE)
 
 #define STOP_FLOATING_ANIM(target) \
 	var/__final_pixel_y = 0; \
