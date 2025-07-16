@@ -69,7 +69,7 @@
 		var/mob/living/M = mover
 		if(M.body_position != LYING_DOWN)
 			return FALSE
-		return TRUE
+	return TRUE
 
 /obj/structure/fluff/railing/CanAStarPass(ID, to_dir, requester)
 	if(dir in CORNERDIRS)
