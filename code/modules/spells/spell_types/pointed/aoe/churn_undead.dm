@@ -5,7 +5,6 @@
 	sound = 'sound/magic/churn.ogg'
 	charge_sound = 'sound/magic/holycharging.ogg'
 
-	cast_range = 5
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	associated_skill = /datum/skill/magic/holy
@@ -14,6 +13,7 @@
 	invocation = "The Undermaiden rebukes!"
 	invocation_type = INVOCATION_SHOUT
 
+	click_to_activate = FALSE
 	charge_required = FALSE
 	cooldown_time = 35 SECONDS
 	spell_cost = 60
