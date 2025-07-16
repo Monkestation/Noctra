@@ -47,16 +47,19 @@
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
 /datum/status_effect/buff/oiled/proc/on_move(mob/living/mover)
-	if(!mover.is_limb_covered(mover.get_bodypart(BODY_ZONE_L_LEG)))
-		var/mob/living/carbon/human/human = mover
-		if(prob(6))
-			if(istype(human))
-				if(human.job == /datum/job/jester)
-					mover.oil_slip(total_time = 0.8 SECONDS, stun_duration = 0.8 SECONDS, height = 30, flip_count = 10)
-			else
-				mover.oil_slip(total_time = 0.8 SECONDS, stun_duration = 0.8 SECONDS, height = 12, flip_count = 0)
+	if(mover.movement_type & (FLYING|FLOATING))
+		return
+	if(mover.is_limb_covered(mover.get_bodypart(BODY_ZONE_L_LEG)))
+		return
+	var/mob/living/carbon/human/human = mover
+	if(prob(6))
+		if(istype(human) && human.job == /datum/job/jester)
+			mover.oil_slip(total_time = 0.8 SECONDS, stun_duration = 0.8 SECONDS, height = 30, flip_count = 10)
+			return
+		mover.oil_slip()
 
-/atom/proc/oil_slip(total_time = 0.8 SECONDS, stun_duration = 0.8 SECONDS, height = 12, flip_count = 0)
+/atom/proc/oil_slip(total_time = 0.5 SECONDS, stun_duration = 0.5 SECONDS, height = 16, flip_count = 1)
+	var/matrix/transform_before = transform
 	var/turn = 90
 	if(dir == EAST)
 		turn = 90
@@ -77,14 +80,13 @@
 	if(flip_count)
 		do_spin_animation(flip_anim_step_time, flip_count, 4)
 
-	var/matrix/transform_before = transform
-	animate(src, transform = matrix().Scale(1.2, 0.7), time = total_time * 0.125, flags = ANIMATION_PARALLEL)
-	animate(transform = transform_before, time = total_time * 0.125)
+	animate(transform = matrix().Scale(1.2, 0.7), time = total_time * 0.3)
+	animate(transform = matrix(), time = total_time * 0.3)
 
 	animate(src, pixel_z = height, time = total_time * 0.5, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
 	animate(pixel_z = -height, time = total_time * 0.5, flags = ANIMATION_RELATIVE)
 
-	animate(src, transform = transform.Turn(-turn), time = 3, easing = LINEAR_EASING, flags = ANIMATION_PARALLEL)
+	animate(src, transform = transform_before, time = 0, flags = ANIMATION_PARALLEL)
 
 ///////////OFFHAND///////////////
 /obj/item/grabbing
