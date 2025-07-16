@@ -32,7 +32,7 @@
 	//this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
 	var/ignore_pronouns
 	if(user != src)
-		ignore_pronouns = !mind.do_i_know(null, user.real_name)
+		ignore_pronouns = !user.mind?.do_i_know(null, real_name)
 	var/t_He = p_they(TRUE, ignore_pronouns = ignore_pronouns)
 	var/t_his = p_their(ignore_pronouns = ignore_pronouns)
 //	var/t_him = p_them()
