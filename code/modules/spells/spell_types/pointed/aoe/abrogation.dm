@@ -7,7 +7,6 @@
 	sound = 'sound/magic/churn.ogg'
 	charge_sound = 'sound/magic/holycharging.ogg'
 
-	cast_range = 2
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	associated_skill = /datum/skill/magic/holy
@@ -16,13 +15,12 @@
 	invocation = "The Undermaiden rejects your presence!"
 	invocation_type = INVOCATION_SHOUT
 
-	charge_time = 2 SECONDS
-	charge_drain = 1
-	charge_slowdown = 0.7
-	cooldown_time = 50 SECONDS
-	spell_cost = 35
+	click_to_activate = FALSE
+	charge_required = FALSE
+	cooldown_time = 30 SECONDS
+	spell_cost = 20
 
-	aoe_radius = 4
+	aoe_radius = 7
 
 /datum/action/cooldown/spell/aoe/abrogation/feedback(had_targets)
 	if(!had_targets)

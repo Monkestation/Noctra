@@ -160,7 +160,7 @@
 		H.apply_status_effect(/datum/status_effect/buff/lux_drained)
 		SEND_SIGNAL(user, COMSIG_LUX_EXTRACTED, target)
 		record_featured_stat(FEATURED_STATS_CRIMINALS, user)
-		GLOB.vanderlin_round_stats[STATS_LUX_HARVESTED]++
+		record_round_statistic(STATS_LUX_HARVESTED)
 
 		H.add_splatter_floor()
 		H.adjustBruteLoss(20)

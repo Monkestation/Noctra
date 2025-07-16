@@ -5,7 +5,7 @@
 	weight = 10
 	earliest_start = 10 MINUTES
 	max_occurrences = 1
-	min_players = 35
+	min_players = 30
 
 /datum/round_event_control/inhumen_scorn/canSpawnEvent(players_amt, gamemode, fake_check)
 	. = ..()

@@ -106,7 +106,7 @@
 
 	record_featured_stat(FEATURED_STATS_FARMERS, user)
 	record_featured_object_stat(FEATURED_STATS_CROPS, plant.name)
-	GLOB.vanderlin_round_stats[STATS_PLANTS_HARVESTED]++
+	record_round_statistic(STATS_PLANTS_HARVESTED)
 	to_chat(user, span_notice(feedback))
 	yield_produce(modifier)
 
@@ -261,6 +261,14 @@
 			add_sleep_experience(user, /datum/skill/labor/farming, user.STAINT * 0.2)
 		return
 	. = ..()
+
+/obj/structure/soil/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	user.changeNext_move(CLICK_CD_FAST)
+	if(try_handle_deweed(null, user, null))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/soil/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()

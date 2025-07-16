@@ -370,6 +370,14 @@
 	output = /obj/item/clothing/cloak/volfmantle
 	craftdiff = 2
 
+/datum/repeatable_crafting_recipe/leather/tricorn
+	name = "tricorn (black)"
+	requirements = list(
+		/obj/item/natural/hide/cured = 2,
+	)
+	output = /obj/item/clothing/head/helmet/leather/tricorn
+	craftdiff = 2
+
 /datum/repeatable_crafting_recipe/leather/drum
 	name = "drum"
 	attacked_atom = /obj/item/grown/log/tree/small

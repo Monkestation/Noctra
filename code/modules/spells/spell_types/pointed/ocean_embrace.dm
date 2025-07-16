@@ -32,7 +32,7 @@
 		var/already_dead = cast_on.stat == DEAD ? TRUE : FALSE
 		cast_on.adjustOxyLoss(80)
 		if(!already_dead && cast_on.stat == DEAD && cast_on.client)
-			GLOB.vanderlin_round_stats[STATS_PEOPLE_DROWNED]++
+			record_round_statistic(STATS_PEOPLE_DROWNED)
 		else
 			cast_on.Knockdown(5)
 			cast_on.Slowdown(60)

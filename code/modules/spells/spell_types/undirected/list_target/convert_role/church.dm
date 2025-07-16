@@ -55,6 +55,8 @@
 	//only orphans who aren't apprentices
 	if(istype(cast_on.mind.assigned_role, /datum/job/orphan) && !cast_on.is_apprentice())
 		return FALSE
+	if(cast_on.age != AGE_CHILD)
+		return FALSE
 	//need to see their damn face
 	if(!cast_on.get_face_name(null))
 		return FALSE
