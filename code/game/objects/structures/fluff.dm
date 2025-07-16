@@ -25,12 +25,12 @@
 	name = "railing"
 	icon = 'icons/roguetown/misc/railing.dmi'
 	icon_state = "railing"
-	density = FALSE
+	density = TRUE
 	anchored = TRUE
 	deconstructible = FALSE
 	flags_1 = ON_BORDER_1
 	climbable = TRUE
-	pass_flags_self = PASSTABLE|LETPASSTHROW
+	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
 	var/passcrawl = TRUE
 	layer = ABOVE_MOB_LAYER
 
@@ -57,19 +57,15 @@
 			layer = ABOVE_MOB_LAYER
 			plane = GAME_PLANE_UPPER
 
-/obj/structure/fluff/railing/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/fluff/railing/CanPass(atom/movable/mover, turf/target)
 	. = ..()
-	if(dir in CORNERDIRS)
-		return TRUE
-	if(mover.throwing || mover.pass_flags & (FLOATING|FLYING))
-		return TRUE
 	if(get_dir(loc, target) == dir)
-		if(!passcrawl || !isliving(mover))
-			return FALSE
-		var/mob/living/M = mover
-		if(M.body_position != LYING_DOWN)
-			return FALSE
-		return TRUE
+		if(passcrawl && isliving(mover))
+			var/mob/living/M = mover
+			if(M.body_position == LYING_DOWN)
+				return TRUE
+		return . || mover.throwing || (mover.movement_type & (FLOATING|FLYING))
+	return TRUE
 
 /obj/structure/fluff/railing/CanAStarPass(ID, to_dir, requester)
 	if(dir in CORNERDIRS)
@@ -137,6 +133,7 @@
 	layer = 2.91
 	climbable = FALSE
 	max_integrity = 400
+	pass_flags_self = PASSSTRUCTURE
 	passcrawl = FALSE
 	climb_offset = 6
 
