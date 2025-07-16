@@ -439,6 +439,14 @@ GLOBAL_LIST_INIT(featured_stats, list(
 	),
 ))
 
+// Chronicle statistics
+#define CHRONICLE_STATS_STRONGEST_PERSON "strongest_person"
+#define CHRONICLE_STATS_WISEST_PERSON "wisest_person"
+#define CHRONICLE_STATS_RICHEST_PERSON "richest_person"
+#define CHRONICLE_STATS_LUCKIEST_PERSON "luckiest_person"
+
+GLOBAL_LIST_EMPTY(chronicle_stats)
+
 /// Increment a round statistic by a given amount
 /proc/record_round_statistic(name, amount = 1)
 	if(SSticker.current_state == GAME_STATE_FINISHED)
@@ -540,3 +548,20 @@ GLOBAL_LIST_INIT(featured_stats, list(
 		stat_data["entries"] = list()
 
 	stat_data["entries"][object_name] = (stat_data["entries"][object_name] || 0) + increment
+
+/// Records a chronicle stat (weakref to an atom/mob)
+/proc/set_chronicle_stat(stat_name, atom/target)
+	if(SSticker.current_state == GAME_STATE_FINISHED)
+		return
+	if(!stat_name || !target || !GLOB.chronicle_stats)
+		return
+
+	GLOB.chronicle_stats[stat_name] = WEAKREF(target)
+
+/// Gets the recorded chronicle stat holder (returns the resolved weakref or null)
+/proc/get_chronicle_stat_holder(stat_name)
+	if(!stat_name || !GLOB.chronicle_stats)
+		return null
+
+	var/datum/weakref/ref = GLOB.chronicle_stats[stat_name]
+	return ref?.resolve()

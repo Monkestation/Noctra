@@ -1358,6 +1358,11 @@ SUBSYSTEM_DEF(gamemode)
 	for(var/stat_name in statistics_to_clear)
 		force_set_round_statistic(stat_name, 0)
 
+	var/highest_strength = 0
+	var/highest_intelligence = 0
+	var/highest_wealth = 0
+	var/highest_luck = 0
+
 	for(var/client/client in GLOB.clients)
 		if(roundstart)
 			GLOB.patron_follower_counts[client.prefs.selected_patron.name]++
@@ -1368,6 +1373,7 @@ SUBSYSTEM_DEF(gamemode)
 			continue
 		if(living.stat == DEAD)
 			continue
+
 		if(!roundstart)
 			if(living.patron)
 				GLOB.patron_follower_counts[living.patron.name]++
@@ -1430,11 +1436,9 @@ SUBSYSTEM_DEF(gamemode)
 				record_round_statistic(STATS_PACIFISTS)
 			if(human_mob.family_datum && human_mob.family_member_datum)
 				var/datum/family_member/member = human_mob.family_member_datum
-
 				// Check if they have children (making them a parent)
 				if(member.children.len > 0)
 					record_round_statistic(STATS_PARENTS)
-
 				// Check if married or has children
 				if(human_mob.IsWedded() || member.children.len > 0)
 					record_round_statistic(STATS_MARRIED)
@@ -1468,6 +1472,21 @@ SUBSYSTEM_DEF(gamemode)
 				record_round_statistic(STATS_ALIVE_HARPIES)
 			if(istriton(human_mob))
 				record_round_statistic(STATS_ALIVE_TRITONS)
+
+			// Chronicle statistics
+			if(human_mob.STASTR > highest_strength)
+				highest_strength = human_mob.STASTR
+				set_chronicle_stat(CHRONICLE_STATS_STRONGEST_PERSON, human_mob)
+			if(human_mob.STAINT > highest_intelligence)
+				highest_intelligence = human_mob.STAINT
+				set_chronicle_stat(CHRONICLE_STATS_WISEST_PERSON, human_mob)
+			var/wealth = get_mammons_in_atom(human_mob)
+			if(wealth > highest_wealth)
+				highest_wealth = wealth
+				set_chronicle_stat(CHRONICLE_STATS_RICHEST_PERSON, human_mob)
+			if(human_mob.STALUC > highest_luck)
+				highest_luck = human_mob.STALUC
+				set_chronicle_stat(CHRONICLE_STATS_LUCKIEST_PERSON, human_mob)
 
 /// Returns total follower influence for the given storyteller
 /datum/controller/subsystem/gamemode/proc/get_follower_influence(datum/storyteller/chosen_storyteller)

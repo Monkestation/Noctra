@@ -215,8 +215,8 @@
 		data += "<font color='#93cac7'><span class='bold'>No confessions!</span></font>"
 	data += "</div>"
 
-	src << browse(null, "window=vanderlin_influences")
-	var/datum/browser/popup = new(src, "vanderlin_round_end", "<center>Round Statistics</center>", 1050, 770)
+	src.mob << browse(null, "window=vanderlin_influences")
+	var/datum/browser/popup = new(src.mob, "vanderlin_round_end", "<center>Round Statistics</center>", 1050, 770)
 	popup.set_content(data.Join())
 	popup.open()
 
@@ -287,7 +287,68 @@
 			data += "</div></div>"
 
 		if("The Realm")
-			data += "<div style='text-align: center; color: #bd1717; font-size: 1.2em; margin-bottom: 15px;'>World Events</div>"
+			// General Section
+			data += "<div style='text-align: center; color: #bd1717; font-size: 1.2em; margin-bottom: 15px;'>General</div>"
+			data += "<div style='border-top: 1.5px solid #444; margin: 0 auto 20px auto; width: 70%;'></div>"
+
+			// Container matching divider width (70%)
+			data += "<div style='width: 70%; margin: 0 auto;'>"
+			data += "<div style='display: table; width: 100%;'>"
+			data += "<div style='display: table-row;'>"
+
+			// First Column (50% width)
+			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 5px;'>"
+
+			var/mob/living/strongest = get_chronicle_stat_holder(CHRONICLE_STATS_STRONGEST_PERSON)
+			data += "<font color='#bd1717'><b>Strongest Person: </b></font><br>"
+			data += strongest ? "[strongest.real_name]<br>([strongest.STASTR] strength)" : "Nobody"
+			data += "</div>"
+
+			var/mob/living/wisest = get_chronicle_stat_holder(CHRONICLE_STATS_WISEST_PERSON)
+			data += "<font color='#bd1717'><b>Smartest Person: </b></font><br>"
+			data += wisest ? "[wisest.real_name]<br>([wisest.STAINT] intelligence)" : "Nobody"
+			data += "</div>"
+
+			// Second Column (50% width)
+			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 5px;'>"
+
+			var/mob/living/richest = get_chronicle_stat_holder(CHRONICLE_STATS_RICHEST_PERSON)
+			data += "<font color='#bd1717'><b>Richest Person: </b></font><br>"
+			data += richest ? "[richest.real_name]<br>([get_mammons_in_atom(richest)] mammons)" : "Nobody"
+			data += "</div>"
+
+			var/mob/living/luckiest = get_chronicle_stat_holder(CHRONICLE_STATS_LUCKIEST_PERSON)
+			data += "<font color='#bd1717'><b>Luckiest Person: </b></font><br>"
+			data += luckiest ? "[luckiest.real_name]<br>([get_mammons_in_atom(luckiest)] luck)" : "Nobody"
+			data += "</div>"
+
+			data += "</div></div></div>"
+
+			// Spacer between sections
+			data += "<div style='height: 20px;'></div>"
+
+			// Economy Section
+			data += "<div style='text-align: center; color: #e6b327; font-size: 1.2em; margin: 15px 0;'>Economy</div>"
+			data += "<div style='border-top: 1.5px solid #e6b327; margin: 0 auto 20px auto; width: 70%;'></div>"
+
+			// Container matching divider width (70%)
+			data += "<div style='width: 70%; margin: 0 auto;'>"
+			data += "<div style='display: table; width: 100%;'>"
+			data += "<div style='display: table-row;'>"
+
+			// First Column (50% width)
+			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 5px;'>"
+			data += "<font color='#f5c02e'><b>Taxes Collected:</b></font><br>"
+			data += "[GLOB.vanderlin_round_stats[STATS_TAXES_COLLECTED]] mammons"
+			data += "</div>"
+
+			// Second Column (50% width)
+			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 5px;'>"
+			data += "<font color='#8f816b'><b>Items Stolen:</b></font><br>"
+			data += "[GLOB.vanderlin_round_stats[STATS_ITEMS_PICKPOCKETED]]"
+			data += "</div>"
+
+			data += "</div></div></div>"
 
 		if("Heroes")
 			data += "<div style='text-align: center; color: #bd1717; font-size: 1.2em; margin-bottom: 15px;'>HEROES</div>"
@@ -321,8 +382,8 @@
 				data += "<div style='text-align: center; color: #999; font-style: italic;'>The Realm has no heroes</div>"
 	data += "</div>"
 
-	src << browse(null, "window=vanderlin_influences")
-	var/datum/browser/popup = new(src, "vanderlin_round_end", "<center>The Chronicle</center>", 1050, 770)
+	src.mob << browse(null, "window=vanderlin_influences")
+	var/datum/browser/popup = new(src.mob, "vanderlin_round_end", "<center>The Chronicle</center>", 1050, 770)
 	popup.set_content(data.Join())
 	popup.open()
 
@@ -462,8 +523,8 @@
 
 	data += "</div></div>"
 
-	src << browse(null, "window=vanderlin_round_end")
-	var/datum/browser/popup = new(src, "vanderlin_influences", "<center>Gods Influences</center>", 1325, 875)
+	src.mob << browse(null, "window=vanderlin_round_end")
+	var/datum/browser/popup = new(src.mob, "vanderlin_influences", "<center>Gods Influences</center>", 1325, 875)
 	popup.set_content(data.Join())
 	popup.open()
 
