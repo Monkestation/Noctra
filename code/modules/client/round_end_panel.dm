@@ -248,7 +248,7 @@
 	data += "</div>"
 
 	// Content
-	data += "<div style='margin: 25px;'>"
+	data += "<div style='margin: 35px;'>"
 	switch(tab)
 		if("Messages")
 			data += "<div style='display: table; width: 100%; table-layout: fixed;'>"
@@ -265,7 +265,7 @@
 					data += "[entry]"
 					data += "</div>"
 			else
-				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>No last words recorded</div>"
+				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>No last words told</div>"
 			data += "</div>"
 
 			// Vertical Divider
@@ -282,68 +282,113 @@
 					data += "[entry]"
 					data += "</div>"
 			else
-				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>No correspondence recorded</div>"
+				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>No correspondence sent</div>"
 			data += "</div>"
 
 			data += "</div></div>"
 
 		if("The Realm")
+			// NOTABLE PEOPLE - Orange header
 			data += "<div style='text-align: center;'>"
+			data += "<div style='color: #e6a962; font-size: 1.2em; margin-bottom: 15px; text-transform: uppercase;'>NOTABLE PEOPLE</div>"
+			data += "<div style='border-top: 1.5px solid #e6a962; margin: 0 auto 25px auto; width: 90%;'></div>"
 
-			data += "<div style='color: #bd1717; font-size: 1.2em; margin-bottom: 15px;'>General</div>"
-
-			data += "<div style='margin: 0 auto; width: 70%; height: 1px; visibility: hidden;'></div>"
-
-			data += "<div style='display: inline-block; margin-top: 25px;'>"
+			data += "<div style='display: inline-block; margin: 0 5%; width: 90%;'>"
 			data += "<div style='display: table; width: 100%;'>"
 			data += "<div style='display: table-row;'>"
 
-			// First Column (50% width)
-			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 15px; vertical-align: top;'>"
-
+			// First Column (25%)
+			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
+			// Strongest Person (Red)
 			var/mob/living/strongest = get_chronicle_stat_holder(CHRONICLE_STATS_STRONGEST_PERSON)
-			data += "<div style='margin-bottom: 10px;'><font color='#bd1717'><b>Strongest Person</b></font></div>"
+			data += "<div style='margin-bottom: 15px;'><font color='#bd1717'><b>STRONGEST PERSON</b></font></div>"
 			data += "<div style='margin: 10px 0;'>"
 			if(strongest)
 				data += get_headshot_icon(strongest)
-				data += "</div><div style='margin: 10px 0;'>"
-				data += "[strongest.real_name]<br>([strongest.STASTR] strength)"
+				data += "</div><div style='margin: 10px 0;'>[strongest.real_name]<br><i>[strongest.job]</i><br>(with <font color='#bd1717'>[strongest.STASTR] strength</font>)"
+			else
+				data += "Nobody"
+			data += "</div>"
+
+			// Second Strongest Person
+			var/mob/living/strongest2 = get_chronicle_stat_holder(CHRONICLE_STATS_STRONGEST_PERSON, 2)
+			data += "<div style='margin: 30px 0 15px 0;'><font color='#bd1717'><b>STRONGEST PERSON</b></font></div>"
+			data += "<div style='margin: 10px 0;'>"
+			if(strongest2)
+				data += get_headshot_icon(strongest2)
+				data += "</div><div style='margin: 10px 0;'>[strongest2.real_name]<br><i>[strongest2.job]</i><br>(with <font color='#bd1717'>[strongest2.STASTR] strength</font>)"
 			else
 				data += "Nobody"
 			data += "</div></div>"
 
+			// Second Column (25%)
+			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
+			// Smartest Person (Light Blue)
 			var/mob/living/wisest = get_chronicle_stat_holder(CHRONICLE_STATS_WISEST_PERSON)
-			data += "<div style='margin-bottom: 10px;'><font color='#bd1717'><b>Smartest Person</b></font></div>"
+			data += "<div style='margin-bottom: 15px;'><font color='#5eb6e6'><b>SMARTEST PERSON</b></font></div>"
 			data += "<div style='margin: 10px 0;'>"
 			if(wisest)
 				data += get_headshot_icon(wisest)
-				data += "</div><div style='margin: 10px 0;'>"
-				data += "[wisest.real_name]<br>([wisest.STAINT] intelligence)"
+				data += "</div><div style='margin: 10px 0;'>[wisest.real_name]<br><i>[wisest.job]</i><br>(with <font color='#5eb6e6'>[wisest.STAINT] intelligence</font>)"
+			else
+				data += "Nobody"
+			data += "</div>"
+
+			// Second Smartest Person
+			var/mob/living/wisest2 = get_chronicle_stat_holder(CHRONICLE_STATS_WISEST_PERSON, 2)
+			data += "<div style='margin: 30px 0 15px 0;'><font color='#5eb6e6'><b>SMARTEST PERSON</b></font></div>"
+			data += "<div style='margin: 10px 0;'>"
+			if(wisest2)
+				data += get_headshot_icon(wisest2)
+				data += "</div><div style='margin: 10px 0;'>[wisest2.real_name]<br><i>[wisest2.job]</i><br>(with <font color='#5eb6e6'>[wisest2.STAINT] intelligence</font>)"
 			else
 				data += "Nobody"
 			data += "</div></div>"
 
-			// Second Column (50% width)
-			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 15px; vertical-align: top;'>"
-
-			var/mob/living/richest = get_chronicle_stat_holder(CHRONICLE_STATS_RICHEST_PERSON)
-			data += "<div style='margin-bottom: 10px;'><font color='#bd1717'><b>Richest Person</b></font></div>"
+			// Third Column (25%)
+			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
+			// Third Strongest Person
+			var/mob/living/strongest3 = get_chronicle_stat_holder(CHRONICLE_STATS_STRONGEST_PERSON, 3)
+			data += "<div style='margin-bottom: 15px;'><font color='#bd1717'><b>STRONGEST PERSON</b></font></div>"
 			data += "<div style='margin: 10px 0;'>"
-			if(richest)
-				data += get_headshot_icon(richest)
-				data += "</div><div style='margin: 10px 0;'>"
-				data += "[richest.real_name]<br>([get_mammons_in_atom(richest)] mammons)"
+			if(strongest3)
+				data += get_headshot_icon(strongest3)
+				data += "</div><div style='margin: 10px 0;'>[strongest3.real_name]<br><i>[strongest3.job]</i><br>(with <font color='#bd1717'>[strongest3.STASTR] strength</font>)"
+			else
+				data += "Nobody"
+			data += "</div>"
+
+			// Fourth Strongest Person
+			var/mob/living/strongest4 = get_chronicle_stat_holder(CHRONICLE_STATS_STRONGEST_PERSON, 4)
+			data += "<div style='margin: 30px 0 15px 0;'><font color='#bd1717'><b>STRONGEST PERSON</b></font></div>"
+			data += "<div style='margin: 10px 0;'>"
+			if(strongest4)
+				data += get_headshot_icon(strongest4)
+				data += "</div><div style='margin: 10px 0;'>[strongest4.real_name]<br><i>[strongest4.job]</i><br>(with <font color='#bd1717'>[strongest4.STASTR] strength</font>)"
 			else
 				data += "Nobody"
 			data += "</div></div>"
 
-			var/mob/living/luckiest = get_chronicle_stat_holder(CHRONICLE_STATS_LUCKIEST_PERSON)
-			data += "<div style='margin-bottom: 10px;'><font color='#bd1717'><b>Luckiest Person</b></font></div>"
+			// Fourth Column (25%)
+			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
+			// Third Smartest Person
+			var/mob/living/wisest3 = get_chronicle_stat_holder(CHRONICLE_STATS_WISEST_PERSON, 3)
+			data += "<div style='margin-bottom: 15px;'><font color='#5eb6e6'><b>SMARTEST PERSON</b></font></div>"
 			data += "<div style='margin: 10px 0;'>"
-			if(luckiest)
-				data += get_headshot_icon(luckiest)
-				data += "</div><div style='margin: 10px 0;'>"
-				data += "[luckiest.real_name]<br>([get_mammons_in_atom(luckiest)] luck)"
+			if(wisest3)
+				data += get_headshot_icon(wisest3)
+				data += "</div><div style='margin: 10px 0;'>[wisest3.real_name]<br><i>[wisest3.job]</i><br>(with <font color='#5eb6e6'>[wisest3.STAINT] intelligence</font>)"
+			else
+				data += "Nobody"
+			data += "</div>"
+
+			// Fourth Smartest Person
+			var/mob/living/wisest4 = get_chronicle_stat_holder(CHRONICLE_STATS_WISEST_PERSON, 4)
+			data += "<div style='margin: 30px 0 15px 0;'><font color='#5eb6e6'><b>SMARTEST PERSON</b></font></div>"
+			data += "<div style='margin: 10px 0;'>"
+			if(wisest4)
+				data += get_headshot_icon(wisest4)
+				data += "</div><div style='margin: 10px 0;'>[wisest4.real_name]<br><i>[wisest4.job]</i><br>(with <font color='#5eb6e6'>[wisest4.STAINT] intelligence</font>)"
 			else
 				data += "Nobody"
 			data += "</div></div>"
@@ -352,24 +397,22 @@
 
 			data += "<div style='height: 20px;'></div>"
 
-			// Economy Section
-			data += "<div style='text-align: center; color: #e6b327; font-size: 1.2em; margin: 15px 0;'>Economy</div>"
-			data += "<div style='margin: 0 auto; width: 70%; height: 1px; visibility: hidden;'></div>"
+			// ECONOMY
+			data += "<div style='text-align: center; color: #e6b327; font-size: 1.2em; margin: 15px 0; text-transform: uppercase;'>ECONOMY</div>"
+			data += "<div style='border-top: 1.5px solid #e6b327; margin: 0 auto 20px auto; width: 90%;'></div>"
 
-			data += "<div style='display: inline-block; margin-top: 25px;'>"
+			data += "<div style='width: 90%; margin: 0 auto;'>"
 			data += "<div style='display: table; width: 100%;'>"
 			data += "<div style='display: table-row;'>"
 
 			// First Column (50% width)
-			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 15px;'>"
-			data += "<font color='#f5c02e'><b>Taxes Collected:</b></font><br>"
-			data += "[GLOB.vanderlin_round_stats[STATS_TAXES_COLLECTED]] mammons"
+			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 5px;'>"
+			data += "<font color='#f5c02e'><b>Taxes Collected: </b></font>[GLOB.vanderlin_round_stats[STATS_TAXES_COLLECTED]]br>"
 			data += "</div>"
 
 			// Second Column (50% width)
-			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 15px;'>"
-			data += "<font color='#8f816b'><b>Items Stolen:</b></font><br>"
-			data += "[GLOB.vanderlin_round_stats[STATS_ITEMS_PICKPOCKETED]]"
+			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 5px;'>"
+			data += "<font color='#8f816b'><b>Items Stolen: </b></font>[GLOB.vanderlin_round_stats[STATS_ITEMS_PICKPOCKETED]]<br>"
 			data += "</div>"
 
 			data += "</div></div></div>"
@@ -392,7 +435,7 @@
 
 					var/obj_count = 1
 					for(var/datum/objective/objective as anything in mind.personal_objectives)
-						var/result = objective.check_completion() ? "<span style='color: #5cb85c;'>✓ TRIUMPH</span>" : "<span style='color: #d9534f;'>✗ FAILED</span>"
+						var/result = objective.check_completion() ? "<span style='color: #5cb85c;'>Triumph</span>" : "<span style='color: #d9534f;'>FAILED</span>"
 						data += "<div style='margin-bottom: 6px; padding-left: 8px; border-left: 2px solid #555;'>"
 						data += "<b>Quest #[obj_count]:</b> [objective.explanation_text]<br>"
 						data += "<div style='text-align: right;'>[result]</div>"
@@ -414,62 +457,70 @@
 
 			for(var/datum/team/A in GLOB.antagonist_teams)
 				all_teams |= A
-
 			for(var/datum/antagonist/A in GLOB.antagonists)
-				if(!A.owner)
-					continue
-				all_antagonists |= A
-
-			for(var/datum/team/T in all_teams)
-				if(!T.show_roundend_report)
-					continue
-
-				for(var/datum/mind/member_mind as anything in T.members)
-					if(!isnull(member_mind.antag_datums))
-						all_antagonists -= member_mind.antag_datums
-
-				data += "<div style='background: #1a0a0a; border: 1px solid #5a3a3a; padding: 12px; border-radius: 4px; margin-bottom: 15px;'>"
-				data += "<div style='color: #d4b4b4; font-weight: bold; margin-bottom: 8px;'>[T.name]</div>"
-				data += "<div style='margin-left: 10px;'>"
-				for(var/datum/mind/member as anything in T.members)
-					data += "<div style='margin-bottom: 5px;'>"
-					data += member.current ? printplayer(member) : "<span style='color: #999;'>Unknown Villain</span>"
-					data += "</div>"
-				data += "</div>"
-				data += "</div>"
-
-			var/current_category
-			var/datum/antagonist/previous_category
-
-			sortTim(all_antagonists, GLOBAL_PROC_REF(cmp_antag_category))
-
-			for(var/datum/antagonist/A in all_antagonists)
-				if(A.roundend_category != current_category)
-					if(previous_category)
-						data += "</div></div>"
-
-					data += "<div style='background: #1a0a0a; border: 1px solid #5a3a3a; padding: 12px; border-radius: 4px; margin-bottom: 15px;'>"
-					data += "<div style='color: #d4b4b4; font-weight: bold; margin-bottom: 8px;'>[A.roundend_category]</div>"
-					data += "<div style='margin-left: 10px;'>"
-
-					current_category = A.roundend_category
-					previous_category = A
-
-				data += "<div style='margin-bottom: 5px;'>"
-				data += A.owner?.current ? printplayer(A.owner) : "<span style='color: #999;'>Unknown Villain</span>"
-				if(A.show_in_roundend)
-					data += "<div style='margin-left: 15px; color: #d4b4b4; font-size: 0.9em;'>"
-					data += A.roundend_report()
-					data += "</div>"
-				data += "</div>"
-
-			if(all_antagonists.len)
-				data += "</div></div>"
+				if(A.owner) all_antagonists |= A
 
 			if(!length(all_teams) && !length(all_antagonists))
 				data += "<div style='text-align: center; color: #999; font-style: italic;'>The Realm has no villains</div>"
+			else
+				for(var/datum/team/T in all_teams)
+					data += "<div style='background: #1a0a0a; border: 1px solid #5a3a3a; padding: 12px; border-radius: 4px; margin-bottom: 15px;'>"
+					data += "<div style='color: #d4b4b4; font-weight: bold; margin-bottom: 8px;'>[T.name]</div>"
+					data += "<div style='margin-left: 10px;'>"
 
-	data += "</div>"
+					for(var/datum/mind/member in T.members)
+						data += "<div style='margin-bottom: 10px;'>"
+						data += member.current ? printplayer(member) : "<span style='color: #999;'>Unknown Villain</span>"
+
+						if(member.antag_datums?.len)
+							data += "<div style='margin-left: 15px; margin-top: 5px;'>"
+							for(var/datum/antagonist/A in member.antag_datums)
+								if(A.objectives.len)
+									var/obj_count = 1
+									for(var/datum/objective/O in A.objectives)
+										var/completed = O.check_completion()
+										data += "<div style='margin-bottom: 3px;'>"
+										data += "<b>Objective #[obj_count]:</b> [O.explanation_text] "
+										data += "<span style='color:[completed ? "#5cb85c" : "#d9534f"]'>"
+										data += "[completed ? "(COMPLETED)" : "(FAILED)"]</span>"
+										data += "</div>"
+										obj_count++
+							data += "</div>"
+						data += "</div>"
+					data += "</div></div>"
+
+				var/current_category
+				var/datum/antagonist/previous_category
+				sortTim(all_antagonists, GLOBAL_PROC_REF(cmp_antag_category))
+
+				for(var/datum/antagonist/A in all_antagonists)
+					if(A.roundend_category != current_category)
+						if(previous_category)
+							data += "</div></div>"
+						data += "<div style='background: #1a0a0a; border: 1px solid #5a3a3a; padding: 12px; border-radius: 4px; margin-bottom: 15px;'>"
+						data += "<div style='color: #d4b4b4; font-weight: bold; margin-bottom: 8px;'>[A.roundend_category]</div>"
+						data += "<div style='margin-left: 10px;'>"
+						current_category = A.roundend_category
+						previous_category = A
+
+					data += "<div style='margin-bottom: 10px;'>"
+					data += A.owner?.current ? printplayer(A.owner) : "<span style='color: #999;'>Unknown Villain</span>"
+					if(A.objectives.len)
+						data += "<div style='margin-left: 15px; margin-top: 5px;'>"
+						var/obj_count = 1
+						for(var/datum/objective/O in A.objectives)
+							var/completed = O.check_completion()
+							data += "<div style='margin-bottom: 3px;'>"
+							data += "<b>Objective #[obj_count]:</b> [O.explanation_text] "
+							data += "<span style='color:[completed ? "#5cb85c" : "#d9534f"]'>"
+							data += "[completed ? "(COMPLETED)" : "(FAILED)"]</span>"
+							data += "</div>"
+							obj_count++
+						data += "</div>"
+					data += "</div>"
+
+				if(all_antagonists.len)
+					data += "</div></div>"
 
 	src.mob << browse(null, "window=vanderlin_influences")
 	var/datum/browser/popup = new(src.mob, "vanderlin_round_end", "<center>The Chronicle</center>", 1050, 770)

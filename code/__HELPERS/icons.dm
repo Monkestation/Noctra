@@ -1354,11 +1354,44 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 		GLOB.icon_dimensions[icon_path] = list("width" = my_icon.Width(), "height" = my_icon.Height())
 	return GLOB.icon_dimensions[icon_path]
 
-/// Generates a headshot icon of a mob and returns it as base64 HTML
+GLOBAL_LIST_EMPTY(headshot_cache)
+
 /proc/get_headshot_icon(mob/living/target, size = 64, crop_height = 32)
-	if(!target || !istype(target))
-		return ""
-	var/icon/headshot = getFlatIcon(target, SOUTH, no_anim = TRUE)
-	headshot.Scale(size, size)
-	headshot.Crop(1, size - crop_height + 1, size, size)
-	return "<img src='data:image/png;base64,[icon2base64(headshot)]' style='width:[size]px;height:[crop_height]px;image-rendering:pixelated;'>"
+    if(!target || !istype(target))
+        return ""
+
+    // Create weak reference to avoid keeping mobs in memory
+    var/datum/weakref/weak_target = WEAKREF(target)
+    var/cache_key = weak_target
+
+    // Create appearance signature
+    var/appearance_signature = "[target.icon]-[target.icon_state]-[target.dir]-[target.overlays]-[target.underlays]-[target.color]-[target.alpha]"
+
+    // Check cache - verify weakref still points to same mob first
+    var/list/cache_entry = GLOB.headshot_cache[cache_key]
+    if(cache_entry)
+        var/mob/living/cached_target = weak_target.resolve()
+        if(cached_target && cache_entry["signature"] == appearance_signature)
+            return cache_entry["html"]
+        else
+            // Remove stale entry if mob is gone or appearance changed
+            GLOB.headshot_cache -= cache_key
+
+    // Generate new headshot
+    var/image/dummy = image(target.icon, target, target.icon_state, target.layer, target.dir)
+    dummy.appearance = target.appearance
+    dummy.dir = SOUTH
+
+    var/icon/headshot = getFlatIcon(dummy, SOUTH, no_anim = TRUE)
+    headshot.Scale(size, size)
+    headshot.Crop(1, size - crop_height + 1, size, size)
+
+    var/icon_html = "<img src='data:image/png;base64,[icon2base64(headshot)]' style='width:[size]px;height:[crop_height]px;image-rendering:pixelated;'>"
+
+    // Store in cache with weakref
+    GLOB.headshot_cache[cache_key] = list(
+        "signature" = appearance_signature,
+        "html" = icon_html
+    )
+
+    return icon_html
