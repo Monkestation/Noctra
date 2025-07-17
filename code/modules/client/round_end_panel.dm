@@ -309,17 +309,17 @@
 				data += "Nobody"
 			data += "</div>"
 
-			// Second Row - SMARTEST
-			var/mob/living/wisest2 = get_chronicle_stat_holder(CHRONICLE_STATS_WISEST_PERSON)
-			data += "<div style='margin: 30px 0 15px 0;'><font color='#5eb6e6'><b>SMARTEST PERSON</b></font></div>"
+			// Second Row - FASTEST
+			var/mob/living/fastest = get_chronicle_stat_holder(CHRONICLE_STATS_FASTEST_PERSON)
+			data += "<div style='margin: 30px 0 15px 0;'><font color='#54d6c2'><b>FASTEST PERSON</b></font></div>"
 			data += "<div style='margin: 10px 0;'>"
-			if(wisest2)
-				data += get_headshot_icon(wisest2)
-				data += "<div style='margin: 10px 0;'>[wisest2.real_name]<br><i>[wisest2.job]</i><br>(with <font color='#5eb6e6'>[wisest2.STAINT] intelligence</font>)</div>"
+			if(fastest)
+				data += get_headshot_icon(fastest)
+				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[fastest.real_name]</font><br><i>[fastest.job]</i><br>(with <font color='#54d6c2'>[fastest.STASPD] speed</font>)</div>"
 			else
 				data += "Nobody"
 			data += "</div>"
-			data += "</div>" // Close first column
+			data += "</div>"
 
 			// Second Column (25%)
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
@@ -329,22 +329,22 @@
 			data += "<div style='margin: 10px 0;'>"
 			if(wisest)
 				data += get_headshot_icon(wisest)
-				data += "<div style='margin: 10px 0;'>[wisest.real_name]<br><i>[wisest.job]</i><br>(with <font color='#5eb6e6'>[wisest.STAINT] intelligence</font>)</div>"
+				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[wisest.real_name]</font><br><i>[wisest.job]</i><br>(with <font color='#5eb6e6'>[wisest.STAINT] intelligence</font>)</div>"
 			else
 				data += "Nobody"
 			data += "</div>"
 
-			// Second Row - SMARTEST
-			var/mob/living/wisest22 = get_chronicle_stat_holder(CHRONICLE_STATS_WISEST_PERSON, 2)
-			data += "<div style='margin: 30px 0 15px 0;'><font color='#5eb6e6'><b>SMARTEST PERSON</b></font></div>"
+			// Second Row - DUMBEST
+			var/mob/living/dumbest = get_chronicle_stat_holder(CHRONICLE_STATS_DUMBEST_PERSON)
+			data += "<div style='margin: 30px 0 15px 0;'><font color='#e67e22'><b>DUMBEST PERSON</b></font></div>"
 			data += "<div style='margin: 10px 0;'>"
-			if(wisest22)
-				data += get_headshot_icon(wisest22)
-				data += "<div style='margin: 10px 0;'>[wisest22.real_name]<br><i>[wisest22.job]</i><br>(with <font color='#5eb6e6'>[wisest22.STAINT] intelligence</font>)</div>"
+			if(dumbest)
+				data += get_headshot_icon(dumbest)
+				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[dumbest.real_name]</font><br><i>[dumbest.job]</i><br>(with <font color='#e67e22'>[dumbest.STAINT] intelligence</font>)</div>"
 			else
 				data += "Nobody"
 			data += "</div>"
-			data += "</div>" // Close second column
+			data += "</div>"
 
 			// Third Column (25%)
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
@@ -354,49 +354,49 @@
 			data += "<div style='margin: 10px 0;'>"
 			if(richest)
 				data += get_headshot_icon(richest)
-				data += "<div style='margin: 10px 0;'>[richest.real_name]<br><i>[richest.job]</i><br>(with <font color='#d8dd90'>[get_mammons_in_atom(richest)] mammons</font>)</div>"
+				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[richest.real_name]</font><br><i>[richest.job]</i><br>(with <font color='#d8dd90'>[get_mammons_in_atom(richest)] mammons</font>)</div>"
 			else
 				data += "Nobody"
 			data += "</div>"
 
-			// Second Row - LUCKIEST
-			var/mob/living/luckiest_person2 = get_chronicle_stat_holder(CHRONICLE_STATS_LUCKIEST_PERSON)
-			data += "<div style='margin: 30px 0 15px 0;'><font color='#54d666'><b>LUCKIEST PERSON</b></font></div>"
+			// Second Row - SLOWEST
+			var/mob/living/slowest = get_chronicle_stat_holder(CHRONICLE_STATS_SLOWEST_PERSON)
+			data += "<div style='margin: 30px 0 15px 0;'><font color='#a569bd'><b>SLOWEST PERSON</b></font></div>"
 			data += "<div style='margin: 10px 0;'>"
-			if(luckiest_person2)
-				data += get_headshot_icon(luckiest_person2)
-				data += "<div style='margin: 10px 0;'>[luckiest_person2.real_name]<br><i>[luckiest_person2.job]</i><br>(with <font color='#54d666'>[luckiest_person2.STALUC] luck</font>)</div>"
+			if(slowest)
+				data += get_headshot_icon(slowest)
+				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[slowest.real_name]</font><br><i>[slowest.job]</i><br>(with <font color='#a569bd'>[slowest.STASPD] speed</font>)</div>"
 			else
 				data += "Nobody"
 			data += "</div>"
-			data += "</div>" // Close third column
+			data += "</div>"
 
 			// Fourth Column (25%)
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
 			// First Row - LUCKIEST
-			var/mob/living/luckiest_person = get_chronicle_stat_holder(CHRONICLE_STATS_LUCKIEST_PERSON)
+			var/mob/living/luckiest = get_chronicle_stat_holder(CHRONICLE_STATS_LUCKIEST_PERSON)
 			data += "<div style='margin-bottom: 15px;'><font color='#54d666'><b>LUCKIEST PERSON</b></font></div>"
 			data += "<div style='margin: 10px 0;'>"
-			if(luckiest_person)
-				data += get_headshot_icon(luckiest_person)
-				data += "<div style='margin: 10px 0;'>[luckiest_person.real_name]<br><i>[luckiest_person.job]</i><br>(with <font color='#54d666'>[luckiest_person.STALUC] luck</font>)</div>"
+			if(luckiest)
+				data += get_headshot_icon(luckiest)
+				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[luckiest.real_name]</font><br><i>[luckiest.job]</i><br>(with <font color='#54d666'>[luckiest.STALUC] luck</font>)</div>"
 			else
 				data += "Nobody"
 			data += "</div>"
 
-			// Second Row - SMARTEST
-			var/mob/living/wisest4 = get_chronicle_stat_holder(CHRONICLE_STATS_WISEST_PERSON, 4)
-			data += "<div style='margin: 30px 0 15px 0;'><font color='#5eb6e6'><b>SMARTEST PERSON</b></font></div>"
+			// Second Row - UNLUCKIEST
+			var/mob/living/unluckiest = get_chronicle_stat_holder(CHRONICLE_STATS_UNLUCKIEST_PERSON)
+			data += "<div style='margin: 30px 0 15px 0;'><font color='#e74c3c'><b>UNLUCKIEST PERSON</b></font></div>"
 			data += "<div style='margin: 10px 0;'>"
-			if(wisest4)
-				data += get_headshot_icon(wisest4)
-				data += "<div style='margin: 10px 0;'>[wisest4.real_name]<br><i>[wisest4.job]</i><br>(with <font color='#5eb6e6'>[wisest4.STAINT] intelligence</font>)</div>"
+			if(unluckiest)
+				data += get_headshot_icon(unluckiest)
+				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[unluckiest.real_name]</font><br><i>[unluckiest.job]</i><br>(with <font color='#e74c3c'>[unluckiest.STALUC] luck</font>)</div>"
 			else
 				data += "Nobody"
 			data += "</div>"
-			data += "</div>" // Close fourth column
+			data += "</div>"
 
-			data += "</div></div></div>" // Close table-row, table, and inline-block
+			data += "</div></div></div>"
 
 			data += "<div style='height: 20px;'></div>"
 
