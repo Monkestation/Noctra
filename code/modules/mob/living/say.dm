@@ -104,7 +104,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 				continue
 			record_featured_stat(FEATURED_STATS_SPECIESISTS, src)
 
-/mob/living/say(message, bubble_type,list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
+/mob/living/say(message, bubble_type, list/spans = list(), sanitize = TRUE, datum/language/language = null, ignore_spam = FALSE, forced = null)
 	var/static/list/crit_allowed_modes = list(MODE_WHISPER = TRUE, MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/static/list/unconscious_allowed_modes = list(MODE_CHANGELING = TRUE, MODE_ALIEN = TRUE)
 	var/talk_key = get_key(message)
@@ -374,57 +374,72 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	show_message(message, MSG_AUDIBLE, deaf_message, deaf_type)
 	return message
 
+// These are only on living for now
+/// Travel only on the source Z level
+#define Z_MODE_NONE 1
+/// Travel a Z above and a Z below but only if there is no ceiling
+#define Z_MODE_ONE_CEILING 2
+/// Travel a Z above and a Z below ignoring ceilings
+#define Z_MODE_ONE 3
+/// Travel to all Z levels in the group
+#define Z_MODE_ALL 4
+
 /mob/living/send_speech(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, message_mode, original_message)
 	var/static/list/eavesdropping_modes = list(MODE_WHISPER = TRUE, MODE_WHISPER_CRIT = TRUE)
-	var/eavesdrop_range = 0
-	var/Zs_too = FALSE
-	var/Zs_all = FALSE
-	var/Zs_yell = FALSE
-	var/listener_has_ceiling	= TRUE
-	var/speaker_has_ceiling		= TRUE
 
+	var/speaker_has_ceiling = TRUE
 	var/turf/speaker_turf = get_turf(src)
 	var/turf/speaker_ceiling = get_step_multiz(speaker_turf, UP)
-	if(speaker_ceiling)
-		if(istransparentturf(speaker_ceiling))
-			speaker_has_ceiling = FALSE
+	if(!speaker_ceiling || istransparentturf(speaker_ceiling))
+		speaker_has_ceiling = FALSE
+
+	var/eavesdrop_range = 0
 	if(eavesdropping_modes[message_mode])
 		eavesdrop_range = EAVESDROP_EXTRA_RANGE
+
+	var/z_message_type = Z_MODE_NONE
 	if(message_mode != MODE_WHISPER)
-		Zs_too = TRUE
-		if(say_test(message) == "2")	//CIT CHANGE - ditto
+		z_message_type = Z_MODE_ONE_CEILING
+		if(say_test(message) == "2") // ! shout
 			message_range += 5
-			Zs_yell = TRUE
-		if(say_test(message) == "3")	//Big "!!" shout
+			z_message_type = Z_MODE_ONE
+		else if(say_test(message) == "3") // Big "!!" shout
 			message_range += 10
-			Zs_all = TRUE
-	var/list/listening = get_hearers_in_view(message_range+eavesdrop_range, source)
+			z_message_type = Z_MODE_ALL
+
+	var/list/listening
+	if(z_message_type == Z_MODE_NONE)
+		listening = get_hearers_in_view(message_range + eavesdrop_range, source)
+	else
+		// !! yelling is handled in the loop below
+		// Reduce range to save on time as otherwise its upto x3 as expensive as above
+		listening = get_hearers_in_view_z_range(message_range - 1, source)
+
 	var/list/the_dead = list()
-//	var/list/yellareas	//CIT CHANGE - adds the ability for yelling to penetrate walls and echo throughout areas
-	for(var/_M in GLOB.player_list)
-		var/mob/M = _M
-//		if(M.stat != DEAD) //not dead, not important
-//			if(yellareas)	//CIT CHANGE - see above. makes yelling penetrate walls
-//				var/area/A = get_area(M)	//CIT CHANGE - ditto
-//				if(istype(A) && A.ambientsounds != SPACE && (A in yellareas))	//CIT CHANGE - ditto
-//					listening |= M	//CIT CHANGE - ditto
-//			continue
-		if(!client) //client is so that ghosts don't have to listen to mice
-			continue
-		if(!M)
-			continue
-		if(!M.client)
-			continue
-		if(get_dist(M, src) > message_range) //they're out of range of normal hearing
-			if(M.client.prefs)
-				if(eavesdropping_modes[message_mode] && !(M.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
+
+	if(client) //client is so that ghosts don't have to listen to mice
+		for(var/mob/player_mob as anything in GLOB.player_list)
+			if(QDELETED(player_mob)) // Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.
+				continue // Remove if underlying cause (likely byond issue) is fixed. See TG PR #49004.
+			// If yelling !! check all alive players if they are in range and in the same Z level group
+			if(player_mob.stat != DEAD)
+				if(z_message_type != Z_MODE_ALL)
 					continue
-				if(!(M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
+				if(get_dist(player_mob, src) > message_range)
 					continue
-		if(!is_in_zweb(src.z,M.z) && !(M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
-			continue
-		listening |= M
-		the_dead[M] = TRUE
+				if(!is_in_zweb(player_mob.z, source.z))
+					continue
+				listening |= player_mob
+				continue
+			// Else if dead check prefs
+			if(player_mob.z != z || get_dist(player_mob, src) > message_range) //they're out of range of normal hearing
+				if(player_mob.client.prefs)
+					if(eavesdropping_modes[message_mode] && !(player_mob.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
+						continue
+					if(!(player_mob.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
+						continue
+					the_dead[player_mob] = TRUE
+					listening |= player_mob
 
 	var/eavesdropping
 	var/eavesrendered
@@ -433,49 +448,34 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		eavesrendered = compose_message(src, message_language, eavesdropping, , spans, message_mode)
 
 	var/rendered = compose_message(src, message_language, message, , spans, message_mode)
+
 	for(var/atom/movable/AM as anything in listening)
 		if(!AM)
 			stack_trace("somehow theres a null returned from get_hearers_in_view() in send_speech!")
 			continue
-		var/turf/listener_turf = get_turf(AM)
-		var/turf/listener_ceiling = get_step_multiz(listener_turf, UP)
-		if(listener_ceiling)
-			listener_has_ceiling = TRUE
-			if(istransparentturf(listener_ceiling))
-				listener_has_ceiling = FALSE
-		if((!Zs_too && !isobserver(AM)) || message_mode == MODE_WHISPER)
-			if(AM.z != src.z)
-				continue
-		if(Zs_too && AM.z != src.z && !Zs_all)
-			if(!Zs_yell)
-				if(listener_turf.z < speaker_turf.z && listener_has_ceiling)	//Listener is below the speaker and has a ceiling above them
-					continue
-				if(listener_turf.z > speaker_turf.z && speaker_has_ceiling)		//Listener is above the speaker and the speaker has a ceiling above
-					continue
-				if(listener_has_ceiling && speaker_has_ceiling)	//Both have a ceiling, on different z-levels -- no hearing at all
-					continue
-			else
-				if(abs((listener_turf.z - speaker_turf.z)) >= 2)	//We're yelling with only one "!", and the listener is 2 or more z levels above or below us.
-					continue
-			var/listener_obstructed = TRUE
-			var/speaker_obstructed = TRUE
-			if(src != AM && !Zs_yell)	//We always hear ourselves. Zs_yell will allow a "!" shout to bypass walls one z level up or below.
-				if(!speaker_has_ceiling && isliving(AM))
-					var/mob/living/M = AM
-					for(var/mob/living/MH in viewers(world.view, speaker_ceiling))
-						if(M == MH && MH.z == speaker_ceiling?.z)
-							speaker_obstructed = FALSE
 
-				if(!listener_has_ceiling)
-					for(var/mob/living/ML in viewers(world.view, listener_ceiling))
-						if(ML == src && ML.z == listener_ceiling?.z)
-							listener_obstructed = FALSE
-				if(listener_obstructed && speaker_obstructed)
-					continue
+		var/ignore_z = FALSE
+		if(isobserver(AM) || (locate(AM) in important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]))
+			ignore_z = TRUE
+
+		if(!ignore_z && z_message_type == Z_MODE_ONE_CEILING)
+			var/listener_has_ceiling = TRUE
+			var/turf/listener_turf = get_turf(AM)
+			var/turf/listener_ceiling = get_step_multiz(listener_turf, UP)
+			if(!listener_ceiling || istransparentturf(listener_ceiling))
+				listener_has_ceiling = FALSE
+			if(listener_has_ceiling && speaker_has_ceiling)	//Both have a ceiling, on different z-levels -- no hearing at all
+				continue
+			if(listener_turf.z < speaker_turf.z && listener_has_ceiling) //Listener is below the speaker and has a ceiling above them
+				continue
+			if(listener_turf.z > speaker_turf.z && speaker_has_ceiling) //Listener is above the speaker and the speaker has a ceiling above
+				continue
+
 		if(eavesdrop_range && get_dist(source, AM) > message_range && !(the_dead[AM]))
-			AM.Hear(eavesrendered, src, message_language, eavesdropping, , spans, message_mode, original_message)
+			AM.Hear(eavesrendered, src, message_language, eavesdropping, null, spans, message_mode, original_message)
 		else
-			AM.Hear(rendered, src, message_language, message, , spans, message_mode, original_message)
+			AM.Hear(rendered, src, message_language, message, null, spans, message_mode, original_message)
+
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
 
 	//speech bubble
@@ -487,6 +487,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay), I, speech_bubble_recipients, 30)
+
+#undef Z_MODE_NONE
+#undef Z_MODE_ONE_CEILING
+#undef Z_MODE_ONE
+#undef Z_MODE_ALL
 
 /mob/proc/binarycheck()
 	return FALSE
