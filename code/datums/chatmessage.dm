@@ -148,7 +148,7 @@
 	if(!target || QDELETED(target))
 		return qdel(src)
 	approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
-	message_loc = target
+	message_loc = isturf(target) ? target : get_atom_on_turf(target)
 	// Translate any existing messages upwards, apply exponential decay factors to timers
 	if (owned_by.seen_messages)
 //		var/idx = 1
