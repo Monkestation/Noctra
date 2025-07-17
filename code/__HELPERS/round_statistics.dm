@@ -36,6 +36,12 @@
 #define STATS_PURITY_VALUE_SPENT "purity_spent"
 #define STATS_TAXES_EVADED "taxes_evaded"
 #define STATS_NOBLE_INCOME_TOTAL "noble_income_total"
+#define STATS_DIRECT_TREASURY_TRANSFERS "direct_treasury_transfers"
+#define STATS_STOCKPILE_EXPORTS_VALUE "stockpile_exports_value"
+#define STATS_STOCKPILE_IMPORTS_VALUE "stockpile_imports_value"
+#define STATS_STOCKPILE_EXPANSES "stockpile_expanses"
+#define STATS_STOCKPILE_REVENUE "stockpile_revenue"
+#define STATS_PEDDLER_REVENUE "peddler_revenue"
 
 // Influence related statistics
 
@@ -286,6 +292,12 @@ GLOBAL_LIST_INIT(vanderlin_round_stats, list(
 	STATS_PURITY_VALUE_SPENT = 0,
 	STATS_TAXES_EVADED = 0,
 	STATS_NOBLE_INCOME_TOTAL = 0,
+	STATS_DIRECT_TREASURY_TRANSFERS = 0,
+	STATS_STOCKPILE_EXPORTS_VALUE = 0,
+	STATS_STOCKPILE_IMPORTS_VALUE = 0,
+	STATS_STOCKPILE_EXPANSES = 0,
+	STATS_STOCKPILE_REVENUE = 0,
+	STATS_PEDDLER_REVENUE = 0,
 ))
 
 GLOBAL_LIST_EMPTY(patron_follower_counts)
