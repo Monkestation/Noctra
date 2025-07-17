@@ -7110,7 +7110,7 @@
 /turf/open/floor/carpet,
 /area/rogue/indoors/lich)
 "Ur" = (
-/obj/item/clothing/shirt/dress/silkdress/green,
+/obj/item/clothing/shirt/dress/silkdress/colored/green,
 /obj/item/clothing/shoes/shortboots,
 /obj/item/clothing/pants/tights/uncolored,
 /obj/structure/mannequin/male/female,
@@ -7274,10 +7274,10 @@
 /obj/item/clothing/shirt/dress/silkdress/colored/black,
 /obj/item/clothing/shirt/dress/silkdress/colored/black,
 /obj/item/clothing/shirt/dress/silkdress/colored/black,
-/obj/item/clothing/shirt/dress/silkdress/green,
-/obj/item/clothing/shirt/dress/silkdress/green,
-/obj/item/clothing/shirt/dress/silkdress/green,
-/obj/item/clothing/shirt/dress/silkdress/green,
+/obj/item/clothing/shirt/dress/silkdress/colored/green,
+/obj/item/clothing/shirt/dress/silkdress/colored/green,
+/obj/item/clothing/shirt/dress/silkdress/colored/green,
+/obj/item/clothing/shirt/dress/silkdress/colored/green,
 /obj/structure/closet/crate/crafted_closet/dark{
 	name = "Common Shirts"
 	},
@@ -7377,7 +7377,7 @@
 /turf/open/floor/wood,
 /area/rogue)
 "VU" = (
-/obj/item/clothing/shirt/dress/silkdress/silkdressprimary,
+/obj/item/clothing/shirt/dress/silkdress/colored/silkdressprimary,
 /obj/item/clothing/shoes/shortboots,
 /obj/item/clothing/pants/tights/uncolored,
 /obj/structure/mannequin/male/female,

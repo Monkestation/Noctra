@@ -27,3 +27,5 @@
 /obj/item/clothing/head/roguehood/random : /obj/item/clothing/head/roguehood/colored/random{@OLD}
 /obj/item/clothing/shirt/dress/gen/brown : /obj/item/clothing/shirt/dress/gen/colored/brown{@OLD}
 /obj/item/clothing/shirt/shortshirt/uncolored : /obj/item/clothing/shirt/shortshirt/colored/uncolored{@OLD}
+/obj/item/clothing/shirt/dress/silkdress/green : /obj/item/clothing/shirt/dress/silkdress/colored/green{@OLD}
+/obj/item/clothing/shirt/dress/silkdress/silkdressprimary : /obj/item/clothing/shirt/dress/silkdress/colored/silkdressprimary{@OLD}
