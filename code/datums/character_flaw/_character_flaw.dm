@@ -24,8 +24,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Chronic Back Pain" = /datum/charflaw/chronic_back_pain,
 	"Old War Wound" = /datum/charflaw/old_war_wound,
 	"Chronic Arthritis" = /datum/charflaw/chronic_arthritis,
-	"Random Flaw or No Flaw"=/datum/charflaw/randflaw,
-	"Guaranteed No Flaw (3 TRI)"=/datum/charflaw/noflaw,))
+	"Luxless" = /datum/charflaw/lux_taken,
+	"Random Flaw or No Flaw" = /datum/charflaw/randflaw,
+	"Guaranteed No Flaw (3 TRI)" = /datum/charflaw/noflaw,))
 
 /datum/charflaw
 	var/name
@@ -335,7 +336,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/hunted
 	name = "Hunted"
 	desc = "Something in my past has made me a target. I'm always looking over my shoulder.	\
-	THIS IS A DIFFICULT FLAW, YOU WILL BE HUNTED AND HAVE ASSASINATION ATTEMPTS MADE AGAINST YOU WITHOUT ANY ESCALATION. \
+	\nTHIS IS A DIFFICULT FLAW, YOU WILL BE HUNTED AND HAVE ASSASINATION ATTEMPTS MADE AGAINST YOU WITHOUT ANY ESCALATION. \
 	EXPECT A MORE DIFFICULT EXPERIENCE. PLAY AT YOUR OWN RISK."
 	var/logged = FALSE
 
@@ -757,3 +758,25 @@ GLOBAL_LIST_INIT(character_flaws, list(
 						to_chat(H, span_warning("The weight of your equipment aggravates your chronic back pain!"))
 					BP.lingering_pain += pain_amount
 					break
+
+/datum/charflaw/lux_taken
+	name = "Lux-less"
+	desc = "Through some grand misfortune, or heroic sacrifice- you have given up your link to Psydon, and with it- your soul. A putrid, horrid thing, you cosign yourself to an eternity of nil after death. Perhaps you are fine with this. \
+	\n\n EXPECT A DIFFICULT, MECHANICALLY UNFAIR EXPERIENCE. \n Rakshari, Hollowkin and Kobolds do not apply, given they already have no lux. "
+	var/nochekk = TRUE
+
+/datum/charflaw/lux_taken/flaw_on_life(mob/user)
+	if(!ishuman(user))
+		return
+
+	var/mob/living/carbon/human/H = user
+
+	//All luxless species below - BE SURE TO UPDATE THIS IF LUXLESS SPECIES ARE ADDED t. shitcode
+	if(is_species(H, /datum/species/demihuman) != TRUE && (is_species(H, /datum/species/kobold)) != TRUE  && (is_species(H, /datum/species/rakshari)) != TRUE )
+		H.apply_status_effect(/datum/status_effect/buff/flaw_lux_taken)
+		SEND_SIGNAL(user, COMSIG_LUX_EXTRACTED, H)
+
+	else //overflow for the luxless species, if they select the flaw they should get a random flaw instead
+		nochekk = FALSE
+		QDEL_NULL(H.charflaw)
+		H.charflaw = new /datum/charflaw/randflaw(H)
