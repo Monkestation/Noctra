@@ -142,6 +142,7 @@
 	name = "silver fullplate"
 	desc = "A finely forged set of full silver plate, with long tassets protecting the legs."
 	icon_state = "silverarmor"
+	allowed_age = list("Adult","Middle-Aged","Old","Immortal") //placeholder until younglings have onmob sprites for this item
 	armor = ARMOR_PLATE_SILVER
 	smeltresult = /obj/item/ingot/silver
 	item_weight = 12 * SILVER_MULTIPLIER

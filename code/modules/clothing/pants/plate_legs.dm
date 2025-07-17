@@ -98,6 +98,7 @@
 	name = "silver platelegs"
 	desc = "A finely forged pair of silver plateleggings, offering additional protection against blunt force."
 	icon_state = "silverlegs"
+	allowed_age = list("Adult","Middle-Aged","Old","Immortal") //placeholder until younglings have onmob sprites for this item
 	armor = ARMOR_PLATE_SILVER
 	smeltresult = /obj/item/ingot/silver
 	item_weight = 9 * SILVER_MULTIPLIER

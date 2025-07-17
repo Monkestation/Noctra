@@ -384,6 +384,7 @@
 	icon_state = "silverbascinet"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
 	smeltresult = /obj/item/ingot/silver
+	allowed_age = list("Adult","Middle-Aged","Old","Immortal") //placeholder until younglings have onmob sprites for this item
 	armor = ARMOR_PLATE_SILVER
 	sellprice = VALUE_SILVER_ARMOR
 	item_weight = 6 * SILVER_MULTIPLIER
