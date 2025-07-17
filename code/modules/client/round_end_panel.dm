@@ -455,7 +455,7 @@
 						if(mind.current.stat == DEAD)
 							data += "<span style='color:#d9534f'>died</span>"
 						else
-							data += "<span style='color:#0dd40d'>survived</span>"
+							data += "<span style='color:#4ccf4c'>survived</span>"
 					else
 						data += "<span style='color: #999;'>Unknown Hero</span>"
 					data += "</div>"
@@ -510,7 +510,7 @@
 							if(member.current.stat == DEAD)
 								data += "<span style='color:#d9534f'>died</span>"
 							else
-								data += "<span style='color:#0dd40d'>survived</span>"
+								data += "<span style='color:#4ccf4c'>survived</span>"
 						else
 							data += "<span style='color: #999;'>Unknown Villain</span>"
 
@@ -557,7 +557,7 @@
 						if(A.owner.current.stat == DEAD)
 							data += "<span style='color:#d9534f'>died</span>"
 						else
-							data += "<span style='color:#0dd40d'>survived</span>"
+							data += "<span style='color:#4ccf4c'>survived</span>"
 					else
 						data += "<span style='color: #999;'>Unknown Villain</span>"
 

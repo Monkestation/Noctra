@@ -1360,10 +1360,13 @@ GLOBAL_LIST_EMPTY(headshot_cache)
     if(!target || !istype(target))
         return ""
 
-    var/cache_key = "[target.icon]-[target.icon_state]-[target.overlays]-[target.underlays]-[target.color]"
+    var/datum/weakref/weak_target = WEAKREF(target)
+    var/cache_key = weak_target
+
+    var/signature = "[target.icon]-[target.icon_state]-[target.overlays]-[target.underlays]-[target.color]"
 
     var/list/cache_entry = GLOB.headshot_cache[cache_key]
-    if(cache_entry)
+    if(cache_entry && cache_entry["signature"] == signature)
         return cache_entry["html"]
 
     var/icon/headshot = get_flat_human_icon(null, target.mind?.assigned_role, target.client?.prefs, "headshot_temp", list(SOUTH))
@@ -1375,10 +1378,11 @@ GLOBAL_LIST_EMPTY(headshot_cache)
 
     var/icon_html = "<img src='data:image/png;base64,[icon2base64(headshot)]' style='width:[size]px;height:[crop_height]px;image-rendering:pixelated;'>"
     GLOB.headshot_cache[cache_key] = list(
-        "html" = icon_html
+        "html" = icon_html,
+        "signature" = signature
     )
 
-    if(length(GLOB.headshot_cache) > 150)
-        GLOB.headshot_cache.Cut(1, 50)
+    if(length(GLOB.headshot_cache) > 200)
+        GLOB.headshot_cache.Cut(1, 25)
 
     return icon_html
