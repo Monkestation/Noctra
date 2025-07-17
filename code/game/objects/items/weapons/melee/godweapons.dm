@@ -339,9 +339,10 @@
 		old_dam = arrow.damage
 		old_pen = arrow.armor_penetration
 		qdel(arrow)
-	arrow = new /obj/projectile/bullet/reusable/arrow/spiced(chambered)
+	arrow = new /obj/projectile/bullet/reusable/arrow/spiced
 	arrow.damage = old_dam || arrow.damage
 	arrow.armor_penetration = old_pen || arrow.armor_penetration
+	chambered.BB = arrow
 
 /obj/projectile/bullet/reusable/arrow/spiced
 	name = "spiced arrow"

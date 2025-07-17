@@ -6,6 +6,8 @@
 	charge_sound = 'sound/magic/charging_lightning.ogg'
 	sparks_amt = 5
 
+	cast_range = 8
+	point_cost = 3
 	attunements = list(
 		/datum/attunement/electric = 0.7,
 	)

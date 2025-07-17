@@ -61,7 +61,7 @@
 	. = ..()
 	if(dir in CORNERDIRS)
 		return TRUE
-	if(mover.throwing || mover.pass_flags & (FLOATING|FLYING))
+	if(mover.throwing || mover.movement_type & (FLOATING|FLYING))
 		return TRUE
 	if(get_dir(loc, target) == dir)
 		if(!passcrawl || !isliving(mover))
@@ -69,7 +69,7 @@
 		var/mob/living/M = mover
 		if(M.body_position != LYING_DOWN)
 			return FALSE
-		return TRUE
+	return TRUE
 
 /obj/structure/fluff/railing/CanAStarPass(ID, to_dir, requester)
 	if(dir in CORNERDIRS)
