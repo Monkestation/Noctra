@@ -330,6 +330,14 @@
 	armor = ARMOR_PLATE_BAD
 	max_integrity = INTEGRITY_STANDARD
 
+//................. Royal Knight's helmet .............. //
+/obj/item/clothing/head/helmet/visored/royalknight
+	name = "royal knights helmet"
+	desc = "A knightly armet that protects dreams of chivalry, fair maidens to rescue, and glorious feats of melee. Purpose made for the protector of the royal lineage. Its visor can be flipped over for higher visibility at the cost of eye protection."
+	icon_state = "knightarmet"
+	emote_environment = 3
+	item_weight = 5.6 * STEEL_MULTIPLIER
+
 //................. Captain's Helmet .............. //
 /obj/item/clothing/head/helmet/visored/captain
 	name = "captain's helmet"

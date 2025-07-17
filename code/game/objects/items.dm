@@ -6,6 +6,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
+	pass_flags_self = PASSITEM
+	pass_flags = PASSTABLE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	///icon state name for inhand overlays
 	var/item_state = null
@@ -56,7 +58,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/list/parrysound = "parrywood"
 	var/w_class = WEIGHT_CLASS_NORMAL
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
-	pass_flags = PASSTABLE
 	var/obj/item/master = null
 
 	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, CHEST, GROIN, etc. flags. See setup.dm
