@@ -1489,7 +1489,7 @@ SUBSYSTEM_DEF(gamemode)
 				highest_luck = human_mob.STALUC
 				set_chronicle_stat(CHRONICLE_STATS_LUCKIEST_PERSON, human_mob)
 			if(human_mob.STASPD > highest_speed)
-				highest_luck = human_mob.STASPD
+				highest_speed = human_mob.STASPD
 				set_chronicle_stat(CHRONICLE_STATS_FASTEST_PERSON, human_mob)
 
 			var/wealth = get_mammons_in_atom(human_mob)
