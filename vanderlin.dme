@@ -276,6 +276,7 @@
 #include "code\_globalvars\plant_defs.dm"
 #include "code\_globalvars\regexes.dm"
 #include "code\_globalvars\roguetown.dm"
+#include "code\_globalvars\say.dm"
 #include "code\_globalvars\traits.dm"
 #include "code\_globalvars\customization\body_markings.dm"
 #include "code\_globalvars\customization\hair_gradients.dm"
