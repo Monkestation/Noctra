@@ -1360,24 +1360,18 @@ GLOBAL_LIST_EMPTY(headshot_cache)
     if(!target || !istype(target))
         return ""
 
-    // Create weak reference to avoid keeping mobs in memory
     var/datum/weakref/weak_target = WEAKREF(target)
     var/cache_key = weak_target
+    var/appearance_signature = "[target.icon]-[target.icon_state]-[target.overlays]-[target.underlays]-[target.color]"
 
-    // Create appearance signature
-    var/appearance_signature = "[target.icon]-[target.icon_state]-[target.dir]-[target.overlays]-[target.underlays]-[target.color]-[target.alpha]"
-
-    // Check cache - verify weakref still points to same mob first
     var/list/cache_entry = GLOB.headshot_cache[cache_key]
     if(cache_entry)
         var/mob/living/cached_target = weak_target.resolve()
         if(cached_target && cache_entry["signature"] == appearance_signature)
             return cache_entry["html"]
         else
-            // Remove stale entry if mob is gone or appearance changed
             GLOB.headshot_cache -= cache_key
 
-    // Generate new headshot
     var/image/dummy = image(target.icon, target, target.icon_state, target.layer, target.dir)
     dummy.appearance = target.appearance
     dummy.dir = SOUTH
@@ -1388,7 +1382,11 @@ GLOBAL_LIST_EMPTY(headshot_cache)
 
     var/icon_html = "<img src='data:image/png;base64,[icon2base64(headshot)]' style='width:[size]px;height:[crop_height]px;image-rendering:pixelated;'>"
 
-    // Store in cache with weakref
+    if(length(GLOB.headshot_cache) >= 200)
+        var/num_to_remove = round(200 * 0.15)
+        for(var/i in 1 to num_to_remove)
+            GLOB.headshot_cache.Cut(1, 2)
+
     GLOB.headshot_cache[cache_key] = list(
         "signature" = appearance_signature,
         "html" = icon_html
