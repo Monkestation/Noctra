@@ -449,10 +449,11 @@
 
 					var/obj_count = 1
 					for(var/datum/objective/objective as anything in mind.personal_objectives)
-						var/result = objective.check_completion() ? "<span style='color: #5cb85c;'>Triumph</span>" : "<span style='color: #d9534f;'>FAILED</span>"
+						var/completed = objective.check_completion()
 						data += "<div style='margin-bottom: 6px; padding-left: 8px; border-left: 2px solid #555;'>"
-						data += "<b>Quest #[obj_count]:</b> [objective.explanation_text]<br>"
-						data += "<div style='text-align: right;'>[result]</div>"
+						data += "<b>Quest #[obj_count]:</b> [objective.explanation_text] "
+						data += "<span style='color:[completed ? "#5cb85c" : "#d9534f"]'>"
+						data += "[completed ? "(COMPLETED)" : "(FAILED)"]</span>"
 						data += "</div>"
 						obj_count++
 
