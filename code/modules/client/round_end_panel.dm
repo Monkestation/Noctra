@@ -198,7 +198,7 @@
 	data += "</div>"
 
 	// Right column
-	data += "<div style='display: table-cell; width: 50%; vertical-align: top; padding: 0 10px;'>"
+	data += "<div style='display: table-cell; width: 50%; vertical-align: top; padding: 0 15px;'>"
 	data += "<font color='#8B4513'><span class='bold'>Humens:</span></font> [GLOB.vanderlin_round_stats[STATS_ALIVE_NORTHERN_HUMANS]]<br>"
 	data += "<font color='#808080'><span class='bold'>Dwarves:</span></font> [GLOB.vanderlin_round_stats[STATS_ALIVE_DWARVES]]<br>"
 	data += "<font color='#87CEEB'><span class='bold'>Pure Elves:</span></font> [GLOB.vanderlin_round_stats[STATS_ALIVE_SNOW_ELVES]]<br>"
@@ -414,7 +414,7 @@
 			data += "<div style='display: flex; justify-content: space-between; gap: 0;'>"
 
 			// Left column
-			data += "<div style='width: 33%; display: flex; justify-content: flex-end;'>"
+			data += "<div style='width: 34.5%; display: flex; justify-content: flex-end;'>"
 			data += "<div style='text-align: left; padding-right: 20px;'>"
 			data += "<div style='margin-bottom: 4px;'><font color='#f7d474'>Realm's Treasury: </font>[SStreasury.treasury_value]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#e6b327'>Regular Vault Income: </font>[GLOB.vanderlin_round_stats[STATS_REGULAR_VAULT_INCOME]]</div>"
@@ -425,7 +425,7 @@
 			data += "</div></div>"
 
 			// Middle column
-			data += "<div style='width: 33%; display: flex; justify-content: center;'>"
+			data += "<div style='width: 31.5%; display: flex; justify-content: center;'>"
 			data += "<div style='text-align: left; padding-left: 5px;'>"
 			data += "<div style='margin-bottom: 4px;'><font color='#8f816b'>Wage Payments: </font>[GLOB.vanderlin_round_stats[STATS_WAGES_PAID]]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#b5c996'>Treasury Transfers: </font>[GLOB.vanderlin_round_stats[STATS_DIRECT_TREASURY_TRANSFERS]]</div>"
