@@ -320,7 +320,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 				H.set_flaw(/datum/charflaw/noeyel)
 			else
 				H.set_flaw(/datum/charflaw/noeyer)
-	qdel(src)
 
 /datum/charflaw/tongueless
 	name = "Tongueless"
