@@ -216,15 +216,14 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	return output
 
 /proc/say_test(text)
-	if(copytext(text, length(text) - 1) == "!!")
-		return "3"
-	var/ending = copytext(text, length(text))
-	if(ending == "?")
-		return "1"
-	if(ending == "!")
-		return "2"
-
-	return "0"
+	. = "0"
+	var/ending = copytext_char(text, -1)
+	if(copytext_char(text, -2) == "!!")
+		. = "3"
+	else if(ending == "!")
+		. = "2"
+	else if(ending == "?")
+		. = "1"
 
 /atom/movable/proc/GetVoice()
 	return "[src]"	//Returns the atom's name, prepended with 'The' if it's not a proper noun
