@@ -324,7 +324,7 @@
 		if(isobserver(hearing_movable) || (locate(hearing_movable) in important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]))
 			ignore_z = TRUE
 
-		if(!ignore_z && z_message_type == Z_MODE_ONE_CEILING && listener.z != z)
+		if(!ignore_z && z_message_type == Z_MODE_ONE_CEILING && hearing_movable.z != z)
 			var/listener_has_ceiling = TRUE
 			var/turf/listener_turf = get_turf(hearing_movable)
 			var/turf/listener_ceiling = get_step_multiz(listener_turf, UP)
