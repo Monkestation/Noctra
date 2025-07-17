@@ -121,6 +121,13 @@
 	sellprice = 35
 	category = "Cloak"
 
+/datum/repeatable_crafting_recipe/sewing/weaving/silktabard
+	name = "fine silk tabard"
+	output = /obj/item/clothing/cloak/silktabard
+	requirements = list(/obj/item/natural/silk = 4)
+	craftdiff = 3
+	category = "Cloak"
+
 /* craftdif of 4 = EXPERT */
 
 /datum/repeatable_crafting_recipe/sewing/weaving/shadowcloak
