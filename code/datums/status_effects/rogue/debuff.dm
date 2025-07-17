@@ -425,13 +425,3 @@
 	name = "Eoran Wine"
 	desc = span_warning("I am intoxicated from ambromsia not meant for mortal mouths.\n")
 	icon_state = "drunk"
-
-/datum/status_effect/debuff/hornless //obviously not going to use this as is, but i'm going to do something with this in the future
-	id = "horn_gone"
-	alert_type = /atom/movable/screen/alert/status_effect/debuff/horn_taken
-	effectedstats = list(STATKEY_LCK = -19)
-	duration = -1
-//tiefling surgery horn removal!
-/atom/movable/screen/alert/status_effect/debuff/horn_taken
-	name = "Hornless"
-	desc = span_danger("I'm... bald... MOM SAVE ME")
