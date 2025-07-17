@@ -1358,10 +1358,15 @@ SUBSYSTEM_DEF(gamemode)
 	for(var/stat_name in statistics_to_clear)
 		force_set_round_statistic(stat_name, 0)
 
-	var/highest_strength = 0
-	var/highest_intelligence = 0
-	var/highest_wealth = 0
-	var/highest_luck = 0
+	var/highest_strength = -1
+	var/highest_intelligence = -1
+	var/highest_wealth = -1
+	var/highest_luck = -1
+	var/highest_speed = -1
+
+	var/lowest_intelligence
+	var/lowest_speed
+	var/lowest_luck
 
 	for(var/client/client in GLOB.clients)
 		if(roundstart)
@@ -1480,13 +1485,38 @@ SUBSYSTEM_DEF(gamemode)
 			if(human_mob.STAINT > highest_intelligence)
 				highest_intelligence = human_mob.STAINT
 				set_chronicle_stat(CHRONICLE_STATS_WISEST_PERSON, human_mob)
+			if(human_mob.STALUC > highest_luck)
+				highest_luck = human_mob.STALUC
+				set_chronicle_stat(CHRONICLE_STATS_LUCKIEST_PERSON, human_mob)
+			if(human_mob.STASPD > highest_speed)
+				highest_luck = human_mob.STASPD
+				set_chronicle_stat(CHRONICLE_STATS_FASTEST_PERSON, human_mob)
+
 			var/wealth = get_mammons_in_atom(human_mob)
 			if(wealth > highest_wealth)
 				highest_wealth = wealth
 				set_chronicle_stat(CHRONICLE_STATS_RICHEST_PERSON, human_mob)
-			if(human_mob.STALUC > highest_luck)
-				highest_luck = human_mob.STALUC
-				set_chronicle_stat(CHRONICLE_STATS_LUCKIEST_PERSON, human_mob)
+
+			if(!lowest_intelligence)
+				lowest_intelligence = human_mob.STAINT
+				set_chronicle_stat(CHRONICLE_STATS_DUMBEST_PERSON, human_mob)
+			else if(human_mob.STAINT < lowest_intelligence)
+				lowest_intelligence = human_mob.STAINT
+				set_chronicle_stat(CHRONICLE_STATS_DUMBEST_PERSON, human_mob)
+
+			if(!lowest_speed)
+				lowest_speed = human_mob.STASPD
+				set_chronicle_stat(CHRONICLE_STATS_SLOWEST_PERSON, human_mob)
+			else if(human_mob.STASPD < lowest_speed)
+				lowest_speed = human_mob.STASPD
+				set_chronicle_stat(CHRONICLE_STATS_SLOWEST_PERSON, human_mob)
+
+			if(!lowest_luck)
+				lowest_luck = human_mob.STALUC
+				set_chronicle_stat(CHRONICLE_STATS_UNLUCKIEST_PERSON, human_mob)
+			else if(human_mob.STALUC < lowest_luck)
+				lowest_luck = human_mob.STALUC
+				set_chronicle_stat(CHRONICLE_STATS_UNLUCKIEST_PERSON, human_mob)
 
 /// Returns total follower influence for the given storyteller
 /datum/controller/subsystem/gamemode/proc/get_follower_influence(datum/storyteller/chosen_storyteller)

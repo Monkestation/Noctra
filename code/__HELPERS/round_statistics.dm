@@ -444,6 +444,10 @@ GLOBAL_LIST_INIT(featured_stats, list(
 #define CHRONICLE_STATS_WISEST_PERSON "wisest_person"
 #define CHRONICLE_STATS_RICHEST_PERSON "richest_person"
 #define CHRONICLE_STATS_LUCKIEST_PERSON "luckiest_person"
+#define CHRONICLE_STATS_UNLUCKIEST_PERSON "unluckiest_person"
+#define CHRONICLE_STATS_DUMBEST_PERSON "dumbest_person"
+#define CHRONICLE_STATS_FASTEST_PERSON "fastest_person"
+#define CHRONICLE_STATS_SLOWEST_PERSON "slowest_person"
 
 GLOBAL_LIST_EMPTY(chronicle_stats)
 
