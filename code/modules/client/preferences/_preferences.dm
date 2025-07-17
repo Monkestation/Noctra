@@ -802,7 +802,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	dat += "<style>label { display: inline-block; width: 200px; }</style><body>"
 	dat += "<center><a href='?_src_=prefs;preference=antag;task=close' style='display:block;margin-bottom:2px'>Done</a></center>"
-	dat += "<center><h2 style='margin:0;padding:0;line-height:1.2'>Villains</h2></center>"
+	dat += "<h2 style='margin:5;padding:5;line-height:1.2'>Villains</h2>"
 
 	if(is_total_antag_banned(user.ckey))
 		dat += "<font color=red><b>I am banned from antagonist roles.</b></font><br>"
@@ -825,7 +825,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	dat += "</body>"
 
-	var/datum/browser/noclose/popup = new(user, "antag_setup", "<div align='center'>Special Roles</div>", 275, 325) //no reason not to reuse the occupation window, as it's cleaner that way
+	var/datum/browser/noclose/popup = new(user, "antag_setup", "<div align='center'>Special Roles</div>", 265, 300) //no reason not to reuse the occupation window, as it's cleaner that way
 	popup.set_window_options(can_close = FALSE)
 	popup.set_content(dat.Join())
 	popup.open(FALSE)
