@@ -15,15 +15,14 @@
 			remove_status_effect(A.debuff)
 
 /datum/charflaw/addiction
+	abstract_type = /datum/charflaw/addiction
 	var/next_sate = 0
 	var/sated = TRUE
 	var/time = 5 MINUTES
-//	var/debuff = /datum/status_effect/debuff/addiction
 	var/debuff = /datum/status_effect/debuff/addiction
 	var/needsate_text
 	var/sated_text = "That's much better..."
 	var/unsate_time
-
 
 /datum/charflaw/addiction/New()
 	..()

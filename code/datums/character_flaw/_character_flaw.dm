@@ -88,12 +88,14 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /mob/living/carbon/human/proc/get_random_flaw()
 	var/list/flaws = subtypesof(/datum/charflaw)
 	for(var/datum/charflaw/flaw as anything in flaws)
+		if(is_abstract(flaw))
+			flaws -= flaw
 		if(initial(flaw.random_exempt) == TRUE)
 			flaws -= flaw
 
 	set_flaw(pick(flaws))
 
-/mob/living/carbon/human/proc/set_flaw(/datum/charflaw/flaw)
+/mob/living/carbon/human/proc/set_flaw(datum/charflaw/flaw)
 	if(!flaw)
 		return
 
