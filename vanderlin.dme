@@ -522,6 +522,7 @@
 #include "code\datums\actions\action_cooldown.dm"
 #include "code\datums\actions\action_innate.dm"
 #include "code\datums\actions\action_item.dm"
+#include "code\datums\actions\toggles.dm"
 #include "code\datums\actions\items\organ_action.dm"
 #include "code\datums\actions\mob\_base.dm"
 #include "code\datums\actions\mob\stone_throw.dm"

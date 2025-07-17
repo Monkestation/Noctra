@@ -86,15 +86,6 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	. = ..()
 	owner.current.remove_spells(source = src)
 
-/datum/antagonist/vampire/lord/on_gain()
-	. = ..()
-	owner.special_role = span_redtext("[name]")
-	owner.current.mana_pool.ethereal_recharge_rate += 0.2
-
-/datum/antagonist/vampire/lord/on_removal()
-	owner.current.mana_pool.ethereal_recharge_rate -= 0.2
-	return ..()
-
 /datum/antagonist/vampire/proc/after_gain()
 	owner.current.verbs |= /mob/living/carbon/human/proc/vamp_regenerate
 	owner.current.verbs |= /mob/living/carbon/human/proc/disguise_button

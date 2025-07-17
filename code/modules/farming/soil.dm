@@ -262,6 +262,14 @@
 		return
 	. = ..()
 
+/obj/structure/soil/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	user.changeNext_move(CLICK_CD_FAST)
+	if(try_handle_deweed(null, user, null))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/structure/soil/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
