@@ -136,6 +136,15 @@
 	sleeved = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
 	sellprice = 0 // See above comment
 
+/obj/item/clothing/armor/plate/full/graggar
+	name = "vicious full-plate"
+	desc = "A sinister set full plate. Untold violence stirs from within."
+	icon_state = "graggarplate"
+	icon = 'icons/roguetown/clothing/special/evilarmor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sleeved = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sellprice = 0 // See above comment
+
 //.............. Silver Armor .................//
 
 /obj/item/clothing/armor/plate/full/silver

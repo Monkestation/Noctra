@@ -290,6 +290,16 @@
 	allowed_race = list("human", "tiefling", "elf", "aasimar")
 	inhand_mod = FALSE
 
+/obj/item/clothing/cloak/graggar
+	name = "vicious cloak"
+	desc = "A cloak with a sinister aura set to bring about violence on the world."
+	icon_state = "graggarcloak"
+	icon_state = "graggarcloak"
+	icon = 'icons/roguetown/clothing/special/evilarmor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sleeved = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sellprice = 0 // See above comment
+
 /obj/item/clothing/cloak/silktabard
 	name = "fine silk tabard"
 	desc = "A finely crafted long tabard weaved from silk. Fashionable, and a symbol of status and wealth."

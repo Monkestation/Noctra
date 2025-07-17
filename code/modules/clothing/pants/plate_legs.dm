@@ -92,6 +92,15 @@
 	sleeved = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
 	sellprice = 0 // See above comment
 
+/obj/item/clothing/pants/platelegs/graggar
+	name = "vicious leggings"
+	desc = "A sinister pair of plate chausses that have born witness many violent atrocities."
+	icon_state = "graggarplatelegs"
+	icon = 'icons/roguetown/clothing/special/evilarmor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sleeved = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sellprice = 0 // See above comment
+
 //.............. Silver Platelegs .................//
 
 /obj/item/clothing/pants/platelegs/silver

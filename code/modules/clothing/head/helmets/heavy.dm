@@ -131,6 +131,20 @@
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 
+//............... Graggar Helmet ............... //
+
+/obj/item/clothing/head/helmet/graggar
+	name = "vicious helmet"
+	desc = "A rugged and horrifying helmet. A violent aura emanates from it."
+	icon_state = "graggarplatehelm"
+	icon = 'icons/roguetown/clothing/special/evilarmor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	armor = ARMOR_PLATE
+	prevent_crits = ALL_CRITICAL_HITS
+	item_weight = 5 * STEEL_MULTIPLIER
+	block2add = FOV_BEHIND
+	sellprice = 0 // See above comment
+
 //............... Spangenhelm ............... //
 /obj/item/clothing/head/helmet/heavy/viking
 	name = "spangenhelm"
