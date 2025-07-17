@@ -29,6 +29,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 ))
 
 /datum/charflaw
+	abstract_type = /datum/charflaw
 	/// Fluff name
 	var/name
 	/// Fluff desc
