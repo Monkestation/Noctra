@@ -217,10 +217,11 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(copytext(text, length(text) - 1) == "!!")
 		return "3"
 	var/ending = copytext(text, length(text))
-	if (ending == "?")
+	if(ending == "?")
 		return "1"
-	if (ending == "!")
+	if(ending == "!")
 		return "2"
+
 	return "0"
 
 /atom/movable/proc/GetVoice()
