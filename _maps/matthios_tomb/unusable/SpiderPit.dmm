@@ -131,7 +131,7 @@
 /turf/open/floor/naturalstone,
 /area/rogue/under/tomb/cave)
 "R" = (
-/obj/item/clothing/shirt/dress/gen/black,
+/obj/item/clothing/shirt/dress/gen/colored/black,
 /obj/item/clothing/cloak/apron/waist{
 	pixel_x = 14;
 	pixel_y = -8

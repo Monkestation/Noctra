@@ -1115,19 +1115,19 @@
 /area/rogue/outdoors/town/roofs)
 "aEX" = (
 /obj/structure/rack/shelf/biggest,
-/obj/item/clothing/head/roguehood/red{
+/obj/item/clothing/head/roguehood/colored/red{
 	pixel_x = -6;
 	pixel_y = -3
 	},
-/obj/item/clothing/head/roguehood/random{
+/obj/item/clothing/head/roguehood/colored/random{
 	pixel_x = 9;
 	pixel_y = 8
 	},
-/obj/item/clothing/head/roguehood/green{
+/obj/item/clothing/head/roguehood/colored/green{
 	pixel_x = 8;
 	pixel_y = -7
 	},
-/obj/item/clothing/head/roguehood/uncolored{
+/obj/item/clothing/head/roguehood/colored{
 	pixel_x = -3;
 	pixel_y = 4
 	},
@@ -4079,7 +4079,7 @@
 /obj/item/clothing/pants/tights/black,
 /obj/item/clothing/shirt/undershirt/fancy,
 /obj/machinery/light/fueled/wallfire/candle/blue,
-/obj/item/clothing/shirt/tunic/green,
+/obj/item/clothing/shirt/tunic/colored/green,
 /obj/item/clothing/gloves/leather/phys,
 /obj/item/clothing/face/spectacles/golden,
 /turf/open/floor/carpet/royalblack,
@@ -8873,7 +8873,7 @@
 /obj/item/clothing/head/fancyhat,
 /obj/item/clothing/head/bardhat,
 /obj/item/clothing/head/chaperon/greyscale/random,
-/obj/item/clothing/head/roguehood/black,
+/obj/item/clothing/head/roguehood/colored/black,
 /obj/item/clothing/head/hatfur,
 /obj/item/clothing/head/helmet/leather/headscarf,
 /turf/open/floor/ruinedwood,
@@ -8884,7 +8884,7 @@
 /area/rogue/under/town/caverogue)
 "fxK" = (
 /obj/structure/closet/crate/crafted_closet/dark,
-/obj/item/clothing/shirt/tunic/green,
+/obj/item/clothing/shirt/tunic/colored/green,
 /obj/item/clothing/shirt/undershirt/random,
 /obj/item/clothing/pants/tights/random,
 /obj/machinery/light/fueled/wallfire/candle,
@@ -13342,8 +13342,8 @@
 /area/rogue/indoors/town/merc_guild)
 "iuT" = (
 /obj/structure/closet/crate/drawer/random,
-/obj/item/clothing/shirt/tunic/random,
-/obj/item/clothing/shirt/tunic/random,
+/obj/item/clothing/shirt/tunic/colored/random,
+/obj/item/clothing/shirt/tunic/colored/random,
 /obj/item/clothing/pants/tights,
 /obj/item/clothing/pants/tights/black,
 /obj/structure/fluff/railing/border{
@@ -14046,11 +14046,11 @@
 /area/rogue/indoors/town/garrison)
 "iQH" = (
 /obj/structure/rack/shelf/biggest,
-/obj/item/clothing/head/roguehood/black{
+/obj/item/clothing/head/roguehood/colored/black{
 	pixel_x = -4;
 	pixel_y = 5
 	},
-/obj/item/clothing/head/roguehood/brown{
+/obj/item/clothing/head/roguehood/colored/brown{
 	pixel_x = 7;
 	pixel_y = -4
 	},
@@ -15047,9 +15047,9 @@
 /area/rogue/outdoors/woods_safe)
 "juX" = (
 /obj/structure/closet/crate/crafted_closet/crafted,
-/obj/item/clothing/shirt/dress/gen/random,
+/obj/item/clothing/shirt/dress/gen/colored/random,
 /obj/item/clothing/cloak/apron/waist,
-/obj/item/clothing/shirt/dress/gen/random,
+/obj/item/clothing/shirt/dress/gen/colored/random,
 /obj/item/clothing/cloak/apron/waist,
 /turf/open/floor/ruinedwood/spiralfade,
 /area/rogue/under/town/basement)
@@ -16447,11 +16447,11 @@
 /obj/item/clothing/shirt/undershirt/fancy,
 /obj/item/clothing/head/fancyhat,
 /obj/item/clothing/cloak/raincloak/furcloak,
-/obj/item/clothing/head/roguehood/random,
+/obj/item/clothing/head/roguehood/colored/random,
 /obj/item/clothing/cloak/raincloak/random,
 /obj/item/clothing/head/bardhat,
 /obj/item/clothing/shoes/nobleboot,
-/obj/item/clothing/shirt/tunic/random,
+/obj/item/clothing/shirt/tunic/colored/random,
 /obj/item/clothing/face/shepherd/clothmask,
 /obj/item/clothing/face/shepherd/clothmask,
 /turf/open/floor/blocks/newstone,
@@ -19264,10 +19264,10 @@
 /area/rogue/outdoors/town/roofs)
 "mir" = (
 /obj/structure/closet/crate/crafted_closet,
-/obj/item/clothing/shirt/dress/gen/purple,
+/obj/item/clothing/shirt/dress/gen/colored/purple,
 /obj/item/clothing/head/headdress,
 /obj/item/clothing/head/headdress/alt,
-/obj/item/clothing/shirt/dress/silkdress/random,
+/obj/item/clothing/shirt/dress/silkdress/colored/random,
 /obj/item/storage/backpack/satchel,
 /obj/item/clothing/cloak/half,
 /obj/item/clothing/armor/gambeson/heavy/winterdress,
@@ -20005,10 +20005,10 @@
 "mHz" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/rack/shelf/biggest,
-/obj/item/clothing/shirt/shortshirt/random{
+/obj/item/clothing/shirt/shortshirt/colored/random{
 	pixel_x = 6
 	},
-/obj/item/clothing/shirt/tunic/random{
+/obj/item/clothing/shirt/tunic/colored/random{
 	pixel_x = -6;
 	pixel_y = 9
 	},
@@ -20118,7 +20118,7 @@
 "mJJ" = (
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/pants/tights/black,
-/obj/item/clothing/shirt/dress/silkdress/black,
+/obj/item/clothing/shirt/dress/silkdress/colored/black,
 /obj/item/clothing/shoes/nobleboot,
 /turf/open/floor/wood,
 /area/rogue/indoors/town)
@@ -22992,8 +22992,8 @@
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/armor/leather/jacket/silk_coat,
 /obj/item/clothing/armor/leather/jacket/silk_coat,
-/obj/item/clothing/shirt/dress/silkdress/random,
-/obj/item/clothing/shirt/dress/silkdress/random,
+/obj/item/clothing/shirt/dress/silkdress/colored/random,
+/obj/item/clothing/shirt/dress/silkdress/colored/random,
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/indoors/town/theatre)
 "oxZ" = (
@@ -32132,18 +32132,18 @@
 "uuC" = (
 /obj/structure/fluff/railing/border,
 /obj/structure/rack/shelf/biggest,
-/obj/item/clothing/shirt/dress/gen/random{
+/obj/item/clothing/shirt/dress/gen/colored/random{
 	pixel_x = -7;
 	pixel_y = 8
 	},
-/obj/item/clothing/shirt/dress/silkdress/random{
+/obj/item/clothing/shirt/dress/silkdress/colored/random{
 	pixel_x = -2
 	},
-/obj/item/clothing/shirt/dress/silkdress/random{
+/obj/item/clothing/shirt/dress/silkdress/colored/random{
 	pixel_x = 9;
 	pixel_y = 9
 	},
-/obj/item/clothing/shirt/dress/gen/random{
+/obj/item/clothing/shirt/dress/gen/colored/random{
 	pixel_x = 8;
 	pixel_y = 2
 	},
@@ -35328,8 +35328,8 @@
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/shirt/undershirt/lowcut,
 /obj/item/clothing/shirt/undershirt/lowcut,
-/obj/item/clothing/shirt/tunic/random,
-/obj/item/clothing/shirt/tunic/random,
+/obj/item/clothing/shirt/tunic/colored/random,
+/obj/item/clothing/shirt/tunic/colored/random,
 /obj/item/clothing/pants/trou,
 /obj/item/clothing/pants/tights,
 /obj/item/clothing/pants/tights,
@@ -35870,7 +35870,7 @@
 "wPc" = (
 /obj/structure/closet/crate/crafted_closet/crafted,
 /obj/item/clothing/cloak/apron/waist/bar,
-/obj/item/clothing/shirt/dress/silkdress/random,
+/obj/item/clothing/shirt/dress/silkdress/colored/random,
 /turf/open/floor/ruinedwood/spiralfade,
 /area/rogue/under/town/basement)
 "wPd" = (

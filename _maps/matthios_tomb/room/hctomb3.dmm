@@ -95,7 +95,7 @@
 /area/rogue/under/tomb/cave/spider)
 "cM" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/clothing/shirt/shortshirt/random{
+/obj/item/clothing/shirt/shortshirt/colored/random{
 	pixel_x = -8
 	},
 /turf/open/floor/blocks/stonered,
@@ -127,7 +127,7 @@
 /area/rogue/under/tomb/cave/wet)
 "dB" = (
 /obj/structure/table/stone_small,
-/obj/item/clothing/shirt/shortshirt/random{
+/obj/item/clothing/shirt/shortshirt/colored/random{
 	pixel_x = 7;
 	pixel_y = -4
 	},

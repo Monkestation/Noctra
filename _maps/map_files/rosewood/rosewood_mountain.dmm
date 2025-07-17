@@ -1556,7 +1556,7 @@
 /area/rogue/indoors/mountains/anvil/surface/building)
 "mo" = (
 /obj/structure/chair/stool,
-/obj/item/clothing/head/roguehood/red{
+/obj/item/clothing/head/roguehood/colored/red{
 	name = "Red Scarf";
 	desc = "Smells like cat?"
 	},
@@ -6422,7 +6422,7 @@
 /area/rogue/under/mountains/anvil/dungeon)
 "Za" = (
 /obj/item/chair/stool/bar,
-/obj/item/clothing/head/roguehood/green{
+/obj/item/clothing/head/roguehood/colored/green{
 	desc = "A rather short green scarf";
 	name = "Green Scarf"
 	},

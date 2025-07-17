@@ -278,7 +278,7 @@
 "lc" = (
 /obj/structure/table/wood/reinforced_alt,
 /obj/structure/fluff/wallclock,
-/obj/item/clothing/shirt/shortshirt/random{
+/obj/item/clothing/shirt/shortshirt/colored/random{
 	pixel_x = -6;
 	pixel_y = 5
 	},
@@ -742,7 +742,7 @@
 /area/rogue/under/tomb/indoors)
 "Cy" = (
 /obj/structure/table/wood/plain/alt,
-/obj/item/clothing/shirt/shortshirt/random{
+/obj/item/clothing/shirt/shortshirt/colored/random{
 	pixel_x = -4;
 	pixel_y = -6
 	},
