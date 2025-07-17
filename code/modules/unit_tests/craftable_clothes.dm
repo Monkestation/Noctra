@@ -39,7 +39,7 @@
 	var/list/obj/clothes_list = subtypesof(/obj/item/clothing) - excluded_paths
 
 	for(var/obj/item/clothing/path as anything in clothes_list)
-		if(is_abstract(path) || (misc_flags & CRAFTING_TEST_EXCLUDE))
+		if(is_abstract(path) || (path.misc_flags & CRAFTING_TEST_EXCLUDE))
 			clothes_list -= path
 
 	for(var/paths_to_exclude as anything in excluded_paths_with_their_subtypes)
