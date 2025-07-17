@@ -10,12 +10,9 @@
 		/obj/item/clothing/neck/keffiyeh,
 	)
 
+/datum/unit_test/craftable_clothes/Run()
 	var/list/obj/clothes_list = subtypesof(/obj/item/clothing) - excluded_paths
 
-/datum/unit_test/craftable_clothes/proc/perform_check(obj/item/clothing/checking_typepath)
-	clothes_list -= piece_of_clothing
-
-/datum/unit_test/craftable_clothes/Run()
 	for(var/paths_to_exclude in excluded_paths_with_their_subtypes)
 		for(var/path in clothes_list)
 			if(ispath(path, paths_to_exclude))
@@ -28,23 +25,23 @@
 
 	for(var/datum/repeatable_crafting_recipe/recipe as anything in subtypesof(/datum/repeatable_crafting_recipe))
 		if(isclothing_path(recipe.output))
-			perform_check(recipe.output)
+			clothes_list -= recipe.output
 
 	for(var/datum/orderless_slapcraft/recipe as anything in subtypesof(/datum/orderless_slapcraft))
 		if(isclothing_path(recipe.output_item))
-			perform_check(recipe.output_item)
+			clothes_list -= recipe.output_item
 
 	for(var/datum/anvil_recipe/recipe as anything in subtypesof(/datum/anvil_recipe))
 		if(isclothing_path(recipe.created_item))
-			perform_check(recipe.created_item)
+			clothes_list -= recipe.created_item
 
 	for(var/datum/crafting_recipe/recipe as anything in subtypesof(/datum/crafting_recipe))
 		if(isclothing_path(recipe.result))
-			perform_check(recipe.result)
+			clothes_list -= recipe.result
 
 	for(var/datum/artificer_recipe/recipe as anything in subtypesof(/datum/artificer_recipe))
 		if(isclothing_path(recipe.created_item))
-			perform_check(recipe.created_item)
+			clothes_list -= recipe.created_item
 
 	if(!clothes_list.len)
 		return
