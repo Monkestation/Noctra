@@ -278,7 +278,7 @@
 
 			if(length(GLOB.letters_sent))
 				for(var/entry in GLOB.letters_sent)
-					data += "<div style='color: #f5d76e; margin: 0 0 12px 30px; padding: 8px; background: rgba(230, 179, 39, 0.08); border-left: 3px solid #e6b327; border-radius: 0 3px 3px 0;'>"
+					data += "<div style='color: #dbd9d9; margin: 0 0 12px 30px; padding: 8px; background: rgba(230, 179, 39, 0.08); border-left: 3px solid #e6b327; border-radius: 0 3px 3px 0;'>"
 					data += "[entry]"
 					data += "</div>"
 			else
@@ -479,7 +479,7 @@
 			else
 				for(var/datum/team/T in all_teams)
 					data += "<div style='background: #1a0a0a; border: 1px solid #5a3a3a; padding: 12px; border-radius: 4px; margin-bottom: 15px;'>"
-					data += "<div style='color: #d4b4b4; font-weight: bold; margin-bottom: 8px;'>[T.name]</div>"
+					data += "<div style='color: #d4b4b4; font-weight: bold; margin-bottom: 8px;'>[capitalize(T.name)]</div>"
 					data += "<div style='margin-left: 10px;'>"
 
 					for(var/datum/mind/member in T.members)
@@ -512,7 +512,7 @@
 						if(previous_category)
 							data += "</div></div>"
 						data += "<div style='background: #1a0a0a; border: 1px solid #5a3a3a; padding: 12px; border-radius: 4px; margin-bottom: 15px;'>"
-						data += "<div style='color: #d4b4b4; font-weight: bold; margin-bottom: 8px;'>[A.roundend_category]</div>"
+						data += "<div style='color: #d4b4b4; font-weight: bold; margin-bottom: 8px;'>[capitalize(A.roundend_category)]</div>"
 						data += "<div style='margin-left: 10px;'>"
 						current_category = A.roundend_category
 						previous_category = A
