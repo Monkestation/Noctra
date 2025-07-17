@@ -261,7 +261,7 @@
 
 			if(length(GLOB.last_words))
 				for(var/entry in GLOB.last_words)
-					data += "<div style='color: #ff6b6b; margin: 0 0 12px 0; padding: 8px; background: rgba(189, 23, 23, 0.08); border-left: 3px solid #bd1717; border-radius: 0 3px 3px 0;'>"
+					data += "<div style='color: #ff6b6b; margin: 0 0 12px 30px; padding: 8px; background: rgba(189, 23, 23, 0.08); border-left: 3px solid #bd1717; border-radius: 0 3px 3px 0;'>"
 					data += "[entry]"
 					data += "</div>"
 			else
@@ -278,7 +278,7 @@
 
 			if(length(GLOB.letters_sent))
 				for(var/entry in GLOB.letters_sent)
-					data += "<div style='color: #f5d76e; margin: 0 0 12px 0; padding: 8px; background: rgba(230, 179, 39, 0.08); border-left: 3px solid #e6b327; border-radius: 0 3px 3px 0;'>"
+					data += "<div style='color: #f5d76e; margin: 0 0 12px 30px; padding: 8px; background: rgba(230, 179, 39, 0.08); border-left: 3px solid #e6b327; border-radius: 0 3px 3px 0;'>"
 					data += "[entry]"
 					data += "</div>"
 			else
@@ -400,75 +400,36 @@
 
 			data += "<div style='height: 20px;'></div>"
 
-			// ECONOMY
-			data += "<div style='text-align: center; color: #e6b327; font-size: 1.2em; margin: 15px 0; text-transform: uppercase;'><img src='[icon2html(/obj/item/coin/gold, mob)]' style='position: relative; top: 5px; margin-right: 5px;'>ECONOMY</div>"
-			data += "<div style='border-top: 1.5px solid #e6b327; margin: 0 auto 20px auto; width: 90%;'></div>"
+			// Economy Section
+			data += "<div style='text-align: center; color: #e6b327; font-size: 1.2em; margin: 15px 0; text-transform: uppercase;'>ECONOMY</div>"
+			data += "<div style='border-top: 1.5px solid #e6b327; margin: 0 auto 20px auto; width: 75%;'></div>"
 
-			data += "<div style='width: 90%; margin: 0 auto; text-align: center;'>"
-			data += "<div style='display: inline-block; text-align: left; width: 100%;'>"
-			data += "<div style='display: table; width: 100%;'>"
+			data += "<div style='width: 100%; margin: 0 auto; position: relative;'>"
+			data += "<div style='display: flex; justify-content: space-between; gap: 0;'>"
 
-			// First Row
-			data += "<div style='display: table-row; margin-bottom: 4px;'>"
-			data += "<div style='display: table-cell; padding-right: 40px; width: 50%; text-align: right;'>"
-			data += "<font color='#f7d474'>Treasury: </font>[SStreasury.treasury_value]"
-			data += "</div>"
-			data += "<div style='display: table-cell; padding-left: 40px; width: 50%; text-align: left;'>"
-			data += "<font color='#8f816b'>Wages Paid: </font>[GLOB.vanderlin_round_stats[STATS_WAGES_PAID]]"
-			data += "</div>"
-			data += "</div>"
+			// Left column
+			data += "<div style='width: 45%; display: flex; justify-content: flex-end;'>"
+			data += "<div style='text-align: left; padding-right: 30px;'>"
+			data += "<div style='margin-bottom: 4px;'><font color='#f7d474'>Realm's Treasury: </font>[SStreasury.treasury_value]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#e6b327'>Regular Vault Income: </font>[GLOB.vanderlin_round_stats[STATS_REGULAR_VAULT_INCOME]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#d4a017'>Total Vault Revenue: </font>[GLOB.vanderlin_round_stats[STATS_VAULT_TOTAL_REVENUE]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#e67e22'>Noble Estates Income: </font>[GLOB.vanderlin_round_stats[STATS_NOBLE_INCOME_TOTAL]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#f5c02e'>Taxes Collected: </font>[GLOB.vanderlin_round_stats[STATS_TAXES_COLLECTED]]</div>"
+			data += "<div><font color='#e74c3c'>Taxes Evaded: </font>[GLOB.vanderlin_round_stats[STATS_TAXES_EVADED]]</div>"
+			data += "</div></div>"
 
-			// Second Row
-			data += "<div style='display: table-row; margin-bottom: 4px;'>"
-			data += "<div style='display: table-cell; padding-right: 40px; text-align: right;'>"
-			data += "<font color='#e6b327'>Regular Vault Income: </font>[GLOB.vanderlin_round_stats[STATS_REGULAR_VAULT_INCOME]]"
-			data += "</div>"
-			data += "<div style='display: table-cell; padding-left: 40px; text-align: left;'>"
-			data += "<font color='#b87333'>Fines Collected: </font>[GLOB.vanderlin_round_stats[STATS_FINES_INCOME]]"
-			data += "</div>"
-			data += "</div>"
+			// Right column
+			data += "<div style='width: 45%; display: flex; justify-content: flex-start;'>"
+			data += "<div style='text-align: left; padding-left: 30px;'>"
+			data += "<div style='margin-bottom: 4px;'><font color='#8f816b'>Wage Payments: </font>[GLOB.vanderlin_round_stats[STATS_WAGES_PAID]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#b87333'>Fines Collected: </font>[GLOB.vanderlin_round_stats[STATS_FINES_INCOME]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#cd7f32'>Boat Exports Value: </font>[GLOB.vanderlin_round_stats[STATS_TRADE_VALUE_EXPORTED]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#d2691e'>Boat Imports Value: </font>[GLOB.vanderlin_round_stats[STATS_TRADE_VALUE_IMPORTED]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#c0b283'>GOLDFACE Imports: </font>[GLOB.vanderlin_round_stats[STATS_GOLDFACE_VALUE_SPENT]]</div>"
+			data += "<div><font color='#b5a642'>PURITY Imports: </font>[GLOB.vanderlin_round_stats[STATS_PURITY_VALUE_SPENT]]</div>"
+			data += "</div></div>"
 
-			// Third Row
-			data += "<div style='display: table-row; margin-bottom: 4px;'>"
-			data += "<div style='display: table-cell; padding-right: 40px; text-align: right;'>"
-			data += "<font color='#d4a017'>Total Vault Revenue: </font>[GLOB.vanderlin_round_stats[STATS_VAULT_TOTAL_REVENUE]]"
-			data += "</div>"
-			data += "<div style='display: table-cell; padding-left: 40px; text-align: left;'>"
-			data += "<font color='#cd7f32'>Boat Exports Value: </font>[GLOB.vanderlin_round_stats[STATS_TRADE_VALUE_EXPORTED]]"
-			data += "</div>"
-			data += "</div>"
-
-			// Fourth Row
-			data += "<div style='display: table-row; margin-bottom: 4px;'>"
-			data += "<div style='display: table-cell; padding-right: 40px; text-align: right;'>"
-			data += "<font color='#e67e22'>Noble Estates Revenue: </font>[GLOB.vanderlin_round_stats[STATS_NOBLE_INCOME_TOTAL]]"
-			data += "</div>"
-			data += "<div style='display: table-cell; padding-left: 40px; text-align: left;'>"
-			data += "<font color='#d2691e'>Boat Imports Value: </font>[GLOB.vanderlin_round_stats[STATS_TRADE_VALUE_IMPORTED]]"
-			data += "</div>"
-			data += "</div>"
-
-			// Fifth Row
-			data += "<div style='display: table-row; margin-bottom: 4px;'>"
-			data += "<div style='display: table-cell; padding-right: 40px; text-align: right;'>"
-			data += "<font color='#f5c02e'>Taxes Collected: </font>[GLOB.vanderlin_round_stats[STATS_TAXES_COLLECTED]]"
-			data += "</div>"
-			data += "<div style='display: table-cell; padding-left: 40px; text-align: left;'>"
-			data += "<font color='#c0b283'>GOLDFACE Costs: </font>[GLOB.vanderlin_round_stats[STATS_GOLDFACE_VALUE_SPENT]]"
-			data += "</div>"
-			data += "</div>"
-
-			// Sixth Row
-			data += "<div style='display: table-row;'>"
-			data += "<div style='display: table-cell; padding-right: 40px; text-align: right;'>"
-			data += "<font color='#e74c3c'>Taxes Evaded: </font>[GLOB.vanderlin_round_stats[STATS_TAXES_EVADED]]"
-			data += "</div>"
-			data += "<div style='display: table-cell; padding-left: 40px; text-align: left;'>"
-			data += "<font color='#b5a642'>PURITY Costs: </font>[GLOB.vanderlin_round_stats[STATS_PURITY_VALUE_SPENT]]"
-			data += "</div>"
-			data += "</div>"
-
-			data += "</div></div></div>"
+			data += "</div></div>"
 
 		if("Heroes")
 			data += "<div style='text-align: center; color: #e6e6e6; font-size: 1.2em; margin-bottom: 15px;'>HEROES OF THE REALM</div>"
