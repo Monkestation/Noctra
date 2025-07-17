@@ -578,3 +578,11 @@
 	additional_items = list(/obj/item/ingot/gold)
 	created_item = /obj/item/weapon/mace/elvenclub/steel
 	craftdiff = 2
+
+/datum/anvil_recipe/weapons/silver/declong
+	name = "Decorated Silver Longsword (+Silver bar, +Gold bar)"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	req_bar = /obj/item/ingot/silver
+	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/gold)
+	created_item = /obj/item/weapon/sword/long/decorated
+	craftdiff = 4
