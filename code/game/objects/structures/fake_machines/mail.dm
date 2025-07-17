@@ -75,7 +75,8 @@ GLOBAL_LIST_EMPTY(letters_sent)
 				break
 		if(found)
 			if(P.info)
-				GLOB.letters_sent |= P.info
+				var/stripped_info = remove_color_tags(P.info)
+				GLOB.letters_sent |= stripped_info
 			visible_message("<span class='warning'>[user] sends something.</span>")
 			playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 			SStreasury.give_money_treasury(coin_loaded, "Mail Income")
@@ -102,7 +103,8 @@ GLOBAL_LIST_EMPTY(letters_sent)
 			to_chat(user, "<span class='warning'>The master of mails has perished?</span>")
 			return
 		if(P.info)
-			GLOB.letters_sent |= P.info
+			var/stripped_info = remove_color_tags(P.info)
+			GLOB.letters_sent |= stripped_info
 		visible_message("<span class='warning'>[user] sends something.</span>")
 		playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 		SStreasury.give_money_treasury(coin_loaded, "Mail")
@@ -192,7 +194,8 @@ GLOBAL_LIST_EMPTY(letters_sent)
 						break
 				if(found)
 					if(given_paper.info)
-						GLOB.letters_sent |= given_paper.info
+						var/stripped_info = remove_color_tags(given_paper.info)
+						GLOB.letters_sent |= stripped_info
 					visible_message("<span class='warning'>[user] sends something.</span>")
 					playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 					return
@@ -218,7 +221,8 @@ GLOBAL_LIST_EMPTY(letters_sent)
 					to_chat(user, "<span class='warning'>The master of mails has perished?</span>")
 				else
 					if(given_paper.info)
-						GLOB.letters_sent |= given_paper.info
+						var/stripped_info = remove_color_tags(given_paper.info)
+						GLOB.letters_sent |= stripped_info
 					visible_message("<span class='warning'>[user] sends something.</span>")
 					playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 					send_ooc_note("<span class='boldnotice'>New letter from <b>[sentfrom].</b></span>", name = send2place)
