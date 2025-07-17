@@ -444,7 +444,20 @@
 
 					data += "<div style='background: #1a1a1a; border: 1px solid #4a4a4a; padding: 12px; border-radius: 4px;'>"
 					data += "<div style='color: #e6e6e6; font-weight: bold; margin-bottom: 8px;'>"
-					data += mind.current ? printplayer(mind) : "<span style='color: #999;'>Unknown Champion</span>"
+					if(mind.current)
+						var/jobtext = ""
+						if(mind.special_role)
+							jobtext = " the <b>[mind.special_role]</b>"
+						else if(mind.assigned_role && mind.current)
+							jobtext = " the <b>[mind.assigned_role.get_informed_title(mind.current)]</b>"
+						var/usede = get_display_ckey(mind.key)
+						data += "<b>[usede]</b> was <span style='color:#e6a962'><b>[mind.name]</b>[jobtext]</span> and "
+						if(mind.current.stat == DEAD)
+							data += "<span style='color:#d9534f'>died</span>"
+						else
+							data += "<span style='color:#00FF00'>survived</span>"
+					else
+						data += "<span style='color: #999;'>Unknown Hero</span>"
 					data += "</div>"
 
 					var/obj_count = 1
@@ -485,7 +498,21 @@
 
 					for(var/datum/mind/member in T.members)
 						data += "<div style='margin-bottom: 10px;'>"
-						data += member.current ? printplayer(member) : "<span style='color: #999;'>Unknown Villain</span>"
+
+						if(member.current)
+							var/jobtext = ""
+							if(member.special_role)
+								jobtext = " the <b>[member.special_role]</b>"
+							else if(member.assigned_role && member.current)
+								jobtext = " the <b>[member.assigned_role.get_informed_title(member.current)]</b>"
+							var/usede = get_display_ckey(member.key)
+							data += "<b>[usede]</b> was <span style='color:#e6a962'><b>[member.name]</b>[jobtext]</span> and "
+							if(member.current.stat == DEAD)
+								data += "<span style='color:#d9534f'>died</span>"
+							else
+								data += "<span style='color:#00FF00'>survived</span>"
+						else
+							data += "<span style='color: #999;'>Unknown Villain</span>"
 
 						if(member.antag_datums?.len)
 							data += "<div style='margin-left: 15px; margin-top: 5px;'>"
@@ -519,7 +546,21 @@
 						previous_category = A
 
 					data += "<div style='margin-bottom: 10px;'>"
-					data += A.owner?.current ? printplayer(A.owner) : "<span style='color: #999;'>Unknown Villain</span>"
+					if(A.owner?.current)
+						var/jobtext = ""
+						if(A.owner.special_role)
+							jobtext = " the <b>[A.owner.special_role]</b>"
+						else if(A.owner.assigned_role && A.owner.current)
+							jobtext = " the <b>[A.owner.assigned_role.get_informed_title(A.owner.current)]</b>"
+						var/usede = get_display_ckey(A.owner.key)
+						data += "<b>[usede]</b> was <span style='color:#e6a962'><b>[A.owner.name]</b>[jobtext]</span> and "
+						if(A.owner.current.stat == DEAD)
+							data += "<span style='color:#d9534f'>died</span>"
+						else
+							data += "<span style='color:#00FF00'>survived</span>"
+					else
+						data += "<span style='color: #999;'>Unknown Villain</span>"
+
 					if(A.objectives.len)
 						data += "<div style='margin-left: 15px; margin-top: 5px;'>"
 						var/obj_count = 1
