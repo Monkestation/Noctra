@@ -14,6 +14,7 @@
 	var/datum/language_holder/language_holder
 	var/verb_say = "says"
 	var/verb_ask = "asks"
+	var/verb_sing = "sings"
 	var/verb_exclaim = "exclaims"
 	var/verb_yell = "yells"
 	var/speech_span
