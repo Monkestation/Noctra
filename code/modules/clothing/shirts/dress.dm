@@ -52,7 +52,7 @@
 	salvage_result = /obj/item/natural/silk
 	salvage_amount = 1
 
-	/obj/item/clothing/shirt/dress/silkdress/colored
+/obj/item/clothing/shirt/dress/silkdress/colored
 
 /obj/item/clothing/shirt/dress/silkdress/colored/princess
 	color = CLOTHING_CHALK_WHITE
