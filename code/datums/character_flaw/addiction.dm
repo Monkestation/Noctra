@@ -109,6 +109,7 @@
 /datum/charflaw/addiction/maniac // this will probably NOT be used as an actual flaw
 	name = "Maniac"
 	desc = "The worms call me the maniac... I just like seeing limbs fly and blood drip, is there something so BAD about that?"
+	random_exempt = TRUE
 	time = 40 MINUTES // we dont wanna contribute to fragging
 	needsate_text = "Where's all the blood?"
 
