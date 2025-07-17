@@ -1356,40 +1356,29 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 
 GLOBAL_LIST_EMPTY(headshot_cache)
 
-/proc/get_headshot_icon(mob/living/target, size = 64, crop_height = 32)
+/proc/get_headshot_icon(mob/living/carbon/human/target, size = 64, crop_height = 32)
     if(!target || !istype(target))
         return ""
 
-    var/datum/weakref/weak_target = WEAKREF(target)
-    var/cache_key = weak_target
-    var/appearance_signature = "[target.icon]-[target.icon_state]-[target.overlays]-[target.underlays]-[target.color]"
+    var/cache_key = "[target.icon]-[target.icon_state]-[target.overlays]-[target.underlays]-[target.color]"
 
     var/list/cache_entry = GLOB.headshot_cache[cache_key]
     if(cache_entry)
-        var/mob/living/cached_target = weak_target.resolve()
-        if(cached_target && cache_entry["signature"] == appearance_signature)
-            return cache_entry["html"]
-        else
-            GLOB.headshot_cache -= cache_key
+        return cache_entry["html"]
 
-    var/image/dummy = image(target.icon, target, target.icon_state, target.layer, target.dir)
-    dummy.appearance = target.appearance
-    dummy.dir = SOUTH
+    var/icon/headshot = get_flat_human_icon(null, target.mind?.assigned_role, target.client?.prefs, "headshot_temp", list(SOUTH))
+    if(!headshot)
+        return ""
 
-    var/icon/headshot = getFlatIcon(dummy, SOUTH, no_anim = TRUE)
     headshot.Scale(size, size)
     headshot.Crop(1, size - crop_height + 1, size, size)
 
     var/icon_html = "<img src='data:image/png;base64,[icon2base64(headshot)]' style='width:[size]px;height:[crop_height]px;image-rendering:pixelated;'>"
-
-    if(length(GLOB.headshot_cache) >= 200)
-        var/num_to_remove = round(200 * 0.15)
-        for(var/i in 1 to num_to_remove)
-            GLOB.headshot_cache.Cut(1, 2)
-
     GLOB.headshot_cache[cache_key] = list(
-        "signature" = appearance_signature,
         "html" = icon_html
     )
+
+    if(length(GLOB.headshot_cache) > 150)
+        GLOB.headshot_cache.Cut(1, 50)
 
     return icon_html
