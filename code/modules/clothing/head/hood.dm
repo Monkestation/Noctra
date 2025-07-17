@@ -47,34 +47,37 @@
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/cloth
 
-/obj/item/clothing/head/roguehood/uncolored
+/obj/item/clothing/head/roguehood/color
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
+/obj/item/clothing/head/roguehood/color/uncolored
 	color = CLOTHING_LINEN
 
-/obj/item/clothing/head/roguehood/brown
+/obj/item/clothing/head/roguehood/color/brown
 	color = CLOTHING_BARK_BROWN
 
-/obj/item/clothing/head/roguehood/red
+/obj/item/clothing/head/roguehood/color/red
 	color = CLOTHING_BLOOD_RED
 
-/obj/item/clothing/head/roguehood/black
+/obj/item/clothing/head/roguehood/color/black
 	color = CLOTHING_SOOT_BLACK
 
-/obj/item/clothing/head/roguehood/green
+/obj/item/clothing/head/roguehood/color/green
 	color = CLOTHING_FOREST_GREEN
 
-/obj/item/clothing/head/roguehood/random/Initialize()
+/obj/item/clothing/head/roguehood/color/random/Initialize()
 	color = pick( CLOTHING_PEASANT_BROWN, CLOTHING_SPRING_GREEN, CLOTHING_CHESTNUT, CLOTHING_YELLOW_OCHRE)
 	return ..()
 
-/obj/item/clothing/head/roguehood/mage/Initialize()
+/obj/item/clothing/head/roguehood/color/mage/Initialize()
 	color = pick(CLOTHING_MAGE_BLUE, CLOTHING_MAGE_GREEN, CLOTHING_MAGE_ORANGE, CLOTHING_MAGE_YELLOW)
 	return ..()
 
-/obj/item/clothing/head/roguehood/guard
+/obj/item/clothing/head/roguehood/color/guard
 	color = CLOTHING_PLUM_PURPLE
 	uses_lord_coloring = LORD_PRIMARY
 
-/obj/item/clothing/head/roguehood/guardsecond
+/obj/item/clothing/head/roguehood/color/guardsecond
 	color = CLOTHING_BLOOD_RED
 	uses_lord_coloring = LORD_SECONDARY
 

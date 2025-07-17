@@ -3,6 +3,7 @@
 	// abstract types don't need to be excluded.
 	var/list/excluded_paths = list(
 		/obj/item/clothing/neck/blkknight, // mapped in only
+		/obj/item/clothing/accessory/medal/gold/ordom, // memorial item, RIP OrdoM.
 		/* special uncraftables designed for specific roles next */
 		/obj/item/clothing/neck/portalamulet, // vampire antag item
 		/obj/item/clothing/head/cyberdeck, // fluff item for maniac
@@ -19,24 +20,34 @@
 		/obj/item/clothing/neck/mercmedal, // only earnable via hermes
 		/obj/item/clothing/neck/shalal/emir, // uhh?
 		/obj/item/clothing/neck/psycross/silver/holy, // unimplemented
+		/* temporary solution to subtypes that change color only below */
+		/obj/item/clothing/head/chaperon/greyscale,
+
 	)
 	var/list/excluded_paths_subtypes_only = list(
 		/obj/item/clothing/neck/keffiyeh,
+		/* temporary solution to subtypes that change color only below */
+		/obj/item/clothing/head/roguehood,
+		/obj/item/clothing/shirt/dress/gen,
+		/obj/item/clothing/shirt/undershirt/random,
+
+
+
 	)
 
 /datum/unit_test/craftable_clothes/Run()
 	var/list/obj/clothes_list = subtypesof(/obj/item/clothing) - excluded_paths
 
-	for(var/path in clothes_list)
-		if(is_abstract(path))
+	for(var/obj/item/clothing/path as anything in clothes_list)
+		if(is_abstract(path) || (misc_flags & CRAFTING_TEST_EXCLUDE))
 			clothes_list -= path
 
-	for(var/paths_to_exclude in excluded_paths_with_their_subtypes)
+	for(var/paths_to_exclude as anything in excluded_paths_with_their_subtypes)
 		for(var/path in clothes_list)
 			if(ispath(path, paths_to_exclude))
 				clothes_list -= path
 
-	for(var/paths_to_exclude in excluded_paths_subtypes_only)
+	for(var/paths_to_exclude as anything in excluded_paths_subtypes_only)
 		for(var/path in clothes_list)
 			if(ispath(path, paths_to_exclude) && (paths_to_exclude != path))
 				clothes_list -= path

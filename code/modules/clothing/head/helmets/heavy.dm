@@ -241,6 +241,7 @@
 	var/picked = FALSE
 
 	prevent_crits = ALL_CRITICAL_HITS
+	abstract_type = /obj/item/clothing/head/helmet/heavy/decorated
 
 /obj/item/clothing/head/helmet/heavy/decorated/update_overlays()
 	. = ..()
