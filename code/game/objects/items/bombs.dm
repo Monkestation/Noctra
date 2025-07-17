@@ -1,8 +1,8 @@
 /obj/item/bomb
 	name = "bottle bomb"
 	desc = "Dangerous explosion, in a bottle."
+	icon = 'icons/obj/bombs.dmi'
 	icon_state = "clear_bomb"
-	icon = 'icons/roguetown/items/cooking.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	throwforce = 0
 	slot_flags = ITEM_SLOT_HIP
@@ -83,8 +83,8 @@
 /obj/item/smokebomb
 	name = "smoke bomb"
 	desc = "A soft sphere with an alchemical mixture and a dispersion mechanism hidden inside. Any pressure will detonate it."
+	icon = 'icons/obj/bombs.dmi'
 	icon_state = "smokebomb"
-	icon = 'icons/roguetown/items/misc.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	//dropshrink = 0
 	throwforce = 0
@@ -123,7 +123,8 @@
 /obj/item/holy_grenade
 	name = "\improper The Holy Hand Grenade of Antioch"
 	desc = "A sacred relic carried by Brother Maynard."
-	//icon_state = "holy_grenade"
+	icon = 'icons/obj/holy_grenade.dmi'
+	icon_state = "holy_grenade"
 	var/fuze = 25
 	var/primed = FALSE
 
@@ -175,8 +176,9 @@
 	if(scripture_heard < length(scripture_required))
 		to_chat(user, span_notice("I pull the holy pin... but it doesn't release! Bring forth the Book of Armaments!"))
 		return
-	to_chat(user, span_userdanger("I pull the holy pin!"))
+	to_chat(user, span_userdanger("I pull the holy pin! Count to three!"))
 	playsound(get_turf(user), 'sound/foley/industrial/clunk.ogg', 40, FALSE, -1)
+	icon_state = "[icon_state]_armed"
 	primed = TRUE
 	START_PROCESSING(SSfastprocess, src)
 
