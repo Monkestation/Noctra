@@ -330,11 +330,11 @@
 			var/turf/listener_ceiling = get_step_multiz(listener_turf, UP)
 			if(!listener_ceiling || istransparentturf(listener_ceiling))
 				listener_has_ceiling = FALSE
-			if(listener_has_ceiling && speaker_has_ceiling)	//Both have a ceiling, on different z-levels -- no hearing at all
-				continue
 			if(listener_turf.z < speaker_turf.z && listener_has_ceiling) //Listener is below the speaker and has a ceiling above them
 				continue
 			if(listener_turf.z > speaker_turf.z && speaker_has_ceiling) //Listener is above the speaker and the speaker has a ceiling above
+				continue
+			if(listener_has_ceiling && speaker_has_ceiling)	//Both have a ceiling, on different z-levels -- no hearing at all
 				continue
 
 		if(eavesdrop_range && get_dist(source, hearing_movable) > message_range && !(the_dead[hearing_movable]))
