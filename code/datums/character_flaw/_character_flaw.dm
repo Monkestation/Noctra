@@ -1,31 +1,32 @@
 
 GLOBAL_LIST_INIT(character_flaws, list(
-	"Alcoholic"=/datum/charflaw/addiction/alcoholic,
-	"Devout Follower"=/datum/charflaw/addiction/godfearing,
-	"Pacifist"=/datum/charflaw/pacifist,
-	"Smoker"=/datum/charflaw/addiction/smoker,
-	"Junkie"=/datum/charflaw/addiction/junkie,
-	"Cyclops (R)"=/datum/charflaw/noeyer,
-	"Cyclops (L)"=/datum/charflaw/noeyel,
-	"Tongueless"=/datum/charflaw/tongueless,
-	"Greedy"=/datum/charflaw/greedy,
-	"Narcoleptic"=/datum/charflaw/narcoleptic,
-	"Masochist"=/datum/charflaw/masochist,
-	"Wooden Arm (R)"=/datum/charflaw/limbloss/arm_r,
-	"Wooden Arm (L)"=/datum/charflaw/limbloss/arm_l,
-	"Bad Sight"=/datum/charflaw/badsight,
-	"Paranoid"=/datum/charflaw/paranoid,
-	"Clingy"=/datum/charflaw/clingy,
-	"Isolationist"=/datum/charflaw/isolationist,
-	"Fire Servant"=/datum/charflaw/addiction/pyromaniac,
-	"Thief-Borne"=/datum/charflaw/addiction/kleptomaniac,
-	"Hunted"=/datum/charflaw/hunted,
+	"Alcoholic" = /datum/charflaw/addiction/alcoholic,
+	"Devout Follower" = /datum/charflaw/addiction/godfearing,
+	"Pacifist" = /datum/charflaw/pacifist,
+	"Smoker" = /datum/charflaw/addiction/smoker,
+	"Junkie" = /datum/charflaw/addiction/junkie,
+	"Cyclops (R)" = /datum/charflaw/noeyer,
+	"Cyclops (L)" = /datum/charflaw/noeyel,
+	"Tongueless" = /datum/charflaw/tongueless,
+	"Greedy" = /datum/charflaw/greedy,
+	"Narcoleptic" = /datum/charflaw/narcoleptic,
+	"Masochist" = /datum/charflaw/masochist,
+	"Wooden Arm (R)" = /datum/charflaw/limbloss/arm_r,
+	"Wooden Arm (L)" = /datum/charflaw/limbloss/arm_l,
+	"Bad Sight" = /datum/charflaw/badsight,
+	"Paranoid" = /datum/charflaw/paranoid,
+	"Clingy" = /datum/charflaw/clingy,
+	"Isolationist" = /datum/charflaw/isolationist,
+	"Fire Servant" = /datum/charflaw/addiction/pyromaniac,
+	"Thief-Borne" = /datum/charflaw/addiction/kleptomaniac,
+	"Hunted" = /datum/charflaw/hunted,
 	"Chronic Migraines" = /datum/charflaw/chronic_migraine,
 	"Chronic Back Pain" = /datum/charflaw/chronic_back_pain,
 	"Old War Wound" = /datum/charflaw/old_war_wound,
 	"Chronic Arthritis" = /datum/charflaw/chronic_arthritis,
-	"Random Flaw or No Flaw"=/datum/charflaw/randflaw,
-	"Guaranteed No Flaw (3 TRI)"=/datum/charflaw/noflaw,))
+	"Random Flaw or No Flaw" = /datum/charflaw/randflaw,
+	"Guaranteed No Flaw (3 TRI)" = /datum/charflaw/noflaw,
+))
 
 /datum/charflaw
 	var/name
@@ -41,6 +42,10 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		owner = new_owner
 		on_mob_creation(owner)
 
+/datum/charflaw/Destroy()
+	on_remove()
+	return ..()
+
 /// Applies when the user mob is created without mind
 /datum/charflaw/proc/on_mob_creation(mob/user)
 	return
@@ -48,10 +53,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /// Aplies after the user mob is fully spawned and has mind
 /datum/charflaw/proc/after_spawn(mob/user)
 	return
-
-/datum/charflaw/Destroy()
-	on_remove()
-	return ..()
 
 /// Applies when the flaw is deleted
 /datum/charflaw/proc/on_remove()
@@ -84,9 +85,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	return
 
 /mob/living/carbon/human/get_random_flaw()
-	var/list/flaws = GLOB.character_flaws.Copy() - list(/datum/charflaw/randflaw, /datum/charflaw/noflaw)
-	var/new_charflaw = pick_n_take(flaws)
-	new_charflaw = GLOB.character_flaws[new_charflaw]
+	var/list/flaws = subtypesof(/datum/charflaw) - list(/datum/charflaw/randflaw, /datum/charflaw/noflaw)
+	var/new_charflaw = pick(flaws)
 	if(charflaw)
 		QDEL_NULL(charflaw)
 	charflaw = new new_charflaw(src)
