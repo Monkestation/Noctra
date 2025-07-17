@@ -7,10 +7,26 @@
 
 	// Navigation buttons
 	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>CHRONICLE</a>"
-	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>STATISTICS</a>"
+	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>CHRONICLE</a>"
 	data += "<a href='byond://?src=[REF(src)];viewinfluences=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>INFLUENCES</a>"
 	data += "</div>"
+
+	// Divider
+	data += "<div style='text-align: center; margin: 25px auto; width: 80%; max-width: 800px;'>"
+	data += "<div style='border-top: 1.5px solid #444; margin: 15px auto; width: 100%;'></div>"
+	data += "</div>"
+
+	// Chronicle sub-tabs
+	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Messages' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a1a, #1a120a); border: 1px solid #5a4a3a; border-bottom: 2px solid #8a7a6a; color: #d4c4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>WHISPERS</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=The Realm' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #2a2a3a, #0a0a1a); border: 1px solid #4a4a5a; border-bottom: 2px solid #7a7a8a; color: #c4c4d4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>THE REALM</a>"
+	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a0a, #1a1200); border: 1px solid #5a4a1a; border-bottom: 2px solid #8a7a3a; color: #d4c464; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>STATISTICS</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Heroes' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a4a5a, #1a1b2a); border: 1px solid #6a7b8a; border-bottom: 2px solid #8f9caa; color: #c0c0d0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>HEROES</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Villains' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a1a1a, #1a0a0a); border: 1px solid #5a3a3a; border-bottom: 2px solid #8a6a6a; color: #d4b4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>VILLAINS</a>"
+	data += "</div>"
+
+	// Content
+	data += "<div style='margin: 35px;'>"
 
 	// Featured stat setup
 	var/current_featured = featured_stat
@@ -205,18 +221,8 @@
 
 	data += "</div></div>"
 
-	// Confessions section
-	data += "<div style='text-align: center; margin: 25px auto; padding: 15px 0; border-top: 1.5px solid #444; width: 80%; max-width: 800px;'>"
-	if(GLOB.confessors.len)
-		data += "<font color='#93cac7'><span class='bold'>Confessions:</span></font> "
-		for(var/x in GLOB.confessors)
-			data += "[x]"
-	else
-		data += "<font color='#93cac7'><span class='bold'>No confessions!</span></font>"
-	data += "</div>"
-
 	src.mob << browse(null, "window=vanderlin_influences")
-	var/datum/browser/popup = new(src.mob, "vanderlin_round_end", "<center>Round Statistics</center>", 1050, 770)
+	var/datum/browser/popup = new(src.mob, "vanderlin_round_end", "<center>The Chronicle</center>", 1075, 785)
 	popup.set_content(data.Join())
 	popup.open()
 
@@ -229,8 +235,7 @@
 
 	// Navigation buttons
 	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>CHRONICLE</a>"
-	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>STATISTICS</a>"
+	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>CHRONICLE</a>"
 	data += "<a href='byond://?src=[REF(src)];viewinfluences=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>INFLUENCES</a>"
 	data += "</div>"
 
@@ -239,10 +244,11 @@
 	data += "<div style='border-top: 1.5px solid #444; margin: 15px auto; width: 100%;'></div>"
 	data += "</div>"
 
-	// Sub-tabs
+	// Chronicle sub-tabs
 	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Messages' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a1a, #1a120a); border: 1px solid #5a4a3a; border-bottom: 2px solid #8a7a6a; color: #d4c4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>WHISPERS</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=The Realm' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #2a2a3a, #0a0a1a); border: 1px solid #4a4a5a; border-bottom: 2px solid #7a7a8a; color: #c4c4d4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>THE REALM</a>"
+	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a0a, #1a1200); border: 1px solid #5a4a1a; border-bottom: 2px solid #8a7a3a; color: #d4c464; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>STATISTICS</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Heroes' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a4a5a, #1a1b2a); border: 1px solid #6a7b8a; border-bottom: 2px solid #8f9caa; color: #c0c0d0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>HEROES</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Villains' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a1a1a, #1a0a0a); border: 1px solid #5a3a3a; border-bottom: 2px solid #8a6a6a; color: #d4b4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>VILLAINS</a>"
 	data += "</div>"
@@ -419,8 +425,8 @@
 			data += "</div></div>"
 
 			// Middle column
-			data += "<div style='width: 34%; display: flex; justify-content: center;'>"
-			data += "<div style='text-align: left;'>"
+			data += "<div style='width: 33%; display: flex; justify-content: center;'>"
+			data += "<div style='text-align: left; padding-left: 5px;'>"
 			data += "<div style='margin-bottom: 4px;'><font color='#8f816b'>Wage Payments: </font>[GLOB.vanderlin_round_stats[STATS_WAGES_PAID]]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#b5c996'>Treasury Transfers: </font>[GLOB.vanderlin_round_stats[STATS_DIRECT_TREASURY_TRANSFERS]]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#da8c3f'>Boat Exports Value: </font>[GLOB.vanderlin_round_stats[STATS_TRADE_VALUE_EXPORTED]]</div>"
@@ -430,7 +436,7 @@
 			data += "</div></div>"
 
 			// Right column
-			data += "<div style='width: 32%; display: flex; justify-content: flex-start;'>"
+			data += "<div style='width: 33%; display: flex; justify-content: flex-start;'>"
 			data += "<div style='text-align: left; padding-left: 20px;'>"
 			data += "<div style='margin-bottom: 4px;'><font color='#c78445'>Fines Collected: </font>[GLOB.vanderlin_round_stats[STATS_FINES_INCOME]]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#9da356'>Stockpile Exports: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_EXPORTS_VALUE]]</div>"
@@ -499,9 +505,19 @@
 			for(var/datum/antagonist/A in GLOB.antagonists)
 				if(A.owner) all_antagonists |= A
 
-			if(!length(all_teams) && !length(all_antagonists))
+			if(!length(all_teams) && !length(all_antagonists) && !length(GLOB.confessors))
 				data += "<div style='text-align: center; color: #999; font-style: italic;'>The Realm has no villains</div>"
 			else
+				if(length(GLOB.confessors))
+					data += "<div style='background: #1a0a0a; border: 1px solid #5a3a3a; padding: 12px; border-radius: 4px; margin-bottom: 15px;'>"
+					data += "<div style='color: #d4b4b4; font-weight: bold; margin-bottom: 8px;'>The Confessed</div>"
+					data += "<div style='margin-left: 10px;'>"
+					for(var/x in GLOB.confessors)
+						data += "<div style='margin-bottom: 10px;'>"
+						data += "<span style='color:#e6a962'><b>[x]</b></span>"
+						data += "</div>"
+					data += "</div></div>"
+
 				for(var/datum/team/T in all_teams)
 					data += "<div style='background: #1a0a0a; border: 1px solid #5a3a3a; padding: 12px; border-radius: 4px; margin-bottom: 15px;'>"
 					data += "<div style='color: #d4b4b4; font-weight: bold; margin-bottom: 8px;'>[capitalize(T.name)]</div>"
@@ -592,7 +608,7 @@
 	data += "</div>"
 
 	src.mob << browse(null, "window=vanderlin_influences")
-	var/datum/browser/popup = new(src.mob, "vanderlin_round_end", "<center>The Chronicle</center>", 1050, 770)
+	var/datum/browser/popup = new(src.mob, "vanderlin_round_end", "<center>The Chronicle</center>", 1075, 785)
 	popup.set_content(data.Join())
 	popup.open()
 
@@ -605,8 +621,7 @@
 
 	// Navigation buttons
 	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>CHRONICLE</a>"
-	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>STATISTICS</a>"
+	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>CHRONICLE</a>"
 	data += "<a href='byond://?src=[REF(src)];viewinfluences=1' style='display: inline-block; width: 120px; padding: 8px 12px; margin: 0 10px; background: #2a2a2a; border: 1px solid #444; color: #ddd; font-weight: bold; text-decoration: none; border-radius: 3px; font-size: 0.9em;'>INFLUENCES</a>"
 	data += "</div>"
 
