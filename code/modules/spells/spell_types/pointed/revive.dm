@@ -89,7 +89,7 @@
 	if(!cast_on.revive(full_heal = FALSE))
 		to_chat(owner, span_warning("Astrata's light fails to revive [cast_on]!"))
 		return
-	GLOB.vanderlin_round_stats[STATS_ASTRATA_REVIVALS]++
+	record_round_statistic(STATS_ASTRATA_REVIVALS)
 	cast_on.emote("breathgasp")
 	cast_on.Jitter(100)
 	cast_on.visible_message(span_notice("[cast_on] is revived by holy light!"), span_green("I awake from the void."))

@@ -6,7 +6,7 @@
 
 	point_cost = 2
 	attunements = list(
-		/datum/attunement/illusion = 0.4,
+		/datum/attunement/light = 0.6,
 	)
 
 	cooldown_time = 6 MINUTES

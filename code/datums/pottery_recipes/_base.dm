@@ -37,13 +37,15 @@
 	return TRUE
 
 /datum/pottery_recipe/proc/update_step(mob/living/user, rotations_per_minute)
-	var/skill_level = max(1, user?.get_skill_level(/datum/skill/craft/masonry))
-	var/fail_chance = (25 * difficulty) + (skill_level * 25)
+	var/skill_level = max(0, user?.get_skill_level(/datum/skill/craft/masonry))
+	var/success_chance = 25 * ((skill_level - difficulty) + 1)
+	success_chance = clamp(success_chance, 5, 95) // No reason to block pottery with lower masonry skills, just make it not worth the time.
+
 	if(rotations_per_minute > speed_sweetspot)
-		fail_chance += (rotations_per_minute - speed_sweetspot) * 2
-	if(prob(fail_chance))
+		success_chance -= (rotations_per_minute - speed_sweetspot) * 2
+	if(!prob(success_chance))
 		if(user.client?.prefs.showrolls)
-			to_chat(user, "<span class='danger'>I've messed up \the [name]. (Success chance: [max(0, 100 - fail_chance)]%)</span>")
+			to_chat(user, "<span class='danger'>I've messed up \the [name]. (Success chance: [success_chance]%)</span>")
 			return
 		to_chat(user, "<span class='danger'>I've messed up \the [name].</span>")
 		return

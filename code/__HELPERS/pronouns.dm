@@ -117,181 +117,179 @@
 		. = "es"
 
 //mobs(and atoms but atoms don't really matter write your own proc overrides) also have gender!
-/mob/p_they(capitalized, temp_gender)
+/mob/p_they(capitalized, temp_gender, ignore_pronouns = FALSE)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "it"
-	switch(temp_gender)
-		if(FEMALE)
-			. = "she"
-		if(MALE)
-			. = "he"
-		if(PLURAL)
-			. = "they"
-	if (pronouns)
-		switch (pronouns)
-			if (HE_HIM)
+	if(pronouns && !ignore_pronouns)
+		switch(pronouns)
+			if(HE_HIM)
 				. = "he"
-			if (SHE_HER)
+			if(SHE_HER)
 				. = "she"
-			if (THEY_THEM)
+			if(THEY_THEM)
 				. = "they"
-			if (IT_ITS)
+			if(IT_ITS)
 				. = "it"
+	else
+		switch(temp_gender)
+			if(FEMALE)
+				. = "she"
+			if(MALE)
+				. = "he"
+			if(PLURAL)
+				. = "they"
 	if(capitalized)
 		. = capitalize(.)
 
-/mob/p_their(capitalized, temp_gender)
+/mob/p_their(capitalized, temp_gender, ignore_pronouns = FALSE)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "its"
-	switch(temp_gender)
-		if(FEMALE)
-			. = "her"
-		if(MALE)
-			. = "his"
-		if(PLURAL)
-			. = "their"
-	if (pronouns)
-		switch (pronouns)
+	if(pronouns && !ignore_pronouns)
+		switch(pronouns)
 			if (HE_HIM)
 				. = "his"
-			if (SHE_HER)
+			if(SHE_HER)
 				. = "her"
-			if (THEY_THEM)
+			if(THEY_THEM)
 				. = "their"
-			if (IT_ITS)
+			if(IT_ITS)
 				. = "its"
+	else
+		switch(temp_gender)
+			if(FEMALE)
+				. = "her"
+			if(MALE)
+				. = "his"
+			if(PLURAL)
+				. = "their"
 	if(capitalized)
 		. = capitalize(.)
 
-/mob/p_them(capitalized, temp_gender)
+/mob/p_them(capitalized, temp_gender, ignore_pronouns = FALSE)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "it"
-	switch(temp_gender)
-		if(FEMALE)
-			. = "her"
-		if(MALE)
-			. = "him"
-		if(PLURAL)
-			. = "them"
+	if(pronouns && !ignore_pronouns)
+		switch(pronouns)
+			if(HE_HIM)
+				. = "him"
+			if(SHE_HER)
+				. = "her"
+			if(THEY_THEM)
+				. = "them"
+			if(IT_ITS)
+				. = "it"
+	else
+		switch(temp_gender)
+			if(FEMALE)
+				. = "her"
+			if(MALE)
+				. = "him"
+			if(PLURAL)
+				. = "them"
 	if(capitalized)
 		. = capitalize(.)
-	if (pronouns)
-		switch (pronouns)
-			if (HE_HIM)
-				. = "him"
-			if (SHE_HER)
-				. = "her"
-			if (THEY_THEM)
-				. = "them"
-			if (IT_ITS)
-				. = "it"
 
-/mob/p_have(temp_gender)
+/mob/p_have(temp_gender, ignore_pronouns = FALSE)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "has"
-	if(temp_gender == PLURAL)
+	if(temp_gender == PLURAL || (!ignore_pronouns && pronouns == THEY_THEM))
 		. = "have"
-		return
-	if (pronouns)
-		if (pronouns == THEY_THEM)
-			. = "have"
 
-/mob/p_are(temp_gender)
+/mob/p_are(temp_gender, ignore_pronouns = FALSE)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "is"
-	if(temp_gender == PLURAL || (pronouns && pronouns == THEY_THEM))
+	if(temp_gender == PLURAL || (!ignore_pronouns && pronouns == THEY_THEM))
 		. = "are"
 
-/mob/p_were(temp_gender)
+/mob/p_were(temp_gender, ignore_pronouns = FALSE)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "was"
-	if(temp_gender == PLURAL || (pronouns && pronouns == THEY_THEM))
+	if(temp_gender == PLURAL || (!ignore_pronouns && pronouns == THEY_THEM))
 		. = "were"
 
-
-/mob/p_do(temp_gender)
+/mob/p_do(temp_gender, ignore_pronouns = FALSE)
 	if(!temp_gender)
 		temp_gender = gender
 	. = "does"
-	if(temp_gender == PLURAL || (pronouns && pronouns == THEY_THEM))
+	if(temp_gender == PLURAL || (!ignore_pronouns && pronouns == THEY_THEM))
 		. = "do"
 
-/mob/p_s(temp_gender)
+/mob/p_s(temp_gender, ignore_pronouns = FALSE)
 	if(!temp_gender)
 		temp_gender = gender
-	if(temp_gender != PLURAL || (pronouns && pronouns != THEY_THEM))
+	if(temp_gender != PLURAL || (!ignore_pronouns && pronouns != THEY_THEM))
 		. = "s"
 
-/mob/p_es(temp_gender)
+/mob/p_es(temp_gender, ignore_pronouns = FALSE)
 	if(!temp_gender)
 		temp_gender = gender
-	if(temp_gender != PLURAL || (pronouns && pronouns != THEY_THEM))
+	if(temp_gender != PLURAL || (!ignore_pronouns && pronouns != THEY_THEM))
 		. = "es"
 
 //humans need special handling, because they can have their gender hidden
-/mob/living/carbon/human/p_they(capitalized, temp_gender)
+/mob/living/carbon/human/p_they(capitalized, temp_gender, ignore_pronouns = FALSE)
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((obscured & ITEM_SLOT_PANTS) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
-/mob/living/carbon/human/p_their(capitalized, temp_gender)
+/mob/living/carbon/human/p_their(capitalized, temp_gender, ignore_pronouns = FALSE)
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((obscured & ITEM_SLOT_PANTS) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
-/mob/living/carbon/human/p_them(capitalized, temp_gender)
+/mob/living/carbon/human/p_them(capitalized, temp_gender, ignore_pronouns = FALSE)
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((obscured & ITEM_SLOT_PANTS) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
-/mob/living/carbon/human/p_have(temp_gender)
+/mob/living/carbon/human/p_have(temp_gender, ignore_pronouns = FALSE)
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((obscured & ITEM_SLOT_PANTS) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
-/mob/living/carbon/human/p_are(temp_gender)
+/mob/living/carbon/human/p_are(temp_gender, ignore_pronouns = FALSE)
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((obscured & ITEM_SLOT_PANTS) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
-/mob/living/carbon/human/p_were(temp_gender)
+/mob/living/carbon/human/p_were(temp_gender, ignore_pronouns = FALSE)
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((obscured & ITEM_SLOT_PANTS) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
-/mob/living/carbon/human/p_do(temp_gender)
+/mob/living/carbon/human/p_do(temp_gender, ignore_pronouns = FALSE)
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((obscured & ITEM_SLOT_PANTS) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
-/mob/living/carbon/human/p_s(temp_gender)
+/mob/living/carbon/human/p_s(temp_gender, ignore_pronouns = FALSE)
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((obscured & ITEM_SLOT_PANTS) && skipface)
 		temp_gender = PLURAL
 	return ..()
 
-/mob/living/carbon/human/p_es(temp_gender)
+/mob/living/carbon/human/p_es(temp_gender, ignore_pronouns = FALSE)
 	var/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
 	if((obscured & ITEM_SLOT_PANTS) && skipface)
