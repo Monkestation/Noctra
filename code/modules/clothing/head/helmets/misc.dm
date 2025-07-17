@@ -245,6 +245,7 @@
 	body_parts_covered = FULL_HEAD
 	max_integrity = INTEGRITY_STRONG
 	prevent_crits = ALL_CRITICAL_HITS
+	abstract_type = /obj/item/clothing/head/helmet/visored
 
 /obj/item/clothing/head/helmet/visored/AdjustClothes(mob/user)
 	if(loc == user)

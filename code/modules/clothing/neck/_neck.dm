@@ -25,6 +25,7 @@
 	sewrepair = FALSE
 	anvilrepair = /datum/skill/craft/armorsmithing
 	smeltresult = /obj/item/ingot/iron
+	abstract_type = /obj/item/clothing/neck
 
 
 /obj/item/clothing/neck/worn_overlays(isinhands = FALSE)

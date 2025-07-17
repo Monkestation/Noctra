@@ -41,6 +41,7 @@
 	body_parts_covered = null
 	icon_state = ""
 	item_state = ""
+	abstract_type = /obj/item/clothing/head/flowercrown
 
 	grid_width = 64
 	grid_height = 32
