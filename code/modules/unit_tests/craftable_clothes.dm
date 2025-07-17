@@ -9,27 +9,26 @@
 	)
 	var/list/excluded_types_with_their_subtypes = list(
 
-
 	)
 
 	for(var/datum/repeatable_crafting_recipe/recipe as anything in subtypesof(/datum/repeatable_crafting_recipe))
-		if(isclothing(recipe.output))
+		if(isclothing_path(recipe.output))
 			overall_recipe_typepaths += recipe.output
 
 	for(var/datum/orderless_slapcraft/recipe as anything in subtypesof(/datum/orderless_slapcraft))
-		if(isclothing(recipe.output_item))
+		if(isclothing_path(recipe.output_item))
 			overall_recipe_typepaths += recipe.output_item
 
 	for(var/datum/anvil_recipe/recipe as anything in subtypesof(/datum/anvil_recipe))
-		if(isclothing(recipe.created_item))
+		if(isclothing_path(recipe.created_item))
 			overall_recipe_typepaths += recipe.created_item
 
 	for(var/datum/crafting_recipe/recipe as anything in subtypesof(/datum/crafting_recipe))
-		if(isclothing(recipe.result))
+		if(isclothing_path(recipe.result))
 			overall_recipe_typepaths += recipe.result
 
 	for(var/datum/artificer_recipe/recipe as anything in subtypesof(/datum/artificer_recipe))
-		if(isclothing(recipe.created_item))
+		if(isclothing_path(recipe.created_item))
 			overall_recipe_typepaths += recipe.created_item
 
 	for(var/recipe as anything in overall_recipe_typepaths)
