@@ -151,7 +151,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 			owner.current.refresh_looping_ambience()
 			if(was_pacifist)
 				var/mob/living/carbon/human/human_user = owner.current
-				human_user.charflaw = new /datum/charflaw/pacifist(human_user)
+				human_user.set_flaw(/datum/charflaw/pacifist)
 				human_user.charflaw.after_spawn(human_user, TRUE)
 			if(!silent)
 				farewell()

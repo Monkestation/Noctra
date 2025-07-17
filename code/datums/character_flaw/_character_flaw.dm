@@ -29,12 +29,16 @@ GLOBAL_LIST_INIT(character_flaws, list(
 ))
 
 /datum/charflaw
+	/// Fluff name
 	var/name
+	/// Fluff desc
 	var/desc
 	/// This flaw is currently disabled and will not process
 	var/ephemeral = FALSE
 	/// The mob affected by the character flaw
 	var/mob/owner
+	/// Flaw is exempt from random picks
+	var/random_exempt = FALSE
 
 /datum/charflaw/New(mob/new_owner)
 	. = ..()
@@ -80,64 +84,59 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(istype(charflaw, flaw))
 		return TRUE
 
-/// Replaces mob's flaw with a random one excluding no flaw
-/mob/proc/get_random_flaw()
-	return
+/// Replaces humans's flaw with a random one excluding no flaw
+/mob/living/carbon/human/proc/get_random_flaw()
+	var/list/flaws = subtypesof(/datum/charflaw)
+	for(var/datum/charflaw/flaw as anything in flaws)
+		if(initial(flaw.random_exempt) == TRUE)
+			flaws -= flaw
 
-/mob/living/carbon/human/get_random_flaw()
-	var/list/flaws = subtypesof(/datum/charflaw) - list(/datum/charflaw/randflaw, /datum/charflaw/noflaw)
-	var/new_charflaw = pick(flaws)
+	set_flaw(pick(flaws))
+
+/mob/living/carbon/human/proc/set_flaw(/datum/charflaw/flaw)
+	if(!flaw)
+		return
+
 	if(charflaw)
 		QDEL_NULL(charflaw)
-	charflaw = new new_charflaw(src)
+
+	charflaw = new flaw(src)
 
 /datum/charflaw/randflaw
 	name = "Random Flaw"
 	desc = "Chooses a random flaw (50% chance for no flaw)"
-	var/nochekk = TRUE
+	random_exempt = TRUE
 
-/datum/charflaw/randflaw/flaw_on_life(mob/user)
-	if(!nochekk)
+/datum/charflaw/randflaw/after_spawn(mob/user)
+	. = ..()
+	if(!ishuman(user))
 		return
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.ckey)
-			nochekk = FALSE
-			if(prob(50))
-				H.get_random_flaw()
-			else
-				H.charflaw = new /datum/charflaw/eznoflaw(H)
+	var/mob/living/carbon/human/H = user
+	if(prob(50))
+		H.get_random_flaw()
+	else
+		H.set_flaw(/datum/charflaw/eznoflaw)
 
 /datum/charflaw/eznoflaw
 	name = "No Flaw"
 	desc = "I'm a normal person, how rare!"
+	random_exempt = TRUE
 
 /datum/charflaw/noflaw
 	name = "No Flaw (3 TRI)"
 	desc = "I'm a normal person, how rare! (Consumes 3 triumphs or randomizes)"
-	var/nochekk = TRUE
+	random_exempt = TRUE
 
-/datum/charflaw/noflaw/flaw_on_life(mob/user)
-	if(!nochekk)
+/datum/charflaw/randflaw/after_spawn(mob/user)
+	. = ..()
+	if(!ishuman(user))
 		return
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.ckey)
-			if(H.get_triumphs() < 3)
-				nochekk = FALSE
-				var/flawz = GLOB.character_flaws.Copy()
-				var/charflaw = pick_n_take(flawz)
-				charflaw = GLOB.character_flaws[charflaw]
-				if((charflaw == type) || (charflaw == /datum/charflaw/randflaw))
-					charflaw = pick_n_take(flawz)
-					charflaw = GLOB.character_flaws[charflaw]
-				if((charflaw == type) || (charflaw == /datum/charflaw/randflaw))
-					charflaw = pick_n_take(flawz)
-					charflaw = GLOB.character_flaws[charflaw]
-				H.charflaw = new charflaw(H)
-			else
-				nochekk = FALSE
-				H.adjust_triumphs(-3)
+	var/mob/living/carbon/human/H = user
+	if(H.get_triumphs() >= 3)
+		H.adjust_triumphs(-3)
+		H.set_flaw(/datum/charflaw/eznoflaw)
+		return
+	H.get_random_flaw()
 
 /datum/charflaw/badsight
 	name = "Bad Eyesight"
@@ -315,9 +314,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		var/mob/living/carbon/human/H = user
 		switch(rand(1,2))
 			if(1)
-				H.charflaw = new /datum/charflaw/noeyel(H)
+				H.set_flaw(/datum/charflaw/noeyel)
 			else
-				H.charflaw = new /datum/charflaw/noeyer(H)
+				H.set_flaw(/datum/charflaw/noeyer)
 	qdel(src)
 
 /datum/charflaw/tongueless

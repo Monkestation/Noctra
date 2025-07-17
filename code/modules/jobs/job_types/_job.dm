@@ -255,9 +255,7 @@
 
 	var/datum/job/target_job = humanguy?.mind?.assigned_role
 	if(target_job?.forced_flaw)
-		if(humanguy.charflaw)
-			QDEL_NULL(humanguy.charflaw)
-		humanguy.charflaw = new target_job.forced_flaw.type(humanguy)
+		humanguy.set_flaw(target_job.forced_flaw.type)
 
 	if(humanguy.charflaw)
 		humanguy.charflaw.after_spawn(humanguy)
