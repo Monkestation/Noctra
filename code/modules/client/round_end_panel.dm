@@ -243,7 +243,7 @@
 	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Messages' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a1a, #1a120a); border: 1px solid #5a4a3a; border-bottom: 2px solid #8a7a6a; color: #d4c4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>MESSAGES</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=The Realm' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #2a2a3a, #0a0a1a); border: 1px solid #4a4a5a; border-bottom: 2px solid #7a7a8a; color: #c4c4d4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>THE REALM</a>"
-	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Heroes' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #2a2a2a, #1a1a1a); border: 1px solid #4a4a4a; border-bottom: 2px solid #7a7a7a; color: #e6e6e6; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>HEROES</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Heroes' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #47636d, #1b1b2a); border: 1px solid #99b2b1; border-bottom: 2px solid #d0d0d0; color: #ffffff; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>HEROES</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Villains' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a1a1a, #1a0a0a); border: 1px solid #5a3a3a; border-bottom: 2px solid #8a6a6a; color: #d4b4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>VILLAINS</a>"
 	data += "</div>"
 
@@ -300,7 +300,7 @@
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
 			// First Row - STRONGEST
 			var/mob/living/strongest = get_chronicle_stat_holder(CHRONICLE_STATS_STRONGEST_PERSON)
-			data += "<div style='margin-bottom: 15px;'><font color='#bd1717'><b>STRONGEST PERSON</b></font></div>"
+			data += "<div style='margin-bottom: 15px;'><font color='#bd1717'>STRONGMAN</font></div>"
 			data += "<div style='margin: 10px 0;'>"
 			if(strongest)
 				data += get_headshot_icon(strongest)
@@ -311,7 +311,7 @@
 
 			// Second Row - FASTEST
 			var/mob/living/fastest = get_chronicle_stat_holder(CHRONICLE_STATS_FASTEST_PERSON)
-			data += "<div style='margin: 30px 0 15px 0;'><font color='#54d6c2'><b>FASTEST PERSON</b></font></div>"
+			data += "<div style='margin: 30px 0 15px 0;'><font color='#54d6c2'>SPEEDSTER</font></div>"
 			data += "<div style='margin: 10px 0;'>"
 			if(fastest)
 				data += get_headshot_icon(fastest)
@@ -325,7 +325,7 @@
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
 			// First Row - SMARTEST
 			var/mob/living/wisest = get_chronicle_stat_holder(CHRONICLE_STATS_WISEST_PERSON)
-			data += "<div style='margin-bottom: 15px;'><font color='#5eb6e6'><b>SMARTEST PERSON</b></font></div>"
+			data += "<div style='margin-bottom: 15px;'><font color='#5eb6e6'>GENIUS</font></div>"
 			data += "<div style='margin: 10px 0;'>"
 			if(wisest)
 				data += get_headshot_icon(wisest)
@@ -336,7 +336,7 @@
 
 			// Second Row - DUMBEST
 			var/mob/living/dumbest = get_chronicle_stat_holder(CHRONICLE_STATS_DUMBEST_PERSON)
-			data += "<div style='margin: 30px 0 15px 0;'><font color='#e67e22'><b>DUMBEST PERSON</b></font></div>"
+			data += "<div style='margin: 30px 0 15px 0;'><font color='#e67e22'>IDIOT</font></div>"
 			data += "<div style='margin: 10px 0;'>"
 			if(dumbest)
 				data += get_headshot_icon(dumbest)
@@ -350,7 +350,7 @@
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
 			// First Row - RICHEST
 			var/mob/living/richest = get_chronicle_stat_holder(CHRONICLE_STATS_RICHEST_PERSON)
-			data += "<div style='margin-bottom: 15px;'><font color='#d8dd90'><b>RICHEST PERSON</b></font></div>"
+			data += "<div style='margin-bottom: 15px;'><font color='#d8dd90'>MAGNATE</font></div>"
 			data += "<div style='margin: 10px 0;'>"
 			if(richest)
 				data += get_headshot_icon(richest)
@@ -361,7 +361,7 @@
 
 			// Second Row - SLOWEST
 			var/mob/living/slowest = get_chronicle_stat_holder(CHRONICLE_STATS_SLOWEST_PERSON)
-			data += "<div style='margin: 30px 0 15px 0;'><font color='#a569bd'><b>SLOWEST PERSON</b></font></div>"
+			data += "<div style='margin: 30px 0 15px 0;'><font color='#a569bd'>TURTLE</font></div>"
 			data += "<div style='margin: 10px 0;'>"
 			if(slowest)
 				data += get_headshot_icon(slowest)
@@ -375,7 +375,7 @@
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
 			// First Row - LUCKIEST
 			var/mob/living/luckiest = get_chronicle_stat_holder(CHRONICLE_STATS_LUCKIEST_PERSON)
-			data += "<div style='margin-bottom: 15px;'><font color='#54d666'><b>LUCKIEST PERSON</b></font></div>"
+			data += "<div style='margin-bottom: 15px;'><font color='#54d666'>LUCKY DEVIL</font></div>"
 			data += "<div style='margin: 10px 0;'>"
 			if(luckiest)
 				data += get_headshot_icon(luckiest)
@@ -386,7 +386,7 @@
 
 			// Second Row - UNLUCKIEST
 			var/mob/living/unluckiest = get_chronicle_stat_holder(CHRONICLE_STATS_UNLUCKIEST_PERSON)
-			data += "<div style='margin: 30px 0 15px 0;'><font color='#e74c3c'><b>UNLUCKIEST PERSON</b></font></div>"
+			data += "<div style='margin: 30px 0 15px 0;'><font color='#e74c3c'>WALKING DISASTER</font></div>"
 			data += "<div style='margin: 10px 0;'>"
 			if(unluckiest)
 				data += get_headshot_icon(unluckiest)
@@ -410,12 +410,52 @@
 
 			// First Column (50% width)
 			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 5px;'>"
+			data += "<font color='#f7d474'>Treasury: </font>[SStreasury.treasury_value]<br>"
+			data += "</div>"
+
+			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 5px;'>"
+			data += "<font color='#e6b327'>Regular Vault Income: </font>[GLOB.vanderlin_round_stats[STATS_REGULAR_VAULT_INCOME]]<br>"
+			data += "</div>"
+
+			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 5px;'>"
+			data += "<font color='#d4a017'>Total Vault Revenue: </font>[GLOB.vanderlin_round_stats[STATS_VAULT_TOTAL_REVENUE]]<br>"
+			data += "</div>"
+
+			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 5px;'>"
+			data += "<font color='#e67e22'>Total Noble Estate Income: </font>[GLOB.vanderlin_round_stats[STATS_NOBLE_INCOME_TOTAL]]<br>"
+			data += "</div>"
+
+			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 5px;'>"
 			data += "<font color='#f5c02e'>Taxes Collected: </font>[GLOB.vanderlin_round_stats[STATS_TAXES_COLLECTED]]<br>"
+			data += "</div>"
+
+			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 5px;'>"
+			data += "<font color='#e74c3c'>Taxes Evaded: </font>[GLOB.vanderlin_round_stats[STATS_TAXES_EVADED]]<br>"
 			data += "</div>"
 
 			// Second Column (50% width)
 			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 5px;'>"
-			data += "<font color='#8f816b'>Items Stolen: </font>[GLOB.vanderlin_round_stats[STATS_ITEMS_PICKPOCKETED]]<br>"
+			data += "<font color='#8f816b'>Wages Paid: </font>[GLOB.vanderlin_round_stats[STATS_WAGES_PAID]]<br>"
+			data += "</div>"
+
+			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 5px;'>"
+			data += "<font color='#b87333'>Fines Collected: </font>[GLOB.vanderlin_round_stats[STATS_FINES_INCOME]]<br>"
+			data += "</div>"
+
+			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 5px;'>"
+			data += "<font color='#cd7f32'>Boat Exports Value: </font>[GLOB.vanderlin_round_stats[STATS_TRADE_VALUE_EXPORTED]]<br>"
+			data += "</div>"
+
+			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 5px;'>"
+			data += "<font color='#d2691e'>Boat Imports Value: </font>[GLOB.vanderlin_round_stats[STATS_TRADE_VALUE_IMPORTED]]<br>"
+			data += "</div>"
+
+			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 5px;'>"
+			data += "<font color='#c0b283'>GOLDFACE expanses: </font>[GLOB.vanderlin_round_stats[STATS_GOLDFACE_VALUE_SPENT]]<br>"
+			data += "</div>"
+
+			data += "<div style='display: table-cell; width: 50%; text-align: center; padding: 0 5px;'>"
+			data += "<font color='#b5a642'>PURITY expanses: </font>[GLOB.vanderlin_round_stats[STATS_PURITY_VALUE_SPENT]]<br>"
 			data += "</div>"
 
 			data += "</div></div></div>"

@@ -26,6 +26,16 @@
 #define STATS_KISSES_MADE "kisses_made"
 #define STATS_SKILLS_LEARNED "skills_learned"
 #define STATS_DEADITES_ALIVE "deadites_alive"
+#define STATS_REGULAR_VAULT_INCOME "vault_regular"
+#define STATS_VAULT_TOTAL_REVENUE "vault_total"
+#define STATS_WAGES_PAID "wages_paid"
+#define STATS_FINES_INCOME "fines_income"
+#define STATS_TRADE_VALUE_EXPORTED "trade_exported"
+#define STATS_TRADE_VALUE_IMPORTED "trade_imported"
+#define STATS_GOLDFACE_VALUE_SPENT "goldface_spent"
+#define STATS_PURITY_VALUE_SPENT "purity_spent"
+#define STATS_TAXES_EVADED "taxes_evaded"
+#define STATS_NOBLE_INCOME_TOTAL "noble_income_total"
 
 // Influence related statistics
 
@@ -266,6 +276,16 @@ GLOBAL_LIST_INIT(vanderlin_round_stats, list(
 	STATS_HANDS_HELD = 0,
 	STATS_ANIMALS_TAMED = 0,
 	STATS_BATHS_TAKEN = 0,
+	STATS_REGULAR_VAULT_INCOME = 0,
+	STATS_VAULT_TOTAL_REVENUE = 0,
+	STATS_WAGES_PAID = 0,
+	STATS_FINES_INCOME = 0,
+	STATS_TRADE_VALUE_EXPORTED = 0,
+	STATS_TRADE_VALUE_IMPORTED = 0,
+	STATS_GOLDFACE_VALUE_SPENT = 0,
+	STATS_PURITY_VALUE_SPENT = 0,
+	STATS_TAXES_EVADED = 0,
+	STATS_NOBLE_INCOME_TOTAL = 0,
 ))
 
 GLOBAL_LIST_EMPTY(patron_follower_counts)

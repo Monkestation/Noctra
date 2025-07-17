@@ -174,6 +174,7 @@
 					return
 				if(newtax < 1)
 					return
+				record_round_statistic(STATS_FINES_INCOME, newtax)
 				SStreasury.give_money_account(-newtax, A)
 				break
 	if(href_list["payroll"])
@@ -198,6 +199,7 @@
 			return
 		for(var/mob/living/carbon/human/H in GLOB.human_list)
 			if(H.job == job_to_pay)
+				record_round_statistic(STATS_WAGES_PAID, amount_to_pay)
 				SStreasury.give_money_account(amount_to_pay, H)
 	if(href_list["compact"])
 		compact = !compact
