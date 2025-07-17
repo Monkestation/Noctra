@@ -80,7 +80,7 @@
 
 
 /**
- * returns every hearaing movable in view to the turf of source not taking into account lighting
+ * returns every hearing movable in view to the turf of source not taking into account lighting
  * useful when you need to maintain always being able to hear something if a sound is emitted from it and you can see it (and youre in range).
  * otherwise this is just a more expensive version of get_hearers_in_LOS()
  *
@@ -126,6 +126,51 @@
 
 	center_turf.luminosity = old_luminosity
 	return .
+
+/**
+ * Use get_hearers_in_view to return a list of listening atoms on other Zs above and below the source.
+ *
+ * This is much more expensive.
+ *
+ * * z_up - Z levels above to check, clamped by the multiZ values of the current Z
+ * * z_down - Z levels below to check like above
+ */
+/proc/get_hearers_in_view_z_range(view_radius, atom/source, z_up = 1, z_down = 1)
+	var/turf/center_turf = get_turf(source)
+	if(!center_turf)
+		return
+
+	var/list/turf/z_turfs_up = list()
+	if(z_up)
+		var/turf/current = center_turf
+		for(var/i in 1 to z_up)
+			var/turf/up = GET_TURF_ABOVE(current)
+			if(!up)
+				break
+			z_turfs_up |= up
+			current = up
+
+	var/list/turf/z_turfs_down = list()
+	if(z_down)
+		var/turf/current = center_turf
+		for(var/i in 1 to z_down)
+			var/turf/down = GET_TURF_BELOW(current)
+			if(!down)
+				break
+			z_turfs_down |= down
+			current = down
+
+	. = get_hearers_in_view(view_radius, source)
+
+	var/i = 0
+	for(var/turf/z_turf as anything in z_turfs_up)
+		view_radius -= ++i
+		. += get_hearers_in_view(view_radius, z_turf)
+
+	var/j = 0
+	for(var/turf/z_turf as anything in z_turfs_down)
+		view_radius -= ++j
+		. += get_hearers_in_view(view_radius, z_turf)
 
 /**
  * Returns a list of movable atoms that are hearing sensitive in view_radius and line of sight to source
