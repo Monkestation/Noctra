@@ -677,7 +677,7 @@
 	if(spatial_grid_key)
 		SSspatial_grid.force_remove_from_grid(src)
 
-	LAZYCLEARLIST(client_mobs_in_contents)
+	LAZYNULL(client_mobs_in_contents)
 
 	. = ..()
 
@@ -686,7 +686,10 @@
 
 	moveToNullspace()
 
-	LAZYCLEARLIST(important_recursive_contents)
+	//This absolutely must be after moveToNullspace()
+	//We rely on Entered and Exited to manage this list, and the copy of this list that is on any /atom/movable "Containers"
+	//If we clear this before the nullspace move, a ref to this object will be hung in any of its movable containers
+	LAZYNULL(important_recursive_contents)
 
 	vis_locs = null
 
