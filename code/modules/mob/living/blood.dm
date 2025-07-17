@@ -173,7 +173,7 @@
 		blood_volume = max(blood_volume - amt, 0)
 		if(src.client)
 			record_featured_stat(FEATURED_STATS_BLEEDERS, src)
-		GLOB.vanderlin_round_stats[STATS_BLOOD_SPILT] += amt
+		record_round_statistic(STATS_BLOOD_SPILT, amt / 100)
 		if(isturf(src.loc)) //Blood loss still happens in locker, floor stays clean
 			add_drip_floor(get_turf(src), amt)
 		var/vol2use

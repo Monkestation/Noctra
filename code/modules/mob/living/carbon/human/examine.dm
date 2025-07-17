@@ -29,12 +29,15 @@
 		user.add_stress(/datum/stressevent/saw_old_party)
 
 /mob/living/carbon/human/examine(mob/user)
-//this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
-	var/t_He = p_they(TRUE)
-	var/t_his = p_their()
+	//this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
+	var/ignore_pronouns
+	if(user != src)
+		ignore_pronouns = !user.mind?.do_i_know(null, real_name)
+	var/t_He = p_they(TRUE, ignore_pronouns = ignore_pronouns)
+	var/t_his = p_their(ignore_pronouns = ignore_pronouns)
 //	var/t_him = p_them()
-	var/t_has = p_have()
-	var/t_is = p_are()
+	var/t_has = p_have(ignore_pronouns = ignore_pronouns)
+	var/t_is = p_are(ignore_pronouns = ignore_pronouns)
 	var/obscure_name
 	var/race_name = dna?.species.name
 	var/self_inspect = FALSE

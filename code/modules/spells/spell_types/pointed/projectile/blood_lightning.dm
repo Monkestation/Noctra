@@ -4,6 +4,8 @@
 	button_icon_state = "bloodlightning"
 	sound = 'sound/magic/vlightning.ogg'
 
+	cast_range = 8
+	point_cost = 6
 	associated_skill = /datum/skill/magic/blood
 	attunements = list(
 		/datum/attunement/electric = 0.3,

@@ -102,7 +102,7 @@
 /datum/component/breed/proc/birth_baby(mob/living/source, mob/living/target)
 	var/turf/delivery_destination = get_turf(source)
 	new /obj/effect/temp_visual/heart(delivery_destination)
-	GLOB.vanderlin_round_stats[STATS_ANIMALS_BRED]++
+	record_round_statistic(STATS_ANIMALS_BRED)
 	pregnant = FALSE
 	addtimer(CALLBACK(src, PROC_REF(toggle_status), source), breed_timer)
 

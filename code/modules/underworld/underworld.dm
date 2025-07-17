@@ -119,7 +119,7 @@
 			if("Yes")
 				playsound(user, 'sound/misc/deadbell.ogg', 50, TRUE, -2, ignore_walls = TRUE)
 				add_abstract_elastic_data(ELASCAT_COMBAT, ELASDATA_COIN_REVIVES, 1)
-				GLOB.vanderlin_round_stats[STATS_SOULS_REINCARNATED]++
+				record_round_statistic(STATS_SOULS_REINCARNATED)
 				user.returntolobby()
 			if("No")
 				to_chat(user,span_notice("You delay fate."))

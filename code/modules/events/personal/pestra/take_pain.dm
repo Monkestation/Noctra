@@ -2,7 +2,7 @@
 	name = "Pain Relief"
 	track = EVENT_TRACK_PERSONAL
 	typepath = /datum/round_event/pain_relief
-	weight = 5
+	weight = 7
 	earliest_start = 5 MINUTES
 	max_occurrences = 1
 	min_players = 30

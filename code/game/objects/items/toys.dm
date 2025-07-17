@@ -180,11 +180,11 @@
 			switch(outcome)
 				if("False Shuffle")
 					record_featured_stat(FEATURED_STATS_CRIMINALS, user)
-					GLOB.vanderlin_round_stats[STATS_GAMES_RIGGED]++
+					record_round_statistic(STATS_GAMES_RIGGED)
 					to_chat(user, span_notice("I shuffle the cards, then reverse the shuffle. Sneaky."))
 				if("Force Top Card")
 					record_featured_stat(FEATURED_STATS_CRIMINALS, user)
-					GLOB.vanderlin_round_stats[STATS_GAMES_RIGGED]++
+					record_round_statistic(STATS_GAMES_RIGGED)
 					user.set_machine(src)
 					interact(user)
 				if("Play fair")
