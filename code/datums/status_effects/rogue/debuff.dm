@@ -431,7 +431,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/horn_taken
 	effectedstats = list(STATKEY_LCK = -19)
 	duration = -1
-
+//tiefling surgery horn removal!
 /atom/movable/screen/alert/status_effect/debuff/horn_taken
 	name = "Hornless"
 	desc = span_danger("I'm... bald... MOM SAVE ME")
