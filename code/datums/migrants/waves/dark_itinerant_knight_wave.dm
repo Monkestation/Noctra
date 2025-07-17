@@ -58,7 +58,7 @@
 
 /datum/outfit/job/dark_itinerant_squire/pre_equip(mob/living/carbon/human/H)
 	..()
-	shirt = /obj/item/clothing/shirt/dress/gen/black
+	shirt = /obj/item/clothing/shirt/dress/gen/colored/black
 	pants = /obj/item/clothing/pants/chainlegs/iron
 	shoes = /obj/item/clothing/shoes/boots
 	belt = /obj/item/storage/belt/leather

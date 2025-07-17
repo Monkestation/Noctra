@@ -78,7 +78,7 @@
 			H.adjust_skillrank(/datum/skill/labor/fishing, 1, TRUE) //Have to know to play the part.
 			if(H.gender == MALE)
 				pants = /obj/item/clothing/pants/tights/random
-				shirt = /obj/item/clothing/shirt/shortshirt/random
+				shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 				shoes = /obj/item/clothing/shoes/boots/leather
 				neck = /obj/item/storage/belt/pouch/coins/poor
 				head = /obj/item/clothing/head/fisherhat
@@ -91,7 +91,7 @@
 				beltl = /obj/item/flint
 				backpack_contents = list(/obj/item/weapon/knife/hunting = 1, /obj/item/natural/worms = 1, /obj/item/weapon/shovel/small = 1)
 			else
-				shirt = /obj/item/clothing/shirt/dress/gen/random
+				shirt = /obj/item/clothing/shirt/dress/gen/colored/random
 				armor = /obj/item/clothing/armor/gambeson/light/striped
 				shoes = /obj/item/clothing/shoes/boots/leather
 				neck = /obj/item/storage/belt/pouch/coins/poor
@@ -106,7 +106,7 @@
 			H.adjust_skillrank(/datum/skill/combat/bows, 2, TRUE) //The assassin trades their crossbow abilities to match their disguise.
 			H.adjust_skillrank(/datum/skill/combat/crossbows, -2, TRUE)
 			pants = /obj/item/clothing/pants/tights/random
-			shirt = /obj/item/clothing/shirt/shortshirt/random
+			shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 			shoes = /obj/item/clothing/shoes/boots/leather
 			neck = /obj/item/storage/belt/pouch/coins/poor
 			cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
@@ -149,7 +149,7 @@
 			if(H.gender == MALE)
 				H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE) //The male noble's sword is less useful than the female noble's bow, so no downside.
 				pants = /obj/item/clothing/pants/tights/black
-				shirt = /obj/item/clothing/shirt/tunic/random
+				shirt = /obj/item/clothing/shirt/tunic/colored/random
 				cloak = /obj/item/clothing/cloak/raincloak/furcloak
 				head = /obj/item/clothing/head/fancyhat
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
@@ -159,7 +159,7 @@
 			else
 				H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE) //Female nobles get the male noble's bow, but are less trained than an Assassin disguising as a Hunter. Balance.
 				H.adjust_skillrank(/datum/skill/combat/crossbows, -1, TRUE)
-				shirt = /obj/item/clothing/shirt/dress/silkdress/random
+				shirt = /obj/item/clothing/shirt/dress/silkdress/colored/random
 				head = /obj/item/clothing/head/hatfur
 				cloak = /obj/item/clothing/cloak/raincloak/furcloak
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
@@ -184,7 +184,7 @@
 			H.put_in_hands(P, forced = TRUE)
 			if(H.gender == FEMALE)
 				head = /obj/item/clothing/head/armingcap
-				armor = /obj/item/clothing/shirt/dress/gen/random
+				armor = /obj/item/clothing/shirt/dress/gen/colored/random
 				shirt = /obj/item/clothing/shirt/undershirt
 				pants = null
 			backpack_contents = list(/obj/item/neuFarm/seed/wheat=1,/obj/item/neuFarm/seed/apple=1,/obj/item/ash=1,/obj/item/weapon/knife/villager=1)

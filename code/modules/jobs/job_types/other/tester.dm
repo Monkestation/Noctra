@@ -29,7 +29,7 @@
 	beltr = /obj/item/weapon/sword/sabre
 	if(prob(50))
 		beltr = /obj/item/weapon/sword/arming
-	shirt = /obj/item/clothing/shirt/shortshirt/merc
+	shirt = /obj/item/clothing/shirt/shortshirt/colored/merc
 	pants = /obj/item/clothing/pants/trou/leather
 	neck = /obj/item/clothing/neck/gorget
 	if(H.gender == FEMALE)

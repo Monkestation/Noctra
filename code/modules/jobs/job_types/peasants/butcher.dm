@@ -38,7 +38,7 @@
 		pants = /obj/item/clothing/pants/trou
 		wrists = /obj/item/clothing/wrists/bracers/leather
 	else
-		shirt = /obj/item/clothing/shirt/dress/gen/random
+		shirt = /obj/item/clothing/shirt/dress/gen/colored/random
 
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC) // Used to dismembering live stock, desensitized to it.
 

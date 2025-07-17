@@ -13,10 +13,10 @@
 
 /datum/outfit/job/adventurer/hollowranger/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/roguehood/red
+	head = /obj/item/clothing/head/roguehood/colored/red
 	mask = /obj/item/clothing/face/shepherd/rag
 	pants = /obj/item/clothing/pants/tights/black
-	shirt = /obj/item/clothing/shirt/tunic/black
+	shirt = /obj/item/clothing/shirt/tunic/colored/black
 	shoes = /obj/item/clothing/shoes/boots
 	belt = /obj/item/storage/belt/leather
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve

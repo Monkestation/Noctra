@@ -73,7 +73,7 @@
 		backr = /obj/item/storage/backpack/satchel
 
 	else
-		armor = /obj/item/clothing/shirt/dress/gen/maid
+		armor = /obj/item/clothing/shirt/dress/gen/colored/maid
 		shirt = /obj/item/clothing/shirt/undershirt
 		shoes = /obj/item/clothing/shoes/ridingboots
 		cloak = /obj/item/clothing/cloak/apron

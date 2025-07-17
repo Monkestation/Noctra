@@ -11,7 +11,7 @@
 
 /datum/outfit/job/adventurer/dranger/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/roguehood/uncolored
+	head = /obj/item/clothing/head/roguehood/colored/uncolored
 	pants = /obj/item/clothing/pants/trou/leather
 	shirt = /obj/item/clothing/shirt/undershirt/random
 	shoes = /obj/item/clothing/shoes/simpleshoes

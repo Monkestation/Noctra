@@ -13,7 +13,7 @@
 	neck = /obj/item/clothing/neck/coif
 	gloves = /obj/item/clothing/gloves/angle
 	pants = /obj/item/clothing/pants/trou/leathertights
-	shirt = /obj/item/clothing/shirt/tunic/black
+	shirt = /obj/item/clothing/shirt/tunic/colored/black
 	armor = /obj/item/clothing/armor/leather/jacket/leathercoat/black
 	shoes = /obj/item/clothing/shoes/nobleboot
 	beltl = /obj/item/flashlight/flare/torch/lantern

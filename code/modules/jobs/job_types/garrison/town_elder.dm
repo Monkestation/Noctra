@@ -246,7 +246,7 @@
 
 /datum/outfit/job/town_elder/hearth_acolyte/pre_equip(mob/living/carbon/human/H)
 	. = ..()
-	head = /obj/item/clothing/head/roguehood/random
+	head = /obj/item/clothing/head/roguehood/colored/random
 	armor = /obj/item/clothing/shirt/robe
 	shoes = /obj/item/clothing/shoes/sandals
 	belt = /obj/item/storage/belt/leather/rope

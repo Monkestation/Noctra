@@ -49,7 +49,7 @@
 	beltr = /obj/item/weapon/knife/villager
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/tights/random
-		shirt = /obj/item/clothing/shirt/shortshirt/random
+		shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 		shoes = /obj/item/clothing/shoes/simpleshoes
 		cloak = /obj/item/clothing/cloak/apron/cook
 		head = /obj/item/clothing/head/cookhat

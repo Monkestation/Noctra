@@ -237,7 +237,7 @@
 	pants = /obj/item/clothing/pants/tights/vagrant
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	wrists = /obj/item/clothing/wrists/bracers/leather
-	head = /obj/item/clothing/head/roguehood/random
+	head = /obj/item/clothing/head/roguehood/colored/random
 	var/loadout = rand(1,6)
 	switch(loadout)
 		if(1) //Axe Warrior
@@ -284,7 +284,7 @@
 	if(prob(50))
 		head = /obj/item/clothing/head/helmet/leather
 	if(prob(50))
-		head = /obj/item/clothing/head/roguehood/uncolored
+		head = /obj/item/clothing/head/roguehood/colored/uncolored
 	if(prob(50))
 		r_hand = /obj/item/weapon/sword/iron
 		shoes = /obj/item/clothing/shoes/boots

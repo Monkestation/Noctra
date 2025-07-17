@@ -72,7 +72,7 @@
 		/obj/item/natural/cloth = 1,
 		/obj/item/natural/fibers = 1,
 	)
-	output = /obj/item/clothing/shirt/shortshirt/uncolored
+	output = /obj/item/clothing/shirt/shortshirt/colored/uncolored
 
 /datum/repeatable_crafting_recipe/sewing/clothshirt
 	name = "cloth shirt"
@@ -215,7 +215,7 @@
 /datum/repeatable_crafting_recipe/sewing/roguehood
 	name = "cloth hood"
 	requirements = list(/obj/item/natural/cloth = 1, /obj/item/natural/fibers = 1,)
-	output = /obj/item/clothing/head/roguehood/uncolored
+	output = /obj/item/clothing/head/roguehood/colored/uncolored
 	craftdiff = 1
 	category = "Hat"
 
@@ -516,7 +516,7 @@
 
 /datum/repeatable_crafting_recipe/sewing/Bladress
 	name = "black dress"
-	output = /obj/item/clothing/shirt/dress/gen/black
+	output = /obj/item/clothing/shirt/dress/gen/colored/black
 	requirements = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
@@ -524,7 +524,7 @@
 
 /datum/repeatable_crafting_recipe/sewing/Bludress
 	name = "blue dress"
-	output = /obj/item/clothing/shirt/dress/gen/blue
+	output = /obj/item/clothing/shirt/dress/gen/colored/blue
 	requirements = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
@@ -532,7 +532,7 @@
 
 /datum/repeatable_crafting_recipe/sewing/Purdress
 	name = "purple dress"
-	output = /obj/item/clothing/shirt/dress/gen/purple
+	output = /obj/item/clothing/shirt/dress/gen/colored/purple
 	requirements = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3

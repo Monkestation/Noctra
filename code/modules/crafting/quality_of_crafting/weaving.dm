@@ -239,7 +239,7 @@
 
 /datum/repeatable_crafting_recipe/sewing/weaving/silkdress
 	name = "dress (chemise, silk)"
-	output = /obj/item/clothing/shirt/dress/silkdress/random
+	output = /obj/item/clothing/shirt/dress/silkdress/colored/random
 	requirements = list(/obj/item/natural/fibers = 2,
 				/obj/item/natural/silk = 3)
 	craftdiff = 5

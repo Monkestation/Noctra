@@ -69,7 +69,7 @@
 
 	neck = /obj/item/storage/belt/pouch/coins/poor
 	if(H.gender == MALE)
-		head = /obj/item/clothing/head/roguehood/random
+		head = /obj/item/clothing/head/roguehood/colored/random
 		if(prob(50))
 			head = /obj/item/clothing/head/strawhat
 		pants = /obj/item/clothing/pants/tights/random
@@ -81,7 +81,7 @@
 		beltl = /obj/item/weapon/knife/villager
 	else
 		head = /obj/item/clothing/head/armingcap
-		armor = /obj/item/clothing/shirt/dress/gen/random
+		armor = /obj/item/clothing/shirt/dress/gen/colored/random
 		shirt = /obj/item/clothing/shirt/undershirt
 		shoes = /obj/item/clothing/shoes/simpleshoes
 		belt = /obj/item/storage/belt/leather/rope
@@ -149,7 +149,7 @@
 	neck = /obj/item/storage/belt/pouch/coins/poor
 
 	if(H.gender == MALE)
-		head = /obj/item/clothing/head/roguehood/random
+		head = /obj/item/clothing/head/roguehood/colored/random
 		if(prob(50))
 			head = /obj/item/clothing/head/strawhat
 		pants = /obj/item/clothing/pants/tights/random
@@ -161,7 +161,7 @@
 		beltl = /obj/item/weapon/knife/villager
 	else
 		head = /obj/item/clothing/head/armingcap
-		armor = /obj/item/clothing/shirt/dress/gen/random
+		armor = /obj/item/clothing/shirt/dress/gen/colored/random
 		shirt = /obj/item/clothing/shirt/undershirt
 		shoes = /obj/item/clothing/shoes/simpleshoes
 		belt = /obj/item/storage/belt/leather/rope

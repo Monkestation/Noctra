@@ -41,7 +41,7 @@
 	neck = /obj/item/storage/belt/pouch/coins/rich
 	ring = /obj/item/clothing/ring/silver
 	if(H.gender == FEMALE)
-		armor = /obj/item/clothing/shirt/dress/gen/green
+		armor = /obj/item/clothing/shirt/dress/gen/colored/green
 		head = /obj/item/clothing/head/hatblu
 		cloak = /obj/item/clothing/cloak/raincloak/purple
 	if(H.gender == MALE)

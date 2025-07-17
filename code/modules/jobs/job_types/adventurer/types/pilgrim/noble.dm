@@ -39,7 +39,7 @@
 		H.change_stat(STATKEY_SPD, 1)
 		H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/bows, 2, TRUE)
-		shirt = /obj/item/clothing/shirt/dress/silkdress/random
+		shirt = /obj/item/clothing/shirt/dress/silkdress/colored/random
 		head = /obj/item/clothing/head/hatfur
 		cloak = /obj/item/clothing/cloak/raincloak/furcloak
 		backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
@@ -51,7 +51,7 @@
 		H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/bows, 2, TRUE)
 		pants = /obj/item/clothing/pants/tights/black
-		shirt = /obj/item/clothing/shirt/tunic/random
+		shirt = /obj/item/clothing/shirt/tunic/colored/random
 		cloak = /obj/item/clothing/cloak/raincloak/furcloak
 		head = /obj/item/clothing/head/fancyhat
 		backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow

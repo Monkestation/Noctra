@@ -82,7 +82,7 @@
 			)
 		if("Splint")
 			armor = /obj/item/clothing/armor/leather/splint
-			shirt = /obj/item/clothing/shirt/tunic/black
+			shirt = /obj/item/clothing/shirt/tunic/colored/black
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			pants = /obj/item/clothing/pants/tights/uncolored
 			H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
@@ -94,7 +94,7 @@
 		if("Jacket")
 			armor = /obj/item/clothing/armor/leather/vest/winterjacket
 			neck = /obj/item/clothing/neck/coif
-			shirt = /obj/item/clothing/shirt/tunic/red
+			shirt = /obj/item/clothing/shirt/tunic/colored/red
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			gloves = /obj/item/clothing/gloves/angle
 			head = /obj/item/clothing/head/roguehood
@@ -109,7 +109,7 @@
 			)
 		if("Sailor")
 			armor = /obj/item/clothing/armor/leather/jacket/sea
-			shirt = /obj/item/clothing/shirt/tunic/red
+			shirt = /obj/item/clothing/shirt/tunic/colored/red
 			head = /obj/item/clothing/head/helmet/leather/headscarf
 			mask = /obj/item/clothing/face/shepherd/clothmask
 			pants = /obj/item/clothing/pants/tights/sailor
@@ -229,7 +229,7 @@
 			)
 		if("Noble") // Congratulations, you're important! Or were, rather.
 			armor = /obj/item/clothing/armor/cuirass/iron
-			shirt = /obj/item/clothing/shirt/tunic/ucolored
+			shirt = /obj/item/clothing/shirt/tunic/colored
 			cloak = /obj/item/clothing/cloak/raincloak/furcloak
 			pants = /obj/item/clothing/pants/tights/black
 			neck = /obj/item/clothing/neck/chaincoif/iron
@@ -471,7 +471,7 @@
 			if(!(H.patron == /datum/patron/divine/noc || /datum/patron/inhumen/zizo))	//Magicians must follow Noc or Zizo to have access to magic.
 				H.set_patron(/datum/patron/divine/noc)
 			r_hand = /obj/item/weapon/polearm/woodstaff
-			head = /obj/item/clothing/head/roguehood/mage
+			head = /obj/item/clothing/head/roguehood/colored/mage
 			armor = /obj/item/clothing/shirt/robe/mage
 			beltl = /obj/item/reagent_containers/glass/bottle/manapot
 			beltr = /obj/item/book/granter/spellbook/apprentice

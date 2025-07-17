@@ -24,13 +24,13 @@
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backr = /obj/item/storage/backpack/satchel
 	ring = /obj/item/clothing/ring/gold/guild_mercator
-	shirt = /obj/item/clothing/shirt/tunic/purple
+	shirt = /obj/item/clothing/shirt/tunic/colored/purple
 	pants = /obj/item/clothing/pants/trou/leather
 	neck = /obj/item/clothing/neck/shalal/emir
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/veryrich)
 	if(H.gender == FEMALE)
 		armor = /obj/item/clothing/armor/leather/jacket/silk_coat
-		shirt = /obj/item/clothing/shirt/dress/silkdress/black
+		shirt = /obj/item/clothing/shirt/dress/silkdress/colored/black
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
@@ -88,7 +88,7 @@
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backr = /obj/item/storage/backpack/satchel
 	ring = /obj/item/clothing/ring/gold/guild_mercator
-	shirt = /obj/item/clothing/shirt/dress/silkdress/black
+	shirt = /obj/item/clothing/shirt/dress/silkdress/colored/black
 	pants = /obj/item/clothing/pants/trou/leather
 	neck = /obj/item/clothing/neck/shalal/emir
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/veryrich = 1, /obj/item/reagent_containers/glass/bottle/wine = 1)

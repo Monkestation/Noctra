@@ -49,7 +49,7 @@
 		H.change_stat(STATKEY_END, 2)
 		H.change_stat(STATKEY_SPD, 1)
 	else
-		armor = /obj/item/clothing/shirt/dress/gen/random
+		armor = /obj/item/clothing/shirt/dress/gen/colored/random
 		shoes = /obj/item/clothing/shoes/simpleshoes
 		shirt = /obj/item/clothing/shirt/undershirt
 		belt = /obj/item/storage/belt/leather/rope

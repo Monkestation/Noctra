@@ -38,7 +38,7 @@
 	belt = /obj/item/storage/belt/leather/plaquegold
 	beltl = /obj/item/storage/keyring/gaffer
 	beltr = /obj/item/flashlight/flare/torch/lantern
-	shirt = /obj/item/clothing/shirt/tunic/black
+	shirt = /obj/item/clothing/shirt/tunic/colored/black
 	wrists = /obj/item/clothing/wrists/bracers/leather/advanced
 	armor = /obj/item/clothing/armor/leather/hide
 	if(!visualsOnly)

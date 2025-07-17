@@ -33,7 +33,7 @@
 	H.adjust_skillrank(/datum/skill/labor/mathematics, 2, TRUE)
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/tights/random
-		shirt = /obj/item/clothing/shirt/shortshirt/random
+		shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 		shoes = /obj/item/clothing/shoes/shortboots
 		belt = /obj/item/storage/belt/leather
 		beltl = /obj/item/storage/belt/pouch/coins/mid

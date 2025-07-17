@@ -152,7 +152,7 @@
 	H.base_constitution = 8
 	H.base_endurance = 8
 	var/loadout = rand(1,7)
-	head = /obj/item/clothing/head/roguehood/random
+	head = /obj/item/clothing/head/roguehood/colored/random
 	pants = /obj/item/clothing/pants/tights/vagrant
 	shirt = /obj/item/clothing/shirt/undershirt/vagrant
 	switch(loadout)
@@ -176,7 +176,7 @@
 		if(7) //Ex Wife
 			r_hand = /obj/item/cooking/pan
 			head = /obj/item/clothing/head/armingcap
-			shirt = /obj/item/clothing/shirt/dress/gen/brown
+			shirt = /obj/item/clothing/shirt/dress/gen/colored/brown
 
 
 ///////////////////////////////////////////////////////////// EVENTMIN SKELETONGS
@@ -210,7 +210,7 @@
 	if(prob(50))
 		head = /obj/item/clothing/head/helmet/leather
 	if(prob(50))
-		head = /obj/item/clothing/head/roguehood/random
+		head = /obj/item/clothing/head/roguehood/colored/random
 	if(prob(50))
 		r_hand = /obj/item/weapon/sword/iron
 	else

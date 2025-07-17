@@ -85,7 +85,7 @@
 			H.change_stat(STATKEY_LCK, -2)
 			GLOB.heretical_players += H.real_name
 		if(/datum/patron/godless)
-			head = /obj/item/clothing/head/roguehood/green
+			head = /obj/item/clothing/head/roguehood/colored/green
 			H.cmode_music = 'sound/music/cmode/church/CombatInquisitor.ogg'
 			H.change_stat(STATKEY_LCK, -2)
 			GLOB.heretical_players += H.real_name

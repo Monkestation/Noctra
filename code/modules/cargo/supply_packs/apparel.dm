@@ -6,7 +6,7 @@
 /datum/supply_pack/apparel/hood
 	name = "Shoulder Hood"
 	cost = 10
-	contains = /obj/item/clothing/head/roguehood/random
+	contains = /obj/item/clothing/head/roguehood/colored/random
 
 /datum/supply_pack/apparel/menacing
 	name = "Sack Hood"
@@ -131,22 +131,22 @@
 /datum/supply_pack/apparel/shortshirt_random
 	name = "Shortshirt"
 	cost = 3
-	contains = /obj/item/clothing/shirt/shortshirt/random
+	contains = /obj/item/clothing/shirt/shortshirt/colored/random
 
 /datum/supply_pack/apparel/tunic_random
 	name = "Tunic"
 	cost = 6
-	contains = /obj/item/clothing/shirt/tunic/random
+	contains = /obj/item/clothing/shirt/tunic/colored/random
 
 /datum/supply_pack/apparel/dress_gen_random
 	name = "Cloth Dress"
 	cost = 7
-	contains = /obj/item/clothing/shirt/dress/gen/random
+	contains = /obj/item/clothing/shirt/dress/gen/colored/random
 
 /datum/supply_pack/apparel/silkdress_random
 	name = "Silk Dress"
 	cost = 30
-	contains = /obj/item/clothing/shirt/dress/silkdress/random
+	contains = /obj/item/clothing/shirt/dress/silkdress/colored/random
 
 /datum/supply_pack/apparel/robe
 	name = "Robe"

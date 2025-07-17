@@ -24,7 +24,7 @@
 	backpack_contents = list(/obj/item/needle/thorn = 1, /obj/item/natural/cloth = 1, /obj/item/clothing/face/spectacles/sglasses, /obj/item/chalk = 1, /obj/item/book/granter/spellbook/apprentice = 1)
 	mask = /obj/item/clothing/face/facemask/steel //idk if this makes it so they cant cast but i want all of the bandits to have the same mask
 	neck = /obj/item/clothing/neck/coif
-	head = /obj/item/clothing/head/roguehood/black
+	head = /obj/item/clothing/head/roguehood/colored/black
 
 	r_hand = /obj/item/weapon/polearm/woodstaff/quarterstaff/iron
 	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
