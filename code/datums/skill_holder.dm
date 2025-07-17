@@ -299,13 +299,13 @@
 			SEND_SIGNAL(current, COMSIG_SKILL_RANK_INCREASED, skill_ref, known_skills[skill_ref], old_level)
 			to_chat(current, span_nicegreen("My proficiency in [skill_ref.name] grows to [SSskills.level_names[known_skills[skill_ref]]]!"))
 			skill_ref.skill_level_effect(known_skills[skill_ref], src)
-			GLOB.vanderlin_round_stats[STATS_SKILLS_LEARNED]++
+			record_round_statistic(STATS_SKILLS_LEARNED)
 			if(istype(skill_ref, /datum/skill/combat))
-				GLOB.vanderlin_round_stats[STATS_COMBAT_SKILLS]++
+				record_round_statistic(STATS_COMBAT_SKILLS)
 			if(istype(skill_ref, /datum/skill/craft))
-				GLOB.vanderlin_round_stats[STATS_CRAFT_SKILLS]++
+				record_round_statistic(STATS_CRAFT_SKILLS)
 			if(skill == /datum/skill/misc/reading && old_level == SKILL_LEVEL_NONE && current.is_literate())
-				GLOB.vanderlin_round_stats[STATS_LITERACY_TAUGHT]++
+				record_round_statistic(STATS_LITERACY_TAUGHT)
 		if(skill == /datum/skill/magic/arcane)
 			current?.adjust_spellpoints(1)
 
@@ -399,13 +399,13 @@
 	if(known_skills[skill_ref] >= old_level)
 		SEND_SIGNAL(current, COMSIG_SKILL_RANK_INCREASED, skill_ref, known_skills[skill_ref], old_level)
 		to_chat(current, span_nicegreen("I feel like I've become more proficient at [skill_ref.name]!"))
-		GLOB.vanderlin_round_stats[STATS_SKILLS_LEARNED]++
+		record_round_statistic(STATS_SKILLS_LEARNED)
 		if(istype(skill_ref, /datum/skill/combat))
-			GLOB.vanderlin_round_stats[STATS_COMBAT_SKILLS]++
+			record_round_statistic(STATS_COMBAT_SKILLS)
 		if(istype(skill_ref, /datum/skill/craft))
-			GLOB.vanderlin_round_stats[STATS_CRAFT_SKILLS]++
+			record_round_statistic(STATS_CRAFT_SKILLS)
 		if(skill == /datum/skill/misc/reading && old_level == SKILL_LEVEL_NONE && current.is_literate())
-			GLOB.vanderlin_round_stats[STATS_LITERACY_TAUGHT]++
+			record_round_statistic(STATS_LITERACY_TAUGHT)
 	else
 		to_chat(current, span_warning("I feel like I've become worse at [skill_ref.name]!"))
 

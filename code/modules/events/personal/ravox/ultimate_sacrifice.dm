@@ -2,10 +2,10 @@
 	name = "Ultimate Sacrifice"
 	track = EVENT_TRACK_PERSONAL
 	typepath = /datum/round_event/ultimate_sacrifice
-	weight = 5
+	weight = 7
 	earliest_start = 20 MINUTES
 	max_occurrences = 1
-	min_players = 40
+	min_players = 35
 
 	tags = list(
 		TAG_MEDICAL,
@@ -23,6 +23,8 @@
 			continue
 		if(H.age == AGE_CHILD)
 			continue
+		return TRUE
+
 	return FALSE
 
 /datum/round_event/ultimate_sacrifice/start()

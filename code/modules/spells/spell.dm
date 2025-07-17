@@ -610,6 +610,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	SEND_SIGNAL(src, COMSIG_SPELL_CAST, cast_on)
+	record_featured_object_stat(FEATURED_STATS_SPELLS, name)
 	if(owner)
 		SEND_SIGNAL(owner, COMSIG_MOB_CAST_SPELL, src, cast_on)
 		if(owner.ckey)

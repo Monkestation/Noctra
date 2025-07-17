@@ -7,6 +7,7 @@
 	foodtype = RAW
 	verb_say = "squeaks"
 	verb_yell = "squeaks"
+	pass_flags = PASSDOORS
 	obj_flags = CAN_BE_HIT
 	var/dead = FALSE
 	eat_effect = /datum/status_effect/debuff/uncookedfood

@@ -1,6 +1,7 @@
-#define PRESTI_CLEAN "presti_clean"
-#define PRESTI_SPARK "presti_spark"
-#define PRESTI_MOTE "presti_mote"
+#define PRESTI_CLEAN	/datum/intent/prestidigitation/clean
+#define PRESTI_GATHER	/datum/intent/prestidigitation/gather
+#define PRESTI_SPARK	/datum/intent/prestidigitation/spark
+#define PRESTI_MOTE		/datum/intent/prestidigitation/mote
 
 /datum/action/cooldown/spell/undirected/touch/prestidigitation
 	name = "Prestidigitation"
@@ -26,21 +27,20 @@
 	var/spark_cd = 0
 
 /datum/action/cooldown/spell/undirected/touch/prestidigitation/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster, list/modifiers)
-	if(victim == caster)
-		if(handle_mote())
-			after_action(PRESTI_MOTE)
-		return
-	if(clean_thing(victim))
-		after_action(PRESTI_CLEAN)
-
-/datum/action/cooldown/spell/undirected/touch/prestidigitation/cast_on_secondary_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster, list/modifiers)
-	if(victim == caster)
-		if(create_spark())
-			after_action(PRESTI_SPARK)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(gather_thing(victim))
-		after_action(PRESTI_CLEAN)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	switch(caster.used_intent.type)
+		if(PRESTI_CLEAN)
+			if(clean_thing(victim))
+				after_action(PRESTI_CLEAN)
+		if(PRESTI_GATHER)
+			if(gather_thing(victim))
+				after_action(PRESTI_CLEAN)
+		if(PRESTI_SPARK)
+			if(create_spark())
+				after_action(PRESTI_SPARK)
+		if(PRESTI_MOTE)
+			if(handle_mote())
+				after_action(PRESTI_MOTE)
+	return FALSE
 
 /datum/action/cooldown/spell/undirected/touch/prestidigitation/proc/handle_mote()
 	// adjusted from /obj/item/wisp_lantern & /obj/item/wisp
@@ -65,7 +65,11 @@
 		if(mote.light_system == STATIC_LIGHT)
 			mote.update_light()
 
-		mote.orbit(owner, 18, pick(list(TRUE, FALSE)), 2000, 48, TRUE)
+		var/list/icon_dimensions = get_icon_dimensions(owner.icon)
+		var/orbitsize = (icon_dimensions["width"] + icon_dimensions["height"]) * 0.5
+		orbitsize -= (orbitsize/world.icon_size)*(world.icon_size*0.25)
+
+		mote.orbit(owner, orbitsize, pick(list(TRUE, FALSE)), 2000, 36, TRUE)
 		return TRUE
 
 	return FALSE
@@ -149,16 +153,37 @@
 
 /obj/item/melee/touch_attack/prestidigitation
 	name = "\improper prestidigitating touch"
-	desc = "I recall the following incantations I've learned:\n \
-	<b>Touch Left</b>: Use your arcyne powers to scrub something clean, also known as the Apprentice's Woe.\n \
-	<b>Touch Right</b>: Use the hand to gather certain things without risk.\n \
-	<b>Touch Self Right</b>: Will forth a spark to ignite flammable items like torches, lanterns or campfires.\n \
-	<b>Touch Self Left</b>: Conjure forth an orbiting mote of magelight to light your way."
+	desc = "You recall the following incantations you've learned:\n \
+	<b>Touch</b>: Use your arcyne powers to scrub an object or something clean, like using soap. Also known as the Apprentice's Woe.\n \
+	<b>Grab</b>: Use your arcyne powers to gather magical materials. \n \
+	<b>Shove</b>: Will forth a spark <i>in front of you</i> to ignite flammable items and things like torches, lanterns or campfires. \n \
+	<b>Use</b>: Conjure forth an orbiting mote of magelight to light your way."
 	color = "#3FBAFD"
-	possible_item_intents = list(/datum/intent/use/prestidigitation)
+	possible_item_intents = list(PRESTI_CLEAN, PRESTI_GATHER, PRESTI_SPARK, PRESTI_MOTE)
 
-/datum/intent/use/prestidigitation
+/datum/intent/prestidigitation
 	reach = 3
+	noaa = TRUE
+	misscost = 0
+	releasedrain = 0
+	candodge = TRUE
+	canparry = TRUE
+
+/datum/intent/prestidigitation/clean
+	name = "touch"
+	icon_state = "intouch"
+
+/datum/intent/prestidigitation/gather
+	name = "grab"
+	icon_state = "ingrab"
+
+/datum/intent/prestidigitation/spark
+	name = "shove"
+	icon_state = "inshove"
+
+/datum/intent/prestidigitation/mote
+	name = "use"
+	icon_state = "inuse"
 
 /obj/effect/wisp/prestidigitation
 	name = "minor magelight mote"
@@ -170,5 +195,6 @@
 	light_color = "#3FBAFD"
 
 #undef PRESTI_CLEAN
+#undef PRESTI_GATHER
 #undef PRESTI_SPARK
 #undef PRESTI_MOTE

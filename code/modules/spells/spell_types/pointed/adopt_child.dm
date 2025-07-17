@@ -4,6 +4,8 @@
 	self_cast_possible = FALSE
 	has_visual_effects = FALSE
 
+	cast_range = 1
+
 	charge_required = TRUE
 	cooldown_time = 20 SECONDS
 
@@ -29,10 +31,6 @@
 		return . | SPELL_CANCEL_CAST
 
 	if(cast_on.family_datum && length(cast_on.family_member_datum?.parents))
-		to_chat(owner, span_warning("This child is not an orphan!"))
-		return . | SPELL_CANCEL_CAST
-
-	if(cast_on.job != "Orphan" && !istype(cast_on.mind?.assigned_role, /datum/job/orphan))
 		to_chat(owner, span_warning("This child is not an orphan!"))
 		return . | SPELL_CANCEL_CAST
 

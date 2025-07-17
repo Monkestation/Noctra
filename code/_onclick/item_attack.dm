@@ -260,7 +260,7 @@
 		span_notice("[user] offers [offer_attempt] to [src] with an outstreched hand."),
 		span_notice("I offer [offer_attempt] to [src] with an outstreched hand."),
 	)
-	to_chat(user, span_notice("I will hold [offer_attempt] out for 10 seconds. \
+	to_chat(user, span_smallnotice("I will hold [offer_attempt] out for 10 seconds. \
 	If I switch hands or take it out my hand it will not be able to be taken.\n \
 	I can stop offering the item by using the same hand."))
 	to_chat(src, span_notice("[user] offers [offer_attempt] to me..."))
