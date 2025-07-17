@@ -13,13 +13,17 @@
 	var/list/obj/clothes_list = subtypesof(/obj/item/clothing) - excluded_paths
 
 /datum/unit_test/craftable_clothes/proc/perform_check(obj/item/clothing/checking_typepath)
-	if(piece_of_clothing == recipe)
-		clothes_list -= piece_of_clothing
+	clothes_list -= piece_of_clothing
 
 /datum/unit_test/craftable_clothes/Run()
-	for(var/path in clothes_list)
-		for(var/paths_to_exclude in excluded_paths_with_their_subtypes)
+	for(var/paths_to_exclude in excluded_paths_with_their_subtypes)
+		for(var/path in clothes_list)
 			if(ispath(path, paths_to_exclude))
+				clothes_list -= path
+
+	for(var/paths_to_exclude in excluded_paths_subtypes_only)
+		for(var/path in clothes_list)
+			if(ispath(path, paths_to_exclude) && (paths_to_exclude != path))
 				clothes_list -= path
 
 	for(var/datum/repeatable_crafting_recipe/recipe as anything in subtypesof(/datum/repeatable_crafting_recipe))
