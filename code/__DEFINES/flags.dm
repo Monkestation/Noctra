@@ -76,21 +76,42 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 	the atom/checkpass() proc uses them (tables will call movable atom checkpass(PASSTABLE) for example)
 */
 //flags for pass_flags
-#define PASSTABLE		(1<<0)
-#define PASSGLASS		(1<<1)
-#define PASSGRILLE		(1<<2)
-#define PASSBLOB		(1<<3)
-#define PASSMOB			(1<<4)
-#define PASSCLOSEDTURF	(1<<5)
-#define LETPASSTHROW	(1<<6)
+/// Allows you to pass over tables.
+#define PASSTABLE (1<<0)
+/// Allows you to pass over glass(this generally includes anything see-through that's glass-adjacent, ie. windows, windoors, airlocks with glass, etc.)
+#define PASSGLASS (1<<1)
+/// Allows you to pass over grilles.
+#define PASSGRILLE (1<<2)
+/// Allows you to pass over blob tiles.
+#define PASSBLOB (1<<3)
+/// Allows you to pass over mobs.
+#define PASSMOB (1<<4)
+/// Allows you to pass over closed turfs, ie. walls.
+#define PASSCLOSEDTURF (1<<5)
+/// Let thrown things past us. **ONLY MEANINGFUL ON pass_flags_self!**
+#define LETPASSTHROW (1<<6)
+/// Allows you to pass over structures, ie. racks, tables(if you don't already have PASSTABLE), etc.
+#define PASSSTRUCTURE (1<<7)
+/// Allows you to pass over doors.
+#define PASSDOORS (1<<8)
+/// Allows you to pass over dense items.
+#define PASSITEM (1<<9)
+/// Do not intercept click attempts during Adjacent() checks. See [turf/proc/ClickCross]. **ONLY MEANINGFUL ON pass_flags_self!**
+#define LETPASSCLICKS (1<<10)
+/// Allows you to pass over windows and window-adjacent stuff, like windows and windoors. Does not include doors with glass in them.
+#define PASSWINDOW (1<<11)
 
 //Movement Types
-#define GROUND			(1<<0)
-#define FLYING			(1<<1)
-#define VENTCRAWLING	(1<<2)
-#define FLOATING		(1<<3)
+/// Regular ground based movment
+#define GROUND (1<<0)
+/// Flying, typically with wings
+#define FLYING (1<<1)
+/// Not used but if we had vents it would use this
+#define VENTCRAWLING (1<<2)
+/// Like flying but for zero G where you lack control
+#define FLOATING (1<<3)
 /// When moving, will Cross()/Uncross() everything, but won't stop or Bump() anything.
-#define PHASING			(1<<4)
+#define PHASING (1<<4)
 
 //Fire and Acid stuff, for resistance_flags
 #define LAVA_PROOF		(1<<0)
