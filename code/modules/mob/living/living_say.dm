@@ -109,7 +109,6 @@
 	language = message_mods[LANGUAGE_EXTENSION] || get_default_language()
 
 	if(!can_speak_vocal(message))
-//		visible_message("<b>[src]</b> makes a muffled noise.")
 		to_chat(src, "<span class='warning'>I can't talk.</span>")
 		return
 
@@ -279,8 +278,8 @@
 		listening = get_hearers_in_view(message_range + eavesdrop_range, source)
 	else
 		// !! yelling is handled in the loop below
-		// Reduce range to save on time as otherwise its upto x3 as expensive as above
-		listening = get_hearers_in_view_z_range(message_range - 1, source)
+		// This may be too expensive with how many messages get sent in a round
+		listening = get_hearers_in_view_z_range(message_range, source)
 
 	var/list/the_dead = list()
 
