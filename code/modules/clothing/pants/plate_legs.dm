@@ -91,3 +91,14 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
 	sleeved = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
 	sellprice = 0 // See above comment
+
+//.............. Silver Platelegs .................//
+
+/obj/item/clothing/pants/platelegs/silver
+	name = "silver platelegs"
+	desc = "A finely forged pair of silver plateleggings, offering additional protection against blunt force."
+	icon_state = "silverlegs"
+	armor = ARMOR_PLATE_SILVER
+	smeltresult = /obj/item/ingot/silver
+	item_weight = 9 * SILVER_MULTIPLIER
+	sellprice = VALUE_SILVER_ARMOR

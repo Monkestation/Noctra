@@ -289,3 +289,10 @@
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	allowed_race = list("human", "tiefling", "elf", "aasimar")
 	inhand_mod = FALSE
+
+/obj/item/clothing/cloak/silktabard
+	name = "fine silk tabard"
+	desc = "A finely crafted long tabard weaved from silk. Fashionable, and a symbol of status and wealth."
+	icon_state = "silktabard"
+	item_state = "silktabard"
+	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
