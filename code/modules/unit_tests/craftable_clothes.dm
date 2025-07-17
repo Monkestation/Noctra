@@ -3,12 +3,22 @@
 	// abstract types don't need to be excluded.
 	var/list/excluded_paths = list(
 		/obj/item/clothing/neck/blkknight, // mapped in only
+		/* special uncraftables designed for specific roles next */
+		/obj/item/clothing/neck/portalamulet, // vampire antag item
 		/obj/item/clothing/head/cyberdeck, // fluff item for maniac
-
-
+		/obj/item/clothing/head/helmet/visored/royalknight,
+		/obj/item/clothing/head/helmet/medium/decorated/skullmet,
+		/obj/item/clothing/head/helmet/visored/zizo,
+		/obj/item/clothing/head/helmet/visored/captain,
+		/obj/item/clothing/head/helmet/visored/warden,
+		/obj/item/clothing/neck/mana_star,
+		/obj/item/clothing/head/helmet/visored/knight/black // deathknight item
+		/obj/item/clothing/neck/gorget/hoplite // mercenary item
 	)
 	var/list/excluded_paths_with_their_subtypes = list(
 		/obj/item/clothing/neck/mercmedal, // only earnable via hermes
+		/obj/item/clothing/neck/shalal/emir // uhh?
+		/obj/item/clothing/neck/psycross/silver/holy // unimplemented
 	)
 	var/list/excluded_paths_subtypes_only = list(
 		/obj/item/clothing/neck/keffiyeh,
