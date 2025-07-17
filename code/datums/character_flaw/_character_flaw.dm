@@ -771,8 +771,8 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 	var/mob/living/carbon/human/H = user
 
-	//All luxless species below - BE SURE TO UPDATE THIS IF LUXLESS SPECIES ARE ADDED t. shitcode
-	if(is_species(H, /datum/species/demihuman) != TRUE && (is_species(H, /datum/species/kobold)) != TRUE  && (is_species(H, /datum/species/rakshari)) != TRUE )
+	//All luxless species below - Make sure to update RACES_PLAYER_LUXLESS list macro
+	if (!(user.client.prefs.pref_species.name in RACES_PLAYER_LUXLESS))
 		H.apply_status_effect(/datum/status_effect/buff/flaw_lux_taken)
 		SEND_SIGNAL(user, COMSIG_LUX_EXTRACTED, H)
 
