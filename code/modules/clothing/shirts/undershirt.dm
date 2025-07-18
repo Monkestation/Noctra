@@ -6,12 +6,16 @@
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	body_parts_covered = CHEST|ARMS|VITALS
+	color = CLOTHING_LINEN
 
 /obj/item/clothing/shirt/undershirt/priest
 	name = "undervestments"
 	desc = ""
 	icon_state = "priestunder"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
+
+/obj/item/clothing/shirt/undershirt/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
 
 /obj/item/clothing/shirt/undershirt/colored/uncolored
 	color = CLOTHING_LINEN
