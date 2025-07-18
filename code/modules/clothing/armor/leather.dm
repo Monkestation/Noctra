@@ -105,7 +105,7 @@
 /obj/item/clothing/armor/leather/vest/colored/black
 	color = CLOTHING_DARK_INK
 
-/obj/item/clothing/armor/leather/vest/innkeep // repath to correct padded vest some day
+/obj/item/clothing/armor/leather/vest/colored/innkeep // repath to correct padded vest some day
 	name = "padded vest"
 	desc = "Dyed green, belongs to the owner of the Drunken Saiga inn."
 	icon_state = "striped"
