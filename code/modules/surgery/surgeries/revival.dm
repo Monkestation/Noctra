@@ -33,7 +33,7 @@
 		span_notice("[user] begins to work lux into [target]'s heart."))
 	return TRUE
 
-/datum/surgery_step/infuse_lux/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)qq
+/datum/surgery_step/infuse_lux/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
 	if(target.mob_biotypes & MOB_UNDEAD)
 		display_results(user, target, span_notice("You cannot infuse life into the undead! The rot must be cured first."),
 		"[user] works the lux into [target]'s innards.",
