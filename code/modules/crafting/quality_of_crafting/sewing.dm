@@ -215,7 +215,7 @@
 /datum/repeatable_crafting_recipe/sewing/roguehood
 	name = "cloth hood"
 	requirements = list(/obj/item/natural/cloth = 1, /obj/item/natural/fibers = 1,)
-	output = /obj/item/clothing/head/roguehood/colored/uncolored
+	output = /obj/item/clothing/head/roguehood
 	craftdiff = 1
 	category = "Hat"
 
