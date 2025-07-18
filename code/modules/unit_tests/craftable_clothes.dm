@@ -79,7 +79,7 @@
 		var/list/supply_pack_contents = list()
 		LAZYADD(supply_pack_contents, supply_pack_being_checked.contains) // some contains definitions are not lists (should be unit tested tbh)
 		for(var/path_in_contents as anything in supply_pack_contents)
-			if(ispath_clothing(path_in_contents))
+			if(isclothing_path(path_in_contents))
 				clothes_list -= path_in_contents
 
 	if(!clothes_list.len)

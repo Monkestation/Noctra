@@ -41,3 +41,4 @@
 /obj/item/clothing/shirt/undershirt/green : /obj/item/clothing/shirt/undershirt/colored/green{@OLD}
 /obj/item/clothing/shirt/undershirt/guard : /obj/item/clothing/shirt/undershirt/colored/guard{@OLD}
 /obj/item/clothing/shirt/undershirt/guardsecond : /obj/item/clothing/shirt/undershirt/colored/guardsecond{@OLD}
+/obj/item/clothing/shirt/undershirt/random : /obj/item/clothing/shirt/undershirt/colored/random{@OLD}
