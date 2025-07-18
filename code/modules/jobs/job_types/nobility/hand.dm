@@ -113,7 +113,7 @@
 		pants = /obj/item/clothing/pants/trou/shadowpants
 	else
 		cloak = /obj/item/clothing/cloak/raincloak/mortus //cool spymaster cloak
-		shirt = /obj/item/clothing/shirt/undershirt/guard
+		shirt = /obj/item/clothing/shirt/undershirt/colored/guard
 		armor = /obj/item/clothing/armor/leather/jacket/hand
 		pants = /obj/item/clothing/pants/tights/black
 	H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)

@@ -26,7 +26,7 @@
 	..()
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	pants = /obj/item/clothing/pants/tights/uncolored
-	shirt = /obj/item/clothing/shirt/undershirt/uncolored
+	shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 	belt = /obj/item/storage/belt/leather/rope
 	beltl = /obj/item/storage/belt/pouch/coins/poor
 	neck = /obj/item/key/manor
@@ -74,7 +74,7 @@
 	..()
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	pants = /obj/item/clothing/pants/tights/uncolored
-	shirt = /obj/item/clothing/shirt/undershirt/uncolored
+	shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 	belt = /obj/item/storage/belt/leather/rope
 	beltl = /obj/item/storage/belt/pouch/coins/poor
 	neck = /obj/item/key/tavern
@@ -122,7 +122,7 @@
 	..()
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	pants = /obj/item/clothing/pants/tights/uncolored
-	shirt = /obj/item/clothing/shirt/undershirt/uncolored
+	shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 	belt = /obj/item/storage/belt/leather/rope
 	beltl = /obj/item/storage/belt/pouch/coins/poor
 	neck = /obj/item/key/matron
@@ -168,7 +168,7 @@
 	..()
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	pants = /obj/item/clothing/pants/tights/uncolored
-	shirt = /obj/item/clothing/shirt/undershirt/uncolored
+	shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 	belt = /obj/item/storage/belt/leather/rope
 	beltl = /obj/item/storage/belt/pouch/coins/poor
 	beltr = /obj/item/storage/keyring/gaffer_assistant

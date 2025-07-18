@@ -44,7 +44,7 @@
 	shoes = /obj/item/clothing/shoes/shalal
 	gloves = /obj/item/clothing/gloves/angle
 	belt = /obj/item/storage/belt/leather/shalal
-	shirt = /obj/item/clothing/shirt/undershirt/red
+	shirt = /obj/item/clothing/shirt/undershirt/colored/red
 	armor = /obj/item/clothing/armor/leather/splint
 	backl = /obj/item/storage/backpack/satchel
 	head = /obj/item/clothing/neck/keffiyeh/red

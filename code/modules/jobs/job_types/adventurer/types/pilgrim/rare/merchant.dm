@@ -46,7 +46,7 @@
 		cloak = /obj/item/clothing/cloak/raincloak/purple
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/tights/green
-		shirt = /obj/item/clothing/shirt/undershirt/green
+		shirt = /obj/item/clothing/shirt/undershirt/colored/green
 		cloak = /obj/item/clothing/cloak/half
 		head = /obj/item/clothing/head/fancyhat
 

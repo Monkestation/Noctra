@@ -18,7 +18,7 @@
 	mask = /obj/item/clothing/face/phys
 	head = /obj/item/clothing/head/roguehood/phys
 	shoes = /obj/item/clothing/shoes/boots/leather
-	shirt = /obj/item/clothing/shirt/undershirt/black
+	shirt = /obj/item/clothing/shirt/undershirt/colored/black
 	backl = /obj/item/storage/backpack/satchel/surgbag/shit
 	pants = /obj/item/clothing/pants/tights/random
 	gloves = /obj/item/clothing/gloves/leather/phys

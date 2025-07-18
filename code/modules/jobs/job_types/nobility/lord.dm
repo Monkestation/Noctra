@@ -92,7 +92,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	H.change_stat(STATKEY_LCK, 5)
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/tights/black
-		shirt = /obj/item/clothing/shirt/undershirt/black
+		shirt = /obj/item/clothing/shirt/undershirt/colored/black
 		armor = /obj/item/clothing/armor/gambeson/arming
 		shoes = /obj/item/clothing/shoes/boots
 		cloak = /obj/item/clothing/cloak/lordcloak

@@ -14,7 +14,7 @@
 	head = /obj/item/clothing/head/brimmed
 	cloak = /obj/item/clothing/cloak/apron/cook
 	shoes = /obj/item/clothing/shoes/boots/leather
-	shirt = /obj/item/clothing/shirt/undershirt/black
+	shirt = /obj/item/clothing/shirt/undershirt/colored/black
 	backl = /obj/item/storage/backpack/satchel/surgbag/shit
 	backr = /obj/item/storage/backpack/satchel/cloth
 	pants = /obj/item/clothing/pants/tights/random

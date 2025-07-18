@@ -56,7 +56,7 @@
 /datum/outfit/job/heir/daring/pre_equip(mob/living/carbon/human/H)
 	..()
 	pants = /obj/item/clothing/pants/tights
-	shirt = /obj/item/clothing/shirt/undershirt/guard
+	shirt = /obj/item/clothing/shirt/undershirt/colored/guard
 	armor = /obj/item/clothing/armor/chainmail
 	shoes = /obj/item/clothing/shoes/nobleboot
 	belt = /obj/item/storage/belt/leather

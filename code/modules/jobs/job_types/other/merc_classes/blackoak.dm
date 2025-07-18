@@ -17,7 +17,7 @@
 	armor = /obj/item/clothing/armor/cuirass/elven
 	backl = /obj/item/storage/backpack/satchel
 	beltl = /obj/item/weapon/knife/dagger/steel/special
-	shirt = /obj/item/clothing/shirt/undershirt/black
+	shirt = /obj/item/clothing/shirt/undershirt/colored/black
 	pants = /obj/item/clothing/pants/trou/leather
 	neck = /obj/item/clothing/neck/chaincoif
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/poor)

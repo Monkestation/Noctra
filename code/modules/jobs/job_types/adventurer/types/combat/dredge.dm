@@ -177,7 +177,7 @@
 			The Ten are false gods, and I loathe those that worship the true corpse god, Necra. Psydon lives, my life for Psydon.")
 			)
 		if("Hide")
-			shirt = /obj/item/clothing/shirt/undershirt/uncolored
+			shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 			armor = /obj/item/clothing/armor/leather/hide
 			cloak = /obj/item/clothing/cloak/raincloak/brown
 			gloves = /obj/item/clothing/gloves/leather/advanced
@@ -502,7 +502,7 @@
 			beltr = /obj/item/weapon/whip
 			wrists = /obj/item/rope/chain
 			armor = /obj/item/clothing/armor/leather/vest
-			shirt = /obj/item/clothing/shirt/undershirt/black
+			shirt = /obj/item/clothing/shirt/undershirt/colored/black
 			head = /obj/item/clothing/head/menacing
 			H.adjust_skillrank(/datum/skill/combat/whipsflails, 3, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)

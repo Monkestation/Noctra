@@ -40,7 +40,7 @@
 	gloves = /obj/item/clothing/gloves/angle
 	wrists = /obj/item/rope/chain //Seems fitting for slavers
 	belt = /obj/item/storage/belt/leather/mercenary/shalal
-	shirt = /obj/item/clothing/shirt/undershirt/uncolored
+	shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 	armor = /obj/item/clothing/armor/leather/splint
 	backr = /obj/item/storage/backpack/satchel
 	head = /obj/item/clothing/neck/keffiyeh/uncolored

@@ -28,7 +28,7 @@
 	armor = /obj/item/clothing/armor/brigandine/coatplates
 	beltr = /obj/item/weapon/sword/long/rider
 	beltl= /obj/item/flashlight/flare/torch/lantern
-	shirt = /obj/item/clothing/shirt/undershirt/black
+	shirt = /obj/item/clothing/shirt/undershirt/colored/black
 	pants = /obj/item/clothing/pants/tights/red
 	neck = /obj/item/clothing/neck/keffiyeh/red
 	backl = /obj/item/storage/backpack/satchel

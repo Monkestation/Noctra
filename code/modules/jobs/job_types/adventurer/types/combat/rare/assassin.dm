@@ -206,7 +206,7 @@
 			backl = /obj/item/storage/backpack/backpack
 			backpack_contents = list(/obj/item/flint = 1, /obj/item/weapon/knife/villager = 1)
 		if("Thief")
-			shirt = /obj/item/clothing/shirt/undershirt/black
+			shirt = /obj/item/clothing/shirt/undershirt/colored/black
 			gloves = /obj/item/clothing/gloves/fingerless
 			pants = /obj/item/clothing/pants/trou/leather
 			shoes = /obj/item/clothing/shoes/boots
@@ -248,7 +248,7 @@
 			H.adjust_skillrank(/datum/skill/craft/cooking, 3, TRUE) // Trustworthy poisoner.
 			shoes = /obj/item/clothing/shoes/simpleshoes
 			pants = /obj/item/clothing/pants/tights/uncolored
-			shirt = /obj/item/clothing/shirt/undershirt/uncolored
+			shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 			belt = /obj/item/storage/belt/leather/assassin
 			beltl = /obj/item/storage/belt/pouch/coins/poor
 			if(H.gender == MALE)
@@ -267,7 +267,7 @@
 			beltl = /obj/item/storage/belt/pouch/coins/poor
 			beltr = /obj/item/weapon/knife/dagger/steel
 			cloak = /obj/item/clothing/cloak/faceless
-			shirt = /obj/item/clothing/shirt/undershirt/black
+			shirt = /obj/item/clothing/shirt/undershirt/colored/black
 			mask = /obj/item/clothing/face/lordmask/faceless
 			backpack_contents = list(/obj/item/reagent_containers/glass/bottle/poison, /obj/item/weapon/knife/dagger/steel/profane, /obj/item/lockpick, /obj/item/storage/fancy/cigarettes/zig, /obj/item/flint)
 			ADD_TRAIT(H, TRAIT_FACELESS, TRAIT_GENERIC)

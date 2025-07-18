@@ -64,7 +64,7 @@
 
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/tights
-		shirt = /obj/item/clothing/shirt/undershirt/guard
+		shirt = /obj/item/clothing/shirt/undershirt/colored/guard
 		shoes = /obj/item/clothing/shoes/nobleboot
 		belt = /obj/item/storage/belt/leather/plaquesilver
 		beltr = /obj/item/storage/keyring/butler

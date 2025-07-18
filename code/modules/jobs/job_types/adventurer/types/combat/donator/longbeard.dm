@@ -39,7 +39,7 @@
 	shoes = /obj/item/clothing/shoes/boots/rare/dwarfplate
 	gloves = /obj/item/clothing/gloves/rare/dwarfplate
 	belt = /obj/item/storage/belt/leather
-	shirt = /obj/item/clothing/shirt/undershirt/black
+	shirt = /obj/item/clothing/shirt/undershirt/colored/black
 	armor = /obj/item/clothing/armor/rare/dwarfplate
 	backl = /obj/item/storage/backpack/satchel
 	head = /obj/item/clothing/head/rare/dwarfplate

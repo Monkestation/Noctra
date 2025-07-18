@@ -47,7 +47,7 @@
 	ADD_TRAIT(H, TRAIT_SEEPRICES, TRAIT_GENERIC)
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/tights/red
-		shirt = /obj/item/clothing/shirt/undershirt/red
+		shirt = /obj/item/clothing/shirt/undershirt/colored/red
 		armor = /obj/item/clothing/shirt/tunic/colored/red
 		cloak = /obj/item/clothing/cloak/raincloak/furcloak
 	else

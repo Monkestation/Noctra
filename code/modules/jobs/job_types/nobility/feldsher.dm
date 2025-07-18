@@ -30,7 +30,7 @@
 /datum/outfit/job/feldsher/pre_equip(mob/living/carbon/human/H)
 	..()
 	shoes = /obj/item/clothing/shoes/shortboots
-	shirt = /obj/item/clothing/shirt/undershirt/red
+	shirt = /obj/item/clothing/shirt/undershirt/colored/red
 	backr = /obj/item/storage/backpack/satchel
 	backl = /obj/item/storage/backpack/satchel/surgbag
 	pants = /obj/item/clothing/pants/tights/random

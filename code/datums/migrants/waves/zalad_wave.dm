@@ -206,7 +206,7 @@
 	armor = /obj/item/clothing/armor/brigandine/coatplates
 	beltr = /obj/item/weapon/sword/long/rider
 	beltl= /obj/item/flashlight/flare/torch/lantern
-	shirt = /obj/item/clothing/shirt/undershirt/black
+	shirt = /obj/item/clothing/shirt/undershirt/colored/black
 	pants = /obj/item/clothing/pants/tights/red
 	neck = /obj/item/clothing/neck/keffiyeh/red
 	backl = /obj/item/storage/backpack/satchel
@@ -275,7 +275,7 @@
 	shoes = /obj/item/clothing/shoes/shalal
 	gloves = /obj/item/clothing/gloves/angle
 	belt = /obj/item/storage/belt/leather/shalal
-	shirt = /obj/item/clothing/shirt/undershirt/red
+	shirt = /obj/item/clothing/shirt/undershirt/colored/red
 	armor = /obj/item/clothing/armor/leather/splint
 	backl = /obj/item/storage/backpack/satchel
 	head = /obj/item/clothing/neck/keffiyeh/red

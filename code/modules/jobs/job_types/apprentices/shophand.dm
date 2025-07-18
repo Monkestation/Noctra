@@ -37,7 +37,7 @@
 	else
 		head = /obj/item/clothing/head/chaperon
 		pants = /obj/item/clothing/pants/tights
-		shirt = /obj/item/clothing/shirt/undershirt/blue
+		shirt = /obj/item/clothing/shirt/undershirt/colored/blue
 		shoes = /obj/item/clothing/shoes/simpleshoes
 		belt = /obj/item/storage/belt/leather
 		beltr = /obj/item/storage/belt/pouch/coins/poor

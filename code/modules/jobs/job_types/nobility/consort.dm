@@ -65,7 +65,7 @@
 	. = ..()
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/tights/black
-		shirt = /obj/item/clothing/shirt/undershirt/black
+		shirt = /obj/item/clothing/shirt/undershirt/colored/black
 		armor = /obj/item/clothing/armor/leather/vest/winterjacket
 	else
 		pants = /obj/item/clothing/pants/tights/random
@@ -109,7 +109,7 @@
 	. = ..()
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/tights/black
-		shirt = /obj/item/clothing/shirt/undershirt/black
+		shirt = /obj/item/clothing/shirt/undershirt/colored/black
 		armor = /obj/item/clothing/armor/leather/vest/winterjacket // this is kind of stupid but i love it anyway
 	else
 		pants = /obj/item/clothing/pants/tights/random
@@ -153,7 +153,7 @@
 	. = ..()
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/tights/green
-		shirt = /obj/item/clothing/shirt/undershirt/black
+		shirt = /obj/item/clothing/shirt/undershirt/colored/black
 		armor = /obj/item/clothing/shirt/tunic/colored/green
 	else
 		shirt = /obj/item/clothing/shirt/dress/silkdress/colored/princess
