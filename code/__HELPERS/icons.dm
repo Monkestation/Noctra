@@ -1036,6 +1036,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	body.update_inv_hands(hide_experimental = TRUE)
 	body.update_inv_belt(hide_experimental = TRUE)
 	body.update_inv_back(hide_experimental = TRUE)
+	body.update_inv_head(hide_nonstandard = TRUE)
 
 	var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 	for(var/D in showDirs)
@@ -1046,6 +1047,7 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	body.update_inv_hands()
 	body.update_inv_belt()
 	body.update_inv_back()
+	body.update_inv_head()
 
 	humanoid_icon_cache[icon_id] = out_icon
 	dummy_key ? unset_busy_human_dummy(dummy_key) : qdel(body)
@@ -1383,6 +1385,7 @@ GLOBAL_LIST_EMPTY(headshot_cache)
 	target.update_inv_hands(hide_experimental = TRUE)
 	target.update_inv_belt(hide_experimental = TRUE)
 	target.update_inv_back(hide_experimental = TRUE)
+	target.update_inv_head(hide_nonstandard = TRUE)
 
 	var/image/dummy = image(target.icon, target, target.icon_state, target.layer, target.dir)
 	dummy.appearance = target.appearance
@@ -1391,6 +1394,7 @@ GLOBAL_LIST_EMPTY(headshot_cache)
 	target.update_inv_hands()
 	target.update_inv_belt()
 	target.update_inv_back()
+	target.update_inv_head()
 
 	var/icon/headshot = getFlatIcon(dummy, SOUTH, no_anim = TRUE)
 	headshot.Scale(size, size)

@@ -261,7 +261,7 @@
 
 	apply_overlay(NECK_LAYER)
 
-/mob/living/carbon/update_inv_head()
+/mob/living/carbon/update_inv_head(hide_nonstandard = FALSE)
 	remove_overlay(HEAD_LAYER)
 
 	var/age = AGE_ADULT
@@ -277,6 +277,10 @@
 		inv?.update_appearance()
 
 	if(head)
+		if(hide_nonstandard && (head.worn_x_dimension != 32 || head.worn_y_dimension != 32))
+			update_hud_head(head)
+			return
+
 		overlays_standing[HEAD_LAYER] = head.build_worn_icon(age = age, default_layer = HEAD_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/head.dmi')
 		update_hud_head(head)
 

@@ -573,7 +573,7 @@ There are several things that need to be remembered:
 	apply_overlay(SHOES_LAYER)
 	apply_overlay(SHOESLEEVE_LAYER)
 
-/mob/living/carbon/human/update_inv_head()
+/mob/living/carbon/human/update_inv_head(hide_nonstandard = FALSE)
 	remove_overlay(HEAD_LAYER)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
@@ -584,6 +584,10 @@ There are several things that need to be remembered:
 		inv?.update_appearance()
 
 	if(head)
+		if(hide_nonstandard && (head.worn_x_dimension != 32 || head.worn_y_dimension != 32))
+			update_hud_head(head)
+			return
+
 		update_hud_head(head)
 		var/datum/species/species = dna?.species
 		var/use_female_sprites = FALSE
