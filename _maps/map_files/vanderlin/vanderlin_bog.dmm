@@ -2517,7 +2517,7 @@
 /obj/item/weapon/sword/scimitar/messer,
 /obj/item/clothing/gloves/leather,
 /obj/item/clothing/armor/leather,
-/obj/item/clothing/cloak/raincloak/furcloak/brown,
+/obj/item/clothing/cloak/raincloak/furcloak/colored/brown,
 /turf/open/floor/ruinedwood/turned,
 /area/rogue/indoors/shelter/bog)
 "HP" = (

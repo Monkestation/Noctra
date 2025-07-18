@@ -63,5 +63,10 @@
 /obj/item/clothing/armor/leather/vest/butler : /obj/item/clothing/armor/leather/vest/colored/butler{@OLD}
 /obj/item/clothing/armor/leather/vest/black : /obj/item/clothing/armor/leather/vest/colored/black{@OLD}
 /obj/item/clothing/armor/leather/vest/innkeep : /obj/item/clothing/armor/leather/vest/colored/innkeep{@OLD}
-/obj/item/clothing/shirt/undershirt/vagrant : /obj/item/clothing/shirt/undershirt/colored/vagrant
-/obj/item/clothing/shirt/undershirt/vagrant/l : /obj/item/clothing/shirt/undershirt/colored/vagrant/l
+/obj/item/clothing/shirt/undershirt/vagrant : /obj/item/clothing/shirt/undershirt/colored/vagrant{@OLD}
+/obj/item/clothing/shirt/undershirt/vagrant/l : /obj/item/clothing/shirt/undershirt/colored/vagrant/l{@OLD}
+/obj/item/clothing/pants/loincloth/brown : /obj/item/clothing/pants/loincloth/colored/brown{@OLD}
+/obj/item/clothing/pants/loincloth/black : /obj/item/clothing/pants/loincloth/colored/black{@OLD}
+/obj/item/clothing/pants/loincloth/pink : /obj/item/clothing/pants/loincloth/colored/pink{@OLD}
+/obj/item/clothing/cloak/raincloak/furcloak/brown : /obj/item/clothing/cloak/raincloak/furcloak/colored/brown{@OLD}
+/obj/item/clothing/cloak/raincloak/furcloak/black : /obj/item/clothing/cloak/raincloak/furcloak/colored/black{@OLD}

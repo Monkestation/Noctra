@@ -216,7 +216,7 @@
 			H.adjust_skillrank(/datum/skill/craft/tanning, 1, TRUE)
 			neck = /obj/item/clothing/neck/gorget
 			mask = /obj/item/clothing/face/facemask
-			pants = /obj/item/clothing/pants/loincloth/black
+			pants = /obj/item/clothing/pants/loincloth/colored/black
 			H.change_stat(STATKEY_CON, -2)
 			H.change_stat(STATKEY_STR, 1)
 			H.change_stat(STATKEY_END, -2)

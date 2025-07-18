@@ -27,7 +27,7 @@
 
 	// Despite extensive combat experience, this class is exceptionally destitute. The only luxury besides combat gear that it possesses is a lantern for a source of light
 	// Beneath the arms and armor is a simple loincloth, and it doesn't start with any money. This should encourage them to find someone to serve or work alongside with very quickly
-	pants = /obj/item/clothing/pants/loincloth/brown
+	pants = /obj/item/clothing/pants/loincloth/colored/brown
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	shoes = /obj/item/clothing/shoes/hoplite
 	cloak = /obj/item/clothing/cloak/half/red

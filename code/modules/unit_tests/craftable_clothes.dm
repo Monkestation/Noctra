@@ -26,6 +26,8 @@ abstract types are automatically excluded.
 		/obj/item/clothing/neck/mercmedal, // only earnable via hermes
 		/obj/item/clothing/neck/shalal, // this is a medal
 		/obj/item/clothing/neck/psycross/silver/holy, // unimplemented
+		/obj/item/clothing/armor/skin_armor, // bruh
+		/obj/item/clothing/head/hooded, // abstract items connected to a cloak
 	)
 	/// excludes paths that are subtypes of these types
 	var/list/excluded_paths_subtypes_only = list(
@@ -97,12 +99,3 @@ abstract types are automatically excluded.
 		return
 
 	TEST_FAIL("The following clothing subtypes do not have a crafting recipe: [clothes_list.Join(", ")]")
-
-
-
-
-
-
-
-
-

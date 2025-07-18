@@ -282,11 +282,11 @@
 /obj/item/clothing/cloak/raincloak/furcloak,
 /obj/item/clothing/cloak/lordcloak,
 /obj/item/clothing/cloak/lordcloak,
-/obj/item/clothing/cloak/raincloak/furcloak/brown,
-/obj/item/clothing/cloak/raincloak/furcloak/brown,
-/obj/item/clothing/cloak/raincloak/furcloak/brown,
-/obj/item/clothing/cloak/raincloak/furcloak/black,
-/obj/item/clothing/cloak/raincloak/furcloak/black,
+/obj/item/clothing/cloak/raincloak/furcloak/colored/brown,
+/obj/item/clothing/cloak/raincloak/furcloak/colored/brown,
+/obj/item/clothing/cloak/raincloak/furcloak/colored/brown,
+/obj/item/clothing/cloak/raincloak/furcloak/colored/black,
+/obj/item/clothing/cloak/raincloak/furcloak/colored/black,
 /turf/open/floor/carpet,
 /area/rogue/indoors)
 "aQ" = (

@@ -83,15 +83,18 @@
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/fur
 
-/obj/item/clothing/cloak/raincloak/furcloak/crafted/Initialize()
+/obj/item/clothing/cloak/raincloak/furcloak/Initialize()
 	. = ..()
 	if(prob(50))
 		color = pick("#685542","#66564d")
 
-/obj/item/clothing/cloak/raincloak/furcloak/brown
+/obj/item/clothing/cloak/raincloak/furcloak/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
+/obj/item/clothing/cloak/raincloak/furcloak/colored/brown
 	color = CLOTHING_MUD_BROWN
 
-/obj/item/clothing/cloak/raincloak/furcloak/black
+/obj/item/clothing/cloak/raincloak/furcloak/colored/black
 	color = CLOTHING_ASH_GREY
 
 /obj/item/clothing/head/hooded/rainhood/furhood

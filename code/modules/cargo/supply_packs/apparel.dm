@@ -86,7 +86,7 @@
 /datum/supply_pack/apparel/raincloak_furcloak_brown
 	name = "Brown Furcloak"
 	cost = 25
-	contains = /obj/item/clothing/cloak/raincloak/furcloak/brown
+	contains = /obj/item/clothing/cloak/raincloak/furcloak/colored/brown
 
 /datum/supply_pack/apparel/halfcloak_random
 	name = "Halfcloak"

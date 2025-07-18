@@ -76,7 +76,7 @@
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/dirt/cobweb,
 /obj/item/restraints/legcuffs/beartrap/armed/camouflage,
-/obj/item/clothing/cloak/raincloak/furcloak/black{
+/obj/item/clothing/cloak/raincloak/furcloak/colored/black{
 	pixel_x = 14
 	},
 /turf/open/floor/naturalstone,

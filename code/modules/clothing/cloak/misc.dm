@@ -133,6 +133,9 @@
 	body_parts_covered = ARMS|CHEST
 	armor = ARMOR_MAILLE_GOOD
 
+/obj/item/clothing/cloak/half/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
 /obj/item/clothing/cloak/half/brown
 	color = CLOTHING_BARK_BROWN
 

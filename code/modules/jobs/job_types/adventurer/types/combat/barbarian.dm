@@ -45,7 +45,7 @@
 	var/weapontype = pickweight(list("Sword" = 4, "Club" = 3, "Axe" = 2)) //clubs and axes share a weapon type
 	switch(armortype)
 		if("Cloak")
-			cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/furcloak/colored/brown
 		if("Hide")
 			armor = /obj/item/clothing/armor/leather/hide
 		if("Helmet")

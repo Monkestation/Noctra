@@ -1933,7 +1933,7 @@
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/natural/cloth,
 /obj/item/natural/cloth,
-/obj/item/clothing/pants/loincloth/pink,
+/obj/item/clothing/pants/loincloth/colored/pink,
 /obj/item/clothing/pants/loincloth,
 /turf/open/floor/tile/bfloorz,
 /area/rogue/indoors/town/bath)
@@ -6102,10 +6102,10 @@
 /obj/structure/rack/shelf/biggest,
 /obj/item/clothing/pants/loincloth,
 /obj/item/clothing/pants/loincloth,
-/obj/item/clothing/pants/loincloth/black,
-/obj/item/clothing/pants/loincloth/black,
-/obj/item/clothing/pants/loincloth/brown,
-/obj/item/clothing/pants/loincloth/pink,
+/obj/item/clothing/pants/loincloth/colored/black,
+/obj/item/clothing/pants/loincloth/colored/black,
+/obj/item/clothing/pants/loincloth/colored/brown,
+/obj/item/clothing/pants/loincloth/colored/pink,
 /obj/item/natural/cloth,
 /obj/item/natural/cloth,
 /turf/open/floor/blocks/stonered/tiny,
@@ -17035,7 +17035,7 @@
 	pixel_x = 7;
 	pixel_y = 2
 	},
-/obj/item/clothing/cloak/raincloak/furcloak/brown{
+/obj/item/clothing/cloak/raincloak/furcloak/colored/brown{
 	pixel_x = -6;
 	pixel_y = -2
 	},

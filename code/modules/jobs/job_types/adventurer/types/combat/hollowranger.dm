@@ -27,7 +27,7 @@
 	wrists = /obj/item/clothing/neck/psycross/silver/dendor
 	gloves = /obj/item/clothing/gloves/fingerless
 	backpack_contents = list(/obj/item/weapon/knife/hunting)
-	cloak = /obj/item/clothing/cloak/raincloak/furcloak/black
+	cloak = /obj/item/clothing/cloak/raincloak/furcloak/colored/black
 
 	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE) // Knives are gonna be a rough backup, but should be one anyway
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 4, TRUE)

@@ -47,7 +47,7 @@
 		ring = /obj/item/clothing/ring/gold
 	pants = /obj/item/clothing/pants/trou/leather/advanced
 	shoes = /obj/item/clothing/shoes/nobleboot
-	cloak = /obj/item/clothing/cloak/raincloak/furcloak/black
+	cloak = /obj/item/clothing/cloak/raincloak/furcloak/colored/black
 	mask = /obj/item/clothing/face/eyepatch/fake
 
 	ADD_TRAIT(H, TRAIT_SEEPRICES, type)

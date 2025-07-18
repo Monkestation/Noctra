@@ -655,7 +655,7 @@
 /turf/open/floor/wood/nosmooth/saiga,
 /area/rogue/outdoors/mountains/anvil/snowyforest)
 "jW" = (
-/obj/item/clothing/pants/loincloth/brown,
+/obj/item/clothing/pants/loincloth/colored/brown,
 /turf/open/floor/cobblerock,
 /area/rogue/under/mountains/anvil/lower/building)
 "ka" = (
@@ -2454,7 +2454,7 @@
 /turf/open/floor/cobble,
 /area/rogue/under/mountains/anvil/lower/building)
 "LY" = (
-/obj/item/clothing/pants/loincloth/brown,
+/obj/item/clothing/pants/loincloth/colored/brown,
 /turf/open/floor/cobblerock,
 /area/rogue/under/mountains/anvil/lower)
 "Ma" = (
@@ -2938,7 +2938,7 @@
 /turf/open/floor/blocks,
 /area/rogue/under/mountains/anvil/lower/building)
 "ST" = (
-/obj/item/clothing/pants/loincloth/brown,
+/obj/item/clothing/pants/loincloth/colored/brown,
 /turf/open/floor/dirt/road,
 /area/rogue/under/mountains/anvil/lower)
 "SY" = (

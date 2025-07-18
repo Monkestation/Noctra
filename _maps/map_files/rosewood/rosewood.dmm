@@ -12790,8 +12790,8 @@
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/shirt/tunic/colored/black,
 /obj/item/clothing/shirt/tunic/colored/black,
-/obj/item/clothing/pants/loincloth/black,
-/obj/item/clothing/pants/loincloth/black,
+/obj/item/clothing/pants/loincloth/colored/black,
+/obj/item/clothing/pants/loincloth/colored/black,
 /obj/item/natural/cloth{
 	pixel_x = 8;
 	pixel_y = 12
@@ -22426,8 +22426,8 @@
 /obj/machinery/light/fueled/wallfire/candle/blue/r,
 /obj/item/clothing/shirt/tunic/colored/black,
 /obj/item/clothing/shirt/tunic/colored/black,
-/obj/item/clothing/pants/loincloth/black,
-/obj/item/clothing/pants/loincloth/black,
+/obj/item/clothing/pants/loincloth/colored/black,
+/obj/item/clothing/pants/loincloth/colored/black,
 /obj/item/natural/cloth{
 	pixel_x = 8;
 	pixel_y = 12
@@ -22815,9 +22815,9 @@
 	},
 /obj/item/clothing/pants/loincloth,
 /obj/item/clothing/pants/loincloth,
-/obj/item/clothing/pants/loincloth/black,
-/obj/item/clothing/pants/loincloth/brown,
-/obj/item/clothing/pants/loincloth/pink,
+/obj/item/clothing/pants/loincloth/colored/black,
+/obj/item/clothing/pants/loincloth/colored/brown,
+/obj/item/clothing/pants/loincloth/colored/pink,
 /turf/open/floor/blocks/stonered/tiny,
 /area/rogue/indoors/town/bath)
 "mKu" = (
@@ -40678,7 +40678,7 @@
 /obj/item/clothing/head/wizhat/gen,
 /obj/item/clothing/shirt/robe/wizard,
 /obj/item/clothing/shirt/robe/black,
-/obj/item/clothing/cloak/raincloak/furcloak/black,
+/obj/item/clothing/cloak/raincloak/furcloak/colored/black,
 /obj/item/clothing/shirt/undershirt/colored/black,
 /obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/shoes/boots,
