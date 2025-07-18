@@ -618,6 +618,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	return ..()
 
 /client/Destroy()
+	STOP_PROCESSING(SSmousecharge, src)
 	if(holder)
 		for(var/I in GLOB.clients)
 			if(!I || I == src)
