@@ -2896,14 +2896,14 @@
 /area/rogue/indoors)
 "qd" = (
 /obj/structure/table/wood/reinforced,
-/obj/item/clothing/cloak/raincloak/green,
-/obj/item/clothing/cloak/raincloak/green,
-/obj/item/clothing/cloak/raincloak/mortus,
-/obj/item/clothing/cloak/raincloak/mortus,
-/obj/item/clothing/cloak/raincloak/purple,
-/obj/item/clothing/cloak/raincloak/purple,
-/obj/item/clothing/cloak/raincloak/red,
-/obj/item/clothing/cloak/raincloak/red,
+/obj/item/clothing/cloak/raincloak/colored/green,
+/obj/item/clothing/cloak/raincloak/colored/green,
+/obj/item/clothing/cloak/raincloak/colored/mortus,
+/obj/item/clothing/cloak/raincloak/colored/mortus,
+/obj/item/clothing/cloak/raincloak/colored/purple,
+/obj/item/clothing/cloak/raincloak/colored/purple,
+/obj/item/clothing/cloak/raincloak/colored/red,
+/obj/item/clothing/cloak/raincloak/colored/red,
 /obj/item/clothing/cloak/half,
 /obj/item/clothing/cloak/half,
 /obj/item/clothing/cloak/half/colored/red,
@@ -3807,7 +3807,7 @@
 /area/rogue/indoors/vampire_manor)
 "vW" = (
 /obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/cloak/raincloak/purple,
+/obj/item/clothing/cloak/raincloak/colored/purple,
 /turf/open/floor/church,
 /area/rogue/indoors/lich)
 "vX" = (
@@ -4069,7 +4069,7 @@
 /area/rogue/outdoors/bog/inhumen_camp)
 "yg" = (
 /obj/item/weapon/shovel,
-/obj/item/clothing/cloak/raincloak/purple,
+/obj/item/clothing/cloak/raincloak/colored/purple,
 /obj/structure/closet/crate/crafted_closet/inn,
 /turf/open/floor/churchmarble,
 /area/rogue/indoors/lich)
@@ -7179,7 +7179,7 @@
 "US" = (
 /obj/structure/closet/crate/crafted_closet/inn,
 /obj/machinery/light/fueled/wallfire/candle/skull,
-/obj/item/clothing/cloak/raincloak/purple,
+/obj/item/clothing/cloak/raincloak/colored/purple,
 /obj/item/rope,
 /turf/open/floor/church,
 /area/rogue/indoors/lich)

@@ -916,10 +916,10 @@
 /area/rogue/indoors/town/church/inquisition)
 "aRq" = (
 /obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
 /turf/open/floor/ruinedwood/turned,
 /area/rogue/under/town/basement)
 "aRA" = (
@@ -1007,10 +1007,10 @@
 /obj/item/clothing/head/roguehood/colored/random,
 /obj/item/clothing/head/roguehood/colored/random,
 /obj/item/clothing/head/roguehood/colored/random,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
 /obj/item/clothing/face/shepherd/clothmask,
 /obj/item/clothing/face/shepherd/clothmask,
 /obj/item/clothing/face/shepherd/clothmask,
@@ -3950,10 +3950,10 @@
 /obj/item/clothing/pants/tights/random,
 /obj/item/clothing/pants/tights/random,
 /obj/item/clothing/pants/tights/random,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
 /obj/item/clothing/armor/leather/vest/colored/random,
 /obj/item/clothing/armor/leather/vest/colored/random,
 /obj/item/clothing/armor/leather/vest/colored/random,
@@ -5866,11 +5866,11 @@
 /area/rogue/outdoors/rtfield/safe)
 "fJZ" = (
 /obj/structure/rack/shelf/biggest,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/indoors/town)
 "fKb" = (
@@ -14263,8 +14263,8 @@
 "nvo" = (
 /obj/structure/closet/crate/crafted_closet/inn,
 /obj/item/clothing/armor/leather/vest/colored/butler,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
 /turf/open/floor/ruinedwood/turned,
 /area/rogue/under/town/basement)
 "nvt" = (
@@ -15973,11 +15973,11 @@
 /area/rogue/indoors/town/manorgate)
 "oXY" = (
 /obj/structure/rack/shelf/biggest,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
 /turf/open/floor/blocks,
 /area/rogue/indoors/town/garrison)
 "oYE" = (
@@ -17720,15 +17720,15 @@
 	pixel_x = 8;
 	pixel_y = -4
 	},
-/obj/item/clothing/cloak/raincloak/mortus{
+/obj/item/clothing/cloak/raincloak/colored/mortus{
 	pixel_x = 0;
 	pixel_y = -8
 	},
-/obj/item/clothing/cloak/raincloak/mortus{
+/obj/item/clothing/cloak/raincloak/colored/mortus{
 	pixel_x = 10;
 	pixel_y = -3
 	},
-/obj/item/clothing/cloak/raincloak/mortus{
+/obj/item/clothing/cloak/raincloak/colored/mortus{
 	pixel_x = -9;
 	pixel_y = 3
 	},
@@ -17962,19 +17962,19 @@
 /area/rogue/indoors/town/clinic_large)
 "qMH" = (
 /obj/structure/table/wood/reinforced,
-/obj/item/clothing/cloak/raincloak/random{
+/obj/item/clothing/cloak/raincloak/colored/random{
 	pixel_x = 7;
 	pixel_y = -6
 	},
-/obj/item/clothing/cloak/raincloak/random{
+/obj/item/clothing/cloak/raincloak/colored/random{
 	pixel_x = -7;
 	pixel_y = -3
 	},
-/obj/item/clothing/cloak/raincloak/random{
+/obj/item/clothing/cloak/raincloak/colored/random{
 	pixel_x = 7;
 	pixel_y = 6
 	},
-/obj/item/clothing/cloak/raincloak/random{
+/obj/item/clothing/cloak/raincloak/colored/random{
 	pixel_x = -8;
 	pixel_y = 7
 	},

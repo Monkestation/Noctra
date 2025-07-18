@@ -583,7 +583,7 @@
 "ha" = (
 /obj/structure/rack,
 /obj/item/clothing/armor/leather/hide/orc,
-/obj/item/clothing/cloak/raincloak/brown,
+/obj/item/clothing/cloak/raincloak/colored/brown,
 /obj/item/clothing/head/helmet/leather/orc,
 /obj/item/weapon/whip,
 /turf/open/floor/twig,

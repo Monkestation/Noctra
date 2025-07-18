@@ -96,7 +96,7 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve,
 /obj/item/ammo_holder/quiver/arrows,
 /obj/item/clothing/head/rare/elfplate/welfplate,
-/obj/item/clothing/cloak/raincloak/green,
+/obj/item/clothing/cloak/raincloak/colored/green,
 /obj/effect/decal/remains/human,
 /turf/open/floor/blocks/paving,
 /area/rogue/under/tomb/sewer)

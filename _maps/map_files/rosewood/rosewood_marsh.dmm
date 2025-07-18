@@ -6095,9 +6095,9 @@
 /area/rogue/indoors/lich)
 "Jc" = (
 /obj/structure/closet/crate/crafted_closet/inn/south,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
 /obj/item/perfume/random,
 /turf/open/floor/ruinedwood,
 /area/rogue/indoors/lich)

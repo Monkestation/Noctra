@@ -3273,8 +3273,8 @@
 /area/rogue/outdoors/town)
 "bUs" = (
 /obj/structure/closet/crate/crafted_closet/dark,
-/obj/item/clothing/cloak/raincloak/mortus,
-/obj/item/clothing/cloak/raincloak/mortus,
+/obj/item/clothing/cloak/raincloak/colored/mortus,
+/obj/item/clothing/cloak/raincloak/colored/mortus,
 /obj/item/clothing/head/padded/deathshroud,
 /obj/item/clothing/head/padded/deathshroud,
 /turf/open/floor/blocks/newstone/alt,
@@ -12379,7 +12379,7 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
 /obj/item/ammo_holder/quiver/bolts,
 /obj/item/clothing/armor/leather/jacket/handjacket,
-/obj/item/clothing/cloak/raincloak/purple,
+/obj/item/clothing/cloak/raincloak/colored/purple,
 /obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/shirt/undershirt/colored/black,
 /obj/item/storage/belt/leather,
@@ -16448,7 +16448,7 @@
 /obj/item/clothing/head/fancyhat,
 /obj/item/clothing/cloak/raincloak/furcloak,
 /obj/item/clothing/head/roguehood/colored/random,
-/obj/item/clothing/cloak/raincloak/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
 /obj/item/clothing/head/bardhat,
 /obj/item/clothing/shoes/nobleboot,
 /obj/item/clothing/shirt/tunic/colored/random,
@@ -16817,7 +16817,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town)
 "kvq" = (
-/obj/item/clothing/cloak/raincloak/mortus{
+/obj/item/clothing/cloak/raincloak/colored/mortus{
 	name = "cloak"
 	},
 /obj/item/clothing/head/sack,
@@ -17031,7 +17031,7 @@
 /area/rogue/indoors/town)
 "kBU" = (
 /obj/structure/rack/shelf/biggest,
-/obj/item/clothing/cloak/raincloak/brown{
+/obj/item/clothing/cloak/raincloak/colored/brown{
 	pixel_x = 7;
 	pixel_y = 2
 	},
@@ -26877,7 +26877,7 @@
 /obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/shirt/robe,
 /obj/item/clothing/shirt/robe/wizard,
-/obj/item/clothing/cloak/raincloak/blue,
+/obj/item/clothing/cloak/raincloak/colored/blue,
 /obj/item/clothing/head/wizhat,
 /obj/item/clothing/shoes/boots,
 /obj/item/clothing/shoes/shortboots,
@@ -27032,11 +27032,11 @@
 /area/rogue/indoors/town/tavern)
 "rjm" = (
 /obj/structure/rack/shelf/biggest,
-/obj/item/clothing/cloak/raincloak/random{
+/obj/item/clothing/cloak/raincloak/colored/random{
 	pixel_x = -9;
 	pixel_y = 6
 	},
-/obj/item/clothing/cloak/raincloak/red{
+/obj/item/clothing/cloak/raincloak/colored/red{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -36814,7 +36814,7 @@
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/cloak/half/colored/random,
 /obj/item/clothing/cloak/half/colored/random,
-/obj/item/clothing/cloak/raincloak/green,
+/obj/item/clothing/cloak/raincloak/colored/green,
 /turf/open/floor/tile,
 /area/rogue/indoors/town/manor)
 "xyr" = (

@@ -4235,8 +4235,8 @@
 /obj/item/clothing/pants/skirt/colored/random,
 /obj/item/clothing/shirt/dress/silkdress/colored/random,
 /obj/item/clothing/shirt/dress/silkdress/colored/random,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
 /obj/item/clothing/cloak/half/colored/random,
 /obj/item/clothing/cloak/half/colored/random,
 /obj/item/clothing/shirt/tunic/noblecoat,
@@ -4349,11 +4349,11 @@
 /area/rogue/indoors/town/orphanage)
 "cpY" = (
 /obj/structure/rack/shelf/biggest,
-/obj/item/clothing/cloak/raincloak/red{
+/obj/item/clothing/cloak/raincloak/colored/red{
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/clothing/cloak/raincloak/random{
+/obj/item/clothing/cloak/raincloak/colored/random{
 	pixel_x = -9;
 	pixel_y = 6
 	},
@@ -12565,11 +12565,11 @@
 /area/rogue/outdoors/exposed/church)
 "gUb" = (
 /obj/structure/closet/crate/crafted_closet,
-/obj/item/clothing/cloak/raincloak/green{
+/obj/item/clothing/cloak/raincloak/colored/green{
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/obj/item/clothing/cloak/raincloak/green,
+/obj/item/clothing/cloak/raincloak/colored/green,
 /turf/open/floor/wood/nosmooth/saiga,
 /area/rogue/indoors/villagegarrison)
 "gUj" = (
@@ -25193,7 +25193,7 @@
 /area/rogue/indoors/town/tavern)
 "nYw" = (
 /obj/structure/closet/crate/crafted_closet/dark,
-/obj/item/clothing/cloak/raincloak/mortus{
+/obj/item/clothing/cloak/raincloak/colored/mortus{
 	name = "cloak"
 	},
 /obj/item/clothing/head/sack,
@@ -30264,8 +30264,8 @@
 /obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/tunic/colored/random,
 /obj/item/clothing/pants/tights/random,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/cloak/raincloak/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
+/obj/item/clothing/cloak/raincloak/colored/random,
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/indoors/town)
 "qGn" = (
@@ -33812,9 +33812,9 @@
 /obj/item/clothing/head/padded/deathshroud,
 /obj/item/clothing/head/padded/deathshroud,
 /obj/item/clothing/head/padded/deathshroud,
-/obj/item/clothing/cloak/raincloak/mortus,
-/obj/item/clothing/cloak/raincloak/mortus,
-/obj/item/clothing/cloak/raincloak/mortus,
+/obj/item/clothing/cloak/raincloak/colored/mortus,
+/obj/item/clothing/cloak/raincloak/colored/mortus,
+/obj/item/clothing/cloak/raincloak/colored/mortus,
 /turf/open/floor/woodturned/nosmooth,
 /area/rogue/outdoors/exposed/church)
 "sBA" = (

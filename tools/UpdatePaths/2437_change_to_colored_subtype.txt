@@ -76,3 +76,10 @@
 /obj/item/clothing/shirt/robe/plain : /obj/item/clothing/shirt/robe/colored/plain{@OLD}
 /obj/item/clothing/shirt/robe/black : /obj/item/clothing/shirt/robe/colored/black{@OLD}
 /obj/item/clothing/shirt/robe/white : /obj/item/clothing/shirt/robe{@OLD}
+/obj/item/clothing/cloak/raincloak/red : /obj/item/clothing/cloak/raincloak/colored/red{@OLD}
+/obj/item/clothing/cloak/raincloak/purple : /obj/item/clothing/cloak/raincloak/colored/purple{@OLD}
+/obj/item/clothing/cloak/raincloak/mortus : /obj/item/clothing/cloak/raincloak/colored/mortus{@OLD}
+/obj/item/clothing/cloak/raincloak/brown : /obj/item/clothing/cloak/raincloak/colored/brown{@OLD}
+/obj/item/clothing/cloak/raincloak/green : /obj/item/clothing/cloak/raincloak/colored/green{@OLD}
+/obj/item/clothing/cloak/raincloak/blue : /obj/item/clothing/cloak/raincloak/colored/blue{@OLD}
+/obj/item/clothing/cloak/raincloak/random : /obj/item/clothing/cloak/raincloak/colored/random{@OLD}

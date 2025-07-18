@@ -5476,7 +5476,7 @@
 /obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/shirt/robe,
 /obj/item/clothing/shirt/robe/wizard,
-/obj/item/clothing/cloak/raincloak/blue,
+/obj/item/clothing/cloak/raincloak/colored/blue,
 /obj/item/clothing/head/wizhat,
 /obj/item/clothing/shoes/boots,
 /obj/item/clothing/shoes/shortboots,
@@ -8965,8 +8965,8 @@
 /area/rogue/outdoors/town)
 "iKj" = (
 /obj/structure/closet/crate/crafted_closet/dark,
-/obj/item/clothing/cloak/raincloak/mortus,
-/obj/item/clothing/cloak/raincloak/mortus,
+/obj/item/clothing/cloak/raincloak/colored/mortus,
+/obj/item/clothing/cloak/raincloak/colored/mortus,
 /obj/item/clothing/head/padded/deathshroud,
 /turf/open/floor/blocks/newstone/alt,
 /area/rogue/indoors/town/church)
@@ -13508,7 +13508,7 @@
 /turf/open/floor/grass,
 /area/rogue/outdoors/town)
 "niP" = (
-/obj/item/clothing/cloak/raincloak/mortus{
+/obj/item/clothing/cloak/raincloak/colored/mortus{
 	name = "cloak"
 	},
 /obj/item/clothing/head/sack,

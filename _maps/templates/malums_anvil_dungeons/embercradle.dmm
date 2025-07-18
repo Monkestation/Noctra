@@ -964,7 +964,7 @@
 	real_name = "Shard"
 	},
 /obj/item/clothing/head/bardhat,
-/obj/item/clothing/cloak/raincloak/mortus,
+/obj/item/clothing/cloak/raincloak/colored/mortus,
 /obj/item/clothing/shoes/boots/leather,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/pants/tights,
@@ -1247,7 +1247,7 @@
 	real_name = "Shriek"
 	},
 /obj/item/clothing/head/bardhat,
-/obj/item/clothing/cloak/raincloak/green,
+/obj/item/clothing/cloak/raincloak/colored/green,
 /obj/item/clothing/shoes/boots/leather,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/pants/tights,
@@ -1321,7 +1321,7 @@
 	real_name = "Hollow"
 	},
 /obj/item/clothing/head/bardhat,
-/obj/item/clothing/cloak/raincloak/purple,
+/obj/item/clothing/cloak/raincloak/colored/purple,
 /obj/item/clothing/shoes/boots/leather,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/pants/tights,
@@ -1381,7 +1381,7 @@
 	real_name = "Clatter"
 	},
 /obj/item/clothing/head/bardhat,
-/obj/item/clothing/cloak/raincloak/blue,
+/obj/item/clothing/cloak/raincloak/colored/blue,
 /obj/item/clothing/shoes/boots/leather,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/pants/tights,
@@ -1734,7 +1734,7 @@
 	real_name = "Rattle"
 	},
 /obj/item/clothing/head/bardhat,
-/obj/item/clothing/cloak/raincloak/red,
+/obj/item/clothing/cloak/raincloak/colored/red,
 /obj/item/clothing/shoes/boots/leather,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/pants/tights,
