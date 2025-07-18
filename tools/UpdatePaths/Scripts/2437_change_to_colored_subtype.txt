@@ -31,4 +31,13 @@
 /obj/item/clothing/shirt/dress/silkdress/silkdressprimary : /obj/item/clothing/shirt/dress/silkdress/colored/silkdressprimary{@OLD}
 /obj/item/clothing/head/chaperon/greyscale : /obj/item/clothing/head/chaperon/colored/greyscale{@OLD}
 /obj/item/clothing/head/chaperon/greyscale/silk : /obj/item/clothing/head/chaperon/colored/greyscale/silk{@OLD}
-/obj/item/clothing/head/chaperon/greyscale/chaperonsecondary : /obj/item/clothing/head/chaperon/colored/greyscale/chaperonsecondary{OLD}
+/obj/item/clothing/head/chaperon/greyscale/chaperonsecondary : /obj/item/clothing/head/chaperon/colored/greyscale/chaperonsecondary{@OLD}
+/obj/item/clothing/shirt/undershirt/uncolored : /obj/item/clothing/shirt/undershirt/colored/uncolored{@OLD}
+/obj/item/clothing/shirt/undershirt/black : /obj/item/clothing/shirt/undershirt/colored/black{@OLD}
+/obj/item/clothing/shirt/undershirt/lord : /obj/item/clothing/shirt/undershirt/colored/lord{@OLD}
+/obj/item/clothing/shirt/undershirt/blue : /obj/item/clothing/shirt/undershirt/colored/blue{@OLD}
+/obj/item/clothing/shirt/undershirt/red : /obj/item/clothing/shirt/undershirt/colored/red{@OLD}
+/obj/item/clothing/shirt/undershirt/purple : /obj/item/clothing/shirt/undershirt/colored/purple{@OLD}
+/obj/item/clothing/shirt/undershirt/green : /obj/item/clothing/shirt/undershirt/colored/green{@OLD}
+/obj/item/clothing/shirt/undershirt/guard : /obj/item/clothing/shirt/undershirt/colored/guard{@OLD}
+/obj/item/clothing/shirt/undershirt/guardsecond : /obj/item/clothing/shirt/undershirt/colored/guardsecond{@OLD}

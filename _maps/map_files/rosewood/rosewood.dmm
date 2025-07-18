@@ -7825,7 +7825,7 @@
 /area/rogue/outdoors/rtfield)
 "ejs" = (
 /obj/structure/closet/crate/crafted_closet/inn/south,
-/obj/item/clothing/shirt/undershirt/black,
+/obj/item/clothing/shirt/undershirt/colored/black,
 /obj/item/clothing/pants/tights/black,
 /obj/item/clothing/head/roguehood/colored/black,
 /obj/item/clothing/shoes/boots,
@@ -40679,7 +40679,7 @@
 /obj/item/clothing/shirt/robe/wizard,
 /obj/item/clothing/shirt/robe/black,
 /obj/item/clothing/cloak/raincloak/furcloak/black,
-/obj/item/clothing/shirt/undershirt/black,
+/obj/item/clothing/shirt/undershirt/colored/black,
 /obj/item/clothing/pants/tights/black,
 /obj/item/clothing/shoes/boots,
 /obj/item/clothing/face/spectacles/golden,

@@ -2322,7 +2322,7 @@
 /obj/structure/closet/crate/chest/crafted,
 /obj/item/clothing/armor/leather/vest/black,
 /obj/item/clothing/pants/tights/uncolored,
-/obj/item/clothing/shirt/undershirt/uncolored,
+/obj/item/clothing/shirt/undershirt/colored/uncolored,
 /obj/item/storage/belt/pouch,
 /turf/open/floor/twig,
 /area/rogue/indoors)

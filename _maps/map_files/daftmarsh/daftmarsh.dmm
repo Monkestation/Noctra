@@ -5472,7 +5472,7 @@
 /area/rogue/outdoors/rtfield)
 "fvW" = (
 /obj/structure/closet/crate/drawer/random,
-/obj/item/clothing/shirt/undershirt/black,
+/obj/item/clothing/shirt/undershirt/colored/black,
 /obj/item/clothing/pants/tights/black,
 /obj/item/clothing/shirt/robe/white,
 /obj/item/clothing/shirt/robe/wizard,
@@ -24959,7 +24959,7 @@
 /area/rogue/indoors/town/garrison)
 "ygd" = (
 /obj/structure/rack,
-/obj/item/clothing/shirt/undershirt/uncolored{
+/obj/item/clothing/shirt/undershirt/colored/uncolored{
 	pixel_x = 3;
 	pixel_y = -4
 	},
@@ -24967,7 +24967,7 @@
 	pixel_x = 5;
 	pixel_y = 2
 	},
-/obj/item/clothing/shirt/undershirt/uncolored{
+/obj/item/clothing/shirt/undershirt/colored/uncolored{
 	pixel_x = -4;
 	pixel_y = 2
 	},

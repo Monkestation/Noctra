@@ -12381,7 +12381,7 @@
 /obj/item/clothing/armor/leather/jacket/handjacket,
 /obj/item/clothing/cloak/raincloak/purple,
 /obj/item/clothing/pants/tights/black,
-/obj/item/clothing/shirt/undershirt/black,
+/obj/item/clothing/shirt/undershirt/colored/black,
 /obj/item/storage/belt/leather,
 /obj/item/clothing/face/eyepatch/fake,
 /obj/item/clothing/shirt/undershirt/fancy,
@@ -12964,8 +12964,8 @@
 /obj/structure/closet/crate/crafted_closet/crafted,
 /obj/item/clothing/pants/tights/guard,
 /obj/item/clothing/pants/tights/guard,
-/obj/item/clothing/shirt/undershirt/guard,
-/obj/item/clothing/shirt/undershirt/guard,
+/obj/item/clothing/shirt/undershirt/colored/guard,
+/obj/item/clothing/shirt/undershirt/colored/guard,
 /turf/open/floor/wood,
 /area/rogue/indoors/town/manor)
 "ifR" = (
@@ -15400,7 +15400,7 @@
 "jHh" = (
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/shirt/formal,
-/obj/item/clothing/shirt/undershirt/black,
+/obj/item/clothing/shirt/undershirt/colored/black,
 /obj/item/clothing/pants/tights/black,
 /obj/item/clothing/shoes/nobleboot,
 /turf/open/floor/wood,
@@ -17930,7 +17930,7 @@
 "lka" = (
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/shirt/formal,
-/obj/item/clothing/shirt/undershirt/black,
+/obj/item/clothing/shirt/undershirt/colored/black,
 /obj/item/clothing/pants/tights/black,
 /turf/open/floor/wood,
 /area/rogue/indoors/town)
@@ -26873,7 +26873,7 @@
 /area/rogue/indoors/town/manor)
 "rgd" = (
 /obj/structure/closet/crate/drawer/random,
-/obj/item/clothing/shirt/undershirt/black,
+/obj/item/clothing/shirt/undershirt/colored/black,
 /obj/item/clothing/pants/tights/black,
 /obj/item/clothing/shirt/robe/white,
 /obj/item/clothing/shirt/robe/wizard,
@@ -27366,11 +27366,11 @@
 	pixel_x = -1;
 	pixel_y = -1
 	},
-/obj/item/clothing/shirt/undershirt/uncolored{
+/obj/item/clothing/shirt/undershirt/colored/uncolored{
 	pixel_x = -4;
 	pixel_y = 2
 	},
-/obj/item/clothing/shirt/undershirt/uncolored{
+/obj/item/clothing/shirt/undershirt/colored/uncolored{
 	pixel_x = 3;
 	pixel_y = -4
 	},
