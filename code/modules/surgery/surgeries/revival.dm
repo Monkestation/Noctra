@@ -24,27 +24,28 @@
 /datum/surgery_step/infuse_lux/validate_target(mob/user, mob/living/target, target_zone, datum/intent/intent)
 	. = ..()
 	if(target.stat < DEAD)
-		to_chat(user, "They're not dead!")
+		to_chat(user, span_notice("They're not dead!"))
 		return FALSE
+	if(target.mob_biotypes & MOB_UNDEAD)
+		to_chat(user, span_notice("You cannot infuse life into the undead! The rot must be cured first."))
+		return false
 
 /datum/surgery_step/infuse_lux/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
-	display_results(user, target, span_notice("I begin to revive [target]..."),
+	display_results(user, target,
+		span_notice("I begin to infuse [target]'s heart with lux."),
 		span_notice("[user] begins to work lux into [target]'s heart."),
-		span_notice("[user] begins to work lux into [target]'s heart."))
+		span_notice("[user] begins to something into [target]'s innards..."))
 	return TRUE
 
 /datum/surgery_step/infuse_lux/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
-	if(target.mob_biotypes & MOB_UNDEAD)
-		display_results(user, target, span_notice("You cannot infuse life into the undead! The rot must be cured first."),
-		"[user] works the lux into [target]'s innards.",
-		"[user] works the lux into [target]'s innards.")
-		return FALSE
-	display_results(user, target, span_notice("You succeed in restarting [target]'s hearth with the infusion of lux."),
-		"[user] works the lux into [target]'s innards.",
-		"[user] works the lux into [target]'s innards.")
 	if(!target.revive(full_heal = FALSE))
 		to_chat(user, span_warning("Nothing happens."))
 		return FALSE
+	display_results(user, target,
+		span_notice("You succeed in restarting [target]'s hearth with the infusion of lux."),
+		span_notice("[user] works lux into [target]'s heart."),
+		span_notice("[user] works something into [target]'s innards..."),
+	)
 	target.blood_volume += BLOOD_VOLUME_SURVIVE
 	target.reagents.add_reagent(/datum/reagent/medicine/atropine, 3)
 	var/mob/living/carbon/spirit/underworld_spirit = target.get_spirit()
