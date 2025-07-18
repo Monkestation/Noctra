@@ -24,6 +24,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Chronic Back Pain" = /datum/charflaw/chronic_back_pain,
 	"Old War Wound" = /datum/charflaw/old_war_wound,
 	"Chronic Arthritis" = /datum/charflaw/chronic_arthritis,
+	"Witless Pixie" = /datum/charflaw/witless_pixie,
 	"Random Flaw or No Flaw"=/datum/charflaw/randflaw,
 	"Guaranteed No Flaw (3 TRI)"=/datum/charflaw/noflaw,))
 
@@ -757,3 +758,21 @@ GLOBAL_LIST_INIT(character_flaws, list(
 						to_chat(H, span_warning("The weight of your equipment aggravates your chronic back pain!"))
 					BP.lingering_pain += pain_amount
 					break
+
+/datum/charflaw/witless_pixie
+	name = "Witless Pixie"
+	desc = "By some cruel twist of fate, you have been born a dainty-minded, dim-witted klutz. Yours is a life of constant misdirection, confusion and general incompetence. \
+	\nIt is no small blessing your dazzling beauty makes up for this, sometimes."
+	var/nochekk = TRUE
+
+/datum/charflaw/witless_pixie/on_mob_creation(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+
+	H.change_stat(STATKEY_INT, -5) //this would probably make the average manorc a vegetable
+
+	if(H.ckey)
+		nochekk = FALSE
+		if(prob(50))
+			ADD_TRAIT(user, TRAIT_BEAUTIFUL, "[type]")
