@@ -843,6 +843,8 @@
 	if(full_heal)
 		fully_heal(admin_revive = admin_revive)
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
+		if(!full_heal && !admin_revive && health > HALFWAYCRITDEATH)
+			adjustOxyLoss(health - HALFWAYCRITDEATH, FALSE)
 		GLOB.dead_mob_list -= src
 		GLOB.alive_mob_list += src
 		set_suicide(FALSE)
