@@ -218,8 +218,8 @@
 	name = "blastpowder"
 	requirements = list(
 		/obj/item/reagent_containers/food/snacks/badrecipe = 2,
-		/obj/item/ore/coal = 1,
-		/obj/item/reagent_containers/food/snacks/produce/fyritius = 1,
+		/obj/item/alch/coaldust = 1,
+		/obj/item/alch/firedust = 1,
 	)
 	tool_usage = list(
 		/obj/item/pestle = list(span_notice("starts to grind together"), span_notice("start to grind together"), 'sound/foley/mortarpestle.ogg'),
