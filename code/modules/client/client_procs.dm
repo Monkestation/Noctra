@@ -1232,7 +1232,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	commendation_popup(forced)
 
 /client/proc/view_stats()
-	set name = "View Statistics"
+	set name = "View Chronicle"
 	set category = "OOC"
 
 	show_round_stats(pick_assoc(GLOB.featured_stats))

@@ -427,7 +427,7 @@
 			// Middle column
 			data += "<div style='width: 31.5%; display: flex; justify-content: center;'>"
 			data += "<div style='text-align: left; padding-left: 5px;'>"
-			data += "<div style='margin-bottom: 4px;'><font color='#8f816b'>Salary Payments: </font>[GLOB.vanderlin_round_stats[STATS_WAGES_PAID]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#b6a17f'>Salary Payments: </font>[GLOB.vanderlin_round_stats[STATS_WAGES_PAID]]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#aac484'>Treasury Transfers: </font>[GLOB.vanderlin_round_stats[STATS_DIRECT_TREASURY_TRANSFERS]]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#db9a59'>Trade Value Exported: </font>[GLOB.vanderlin_round_stats[STATS_TRADE_VALUE_EXPORTED]]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#dfbf57'>Trade Value Imported: </font>[GLOB.vanderlin_round_stats[STATS_TRADE_VALUE_IMPORTED]]</div>"
@@ -501,9 +501,20 @@
 			var/list/all_antagonists = list()
 
 			for(var/datum/team/A in GLOB.antagonist_teams)
-				all_teams |= A
+				if(A.type != /datum/team && length(A.members))
+					all_teams |= A
+
 			for(var/datum/antagonist/A in GLOB.antagonists)
-				if(A.owner) all_antagonists |= A
+				if(A.owner && A.type != /datum/antagonist)
+					var/should_exclude = FALSE
+					if(length(A.owner.antag_datums) == 1)
+						for(var/datum/team/T in all_teams)
+							if(A.owner in T.members)
+								should_exclude = TRUE
+								break
+
+					if(!should_exclude)
+						all_antagonists |= A
 
 			if(!length(all_teams) && !length(all_antagonists) && !length(GLOB.confessors))
 				data += "<div style='text-align: center; color: #999; font-style: italic;'>The Realm has no villains</div>"
