@@ -217,8 +217,8 @@
 /datum/repeatable_crafting_recipe/engineering/gunpowder
 	name = "blastpowder"
 	requirements = list(
-		/obj/item/natural/stone= 1,
-		/obj/item/reagent_containers/food/snacks/rotten/egg = 1,
+		/obj/item/reagent_containers/food/snacks/badrecipe = 2,
+		/obj/item/ore/coal = 1,
 		/obj/item/reagent_containers/food/snacks/produce/fyritius = 1,
 	)
 	tool_usage = list(
