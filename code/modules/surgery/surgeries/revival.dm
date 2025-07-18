@@ -43,7 +43,7 @@
 		to_chat(user, span_warning("Nothing happens."))
 		return FALSE
 	display_results(user, target,
-		span_notice("You succeed in restarting [target]'s hearth with the infusion of lux."),
+		span_notice("You succeed in restarting [target]'s heart with the infusion of lux."),
 		span_notice("[user] works lux into [target]'s heart."),
 		span_notice("[user] works something into [target]'s innards..."),
 	)
