@@ -54,7 +54,7 @@
 		return FALSE
 	user.visible_message(span_warning("[user] picks the lock of \the [src]!"), span_notice("I finish picking the lock of \the [src]."))
 	record_featured_stat(FEATURED_STATS_CRIMINALS, user)
-	GLOB.vanderlin_round_stats[STATS_LOCKS_PICKED]++
+	record_round_statistic(STATS_LOCKS_PICKED)
 	being_picked = FALSE
 	return TRUE
 
@@ -99,6 +99,7 @@
 	locked = TRUE
 	plane = HUD_PLANE
 	layer = 1
+	mouse_drag_pointer = null
 
 	///Angle of the lock itself. Determined by holding down mouse1.
 	var/lock_angle = 0

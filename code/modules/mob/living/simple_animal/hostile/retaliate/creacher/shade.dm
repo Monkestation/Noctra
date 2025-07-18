@@ -49,7 +49,7 @@
 	aggro_vision_range = 9
 	melee_damage_type = BRUTE
 	// Makes thrown objects phase through them
-	pass_flags = LETPASSTHROW
+	pass_flags_self = LETPASSTHROW
 	/*
 	* Extremely optional choice to make
 	* them immune to all brute damage but

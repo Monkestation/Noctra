@@ -147,7 +147,7 @@
 					if(lastuser)
 						var/mob/living/L = lastuser.resolve()
 						record_featured_stat(FEATURED_STATS_ALCHEMISTS, L)
-						GLOB.vanderlin_round_stats[STATS_POTIONS_BREWED] += batch_count
+						record_round_statistic(STATS_POTIONS_BREWED, batch_count)
 						var/boon = L.get_learning_boon(/datum/skill/craft/alchemy)
 						var/amt2raise = L.STAINT * 2 * batch_count // More XP for multiple batches
 						L.adjust_experience(/datum/skill/craft/alchemy, amt2raise * boon, FALSE)

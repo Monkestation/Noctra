@@ -1,6 +1,7 @@
 /datum/language/thievescant
 	name = "Thieves' Cant"
 	desc = ""
+	icon_state = "thief"
 	speech_verb = "says"
 	ask_verb = "asks"
 	exclaim_verb = "yells"
@@ -13,8 +14,6 @@
 	additional_syllable_low = -2
 	additional_syllable_high = -1
 	default_priority = 80
-	default_priority = 80
-	icon_state = "thief"
 	signlang_verb = list(
 		"scrunches their nose",
 		"smiles",

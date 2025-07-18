@@ -11,9 +11,15 @@
 
 	var/ascended = FALSE
 
-	innate_traits = list(
-		TRAIT_HEAVYARMOR,
-	)
+/datum/antagonist/vampire/lord/apply_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/M = mob_override || owner.current
+	ADD_TRAIT(M, TRAIT_HEAVYARMOR, "[type]")
+
+/datum/antagonist/vampire/lord/remove_innate_effects(mob/living/mob_override)
+	. = ..()
+	var/mob/living/M = mob_override || owner.current
+	REMOVE_TRAIT(M, TRAIT_HEAVYARMOR, "[type]")
 
 /datum/antagonist/vampire/lord/on_gain()
 	var/mob/living/carbon/vampire = owner.current
@@ -21,6 +27,8 @@
 	owner.current?.roll_mob_stats()
 	owner.current?.purge_combat_knowledge()
 	. = ..()
+	owner.current?.mana_pool.ethereal_recharge_rate += 0.2
+	owner.special_role = span_redtext("[name]")
 	var/datum/action/cooldown/spell/undirected/mansion_portal/portal = new(src)
 	portal.Grant(owner.current)
 	addtimer(CALLBACK(owner.current, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup), "[name]"), 5 SECONDS)
@@ -36,6 +44,7 @@
 	owner.current.verbs -= /mob/living/carbon/human/proc/demand_submission
 	owner.current.verbs -= /mob/living/carbon/human/proc/vamp_regenerate
 	owner.current.verbs -= /mob/living/carbon/human/proc/punish_spawn
+	owner.current.mana_pool.ethereal_recharge_rate -= 0.2
 
 /datum/antagonist/vampire/lord/greet()
 	to_chat(owner.current, span_userdanger("I am ancient. I am the Land. And I am now awoken to trespassers upon my domain."))

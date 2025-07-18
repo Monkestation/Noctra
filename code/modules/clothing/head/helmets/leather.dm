@@ -60,6 +60,12 @@
 	desc = "A black top hat with a buckle on top, favored by Witch Hunters and Inquisitors."
 	icon_state = "puritan_hat"
 
+//............... Tricorn ............... //
+/obj/item/clothing/head/helmet/leather/tricorn
+	name = "tricorn hat"
+	desc = "A black leather hat with a shaped brim that has been folded to form three points."
+	icon_state = "renegadetricorn"
+
 //............... Ominous Hood ............... //
 /obj/item/clothing/head/helmet/leather/hood_ominous // a leather coif locked to headslot since you cannot pull it back. Crit prevent between armor items a little weird, this is leather coif, compare to helmet
 	name = "ominous hood"
@@ -97,6 +103,8 @@
 	armor = ARMOR_PADDED
 	prevent_crits = list(BCLASS_LASHING, BCLASS_BITE, BCLASS_TWIST, BCLASS_BLUNT)
 	item_weight = 3 * IRON_MULTIPLIER
+
+	actions_types = list(/datum/action/item_action/toggle_light)
 
 	var/brightness_on = 4 //less than a torch; basically good for one person.
 	var/on = FALSE

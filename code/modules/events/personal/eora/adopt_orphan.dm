@@ -5,7 +5,7 @@
 	weight = 7
 	earliest_start = 10 MINUTES
 	max_occurrences = 1
-	min_players = 40
+	min_players = 35
 
 	tags = list(
 		TAG_BOON,
@@ -17,6 +17,7 @@
 		return FALSE
 
 	var/recipient_found = FALSE
+	var/orphans = 0
 	var/potential_orphans = 0
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(!istype(H) || H.stat == DEAD || !H.client)
@@ -31,18 +32,19 @@
 	for(var/mob/living/carbon/human/child in GLOB.player_list)
 		if(child.age != AGE_CHILD || child.stat == DEAD || !child.client)
 			continue
-		if(child.family_datum)
-			continue
-		if(child.job == "Orphan" && istype(child.mind?.assigned_role, /datum/job/orphan))
+		if(!child.family_datum && (child.job == "Orphan" && istype(child.mind?.assigned_role, /datum/job/orphan)))
+			orphans++
+		else if(!child.family_datum || !length(child.family_member_datum?.parents))
 			potential_orphans++
 
-	if(recipient_found && potential_orphans >= 2)
+	if(recipient_found && (orphans + potential_orphans) >= 2)
 		return TRUE
 
 	return FALSE
 
 /datum/round_event/adoption_call/start()
 	var/list/valid_targets = list()
+	var/orphans = 0
 	var/potential_orphans = 0
 
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
@@ -57,12 +59,12 @@
 	for(var/mob/living/carbon/human/child in GLOB.player_list)
 		if(child.age != AGE_CHILD || child.stat == DEAD || !child.client)
 			continue
-		if(child.family_datum)
-			continue
-		if(child.job == "Orphan" && istype(child.mind?.assigned_role, /datum/job/orphan))
+		if(!child.family_datum && (child.job == "Orphan" && istype(child.mind?.assigned_role, /datum/job/orphan)))
+			orphans++
+		else if(!child.family_datum || !length(child.family_member_datum?.parents))
 			potential_orphans++
 
-	if(!length(valid_targets) || potential_orphans < 2)
+	if(!length(valid_targets) || (orphans + potential_orphans) < 2)
 		return
 
 	var/mob/living/carbon/human/chosen_one = pick(valid_targets)

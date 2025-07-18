@@ -16,6 +16,7 @@
 
 /datum/action/cooldown/spell/undirected/feather_falling/cast(atom/cast_on)
 	. = ..()
-	var/duration_increase = min(0, attuned_strength * 90 SECONDS)
+	var/datum/status_effect/status = /datum/status_effect/buff/featherfall
+	var/duration_increase = max(0, attuned_strength * 90 SECONDS)
 	for(var/mob/living/L in viewers(max(1, FLOOR(attuned_strength, 1)), owner))
-		L.apply_status_effect(/datum/status_effect/buff/featherfall, duration_increase)
+		L.apply_status_effect(status, initial(status.duration) + duration_increase)

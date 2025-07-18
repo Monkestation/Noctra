@@ -104,6 +104,7 @@
 		unregister_hand_signals()
 		hand_owner?.temporarilyRemoveItemFromInventory(attached_hand)
 		QDEL_NULL(attached_hand)
+	attached_hand = null
 
 	if(reset_cooldown_after)
 		if(hand_owner)
@@ -328,4 +329,7 @@
 
 	// We have no spell associated for some reason, just delete us as normal.
 	holder.temporarilyRemoveItemFromInventory(src, force = TRUE)
+	qdel(src)
+
+/obj/item/melee/touch_attack/attack_self(mob/user, params)
 	qdel(src)

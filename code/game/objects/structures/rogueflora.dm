@@ -53,7 +53,7 @@
 	if(.)
 		if(!was_destroyed && obj_destroyed)
 			record_featured_stat(FEATURED_STATS_TREE_FELLERS, user)
-			GLOB.vanderlin_round_stats[STATS_TREES_CUT]++
+			record_round_statistic(STATS_TREES_CUT)
 
 /obj/structure/flora/tree/fire_act(added, maxstacks)
 	if(added > 5)
@@ -586,6 +586,7 @@
 	icon = 'icons/roguetown/misc/foliagetall.dmi'
 	icon_state = "mush1"
 	base_icon_state = "mush"
+	density = TRUE
 	num_random_icons = 5
 	max_integrity = 120
 	blade_dulling = DULLING_CUT
@@ -619,10 +620,11 @@
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/structure/flora/shroom_tree/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/flora/shroom_tree/CanPass(atom/movable/mover, turf/target)
 	. = ..()
 	if(get_dir(loc, target) == dir)
-		return FALSE
+		return
+	return TRUE
 
 /obj/structure/flora/shroom_tree/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
 	SIGNAL_HANDLER

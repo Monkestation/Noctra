@@ -6,18 +6,34 @@
 */
 
 /datum/language
-	var/name = "an unknown language"  // Fluff name of language if any.
-	var/desc = ""          // Short description for 'Check Languages'.
-	var/speech_verb = "says"          // 'says', 'hisses', 'farts'.
-	var/ask_verb = "asks"             // Used when sentence ends in a ?
-	var/exclaim_verb = "exclaims"     // Used when sentence ends in a !
-	var/whisper_verb = "whispers"     // Optional. When not specified speech_verb + quietly/softly is used instead.
-	var/sing_verb = "sings"			  // Used for singing.
-	var/list/signlang_verb = list("signs", "gestures") // list of emotes that might be displayed if this language has NONVERBAL or SIGNLANG flags
-	var/key                           // Character used to speak in language
-	// If key is null, then the language isn't real or learnable.
-	var/flags                         // Various language flags.
-	var/list/syllables                // Used when scrambling text for a non-speaker.
+	/// Fluff name of language if any.
+	var/name = "an unknown language"
+	/// Short description for 'Check Languages'.
+	var/desc = ""
+	/// Icon file of the language
+	var/icon = 'icons/language.dmi'
+	/// Icon state of the language
+	var/icon_state = "popcorn"
+	/// 'says', 'hisses', 'farts'.
+	var/speech_verb = "says"
+	/// Used when sentence ends in a ?
+	var/ask_verb = "asks"
+	/// Used when sentence ends in a !
+	var/exclaim_verb = "exclaims"
+	/// Optional. When not specified speech_verb + quietly/softly is used instead.
+	var/whisper_verb = "whispers"
+	/// Used for singing.
+	var/sing_verb = "sings"
+	/// List of emotes that might be displayed if this language has NONVERBAL or SIGNLANG flags
+	var/list/signlang_verb = list("signs", "gestures")
+	/// Character used to speak in language
+	/// If key is null, then the language isn't real or learnable.
+	var/key
+	/// Various language flags.
+	var/flags
+	/// Used when scrambling text for a non-speaker.
+	var/list/syllables
+
 	// These modify how syllables are combined.
 	/// Likelihood of making a new sentence after each syllable.
 	var/sentence_chance = 2
@@ -33,10 +49,22 @@
 	/// Scramble word interprets the word as this much longer than it really is (high end)
 	/// You can set this to an arbitarily large negative number to make all words only one syllable.
 	var/additional_syllable_high = 3
-
-	var/list/spans = list()
 	/// List of characters that will randomly be inserted between syllables.
 	var/list/special_characters
+
+	/// the language that an atom knows with the highest "default_priority" is selected by default.
+	var/default_priority = 0
+	/// Spans applied to all messages spoken in this language
+	var/list/spans = list()
+
+	/**
+	 * Assoc Lazylist of other language types that would have a degree of mutual understanding with this language.
+	 * For example, you could do `list(/datum/language/common = 50)` to say that this language has a 50% chance to understand common words
+	 * And yeah if you give a 100% chance, they can basically just understand the language.
+	 * Not sure why you would do that though.
+	 */
+	var/list/mutual_understanding
+
 	/**
 	 * Cache of recently scrambled text
 	 * This allows commonly reused words to not require a full re-scramble every time.
@@ -46,6 +74,7 @@
 	 * Case insensitive, punctuation insensitive.
 	 */
 	VAR_PRIVATE/list/scramble_cache = list()
+
 	/**
 	 * Scramble cache, but for the 1000 most common words in the English language.
 	 * These are never rescrambled, so they will consistently be the same thing.
@@ -53,6 +82,7 @@
 	 * Case insensitive, punctuation insensitive.
 	 */
 	VAR_PRIVATE/list/most_common_cache = list()
+
 	/**
 	 * Cache of recently spoken sentences
 	 * So if one person speaks over the radio, everyone hears the same thing.
@@ -63,22 +93,6 @@
 	 * Case sensitive, punctuation sensitive.
 	 */
 	VAR_PRIVATE/list/last_sentence_cache = list()
-
-	var/default_priority = 0          // the language that an atom knows with the highest "default_priority" is selected by default.
-
-
-
-	// if you are seeing someone speak popcorn language, then something is wrong.
-	var/icon = 'icons/language.dmi'
-	var/icon_state = "popcorn"
-
-	/**
-	 * Assoc Lazylist of other language types that would have a degree of mutual understanding with this language.
-	 * For example, you could do `list(/datum/language/common = 50)` to say that this language has a 50% chance to understand common words
-	 * And yeah if you give a 100% chance, they can basically just understand the language.
-	 * Not sure why you would do that though.
-	 */
-	var/list/mutual_understanding
 
 // Primarily for debugging, allows for easy iteration and testing of languages.
 /datum/language/vv_edit_var(var_name, var_value)
