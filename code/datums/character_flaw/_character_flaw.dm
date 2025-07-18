@@ -763,7 +763,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	name = "Witless Pixie"
 	desc = "By some cruel twist of fate, you have been born a dainty-minded, dim-witted klutz. Yours is a life of constant misdirection, confusion and general incompetence. \
 	\nIt is no small blessing your dazzling beauty makes up for this, sometimes."
-	var/nochekk = TRUE
 
 /datum/charflaw/witless_pixie/on_mob_creation(mob/user)
 	if(!ishuman(user))
@@ -772,7 +771,5 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 	H.change_stat(STATKEY_INT, -5) //this would probably make the average manorc a vegetable
 
-	if(H.ckey)
-		nochekk = FALSE
-		if(prob(50))
-			ADD_TRAIT(user, TRAIT_BEAUTIFUL, "[type]")
+	if(prob(50))
+		ADD_TRAIT(user, TRAIT_BEAUTIFUL, "[type]")
