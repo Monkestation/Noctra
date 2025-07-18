@@ -4110,7 +4110,7 @@
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/indoors/bandit_lair)
 "yy" = (
-/obj/item/clothing/shirt/robe/white,
+/obj/item/clothing/shirt/robe,
 /obj/structure/table/wood/fancy/royalblue,
 /turf/open/floor/carpet,
 /area/rogue/indoors)

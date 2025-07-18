@@ -282,7 +282,7 @@
 	pixel_x = -6;
 	pixel_y = 5
 	},
-/obj/item/clothing/shirt/robe/white{
+/obj/item/clothing/shirt/robe{
 	pixel_y = -1;
 	pixel_x = 9
 	},

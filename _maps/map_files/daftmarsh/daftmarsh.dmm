@@ -5474,7 +5474,7 @@
 /obj/structure/closet/crate/drawer/random,
 /obj/item/clothing/shirt/undershirt/colored/black,
 /obj/item/clothing/pants/tights/colored/black,
-/obj/item/clothing/shirt/robe/white,
+/obj/item/clothing/shirt/robe,
 /obj/item/clothing/shirt/robe/wizard,
 /obj/item/clothing/cloak/raincloak/blue,
 /obj/item/clothing/head/wizhat,
