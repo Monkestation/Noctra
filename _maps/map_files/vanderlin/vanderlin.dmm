@@ -8885,7 +8885,7 @@
 "fxK" = (
 /obj/structure/closet/crate/crafted_closet/dark,
 /obj/item/clothing/shirt/tunic/colored/green,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/pants/tights/random,
 /obj/machinery/light/fueled/wallfire/candle,
 /turf/open/floor/blocks/newstone/alt,
@@ -9732,7 +9732,7 @@
 /area/rogue/under/town/basement)
 "gdZ" = (
 /obj/structure/closet/crate/crafted_closet,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/pants/tights/random,
 /obj/item/clothing/pants/tights/random,
 /obj/item/clothing/pants/tights/random,
@@ -10589,8 +10589,8 @@
 /area/rogue/indoors/town/orphanage)
 "gEy" = (
 /obj/structure/closet/crate/crafted_closet/crafted,
-/obj/item/clothing/shirt/undershirt/random,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/pants/tights/random,
 /obj/item/clothing/pants/tights/random,
 /turf/open/floor/ruinedwood/spiralfade,
@@ -11390,9 +11390,9 @@
 "hft" = (
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/shirt/undershirt/puritan,
-/obj/item/clothing/shirt/undershirt/random,
-/obj/item/clothing/shirt/undershirt/random,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/undershirt/sailor,
 /obj/item/clothing/shirt/undershirt/sailor/red,
 /obj/item/clothing/armor/leather/vest/black,
@@ -16443,7 +16443,7 @@
 "klK" = (
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/pants/tights/random,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/undershirt/fancy,
 /obj/item/clothing/head/fancyhat,
 /obj/item/clothing/cloak/raincloak/furcloak,
@@ -20013,7 +20013,7 @@
 	pixel_y = 9
 	},
 /obj/item/clothing/shirt/undershirt/lowcut,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/undershirt/sailor,
 /obj/item/clothing/shirt/undershirt/sailor/red,
 /turf/open/floor/ruinedwood/turned/darker,
@@ -28135,7 +28135,7 @@
 /obj/item/clothing/shoes/boots/leather,
 /obj/item/clothing/armor/leather/vest,
 /obj/item/clothing/pants/tights/random,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /turf/open/floor/wood,
 /area/rogue/indoors/town/smithy)
 "rVH" = (

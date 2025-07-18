@@ -4228,9 +4228,9 @@
 "cmK" = (
 /obj/structure/closet/crate/crafted_closet/inn/south,
 /obj/machinery/light/fueled/wallfire/candle/l,
-/obj/item/clothing/shirt/undershirt/random,
-/obj/item/clothing/shirt/undershirt/random,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/pants/skirt/random,
 /obj/item/clothing/pants/skirt/random,
 /obj/item/clothing/shirt/dress/silkdress/colored/random,
@@ -6297,8 +6297,8 @@
 /obj/item/clothing/pants/skirt/random,
 /obj/item/clothing/pants/skirt/random,
 /obj/item/clothing/head/roguehood/colored/random,
-/obj/item/clothing/shirt/undershirt/random,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/undershirt/fancy,
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/indoors/town)
@@ -7633,8 +7633,8 @@
 /obj/item/clothing/cloak/apron/waist/brown,
 /obj/item/clothing/cloak/apron/waist,
 /obj/item/clothing/head/hatfur,
-/obj/item/clothing/shirt/undershirt/random,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/dress/silkdress/colored/random,
 /obj/item/clothing/shirt/dress/silkdress/colored/random,
 /obj/item/clothing/pants/tights/random,
@@ -18895,9 +18895,9 @@
 /area/rogue/indoors/town/clocktower)
 "kzy" = (
 /obj/structure/closet/crate/crafted_closet,
-/obj/item/clothing/shirt/undershirt/random,
-/obj/item/clothing/shirt/undershirt/random,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/pants/tights/random,
 /obj/item/clothing/pants/tights/random,
 /obj/item/clothing/pants/tights/random,
@@ -23385,7 +23385,7 @@
 "mZu" = (
 /obj/structure/closet/crate/crafted_closet/inn/south,
 /obj/item/clothing/shirt/dress/silkdress/colored/random,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/tunic/colored/random,
 /obj/item/clothing/pants/tights/random,
 /obj/item/clothing/pants/tights/random,
@@ -25394,7 +25394,7 @@
 /area/rogue/indoors/town/church/chapel)
 "ocy" = (
 /obj/structure/rack/shelf/biggest,
-/obj/item/clothing/shirt/undershirt/random{
+/obj/item/clothing/shirt/undershirt/colored/random{
 	pixel_y = 5;
 	pixel_x = 3
 	},
@@ -25406,7 +25406,7 @@
 	pixel_x = 2;
 	pixel_y = -1
 	},
-/obj/item/clothing/shirt/undershirt/random{
+/obj/item/clothing/shirt/undershirt/colored/random{
 	pixel_y = -3;
 	pixel_x = -8
 	},
@@ -30260,8 +30260,8 @@
 /area/rogue/indoors/soilsons)
 "qGl" = (
 /obj/structure/closet/crate/drawer/inn,
-/obj/item/clothing/shirt/undershirt/random,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/tunic/colored/random,
 /obj/item/clothing/pants/tights/random,
 /obj/item/clothing/cloak/raincloak/random,
@@ -37217,7 +37217,7 @@
 "uvx" = (
 /obj/structure/closet/crate/crafted_closet/dark,
 /obj/item/clothing/pants/tights/random,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/tunic/colored/green,
 /turf/open/floor/blocks/paving,
 /area/rogue/indoors/town/dwarfin)

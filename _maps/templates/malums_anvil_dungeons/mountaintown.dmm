@@ -662,9 +662,9 @@
 /area/rogue/under/mountains/anvil/dungeon/lower)
 "hD" = (
 /obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/shirt/undershirt/random,
-/obj/item/clothing/shirt/undershirt/random,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/pants/tights/random,
 /obj/item/clothing/pants/tights/random,
 /obj/item/clothing/pants/tights/random,
@@ -735,8 +735,8 @@
 /area/rogue/under/mountains/anvil/dungeon/lower)
 "iS" = (
 /obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/shirt/undershirt/random,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/pants/tights/random,
 /obj/item/clothing/pants/tights/random,
 /turf/open/floor/wood/nosmooth,
@@ -1814,10 +1814,10 @@
 /turf/open/floor/churchmarble,
 /area/rogue/under/mountains/anvil/dungeon)
 "yU" = (
-/obj/item/clothing/shirt/undershirt/random,
-/obj/item/clothing/shirt/undershirt/random,
-/obj/item/clothing/shirt/undershirt/random,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/pants/tights/random,
 /obj/item/clothing/pants/tights/random,
 /obj/item/clothing/pants/tights/random,
@@ -3018,8 +3018,8 @@
 /obj/structure/closet/crate/crafted_closet/inn/south{
 	name = "closet"
 	},
-/obj/item/clothing/shirt/undershirt/random,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/cloak/apron/brown,
 /turf/open/floor/ruinedwood/spiralfade,
 /area/rogue/under/mountains/anvil/dungeon)

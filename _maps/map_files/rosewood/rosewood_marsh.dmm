@@ -3014,7 +3014,7 @@
 /obj/structure/closet/crate/crafted_closet/inn/south,
 /obj/item/clothing/pants/skirt/random,
 /obj/item/clothing/shirt/tunic/colored/random,
-/obj/item/clothing/shirt/undershirt/random,
+/obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/dress/silkdress/colored/random,
 /obj/effect/spawner/map_spawner/loot/armor,
 /turf/open/floor/ruinedwood/darker,
