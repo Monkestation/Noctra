@@ -74,7 +74,7 @@
 			head = /obj/item/clothing/head/strawhat
 		pants = /obj/item/clothing/pants/tights/random
 		armor = /obj/item/clothing/armor/gambeson/light/striped
-		shirt = /obj/item/clothing/shirt/undershirt/random
+		shirt = /obj/item/clothing/shirt/undershirt/colored/random
 		shoes = /obj/item/clothing/shoes/simpleshoes
 		belt = /obj/item/storage/belt/leather/rope
 		beltr = /obj/item/key/soilson
@@ -154,7 +154,7 @@
 			head = /obj/item/clothing/head/strawhat
 		pants = /obj/item/clothing/pants/tights/random
 		armor = /obj/item/clothing/armor/gambeson/light/striped
-		shirt = /obj/item/clothing/shirt/undershirt/random
+		shirt = /obj/item/clothing/shirt/undershirt/colored/random
 		shoes = /obj/item/clothing/shoes/simpleshoes
 		belt = /obj/item/storage/belt/leather/rope
 		beltr = /obj/item/key/soilson

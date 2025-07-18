@@ -158,7 +158,7 @@
 	head = /obj/item/clothing/head/hatblu
 	armor = /obj/item/clothing/armor/leather/vest/random
 	pants = /obj/item/clothing/pants/trou
-	shirt = /obj/item/clothing/shirt/undershirt/random
+	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	shoes = /obj/item/clothing/shoes/boots/leather
 	belt = /obj/item/storage/belt/leather
 	beltr = /obj/item/weapon/pick/paxe

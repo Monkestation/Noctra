@@ -48,7 +48,7 @@
 	shoes = /obj/item/clothing/shoes/ridingboots
 	gloves = /obj/item/clothing/gloves/angle
 	belt = /obj/item/storage/belt/leather
-	shirt = /obj/item/clothing/shirt/undershirt/random
+	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	armor = /obj/item/clothing/armor/chainmail/hauberk
 	backl = /obj/item/weapon/polearm/spear
 	head = /obj/item/clothing/head/helmet/leather

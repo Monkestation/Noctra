@@ -116,7 +116,7 @@
 /datum/supply_pack/apparel/undershirt_random
 	name = "Undershirt"
 	cost = 4
-	contains = /obj/item/clothing/shirt/undershirt/random
+	contains = /obj/item/clothing/shirt/undershirt/colored/random
 
 /datum/supply_pack/apparel/undershirt_sailor
 	name = "Sailor Undershirt"

@@ -41,7 +41,7 @@
 	cloak = /obj/item/clothing/cloak/apron/waist/brown
 	neck = /obj/item/storage/belt/pouch/coins/mid
 	pants = /obj/item/clothing/pants/trou
-	shirt = /obj/item/clothing/shirt/undershirt/random
+	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	shoes = /obj/item/clothing/shoes/boots/leather
 	belt = /obj/item/storage/belt/leather
 	beltl = /obj/item/weapon/hammer

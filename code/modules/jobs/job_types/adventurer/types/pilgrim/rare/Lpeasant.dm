@@ -33,7 +33,7 @@
 	H.adjust_skillrank(/datum/skill/labor/taming, 2, TRUE)
 
 	belt = /obj/item/storage/belt/leather
-	shirt = /obj/item/clothing/shirt/undershirt/random
+	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	pants = /obj/item/clothing/pants/trou
 	shoes = /obj/item/clothing/shoes/boots/leather
 	backr = /obj/item/weapon/hoe

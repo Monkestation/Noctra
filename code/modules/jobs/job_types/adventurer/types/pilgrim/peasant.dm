@@ -25,7 +25,7 @@
 	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
 
 	belt = /obj/item/storage/belt/leather/rope
-	shirt = /obj/item/clothing/shirt/undershirt/random
+	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	pants = /obj/item/clothing/pants/trou
 	head = /obj/item/clothing/head/strawhat
 	shoes = /obj/item/clothing/shoes/simpleshoes

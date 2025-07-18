@@ -133,7 +133,7 @@
 			)
 		if("Peon")
 			head = /obj/item/clothing/head/armingcap
-			shirt = /obj/item/clothing/shirt/undershirt/random
+			shirt = /obj/item/clothing/shirt/undershirt/colored/random
 			armor = /obj/item/clothing/armor/gambeson/light/striped
 			gloves = /obj/item/clothing/gloves/leather/advanced
 			wrists = /obj/item/clothing/wrists/bracers/leather

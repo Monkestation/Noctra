@@ -41,7 +41,7 @@
 	shoes = /obj/item/clothing/shoes/boots/rare/zybanplate
 	gloves = /obj/item/clothing/gloves/rare/zybanplate
 	belt = /obj/item/storage/belt/leather
-	shirt = /obj/item/clothing/shirt/undershirt/random
+	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	armor = /obj/item/clothing/armor/rare/zybanplate
 	backl = /obj/item/storage/backpack/satchel
 	head = /obj/item/clothing/head/rare/zybanplate

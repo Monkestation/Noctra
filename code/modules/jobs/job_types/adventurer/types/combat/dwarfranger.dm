@@ -13,7 +13,7 @@
 	..()
 	head = /obj/item/clothing/head/roguehood/colored/uncolored
 	pants = /obj/item/clothing/pants/trou/leather
-	shirt = /obj/item/clothing/shirt/undershirt/random
+	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	belt = /obj/item/storage/belt/leather
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
