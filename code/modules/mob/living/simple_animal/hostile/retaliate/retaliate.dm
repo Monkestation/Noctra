@@ -202,6 +202,7 @@
 
 	face_atom(A)
 	playsound(src,'sound/misc/eat.ogg', rand(30,60), TRUE)
+	target = null
 	qdel(A)
 	food = min(food + 30, food_max)
 	return TRUE

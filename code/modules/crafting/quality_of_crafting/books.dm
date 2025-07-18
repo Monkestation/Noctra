@@ -75,6 +75,10 @@
 			temp_recipe = new path()
 			var/datum/anvil_recipe/r = temp_recipe
 			category = r.category
+		else if(ispath(path, /datum/artificer_recipe))
+			temp_recipe = new path()
+			var/datum/artificer_recipe/r = temp_recipe
+			category = r.category
 		else if(ispath(path, /datum/pottery_recipe))
 			temp_recipe = new path()
 			var/datum/pottery_recipe/r = temp_recipe
@@ -120,7 +124,7 @@
 		current_reader << browse(null,"window=recipe")
 		current_reader = null
 
-/obj/item/recipe_book/attack_self(mob/user)
+/obj/item/recipe_book/attack_self(mob/user, params)
 	. = ..()
 	current_reader = user
 	current_reader << browse(generate_html(user),"window=recipe;size=800x810")
@@ -480,6 +484,11 @@
 		var/datum/anvil_recipe/r = temp_recipe
 		recipe_name = initial(r.name)
 		recipe_html = get_recipe_specific_html(r, user)
+	else if(ispath(path, /datum/artificer_recipe))
+		temp_recipe = new path()
+		var/datum/artificer_recipe/r = temp_recipe
+		recipe_name = initial(r.name)
+		recipe_html = get_recipe_specific_html(r, user)
 	else if(ispath(path, /datum/pottery_recipe))
 		temp_recipe = new path()
 		var/datum/pottery_recipe/r = temp_recipe
@@ -767,6 +776,7 @@
 		/datum/book_entry/water_pressure,
 		/datum/repeatable_crafting_recipe/engineering,
 		/datum/slapcraft_recipe/engineering,
+		/datum/artificer_recipe,
 	)
 
 /obj/item/recipe_book/masonry

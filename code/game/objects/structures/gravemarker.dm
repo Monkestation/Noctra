@@ -44,5 +44,5 @@
 		if(pacify_coffin(hole, user))
 			user.visible_message(span_rose("[user] consecrates [hole]."), span_rose("I consecrate [hole]."))
 			SEND_SIGNAL(user, COMSIG_GRAVE_CONSECRATED, hole)
-			GLOB.vanderlin_round_stats[STATS_GRAVES_CONSECRATED]++
+			record_round_statistic(STATS_GRAVES_CONSECRATED)
 	return ..()

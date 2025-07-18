@@ -159,7 +159,7 @@
 		if(C != grabbee)
 			qdel(src)
 			return 1
-		if(modifiers["right"])
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			qdel(src)
 			return 1
 	return ..()
@@ -719,10 +719,10 @@
 		if(C != grabbee)
 			qdel(src)
 			return 1
-		if(modifiers["right"])
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			qdel(src)
 			return 1
-		var/_y = text2num(params2list(params)["icon-y"])
+		var/_y = text2num(LAZYACCESS(modifiers, ICON_Y))
 		if(_y>=17)
 			bitelimb(C)
 		else
@@ -774,7 +774,7 @@
 								MOBTIMER_SET(user, MT_ZOMBIETRIUMPH)
 							playsound(C.loc, 'sound/combat/fracture/headcrush (2).ogg', 100, FALSE, -1)
 							if(C.client)
-								GLOB.vanderlin_round_stats[STATS_LIMBS_BITTEN]++
+								record_round_statistic(STATS_LIMBS_BITTEN)
 							return
 		if(HAS_TRAIT(user, TRAIT_POISONBITE))
 			if(C.reagents)
@@ -789,7 +789,7 @@
 	to_chat(user, "<span class='danger'>I bite [C]'s [parse_zone(sublimb_grabbed)].[C.next_attack_msg.Join()]</span>")
 	C.next_attack_msg.Cut()
 	if(C.client && C.stat != DEAD)
-		GLOB.vanderlin_round_stats[STATS_LIMBS_BITTEN]++
+		record_round_statistic(STATS_LIMBS_BITTEN)
 	log_combat(user, C, "limb chewed [sublimb_grabbed] ")
 
 //this is for carbon mobs being drink only

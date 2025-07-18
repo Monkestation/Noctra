@@ -1,6 +1,6 @@
 ////////////////////////////////
 /proc/message_admins(msg)
-	msg = "<span class=\"admin\"><span class=\"prefix\">ADMIN LOG:</span> <span class=\"message linkify\">[msg]</span></span>"
+	msg = span_admin("[span_prefix("ADMIN LOG: ")]<span class=\"message linkify\">[msg]</span>")
 	for(var/client/C in GLOB.admins)
 		if(check_rights_for(C, R_ADMIN))
 			to_chat(C, msg)
@@ -1056,3 +1056,25 @@
 		user.client.holder.path_debug = new(user.client.holder)
 	else
 		QDEL_NULL(user.client.holder.path_debug)
+
+/datum/admins/proc/give_all_triumphs()
+	set category = "GameMaster"
+	set desc = "Triumph Giver"
+	set name = "Give All Triumphs"
+
+	var/mob/user = usr
+	if(!user.client.holder)
+		return
+	var/answer = input(user, "ARE YOU ABSOLUTELY SURE? THIS WILL GIVE TRIUMPHS TO EVERYONE CONNECTED.", "TRIUMPHS") as anything in list("Yes", "No")
+	if(answer != "Yes")
+		return
+	var/amount = input(user, "Choose the amount of triumphs", "Triumph Giver") as num|null
+	if(!amount)
+		return
+	if(amount < 0)
+		return
+
+	var/reason = input(user, "Choose a reason", "Triumph Giver") as text|null
+
+	for(var/client/client as anything in GLOB.clients)
+		client.mob.adjust_triumphs(amount, reason = reason)

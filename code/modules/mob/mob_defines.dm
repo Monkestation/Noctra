@@ -15,6 +15,8 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	throwforce = 10
 	vis_flags = VIS_INHERIT_PLANE
+	pass_flags_self = PASSMOB
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 
 	//FOV STUFF
 	plane = GAME_PLANE_FOV_HIDDEN
@@ -125,7 +127,7 @@
 	var/r_index = 1
 	var/r_ua_index = 1
 	var/l_ua_index = 1
-	var/oactive = FALSE //offhand active
+
 	/// The movement intent of the mob (run/wal)
 	var/m_intent = MOVE_INTENT_WALK//Living
 
@@ -139,7 +141,7 @@
 
 	//Hands
 	///What hand is the active hand
-	var/active_hand_index = 1
+	var/active_hand_index = 2
 	/**
 	 * list of items held in hands
 	 *
@@ -174,15 +176,6 @@
 
 	///The last mob/living/carbon to push/drag/grab this mob (exclusively used by slimes friend recognition)
 	var/mob/living/carbon/LAssailant = null
-
-	/**
-	 * construct spells and mime spells.
-	 *
-	 * Spells that do not transfer from one mob to another and can not be lost in mindswap.
-	 * obviously do not live in the mind
-	 */
-	var/list/mob_spell_list = list()
-
 
 	/// bitflags defining which status effects can be inflicted (replaces canknockdown, canstun, etc)
 	var/status_flags = CANSTUN|CANKNOCKDOWN|CANUNCONSCIOUS|CANPUSH|CANSLOWDOWN
@@ -278,7 +271,6 @@
 	var/cmode = 0
 	var/d_intent = INTENT_DODGE
 	var/islatejoin = FALSE
-	var/obj/effect/proc_holder/ranged_ability //Any ranged ability the mob has, as a click override
 
 	var/list/mob_timers = list()
 
@@ -287,3 +279,12 @@
 	var/sprinted_tiles = 0
 	///how many tiles we can move while casting
 	var/cast_move = 0
+
+	/// pronouns of the mob, set in the character sheet.
+	var/pronouns = null
+
+	/// Weakref to the item we are offering
+	var/datum/weakref/offered_item
+
+	/// A ref of the area we're taking our ambient loop from.
+	var/area/ambience_tracked_area

@@ -99,11 +99,12 @@
 	slice_sound = TRUE
 	faretype = FARE_POOR
 
-/obj/item/reagent_containers/food/snacks/meat/salami/update_icon()
+/obj/item/reagent_containers/food/snacks/meat/salami/update_icon_state()
 	if(slices_num)
 		icon_state = "salumoi[slices_num]"
 	else
 		icon_state = "salumoi_slice"
+	return ..()
 
 /obj/item/reagent_containers/food/snacks/meat/salami/on_consume(mob/living/eater)
 	..()
@@ -174,11 +175,12 @@
 	eat_effect = null
 	faretype = FARE_POOR
 
-/obj/item/reagent_containers/food/snacks/fat/salo/update_icon()
+/obj/item/reagent_containers/food/snacks/fat/salo/update_icon_state()
 	if(slices_num)
 		icon_state = "salo[slices_num]"
 	else
 		icon_state = "saloslice"
+	return ..()
 
 /obj/item/reagent_containers/food/snacks/fat/salo/on_consume(mob/living/eater)
 	..()
@@ -352,11 +354,12 @@
 	slice_sound = TRUE
 	faretype = FARE_IMPOVERISHED
 
-/obj/item/reagent_containers/food/snacks/butter/update_icon()
+/obj/item/reagent_containers/food/snacks/butter/update_icon_state()
 	if(slices_num)
 		icon_state = "butter[slices_num]"
 	else
 		icon_state = "butter_slice"
+	return ..()
 
 /obj/item/reagent_containers/food/snacks/butter/on_consume(mob/living/eater)
 	..()
@@ -796,7 +799,7 @@
 
 /obj/item/reagent_containers/food/snacks/jellycake_pear
 	name = "pear gelatine cake"
-	desc = "A mildly unappetising dessert, fittingly considered a delicacy by orcs. This flavor is a strange fusion of Zybantine and Orcish cuisines."
+	desc = "A mildly unappetising dessert, fittingly considered a delicacy by orcs. This flavor is a strange fusion of Zalad and Orcish cuisines."
 	icon_state = "peargelatinecake"
 	dropshrink = 0.8
 	slice_path = /obj/item/reagent_containers/food/snacks/jellyslice_pear

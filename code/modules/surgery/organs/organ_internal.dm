@@ -88,7 +88,7 @@
 			M.death()
 	for(var/datum/action/A as anything in actions)
 		A.Remove(M)
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 //	START_PROCESSING(SSobj, src)
 
 
@@ -156,7 +156,7 @@
 		eat_effect = null // food buff handled in /datum/reagent/organpoison
 	if(bitecount >= bitesize)
 		record_featured_stat(FEATURED_STATS_CRIMINALS, eater)
-		GLOB.vanderlin_round_stats[STATS_ORGANS_EATEN]++
+		record_round_statistic(STATS_ORGANS_EATEN)
 		check_culling(eater)
 		SEND_SIGNAL(eater, COMSIG_ORGAN_CONSUMED, src.type)
 	. = ..()

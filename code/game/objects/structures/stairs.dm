@@ -1,7 +1,3 @@
-#define STAIR_TERMINATOR_AUTOMATIC 0
-#define STAIR_TERMINATOR_NO 1
-#define STAIR_TERMINATOR_YES 2
-
 // stairs require /turf/open/transparent/openspace as the tile above them to work
 // multiple stair objects can be chained together; the Z level transition will happen on the final stair object in the chain
 
@@ -42,32 +38,15 @@
 
 /obj/structure/stairs/fancy/c
 	icon_state = "fancy_stairs_c"
+	uses_lord_coloring = LORD_PRIMARY
 
 /obj/structure/stairs/fancy/r
 	icon_state = "fancy_stairs_r"
+	uses_lord_coloring = LORD_PRIMARY
 
 /obj/structure/stairs/fancy/l
 	icon_state = "fancy_stairs_l"
-
-/obj/structure/stairs/fancy/Initialize()
-	. = ..()
-	if(GLOB.lordprimary)
-		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
-	else
-		GLOB.lordcolor += src
-
-/obj/structure/stairs/fancy/Destroy()
-	GLOB.lordcolor -= src
-	return ..()
-
-/obj/structure/stairs/fancy/lordcolor(primary,secondary)
-	if(!primary || !secondary)
-		return
-	var/mutable_appearance/M = mutable_appearance(icon, "[icon_state]_primary", -(layer+0.1))
-	M.color = primary
-	add_overlay(M)
-	GLOB.lordcolor -= src
-
+	uses_lord_coloring = LORD_PRIMARY
 
 /obj/structure/stairs/OnCrafted(dirin, mob/user)
 	dir = dirin

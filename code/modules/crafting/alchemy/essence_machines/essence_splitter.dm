@@ -110,7 +110,7 @@
 		if(extracted > 0)
 			vial.contained_essence = new essence_type
 			vial.essence_amount = extracted
-			vial.update_icon()
+			vial.update_appearance(UPDATE_OVERLAYS)
 			to_chat(user, span_info("You extract [extracted] units of essence into the vial."))
 		return
 
@@ -136,11 +136,23 @@
 	return TRUE
 
 /obj/machinery/essence/splitter/attack_hand(mob/user, params)
+	. = ..()
 	if(processing)
 		to_chat(user, span_warning("The splitter is currently processing."))
 		return
 
 	begin_bulk_splitting(user)
+
+/obj/machinery/essence/splitter/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(processing)
+		to_chat(user, span_warning("The splitter is currently processing."))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	remove_all_items(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/essence/splitter/proc/remove_all_items(mob/user)
 	for(var/obj/item/I in current_items)

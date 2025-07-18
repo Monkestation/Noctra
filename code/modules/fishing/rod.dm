@@ -79,7 +79,7 @@
 	icon_state = "auto"
 	no_attack = TRUE
 
-/obj/item/fishingrod/attack_self(mob/user)
+/obj/item/fishingrod/attack_self(mob/user, params)
 	if(user.doing())
 		user.stop_all_doing()
 	else
@@ -133,10 +133,13 @@
 					I.forceMove(src)
 					reel = I
 					to_chat(user, "<span class='notice'>I add [I] to [src]...</span>")
-	update_icon()
-	return
+	update_appearance(UPDATE_OVERLAYS)
 
-/obj/item/fishingrod/attack_right(mob/user)
+/obj/item/fishingrod/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/attacheditems = list()
 	if(baited)
 		attacheditems += baited
@@ -165,8 +168,7 @@
 			line = null
 		user.put_in_hands(totake)
 		to_chat(user, "<span class='notice'>I take [totake] off of [src].</span>")
-		update_icon()
-		return
+		update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/fishingrod/examine(mob/user)
 	. = ..()
@@ -195,19 +197,20 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/fishingrod/update_icon()
-	cut_overlays()
-	if(baited)
-		var/obj/item/I = baited
-		I.pixel_x = 6
-		I.pixel_y = -6
-		add_overlay(new /mutable_appearance(I))
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
+/obj/item/fishingrod/update_overlays()
+	. = ..()
+	if(!baited)
+		return
+	var/obj/item/I = baited
+	I.pixel_x = 0
+	I.pixel_y = 0
+	var/mutable_appearance/M = new /mutable_appearance(I)
+	M.pixel_x = 6
+	M.pixel_y = -6
+	. += M
 
-#define FISHRARITYWEIGHTS = list("com" = 70, "rare" = 20, "ultra" = 9, "gold" = 1)
-#define FISHSIZEWEIGHTS = list("tiny" = 4, "small" = 4, "normal" = 4, "large" = 2, "prize" = 1)
+#define FISHRARITYWEIGHTS list("com" = 70, "rare" = 20, "ultra" = 9, "gold" = 1)
+#define FISHSIZEWEIGHTS list("tiny" = 4, "small" = 4, "normal" = 4, "large" = 2, "prize" = 1)
 
 /obj/item/fishingrod/proc/checkreqs(mob/living/user)
 	. = FALSE
@@ -322,8 +325,8 @@
 
 	//initialize fishing modifiers
 	var/deepmod = 0
-	var/list/raritypicker = list("com" = 70, "rare" = 20, "ultra" = 9, "gold" = 1)
-	var/list/sizepicker = list("tiny" = 4, "small" = 4, "normal" = 4, "large" = 2, "prize" = 1)
+	var/list/raritypicker = FISHRARITYWEIGHTS
+	var/list/sizepicker = FISHSIZEWEIGHTS
 	var/obj/item/fishing/bait/B = null
 	fisher = user
 	var/specialcatchprob = 0
@@ -548,7 +551,7 @@
 				else
 					to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
 					return
-			update_icon()
+			update_appearance(UPDATE_OVERLAYS)
 		else //where all nonfishing intents end up
 			return ..()
 	else
@@ -722,7 +725,7 @@
 					caughtfish.sellprice *= costmod
 			if(fisher.mind)
 				record_featured_stat(FEATURED_STATS_FISHERS, fisher)
-				GLOB.vanderlin_round_stats[STATS_FISH_CAUGHT]++
+				record_round_statistic(STATS_FISH_CAUGHT)
 		else//only occurs on special catch that most likely won't have special modifiers
 			if(turfcatch)
 				var/atom/caughtthing = new fishtype(targeted)
@@ -738,16 +741,16 @@
 	stopgame(fisher)
 	qdel(baited)
 	baited = null
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
+
+#undef FISHRARITYWEIGHTS
+#undef FISHSIZEWEIGHTS
 
 /obj/item/fishingrod/fisher
 
-/obj/item/fishingrod/fisher/New()
+/obj/item/fishingrod/fisher/Initialize(mapload, ...)
 	. = ..()
 	icon_state = "rod[rand(1,3)]"
-
-/obj/item/fishingrod/fisher/Initialize()
-	. = ..()
 	reel = new /obj/item/fishing/reel/silk(src)
 	hook = new /obj/item/fishing/hook/iron(src)
 	line = new /obj/item/fishing/line/bobber(src)

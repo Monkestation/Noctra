@@ -103,7 +103,7 @@
 	if(used_limb)
 		if(target != src) // No self love here
 			if(used_limb == parse_zone(BODY_ZONE_PRECISE_R_HAND) || used_limb == parse_zone(BODY_ZONE_PRECISE_L_HAND))
-				GLOB.vanderlin_round_stats[STATS_HANDS_HELD]++
+				record_round_statistic(STATS_HANDS_HELD)
 		target.visible_message(span_warning("[src] grabs [target]'s [used_limb]."), \
 						span_warning("[src] grabs my [used_limb]."), span_hear("I hear shuffling."), null, list(src))
 		to_chat(src, span_info("I grab [target]'s [used_limb]."))
@@ -240,7 +240,7 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
-	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_NO_ATTACK_HAND)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		. = TRUE
 
 	if(!lying_attack_check(user))

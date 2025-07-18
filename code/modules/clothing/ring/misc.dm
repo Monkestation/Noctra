@@ -89,28 +89,32 @@
 	var/activetime
 	var/activate_sound
 
-/obj/item/clothing/ring/active/attack_right(mob/user)
-	if(loc != user)
+/obj/item/clothing/ring/active/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
+	if(loc != user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(cooldowny)
 		if(world.time < cooldowny + cdtime)
 			to_chat(user, "<span class='warning'>Nothing happens.</span>")
-			return
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.visible_message("<span class='warning'>[user] twists the [src]!</span>")
 	if(activate_sound)
 		playsound(user, activate_sound, 100, FALSE, -1)
 	cooldowny = world.time
 	addtimer(CALLBACK(src, PROC_REF(demagicify)), activetime)
 	active = TRUE
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 	activate(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/ring/active/proc/activate(mob/user)
 	user.update_inv_ring()
 
 /obj/item/clothing/ring/active/proc/demagicify()
 	active = FALSE
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 	if(ismob(loc))
 		var/mob/user = loc
 		user.visible_message("<span class='warning'>The ring settles down.</span>")
@@ -125,8 +129,8 @@
 	activetime = 30 SECONDS
 	sellprice = 100
 
-/obj/item/clothing/ring/active/nomag/update_icon()
-	..()
+/obj/item/clothing/ring/active/nomag/update_icon_state()
+	. = ..()
 	if(active)
 		icon_state = "rubyactive"
 	else

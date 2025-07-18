@@ -240,6 +240,7 @@
 		return FALSE
 
 	spouses += spouse
+	person.spouse_mob = spouse.person
 
 	// Only add reciprocal relationship if not already doing so
 	if(!skip_reciprocal && !(src in spouse.spouses))
@@ -593,7 +594,7 @@
 	if(!relationship)
 		return null
 
-	var/p_He = p_they(TRUE)
+	var/p_He = lookee.p_they(TRUE)
 	var/relationship_text = "[p_He] is my [relationship]"
 
 	if(lookee_member.adoption_status && (relationship in list("son", "daughter", "child")))

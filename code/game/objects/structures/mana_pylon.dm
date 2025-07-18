@@ -45,7 +45,7 @@
 	if(step_up)
 		forceMove(step_up)
 
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
 	set_light(1.4, 1.4, 0.75, l_color = COLOR_CYAN)
 
 /obj/structure/mana_pylon/Destroy()
@@ -54,13 +54,12 @@
 	QDEL_NULL(fake_density)
 	return ..()
 
-/obj/structure/mana_pylon/update_icon()
+/obj/structure/mana_pylon/update_overlays()
 	. = ..()
-	cut_overlays()
 	var/mutable_appearance/MA = mutable_appearance(icon, "pylon-glow", plane = ABOVE_LIGHTING_PLANE)
 	if(different_z)
 		MA.color = COLOR_RED
-	add_overlay(MA)
+	. += MA
 
 /obj/structure/mana_pylon/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -96,7 +95,15 @@
 		unlink_pylon(linked_pylon)
 
 	if(pylon_to_link.z == z)
-		created_beam = LeyBeam(pylon_to_link, icon_state = "medbeam", maxdistance = world.maxx, time = INFINITY)
+		created_beam = Beam(
+			pylon_to_link,
+			icon_state = "medbeam",
+			time = INFINITY,
+			max_distance = world.maxx,
+			beam_layer = LOWER_LEYLINE_LAYER,
+			beam_plane = LEYLINE_PLANE,
+			invisibility = INVISIBILITY_LEYLINES,
+		)
 
 	if(pylon_to_link.z != z)
 		different_z = TRUE
@@ -104,7 +111,7 @@
 		different_z = FALSE
 	linked_pylon = pylon_to_link
 	mana_pool.start_transfer(pylon_to_link.mana_pool, TRUE)
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
 /obj/structure/mana_pylon/proc/unlink_pylon(obj/structure/pylon_to_unlink)
@@ -145,8 +152,11 @@
 		else
 			mana_pool.transfer_specific_mana(user.mana_pool, transfer_amount, decrement_budget = TRUE)
 
-/obj/structure/mana_pylon/attack_right(mob/user)
+/obj/structure/mana_pylon/attack_hand_secondary(mob/user, params)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(user.client)
 		drain_mana(user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

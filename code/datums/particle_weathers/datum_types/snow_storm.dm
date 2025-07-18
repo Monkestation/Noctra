@@ -100,21 +100,16 @@
 
 /turf
 	var/obj/structure/snow/snow
-	var/turf_flags = TURF_EFFECT_AFFECTABLE
 
 /turf/proc/apply_weather_effect(datum/weather_effect/effect)
 	SIGNAL_HANDLER
+	if(!effect)
+		return
 
-	if(locate(/obj/structure/door) in src)
-		var/obj/structure/door/door = locate(/obj/structure/door) in src
-		if(door.density)
-			return
-	if(locate(/obj/structure/window) in src)
-		var/obj/structure/window/door = locate(/obj/structure/window) in src
-		if(!door.climbable)
-			return
+	if(!(turf_flags & TURF_EFFECT_AFFECTABLE))
+		return
 
-	if(!(turf_flags & TURF_EFFECT_AFFECTABLE) || density || !effect)
+	if(is_blocked_turf(TRUE))
 		return
 
 	effect.effect_affect(src)
@@ -146,7 +141,7 @@
 	START_PROCESSING(SSslowobj, src)
 
 	update_corners(TRUE)
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 	update_visuals_effects(first = TRUE)
 
@@ -173,7 +168,7 @@
 		if(bordered_snow == src)
 			continue
 		bordered_snow.update_corners(ignored = src)
-		bordered_snow.update_overlays()
+		bordered_snow.update_appearance(UPDATE_OVERLAYS)
 
 
 /obj/structure/snow/process(delta_time)
@@ -181,8 +176,7 @@
 		damage_act(3)
 	else if(!istype(SSParticleWeather.runningWeather, /datum/weather_effect/snow))
 		damage_act(6)
-	update_overlays()
-
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/snow/proc/get_slowdown()
 	return 1.5 * bleed_layer
@@ -265,7 +259,7 @@
 
 		if(propagate)
 			bordered_snow.update_corners()
-			bordered_snow.update_overlays()
+			bordered_snow.update_appearance(UPDATE_OVERLAYS)
 
 		var/direction = get_dir(src, bordered_snow)
 		for(var/deep = 1 to length(snow_dirs))
@@ -282,21 +276,18 @@
 
 /obj/structure/snow/update_overlays()
 	. = ..()
-	if(overlays)
-		overlays.Cut()
-
 	for(var/deep = 1 to length(snows_connections))
 		if(deep > bleed_layer)
 			continue
 
 		for(var/i = 1 to 4)
-			overlays += image(icon, "[icon_prefix]_[deep]_[snows_connections[deep][i]]", dir = 1<<(i-1))
+			. += image(icon, "[icon_prefix]_[deep]_[snows_connections[deep][i]]", dir = 1<<(i-1))
 
 	var/new_overlay = ""
 	for(var/i in diged)
 		if(diged[i] > world.time)
 			new_overlay += i
-	overlays += "[new_overlay]"
+	. += "[new_overlay]"
 
 /obj/structure/snow/proc/damage_act(damage)
 	if(progression > damage / 5)
@@ -305,9 +296,8 @@
 		changing_layer(min(bleed_layer - round(damage / (bleed_layer * 20), 1), MAX_LAYER_SNOW_LEVELS))
 		progression = bleed_layer * 4
 
-/obj/structure/snow/bullet_act(obj/projectile/proj)
+/obj/structure/snow/bullet_act(obj/projectile/proj, def_zone, piercing_hit)
 	return FALSE
-
 
 /obj/structure/snow/proc/weathered(datum/weather_effect/effect)
 	if(progression < bleed_layer * 32)
@@ -339,7 +329,7 @@
 		return
 
 	update_corners(TRUE)
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 	update_visuals_effects()
 
@@ -349,7 +339,7 @@
 /obj/structure/snow/Crossed(atom/movable/arrived)
 	. = ..()
 	if(isliving(arrived))
-		set_diged_ways(GLOB.reverse_dir[arrived.dir])
+		set_diged_ways(REVERSE_DIR(arrived.dir))
 
 /obj/structure/snow/Uncrossed(atom/movable/gone)
 	. = ..()
@@ -358,7 +348,7 @@
 
 /obj/structure/snow/proc/set_diged_ways(dir)
 	diged["[dir]"] = world.time + 1 MINUTES
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 #define CORNER_NONE 0
 #define CORNER_COUNTERCLOCKWISE 1

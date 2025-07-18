@@ -160,10 +160,16 @@
 
 	var/list/obj/effect/proc_holder/abilities = list()
 
-	/// Whether the mob is slowed down when dragging another prone mob
-	var/slowed_by_drag = TRUE
+	var/can_be_held = FALSE	//whether this can be picked up and held.
 
-	/// max amount of energy this mob can have
+	var/ventcrawl_layer = 2
+	var/losebreath = 0
+
+	var/slowed_by_drag = TRUE //Whether the mob is slowed down when dragging another prone mob
+
+	var/list/ownedSoullinks //soullinks we are the owner of
+	var/list/sharedSoullinks //soullinks we are a/the sharer of
+
 	var/max_energy = 1000
 	/// current amount of energy this mob has
 	var/energy = 1000
@@ -251,3 +257,10 @@
 	var/tempatarget = null
 
 	var/pet_passive = FALSE
+
+	/// amount of spell points this mob currently has
+	var/spell_points
+	/// amount of spell points this mob has used
+	var/used_spell_points
+
+	var/last_message

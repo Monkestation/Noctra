@@ -1,8 +1,3 @@
-#define BAD_INIT_QDEL_BEFORE 1
-#define BAD_INIT_DIDNT_INIT 2
-#define BAD_INIT_SLEPT 4
-#define BAD_INIT_NO_HINT 8
-
 SUBSYSTEM_DEF(atoms)
 	name = "Atoms"
 	init_order = INIT_ORDER_ATOMS
@@ -27,39 +22,26 @@ SUBSYSTEM_DEF(atoms)
 		return
 
 	initialized = INITIALIZATION_INNEW_MAPLOAD
-	#ifdef TESTING
-	var/count
-	#endif
 	var/list/mapload_arg = list(TRUE)
 	if(atoms)
-		#ifdef TESTING
-		count = atoms.len
-		#endif
+
 		for(var/atom/A as anything in atoms)
 			if(!(A.flags_1 & INITIALIZED_1))
 				InitAtom(A, mapload_arg)
 				CHECK_TICK
+
 	else
-		#ifdef TESTING
-		count = 0
-		#endif
+
 		for(var/atom/A as anything in world)
 			if(!(A.flags_1 & INITIALIZED_1))
 				InitAtom(A, mapload_arg)
-				#ifdef TESTING
-				++count
-				#endif
 				CHECK_TICK
-	#ifdef TESTING
-	testing("Initialized [count] atoms")
-	#endif
 	initialized = INITIALIZATION_INNEW_REGULAR
 
 	if(late_loaders.len)
 		for(var/I in late_loaders)
 			var/atom/A = I
 			A.LateInitialize()
-		testing("Late initialized [late_loaders.len] atoms")
 		late_loaders.Cut()
 
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, list/arguments)

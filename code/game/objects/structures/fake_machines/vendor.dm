@@ -25,18 +25,18 @@
 
 /obj/structure/fake_machine/vendor/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/fake_machine/vendor/on_lock_add()
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/fake_machine/vendor/on_lock(mob/user, silent)
 	. = ..()
-	update_icon()
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/fake_machine/vendor/on_unlock(mob/user, silent)
 	. = ..()
-	update_icon()
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/fake_machine/vendor/obj_break(damage_flag, silent)
 	. = ..()
@@ -44,32 +44,27 @@
 		I.forceMove(loc)
 		held_items -= I
 	budget2change(budget)
-	update_icon()
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/fake_machine/vendor/Destroy()
 	for(var/obj/item/I as anything in held_items)
 		I.forceMove(loc)
 		held_items -= I
 	budget2change(budget)
-	set_light(0)
-	. = ..()
+	return ..()
 
-/obj/structure/fake_machine/vendor/update_icon()
-	if(!locked() || obj_broken)
-		icon_state = "streetvendor0"
-		if(length(overlays))
-			cut_overlays()
-		set_light(0)
-		return
-	icon_state = "streetvendor1"
-	if(!length(held_items))
-		if(length(overlays))
-			cut_overlays()
+/obj/structure/fake_machine/vendor/update_icon_state()
+	. = ..()
+	var/state = locked() && !obj_broken
+	icon_state = "streedvendor[state]"
+
+/obj/structure/fake_machine/vendor/update_overlays()
+	. = ..()
+	if(!length(held_items) || !locked() || obj_broken)
 		set_light(0)
 		return
 	set_light(1, 1, 1, l_color = lighting_color)
-	if(!length(overlays))
-		add_overlay(mutable_appearance(icon, filled_overlay))
+	. += mutable_appearance(icon, filled_overlay)
 
 /obj/structure/fake_machine/vendor/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/coin))
@@ -85,13 +80,17 @@
 		return
 	return ..()
 
-/obj/structure/fake_machine/vendor/attack_right(mob/user)
+/obj/structure/fake_machine/vendor/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(user.cmode)
+		return
 	if(!lock_check())
 		to_chat(user, span_notice("There is no lock on \the [src]! I won't be able to sell this!"))
-		return
-	var/held = user.get_active_held_item()
-	add_merchandise(held, user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	add_merchandise(weapon, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/fake_machine/vendor/proc/add_merchandise(obj/item/I, mob/user)
 	if(QDELETED(I) || !isitem(I))
@@ -110,7 +109,7 @@
 	held_items[I]["PRICE"] = 0
 	I.forceMove(src)
 	playsound(get_turf(src), 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
-	update_icon()
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/fake_machine/vendor/Topic(href, href_list)
 	. = ..()
@@ -131,7 +130,7 @@
 			held_items -= O
 			if(!usr.put_in_hands(O))
 				O.forceMove(get_turf(src))
-			update_icon()
+			update_appearance(UPDATE_OVERLAYS)
 	if(href_list["retrieve"])
 		var/obj/item/O = locate(href_list["retrieve"]) in held_items
 		if(!O || !istype(O))
@@ -142,7 +141,7 @@
 			held_items -= O
 			if(!usr.put_in_hands(O))
 				O.forceMove(get_turf(src))
-			update_icon()
+			update_appearance(UPDATE_OVERLAYS)
 	if(href_list["change"])
 		if(!usr.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH) || !locked())
 			return
@@ -252,7 +251,6 @@
 	held_items[I] = list()
 	held_items[I]["NAME"] = I.name
 	held_items[I]["PRICE"] = 40
-	update_icon()
 
 /obj/structure/fake_machine/vendor/steward
 	lockids = list(ACCESS_STEWARD)
@@ -275,7 +273,6 @@
 	held_items[I] = list()
 	held_items[I]["NAME"] = I.name
 	held_items[I]["PRICE"] = 120
-	update_icon()
 
 /obj/structure/fake_machine/vendor/apothecary
 	name = "DRUG PEDDLER"
@@ -313,7 +310,6 @@
 			cachey[user] = list()
 		cachey[user]["moneydonate"] += P.get_real_price()
 		qdel(P)
-		update_icon()
 		playsound(loc, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
 
 		if(cachey[user]["moneydonate"] > 99)

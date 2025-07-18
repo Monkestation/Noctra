@@ -17,14 +17,12 @@
 
 	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_PLAYER_NONHERETICAL
-	allowed_patrons = list(/datum/patron/divine/necra)
 
 	outfit = /datum/outfit/job/undertaker
 	give_bank_account = TRUE
 	cmode_music = 'sound/music/cmode/church/CombatGravekeeper.ogg'
 
 /datum/outfit/job/undertaker
-	allowed_patrons = list(/datum/patron/divine/necra)
 	job_bitflag = BITFLAG_CHURCH
 
 /datum/outfit/job/undertaker/pre_equip(mob/living/carbon/human/H)
@@ -38,6 +36,10 @@
 	beltl = /obj/item/storage/keyring/gravetender
 	beltr = /obj/item/storage/belt/pouch/coins/poor
 	wear_back_right = /obj/item/weapon/shovel
+
+	if(H.patron != /datum/patron/divine/necra)
+		H.set_patron(/datum/patron/divine/necra)
+
 	H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE) // these are basically the acolyte skills with a bit of other stuff
 	H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
@@ -53,6 +55,9 @@
 	H.change_stat(STATKEY_END, 2)
 	H.change_stat(STATKEY_PER, -1) // similar to acolyte's stats
 	H.change_stat(STATKEY_LCK, -1) // Tradeoff for never being cursed when unearthing graves.
+	if(!H.has_language(/datum/language/celestial)) // For discussing church matters with the other Clergy
+		H.grant_language(/datum/language/celestial)
+		to_chat(H, "<span class='info'>I can speak Celestial with ,c before my speech.</span>")
 	ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC) // Operating with corpses every day.
 	ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC) // In case they need to move tombs or anything.

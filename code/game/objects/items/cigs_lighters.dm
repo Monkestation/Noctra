@@ -291,7 +291,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		handle_reagents()
 */
 
-/obj/item/clothing/face/cigarette/attack_self(mob/user)
+/obj/item/clothing/face/cigarette/attack_self(mob/user, params)
 	if(lit)
 		user.visible_message("<span class='notice'>[user] calmly drops and treads on \the [src], putting it out instantly.</span>")
 		new type_butt(user.loc)
@@ -486,7 +486,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		else
 			return ..()
 
-/obj/item/clothing/face/cigarette/pipe/attack_self(mob/user)
+/obj/item/clothing/face/cigarette/pipe/attack_self(mob/user, params)
 	var/turf/location = get_turf(user)
 	if(lit)
 		user.visible_message("<span class='notice'>[user] puts out [src].</span>", "<span class='notice'>I put out [src].</span>")
@@ -534,7 +534,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	if(!overlay_state)
 		overlay_state = pick(overlay_list)
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/lighter/suicide_act(mob/living/carbon/user)
 	if (lit)
@@ -545,11 +545,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		user.visible_message("<span class='suicide'>[user] begins whacking [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		return BRUTELOSS
 
-/obj/item/lighter/update_icon()
-	cut_overlays()
-	var/mutable_appearance/lighter_overlay = mutable_appearance(icon,"lighter_overlay_[overlay_state][lit ? "-on" : ""]")
+/obj/item/lighter/update_overlays()
+	. = ..()
+	var/mutable_appearance/lighter_overlay = mutable_appearance(icon, "lighter_overlay_[overlay_state][lit ? "-on" : ""]")
 	icon_state = "[initial(icon_state)][lit ? "-on" : ""]"
-	add_overlay(lighter_overlay)
+	. += lighter_overlay
 
 /obj/item/lighter/ignition_effect(atom/A, mob/user)
 	if(get_temperature())
@@ -570,12 +570,12 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		attack_verb = null //human_defense.dm takes care of it
 		set_light(0)
 		STOP_PROCESSING(SSobj, src)
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/lighter/extinguish()
 	set_lit(FALSE)
 
-/obj/item/lighter/attack_self(mob/living/user)
+/obj/item/lighter/attack_self(mob/living/user, params)
 	if(user.is_holding(src))
 		if(!lit)
 			set_lit(TRUE)
@@ -669,14 +669,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	. = ..()
 	if(!lighter_color)
 		lighter_color = pick(color_list)
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
 
-/obj/item/lighter/greyscale/update_icon()
-	cut_overlays()
-	var/mutable_appearance/lighter_overlay = mutable_appearance(icon,"lighter_overlay_[overlay_state][lit ? "-on" : ""]")
+/obj/item/lighter/greyscale/update_overlays()
+	. = ..()
+	var/mutable_appearance/lighter_overlay = mutable_appearance(icon, "lighter_overlay_[overlay_state][lit ? "-on" : ""]")
 	icon_state = "[initial(icon_state)][lit ? "-on" : ""]"
 	lighter_overlay.color = lighter_color
-	add_overlay(lighter_overlay)
+	. += lighter_overlay
 
 /obj/item/lighter/greyscale/ignition_effect(atom/A, mob/user)
 	if(get_temperature())

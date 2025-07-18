@@ -148,7 +148,11 @@
 		else
 			attemptsell(P, user, TRUE, TRUE)
 
-/obj/structure/fake_machine/stockpile/attack_right(mob/user)
+/obj/structure/fake_machine/stockpile/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(ishuman(user))
 		if(user.real_name in GLOB.outlawed_players)
 			say("OUTLAW DETECTED! REFUSING SERVICE!")
@@ -245,7 +249,7 @@
 /datum/withdraw_tab/proc/insert_coins(obj/item/coin/C)
 	budget += C.get_real_price()
 	qdel(C)
-	parent_structure.update_icon()
+	parent_structure.update_appearance()
 	playsound(parent_structure.loc, 'sound/misc/coininsert.ogg', 100, TRUE, -1)
 
 /proc/stock_announce(message)

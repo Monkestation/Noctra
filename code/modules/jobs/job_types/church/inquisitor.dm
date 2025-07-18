@@ -1,9 +1,9 @@
 /datum/job/inquisitor
 	title = "Inquisitor"
 	tutorial = "A recent arrival from Grenzelhoft, \
-	you are a member of the secretive lodges that have held to the service of Psydon since the Apotheosis War. \
-	You have been sent by your leader, the Holy Bishop, \
-	to assign the local Priest in combatting the increasing number of heretics and monsters infiltrating Vanderlin."
+	you are an emmissary of political and theological import. \
+	You have been sent by your leader, the Orthodox Bishop, \
+	to assist the local Priest in combatting the increasing number of heretics and monsters infiltrating Vanderlin."
 	flag = PURITAN
 	department_flag = CHURCHMEN
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
@@ -299,10 +299,10 @@
 					if("Zizo")
 						held_confession.bad_type = "A FOLLOWER OF THE FORBIDDEN ONE"
 						held_confession.antag = "worshiper of " + antag_type
-					if("Verewolf")
+					if("Werevolf")
 						held_confession.bad_type = "A BEARER OF DENDOR'S CURSE"
 						held_confession.antag = antag_type
-					if("Lesser Verewolf")
+					if("Lesser Werevolf")
 						held_confession.bad_type = "A BEARER OF DENDOR'S CURSE"
 						held_confession.antag = antag_type
 					if("Vampire")
@@ -333,7 +333,7 @@
 				has_confessed = TRUE
 				held_confession.signed = real_name
 				held_confession.info = "THE GUILTY PARTY ADMITS THEIR SINFUL NATURE AS <font color='red'>[held_confession.bad_type]</font>. THEY WILL SERVE ANY PUNISHMENT OR SERVICE AS REQUIRED BY THE ORDER OF THE PSYCROSS UNDER PENALTY OF DEATH.<br/><br/>SIGNED,<br/><font color='red'><i>[held_confession.signed]</i></font>"
-				held_confession.update_icon_state()
+				held_confession.update_appearance(UPDATE_ICON_STATE)
 			return
 		else
 			if(torture) // Only scream your confession if it's due to torture.

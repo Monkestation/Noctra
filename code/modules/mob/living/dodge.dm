@@ -31,7 +31,7 @@
 					   addition = "(INTENT:[uppertext(user.used_intent.name)])")
 
 		if(src.client)
-			GLOB.vanderlin_round_stats[STATS_DODGES]++
+			record_round_statistic(STATS_DODGES)
 		return TRUE
 	return FALSE
 
@@ -46,12 +46,15 @@
 		return FALSE
 
 	if(!is_valid_dodge_turf(target_turf))
-		to_chat(src, "<span class='boldwarning'>There's nowhere to dodge to!</span>")
+		to_chat(src, span_boldwarning("There's nowhere to dodge to!"))
 		return FALSE
 
 	var/drained = 10
 	var/dodge_speed = floor(STASPD / 2)
 	var/dodge_score = calculate_dodge_score(user)
+
+	//------------Duel Wielding------------
+	var/attacker_dualwielding = user.dual_wielding_check()
 
 	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
@@ -68,22 +71,28 @@
 				dodge_speed = floor(dodge_speed * 0.25)
 				drained += 20
 
+
+
 		if((H.get_encumbrance() > 0.7) || H.legcuffed)
 			H.Knockdown(1)
 			return FALSE
 
 		if(!H.adjust_stamina(max(drained, 5)))
-			to_chat(src, "<span class='warning'>I'm too tired to dodge!</span>")
+			to_chat(src, span_warning("I'm too tired to dodge!"))
 			return FALSE
 
 	dodge_score = clamp(dodge_score, 0, 95)
 	var/dodgeroll = rand(1, 100)
+	var/second_dodgeroll = rand(1, 100)
 
 	if(client?.prefs.showrolls)
-		to_chat(src, "<span class='info'>Roll under [dodge_score] to dodge... [dodgeroll]</span>")
-
-	if(dodgeroll > dodge_score)
-		return FALSE
+		to_chat(src, span_info("Roll under [dodge_score] to dodge... [dodgeroll]"))
+		if(dodgeroll > dodge_score)
+			return FALSE
+		if(attacker_dualwielding)
+			to_chat(src, span_info("Twice! Roll under [dodge_score] to dodge... [second_dodgeroll]"))
+			if(second_dodgeroll > dodge_score)
+				return FALSE
 
 	try_dodge_to(user, target_turf, dodge_speed)
 
@@ -95,7 +104,7 @@
 		log_defense(src, user, "dodged", defending_item, attacking_item, "INTENT:[uppertext(user.used_intent.name)]")
 
 	if(client)
-		GLOB.vanderlin_round_stats[STATS_DODGES]++
+		record_round_statistic(STATS_DODGES)
 
 	return TRUE
 

@@ -1,9 +1,5 @@
 // Foam
 // Similar to smoke, but slower and mobs absorb its reagent through their exposed skin.
-#define ALUMINUM_FOAM 1
-#define IRON_FOAM 2
-#define RESIN_FOAM 3
-
 
 /obj/effect/particle_effect/foam
 	name = "foam"
@@ -30,9 +26,6 @@
 	create_reagents(1000) //limited by the size of the reagent holder anyway.
 	START_PROCESSING(SSfastprocess, src)
 	playsound(src, 'sound/blank.ogg', 80, TRUE, -3)
-
-/obj/effect/particle_effect/foam/ComponentInitialize()
-	. = ..()
 	if(slippery_foam)
 		AddComponent(/datum/component/slippery, 100)
 

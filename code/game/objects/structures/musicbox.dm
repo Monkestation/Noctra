@@ -100,7 +100,8 @@
 	. = ..()
 	qdel(soundloop)
 
-/obj/structure/fake_machine/musicbox/update_icon()
+/obj/structure/fake_machine/musicbox/update_icon_state()
+	. = ..()
 	icon_state = "music[playing]"
 
 /obj/structure/fake_machine/musicbox/examine(mob/user)
@@ -122,12 +123,12 @@
 	soundloop.cursound = null
 	soundloop.volume = curvol
 	soundloop.start()
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/fake_machine/musicbox/proc/stop_playing()
 	playing = FALSE
 	soundloop.stop()
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/fake_machine/musicbox/attack_hand(mob/user)
 	. = ..()
@@ -220,3 +221,10 @@
 	. = ..()
 	soundloop.extra_range = 12
 	soundloop.falloff_exponent = 6
+
+#undef MUSIC_TAVCAT_CHILL
+#undef MUSIC_TAVCAT_FUCK
+#undef MUSIC_TAVCAT_PARTY
+#undef MUSIC_TAVCAT_SCUM
+#undef MUSIC_TAVCAT_DAMN
+#undef MUSIC_TAVCAT_MISC

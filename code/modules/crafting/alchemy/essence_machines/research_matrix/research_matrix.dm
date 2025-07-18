@@ -2,7 +2,7 @@
 	name = "thaumaturgical research matrix"
 	desc = "A complex crystalline construct that allows researchers to visualize and unlock the interconnected web of thaumaturgical knowledge. The surface shimmers with arcane symbols."
 	icon = 'icons/roguetown/misc/splitter.dmi'
-	icon_state = "research_matrix"
+	icon_state = "splitter"
 	density = TRUE
 	anchored = TRUE
 	processing_priority = 3
@@ -78,7 +78,7 @@
 			vial.essence_amount -= transferred
 			if(vial.essence_amount <= 0)
 				vial.contained_essence = null
-			vial.update_icon()
+			vial.update_appearance(UPDATE_OVERLAYS)
 			to_chat(user, span_info("You pour [transferred] units of essence into the matrix."))
 		return
 

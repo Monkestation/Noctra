@@ -43,7 +43,7 @@
 					addtimer(CALLBACK(T, TYPE_PROC_REF(/obj/item/weapon/tongs, make_unhot), tyme), 50)
 					if(istype(T, /obj/item/weapon/tongs/stone))
 						T.take_damage(1, BRUTE, "blunt")
-				T.update_icon()
+				T.update_appearance()
 				return
 
 			for(var/obj/item/storage/crucible/crucible in contents)
@@ -52,7 +52,7 @@
 					return
 				crucible.forceMove(T)
 				T.held_item = crucible
-				T.update_icon()
+				T.update_appearance()
 				return
 			if(on)
 				to_chat(user, "<span class='info'>Nothing to retrieve from inside.</span>")
@@ -218,7 +218,7 @@
 						for(var/i in 1 to maxore)
 							var/obj/item/R = new alloy(src, floor_mean_quality)
 							if(alloy == /obj/item/ingot/blacksteel)
-								GLOB.vanderlin_round_stats[STATS_BLACKSTEEL_SMELTED]++
+								record_round_statistic(STATS_BLACKSTEEL_SMELTED)
 							ore += R
 					else
 						for(var/obj/item/I in ore)

@@ -72,9 +72,12 @@
 
 	update_client_colour()
 	update_mouse_pointer()
-	if(client)
-		client.change_view(CONFIG_GET(string/default_view)) // Resets the client.view in case it was changed.
+	update_ambience_area(get_area(src))
 
+	if(!can_hear())
+		stop_sound_channel(CHANNEL_AMBIENCE)
+
+	if(client)
 		if(client.player_details.player_actions.len)
 			for(var/datum/action/A in client.player_details.player_actions)
 				A.Grant(src)

@@ -12,7 +12,11 @@
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	var/picked
 
-/obj/item/clothing/cloak/stabard/attack_right(mob/user)
+/obj/item/clothing/cloak/stabard/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(picked)
 		return
 	var/the_time = world.time
@@ -41,7 +45,7 @@
 	color = clothing_color2hex(colorone)
 	if(colortwo)
 		detail_color = clothing_color2hex(colortwo)
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_cloak()
@@ -49,7 +53,7 @@
 		detail_color = initial(detail_color)
 		color = initial(color)
 		detail_tag = initial(detail_tag)
-		update_icon()
+		update_appearance(UPDATE_OVERLAYS)
 		if(ismob(loc))
 			var/mob/L = loc
 			L.update_inv_cloak()
@@ -61,8 +65,13 @@
 	color = CLOTHING_BLOOD_RED
 	detail_tag = "_spl"
 	detail_color = CLOTHING_PLUM_PURPLE
+	uses_lord_coloring = LORD_PRIMARY | LORD_DETAIL_AND_COLOR
 
-/obj/item/clothing/cloak/stabard/guard/attack_right(mob/user)
+/obj/item/clothing/cloak/stabard/guard/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(picked)
 		return
 	var/the_time = world.time
@@ -80,51 +89,23 @@
 			detail_tag = "_box"
 		if("Diamonds")
 			detail_tag = "_dim"
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_cloak()
 	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
 		detail_tag = initial(detail_tag)
-		update_icon()
+		update_appearance(UPDATE_OVERLAYS)
 		if(ismob(loc))
 			var/mob/L = loc
 			L.update_inv_cloak()
 		return
 	picked = TRUE
 
-/obj/item/clothing/cloak/stabard/guard/Initialize()
-	. = ..()
-	if(GLOB.lordprimary)
-		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
-	else
-		GLOB.lordcolor += src
-
-/obj/item/clothing/cloak/stabard/guard/update_icon()
-	cut_overlays()
-	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
-		pic.appearance_flags = RESET_COLOR
-		if(get_detail_color())
-			pic.color = get_detail_color()
-		add_overlay(pic)
-
-/obj/item/clothing/cloak/stabard/guard/lordcolor(primary,secondary)
-	color = primary
-	detail_color = secondary
-	update_icon()
-	if(ismob(loc))
-		var/mob/L = loc
-		L.update_inv_cloak()
-
-/obj/item/clothing/cloak/stabard/guard/Destroy()
-	GLOB.lordcolor -= src
-	return ..()
-
 /obj/item/clothing/cloak/stabard/dungeon
 	color = CLOTHING_SOOT_BLACK
 
-/obj/item/clothing/cloak/stabard/dungeon/attack_right(mob/user)
+/obj/item/clothing/cloak/stabard/dungeon/attack_hand_secondary(mob/user, params)
 	return
 
 /obj/item/clothing/cloak/stabard/mercenary
@@ -135,7 +116,7 @@
 	detail_tag = pick("_quad", "_spl", "_box", "_dim")
 	color = clothing_color2hex(pick(CLOTHING_COLOR_NAMES))
 	detail_color = clothing_color2hex(pick(CLOTHING_COLOR_NAMES))
-	update_icon()
+	update_appearance(UPDATE_ICON)
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_cloak()
@@ -222,7 +203,11 @@
 	name = "jupon"
 	icon_state = "surcoat"
 
-/obj/item/clothing/cloak/stabard/surcoat/attack_right(mob/user)
+/obj/item/clothing/cloak/stabard/surcoat/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(picked)
 		return
 	var/the_time = world.time
@@ -251,7 +236,7 @@
 	color = clothing_color2hex(colorone)
 	if(colortwo)
 		detail_color = clothing_color2hex(colortwo)
-	update_icon()
+	update_appearance(UPDATE_ICON)
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_cloak()
@@ -259,29 +244,25 @@
 		detail_color = initial(detail_color)
 		color = initial(color)
 		detail_tag = initial(detail_tag)
-		update_icon()
+		update_appearance(UPDATE_ICON)
 		if(ismob(loc))
 			var/mob/L = loc
 			L.update_inv_cloak()
 		return
 	picked = TRUE
 
-/obj/item/clothing/cloak/stabard/surcoat/update_icon()
-	cut_overlays()
-	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
-		pic.appearance_flags = RESET_COLOR
-		if(get_detail_color())
-			pic.color = get_detail_color()
-		add_overlay(pic)
-
 /obj/item/clothing/cloak/stabard/surcoat/guard
 	desc = "A surcoat with the lord's heraldic colors."
 	color = CLOTHING_BLOOD_RED
 	detail_tag = "_quad"
 	detail_color = CLOTHING_PLUM_PURPLE
+	uses_lord_coloring = LORD_PRIMARY | LORD_DETAIL_AND_COLOR
 
-/obj/item/clothing/cloak/stabard/surcoat/guard/attack_right(mob/user)
+/obj/item/clothing/cloak/stabard/surcoat/guard/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(picked)
 		return
 	var/the_time = world.time
@@ -299,34 +280,15 @@
 			detail_tag = "_box"
 		if("Diamonds")
 			detail_tag = "_dim"
-	update_icon()
+	update_appearance(UPDATE_ICON)
 	if(ismob(loc))
 		var/mob/L = loc
 		L.update_inv_cloak()
 	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
 		detail_tag = initial(detail_tag)
-		update_icon()
+		update_appearance(UPDATE_ICON)
 		if(ismob(loc))
 			var/mob/L = loc
 			L.update_inv_cloak()
 		return
 	picked = TRUE
-
-/obj/item/clothing/cloak/stabard/surcoat/guard/Initialize()
-	. = ..()
-	if(GLOB.lordprimary)
-		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
-	else
-		GLOB.lordcolor += src
-
-/obj/item/clothing/cloak/stabard/surcoat/guard/lordcolor(primary,secondary)
-	color = primary
-	detail_color = secondary
-	update_icon()
-	if(ismob(loc))
-		var/mob/L = loc
-		L.update_inv_cloak()
-
-/obj/item/clothing/cloak/stabard/surcoat/guard/Destroy()
-	GLOB.lordcolor -= src
-	return ..()

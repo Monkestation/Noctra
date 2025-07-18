@@ -159,30 +159,32 @@
 	H.pickup(user)
 	user.put_in_hands(H)
 	user.visible_message(span_notice("[user] draws a card from the deck."), span_notice("I draw a card from the deck."))
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
-/obj/item/toy/cards/deck/update_icon()
-	if(cards.len > 26)
+/obj/item/toy/cards/deck/update_icon_state()
+	. = ..()
+	var/card_num = length(cards)
+	if(card_num > 26)
 		icon_state = "deck_[deckstyle]_full"
-	else if(cards.len > 10)
+	else if(card_num > 13)
 		icon_state = "deck_[deckstyle]_half"
-	else if(cards.len > 0)
+	else if(card_num > 6)
 		icon_state = "deck_[deckstyle]_low"
-	else if(cards.len == 0)
+	else if(card_num == 0)
 		icon_state = "deck_[deckstyle]_empty"
 
-/obj/item/toy/cards/deck/attack_self(mob/user)
+/obj/item/toy/cards/deck/attack_self(mob/user, params)
 	if(cooldown < world.time - 50)
 		if(HAS_TRAIT(user, TRAIT_BLACKLEG))
 			var/outcome = alert(user, "How do you want to shuffle the deck?","XYLIX","False Shuffle","Force Top Card","Play fair")
 			switch(outcome)
 				if("False Shuffle")
 					record_featured_stat(FEATURED_STATS_CRIMINALS, user)
-					GLOB.vanderlin_round_stats[STATS_GAMES_RIGGED]++
+					record_round_statistic(STATS_GAMES_RIGGED)
 					to_chat(user, span_notice("I shuffle the cards, then reverse the shuffle. Sneaky."))
 				if("Force Top Card")
 					record_featured_stat(FEATURED_STATS_CRIMINALS, user)
-					GLOB.vanderlin_round_stats[STATS_GAMES_RIGGED]++
+					record_round_statistic(STATS_GAMES_RIGGED)
 					user.set_machine(src)
 					interact(user)
 				if("Play fair")
@@ -234,7 +236,7 @@
 			qdel(SC)
 		else
 			to_chat(user, span_warning("I can't mix cards from other decks!"))
-		update_icon()
+		update_appearance(UPDATE_ICON_STATE)
 	else if(istype(I, /obj/item/toy/cards/cardhand))
 		var/obj/item/toy/cards/cardhand/CH = I
 		if(CH.parentdeck == src)
@@ -246,7 +248,7 @@
 			qdel(CH)
 		else
 			to_chat(user, span_warning("I can't mix cards from other decks!"))
-		update_icon()
+		update_appearance(UPDATE_ICON_STATE)
 	else
 		return ..()
 
@@ -280,7 +282,7 @@
 	var/choice = null
 
 
-/obj/item/toy/cards/cardhand/attack_self(mob/user)
+/obj/item/toy/cards/cardhand/attack_self(mob/user, params)
 	user.set_machine(src)
 	interact(user)
 
@@ -444,7 +446,7 @@
 	else
 		return ..()
 
-/obj/item/toy/cards/singlecard/attack_self(mob/living/carbon/human/user)
+/obj/item/toy/cards/singlecard/attack_self(mob/living/carbon/human/user, params)
 	if(!ishuman(user) || !(user.mobility_flags & MOBILITY_USE))
 		return
 	Flip()

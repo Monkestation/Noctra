@@ -11,11 +11,6 @@
 	on_remove_on_mob_delete = TRUE
 	alert_type = /atom/movable/screen/alert/status_effect/invisible
 
-/datum/status_effect/invisibility/on_creation(mob/living/new_owner, new_duration)
-	if(isnum(new_duration) && (new_duration != duration))
-		duration = new_duration
-	return ..()
-
 /datum/status_effect/invisibility/on_apply()
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_IMPERCEPTIBLE, id)

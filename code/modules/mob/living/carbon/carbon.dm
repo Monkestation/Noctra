@@ -64,22 +64,20 @@
 	var/oindex = active_hand_index
 	active_hand_index = held_index
 	if(hud_used)
-		hud_used.throw_icon?.update_icon()
-		hud_used.give_intent?.update_icon()
+		hud_used.throw_icon?.update_appearance()
+		hud_used.give_intent?.update_appearance()
 		var/atom/movable/screen/inventory/hand/H
 		H = hud_used.hand_slots["[oindex]"]
 		if(H)
-			H.update_icon()
+			H.update_appearance()
 		H = hud_used.hand_slots["[held_index]"]
 		if(H)
-			H.update_icon()
+			H.update_appearance()
 		H = hud_used.action_intent
-	oactive = FALSE
+
 	update_a_intents()
 
-	givingto = null
 	return TRUE
-
 
 /mob/living/carbon/activate_hand(selhand) //l/r OR 1-held_items.len
 	if(!selhand)
@@ -170,14 +168,14 @@
 	in_throw_mode = 0
 	if(client && hud_used)
 		hud_used.throw_icon?.throwy = 0
-		hud_used.throw_icon?.update_icon()
+		hud_used.throw_icon?.update_appearance()
 
 
 /mob/living/carbon/proc/throw_mode_on()
 	in_throw_mode = 1
 	if(client && hud_used)
 		hud_used.throw_icon?.throwy = 1
-		hud_used.throw_icon?.update_icon()
+		hud_used.throw_icon?.update_appearance()
 
 /mob/proc/throw_item(atom/target, offhand = FALSE)
 	SEND_SIGNAL(src, COMSIG_MOB_THROW, target)
@@ -504,7 +502,7 @@
 			I.safe_throw_at(target,I.throw_range,I.throw_speed,src, force = move_force)
 
 /mob/living/carbon/proc/get_str_arms(num)
-	if(!domhand || !num)
+	if(!domhand || !num || HAS_TRAIT(src, TRAIT_DUALWIELDER))
 		return STASTR
 	var/used = STASTR
 	if(num == domhand)
@@ -527,12 +525,6 @@
 		stat("END: \Roman[STAEND]")
 		stat("SPD: \Roman[STASPD]")
 		stat("PATRON: [uppertext(patron)]")
-
-/mob/living/carbon/Stat()
-	..()
-	if(!client)
-		return
-	add_abilities_to_panel()
 
 /mob/living/carbon/attack_ui(slot)
 	if(!has_hand_for_held_index(active_hand_index))
@@ -725,11 +717,11 @@
 
 	if(HAS_TRAIT(src, TRAIT_BESTIALSENSE))
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_DARKVISION)
-		see_in_dark = 4
+		see_in_dark = max(see_in_dark, 4)
 
 	if(HAS_TRAIT(src, TRAIT_DARKVISION))
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-		see_in_dark = 6
+		see_in_dark = max(see_in_dark, 6)
 
 	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
 		sight |= (SEE_MOBS)
@@ -852,7 +844,7 @@
 		clear_fullscreen("DDZ")
 	if(hud_used)
 		if(hud_used.stressies)
-			hud_used.stressies.update_icon()
+			hud_used.stressies.update_appearance()
 //	if(blood_volume <= 0)
 //		overlay_fullscreen("DD", /atom/movable/screen/fullscreen/crit/death)
 //	else
@@ -994,7 +986,7 @@
 	else
 		clear_alert("handcuffed")
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "handcuffed")
-	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
+	update_mob_action_buttons()
 	update_inv_handcuffed()
 	update_hud_handcuffed()
 

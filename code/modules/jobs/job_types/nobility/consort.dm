@@ -13,7 +13,7 @@
 	min_pq = 6
 	bypass_lastclass = TRUE
 
-	spells = list(/obj/effect/proc_holder/spell/self/convertrole/servant)
+	spells = list(/datum/action/cooldown/spell/undirected/list_target/convert_role/servant)
 	allowed_races = list(
 		"Humen",
 		"Half-Elf",
@@ -30,9 +30,9 @@
 /datum/job/consort/after_spawn(mob/living/spawned, client/player_client)
 	..()
 	var/mob/living/carbon/human/H = spawned
-	SSfamilytree.AddRoyal(H, (H.gender == FEMALE) ? FAMILY_MOTHER : FAMILY_FATHER)
+	addtimer(CALLBACK(SSfamilytree, TYPE_PROC_REF(/datum/controller/subsystem/familytree, AddRoyal), H, (H.gender == FEMALE) ? FAMILY_MOTHER : FAMILY_FATHER), 3 SECONDS)
 	if(GLOB.keep_doors.len > 0)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(know_keep_door_password), H), 50)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(know_keep_door_password), H), 5 SECONDS)
 	ADD_TRAIT(H, TRAIT_KNOWKEEPPLANS, TRAIT_GENERIC)
 
 /datum/outfit/job/consort
@@ -207,13 +207,3 @@
 	to_chat(H, "<span class='info'>I can gesture in thieves' cant with ,t before my speech.</span>")
 	ADD_TRAIT(H, TRAIT_THIEVESGUILD, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NUTCRACKER, TRAIT_GENERIC)
-
-/obj/effect/proc_holder/spell/self/convertrole/servant
-	name = "Recruit Servant"
-	new_role = "Servant"
-	overlay_state = "recruit_servant"
-	recruitment_faction = "Servants"
-	recruitment_message = "Join the keep's servants, %RECRUIT!"
-	accept_message = "I serve the Crown!"
-	refuse_message = "I refuse."
-	recharge_time = 100

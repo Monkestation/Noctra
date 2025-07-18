@@ -92,7 +92,7 @@
 /obj/item/clothing/shirt/robe/priest/pickup(mob/living/user)
 	if((user.job != "Priest") && (user.job != "Priestess"))
 		user.visible_message(span_reallybig("UNWORTHY HANDS TOUCH MY VISAGE, CEASE OR BE PUNISHED"))
-		playsound(user, 'sound/misc/astratascream.ogg', 80, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(user, 'sound/misc/gods/astrata_scream.ogg', 80, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		spawn(30)
 			if(loc == user)
 				user.adjust_divine_fire_stacks(5)
@@ -247,9 +247,6 @@
 		H.update_fov_angles()
 	else
 		hood.moveToNullspace()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
 
 /obj/item/clothing/shirt/robe/newmage/adept
 	name = "adept robe"
@@ -358,3 +355,9 @@
 	picked = TRUE
 	to_chat(user, span_info("[src] magically changes it's colours!"))
 	playsound(src, 'sound/magic/swap.ogg', 50, TRUE)
+
+/obj/item/clothing/shirt/robe/faceless
+	desc = "A slimmed down, fitting robe made of fine silks and fabrics."
+	color = null
+	icon_state = "facelesscloth" //Credit goes to Cre
+	item_state = "facelesscloth"

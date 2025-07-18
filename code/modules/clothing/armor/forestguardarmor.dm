@@ -23,10 +23,9 @@
 /obj/item/clothing/cloak/forrestercloak/snow
 	icon_state = "snowcloak"
 
-/obj/item/clothing/cloak/forrestercloak/ComponentInitialize()
+/obj/item/clothing/cloak/forrestercloak/Initialize(mapload, ...)
 	. = ..()
 	AddComponent(/datum/component/storage/concrete/grid/cloak)
-
 
 /obj/item/clothing/cloak/wardencloak
 	name = "warden's cloak"
@@ -40,7 +39,7 @@
 	sleevetype = "shirt"
 	nodismemsleeves = TRUE
 
-/obj/item/clothing/cloak/wardencloak/ComponentInitialize()
+/obj/item/clothing/cloak/wardencloak/Initialize(mapload, ...)
 	. = ..()
 	AddComponent(/datum/component/storage/concrete/grid/cloak)
 
@@ -66,15 +65,6 @@
 
 	prevent_crits = ALL_EXCEPT_STAB
 
-/obj/item/clothing/head/helmet/medium/decorated/update_icon()
-	cut_overlays()
-	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
-		pic.appearance_flags = RESET_COLOR
-		if(get_detail_color())
-			pic.color = get_detail_color()
-		add_overlay(pic)
-
 /obj/item/clothing/head/helmet/medium/decorated/skullmet
 	name = "skullmet"
 	desc = "A crude helmet constructed with the skull of various beasts of Dendor."
@@ -82,8 +72,10 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/forest_guard.dmi'
 	icon_state = "skullmet_volf"
 
-/obj/item/clothing/head/helmet/medium/decorated/skullmet/attack_right(mob/user)
-	..()
+/obj/item/clothing/head/helmet/medium/decorated/skullmet/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(!picked)
 		var/list/icons = SKULLMET_ICONS
 		var/choice = input(user, "Choose a helmet design.", "Helmet designs") as anything in icons
@@ -91,7 +83,7 @@
 		picked = TRUE
 		icon_state = playerchoice
 		item_state = playerchoice
-		update_icon()
 		if(loc == user && ishuman(user))
 			var/mob/living/carbon/H = user
 			H.update_inv_head()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

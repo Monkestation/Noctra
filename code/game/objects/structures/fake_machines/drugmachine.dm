@@ -38,19 +38,11 @@
 	popup.set_content(contents)
 	popup.open()
 
-/obj/item/roguemachine/drugtrade/update_icon()
-	if(!anchored)
-		w_class = WEIGHT_CLASS_BULKY
-		set_light(0)
-		return
-	w_class = WEIGHT_CLASS_GIGANTIC
-	set_light(2, 2, 2, l_color =  "#9C37B5")
-
 /obj/item/roguemachine/drugtrade/Initialize()
 	. = ..()
 	if(anchored)
 		START_PROCESSING(SSroguemachine, src)
-	update_icon()
+	set_light(2, 2, 2, l_color =  "#9C37B5")
 	for(var/X in GLOB.alldirs)
 		var/T = get_step(src, X)
 		if(!T)
@@ -169,7 +161,7 @@
 			if(!(upgrade_flags & UPGRADE_NOTAX))
 				SStreasury.give_money_treasury(tax_amt, "goldface import tax")
 				record_featured_stat(FEATURED_STATS_TAX_PAYERS, human_mob, tax_amt)
-				GLOB.vanderlin_round_stats[STATS_TAXES_COLLECTED] += tax_amt
+				record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
 		else
 			say("Not enough!")
 			return

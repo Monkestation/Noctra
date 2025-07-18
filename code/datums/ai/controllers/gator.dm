@@ -110,7 +110,9 @@
 
 	if(!has_target && !in_water && prob(return_to_water_chance))
 		var/atom/water_target = controller.blackboard[BB_GATOR_PREFERRED_TERRITORY]
-		if(water_target.z != controller.pawn.z)
+		if(QDELETED(water_target))
+			return
+		if(water_target.z != gator_pawn.z)
 			controller.set_blackboard_key(BB_GATOR_PREFERRED_TERRITORY, null)
 			water_target = null
 		if(water_target)

@@ -35,15 +35,18 @@
 	if(lock)
 		. += span_info("It is [locked() ? "locked" : "unlocked"].")
 
-/obj/structure/pillory/attack_right(mob/living/user)
+/obj/structure/pillory/attack_hand_secondary(mob/living/user, params)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(!length(buckled_mobs))
 		to_chat(user, span_warning("What's the point of latching it with nobody inside?"))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(user in buckled_mobs)
 		to_chat(user, span_warning("I can't reach the latch!"))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	togglelatch(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/pillory/pre_lock_interact(mob/user)
 	if(user in buckled_mobs)
@@ -100,14 +103,12 @@
 			var/datum/species/S = H.dna.species
 
 			if (istype(S))
-				//H.cut_overlays()
 				H.update_body_parts_head_only()
 				density = FALSE
 				switch(H.dna.species.name)
 					if ("Dwarf","Goblin")
 						H.set_mob_offsets("bed_buckle", _w = 0, _z = PILLORY_HEAD_OFFSET)
 				icon_state = "[base_icon]-over"
-				update_icon()
 			else
 				unbuckle_all_mobs()
 		else
@@ -121,7 +122,6 @@
 	M.regenerate_icons()
 	M.reset_offsets("bed_buckle")
 	icon_state = "[base_icon]"
-	update_icon()
 	..()
 
 /obj/structure/pillory/user_unbuckle_mob(mob/living/buckled_mob, mob/living/user)

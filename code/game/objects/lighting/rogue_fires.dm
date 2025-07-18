@@ -6,20 +6,11 @@
 //	pixel_y = 10
 	base_state = "stonefire"
 	climbable = TRUE
-	pass_flags = LETPASSTHROW
+	pass_flags_self = LETPASSTHROW
 	cookonme = TRUE
 	dir = SOUTH
 	crossfire = TRUE
 	fueluse = 0
-
-/obj/machinery/light/fueled/firebowl/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSTABLE))
-		return 1
-	if(mover.throwing)
-		return 1
-	if(locate(/obj/structure/table) in get_turf(mover))
-		return 1
-	return !density
 
 /obj/machinery/light/fueled/firebowl/attack_hand(mob/user)
 	. = ..()
@@ -71,6 +62,12 @@
 /obj/machinery/light/fueled/firebowl/church
 	icon_state = "churchfire1"
 	base_state = "churchfire"
+
+/obj/machinery/light/fueled/firebowl/church/magic
+	name = "magical bonfire"
+	color = "#6ab2ee"
+	bulb_colour = "#6ab2ee"
+	max_integrity = 30
 
 /obj/machinery/light/fueled/firebowl/church/unholyfire
 	desc = "This fire burns yet it is cold..."
@@ -237,6 +234,7 @@
 	cookonme = FALSE
 	temperature_change = 0
 	fog_parter_effect = null
+	var/shows_empty = TRUE
 
 /obj/machinery/light/fueled/torchholder/c
 	pixel_y = 32
@@ -246,6 +244,14 @@
 
 /obj/machinery/light/fueled/torchholder/l
 	dir = EAST
+
+/obj/machinery/light/fueled/torchholder/update_icon_state()
+	. = ..()
+	if(!shows_empty)
+		return
+	if(torchy)
+		return
+	icon_state = base_state
 
 /obj/machinery/light/fueled/torchholder/seton(s)
 	. = ..()
@@ -261,7 +267,7 @@
 				playsound(src.loc, 'sound/items/firelight.ogg', 100)
 				on = TRUE
 				update()
-				update_icon()
+				update_appearance(UPDATE_ICON_STATE)
 				if(soundloop)
 					soundloop.start()
 				return TRUE
@@ -304,17 +310,8 @@
 		torchy = null
 		on = FALSE
 		update()
-		update_icon()
+		update_appearance(UPDATE_ICON_STATE)
 		playsound(src.loc, 'sound/foley/torchfixturetake.ogg', 70)
-
-/obj/machinery/light/fueled/torchholder/update_icon()
-	if(torchy)
-		if(on)
-			icon_state = "[base_state]1"
-		else
-			icon_state = "[base_state]0"
-	else
-		icon_state = "torchwall"
 
 /obj/machinery/light/fueled/torchholder/burn_out()
 	if(torchy && torchy.on)
@@ -335,7 +332,7 @@
 					playsound(src.loc, 'sound/items/firelight.ogg', 100)
 					on = TRUE
 					update()
-					update_icon()
+					update_appearance(UPDATE_ICON_STATE)
 					return
 			if(!LR.on && on)
 				if(LR.fuel > 0)
@@ -349,16 +346,15 @@
 				torchy = LR
 				on = TRUE
 				update()
-				update_icon()
+				update_appearance(UPDATE_ICON_STATE)
 			else
 				if(!user.transferItemToLoc(LR, src))
 					return
 				torchy = LR
-				update_icon()
+				update_appearance(UPDATE_ICON_STATE)
 			playsound(src.loc, 'sound/foley/torchfixtureput.ogg', 70)
 		return
 	. = ..()
-
 
 /obj/machinery/light/fueled/torchholder/metal_torch
 	torchy = /obj/item/flashlight/flare/torch/metal
@@ -431,7 +427,7 @@
 
 			if(user.transferItemToLoc(W, src, silent = TRUE))
 				attachment = W
-				update_icon()
+				update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
 			return
 
 	else
@@ -457,20 +453,21 @@
 	if(food)
 		playsound(src.loc, 'sound/misc/frying.ogg', 80, FALSE, extrarange = 2)
 
-/obj/machinery/light/fueled/hearth/update_icon()
-	cut_overlays()
-	icon_state = "[base_state][on]"
-	if(attachment)
-		if(istype(attachment, /obj/item/cooking/pan) || istype(attachment, /obj/item/reagent_containers/glass/bucket/pot) || istype(attachment, /obj/item/reagent_containers/glass/bottle/teapot))
-			var/obj/item/I = attachment
-			I.pixel_x = 0
-			I.pixel_y = 0
-			add_overlay(new /mutable_appearance(I))
-			if(food)
-				I = food
-				I.pixel_x = 0
-				I.pixel_y = 0
-				add_overlay(new /mutable_appearance(I))
+/obj/machinery/light/fueled/hearth/update_overlays()
+	. = ..()
+	if(!attachment)
+		return
+	if(istype(attachment, /obj/item/cooking/pan) || istype(attachment, /obj/item/reagent_containers/glass/bucket/pot) || istype(attachment, /obj/item/reagent_containers/glass/bottle/teapot))
+		var/obj/item/I = attachment
+		I.pixel_x = 0
+		I.pixel_y = 0
+		. += new /mutable_appearance(I)
+		if(!food)
+			return
+		I = food
+		I.pixel_x = 0
+		I.pixel_y = 0
+		. += new /mutable_appearance(I)
 
 /obj/machinery/light/fueled/hearth/attack_hand(mob/user)
 	. = ..()
@@ -481,7 +478,7 @@
 		if(!user.put_in_active_hand(attachment))
 			attachment.forceMove(user.loc)
 		attachment = null
-		update_icon()
+		update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
 	else
 		if(on)
 			var/mob/living/carbon/human/H = user
@@ -512,7 +509,7 @@
 							rawegg = FALSE
 						qdel(food)
 						food = C
-			if(istype(attachment, /obj/item/reagent_containers/glass/bucket/pot))
+			else if(istype(attachment, /obj/item/reagent_containers/glass/bucket/pot))
 				if(attachment.reagents)
 					attachment.reagents.expose_temperature(400, 0.033)
 					if(attachment.reagents.chem_temp > 374)
@@ -521,8 +518,7 @@
 						boilloop.stop()
 			else
 				boilloop.stop()
-		update_icon()
-
+		update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/light/fueled/hearth/onkick(mob/user)
 	if(isliving(user) && on)
@@ -586,21 +582,9 @@
 	climbable = TRUE
 	on = FALSE
 	fueluse = 30 MINUTES
-	pass_flags = LETPASSTHROW
+	pass_flags_self = LETPASSTHROW
 	bulb_colour = "#eea96a"
 	max_integrity = 60
-
-/obj/machinery/light/fueled/campfire/densefire/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSTABLE))
-		return 1
-	if(mover.throwing)
-		return 1
-	if(locate(/obj/structure/table) in get_turf(mover))
-		return 1
-	if(locate(/obj/machinery/light/fueled/firebowl) in get_turf(mover))
-		return 1
-	return !density
-
 
 /obj/machinery/light/fueled/campfire/pyre
 	name = "pyre"

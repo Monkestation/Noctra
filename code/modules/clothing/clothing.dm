@@ -1,8 +1,3 @@
-#define ARMOR_CLASS_NONE 0
-#define AC_LIGHT 1
-#define AC_MEDIUM 2
-#define AC_HEAVY 3
-
 /obj/item/clothing
 	name = "clothing"
 	resistance_flags = FLAMMABLE
@@ -72,8 +67,6 @@
 	var/adjustable = CANT_CADJUST
 
 /obj/item/clothing/Initialize()
-	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
-		actions_types += /datum/action/item_action/toggle_voice_box
 	. = ..()
 	if(ispath(pocket_storage_component_path))
 		LoadComponent(pocket_storage_component_path)
@@ -83,8 +76,26 @@
 	if(armor_class)
 		has_inspect_verb = TRUE
 
+	if(uses_lord_coloring)
+		if(GLOB.lordprimary && GLOB.lordsecondary)
+			lordcolor()
+		else
+			RegisterSignal(SSdcs, COMSIG_LORD_COLORS_SET, TYPE_PROC_REF(/obj/item/clothing, lordcolor))
+
 	if(hoodtype)
 		MakeHood()
+
+/obj/item/clothing/Initialize(mapload, ...)
+	AddElement(/datum/element/update_icon_updates_onmob, slot_flags)
+	return ..()
+
+/obj/item/clothing/Destroy()
+	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
+	if(hoodtype)
+		QDEL_NULL(hood)
+	if(uses_lord_coloring)
+		UnregisterSignal(SSdcs, COMSIG_LORD_COLORS_SET)
+	return ..()
 
 /obj/item/clothing/Topic(href, href_list)
 	. = ..()
@@ -111,7 +122,7 @@
 	var/mob/living/L = user
 	var/altheld //Is the user pressing alt?
 	var/list/modifiers = params2list(params)
-	if(modifiers["alt"])
+	if(LAZYACCESS(modifiers, ALT_CLICKED))
 		altheld = TRUE
 	if(!isliving(user))
 		return
@@ -244,13 +255,6 @@
 		if(M.putItemFromInventoryInHandIfPossible(src, H.held_index))
 			add_fingerprint(usr)
 
-/obj/item/clothing/Destroy()
-	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
-	if(hoodtype)
-		qdel(hood)
-		hood = null
-	return ..()
-
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))
 		if(!user.incapacitated(ignore_grab = TRUE))
@@ -295,6 +299,16 @@
 	for(var/trait in clothing_traits)
 		ADD_CLOTHING_TRAIT(user, trait)
 
+/obj/item/clothing/update_overlays()
+	. = ..()
+	if(!get_detail_tag())
+		return
+	var/mutable_appearance/pic = mutable_appearance(icon, "[icon_state][detail_tag]")
+	pic.appearance_flags = RESET_COLOR
+	if(get_detail_color())
+		pic.color = get_detail_color()
+	. += pic
+
 /**
  * Inserts a trait (or multiple traits) into the clothing traits list
  *
@@ -311,15 +325,6 @@
 	if(istype(wearer) && (wearer.get_slot_by_item(src) & slot_flags))
 		for(var/new_trait in trait_or_traits)
 			ADD_CLOTHING_TRAIT(wearer, new_trait)
-
-/obj/item/clothing/update_icon()
-	cut_overlays()
-	if (get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
-		pic.appearance_flags = RESET_COLOR
-		if (get_detail_color())
-			pic.color = get_detail_color()
-		add_overlay(pic)
 
 /obj/item/clothing/obj_break(damage_flag, silent)
 	if(!damaged_clothes)
@@ -426,12 +431,16 @@ BLIND     // can't see anything
 		W.connectedc = src
 		hood = W
 
-/obj/item/clothing/attack_right(mob/user)
-	if(hoodtype)
+/obj/item/clothing/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(hoodtype && (loc == user))
 		ToggleHood()
-	if(adjustable > 0)
-		if(loc == user)
-			AdjustClothes(user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(adjustable > 0 && (loc == user))
+		AdjustClothes(user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/proc/AdjustClothes(mob/usFer)
 	return //override this in the clothing item itself so we can update the right inv
@@ -469,12 +478,7 @@ BLIND     // can't see anything
 		H.update_inv_pants()
 		H.update_fov_angles()
 	else
-//		hood.forceMove(src)
 		hood.moveToNullspace()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
-
 
 /obj/item/clothing/proc/ToggleHood()
 	if(!hoodtoggled)

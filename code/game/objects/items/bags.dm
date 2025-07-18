@@ -45,7 +45,7 @@
 		return TRUE
 
 
-/obj/item/storage/sack/attack_right(mob/user)
+/obj/item/storage/sack/attack_hand_secondary(mob/user, params)
 	. = ..()
 	if(.)
 		return
@@ -57,7 +57,8 @@
 		STR.remove_from_storage(I, get_turf(user))
 		user.put_in_hands(I)
 
-/obj/item/storage/sack/update_icon()
+/obj/item/storage/sack/update_icon_state()
+	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	var/list/things = STR.contents()
 	if(things.len)
@@ -107,7 +108,7 @@
 	max_integrity = 300
 	component_type = /datum/component/storage/concrete/grid/sack/meat
 
-/obj/item/storage/meatbag/attack_right(mob/user)
+/obj/item/storage/meatbag/attack_hand_secondary(mob/user, params)
 	. = ..()
 	if(.)
 		return

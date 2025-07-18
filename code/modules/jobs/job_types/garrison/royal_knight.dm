@@ -132,7 +132,7 @@
 /datum/outfit/job/royalknight/knight/pre_equip(mob/living/carbon/human/H)
 	. = ..()
 	armor = /obj/item/clothing/armor/plate/full
-	head = /obj/item/clothing/head/helmet/visored/knight
+	head = /obj/item/clothing/head/helmet/visored/royalknight
 	gloves = /obj/item/clothing/gloves/plate
 	shoes = /obj/item/clothing/shoes/boots/armor
 

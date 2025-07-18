@@ -23,6 +23,18 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	/// Whether this species a requires patreon subscription to access
 	var/patreon_req = FALSE
 
+	/**
+	 * The list of pronouns this species allows in the character sheet.
+	 * If none are specified, it will default to the PRONOUNS_LIST.
+	 */
+	var/list/allowed_pronouns = PRONOUNS_LIST_NO_IT
+
+	/// The list of voice types this species allows in the character sheet for feminine bodies
+	var/list/allowed_voicetypes_f = VOICE_TYPES_LIST
+
+	/// The list of voice types this species allows in the character sheet for masculine bodies
+	var/list/allowed_voicetypes_m = VOICE_TYPES_LIST
+
 	/// Associative list of FEATURE SLOT to PIXEL ADJUSTMENTS X/Y seperated by gender
 	var/list/offset_features_m = list(
 		OFFSET_RING = list(0,0),\
@@ -65,9 +77,9 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	/// Type of damage overlay to use
 	var/damage_overlay_type = "human"
 	/// Damage overlays to use for males
-	var/dam_icon_m
+	var/dam_icon_m = 'icons/roguetown/mob/bodies/dam/dam_male.dmi'
 	/// Damge overlays to use for females
-	var/dam_icon_f
+	var/dam_icon_f = 'icons/roguetown/mob/bodies/dam/dam_female.dmi'
 	/// String value ranging from t1 to t3 which controls body hair overlays for this species
 	var/hairyness = null
 	/// Append species id to clothing sprite name
@@ -318,7 +330,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 				/datum/language/hellspeak = "Infernal",
 				/datum/language/orcish = "Orcish",
 				/datum/language/celestial = "Celestial",
-				/datum/language/zybantine = "Zybean"
+				/datum/language/zalad = "Zalad"
 			)
 
 			if (language in language_map)
@@ -676,8 +688,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	if(mutanthands)
 		// Drop items in hands
 		// If you're lucky enough to have a TRAIT_NODROP item, then it stays.
-		for(var/V in C.held_items)
-			var/obj/item/I = V
+		for(var/obj/item/I as anything in C.held_items)
 			if(istype(I))
 				C.dropItemToGround(I)
 			else	//Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
@@ -1645,10 +1656,15 @@ GLOBAL_LIST_EMPTY(patreon_races)
 			affecting = target.get_bodypart(BODY_ZONE_CHEST)
 		var/armor_block = target.run_armor_check(selzone, "blunt", blade_dulling = BCLASS_BLUNT)
 		var/damage = user.get_kick_damage(1.4)
+		var/damage_blocked = FALSE
+
 		if(!target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block))
+			damage_blocked = TRUE
 			target.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
 		else
 			affecting.bodypart_attacked_by(BCLASS_BLUNT, damage, user, selzone)
+
+		SEND_SIGNAL(user, COMSIG_MOB_KICK, target, selzone, damage_blocked)
 		playsound(target, 'sound/combat/hits/kick/kick.ogg', 100, TRUE, -1)
 		target.lastattacker = user.real_name
 		target.lastattackerckey = user.ckey

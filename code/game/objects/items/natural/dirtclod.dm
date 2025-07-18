@@ -17,7 +17,7 @@
 			playsound(loc,'sound/items/dig_shovel.ogg', 100, TRUE)
 			src.forceMove(S)
 			S.heldclod = src
-			W.update_icon()
+			W.update_appearance()
 			return
 	return ..()
 
@@ -40,7 +40,7 @@
 			qdel(src)
 			new /obj/structure/fluff/clodpile(T)
 
-/obj/item/natural/dirtclod/attack_self(mob/living/user)
+/obj/item/natural/dirtclod/attack_self(mob/living/user, params)
 	user.visible_message("<span class='warning'>[user] scatters [src].</span>")
 	qdel(src)
 
@@ -66,7 +66,7 @@
 				playsound(loc,'sound/items/dig_shovel.ogg', 100, TRUE)
 				var/obj/item/J = new /obj/item/natural/dirtclod(S)
 				S.heldclod = J
-				W.update_icon()
+				W.update_appearance()
 				dirtamt--
 				if(dirtamt <= 0)
 					qdel(src)
@@ -76,7 +76,7 @@
 				var/obj/item/I = S.heldclod
 				S.heldclod = null
 				qdel(I)
-				W.update_icon()
+				W.update_appearance()
 				dirtamt++
 				if(dirtamt > 5)
 					dirtamt = 5

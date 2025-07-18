@@ -297,7 +297,7 @@
 				/obj/item/natural/fibers = 2)
 	craftdiff = 3
 
-/datum/repeatable_crafting_recipe/leather/standalone/leathercoat
+/datum/repeatable_crafting_recipe/leather/standalone/leathercoat/black // never add items with the same names
 	name = "black leather coat"
 	output = /obj/item/clothing/armor/leather/jacket/leathercoat/black
 	attacked_atom = /obj/item/natural/hide/cured
@@ -368,6 +368,14 @@
 		/obj/item/natural/head/volf = 1,
 	)
 	output = /obj/item/clothing/cloak/volfmantle
+	craftdiff = 2
+
+/datum/repeatable_crafting_recipe/leather/tricorn
+	name = "tricorn (black)"
+	requirements = list(
+		/obj/item/natural/hide/cured = 2,
+	)
+	output = /obj/item/clothing/head/helmet/leather/tricorn
 	craftdiff = 2
 
 /datum/repeatable_crafting_recipe/leather/drum

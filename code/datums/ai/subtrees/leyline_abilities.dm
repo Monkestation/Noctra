@@ -83,7 +83,7 @@
 		finish_action(controller, FALSE)
 		return
 
-	lycan.Beam(target, "lightning", 'icons/effects/beam.dmi', 3 SECONDS)
+	lycan.Beam(target, "lightning7", 'icons/effects/beam.dmi', 3 SECONDS)
 
 	playsound(lycan, 'sound/magic/lightning.ogg', 75, TRUE)
 

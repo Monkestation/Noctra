@@ -13,6 +13,7 @@
 	plane = BLACKNESS_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
+	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 
 	/// List of all turfs currently inside this area as nested lists indexed by zlevel.
 	/// Acts as a filtered bersion of area.contents For faster lookup
@@ -25,9 +26,7 @@
 	/// This uses the same nested list format as turfs_by_zlevel
 	var/list/list/turf/turfs_to_uncontain_by_zlevel = list()
 
-	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
-
-	var/valid_territory = TRUE // If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
+	var/area_flags = VALID_TERRITORY | UNIQUE_AREA
 
 	var/totalbeauty = 0 //All beauty in this area combined, only includes indoor area.
 	var/beauty = 0 // Beauty average per open turf in the area
@@ -43,45 +42,43 @@
 	var/mood_message = "<span class='nicegreen'>This area is pretty nice!\n</span>"
 
 	var/has_gravity = STANDARD_GRAVITY
-	///Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
-	var/noteleport = FALSE
-	///Hides area from player Teleport function.
-	var/hidden = FALSE
-	///Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
-	var/safe = FALSE
-	/// If false, loading multiple maps with this area type will create multiple instances.
-	var/unique = TRUE
-
-//	var/no_air = null
 
 	var/parallax_movedir = 0
 
-	var/list/ambientsounds = null
-	var/list/ambientrain = null
-	var/list/ambientnight = null
+	/// The background music that plays in this area
+	/// This overrides the others if they are absent
+	var/sound/background_track
+	/// The background music that plays in this area at dusk
+	var/sound/background_track_dusk
+	/// The background music that plays in this area at night
+	var/sound/background_track_night
+	/// Alternative droning loops to replace the background music
+	/// To make things more spooky
+	/// Do not set directly on /area use the index
+	var/list/alternative_droning
+	var/droning_index
+	/// Alternative droning loops for night
+	/// Do not set directly on /area use the index
+	var/list/alternative_droning_night
+	var/droning_index_night
+	/// Self explanatory
+	var/uses_alt_droning = TRUE
 
-	var/min_ambience_cooldown = 70 SECONDS
-	var/max_ambience_cooldown = 120 SECONDS
+	/// A list of sounds to pick from every so often to play to clients.
+	/// Do not set directly on /area use the index
+	var/list/ambientsounds
+	var/ambient_index
+	/// A list of sounds to pick but at night
+	/// Do not set directly on /area use the index
+	var/list/ambientnight
+	var/ambient_index_night
+	/// Does this area immediately play an ambience sound upon enter?
+	var/forced_ambience = FALSE
+	///Used to decide what the minimum time between ambience is
+	var/min_ambience_cooldown = 25 SECONDS
+	///Used to decide what the maximum time between ambience is
+	var/max_ambience_cooldown = 35 SECONDS
 
-	var/droningniqqa = TRUE
-	var/loopniqqa = TRUE
-
-	var/droning_sound_current = null
-	var/droning_sound_dawn = null
-	var/droning_sound = null
-	var/droning_sound_dusk = null
-	var/droning_sound_night = null
-	var/droning_vary = 0
-	var/droning_repeat = TRUE
-	var/droning_wait = 0
-	var/droning_volume = 90 // From 100, part of soundscape polishing THIS VAR DOES NOTHING
-	var/droning_channel = CHANNEL_BUZZ
-	var/droning_frequency = 0
-
-	var/list/spookysounds = null
-	var/list/spookynight = null
-
-	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 	var/soundenv = 0
 
 	var/first_time_text = null
@@ -92,7 +89,6 @@
 	var/list/ambush_times
 
 	var/converted_type
-
 
 /**
  * A list of teleport locations
@@ -129,7 +125,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/New()
 	// This interacts with the map loader, so it needs to be set immediately
 	// rather than waiting for atoms to initialize.
-	if (unique)
+	if(area_flags & UNIQUE_AREA)
 		GLOB.areas_by_type[type] = src
 	GLOB.areas += src
 	return ..()
@@ -234,15 +230,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * returns INITIALIZE_HINT_LATELOAD
  */
 /area/Initialize()
+	setup_ambience()
 	if(!outdoors)
 		plane = INDOOR_PLANE
 		icon_state = "mask"
 	else
 		icon_state = ""
-	layer = AREA_LAYER
-	map_name = name // Save the initial (the name set in the map) name of the area.
 	first_time_text = uppertext(first_time_text) // Standardization
-
 
 	if(dynamic_lighting == DYNAMIC_LIGHTING_FORCED)
 		dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
@@ -263,9 +257,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 	return INITIALIZE_HINT_LATELOAD
 
-/**
- * Sets machine power levels in the area
- */
 /area/LateInitialize()
 	update_beauty()
 
@@ -295,6 +286,18 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if(!areas_in_z["[z]"])
 			areas_in_z["[z]"] = list()
 		areas_in_z["[z]"] += src
+
+/// Setup all ambience tracks
+/area/proc/setup_ambience()
+	if(!ambientsounds && ambient_index)
+		ambientsounds = GLOB.ambience_assoc_sounds[ambient_index]
+	if(!ambientnight && ambient_index_night)
+		ambientnight = GLOB.ambience_assoc_sounds[ambient_index_night]
+
+	if(!alternative_droning && droning_index)
+		alternative_droning = GLOB.ambience_assoc_droning[droning_index]
+	if(!alternative_droning_night && droning_index_night)
+		alternative_droning_night = GLOB.ambience_assoc_droning[droning_index_night]
 
 /**
  * Destroy an area and clean it up
@@ -330,13 +333,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 //			weather_icon = TRUE
 //	if(!weather_icon)
 //		icon_state = null
-	return
+	return ..()
 
 /**
  * Update the icon of the area (overridden to always be null for space
  */
 /area/space/update_icon_state()
 	icon_state = null
+	return ..()
 
 /**
  * Call back when an atom enters an area
@@ -345,7 +349,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  *
  * If the area has ambience, then it plays some ambience music to the ambience channel
  */
-/area/Entered(atom/movable/M, atom/OldLoc)
+/area/Entered(atom/movable/M, atom/old_loc)
 	set waitfor = FALSE
 	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, M)
 	SEND_SIGNAL(M, COMSIG_ENTER_AREA, src) //The atom that enters the area
@@ -356,22 +360,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!L.ckey || L.stat == DEAD)
 		return
 
-	// Ambience goes down here -- make sure to list each area separately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
-//	if(L.client && !L.client.ambience_playing && L.client.prefs.toggles & SOUND_SHIP_AMBIENCE)
-//		L.client.ambience_playing = 1
-//		SEND_SOUND(L, sound('sound/blank.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
+	if(ismob(M))
+		var/mob/mob = M
+		mob.update_ambience_area(src)
 
 	if(first_time_text)
 		L.intro_area(src)
-
-	var/mob/living/living_arrived = M
-
-	if(istype(living_arrived) && living_arrived.client && !living_arrived.cmode)
-		//Ambience if combat mode is off
-		SSdroning.area_entered(src, living_arrived.client)
-		SSdroning.play_loop(src, living_arrived.client)
-
-//	L.play_ambience(src)
 
 /client
 	var/musicfading = 0
@@ -394,14 +388,15 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	T.maptext_height = 209
 	T.maptext_x = 12
 	T.maptext_y = 64
+	var/used_sound = 'sound/misc/stings/generic.ogg'
 	var/map_sound = SSmapping.config.custom_area_sound
-	if(A.custom_area_sound)
-		playsound_local(src, A.custom_area_sound, 125, FALSE)
+	var/area_sound = A.custom_area_sound
+	if(area_sound)
+		used_sound = area_sound
 	else if(map_sound)
-		playsound_local(src, map_sound, 100, FALSE)
-	else
-		playsound_local(src, 'sound/misc/area.ogg', 100, FALSE)
+		used_sound = map_sound
 
+	SEND_SOUND(src, sound(used_sound, repeat = 0, wait = 0, volume = 40))
 	animate(T, alpha = 255, time = 10, easing = EASE_IN)
 	addtimer(CALLBACK(src, PROC_REF(clear_area_text), T), 35)
 
@@ -415,7 +410,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(client)
 		if(client.screen && A)
 			client.screen -= A
-			qdel(A)
+	qdel(A)
 
 /mob/living/proc/clear_time_icon(atom/movable/screen/A)
 	if(!A)
@@ -460,8 +455,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  */
 /area/proc/setup(a_name)
 	name = a_name
-	valid_territory = FALSE
+	area_flags &= ~VALID_TERRITORY
 	require_area_resort()
+
 /**
  * Set the area size of the area
  *
@@ -501,12 +497,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/on_joining_game(mob/living/boarder)
 	. = ..()
 	if(istype(boarder) && boarder.client)
-		SSdroning.area_entered(src, boarder.client)
 		boarder.client.update_ambience_pref()
-		SSdroning.play_loop(src, boarder.client)
+		boarder.refresh_looping_ambience()
 
 /area/reconnect_game(mob/living/boarder)
 	. = ..()
 	if(istype(boarder) && boarder.client)
-		SSdroning.area_entered(src, boarder.client)
-		SSdroning.play_loop(src, boarder.client)
+		boarder.refresh_looping_ambience()

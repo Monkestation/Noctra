@@ -29,12 +29,15 @@
 		user.add_stress(/datum/stressevent/saw_old_party)
 
 /mob/living/carbon/human/examine(mob/user)
-//this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
-	var/t_He = p_they(TRUE)
-	var/t_his = p_their()
+	//this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
+	var/ignore_pronouns
+	if(user != src)
+		ignore_pronouns = !user.mind?.do_i_know(null, real_name)
+	var/t_He = p_they(TRUE, ignore_pronouns = ignore_pronouns)
+	var/t_his = p_their(ignore_pronouns = ignore_pronouns)
 //	var/t_him = p_them()
-	var/t_has = p_have()
-	var/t_is = p_are()
+	var/t_has = p_have(ignore_pronouns = ignore_pronouns)
+	var/t_is = p_are(ignore_pronouns = ignore_pronouns)
 	var/obscure_name
 	var/race_name = dna?.species.name
 	var/self_inspect = FALSE
@@ -83,8 +86,8 @@
 		if(race_name) // race name
 			appendage_to_name += " [race_name]"
 
-		///If a foreign has been recruited by the church,keep etc their title will show up with their new role.
-		if(used_title && (!HAS_TRAIT(src, TRAIT_FOREIGNER) || HAS_TRAIT(src, TRAIT_RECRUITED)))  // job name, don't show job of foreigners.
+
+		if(used_title && (!HAS_TRAIT(src, TRAIT_FOREIGNER) || HAS_TRAIT(src, TRAIT_RECRUITED)) && !HAS_TRAIT(src, TRAIT_FACELESS)) // job name, don't show job of foreigners.
 			appendage_to_name += ", [used_title]"
 
 		if(appendage_to_name) // if we got any of those paramaters add it to their name
@@ -123,8 +126,6 @@
 			var/is_male = FALSE
 			if(gender == MALE)
 				is_male = TRUE
-			if(RomanticPartner(stranger))
-				. += span_love(span_bold("[t_He] is my [is_male ? "husband" : "wife"]."))
 			if(family_datum == stranger.family_datum && family_datum)
 				var/family_text = ReturnRelation(user)
 				if(family_text)
@@ -186,6 +187,9 @@
 
 	if(HAS_TRAIT(src, TRAIT_LEPROSY))
 		. += span_necrosis("A LEPER...")
+
+	if(HAS_TRAIT(src, TRAIT_FACELESS))
+		. += span_userdanger("FACELESS?! AN ASSASSIN!")
 
 	if(user != src)
 		var/datum/mind/user_mind = user.mind
@@ -564,6 +568,8 @@
 			. += "<a href='byond://?src=[REF(src)];inspect_limb=[checked_zone]'>Inspect [parse_zone(checked_zone)]</a>"
 			if(body_position == LYING_DOWN && user != src && (user.zone_selected == BODY_ZONE_CHEST))
 				. += "<a href='byond://?src=[REF(src)];check_hb=1'>Listen to Heartbeat</a>"
+
+	if(!HAS_TRAIT(src, TRAIT_FACELESS))
 		. += "<a href='byond://?src=[REF(src)];view_descriptors=1'>Look at Features</a>"
 
 	// Characters with the hunted flaw will freak out if they can't see someone's face.

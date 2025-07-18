@@ -26,7 +26,7 @@
 				if(do_after(user, 5 SECONDS, src))
 					set_facial_hair_style(/datum/sprite_accessory/hair/facial/none)
 					update_body()
-					GLOB.vanderlin_round_stats[STATS_BEARDS_SHAVED]++
+					record_round_statistic(STATS_BEARDS_SHAVED)
 					if(dna?.species)
 						if(dna.species.id == "dwarf")
 							var/mob/living/carbon/V = src
@@ -52,19 +52,26 @@
 
 	. = ..()
 
+	if(!CONFIG_GET(flag/disable_human_mood))
+		AddComponent(/datum/component/mood)
 	AddComponent(/datum/component/personal_crafting)
 	AddElement(/datum/element/footstep, footstep_type, 1, -6)
 	GLOB.human_list += src
 	if(ai_controller && flee_in_pain)
 		AddElement(/datum/element/ai_flee_while_in_pain)
 
+/mob/living/carbon/human/Destroy()
+	QDEL_NULL(physiology)
+	GLOB.human_list -= src
+	return ..()
+
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
 	var/mob/living/carbon/V = src
 	var/obj/item/bodypart/affecting
 	var/dam = levels * rand(10,50)
 	V.add_stress(/datum/stressevent/felldown)
-	GLOB.vanderlin_round_stats[STATS_MOAT_FALLERS]-- // If you get your ankles broken you fall. This makes sure only those that DIDN'T get damage get counted.
-	GLOB.vanderlin_round_stats[STATS_ANKLES_BROKEN]++
+	record_round_statistic(STATS_MOAT_FALLERS, -1) // If you get your ankles broken you fall. This makes sure only those that DIDN'T get damage get counted.
+	record_round_statistic(STATS_ANKLES_BROKEN)
 	var/chat_message
 	switch(rand(1,4))
 		if(1)
@@ -102,16 +109,6 @@
 	create_dna(src)
 	randomize_human(src)
 	dna.initialize_dna()
-
-/mob/living/carbon/human/ComponentInitialize()
-	. = ..()
-	if(!CONFIG_GET(flag/disable_human_mood))
-		AddComponent(/datum/component/mood)
-
-/mob/living/carbon/human/Destroy()
-	QDEL_NULL(physiology)
-	GLOB.human_list -= src
-	return ..()
 
 /mob/living/carbon/human/Stat()
 	..()
@@ -328,7 +325,7 @@
 	if(!client || !hud_used)
 		return
 	if(hud_used.clock)
-		hud_used.clock.update_icon()
+		hud_used.clock.update_appearance()
 
 /mob/living/carbon/human/update_health_hud(stamina_only = FALSE)
 	if(!client || !hud_used)
@@ -427,7 +424,7 @@
 					hud_used.energy.icon_state = "stam10"
 
 	if(hud_used.zone_select && !stamina_only)
-		hud_used.zone_select.update_icon()
+		hud_used.zone_select.update_appearance()
 
 /mob/living/carbon/human/fully_heal(admin_revive = FALSE)
 	dna?.species.spec_fully_heal(src)
@@ -692,6 +689,11 @@
 	else
 		REMOVE_TRAIT(src, TRAIT_FOREIGNER, TRAIT_GENERIC)
 
+	if(HAS_TRAIT(target, TRAIT_FACELESS))
+		ADD_TRAIT(src, TRAIT_FACELESS, TRAIT_GENERIC)
+	else
+		REMOVE_TRAIT(src, TRAIT_FACELESS, TRAIT_GENERIC)
+
 	regenerate_icons()
 
 
@@ -752,3 +754,15 @@
 		bloody_hands = 0
 		update_inv_gloves()
 		. = TRUE
+
+/mob/living/carbon/human/dual_wielding_check()
+	if(!HAS_TRAIT(src, TRAIT_DUALWIELDER))
+		return FALSE
+
+	var/main_hand = get_active_held_item()
+	var/off_hand = get_inactive_held_item()
+
+	if(istype(main_hand, off_hand) || (isweapon(main_hand) && isweapon(off_hand)))
+		return TRUE
+
+	return FALSE

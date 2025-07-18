@@ -280,7 +280,7 @@
 	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/strike, /datum/intent/sword/chop/long, /datum/intent/sword/thrust/long)
 	icon_state = "marlin"
 	name = "shalal sabre"
-	desc = "A fine weapon of Zybantu origin in the style of the Shalal tribesfolk, renowned for their defiance against magic and mastery of mounted swordsmanship."
+	desc = "A fine weapon of Zaladin origin in the style of the Shalal tribesfolk, renowned for their defiance against magic and mastery of mounted swordsmanship."
 	parrysound = "rapier"
 	minstr = 6
 	sellprice = 80
@@ -323,7 +323,7 @@
 /obj/item/weapon/sword/scimitar
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop)
 	name = "scimitar"
-	desc = "A Zybantu design for swords, these curved blades are a common sight in the lands of the Ziggurat."
+	desc = "A Zaladin design for swords, these curved blades are a common sight in the lands of the Ziggurat."
 	icon_state = "scimitar"
 	swingsound = BLADEWOOSH_LARGE
 	wdefense = AVERAGE_PARRY
@@ -618,7 +618,7 @@
 	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/strike, /datum/intent/sword/chop/long)
 	icon_state = "tabi"
 	name = "kilij scimitar"
-	desc = "A curved blade of Zybantu origin meaning 'curved one'. The standard sword that saw the conquest of the Zybantine continent and peoples."
+	desc = "A curved blade of Zaladin origin meaning 'curved one'. The standard sword that saw the conquest of the Zalad continent and peoples."
 	sellprice = 80
 
 /obj/item/weapon/sword/long/rider/getonmobprop(tag)
@@ -926,13 +926,15 @@
 	icon_state = "terminusest"
 	name = "Terminus Est"
 
-/obj/item/weapon/sword/long/exe/cloth/rmb_self(mob/user)
+/obj/item/weapon/sword/long/exe/cloth/attack_self_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(user, "clothwipe", 100, TRUE)
 	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_SCRUB)
-	user.visible_message("<span class='warning'>[user] wipes [src] down with its cloth.</span>","<span class='notice'>I wipe [src] down with its cloth.</span>")
-	return
-
+	user.visible_message("<span class='warning'>[user] wipes [src] down with its cloth.</span>", "<span class='notice'>I wipe [src] down with its cloth.</span>")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 // Copper Messer
 

@@ -8,10 +8,11 @@
 	density = TRUE
 	anchored = TRUE
 	opacity = FALSE
+	pass_flags_self = PASSWINDOW|PASSSTRUCTURE
 	max_integrity = 100
 	integrity_failure = 0.1
 	blade_dulling = DULLING_BASHCHOP
-	pass_flags = LETPASSTHROW
+	pass_flags_self = LETPASSTHROW
 	climb_time = 20
 	climb_offset = 10
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
@@ -29,13 +30,11 @@
 
 /obj/structure/window/Initialize()
 	. = ..()
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
-/obj/structure/window/update_icon()
-	if(brokenstate)
-		icon_state = "[initial(icon_state)]br"
-		return
-	icon_state = "[initial(icon_state)]"
+/obj/structure/window/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][brokenstate ? "br" : ""]"
 
 /obj/structure/window/proc/repairwindow(obj/item/I, mob/user)
 	if(brokenstate)
@@ -127,15 +126,25 @@
 	. = ..()
 	lockdir = dir
 	GLOB.TodUpdate += src
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/window/openclose/Destroy()
 	GLOB.TodUpdate -= src
 	return ..()
 
-/obj/structure/window/openclose/update_tod(todd)
-	update_icon()
+/obj/structure/window/openclose/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock, mob/living/caster)
+	SIGNAL_HANDLER
 
-/obj/structure/window/openclose/update_icon()
+	INVOKE_ASYNC(src, PROC_REF(open_up))
+
+/obj/structure/window/openclose/update_tod(todd)
+	update_appearance(UPDATE_ICON_STATE)
+
+/obj/structure/window/openclose/update_icon_state()
+	. = ..()
 	var/icon
 	if(GLOB.tod == "night")
 		icon += "w-"
@@ -148,17 +157,22 @@
 		return
 	icon_state = "[icon]"
 
-/obj/structure/window/openclose/attack_right(mob/user)
-	if(get_dir(src,user) == lockdir)
+/obj/structure/window/openclose/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(get_dir(src, user) == lockdir)
 		if(brokenstate)
 			to_chat(user, "<span class='warning'>It's broken, that would be foolish.</span>")
-			return
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		if(climbable)
 			close_up(user)
 		else
 			open_up(user)
 	else
 		to_chat(user, "<span class='warning'>The window doesn't close from this side.</span>")
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/window/openclose/attackby(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/weapon/knife/dagger) && !climbable && !user.cmode)
@@ -178,18 +192,21 @@
 	smeltresult = /obj/item/ingot/iron
 
 /obj/structure/window/proc/open_up(mob/user)
-	visible_message("<span class='info'>[user] opens [src].</span>")
+	if(user)
+		visible_message("<span class='info'>[user] opens [src].</span>")
 	playsound(src, 'sound/foley/doors/windowup.ogg', 100, FALSE)
 	climbable = TRUE
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/window/proc/close_up(mob/user)
-	visible_message("<span class='info'>[user] closes [src].</span>")
+	if(user)
+		visible_message("<span class='info'>[user] closes [src].</span>")
 	playsound(src, 'sound/foley/doors/windowdown.ogg', 100, FALSE)
 	climbable = FALSE
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
-/obj/structure/window/CanPass(atom/movable/mover, turf/target)
+/obj/structure/window/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && climbable && ((mover.pass_flags & PASSTABLE) || (mover.pass_flags & PASSGRILLE)))
 		return 1
 	if(isliving(mover))
@@ -214,22 +231,19 @@
 						dude.visible_message(
 							span_warning("[dude] hits their head as they fly through the window!"),
 							span_danger("I hit my head on the window frame!"))
-				return 1
+				return TRUE
 	else if(isitem(mover))
 		var/obj/item/I = mover
+		if(brokenstate)
+			return TRUE
 		if(I.throwforce >= 10)
 			take_damage(I.throwforce)
-			if(brokenstate)
-				return 1
-		else
-			return !density
-	return ..()
 
 /obj/structure/window/proc/force_open()
 	playsound(src, 'sound/foley/doors/windowup.ogg', 100, FALSE)
 	climbable = TRUE
 	opacity = FALSE
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/window/attackby(obj/item/W, mob/user, params)
 	return ..()
@@ -259,5 +273,5 @@
 		new /obj/item/natural/glass/shard (get_turf(src))
 		climbable = TRUE
 		brokenstate = TRUE
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 	..()

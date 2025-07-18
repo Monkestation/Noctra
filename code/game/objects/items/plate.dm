@@ -62,7 +62,6 @@
 	if(istype(item_to_plate, /obj/item/reagent_containers/food/snacks))
 		var/obj/item/reagent_containers/food/snacks/S = item_to_plate
 		S.rotprocess += 1 MINUTES
-	update_icon()
 	w_class = contents.len ? WEIGHT_CLASS_BULKY : WEIGHT_CLASS_NORMAL
 
 ///This proc cleans up any signals on the item when it is removed from a plate, and ensures it has the correct state again.
@@ -103,7 +102,7 @@
 		scattered_item.pixel_y = scatter_vector[2]
 		scattered_item.throw_impact(hit_atom, throwingdatum)
 
-/obj/item/plate/attack_self(mob/user)
+/obj/item/plate/attack_self(mob/user, params)
 	. = ..()
 	if(contents.len) // If the tray isn't empty
 		for(var/obj/item/scattered_item as anything in contents)

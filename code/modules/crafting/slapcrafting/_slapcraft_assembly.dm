@@ -50,12 +50,16 @@
 		component_overlay.overlays = component.overlays
 		. += component_overlay
 
-/obj/item/slapcraft_assembly/attack_right(mob/user)
+/obj/item/slapcraft_assembly/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(recipe.can_disassemble)
 		to_chat(user, span_notice("You take apart \the [src]."))
 		disassemble()
 	else
 		to_chat(user, span_warning("You can't take this apart!"))
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 // Something in the assembly got deleted. Perhaps burned, melted or otherwise.
 /obj/item/slapcraft_assembly/handle_atom_del(atom/deleted_atom)
@@ -69,7 +73,7 @@
 
 /obj/item/slapcraft_assembly/Entered(atom/movable/arrived, direction)
 	. = ..()
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/slapcraft_assembly/Destroy(force)
 	disassembling = TRUE

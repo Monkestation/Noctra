@@ -76,6 +76,9 @@
 	/// If this is currently being lockpicked
 	var/being_picked = FALSE
 
+	/// Uses colours defined by the monarch roundstart see [lordcolor.dm]
+	var/uses_lord_coloring = FALSE
+
 	vis_flags = VIS_INHERIT_PLANE
 
 /obj/vv_edit_var(vname, vval)
@@ -104,7 +107,7 @@
 	if(obj_integrity == null)
 		obj_integrity = max_integrity
 	if(lockid)
-		log_mapping("[src] ([type]) at [AREACOORD(src)] has a depreciated lockid varedit.")
+		//log_mapping("[src] ([type]) at [AREACOORD(src)] has a depreciated lockid varedit.")
 		if(!lockids)
 			lockids = list(lockid)
 			lockid = null
@@ -209,6 +212,10 @@
 	return get_turf(src)
 
 /obj/proc/CanAStarPass(ID, to_dir, requester)
+	if(ismovable(requester))
+		var/atom/movable/AM = requester
+		if(AM.pass_flags & pass_flags_self)
+			return TRUE
 	. = !density
 
 /obj/proc/check_uplink_validity()
