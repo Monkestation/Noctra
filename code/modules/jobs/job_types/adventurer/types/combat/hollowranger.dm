@@ -19,8 +19,8 @@
 	shirt = /obj/item/clothing/shirt/tunic/black
 	shoes = /obj/item/clothing/shoes/boots
 	belt = /obj/item/storage/belt/leather
-	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-	backl = /obj/item/storage/backpack/satchel
+	wear_back_right = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+	wear_back_left = /obj/item/storage/backpack/satchel
 	beltl = /obj/item/ammo_holder/quiver/arrows
 	beltr = /obj/item/weapon/knife/cleaver/combat
 	armor = /obj/item/clothing/armor/leather/jacket

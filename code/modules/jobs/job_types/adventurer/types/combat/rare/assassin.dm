@@ -262,7 +262,7 @@
 			gloves = /obj/item/clothing/gloves/leather/black
 			pants = /obj/item/clothing/pants/trou/leather
 			shoes = /obj/item/clothing/shoes/boots
-			backl = /obj/item/storage/backpack/satchel
+			wear_back_left = /obj/item/storage/backpack/satchel
 			belt = /obj/item/storage/belt/leather/knifebelt/black/steel
 			beltl = /obj/item/storage/belt/pouch/coins/poor
 			beltr = /obj/item/weapon/knife/dagger/steel

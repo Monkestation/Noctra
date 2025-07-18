@@ -177,13 +177,13 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			</td>
 		</tr>
 		<tr>
-			<th>BackR:</th>
+			<th>wear_back_right:</th>
 			<td>
 				[backsr_select]
 			</td>
 		</tr>
 		<tr>
-			<th>BackL:</th>
+			<th>wear_back_left:</th>
 			<td>
 				[backsl_select]
 			</td>

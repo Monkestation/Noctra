@@ -22,8 +22,8 @@
 	wrists = /obj/item/clothing/wrists/bracers/leather/advanced
 	beltr = /obj/item/reagent_containers/glass/bottle/waterskin
 	beltl = /obj/item/flashlight/flare/torch/lantern/copper
-	backr = /obj/item/weapon/polearm/halberd/bardiche
-	backl = /obj/item/storage/backpack/satchel
+	wear_back_right = /obj/item/weapon/polearm/halberd/bardiche
+	wear_back_left = /obj/item/storage/backpack/satchel
 	shirt = /obj/item/clothing/shirt/tribalrag
 	pants = /obj/item/clothing/pants/platelegs/rust
 	neck = /obj/item/clothing/neck/chaincoif
