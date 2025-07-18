@@ -69,7 +69,7 @@
 		belt = /obj/item/storage/belt/leather/plaquesilver
 		beltr = /obj/item/storage/keyring/butler
 		beltl = /obj/item/storage/belt/pouch/coins/mid
-		armor = /obj/item/clothing/armor/leather/vest/butler
+		armor = /obj/item/clothing/armor/leather/vest/colored/butler
 		backr = /obj/item/storage/backpack/satchel
 
 	else

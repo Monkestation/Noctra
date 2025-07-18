@@ -31,7 +31,7 @@
 	beltl = /obj/item/storage/belt/pouch/coins/poor
 	neck = /obj/item/key/manor
 	if(H.gender == MALE)
-		armor = /obj/item/clothing/armor/leather/vest/black
+		armor = /obj/item/clothing/armor/leather/vest/colored/black
 	else
 		cloak = /obj/item/clothing/cloak/apron
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
@@ -79,7 +79,7 @@
 	beltl = /obj/item/storage/belt/pouch/coins/poor
 	neck = /obj/item/key/tavern
 	if(H.gender == MALE)
-		armor = /obj/item/clothing/armor/leather/vest/black
+		armor = /obj/item/clothing/armor/leather/vest/colored/black
 	else
 		cloak = /obj/item/clothing/cloak/apron
 	if(H.mind)
@@ -127,7 +127,7 @@
 	beltl = /obj/item/storage/belt/pouch/coins/poor
 	neck = /obj/item/key/matron
 	if(H.gender == MALE)
-		armor = /obj/item/clothing/armor/leather/vest/black
+		armor = /obj/item/clothing/armor/leather/vest/colored/black
 	else
 		cloak = /obj/item/clothing/cloak/apron
 	if(H.mind)
@@ -173,7 +173,7 @@
 	beltl = /obj/item/storage/belt/pouch/coins/poor
 	beltr = /obj/item/storage/keyring/gaffer_assistant
 	if(H.gender == MALE)
-		armor = /obj/item/clothing/armor/leather/vest/black
+		armor = /obj/item/clothing/armor/leather/vest/colored/black
 	else
 		cloak = /obj/item/clothing/cloak/apron
 	if(H.mind)

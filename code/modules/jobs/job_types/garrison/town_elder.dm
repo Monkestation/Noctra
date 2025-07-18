@@ -156,7 +156,7 @@
 /datum/outfit/job/town_elder/master_of_crafts_and_labor/pre_equip(mob/living/carbon/human/H)
 
 	head = /obj/item/clothing/head/hatblu
-	armor = /obj/item/clothing/armor/leather/vest/random
+	armor = /obj/item/clothing/armor/leather/vest/colored/random
 	pants = /obj/item/clothing/pants/trou
 	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	shoes = /obj/item/clothing/shoes/boots/leather

@@ -446,7 +446,7 @@
 /area/rogue/indoors)
 "bl" = (
 /obj/structure/mannequin/male/female,
-/obj/item/clothing/armor/leather/vest/butcher,
+/obj/item/clothing/armor/leather/vest/colored/butcher,
 /turf/open/floor/wood,
 /area/rogue/indoors)
 "bm" = (
@@ -4924,18 +4924,18 @@
 /obj/item/clothing/armor/leather/vest,
 /obj/item/clothing/armor/leather/vest,
 /obj/item/clothing/armor/leather/vest,
-/obj/item/clothing/armor/leather/vest/black,
-/obj/item/clothing/armor/leather/vest/black,
-/obj/item/clothing/armor/leather/vest/black,
-/obj/item/clothing/armor/leather/vest/butcher,
-/obj/item/clothing/armor/leather/vest/butcher,
-/obj/item/clothing/armor/leather/vest/butcher,
+/obj/item/clothing/armor/leather/vest/colored/black,
+/obj/item/clothing/armor/leather/vest/colored/black,
+/obj/item/clothing/armor/leather/vest/colored/black,
+/obj/item/clothing/armor/leather/vest/colored/butcher,
+/obj/item/clothing/armor/leather/vest/colored/butcher,
+/obj/item/clothing/armor/leather/vest/colored/butcher,
 /obj/item/clothing/armor/leather/jacket/hand,
 /obj/item/clothing/armor/leather/jacket/hand,
 /obj/item/clothing/armor/leather/jacket/hand,
-/obj/item/clothing/armor/leather/vest/innkeep,
-/obj/item/clothing/armor/leather/vest/innkeep,
-/obj/item/clothing/armor/leather/vest/innkeep,
+/obj/item/clothing/armor/leather/vest/colored/innkeep,
+/obj/item/clothing/armor/leather/vest/colored/innkeep,
+/obj/item/clothing/armor/leather/vest/colored/innkeep,
 /obj/item/clothing/armor/leather/jacket/sea,
 /obj/item/clothing/armor/leather/jacket/sea,
 /obj/item/clothing/armor/leather/jacket/sea,
@@ -6114,7 +6114,7 @@
 /area/rogue/indoors)
 "Ns" = (
 /obj/structure/mannequin/male/female,
-/obj/item/clothing/armor/leather/vest/innkeep,
+/obj/item/clothing/armor/leather/vest/colored/innkeep,
 /turf/open/floor/wood,
 /area/rogue/indoors)
 "Nt" = (

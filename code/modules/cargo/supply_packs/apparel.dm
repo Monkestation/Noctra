@@ -101,7 +101,7 @@
 /datum/supply_pack/apparel/leather_vest_random
 	name = "Leather Vest"
 	cost = 15
-	contains = /obj/item/clothing/armor/leather/vest/random
+	contains = /obj/item/clothing/armor/leather/vest/colored/random
 
 /datum/supply_pack/apparel/workervest
 	name = "Worker Vest"
