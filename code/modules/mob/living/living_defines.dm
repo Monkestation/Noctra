@@ -158,8 +158,6 @@
 
 	var/last_words	//used for database logging
 
-	var/list/obj/effect/proc_holder/abilities = list()
-
 	var/can_be_held = FALSE	//whether this can be picked up and held.
 
 	var/ventcrawl_layer = 2
