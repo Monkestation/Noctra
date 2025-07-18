@@ -769,7 +769,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		return
 	var/mob/living/carbon/human/H = user
 
-	H.change_stat(STATKEY_INT, rand(-2, -5)) //this would probably make the average manorc a vegetable
+	H.change_stat(STATKEY_INT, rand(-3, -7)) //this would probably make the average manorc a vegetable
 
 /datum/charflaw/witless_pixie/flaw_on_life(mob/user)
 
