@@ -328,7 +328,7 @@ GLOBAL_LIST_EMPTY(tennite_schisms)
 	if(!challenger)
 		return FALSE
 
-	return FALSE
+	return TRUE
 
 /datum/round_event/schism_within_ten/start()
 	if(LAZYLEN(GLOB.tennite_schisms) > 0)
