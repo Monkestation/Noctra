@@ -3031,7 +3031,7 @@
 /obj/item/clothing/pants/trou,
 /obj/item/clothing/pants/tights,
 /obj/item/clothing/pants/tights,
-/obj/item/clothing/pants/skirt/random,
+/obj/item/clothing/pants/skirt/colored/random,
 /obj/machinery/light/fueled/torchholder/r,
 /turf/open/floor/woodturned,
 /area/rogue/indoors/soilsons)
@@ -11514,7 +11514,7 @@
 /obj/item/clothing/pants/trou,
 /obj/item/clothing/pants/tights,
 /obj/item/clothing/pants/tights,
-/obj/item/clothing/pants/skirt/random,
+/obj/item/clothing/pants/skirt/colored/random,
 /turf/open/floor/woodturned,
 /area/rogue/indoors/soilsons)
 "lnP" = (
@@ -20066,7 +20066,7 @@
 /area/rogue/outdoors/town)
 "tBL" = (
 /obj/structure/rack/shelf/biggest,
-/obj/item/clothing/pants/skirt/random{
+/obj/item/clothing/pants/skirt/colored/random{
 	pixel_x = -3;
 	pixel_y = 11
 	},

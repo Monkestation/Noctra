@@ -1,6 +1,10 @@
-// this unit test makes sure every piece of clothing is craftable
+/*
+this unit test makes sure every piece of clothing is craftable
+abstract types are automatically excluded.
+
+*/
 /datum/unit_test/craftable_clothes
-	// abstract types are automatically excluded.
+	/// explicitly excluded paths with this path only
 	var/list/excluded_paths = list(
 		/obj/item/clothing/neck/blkknight, // mapped in only
 		/obj/item/clothing/accessory/medal/gold/ordom, // memorial item, RIP OrdoM.
@@ -16,22 +20,29 @@
 		/obj/item/clothing/head/helmet/visored/knight/black, // deathknight item
 		/obj/item/clothing/neck/gorget/hoplite, // mercenary item
 	)
+	// these don't use misc_flags = CRAFTING_TEST_EXCLUDE because we want to explicitly know which
+	/// excludes paths along with their subtypes
 	var/list/excluded_paths_with_their_subtypes = list(
 		/obj/item/clothing/neck/mercmedal, // only earnable via hermes
 		/obj/item/clothing/neck/shalal, // this is a medal
 		/obj/item/clothing/neck/psycross/silver/holy, // unimplemented
 	)
+	/// excludes paths that are subtypes of these types
 	var/list/excluded_paths_subtypes_only = list(
 		/obj/item/clothing/neck/keffiyeh,
 		/* temporary solution to subtypes that change color only below */
 	)
+	/// if the path of the item contains this keyword, it will be excluded
 	var/list/excluded_paths_by_text = list(
 		"goblin",
 		"orc",
+		"rare",
 	)
 
 /datum/unit_test/craftable_clothes/Run()
+	/// list of all supply packs
 	var/list/datum/supply_pack/supply_pack_list = subtypesof(/datum/supply_pack)
+	/// list of all clothes paths, which we will remove paths that have a recipe or a supply_pack entry from.
 	var/list/obj/clothes_list = subtypesof(/obj/item/clothing) - excluded_paths
 
 	for(var/obj/item/clothing/path as anything in clothes_list)

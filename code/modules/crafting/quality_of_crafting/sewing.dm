@@ -345,17 +345,10 @@
 	craftdiff = 2
 	category = "Wrists"
 
-/datum/repeatable_crafting_recipe/sewing/Bluskirt
-	name = "blue skirt"
-	output = /obj/item/clothing/pants/skirt/blue
-	requirements = list(/obj/item/natural/cloth = 2,
-			/obj/item/natural/fibers = 1)
-	craftdiff = 2
-	category = "Pants"
 
-/datum/repeatable_crafting_recipe/sewing/Greskirt
-	name = "green skirt"
-	output = /obj/item/clothing/pants/skirt/green
+/datum/repeatable_crafting_recipe/sewing/skirt
+	name = "skirt"
+	output = /obj/item/clothing/pants/skirt
 	requirements = list(/obj/item/natural/cloth = 2,
 			/obj/item/natural/fibers = 1)
 	craftdiff = 2

@@ -93,7 +93,7 @@
 /area/rogue/under/tomb/indoors)
 "cJ" = (
 /obj/structure/table/wood/reinforced_alt,
-/obj/item/clothing/pants/skirt/random{
+/obj/item/clothing/pants/skirt/colored/random{
 	pixel_x = 5;
 	pixel_y = 7
 	},

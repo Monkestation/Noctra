@@ -272,6 +272,12 @@
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/noc
 	additional_items = list(/obj/item/ingot/silver)
 
+/datum/anvil_recipe/armor/steel/templar/helmet_noc
+	name = "Gold Helmet"
+	recipe_name = "a golden helmet"
+	created_item = /obj/item/clothing/head/helmet/heavy/bucket/gold
+	additional_items = list(/obj/item/ingot/gold)
+
 /datum/anvil_recipe/armor/steel/templar/helmet_astrata
 	name = "Astratan Helmet"
 	recipe_name = "an astratan helmet"

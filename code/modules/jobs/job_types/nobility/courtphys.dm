@@ -42,7 +42,7 @@
 	beltr = /obj/item/weapon/whip/cane/physician
 	cloak = /obj/item/clothing/cloak/apron/brown
 	if(H.gender == FEMALE)
-		pants = /obj/item/clothing/pants/skirt/green
+		pants = /obj/item/clothing/pants/skirt/colored/green
 	else
 		pants = /obj/item/clothing/pants/tights/green
 	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)

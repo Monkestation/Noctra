@@ -20,6 +20,7 @@
 	anvilrepair = null
 	resistance_flags = FLAMMABLE // Made of leather
 	smeltresult = /obj/item/ash
+	color = CLOTHING_LINEN
 
 	armor = ARMOR_PADDED
 	prevent_crits = MINOR_CRITICALS

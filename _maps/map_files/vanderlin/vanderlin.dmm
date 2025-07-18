@@ -32415,7 +32415,7 @@
 /area/rogue/indoors/town/clinic_large)
 "uCm" = (
 /obj/structure/rack/shelf/biggest,
-/obj/item/clothing/pants/skirt/random{
+/obj/item/clothing/pants/skirt/colored/random{
 	pixel_x = -3;
 	pixel_y = 11
 	},
@@ -35333,7 +35333,7 @@
 /obj/item/clothing/pants/trou,
 /obj/item/clothing/pants/tights,
 /obj/item/clothing/pants/tights,
-/obj/item/clothing/pants/skirt/random,
+/obj/item/clothing/pants/skirt/colored/random,
 /turf/open/floor/woodturned,
 /area/rogue/indoors/soilsons)
 "wxf" = (

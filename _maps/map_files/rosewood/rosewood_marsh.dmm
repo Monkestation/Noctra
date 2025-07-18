@@ -3012,7 +3012,7 @@
 /area/rogue/outdoors/bog)
 "sf" = (
 /obj/structure/closet/crate/crafted_closet/inn/south,
-/obj/item/clothing/pants/skirt/random,
+/obj/item/clothing/pants/skirt/colored/random,
 /obj/item/clothing/shirt/tunic/colored/random,
 /obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/dress/silkdress/colored/random,
