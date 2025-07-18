@@ -28,13 +28,14 @@
 		return FALSE
 	if(target.mob_biotypes & MOB_UNDEAD)
 		to_chat(user, span_notice("You cannot infuse life into the undead! The rot must be cured first."))
-		return false
+		return FALSE
 
 /datum/surgery_step/infuse_lux/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
 	display_results(user, target,
 		span_notice("I begin to infuse [target]'s heart with lux."),
 		span_notice("[user] begins to work lux into [target]'s heart."),
-		span_notice("[user] begins to something into [target]'s innards..."))
+		span_notice("[user] begins to something into [target]'s innards..."),
+	)
 	return TRUE
 
 /datum/surgery_step/infuse_lux/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
