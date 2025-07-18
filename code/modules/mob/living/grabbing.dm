@@ -6,7 +6,7 @@
 /mob/living/carbon/proc/add_grab_fatigue(amount = 1)
 	grab_fatigue += amount
 	if(grab_fatigue > 10) // High fatigue starts affecting performance
-		adjust_stamina(grab_fatigue - 5) // Extra stamina drain
+		adjust_stamina(max(grab_fatigue - 10, 1)) // Extra stamina drain
 
 /datum/status_effect/buff/oiled
 	id = "oiled"
@@ -115,7 +115,7 @@
 
 /obj/item/grabbing/process()
 	if(valid_check())
-		if(grab_state > GRAB_PASSIVE && sublimb_grabbed == BODY_ZONE_PRECISE_NECK && (grabbee && (grabbed.dir == turn(get_dir(grabbed,grabbee), 180))))
+		if(grab_state > GRAB_PASSIVE && sublimb_grabbed == BODY_ZONE_PRECISE_NECK && ((grabbee && (grabbed.dir == turn(get_dir(grabbed,grabbee), 180))) || grabbee.body_position == LYING_DOWN))
 			chokehold = TRUE
 		else
 			chokehold = FALSE
@@ -281,7 +281,7 @@
 			if(M.grippedby(user)) // grab was strengthened
 				bleed_suppressing = 0.5
 		if(/datum/intent/grab/choke)
-			if(limb_grabbed && grab_state > 0) //this implies a carbon victim
+			if(limb_grabbed && grab_state > GRAB_PASSIVE) //this implies a carbon victim
 				if(iscarbon(M) && M != user)
 					user.adjust_stamina(rand(1,3) * spam_penalty)
 					var/mob/living/carbon/C = M

@@ -1189,29 +1189,29 @@
 	if(pulledby.mind)
 		their_wrestling = pulledby.get_skill_level(/datum/skill/combat/wrestling)
 
-	var/break_chance = 25 // Base chance
-	break_chance += (my_wrestling - their_wrestling) * 8
-	break_chance += (STASTR - pulledby.STASTR) * 3
+	var/break_chance = 15 // Base chance
+	break_chance += (my_wrestling - their_wrestling)
+	break_chance += (STASTR - pulledby.STASTR) * 0.4
 
 	// Both parties get a chance to break free
 	if(prob(break_chance))
-		visible_message("<span class='warning'>[src] and [pulledby] struggle and break free from each other's grips!</span>")
+		visible_message(span_warning("[src] and [pulledby] struggle and break free from each other's grips!"))
 		log_combat(src, pulledby, "mutual grab break")
 		stop_pulling()
 		pulledby.stop_pulling()
 
 		// Both get briefly stunned from the struggle
-		Immobilize(10)
-		pulledby?.Immobilize(10)
-		adjust_stamina(rand(5,10))
-		pulledby?.adjust_stamina(rand(5,10))
+		Immobilize(5)
+		pulledby?.Immobilize(5)
+		adjust_stamina(rand(3,5))
+		pulledby?.adjust_stamina(rand(3,5))
 
 		playsound(loc, 'sound/combat/grabbreak.ogg', 75, TRUE, -1)
 		return TRUE
 	else
-		visible_message("<span class='warning'>[src] and [pulledby] struggle against each other's grips!</span>")
-		adjust_stamina(rand(2,5))
-		pulledby?.adjust_stamina(rand(2,5))
+		// visible_message(span_warning("[src] and [pulledby] struggle against each other's grips!"))
+		adjust_stamina(rand(1,3))
+		pulledby?.adjust_stamina(rand(1,3))
 
 	return FALSE
 
@@ -1243,7 +1243,7 @@
 	// Fatigue penalties for attacker
 	if(iscarbon(attacker))
 		var/mob/living/carbon/C = attacker
-		counter_chance += C.grab_fatigue * 3
+		counter_chance += C.grab_fatigue * 2
 
 	// Equipment in hands affects counter ability
 	var/obj/item/my_weapon = get_active_held_item()
@@ -1430,7 +1430,7 @@
 		if(G.chokehold)
 			combat_modifier -= 0.1 // BUFF: Reduced chokehold penalty (was 0.15)
 
-	resist_chance += ((((STASTR - L.STASTR)/2) + wrestling_diff) * 6 + rand(-5, 5))
+	resist_chance += ((((STASTR - L.STASTR)/4) + wrestling_diff) * 4 + rand(-5, 5))
 	resist_chance *= combat_modifier * stamina_factor * positioning_modifier
 	resist_chance = clamp(resist_chance, 8, 90)
 
