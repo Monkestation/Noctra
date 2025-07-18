@@ -80,27 +80,27 @@
 			cloak = /obj/item/clothing/cloak/tabard/crusader
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
 		if(/datum/patron/inhumen/graggar) // Heretical Patrons
-			cloak = /obj/item/clothing/cloak/raincloak/mortus
+			cloak = /obj/item/clothing/cloak/raincloak/colored/mortus
 			H.change_stat(STATKEY_LCK, -1)
 			H.cmode_music = 'sound/music/cmode/antag/combat_werewolf.ogg'
 			GLOB.heretical_players += H.real_name
 		if(/datum/patron/inhumen/graggar_zizo)
-			cloak = /obj/item/clothing/cloak/raincloak/mortus
+			cloak = /obj/item/clothing/cloak/raincloak/colored/mortus
 			H.cmode_music = 'sound/music/cmode/antag/combat_werewolf.ogg'
 		if(/datum/patron/inhumen/zizo)
-			cloak = /obj/item/clothing/cloak/raincloak/mortus
+			cloak = /obj/item/clothing/cloak/raincloak/colored/mortus
 			H.change_stat(STATKEY_LCK, -1)
 			H.cmode_music = 'sound/music/cmode/antag/combat_cult.ogg'
 			GLOB.heretical_players += H.real_name
 		if(/datum/patron/inhumen/matthios)
-			cloak = /obj/item/clothing/cloak/raincloak/mortus
+			cloak = /obj/item/clothing/cloak/raincloak/colored/mortus
 			H.change_stat(STATKEY_LCK, -1)
 			H.cmode_music = 'sound/music/cmode/antag/CombatBandit1.ogg'
 			GLOB.heretical_players += H.real_name
 		if(/datum/patron/inhumen/baotha)
 			head = /obj/item/clothing/head/crown/circlet
 			mask = /obj/item/clothing/face/spectacles/sglasses
-			cloak = /obj/item/clothing/cloak/raincloak/purple
+			cloak = /obj/item/clothing/cloak/raincloak/colored/purple
 			H.change_stat(STATKEY_LCK, -1)
 			H.cmode_music = 'sound/music/cmode/antag/CombatBaotha.ogg'
 			GLOB.heretical_players += H.real_name

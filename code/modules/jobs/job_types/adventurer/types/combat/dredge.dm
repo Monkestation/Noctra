@@ -164,7 +164,7 @@
 			gloves = /obj/item/clothing/gloves/leather/advanced
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			armor = /obj/item/clothing/armor/leather/vest
-			cloak = /obj/item/clothing/cloak/raincloak/mortus
+			cloak = /obj/item/clothing/cloak/raincloak/colored/mortus
 			pants = /obj/item/clothing/pants/tights/colored/black
 			H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 			ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
@@ -179,7 +179,7 @@
 		if("Hide")
 			shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 			armor = /obj/item/clothing/armor/leather/hide
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			gloves = /obj/item/clothing/gloves/leather/advanced
 			pants = /obj/item/clothing/pants/tights/colored/black
 			H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
@@ -322,7 +322,7 @@
 		if("Shovel") // Rare roll, might as well get some stat benefits
 			beltr = /obj/item/flashlight/flare/torch/lantern
 			backr = /obj/item/weapon/shovel
-			cloak = /obj/item/clothing/cloak/raincloak/mortus
+			cloak = /obj/item/clothing/cloak/raincloak/colored/mortus
 			H.adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/lockpicking, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)

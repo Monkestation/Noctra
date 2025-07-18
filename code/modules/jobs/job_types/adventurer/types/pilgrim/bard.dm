@@ -37,9 +37,9 @@
 		gloves = /obj/item/clothing/gloves/fingerless
 	belt = /obj/item/storage/belt/leather
 	armor = /obj/item/clothing/armor/leather/vest
-	cloak = /obj/item/clothing/cloak/raincloak/blue
+	cloak = /obj/item/clothing/cloak/raincloak/colored/blue
 	if(prob(50))
-		cloak = /obj/item/clothing/cloak/raincloak/red
+		cloak = /obj/item/clothing/cloak/raincloak/colored/red
 	backl = /obj/item/storage/backpack/satchel
 	beltr = /obj/item/weapon/knife/dagger/steel/special
 	beltl = /obj/item/storage/belt/pouch/coins/poor

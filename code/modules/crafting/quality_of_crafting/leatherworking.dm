@@ -78,7 +78,7 @@
 	requirements = list(
 		/obj/item/natural/hide/cured = 2,
 	)
-	output = /obj/item/clothing/cloak/raincloak/brown
+	output = /obj/item/clothing/cloak/raincloak/colored/brown
 	craftdiff = 2
 
 /datum/repeatable_crafting_recipe/leather/belt

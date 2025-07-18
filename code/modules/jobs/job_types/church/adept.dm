@@ -101,7 +101,7 @@
 	backl = /obj/item/ammo_holder/quiver/arrows
 	beltl = /obj/item/weapon/mace/cudgel
 	pants = /obj/item/clothing/pants/trou/leather
-	cloak = /obj/item/clothing/cloak/raincloak/brown
+	cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 	backpack_contents = list(/obj/item/lockpick = 1, /obj/item/storage/keyring/inquisitor = 1, /obj/item/weapon/knife/dagger/psydon = 1)
 
 	//Stats for class

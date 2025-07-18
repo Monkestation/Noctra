@@ -48,7 +48,7 @@
 		if("Crossbow & Dagger") //Rogue
 			backl= /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow //we really need to make this not a grenade launcher subtype
 			beltr = /obj/item/ammo_holder/quiver/bolts
-			cloak = /obj/item/clothing/cloak/raincloak/mortus //cool cloak
+			cloak = /obj/item/clothing/cloak/raincloak/colored/mortus //cool cloak
 			beltl = /obj/item/weapon/knife/dagger/steel
 			backr = /obj/item/storage/backpack/satchel
 			backpack_contents = list(/obj/item/needle/thorn = 1, /obj/item/natural/cloth = 1, /obj/item/lockpickring/mundane = 1) //rogue gets lockpicks

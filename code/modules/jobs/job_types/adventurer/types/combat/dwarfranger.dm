@@ -28,7 +28,7 @@
 		shoes = /obj/item/clothing/shoes/boots
 	if(prob(23))
 		shoes = /obj/item/clothing/shoes/boots/leather
-	cloak = /obj/item/clothing/cloak/raincloak/brown
+	cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE) // In line with basic combat classes
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)

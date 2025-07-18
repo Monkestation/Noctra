@@ -52,7 +52,7 @@
 			shirt = /obj/item/clothing/shirt/shortshirt
 			belt = /obj/item/storage/belt/leather/assassin
 			armor = /obj/item/clothing/armor/leather/vest
-			cloak = /obj/item/clothing/cloak/raincloak/red
+			cloak = /obj/item/clothing/cloak/raincloak/colored/red
 			backl = /obj/item/storage/backpack/satchel
 			beltr = /obj/item/weapon/knife/dagger/steel/special
 			beltl = /obj/item/storage/belt/pouch/coins/poor
@@ -214,7 +214,7 @@
 			belt = /obj/item/storage/belt/leather/assassin
 			beltr = /obj/item/weapon/mace/cudgel
 			beltl = /obj/item/storage/belt/pouch/coins/poor
-			cloak = /obj/item/clothing/cloak/raincloak/mortus
+			cloak = /obj/item/clothing/cloak/raincloak/colored/mortus
 		if("Ranger")
 			if(H.gender == MALE)
 				pants = /obj/item/clothing/pants/trou/leather
@@ -231,9 +231,9 @@
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			belt = /obj/item/storage/belt/leather/assassin
 			armor = /obj/item/clothing/armor/leather/hide
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			if(prob(33))
-				cloak = /obj/item/clothing/cloak/raincloak/green
+				cloak = /obj/item/clothing/cloak/raincloak/colored/green
 			backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 			backl = /obj/item/storage/backpack/satchel
 			beltr = /obj/item/flashlight/flare/torch/lantern

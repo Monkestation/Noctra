@@ -112,7 +112,7 @@
 		mask = /obj/item/clothing/face/shepherd/shadowmask
 		pants = /obj/item/clothing/pants/trou/shadowpants
 	else
-		cloak = /obj/item/clothing/cloak/raincloak/mortus //cool spymaster cloak
+		cloak = /obj/item/clothing/cloak/raincloak/colored/mortus //cool spymaster cloak
 		shirt = /obj/item/clothing/shirt/undershirt/colored/guard
 		armor = /obj/item/clothing/armor/leather/jacket/hand
 		pants = /obj/item/clothing/pants/tights/colored/black

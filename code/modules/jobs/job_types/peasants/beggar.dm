@@ -38,7 +38,7 @@
 	if(prob(10))
 		beltl = /obj/item/clothing/face/cigarette/rollie/cannabis
 	if(prob(10))
-		cloak = /obj/item/clothing/cloak/raincloak/brown
+		cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 	if(prob(10))
 		gloves = /obj/item/clothing/gloves/fingerless
 	if(H.gender == FEMALE)

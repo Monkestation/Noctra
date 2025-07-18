@@ -22,7 +22,7 @@
 	shoes = /obj/item/clothing/shoes/shalal
 	gloves = /obj/item/clothing/gloves/leather
 	head = /obj/item/clothing/head/crown/circlet
-	cloak = /obj/item/clothing/cloak/raincloak/purple
+	cloak = /obj/item/clothing/cloak/raincloak/colored/purple
 	armor = /obj/item/clothing/armor/gambeson/arming
 	belt = /obj/item/storage/belt/leather/shalal
 	beltl = /obj/item/weapon/sword/sabre/shalal
