@@ -1386,6 +1386,9 @@ GLOBAL_LIST_EMPTY(headshot_cache)
 	target.update_inv_belt(hide_experimental = TRUE)
 	target.update_inv_back(hide_experimental = TRUE)
 	target.update_inv_head(hide_nonstandard = TRUE)
+	var/was_typing = target.typing
+	if(was_typing)
+		target.set_typing_indicator(FALSE)
 
 	var/image/dummy = image(target.icon, target, target.icon_state, target.layer, target.dir)
 	dummy.appearance = target.appearance
@@ -1395,6 +1398,8 @@ GLOBAL_LIST_EMPTY(headshot_cache)
 	target.update_inv_belt()
 	target.update_inv_back()
 	target.update_inv_head()
+	if(was_typing)
+		target.set_typing_indicator(TRUE)
 
 	var/icon/headshot = getFlatIcon(dummy, SOUTH, no_anim = TRUE)
 	headshot.Scale(size, size)
