@@ -61,7 +61,8 @@
 		if(revive_pq && !HAS_TRAIT(target, TRAIT_IWASREVIVED) && user?.ckey)
 			adjust_playerquality(revive_pq, user.ckey)
 			ADD_TRAIT(target, TRAIT_IWASREVIVED, "[type]")
-	target.remove_status_effect(/datum/status_effect/buff/lux_drained)
+	target.remove_status_effect(/datum/status_effect/debuff/lux_drained)
+	target.remove_status_effect(/datum/status_effect/debuff/flaw_lux_taken)
 	GLOB.vanderlin_round_stats[STATS_LUX_REVIVALS]++
 	return TRUE
 

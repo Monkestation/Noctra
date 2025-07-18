@@ -774,7 +774,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 	//All luxless species below - Make sure to update RACES_PLAYER_LUXLESS list macro
 	if (!(user.client.prefs.pref_species.name in RACES_PLAYER_LUXLESS))
-		H.apply_status_effect(/datum/status_effect/buff/flaw_lux_taken)
+		H.apply_status_effect(/datum/status_effect/debuff/flaw_lux_taken)
 		SEND_SIGNAL(user, COMSIG_LUX_EXTRACTED, H)
 
 	else //overflow for the luxless species, if they select the flaw they should get a random flaw instead
