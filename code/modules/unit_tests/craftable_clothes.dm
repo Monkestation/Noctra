@@ -28,6 +28,9 @@ abstract types are automatically excluded.
 		/obj/item/clothing/neck/psycross/silver/holy, // unimplemented
 		/obj/item/clothing/armor/skin_armor, // bruh
 		/obj/item/clothing/head/hooded, // abstract items connected to a cloak
+		/obj/item/clothing/ring, // TEMPORARY (TODO)
+		/obj/item/clothing/accessory, // ???
+
 	)
 	/// excludes paths that are subtypes of these types
 	var/list/excluded_paths_subtypes_only = list(
@@ -38,6 +41,7 @@ abstract types are automatically excluded.
 	var/list/excluded_paths_by_text = list(
 		"goblin",
 		"orc",
+		"rousman",
 		"rare",
 	)
 

@@ -16,6 +16,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/rainhood
 	toggle_icon_state = FALSE
 	salvage_result = /obj/item/natural/hide/cured
+	color = CLOTHING_BARK_BROWN
 
 /obj/item/clothing/cloak/raincloak/Initialize(mapload, ...)
 	. = ..()

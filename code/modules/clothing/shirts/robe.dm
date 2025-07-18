@@ -193,6 +193,7 @@
 	var/picked
 	var/newicon
 	var/robe_count = 0	/// This var basicly counts the numbers of times this robe has changes its appearence
+	abstract_type = /obj/item/clothing/shirt/robe/newmage
 
 /obj/item/clothing/shirt/robe/newmage/ToggleHood()
 	if(!hoodtoggled)

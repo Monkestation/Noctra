@@ -40,6 +40,7 @@
 	item_weight = 4
 
 	var/transfer_prints = FALSE
+	abstract_type = /obj/item/clothing/gloves
 
 /obj/item/clothing/gloves/Initialize(mapload, ...)
 	. = ..()
