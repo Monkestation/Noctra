@@ -97,7 +97,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/remove_antag_hud(antag_hud_type, antag_hud_name, mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
-	hud.leave_hud(M)
+	hud?.leave_hud(M)
 	set_antag_hud(M, null)
 
 //Assign default team and creates one for one of a kind team antagonists
@@ -147,6 +147,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
 		if(owner.current)
+			// Maniac sigh
+			owner.current.refresh_looping_ambience()
 			if(was_pacifist)
 				var/mob/living/carbon/human/human_user = owner.current
 				human_user.charflaw = new /datum/charflaw/pacifist(human_user)

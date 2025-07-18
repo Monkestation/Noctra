@@ -124,7 +124,7 @@
 		current_reader << browse(null,"window=recipe")
 		current_reader = null
 
-/obj/item/recipe_book/attack_self(mob/user)
+/obj/item/recipe_book/attack_self(mob/user, params)
 	. = ..()
 	current_reader = user
 	current_reader << browse(generate_html(user),"window=recipe;size=800x810")

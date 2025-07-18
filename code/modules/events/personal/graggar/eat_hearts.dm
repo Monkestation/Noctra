@@ -22,7 +22,7 @@
 			continue
 		if(!H.patron || !istype(H.patron, /datum/patron/inhumen/graggar))
 			continue
-		if(locate(/obj/effect/proc_holder/spell/invoked/extract_heart) in H.mind.spell_list)
+		if(H.get_spell(/datum/action/cooldown/spell/extract_heart))
 			continue
 		return TRUE
 
@@ -36,7 +36,7 @@
 			continue
 		if(!human_mob.patron || !istype(human_mob.patron, /datum/patron/inhumen/graggar))
 			continue
-		if(locate(/obj/effect/proc_holder/spell/invoked/extract_heart) in human_mob.mind.spell_list)
+		if(human_mob.get_spell(/datum/action/cooldown/spell/extract_heart))
 			continue
 		valid_targets += human_mob
 
@@ -48,8 +48,7 @@
 	var/datum/objective/consume_organs/new_objective = new(owner = chosen_one.mind)
 	chosen_one.mind.add_personal_objective(new_objective)
 
-	var/obj/effect/proc_holder/spell/invoked/extract_heart/heart_spell = new()
-	chosen_one.mind.AddSpell(heart_spell)
+	chosen_one.add_spell(/datum/action/cooldown/spell/extract_heart)
 
 	to_chat(chosen_one, span_userdanger("YOU ARE GRAGGAR'S CHOSEN!"))
 	to_chat(chosen_one, span_biginfo("Graggar hungers! [new_objective.explanation_text]"))

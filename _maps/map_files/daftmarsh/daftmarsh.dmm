@@ -7779,8 +7779,8 @@
 /turf/open/floor/ruinedwood/spiralfade,
 /area/rogue/outdoors/town/roofs)
 "hJe" = (
-/obj/structure/table/wood{
-	icon_state = "map3"
+/obj/structure/table/map/enigma{
+	dir = 6
 	},
 /turf/open/floor/church,
 /area/rogue/indoors/town/manor)
@@ -9656,10 +9656,10 @@
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/under/town/sewer)
 "jwI" = (
-/obj/structure/table/wood{
-	icon_state = "map4"
-	},
 /obj/item/paper/scroll,
+/obj/structure/table/map/vanderlin{
+	dir = 9
+	},
 /turf/open/floor/carpet/lord/center,
 /area/rogue/indoors/town/manor)
 "jwT" = (
@@ -10642,10 +10642,10 @@
 /turf/open/floor/wood/nosmooth,
 /area/rogue/indoors/town)
 "kot" = (
-/obj/structure/table/wood{
-	icon_state = "map6"
-	},
 /obj/item/candle/skull,
+/obj/structure/table/map/vanderlin{
+	dir = 5
+	},
 /turf/open/floor/carpet/lord/right,
 /area/rogue/indoors/town/manor)
 "koK" = (
@@ -13024,9 +13024,6 @@
 /turf/open/floor/twig,
 /area/rogue/outdoors/town)
 "mHF" = (
-/obj/structure/table/wood{
-	icon_state = "map2"
-	},
 /obj/item/reagent_containers/glass/cup/silver{
 	pixel_x = 7;
 	pixel_y = 11
@@ -13035,6 +13032,7 @@
 	pixel_x = -7;
 	pixel_y = 7
 	},
+/obj/structure/table/map/enigma,
 /turf/open/floor/church,
 /area/rogue/indoors/town/manor)
 "mHQ" = (
@@ -14378,8 +14376,8 @@
 /turf/open/floor/tile,
 /area/rogue/under/town/basement)
 "ogd" = (
-/obj/structure/table/wood{
-	icon_state = "map5"
+/obj/structure/table/map/vanderlin{
+	dir = 1
 	},
 /turf/open/floor/carpet/lord/center,
 /area/rogue/indoors/town/manor)
@@ -14449,10 +14447,8 @@
 /turf/open/floor/wood,
 /area/rogue/indoors/town)
 "okq" = (
-/obj/structure/table/wood{
-	icon_state = "map2"
-	},
 /obj/item/candle/yellow,
+/obj/structure/table/map/vanderlin,
 /turf/open/floor/carpet/lord/center,
 /area/rogue/indoors/town/manor)
 "okD" = (
@@ -15566,9 +15562,6 @@
 /turf/open/floor/dirt,
 /area/rogue/outdoors/town)
 "prd" = (
-/obj/structure/table/wood{
-	icon_state = "map1"
-	},
 /obj/item/reagent_containers/glass/carafe/silver/redwine{
 	pixel_y = 16;
 	pixel_x = 7
@@ -15576,6 +15569,9 @@
 /obj/item/candle/yellow{
 	pixel_x = -3;
 	pixel_y = 5
+	},
+/obj/structure/table/map/enigma{
+	dir = 10
 	},
 /turf/open/floor/church,
 /area/rogue/indoors/town/manor)
@@ -16669,10 +16665,10 @@
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/magician)
 "qxs" = (
-/obj/structure/table/wood{
-	icon_state = "map4"
-	},
 /obj/item/candle/yellow,
+/obj/structure/table/map/enigma{
+	dir = 9
+	},
 /turf/open/floor/church,
 /area/rogue/indoors/town/manor)
 "qxA" = (
@@ -17459,9 +17455,6 @@
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town)
 "rpI" = (
-/obj/structure/table/wood{
-	icon_state = "map6"
-	},
 /obj/item/paper/scroll,
 /obj/item/paper/scroll{
 	pixel_x = -2
@@ -17469,6 +17462,9 @@
 /obj/item/paper/scroll{
 	pixel_x = -5;
 	pixel_y = 3
+	},
+/obj/structure/table/map/enigma{
+	dir = 5
 	},
 /turf/open/floor/church,
 /area/rogue/indoors/town/manor)
@@ -18162,8 +18158,8 @@
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/indoors/soilsons)
 "rVo" = (
-/obj/structure/table/wood{
-	icon_state = "map1"
+/obj/structure/table/map/vanderlin{
+	dir = 10
 	},
 /turf/open/floor/carpet/lord/center,
 /area/rogue/indoors/town/manor)
@@ -21210,12 +21206,12 @@
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/magician)
 "uFt" = (
-/obj/structure/table/wood{
-	icon_state = "map5"
+/obj/item/natural/feather,
+/obj/item/natural/feather,
+/obj/item/natural/feather,
+/obj/structure/table/map/enigma{
+	dir = 1
 	},
-/obj/item/natural/feather,
-/obj/item/natural/feather,
-/obj/item/natural/feather,
 /turf/open/floor/church,
 /area/rogue/indoors/town/manor)
 "uFy" = (
@@ -23705,10 +23701,10 @@
 /turf/open/floor/blocks/paving,
 /area/rogue/under/town/sewer)
 "wXD" = (
-/obj/structure/table/wood{
-	icon_state = "map3"
-	},
 /obj/item/natural/feather,
+/obj/structure/table/map/vanderlin{
+	dir = 6
+	},
 /turf/open/floor/carpet/lord/right,
 /area/rogue/indoors/town/manor)
 "wXW" = (
@@ -24789,6 +24785,7 @@
 /obj/structure/stairs/stone/church{
 	dir = 4
 	},
+/obj/structure/fake_machine/atm,
 /turf/open/floor/church,
 /area/rogue/indoors/town/clinic_large)
 "xWr" = (

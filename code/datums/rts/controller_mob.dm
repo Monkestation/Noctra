@@ -118,12 +118,12 @@
 
 /mob/camera/strategy_controller/ClickOn(atom/A, params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["left"] && get_turf(A))
+	if(LAZYACCESS(modifiers, LEFT_CLICK) && get_turf(A))
 		if(held_build)
 			if(held_build.try_place_building(src, get_turf(A)))
 				var/datum/building_datum/last_type = held_build.type
 				held_build.clean_up(success = TRUE)
-				if(modifiers["shift"])
+				if(LAZYACCESS(modifiers, SHIFT_CLICKED))
 					try_setup_build(last_type)
 
 			else
@@ -132,7 +132,9 @@
 			return
 	. = ..()
 
-/mob/camera/strategy_controller/RightClickOn(atom/A, params)
+/mob/camera/strategy_controller/UnarmedAttack(atom/A, proximity_flag, params)
+	if(!LAZYACCESS(params2list(params), RIGHT_CLICK))
+		return
 	var/allow_break = FALSE
 	for(var/obj/structure/structure in A.contents)
 		if(is_type_in_list(structure, GLOB.breakable_types))
@@ -166,7 +168,6 @@
 		else
 			var/datum/queued_workorder/new_queued = new /datum/queued_workorder(/datum/work_order/break_turf, src, A)
 			in_progress_workorders += new_queued
-	. = ..()
 
 /mob/camera/strategy_controller/process()
 	building_icon?.update(src)

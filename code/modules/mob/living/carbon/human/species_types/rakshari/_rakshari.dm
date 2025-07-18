@@ -6,7 +6,7 @@
 	id = "rakshari"
 	changesource_flags = WABBAJACK
 
-	desc = "Their origins trace back to nomadic desert tribes, \
+	desc = "Rakshari origins trace back to nomadic desert tribes, \
 	whose survival in the harsh sands cultivated a culture steeped in resilience, cunning, and adaptability. \
 	\n\n\
 	Over centuries, the Rakshari united under the banners of powerful Zalad merchant-kings and warlords,\
@@ -16,7 +16,7 @@
 	Practice of this was justified through religious doctrines, \
 	venerating strength and dominance as divine virtues. \
 	\n\n\
-	As they further attached themselves to Zalad, however, \
+	As they further attached themselves to Zaladin, however, \
 	their people would integrate more sophisticated forms of servitude, \
 	such as indentured contracts and debt bondage. \
 	\n\n\

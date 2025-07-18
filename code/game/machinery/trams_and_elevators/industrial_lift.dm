@@ -666,7 +666,7 @@ GLOBAL_LIST_INIT(all_radial_directions, list(
 		return FALSE
 	return TRUE
 
-/obj/structure/industrial_lift/attack_hand(mob/user, list/modifiers)
+/obj/structure/industrial_lift/attack_hand(mob/user, params)
 	. = ..()
 	if(.)
 		return

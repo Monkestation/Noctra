@@ -15,7 +15,7 @@
 	. = ..()
 	countdown = new(src)
 
-/obj/item/hourglass/attack_self(mob/user)
+/obj/item/hourglass/attack_self(mob/user, params)
 	. = ..()
 	if(hand_activated)
 		toggle(user)

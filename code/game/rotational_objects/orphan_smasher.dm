@@ -113,11 +113,12 @@
 	try_step(STEP_BUTTON, user)
 	return TRUE
 
-/obj/structure/orphan_smasher/attack_right(mob/user)
-	if(!user.Adjacent(src))
+/obj/structure/orphan_smasher/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 	try_step(STEP_FIDDLE, user)
-	return TRUE
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/orphan_smasher/attack_hand(mob/user)
 	. = ..()
@@ -326,13 +327,16 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/structure/material_bin/attack_right(mob/user)
+/obj/structure/material_bin/attack_hand_secondary(mob/user, params)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	user.visible_message(span_danger("[user] starts to [opened ? "close" : "open"] [src]!"), span_danger("You start to [opened ? "close" : "open"] [src]!"))
 	if(!do_after(user, 2.5 SECONDS, src))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	opened = !opened
 	update_appearance(UPDATE_ICON_STATE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 #undef STEP_FIDDLE
 #undef STEP_LEVER

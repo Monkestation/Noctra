@@ -218,7 +218,7 @@
 						for(var/i in 1 to maxore)
 							var/obj/item/R = new alloy(src, floor_mean_quality)
 							if(alloy == /obj/item/ingot/blacksteel)
-								GLOB.vanderlin_round_stats[STATS_BLACKSTEEL_SMELTED]++
+								record_round_statistic(STATS_BLACKSTEEL_SMELTED)
 							ore += R
 					else
 						for(var/obj/item/I in ore)

@@ -44,8 +44,8 @@
 	var/datum/objective/create_abyssoids/new_objective = new(owner = chosen_one.mind)
 	chosen_one.mind.add_personal_objective(new_objective)
 
-	var/obj/effect/proc_holder/spell/self/create_abyssoid/abyssoid_spell = new()
-	chosen_one.mind.AddSpell(abyssoid_spell)
+
+	chosen_one.add_spell(/datum/action/cooldown/spell/undirected/create_abyssoid)
 
 	to_chat(chosen_one, span_userdanger("YOU ARE ABYSSOR'S CHOSEN!"))
 	to_chat(chosen_one, span_blue("Abyssor wants everyone to remember him! Create an army of holy abyssoid leeches and distribute them among the ingrates!"))

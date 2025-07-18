@@ -105,9 +105,6 @@
 		shoot_with_empty_chamber(user)
 		return
 
-	if(user?.used_intent.arc_check())
-		target = get_turf(target)
-
 	return process_fire(target, user, TRUE, click_parameters, null, 0)
 
 

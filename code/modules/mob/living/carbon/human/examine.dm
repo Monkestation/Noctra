@@ -29,12 +29,15 @@
 		user.add_stress(/datum/stressevent/saw_old_party)
 
 /mob/living/carbon/human/examine(mob/user)
-//this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
-	var/t_He = p_they(TRUE)
-	var/t_his = p_their()
+	//this is very slightly better than it was because you can use it more places. still can't do \his[src] though.
+	var/ignore_pronouns
+	if(user != src)
+		ignore_pronouns = !user.mind?.do_i_know(null, real_name)
+	var/t_He = p_they(TRUE, ignore_pronouns = ignore_pronouns)
+	var/t_his = p_their(ignore_pronouns = ignore_pronouns)
 //	var/t_him = p_them()
-	var/t_has = p_have()
-	var/t_is = p_are()
+	var/t_has = p_have(ignore_pronouns = ignore_pronouns)
+	var/t_is = p_are(ignore_pronouns = ignore_pronouns)
 	var/obscure_name
 	var/race_name = dna?.species.name
 	var/self_inspect = FALSE
@@ -123,8 +126,6 @@
 			var/is_male = FALSE
 			if(gender == MALE)
 				is_male = TRUE
-			if(RomanticPartner(stranger))
-				. += span_love(span_bold("[t_He] is my [is_male ? "husband" : "wife"]."))
 			if(family_datum == stranger.family_datum && family_datum)
 				var/family_text = ReturnRelation(user)
 				if(family_text)
@@ -573,8 +574,9 @@
 			. += "<a href='byond://?src=[REF(src)];inspect_limb=[checked_zone]'>Inspect [parse_zone(checked_zone)]</a>"
 			if(body_position == LYING_DOWN && user != src && (user.zone_selected == BODY_ZONE_CHEST))
 				. += "<a href='byond://?src=[REF(src)];check_hb=1'>Listen to Heartbeat</a>"
-		if(!HAS_TRAIT(src, TRAIT_FACELESS))
-			. += "<a href='byond://?src=[REF(src)];view_descriptors=1'>Look at Features</a>"
+
+	if(!HAS_TRAIT(src, TRAIT_FACELESS))
+		. += "<a href='byond://?src=[REF(src)];view_descriptors=1'>Look at Features</a>"
 
 	// Characters with the hunted flaw will freak out if they can't see someone's face.
 	if(!appears_dead)

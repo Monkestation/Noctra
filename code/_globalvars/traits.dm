@@ -253,6 +253,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_KITTEN_MOM = span_info("Kittens love you, they see you are a parent."),
 	TRAIT_FACELESS = span_danger("I am faceless. I am shunned. The others will recognise me for what I am. If I give them the chance."),
 	TRAIT_FLOWERFIELD_IMMUNITY = span_info("I am immune to the effects of flower fields."),
+	TRAIT_DUALWIELDER = span_info("I am trained in the art of dual wielding."),
 ))
 
 /// value -> trait name, generated on use from trait_by_type global

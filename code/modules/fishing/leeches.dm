@@ -213,7 +213,7 @@
 	blood_storage = BLOOD_VOLUME_SURVIVE
 	blood_maximum = BLOOD_VOLUME_BAD
 
-/obj/item/natural/worms/leech/parasite/attack_self(mob/user)
+/obj/item/natural/worms/leech/parasite/attack_self(mob/user, params)
 	. = ..()
 	giving = !giving
 	if(giving)
@@ -245,7 +245,7 @@
 	if(iscarbon(user))
 		var/mob/living/carbon/V = user
 		if(prob(5))
-			GLOB.vanderlin_round_stats[STATS_ZIZO_PRAISED]++
+			record_round_statistic(STATS_ZIZO_PRAISED)
 			V.say(pick( \
 				"PRAISE ZIZO!", \
 				"DEATH TO THE TEN...", \

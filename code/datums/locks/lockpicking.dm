@@ -54,7 +54,7 @@
 		return FALSE
 	user.visible_message(span_warning("[user] picks the lock of \the [src]!"), span_notice("I finish picking the lock of \the [src]."))
 	record_featured_stat(FEATURED_STATS_CRIMINALS, user)
-	GLOB.vanderlin_round_stats[STATS_LOCKS_PICKED]++
+	record_round_statistic(STATS_LOCKS_PICKED)
 	being_picked = FALSE
 	return TRUE
 
@@ -99,6 +99,7 @@
 	locked = TRUE
 	plane = HUD_PLANE
 	layer = 1
+	mouse_drag_pointer = null
 
 	///Angle of the lock itself. Determined by holding down mouse1.
 	var/lock_angle = 0
@@ -184,10 +185,10 @@
 	. = ..()
 
 	if(!frozen && linked_pick)
-		var/list/new_params = params2list(params)
+		var/list/modifiers = params2list(params)
 
-		var/icon_x = text2num(new_params["icon-x"]) - 240
-		var/icon_y = text2num(new_params["icon-y"]) - 240
+		var/icon_x = text2num(LAZYACCESS(modifiers, ICON_X)) - 240
+		var/icon_y = text2num(LAZYACCESS(modifiers, ICON_Y)) - 240
 
 		icon_y = max(1,icon_y)
 
@@ -224,9 +225,9 @@
 	SIGNAL_HANDLER
 	var/list/modifiers = params2list(params)
 
-	if(LAZYACCESS(modifiers, "middle"))
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 		return
-	if(LAZYACCESS(modifiers, "right")) //right click to close
+	if(LAZYACCESS(modifiers, RIGHT_CLICK)) //right click to close
 		close_lockpick()
 		return
 	if(source.mob.in_throw_mode)

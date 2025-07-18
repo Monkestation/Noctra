@@ -253,6 +253,14 @@
 	armor = ARMOR_MAILLE
 	max_integrity = INTEGRITY_STRONG
 
+/obj/item/clothing/neck/highcollier/iron/renegadecollar
+	icon_state = "renegadecollar"
+	name = "black collar"
+	desc = "A tough leather collar concealing iron chain mail, meant to be paired with its jacket."
+	body_parts_covered = NECK|EARS|MOUTH|NOSE
+	armor = ARMOR_MAILLE_IRON
+	max_integrity = INTEGRITY_STRONG
+
 /obj/item/clothing/neck/talkstone
 	name = "talkstone"
 	desc = "A bizarre, enchanted necklace. Allows you to bridge the gap between languages."
@@ -262,13 +270,31 @@
 	resistance_flags = FIRE_PROOF
 	sellprice = 98
 
-/obj/item/clothing/neck/horus
-	name = "eye of horuz"
-	desc = ""
+/obj/item/clothing/neck/mercator
+	name = "mercator's eye"
+	desc = "An enchanted amulet commissioned by the Mercator Guild to quickly determine the commercial value of bulk goods."
 	icon_state = "horus"
 	//dropshrink = 0.75
 	resistance_flags = FIRE_PROOF
 	sellprice = 30
+
+/obj/item/clothing/neck/mercator/examine()
+	. = ..()
+	. += span_info("Click on a turf or an item to see how much it is worth.")
+
+/obj/item/clothing/neck/mercator/afterattack(atom/A, mob/user, params)
+	. = ..()
+	var/total_sellprice = 0
+	if(isturf(A))
+		for(var/obj/item/I in A.contents)
+			total_sellprice += I.sellprice
+		to_chat(user, span_notice("Everything on the ground is worth [total_sellprice] mammons."))
+	else if(istype(A, /obj/item))
+		var/obj/item/I = A
+		total_sellprice += I.sellprice
+		for(var/obj/item/item in I.contents)
+			total_sellprice += item.sellprice
+		to_chat(user, span_notice("The item and its contents is worth [total_sellprice] mammons."))
 
 /obj/item/clothing/neck/shalal
 	name = "desert rider medal"

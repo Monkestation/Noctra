@@ -179,7 +179,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		return ..()
 	else
 		if(try_tame(O, user))
-			SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, O, user, params) // for udder functionality
+			SEND_SIGNAL(src, COMSIG_ATOM_ATTACKBY, O, user, params) // for udder functionality
 			return TRUE
 	. = ..()
 
@@ -207,6 +207,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	tame = TRUE
 	if(user)
 		befriend(user)
+		record_round_statistic(STATS_ANIMALS_TAMED)
 		SEND_SIGNAL(user, COMSIG_ANIMAL_TAMED, src)
 	pet_passive = TRUE
 

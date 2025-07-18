@@ -127,8 +127,6 @@
 
 	var/last_words	//used for database logging
 
-	var/list/obj/effect/proc_holder/abilities = list()
-
 	var/can_be_held = FALSE	//whether this can be picked up and held.
 
 	var/ventcrawl_layer = 2
@@ -212,5 +210,10 @@
 	var/tempatarget = null
 	var/pegleg = 0			//Handles check & slowdown for peglegs. Fuckin' bootleg, literally, but hey it at least works.
 	var/pet_passive = FALSE
+
+	/// amount of spell points this mob currently has
+	var/spell_points
+	/// amount of spell points this mob has used
+	var/used_spell_points
 
 	var/last_message

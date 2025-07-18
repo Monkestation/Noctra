@@ -34,11 +34,6 @@
 				qdel(S)
 			else
 				S.be_replaced()
-	for(var/obj/effect/proc_holder/spell/S as anything in mob_spell_list)
-		QDEL_NULL(S)
-	mob_spell_list.Cut()
-	if(ranged_ability)
-		QDEL_NULL(ranged_ability)
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 
@@ -124,7 +119,7 @@
 		playsound(src.loc, 'sound/foley/zfall.ogg', 100, FALSE)
 	if(!isgroundlessturf(T))
 		ZImpactDamage(T, levels)
-		GLOB.vanderlin_round_stats[STATS_MOAT_FALLERS]++
+		record_round_statistic(STATS_MOAT_FALLERS)
 	return ..()
 
 /mob/living/proc/ZImpactDamage(turf/T, levels)
@@ -645,7 +640,7 @@
 		log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] while in [InFullCritical() ? "hard":"soft"] critical with [round(health, 0.1)] points of health!", LOG_ATTACK)
 
 		if(istype(src.loc, /turf/open/water) && !HAS_TRAIT(src, TRAIT_NOBREATH) && body_position == LYING_DOWN && client)
-			GLOB.vanderlin_round_stats[STATS_PEOPLE_DROWNED]++
+			record_round_statistic(STATS_PEOPLE_DROWNED)
 
 		adjustOxyLoss(201)
 		updatehealth()
@@ -859,9 +854,6 @@
 		remove_client_colour(/datum/client_colour/monochrome/death)
 		. = TRUE
 		if(mind)
-			for(var/S in mind.spell_list)
-				var/obj/effect/proc_holder/spell/spell = S
-				spell.updateButtonIcon()
 			mind.remove_antag_datum(/datum/antagonist/zombie)
 		if(ishuman(src))
 			var/mob/living/carbon/human/human = src
@@ -1122,7 +1114,7 @@
 		return
 	surrendering = 1
 	if(alert(src, "Yield in surrender?",,"YES","NO") == "YES")
-		GLOB.vanderlin_round_stats[STATS_YIELDS]++
+		record_round_statistic(STATS_YIELDS)
 		changeNext_move(CLICK_CD_EXHAUSTED)
 		var/image/flaggy = image('icons/effects/effects.dmi',src,"surrender",ABOVE_MOB_LAYER)
 		flaggy.appearance_flags = RESET_TRANSFORM|KEEP_APART
@@ -1687,11 +1679,6 @@
 			to_chat(src, span_warning("You are too far away!"))
 			return FALSE
 
-		// var/datum/dna/mob_DNA = has_dna()
-		// if(!mob_DNA || !mob_DNA.check_mutation(/datum/mutation/human/telekinesis) || !tkMaxRangeCheck(src, target))
-		to_chat(src, span_warning("You are too far away!"))
-		return FALSE
-
 	if((action_bitflags & NEED_DEXTERITY) && !IsAdvancedToolUser()) // !ISADVANCEDTOOLUSER(src)
 		to_chat(src, span_warning("You don't have the dexterity to do this!"))
 		return FALSE
@@ -1746,13 +1733,6 @@
 		mind.transfer_to(new_mob)
 	else
 		new_mob.key = key
-
-/mob/living/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)
-	. = ..()
-	if(.)
-		return
-	if((magic && HAS_TRAIT(src, TRAIT_ANTIMAGIC)) || (holy && HAS_TRAIT(src, TRAIT_HOLY)))
-		return src
 
 /mob/living/proc/fakefireextinguish()
 	return
@@ -1851,22 +1831,6 @@
 /mob/living/proc/fall(forced)
 	if(!(mobility_flags & MOBILITY_USE))
 		drop_all_held_items()
-
-/mob/living/proc/AddAbility(obj/effect/proc_holder/A)
-	abilities.Add(A)
-	A.on_gain(src)
-	if(A.has_action)
-		A.action.Grant(src)
-
-/mob/living/proc/RemoveAbility(obj/effect/proc_holder/A)
-	abilities.Remove(A)
-	A.on_lose(src)
-	if(A.action)
-		A.action.Remove(src)
-
-/mob/living/proc/add_abilities_to_panel()
-	for(var/obj/effect/proc_holder/A in abilities)
-		statpanel("[A.panel]",A.get_panel_text(),A)
 
 /// Called when mob changes from a standing position into a prone while lacking the ability to stand up at the moment.
 /mob/living/proc/on_fall()
@@ -2007,11 +1971,6 @@
 			AT.get_remote_view_fullscreens(src)
 		else
 			clear_fullscreen("remote_view", 0)
-
-/mob/living/update_mouse_pointer()
-	..()
-	if (client && ranged_ability && ranged_ability.ranged_mousepointer)
-		client.mouse_pointer_icon = ranged_ability.ranged_mousepointer
 
 /mob/living/vv_get_dropdown()
 	. = ..()
@@ -2218,6 +2177,7 @@
 		return
 	. = body_position
 	body_position = new_value
+	SEND_SIGNAL(src, COMSIG_LIVING_SET_BODY_POSITION, new_value, .)
 	if(new_value == LYING_DOWN) // From standing to lying down.
 		on_lying_down()
 	else // From lying down to standing up.
@@ -2488,6 +2448,9 @@
 			log_combat(src, src, "lost consciousness")
 		if(DEAD)
 			log_combat(src, src, "died")
+	if(!can_hear())
+		stop_sound_channel(CHANNEL_AMBIENCE)
+	refresh_looping_ambience()
 
 /mob/living/set_pulledby(new_pulledby)
 	. = ..()
@@ -2546,6 +2509,11 @@
 
 /mob/living/proc/encumbrance_to_speed()
 
+/// checks if this mob can do a dualwielding attack or defense
+/mob/living/proc/dual_wielding_check()
+	if(!ishuman(src)) // lol
+		return FALSE
+
 /mob/proc/food_tempted(/obj/item/W, mob/user)
 	return
 
@@ -2563,3 +2531,99 @@
 
 /mob/proc/get_punch_dmg()
 	return
+
+/// Check if mob knows spell
+/mob/living/proc/get_spell(datum/action/cooldown/spell/spell_type, specific = FALSE)
+	if(!length(actions))
+		return
+	if(istype(spell_type, /datum/action/cooldown/spell))
+		spell_type = spell_type.type
+	if(!specific)
+		return locate(spell_type) in actions
+	for(var/datum/action/cooldown/spell/spell in actions)
+		if(spell.type == spell_type)
+			return spell
+
+/// Add a spell to the mob via typepath
+/mob/living/proc/add_spell(datum/action/cooldown/spell/spell_type, silent = TRUE, source)
+	if(QDELETED(src))
+		return
+	if(get_spell(spell_type))
+		return
+	if(!source)
+		source = src
+	var/datum/action/spell = new spell_type(source)
+	if(!silent)
+		to_chat(src, span_nicegreen("I learnt [spell.name]!"))
+	spell.Grant(src)
+
+/mob/living/proc/remove_spell(datum/action/cooldown/spell/spell, return_skill_points = FALSE, silent = TRUE)
+	if(QDELETED(src))
+		return
+	var/datum/action/cooldown/spell/real_spell = get_spell(spell)
+	if(!real_spell)
+		return
+	if(return_skill_points)
+		used_spell_points = max(used_spell_points - real_spell.point_cost, 0)
+		spell_points = max(spell_points + real_spell.point_cost, 0)
+		check_learnspell()
+	if(!silent)
+		to_chat(src, span_boldwarning("I forgot [real_spell.name]!"))
+	qdel(real_spell)
+
+/**
+ * purges all spells known by the mob
+ * Vars:
+ ** return_skill_points - do we return the skillpoints for the spells?
+ ** silent - do we notify the player of this change?
+*/
+/mob/living/proc/remove_spells(return_skill_points = FALSE, silent = TRUE, source)
+	if(QDELETED(src))
+		return
+	for(var/datum/action/cooldown/spell/spell in actions)
+		if(source && (spell.target != source))
+			continue
+		remove_spell(spell, return_skill_points, silent)
+	if(!silent)
+		to_chat(src, span_boldwarning("I forget all my spells!"))
+
+/mob/living/proc/purge_all_spellpoints(silent = TRUE)
+	if(QDELETED(src))
+		return
+	spell_points = 0
+	used_spell_points = 0
+	if(!silent)
+		to_chat(src, span_boldwarning("I lose all my spellpoints!"))
+
+/**
+ * adjusts the amount of available spellpoints
+ * Vars:
+ ** points - amount of points to grant or reduce
+*/
+/mob/living/proc/adjust_spellpoints(points)
+	if(QDELETED(src))
+		return
+	spell_points += points
+	check_learnspell()
+
+/mob/living/proc/check_learnspell()
+	if(QDELETED(src))
+		return
+	var/datum/action/cooldown/spell/undirected/learn/spell = LAZYACCESS(actions, /datum/action/cooldown/spell/undirected/learn)
+	if(((spell_points - used_spell_points) > 0))
+		if(!spell)
+			spell = /datum/action/cooldown/spell/undirected/learn
+			add_spell(spell)
+		return
+	if(spell)
+		remove_spell(spell)
+
+/**
+ * purges all spells and skills
+ * Vars:
+ ** silent - do we notify the player of this change?
+*/
+/mob/living/proc/purge_combat_knowledge(silent = TRUE)
+	purge_all_skills(silent)
+	remove_spells(silent = silent)
+	purge_all_spellpoints(silent)

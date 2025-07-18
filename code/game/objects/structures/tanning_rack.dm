@@ -76,7 +76,7 @@
 
 /obj/machinery/tanningrack/update_overlays()
 	. = ..()
-	if(hide)
+	if(!hide)
 		return
 	var/obj/item/I = hide
 	I.pixel_x = 0

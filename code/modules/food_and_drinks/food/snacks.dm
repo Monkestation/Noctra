@@ -199,7 +199,7 @@ All foods are distributed among various categories. Use common sense.
 			if(!isturf(location))
 				if(!istype(location, /obj/structure/closet) && !SEND_SIGNAL(location, COMSIG_TRY_STORAGE_INSERT, NU, null, TRUE, TRUE))
 					NU.forceMove(get_turf(location))
-			GLOB.vanderlin_round_stats[STATS_FOOD_ROTTED]++
+			record_round_statistic(STATS_FOOD_ROTTED)
 			return TRUE
 	else
 		color = "#6c6897"
@@ -212,7 +212,7 @@ All foods are distributed among various categories. Use common sense.
 		cooktime = 0
 		modified = TRUE
 		rot_away_timer = QDEL_IN_STOPPABLE(src, 10 MINUTES)
-		GLOB.vanderlin_round_stats[STATS_FOOD_ROTTED]++
+		record_round_statistic(STATS_FOOD_ROTTED)
 		return TRUE
 
 
@@ -327,7 +327,7 @@ All foods are distributed among various categories. Use common sense.
 		record_featured_stat(FEATURED_STATS_EATERS, eater)
 		record_featured_object_stat(FEATURED_STATS_FOOD, name)
 		if(faretype == FARE_LAVISH || faretype == FARE_FINE)
-			GLOB.vanderlin_round_stats[STATS_LUXURIOUS_FOOD_EATEN]++
+			record_round_statistic(STATS_LUXURIOUS_FOOD_EATEN)
 		if(eat_effect == /datum/status_effect/debuff/rotfood)
 			SEND_SIGNAL(eater, COMSIG_ROTTEN_FOOD_EATEN, src)
 		var/atom/current_loc = loc
@@ -339,7 +339,7 @@ All foods are distributed among various categories. Use common sense.
 			generate_trash(current_loc.drop_location())
 	update_appearance(UPDATE_ICON_STATE)
 
-/obj/item/reagent_containers/food/snacks/attack_self(mob/user)
+/obj/item/reagent_containers/food/snacks/attack_self(mob/user, params)
 	return
 
 /obj/item/reagent_containers/food/snacks/attack(mob/living/M, mob/living/user, def_zone)

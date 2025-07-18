@@ -49,14 +49,13 @@
 
 	ai_controller = /datum/ai_controller/warden
 
-
+	del_on_death = TRUE
 
 /mob/living/simple_animal/hostile/retaliate/elemental/warden/Initialize()
 	. = ..()
 	AddComponent(/datum/component/ai_aggro_system)
 
 /mob/living/simple_animal/hostile/retaliate/elemental/warden/death(gibbed)
-	..()
 	var/turf/deathspot = get_turf(src)
 	new /obj/item/natural/elementalshard(deathspot)
 	new /obj/item/natural/elementalshard(deathspot)
@@ -66,6 +65,5 @@
 	new /obj/item/natural/elementalmote(deathspot)
 	new /obj/item/natural/elementalmote(deathspot)
 	new /obj/item/natural/elementalmote(deathspot)
-	update_appearance()
 	spill_embedded_objects()
-	qdel(src)
+	return ..()

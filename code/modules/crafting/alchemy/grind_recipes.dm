@@ -9,32 +9,6 @@
 	valid_outputs = list(/obj/item/alch/viscera = 1)
 	bonus_chance_outputs = list(/obj/item/alch/viscera = 75)
 
-//Runes -> dust
-/datum/alch_grind_recipe/fire_rune
-	valid_input = /obj/item/rune/spell/fire_rune
-	valid_outputs = list(/obj/item/alch/firedust = 2)
-	bonus_chance_outputs = list(/obj/item/alch/firedust = 33)
-
-/datum/alch_grind_recipe/water_rune
-	valid_input = /obj/item/rune/spell/water_rune
-	valid_outputs = list(/obj/item/alch/waterdust = 2)
-	bonus_chance_outputs = list(/obj/item/alch/waterdust = 33)
-
-/datum/alch_grind_recipe/air_rune
-	valid_input = /obj/item/rune/spell/air_rune
-	valid_outputs = list(/obj/item/alch/airdust = 2)
-	bonus_chance_outputs = list(/obj/item/alch/airdust = 33)
-
-/datum/alch_grind_recipe/earth_rune
-	valid_input = /obj/item/rune/spell/earth_rune
-	valid_outputs = list(/obj/item/alch/earthdust = 2)
-	bonus_chance_outputs = list(/obj/item/alch/earthdust = 33)
-
-/datum/alch_grind_recipe/blank_rune
-	valid_input = /obj/item/rune/spell/blank_rune
-	valid_outputs = list(/obj/item/alch/runedust = 2)
-	bonus_chance_outputs = list(/obj/item/alch/runedust = 33)
-
 //Objects -> dusts
 /datum/alch_grind_recipe/crow
 	valid_input = /obj/item/reagent_containers/food/snacks/crow
@@ -54,8 +28,8 @@
 /datum/alch_grind_recipe/fish
 	picky = FALSE
 	valid_input = /obj/item/reagent_containers/food/snacks/fish
-	valid_outputs = list(/obj/item/alch/waterdust = 1)
-	bonus_chance_outputs = list(/obj/item/alch/bonemeal = 50)
+	valid_outputs = list(/obj/item/alch/waterdust = 2) // makes fish worth buying , fisher/apothecary combo
+	bonus_chance_outputs = list(/obj/item/alch/waterdust = 25 ,/obj/item/alch/bonemeal = 33)
 
 /datum/alch_grind_recipe/swampweed
 	valid_input = /obj/item/reagent_containers/food/snacks/produce/swampweed
@@ -80,11 +54,17 @@
 /datum/alch_grind_recipe/fyritius
 	valid_input = /obj/item/reagent_containers/food/snacks/produce/fyritius
 	valid_outputs = list(/obj/item/alch/firedust = 1)
+	bonus_chance_outputs = list(/obj/item/alch/firedust = 50)
 
 /datum/alch_grind_recipe/poppy
 	valid_input = /obj/item/reagent_containers/food/snacks/produce/poppy
 	valid_outputs = list(/obj/item/reagent_containers/powder/ozium = 1)
-	bonus_chance_outputs = list(/obj/item/alch/airdust =33,/obj/item/alch/earthdust = 33)
+	bonus_chance_outputs = list(/obj/item/alch/airdust =33 ,/obj/item/alch/earthdust = 33)
+
+/datum/alch_grind_recipe/manabloom
+	valid_input = /obj/item/reagent_containers/food/snacks/produce/manabloom
+	valid_outputs = list(/obj/item/reagent_containers/powder/manabloom = 1)
+	bonus_chance_outputs = list(/obj/item/reagent_containers/powder/manabloom =33, /obj/item/alch/runedust= 33)
 
 /datum/alch_grind_recipe/seeds
 	picky = FALSE
@@ -94,7 +74,7 @@
 
 /datum/alch_grind_recipe/seedsherb
 	picky = FALSE
-	valid_input = /obj/item/herbseed
+	valid_input = /obj/item/neuFarm/seed
 	valid_outputs = list(/obj/item/alch/seeddust = 1)
 	bonus_chance_outputs = list(/obj/item/alch/airdust =25,/obj/item/alch/earthdust = 25)
 
@@ -142,64 +122,65 @@
 //Herb -> Herbseed
 /datum/alch_grind_recipe/atropa_seed
 	valid_input = /obj/item/alch/atropa
-	valid_outputs = list(/obj/item/herbseed/atropa = 1)
+	valid_outputs = list(/obj/item/neuFarm/seed/atropa = 1)
 
 /datum/alch_grind_recipe/matricaria_seed
 	valid_input = /obj/item/alch/matricaria
-	valid_outputs = list(/obj/item/herbseed/matricaria = 1)
+	valid_outputs = list(/obj/item/neuFarm/seed/matricaria = 1)
 
 /datum/alch_grind_recipe/symphitum_seed
 	valid_input = /obj/item/alch/symphitum
-	valid_outputs = list(/obj/item/herbseed/symphitum = 1)
+	valid_outputs = list(/obj/item/neuFarm/seed/symphitum = 1)
 
 /datum/alch_grind_recipe/taraxacum_seed
 	valid_input = /obj/item/alch/taraxacum
-	valid_outputs = list(/obj/item/herbseed/taraxacum = 1)
+	valid_outputs = list(/obj/item/neuFarm/seed/taraxacum = 1)
 
 /datum/alch_grind_recipe/euphrasia_seed
 	valid_input = /obj/item/alch/euphrasia
-	valid_outputs = list(/obj/item/herbseed/euphrasia = 1)
+	valid_outputs = list(/obj/item/neuFarm/seed/euphrasia = 1)
 
 /datum/alch_grind_recipe/paris_seed
 	valid_input = /obj/item/alch/paris
-	valid_outputs = list(/obj/item/herbseed/paris = 1)
+	valid_outputs = list(/obj/item/neuFarm/seed/paris = 1)
 
 /datum/alch_grind_recipe/calendula_seed
 	valid_input = /obj/item/alch/calendula
-	valid_outputs = list(/obj/item/herbseed/calendula = 1)
+	valid_outputs = list(/obj/item/neuFarm/seed/calendula = 1)
 
 /datum/alch_grind_recipe/mentha_seed
 	valid_input = /obj/item/alch/mentha
-	valid_outputs = list(/obj/item/herbseed/mentha = 1)
+	valid_outputs = list(/obj/item/neuFarm/seed/mentha = 1)
 
 /datum/alch_grind_recipe/urtica_seed
 	valid_input = /obj/item/alch/urtica
-	valid_outputs = list(/obj/item/herbseed/urtica = 1)
+	valid_outputs = list(/obj/item/neuFarm/seed/urtica = 1)
 
 /datum/alch_grind_recipe/salvia_seed
 	valid_input = /obj/item/alch/salvia
-	valid_outputs = list(/obj/item/herbseed/salvia = 1)
+	valid_outputs = list(/obj/item/neuFarm/seed/salvia = 1)
 
 /datum/alch_grind_recipe/hypericum_seed
 	valid_input = /obj/item/alch/hypericum
-	valid_outputs = list(/obj/item/herbseed/hypericum = 1)
+	valid_outputs = list(/obj/item/neuFarm/seed/hypericum = 1)
 
 /datum/alch_grind_recipe/benedictus_seed
 	valid_input = /obj/item/alch/benedictus
-	valid_outputs = list(/obj/item/herbseed/benedictus = 1)
+	valid_outputs = list(/obj/item/neuFarm/seed/benedictus = 1)
 
 /datum/alch_grind_recipe/valeriana_seed
 	valid_input = /obj/item/alch/valeriana
-	valid_outputs = list(/obj/item/herbseed/valeriana = 1)
+	valid_outputs = list(/obj/item/neuFarm/seed/valeriana = 1)
 
 /datum/alch_grind_recipe/artemisia_seed
 	valid_input = /obj/item/alch/artemisia
-	valid_outputs = list(/obj/item/herbseed/artemisia = 1)
+	valid_outputs = list(/obj/item/neuFarm/seed/artemisia = 1)
 
 /datum/alch_grind_recipe/rosa_seed
 	valid_input = /obj/item/alch/rosa
-	valid_outputs = list(/obj/item/herbseed/rosa = 1)
+	valid_outputs = list(/obj/item/neuFarm/seed/rosa = 1)
 
 /datum/alch_grind_recipe/euphorbia_seed
 	valid_input = /obj/item/alch/euphorbia
-	valid_outputs = list(/obj/item/herbseed/euphorbia = 1)
+	valid_outputs = list(/obj/item/neuFarm/seed/euphorbia = 1)
+

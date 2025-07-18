@@ -142,7 +142,7 @@
 		lower_from_mouth()
 		update_appearance()
 	// Prevents an exploit
-	for(var/mob/living/carbon/L as anything in hearers(7, loc))
+	for(var/mob/living/L in hearers(7, loc))
 		for(var/datum/status_effect/bardicbuff/b in L.status_effects)
 			L.remove_status_effect(b) // All applicable bard buffs stopped
 
@@ -159,7 +159,7 @@
 		terminate_playing(user)
 	. = ..()
 
-/obj/item/instrument/attack_self(mob/living/user)
+/obj/item/instrument/attack_self(mob/living/user, params)
 	. = ..()
 	if(.)
 		return
@@ -256,7 +256,7 @@
 	soundloop.set_parent(user)
 	soundloop.start()
 	user.apply_status_effect(/datum/status_effect/buff/playing_music, stressevent, note_color)
-	GLOB.vanderlin_round_stats[STATS_SONGS_PLAYED]++
+	record_round_statistic(STATS_SONGS_PLAYED)
 	if(dynamic_icon)
 		lift_to_mouth()
 		update_icon()

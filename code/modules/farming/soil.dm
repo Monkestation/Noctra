@@ -106,7 +106,7 @@
 
 	record_featured_stat(FEATURED_STATS_FARMERS, user)
 	record_featured_object_stat(FEATURED_STATS_CROPS, plant.name)
-	GLOB.vanderlin_round_stats[STATS_PLANTS_HARVESTED]++
+	record_round_statistic(STATS_PLANTS_HARVESTED)
 	to_chat(user, span_notice(feedback))
 	yield_produce(modifier)
 
@@ -130,7 +130,7 @@
 		if(LAZYLEN(seeds))
 			attacking_item = pick(seeds)
 
-	if(istype(attacking_item, /obj/item/neuFarm/seed) || istype(attacking_item, /obj/item/herbseed)) //SLOP OBJECT PROC SHARING
+	if(istype(attacking_item, /obj/item/neuFarm/seed)) //SLOP OBJECT PROC SHARING
 		playsound(src, pick('sound/foley/touch1.ogg','sound/foley/touch2.ogg','sound/foley/touch3.ogg'), 170, TRUE)
 		if(do_after(user, get_farming_do_time(user, 15), src))
 			if(old_item)
@@ -262,14 +262,23 @@
 		return
 	. = ..()
 
-/obj/structure/soil/attack_right(mob/user)
+/obj/structure/soil/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	user.changeNext_move(CLICK_CD_FAST)
-	var/obj/item = user.get_active_held_item()
-	if(try_handle_deweed(item, user, null))
+	if(try_handle_deweed(null, user, null))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/structure/soil/attackby_secondary(obj/item/weapon, mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(try_handle_flatten(item, user, null))
-		return
-	return ..()
+	user.changeNext_move(CLICK_CD_FAST)
+	if(try_handle_deweed(weapon, user, null))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(try_handle_flatten(weapon, user, null))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/soil/attackby(obj/item/attacking_item, mob/user, params)
 	user.changeNext_move(CLICK_CD_FAST)
@@ -436,6 +445,13 @@
 			plant_state = "[plant.icon_state]1"
 		else
 			plant_state = "[plant.icon_state]0"
+
+	if(istype(plant, /datum/plant_def/alchemical))
+		if(plant_state == "[plant.icon_state]0")
+			plant_state = "herb0"
+		else if(plant_state == "[plant.icon_state]3")
+			plant_state = "herb3"
+
 	return mutable_appearance(plant.icon, plant_state, color = plant_color)
 
 /obj/structure/soil/examine(mob/user)
@@ -756,15 +772,16 @@
 
 	// Quality modifiers
 	var/quality_modifier = 0
-	switch(crop_quality)
-		if(QUALITY_BRONZE)
-			quality_modifier = 1
-		if(QUALITY_SILVER)
-			quality_modifier = 2
-		if(QUALITY_GOLD)
-			quality_modifier = 3
-		if(QUALITY_DIAMOND)
-			quality_modifier = 4
+	if(!istype(plant, /datum/plant_def/alchemical))
+		switch(crop_quality)
+			if(QUALITY_BRONZE)
+				quality_modifier = 1
+			if(QUALITY_SILVER)
+				quality_modifier = 2
+			if(QUALITY_GOLD)
+				quality_modifier = 3
+			if(QUALITY_DIAMOND)
+				quality_modifier = 4
 
 	// Calculate final yield amount
 	var/spawn_amount = max(base_amount + modifier + quality_modifier, 1)

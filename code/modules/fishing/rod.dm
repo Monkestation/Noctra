@@ -79,7 +79,7 @@
 	icon_state = "auto"
 	no_attack = TRUE
 
-/obj/item/fishingrod/attack_self(mob/user)
+/obj/item/fishingrod/attack_self(mob/user, params)
 	if(user.doing())
 		user.stop_all_doing()
 	else
@@ -135,7 +135,11 @@
 					to_chat(user, "<span class='notice'>I add [I] to [src]...</span>")
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/item/fishingrod/attack_right(mob/user)
+/obj/item/fishingrod/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/attacheditems = list()
 	if(baited)
 		attacheditems += baited
@@ -721,7 +725,7 @@
 					caughtfish.sellprice *= costmod
 			if(fisher.mind)
 				record_featured_stat(FEATURED_STATS_FISHERS, fisher)
-				GLOB.vanderlin_round_stats[STATS_FISH_CAUGHT]++
+				record_round_statistic(STATS_FISH_CAUGHT)
 		else//only occurs on special catch that most likely won't have special modifiers
 			if(turfcatch)
 				var/atom/caughtthing = new fishtype(targeted)

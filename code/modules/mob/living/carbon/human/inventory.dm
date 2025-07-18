@@ -45,7 +45,6 @@
 	return null
 
 /mob/living/carbon/human/get_slot_by_item(obj/item/looking_for)
-
 	if(looking_for == wear_mask)
 		return ITEM_SLOT_MASK
 
@@ -191,7 +190,7 @@
 			if(wear_armor.breakouttime) //when equipping a straightjacket
 				ADD_TRAIT(src, TRAIT_RESTRAINED, SUIT_TRAIT)
 				stop_pulling() //can't pull if restrained
-				update_action_buttons_icon() //certain action buttons will no longer be usable.
+				update_mob_action_buttons() //certain action buttons will no longer be usable.
 			update_inv_armor()
 		if(ITEM_SLOT_PANTS)
 			wear_pants = I
@@ -268,7 +267,7 @@
 		if(wear_armor.breakouttime) //when unequipping a straightjacket
 			REMOVE_TRAIT(src, TRAIT_RESTRAINED, SUIT_TRAIT)
 			drop_all_held_items() //suit is restraining
-			update_action_buttons_icon() //certain action buttons may be usable again.
+			update_mob_action_buttons() //certain action buttons may be usable again.
 		wear_armor = null
 		if(!QDELETED(src)) //no need to update we're getting deleted anyway
 			update_inv_armor()

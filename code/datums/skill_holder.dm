@@ -51,6 +51,9 @@
 /mob/proc/get_skill_level(skill)
 	return ensure_skills().get_skill_level(skill)
 
+/mob/proc/has_skill(skill)
+	return ensure_skills().has_skill(skill)
+
 /mob/proc/get_skill_speed_modifier(skill)
 	return ensure_skills().get_skill_speed_modifier(skill)
 
@@ -124,12 +127,7 @@
 
 /datum/skill_holder/proc/set_current(mob/incoming)
 	current = incoming
-	RegisterSignal(incoming, COMSIG_MIND_TRANSFER, PROC_REF(transfer_skills))
 	incoming.skills = src
-
-/datum/skill_holder/proc/transfer_skills(mob/source, mob/destination)
-	UnregisterSignal(source, COMSIG_MIND_TRANSFER)
-	set_current(destination)
 
 /**
  * Offer apprenticeship to a youngling
@@ -226,6 +224,17 @@
 	return known_skills[skill_ref] || SKILL_LEVEL_NONE
 
 /**
+ * Returns boolean for presence of skill
+ * Vars:
+ ** skill - the skill
+ */
+/datum/skill_holder/proc/has_skill(skill)
+	var/datum/skill/skill_ref = GetSkillRef(skill)
+	if(!(skill_ref in known_skills))
+		return FALSE
+	return TRUE
+
+/**
  * Gets the skill's singleton and returns the result of its get_skill_speed_modifier
  * Vars:
  ** skill - the skill
@@ -290,15 +299,15 @@
 			SEND_SIGNAL(current, COMSIG_SKILL_RANK_INCREASED, skill_ref, known_skills[skill_ref], old_level)
 			to_chat(current, span_nicegreen("My proficiency in [skill_ref.name] grows to [SSskills.level_names[known_skills[skill_ref]]]!"))
 			skill_ref.skill_level_effect(known_skills[skill_ref], src)
-			GLOB.vanderlin_round_stats[STATS_SKILLS_LEARNED]++
+			record_round_statistic(STATS_SKILLS_LEARNED)
 			if(istype(skill_ref, /datum/skill/combat))
-				GLOB.vanderlin_round_stats[STATS_COMBAT_SKILLS]++
+				record_round_statistic(STATS_COMBAT_SKILLS)
 			if(istype(skill_ref, /datum/skill/craft))
-				GLOB.vanderlin_round_stats[STATS_CRAFT_SKILLS]++
+				record_round_statistic(STATS_CRAFT_SKILLS)
 			if(skill == /datum/skill/misc/reading && old_level == SKILL_LEVEL_NONE && current.is_literate())
-				GLOB.vanderlin_round_stats[STATS_LITERACY_TAUGHT]++
+				record_round_statistic(STATS_LITERACY_TAUGHT)
 		if(skill == /datum/skill/magic/arcane)
-			current?.mind?.adjust_spellpoints(1)
+			current?.adjust_spellpoints(1)
 
 		return TRUE
 	else
@@ -323,7 +332,7 @@
 	var/amt2gain = 0
 	// Give spellpoints if the skill is arcane
 	if(skill == /datum/skill/magic/arcane)
-		current.mind?.adjust_spellpoints(amt)
+		current?.adjust_spellpoints(amt)
 	if(amt > 0)
 		for(var/i in 1 to amt)
 			switch(skill_experience[skill_ref])
@@ -390,13 +399,13 @@
 	if(known_skills[skill_ref] >= old_level)
 		SEND_SIGNAL(current, COMSIG_SKILL_RANK_INCREASED, skill_ref, known_skills[skill_ref], old_level)
 		to_chat(current, span_nicegreen("I feel like I've become more proficient at [skill_ref.name]!"))
-		GLOB.vanderlin_round_stats[STATS_SKILLS_LEARNED]++
+		record_round_statistic(STATS_SKILLS_LEARNED)
 		if(istype(skill_ref, /datum/skill/combat))
-			GLOB.vanderlin_round_stats[STATS_COMBAT_SKILLS]++
+			record_round_statistic(STATS_COMBAT_SKILLS)
 		if(istype(skill_ref, /datum/skill/craft))
-			GLOB.vanderlin_round_stats[STATS_CRAFT_SKILLS]++
+			record_round_statistic(STATS_CRAFT_SKILLS)
 		if(skill == /datum/skill/misc/reading && old_level == SKILL_LEVEL_NONE && current.is_literate())
-			GLOB.vanderlin_round_stats[STATS_LITERACY_TAUGHT]++
+			record_round_statistic(STATS_LITERACY_TAUGHT)
 	else
 		to_chat(current, span_warning("I feel like I've become worse at [skill_ref.name]!"))
 

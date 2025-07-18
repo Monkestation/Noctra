@@ -7,23 +7,19 @@
 	max_occurrences = 1
 	min_players = 35
 
-	tags = list(
-		TAG_BOON,
-	)
-
 /datum/round_event_control/retainer_recruitment/canSpawnEvent(players_amt, gamemode, fake_check)
 	. = ..()
 	if(!.)
 		return FALSE
 
-	for(var/mob/living/carbon/human/H in GLOB.player_list)
-		if(!istype(H) || H.stat == DEAD || !H.client)
+	for(var/mob/living/carbon/human/human_mob in GLOB.player_list)
+		if(!istype(human_mob) || human_mob.stat == DEAD || !human_mob.client)
 			continue
-		if(!H.patron || !istype(H.patron, /datum/patron/divine/astrata))
+		if(!human_mob.patron || !istype(human_mob.patron, /datum/patron/divine/astrata))
 			continue
-		if(!H.is_noble() || (H.mind?.assigned_role.title in GLOB.church_positions))
+		if(!human_mob.is_noble() || (human_mob.mind?.assigned_role.title in GLOB.church_positions))
 			continue
-		if(locate(/obj/effect/proc_holder/spell/self/convertrole) in H.mind.spell_list)
+		if(human_mob.get_spell(/datum/action/cooldown/spell/undirected/list_target/convert_role))
 			continue
 		return TRUE
 
@@ -40,7 +36,7 @@
 			continue
 		if(!human_mob.is_noble() || (human_mob.mind?.assigned_role.title in GLOB.church_positions))
 			continue
-		if(locate(/obj/effect/proc_holder/spell/self/convertrole) in human_mob.mind.spell_list)
+		if(human_mob.get_spell(/datum/action/cooldown/spell/undirected/list_target/convert_role))
 			continue
 
 		if(istype(human_mob.mind?.assigned_role, /datum/job/minor_noble) || human_mob.job == "Noble")
@@ -48,14 +44,14 @@
 		else
 			valid_targets += human_mob
 
-	if(minor_nobles.len)
+	if(length(minor_nobles))
 		valid_targets = minor_nobles
 
 	if(!length(valid_targets))
 		return
 
 	var/mob/living/carbon/human/noble = pick(valid_targets)
-	noble.mind.AddSpell(new /obj/effect/proc_holder/spell/self/convertrole/retainer)
+	noble.add_spell(/datum/action/cooldown/spell/undirected/list_target/convert_role/retainer, source = src)
 
 	var/datum/objective/retainer/new_objective = new(owner = noble.mind)
 	noble.mind.add_personal_objective(new_objective)

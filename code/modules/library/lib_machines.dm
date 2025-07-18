@@ -91,7 +91,11 @@
 		to_chat(user, span_warning("[src] is empty."))
 		return
 
-/obj/machinery/printingpress/attack_right(mob/user)
+/obj/machinery/printingpress/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(printing)
 		to_chat(user, span_warning("[src] is currently printing. Please wait."))
 		return
@@ -147,7 +151,7 @@
 		visible_message("<span class='notice'>The printing press hums as it produces [book.name].</span>")
 
 	// Printing is done
-	GLOB.vanderlin_round_stats[STATS_BOOKS_PRINTED]++
+	record_round_statistic(STATS_BOOKS_PRINTED)
 	printing = FALSE
 	src.icon_state = "Ppress_Done"
 	cooldown = world.time + PRINTER_COOLDOWN

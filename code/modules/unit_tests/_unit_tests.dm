@@ -69,6 +69,7 @@
 #include "focus_only_tests.dm"
 #include "map_landmarks.dm"
 #include "mapping.dm"
+#include "projectiles.dm"
 #include "reagent_id_typos.dm"
 #include "reagent_names.dm"
 #include "reagent_recipe_collisions.dm"

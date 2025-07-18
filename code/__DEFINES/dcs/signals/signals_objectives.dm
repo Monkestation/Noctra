@@ -1,4 +1,4 @@
-/// from base of /obj/effect/proc_holder/spell/invoked/mockery/cast() (victim)
+/// from base of /datum/action/cooldown/spell/mockery/cast() (victim)
 #define COMSIG_VICIOUSLY_MOCKED "viciously_mocked_act"
 /// from base of /obj/structure/well/fountain/mana/attackby() (baptizer)
 #define COMSIG_BAPTISM_RECEIVED "baptism_received"
@@ -22,7 +22,7 @@
 #define COMSIG_ANIMAL_TAMED "animal_tamed"
 /// from base of /datum/emote/living/hug/adjacentaction() (target)
 #define COMSIG_MOB_HUGGED "mob_hugged"
-/// from base of /obj/effect/proc_holder/spell/self/create_abyssoid/cast() ()
+/// from base of /datum/action/cooldown/spell/undirectedcreate_abyssoid/cast() ()
 #define COMSIG_ABYSSOID_CREATED "abyssoid_created"
 /// from base of /obj/item/reagent_containers/food/snacks/on_consume() (/obj/item/reagent_containers/food/snacks/eaten_food)
 #define COMSIG_ROTTEN_FOOD_EATEN "rotten_food_eaten"
@@ -30,15 +30,15 @@
 #define COMSIG_LUX_TASTED "lux_tasted"
 /// from base of //mob/living/carbon/monkey/attack_hand() (victim)
 #define COMSIG_HEAD_PUNCHED "head_punched"
-/// from base of /obj/effect/proc_holder/spell/invoked/transform_tree/cast() ()
+/// from base of /datum/action/cooldown/spell/transform_tree/cast() ()
 #define COMSIG_TREE_TRANSFORMED "tree_transformed"
 /// from base of /datum/emote/living/spit/adjacentaction() (mob/target)
 #define COMSIG_SPAT_ON "spat_on"
-/// from base of /mob/living/attack_right() (mob/new_apprentice)
+/// from base of /mob/living/attack_hand_secondary() (mob/new_apprentice)
 #define COMSIG_APPRENTICE_MADE "apprentice_made"
-/// from base of /obj/effect/proc_holder/spell/invoked/adopt_child/cast() (mob/adoptee)
+/// from base of /datum/action/cooldown/spell/adopt_child/cast() (mob/adoptee)
 #define COMSIG_ORPHAN_ADOPTED "orphan_adopted"
-/// from base of /obj/effect/proc_holder/spell/invoked/transfer_pain/cast() (amount)
+/// from base of /datum/action/cooldown/spell/transfer_pain/cast() (amount)
 #define COMSIG_PAIN_TRANSFERRED "pain_transferred"
 /// from base of /obj/item/coin/attack_self() (mob/user, obj/item/coin/coin, outcome)
 #define COMSIG_COIN_FLIPPED "coin_flipped"
@@ -54,7 +54,7 @@
 #define COMSIG_MOB_KICK "mob_kick"
 /// from /obj/structure/closet/dirthole/attackby() (mob/user)
 #define COMSIG_GRAVE_ROBBED "grave_robbed"
-/// from /obj/effect/proc_holder/spell/invoked/find_flaw/cast() (datum/charflaw/flaw, mob/target)
+/// from /datum/action/cooldown/spell/find_flaw/cast() (datum/charflaw/flaw, mob/target)
 #define COMSIG_FLAW_FOUND "flaw_found"
 
 // Globals
@@ -63,5 +63,5 @@
 #define COMSIG_GLOBAL_MARRIAGE "global_marriage"
 /// from base of /turf/open/water/Entered() (fish_type, fish_rarity)
 #define COMSIG_GLOBAL_FISH_RELEASED "global_fish_released"
-/// from base of /obj/effect/proc_holder/spell/self/convertrole/proc/convert() (mob/living/carbon/human/recruiter, mob/living/carbon/human/recruit, newrole)
+/// from base of /datum/action/cooldown/spell/undirected/list_target/convertrole/proc/convert() (mob/living/carbon/human/recruiter, mob/living/carbon/human/recruit, newrole)
 #define COMSIG_GLOBAL_ROLE_CONVERTED "role_converted"

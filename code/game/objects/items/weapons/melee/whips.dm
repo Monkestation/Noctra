@@ -79,16 +79,55 @@
 	resistance_flags = FIRE_PROOF
 	smeltresult = /obj/item/ingot/steel
 	sellprice = 50
+
 //................ Caning Stick.................//
 /obj/item/weapon/whip/cane
-	force = DAMAGE_WHIP-10 // half the damage of a whip.
 	name = "caning stick"
 	desc = "A thin cane meant for striking others as punishment."
-	possible_item_intents = list(/datum/intent/whip/lash/cane)
 	icon_state = "canestick"
+	possible_item_intents = list(/datum/intent/whip/lash/cane)
+	force = DAMAGE_WHIP / 2
 	wlength = WLENGTH_NORMAL
-	max_integrity = 4 //Striking unarmered parts doesn't take integrity, four hits to anything with an armor value will break it.
+	max_integrity = 4 // Striking unarmoured parts doesn't take integrity, four hits to anything with an armor value will break it.
 	sellprice = 0
+
+/obj/item/weapon/whip/cane/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list(
+					"shrink" = 0.5,
+					"sx" = -6,
+					"sy" = -6,
+					"nx" = 6,
+					"ny" = -5,
+					"wx" = -1,
+					"wy" = -5,
+					"ex" = -1,
+					"ey" = -5,
+					"nturn" = -45,
+					"sturn" = -45,
+					"wturn" = -45,
+					"eturn" = -45,
+					"nflip" = 0,
+					"sflip" = 0,
+					"wflip" = 0,
+					"eflip" = 0,
+					"northabove" = FALSE,
+					"southabove" = TRUE,
+					"eastabove" = TRUE,
+					"westabove" = FALSE
+				)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
+/obj/item/weapon/whip/cane/physician
+	name = "physician's cane"
+	desc = "A prized cane. Embellished with a golden serpent, representing the Kingsfield university."
+	icon_state = "fancy_cane"
+	max_integrity = 100
+	sellprice = 30
 
 /datum/intent/whip/lash/cane
 	attack_verb = list("lashes", "canes")
