@@ -72,7 +72,7 @@
 		/obj/item/natural/cloth = 1,
 		/obj/item/natural/fibers = 1,
 	)
-	output = /obj/item/clothing/shirt/shortshirt/colored/uncolored
+	output = /obj/item/clothing/shirt/shortshirt
 
 /datum/repeatable_crafting_recipe/sewing/clothshirt
 	name = "cloth shirt"
@@ -80,7 +80,7 @@
 		/obj/item/natural/cloth = 2,
 		/obj/item/natural/fibers = 1,
 	)
-	output = /obj/item/clothing/shirt/undershirt/colored/uncolored
+	output = /obj/item/clothing/shirt/undershirt
 
 /datum/repeatable_crafting_recipe/sewing/tunic
 	name = "tunic"

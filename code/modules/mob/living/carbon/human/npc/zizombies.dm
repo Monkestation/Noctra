@@ -233,7 +233,7 @@
 	H.base_speed = 7
 	H.base_constitution = 10
 	H.base_endurance = 16//the zombies shouldn't get tired after all
-	shirt = /obj/item/clothing/shirt/undershirt/vagrant
+	shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 	pants = /obj/item/clothing/pants/tights/colored/vagrant
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	wrists = /obj/item/clothing/wrists/bracers/leather
@@ -274,9 +274,9 @@
 	if(prob(50))
 		armor = /obj/item/clothing/armor/chainmail/iron
 	if(prob(30))
-		shirt = /obj/item/clothing/shirt/undershirt/vagrant
+		shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 		if(prob(50))
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 	if(prob(50))
 		pants = /obj/item/clothing/pants/tights/colored/vagrant
 		if(prob(50))
@@ -320,7 +320,7 @@
 			shoes = /obj/item/clothing/shoes/boots
 			belt = /obj/item/storage/belt/leather
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			neck = /obj/item/clothing/neck/chaincoif
@@ -331,7 +331,7 @@
 			shoes = /obj/item/clothing/shoes/boots
 			belt = /obj/item/storage/belt/leather
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			neck = /obj/item/clothing/neck/chaincoif
 			wrists = /obj/item/clothing/wrists/bracers/leather
@@ -342,7 +342,7 @@
 			shoes = /obj/item/clothing/shoes/boots
 			belt = /obj/item/storage/belt/leather
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			neck = /obj/item/clothing/neck/chaincoif
 			wrists = /obj/item/clothing/wrists/bracers/leather
@@ -350,7 +350,7 @@
 		if(4) //zizombie Warrior
 			r_hand =/obj/item/weapon/polearm/spear
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 			neck = /obj/item/clothing/neck/chaincoif
 			shoes = /obj/item/clothing/shoes/boots
 			pants = /obj/item/clothing/pants/tights/colored/vagrant
@@ -360,7 +360,7 @@
 			r_hand = /obj/item/weapon/sword/sabre
 			l_hand = /obj/item/weapon/knife/dagger
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			neck = /obj/item/clothing/neck/chaincoif
@@ -370,7 +370,7 @@
 			r_hand = /obj/item/weapon/sword/scimitar/messer
 			l_hand = /obj/item/weapon/knife/dagger
 			shoes = /obj/item/clothing/shoes/boots
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			neck = /obj/item/clothing/neck/chaincoif
 			armor = /obj/item/clothing/armor/chainmail/iron
@@ -403,7 +403,7 @@
 			shoes = /obj/item/clothing/shoes/boots/armor/light
 			belt = /obj/item/storage/belt/leather
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			neck = /obj/item/clothing/neck/chaincoif
@@ -414,7 +414,7 @@
 			shoes = /obj/item/clothing/shoes/boots/armor/light
 			belt = /obj/item/storage/belt/leather
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			neck = /obj/item/clothing/neck/chaincoif
@@ -425,7 +425,7 @@
 			shoes = /obj/item/clothing/shoes/boots/armor/light
 			belt = /obj/item/storage/belt/leather
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			neck = /obj/item/clothing/neck/chaincoif
@@ -436,7 +436,7 @@
 			shoes = /obj/item/clothing/shoes/boots/armor/light
 			belt = /obj/item/storage/belt/leather
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			neck = /obj/item/clothing/neck/chaincoif
@@ -447,7 +447,7 @@
 			shoes = /obj/item/clothing/shoes/boots/armor/light
 			belt = /obj/item/storage/belt/leather
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			neck = /obj/item/clothing/neck/chaincoif

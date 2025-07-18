@@ -10,7 +10,7 @@
 	r_hand = /obj/item/weapon/pitchfork
 	l_hand = /obj/item/flint
 	armor = /obj/item/clothing/armor/gambeson/light
-	shirt = /obj/item/clothing/shirt/undershirt/vagrant
+	shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 	neck = /obj/item/clothing/neck/coif/cloth
 	head = /obj/item/clothing/head/helmet/leather
 	gloves = /obj/item/clothing/gloves/fingerless

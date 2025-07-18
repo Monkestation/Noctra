@@ -13,7 +13,7 @@
 /datum/outfit/job/urchinbrain/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/fancyhat
-	shirt = /obj/item/clothing/shirt/undershirt/vagrant
+	shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 	neck = /obj/item/storage/belt/pouch/coins/poor
 	armor = /obj/item/clothing/shirt/rags
 	pants = /obj/item/clothing/pants/tights/colored/vagrant
@@ -49,7 +49,7 @@
 /datum/outfit/job/urchinbrawn/pre_equip(mob/living/carbon/human/H)
 	..()
 	neck = /obj/item/storage/belt/pouch/coins/poor
-	shirt = /obj/item/clothing/shirt/undershirt/vagrant
+	shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 	armor = /obj/item/clothing/shirt/rags
 	pants = /obj/item/clothing/pants/tights/colored/vagrant
 	shoes = /obj/item/clothing/shoes/simpleshoes

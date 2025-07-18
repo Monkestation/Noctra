@@ -47,9 +47,9 @@
 		pants = /obj/item/clothing/pants/tights/colored/vagrant
 		if(prob(50))
 			pants = /obj/item/clothing/pants/tights/colored/vagrant/l
-		shirt = /obj/item/clothing/shirt/undershirt/vagrant
+		shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 		if(prob(50))
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant/l
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant/l
 	H.adjust_skillrank(/datum/skill/misc/sneaking, pick(1,2,3,4,5), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/stealing, pick(1,2,3,4,5), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/lockpicking, pick (1,2,3,4,5), TRUE) // thug lyfe

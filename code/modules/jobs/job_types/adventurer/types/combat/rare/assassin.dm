@@ -73,7 +73,7 @@
 				armor = /obj/item/clothing/shirt/rags
 			else
 				pants = /obj/item/clothing/pants/tights/colored/vagrant
-				shirt = /obj/item/clothing/shirt/undershirt/vagrant
+				shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 		if("Fisher")
 			H.adjust_skillrank(/datum/skill/labor/fishing, 1, TRUE) //Have to know to play the part.
 			if(H.gender == MALE)

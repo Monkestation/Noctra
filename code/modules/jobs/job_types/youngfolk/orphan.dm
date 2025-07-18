@@ -29,9 +29,9 @@
 	// The guaranteed clothing they wear.
 	if(prob(50))
 		if(prob(50))
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant/l
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant/l
 		else
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 		if(prob(50))
 			pants = /obj/item/clothing/pants/tights/colored/vagrant/l
 		else

@@ -63,3 +63,5 @@
 /obj/item/clothing/armor/leather/vest/butler : /obj/item/clothing/armor/leather/vest/colored/butler{@OLD}
 /obj/item/clothing/armor/leather/vest/black : /obj/item/clothing/armor/leather/vest/colored/black{@OLD}
 /obj/item/clothing/armor/leather/vest/innkeep : /obj/item/clothing/armor/leather/vest/colored/innkeep{@OLD}
+/obj/item/clothing/shirt/undershirt/vagrant : /obj/item/clothing/shirt/undershirt/colored/vagrant
+/obj/item/clothing/shirt/undershirt/vagrant/l : /obj/item/clothing/shirt/undershirt/colored/vagrant/l
