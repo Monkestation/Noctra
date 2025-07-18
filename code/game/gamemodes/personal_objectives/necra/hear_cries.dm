@@ -41,8 +41,8 @@
 
 	time_spent += check_interval
 
-	if(prob(20) && GLOB.last_messages.len)
-		var/message = pick(GLOB.last_messages - heard_messages)
+	if(prob(20) && length(GLOB.last_words))
+		var/message = pick(GLOB.last_words - heard_messages)
 		to_chat(user, span_red("[message]"))
 		heard_messages += message
 		if(prob(25))

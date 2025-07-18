@@ -142,6 +142,11 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		show_influences(debug_mode)
 		return
 
+	if(href_list["viewchronicle"])
+		var/tab = href_list["chronicletab"] || "The Realm"
+		show_chronicle(tab)
+		return
+
 	switch(href_list["_src_"])
 		if("holder")
 			hsrc = holder
@@ -1228,7 +1233,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	commendation_popup(forced)
 
 /client/proc/view_stats()
-	set name = "View Statistics"
+	set name = "View Chronicle"
 	set category = "OOC"
 
 	show_round_stats(pick_assoc(GLOB.featured_stats))

@@ -15,15 +15,14 @@
 			remove_status_effect(A.debuff)
 
 /datum/charflaw/addiction
+	abstract_type = /datum/charflaw/addiction
 	var/next_sate = 0
 	var/sated = TRUE
 	var/time = 5 MINUTES
-//	var/debuff = /datum/status_effect/debuff/addiction
 	var/debuff = /datum/status_effect/debuff/addiction
 	var/needsate_text
 	var/sated_text = "That's much better..."
 	var/unsate_time
-
 
 /datum/charflaw/addiction/New()
 	..()
@@ -110,6 +109,7 @@
 /datum/charflaw/addiction/maniac // this will probably NOT be used as an actual flaw
 	name = "Maniac"
 	desc = "The worms call me the maniac... I just like seeing limbs fly and blood drip, is there something so BAD about that?"
+	random_exempt = TRUE
 	time = 40 MINUTES // we dont wanna contribute to fragging
 	needsate_text = "Where's all the blood?"
 
