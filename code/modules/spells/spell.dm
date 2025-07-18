@@ -54,8 +54,6 @@
 
 	/// Variable for type of spell.
 	var/spell_type = SPELL_MANA
-	/// Generic spell flags that may or may not be related to casting.
-	var/spell_flags = NONE
 	/// School of magic. (Might go unused)
 	var/school = SCHOOL_UNSET
 	/// Cost to learn this spell in the tree.
@@ -81,6 +79,8 @@
 	/// Can be "none", "whisper", "shout", "emote".
 	var/invocation_type = INVOCATION_NONE
 
+	/// Generic spell flags that may or may not be related to casting.
+	var/spell_flags = NONE
 	/// Flag for certain states that the spell requires the user be in to cast.
 	var/spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	/// This determines what type of antimagic is needed to block the spell.
@@ -105,7 +105,7 @@
 
 	/// Assoc list of [datum/attunement] to value.
 	var/list/attunements
-	/// Value summed from caster and spell attunements to  adjust some spell effects.
+	/// Value summed from caster and spell attunements to adjust some spell effects.
 	var/attuned_strength
 
 	// Pointed vars
@@ -432,7 +432,7 @@
 	if(!owner)
 		CRASH("[type] - can_cast_spell called on a spell without an owner!")
 
-	if(!(spell_flags & SPELL_IGNORE_COCKBLOCK) && HAS_TRAIT(owner, TRAIT_SPELLBLOCK))
+	if(!(spell_flags & SPELL_IGNORE_SPELLBLOCK) && HAS_TRAIT(owner, TRAIT_SPELLBLOCK))
 		if(feedback)
 			to_chat(owner, span_warning("I can't seem to concentrate on casting..."))
 		return FALSE
