@@ -251,10 +251,6 @@
 		chargedprog = 0
 		START_PROCESSING(SSmousecharge, src)
 
-/client/Destroy()
-	STOP_PROCESSING(SSmousecharge, src)
-	return ..()
-
 /client/process()
 	if(!mob || !isliving(mob))
 		return PROCESS_KILL
