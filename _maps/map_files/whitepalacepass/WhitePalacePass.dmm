@@ -10185,9 +10185,9 @@
 /obj/item/clothing/head/roguehood/colored/random,
 /obj/item/clothing/head/chaperon/greyscale/silk/random,
 /obj/item/clothing/head/chaperon/greyscale/silk/random,
-/obj/item/clothing/head/chaperon/greyscale/random,
-/obj/item/clothing/head/chaperon/greyscale/random,
-/obj/item/clothing/head/chaperon/greyscale/random,
+/obj/item/clothing/head/chaperon/colored/greyscale/random,
+/obj/item/clothing/head/chaperon/colored/greyscale/random,
+/obj/item/clothing/head/chaperon/colored/greyscale/random,
 /obj/machinery/light/fueled/wallfire/candle/r,
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town)

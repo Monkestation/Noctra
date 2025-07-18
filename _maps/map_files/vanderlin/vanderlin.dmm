@@ -1507,11 +1507,11 @@
 	pixel_x = 8;
 	pixel_y = 13
 	},
-/obj/item/clothing/head/chaperon/greyscale/random{
+/obj/item/clothing/head/chaperon/colored/greyscale/random{
 	pixel_x = -6;
 	pixel_y = 2
 	},
-/obj/item/clothing/head/chaperon/greyscale/random{
+/obj/item/clothing/head/chaperon/colored/greyscale/random{
 	pixel_x = -9;
 	pixel_y = 5
 	},
@@ -8872,7 +8872,7 @@
 /obj/structure/closet/crate/crafted_closet/inn,
 /obj/item/clothing/head/fancyhat,
 /obj/item/clothing/head/bardhat,
-/obj/item/clothing/head/chaperon/greyscale/random,
+/obj/item/clothing/head/chaperon/colored/greyscale/random,
 /obj/item/clothing/head/roguehood/colored/black,
 /obj/item/clothing/head/hatfur,
 /obj/item/clothing/head/helmet/leather/headscarf,
