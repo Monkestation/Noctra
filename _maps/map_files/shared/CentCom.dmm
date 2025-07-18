@@ -1513,18 +1513,18 @@
 /obj/item/clothing/pants/tights,
 /obj/item/clothing/pants/tights,
 /obj/item/clothing/pants/tights,
-/obj/item/clothing/pants/tights/black,
-/obj/item/clothing/pants/tights/black,
-/obj/item/clothing/pants/tights/black,
-/obj/item/clothing/pants/tights/black,
-/obj/item/clothing/pants/tights/green,
-/obj/item/clothing/pants/tights/green,
-/obj/item/clothing/pants/tights/green,
-/obj/item/clothing/pants/tights/green,
-/obj/item/clothing/pants/tights/red,
-/obj/item/clothing/pants/tights/red,
-/obj/item/clothing/pants/tights/red,
-/obj/item/clothing/pants/tights/red,
+/obj/item/clothing/pants/tights/colored/black,
+/obj/item/clothing/pants/tights/colored/black,
+/obj/item/clothing/pants/tights/colored/black,
+/obj/item/clothing/pants/tights/colored/black,
+/obj/item/clothing/pants/tights/colored/green,
+/obj/item/clothing/pants/tights/colored/green,
+/obj/item/clothing/pants/tights/colored/green,
+/obj/item/clothing/pants/tights/colored/green,
+/obj/item/clothing/pants/tights/colored/red,
+/obj/item/clothing/pants/tights/colored/red,
+/obj/item/clothing/pants/tights/colored/red,
+/obj/item/clothing/pants/tights/colored/red,
 /obj/item/clothing/pants/trou/leather,
 /obj/item/clothing/pants/trou/leather,
 /obj/item/clothing/pants/trou/leather,
@@ -1955,7 +1955,7 @@
 "jw" = (
 /obj/item/clothing/shirt/dress/gen/colored/maid,
 /obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
+/obj/item/clothing/pants/tights/colored/uncolored,
 /obj/structure/mannequin/male/female,
 /turf/open/floor/wood,
 /area/rogue)
@@ -3423,7 +3423,7 @@
 "tz" = (
 /obj/item/clothing/shirt/dress/gen/colored/black,
 /obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
+/obj/item/clothing/pants/tights/colored/uncolored,
 /obj/structure/mannequin/male/female,
 /turf/open/floor/wood,
 /area/rogue)
@@ -3486,7 +3486,7 @@
 "tU" = (
 /obj/item/clothing/shirt/dress/silkdress/colored/black,
 /obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
+/obj/item/clothing/pants/tights/colored/uncolored,
 /obj/structure/mannequin/male/female,
 /turf/open/floor/wood,
 /area/rogue)
@@ -3682,7 +3682,7 @@
 "vp" = (
 /obj/item/clothing/shirt/dress/gen/colored/brown,
 /obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
+/obj/item/clothing/pants/tights/colored/uncolored,
 /obj/structure/mannequin/male/female,
 /turf/open/floor/wood,
 /area/rogue)
@@ -3718,7 +3718,7 @@
 /obj/item/clothing/shoes/simpleshoes/buckle,
 /obj/item/clothing/shirt/tunic/colored/black,
 /obj/item/clothing/shirt/undershirt/colored/black,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /turf/open/floor/wood,
 /area/rogue)
 "vC" = (
@@ -4181,7 +4181,7 @@
 /obj/structure/mannequin/male,
 /obj/item/clothing/shoes/simpleshoes/buckle,
 /obj/item/clothing/shirt/tunic,
-/obj/item/clothing/pants/tights/uncolored,
+/obj/item/clothing/pants/tights/colored/uncolored,
 /obj/item/clothing/shirt/undershirt/colored/uncolored,
 /turf/open/floor/wood,
 /area/rogue)
@@ -4299,7 +4299,7 @@
 /obj/item/clothing/shoes/simpleshoes/buckle,
 /obj/item/clothing/shirt/tunic/colored/purple,
 /obj/item/clothing/shirt/undershirt/colored/purple,
-/obj/item/clothing/pants/tights/purple,
+/obj/item/clothing/pants/tights/colored/purple,
 /turf/open/floor/wood,
 /area/rogue)
 "Ab" = (
@@ -4733,7 +4733,7 @@
 /obj/item/clothing/shoes/simpleshoes/buckle,
 /obj/item/clothing/shirt/tunic/colored/red,
 /obj/item/clothing/shirt/undershirt/colored/red,
-/obj/item/clothing/pants/tights/red,
+/obj/item/clothing/pants/tights/colored/red,
 /turf/open/floor/wood,
 /area/rogue)
 "Df" = (
@@ -4840,7 +4840,7 @@
 "Ea" = (
 /obj/item/clothing/shirt/dress/silkdress/colored/princess,
 /obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
+/obj/item/clothing/pants/tights/colored/uncolored,
 /obj/structure/mannequin/male/female,
 /turf/open/floor/wood,
 /area/rogue)
@@ -5147,18 +5147,18 @@
 /obj/item/clothing/pants/tights,
 /obj/item/clothing/pants/tights,
 /obj/item/clothing/pants/tights,
-/obj/item/clothing/pants/tights/black,
-/obj/item/clothing/pants/tights/black,
-/obj/item/clothing/pants/tights/black,
-/obj/item/clothing/pants/tights/green,
-/obj/item/clothing/pants/tights/green,
-/obj/item/clothing/pants/tights/green,
-/obj/item/clothing/pants/tights/purple,
-/obj/item/clothing/pants/tights/purple,
-/obj/item/clothing/pants/tights/purple,
-/obj/item/clothing/pants/tights/red,
-/obj/item/clothing/pants/tights/red,
-/obj/item/clothing/pants/tights/red,
+/obj/item/clothing/pants/tights/colored/black,
+/obj/item/clothing/pants/tights/colored/black,
+/obj/item/clothing/pants/tights/colored/black,
+/obj/item/clothing/pants/tights/colored/green,
+/obj/item/clothing/pants/tights/colored/green,
+/obj/item/clothing/pants/tights/colored/green,
+/obj/item/clothing/pants/tights/colored/purple,
+/obj/item/clothing/pants/tights/colored/purple,
+/obj/item/clothing/pants/tights/colored/purple,
+/obj/item/clothing/pants/tights/colored/red,
+/obj/item/clothing/pants/tights/colored/red,
+/obj/item/clothing/pants/tights/colored/red,
 /obj/structure/closet/crate/crafted_closet/dark{
 	name = "Common Pants"
 	},
@@ -5752,7 +5752,7 @@
 "Ku" = (
 /obj/item/clothing/shirt/dress/silkdress,
 /obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
+/obj/item/clothing/pants/tights/colored/uncolored,
 /obj/structure/mannequin/male/female,
 /turf/open/floor/wood,
 /area/rogue)
@@ -5976,7 +5976,7 @@
 /obj/item/clothing/shoes/simpleshoes/buckle,
 /obj/item/clothing/shirt/tunic/colored/blue,
 /obj/item/clothing/shirt/undershirt/colored/lord,
-/obj/item/clothing/pants/tights/lord,
+/obj/item/clothing/pants/tights/colored/lord,
 /turf/open/floor/wood,
 /area/rogue)
 "Mk" = (
@@ -6225,7 +6225,7 @@
 /obj/item/clothing/shoes/simpleshoes/buckle,
 /obj/item/clothing/shirt/tunic/colored/green,
 /obj/item/clothing/shirt/undershirt/colored/green,
-/obj/item/clothing/pants/tights/green,
+/obj/item/clothing/pants/tights/colored/green,
 /turf/open/floor/wood,
 /area/rogue)
 "Oc" = (
@@ -6386,7 +6386,7 @@
 "Pu" = (
 /obj/item/clothing/shirt/dress/gen/colored/purple,
 /obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
+/obj/item/clothing/pants/tights/colored/uncolored,
 /obj/structure/mannequin/male/female,
 /turf/open/floor/wood,
 /area/rogue)
@@ -6397,7 +6397,7 @@
 "Px" = (
 /obj/item/clothing/shirt/dress/gen/colored/blue,
 /obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
+/obj/item/clothing/pants/tights/colored/uncolored,
 /obj/structure/mannequin/male/female,
 /turf/open/floor/wood,
 /area/rogue)
@@ -7112,7 +7112,7 @@
 "Ur" = (
 /obj/item/clothing/shirt/dress/silkdress/colored/green,
 /obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
+/obj/item/clothing/pants/tights/colored/uncolored,
 /obj/structure/mannequin/male/female,
 /turf/open/floor/wood,
 /area/rogue)
@@ -7379,7 +7379,7 @@
 "VU" = (
 /obj/item/clothing/shirt/dress/silkdress/colored/silkdressprimary,
 /obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
+/obj/item/clothing/pants/tights/colored/uncolored,
 /obj/structure/mannequin/male/female,
 /turf/open/floor/wood,
 /area/rogue)
@@ -7396,7 +7396,7 @@
 "Wc" = (
 /obj/item/clothing/shirt/dress/gen/colored/green,
 /obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
+/obj/item/clothing/pants/tights/colored/uncolored,
 /obj/structure/mannequin/male/female,
 /turf/open/floor/wood,
 /area/rogue)

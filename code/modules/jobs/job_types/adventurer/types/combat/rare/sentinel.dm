@@ -42,7 +42,7 @@
 	else
 		pants = /obj/item/clothing/pants/tights
 		if(prob(50))
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/long
 	beltl = /obj/item/ammo_holder/quiver/arrows
 	shoes = /obj/item/clothing/shoes/ridingboots

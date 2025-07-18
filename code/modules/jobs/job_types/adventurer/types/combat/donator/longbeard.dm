@@ -33,7 +33,7 @@
 		H.change_stat(STATKEY_CON, 2)
 		H.change_stat(STATKEY_END, 1)
 
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	backr = /obj/item/weapon/mace/goden/steel/warhammer
 	beltl = /obj/item/storage/belt/pouch/coins/mid
 	shoes = /obj/item/clothing/shoes/boots/rare/dwarfplate

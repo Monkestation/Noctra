@@ -25,7 +25,7 @@
 /datum/outfit/job/servant/pre_equip(mob/living/carbon/human/H)
 	..()
 	shoes = /obj/item/clothing/shoes/simpleshoes
-	pants = /obj/item/clothing/pants/tights/uncolored
+	pants = /obj/item/clothing/pants/tights/colored/uncolored
 	shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 	belt = /obj/item/storage/belt/leather/rope
 	beltl = /obj/item/storage/belt/pouch/coins/poor
@@ -73,7 +73,7 @@
 /datum/outfit/job/tapster/pre_equip(mob/living/carbon/human/H)
 	..()
 	shoes = /obj/item/clothing/shoes/simpleshoes
-	pants = /obj/item/clothing/pants/tights/uncolored
+	pants = /obj/item/clothing/pants/tights/colored/uncolored
 	shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 	belt = /obj/item/storage/belt/leather/rope
 	beltl = /obj/item/storage/belt/pouch/coins/poor
@@ -121,7 +121,7 @@
 /datum/outfit/job/matron_assistant/pre_equip(mob/living/carbon/human/H)
 	..()
 	shoes = /obj/item/clothing/shoes/simpleshoes
-	pants = /obj/item/clothing/pants/tights/uncolored
+	pants = /obj/item/clothing/pants/tights/colored/uncolored
 	shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 	belt = /obj/item/storage/belt/leather/rope
 	beltl = /obj/item/storage/belt/pouch/coins/poor
@@ -167,7 +167,7 @@
 /datum/outfit/job/gaffer_assistant/pre_equip(mob/living/carbon/human/H)
 	..()
 	shoes = /obj/item/clothing/shoes/simpleshoes
-	pants = /obj/item/clothing/pants/tights/uncolored
+	pants = /obj/item/clothing/pants/tights/colored/uncolored
 	shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 	belt = /obj/item/storage/belt/leather/rope
 	beltl = /obj/item/storage/belt/pouch/coins/poor

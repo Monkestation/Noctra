@@ -36,7 +36,7 @@
 			backr = /obj/item/weapon/polearm/spear/billhook
 
 
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	beltl = /obj/item/storage/belt/pouch/coins/mid
 	shoes = /obj/item/clothing/shoes/boots/rare/zybanplate
 	gloves = /obj/item/clothing/gloves/rare/zybanplate

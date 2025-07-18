@@ -72,7 +72,7 @@
 			if(H.gender == FEMALE)
 				armor = /obj/item/clothing/shirt/rags
 			else
-				pants = /obj/item/clothing/pants/tights/vagrant
+				pants = /obj/item/clothing/pants/tights/colored/vagrant
 				shirt = /obj/item/clothing/shirt/undershirt/vagrant
 		if("Fisher")
 			H.adjust_skillrank(/datum/skill/labor/fishing, 1, TRUE) //Have to know to play the part.
@@ -148,7 +148,7 @@
 			ring = /obj/item/clothing/ring/silver
 			if(H.gender == MALE)
 				H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE) //The male noble's sword is less useful than the female noble's bow, so no downside.
-				pants = /obj/item/clothing/pants/tights/black
+				pants = /obj/item/clothing/pants/tights/colored/black
 				shirt = /obj/item/clothing/shirt/tunic/colored/random
 				cloak = /obj/item/clothing/cloak/raincloak/furcloak
 				head = /obj/item/clothing/head/fancyhat
@@ -222,7 +222,7 @@
 			else
 				pants = /obj/item/clothing/pants/tights
 				if(prob(50))
-					pants = /obj/item/clothing/pants/tights/black
+					pants = /obj/item/clothing/pants/tights/colored/black
 				shirt = /obj/item/clothing/shirt/undershirt
 			if(prob(23))
 				gloves = /obj/item/clothing/gloves/leather
@@ -247,7 +247,7 @@
 			H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/cooking, 3, TRUE) // Trustworthy poisoner.
 			shoes = /obj/item/clothing/shoes/simpleshoes
-			pants = /obj/item/clothing/pants/tights/uncolored
+			pants = /obj/item/clothing/pants/tights/colored/uncolored
 			shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 			belt = /obj/item/storage/belt/leather/assassin
 			beltl = /obj/item/storage/belt/pouch/coins/poor

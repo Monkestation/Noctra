@@ -105,7 +105,7 @@
 
 /datum/repeatable_crafting_recipe/sewing/clothtights
 	name = "cloth tights"
-	output = /obj/item/clothing/pants/tights/uncolored
+	output = /obj/item/clothing/pants/tights/colored/uncolored
 	requirements = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
 	category = "Pants"

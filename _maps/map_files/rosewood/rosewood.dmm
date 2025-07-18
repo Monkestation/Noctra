@@ -592,7 +592,7 @@
 "arm" = (
 /obj/structure/closet/crate/crafted_closet/inn,
 /obj/item/clothing/shirt/undershirt/fancy,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/shoes/boots,
 /obj/item/storage/backpack/satchel,
 /obj/item/clothing/cloak/lordcloak/ladycloak,
@@ -2792,7 +2792,7 @@
 "bBc" = (
 /obj/structure/closet/crate/crafted_closet/crafted,
 /obj/item/clothing/shoes/boots,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/shirt/undershirt/fancy,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor)
@@ -3019,8 +3019,8 @@
 /obj/item/clothing/shirt/undershirt/lowcut,
 /obj/item/clothing/shirt/tunic/colored/random,
 /obj/item/clothing/shirt/tunic/colored/random,
-/obj/item/clothing/pants/tights/black,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
+/obj/item/clothing/pants/tights/colored/black,
 /turf/open/floor/herringbone,
 /area/rogue/indoors/town/smithy)
 "bFU" = (
@@ -3209,7 +3209,7 @@
 "bLZ" = (
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/shoes/boots/leather,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /obj/item/reagent_containers/food/snacks/hardtack,
 /obj/item/clothing/shirt/undershirt/fancy,
 /obj/item/clothing/cloak/tabard/knight,
@@ -7826,7 +7826,7 @@
 "ejs" = (
 /obj/structure/closet/crate/crafted_closet/inn/south,
 /obj/item/clothing/shirt/undershirt/colored/black,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/head/roguehood/colored/black,
 /obj/item/clothing/shoes/boots,
 /turf/open/floor/wood,
@@ -21960,7 +21960,7 @@
 	pixel_y = 5
 	},
 /obj/item/clothing/shoes/boots,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/shirt/undershirt/fancy,
 /turf/open/floor/wood/nosmooth/saiga,
 /area/rogue/indoors/town/manor)
@@ -22121,7 +22121,7 @@
 	pixel_y = 5
 	},
 /obj/item/clothing/shoes/boots,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/shirt/undershirt/fancy,
 /turf/open/floor/wood/nosmooth/saiga,
 /area/rogue/indoors/town/manor)
@@ -22830,7 +22830,7 @@
 	},
 /obj/structure/closet/crate/crafted_closet/dark,
 /obj/item/clothing/pants/skirt/colored/blue,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/shirt/undershirt/lowcut,
 /obj/item/clothing/armor/cuirass,
 /turf/open/floor/carpet/red,
@@ -26774,7 +26774,7 @@
 	},
 /obj/item/clothing/shirt/undershirt/fancy,
 /obj/item/clothing/shoes/boots,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/armor/leather/jacket/handjacket,
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/indoors/town/manor)
@@ -27377,7 +27377,7 @@
 "oZf" = (
 /obj/structure/closet/crate/crafted_closet/crafted,
 /obj/item/clothing/shoes/boots/leather,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/shirt/undershirt/fancy,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/manor)
@@ -31446,7 +31446,7 @@
 /obj/item/clothing/shirt/undershirt/fancy,
 /obj/item/clothing/shirt/dress/royal/prince,
 /obj/item/clothing/shirt/dress/royal/princess,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/shoes/boots,
 /obj/item/clothing/head/crown/circlet,
 /turf/open/floor/ruinedwood/turned/darker,
@@ -37712,8 +37712,8 @@
 /obj/structure/rack/shelf/biggest,
 /obj/item/clothing/shirt/undershirt/fancy,
 /obj/item/clothing/shirt/undershirt/fancy,
-/obj/item/clothing/pants/tights/black,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
+/obj/item/clothing/pants/tights/colored/black,
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/indoors/town)
 "uIB" = (
@@ -39783,7 +39783,7 @@
 "vLW" = (
 /obj/structure/closet/crate/crafted_closet/inn,
 /obj/item/clothing/shoes/boots,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/shirt/undershirt/fancy,
 /obj/item/clothing/gloves/leather/phys,
 /obj/item/clothing/head/roguehood/phys,
@@ -40680,7 +40680,7 @@
 /obj/item/clothing/shirt/robe/black,
 /obj/item/clothing/cloak/raincloak/furcloak/black,
 /obj/item/clothing/shirt/undershirt/colored/black,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/shoes/boots,
 /obj/item/clothing/face/spectacles/golden,
 /obj/machinery/light/fueled/wallfire/candle/blue/r,

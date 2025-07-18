@@ -14,7 +14,7 @@
 	neck = /obj/item/clothing/neck/gorget
 	head = /obj/item/clothing/head/helmet
 	shoes = /obj/item/clothing/shoes/nobleboot
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	cloak = /obj/item/clothing/cloak/heartfelt
 	armor = /obj/item/clothing/armor/medium/surcoat/heartfelt
 	beltr = /obj/item/storage/belt/pouch/coins/rich
@@ -103,7 +103,7 @@
 	shirt = /obj/item/clothing/shirt/undershirt
 	belt = /obj/item/storage/belt/leather/black
 	shoes = /obj/item/clothing/shoes/nobleboot
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	neck = /obj/item/clothing/neck/gorget
 	armor = /obj/item/clothing/armor/medium/surcoat/heartfelt
 	beltr = /obj/item/storage/belt/pouch/coins/rich
@@ -280,7 +280,7 @@
 	H.virginity = TRUE
 	neck = /obj/item/clothing/neck/psycross/silver
 	shirt = /obj/item/clothing/shirt/undershirt/priest
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	shoes = /obj/item/clothing/shoes/shortboots
 	belt = /obj/item/storage/belt/leather/rope
 	beltl = /obj/item/flashlight/flare/torch/lantern

@@ -5473,7 +5473,7 @@
 "fvW" = (
 /obj/structure/closet/crate/drawer/random,
 /obj/item/clothing/shirt/undershirt/colored/black,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/shirt/robe/white,
 /obj/item/clothing/shirt/robe/wizard,
 /obj/item/clothing/cloak/raincloak/blue,
@@ -20733,7 +20733,7 @@
 /obj/item/clothing/shirt/tunic/colored/random,
 /obj/item/clothing/shirt/tunic/colored/random,
 /obj/item/clothing/pants/tights,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/steward)
 "ujE" = (
@@ -24963,7 +24963,7 @@
 	pixel_x = 3;
 	pixel_y = -4
 	},
-/obj/item/clothing/pants/tights/uncolored{
+/obj/item/clothing/pants/tights/colored/uncolored{
 	pixel_x = 5;
 	pixel_y = 2
 	},

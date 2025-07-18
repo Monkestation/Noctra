@@ -33,9 +33,9 @@
 		else
 			shirt = /obj/item/clothing/shirt/undershirt/vagrant
 		if(prob(50))
-			pants = /obj/item/clothing/pants/tights/vagrant/l
+			pants = /obj/item/clothing/pants/tights/colored/vagrant/l
 		else
-			pants = /obj/item/clothing/pants/tights/vagrant
+			pants = /obj/item/clothing/pants/tights/colored/vagrant
 	else
 		armor = /obj/item/clothing/shirt/rags
 	// Flair

@@ -806,7 +806,7 @@
 "kG" = (
 /obj/structure/closet/crate/crafted_closet/inn,
 /obj/item/clothing/shirt/undershirt,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/head/cookhat,
 /turf/open/floor/wood/nosmooth,
 /area/rogue/indoors/shelter/bog)

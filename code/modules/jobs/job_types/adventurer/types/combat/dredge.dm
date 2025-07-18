@@ -27,7 +27,7 @@
 
 	shoes = /obj/item/clothing/shoes/boots
 	belt = /obj/item/storage/belt/leather
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	backl = /obj/item/storage/backpack/satchel
 
 	if(H.dna.species.id == "human") // This statblock serves to smooth out racial stat-bonuses slightly. Makes room for the RNG to do its shitty work.
@@ -60,7 +60,7 @@
 			armor = /obj/item/clothing/armor/chainmail/iron
 			shirt = /obj/item/clothing/armor/gambeson
 			gloves = /obj/item/clothing/gloves/leather
-			pants = /obj/item/clothing/pants/tights/uncolored
+			pants = /obj/item/clothing/pants/tights/colored/uncolored
 			head = /obj/item/clothing/head/roguehood
 			H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 			ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
@@ -71,7 +71,7 @@
 			armor = /obj/item/clothing/armor/cuirass/iron
 			shirt = /obj/item/clothing/armor/gambeson/heavy
 			neck = /obj/item/clothing/neck/gorget
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 			head = /obj/item/clothing/head/roguehood
 			H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
@@ -84,7 +84,7 @@
 			armor = /obj/item/clothing/armor/leather/splint
 			shirt = /obj/item/clothing/shirt/tunic/colored/black
 			wrists = /obj/item/clothing/wrists/bracers/leather
-			pants = /obj/item/clothing/pants/tights/uncolored
+			pants = /obj/item/clothing/pants/tights/colored/uncolored
 			H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
 			H.change_stat(STATKEY_END, 1)
@@ -148,7 +148,7 @@
 			head = /obj/item/clothing/head/helmet/leather/headscarf
 			gloves = /obj/item/clothing/gloves/leather/advanced
 			wrists = /obj/item/clothing/wrists/bracers/leather
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 			H.change_stat(STATKEY_STR, -1)
 			H.change_stat(STATKEY_END, 1)
 			H.change_stat(STATKEY_SPD, 1)
@@ -165,7 +165,7 @@
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			armor = /obj/item/clothing/armor/leather/vest
 			cloak = /obj/item/clothing/cloak/raincloak/mortus
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 			H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 			ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
@@ -181,7 +181,7 @@
 			armor = /obj/item/clothing/armor/leather/hide
 			cloak = /obj/item/clothing/cloak/raincloak/brown
 			gloves = /obj/item/clothing/gloves/leather/advanced
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 			H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
@@ -194,7 +194,7 @@
 		if("Freak")
 			head = /obj/item/clothing/head/menacing
 			neck = /obj/item/clothing/neck/chaincoif/iron
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 			ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
@@ -231,7 +231,7 @@
 			armor = /obj/item/clothing/armor/cuirass/iron
 			shirt = /obj/item/clothing/shirt/tunic/colored
 			cloak = /obj/item/clothing/cloak/raincloak/furcloak
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 			neck = /obj/item/clothing/neck/chaincoif/iron
 			head = /obj/item/clothing/head/fancyhat
 			ring = /obj/item/clothing/ring/silver
@@ -271,7 +271,7 @@
 			wrists = /obj/item/clothing/wrists/bracers
 			neck = /obj/item/clothing/neck/chaincoif
 			shirt = /obj/item/clothing/armor/gambeson
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 			backpack_contents = list(/obj/item/clothing/gloves/rare/grenzelplate = 1, /obj/item/clothing/shoes/boots/rare/grenzelplate,)
 			H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE) // heavy armor user
 			ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC) // Keep this rare. Only a handful of armor users get this.

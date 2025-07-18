@@ -65,7 +65,7 @@
 		H.change_stat(STATKEY_CON, 1)
 		H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/bows, 2, TRUE)
-		pants = /obj/item/clothing/pants/tights/black
+		pants = /obj/item/clothing/pants/tights/colored/black
 		shirt = /obj/item/clothing/shirt/tunic/colored/random
 		cloak = /obj/item/clothing/cloak/raincloak/furcloak
 		head = /obj/item/clothing/head/fancyhat

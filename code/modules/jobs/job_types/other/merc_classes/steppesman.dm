@@ -25,7 +25,7 @@
 	beltr = /obj/item/weapon/sword/sabre
 	beltl= /obj/item/ammo_holder/quiver/arrows
 	shirt = /obj/item/clothing/shirt/undershirt
-	pants = /obj/item/clothing/pants/tights/red
+	pants = /obj/item/clothing/pants/tights/colored/red
 	neck = /obj/item/storage/belt/pouch/coins/poor
 	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 	backr = /obj/item/storage/backpack/satchel

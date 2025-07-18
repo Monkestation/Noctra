@@ -12,7 +12,7 @@
 
 /datum/outfit/job/adventurer/gravedigger/pre_equip(mob/living/carbon/human/H)
 	..()
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	armor = /obj/item/clothing/armor/leather/vest/black
 	shirt = /obj/item/clothing/shirt/undershirt/colored/black
 	backl = /obj/item/storage/backpack/satchel

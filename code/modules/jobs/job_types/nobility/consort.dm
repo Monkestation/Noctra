@@ -64,7 +64,7 @@
 /datum/outfit/job/consort/highborn/pre_equip(mob/living/carbon/human/H)
 	. = ..()
 	if(H.gender == MALE)
-		pants = /obj/item/clothing/pants/tights/black
+		pants = /obj/item/clothing/pants/tights/colored/black
 		shirt = /obj/item/clothing/shirt/undershirt/colored/black
 		armor = /obj/item/clothing/armor/leather/vest/winterjacket
 	else
@@ -108,7 +108,7 @@
 /datum/outfit/job/consort/courtesan/pre_equip(mob/living/carbon/human/H)
 	. = ..()
 	if(H.gender == MALE)
-		pants = /obj/item/clothing/pants/tights/black
+		pants = /obj/item/clothing/pants/tights/colored/black
 		shirt = /obj/item/clothing/shirt/undershirt/colored/black
 		armor = /obj/item/clothing/armor/leather/vest/winterjacket // this is kind of stupid but i love it anyway
 	else
@@ -152,7 +152,7 @@
 /datum/outfit/job/consort/lowborn/pre_equip(mob/living/carbon/human/H)
 	. = ..()
 	if(H.gender == MALE)
-		pants = /obj/item/clothing/pants/tights/green
+		pants = /obj/item/clothing/pants/tights/colored/green
 		shirt = /obj/item/clothing/shirt/undershirt/colored/black
 		armor = /obj/item/clothing/shirt/tunic/colored/green
 	else

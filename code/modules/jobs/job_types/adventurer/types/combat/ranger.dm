@@ -43,7 +43,7 @@
 	else
 		pants = /obj/item/clothing/pants/tights
 		if(prob(50))
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 		shirt = /obj/item/clothing/shirt/undershirt
 	if(prob(23))
 		gloves = /obj/item/clothing/gloves/leather

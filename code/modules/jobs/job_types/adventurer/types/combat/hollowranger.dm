@@ -15,7 +15,7 @@
 	..()
 	head = /obj/item/clothing/head/roguehood/colored/red
 	mask = /obj/item/clothing/face/shepherd/rag
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	shirt = /obj/item/clothing/shirt/tunic/colored/black
 	shoes = /obj/item/clothing/shoes/boots
 	belt = /obj/item/storage/belt/leather

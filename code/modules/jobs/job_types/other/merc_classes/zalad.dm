@@ -29,7 +29,7 @@
 	beltr = /obj/item/weapon/sword/long/rider
 	beltl= /obj/item/flashlight/flare/torch/lantern
 	shirt = /obj/item/clothing/shirt/undershirt/colored/black
-	pants = /obj/item/clothing/pants/tights/red
+	pants = /obj/item/clothing/pants/tights/colored/red
 	neck = /obj/item/clothing/neck/keffiyeh/red
 	backl = /obj/item/storage/backpack/satchel
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/poor)

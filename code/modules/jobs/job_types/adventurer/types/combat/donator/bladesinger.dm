@@ -32,7 +32,7 @@
 		H.underwear = "Femleotard"
 		H.underwear_color = CLOTHING_SOOT_BLACK
 		H.update_body()
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	backr = /obj/item/weapon/sword/long/greatsword/elfgsword
 	beltl = /obj/item/storage/belt/pouch/coins/mid
 	shoes = /obj/item/clothing/shoes/boots/rare/elfplate/welfplate

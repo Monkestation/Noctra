@@ -16,7 +16,7 @@
 	shirt = /obj/item/clothing/shirt/undershirt/vagrant
 	neck = /obj/item/storage/belt/pouch/coins/poor
 	armor = /obj/item/clothing/shirt/rags
-	pants = /obj/item/clothing/pants/tights/vagrant
+	pants = /obj/item/clothing/pants/tights/colored/vagrant
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	belt = /obj/item/storage/belt/leather
 	beltr = /obj/item/weapon/knife/dagger
@@ -51,7 +51,7 @@
 	neck = /obj/item/storage/belt/pouch/coins/poor
 	shirt = /obj/item/clothing/shirt/undershirt/vagrant
 	armor = /obj/item/clothing/shirt/rags
-	pants = /obj/item/clothing/pants/tights/vagrant
+	pants = /obj/item/clothing/pants/tights/colored/vagrant
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	belt = /obj/item/storage/belt/leather
 	beltr = /obj/item/weapon/mace/cudgel

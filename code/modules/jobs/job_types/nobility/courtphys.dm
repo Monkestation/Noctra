@@ -44,7 +44,7 @@
 	if(H.gender == FEMALE)
 		pants = /obj/item/clothing/pants/skirt/colored/green
 	else
-		pants = /obj/item/clothing/pants/tights/green
+		pants = /obj/item/clothing/pants/tights/colored/green
 	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)

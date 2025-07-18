@@ -44,9 +44,9 @@
 	if(H.gender == FEMALE)
 		armor = /obj/item/clothing/shirt/rags
 	else
-		pants = /obj/item/clothing/pants/tights/vagrant
+		pants = /obj/item/clothing/pants/tights/colored/vagrant
 		if(prob(50))
-			pants = /obj/item/clothing/pants/tights/vagrant/l
+			pants = /obj/item/clothing/pants/tights/colored/vagrant/l
 		shirt = /obj/item/clothing/shirt/undershirt/vagrant
 		if(prob(50))
 			shirt = /obj/item/clothing/shirt/undershirt/vagrant/l
