@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	for(var/slur as anything in GLOB.slurs_all)
 		if(findtext(text, slur))
 			record_featured_object_stat(FEATURED_STATS_SLURS, capitalize(slur))
-			GLOB.vanderlin_round_stats[STATS_SLURS_SPOKEN]++
+			record_round_statistic(STATS_SLURS_SPOKEN)
 
 /mob/living/carbon/check_slur(text)
 	if(!LAZYLEN(GLOB.slurs_all))
@@ -95,7 +95,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	for(var/slur as anything in GLOB.slurs_all)
 		if(findtext(text, slur))
 			record_featured_object_stat(FEATURED_STATS_SLURS, capitalize(slur))
-			GLOB.vanderlin_round_stats[STATS_SLURS_SPOKEN]++
+			record_round_statistic(STATS_SLURS_SPOKEN)
 			if(!LAZYLEN(GLOB.slur_groups) || !dna?.species)
 				continue
 			if(is_string_in_list(slur, GLOB.slur_groups["Generic"]))
@@ -226,7 +226,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		record_featured_stat(FEATURED_STATS_SPEAKERS, src)
 		INVOKE_ASYNC(src, PROC_REF(check_slur), message)
 	if(findtext(message, "Abyssor"))
-		GLOB.vanderlin_round_stats[STATS_ABYSSOR_REMEMBERED]++
+		record_round_statistic(STATS_ABYSSOR_REMEMBERED)
 
 	spans |= speech_span
 

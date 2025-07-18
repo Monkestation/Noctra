@@ -5,7 +5,7 @@
 	weight = 7
 	earliest_start = 10 MINUTES
 	max_occurrences = 1
-	min_players = 25
+	min_players = 20
 
 	tags = list(
 		TAG_LOOT,

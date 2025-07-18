@@ -586,7 +586,7 @@
 
 		if(user.mind)
 			SEND_SIGNAL(user, COMSIG_MOB_HUGGED, H)
-			GLOB.vanderlin_round_stats[STATS_HUGS_MADE]++
+			record_round_statistic(STATS_HUGS_MADE)
 
 // ............... I ..................
 /datum/emote/living/idle
@@ -671,7 +671,7 @@
 				message_param = "kisses %t on \the [parse_zone(H.zone_selected)]."
 	playsound(target.loc, pick('sound/vo/kiss (1).ogg','sound/vo/kiss (2).ogg'), 100, FALSE, -1)
 	if(user.mind)
-		GLOB.vanderlin_round_stats[STATS_KISSES_MADE]++
+		record_round_statistic(STATS_KISSES_MADE)
 
 // ............... L ..................
 /datum/emote/living/laugh
@@ -691,7 +691,7 @@
 /datum/emote/living/laugh/run_emote(mob/user, params, type_override, intentional, targetted)
 	. = ..()
 	if(. && user.mind)
-		GLOB.vanderlin_round_stats[STATS_LAUGHS_MADE]++
+		record_round_statistic(STATS_LAUGHS_MADE)
 
 /mob/living/carbon/human/verb/emote_laugh()
 	set name = "Laugh"
@@ -871,7 +871,7 @@
 /datum/emote/living/rage/run_emote(mob/user, params, type_override, intentional, targetted)
 	. = ..()
 	if(. && user.mind)
-		GLOB.vanderlin_round_stats[STATS_WARCRIES]++
+		record_round_statistic(STATS_WARCRIES)
 
 /mob/living/carbon/human/verb/emote_rage()
 	set name = "Rage"

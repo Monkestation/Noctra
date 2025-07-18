@@ -10,7 +10,6 @@
 
 	tags = list(
 		TAG_NATURE,
-		TAG_MAGIC,
 	)
 
 /datum/round_event_control/dendor_trees/canSpawnEvent(players_amt, gamemode, fake_check)

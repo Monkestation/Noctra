@@ -30,6 +30,6 @@
 	if(pacify_coffin(cast_on, owner))
 		owner.visible_message(span_rose("[owner] consecrates [cast_on]."), span_rose("My funeral rites have been performed on [cast_on]."))
 		SEND_SIGNAL(owner, COMSIG_GRAVE_CONSECRATED, cast_on)
-		GLOB.vanderlin_round_stats[STATS_GRAVES_CONSECRATED]++
+		record_round_statistic(STATS_GRAVES_CONSECRATED)
 		return
 	to_chat(owner, span_warning("I failed to perform the rites."))

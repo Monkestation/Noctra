@@ -94,7 +94,7 @@
 	if(.)
 		if(!was_destroyed && obj_destroyed)
 			record_featured_stat(FEATURED_STATS_TREE_FELLERS, user)
-			GLOB.vanderlin_round_stats[STATS_TREES_CUT]++
+			record_round_statistic(STATS_TREES_CUT)
 
 /obj/structure/flora/newtree/fire_act(added, maxstacks)
 	. = ..()

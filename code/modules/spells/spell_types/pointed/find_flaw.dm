@@ -4,7 +4,6 @@
 	self_cast_possible = FALSE
 	has_visual_effects = FALSE
 
-	cast_range = 2
 	antimagic_flags = NONE
 
 	charge_required = FALSE

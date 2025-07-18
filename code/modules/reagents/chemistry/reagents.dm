@@ -95,9 +95,9 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 				record_featured_object_stat(FEATURED_STATS_DRINKS, name, adjusted_metabolization_rate)
 			if(istype(src, /datum/reagent/consumable/ethanol))
 				record_featured_stat(FEATURED_STATS_ALCOHOLICS, M, adjusted_metabolization_rate)
-				GLOB.vanderlin_round_stats[STATS_ALCOHOL_CONSUMED] += adjusted_metabolization_rate
+				record_round_statistic(STATS_ALCOHOL_CONSUMED, adjusted_metabolization_rate)
 			if(istype(src, /datum/reagent/water))
-				GLOB.vanderlin_round_stats[STATS_WATER_CONSUMED] += adjusted_metabolization_rate
+				record_round_statistic(STATS_WATER_CONSUMED, adjusted_metabolization_rate)
 	return TRUE
 
 /datum/reagent/proc/on_transfer(atom/A, method=TOUCH, trans_volume) //Called after a reagent is transfered
