@@ -70,3 +70,6 @@
 /obj/item/clothing/pants/loincloth/pink : /obj/item/clothing/pants/loincloth/colored/pink{@OLD}
 /obj/item/clothing/cloak/raincloak/furcloak/brown : /obj/item/clothing/cloak/raincloak/furcloak/colored/brown{@OLD}
 /obj/item/clothing/cloak/raincloak/furcloak/black : /obj/item/clothing/cloak/raincloak/furcloak/colored/black{@OLD}
+/obj/item/clothing/cloak/half/brown : /obj/item/clothing/cloak/half/colored/brown{@OLD}
+/obj/item/clothing/cloak/half/red : /obj/item/clothing/cloak/half/colored/red{@OLD}
+/obj/item/clothing/cloak/half/random : /obj/item/clothing/cloak/half/colored/random{@OLD}
