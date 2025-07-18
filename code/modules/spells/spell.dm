@@ -52,18 +52,18 @@
 	panel = "Spells"
 	click_to_activate = TRUE
 
-	/// Variable for type of spell
+	/// Variable for type of spell.
 	var/spell_type = SPELL_MANA
-	/// Generic spell flags not related to casting
+	/// Generic spell flags that may or may not be related to casting.
 	var/spell_flags = NONE
-	/// School of magic (Might go unused)
+	/// School of magic. (Might go unused)
 	var/school = SCHOOL_UNSET
-	/// Cost to learn this spell in the tree
+	/// Cost to learn this spell in the tree.
 	var/point_cost = 0
-	/// Cost to cast based on [spell_type]
+	/// Cost to cast based on [spell_type].
 	var/spell_cost = 0
 
-	/// The sound played on cast
+	/// The sound played on cast.
 	var/sound = 'sound/magic/whiteflame.ogg'
 
 	/// If the spell uses the wizard spell rank system, the cooldown reduction per rank of the spell
@@ -73,18 +73,17 @@
 	/// The max possible spell level
 	var/spell_max_level = 5
 
-	/// What is uttered when the user casts the spell
+	/// What is uttered when the user casts the spell.
 	var/invocation
-	/// What is shown in chat when the user casts the spell, only matters for INVOCATION_EMOTE
+	/// What is shown in chat when the user casts the spell, only matters for INVOCATION_EMOTE.
 	var/invocation_self_message
 	/// What type of invocation the spell is.
-	/// Can be "none", "whisper", "shout", "emote"
+	/// Can be "none", "whisper", "shout", "emote".
 	var/invocation_type = INVOCATION_NONE
 
 	/// Flag for certain states that the spell requires the user be in to cast.
 	var/spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	/// This determines what type of antimagic is needed to block the spell.
-	/// (MAGIC_RESISTANCE, MAGIC_RESISTANCE_MIND, MAGIC_RESISTANCE_HOLY)
 	/// If SPELL_REQUIRES_NO_ANTIMAGIC is set in Spell requirements,
 	/// The spell cannot be cast if the caster has any of the antimagic flags set.
 	var/antimagic_flags = MAGIC_RESISTANCE
@@ -96,82 +95,76 @@
 	/// The amount of smoke to create on cast. This is a range, so a value of 5 will create enough smoke to cover everything within 5 steps.
 	var/smoke_amt = 0
 
-	/// Required worn items to cast
+	/// Required worn items to cast.
 	var/list/required_items
 
-	/// Skill associated with spell enhancements
+	/// Skill associated with spell enhancements.
 	var/associated_skill = /datum/skill/magic/arcane
-	/// Stat associated with spell enchancements
+	/// Stat associated with spell enchancements.
 	var/associated_stat = STATKEY_INT
-	/// Threshold to which we can increase [associated_skill] to
-	var/skill_level_threshold = SKILL_LEVEL_JOURNEYMAN
 
-	/// Assoc list of [datum/attunement] to value
+	/// Assoc list of [datum/attunement] to value.
 	var/list/attunements
-	/// Adjust some spell effects based on attunement
+	/// Value summed from caster and spell attunements to  adjust some spell effects.
 	var/attuned_strength
-
-	/// Ignore the trait [TRAIT_SPELLBLOCK]
-	var/ignore_cockblock = FALSE
 
 	// Pointed vars
 	// In the TG refactor these weren't a given but almost all our spells are pointed including most spell types.
 	// I don't really like this but oh well its required without creating a mess of inheritance.
-	/// If this spell can be cast on yourself
+	/// If this spell can be cast on yourself.
 	var/self_cast_possible = TRUE
 	/// Message showing to the spell owner upon activating pointed spell.
 	var/active_msg
 	/// Message showing to the spell owner upon deactivating pointed spell.
 	var/deactive_msg
-	/// The casting range of our spell
+	/// The casting range of our spell.
 	var/cast_range = 7
-	/// Variable dictating if the spell will use turf based aim assist
+	/// Variable dictating if the spell will use turf based aim assist.
 	var/aim_assist = TRUE
 
 	// Charged vars
-	// Like the above, but worse since there is already charging behaviour and we are going to reuse
-	// as little of it as possible because its inconsistent
 	/// If the spell requires time to charge.
 	var/charge_required = TRUE
 	/// Whether we're currently charging the spell.
 	var/currently_charging = FALSE
-	/// Cost to charge.
-	/// Total drain is:
-	/// process_time is currently 4 Deciseconds from SSaction_charge
-	/// ([charge_time] / [process_time]) * charge_drain
+	/**
+	 * Cost to charge.
+	 *
+	 * Total drain is: ([charge_time] / [process_time]) * charge_drain
+	 * process_time is currently 4 from SSaction_charge.
+	 */
 	var/charge_drain = 0
-	/// Time to charge
+	/// Time to charge.
 	var/charge_time = 0
-	/// Slowdown while charging
+	/// Slowdown while charging.
 	var/charge_slowdown = 0
-	/// Message to show when we start casting
+	/// Message to show when we start casting.
 	var/charge_message
-
 	// Not using looping_sound due to their tendancy to break and hard delete,
-	// also all the invoke sounds are just static sounds
-	/// What soundpath should we play when we start chanelling
+	// also all the invoke sounds are just static sounds.
+	/// What sound file should we play when we start chanelling.
 	var/charge_sound = 'sound/magic/charging.ogg'
-	/// The actual sound we generate, don't mess with this
+	/// The actual sound we generate, don't mess with this.
 	var/sound/charge_sound_instance
-
 	// Following vars are used for mouse pointer charge only
-	/// World time that the charge started
+	/// World time that the charge started.
 	var/charge_started_at = 0
-	/// Charge target time, from get_charge_time()
+	/// Charge target time, from get_charge_time().
 	var/charge_target_time = 0
-	/// Whether the spell is currently charged, for cases where you want to keep casting after the initial charge (projectiles)
+	/// Whether the spell is currently charged, for cases where you want to keep casting after the initial charge (projectiles).
 	var/charged = FALSE
 
-	/// If the spell creates visual effects
+	/// If the spell creates visual effects.
 	var/has_visual_effects = TRUE
 
 	// Exp gain variables
 	// Experience gain is dependant on spell cost and the associated skill
 	/// Experience gain modifier, cost is multipled by this to get experience gain.
-	/// set to 0 to stop experience gain.
+	/// Set to 0 to stop experience gain.
 	var/experience_modifer = 0.6
 	/// Max skill level this spell can raise to.
 	var/experience_max_skill = SKILL_LEVEL_EXPERT
+	// Sleep exp variables are reliant on the caster having a mind
 	/// Whether this is always sleep experience.
 	var/experience_sleep = FALSE
 	/// If set we are sleep experience after this threshold and normal before.
@@ -439,7 +432,7 @@
 	if(!owner)
 		CRASH("[type] - can_cast_spell called on a spell without an owner!")
 
-	if(!ignore_cockblock && HAS_TRAIT(owner, TRAIT_SPELLBLOCK))
+	if(!(spell_flags & SPELL_IGNORE_COCKBLOCK) && HAS_TRAIT(owner, TRAIT_SPELLBLOCK))
 		if(feedback)
 			to_chat(owner, span_warning("I can't seem to concentrate on casting..."))
 		return FALSE
@@ -856,7 +849,6 @@
 	var/mob/living/caster = owner
 
 	var/used_cost = get_adjusted_cost(cost_override)
-
 	if(used_cost <= 0)
 		return TRUE
 
@@ -866,6 +858,9 @@
 			if(feedback)
 				to_chat(owner, span_warning("I don't have enough stamina to cast!"))
 			return FALSE
+
+	if(spell_type == NONE)
+		return
 
 	switch(spell_type)
 		if(SPELL_MANA)
@@ -933,6 +928,9 @@
 		var/stamina_spell = (used_type == SPELL_STAMINA)
 		owner.adjust_stamina(-(used_cost / (1 + stamina_spell)))
 
+	if(spell_type == NONE)
+		return // No return value == No exp
+
 	switch(used_type)
 		if(SPELL_MANA)
 			var/mob/living/caster = owner
@@ -958,13 +956,16 @@
 		return
 	if(!associated_skill)
 		return
+
 	var/skill_level = owner.get_skill_level(associated_skill)
 	if(experience_max_skill && (skill_level >= experience_max_skill))
 		return
+
 	var/stat_modifier = 1
 	if(isliving(owner))
 		var/mob/living/caster = owner
 		stat_modifier = caster.get_stat(associated_stat) * 0.1
+
 	var/experience_gain = cost_in * experience_modifer * stat_modifier
 	if(owner.mind)
 		if(experience_sleep || (experience_sleep_threshold && (skill_level >= experience_sleep_threshold)))

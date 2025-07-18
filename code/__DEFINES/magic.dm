@@ -147,6 +147,10 @@ DEFINE_BITFIELD(antimagic_flags, list(
 /// Casted with the essence gauntlet, using essence vials
 #define SPELL_ESSENCE 4
 
+// Generic Bitflags for spells
+/// Ignore the trait [TRAIT_SPELLBLOCK]
+#define SPELL_IGNORE_SPELLBLOCK (1 << 0)
+
 // Bitflags for spell requirements
 /// Whether the spell requires wizard clothes to cast.
 #define SPELL_REQUIRES_WIZARD_GARB (1 << 0)
