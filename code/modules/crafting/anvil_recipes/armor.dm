@@ -273,37 +273,37 @@
 	additional_items = list(/obj/item/ingot/silver)
 
 /datum/anvil_recipe/armor/steel/templar/helmet_astrata
-	name "Astratan Helmet"
+	name = "Astratan Helmet"
 	recipe_name = "an astratan helmet"
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/astrata
 	additional_items = list(/obj/item/ingot/gold)
 
 /datum/anvil_recipe/armor/steel/templar/helmet_necra
-	name "Necran Helmet"
+	name = "Necran Helmet"
 	recipe_name = "a necran helmet"
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/necra
 	additional_items = list(/obj/item/ingot/iron)
 
 /datum/anvil_recipe/armor/steel/templar/helmet_dendor
-	name "Dendor Helmet"
+	name = "Dendor Helmet"
 	recipe_name = "a dendorian helmet"
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/dendorhelm
 	additional_items = list(/obj/item/grown/log/tree/small)
 
 /datum/anvil_recipe/armor/steel/templar/helmet_pestra
-	name "Pestran Helmet"
+	name = "Pestran Helmet"
 	recipe_name = "a pestran helmet"
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/pestrahelm
 	additional_items = list(/obj/item/ingot/iron)
 
 /datum/anvil_recipe/armor/steel/templar/helmet_malum
-	name "Malum Helmet"
+	name = "Malum Helmet"
 	recipe_name = "a malumite helmet"
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/malumhelm
 	additional_items = list(/obj/item/ingot/iron)
 
 /datum/anvil_recipe/armor/steel/templar/helmet_ravox
-	name "Ravox Helmet"
+	name = "Ravox Helmet"
 	recipe_name = "a ravoxian helmet"
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/ravox
 	additional_items = list(/obj/item/ingot/iron)
