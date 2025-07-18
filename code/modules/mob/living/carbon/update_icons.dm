@@ -64,7 +64,7 @@
 	update_inv_legcuffed()
 	update_fire()
 
-/mob/living/carbon/update_inv_hands()
+/mob/living/carbon/update_inv_hands(hide_experimental = FALSE)
 	remove_overlay(HANDS_LAYER)
 	remove_overlay(HANDS_BEHIND_LAYER)
 	var/age = AGE_ADULT
@@ -122,7 +122,7 @@
 
 		var/mutable_appearance/inhand_overlay
 		var/mutable_appearance/behindhand_overlay
-		if(I.experimental_inhand)
+		if(I.experimental_inhand && !hide_experimental)
 			var/used_prop
 			var/list/prop
 			if(I.altgripped)
