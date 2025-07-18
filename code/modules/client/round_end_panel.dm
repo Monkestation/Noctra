@@ -474,7 +474,7 @@
 						else
 							data += "<span style='color:#4ccf4c'>survived</span>"
 					else
-						data += "<span style='color: #999;'>Unknown Hero</span>"
+						data += "<b>Unknown Hero</b>"
 					data += "</div>"
 
 					var/obj_count = 1
@@ -539,7 +539,7 @@
 							else
 								data += "<span style='color:#4ccf4c'>survived</span>"
 						else
-							data += "<span style='color: #999;'>Unknown Villain</span>"
+							data += "<b>Unknown Villain</b>"
 
 						if(member.antag_datums?.len)
 							data += "<div style='margin-left: 15px; margin-top: 5px;'>"
@@ -586,7 +586,7 @@
 						else
 							data += "<span style='color:#4ccf4c'>survived</span>"
 					else
-						data += "<span style='color: #999;'>Unknown Villain</span>"
+						data += "<b>Unknown Villain</b>"
 
 					if(A.objectives.len)
 						data += "<div style='margin-left: 15px; margin-top: 5px;'>"

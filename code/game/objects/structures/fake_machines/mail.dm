@@ -364,15 +364,10 @@ GLOBAL_LIST_EMPTY(letters_sent)
 			return
 		if(GLOB.confessors)
 			var/no
-			if(", [C.signed]" in GLOB.confessors)
-				no = TRUE
 			if("[C.signed]" in GLOB.confessors)
 				no = TRUE
 			if(!no)
-				if(GLOB.confessors.len)
-					GLOB.confessors += ", [C.signed] - a [C.antag]"
-				else
-					GLOB.confessors += "[C.signed] - a [C.antag]"
+				GLOB.confessors += "[C.signed] - a [C.antag]"
 		qdel(C)
 		visible_message("<span class='warning'>[user] sends something.</span>")
 		playsound(loc, 'sound/magic/forgotten_bell.ogg', 80, FALSE, -1)
