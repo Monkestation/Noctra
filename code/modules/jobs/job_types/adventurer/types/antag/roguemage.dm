@@ -17,7 +17,7 @@
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	pants = /obj/item/clothing/pants/trou/leather
 	shirt = /obj/item/clothing/shirt/shortshirt
-	armor = /obj/item/clothing/shirt/robe/black
+	armor = /obj/item/clothing/shirt/robe/colored/black
 	belt = /obj/item/storage/belt/leather
 	beltr = /obj/item/reagent_containers/glass/bottle/manapot
 	backr = /obj/item/storage/backpack/satchel

@@ -53,6 +53,7 @@
 	salvage_amount = 1
 
 /obj/item/clothing/shirt/dress/silkdress/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
 
 /obj/item/clothing/shirt/dress/silkdress/colored/princess
 	color = CLOTHING_CHALK_WHITE

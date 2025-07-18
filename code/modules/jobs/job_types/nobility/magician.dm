@@ -44,7 +44,7 @@
 	..()
 	head = /obj/item/clothing/head/wizhat/gen
 	backr = /obj/item/storage/backpack/satchel
-	armor = /obj/item/clothing/shirt/robe/black
+	armor = /obj/item/clothing/shirt/robe/colored/black
 	cloak = /obj/item/clothing/cloak/black_cloak
 	neck = /obj/item/clothing/neck/mana_star
 	ring = /obj/item/clothing/ring/gold

@@ -40,7 +40,7 @@
 		armor = /obj/item/clothing/shirt/rags
 	// Flair
 	if(prob(35))
-		cloak = pick(/obj/item/clothing/cloak/half, /obj/item/clothing/cloak/half/brown)
+		cloak = pick(/obj/item/clothing/cloak/half, /obj/item/clothing/cloak/half/colored/brown)
 	if(prob(30))
 		head = pick(/obj/item/clothing/head/knitcap, /obj/item/clothing/head/bardhat, /obj/item/clothing/head/courtierhat, /obj/item/clothing/head/fancyhat)
 	if(prob(15))

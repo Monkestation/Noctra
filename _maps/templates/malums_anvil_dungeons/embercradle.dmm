@@ -2929,7 +2929,7 @@
 /obj/item/weapon/sword/sabre/scythe,
 /obj/item/weapon/sword/sabre/scythe,
 /obj/item/clothing/pants/trou/leather,
-/obj/item/clothing/shirt/robe/black,
+/obj/item/clothing/shirt/robe/colored/black,
 /obj/item/clothing/gloves/leather/black,
 /obj/effect/mapping_helpers/floor_clothing_equipper,
 /obj/item/clothing/shoes/boots,

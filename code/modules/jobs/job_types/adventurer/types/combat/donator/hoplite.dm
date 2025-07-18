@@ -30,7 +30,7 @@
 	pants = /obj/item/clothing/pants/loincloth/colored/brown
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	shoes = /obj/item/clothing/shoes/hoplite
-	cloak = /obj/item/clothing/cloak/half/red
+	cloak = /obj/item/clothing/cloak/half/colored/red
 	belt = /obj/item/storage/belt/leather/rope
 	armor = /obj/item/clothing/armor/rare/hoplite
 	head = /obj/item/clothing/head/rare/hoplite

@@ -20,7 +20,7 @@
 	head = /obj/item/clothing/head/roguehood/colored/brown
 	shoes = /obj/item/clothing/shoes/shortboots
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak/colored/brown
-	armor = /obj/item/clothing/shirt/robe/plain
+	armor = /obj/item/clothing/shirt/robe/colored/plain
 	wrists = /obj/item/clothing/wrists/bracers/leather
 	belt = /obj/item/storage/belt/leather/rope
 	beltr = /obj/item/storage/belt/pouch/coins/poor

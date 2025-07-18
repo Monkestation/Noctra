@@ -427,7 +427,7 @@
 
 /datum/outfit/job/town_elder/dreamwatcher/pre_equip(mob/living/carbon/human/H)
 	head = /obj/item/clothing/head/softcap
-	armor = /obj/item/clothing/shirt/robe/black
+	armor = /obj/item/clothing/shirt/robe/colored/black
 	shoes = /obj/item/clothing/shoes/sandals
 	belt = /obj/item/storage/belt/leather/rope
 	beltr = /obj/item/storage/keyring/elder

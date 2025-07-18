@@ -223,7 +223,7 @@
 	..()
 	neck = /obj/item/clothing/neck/talkstone
 	cloak = /obj/item/clothing/cloak/black_cloak
-	armor = /obj/item/clothing/shirt/robe/black
+	armor = /obj/item/clothing/shirt/robe/colored/black
 	pants = /obj/item/clothing/pants/tights/random
 	shoes = /obj/item/clothing/shoes/shortboots
 	belt = /obj/item/storage/belt/leather/plaquesilver

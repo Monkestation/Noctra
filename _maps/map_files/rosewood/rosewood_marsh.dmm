@@ -1574,7 +1574,7 @@
 /obj/structure/closet/crate/chest/old_crate,
 /obj/item/clothing/shirt/dress/silkdress/colored/random,
 /obj/item/clothing/armor/leather/vest/colored/random,
-/obj/item/clothing/cloak/half/random,
+/obj/item/clothing/cloak/half/colored/random,
 /obj/item/clothing/head/roguehood/colored/random,
 /turf/open/floor/ruinedwood,
 /area/rogue/indoors/mountains)

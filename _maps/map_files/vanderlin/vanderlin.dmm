@@ -2580,15 +2580,15 @@
 /area/rogue/indoors/town)
 "bxK" = (
 /obj/structure/rack/shelf/biggest,
-/obj/item/clothing/cloak/half/random{
+/obj/item/clothing/cloak/half/colored/random{
 	pixel_x = -8;
 	pixel_y = 6
 	},
-/obj/item/clothing/cloak/half/random{
+/obj/item/clothing/cloak/half/colored/random{
 	pixel_x = 1;
 	pixel_y = -3
 	},
-/obj/item/clothing/cloak/half/red{
+/obj/item/clothing/cloak/half/colored/red{
 	pixel_x = 7;
 	pixel_y = 5
 	},
@@ -5849,7 +5849,7 @@
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/shoes/nobleboot,
 /obj/item/clothing/pants/tights/colored/uncolored,
-/obj/item/clothing/shirt/robe/plain,
+/obj/item/clothing/shirt/robe/colored/plain,
 /turf/open/floor/wood,
 /area/rogue/indoors/town)
 "dEK" = (
@@ -36812,8 +36812,8 @@
 /area/rogue/indoors/town/garrison)
 "xyk" = (
 /obj/structure/closet/crate/crafted_closet,
-/obj/item/clothing/cloak/half/random,
-/obj/item/clothing/cloak/half/random,
+/obj/item/clothing/cloak/half/colored/random,
+/obj/item/clothing/cloak/half/colored/random,
 /obj/item/clothing/cloak/raincloak/green,
 /turf/open/floor/tile,
 /area/rogue/indoors/town/manor)

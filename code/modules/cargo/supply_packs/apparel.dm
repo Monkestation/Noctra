@@ -91,7 +91,7 @@
 /datum/supply_pack/apparel/halfcloak_random
 	name = "Halfcloak"
 	cost = 12
-	contains = /obj/item/clothing/cloak/half/random
+	contains = /obj/item/clothing/cloak/half/colored/random
 
 /datum/supply_pack/apparel/armordress
 	name = "Padded Dress"

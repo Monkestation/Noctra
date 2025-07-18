@@ -136,10 +136,10 @@
 /obj/item/clothing/cloak/half/colored
 	misc_flags = CRAFTING_TEST_EXCLUDE
 
-/obj/item/clothing/cloak/half/brown
+/obj/item/clothing/cloak/half/colored/brown
 	color = CLOTHING_BARK_BROWN
 
-/obj/item/clothing/cloak/half/red
+/obj/item/clothing/cloak/half/colored/red
 	color = CLOTHING_BLOOD_RED
 
 /obj/item/clothing/cloak/half/vet
@@ -149,7 +149,7 @@
 	inhand_mod = FALSE
 	uses_lord_coloring = LORD_PRIMARY
 
-/obj/item/clothing/cloak/half/random/Initialize()
+/obj/item/clothing/cloak/half/colored/random/Initialize()
 	color = pick(CLOTHING_WINESTAIN_RED, CLOTHING_MUSTARD_YELLOW, CLOTHING_SOOT_BLACK, CLOTHING_BARK_BROWN, CLOTHING_FOREST_GREEN, CLOTHING_BERRY_BLUE)
 	return ..()
 

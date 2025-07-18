@@ -32,7 +32,7 @@
 		H.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)
 		if(H.age == AGE_OLD)
 			head = /obj/item/clothing/head/wizhat/gen
-			armor = /obj/item/clothing/shirt/robe/plain
+			armor = /obj/item/clothing/shirt/robe/colored/plain
 			backl = /obj/item/storage/backpack/backpack
 			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 			H.change_stat(STATKEY_INT, 1)

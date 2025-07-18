@@ -2906,10 +2906,10 @@
 /obj/item/clothing/cloak/raincloak/red,
 /obj/item/clothing/cloak/half,
 /obj/item/clothing/cloak/half,
-/obj/item/clothing/cloak/half/red,
-/obj/item/clothing/cloak/half/red,
-/obj/item/clothing/cloak/half/brown,
-/obj/item/clothing/cloak/half/brown,
+/obj/item/clothing/cloak/half/colored/red,
+/obj/item/clothing/cloak/half/colored/red,
+/obj/item/clothing/cloak/half/colored/brown,
+/obj/item/clothing/cloak/half/colored/brown,
 /turf/open/floor/carpet,
 /area/rogue/indoors)
 "qf" = (
