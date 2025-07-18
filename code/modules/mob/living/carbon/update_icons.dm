@@ -64,7 +64,7 @@
 	update_inv_legcuffed()
 	update_fire()
 
-/mob/living/carbon/update_inv_hands()
+/mob/living/carbon/update_inv_hands(hide_experimental = FALSE)
 	remove_overlay(HANDS_LAYER)
 	remove_overlay(HANDS_BEHIND_LAYER)
 	var/age = AGE_ADULT
@@ -122,7 +122,7 @@
 
 		var/mutable_appearance/inhand_overlay
 		var/mutable_appearance/behindhand_overlay
-		if(I.experimental_inhand)
+		if(I.experimental_inhand && !hide_experimental)
 			var/used_prop
 			var/list/prop
 			if(I.altgripped)
@@ -261,7 +261,7 @@
 
 	apply_overlay(NECK_LAYER)
 
-/mob/living/carbon/update_inv_head()
+/mob/living/carbon/update_inv_head(hide_nonstandard = FALSE)
 	remove_overlay(HEAD_LAYER)
 
 	var/age = AGE_ADULT
@@ -277,6 +277,10 @@
 		inv?.update_appearance()
 
 	if(head)
+		if(hide_nonstandard && (head.worn_x_dimension != 32 || head.worn_y_dimension != 32))
+			update_hud_head(head)
+			return
+
 		overlays_standing[HEAD_LAYER] = head.build_worn_icon(age = age, default_layer = HEAD_LAYER, default_icon_file = 'icons/roguetown/clothing/onmob/head.dmi')
 		update_hud_head(head)
 
