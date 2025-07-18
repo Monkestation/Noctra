@@ -1,5 +1,6 @@
 /datum/antagonist/zombie
 	name = "Zombie"	// Deadite plague of Zizo
+	roundend_category = "Deadites"
 	antagpanel_category = "Zombie"
 	antag_hud_type = ANTAG_HUD_HIDDEN
 	antag_hud_name = "zombie"

@@ -51,6 +51,8 @@
 
 #define DAMAGE_THRESHOLD_FIRE_CRIT 150
 
+#define HALFWAYCRITDEATH ((HEALTH_THRESHOLD_CRIT + HEALTH_THRESHOLD_DEAD) * 0.5)
+
 //Actual combat defines
 
 //click cooldowns, in tenths of a second, used for various combat actions
