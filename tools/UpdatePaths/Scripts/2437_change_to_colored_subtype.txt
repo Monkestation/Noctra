@@ -29,3 +29,6 @@
 /obj/item/clothing/shirt/shortshirt/uncolored : /obj/item/clothing/shirt/shortshirt/colored/uncolored{@OLD}
 /obj/item/clothing/shirt/dress/silkdress/green : /obj/item/clothing/shirt/dress/silkdress/colored/green{@OLD}
 /obj/item/clothing/shirt/dress/silkdress/silkdressprimary : /obj/item/clothing/shirt/dress/silkdress/colored/silkdressprimary{@OLD}
+/obj/item/clothing/head/chaperon/greyscale : /obj/item/clothing/head/chaperon/colored/greyscale{@OLD}
+/obj/item/clothing/head/chaperon/greyscale/silk : /obj/item/clothing/head/chaperon/colored/greyscale/silk{@OLD}
+/obj/item/clothing/head/chaperon/greyscale/chaperonsecondary : /obj/item/clothing/head/chaperon/colored/greyscale/chaperonsecondary{OLD}

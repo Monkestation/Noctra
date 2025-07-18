@@ -43,7 +43,7 @@
 	belt = /obj/item/storage/belt/leather/plaquesilver
 	beltl = /obj/item/storage/keyring/merchant
 	armor = /obj/item/clothing/shirt/robe/merchant
-	head = /obj/item/clothing/head/chaperon/greyscale/silk/random
+	head = /obj/item/clothing/head/chaperon/colored/greyscale/silk/random
 	ring = /obj/item/clothing/ring/gold/guild_mercator
 
 	if(H.gender == MALE)

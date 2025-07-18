@@ -140,7 +140,7 @@
 
 /datum/repeatable_crafting_recipe/sewing/weaving/silkchaperone
 	name = "hat (chaperone)"
-	output = /obj/item/clothing/head/chaperon/greyscale/silk
+	output = /obj/item/clothing/head/chaperon/colored/greyscale/silk
 	requirements = list(/obj/item/natural/cloth = 1,
 				/obj/item/natural/silk = 2)
 	craftdiff = 4

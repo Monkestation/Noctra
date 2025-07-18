@@ -4,6 +4,7 @@
 	dynamic_hair_suffix = ""
 	icon = 'icons/roguetown/clothing/head.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
+	abstract_type = /obj/item/clothing/head/hooded
 
 /obj/item/clothing/head/hooded/Destroy()
 	connectedc = null

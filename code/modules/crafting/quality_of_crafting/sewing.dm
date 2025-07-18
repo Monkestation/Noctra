@@ -569,7 +569,7 @@
 
 /datum/repeatable_crafting_recipe/sewing/chaperonhat
 	name = "chaperon hat"
-	output = /obj/item/clothing/head/chaperon/greyscale
+	output = /obj/item/clothing/head/chaperon/colored/greyscale
 	requirements = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 4

@@ -13,37 +13,37 @@
 	icon_state = "priestunder"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
 
-/obj/item/clothing/shirt/undershirt/uncolored
+/obj/item/clothing/shirt/undershirt/colored/uncolored
 	color = CLOTHING_LINEN
 
-/obj/item/clothing/shirt/undershirt/black
+/obj/item/clothing/shirt/undershirt/colored/black
 	color = CLOTHING_SOOT_BLACK
 
-/obj/item/clothing/shirt/undershirt/lord
+/obj/item/clothing/shirt/undershirt/colored/lord
 	desc = ""
 	color = CLOTHING_BERRY_BLUE
 
-/obj/item/clothing/shirt/undershirt/blue
+/obj/item/clothing/shirt/undershirt/colored/blue
 	color = CLOTHING_SKY_BLUE
 
-/obj/item/clothing/shirt/undershirt/red
+/obj/item/clothing/shirt/undershirt/colored/red
 	color = CLOTHING_RED_OCHRE
 
-/obj/item/clothing/shirt/undershirt/purple
+/obj/item/clothing/shirt/undershirt/colored/purple
 	color = CLOTHING_PLUM_PURPLE
 
-/obj/item/clothing/shirt/undershirt/green
+/obj/item/clothing/shirt/undershirt/colored/green
 	color = CLOTHING_FOREST_GREEN
 
-/obj/item/clothing/shirt/undershirt/guard
+/obj/item/clothing/shirt/undershirt/colored/guard
 	color = CLOTHING_PLUM_PURPLE
 	uses_lord_coloring = LORD_PRIMARY
 
-/obj/item/clothing/shirt/undershirt/guardsecond
+/obj/item/clothing/shirt/undershirt/colored/guardsecond
 	color = CLOTHING_BLOOD_RED
 	uses_lord_coloring = LORD_SECONDARY
 
-/obj/item/clothing/shirt/undershirt/random/Initialize()
+/obj/item/clothing/shirt/undershirt/colored/random/Initialize()
 	color = pick_assoc(GLOB.peasant_dyes)
 	return ..()
 
