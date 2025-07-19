@@ -32291,6 +32291,10 @@
 /obj/machinery/light/fueled/firebowl/standing/blue,
 /turf/open/floor/naturalstone,
 /area/rogue/under/town/caverogue)
+"tGP" = (
+/obj/item/weapon/shovel/small,
+/turf/open/floor/dirt,
+/area/rogue/outdoors/town)
 "tHc" = (
 /turf/open/floor/cobble/alt,
 /area/rogue/under/town/sewer)
@@ -113333,7 +113337,7 @@ vgJ
 vgJ
 vgJ
 lIF
-jdk
+tGP
 eTs
 jdk
 vnF
