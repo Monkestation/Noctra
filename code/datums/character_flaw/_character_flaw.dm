@@ -770,15 +770,19 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		return
 	var/mob/living/carbon/human/H = user
 
-	H.change_stat(STATKEY_INT, rand(-3, -7)) //this would probably make the average manorc a vegetable
+	H.change_stat(STATKEY_INT, rand(-2, -5)) //this would probably make the average manorc a vegetable
 
 /datum/charflaw/witless_pixie/after_spawn(mob/user)
 	if(!ishuman(user))
 		return
 
-	if(prob(50))
-		ADD_TRAIT(user, TRAIT_BEAUTIFUL, "[type]")
-		return
+	//solves edgecases with inbred princes and eoran hand-holders. Yes, you can be an ugly Eoran templar. You are not safe.
+	REMOVE_TRAIT(user, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
+	REMOVE_TRAIT(user, TRAIT_UGLY, TRAIT_GENERIC)
 
-	if(prob(30))
-		ADD_TRAIT(user, TRAIT_UGLY, "[type]")
+	if(prob(50))
+		ADD_TRAIT(user, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
+
+	else if(prob(30))
+		ADD_TRAIT(user, TRAIT_UGLY, TRAIT_GENERIC)
+		return
