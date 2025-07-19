@@ -764,7 +764,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	name = "Lux-less"
 	desc = "Through some grand misfortune, or heroic sacrifice- you have given up your link to Psydon, and with it- your soul. A putrid, horrid thing, you cosign yourself to an eternity of nil after death. Perhaps you are fine with this. \
 	\n\n EXPECT A DIFFICULT, MECHANICALLY UNFAIR EXPERIENCE. \n Rakshari, Hollowkin and Kobolds do not apply, given they already have no lux. "
-	var/nochekk = TRUE
 
 /datum/charflaw/lux_taken/after_spawn(mob/user)
 	if(!ishuman(user))
@@ -773,11 +772,10 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	var/mob/living/carbon/human/H = user
 
 	//All luxless species below - Make sure to update RACES_PLAYER_LUXLESS list macro
-	if (!(user.client.prefs.pref_species.name in RACES_PLAYER_LUXLESS))
+	if (!(H.dna?.species?.id in RACES_PLAYER_LUXLESS))
 		H.apply_status_effect(/datum/status_effect/debuff/flaw_lux_taken)
 		SEND_SIGNAL(user, COMSIG_LUX_EXTRACTED, H)
 
 	else //overflow for the luxless species, if they select the flaw they should get a random flaw instead
-		nochekk = FALSE
-		QDEL_NULL(H.charflaw)
-		H.charflaw = new /datum/charflaw/randflaw(H)
+		H.get_random_flaw()
+		return
