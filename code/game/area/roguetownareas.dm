@@ -673,6 +673,14 @@
 	first_time_text = "The Clinic"
 	icon_state = "clinic_large"
 
+/area/rogue/indoors/town/clinic_large/apothecary
+	name = "Apothecary's Workshop"
+	icon_state = "clinic_apoth"
+
+/area/rogue/indoors/town/clinic_large/feldsher
+	name = "Feldsher's Office"
+	icon_state = "clinic_feld"
+
 /area/rogue/indoors/town/thieves_guild
 	first_time_text = "Thieves Guild"
 	icon_state = "thieves_guild"

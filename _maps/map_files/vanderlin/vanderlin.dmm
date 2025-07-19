@@ -43,8 +43,10 @@
 /turf/open/floor/cobble,
 /area/rogue/outdoors/town)
 "acs" = (
-/turf/open/floor/ruinedwood/spiral,
-/area/rogue/indoors/town/manor/jester)
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/ruinedwood/darker,
+/area/rogue/indoors/town)
 "acx" = (
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/town/roofs)
@@ -680,8 +682,10 @@
 /turf/open/floor/metal/barograte,
 /area/rogue/outdoors/town)
 "avx" = (
-/turf/closed/wall/mineral/decorstone,
-/area/rogue/indoors/town/manor/guest/meeting)
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/hexstone,
+/area/rogue/indoors/town)
 "avy" = (
 /obj/item/natural/stone,
 /turf/open/floor/dirt,
@@ -1161,7 +1165,7 @@
 	pixel_y = 10
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "aFU" = (
 /obj/machinery/anvil,
 /obj/item/weapon/hammer/iron,
@@ -1474,7 +1478,7 @@
 "aPw" = (
 /obj/machinery/light/fueled/cauldron,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "aPS" = (
 /turf/open/floor/church,
 /area/rogue/indoors/town/clinic_large)
@@ -1544,7 +1548,7 @@
 	pixel_y = 6
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "aSd" = (
 /obj/machinery/light/fueled/wallfire/candle/blue{
 	pixel_x = 32;
@@ -1589,7 +1593,7 @@
 	},
 /obj/machinery/light/fueled/wallfire/candle/blue/r,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "aTf" = (
 /obj/structure/table/wood/plain_alt,
 /obj/item/reagent_containers/glass/cup/wooden,
@@ -1813,7 +1817,7 @@
 	dir = 1
 	},
 /turf/open/floor/ruinedwood/spiral,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "bas" = (
 /turf/open/floor/tile,
 /area/rogue/indoors/town/manor/lord_appt)
@@ -2837,7 +2841,7 @@
 	},
 /obj/effect/landmark/start/feldsher,
 /turf/open/floor/carpet,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "bET" = (
 /turf/open/floor/blocks,
 /area/rogue/under/town/basement)
@@ -3203,7 +3207,7 @@
 	color = "grey"
 	},
 /turf/open/floor/carpet,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "bRy" = (
 /turf/open/floor/churchrough,
 /area/rogue/indoors/town/church/inquisition)
@@ -3799,7 +3803,7 @@
 /area/rogue/indoors/town/manor/lord_appt)
 "clJ" = (
 /turf/closed/wall/mineral/stone,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "clM" = (
 /obj/structure/fluff/statue/tdummy,
 /turf/open/floor/dirt,
@@ -4091,7 +4095,7 @@
 /obj/effect/mapping_helpers/access/locker,
 /obj/effect/mapping_helpers/access/keyset/town/apothecary,
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "cuB" = (
 /obj/structure/fluff/wallclock,
 /turf/open/floor/metal/alt,
@@ -4491,7 +4495,7 @@
 	pixel_y = -4
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "cGL" = (
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/manor)
@@ -4669,13 +4673,13 @@
 	pixel_x = -6
 	},
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "cMy" = (
 /turf/open/floor/blocks/paving,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "cMD" = (
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "cME" = (
 /obj/structure/flora/grass/water,
 /turf/open/floor/cobblerock,
@@ -5086,7 +5090,7 @@
 "daU" = (
 /obj/structure/fluff/walldeco/vinez,
 /turf/closed/wall/mineral/stone,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "dbt" = (
 /obj/structure/fluff/statue/gargoyle/moss,
 /obj/structure/fluff/railing/border,
@@ -5160,7 +5164,7 @@
 	icon_state = "largetable"
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "ddA" = (
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/cloak/lordcloak,
@@ -5271,7 +5275,7 @@
 /obj/item/essence_vial,
 /obj/machinery/light/fueled/wallfire/candle,
 /turf/open/floor/blocks/paving,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "dfu" = (
 /obj/machinery/light/fueled/wallfire/candle{
 	pixel_x = 32;
@@ -5628,7 +5632,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "dpn" = (
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/manor/archivist)
@@ -5789,7 +5793,7 @@
 /turf/open/floor/wood,
 /area/rogue/indoors/town/manor/garrison)
 "duE" = (
-/turf/closed/wall/mineral/wood,
+/turf/open/floor/blocks,
 /area/rogue/indoors/town/manor/jester)
 "duS" = (
 /obj/structure/flora/grass,
@@ -5934,7 +5938,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "dzd" = (
 /obj/structure/door/viewport{
 	name = "Makers Quarters"
@@ -6287,7 +6291,7 @@
 	},
 /obj/machinery/light/fueled/wallfire/candle,
 /turf/open/floor/tile,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "dKk" = (
 /obj/structure/door{
 	lockid = "roomhunt";
@@ -7043,7 +7047,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "eey" = (
 /turf/closed/wall/mineral/pipe,
 /area/rogue/indoors/town/smithy)
@@ -8330,7 +8334,7 @@
 "eSB" = (
 /obj/effect/landmark/start/nightman,
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "eSV" = (
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/dirt/road,
@@ -8434,7 +8438,7 @@
 	pixel_x = 6
 	},
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "eWt" = (
 /obj/machinery/light/fueled/torchholder{
 	dir = 1
@@ -8935,8 +8939,7 @@
 /turf/open/floor/concrete,
 /area/rogue/indoors/town/church/inquisition)
 "fnl" = (
-/obj/structure/ladder,
-/turf/open/floor/blocks,
+/turf/open/floor/ruinedwood/spiral,
 /area/rogue/indoors/town/manor/jester)
 "fns" = (
 /obj/structure/bars/pipe{
@@ -9349,7 +9352,7 @@
 /obj/effect/mapping_helpers/access/locker,
 /obj/effect/mapping_helpers/access/keyset/town/apothecary,
 /turf/open/floor/twig,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "fAI" = (
 /turf/open/floor/grass/yel,
 /area/rogue/outdoors/rtfield/safe)
@@ -9695,7 +9698,7 @@
 "fLp" = (
 /obj/machinery/light/fueled/wallfire/candle/r,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "fLq" = (
 /obj/effect/mapping_helpers/access/keyset/manor/general,
 /obj/structure/door/window,
@@ -11249,7 +11252,7 @@
 	},
 /obj/machinery/light/fueled/wallfire/candle/l,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "gMh" = (
 /obj/effect/landmark/bounty_location{
 	completion_range = 5;
@@ -11549,7 +11552,7 @@
 /obj/machinery/essence/test_tube,
 /obj/machinery/light/fueled/wallfire/candle,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "gVQ" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -11839,7 +11842,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "hfp" = (
 /obj/structure/flora/grass/herb/random,
 /turf/open/floor/grass/eora,
@@ -11901,7 +11904,7 @@
 	},
 /obj/item/weapon/surgery/scalpel,
 /turf/open/floor/churchbrick,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "hgO" = (
 /obj/item/natural/rock,
 /obj/structure/minecart_rail{
@@ -12040,7 +12043,7 @@
 /obj/structure/rack/shelf/biggest,
 /obj/item/natural/cloth,
 /turf/open/floor/blocks/paving,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "hmN" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/cobweb{
@@ -12110,7 +12113,7 @@
 	pixel_y = 2
 	},
 /turf/open/water/sewer,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "hnQ" = (
 /obj/structure/chair/wood/alt/fancy,
 /obj/effect/landmark/start/mercenary,
@@ -12509,7 +12512,7 @@
 "hCB" = (
 /obj/structure/fake_machine/drugmachine,
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "hCL" = (
 /obj/structure/fluff/walldeco/church/line{
 	dir = 8
@@ -12663,7 +12666,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "hGQ" = (
 /obj/machinery/light/fueled/wallfire/candle/l,
 /turf/open/floor/woodturned,
@@ -12760,7 +12763,7 @@
 "hJF" = (
 /obj/structure/ladder,
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "hJI" = (
 /obj/structure/bed/inn/double,
 /obj/item/bedsheet/double_pelt,
@@ -12779,7 +12782,7 @@
 /obj/structure/fake_machine/scomm/l,
 /obj/structure/fluff/walldeco/med5,
 /turf/closed/wall/mineral/craftstone,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "hKe" = (
 /obj/structure/fluff/walldeco/bath/wallpipes/outie{
 	dir = 6
@@ -13915,6 +13918,9 @@
 	},
 /turf/closed/wall/mineral/craftstone,
 /area/rogue/indoors/town/bath)
+"iwu" = (
+/turf/closed/wall/mineral/decorstone,
+/area/rogue/indoors/town/clinic_large/feldsher)
 "iwx" = (
 /obj/machinery/light/fueled/torchholder{
 	pixel_y = 26
@@ -14691,7 +14697,7 @@
 "iVT" = (
 /obj/machinery/light/fueled/wallfire/candle/blue,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "iVU" = (
 /obj/structure/fluff/railing/border{
 	dir = 6
@@ -14801,7 +14807,7 @@
 /area/rogue/under/dungeon)
 "iZL" = (
 /turf/open/floor/twig,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "iZS" = (
 /obj/structure/window,
 /turf/open/floor/blocks/stonered,
@@ -14996,7 +15002,7 @@
 "jdX" = (
 /obj/structure/chair/stool,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "jeb" = (
 /obj/machinery/light/fueled/torchholder/r,
 /turf/open/floor/woodturned,
@@ -15148,7 +15154,7 @@
 /area/rogue/indoors/town/manor/servant)
 "jjz" = (
 /turf/closed/wall/mineral/stone/window,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "jjE" = (
 /obj/structure/fluff/statue/knight/interior,
 /turf/open/floor/cobble,
@@ -15756,7 +15762,7 @@
 "jCx" = (
 /obj/structure/fake_machine/scomm/r,
 /turf/open/floor/tile,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "jCC" = (
 /obj/structure/chair/wood/alt{
 	dir = 1
@@ -15819,7 +15825,7 @@
 /obj/structure/rack/shelf/biggest,
 /obj/item/reagent_containers/food/snacks/produce/swampweed_dried,
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "jEf" = (
 /obj/structure/flora/grass/bush,
 /obj/structure/flora/grass,
@@ -15918,7 +15924,7 @@
 	},
 /obj/structure/table/wood/reinforced_alter,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "jGL" = (
 /obj/structure/roguerock,
 /turf/open/floor/grass,
@@ -16023,7 +16029,7 @@
 	pixel_y = -3
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "jKy" = (
 /obj/machinery/light/fueled/wallfire/candle/l,
 /turf/open/floor/cobble,
@@ -16321,6 +16327,9 @@
 /obj/structure/fake_machine/submission,
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/indoors/town/steward)
+"jRi" = (
+/turf/closed/wall/mineral/decostone/center,
+/area/rogue/indoors/town/clinic_large/feldsher)
 "jRn" = (
 /obj/structure/bookcase/random/legends,
 /turf/open/floor/ruinedwood/spiral,
@@ -16931,7 +16940,7 @@
 	redstone_id = "nite_shutter"
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "kjy" = (
 /obj/effect/mapping_helpers/access/keyset/manor/general,
 /obj/structure/door/violet{
@@ -17235,7 +17244,7 @@
 /obj/structure/rack/shelf/biggest,
 /obj/item/storage/backpack/backpack,
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "kqi" = (
 /turf/open/floor/blocks/paving,
 /area/rogue/under/town/sewer)
@@ -17478,7 +17487,7 @@
 "kxE" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/blocks/paving,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "kxG" = (
 /obj/structure/chair/stool{
 	pixel_y = 5
@@ -17815,14 +17824,14 @@
 /obj/structure/closet/crate/chest/neu,
 /obj/effect/mapping_helpers/access/locker,
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "kIE" = (
 /obj/structure/table/wood/large/corner,
 /turf/open/floor/cobble,
 /area/rogue/outdoors/town)
 "kIF" = (
 /turf/open/floor/tile,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "kII" = (
 /obj/structure/fake_machine/atm,
 /turf/open/floor/ruinedwood,
@@ -17927,7 +17936,7 @@
 	pixel_y = -32
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "kLN" = (
 /obj/structure/fluff/globe,
 /turf/open/floor/metal/alt,
@@ -17991,7 +18000,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/fueled/wallfire/candle/blue/l,
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "kNp" = (
 /turf/closed/mineral/random/high,
 /area/rogue/under/cave)
@@ -18110,7 +18119,7 @@
 /obj/effect/mapping_helpers/access/locker,
 /obj/effect/mapping_helpers/access/keyset/town/apothecary,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "kSz" = (
 /obj/structure/table/wood/plain_alt,
 /obj/item/dice{
@@ -18141,7 +18150,7 @@
 "kTY" = (
 /obj/machinery/light/fueled/wallfire/candle/blue/r,
 /turf/open/floor/churchbrick,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "kUh" = (
 /turf/open/floor/tile/masonic,
 /area/rogue/indoors/town/manor/lord_appt)
@@ -18175,7 +18184,7 @@
 "kVc" = (
 /obj/machinery/light/fueled/firebowl/standing/blue,
 /turf/open/floor/blocks/paving,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "kVM" = (
 /obj/machinery/light/fueled/wallfire/candle{
 	pixel_x = -32;
@@ -18440,7 +18449,7 @@
 /obj/structure/rack/shelf/biggest,
 /obj/effect/spawner/map_spawner/loot/potion_ingredient/herb,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "ldX" = (
 /mob/living/simple_animal/hostile/retaliate/bigrat,
 /turf/open/floor/cobble,
@@ -18731,7 +18740,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/door/weak/bolt,
 /turf/open/floor/blocks/paving,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "loV" = (
 /obj/structure/fluff/railing/wood{
 	dir = 4
@@ -18890,7 +18899,7 @@
 /area/rogue/under/town/sewer)
 "lwc" = (
 /turf/closed/wall/mineral/decorstone,
-/area/rogue/indoors/town/manor/jester)
+/area/rogue/indoors/town/manor/guest/meeting)
 "lwg" = (
 /turf/closed/wall/mineral/decorstone,
 /area/rogue/under/town/caverogue)
@@ -19505,7 +19514,7 @@
 /area/rogue/indoors/town/manor/guest/guest2)
 "lSt" = (
 /turf/closed/wall/mineral/craftstone,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "lSD" = (
 /obj/structure/fluff/railing/wood{
 	dir = 4
@@ -19535,6 +19544,10 @@
 	},
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/indoors/town)
+"lTC" = (
+/obj/structure/window/stained/silver/alt,
+/turf/open/floor/churchmarble,
+/area/rogue/indoors/town/clinic_large/feldsher)
 "lTY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -19690,7 +19703,7 @@
 /area/rogue/indoors/town/cell)
 "mbl" = (
 /turf/closed/wall/mineral/stone/moss,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "mbr" = (
 /obj/structure/door/weak/bolt{
 	dir = 4
@@ -19775,7 +19788,7 @@
 	dir = 1
 	},
 /turf/open/floor/carpet,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "mdQ" = (
 /obj/structure/winch{
 	dir = 4;
@@ -19832,7 +19845,7 @@
 /area/rogue/outdoors/town)
 "meN" = (
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "meZ" = (
 /obj/structure/door/window{
 	name = "Tailor Shop"
@@ -20487,7 +20500,7 @@
 "mBY" = (
 /obj/machinery/light/fueled/wallfire/candle/l,
 /turf/open/floor/ruinedwood/spiral,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "mCf" = (
 /obj/structure/rack/shelf/biggest,
 /obj/item/storage/sack{
@@ -21738,7 +21751,7 @@
 /area/rogue/indoors/town)
 "nmk" = (
 /turf/open/floor/carpet,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "nmm" = (
 /obj/structure/fluff/railing/wood{
 	dir = 8;
@@ -22230,7 +22243,7 @@
 "nCt" = (
 /obj/effect/landmark/start/feldsher,
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "nCv" = (
 /obj/machinery/light/fueled/wallfire/candle/blue{
 	pixel_y = -32
@@ -22316,7 +22329,7 @@
 	pixel_y = -1
 	},
 /turf/open/floor/churchbrick,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "nEP" = (
 /obj/structure/table/wood{
 	icon_state = "longtable"
@@ -22382,7 +22395,7 @@
 	},
 /obj/machinery/light/fueled/wallfire/candle/blue/l,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "nFW" = (
 /obj/structure/fluff/walldeco/church/line,
 /obj/structure/bed/mediocre,
@@ -22478,7 +22491,7 @@
 	},
 /obj/effect/mapping_helpers/access/keyset/town/bathhouse,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "nHv" = (
 /obj/structure/closet/crate/crafted_closet/inn,
 /obj/item/key/houses/house1,
@@ -22678,7 +22691,7 @@
 "nMH" = (
 /obj/machinery/essence/combiner,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "nML" = (
 /turf/open/floor/dirt,
 /area/rogue/under/town/caverogue)
@@ -23027,7 +23040,7 @@
 	},
 /obj/structure/table/wood/reinforced_alter,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "oaj" = (
 /obj/effect/landmark/start/weaponsmith{
 	dir = 8
@@ -23113,7 +23126,7 @@
 	},
 /obj/structure/well,
 /turf/open/floor/blocks/paving,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "obK" = (
 /obj/structure/fake_machine/hailerboard/r,
 /obj/structure/chair/stool,
@@ -23456,6 +23469,10 @@
 	},
 /turf/open/floor/blocks,
 /area/rogue/outdoors/town)
+"olo" = (
+/obj/structure/fluff/railing/wood,
+/turf/open/floor/ruinedwood/spiral,
+/area/rogue/indoors/town/manor/jester)
 "olI" = (
 /obj/structure/rotation_piece/cog,
 /turf/open/water/river{
@@ -23836,7 +23853,7 @@
 "oxN" = (
 /obj/machinery/light/fueled/wallfire/candle/blue/l,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "oxT" = (
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/armor/leather/jacket/silk_coat,
@@ -24199,7 +24216,7 @@
 /obj/effect/spawner/map_spawner/loot/potion_ingredient/herb,
 /obj/item/reagent_containers/food/snacks/produce/swampweed_dried,
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "oJQ" = (
 /turf/open/floor/ruinedwood/spiralfade,
 /area/rogue/indoors/town/manorgate)
@@ -24394,7 +24411,7 @@
 /obj/item/reagent_containers/food/snacks/produce/dry_westleach,
 /obj/item/soap/bath,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "oQg" = (
 /obj/structure/door/window,
 /obj/effect/mapping_helpers/access/keyset/town/butcher,
@@ -24673,7 +24690,7 @@
 "oYU" = (
 /obj/structure/closet/crate/chest/neu,
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "oZg" = (
 /turf/closed/wall/mineral/roofwall/center,
 /area/rogue/indoors/town)
@@ -25132,7 +25149,7 @@
 /obj/effect/mapping_helpers/access/locker,
 /obj/effect/mapping_helpers/access/keyset/town/doctor,
 /turf/open/floor/churchbrick,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "pqP" = (
 /obj/machinery/light/fueled/wallfire/candle{
 	pixel_x = -32;
@@ -25151,7 +25168,7 @@
 	pixel_y = 0
 	},
 /turf/open/floor/blocks/paving,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "pqV" = (
 /obj/structure/rack/shelf/big,
 /turf/open/floor/wood,
@@ -25221,7 +25238,7 @@
 /obj/item/essence_connector,
 /obj/item/essence_connector,
 /turf/open/floor/blocks/paving,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "pte" = (
 /obj/structure/table/map/vanderlin{
 	dir = 10
@@ -25849,7 +25866,7 @@
 /area/rogue/under/cavewet)
 "pQG" = (
 /turf/open/floor/ruinedwood/spiral,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "pQS" = (
 /turf/closed/wall/mineral/decowood,
 /area/rogue/indoors/town)
@@ -26123,7 +26140,7 @@
 /obj/item/natural/cloth,
 /obj/machinery/light/fueled/wallfire/candle/blue,
 /turf/open/floor/blocks/paving,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "qai" = (
 /obj/machinery/light/fueled/wallfire/candle{
 	pixel_y = -32
@@ -26175,7 +26192,7 @@
 /area/rogue/indoors/town/theatre)
 "qbT" = (
 /turf/open/floor/churchbrick,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "qbV" = (
 /turf/open/floor/tile,
 /area/rogue/indoors/town/manor/throne)
@@ -26424,7 +26441,7 @@
 	layer = 2.81
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "qlb" = (
 /obj/structure/roguerock,
 /turf/open/water,
@@ -26546,7 +26563,7 @@
 "qox" = (
 /obj/machinery/light/fueled/firebowl/standing/blue,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "qoK" = (
 /turf/closed/wall/mineral/wooddark,
 /area/rogue/indoors/town/shop)
@@ -26688,7 +26705,7 @@
 	redstone_id = "nite_shutter"
 	},
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "qsV" = (
 /obj/structure/floordoor{
 	redstone_id = "thronegrille"
@@ -27087,6 +27104,10 @@
 /obj/effect/mapping_helpers/access/keyset/manor/general,
 /turf/open/floor/tile,
 /area/rogue/indoors/town/manor/servant)
+"qEu" = (
+/obj/structure/window/stained/silver/alt,
+/turf/open/floor/church,
+/area/rogue/indoors/town/clinic_large/feldsher)
 "qEy" = (
 /obj/structure/fermentation_keg/random/water,
 /turf/open/floor/ruinedwood/turned/darker,
@@ -27132,7 +27153,7 @@
 "qFY" = (
 /obj/machinery/essence/test_tube,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "qGa" = (
 /obj/structure/flora/grass/water,
 /turf/open/water/river{
@@ -27187,8 +27208,7 @@
 /turf/open/floor/churchbrick,
 /area/rogue/under/town/sewer)
 "qIB" = (
-/obj/structure/fluff/railing/wood,
-/turf/open/floor/ruinedwood/spiral,
+/turf/closed/wall/mineral/wood,
 /area/rogue/indoors/town/manor/jester)
 "qIC" = (
 /obj/structure/bookcase/random/legends,
@@ -27311,7 +27331,7 @@
 	},
 /obj/effect/mapping_helpers/access/keyset/town/bathhouse,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "qOe" = (
 /obj/structure/table/wood/counter/end{
 	dir = 1
@@ -27474,7 +27494,7 @@
 /obj/item/reagent_containers/glass/bottle/water,
 /obj/item/reagent_containers/glass/bottle/water,
 /turf/open/floor/tile,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "qSI" = (
 /obj/machinery/light/fueled/oven{
 	pixel_y = 31
@@ -27690,7 +27710,7 @@
 /obj/item/essence_vial,
 /obj/item/essence_vial,
 /turf/open/floor/blocks/paving,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "qXw" = (
 /obj/item/ore/iron,
 /turf/open/floor/naturalstone,
@@ -27949,7 +27969,7 @@
 "rhL" = (
 /obj/effect/decal/carpet,
 /turf/open/floor/ruinedwood/spiral,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "rhR" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /obj/structure/flora/grass,
@@ -28097,7 +28117,7 @@
 /obj/structure/table/wood/plain_alt,
 /obj/item/reagent_containers/glass/carafe/silver,
 /turf/open/floor/carpet,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "rkg" = (
 /obj/structure/fluff/railing/border{
 	dir = 6
@@ -28917,7 +28937,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/garrison)
 "rLE" = (
-/turf/open/floor/blocks,
+/turf/closed/wall/mineral/decorstone,
 /area/rogue/indoors/town/manor/jester)
 "rMe" = (
 /obj/structure/fluff/walldeco/chains,
@@ -29076,7 +29096,7 @@
 /obj/item/reagent_containers/glass/bottle/vial/strpot,
 /obj/item/reagent_containers/glass/bottle/vial/lucpot,
 /turf/open/floor/blocks/paving,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "rRt" = (
 /obj/structure/fluff/railing/border{
 	dir = 4
@@ -29225,7 +29245,7 @@
 	redstone_id = "nite_shutter"
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "rVI" = (
 /obj/structure/bars/pipe{
 	dir = 4;
@@ -29463,7 +29483,7 @@
 	redstone_id = "nite_shutter"
 	},
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "sec" = (
 /obj/structure/fluff/railing/wood{
 	dir = 8;
@@ -29532,7 +29552,7 @@
 /obj/structure/rack/shelf/biggest,
 /obj/item/reagent_containers/food/snacks/produce/dry_westleach,
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "sgd" = (
 /obj/effect/waterfall,
 /turf/open/water,
@@ -29716,7 +29736,7 @@
 	},
 /obj/structure/fake_machine/vendor/apothecary,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "skX" = (
 /obj/structure/flora/grass/maneater/real,
 /obj/structure/flora/grass,
@@ -30079,7 +30099,7 @@
 /obj/effect/mapping_helpers/access/locker,
 /obj/effect/mapping_helpers/access/keyset/town/doctor,
 /turf/open/floor/ruinedwood/spiral,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "swp" = (
 /obj/structure/bookcase/random_recipes,
 /turf/open/floor/woodturned,
@@ -30669,7 +30689,7 @@
 	},
 /obj/item/weapon/surgery/hemostat,
 /turf/open/floor/churchbrick,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "sMa" = (
 /obj/structure/gearbox,
 /turf/open/floor/blocks/stonered,
@@ -30758,6 +30778,10 @@
 /obj/structure/bed/hay,
 /turf/open/floor/cobble,
 /area/rogue/indoors/dungeon)
+"sPp" = (
+/obj/structure/ladder,
+/turf/open/floor/blocks,
+/area/rogue/indoors/town/manor/jester)
 "sPE" = (
 /obj/structure/water_pipe,
 /turf/open/transparent/openspace,
@@ -30884,7 +30908,7 @@
 "sUj" = (
 /obj/machinery/essence/enchantment_altar,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "sUl" = (
 /obj/structure/bars/grille,
 /obj/structure/fluff/railing/border,
@@ -30976,7 +31000,7 @@
 	pixel_x = 4
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "sXE" = (
 /obj/structure/table/wood/plain_alt,
 /turf/open/floor/hexstone,
@@ -31051,7 +31075,7 @@
 "taf" = (
 /obj/structure/fluff/walldeco/vinez,
 /turf/closed/wall/mineral/craftstone,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "tam" = (
 /obj/machinery/light/fueled/hearth,
 /obj/machinery/light/fueled/wallfire/candle,
@@ -31086,6 +31110,7 @@
 /area/rogue/indoors/town/church)
 "taD" = (
 /obj/structure/closet/crate/chest/crafted,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/indoors/town)
 "tbo" = (
@@ -31997,7 +32022,7 @@
 	icon_state = "largetable"
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "tDe" = (
 /obj/structure/fluff/railing/border,
 /turf/open/floor/carpet/royalblack,
@@ -32120,7 +32145,7 @@
 	pixel_y = 2
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "tHD" = (
 /obj/structure/hotspring,
 /obj/effect/lily_petal,
@@ -32883,7 +32908,7 @@
 /obj/item/recipe_book/alchemy,
 /obj/item/recipe_book/alchemy,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "ued" = (
 /obj/structure/fluff/railing/wood{
 	dir = 4;
@@ -33028,6 +33053,10 @@
 	},
 /turf/open/floor/church,
 /area/rogue/indoors/town/church/chapel)
+"uji" = (
+/obj/structure/spider/stickyweb,
+/turf/open/floor/concrete,
+/area/rogue/indoors/town)
 "ujj" = (
 /obj/structure/chair/wood/alt/chair_noble,
 /turf/open/floor/ruinedwood/darker,
@@ -33231,7 +33260,7 @@
 /obj/structure/rack/shelf/biggest,
 /obj/item/broom,
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "uqG" = (
 /turf/open/floor/metal/barograte,
 /area/rogue/indoors/town/warehouse)
@@ -34580,6 +34609,11 @@
 /obj/structure/bookcase/random/myths,
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/indoors/town/magician)
+"vho" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
+/turf/open/floor/concrete,
+/area/rogue/indoors/town)
 "vhp" = (
 /obj/item/ammo_casing/caseless/arrow,
 /turf/open/floor/cobble,
@@ -34637,6 +34671,7 @@
 "vjW" = (
 /obj/structure/chair/stool,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/hexstone,
 /area/rogue/indoors/town)
 "vjY" = (
@@ -34839,7 +34874,7 @@
 "vtn" = (
 /obj/machinery/essence/research_matrix,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "vtv" = (
 /turf/closed/mineral,
 /area/rogue/under/cave)
@@ -34863,7 +34898,7 @@
 	pixel_y = 7
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "vue" = (
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/grass,
@@ -35302,7 +35337,7 @@
 /obj/structure/rack/shelf/biggest,
 /obj/item/reagent_containers/glass/carafe/silver,
 /turf/open/floor/blocks/stonered,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "vJa" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -35483,7 +35518,7 @@
 "vNG" = (
 /obj/structure/fake_machine/scomm/r,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "vNQ" = (
 /obj/structure/bars,
 /turf/open/floor/cobble,
@@ -35503,6 +35538,7 @@
 "vOF" = (
 /obj/machinery/light/fueledstreet/orange/wall,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/hexstone,
 /area/rogue/indoors/town)
 "vPf" = (
@@ -35830,7 +35866,7 @@
 /obj/item/paper,
 /obj/item/natural/feather,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "wdv" = (
 /obj/effect/landmark/start/beastmonger{
 	dir = 8
@@ -35981,7 +36017,7 @@
 "whO" = (
 /obj/machinery/tanningrack,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "whP" = (
 /obj/machinery/light/fueled/wallfire/candle,
 /turf/open/floor/tile/masonic{
@@ -35993,7 +36029,7 @@
 	pixel_y = 31
 	},
 /turf/open/floor/tile,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "whX" = (
 /obj/machinery/light/fueled/wallfire/candle,
 /obj/structure/bars{
@@ -36120,7 +36156,7 @@
 	mailtag = "Apothecary"
 	},
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "wkP" = (
 /obj/structure/fluff/railing/border,
 /turf/open/floor/cobblerock,
@@ -37121,7 +37157,7 @@
 "wQZ" = (
 /obj/item/bin/water,
 /turf/open/floor/blocks/paving,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "wRc" = (
 /obj/structure/fluff/walldeco/stone{
 	icon_state = "walldec6"
@@ -37338,7 +37374,7 @@
 "wZF" = (
 /obj/structure/stairs,
 /turf/open/floor/blocks,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/outdoors/town)
 "wZH" = (
 /obj/structure/water_pipe,
 /obj/structure/water_pipe,
@@ -37380,7 +37416,7 @@
 /obj/item/natural/cloth,
 /obj/item/natural/cloth,
 /turf/open/floor/blocks/paving,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "xbf" = (
 /turf/open/floor/ruinedwood/spiralfade,
 /area/rogue/indoors/town)
@@ -37519,7 +37555,7 @@
 /obj/item/natural/feather,
 /obj/machinery/light/fueled/wallfire/candle,
 /turf/open/floor/tile,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "xeP" = (
 /turf/open/floor/concrete,
 /area/rogue/indoors/town/clocktower)
@@ -37582,7 +37618,7 @@
 /obj/structure/toilet,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/blocks/paving,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "xgL" = (
 /obj/structure/table/wood{
 	dir = 10;
@@ -37756,7 +37792,7 @@
 /obj/effect/mapping_helpers/access/keyset/town/matron,
 /obj/effect/mapping_helpers/access/locker,
 /obj/structure/door/red{
-	name = "Sweatshop"
+	name = "Abandoned Sweatshop"
 	},
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/indoors/town)
@@ -38185,7 +38221,7 @@
 	dir = 1
 	},
 /turf/open/floor/ruinedwood/spiral,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "xDw" = (
 /turf/open/floor/blocks/paving,
 /area/rogue/indoors/town/bath)
@@ -38770,7 +38806,7 @@
 /obj/item/clothing/shirt/robe/phys,
 /obj/item/clothing/gloves/leather/phys,
 /turf/open/floor/churchbrick,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/feldsher)
 "xVj" = (
 /obj/structure/rack/shelf/biggest,
 /obj/item/reagent_containers/glass/cup/wooden{
@@ -38879,7 +38915,7 @@
 /obj/structure/rack/shelf/biggest,
 /obj/effect/spawner/map_spawner/loot/potion_vitals,
 /turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large)
+/area/rogue/indoors/town/clinic_large/apothecary)
 "xYm" = (
 /obj/structure/table/wood{
 	dir = 10;
@@ -99447,7 +99483,7 @@ nlk
 nlk
 nlk
 nlk
-pEo
+acs
 pBa
 nWN
 pEo
@@ -100054,7 +100090,7 @@ hUM
 mHt
 dlA
 nuh
-nuh
+avx
 wcz
 bJB
 qcb
@@ -100256,7 +100292,7 @@ hUM
 pxn
 dlA
 kaN
-kaN
+vho
 kaN
 tQf
 nlk
@@ -100662,7 +100698,7 @@ nlk
 ada
 tQf
 dnw
-tQf
+uji
 mqN
 nlk
 elp
@@ -137184,11 +137220,11 @@ pQS
 cjt
 hVd
 hVd
-foL
-cWz
-cWz
-cWz
-foL
+iwu
+lTC
+lTC
+lTC
+iwu
 acx
 acx
 acx
@@ -137383,14 +137419,14 @@ pQS
 cCU
 pQS
 cjt
-foL
-foL
-foL
-foL
+iwu
+iwu
+iwu
+iwu
 xVe
 xVe
 xVe
-foL
+iwu
 foL
 foL
 foL
@@ -137585,10 +137621,10 @@ pAK
 pAK
 pAK
 rVi
-foL
-xLk
-xLk
-foL
+iwu
+jRi
+jRi
+iwu
 qbT
 qbT
 qbT
@@ -137787,10 +137823,10 @@ pAK
 pAK
 pAK
 rVi
-foL
-xLk
-xLk
-foL
+iwu
+jRi
+jRi
+iwu
 nEJ
 qbT
 kTY
@@ -137989,17 +138025,17 @@ pQS
 cfB
 pQS
 cjt
-foL
-xLk
-xLk
-foL
-foL
+iwu
+jRi
+jRi
+iwu
+iwu
 pqD
-foL
-foL
-foL
-foL
-foL
+iwu
+iwu
+iwu
+iwu
+iwu
 dqr
 dqr
 foL
@@ -138191,17 +138227,17 @@ dSF
 iGx
 kBM
 pQS
-foL
-xLk
-xLk
-foL
+iwu
+jRi
+jRi
+iwu
 dKg
 kIF
 pQG
 mBY
 pQG
 ban
-foL
+iwu
 uCe
 ybp
 wSI
@@ -138393,17 +138429,17 @@ fTT
 iGx
 hKR
 pQS
-foL
-xLk
-xLk
-foL
+iwu
+jRi
+jRi
+iwu
 whU
 kIF
 pQG
 rhL
 pQG
 xDv
-foL
+iwu
 uCe
 ybp
 wLR
@@ -138595,10 +138631,10 @@ put
 svi
 aMu
 pQS
-foL
-xLk
-xLk
-foL
+iwu
+jRi
+jRi
+iwu
 whU
 kIF
 pQG
@@ -138797,17 +138833,17 @@ fvJ
 pQS
 pQS
 cjt
-foL
-xLk
-xLk
-foL
+iwu
+jRi
+jRi
+iwu
 xeO
 kIF
 nmk
 nmk
 nmk
 hGH
-foL
+iwu
 uCe
 ybp
 wLR
@@ -138999,17 +139035,17 @@ dKX
 dKX
 dKX
 dKX
-foL
-foL
-foL
-foL
+iwu
+iwu
+iwu
+iwu
 qSC
 jCx
 bER
 rke
 bRw
 mdd
-foL
+iwu
 pEP
 paj
 eju
@@ -139204,14 +139240,14 @@ hVd
 hVd
 hVd
 vee
-foL
-foL
-cWz
-wnV
-wnV
-wnV
-foL
-foL
+iwu
+iwu
+lTC
+qEu
+qEu
+qEu
+iwu
+iwu
 wLR
 wLR
 foL
@@ -144784,11 +144820,11 @@ nyF
 vZn
 kXO
 kXO
-avx
-avx
-avx
+lwc
+lwc
+lwc
 qeN
-avx
+lwc
 auV
 auV
 auV
@@ -144986,7 +145022,7 @@ kXO
 kXO
 kXO
 snf
-avx
+lwc
 nEh
 juf
 juf
@@ -145188,7 +145224,7 @@ guQ
 snf
 snf
 snf
-avx
+lwc
 qql
 pFW
 aHo
@@ -145390,7 +145426,7 @@ tff
 ckV
 snf
 snf
-avx
+lwc
 hIg
 iIS
 jmf
@@ -145996,11 +146032,11 @@ vgJ
 rDr
 tZz
 snf
-avx
-avx
-avx
-avx
-avx
+lwc
+lwc
+lwc
+lwc
+lwc
 auV
 auV
 auV
@@ -222955,12 +222991,12 @@ fzW
 cIc
 cIc
 cIc
-duE
-duE
-duE
-duE
-duE
-duE
+qIB
+qIB
+qIB
+qIB
+qIB
+qIB
 gOl
 cgT
 cgT
@@ -223154,10 +223190,10 @@ vgJ
 vgJ
 wzo
 cIc
-lwc
-lwc
-lwc
-duE
+rLE
+rLE
+rLE
+qIB
 seY
 jFQ
 blf
@@ -223356,15 +223392,15 @@ vgJ
 vgJ
 wzo
 cIc
-lwc
-fnl
 rLE
+sPp
+duE
 vMQ
 faL
 faL
-acs
+fnl
 qCG
-qIB
+olo
 cgT
 cGL
 cGL
@@ -223558,10 +223594,10 @@ vgJ
 vgJ
 wzo
 cIc
-lwc
-lwc
-lwc
-duE
+rLE
+rLE
+rLE
+qIB
 ldg
 qua
 viu
@@ -223763,12 +223799,12 @@ crM
 cIc
 cIc
 cIc
-duE
-duE
-duE
-duE
-duE
-duE
+qIB
+qIB
+qIB
+qIB
+qIB
+qIB
 gOl
 cgT
 cgT
