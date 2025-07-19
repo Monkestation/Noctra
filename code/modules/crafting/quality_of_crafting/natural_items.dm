@@ -444,3 +444,15 @@
 	output = /obj/item/weapon/axe/boneaxe
 	craftdiff = 2
 
+/datum/repeatable_crafting_recipe/survival/clay
+	name = "clay lump"
+	requirements = list(
+		/obj/item/natural/dirtclod= 3,
+	)
+	reagent_requirements = list(
+		/datum/reagent/water = 10
+	)
+	attacked_atom = /obj/item/natural/dirtclod
+	starting_atom = /obj/item/natural/dirtclod
+	output = /obj/item/natural/clay
+	craftdiff = 0

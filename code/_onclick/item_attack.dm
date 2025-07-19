@@ -61,7 +61,9 @@
 			if(SECONDARY_ATTACK_CALL_NORMAL)
 				attackby_result = target.attackby(src, user, params)
 			if(SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-				// Pass
+				return TRUE
+			if(SECONDARY_ATTACK_CONTINUE_CHAIN)
+				// Normal behavior
 			else
 				CRASH("attackby_secondary must return an SECONDARY_ATTACK_* define, please consult code/__DEFINES/combat.dm")
 	else
@@ -237,6 +239,8 @@
 		return result
 
 	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(weapon.item_flags & ABSTRACT)
+		return
 	if(src == user)
 		if(offered_item)
 			offered_item = null
@@ -248,7 +252,7 @@
 			to_chat(user, span_warning("I can't offer myself an item!"))
 		return
 	var/obj/item/offer_attempt = user.get_active_held_item()
-	if(HAS_TRAIT(offer_attempt, TRAIT_NODROP) || offer_attempt.item_flags & ABSTRACT)
+	if(HAS_TRAIT(offer_attempt, TRAIT_NODROP))
 		to_chat(user, span_warning("I can't offer this."))
 		return
 	user.offered_item = WEAKREF(offer_attempt)
@@ -256,7 +260,7 @@
 		span_notice("[user] offers [offer_attempt] to [src] with an outstreched hand."),
 		span_notice("I offer [offer_attempt] to [src] with an outstreched hand."),
 	)
-	to_chat(user, span_notice("I will hold [offer_attempt] out for 10 seconds. \
+	to_chat(user, span_smallnotice("I will hold [offer_attempt] out for 10 seconds. \
 	If I switch hands or take it out my hand it will not be able to be taken.\n \
 	I can stop offering the item by using the same hand."))
 	to_chat(src, span_notice("[user] offers [offer_attempt] to me..."))

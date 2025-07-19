@@ -6,7 +6,7 @@
 	charge_sound = 'sound/magic/holycharging.ogg'
 	self_cast_possible = FALSE
 
-	cast_range = 4
+	cast_range = 5
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	associated_skill = /datum/skill/magic/holy
@@ -18,9 +18,7 @@
 	invocation = "Be still and calm, brotherbeast."
 	invocation_type = INVOCATION_WHISPER
 
-	charge_time = 4 SECONDS
-	charge_drain = 1
-	charge_slowdown = 0.7
+	charge_required = FALSE
 	cooldown_time = 6 MINUTES
 	spell_cost = 60
 

@@ -68,12 +68,8 @@ SUBSYSTEM_DEF(garbage)
 
 /datum/controller/subsystem/garbage/Initialize(start_timeofday)
 	. = ..()
-#ifdef REFERENCE_TRACKING
-	enable_hard_deletes = TRUE
-#else
 	if(CONFIG_GET(flag/hard_deletes_enabled))
 		enable_hard_deletes = TRUE
-#endif
 
 /datum/controller/subsystem/garbage/stat_entry(msg)
 	var/list/counts = list()
@@ -233,6 +229,10 @@ SUBSYSTEM_DEF(garbage)
 				var/message = "## TESTING: GC: -- [text_ref(D)] | [type] was unable to be GC'd --"
 				message = "[message] (ref count of [refcount(D)])"
 				log_world(message)
+
+				var/detail = D.dump_harddel_info()
+				if(detail)
+					LAZYADD(I.extra_details, detail)
 
 				#ifdef TESTING
 				for(var/c in GLOB.admins) //Using testing() here would fill the logs with ADMIN_VV garbage
@@ -415,7 +415,7 @@ SUBSYSTEM_DEF(garbage)
 		if (QDEL_HINT_HARDDEL) //qdel should assume this object won't gc, and queue a hard delete
 			SSgarbage.Queue(to_delete, GC_QUEUE_HARDDELETE)
 		if (QDEL_HINT_HARDDEL_NOW) //qdel should assume this object won't gc, and hard del it post haste.
-			SSgarbage.HardDelete(to_delete)
+			SSgarbage.HardDelete(to_delete, TRUE)
 		#ifdef REFERENCE_TRACKING
 		if (QDEL_HINT_FINDREFERENCE) //qdel will, if REFERENCE_TRACKING is enabled, display all references to this object, then queue the object for deletion.
 			SSgarbage.Queue(to_delete)

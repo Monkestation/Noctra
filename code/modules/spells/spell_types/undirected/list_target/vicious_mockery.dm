@@ -6,12 +6,10 @@
 
 	associated_skill = /datum/skill/misc/music
 
-	invocation_type = INVOCATION_SHOUT
-
-	cooldown_time = 1 MINUTES
+	spell_type = SPELL_NONE
+	cooldown_time = 30 SECONDS
 
 	choose_target_message = "Choose who to mock."
-	target_radius = 6
 
 /datum/action/cooldown/spell/undirected/list_target/vicious_mockery/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
@@ -43,4 +41,4 @@
 	if(cast_on.can_hear())
 		SEND_SIGNAL(owner, COMSIG_VICIOUSLY_MOCKED, cast_on)
 		cast_on.apply_status_effect(/datum/status_effect/debuff/viciousmockery)
-		GLOB.vanderlin_round_stats[STATS_PEOPLE_MOCKED]++
+		record_round_statistic(STATS_PEOPLE_MOCKED)

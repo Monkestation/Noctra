@@ -363,7 +363,7 @@
 									SEND_SIGNAL(U, COMSIG_ITEM_STOLEN, V)
 									record_featured_stat(FEATURED_STATS_THIEVES, U)
 									record_featured_stat(FEATURED_STATS_CRIMINALS, U)
-									GLOB.vanderlin_round_stats[STATS_ITEMS_PICKPOCKETED]++
+									record_round_statistic(STATS_ITEMS_PICKPOCKETED)
 								if(has_flaw(/datum/charflaw/addiction/kleptomaniac))
 									sate_addiction()
 							else

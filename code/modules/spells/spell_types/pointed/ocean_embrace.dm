@@ -4,9 +4,8 @@
 	button_icon_state = "revive"
 	sound = 'sound/foley/jumpland/waterland.ogg'
 	charge_sound = 'sound/magic/holycharging.ogg'
-	self_cast_possible = FALSE
 
-	cast_range = 3
+	cast_range = 6
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	associated_skill = /datum/skill/magic/holy
@@ -15,9 +14,7 @@
 	invocation = "Embrace the waters of Abyssor's domain!"
 	invocation_type = INVOCATION_SHOUT
 
-	charge_time = 2 SECONDS
-	charge_drain = 1
-	charge_slowdown = 0.7
+	charge_time = 1 SECONDS
 	cooldown_time = 30 SECONDS
 	spell_cost = 50
 
@@ -35,7 +32,7 @@
 		var/already_dead = cast_on.stat == DEAD ? TRUE : FALSE
 		cast_on.adjustOxyLoss(80)
 		if(!already_dead && cast_on.stat == DEAD && cast_on.client)
-			GLOB.vanderlin_round_stats[STATS_PEOPLE_DROWNED]++
+			record_round_statistic(STATS_PEOPLE_DROWNED)
 		else
 			cast_on.Knockdown(5)
 			cast_on.Slowdown(60)

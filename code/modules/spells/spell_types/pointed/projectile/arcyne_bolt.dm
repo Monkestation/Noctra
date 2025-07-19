@@ -4,6 +4,7 @@
 	button_icon_state =  "arcane_bolt"
 	sound = 'sound/magic/vlightning.ogg'
 
+	cast_range = 12
 	point_cost = 2
 	attunements = list(
 		/datum/attunement/arcyne = 0.7,

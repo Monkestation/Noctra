@@ -18,10 +18,11 @@
 
 /datum/action/cooldown/spell/undirected/blade_ward/cast(atom/cast_on)
 	. = ..()
-	var/duration_increase = min(0, attuned_strength * 1.5 MINUTES)
+	var/datum/status_effect/status = /datum/status_effect/buff/bladeward
+	var/duration_increase = max(0, attuned_strength * 1.5 MINUTES)
 	if(isliving(owner))
 		var/mob/living/L = owner
-		L.apply_status_effect(/datum/status_effect/buff/bladeward, duration_increase)
+		L.apply_status_effect(status, initial(status.duration) + duration_increase)
 		L.visible_message(
 			span_info("[L] traces a warding sigil in the air."),
 			span_notice("I trace a a sigil of warding in the air."),
@@ -31,7 +32,7 @@
 		return
 
 	for(var/mob/living/extra_target in orange(FLOOR(attuned_strength, 1), owner))
-		extra_target.apply_status_effect(/datum/status_effect/buff/bladeward, duration_increase)
+		extra_target.apply_status_effect(status, initial(status.duration) + duration_increase)
 		extra_target.visible_message(
 			span_info("[extra_target] has a sigil of warding appear over them."),
 			span_notice("I see a sigil of warding floating over me."),

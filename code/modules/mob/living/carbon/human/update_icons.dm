@@ -573,7 +573,7 @@ There are several things that need to be remembered:
 	apply_overlay(SHOES_LAYER)
 	apply_overlay(SHOESLEEVE_LAYER)
 
-/mob/living/carbon/human/update_inv_head()
+/mob/living/carbon/human/update_inv_head(hide_nonstandard = FALSE)
 	remove_overlay(HEAD_LAYER)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
@@ -584,6 +584,10 @@ There are several things that need to be remembered:
 		inv?.update_appearance()
 
 	if(head)
+		if(hide_nonstandard && (head.worn_x_dimension != 32 || head.worn_y_dimension != 32))
+			update_hud_head(head)
+			return
+
 		update_hud_head(head)
 		var/datum/species/species = dna?.species
 		var/use_female_sprites = FALSE
@@ -607,7 +611,7 @@ There are several things that need to be remembered:
 	apply_overlay(HEAD_LAYER)
 	update_body() //hoodies
 
-/mob/living/carbon/human/update_inv_belt()
+/mob/living/carbon/human/update_inv_belt(hide_experimental = FALSE)
 	remove_overlay(BELT_LAYER)
 	remove_overlay(BELT_BEHIND_LAYER)
 
@@ -652,7 +656,7 @@ There are several things that need to be remembered:
 		if(!(cloak && (cloak.flags_inv & HIDEBELT)))
 			var/mutable_appearance/onbelt_overlay
 			var/mutable_appearance/onbelt_behind
-			if(beltr.experimental_onhip)
+			if(beltr.experimental_onhip && !hide_experimental)
 				var/list/prop
 				if(beltr.force_reupdate_inhand)
 					prop = beltr.onprop?["onbelt"]
@@ -692,7 +696,7 @@ There are several things that need to be remembered:
 		if(!(cloak && (cloak.flags_inv & HIDEBELT)))
 			var/mutable_appearance/onbelt_overlay
 			var/mutable_appearance/onbelt_behind
-			if(beltl.experimental_onhip)
+			if(beltl.experimental_onhip && !hide_experimental)
 				var/list/prop
 				if(beltl.force_reupdate_inhand)
 					prop = beltl.onprop?["onbelt"]
@@ -775,7 +779,7 @@ There are several things that need to be remembered:
 
 	apply_overlay(MASK_LAYER)
 
-/mob/living/carbon/human/update_inv_back()
+/mob/living/carbon/human/update_inv_back(hide_experimental = FALSE)
 	remove_overlay(BACK_LAYER)
 	remove_overlay(BACK_BEHIND_LAYER)
 	remove_overlay(UNDER_CLOAK_LAYER)
@@ -812,7 +816,7 @@ There are several things that need to be remembered:
 			var/mutable_appearance/back_overlay
 			var/mutable_appearance/behindback_overlay
 			update_hud_backr(backr)
-			if(backr.experimental_onback)
+			if(backr.experimental_onback && !hide_experimental)
 				var/list/prop
 				if(backr.force_reupdate_inhand)
 					prop = backr.onprop?["onback"]
@@ -850,7 +854,7 @@ There are several things that need to be remembered:
 			update_hud_backl(backl)
 			var/mutable_appearance/back_overlay
 			var/mutable_appearance/behindback_overlay
-			if(backl.experimental_onback)
+			if(backl.experimental_onback && !hide_experimental)
 				var/list/prop
 				if(backl.force_reupdate_inhand)
 					prop = backl.onprop?["onback"]

@@ -8,6 +8,7 @@
 	opacity = TRUE
 	layer = OPEN_DOOR_LAYER
 	resistance_flags = FLAMMABLE
+	pass_flags_self = PASSDOORS|PASSSTRUCTURE
 	max_integrity = 1000
 	integrity_failure = 0.5
 	armor = list("blunt" = 10, "slash" = 10, "stab" = 10,  "piercing" = 0, "fire" = 0, "acid" = 0)

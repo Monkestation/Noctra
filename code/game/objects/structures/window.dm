@@ -8,6 +8,7 @@
 	density = TRUE
 	anchored = TRUE
 	opacity = FALSE
+	pass_flags_self = PASSWINDOW|PASSSTRUCTURE
 	max_integrity = 100
 	integrity_failure = 0.1
 	blade_dulling = DULLING_BASHCHOP

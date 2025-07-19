@@ -725,7 +725,7 @@
 					caughtfish.sellprice *= costmod
 			if(fisher.mind)
 				record_featured_stat(FEATURED_STATS_FISHERS, fisher)
-				GLOB.vanderlin_round_stats[STATS_FISH_CAUGHT]++
+				record_round_statistic(STATS_FISH_CAUGHT)
 		else//only occurs on special catch that most likely won't have special modifiers
 			if(turfcatch)
 				var/atom/caughtthing = new fishtype(targeted)

@@ -177,7 +177,7 @@
 		if(HAS_TRAIT(user, TRAIT_BLESSED))
 			to_chat(user, span_info("Dendor will not grant more powers, but he still approves of the sacrifice, judging by the signs..."))
 			user.apply_status_effect(/datum/status_effect/buff/blessed)
-			GLOB.vanderlin_round_stats[STATS_DENDOR_SACRIFICES]++
+			record_round_statistic(STATS_DENDOR_SACRIFICES)
 			qdel(src)
 			return
 
@@ -193,7 +193,7 @@
 	else
 		to_chat(user, span_warning("Dendor finds me unworthy..."))
 
-	GLOB.vanderlin_round_stats[STATS_DENDOR_SACRIFICES]++
+	record_round_statistic(STATS_DENDOR_SACRIFICES)
 	qdel(src)
 
 /*	.................   Yellow Blessings of Dendor   ................... */
@@ -217,7 +217,7 @@
 		if(HAS_TRAIT(user, TRAIT_BLESSED))
 			to_chat(user, span_info("Dendor will not grant more powers, but he still approves of the sacrifice, judging by the signs..."))
 			user.apply_status_effect(/datum/status_effect/buff/blessed)
-			GLOB.vanderlin_round_stats[STATS_DENDOR_SACRIFICES]++
+			record_round_statistic(STATS_DENDOR_SACRIFICES)
 			qdel(src)
 			return
 
@@ -233,7 +233,7 @@
 	else
 		to_chat(user, span_warning("Dendor finds me unworthy..."))
 
-	GLOB.vanderlin_round_stats[STATS_DENDOR_SACRIFICES]++
+	record_round_statistic(STATS_DENDOR_SACRIFICES)
 	qdel(src)
 
 /*	.................  Red Blessings of Dendor   ................... */
@@ -257,7 +257,7 @@
 		if(HAS_TRAIT(user, TRAIT_BLESSED))
 			to_chat(user, span_info("Dendor will not grant more powers, but he still approves of the sacrifice, judging by the signs..."))
 			user.apply_status_effect(/datum/status_effect/buff/blessed)
-			GLOB.vanderlin_round_stats[STATS_DENDOR_SACRIFICES]++
+			record_round_statistic(STATS_DENDOR_SACRIFICES)
 			qdel(src)
 			return
 
@@ -290,5 +290,5 @@
 	else
 		to_chat(user, span_warning("Dendor finds me unworthy..."))
 
-	GLOB.vanderlin_round_stats[STATS_DENDOR_SACRIFICES]++
+	record_round_statistic(STATS_DENDOR_SACRIFICES)
 	qdel(src)

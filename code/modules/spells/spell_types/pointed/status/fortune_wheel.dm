@@ -10,6 +10,7 @@
 
 	charge_required = FALSE
 	spell_cost = 35
+	cooldown_time = 2 MINUTES
 
 	status_effect = /datum/status_effect/wheel
 

@@ -95,7 +95,7 @@ GLOBAL_LIST_EMPTY(heretical_players)
 
 	var/list/spells = list(
 		/datum/action/cooldown/spell/undirected/touch/orison/lesser,
-		/datum/action/cooldown/spell/healing/lesser,
+		/datum/action/cooldown/spell/healing,
 		/datum/action/cooldown/spell/diagnose/holy,
 	)
 

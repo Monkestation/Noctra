@@ -4,6 +4,7 @@
 	button_icon_state = "fireball"
 	charge_sound = 'sound/magic/charging_fire.ogg'
 
+	cast_range = 8
 	point_cost = 4
 	attunements = list(
 		/datum/attunement/fire = 0.5

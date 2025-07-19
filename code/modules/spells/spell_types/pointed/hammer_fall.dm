@@ -4,9 +4,7 @@
 	button_icon_state = "craft_buff"
 	sound = 'sound/items/bsmithfail.ogg'
 	charge_sound = 'sound/magic/holycharging.ogg'
-	self_cast_possible = FALSE
 
-	cast_range = 2
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	associated_skill = /datum/skill/magic/holy
@@ -16,7 +14,6 @@
 	invocation_type = INVOCATION_SHOUT
 
 	charge_time = 2 SECONDS
-	charge_drain = 1
 	charge_slowdown = 1.3
 	cooldown_time = 3 MINUTES
 	spell_cost = 75

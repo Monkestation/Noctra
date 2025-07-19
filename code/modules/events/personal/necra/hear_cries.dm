@@ -5,7 +5,7 @@
 	weight = 7
 	earliest_start = 15 MINUTES
 	max_occurrences = 1
-	min_players = 20
+	min_players = 25
 
 	tags = list(
 		TAG_HAUNTED,
@@ -16,7 +16,7 @@
 	if(!.)
 		return FALSE
 
-	if(length(GLOB.last_messages) < 10)
+	if(length(GLOB.last_words) < 8)
 		return FALSE
 
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
@@ -29,7 +29,7 @@
 	return FALSE
 
 /datum/round_event/dead_whispers/start()
-	if(length(GLOB.last_messages) < 10)
+	if(length(GLOB.last_words) < 8)
 		return FALSE
 
 	var/list/valid_targets = list()

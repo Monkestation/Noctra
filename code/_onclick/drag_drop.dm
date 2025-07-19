@@ -91,7 +91,6 @@
 	if(mob.stat != CONSCIOUS)
 		mob.atkswinging = null
 		charging = null
-		mouse_pointer_icon = 'icons/effects/mousemice/human.dmi'
 		return
 
 	if(mouse_down_icon)
@@ -172,7 +171,7 @@
 	if(mouse_up_icon)
 		mouse_pointer_icon = mouse_up_icon
 	else
-		mouse_pointer_icon = 'icons/effects/mousemice/human.dmi'
+		mob?.update_mouse_pointer()
 	var/mob/living/L = mob
 	if(L)
 		update_to_mob(L)
@@ -206,8 +205,6 @@
 	if(mob.stat != CONSCIOUS)
 		chargedprog = 0
 		mob.atkswinging = null
-//		mob.update_warning()
-		mouse_pointer_icon = 'icons/effects/mousemice/human.dmi'
 		return
 
 	if (mouse_up_icon)
@@ -253,10 +250,6 @@
 		doneset = FALSE
 		chargedprog = 0
 		START_PROCESSING(SSmousecharge, src)
-
-/client/Destroy()
-	STOP_PROCESSING(SSmousecharge, src)
-	return ..()
 
 /client/process()
 	if(!mob || !isliving(mob))

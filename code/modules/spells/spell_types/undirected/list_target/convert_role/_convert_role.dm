@@ -20,7 +20,7 @@
 	if(conversion_radius)
 		for(var/mob/living/carbon/human/nearby_living in get_hearers_in_LOS(conversion_radius, center) - center)
 			if(!can_convert(nearby_living))
-				return
+				continue
 			things += nearby_living
 
 	return things
@@ -37,25 +37,22 @@
 	//need to see their damn face
 	if(!cast_on.get_face_name(null))
 		return FALSE
-	//only migrants and peasants
-	if(!(cast_on.job in GLOB.peasant_positions))
-		return FALSE
 
 	return TRUE
 
 /datum/action/cooldown/spell/undirected/list_target/convert_role/cast(mob/living/carbon/human/cast_on)
 	. = ..()
-	owner.say(replacetext(recruitment_message, "%RECRUIT", "[cast_on]"), forced = "Convert spell ([name])")
+	owner.say(replacetext(recruitment_message, "%RECRUIT", "[cast_on]"), forced = "Convert spell ([src])")
 
 	var/answer = browser_alert(cast_on, "Do you wish to become a [new_role]?", "[recruitment_faction] recruitment.", DEFAULT_INPUT_CONFIRMATIONS)
 	if(QDELETED(src) || QDELETED(owner) || QDELETED(cast_on) || !can_cast_spell())
 		return
 	if(answer != CHOICE_CONFIRM)
 		if(refuse_message)
-			cast_on.say(refuse_message, forced = "Convert spell ([name])")
+			cast_on.say(refuse_message, forced = "Convert spell ([src])")
 		return
 	if(accept_message)
-		cast_on.say(accept_message, forced = "Convert spell ([name])")
+		cast_on.say(accept_message, forced = "Convert spell ([src])")
 	on_conversion(cast_on)
 
 /datum/action/cooldown/spell/undirected/list_target/convert_role/proc/on_conversion(mob/living/carbon/human/cast_on)
