@@ -178,7 +178,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 
 /mob/dead/new_player/verb/do_rp_prompt()
 	set name = "Lore Primer"
-	set category = "Memory"
+	set category = "OOC"
 	var/list/dat = list()
 	dat += GLOB.roleplay_readme
 	if(dat)

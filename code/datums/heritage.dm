@@ -751,7 +751,7 @@
 
 /mob/living/carbon/human/verb/ReturnFamilyList()
 	set name = "List Family"
-	set category = "Memory"
+	set category = "IC"
 	if(spouse_mob)
 		to_chat(src, span_info("[spouse_mob.real_name] the [spouse_mob.dna.species.name] [spouse_mob.mind?.assigned_role.get_informed_title(spouse_mob)] is your lover."))
 	if(family_datum)
@@ -760,8 +760,8 @@
 		to_chat(src, "You're not part of any notable family.")
 
 /mob/living/carbon/human/verb/ToggleFamilyUI()
-	set name = "Toggle Family UI"
-	set category = "Memory"
+	set name = "Family UI"
+	set category = "IC"
 	ShowFamilyUI(FALSE)
 
 /mob/living/carbon/human/proc/ShowFamilyUI(silent)
