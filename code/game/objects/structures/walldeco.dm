@@ -12,8 +12,8 @@
 	return
 
 /obj/structure/fluff/walldeco/wantedposter
-	name = "bandit notice"
-	desc = ""
+	name = "wanted poster"
+	desc = "The list of the worst scoundrels this realm has to offer along with their face sketches."
 	icon_state = "wanted1"
 	layer = BELOW_MOB_LAYER
 	pixel_y = 32
@@ -31,17 +31,91 @@
 	dir = pick(GLOB.cardinals)
 
 /obj/structure/fluff/walldeco/wantedposter/examine(mob/user)
-	. = ..()
 	if(user.Adjacent(src))
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(!isbandit(user))
-				to_chat(H, "<b>I now know the faces of the local bandits.</b>")
-				ADD_TRAIT(H, TRAIT_KNOWBANDITS, TRAIT_GENERIC)
-				H.playsound_local(H, 'sound/misc/notice (2).ogg', 100, FALSE)
-			else
-				var/list/funny = list("Yup. My face is on there.", "Wait a minute... That's me!", "Look at that handsome devil...", "At least I am wanted by someone...", "My chin can't be that big... right?")
-				to_chat(H, "<b>[pick(funny)]</b>")
+			show_outlaw_headshot(H)
+			H.playsound_local(H, 'sound/misc/notice (2).ogg', 100, FALSE)
+	return ..()
+
+/obj/structure/fluff/walldeco/wantedposter/proc/show_outlaw_headshot(mob/user)
+	var/list/outlaws = list()
+
+	// Collect all outlaw mobs and their credit icons
+	for(var/mob/living/carbon/human/outlaw in GLOB.player_list)
+		if(outlaw.real_name in GLOB.outlawed_players)
+			var/icon/credit_icon = SScrediticons.get_credit_icon(outlaw)
+			outlaws += list(list(
+				"name" = outlaw.real_name,
+				"icon" = credit_icon
+			))
+
+	if(!length(outlaws))
+		to_chat(user, "<span class='warning'>There are no wanted criminals at the moment...</span>")
+		return
+	else if(user in outlaws)
+		var/list/funny = list("Yup. My face is on there.", "Wait a minute... That's me!", "Look at that handsome devil...", "At least I am wanted by someone...", "My chin can't be that big... right?")
+		to_chat(user, "<b>[pick(funny)]</b>")
+	else
+		to_chat(user, "<b>I now know the faces of the local bandits and other outlaws.</b>")
+
+	ADD_TRAIT(user, TRAIT_KNOWBANDITS, TRAIT_GENERIC)
+
+
+	var/dat = {"
+	<style>
+		.wanted-container {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 15px;
+			padding: 10px;
+		}
+		.wanted-card {
+			border: 2px solid #8B0000;
+			border-radius: 3px;
+			padding: 8px;
+			background: #1a1a1a;
+			text-align: center;
+			box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+		}
+		.wanted-name {
+			color: #FF0000;
+			font-weight: bold;
+			margin-top: 2px;
+			font-size: 13px;
+			text-shadow: 1px 1px 2px black;
+		}
+		.wanted-icon {
+			width: 96px;
+			height: 96px;
+			margin: 0 auto;
+			image-rendering: pixelated;
+			border: 1px solid #444;
+		}
+	</style>
+	<div class='wanted-container'>
+	"}
+
+	// Add each outlaw to the display
+	for(var/list/outlaw_data in outlaws)
+		var/icon_html = ""
+		if(outlaw_data["icon"])
+			icon_html = "<img class='wanted-icon' src='data:image/png;base64,[icon2base64(outlaw_data["icon"])]'>"
+		else
+			icon_html = "<div class='wanted-icon' style='background:#333;'></div>"
+
+		dat += {"
+		<div class='wanted-card'>
+			[icon_html]
+			<div class='wanted-name'>[outlaw_data["name"]]</div>
+		</div>
+		"}
+
+	dat += "</div>"
+
+	var/datum/browser/popup = new(user, "wanted_posters", "<center>Wanted Criminals</center>", 400, 300)
+	popup.set_content(dat)
+	popup.open()
 
 /obj/structure/fluff/walldeco/innsign
 	name = "sign"
