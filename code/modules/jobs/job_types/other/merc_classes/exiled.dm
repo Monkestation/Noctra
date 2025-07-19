@@ -23,7 +23,7 @@
 		H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/tanning, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
-		H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE) // Cut those trees #Morbiussweep
+		H.adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE) // Cut those trees #Morbiussweep
 		H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
@@ -45,7 +45,7 @@
 	backl = /obj/item/storage/backpack/satchel
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/poor)
 
-	H.change_stat(STATKEY_STR, 1)
+	H.change_stat(STATKEY_STR, 2)
 	H.change_stat(STATKEY_END, 2)
 	H.change_stat(STATKEY_CON, 2)
 	H.change_stat(STATKEY_SPD, -1) // fat fuck
@@ -54,5 +54,6 @@
 	ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 	if(H.dna?.species)
 		H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
