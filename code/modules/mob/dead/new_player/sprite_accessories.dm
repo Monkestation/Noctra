@@ -51,7 +51,7 @@
 /datum/sprite_accessory
 	var/use_static		//determines if the accessory will be skipped by color preferences
 	var/locked = FALSE		//Is this part locked from roundstart selection? Used for parts that apply effects
-	var/list/specuse = list("human") //what species can use dis
+	var/list/specuse = list(SPEC_ID_HUMEN) //what species can use dis
 	var/additional = FALSE //added hairbands/metal in hair/beards
 	var/roundstart = TRUE
 	var/under_layer = FALSE

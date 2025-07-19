@@ -14,6 +14,11 @@
 #define SPEC_ID_TRITON "triton"
 #define SPEC_ID_HUMAN_SPACE "space_human"
 
+#define SPEC_ID_ORC	"orc"
+#define SPEC_ID_GOBLIN	"goblin"
+#define SPEC_ID_ROUSMAN	"rousman"
+#define SPEC_ID_ZIZOMBIE	"zizombie"
+
 /// List of all species
 #define ALL_RACES_LIST list(\
 	SPEC_ID_HUMEN,\
@@ -30,12 +35,10 @@
 	SPEC_ID_KOBOLD,\
 	SPEC_ID_HOLLOWKIN,\
 	SPEC_ID_HALF_ORC,\
-	"orc",\
-	"goblin",\
-	"rousman",\
-	"zizombie",\
-	"kobold",\
-	"triton",\
+	SPEC_ID_ORC,\
+	SPEC_ID_GOBLIN,\
+	SPEC_ID_ROUSMAN,\
+	SPEC_ID_ZIZOMBIE,\
 	SPEC_ID_HUMAN_SPACE,\
 	)
 
@@ -47,8 +50,8 @@
 	SPEC_ID_TIEFLING,\
 	SPEC_ID_AASIMAR,\
 	SPEC_ID_HALF_ORC,\
-	"orc",\
-	"zizombie",\
+	SPEC_ID_ORC,\
+	SPEC_ID_ZIZOMBIE,\
 	SPEC_ID_ELF,\
 	SPEC_ID_HUMAN_SPACE,\
 	)
@@ -61,8 +64,8 @@
 	SPEC_ID_TIEFLING,\
 	SPEC_ID_AASIMAR,\
 	SPEC_ID_HALF_ORC,\
-	"orc",\
-	"zizombie",\
+	SPEC_ID_ORC,\
+	SPEC_ID_ZIZOMBIE,\
 	SPEC_ID_HUMAN_SPACE,\
 	)
 
