@@ -137,6 +137,12 @@
 	passcrawl = FALSE
 	climb_offset = 6
 
+/obj/structure/fluff/railing/fence/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(get_dir(loc, target) == dir)
+		return FALSE
+	return TRUE
+
 /obj/structure/fluff/railing/woodfence
 	name = "wooden fence"
 	desc = "A sturdy fence of wooden planks."
@@ -151,7 +157,7 @@
 	passcrawl = FALSE
 	climb_offset = 6
 
-/obj/structure/fluff/railing/fence/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/fluff/railing/woodfence/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(get_dir(loc, target) == dir)
 		return FALSE
@@ -1340,6 +1346,7 @@
 	density = FALSE
 	anchored = TRUE
 	max_integrity = 300
+	layer = 2.1
 
 /obj/structure/fluff/steamvent/Initialize()
 	. = ..()
