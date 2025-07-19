@@ -306,4 +306,4 @@
 	icon_state = "silktabard"
 	item_state = "silktabard"
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
-	allowed_age = list("Adult","Middle-Aged","Old","Immortal") //placeholder until younglings have onmob sprites for this item
+	allowed_ages = ALL_AGES_LIST //placeholder until younglings have onmob sprites for this item
