@@ -1,5 +1,5 @@
 /datum/job/mageapprentice
-	name = "Magician's Apprentice"
+	title = "Magician's Apprentice"
 	tutorial = "Your family managed to send you to college to learn the Arcyne Arts.\
 	 It's been stressful, but you'll earn your degree and become a fully fleged Magician one dae.\
 	  As long as you can keep your grades up, that is..."
@@ -36,7 +36,7 @@
 		backpack_contents = list(/obj/item/book/granter/spellbook/apprentice = 1, /obj/item/chalk = 1)
 	else
 		shoes = /obj/item/clothing/shoes/simpleshoes
-		shirt = /obj/item/clothing/shirt/dress/random
+		shirt = /obj/item/clothing/shirt/dress
 		pants = /obj/item/clothing/pants/tights/random
 		belt = /obj/item/storage/belt/leather/rope
 		beltl = /obj/item/storage/keyring/mageapprentice
@@ -44,7 +44,7 @@
 		armor = /obj/item/clothing/shirt/robe/newmage/adept
 		backr = /obj/item/storage/backpack/satchel
 		backpack_contents = list(/obj/item/book/granter/spellbook/apprentice = 1, /obj/item/chalk = 1)
-	if (H.age = AGE_ADULT)
+	if (H.age == AGE_ADULT)
 		H.adjust_skillrank(/datum/skill/magic/arcane, 2, TRUE)
 		H.adjust_spellpoints(4)
 	else
