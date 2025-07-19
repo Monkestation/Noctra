@@ -155,18 +155,21 @@
 		if(real_name in GLOB.heretical_players)
 			. += span_userdanger("HERETIC! SHAME!")
 
-		if(real_name in GLOB.outlawed_players)
-			. += span_userdanger("OUTLAW!")
-
 		if(iszizocultist(user) || iszizolackey(user))
 			if(virginity)
 				. += span_userdanger("VIRGIN!")
 
-		if(mind && mind.special_role)
-			if(mind && mind.special_role == "Bandit" && HAS_TRAIT(user, TRAIT_KNOWBANDITS))
+		var/is_bandit = FALSE
+		if(mind?.special_role == "Bandit")
+			is_bandit = TRUE
+			if((real_name in GLOB.outlawed_players) && HAS_TRAIT(user, TRAIT_KNOWBANDITS))
 				. += span_userdanger("BANDIT!")
-			if(mind && mind.special_role == "Vampire Lord")
-				. += span_userdanger("A MONSTER!")
+
+		if(!is_bandit && (real_name in GLOB.outlawed_players))
+			. += span_userdanger("OUTLAW!")
+
+		if(mind?.special_role == "Vampire Lord")
+			. += span_userdanger("A MONSTER!")
 
 		var/list/known_frumentarii = user.mind?.cached_frumentarii
 		if(name in known_frumentarii)
