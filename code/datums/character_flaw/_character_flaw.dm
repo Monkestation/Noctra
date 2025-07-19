@@ -779,8 +779,6 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(prob(50))
 		ADD_TRAIT(user, TRAIT_BEAUTIFUL, "[type]")
 
-	if(prob(25))
+	if(prob(30))
 		ADD_TRAIT(user, TRAIT_UGLY, "[type]")
-
-	if(HAS_TRAIT(user, TRAIT_BEAUTIFUL) && HAS_TRAIT(user, TRAIT_UGLY)) //fuck you. You WILL become normal.
-		REMOVE_TRAIT(user, TRAIT_BEAUTIFUL, "[type]")
+		return
