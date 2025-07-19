@@ -1,4 +1,4 @@
-
+GLOBAL_LIST_EMPTY(letters_sent)
 
 /obj/structure/fake_machine/mail
 	name = "HERMES"
@@ -74,6 +74,9 @@
 				playsound(X, 'sound/misc/mail.ogg', 100, FALSE, -1)
 				break
 		if(found)
+			if(P.info)
+				var/stripped_info = remove_color_tags(P.info)
+				GLOB.letters_sent |= stripped_info
 			visible_message("<span class='warning'>[user] sends something.</span>")
 			playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 			SStreasury.give_money_treasury(coin_loaded, "Mail Income")
@@ -99,6 +102,9 @@
 		else
 			to_chat(user, "<span class='warning'>The master of mails has perished?</span>")
 			return
+		if(P.info)
+			var/stripped_info = remove_color_tags(P.info)
+			GLOB.letters_sent |= stripped_info
 		visible_message("<span class='warning'>[user] sends something.</span>")
 		playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 		SStreasury.give_money_treasury(coin_loaded, "Mail")
@@ -164,7 +170,8 @@
 			process_confession(user, P)
 			return
 	if(istype(P, /obj/item/paper))
-		if(P.w_class >= WEIGHT_CLASS_BULKY)
+		var/obj/item/paper/given_paper = P
+		if(given_paper.w_class >= WEIGHT_CLASS_BULKY)
 			return
 		if(alert(user, "Send Mail?",,"YES","NO") == "YES")
 			var/send2place = input(user, "Where to? (Person or #number)", "VANDERLIN", null)
@@ -177,15 +184,18 @@
 				for(var/obj/structure/fake_machine/mail/X in SSroguemachine.hermailers)
 					if(X.ournum == box2find)
 						found = TRUE
-						P.mailer = sentfrom
-						P.mailedto = send2place
-						P.update_appearance(UPDATE_ICON_STATE | UPDATE_NAME)
-						P.forceMove(X.loc)
+						given_paper.mailer = sentfrom
+						given_paper.mailedto = send2place
+						given_paper.update_appearance(UPDATE_ICON_STATE | UPDATE_NAME)
+						given_paper.forceMove(X.loc)
 						X.say("New mail!")
 						playsound(X, 'sound/misc/mail.ogg', 100, FALSE, -1)
 						playsound(src.loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 						break
 				if(found)
+					if(given_paper.info)
+						var/stripped_info = remove_color_tags(given_paper.info)
+						GLOB.letters_sent |= stripped_info
 					visible_message("<span class='warning'>[user] sends something.</span>")
 					playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 					return
@@ -198,18 +208,21 @@
 				if(SSroguemachine.hermailermaster)
 					var/obj/item/roguemachine/mastermail/X = SSroguemachine.hermailermaster
 					findmaster = TRUE
-					P.mailer = sentfrom
-					P.mailedto = send2place
-					P.update_appearance(UPDATE_ICON_STATE | UPDATE_NAME)
-					P.forceMove(X.loc)
+					given_paper.mailer = sentfrom
+					given_paper.mailedto = send2place
+					given_paper.update_appearance(UPDATE_ICON_STATE | UPDATE_NAME)
+					given_paper.forceMove(X.loc)
 					var/datum/component/storage/STR = X.GetComponent(/datum/component/storage)
-					STR.handle_item_insertion(P, prevent_warning=TRUE)
+					STR.handle_item_insertion(given_paper, prevent_warning=TRUE)
 					X.new_mail=TRUE
 					X.update_appearance(UPDATE_ICON_STATE)
 					playsound(src.loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 				if(!findmaster)
 					to_chat(user, "<span class='warning'>The master of mails has perished?</span>")
 				else
+					if(given_paper.info)
+						var/stripped_info = remove_color_tags(given_paper.info)
+						GLOB.letters_sent |= stripped_info
 					visible_message("<span class='warning'>[user] sends something.</span>")
 					playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
 					send_ooc_note("<span class='boldnotice'>New letter from <b>[sentfrom].</b></span>", name = send2place)
@@ -351,15 +364,10 @@
 			return
 		if(GLOB.confessors)
 			var/no
-			if(", [C.signed]" in GLOB.confessors)
-				no = TRUE
 			if("[C.signed]" in GLOB.confessors)
 				no = TRUE
 			if(!no)
-				if(GLOB.confessors.len)
-					GLOB.confessors += ", [C.signed] - a [C.antag]"
-				else
-					GLOB.confessors += "[C.signed] - a [C.antag]"
+				GLOB.confessors += "[C.signed] - a [C.antag]"
 		qdel(C)
 		visible_message("<span class='warning'>[user] sends something.</span>")
 		playsound(loc, 'sound/magic/forgotten_bell.ogg', 80, FALSE, -1)

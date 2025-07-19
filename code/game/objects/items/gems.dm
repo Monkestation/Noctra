@@ -64,6 +64,7 @@
 	//color = "#15af158c"
 	icon_state = "emerald_cut"
 	sellprice = 44
+	attuned = /datum/attunement/earth
 
 /obj/item/gem/blue
 	name = "blortz"
@@ -71,6 +72,7 @@
 	//color = "#1ca5aa8c"
 	icon_state = "quartz_cut"
 	sellprice = 88
+	attuned = /datum/attunement/ice
 
 /obj/item/gem/yellow
 	name = "toper"
@@ -78,6 +80,7 @@
 	//color = "#e6a0088c"
 	icon_state = "topaz_cut"
 	sellprice = 25
+	attuned = /datum/attunement/electric
 
 /obj/item/gem/violet
 	name = "saffira"
@@ -85,6 +88,7 @@
 	//color = "#1733b38c"
 	icon_state = "sapphire_cut"
 	sellprice = 56
+	attuned = /datum/attunement/arcyne
 
 /obj/item/gem/diamond
 	name = "dorpel"
@@ -92,6 +96,7 @@
 	//color = "#ffffff8c"
 	icon_state = "diamond_cut"
 	sellprice = 121
+	attuned = /datum/attunement/light
 
 /obj/item/gem/red
 	name = "rubor"
