@@ -37,9 +37,8 @@
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			show_outlaw_headshot(H)
-			H.playsound_local(H, 'sound/misc/notice (2).ogg', 100, FALSE)
 	else
-		to_chat(user, span_warning("I need to get closer to see the scoundrels faces!"))
+		to_chat(user, span_warning("I need to get closer to see the scoundrels' faces!"))
 
 /obj/structure/fluff/walldeco/wantedposter/proc/show_outlaw_headshot(mob/user)
 	var/list/outlaws = list()
@@ -55,51 +54,78 @@
 	if(!length(outlaws))
 		to_chat(user, span_warning("There are no wanted criminals at the moment..."))
 		return
-	else if(user.real_name in GLOB.outlawed_players)
+
+	if(user.real_name in GLOB.outlawed_players)
 		var/list/funny = list("Yup. My face is on there.", "Wait a minute... That's me!", "Look at that handsome devil...", "At least I am wanted by someone...", "My chin can't be that big... right?")
 		to_chat(user, span_notice("[pick(funny)]"))
-	else
-		to_chat(user, span_notice("I recognize these faces as wanted criminals now."))
-
-	ADD_TRAIT(user, TRAIT_KNOWBANDITS, TRAIT_GENERIC)
+		if(!HAS_TRAIT(user, TRAIT_KNOWBANDITS))
+			ADD_TRAIT(user, TRAIT_KNOWBANDITS, TRAIT_GENERIC)
+			user.playsound_local(user, 'sound/misc/notice (2).ogg', 100, FALSE)
+			to_chat(user, span_notice("I can recognize these fine gentlemen as wanted people now."))
+	else if(!HAS_TRAIT(user, TRAIT_KNOWBANDITS))
+		ADD_TRAIT(user, TRAIT_KNOWBANDITS, TRAIT_GENERIC)
+		user.playsound_local(user, 'sound/misc/notice (2).ogg', 100, FALSE)
+		to_chat(user, span_notice("I can recognize these faces as wanted criminals now."))
 
 	var/dat = {"
 	<style>
 		.wanted-container {
 			display: grid;
 			grid-template-columns: repeat(3, 1fr);
-			gap: 15px;
-			padding: 10px;
+			gap: 20px;
+			padding: 15px;
 		}
-		.wanted-card {
-			border: 2px solid #8B0000;
-			border-radius: 3px;
+		.wanted-poster {
+			width: 160px;
+			height: 220px;
+			border: 3px double #5c2c0f;
+			background-color: #f5e7d0;
 			padding: 8px;
-			background: #1a1a1a;
+			box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
+			font-family: 'Times New Roman', serif;
+			display: flex;
+			flex-direction: column;
+		}
+		.wanted-header {
+			color: #c70404; /* Darker red */
+			font-size: 28px; /* Bigger */
+			font-weight: bold;
 			text-align: center;
-			box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-		}
-		.wanted-criminal {
-			color: #FF0000;
-			font-size: 12px;
-			margin-bottom: 4px;
+			margin-bottom: 10px;
 			text-transform: uppercase;
-			letter-spacing: 1px;
-			text-shadow: 1px 1px 2px black;
+			border-bottom: 2px solid #8B0000;
+			padding-bottom: 5px;
 		}
-		.wanted-name {
-			color: #e6a962; /* Chronicle orange color */
-			margin-top: 6px; /* Increased gap */
-			font-size: 13px;
-			text-shadow: 1px 1px 2px black;
+		.wanted-icon-container {
+			width: 120px; /* Slightly larger */
+			height: 100px; /* Slightly larger */
+			margin: 0 auto 10px auto;
+			border: 2px solid #5c2c0f;
+			background-color: #ba9d6c; /* Brown background */
+			padding: 3px;
 		}
 		.wanted-icon {
-			width: 96px;
-			height: 48px;
-			margin: 0 auto 4px auto; /* Added bottom margin */
-			image-rendering: pixelated;
-			border: 1px solid #444;
+			width: 100%;
+			height: 100%;
 			object-fit: cover;
+			image-rendering: pixelated;
+		}
+		.wanted-name {
+			color: #000000; /* Black */
+			font-size: 18px;
+			font-weight: bold;
+			text-align: center;
+			margin: 5px 0;
+			text-transform: uppercase;
+		}
+		.wanted-footer {
+			color: #8B0000;
+			font-size: 16px;
+			font-weight: bold;
+			text-align: center;
+			margin-top: auto; /* Pushes to bottom */
+			padding-top: 5px;
+			text-transform: uppercase;
 		}
 	</style>
 	<div class='wanted-container'>
@@ -110,19 +136,22 @@
 		if(outlaw_data["icon"])
 			icon_html = "<img class='wanted-icon' src='data:image/png;base64,[icon2base64(outlaw_data["icon"])]'>"
 		else
-			icon_html = "<div class='wanted-icon' style='background:#333;'></div>"
+			icon_html = "<div class='wanted-icon' style='background:#8B4513;'></div>"
 
 		dat += {"
-		<div class='wanted-card'>
-			<div class='wanted-criminal'>Criminal</div>
-			[icon_html]
+		<div class='wanted-poster'>
+			<div class='wanted-header'>WANTED</div>
+			<div class='wanted-icon-container'>
+				[icon_html]
+			</div>
 			<div class='wanted-name'>[outlaw_data["name"]]</div>
+			<div class='wanted-footer'>DEAD OR ALIVE</div>
 		</div>
 		"}
 
 	dat += "</div>"
 
-	var/datum/browser/popup = new(user, "wanted_posters", "<center>Wanted Criminals</center>", 500, 400)
+	var/datum/browser/popup = new(user, "wanted_posters", "<center>Wanted Posters</center>", 700, 600)
 	popup.set_content(dat)
 	popup.open()
 
