@@ -254,8 +254,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(radio_return & NOPASS)
 		return 1
 
-	var/datum/language/D = GLOB.language_datum_instances[language]
-	if(D.flags & SIGNLANG)
+	var/datum/language/speaker_language = GLOB.language_datum_instances[language]
+	if(speaker_language?.flags & SIGNLANG)
 		send_speech_sign(message, message_range, src, bubble_type, spans, language, message_mode, original_message)
 	else
 		send_speech(message, message_range, src, bubble_type, spans, language, message_mode, original_message)
@@ -266,7 +266,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	return 1
 
-/mob/living/proc/send_speech_sign(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language=null, message_mode, original_message)
+/mob/living/proc/send_speech_sign(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language, message_mode, original_message)
 	var/static/list/eavesdropping_modes = list(MODE_WHISPER = TRUE, MODE_WHISPER_CRIT = TRUE)
 	var/eavesdrop_range = 0
 
@@ -312,8 +312,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
 
 	//time for emoting!!
-	var/datum/language/D = GLOB.language_datum_instances[message_language]
-	var/sign_verb = pick(D.signlang_verb)
+	var/datum/language/speaker_language = GLOB.language_datum_instances[message_language]
+	var/sign_verb = safepick(speaker_language?.signlang_verb)
 	var/chatmsg = "<b>[src]</b> " + sign_verb + "."
 	visible_message(chatmsg, runechat_message = sign_verb, ignored_mobs = understanders)
 
