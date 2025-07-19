@@ -201,7 +201,7 @@ All foods are distributed among various categories. Use common sense.
 		record_round_statistic(STATS_FOOD_ROTTED)
 		return TRUE
 	if(!ismob(loc) && loc)
-		var/obj/item/reagent_containers/NU = new become_rot_type(location)
+		var/obj/item/reagent_containers/NU = new become_rot_type(loc)
 		reagents.trans_to(NU.reagents, reagents.maximum_volume)
 		qdel(src)
 		record_round_statistic(STATS_FOOD_ROTTED)
