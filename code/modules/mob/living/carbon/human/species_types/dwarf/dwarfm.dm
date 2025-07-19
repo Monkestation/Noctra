@@ -11,7 +11,7 @@
 
 /datum/species/dwarf/mountain
 	name = "Dwarf"
-	id = "dwarf"
+	id = SPEC_ID_DWARF
 	desc = "Shaped by Psydon and Necra, chosen by Malum.\
 	\n\n\
 	A proud and robust species of vertically challenged folk, \

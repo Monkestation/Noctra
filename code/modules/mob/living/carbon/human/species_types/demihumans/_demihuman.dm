@@ -11,7 +11,7 @@
 
 /datum/species/demihuman
 	name = "Hollow-Kin"
-	id = "demihuman"
+	id = SPEC_ID_HOLLOWKIN
 	desc = "Hollowkin are short lived, widely diverse, and have an insatiable hatred for dark elves. \
 	This hate stems from their long standing political neighbor and rival, \
 	the Zizonic dark-elven kingdoms of Subterra. \

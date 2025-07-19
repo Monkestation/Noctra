@@ -52,18 +52,16 @@
 	panel = "Spells"
 	click_to_activate = TRUE
 
-	/// Flags for type of spell
+	/// Variable for type of spell.
 	var/spell_type = SPELL_MANA
-	/// School of magic (Might go unused)
+	/// School of magic. (Might go unused)
 	var/school = SCHOOL_UNSET
-	/// Cost to learn this spell in the tree
+	/// Cost to learn this spell in the tree.
 	var/point_cost = 0
-	/// Cost to cast, mana or devotion
+	/// Cost to cast based on [spell_type].
 	var/spell_cost = 0
-	/// Cost to stamina for casting the spell. Defaults to spell_cost / 2
-	var/stamina_cost
 
-	/// The sound played on cast
+	/// The sound played on cast.
 	var/sound = 'sound/magic/whiteflame.ogg'
 
 	/// If the spell uses the wizard spell rank system, the cooldown reduction per rank of the spell
@@ -73,18 +71,19 @@
 	/// The max possible spell level
 	var/spell_max_level = 5
 
-	/// What is uttered when the user casts the spell
+	/// What is uttered when the user casts the spell.
 	var/invocation
-	/// What is shown in chat when the user casts the spell, only matters for INVOCATION_EMOTE
+	/// What is shown in chat when the user casts the spell, only matters for INVOCATION_EMOTE.
 	var/invocation_self_message
 	/// What type of invocation the spell is.
-	/// Can be "none", "whisper", "shout", "emote"
+	/// Can be "none", "whisper", "shout", "emote".
 	var/invocation_type = INVOCATION_NONE
 
+	/// Generic spell flags that may or may not be related to casting.
+	var/spell_flags = NONE
 	/// Flag for certain states that the spell requires the user be in to cast.
 	var/spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	/// This determines what type of antimagic is needed to block the spell.
-	/// (MAGIC_RESISTANCE, MAGIC_RESISTANCE_MIND, MAGIC_RESISTANCE_HOLY)
 	/// If SPELL_REQUIRES_NO_ANTIMAGIC is set in Spell requirements,
 	/// The spell cannot be cast if the caster has any of the antimagic flags set.
 	var/antimagic_flags = MAGIC_RESISTANCE
@@ -96,76 +95,80 @@
 	/// The amount of smoke to create on cast. This is a range, so a value of 5 will create enough smoke to cover everything within 5 steps.
 	var/smoke_amt = 0
 
-	/// Required worn items to cast
+	/// Required worn items to cast.
 	var/list/required_items
 
-	/// Skill associated with spell enhancements
+	/// Skill associated with spell enhancements.
 	var/associated_skill = /datum/skill/magic/arcane
-	/// Stat associated with spell enchancements
+	/// Stat associated with spell enchancements.
 	var/associated_stat = STATKEY_INT
-	/// Base exp gain when casting this spell
-	var/base_exp_gain = 0
-	/// Threshold to which we can increase [associated_skill] to
-	var/skill_level_threshold = SKILL_LEVEL_JOURNEYMAN
 
-	/// Assoc list of [datum/attunement] to value
+	/// Assoc list of [datum/attunement] to value.
 	var/list/attunements
-	/// Adjust some spell effects based on attunement
+	/// Value summed from caster and spell attunements to adjust some spell effects.
 	var/attuned_strength
-
-	/// Ignore the trait [TRAIT_SPELLBLOCK]
-	var/ignore_cockblock = FALSE
 
 	// Pointed vars
 	// In the TG refactor these weren't a given but almost all our spells are pointed including most spell types.
 	// I don't really like this but oh well its required without creating a mess of inheritance.
-	/// If this spell can be cast on yourself
+	/// If this spell can be cast on yourself.
 	var/self_cast_possible = TRUE
 	/// Message showing to the spell owner upon activating pointed spell.
 	var/active_msg
 	/// Message showing to the spell owner upon deactivating pointed spell.
 	var/deactive_msg
-	/// The casting range of our spell
+	/// The casting range of our spell.
 	var/cast_range = 7
-	/// Variable dictating if the spell will use turf based aim assist
+	/// Variable dictating if the spell will use turf based aim assist.
 	var/aim_assist = TRUE
 
 	// Charged vars
-	// Like the above, but worse since there is already charging behaviour and we are going to reuse
-	// as little of it as possible because its inconsistent
 	/// If the spell requires time to charge.
 	var/charge_required = TRUE
 	/// Whether we're currently charging the spell.
 	var/currently_charging = FALSE
-	/// Cost to charge.
-	/// Total drain is:
-	/// process_time is currently 4 Deciseconds from SSaction_charge
-	/// ([charge_time] / [process_time]) * charge_drain
+	/**
+	 * Cost to charge.
+	 *
+	 * Total drain is: ([charge_time] / [process_time]) * charge_drain
+	 * process_time is currently 4 from SSaction_charge.
+	 */
 	var/charge_drain = 0
-	/// Time to charge
+	/// Time to charge.
 	var/charge_time = 0
-	/// Slowdown while charging
+	/// Slowdown while charging.
 	var/charge_slowdown = 0
-	/// Message to show when we start casting
+	/// Message to show when we start casting.
 	var/charge_message
-
 	// Not using looping_sound due to their tendancy to break and hard delete,
-	// also all the invoke sounds are just static sounds
-	/// What soundpath should we play when we start chanelling
+	// also all the invoke sounds are just static sounds.
+	/// What sound file should we play when we start chanelling.
 	var/charge_sound = 'sound/magic/charging.ogg'
-	/// The actual sound we generate, don't mess with this
+	/// The actual sound we generate, don't mess with this.
 	var/sound/charge_sound_instance
-
 	// Following vars are used for mouse pointer charge only
-	/// World time that the charge started
+	/// World time that the charge started.
 	var/charge_started_at = 0
-	/// Charge target time, from get_charge_time()
+	/// Charge target time, from get_charge_time().
 	var/charge_target_time = 0
-	/// Whether the spell is currently charged, for cases where you want to keep casting after the initial charge (projectiles)
+	/// Whether the spell is currently charged, for cases where you want to keep casting after the initial charge (projectiles).
 	var/charged = FALSE
 
-	/// If the spell creates visual effects
+	/// If the spell creates visual effects.
 	var/has_visual_effects = TRUE
+
+	// Exp gain variables
+	// Experience gain is dependant on spell cost and the associated skill
+	/// Experience gain modifier, cost is multipled by this to get experience gain.
+	/// Set to 0 to stop experience gain.
+	var/experience_modifer = 0.5
+	/// Max skill level this spell can raise to.
+	var/experience_max_skill = SKILL_LEVEL_EXPERT
+	// Sleep exp variables are reliant on the caster having a mind
+	/// Whether this is always sleep experience.
+	var/experience_sleep = FALSE
+	/// If set we are sleep experience after this threshold and normal before.
+	var/experience_sleep_threshold = SKILL_LEVEL_APPRENTICE
 
 /datum/action/cooldown/spell/New(Target)
 	. = ..()
@@ -216,6 +219,11 @@
 		return PROCESS_KILL
 
 /datum/action/cooldown/spell/Grant(mob/grant_to)
+	// Spells are hard baked to pratically only work with living owners
+	if(!isliving(grant_to))
+		qdel(src)
+		return
+
 	// If our spell is mind-bound, we only wanna grant it to our mind
 	if(istype(target, /datum/mind))
 		var/datum/mind/mind_target = target
@@ -353,51 +361,51 @@
 
 	return Activate(target)
 
-/datum/action/cooldown/spell/proc/get_chargetime()
-	if(!charge_time)
-		return FALSE
-	if(!isliving(owner))
+/// Adjust the base charge time based on the users stats
+/datum/action/cooldown/spell/proc/get_adjusted_charge_time()
+	if(charge_time <= 0)
 		return
-	var/mob/living/L = owner
-	var/new_time = charge_time
-	new_time -= charge_time * L.get_skill_level(associated_skill) * 0.05
-	var/INT = L.STAINT
-	if(INT > 10)
-		new_time -= charge_time * INT * 0.02
-	else
-		new_time += charge_time * (10 - INT) * 0.02
 
-	return clamp(new_time, 1 DECISECONDS, 30 SECONDS)
-
-/datum/action/cooldown/spell/proc/get_fatigue_drain()
-	if(!isliving(owner))
-		return
 	var/mob/living/living_owner = owner
-	var/new_stamina_cost = spell_cost / 2
-	if(!isnull(stamina_cost))
-		new_stamina_cost = stamina_cost
-	var/base_cost = new_stamina_cost
+	var/new_time = charge_time
 
-	new_stamina_cost -= base_cost * (living_owner.get_skill_level(associated_skill) * 0.05)
+	new_time -= charge_time * living_owner.get_skill_level(associated_skill) * 0.05
 
-	var/owner_int = living_owner.STAINT
-	if(owner_int > 10)
-		new_stamina_cost -= (base_cost * (owner_int * 0.02))
+	var/owner_stat = living_owner.get_stat(associated_stat)
+	if(owner_stat > 10)
+		new_time -= charge_time * (owner_stat - 10) * 0.02
 	else
-		new_stamina_cost += (base_cost * ((10-owner_int)) * 0.02)
+		new_time += charge_time * (10 - owner_stat) * 0.02
+
+	return max(new_time, 1 DECISECONDS)
+
+/// Adjust the base spell cost based on the users stats
+/datum/action/cooldown/spell/proc/get_adjusted_cost(cost_override)
+	if(spell_cost <= 0 && !cost_override)
+		return
+
+	var/mob/living/living_owner = owner
+	var/new_cost = spell_cost
+	if(cost_override)
+		new_cost = cost_override
+
+	new_cost -= spell_cost * living_owner.get_skill_level(associated_skill) * 0.03
+
+	var/owner_stat = living_owner.get_stat(associated_stat)
+	if(owner_stat > 10)
+		new_cost -= spell_cost * (owner_stat - 10) * 0.02
+	else
+		new_cost += spell_cost * (10 - owner_stat) * 0.02
+
 	var/owner_encumbrance = living_owner.get_encumbrance()
 	if(owner_encumbrance > 0.4)
-		new_stamina_cost += base_cost * (owner_encumbrance * 0.5)
+		new_cost += spell_cost * owner_encumbrance * 0.5
 
-	return max(new_stamina_cost, 0)
+	return max(new_cost, 0)
 
 /// Do any attunement handling in here or any time after before_cast
 /datum/action/cooldown/spell/proc/handle_attunements()
 	SHOULD_CALL_PARENT(TRUE)
-
-	if(!isliving(owner))
-		attuned_strength = 1
-		return
 
 	var/mob/living/caster = owner
 	var/list/datum/mana_pool/usable_pools = caster.get_all_pools()
@@ -423,7 +431,7 @@
 	if(!owner)
 		CRASH("[type] - can_cast_spell called on a spell without an owner!")
 
-	if(!ignore_cockblock && HAS_TRAIT(owner, TRAIT_SPELLBLOCK))
+	if(!(spell_flags & SPELL_IGNORE_SPELLBLOCK) && HAS_TRAIT(owner, TRAIT_SPELLBLOCK))
 		if(feedback)
 			to_chat(owner, span_warning("I can't seem to concentrate on casting..."))
 		return FALSE
@@ -539,7 +547,9 @@
 
 	if(!(precast_result & SPELL_NO_IMMEDIATE_COST))
 		// Invoke the base cost of the spell in whatever unit it uses based on spell_type
-		invoke_cost()
+		var/spent_cost = invoke_cost()
+		if(spent_cost)
+			handle_exp(spent_cost)
 
 	// And then proceed with the aftermath of the cast
 	// Final effects that happen after all the casting is done can go here
@@ -558,6 +568,7 @@
  * - SPELL_CANCEL_CAST will stop the spell from being cast.
  * - SPELL_NO_FEEDBACK will prevent the spell from calling [proc/spell_feedback] on cast. (invocation, sounds)
  * - SPELL_NO_IMMEDIATE_COOLDOWN will prevent the spell from starting its cooldown between cast and before after_cast.
+ * - SPELL_NO_IMMEDIATE_COST will prevent the spell from charging its cost and subsequent gain of experience between cast and before after_cast.
  */
 /datum/action/cooldown/spell/proc/before_cast(atom/cast_on)
 	SHOULD_CALL_PARENT(TRUE)
@@ -592,7 +603,7 @@
 			do_after_flags &= ~IGNORE_USER_LOC_CHANGE
 		on_start_charge()
 		var/success = TRUE
-		if(!do_after(owner, get_chargetime(), timed_action_flags = do_after_flags))
+		if(!do_after(owner, get_adjusted_charge_time(), timed_action_flags = do_after_flags))
 			success = FALSE
 			sig_return |= SPELL_CANCEL_CAST
 
@@ -642,7 +653,7 @@
 		smoke.set_up(smoke_amt, loca = get_turf(owner))
 		smoke.start()
 
-	if(has_visual_effects && isliving(owner))
+	if(has_visual_effects)
 		var/mob/living/caster = owner
 		caster.finish_spell_visual_effects(attunements)
 
@@ -681,7 +692,7 @@
 	if(charge_sound_instance)
 		playsound(owner, charge_sound_instance, 50, FALSE, channel = CHANNEL_CHARGED_SPELL)
 
-	if(has_visual_effects && isliving(owner))
+	if(has_visual_effects)
 		var/mob/living/caster = owner
 		caster.start_spell_visual_effects(attunements)
 
@@ -723,7 +734,7 @@
 		// Play a null sound in to cancel the sound playing, because byond
 		playsound(owner, sound(null, repeat = 0), 50, FALSE, channel = CHANNEL_CHARGED_SPELL)
 
-	if(has_visual_effects && isliving(owner))
+	if(has_visual_effects)
 		var/mob/living/caster = owner
 		caster.cancel_spell_visual_effects()
 
@@ -742,12 +753,6 @@
 
 	if(invocation_type == INVOCATION_NONE)
 		return TRUE
-
-	// If you want a spell usable by ghosts for some reason, it must be INVOCATION_NONE
-	if(!isliving(owner))
-		if(feedback)
-			to_chat(owner, span_warning("You need to be living to invoke [src]!"))
-		return FALSE
 
 	var/mob/living/living_owner = owner
 	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(living_owner, TRAIT_EMOTEMUTE))
@@ -831,20 +836,24 @@
 
 /// Check if the spell is castable by cost
 /datum/action/cooldown/spell/proc/check_cost(cost_override, feedback = TRUE)
-	var/used_cost = spell_cost
-	if(cost_override)
-		used_cost = cost_override
+	var/mob/living/caster = owner
 
+	var/used_cost = get_adjusted_cost(cost_override)
 	if(used_cost <= 0)
 		return TRUE
 
+	if(!HAS_TRAIT(owner, TRAIT_NOSTAMINA))
+		var/stamina_spell = (spell_type == SPELL_STAMINA)
+		if(!caster.check_stamina(used_cost / (1 + stamina_spell)))
+			if(feedback)
+				to_chat(owner, span_warning("I don't have enough stamina to cast!"))
+			return FALSE
+
+	if(spell_type == NONE)
+		return
+
 	switch(spell_type)
 		if(SPELL_MANA)
-			if(!isliving(owner))
-				if(feedback)
-					to_chat(owner, span_warning("I have no mana!"))
-				return FALSE
-			var/mob/living/caster = owner
 			if(!caster.has_mana_available(attunements, used_cost))
 				if(feedback)
 					to_chat(owner, span_warning("I am too drained to cast!"))
@@ -853,8 +862,8 @@
 			return TRUE
 
 		if(SPELL_MIRACLE)
-			var/mob/living/carbon/human/H = owner
-			if(!H.cleric?.check_devotion(spell_cost))
+			var/mob/living/carbon/human/H = caster
+			if(!istype(H) || !H.cleric?.check_devotion(spell_cost))
 				if(feedback)
 					to_chat(owner, span_warning("My devotion is too weak!"))
 				return FALSE
@@ -885,17 +894,18 @@
  * Charge the owner with the cost of the spell.
  *
  * Vars
- * cost_override override the used cost
- * type_override override the method of charging cost
- * re_run if the proc is being recursively run due to lack of requirements
+ * * cost_override override the used cost
+ * * type_override override the method of charging cost
+ * * re_run if the proc is being recursively run due to lack of requirements
+ *
+ * Returns
+ * * Cost used
  */
 /datum/action/cooldown/spell/proc/invoke_cost(cost_override, type_override, re_run = FALSE)
-	if(!owner || !isliving(owner))
+	if(!owner)
 		return
 
-	var/used_cost = spell_cost
-	if(cost_override)
-		used_cost = cost_override
+	var/used_cost = get_adjusted_cost(cost_override)
 
 	if(used_cost <= 0)
 		return
@@ -905,10 +915,11 @@
 		used_type = type_override
 
 	if(!re_run)
-		if(cost_override)
-			owner.adjust_stamina(-(used_cost / 2))
-		else
-			owner.adjust_stamina(get_fatigue_drain())
+		var/stamina_spell = (used_type == SPELL_STAMINA)
+		owner.adjust_stamina(-(used_cost / (1 + stamina_spell)))
+
+	if(spell_type == NONE)
+		return // No return value == No exp
 
 	switch(used_type)
 		if(SPELL_MANA)
@@ -917,18 +928,38 @@
 
 		if(SPELL_MIRACLE)
 			var/mob/living/carbon/human/H = owner
-			if(!H.cleric)
-				invoke_cost(used_cost, SPELL_MANA, TRUE)
-				return
+			if(!istype(H) || !H.cleric)
+				return invoke_cost(used_cost, SPELL_MANA, TRUE)
 			H.cleric.update_devotion(-used_cost)
 
 		if(SPELL_ESSENCE)
 			var/obj/item/clothing/gloves/essence_gauntlet/gaunt = target
 			if(!gaunt.check_gauntlet_validity(owner))
-				invoke_cost(used_cost, SPELL_MANA, TRUE)
-				return
+				return invoke_cost(used_cost, SPELL_MANA, TRUE)
 
 			gaunt.consume_essence(used_cost, attunements)
+
+	return used_cost
+
+/datum/action/cooldown/spell/proc/handle_exp(cost_in)
+	if(experience_modifer <= 0)
+		return
+	if(!associated_skill)
+		return
+
+	var/skill_level = owner.get_skill_level(associated_skill)
+	if(experience_max_skill && (skill_level >= experience_max_skill))
+		return
+
+	var/mob/living/caster = owner
+	var/stat_modifier = caster.get_stat(associated_stat) * 0.1
+
+	var/experience_gain = cost_in * experience_modifer * stat_modifier
+	if(owner.mind)
+		if(experience_sleep || (experience_sleep_threshold && (skill_level >= experience_sleep_threshold)))
+			owner.mind.add_sleep_experience(associated_skill, experience_gain)
+			return
+	owner.adjust_experience(associated_skill, experience_gain)
 
 /// Try to begin the casting process on mouse down
 /datum/action/cooldown/spell/proc/start_casting(client/source, atom/_target, turf/location, control, params)
@@ -971,7 +1002,7 @@
 	owner.update_mouse_pointer()
 
 	charge_started_at = world.time
-	charge_target_time = get_chargetime()
+	charge_target_time = get_adjusted_charge_time()
 
 /// Attempt to cast the spell after the mouse up
 /datum/action/cooldown/spell/proc/try_casting(client/source, atom/_target, turf/location, control, params)

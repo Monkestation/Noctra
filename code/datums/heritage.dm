@@ -688,7 +688,7 @@
 	// Build mix string
 	if(istype(dad_species, /datum/species/human/northern) || istype(mom_species, /datum/species/human/northern))
 		mix_text += "human+"
-	if(istype(dad_species, /datum/species/elf) || istype(mom_species, /datum/species/elf))
+	if(istype(dad_species, /datum/species/elf/snow) || istype(mom_species, /datum/species/elf/snow))
 		mix_text += "elf+"
 	if(istype(dad_species, /datum/species/elf/dark) || istype(mom_species, /datum/species/elf/dark))
 		mix_text += "darkelf+"
@@ -778,7 +778,7 @@
 		to_chat(src, "FamilyUI Toggled [family_UI ? "On" : "Off"]")
 
 /mob/living/carbon/human/proc/ApplySpouseUI(toggle_true = FALSE)
-	if(!spouse_mob)
+	if(!spouse_mob || !client)
 		return
 	if(!spouse_indicator)
 		spouse_indicator = new('icons/relations.dmi', loc = spouse_mob, icon_state = "related")
