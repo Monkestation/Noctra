@@ -54,6 +54,8 @@ jobs:
         with:
           path: ~/.cargo
           key: ${{ runner.os }}-rust-${{ hashFiles('tools/ci/ci_dependencies.sh')}}
+          restore-keys: |
+            ${{ runner.os }}-rust-
       - name: Install OpenDream
         uses: robinraju/release-downloader@v1.12
         with:
