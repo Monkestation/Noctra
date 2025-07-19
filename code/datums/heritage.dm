@@ -778,7 +778,7 @@
 		to_chat(src, "FamilyUI Toggled [family_UI ? "On" : "Off"]")
 
 /mob/living/carbon/human/proc/ApplySpouseUI(toggle_true = FALSE)
-	if(!spouse_mob)
+	if(!spouse_mob || !client)
 		return
 	if(!spouse_indicator)
 		spouse_indicator = new('icons/relations.dmi', loc = spouse_mob, icon_state = "related")
