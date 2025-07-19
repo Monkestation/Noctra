@@ -11313,6 +11313,13 @@
 	},
 /turf/open/floor/grass,
 /area/rogue/outdoors/rtfield/safe)
+"gDv" = (
+/obj/machinery/essence/infuser{
+	pixel_x = 0;
+	pixel_y = -5
+	},
+/turf/open/floor/blocks/stonered/tiny,
+/area/rogue/indoors/town/clinic_large/apothecary)
 "gDz" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1;
@@ -18270,10 +18277,6 @@
 	},
 /turf/open/floor/carpet,
 /area/rogue/indoors/town/tavern)
-"kXT" = (
-/obj/machinery/essence/test_tube,
-/turf/open/floor/blocks/stonered/tiny,
-/area/rogue/indoors/town/clinic_large/apothecary)
 "kXX" = (
 /obj/structure/bookcase/random/legends,
 /turf/open/floor/carpet/red,
@@ -97098,9 +97101,9 @@ uho
 uho
 uho
 akL
-kXT
-obS
 dJT
+obS
+gDv
 jsC
 cDb
 obS
