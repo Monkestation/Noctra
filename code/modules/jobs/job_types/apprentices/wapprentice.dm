@@ -43,6 +43,7 @@
 		beltl = /obj/item/storage/keyring/mageapprentice
 		beltr = /obj/item/storage/magebag/apprentice
 		backr = /obj/item/storage/backpack/satchel
+		backpack_contents = list(/obj/item/book/granter/spellbook/apprentice = 1, /obj/item/chalk = 1)
 	H.adjust_skillrank(/datum/skill/magic/arcane, pick(2,3), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
@@ -65,7 +66,7 @@
 	 It's been stressful, but you'll earn your degree and become a fully fleged Magician one dae.\
 	  As long as you can keep your grades up, that is..."
 	outfit = /datum/outfit/job/wassociate/mageapprentice
-	allowed_ages = list(AGE_ADULT, AGE_CHILD)
+	allowed_ages = list(AGE_CHILD, AGE_ADULT)
 
 	category_tags = list(CTAG_MAGIE)
 
@@ -79,6 +80,7 @@
 		beltr = /obj/item/storage/magebag/apprentice
 		armor = /obj/item/clothing/shirt/robe/newmage/adept
 		backr = /obj/item/storage/backpack/satchel
+		backpack_contents = list(/obj/item/book/granter/spellbook/apprentice = 1, /obj/item/chalk = 1)
 	else
 		shoes = /obj/item/clothing/shoes/simpleshoes
 		shirt = /obj/item/clothing/shirt/dress/random
@@ -88,7 +90,11 @@
 		beltr = /obj/item/storage/magebag/apprentice
 		armor = /obj/item/clothing/shirt/robe/newmage/adept
 		backr = /obj/item/storage/backpack/satchel
-	H.adjust_skillrank(/datum/skill/magic/arcane, pick(1,2), TRUE)
+		backpack_contents = list(/obj/item/book/granter/spellbook/apprentice = 1, /obj/item/chalk = 1)
+	if (H.age = AGE_ADULT)
+		H.adjust_skillrank(/datum/skill/magic/arcane, 2, TRUE)
+	else
+		H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE) //children can have one spellpoint, as a treat.
 	H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
