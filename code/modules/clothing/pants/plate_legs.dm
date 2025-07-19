@@ -105,7 +105,7 @@
 
 /obj/item/clothing/pants/platelegs/silver
 	name = "silver platelegs"
-	desc = "A finely forged pair of silver plateleggings, offering additional protection against blunt force."
+	desc = "A finely forged pair of silver plate leggings, offering additional protection against blunt force."
 	icon_state = "silverlegs"
 	allowed_age = list("Adult","Middle-Aged","Old","Immortal") //placeholder until younglings have onmob sprites for this item
 	armor = ARMOR_PLATE_SILVER
