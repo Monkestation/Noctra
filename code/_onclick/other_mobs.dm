@@ -484,10 +484,7 @@
 			to_chat(src, span_warning("That's too high for me..."))
 			return
 
-	if(mmb_intent) // how
-		changeNext_move(mmb_intent.clickcd)
-	else
-		changeNext_move(CLICK_CD_FAST)
+	changeNext_move(mmb_intent?.clickcd ? mmb_intent.clickcd : CLICK_CD_MELEE)
 
 	face_atom(A)
 
