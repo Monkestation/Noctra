@@ -763,7 +763,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/witless_pixie
 	name = "Witless Pixie"
 	desc = "By some cruel twist of fate, you have been born a dainty-minded, dim-witted klutz. Yours is a life of constant misdirection, confusion and general incompetence. \
-	\nIt is no small blessing your dazzling looks make up for this, sometimes."
+	\nIt is no small blessing your dazzling looks make up for this, sometimes. \n\nSometimes... they do you no favours at all. \"
 
 /datum/charflaw/witless_pixie/on_mob_creation(mob/user)
 	if(!ishuman(user))
@@ -775,4 +775,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/witless_pixie/flaw_on_life(mob/user)
 
 	if(prob(50))
-		ADD_TRAIT(user, TRAIT_BEAUTIFUL, "[type]")
+			if(prob(25))
+				ADD_TRAIT(user, TRAIT_UGLY, "[type]")
+		else
+			ADD_TRAIT(user, TRAIT_BEAUTIFUL, "[type]")
