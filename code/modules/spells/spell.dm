@@ -653,7 +653,7 @@
 		smoke.set_up(smoke_amt, loca = get_turf(owner))
 		smoke.start()
 
-	if(has_visual_effect)
+	if(has_visual_effects)
 		var/mob/living/caster = owner
 		caster.finish_spell_visual_effects(attunements)
 
