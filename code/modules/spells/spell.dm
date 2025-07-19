@@ -161,7 +161,7 @@
 	// Experience gain is dependant on spell cost and the associated skill
 	/// Experience gain modifier, cost is multipled by this to get experience gain.
 	/// Set to 0 to stop experience gain.
-	var/experience_modifer = 0.6
+	var/experience_modifer = 0.5
 	/// Max skill level this spell can raise to.
 	var/experience_max_skill = SKILL_LEVEL_EXPERT
 	// Sleep exp variables are reliant on the caster having a mind
