@@ -52,7 +52,7 @@ SUBSYSTEM_DEF(crediticons)
 		GLOB.credits_icons[thename]["icon"] = rendered_icon
 		GLOB.credits_icons[thename]["vc"] = actor.voice_color
 
-/datum/controller/subsystem/crediticons/proc/get_credit_icon(mob/living/carbon/human/target)
+/datum/controller/subsystem/crediticons/proc/get_credit_icon(mob/living/carbon/human/target, crop_to_upper_half = FALSE)
 	if(!target || !istype(target) || !target.mind || !target.client)
 		return null
 
@@ -63,6 +63,14 @@ SUBSYSTEM_DEF(crediticons)
 		if(used_title)
 			credit_name = "[credit_name]\nthe [used_title]"
 
-	if(GLOB.credits_icons[credit_name]?["icon"])
-		return GLOB.credits_icons[credit_name]["icon"]
-	return null
+	if(!GLOB.credits_icons[credit_name]?["icon"])
+		return null
+
+	var/icon/credit_icon = GLOB.credits_icons[credit_name]["icon"]
+
+	if(crop_to_upper_half)
+		var/icon/cropped_icon = icon(credit_icon)
+		cropped_icon.Crop(1, 49, 96, 96)
+		return cropped_icon
+
+	return credit_icon

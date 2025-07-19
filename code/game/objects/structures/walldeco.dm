@@ -32,6 +32,7 @@
 	dir = pick(GLOB.cardinals)
 
 /obj/structure/fluff/walldeco/wantedposter/examine(mob/user)
+	. = ..()
 	if(user.Adjacent(src))
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -40,27 +41,25 @@
 	else
 		to_chat(user, span_warning("I need to get closer to see the scoundrels faces!"))
 
-	return ..()
-
 /obj/structure/fluff/walldeco/wantedposter/proc/show_outlaw_headshot(mob/user)
 	var/list/outlaws = list()
 
 	for(var/mob/living/carbon/human/outlaw in GLOB.player_list)
 		if(outlaw.real_name in GLOB.outlawed_players)
-			var/icon/credit_icon = SScrediticons.get_credit_icon(outlaw)
+			var/icon/credit_icon = SScrediticons.get_credit_icon(outlaw, TRUE)
 			outlaws += list(list(
 				"name" = outlaw.real_name,
 				"icon" = credit_icon
 			))
 
 	if(!length(outlaws))
-		to_chat(user, span_warning("There are no wanted criminals at the moment.."))
+		to_chat(user, span_warning("There are no wanted criminals at the moment..."))
 		return
-	else if(user in outlaws)
+	else if(user.real_name in GLOB.outlawed_players)
 		var/list/funny = list("Yup. My face is on there.", "Wait a minute... That's me!", "Look at that handsome devil...", "At least I am wanted by someone...", "My chin can't be that big... right?")
-		to_chat(user, "<b>[pick(funny)]</b>")
+		to_chat(user, span_notice("[pick(funny)]"))
 	else
-		to_chat(user, "<b>I now know the faces of the local bandits and other outlaws.</b>")
+		to_chat(user, span_notice("I recognize these faces as wanted criminals now."))
 
 	ADD_TRAIT(user, TRAIT_KNOWBANDITS, TRAIT_GENERIC)
 
@@ -80,19 +79,27 @@
 			text-align: center;
 			box-shadow: 0 2px 4px rgba(0,0,0,0.5);
 		}
-		.wanted-name {
+		.wanted-criminal {
 			color: #FF0000;
-			font-weight: bold;
-			margin-top: 2px;
+			font-size: 12px;
+			margin-bottom: 4px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			text-shadow: 1px 1px 2px black;
+		}
+		.wanted-name {
+			color: #e6a962; /* Chronicle orange color */
+			margin-top: 6px; /* Increased gap */
 			font-size: 13px;
 			text-shadow: 1px 1px 2px black;
 		}
 		.wanted-icon {
 			width: 96px;
-			height: 96px;
-			margin: 0 auto;
+			height: 48px;
+			margin: 0 auto 4px auto; /* Added bottom margin */
 			image-rendering: pixelated;
 			border: 1px solid #444;
+			object-fit: cover;
 		}
 	</style>
 	<div class='wanted-container'>
@@ -107,6 +114,7 @@
 
 		dat += {"
 		<div class='wanted-card'>
+			<div class='wanted-criminal'>Criminal</div>
 			[icon_html]
 			<div class='wanted-name'>[outlaw_data["name"]]</div>
 		</div>
