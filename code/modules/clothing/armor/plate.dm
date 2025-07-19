@@ -7,7 +7,6 @@
 	equip_delay_self = 4 SECONDS
 	unequip_delay_self = 4 SECONDS
 	equip_sound = 'sound/foley/equip/equip_armor_plate.ogg'
-	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	pickup_sound = "rustle"
 	sellprice = VALUE_STEEL_ARMOR
 	clothing_flags = CANT_SLEEP_IN
