@@ -766,7 +766,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	\n\n EXPECT A DIFFICULT, MECHANICALLY UNFAIR EXPERIENCE. \n Rakshari, Hollowkin and Kobolds do not apply, given they already have no lux. "
 	var/nochekk = TRUE
 
-/datum/charflaw/lux_taken/flaw_on_life(mob/user)
+/datum/charflaw/lux_taken/after_spawn(mob/user)
 	if(!ishuman(user))
 		return
 
