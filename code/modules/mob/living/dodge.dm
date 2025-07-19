@@ -17,10 +17,6 @@
 	// Find a valid dodge turf
 	var/turf/turfy = find_dodge_turf(dirry)
 
-	// Check if we can dodge
-	if(pulledby || !turfy)
-		turfy = get_turf(src)
-
 	if(do_dodge(user, turfy))
 		flash_fullscreen("blackflash2")
 		user.aftermiss()
@@ -119,6 +115,9 @@
  */
 /mob/living/proc/is_valid_dodge_turf(turf/target_turf)
 	if(!target_turf || target_turf.density)
+		return FALSE
+
+	if(isopenspace(target_turf))
 		return FALSE
 
 	for(var/atom/movable/AM in target_turf)
