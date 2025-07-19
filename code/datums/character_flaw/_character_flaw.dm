@@ -782,7 +782,5 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 	if(prob(50))
 		ADD_TRAIT(user, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
-
 	else if(prob(30))
 		ADD_TRAIT(user, TRAIT_UGLY, TRAIT_GENERIC)
-		return
