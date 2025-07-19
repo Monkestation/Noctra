@@ -373,7 +373,7 @@
 
 	var/owner_stat = living_owner.get_stat(associated_stat)
 	if(owner_stat > 10)
-		new_time -= charge_time * owner_stat * 0.02
+		new_time -= charge_time * (owner_stat - 10) * 0.02
 	else
 		new_time += charge_time * (10 - owner_stat) * 0.02
 
@@ -389,11 +389,11 @@
 	if(cost_override)
 		new_cost = cost_override
 
-	new_cost -= spell_cost * living_owner.get_skill_level(associated_skill) * 0.05
+	new_cost -= spell_cost * living_owner.get_skill_level(associated_skill) * 0.03
 
 	var/owner_stat = living_owner.get_stat(associated_stat)
 	if(owner_stat > 10)
-		new_cost -= spell_cost * owner_stat * 0.02
+		new_cost -= spell_cost * (owner_stat - 10) * 0.02
 	else
 		new_cost += spell_cost * (10 - owner_stat) * 0.02
 
