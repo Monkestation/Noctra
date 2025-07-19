@@ -2,12 +2,12 @@
 	name = "Comedia"
 	desc = "Say something funny to someone in high spirits, it will brighten their mood."
 	button_icon_state = "comedy"
+	has_visual_effects = FALSE
 	antimagic_flags = NONE
 
 	invocation_type = INVOCATION_SHOUT
 
-	charge_drain = FALSE
-	has_visual_effects = FALSE
+	charge_required = FALSE
 	cooldown_time = 1 MINUTES
 
 	var/message

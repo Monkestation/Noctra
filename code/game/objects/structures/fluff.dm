@@ -25,12 +25,12 @@
 	name = "railing"
 	icon = 'icons/roguetown/misc/railing.dmi'
 	icon_state = "railing"
-	density = FALSE
+	density = TRUE
 	anchored = TRUE
 	deconstructible = FALSE
 	flags_1 = ON_BORDER_1
 	climbable = TRUE
-	pass_flags_self = PASSTABLE|LETPASSTHROW
+	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
 	var/passcrawl = TRUE
 	layer = ABOVE_MOB_LAYER
 
@@ -57,18 +57,14 @@
 			layer = ABOVE_MOB_LAYER
 			plane = GAME_PLANE_UPPER
 
-/obj/structure/fluff/railing/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/fluff/railing/CanPass(atom/movable/mover, turf/target)
 	. = ..()
-	if(dir in CORNERDIRS)
-		return TRUE
-	if(mover.throwing || mover.movement_type & (FLOATING|FLYING))
-		return TRUE
 	if(get_dir(loc, target) == dir)
-		if(!passcrawl || !isliving(mover))
-			return FALSE
-		var/mob/living/M = mover
-		if(M.body_position != LYING_DOWN)
-			return FALSE
+		if(passcrawl && isliving(mover))
+			var/mob/living/M = mover
+			if(M.body_position == LYING_DOWN)
+				return TRUE
+		return . || mover.throwing || (mover.movement_type & (FLOATING|FLYING))
 	return TRUE
 
 /obj/structure/fluff/railing/CanAStarPass(ID, to_dir, requester)
@@ -137,6 +133,7 @@
 	layer = 2.91
 	climbable = FALSE
 	max_integrity = 400
+	pass_flags_self = PASSSTRUCTURE
 	passcrawl = FALSE
 	climb_offset = 6
 
@@ -298,7 +295,7 @@
 	desc = "An intricately-carved grandfather clock. On its pendulum is engraved the sigil of clan Kharzarad, a sickle behind an hourglass."
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "clock"
-	density = FALSE
+	density = TRUE
 	anchored = FALSE
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
@@ -373,10 +370,11 @@
 		. += "Oh no, it's [station_time_timestamp("hh:mm")] on a [day]."
 		// . += span_info("(Round Time: [gameTimestamp("hh:mm:ss", REALTIMEOFDAY - SSticker.round_start_irl)].)")
 
-/obj/structure/fluff/clock/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/fluff/clock/CanPass(atom/movable/mover, turf/target)
 	. = ..()
-	if(get_dir(loc, mover) == dir)
-		return FALSE
+	if(get_dir(loc, target) == dir)
+		return
+	return TRUE
 
 /obj/structure/fluff/clock/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
 	SIGNAL_HANDLER
@@ -567,7 +565,7 @@
 	desc = ""
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "bstatue"
-	density = FALSE
+	density = TRUE
 	anchored = TRUE
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
@@ -596,10 +594,11 @@
 						user.put_in_hands(I)
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/structure/fluff/statue/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/fluff/statue/CanPass(atom/movable/mover, turf/target)
 	. = ..()
-	if(get_dir(loc, mover) == dir)
-		return FALSE
+	if(get_dir(loc, target) == dir)
+		return
+	return TRUE
 
 /obj/structure/fluff/statue/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
 	SIGNAL_HANDLER
@@ -966,7 +965,7 @@
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	break_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
-	density = FALSE
+	density = TRUE
 	anchored = TRUE
 	blade_dulling = DULLING_BASHCHOP
 	layer = BELOW_MOB_LAYER
@@ -1001,10 +1000,11 @@
 	..()
 	M.reset_offsets("bed_buckle")
 
-/obj/structure/fluff/psycross/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/fluff/psycross/CanPass(atom/movable/mover, turf/target)
 	. = ..()
 	if(get_dir(loc, mover) == dir)
-		return FALSE
+		return
+	return TRUE
 
 /obj/structure/fluff/psycross/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
 	SIGNAL_HANDLER

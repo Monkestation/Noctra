@@ -132,7 +132,7 @@
 	return TRUE
 
 /datum/action/cooldown/spell/undirected/touch/prestidigitation/proc/after_action(action_type)
-	var/fatigue_used = get_fatigue_drain() //note that as our skills/stats increases, our fatigue drain DECREASES, so this means less xp, too. which is what we want since this is a basic spell, not a spam-for-xp-forever kinda beat
+	var/fatigue_used = get_adjusted_cost() //note that as our skills/stats increases, our fatigue drain DECREASES, so this means less xp, too. which is what we want since this is a basic spell, not a spam-for-xp-forever kinda beat
 	var/extra_fatigue = 0 // extra fatigue isn't considered in xp calculation
 	switch(action_type)
 		if(PRESTI_CLEAN)

@@ -22,6 +22,12 @@
 	/// Will have no effect unless on_creation has 3+ args
 	var/extra_args
 
+/datum/action/cooldown/spell/status/New(Target)
+	. = ..()
+	if(!status_effect)
+		stack_trace("Status spell [type] created without status effect.")
+		qdel(src)
+
 /datum/action/cooldown/spell/status/is_valid_target(atom/cast_on)
 	. = ..()
 	if(!.)
@@ -32,6 +38,8 @@
 	. = ..()
 	if(. & SPELL_CANCEL_CAST)
 		return
+	if(!isnum(duration))
+		duration = initial(status_effect.duration)
 	if(duration_scaling)
 		if(duration_modification)
 			duration += duration_modification * attuned_strength

@@ -7,11 +7,16 @@
 	var/datum/plant_def/plant_type
 	var/spread_chance = 75
 
-/obj/structure/wild_plant/Initialize(mapload, ...)
+/obj/structure/wild_plant/Initialize(mapload, incoming_type, incoming_spread)
 	. = ..()
-	if(!plant_type || !ispath(plant_type))
-		return
+	if(incoming_type)
+		plant_type = incoming_type
+	if(!plant_type)
+		plant_type = /datum/plant_def/cabbage
 	plant_type = new plant_type
+
+	if(incoming_spread)
+		spread_chance = incoming_spread
 	if(prob(spread_chance))
 		try_spread()
 
@@ -46,6 +51,7 @@
 		if(is_anchored_dense_turf(turf))
 			continue
 		new /obj/structure/wild_plant(turf, plant_type.type, spread_chance - 20)
+
 		if(!prob(spread_chance))
 			return
 

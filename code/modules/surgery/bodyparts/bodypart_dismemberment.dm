@@ -54,7 +54,7 @@
 	C.add_stress(/datum/stressevent/dismembered)
 	var/stress2give
 	if(!skeletonized && C.dna?.species) //we need a skeleton species for skeleton npcs
-		if(C.dna.species.id != "goblin" && C.dna.species.id != "rousman") //convert this into a define list later
+		if(C.dna.species.id != SPEC_ID_GOBLIN && C.dna.species.id != SPEC_ID_ROUSMAN) //convert this into a define list later
 			stress2give = /datum/stressevent/viewdismember
 	if(C)
 		if(C.buckled)

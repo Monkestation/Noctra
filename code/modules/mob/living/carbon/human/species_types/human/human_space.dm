@@ -11,7 +11,7 @@
 
 /datum/species/human/space
 	name = "Human"
-	id = "humanspace"
+	id = SPEC_ID_HUMAN_SPACE
 	desc = "A space-faring species. \
 	\n\n\
 	Humans have long since departed from the restraints of their homeworld, 'Earth.' \
