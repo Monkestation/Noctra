@@ -2054,6 +2054,13 @@
 	dir = 8
 	},
 /area/rogue/under/town/basement)
+"bfx" = (
+/obj/structure/lever{
+	pixel_y = 7;
+	redstone_id = "apothecary"
+	},
+/turf/open/floor/blocks/paving,
+/area/rogue/indoors/town/clinic_large/apothecary)
 "bfF" = (
 /obj/machinery/light/fueled/lanternpost/fixed{
 	dir = 1
@@ -3846,6 +3853,16 @@
 /obj/structure/table/wood/counter/end,
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/indoors/town)
+"cit" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 4
+	},
+/obj/structure/fluff/walldeco/church/line{
+	dir = 8
+	},
+/obj/machinery/light/fueled/wallfire/candle/blue/l,
+/turf/open/floor/church,
+/area/rogue/indoors/town/clinic_large)
 "ciO" = (
 /obj/structure/rack/shelf/biggest,
 /obj/item/reagent_containers/glass/bottle/beer/ratkept,
@@ -8283,7 +8300,7 @@
 /obj/structure/fluff/walldeco/church/line{
 	dir = 1
 	},
-/obj/structure/fermentation_keg/water,
+/obj/machinery/light/fueled/firebowl/standing/blue,
 /turf/open/floor/church,
 /area/rogue/indoors/town/clinic_large)
 "eQe" = (
@@ -12933,6 +12950,10 @@
 	},
 /turf/open/floor/naturalstone,
 /area/rogue/under/cave)
+"hCi" = (
+/obj/structure/fluff/walldeco/vinez,
+/turf/closed/wall/mineral/stone/window/moss,
+/area/rogue/outdoors/town)
 "hCq" = (
 /turf/open/floor/dirt/road,
 /area/rogue/under/cavelava)
@@ -13239,6 +13260,9 @@
 /obj/item/storage/backpack/satchel,
 /turf/open/floor/concrete,
 /area/rogue/indoors/town/church/inquisition)
+"hLq" = (
+/turf/closed/wall/mineral/stone,
+/area/rogue/outdoors/town/roofs)
 "hLz" = (
 /obj/structure/closet/crate/chest/neu,
 /obj/item/reagent_containers/powder/ozium,
@@ -15574,6 +15598,9 @@
 	},
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/outdoors/mountains)
+"jja" = (
+/turf/closed/wall/mineral/stone/window/moss,
+/area/rogue/outdoors/town)
 "jjn" = (
 /obj/structure/bookcase/random/legends,
 /obj/machinery/light/fueled/wallfire/candle{
@@ -16440,6 +16467,13 @@
 	},
 /turf/open/floor/wood,
 /area/rogue/indoors/town)
+"jNk" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 4
+	},
+/obj/structure/fermentation_keg/water,
+/turf/open/floor/church,
+/area/rogue/indoors/town/clinic_large)
 "jNl" = (
 /obj/structure/table/wood/plain_alt,
 /obj/machinery/light/fueled/wallfire/candle{
@@ -17062,6 +17096,16 @@
 "kfn" = (
 /turf/closed/wall/mineral/stone/window,
 /area/rogue/indoors/town/manorgate)
+"kfw" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 4
+	},
+/obj/structure/fluff/walldeco/church/line{
+	dir = 8
+	},
+/obj/machinery/light/fueled/wallfire/candle/blue/r,
+/turf/open/floor/church,
+/area/rogue/indoors/town/clinic_large)
 "kfU" = (
 /obj/structure/stairs{
 	dir = 1
@@ -19325,6 +19369,16 @@
 	},
 /turf/open/floor/wood,
 /area/rogue/indoors/town/manor/halls)
+"lMX" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 8
+	},
+/obj/structure/fluff/walldeco/church/line{
+	dir = 4
+	},
+/obj/machinery/light/fueled/wallfire/candle/blue/l,
+/turf/open/floor/church,
+/area/rogue/indoors/town/clinic_large)
 "lNb" = (
 /obj/structure/fake_machine/vendor/butcher,
 /turf/closed/wall/mineral/wooddark/end{
@@ -23291,7 +23345,7 @@
 "ofd" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/door/window{
-	name = "Bathhouse"
+	name = "Apothecary"
 	},
 /obj/effect/mapping_helpers/access/keyset/town/bathhouse,
 /turf/open/floor/blocks/stonered/tiny,
@@ -28380,6 +28434,16 @@
 /obj/item/book/law,
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/garrison)
+"rut" = (
+/obj/structure/fluff/walldeco/church/line{
+	dir = 8
+	},
+/obj/structure/fluff/walldeco/church/line{
+	dir = 4
+	},
+/obj/machinery/light/fueled/wallfire/candle/blue/r,
+/turf/open/floor/church,
+/area/rogue/indoors/town/clinic_large)
 "rux" = (
 /turf/open/floor/tile/masonic{
 	dir = 8
@@ -29843,6 +29907,8 @@
 /area/rogue/outdoors/rtfield)
 "sqJ" = (
 /obj/machinery/light/fueled/wallfire/candle/r,
+/obj/machinery/light/fueled/hearth,
+/obj/item/reagent_containers/glass/bucket/pot,
 /turf/open/floor/blocks/stonered/tiny,
 /area/rogue/indoors/town/clinic_large/apothecary)
 "sqX" = (
@@ -35141,10 +35207,10 @@
 /turf/open/floor/metal/barograte,
 /area/rogue/outdoors/town)
 "vDD" = (
-/obj/structure/door/window{
-	name = "Bathhouse"
-	},
 /obj/effect/mapping_helpers/access/keyset/town/bathhouse,
+/obj/structure/door/window{
+	name = "Apothecary"
+	},
 /turf/open/floor/blocks/stonered/tiny,
 /area/rogue/indoors/town/clinic_large/apothecary)
 "vDI" = (
@@ -36377,6 +36443,14 @@
 /obj/item/coin/copper/pile,
 /turf/open/floor/wood,
 /area/rogue/indoors/town)
+"wts" = (
+/obj/structure/stairs/stone/church,
+/obj/machinery/light/fueled/wallfire/candle/blue{
+	pixel_y = -32
+	},
+/obj/machinery/light/fueled/wallfire/candle/blue/r,
+/turf/open/floor/churchmarble,
+/area/rogue/indoors/town/clinic_large)
 "wtv" = (
 /turf/closed/wall/mineral/wooddark/end,
 /area/rogue/outdoors/town)
@@ -38687,6 +38761,12 @@
 "xRq" = (
 /turf/open/water/cleanshallow/dirt,
 /area/rogue/outdoors/town)
+"xRv" = (
+/obj/structure/bars/passage/shutter/open{
+	redstone_id = "apothecary"
+	},
+/turf/closed/wall/mineral/stone/window,
+/area/rogue/indoors/town/clinic_large/apothecary)
 "xRN" = (
 /obj/machinery/light/fueled/wallfire/candle{
 	pixel_y = -32
@@ -94398,11 +94478,11 @@ ehF
 ehF
 cnK
 cnK
-lIF
+jja
 sJT
-lIF
-lIF
-pgV
+jja
+jja
+hCi
 oJr
 ehF
 elp
@@ -95011,7 +95091,7 @@ jdk
 ehF
 jdk
 nvY
-lIF
+jja
 ehF
 qhM
 jdk
@@ -95205,7 +95285,7 @@ vnF
 ehF
 vnF
 mBa
-lIF
+jja
 hya
 jdk
 ehF
@@ -95213,7 +95293,7 @@ jdk
 ehF
 jdk
 oza
-pgV
+hCi
 sWL
 swd
 ntp
@@ -95407,7 +95487,7 @@ pkY
 ehF
 ehF
 suk
-lIF
+jja
 hya
 jdk
 ehF
@@ -95415,7 +95495,7 @@ jdk
 ehF
 jdk
 nvY
-lIF
+jja
 sWL
 ehF
 ehF
@@ -95612,7 +95692,7 @@ uho
 ede
 ede
 nMb
-ehF
+pMU
 jdk
 ehF
 jdk
@@ -95807,7 +95887,7 @@ uho
 uho
 akL
 hxI
-hIQ
+bfx
 cDb
 moF
 uwR
@@ -96208,7 +96288,7 @@ elp
 elp
 elp
 elp
-fCu
+xRv
 fBx
 cDb
 obS
@@ -96612,7 +96692,7 @@ elp
 elp
 elp
 elp
-fCu
+xRv
 vJg
 cDb
 obS
@@ -97439,10 +97519,10 @@ lqA
 fUO
 wLR
 wLR
-wLR
+cqg
 lsu
 wLR
-eyV
+wts
 foL
 foL
 foL
@@ -97843,10 +97923,10 @@ lqA
 fUO
 wLR
 jJi
+cit
 xDP
 xDP
-xDP
-pyl
+lMX
 lsu
 aPS
 lDC
@@ -98040,7 +98120,7 @@ cDb
 evm
 bgm
 vkO
-vkO
+jNk
 bdP
 fUO
 wLR
@@ -98649,12 +98729,12 @@ wLR
 wLR
 bFI
 pyl
-pyl
+rut
 vkO
 pyl
 pyl
 pyl
-xDP
+kfw
 lsu
 aPS
 lDC
@@ -136214,9 +136294,9 @@ pQS
 pQS
 fvJ
 cjt
-jjT
-jjT
-jjT
+nBO
+nBO
+dZI
 acx
 acx
 acx
@@ -136418,7 +136498,7 @@ hKR
 pQS
 pQS
 cjt
-jjT
+nBO
 jjT
 jjT
 jjT
@@ -175406,9 +175486,9 @@ acx
 acx
 acx
 acx
-vgJ
-vgJ
-vgJ
+acx
+acx
+acx
 vgJ
 vgJ
 vgJ
@@ -175608,9 +175688,9 @@ acx
 acx
 acx
 acx
-vgJ
-vgJ
-vgJ
+acx
+acx
+acx
 vgJ
 qfb
 hXM
@@ -175811,8 +175891,8 @@ acx
 acx
 acx
 acx
-vgJ
-vgJ
+acx
+acx
 vgJ
 ago
 oZg
@@ -176013,8 +176093,8 @@ acx
 acx
 acx
 acx
-vgJ
-vgJ
+acx
+acx
 fdp
 ago
 oZg
@@ -176216,7 +176296,7 @@ acx
 acx
 acx
 acx
-vgJ
+acx
 fdp
 xnx
 dDL
@@ -176418,7 +176498,7 @@ acx
 acx
 acx
 acx
-qMe
+hLq
 fdp
 hVd
 hVd
@@ -215801,14 +215881,14 @@ vgJ
 vgJ
 vgJ
 vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
 vgJ
 vgJ
 vgJ
@@ -216003,15 +216083,15 @@ vgJ
 vgJ
 vgJ
 vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
 vgJ
 vgJ
 vgJ
@@ -216202,18 +216282,18 @@ uVx
 uVx
 uVx
 uVx
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
 vgJ
 vgJ
 vgJ
@@ -216404,19 +216484,19 @@ uVx
 uVx
 uVx
 uVx
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
 vgJ
 vgJ
 vgJ
@@ -216606,19 +216686,19 @@ uVx
 uVx
 uVx
 uVx
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
 vgJ
 vgJ
 vgJ
@@ -216808,21 +216888,21 @@ uVx
 uVx
 uVx
 uVx
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
 vgJ
 vgJ
 vgJ
@@ -217015,16 +217095,16 @@ uVx
 uVx
 uVx
 uVx
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
+uVx
 vgJ
 vgJ
 vgJ
@@ -217208,25 +217288,25 @@ vgJ
 uVx
 uVx
 uVx
-bWs
-bWs
-bWs
-bWs
-bWs
-bWs
-bWs
-bWs
-bWs
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
-vgJ
+eti
+eti
+eti
+eti
+eti
+eti
+eti
+eti
+eti
+eti
+eti
+eti
+eti
+eti
+eti
+uVx
+uVx
+uVx
+uVx
 vgJ
 vgJ
 vgJ
