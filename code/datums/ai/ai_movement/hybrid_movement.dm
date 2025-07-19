@@ -21,12 +21,6 @@
 			continue
 		COOLDOWN_START(controller, movement_cooldown, controller.movement_delay)
 
-		// Somehow we have a deleted controller or controller with no pawn
-		if(QDELETED(controller) || QDELETED(controller.pawn))
-			stack_trace("QDELETED ai_controller [controller] still in moving_controllers after deletion.")
-			moving_controllers -= controller
-			continue
-
 		if(!controller.can_move())
 			continue
 
