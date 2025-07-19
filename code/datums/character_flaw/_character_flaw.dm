@@ -27,7 +27,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Witless Pixie" = /datum/charflaw/witless_pixie,
 	"Random Flaw or No Flaw"=/datum/charflaw/randflaw,
 	"Guaranteed No Flaw (3 TRI)"=/datum/charflaw/noflaw,
-	))
+))
 
 /datum/charflaw
 	abstract_type = /datum/charflaw
