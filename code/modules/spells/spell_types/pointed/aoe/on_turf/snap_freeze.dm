@@ -28,13 +28,14 @@
 /datum/action/cooldown/spell/aoe/on_turf/snap_freeze/proc/do_freeze(turf/victim)
 	new /obj/effect/temp_visual/snap_freeze(victim)
 	playsound(victim, 'sound/combat/newstuck.ogg', 80, TRUE)
+	var/strength = clamp(attuned_strength, 0.5, 2)
 	for(var/mob/living/L in victim)
 		if(L.can_block_magic(MAGIC_RESISTANCE))
 			L.visible_message(span_warning("The ice fades away around [L]."))
 			playsound(get_turf(L), 'sound/magic/magic_nulled.ogg', 100)
 			continue
 		L.adjustFireLoss(35)
-		L.apply_status_effect(/datum/status_effect/debuff/frostbite, null, attuned_strength)
+		L.apply_status_effect(/datum/status_effect/debuff/frostbite, null, clamp(attuned_strength, 0.5, 2))
 		to_chat(L, span_userdanger("The air chills your bones!"))
 
 /obj/effect/temp_visual/trapice

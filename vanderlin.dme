@@ -2630,7 +2630,7 @@
 #include "code\modules\spells\spell_types\pointed\aoe\on_turf\meteor_storm.dm"
 #include "code\modules\spells\spell_types\pointed\aoe\on_turf\snap_freeze.dm"
 #include "code\modules\spells\spell_types\pointed\beam\_beam.dm"
-#include "code\modules\spells\spell_types\pointed\beam\ray_of_frost.dm"
+#include "code\modules\spells\spell_types\pointed\beam\beam_of_frost.dm"
 #include "code\modules\spells\spell_types\pointed\conjure\_conjure.dm"
 #include "code\modules\spells\spell_types\pointed\conjure\bonfire.dm"
 #include "code\modules\spells\spell_types\pointed\conjure\familiar.dm"
