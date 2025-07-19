@@ -90,7 +90,7 @@
 			cloak = /obj/item/clothing/cloak/stabard/templar/pestra
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
 			beltr = /obj/item/reagent_containers/glass/bottle/poison //Jackberry poison, Pestrans are Alchemists, Physicians.
-			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC) //Bounty for FUCKED UP DARK WIZARD.
+			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/combat/knives, 4, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)
 		if(/datum/patron/divine/eora)
