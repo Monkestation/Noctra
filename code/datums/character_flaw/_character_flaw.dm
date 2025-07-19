@@ -768,9 +768,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 /datum/charflaw/witless_pixie/on_mob_creation(mob/user)
 	if(!ishuman(user))
 		return
-	var/mob/living/carbon/human/H = user
+	var/mob/living/L = user
 
-	H.change_stat(STATKEY_INT, rand(-2, -5)) //this would probably make the average manorc a vegetable
+	L.adjust_stat_modifier(REF(src), STATKEY_INT, rand(-2, -5)) //this would probably make the average manorc a vegetable
 
 /datum/charflaw/witless_pixie/after_spawn(mob/user)
 	if(!ishuman(user))
