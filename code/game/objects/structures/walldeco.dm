@@ -21,6 +21,7 @@
 /obj/structure/fluff/walldeco/wantedposter/r
 	pixel_y = 0
 	pixel_x = 32
+
 /obj/structure/fluff/walldeco/wantedposter/l
 	pixel_y = 0
 	pixel_x = -32
@@ -36,12 +37,14 @@
 			var/mob/living/carbon/human/H = user
 			show_outlaw_headshot(H)
 			H.playsound_local(H, 'sound/misc/notice (2).ogg', 100, FALSE)
+	else
+		to_chat(user, span_warning("I need to get closer to see the scoundrels faces!"))
+
 	return ..()
 
 /obj/structure/fluff/walldeco/wantedposter/proc/show_outlaw_headshot(mob/user)
 	var/list/outlaws = list()
 
-	// Collect all outlaw mobs and their credit icons
 	for(var/mob/living/carbon/human/outlaw in GLOB.player_list)
 		if(outlaw.real_name in GLOB.outlawed_players)
 			var/icon/credit_icon = SScrediticons.get_credit_icon(outlaw)
@@ -51,7 +54,7 @@
 			))
 
 	if(!length(outlaws))
-		to_chat(user, "<span class='warning'>There are no wanted criminals at the moment...</span>")
+		to_chat(user, span_warning("There are no wanted criminals at the moment.."))
 		return
 	else if(user in outlaws)
 		var/list/funny = list("Yup. My face is on there.", "Wait a minute... That's me!", "Look at that handsome devil...", "At least I am wanted by someone...", "My chin can't be that big... right?")
@@ -60,7 +63,6 @@
 		to_chat(user, "<b>I now know the faces of the local bandits and other outlaws.</b>")
 
 	ADD_TRAIT(user, TRAIT_KNOWBANDITS, TRAIT_GENERIC)
-
 
 	var/dat = {"
 	<style>
@@ -96,7 +98,6 @@
 	<div class='wanted-container'>
 	"}
 
-	// Add each outlaw to the display
 	for(var/list/outlaw_data in outlaws)
 		var/icon_html = ""
 		if(outlaw_data["icon"])
@@ -113,7 +114,7 @@
 
 	dat += "</div>"
 
-	var/datum/browser/popup = new(user, "wanted_posters", "<center>Wanted Criminals</center>", 400, 300)
+	var/datum/browser/popup = new(user, "wanted_posters", "<center>Wanted Criminals</center>", 500, 400)
 	popup.set_content(dat)
 	popup.open()
 
