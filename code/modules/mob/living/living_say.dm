@@ -141,7 +141,7 @@
 		return
 
 	if(client)
-		last_message = message
+		last_words = message
 		record_featured_stat(FEATURED_STATS_SPEAKERS, src)
 		if(findtext(message, "abyssor"))
 			record_round_statistic(STATS_ABYSSOR_REMEMBERED)
@@ -181,19 +181,19 @@
 		if(!message_mods[WHISPER_MODE])
 			message_mods[WHISPER_MODE] = MODE_WHISPER
 	if(radio_return & NOPASS)
-		return 1
+		return TRUE
 
-	var/datum/language/D = GLOB.language_datum_instances[language]
-	if(D.flags & SIGNLANG)
+	var/datum/language/speaker_language = GLOB.language_datum_instances[language]
+	if(speaker_language?.flags & SIGNLANG)
 		send_speech_sign(message, message_range, src, bubble_type, spans, language, message_mods, original_message)
 	else
 		send_speech(message, message_range, src, bubble_type, spans, language, message_mods, original_message)
 
 	if(succumbed)
-		succumb(1)
+		succumb(TRUE)
 		to_chat(src, compose_message(src, language, message, null, spans, message_mods))
 
-	return 1
+	return TRUE
 
 /datum/species/proc/get_span_language(datum/language/message_language)
 	if(!message_language)
@@ -396,8 +396,10 @@
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
 
 	//time for emoting!!
-	var/datum/language/D = GLOB.language_datum_instances[message_language]
-	var/sign_verb = pick(D.signlang_verb)
+	var/datum/language/speaker_language = GLOB.language_datum_instances[message_language]
+	var/sign_verb = safepick(speaker_language.signlang_verb)
+	if(!sign_verb)
+		sign_verb = "signs"
 	var/chatmsg = "<b>[src]</b> " + sign_verb + "."
 	visible_message(chatmsg, runechat_message = sign_verb, ignored_mobs = understanders)
 
