@@ -219,6 +219,11 @@
 		return PROCESS_KILL
 
 /datum/action/cooldown/spell/Grant(mob/grant_to)
+	// Spells are hard baked to pratically only work with living owners
+	if(!isliving(grant_to))
+		qdel(src)
+		return
+
 	// If our spell is mind-bound, we only wanna grant it to our mind
 	if(istype(target, /datum/mind))
 		var/datum/mind/mind_target = target
@@ -358,9 +363,7 @@
 
 /// Adjust the base charge time based on the users stats
 /datum/action/cooldown/spell/proc/get_adjusted_charge_time()
-	if(!charge_time)
-		return FALSE
-	if(!isliving(owner))
+	if(charge_time <= 0)
 		return
 
 	var/mob/living/living_owner = owner
@@ -374,11 +377,11 @@
 	else
 		new_time += charge_time * (10 - owner_stat) * 0.02
 
-	return clamp(new_time, 1 DECISECONDS, 30 SECONDS)
+	return max(new_time, 1 DECISECONDS)
 
 /// Adjust the base spell cost based on the users stats
 /datum/action/cooldown/spell/proc/get_adjusted_cost(cost_override)
-	if(!isliving(owner))
+	if(spell_cost <= 0 && !cost_override)
 		return
 
 	var/mob/living/living_owner = owner
@@ -403,10 +406,6 @@
 /// Do any attunement handling in here or any time after before_cast
 /datum/action/cooldown/spell/proc/handle_attunements()
 	SHOULD_CALL_PARENT(TRUE)
-
-	if(!isliving(owner))
-		attuned_strength = 1
-		return
 
 	var/mob/living/caster = owner
 	var/list/datum/mana_pool/usable_pools = caster.get_all_pools()
@@ -654,7 +653,7 @@
 		smoke.set_up(smoke_amt, loca = get_turf(owner))
 		smoke.start()
 
-	if(has_visual_effects && isliving(owner))
+	if(has_visual_effect)
 		var/mob/living/caster = owner
 		caster.finish_spell_visual_effects(attunements)
 
@@ -693,7 +692,7 @@
 	if(charge_sound_instance)
 		playsound(owner, charge_sound_instance, 50, FALSE, channel = CHANNEL_CHARGED_SPELL)
 
-	if(has_visual_effects && isliving(owner))
+	if(has_visual_effects)
 		var/mob/living/caster = owner
 		caster.start_spell_visual_effects(attunements)
 
@@ -735,7 +734,7 @@
 		// Play a null sound in to cancel the sound playing, because byond
 		playsound(owner, sound(null, repeat = 0), 50, FALSE, channel = CHANNEL_CHARGED_SPELL)
 
-	if(has_visual_effects && isliving(owner))
+	if(has_visual_effects)
 		var/mob/living/caster = owner
 		caster.cancel_spell_visual_effects()
 
@@ -754,12 +753,6 @@
 
 	if(invocation_type == INVOCATION_NONE)
 		return TRUE
-
-	// If you want a spell usable by ghosts for some reason, it must be INVOCATION_NONE
-	if(!isliving(owner))
-		if(feedback)
-			to_chat(owner, span_warning("You need to be living to invoke [src]!"))
-		return FALSE
 
 	var/mob/living/living_owner = owner
 	if(invocation_type == INVOCATION_EMOTE && HAS_TRAIT(living_owner, TRAIT_EMOTEMUTE))
@@ -843,9 +836,6 @@
 
 /// Check if the spell is castable by cost
 /datum/action/cooldown/spell/proc/check_cost(cost_override, feedback = TRUE)
-	if(!isliving(owner))
-		return FALSE
-
 	var/mob/living/caster = owner
 
 	var/used_cost = get_adjusted_cost(cost_override)
@@ -912,7 +902,7 @@
  * * Cost used
  */
 /datum/action/cooldown/spell/proc/invoke_cost(cost_override, type_override, re_run = FALSE)
-	if(!owner || !isliving(owner))
+	if(!owner)
 		return
 
 	var/used_cost = get_adjusted_cost(cost_override)
@@ -961,10 +951,8 @@
 	if(experience_max_skill && (skill_level >= experience_max_skill))
 		return
 
-	var/stat_modifier = 1
-	if(isliving(owner))
-		var/mob/living/caster = owner
-		stat_modifier = caster.get_stat(associated_stat) * 0.1
+	var/mob/living/caster = owner
+	var/stat_modifier = caster.get_stat(associated_stat) * 0.1
 
 	var/experience_gain = cost_in * experience_modifer * stat_modifier
 	if(owner.mind)
