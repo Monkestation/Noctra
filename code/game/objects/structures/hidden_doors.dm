@@ -67,7 +67,7 @@ GLOBAL_LIST_EMPTY(thieves_guild_doors)
 /obj/structure/door/secret/wizard //for wizard tower
 	vip = list(
 		/datum/job/magician,
-		/datum/job/wassociate,
+		/datum/job/mageapprentice,
 		/datum/job/archivist,
 	)
 	//make me look like an arcane door
