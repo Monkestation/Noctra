@@ -61,7 +61,7 @@
 		if(!HAS_TRAIT(user, TRAIT_KNOWBANDITS))
 			ADD_TRAIT(user, TRAIT_KNOWBANDITS, TRAIT_GENERIC)
 			user.playsound_local(user, 'sound/misc/notice (2).ogg', 100, FALSE)
-			to_chat(user, span_notice("I can recognize these fine gentlemen as wanted people now."))
+			to_chat(user, span_notice("I can recognize these fine people anywhere now."))
 	else if(!HAS_TRAIT(user, TRAIT_KNOWBANDITS))
 		ADD_TRAIT(user, TRAIT_KNOWBANDITS, TRAIT_GENERIC)
 		user.playsound_local(user, 'sound/misc/notice (2).ogg', 100, FALSE)
@@ -76,8 +76,8 @@
 			padding: 15px;
 		}
 		.wanted-poster {
-			width: 160px;
-			height: 220px;
+			width: 175px;
+			height: 228px;
 			border: 3px double #5c2c0f;
 			background-color: #f5e7d0;
 			padding: 8px;
@@ -87,45 +87,59 @@
 			flex-direction: column;
 		}
 		.wanted-header {
-			color: #c70404; /* Darker red */
-			font-size: 28px; /* Bigger */
+			color: #c70404;
+			font-size: 28px;
 			font-weight: bold;
 			text-align: center;
-			margin-bottom: 10px;
+			margin-bottom: 5px;
 			text-transform: uppercase;
+		}
+		.wanted-divider {
 			border-bottom: 2px solid #8B0000;
-			padding-bottom: 5px;
-		}
-		.wanted-icon-container {
-			width: 120px; /* Slightly larger */
-			height: 100px; /* Slightly larger */
-			margin: 0 auto 10px auto;
-			border: 2px solid #5c2c0f;
-			background-color: #ba9d6c; /* Brown background */
-			padding: 3px;
-		}
-		.wanted-icon {
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-			image-rendering: pixelated;
-		}
-		.wanted-name {
-			color: #000000; /* Black */
-			font-size: 18px;
-			font-weight: bold;
-			text-align: center;
 			margin: 5px 0;
-			text-transform: uppercase;
 		}
 		.wanted-footer {
 			color: #8B0000;
 			font-size: 16px;
 			font-weight: bold;
 			text-align: center;
-			margin-top: auto; /* Pushes to bottom */
-			padding-top: 5px;
+			margin-bottom: 8px;
 			text-transform: uppercase;
+		}
+		.wanted-icon-container {
+			width: 120px;
+			height: 85px;
+			margin: 0 auto;
+			border: 2px solid #5c2c0f;
+			background-color: #ccac74;
+			padding: 3px;
+		}
+		.wanted-icon {
+			width: 100%;
+			height: 90%;
+			object-fit: cover;
+			image-rendering: pixelated;
+		}
+		.wanted-name-container {
+			flex-grow: 1;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			min-height: 60px;
+			margin-top: 5px;
+		}
+		.wanted-name {
+			color: #000000;
+			font-size: 18px;
+			font-weight: bold;
+			text-align: center;
+			padding: 0 5px;
+			text-transform: uppercase;
+			word-break: break-word;
+			overflow: hidden;
+			display: -webkit-box;
+			-webkit-line-clamp: 3;
+			-webkit-box-orient: vertical;
 		}
 	</style>
 	<div class='wanted-container'>
@@ -141,17 +155,20 @@
 		dat += {"
 		<div class='wanted-poster'>
 			<div class='wanted-header'>WANTED</div>
+			<div class='wanted-divider'></div>
+			<div class='wanted-footer'>DEAD OR ALIVE</div>
 			<div class='wanted-icon-container'>
 				[icon_html]
 			</div>
-			<div class='wanted-name'>[outlaw_data["name"]]</div>
-			<div class='wanted-footer'>DEAD OR ALIVE</div>
+			<div class='wanted-name-container'>
+				<div class='wanted-name'>[outlaw_data["name"]]</div>
+			</div>
 		</div>
 		"}
 
 	dat += "</div>"
 
-	var/datum/browser/popup = new(user, "wanted_posters", "<center>Wanted Posters</center>", 700, 600)
+	var/datum/browser/popup = new(user, "wanted_posters", "<center>Wanted Posters</center>", 688, 570)
 	popup.set_content(dat)
 	popup.open()
 
