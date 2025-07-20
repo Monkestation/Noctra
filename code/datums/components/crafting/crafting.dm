@@ -258,7 +258,8 @@
 					var/list/parts = del_reqs(R, user)
 					if(islist(R.result))
 						var/list/L = R.result
-						for(var/atom/movable/I as anything in L) IT(T)
+						for(var/IT in L)
+							var/atom/movable/I = new IT(T)
 							I.CheckParts(parts, R)
 							I.OnCrafted(user.dir, user)
 					else
