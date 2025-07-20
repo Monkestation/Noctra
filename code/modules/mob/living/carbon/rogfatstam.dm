@@ -39,7 +39,7 @@
 		var/boon = get_learning_boon(/datum/skill/misc/athletics)
 		adjust_experience(/datum/skill/misc/athletics, (STAINT*0.02) * boon)
 	energy += added
-	if(energy > max_energy)
+	if(energy >= max_energy)
 		energy = max_energy
 		update_health_hud(TRUE)
 		return FALSE
@@ -52,6 +52,16 @@
 			SEND_SIGNAL(src, COMSIG_MOB_ENERGY_SPENT, abs(added))
 		update_health_hud(TRUE)
 		return TRUE
+
+/mob/proc/check_energy(has_amount)
+	return TRUE
+
+/mob/living/check_energy(has_amount)
+	if(!has_amount || has_amount > max_energy)
+		return FALSE
+	if((max_energy - energy) < has_amount)
+		return FALSE
+	return TRUE
 
 /mob/proc/adjust_stamina(added as num)
 	return TRUE
@@ -102,6 +112,16 @@
 			last_fatigued = world.time
 		update_health_hud(TRUE)
 		return TRUE
+
+/mob/proc/check_stamina(has_amount)
+	return TRUE
+
+/mob/living/check_stamina(has_amount)
+	if(!has_amount || has_amount > maximum_stamina)
+		return FALSE
+	if((maximum_stamina - stamina) < has_amount)
+		return FALSE
+	return TRUE
 
 /mob/living/carbon
 	var/heart_attacking = FALSE

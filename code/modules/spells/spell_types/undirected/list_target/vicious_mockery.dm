@@ -6,7 +6,7 @@
 
 	associated_skill = /datum/skill/misc/music
 
-	spell_type = SPELL_NONE
+	spell_type = NONE
 	cooldown_time = 30 SECONDS
 
 	choose_target_message = "Choose who to mock."

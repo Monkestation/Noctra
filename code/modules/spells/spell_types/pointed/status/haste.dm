@@ -18,5 +18,3 @@
 	status_effect = /datum/status_effect/buff/haste
 	duration_scaling = TRUE
 	duration_modification = 30 SECONDS
-
-
