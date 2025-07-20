@@ -180,14 +180,14 @@
 		var/obj/item/weapon/W = I
 		var/datum/component/two_handed/twohanded = I.GetComponent(/datum/component/two_handed)
 		if(twohanded)
-			twohanded.modify_base_force(multiplicative_modifier = FORCE_BLADE_FORCE)
+			twohanded.modify_base_force(multiplicative_modifier = modifier)
 		else
 			W.force *= modifier
 		W.throwforce *= modifier
 		W.blade_int *= modifier
 		W.max_blade_int *= modifier
-		W.armor_penetration *= modifier
-		W.wdefense *= modifier
+		// W.armor_penetration *= modifier
+		// W.wdefense *= modifier
 		// Make (ONLY) axes (and the Pick-axe) better at woodcutting too
 		if(istype(I, /obj/item/weapon/axe/iron) || istype(I, /obj/item/weapon/pick/paxe))
 			var/obj/item/weapon/A = I
@@ -201,8 +201,8 @@
 		var/obj/item/clothing/C = I
 		C.damage_deflection *= modifier
 		C.integrity_failure /= modifier
-		C.armor = C.armor.multiplymodifyAllRatings(modifier)
-		C.equip_delay_self *= modifier
+		// C.armor = C.armor.multiplymodifyAllRatings(modifier)
+		// C.equip_delay_self *= modifier
 	// If it's a crossbow, up its damage multiplier
 	if(istype(I,/obj/item/gun/ballistic/revolver/grenadelauncher))
 		var/obj/item/gun/ballistic/revolver/grenadelauncher/R = I
