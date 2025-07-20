@@ -267,7 +267,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	for(var/datum/outfit/O as anything in paths) //not much to initalize here but whatever
 		if(initial(O.can_be_admin_equipped))
-			outfits[initial(O.name)] = path
+			outfits[initial(O.name)] = paths[O]
 
 	var/dresscode = browser_input_list(src, "Select outfit", "Robust quick dress shop", baseoutfits + sortList(outfits))
 	if (isnull(dresscode))

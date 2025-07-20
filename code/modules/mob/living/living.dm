@@ -40,7 +40,7 @@
 	GLOB.mob_living_list -= src
 	for(var/datum/soullink/S as anything in ownedSoullinks)
 		S.ownerDies(FALSE)
-		qdel(s) //If the owner is destroy()'d, the soullink is destroy()'d
+		qdel(S) //If the owner is destroy()'d, the soullink is destroy()'d
 	ownedSoullinks = null
 	for(var/datum/soullink/S as anything in sharedSoullinks)
 		S.sharerDies(FALSE)

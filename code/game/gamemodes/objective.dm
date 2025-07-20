@@ -526,7 +526,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 	),GLOBAL_PROC_REF(cmp_typepaths_asc))
 
 	for(var/datum/objective/X as anything in allowed_types)
-		GLOB.admin_objective_list[initial(X.name)] = T
+		GLOB.admin_objective_list[initial(X.name)] = allowed_types[X]
 
 /datum/objective/contract
 	var/payout = 0

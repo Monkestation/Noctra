@@ -126,7 +126,8 @@ SUBSYSTEM_DEF(ticker)
 	var/list/music = list()
 	var/use_rare_music = prob(1)
 
-	for(var/lower as anything in provisional_title_music)(S)
+	for(var/S in provisional_title_music)
+		var/lower = lowertext(S)
 		var/list/L = splittext(lower,"+")
 		switch(L.len)
 			if(3) //rare+MAP+sound.ogg or MAP+rare.sound.ogg -- Rare Map-specific sounds
