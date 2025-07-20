@@ -265,8 +265,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/list/outfits = list()
 	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job)  - typesof(/datum/outfit/job)
 
-	for(var/path in paths)
-		var/datum/outfit/O = path //not much to initalize here but whatever
+	for(var/datum/outfit/O as anything in paths) //not much to initalize here but whatever
 		if(initial(O.can_be_admin_equipped))
 			outfits[initial(O.name)] = path
 

@@ -13,8 +13,7 @@
 /datum/buildmode_mode/mapgen/change_settings(client/c)
 	var/list/gen_paths = subtypesof(/datum/mapGenerator)
 	var/list/options = list()
-	for(var/path in gen_paths)
-		var/datum/mapGenerator/MP = path
+	for(var/datum/mapGenerator/MP as anything in gen_paths)
 		options[initial(MP.buildmode_name)] = path
 	var/type = input(c,"Select Generator Type","Type") as null|anything in options
 	if(!type)

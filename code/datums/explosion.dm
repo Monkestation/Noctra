@@ -186,8 +186,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/iteration = 0
 	var/affTurfLen = length(affected_turfs)
 	var/expBlockLen = length(cached_exp_block)
-	for(var/TI in affected_turfs)
-		var/turf/T = TI
+	for(var/turf/T as anything in affected_turfs)
 		++iteration
 		var/init_dist = cheap_hypotenuse(T.x, T.y, x0, y0)
 		var/dist = init_dist
@@ -286,8 +285,7 @@ GLOBAL_LIST_EMPTY(explosions)
 				exploded_this_tick.Cut()
 
 	//unfuck the shit
-	for(var/Unexplode in exploded_this_tick)
-		var/turf/UnexplodeT = Unexplode
+	for(var/turf/UnexplodeT as anything in exploded_this_tick)
 		UnexplodeT.explosion_level = 0
 	exploded_this_tick.Cut()
 
