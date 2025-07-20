@@ -3,9 +3,6 @@
 	name = "hole"
 	icon_state = "hole1"
 	icon = 'icons/turf/floors.dmi'
-	var/stage = 1
-	var/turf/open/floor/dirt/mastert
-	var/faildirt = 0
 	mob_storage_capacity = 3
 	allow_dense = TRUE
 	opened = TRUE
@@ -18,31 +15,26 @@
 	lock = null
 	can_add_lock = FALSE
 	alternative_icon_handling = TRUE
+	var/stage = 1
+	var/faildirt = 0
 
 /obj/structure/closet/dirthole/Initialize()
 	var/turf/open/floor/dirt/T = loc
-	if(istype(T))
-		mastert = T
-		T.holie = src
-		if(T.muddy)
-			if(!(locate(/obj/item/natural/worms) in T))
-				if(prob(40))
-					if(prob(10))
-						new /obj/item/natural/worms/grub_silk(T)
-					else
-						new /obj/item/natural/worms/leech(T)
+	if(!istype(T))
+		return INITIALIZE_HINT_QDEL
+	if(T.muddy)
+		if(!(locate(/obj/item/natural/worms) in T))
+			if(prob(40))
+				if(prob(10))
+					new /obj/item/natural/worms/grub_silk(T)
 				else
-					new /obj/item/natural/worms(T)
-		else
-			if(!(locate(/obj/item/natural/stone) in T))
-				if(prob(23))
-					new /obj/item/natural/stone(T)
-	return ..()
-
-/obj/structure/closet/dirthole/Destroy()
-	if(istype(mastert))
-		if(mastert && mastert?.holie == src)
-			mastert.holie = null
+					new /obj/item/natural/worms/leech(T)
+			else
+				new /obj/item/natural/worms(T)
+	else
+		if(!(locate(/obj/item/natural/stone) in T))
+			if(prob(23))
+				new /obj/item/natural/stone(T)
 	return ..()
 
 /obj/structure/closet/dirthole/grave
@@ -70,10 +62,10 @@
 		looted = TRUE
 		switch(lootroll)
 			if(1)
-				new /mob/living/carbon/human/species/skeleton/npc(mastert)
-				new /obj/structure/closet/crate/chest/lootbox(mastert)
+				new /mob/living/carbon/human/species/skeleton/npc(get_turf(src))
+				new /obj/structure/closet/crate/chest/lootbox(get_turf(src))
 			if(2)
-				new /obj/structure/closet/crate/chest/lootbox(mastert)
+				new /obj/structure/closet/crate/chest/lootbox(get_turf(src))
 	..()
 
 /obj/structure/closet/dirthole/closed/loot/examine(mob/user)
@@ -151,15 +143,16 @@
 	else
 		playsound(loc,'sound/items/dig_shovel.ogg', 100, TRUE)
 		if(stage == 3)
-			var/turf/underT = get_step_multiz(src, DOWN)
-			if(underT && isopenturf(underT) && mastert)
+			var/turf/under_turf = get_step_multiz(src, DOWN)
+			var/turf/our_turf = get_turf(src)
+			if(under_turf && our_turf && isopenturf(under_turf))
 				user.visible_message("[user] starts digging out the bottom of [src]", "I start digging out the bottom of [src].")
 				if(!do_after(user, 10 SECONDS * attacking_shovel.time_multiplier, src))
 					return TRUE
 				attacking_shovel.heldclod = new(attacking_shovel)
 				attacking_shovel.update_appearance(UPDATE_ICON_STATE)
-				playsound(mastert,'sound/items/dig_shovel.ogg', 100, TRUE)
-				mastert.ChangeTurf(/turf/open/transparent/openspace)
+				playsound(our_turf,'sound/items/dig_shovel.ogg', 100, TRUE)
+				our_turf.ChangeTurf(/turf/open/transparent/openspace)
 				return
 			to_chat(user, "<span class='warning'>I think that's deep enough.</span>")
 			return
