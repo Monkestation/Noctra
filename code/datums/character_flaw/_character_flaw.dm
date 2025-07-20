@@ -772,10 +772,10 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	var/mob/living/carbon/human/H = user
 
 	//All luxless species below - Make sure to update RACES_PLAYER_LUXLESS list macro
-	if (!(H.dna?.species?.id in RACES_PLAYER_LUXLESS))
-		H.apply_status_effect(/datum/status_effect/debuff/flaw_lux_taken)
-		SEND_SIGNAL(user, COMSIG_LUX_EXTRACTED, H)
-
-	else //overflow for the luxless species, if they select the flaw they should get a random flaw instead
+	if (H.dna?.species?.id in RACES_PLAYER_LUXLESS)
 		H.get_random_flaw()
 		return
+
+	else //overflow for the luxless species, if they select the flaw they should get a random flaw instead
+		H.apply_status_effect(/datum/status_effect/debuff/flaw_lux_taken)
+		SEND_SIGNAL(user, COMSIG_LUX_EXTRACTED, H)
