@@ -368,8 +368,7 @@
 	//attempt to dismember bodyparts
 	if(severity <= 2)
 		var/max_limb_loss = rand(0, floor(3/severity))
-		for(var/X in bodyparts)
-			var/obj/item/bodypart/BP = X
+		for(var/obj/item/bodypart/BP as anything in bodyparts)
 			if(prob(25/severity) && !prob(15) && BP.body_zone != BODY_ZONE_HEAD && BP.body_zone != BODY_ZONE_CHEST)
 				BP.brute_dam = BP.max_damage
 				BP.dismember()

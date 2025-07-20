@@ -127,8 +127,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 				possible_targets += possible_target
 	if(try_target_late_joiners)
 		var/list/all_possible_targets = possible_targets.Copy()
-		for(var/I in all_possible_targets)
-			var/datum/mind/PT = I
+		for(var/datum/mind/PT as anything in all_possible_targets)
 			if(!PT.late_joiner)
 				possible_targets -= PT
 		if(!possible_targets.len)
@@ -525,8 +524,8 @@ GLOBAL_LIST_EMPTY(possible_items)
 		/datum/objective/custom
 	),GLOBAL_PROC_REF(cmp_typepaths_asc))
 
-	for(var/datum/objective/X as anything in allowed_types)
-		GLOB.admin_objective_list[initial(X.name)] = allowed_types[X]
+	for(var/datum/objective/objective as anything in allowed_types)
+		GLOB.admin_objective_list[initial(objective.name)] = objective
 
 /datum/objective/contract
 	var/payout = 0

@@ -65,8 +65,7 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	if(transfer_contents_on_component_transfer)
-		for(var/i in _contents_limbo)
-			var/atom/movable/AM = i
+		for(var/atom/movable/AM as anything in _contents_limbo)
 			AM.forceMove(parent)
 		_contents_limbo = null
 	if(_user_limbo)

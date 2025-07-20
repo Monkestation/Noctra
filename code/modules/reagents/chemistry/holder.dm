@@ -136,8 +136,7 @@
 	var/list/cached_reagents = reagent_list
 	if(total_volume > 0)
 		var/part = amount / total_volume
-		for(var/reagent in cached_reagents)
-			var/datum/reagent/R = reagent
+		for(var/datum/reagent/R as anything in cached_reagents)
 			remove_reagent(R.type, R.volume * part)
 
 		update_total()
@@ -202,8 +201,7 @@
 	var/transfer_log = list()
 	if(!round_robin)
 		var/part = amount / src.total_volume
-		for(var/reagent in cached_reagents)
-			var/datum/reagent/T = reagent
+		for(var/datum/reagent/T as anything in cached_reagents)
 			if(remove_blacklisted && !T.can_synth)
 				continue
 			var/transfer_amount = T.volume * part
@@ -341,8 +339,7 @@
 					if(R.overdosed)
 						need_mob_update += R.overdose_process(C)
 					if(is_type_in_list(R,cached_addictions))
-						for(var/addiction in cached_addictions)
-							var/datum/reagent/A = addiction
+						for(var/datum/reagent/A as anything in cached_addictions)
 							if(istype(R, A))
 								A.addiction_stage = -15 // you're satisfied for a good while.
 				need_mob_update += R.on_mob_life(C)
@@ -350,8 +347,7 @@
 	if(can_overdose)
 		if(addiction_tick == 6)
 			addiction_tick = 1
-			for(var/addiction in cached_addictions)
-				var/datum/reagent/R = addiction
+			for(var/datum/reagent/R as anything in cached_addictions)
 				if(C && R)
 					R.addiction_stage++
 					switch(R.addiction_stage)
@@ -417,8 +413,7 @@
 	do
 		var/list/possible_reactions = list()
 		reaction_occurred = 0
-		for(var/reagent in cached_reagents)
-			var/datum/reagent/R = reagent
+		for(var/datum/reagent/R as anything in cached_reagents)
 			for(var/reaction in cached_reactions[R.type]) // Was a big list but now it should be smaller since we filtered it with our reagent id
 				if(!reaction)
 					continue

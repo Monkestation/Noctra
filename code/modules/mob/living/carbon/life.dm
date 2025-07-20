@@ -561,12 +561,10 @@
 
 /mob/living/carbon/proc/handle_organs()
 	if(stat != DEAD)
-		for(var/V in internal_organs)
-			var/obj/item/organ/O = V
+		for(var/obj/item/organ/O as anything in internal_organs)
 			O.on_life()
 	else
-		for(var/V in internal_organs)
-			var/obj/item/organ/O = V
+		for(var/obj/item/organ/O as anything in internal_organs)
 			O.on_death() //Needed so organs decay while inside the body.
 
 /mob/living/carbon/handle_embedded_objects()

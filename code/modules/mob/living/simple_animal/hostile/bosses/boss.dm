@@ -123,8 +123,7 @@
 			return //Let's save our points for a better ability (unless we're at max points, in which case we can't save anymore!)
 		if(!boss.client)
 			abilities = shuffle(abilities)
-			for(var/ab in abilities)
-				var/datum/action/boss/AB = ab
+			for(var/datum/action/boss/AB as anything in abilities)
 				if(prob(AB.usage_probability) && AB.Trigger())
 					break
 

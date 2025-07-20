@@ -66,8 +66,7 @@
 	var/list/L = block(get_step(user, SOUTHWEST), get_step(user, NORTHEAST))
 	for(var/turf/T as anything in L)
 		if(T.Adjacent(user))
-			for(var/B in T)
-				var/atom/movable/AM = B
+			for(var/atom/movable/AM as anything in T)
 				if(AM.flags_1 & HOLOGRAM_1)
 					continue
 				. += AM
@@ -259,8 +258,7 @@
 					var/list/parts = del_reqs(R, user)
 					if(islist(R.result))
 						var/list/L = R.result
-						for(var/IT in L)
-							var/atom/movable/I = new IT(T)
+						for(var/atom/movable/I as anything in L) IT(T)
 							I.CheckParts(parts, R)
 							I.OnCrafted(user.dir, user)
 					else
