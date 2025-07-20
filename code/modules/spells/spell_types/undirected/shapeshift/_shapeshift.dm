@@ -126,11 +126,15 @@
 	stored.forceMove(src)
 	stored.notransform = TRUE
 	if(source.convert_damage)
-		var/damage_percent = (stored.maxHealth - stored.health) / stored.maxHealth;
-		var/damapply = damage_percent * shape.maxHealth;
+		var/damage_percent = (stored.maxHealth - stored.health) / stored.maxHealth
+		var/damapply = damage_percent * shape.maxHealth
 
-		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE);
-		shape.blood_volume = stored.blood_volume;
+		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE)
+		shape.blood_volume = stored.blood_volume
+
+	if(!shape.get_spell(_source.type), TRUE)
+		var/datum/action/cooldown/spell/undirected/shapeshift/copy = new _source.type(src)
+		copy.Grant(shape)
 
 	RegisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(shape_death))
 	RegisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(caster_death))
