@@ -14,7 +14,7 @@
 	var/list/gen_paths = subtypesof(/datum/mapGenerator)
 	var/list/options = list()
 	for(var/datum/mapGenerator/MP as anything in gen_paths)
-		options[initial(MP.buildmode_name)] = gen_paths[MP]
+		options[initial(MP.buildmode_name)] = MP
 	var/type = input(c,"Select Generator Type","Type") as null|anything in options
 	if(!type)
 		return
