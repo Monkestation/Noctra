@@ -113,9 +113,9 @@
 	var/restoring = FALSE
 	var/datum/action/cooldown/spell/undirected/shapeshift/source
 
-/obj/shapeshift_holder/Initialize(mapload, datum/action/cooldown/spell/undirected/shapeshift/_source, mob/living/caster)
+/obj/shapeshift_holder/Initialize(mapload, datum/action/cooldown/spell/undirected/shapeshift/source, mob/living/caster)
 	. = ..()
-	source = _source
+	src.source = source
 	shape = loc
 	if(!istype(shape))
 		stack_trace("shapeshift holder created outside mob/living")
@@ -132,8 +132,8 @@
 		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE)
 		shape.blood_volume = stored.blood_volume
 
-	if(!shape.get_spell(_source.type, TRUE))
-		var/datum/action/cooldown/spell/undirected/shapeshift/copy = new _source.type(src)
+	if(!shape.get_spell(source.type, TRUE))
+		var/datum/action/cooldown/spell/undirected/shapeshift/copy = new source.type(src)
 		copy.Grant(shape)
 
 	RegisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(shape_death))
