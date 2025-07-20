@@ -1175,9 +1175,9 @@ GLOBAL_VAR_INIT(mobids, 1)
 	var/turf/mob_location = get_turf(src)
 	var/area/mob_area = get_area(src)
 
-	if(mob_location.get_lumcount() > light_amount)
+	if(mob_location?.get_lumcount() > light_amount)
 		return TRUE
-	else if(mob_area.dynamic_lighting == DYNAMIC_LIGHTING_DISABLED)
+	else if(mob_area?.dynamic_lighting == DYNAMIC_LIGHTING_DISABLED)
 		return TRUE
 
 	return FALSE
