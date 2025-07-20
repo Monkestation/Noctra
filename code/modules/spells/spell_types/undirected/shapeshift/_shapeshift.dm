@@ -132,7 +132,7 @@
 		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE)
 		shape.blood_volume = stored.blood_volume
 
-	if(!shape.get_spell(_source.type), TRUE)
+	if(!shape.get_spell(_source.type, TRUE))
 		var/datum/action/cooldown/spell/undirected/shapeshift/copy = new _source.type(src)
 		copy.Grant(shape)
 
