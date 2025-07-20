@@ -631,8 +631,7 @@
 	. = 0
 	var/cached_amount = total_volume		//cache amount
 	var/list/cached_reagents = reagent_list		//cache reagents
-	for(var/I in cached_reagents)
-		var/datum/reagent/R = I
+	for(var/datum/reagent/R as anything in cached_reagents)
 		. += R.specific_heat * (R.volume / cached_amount)
 
 /datum/reagents/proc/adjust_thermal_energy(J, min_temp = 2.7, max_temp = 1000)
@@ -664,8 +663,7 @@
 	//Equalize temperature - Not using specific_heat() because the new chemical isn't in yet.
 	var/specific_heat = 0
 	var/thermal_energy = 0
-	for(var/i in cached_reagents)
-		var/datum/reagent/R = i
+	for(var/datum/reagent/R as anything in cached_reagents)
 		specific_heat += R.specific_heat * (R.volume / new_total)
 		thermal_energy += R.specific_heat * R.volume * cached_temp
 	specific_heat += D.specific_heat * (amount / new_total)
@@ -674,8 +672,7 @@
 	////
 
 	//add the reagent to the existing if it exists
-	for(var/A in cached_reagents)
-		var/datum/reagent/R = A
+	for(var/datum/reagent/R as anything in cached_reagents)
 		if (R.type == reagent)
 			R.volume += amount
 			update_total()
@@ -728,8 +725,7 @@
 
 	var/list/cached_reagents = reagent_list
 
-	for(var/A in cached_reagents)
-		var/datum/reagent/R = A
+	for(var/datum/reagent/R as anything in cached_reagents)
 		if (R.type == reagent)
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
@@ -940,8 +936,7 @@
 	var/increased = FALSE
 	if(old_temp < chem_temp)
 		increased = TRUE
-	for(var/i in reagent_list)
-		var/datum/reagent/R = i
+	for(var/datum/reagent/R as anything in reagent_list)
 		R.on_temp_change(increased)
 	handle_reactions()
 	SEND_SIGNAL(my_atom, COMSIG_REAGENTS_EXPOSE_TEMPERATURE, null, chem_temp)

@@ -220,8 +220,7 @@
 /mob/living/carbon/proc/get_complex_pain()
 	var/total_pain = 0
 
-	for(var/I in bodyparts)
-		var/obj/item/bodypart/BP = I
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		if(BP.status == BODYPART_ROBOTIC)
 			continue
 
@@ -395,8 +394,7 @@
 	return "[intensity]"
 
 /mob/living/carbon/proc/handle_lingering_pain()
-	for(var/I in bodyparts)
-		var/obj/item/bodypart/BP = I
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		if(BP.status == BODYPART_ROBOTIC)
 			continue
 

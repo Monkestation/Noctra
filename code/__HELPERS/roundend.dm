@@ -144,8 +144,7 @@
 		M.do_game_over()
 		M.playsound_local(M, 'sound/music/credits.ogg', 100, FALSE)
 
-	for(var/I in round_end_events)
-		var/datum/callback/cb = I
+	for(var/datum/callback/cb as anything in round_end_events)
 		cb.InvokeAsync()
 	LAZYCLEARLIST(round_end_events)
 

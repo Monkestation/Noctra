@@ -126,8 +126,7 @@ SUBSYSTEM_DEF(ticker)
 	var/list/music = list()
 	var/use_rare_music = prob(1)
 
-	for(var/S in provisional_title_music)
-		var/lower = lowertext(S)
+	for(var/lower as anything in provisional_title_music)(S)
 		var/list/L = splittext(lower,"+")
 		switch(L.len)
 			if(3) //rare+MAP+sound.ogg or MAP+rare.sound.ogg -- Rare Map-specific sounds
@@ -315,8 +314,7 @@ SUBSYSTEM_DEF(ticker)
 	transfer_characters()	//transfer keys to the new mobs
 	log_game("GAME SETUP: transfer characters success")
 
-	for(var/I in round_start_events)
-		var/datum/callback/cb = I
+	for(var/datum/callback/cb as anything in round_start_events)
 		cb.InvokeAsync()
 
 	log_game("GAME SETUP: round start events success")
@@ -444,8 +442,7 @@ SUBSYSTEM_DEF(ticker)
 		addtimer(CALLBACK(src, PROC_REF(release_characters), livings), 30, TIMER_CLIENT_TIME)
 
 /datum/controller/subsystem/ticker/proc/release_characters(list/livings)
-	for(var/I in livings)
-		var/mob/living/L = I
+	for(var/mob/living/L as anything in livings)
 		L.notransform = FALSE
 
 

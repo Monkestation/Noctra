@@ -64,8 +64,7 @@
 	soulowner = owner
 	soulsharers = sharers
 	LAZYADD(owner.ownedSoullinks, src)
-	for(var/l in sharers)
-		var/mob/living/L = l
+	for(var/mob/living/L as anything in sharers)
 		LAZYADD(L.sharedSoullinks, src)
 	return TRUE
 

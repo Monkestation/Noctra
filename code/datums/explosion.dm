@@ -409,8 +409,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(wipe_color_and_text), wipe_colours), 100)
 
 /proc/wipe_color_and_text(list/atom/wiping)
-	for(var/i in wiping)
-		var/atom/A = i
+	for(var/atom/A as anything in wiping)
 		A.color = null
 		A.maptext = ""
 

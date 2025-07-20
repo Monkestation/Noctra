@@ -24,8 +24,7 @@
 		_A.mouse_opacity = initial(_A.mouse_opacity)
 	if(drop_all_on_destroy)
 		do_quick_empty()
-	for(var/i in slaves)
-		var/datum/component/storage/slave = i
+	for(var/datum/component/storage/slave as anything in slaves)
 		slave.change_master(null)
 	QDEL_LIST(_contents_limbo)
 	_user_limbo = null
@@ -84,8 +83,7 @@
 
 /datum/component/storage/concrete/refresh_mob_views()
 	. = ..()
-	for(var/i in slaves)
-		var/datum/component/storage/slave = i
+	for(var/datum/component/storage/slave as anything in slaves)
 		slave.refresh_mob_views()
 
 /datum/component/storage/concrete/proc/on_slave_link(datum/component/storage/S)
@@ -110,8 +108,7 @@
 
 /datum/component/storage/concrete/can_see_contents()
 	. = ..()
-	for(var/i in slaves)
-		var/datum/component/storage/slave = i
+	for(var/datum/component/storage/slave as anything in slaves)
 		. |= slave.can_see_contents()
 
 //Resets screen loc and other vars of something being removed from storage.
@@ -206,6 +203,5 @@
 	if(isobj(parent))
 		var/obj/O = parent
 		O.update_appearance()
-	for(var/i in slaves)
-		var/datum/component/storage/slave = i
+	for(var/datum/component/storage/slave as anything in slaves)
 		slave.update_icon()

@@ -64,8 +64,7 @@
 	if(!isturf(user.loc))
 		return
 	var/list/L = block(get_step(user, SOUTHWEST), get_step(user, NORTHEAST))
-	for(var/A in L)
-		var/turf/T = A
+	for(var/turf/T as anything in L)
 		if(T.Adjacent(user))
 			for(var/B in T)
 				var/atom/movable/AM = B

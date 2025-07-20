@@ -109,11 +109,9 @@ GLOBAL_LIST_EMPTY(last_messages)
 		if(last_message)
 			GLOB.last_messages |= last_message
 
-	for(var/s in ownedSoullinks)
-		var/datum/soullink/S = s
+	for(var/datum/soullink/S as anything in ownedSoullinks)
 		S.ownerDies(gibbed)
-	for(var/s in sharedSoullinks)
-		var/datum/soullink/S = s
+	for(var/datum/soullink/S as anything in sharedSoullinks)
 		S.sharerDies(gibbed)
 
 //	for(var/datum/death_tracker/D in target.death_trackers)

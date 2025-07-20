@@ -118,8 +118,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		dupe_search_range = get_owners()
 	var/list/possible_targets = list()
 	var/try_target_late_joiners = FALSE
-	for(var/I in owners)
-		var/datum/mind/O = I
+	for(var/datum/mind/O as anything in owners)
 		if(O.late_joiner)
 			try_target_late_joiners = TRUE
 	for(var/datum/mind/possible_target in get_crewmember_minds())
@@ -526,8 +525,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 		/datum/objective/custom
 	),GLOBAL_PROC_REF(cmp_typepaths_asc))
 
-	for(var/T in allowed_types)
-		var/datum/objective/X = T
+	for(var/datum/objective/X as anything in allowed_types)
 		GLOB.admin_objective_list[initial(X.name)] = T
 
 /datum/objective/contract

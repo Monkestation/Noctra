@@ -378,8 +378,7 @@ SUBSYSTEM_DEF(vote)
 	usr.vote()
 
 /datum/controller/subsystem/vote/proc/remove_action_buttons()
-	for(var/v in generated_actions)
-		var/datum/action/vote/V = v
+	for(var/datum/action/vote/V as anything in generated_actions)
 		if(!QDELETED(V))
 			V.remove_from_client()
 			V.Remove(V.owner)
