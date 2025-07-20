@@ -52,7 +52,7 @@
 /atom/movable/proc/send_speech_emote(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language = null, list/message_mods = list(), original_message)
 	var/rendered = compose_message(src, message_language, message, null, spans, message_mods)
 	for(var/atom/movable/AM as anything in get_hearers_in_view(range, source))
-		AM.Hear(rendered, src, message_language, message, null, spans, message_mods)
+		AM.Hear(rendered, src, message_language, message, null, spans, message_mods, original_message)
 
 /datum/emote/spin
 	key = "spin"

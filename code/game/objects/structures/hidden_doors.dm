@@ -87,7 +87,7 @@ GLOBAL_LIST_EMPTY(thieves_guild_doors)
 		return
 	..()
 
-/obj/structure/door/secret/Hear(message, atom/movable/speaker, message_language, raw_message, list/spans, list/message_mods = list(), original_message)
+/obj/structure/door/secret/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), original_message)
 	var/mob/living/carbon/human/H = speaker
 	if(speaker == src) //door speaking to itself
 		return FALSE
