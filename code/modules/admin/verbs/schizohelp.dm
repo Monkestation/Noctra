@@ -65,19 +65,22 @@ GLOBAL_LIST_EMPTY_TYPED(schizohelps, /datum/schizohelp)
 	return "[adjective] [noun]"
 
 /client/proc/answer_schizohelp(datum/schizohelp/schizo)
-	if(QDELETED(schizo) || QDELETED(schizo.owner))
+	if(QDELETED(schizo))
 		to_chat(src, span_warning("This meditation can no longer be answered..."))
 		return
-	if(schizo.owner == src.mob)
+	var/mob/schizo_mob = schizo.owner?.resolve()
+	if(!schizo_mob)
+		return
+	if(schizo_mob == mob)
 		to_chat(src, span_warning("I can't answer my own meditation!"))
 		return
-	if(schizo.answers[src.key])
+	if(schizo.answers[key])
 		to_chat(src, span_warning("I have already answered this meditation!"))
 		return
 	var/answer = browser_input_text(src, "Answer their meditations...", "THE VOICE", multiline = TRUE)
 	if(!answer || QDELETED(schizo))
 		return
-	schizo.answer_schizo(answer, src.mob)
+	schizo.answer_schizo(answer, mob)
 
 /datum/schizohelp
 	/// Guy who made this schizohelp "ticket"
