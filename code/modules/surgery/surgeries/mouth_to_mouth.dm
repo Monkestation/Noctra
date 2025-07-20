@@ -17,9 +17,8 @@
 	)
 	lying_required = TRUE
 	self_operable = FALSE
-	//Those skill levels mean a 40 to 60 chance to fail rate at NONE skill. Just enough to barely keep people from expiring.
 	skill_min = SKILL_LEVEL_NONE
-	skill_median = SKILL_LEVEL_APPRENTICE
+	skill_median = SKILL_LEVEL_NOVICE
 	surgery_flags = NONE
 	repeating = TRUE
 

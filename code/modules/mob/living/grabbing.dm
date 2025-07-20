@@ -36,9 +36,9 @@
 
 	if(istype(mover))
 		if(is_jester_job(mover.mind?.assigned_role))
-			mover.liquid_slip(total_time = 0.8 SECONDS, stun_duration = 0.8 SECONDS, height = 30, flip_count = 10)
+			mover.liquid_slip(total_time = 1.6 SECONDS, stun_duration = 1.6 SECONDS, height = 30, flip_count = 10)
 		else
-			mover.liquid_slip(total_time = 0.8 SECONDS, stun_duration = 0.8 SECONDS, height = 12, flip_count = 0)
+			mover.liquid_slip(total_time = 1.6 SECONDS, stun_duration = 1.6 SECONDS, height = 12, flip_count = 0)
 
 /atom/movable/screen/alert/status_effect/oiled
 	name = "Oiled"
@@ -76,6 +76,7 @@
 	if(isliving(src))
 		var/mob/living/living = src
 		living.Knockdown(stun_duration)
+		living.set_resting(FALSE, silent = TRUE)
 		animate(src, pixel_x = 0, pixel_y = 0, transform = src.transform.Turn(-turn), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 	else
 		spawn(stun_duration + total_time)

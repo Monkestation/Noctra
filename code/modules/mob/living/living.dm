@@ -1323,7 +1323,7 @@
 	if(body_position != LYING_DOWN && target.body_position == LYING_DOWN)
 		modifier += 0.2
 	else if(body_position == LYING_DOWN && target.body_position != LYING_DOWN)
-		modifier -= 0.3
+		modifier -= 0.2
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/human = src
@@ -1368,6 +1368,9 @@
 /mob/living/resist_grab(moving_resist)
 	. = TRUE
 
+	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
+		return
+
 	if(!MOBTIMER_FINISHED(pulledby, MT_RESIST_GRAB, 2 SECONDS))
 		return
 
@@ -1378,8 +1381,8 @@
 	var/mob/living/L = pulledby
 	var/combat_modifier = 1
 
+	// Modifier of pulledby against the resisting src
 	var/positioning_modifier = L.get_positioning_modifier(src)
-	positioning_modifier = 2.0 - positioning_modifier
 
 	if(mind)
 		wrestling_diff += (get_skill_level(/datum/skill/combat/wrestling))
@@ -1394,9 +1397,6 @@
 			combat_modifier += 0.6
 			resist_chance += 25
 
-	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
-		combat_modifier -= 0.2
-
 	if(pulledby.grab_state >= GRAB_AGGRESSIVE)
 		combat_modifier -= 0.15
 
@@ -1406,7 +1406,7 @@
 			combat_modifier += 0.25
 
 	if(cmode && !L.cmode)
-		combat_modifier += 0.4
+		combat_modifier += 0.2
 	else if(!cmode && L.cmode)
 		combat_modifier -= 0.2
 
@@ -1431,7 +1431,7 @@
 			combat_modifier -= 0.1 // BUFF: Reduced chokehold penalty (was 0.15)
 
 	resist_chance += ((((STASTR - L.STASTR)/4) + wrestling_diff) * 4 + rand(-5, 5))
-	resist_chance *= combat_modifier * stamina_factor * positioning_modifier
+	resist_chance *= combat_modifier * stamina_factor * (1/positioning_modifier)
 	resist_chance = clamp(resist_chance, 8, 90)
 
 	var/time_grabbed = S_TIMER_COOLDOWN_TIMELEFT(src, "broke_free")

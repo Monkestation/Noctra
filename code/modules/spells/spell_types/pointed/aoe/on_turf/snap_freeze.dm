@@ -28,7 +28,6 @@
 /datum/action/cooldown/spell/aoe/on_turf/snap_freeze/proc/do_freeze(turf/victim)
 	new /obj/effect/temp_visual/snap_freeze(victim)
 	playsound(victim, 'sound/combat/newstuck.ogg', 80, TRUE)
-	var/strength = clamp(attuned_strength, 0.5, 2)
 	for(var/mob/living/L in victim)
 		if(L.can_block_magic(MAGIC_RESISTANCE))
 			L.visible_message(span_warning("The ice fades away around [L]."))
