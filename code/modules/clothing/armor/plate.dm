@@ -135,6 +135,8 @@
 	sleeved = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
 	sellprice = 0 // See above comment
 
+//.............. Graggar Armor .................//
+
 /obj/item/clothing/armor/plate/full/graggar
 	name = "vicious full-plate"
 	desc = "A sinister set full plate. Untold violence stirs from within."
