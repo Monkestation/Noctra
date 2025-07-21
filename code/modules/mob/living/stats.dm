@@ -244,6 +244,13 @@
 		(STATKEY_LCK) = STALUC,
 	)
 
+/// Return mob's stat value by stat_key
+/mob/living/proc/get_stat(stat_key)
+	if(!stat_key)
+		return
+
+	return LAZYACCESS(get_all_stats(), stat_key)
+
 ///Returns: the difference in value between the opponents stat key and ours.
 ///EG: Our endurace - opp endurance.
 /mob/living/proc/stat_difference_to(mob/living/opponent,stat_key)

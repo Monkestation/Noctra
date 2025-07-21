@@ -201,7 +201,7 @@ GLOBAL_LIST_EMPTY(heretical_players)
 // Debug verb
 /mob/living/carbon/human/proc/devotionchange()
 	set name = "(DEBUG)Change Devotion"
-	set category = "Special Verbs"
+	set category = "Special"
 
 	var/datum/devotion/cleric_holder/C = src.cleric
 	var/changeamt = input(src, "My devotion is [C.devotion]. How much to change?", "How much to change?") as null|num

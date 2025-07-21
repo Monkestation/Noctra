@@ -484,7 +484,7 @@
 			to_chat(src, span_warning("That's too high for me..."))
 			return
 
-	changeNext_move(mmb_intent.clickcd)
+	changeNext_move(mmb_intent?.clickcd ? mmb_intent.clickcd : CLICK_CD_MELEE)
 
 	face_atom(A)
 
@@ -506,7 +506,7 @@
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		jadded += H.get_complex_pain()/50
+		jadded += H.get_complex_pain() / 50
 		if(H.get_encumbrance() >= 0.7)
 			jadded += 50
 			jrange = 1

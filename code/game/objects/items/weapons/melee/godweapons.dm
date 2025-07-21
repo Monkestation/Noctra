@@ -157,7 +157,7 @@
 
 		new /obj/item/reagent_containers/lux(get_turf(target))
 
-		H.apply_status_effect(/datum/status_effect/buff/lux_drained)
+		H.apply_status_effect(/datum/status_effect/debuff/lux_drained)
 		SEND_SIGNAL(user, COMSIG_LUX_EXTRACTED, target)
 		record_featured_stat(FEATURED_STATS_CRIMINALS, user)
 		record_round_statistic(STATS_LUX_HARVESTED)
