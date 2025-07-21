@@ -13,7 +13,7 @@
 
 /obj/structure/fluff/walldeco/wantedposter
 	name = "wanted poster"
-	desc = "The list of the worst scoundrels this realm has to offer along with their face sketches."
+	desc = "A list of the worst scoundrels this realm has to offer along with their face sketches."
 	icon_state = "wanted1"
 	layer = BELOW_MOB_LAYER
 	pixel_y = 32
@@ -33,14 +33,14 @@
 
 /obj/structure/fluff/walldeco/wantedposter/examine(mob/user)
 	. = ..()
-	if(user.Adjacent(src))
-		if(ishuman(user))
-			var/mob/living/carbon/human/H = user
-			show_outlaw_headshot(H)
-	else
-		to_chat(user, span_warning("I need to get closer to see the scoundrels' faces!"))
+	if(ishuman(user))
+		if(user.Adjacent(src))
+			var/mob/living/carbon/human/human_user = user
+			show_outlaw_headshot(human_user)
+		else
+			to_chat(user, span_warning("I need to get closer to see the scoundrels' faces!"))
 
-/obj/structure/fluff/walldeco/wantedposter/proc/show_outlaw_headshot(mob/user)
+/obj/structure/fluff/walldeco/wantedposter/proc/show_outlaw_headshot(mob/living/carbon/human/user)
 	var/list/outlaws = list()
 
 	for(var/mob/living/carbon/human/outlaw in GLOB.player_list)
