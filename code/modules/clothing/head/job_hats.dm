@@ -108,7 +108,9 @@
 	item_state = "inqhat"
 	sewrepair = TRUE
 
-/obj/item/clothing/head/physhat
-	name = "court physician's hat"
-	desc = "A head covering for the distinguished physician."
-	icon_state = "physicianhat"
+/obj/item/clothing/head/crtphys
+	name = "court physician's beret"
+	desc = "A head and mask covering for the distinguished physician."
+	icon_state = "courtmask"
+	item_state = "crtmask"
+	flags_inv = HIDEFACE

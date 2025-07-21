@@ -321,6 +321,13 @@
 	item_state = "surgcollar"
 	sellprice = 15
 
+/obj/item/clothing/neck/crtphys
+	name = "court physician's collar"
+	desc = "Fits snug."
+	icon_state = "courtcollar"
+	item_state = "crtcollar"
+	sellprice = 15
+
 /obj/item/clothing/neck/bogcowl
 	name = "bogcowl"
 	desc = "An odd cowl made using mud, sticks, and fibers."

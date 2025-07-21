@@ -155,6 +155,12 @@
 	icon_state = "surgrobe"
 	item_state = "surgrobe"
 
+/obj/item/clothing/shirt/robe/crtphys
+	name = "court physician's robe"
+	desc = "The dark red helps hide blood stains, and is elegant."
+	icon_state = "courtrobe_floor"
+	item_state = "crtrobe"
+
 /obj/item/clothing/shirt/robe/archivist
 	name = "archivist's robe"
 	desc = "Robes belonging to seekers of knowledge."
