@@ -142,7 +142,7 @@
 			switch(dam)
 				if(30 to INFINITY)
 					added_wound = /datum/wound/bruise/large
-				if(15 to 25)
+				if(15 to 30)
 					added_wound = /datum/wound/bruise
 				if(5 to 15)
 					added_wound = /datum/wound/bruise/small
@@ -151,7 +151,7 @@
 			switch(dam)
 				if(30 to INFINITY)
 					added_wound = /datum/wound/slash/large
-				if(15 to 25)
+				if(15 to 30)
 					added_wound = /datum/wound/slash
 				if(5 to 15)
 					added_wound = /datum/wound/slash/small
@@ -160,7 +160,7 @@
 			switch(dam)
 				if(30 to INFINITY)
 					added_wound = /datum/wound/puncture/large
-				if(15 to 25)
+				if(15 to 30)
 					added_wound = /datum/wound/puncture
 				if(5 to 15)
 					added_wound = /datum/wound/puncture/small
