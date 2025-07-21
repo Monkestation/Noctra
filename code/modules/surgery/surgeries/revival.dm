@@ -59,7 +59,8 @@
 	target.update_body()
 	target.visible_message(span_notice("[target] is dragged back from Necra's hold!"), span_green("I awake from the void."))
 	qdel(tool)
-	target.remove_status_effect(/datum/status_effect/buff/lux_drained)
+	target.remove_status_effect(/datum/status_effect/debuff/lux_drained)
+	target.remove_status_effect(/datum/status_effect/debuff/flaw_lux_taken)
 	record_round_statistic(STATS_LUX_REVIVALS)
 	return TRUE
 
