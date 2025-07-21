@@ -761,7 +761,7 @@
 
 	// Final completion message
 	if(successful_crafts > 0)
-		to_chat(user, span_notice("Finished crafting [successful_crafts] [name][successful_crafts > 1 ? "s" : ""]."))
+		to_chat(user, span_green("Finished crafting [successful_crafts] [name][successful_crafts > 1 ? "s" : ""]."))
 	else
 		to_chat(user, span_warning("Failed to craft any [name]."))
 

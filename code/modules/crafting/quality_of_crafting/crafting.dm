@@ -338,6 +338,7 @@
 	allow_inverse_start = FALSE
 	output = /obj/item/kitchen/spoon
 	craft_time = 3 SECONDS
+	subtypes_allowed = TRUE
 
 /datum/repeatable_crafting_recipe/crafting/fork
 	name = "wooden fork"
@@ -352,6 +353,7 @@
 	allow_inverse_start = FALSE
 	output = /obj/item/kitchen/fork
 	craft_time = 3 SECONDS
+	subtypes_allowed = TRUE
 
 /datum/repeatable_crafting_recipe/crafting/rollingpin
 	name = "wooden rollingpin"
@@ -366,6 +368,7 @@
 	allow_inverse_start = FALSE
 	output = /obj/item/kitchen/rollingpin
 	craft_time = 5 SECONDS
+	subtypes_allowed = TRUE
 
 /datum/repeatable_crafting_recipe/crafting/woodbowl
 	name = "wooden bowl"
