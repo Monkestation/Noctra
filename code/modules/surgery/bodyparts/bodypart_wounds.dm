@@ -185,15 +185,15 @@
 				if(1 to 10)
 					added_wound = /datum/wound/bite/small
 
+	if(!added_wound)
+		return
+
 	if(do_crit)
 		var/crit_attempt = try_crit(bclass, dam, user, zone_precise, silent, crit_message)
 		if(crit_attempt)
 			return crit_attempt
 
-	if(added_wound)
-		added_wound = add_wound(added_wound, silent, crit_message)
-
-	return added_wound
+	return add_wound(added_wound, silent, crit_message)
 
 /// Behemoth of a proc used to apply a wound after a bodypart is damaged in an attack
 /obj/item/bodypart/proc/try_crit(bclass, dam, mob/living/user, zone_precise, silent = FALSE, crit_message = FALSE)
@@ -216,7 +216,7 @@
 	if(!crit_classes)
 		return FALSE
 
-	if(user?.stat_roll(STATKEY_LCK,2,10))
+	if(user?.stat_roll(STATKEY_LCK, 2, 10))
 		dam += 10
 
 	var/used
