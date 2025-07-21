@@ -10131,9 +10131,10 @@
 /obj/machinery/light/fueled/wallfire/candle,
 /obj/structure/closet/crate/drawer,
 /obj/item/lipstick,
-/obj/item/lipstick/jade,
-/obj/item/lipstick/random,
 /obj/item/perfume/random,
+/obj/item/lipstick/white,
+/obj/item/lipstick/green,
+/obj/item/lipstick/jade,
 /turf/open/floor/tile/bfloorz,
 /area/rogue/indoors/town/manor/lord_appt)
 "fSl" = (
@@ -10538,6 +10539,9 @@
 	},
 /turf/open/floor/church,
 /area/rogue/indoors/town/church/chapel)
+"gfz" = (
+/turf/closed/wall/mineral/wood/window,
+/area/rogue/outdoors/rtfield/safe)
 "gfF" = (
 /turf/closed/mineral/random/low_nonval,
 /area/rogue/outdoors/town)
@@ -11788,12 +11792,6 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/town/roofs)
-"gQu" = (
-/obj/structure/fluff/railing/woodfence{
-	dir = 4
-	},
-/turf/open/floor/cobble/mossy,
-/area/rogue/outdoors/rtfield/safe)
 "gRn" = (
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/outdoors/mountains)
@@ -39396,10 +39394,10 @@
 "yjn" = (
 /obj/machinery/light/fueled/wallfire/candle,
 /obj/structure/closet/crate/drawer,
-/obj/item/lipstick/black,
-/obj/item/lipstick/purple,
-/obj/item/lipstick/random,
 /obj/item/perfume/random,
+/obj/item/lipstick/purple,
+/obj/item/lipstick/blue,
+/obj/item/lipstick/black,
 /turf/open/floor/tile/bfloorz,
 /area/rogue/indoors/town/manor/lord_appt)
 "yjO" = (
@@ -152512,11 +152510,11 @@ nlp
 eTF
 jmr
 jmr
-aWD
 jmr
+aWD
 ucW
 ucW
-gQu
+ucW
 fhm
 xZg
 nZK
@@ -152714,11 +152712,11 @@ aWD
 fzl
 nlp
 fYR
+nlp
 jPW
-fYR
 bLD
 bLD
-fYR
+gfz
 fYR
 ucW
 ucW
@@ -193116,10 +193114,10 @@ uVx
 uVx
 uVx
 uVx
-uVx
-uVx
-uVx
-uVx
+tQl
+eti
+eti
+bWs
 uVx
 uVx
 uVx
