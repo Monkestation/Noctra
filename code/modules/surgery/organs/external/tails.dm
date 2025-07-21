@@ -23,6 +23,7 @@
 
 /obj/item/organ/tail/medicator
 	name = "medicator plumage"
+	desc = "A foul smelling substance drips from the tips, even without its host."
 	accessory_type = /datum/sprite_accessory/tail/medicator
 
 /obj/item/organ/tail/kobold
