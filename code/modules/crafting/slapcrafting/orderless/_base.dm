@@ -135,6 +135,11 @@
 		qdel(hosted_source)
 	else
 		handle_output_item(user, hosted_source)
+		// Handle item-specific post-processing by passing used ingredients
+		if(length(atoms_to_pass))
+			hosted_source.CheckParts(atoms_to_pass)
+
+		hosted_source.OnCrafted(user.dir, user)
 
 /datum/orderless_slapcraft/proc/handle_output_item(mob/user, obj/item/new_item)
 	to_chat(user, span_notice("You finish crafting [new_item]"))
@@ -211,20 +216,23 @@
 		    <h1>[name]</h1>
 		    <div>
 		"}
+	html += "<strong>With the use of [related_skill.name] skill:</strong><br>"
 	html += "[icon2html(new starting_item, user)] <strong class=class='scroll'>Start the process with [initial(starting_item.name)]</strong><br>"
-	html += "<strong> then add </strong> <br>"
+	html += "<strong> then add </strong> <br><hr>"
 	for(var/atom/path as anything in requirements)
 		var/count = requirements[path]
 		if(islist(path))
 			var/first = TRUE
 			var/list/paths = path
+			html += "up to [count] of<br>"
 			for(var/atom/sub_path as anything in paths)
 				if(!first)
 					html += "or <br>"
-				html += "[icon2html(new sub_path, user)] [count] of any [initial(sub_path.name)]<br>"
+				html += "[icon2html(new sub_path, user)] any [initial(sub_path.name)]<br>"
 				first = FALSE
 		else
 			html += "[icon2html(new path, user)] [count] of any [initial(path.name)]<br>"
+		html += "<hr>"
 
 	html += {"
 		</div>

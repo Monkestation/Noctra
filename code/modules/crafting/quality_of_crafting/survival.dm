@@ -240,7 +240,7 @@
 	attacked_atom = /obj/item/weapon/polearm/woodstaff
 	starting_atom = /obj/item/natural/fibers
 	output = /obj/item/weapon/polearm/spear/bonespear
-	craftdiff = 3
+	craftdiff = 2
 
 /datum/repeatable_crafting_recipe/survival/bone_axe
 	name = "bone axe"

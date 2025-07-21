@@ -693,6 +693,18 @@
 		/datum/orderless_slapcraft/bouquet,
 		)
 
+/obj/item/recipe_book/sewing_leather
+	can_spawn = FALSE
+	name = "High Fashion Encyclopedia"
+	desc = "The combined works of famed Elise Heiran and Orym Vayore."
+	icon_state ="book7_0"
+	base_icon_state = "book7"
+	types = list(
+		/datum/repeatable_crafting_recipe/sewing,
+		/datum/orderless_slapcraft/bouquet,
+		/datum/repeatable_crafting_recipe/leather,
+		)
+
 /obj/item/recipe_book/cooking
 	name = "The Hearthstone Grimoire: Culinary Secrets of the Realm"
 	desc = "Penned by Aric Dunswell, Head Court Chef, Third Generation."

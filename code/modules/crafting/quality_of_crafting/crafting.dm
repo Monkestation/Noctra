@@ -153,6 +153,16 @@
 	output = /obj/item/weapon/shield/heater/crafted
 	craftdiff = 2
 
+/datum/repeatable_crafting_recipe/crafting/drum
+	name = "drum"
+	starting_atom = /obj/item/natural/hide/cured
+	attacked_atom = /obj/item/grown/log/tree/small
+	requirements = list(
+		/obj/item/natural/hide = 1,
+		/obj/item/grown/log/tree/small = 1,
+	)
+	output = /obj/item/instrument/drum
+
 /datum/repeatable_crafting_recipe/crafting/dart
 	name = "dart"
 	requirements = list(

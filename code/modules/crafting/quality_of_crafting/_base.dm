@@ -73,8 +73,6 @@
 /datum/repeatable_crafting_recipe/New()
 	. = ..()
 	create_blacklisted_paths()
-	if(output_amount > 1)
-		name = name += " x[output_amount]"
 
 /datum/repeatable_crafting_recipe/proc/create_blacklisted_paths()
 	var/list/new_blacklist = list()
@@ -349,7 +347,6 @@
 
 	// Process the bundle efficiently
 	item:amount -= use_amount
-	item.update_bundle()
 	copied_requirements[matching_requirement] -= use_amount
 
 	// Create items only if we need to put them in hand or they're needed for other purposes
@@ -368,12 +365,13 @@
 	// Clean up the bundle if empty
 	if(item:amount <= 0)
 		qdel(item)
+	else
+		item.update_bundle()
 
 	// Remove requirement if fulfilled
 	if(copied_requirements[matching_requirement] <= 0)
 		copied_requirements -= matching_requirement
 		return TRUE // Early break since requirement is fulfilled
-
 	return FALSE
 
 /**
@@ -642,8 +640,7 @@
 				continue
 
 			if(istype(item, /obj/item/natural/bundle))
-				if(process_bundle(item, user, copied_requirements, to_delete, blacklisted_paths))
-					break
+				process_bundle(item, user, copied_requirements, to_delete, blacklisted_paths)
 				continue
 
 			user.visible_message(span_info("[user] starts picking up [item]."), span_info("I start picking up [item]."))
@@ -715,9 +712,30 @@
 				to_chat(user, span_notice("Successfully crafted \a [name]. ([successful_crafts]/[requested_crafts])"))
 				continue
 
+		if(!crafting_success)
+			var/list/failure_reasons = list()
+			if(length(copied_requirements))
+				failure_reasons += "not enough material"
+			if(length(copied_reagent_requirements))
+				failure_reasons += "insufficient reagents"
+			if(length(copied_tool_usage))
+				failure_reasons += "missing tools"
+
+			to_chat(user, span_warning("Crafting failed due to [failure_reasons.Join(" and ")]."))
 		// Move items back if failed
 		move_items_back(to_delete, user)
+		move_products(list(), user)
 
+		// Crafting unsuccessful, transfer all reagents to the original containers then delete the container copies
+		for(var/obj/item/reagent_containers/key in copied_containers)
+			var/obj/item/reagent_containers/doomed = copied_containers[key]
+			doomed.reagents.trans_to(key, doomed.reagents.total_volume)
+			qdel(doomed)
+
+		// End the crafting while loop
+		break
+
+		/* Removed crafting retry due to buggy behavior caused by players moving
 		// If we failed at some point in the process, restore reagents and ask if they want to continue trying
 		if(!crafting_success && successful_crafts < requested_crafts)
 
@@ -739,6 +757,7 @@
 
 		// After each successful or failed craft, give the user a moment to react
 		sleep(0.5 SECONDS)
+		*/
 
 	// Final completion message
 	if(successful_crafts > 0)
@@ -1007,7 +1026,7 @@
 		</style>
 		<body>
 		  <div>
-		    <h1>[name]</h1>
+		    <h1>[icon2html(new output, user)] [name][output_amount > 1 ? " x[output_amount]" : ""]</h1>
 		    <div>
 		      <h2>Requirements</h2>
 		"}
@@ -1044,7 +1063,7 @@
 		html += {"
 		<br>
 		<div>
-		    <strong>Required Liquids</strong>
+		    <strong>Required Liquids:</strong>
 			<br>
 			  "}
 		for(var/atom/path as anything in reagent_requirements)
@@ -1054,6 +1073,13 @@
 			</div>
 		<div>
 		"}
+
+	if(minimum_skill_level)
+		html += "<br><strong class=class='scroll'>[SSskills.level_names[min(craftdiff, length(SSskills.level_names))]] [skillcraft.name] skill REQUIRED</strong><br>"
+	else if(craftdiff)
+		html += "<br><strong class=class='scroll'>[SSskills.level_names[min(craftdiff, length(SSskills.level_names))]] [skillcraft.name] skill recommended</strong><br>"
+	else
+		html += "<br><strong class=class='scroll'>No [skillcraft.name] skill needed</strong><br>"
 
 	html += "<h1>Steps</h1><br>"
 	if(subtypes_allowed)

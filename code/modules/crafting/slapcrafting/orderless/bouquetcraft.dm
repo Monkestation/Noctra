@@ -12,7 +12,7 @@
 	var/flower_count = 0
 
 /datum/orderless_slapcraft/bouquet/before_process_item(obj/item/attacking_item, mob/user)
-	// UTTER JANK TO KEEP THIS PURE ORDERLESS SLAPCRAFT WHILE PREVENTING BUGS
+	// UTTER JANK TO KEEP THIS PURE ORDERLESS SLAPCRAFT
 	if(!istype(hosted_source, /obj/item/bouquet))
 		var/old_host = hosted_source
 		UnregisterSignal(old_host, COMSIG_PARENT_QDELETING)

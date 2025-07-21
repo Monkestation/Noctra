@@ -44,6 +44,8 @@
 	recipe = input(src, "Choose a recipe to craft", "Recipes") as null|anything in recipes
 	if(!recipe)
 		return TRUE
+	if(!Adjacent(attacked_atom)) // sanity check
+		return TRUE
 	return execute_recipe(recipe, starting_atom, attacked_atom)
 
 /mob/living/proc/execute_recipe(datum/slapcraft_recipe/target_recipe, obj/item/first_item, obj/item/second_item)
