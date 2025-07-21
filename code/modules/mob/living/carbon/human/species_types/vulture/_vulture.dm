@@ -74,11 +74,12 @@
 		ORGAN_SLOT_APPENDIX = /obj/item/organ/appendix,
 		ORGAN_SLOT_GUTS = /obj/item/organ/guts,
 		ORGAN_SLOT_TAIL = /obj/item/organ/tail/medicator,
-		ORGAN_SLOT_NECK_FEATURE = /obj/item/organ/neck/medicator,
+		ORGAN_SLOT_NECK_FEATURE = /obj/item/organ/feature/neck/medicator,
 	)
 
 	customizers = list(
 		/datum/customizer/organ/tail/medicator,
+		/datum/customizer/organ/neck_feature/medicator,
 		/datum/customizer/bodypart_feature/hair/head/humanoid/medicator,
 		/datum/customizer/bodypart_feature/accessory,
 		/datum/customizer/bodypart_feature/face_detail,
