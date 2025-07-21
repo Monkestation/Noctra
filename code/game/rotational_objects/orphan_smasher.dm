@@ -62,15 +62,17 @@
 	var/next_step
 	if(!working)
 		next_step = pre_start_list[length(step_list) + 1]
+		. += span_notice("[src] is currently OFF.")
 	else
 		next_step = post_start_list[length(step_list) + 1]
+		. += span_notice("[src] is currently ON.")
 	switch(next_step)
 		if(STEP_FIDDLE)
-			. += span_notice("The next step is to fiddle with the machine with RMB.")
+			. += span_notice("To toggle the machine, use RMB.")
 		if(STEP_BUTTON)
-			. += span_notice("The next step is to press a button with Ctrl+Click.")
+			. += span_notice("To toggle the machine, use Ctrl+Click.")
 		if(STEP_LEVER)
-			. += span_notice("The next step is to flip a lever with MMB.")
+			. += span_notice("To toggle the machine, use MMB.")
 
 /obj/structure/orphan_smasher/process()
 	if(!working)
