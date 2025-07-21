@@ -10,10 +10,25 @@
 	var/wagging = FALSE
 
 /obj/item/organ/tail/Remove(mob/living/carbon/human/H,  special = 0)
-	..()
+	. = ..()
 	if(H && H.dna && H.dna.species)
 		H.dna.species.stop_wagging_tail(H)
 
 /obj/item/organ/tail/cat
 	name = "cat tail"
-	desc = ""
+
+/obj/item/organ/tail/harpy
+	name = "harpy plumage"
+	accessory_type = /datum/sprite_accessory/tail/hawk
+
+/obj/item/organ/tail/medicator
+	name = "medicator plumage"
+	accessory_type = /datum/sprite_accessory/tail/vulture
+
+/obj/item/organ/tail/kobold
+	name = "small lizard tail"
+	accessory_type = /datum/sprite_accessory/tail/kobold
+
+/obj/item/organ/tail/triton
+	name = "triton bell"
+	accessory_type = /datum/sprite_accessory/tail/triton
