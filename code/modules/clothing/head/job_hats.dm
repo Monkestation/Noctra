@@ -113,4 +113,9 @@
 	desc = "A head and mask covering for the distinguished physician."
 	icon_state = "courtmask"
 	item_state = "courtmask"
-	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDEHAIR
+	//partially copied from feldsher mask code, let's hope this doesn't break anything
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	body_parts_covered = FACE|EARS|EYES|MOUTH|NECK
+	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HEAD|ITEM_SLOT_HIP
+	sewrepair = TRUE
+	gas_transfer_coefficient = 0.3
