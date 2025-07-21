@@ -1161,3 +1161,37 @@
 /datum/sprite_accessory/hair/head/triton/betta
 	name = "Betta"
 	icon_state = "betta"
+
+/datum/sprite_accessory/hair/head/medicator
+	name = "Base Medicator"
+	abstract_type = /datum/sprite_accessory/hair/head/medicator
+	icon = 'icons/mob/sprite_accessory/hair/medicator.dmi'
+	specuse = list(SPEC_ID_MEDICATOR)
+
+/datum/sprite_accessory/hair/head/medicator/windswept
+	name = "Windswept"
+	icon_state = "windswept"
+
+/datum/sprite_accessory/hair/head/medicator/curl
+	name = "Curl"
+	icon_state = "curl"
+
+/datum/sprite_accessory/hair/head/medicator/spencer
+	name = "Spencer"
+	icon_state = "spencer"
+
+/datum/sprite_accessory/hair/head/medicator/dynamic
+	name = "Dynamic"
+	icon_state = "dynamic"
+
+/datum/sprite_accessory/hair/head/medicator/jockey
+	name = "Jockey"
+	icon_state = "jockey"
+
+/datum/sprite_accessory/hair/head/medicator/hook
+	name = "Hook"
+	icon_state = "hook"
+
+/datum/sprite_accessory/hair/head/medicator/crown
+	name = "Crown"
+	icon_state = "crown"
