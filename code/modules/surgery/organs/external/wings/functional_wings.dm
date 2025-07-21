@@ -1,7 +1,7 @@
 /obj/item/organ/wings/flight
 	/// Flight datum
 	var/datum/action/item_action/organ_action/use/flight/fly
-	///What species get flights thanks to those wings.
+	/// What species ids get flight from these wings
 	var/list/flight_for_species
 
 /obj/item/organ/wings/flight/Destroy()
@@ -10,8 +10,7 @@
 
 /obj/item/organ/wings/flight/Insert(mob/living/carbon/M, special, drop_if_replaced)
 	. = ..()
-
-	if(!(M.dna?.species in flight_for_species))
+	if(!(M.dna?.species.id in flight_for_species))
 		return
 	if(QDELETED(fly))
 		fly = new(src)
@@ -22,6 +21,11 @@
 	if(QDELETED(fly))
 		return
 	fly.Remove(M)
+
+/obj/item/organ/wings/flight/harpy
+	name = "harpy wings"
+	accessory_type = /datum/sprite_accessory/wings/large/harpyswept
+	flight_for_species = list(SPEC_ID_HARPY)
 
 /obj/effect/flyer_shadow
 	name = ""
