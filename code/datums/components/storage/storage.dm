@@ -883,7 +883,31 @@
 		user.visible_message(span_warning("[user] draws [I] from [parent]!"), span_notice("I draw [I] from [parent]."))
 		return
 
-	on_attack_hand(source, user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(not_while_equipped)
+			if(H.backl == A)
+				if(!H.get_active_held_item())
+					H.putItemFromInventoryInHandIfPossible(A, H.active_hand_index)
+				return
+			if(H.backr == A)
+				if(!H.get_active_held_item())
+					H.putItemFromInventoryInHandIfPossible(A, H.active_hand_index)
+				return
+			if(H.beltl == A)
+				if(!H.get_active_held_item())
+					H.putItemFromInventoryInHandIfPossible(A, H.active_hand_index)
+				return
+			if(H.beltr == A)
+				if(!H.get_active_held_item())
+					H.putItemFromInventoryInHandIfPossible(A, H.active_hand_index)
+				return
+			if(H.wear_neck == A)
+				if(!H.get_active_held_item())
+					H.putItemFromInventoryInHandIfPossible(A, H.active_hand_index)
+				return
+
+	user_show_to_mob(user)
 
 /datum/component/storage/proc/action_trigger(datum/signal_source, datum/action/source)
 	gather_mode_switch(source.owner)

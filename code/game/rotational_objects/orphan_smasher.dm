@@ -57,6 +57,21 @@
 	completed_items.Cut()
 	return ..()
 
+/obj/structure/orphan_smasher/examine(mob/user)
+	. = ..()
+	var/next_step
+	if(!working)
+		next_step = pre_start_list[length(step_list) + 1]
+	else
+		next_step = post_start_list[length(step_list) + 1]
+	switch(next_step)
+		if(STEP_FIDDLE)
+			. += span_notice("The next step is to fiddle with the machine with RMB.")
+		if(STEP_BUTTON)
+			. += span_notice("The next step is to press a button with Ctrl+Click.")
+		if(STEP_LEVER)
+			. += span_notice("The next step is to flip a lever with MMB.")
+
 /obj/structure/orphan_smasher/process()
 	if(!working)
 		return
@@ -304,7 +319,7 @@
 
 /obj/structure/material_bin
 	name = "auto anvil hopper"
-	desc = ""
+	desc = "The storage can be opened and closed with RMB."
 
 	icon = 'icons/obj/autosmithy.dmi'
 	icon_state = "material"
@@ -331,11 +346,12 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	user.visible_message(span_danger("[user] starts to [opened ? "close" : "open"] [src]!"), span_danger("You start to [opened ? "close" : "open"] [src]!"))
+	user.visible_message(span_danger("[user] starts to [opened ? "close" : "open"] [src]."), span_danger("You start to [opened ? "close" : "open"] [src]."))
 	if(!do_after(user, 2.5 SECONDS, src))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	opened = !opened
 	update_appearance(UPDATE_ICON_STATE)
+	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_HIDE_ALL)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 #undef STEP_FIDDLE
