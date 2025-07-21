@@ -153,7 +153,7 @@
 					added_wound = /datum/wound/slash/large
 				if(15 to 25)
 					added_wound = /datum/wound/slash
-				if(1 to 15)
+				if(5 to 15)
 					added_wound = /datum/wound/slash/small
 
 		if(BCLASS_STAB, BCLASS_PICK, BCLASS_SHOT, BCLASS_PIERCE)
@@ -167,22 +167,22 @@
 
 		if(BCLASS_LASHING)
 			switch(dam)
-				if(30 to INFINITY)
+				if(20 to INFINITY)
 					added_wound = /datum/wound/lashing/large
-				if(15 to 25)
+				if(10 to 20)
 					added_wound = /datum/wound/lashing
-				if(5 to 15)
+				if(1 to 10)
 					added_wound = /datum/wound/lashing/small
 
 		if(BCLASS_BITE)
 			do_crit = FALSE
 			switch(dam)
-				if(30 to INFINITY)
+				if(20 to INFINITY)
 					added_wound = /datum/wound/bite/large
 					do_crit = TRUE
-				if(15 to 25)
+				if(10 to 20)
 					added_wound = /datum/wound/bite
-				if(5 to 15)
+				if(1 to 10)
 					added_wound = /datum/wound/bite/small
 
 	if(do_crit)
