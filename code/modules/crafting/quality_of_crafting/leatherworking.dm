@@ -12,15 +12,16 @@
 	skillcraft = /datum/skill/craft/tanning
 	craftdiff = 0
 	subtypes_allowed = TRUE // so you can use any subtype of fur
+	category = "Leatherworking"
 
 /datum/repeatable_crafting_recipe/leather/pouch
 	name = "leather pouch"
+	attacked_atom = /obj/item/natural/hide/cured
 	output = /obj/item/storage/belt/pouch
 	sellprice = 6
 
 /datum/repeatable_crafting_recipe/leather/volfhelm
 	name = "volf helm"
-	attacked_atom = /obj/item/natural/hide
 	requirements = list(
 		/obj/item/natural/hide = 3,
 		/obj/item/natural/fur = 2,
@@ -116,7 +117,6 @@
 
 /datum/repeatable_crafting_recipe/leather/cloakfur
 	name = "fur cloak"
-	attacked_atom = /obj/item/natural/hide
 	requirements = list(
 		/obj/item/natural/hide = 2,
 		/obj/item/natural/fur = 1,
@@ -125,6 +125,7 @@
 
 /datum/repeatable_crafting_recipe/leather/quiver
 	name = "quiver"
+	attacked_atom = /obj/item/natural/hide/cured
 	requirements = list(
 		/obj/item/natural/hide/cured = 2,
 		/obj/item/natural/fibers = 2,
@@ -133,6 +134,7 @@
 
 /datum/repeatable_crafting_recipe/leather/dartpouch
 	name = "dart pouch"
+	attacked_atom = /obj/item/natural/hide/cured
 	requirements = list(
 		/obj/item/natural/hide/cured = 1,
 		/obj/item/natural/fibers = 1,
@@ -141,7 +143,6 @@
 
 /datum/repeatable_crafting_recipe/leather/tribal_cloak
 	name = "tribal pelt"
-	attacked_atom = /obj/item/natural/hide
 	requirements = list(
 		/obj/item/natural/hide = 1,
 	)
@@ -149,7 +150,6 @@
 
 /datum/repeatable_crafting_recipe/leather/tribal_shoes
 	name = "tribal shoes"
-	attacked_atom = /obj/item/natural/hide
 	requirements = list(
 		/obj/item/natural/hide = 1,
 	)
@@ -182,6 +182,7 @@
 
 /datum/repeatable_crafting_recipe/leather/magepouch
 	name = "summoners pouch"
+	attacked_atom = /obj/item/natural/hide/cured
 	requirements = list(
 		/obj/item/natural/hide/cured = 2,
 		/obj/item/natural/fibers = 1,
@@ -236,7 +237,6 @@
 
 /datum/repeatable_crafting_recipe/leather/papakha
 	name = "papakha hat"
-	attacked_atom = /obj/item/natural/fur
 	requirements = list(
 		/obj/item/natural/fur = 1,
 		/obj/item/natural/fibers = 2,
@@ -246,7 +246,6 @@
 
 /datum/repeatable_crafting_recipe/leather/whip
 	name = "leather whip"
-	attacked_atom = /obj/item/natural/hide
 	requirements = list(
 		/obj/item/natural/hide = 2,
 	)
@@ -292,7 +291,6 @@
 /datum/repeatable_crafting_recipe/leather/standalone/leathercoat
 	name = "leather coat"
 	output = /obj/item/clothing/armor/leather/jacket/leathercoat
-	attacked_atom = /obj/item/natural/hide/cured
 	requirements = list(/obj/item/natural/hide/cured = 2,
 				/obj/item/natural/fibers = 2)
 	craftdiff = 3
@@ -300,7 +298,6 @@
 /datum/repeatable_crafting_recipe/leather/standalone/leathercoat/black // never add items with the same names
 	name = "black leather coat"
 	output = /obj/item/clothing/armor/leather/jacket/leathercoat/black
-	attacked_atom = /obj/item/natural/hide/cured
 	requirements = list(/obj/item/natural/hide/cured = 2,
 				/obj/item/natural/fibers = 2)
 	craftdiff = 3
@@ -317,6 +314,7 @@
 
 /datum/repeatable_crafting_recipe/leather/backpack
 	name = "leather backpack"
+	attacked_atom = /obj/item/natural/hide/cured
 	requirements = list(
 		/obj/item/natural/hide/cured = 3,
 		/obj/item/natural/fibers = 2,
@@ -326,7 +324,6 @@
 
 /datum/repeatable_crafting_recipe/leather/hidearmor
 	name = "hide armor"
-	attacked_atom = /obj/item/natural/hide
 	requirements = list(
 		/obj/item/natural/hide = 2,
 		/obj/item/natural/fur = 1,
@@ -336,7 +333,6 @@
 
 /datum/repeatable_crafting_recipe/leather/coif
 	name = "leather coif"
-	attacked_atom = /obj/item/natural/hide
 	requirements = list(
 		/obj/item/natural/hide = 1,
 	)
@@ -352,7 +348,7 @@
 	craftdiff = 1
 
 /datum/repeatable_crafting_recipe/leather/brimmedhat
-	name = "brimmed hat x2"
+	name = "brimmed hat"
 	requirements = list(
 		/obj/item/natural/hide/cured = 1,
 	)
@@ -362,7 +358,6 @@
 
 /datum/repeatable_crafting_recipe/leather/volfmantle
 	name = "volf mantle"
-	attacked_atom = /obj/item/natural/fur/volf
 	requirements = list(
 		/obj/item/natural/fur/volf = 2,
 		/obj/item/natural/head/volf = 1,

@@ -52,6 +52,7 @@
 	max_integrity = 600
 	melting_material = /datum/material/steel
 	melt_amount = 75
+	pickmult = 1.2
 
 /obj/item/weapon/pick/stone
 	name = "stone pick"
@@ -63,6 +64,7 @@
 	max_integrity = 250
 	anvilrepair = null
 	melting_material = null
+	pickmult = 0.7 // Worse pick
 
 /obj/item/weapon/pick/drill
 	name = "clockwork drill"
@@ -81,6 +83,7 @@
 	melting_material = /datum/material/steel
 	melt_amount = 150
 	gripsprite = TRUE
+	pickmult = 1.5
 
 /obj/item/weapon/pick/drill/Initialize()
 	. = ..()

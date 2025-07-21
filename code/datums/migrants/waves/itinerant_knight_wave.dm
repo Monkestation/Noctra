@@ -66,7 +66,7 @@
 	belt = /obj/item/storage/belt/leather
 	beltr = /obj/item/ammo_holder/quiver/arrows
 	armor = /obj/item/clothing/armor/plate/full
-	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/short
 	gloves = /obj/item/clothing/gloves/leather
 	wrists = /obj/item/clothing/wrists/bracers/leather
 	backr = /obj/item/storage/backpack/satchel

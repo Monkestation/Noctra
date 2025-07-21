@@ -2555,10 +2555,10 @@
 			return spell
 
 /// Add a spell to the mob via typepath
-/mob/living/proc/add_spell(datum/action/cooldown/spell/spell_type, silent = TRUE, source)
+/mob/living/proc/add_spell(datum/action/cooldown/spell/spell_type, silent = TRUE, source, forced = FALSE)
 	if(QDELETED(src))
 		return
-	if(get_spell(spell_type))
+	if(!forced && get_spell(spell_type))
 		return
 	if(!source)
 		source = src

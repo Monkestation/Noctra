@@ -12,6 +12,7 @@
 	attacked_atom = /obj/item/natural/feather
 	starting_atom = /obj/item/paper
 	craftdiff = 0
+	category = "Paperwork"
 
 /datum/repeatable_crafting_recipe/reading/confessional
 	name = "confession"
@@ -24,5 +25,6 @@
 		/obj/item/paper/scroll = 3,
 	)
 	starting_atom = /obj/item/paper/scroll
+
 	craftdiff = 2
 	output = /obj/item/textbook

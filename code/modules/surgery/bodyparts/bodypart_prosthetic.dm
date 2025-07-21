@@ -272,7 +272,7 @@
 /obj/item/bodypart/l_leg/prosthetic/gold
 	name = "golden left leg"
 	desc = "A left leg of cogs and gold."
-	icon_state = "bprleg"
+	icon_state = "bpleg"
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_BULKY
 	max_damage = 120
@@ -284,7 +284,7 @@
 /obj/item/bodypart/r_leg/prosthetic/gold
 	name = "golden right leg"
 	desc = "A right leg of cogs and gold."
-	icon_state = "bprleg"
+	icon_state = "bpleg"
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_BULKY
 	max_damage = 120

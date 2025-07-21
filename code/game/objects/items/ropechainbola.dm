@@ -10,8 +10,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 1
 	throw_range = 5
-	breakouttime = 5 SECONDS
-	slipouttime = 1 MINUTES
+	breakouttime = 10 SECONDS
+	slipouttime = 30 SECONDS
 	possible_item_intents = list(/datum/intent/tie)
 	firefuel = 5 MINUTES
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
@@ -143,8 +143,8 @@
 	wdefense = 1
 	throw_speed = 1
 	throw_range = 3
-	breakouttime = 1 MINUTES
-	slipouttime = 5 MINUTES
+	breakouttime = 30 SECONDS
+	slipouttime = 1 MINUTES
 	possible_item_intents = list(/datum/intent/tie, /datum/intent/whip)
 	firefuel = null
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
@@ -166,7 +166,7 @@
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
 	icon_state = "net"
-	breakouttime = 35//easy to apply, easy to break out of
+	breakouttime = 3.5 SECONDS //easy to apply, easy to break out of
 	gender = NEUTER
 	var/knockdown = 0
 

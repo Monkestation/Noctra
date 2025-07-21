@@ -10,7 +10,6 @@
 	craft_time = 10 SECONDS
 	crafting_message = "starts rolling a westleach zig"
 	craftdiff = 0
-	uses_attacked_atom = TRUE
 	subtypes_allowed = TRUE
 
 /datum/repeatable_crafting_recipe/sigsweet
@@ -25,7 +24,6 @@
 	craft_time = 10 SECONDS
 	crafting_message = "starts rolling a swampweed zig"
 	craftdiff = 0
-	uses_attacked_atom = TRUE
 	subtypes_allowed = TRUE
 
 /datum/repeatable_crafting_recipe/canvas
@@ -52,11 +50,11 @@
 		/obj/item/natural/feather = 1,
 	)
 	attacked_atom = /obj/item/grown/log/tree/stick
+	allow_inverse_start = TRUE
 
 	craft_time = 3 SECONDS
 	crafting_message = "starts tying a paint brush"
 	craftdiff = 0
-	uses_attacked_atom = TRUE
 	subtypes_allowed = TRUE
 
 /datum/repeatable_crafting_recipe/paint_palette
@@ -66,11 +64,12 @@
 	requirements = list(
 		/obj/item/grown/log/tree/stick = 1,
 		/obj/item/natural/wood/plank = 1,
+		/obj/item/alch = 1,
 	)
 	attacked_atom = /obj/item/natural/wood/plank
+	allow_inverse_start = TRUE
 
 	craft_time = 3 SECONDS
 	crafting_message = "starts constructing a paint palette"
 	craftdiff = 0
-	uses_attacked_atom = TRUE
 	subtypes_allowed = TRUE

@@ -38,7 +38,7 @@
 	)
 	output = /obj/item/burial_shroud
 	craftdiff = 1
-	category = "Misc"
+	category = "Misc Sewing"
 
 /datum/repeatable_crafting_recipe/sewing/loincloth
 	name = "loincloth"
@@ -149,7 +149,7 @@
 	requirements = list(/obj/item/paper = 1,
 				/obj/item/natural/fibers = 1)
 	blacklisted_paths = list(/obj/item/paper/scroll, /obj/item/paper/confession)
-	category = "Misc"
+	category = "Misc Sewing"
 /*.............. recipes requiring skill 1 ..............*/
 
 /datum/repeatable_crafting_recipe/sewing/stripedtunic
@@ -248,7 +248,7 @@
 	requirements =  list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 1
-	category = "Misc"
+	category = "Misc Sewing"
 
 /datum/repeatable_crafting_recipe/sewing/armingcap
 	name = "arming cap"
@@ -258,7 +258,25 @@
 	craftdiff = 1
 	category = "Hat"
 
+/datum/repeatable_crafting_recipe/sewing/flowercrown
+	abstract_type = /datum/repeatable_crafting_recipe/sewing/flowercrown
+	attacked_atom = /obj/item/rope
+	craftdiff = 1
+	category = "Hat"
 
+/datum/repeatable_crafting_recipe/sewing/flowercrown/rosa
+	name = "Rosa Crown"
+	requirements = list(/obj/item/rope = 1,\
+					/obj/item/alch/rosa = 2)
+	output = /obj/item/clothing/head/flowercrown/rosa
+
+/datum/repeatable_crafting_recipe/sewing/flowercrown/salvia
+	name = "Salvia Crown"
+	requirements = list(/obj/item/rope = 1,\
+					/obj/item/alch/salvia = 2)
+	output = /obj/item/clothing/head/flowercrown/salvia
+
+/*.............. recipes requiring skill 2 ..............*/
 /datum/repeatable_crafting_recipe/sewing/gambeson
 	name = "gambeson"
 	output = /obj/item/clothing/armor/gambeson
@@ -297,7 +315,7 @@
 	requirements = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 2
-	category = "Misc"
+	category = "Misc Sewing"
 
 /datum/repeatable_crafting_recipe/sewing/bedsheetpelt
 	name = "leather bedsheet"
@@ -306,7 +324,7 @@
 	requirements = list(/obj/item/natural/hide/cured = 2,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 2
-	category = "Misc"
+	category = "Misc Sewing"
 
 /datum/repeatable_crafting_recipe/sewing/double_bedsheetpelt
 	name = "large leather bedsheet"
@@ -315,7 +333,7 @@
 	requirements = list(/obj/item/natural/hide/cured = 4,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 2
-	category = "Misc"
+	category = "Misc Sewing"
 
 /datum/repeatable_crafting_recipe/sewing/undervestments
 	name = "undervestments"
