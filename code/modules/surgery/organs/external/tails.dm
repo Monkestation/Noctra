@@ -23,7 +23,7 @@
 
 /obj/item/organ/tail/medicator
 	name = "medicator plumage"
-	accessory_type = /datum/sprite_accessory/tail/vulture
+	accessory_type = /datum/sprite_accessory/tail/medicator
 
 /obj/item/organ/tail/kobold
 	name = "small lizard tail"

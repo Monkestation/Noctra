@@ -13,12 +13,14 @@
 
 	if(!(M.dna?.species in flight_for_species))
 		return
-
-	fly = new(src)
+	if(QDELETED(fly))
+		fly = new(src)
 	fly.Grant(M)
 
 /obj/item/organ/wings/flight/Remove(mob/living/carbon/M, special, drop_if_replaced)
 	. = ..()
+	if(QDELETED(fly))
+		return
 	fly.Remove(M)
 
 /obj/effect/flyer_shadow
