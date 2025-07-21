@@ -112,5 +112,5 @@
 	name = "court physician's beret"
 	desc = "A head and mask covering for the distinguished physician."
 	icon_state = "courtmask"
-	item_state = "crtmask"
+	item_state = "courtmask"
 	flags_inv = HIDEFACE

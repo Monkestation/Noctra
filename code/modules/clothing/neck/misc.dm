@@ -325,7 +325,7 @@
 	name = "court physician's collar"
 	desc = "Fits snug."
 	icon_state = "courtcollar"
-	item_state = "crtcollar"
+	item_state = "courtcollar"
 	sellprice = 15
 
 /obj/item/clothing/neck/bogcowl
