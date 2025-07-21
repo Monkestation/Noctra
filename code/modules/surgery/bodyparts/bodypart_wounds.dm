@@ -368,10 +368,6 @@
 	if(dam < 5)
 		return FALSE
 
-	if(user)
-		if((owner.dir == REVERSE_DIR(get_dir(owner, user))))
-			from_behind = TRUE
-
 	var/list/crit_classes
 	if(bclass in GLOB.dislocation_bclasses)
 		LAZYADD(crit_classes, "dislocation")
@@ -386,10 +382,14 @@
 	if(user?.stat_roll(STATKEY_LCK, 2, 10))
 		dam += 10
 
+	var/from_behind = FALSE
+	if(user)
+		if((owner.dir == REVERSE_DIR(get_dir(owner, user))))
+			from_behind = TRUE
+
 	var/used
 	var/damage_dividend = (get_damage() / max_damage)
 	var/resistance = HAS_TRAIT(owner, TRAIT_CRITICAL_RESISTANCE)
-	var/from_behind = FALSE
 	var/list/attempted_wounds
 	switch(pick(crit_classes))
 		if("dislocation")
