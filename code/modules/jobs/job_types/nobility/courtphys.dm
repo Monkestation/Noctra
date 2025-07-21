@@ -38,10 +38,13 @@
 	belt = /obj/item/storage/belt/leather
 	beltl = /obj/item/storage/keyring/physician
 	beltr = /obj/item/weapon/whip/cane/physician
-	shirt = /obj/item/clothing/shirt/undershirt/green
-	pants = /obj/item/clothing/pants/tights/random
+	shirt = /obj/item/clothing/shirt/undershirt/fancy
 	armor = /obj/item/clothing/shirt/robe/crtphys
 	pants = /obj/item/clothing/pants/tights/green
+	if(H.gender == FEMALE)
+		pants = /obj/item/clothing/pants/skirt/random
+	else
+		pants = /obj/item/clothing/pants/tights/random
 
 	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
