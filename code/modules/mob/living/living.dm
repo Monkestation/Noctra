@@ -716,10 +716,13 @@
 			visible_message(span_warning("[src] struggles to stand up."), span_danger("I am struggling to stand up."))
 			return FALSE
 
-/mob/living/proc/toggle_rest()
-	set name = "Rest/Stand"
+/mob/living/verb/toggle_rest_verb()
+	set name = "Rest"
 	set category = "IC"
-	set hidden = 1
+
+	toggle_rest()
+
+/mob/living/proc/toggle_rest()
 	if(resting)
 		stand_up()
 	else
@@ -1106,10 +1109,16 @@
 		else if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
 
+/mob/living/carbon/human/verb/ic_pray()
+	set name = "Pray"
+	set category = "IC"
+
+	emote("pray", intentional = TRUE)
+
 /mob/living/verb/submit()
 	set name = "Yield"
 	set category = "IC"
-	set hidden = 1
+
 	if(surrendering)
 		return
 	if(stat)

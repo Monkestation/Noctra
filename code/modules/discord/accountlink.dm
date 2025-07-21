@@ -1,6 +1,6 @@
 // Verb to link discord accounts to BYOND accounts
 /client/verb/linkdiscord()
-	set category = "Special Verbs"
+	set category = "Special"
 	set name = "Link Discord Account"
 	set desc = ""
 	set hidden = 1

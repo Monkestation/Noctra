@@ -245,7 +245,6 @@
 /atom/movable/screen/alert/status_effect/buff/haste
 	name = "Haste"
 	desc = "I am magically hastened."
-	icon_state = "buff"
 
 /datum/status_effect/buff/haste
 	id = "haste"

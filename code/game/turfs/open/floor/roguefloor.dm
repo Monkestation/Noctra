@@ -238,7 +238,6 @@
 
 	var/muddy = FALSE
 	var/bloodiness = 20
-	var/obj/structure/closet/dirthole/holie
 	var/dirt_amt = 3
 
 /turf/open/floor/dirt/attack_hand_secondary(mob/user, params)
@@ -256,12 +255,6 @@
 		else
 			qdel(I)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/turf/open/floor/dirt/Destroy()
-	if(holie)
-		QDEL_NULL(holie)
-	return ..()
-
 
 /turf/open/floor/dirt/Crossed(atom/movable/O)
 	..()

@@ -21,23 +21,24 @@
 /// The available_commands parameter should be passed as a list of typepaths
 /datum/component/obeys_commands/Initialize(list/command_typepaths = list(), list/radial_menu_offset = list(0, 0), radial_relative_to_user = FALSE)
 	. = ..()
-	if (!isliving(parent))
+	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/mob/living/living_parent = parent
-	if (!living_parent.ai_controller)
+	if(!living_parent.ai_controller)
 		return COMPONENT_INCOMPATIBLE
-	if (!length(command_typepaths))
+	if(!length(command_typepaths))
 		CRASH("Initialised obedience component with no commands.")
 	src.radial_menu_offset = radial_menu_offset
 	src.radial_relative_to_user = radial_relative_to_user
-	for (var/command_path in command_typepaths)
+	for(var/command_path in command_typepaths)
 		var/datum/pet_command/new_command = new command_path(parent)
 		available_commands[new_command.command_name] = new_command
 
 /datum/component/obeys_commands/Destroy(force)
-	. = ..()
 	QDEL_LIST_ASSOC_VAL(available_commands)
-	QDEL_NULL(available_commands)
+	available_commands = null
+	radial_viewers = null
+	return ..()
 
 /datum/component/obeys_commands/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_LIVING_BEFRIENDED, PROC_REF(add_friend))
@@ -53,7 +54,7 @@
 	SIGNAL_HANDLER
 	RegisterSignal(new_friend, COMSIG_KB_LIVING_VIEW_PET_COMMANDS, PROC_REF(on_key_pressed))
 	RegisterSignal(new_friend, DEACTIVATE_KEYBIND(COMSIG_KB_LIVING_VIEW_PET_COMMANDS), PROC_REF(on_key_unpressed))
-	for (var/command_name as anything in available_commands)
+	for(var/command_name as anything in available_commands)
 		var/datum/pet_command/command = available_commands[command_name]
 		INVOKE_ASYNC(command, TYPE_PROC_REF(/datum/pet_command, add_new_friend), new_friend)
 
@@ -79,9 +80,9 @@
 /datum/component/obeys_commands/proc/on_examine(mob/living/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if (IS_DEAD_OR_INCAP(source))
+	if(IS_DEAD_OR_INCAP(source))
 		return
-	if (!(user in source.ai_controller?.blackboard[BB_FRIENDS_LIST]))
+	if(!(user in source.ai_controller?.blackboard[BB_FRIENDS_LIST]))
 		return
 	examine_list += span_notice("[source.p_they(capitalized = TRUE)] seem[source.p_s()] happy to see you!")
 
@@ -101,9 +102,9 @@
 /datum/component/obeys_commands/proc/display_menu(mob/living/friend)
 
 	var/mob/living/living_parent = parent
-	if (IS_DEAD_OR_INCAP(living_parent) || friend.stat != CONSCIOUS)
+	if(IS_DEAD_OR_INCAP(living_parent) || friend.stat != CONSCIOUS)
 		return
-	if (!(friend in living_parent.ai_controller?.blackboard[BB_FRIENDS_LIST]))
+	if(!(friend in living_parent.ai_controller?.blackboard[BB_FRIENDS_LIST]))
 		return // Not our friend, can't boss us around
 	// if(radial_viewers[REF(friend)])
 	// 	return
@@ -114,7 +115,7 @@
 /// Actually display the radial menu and then do something with the result
 /datum/component/obeys_commands/proc/display_radial_menu(mob/living/friend)
 	var/list/radial_options = list()
-	for (var/command_name as anything in available_commands)
+	for(var/command_name as anything in available_commands)
 		var/datum/pet_command/command = available_commands[command_name]
 		var/datum/radial_menu_choice/choice = command.provide_radial_data()
 		if (!choice)
@@ -140,11 +141,11 @@
 
 /datum/component/obeys_commands/proc/check_name(datum/source, mob/living/clicker)
 	var/mob/living/living_parent = parent
-	if (IS_DEAD_OR_INCAP(living_parent))
+	if(IS_DEAD_OR_INCAP(living_parent))
 		return
 	if(!living_parent.Adjacent(parent))
 		return
-	if (!(clicker in living_parent.ai_controller?.blackboard[BB_FRIENDS_LIST]))
+	if(!(clicker in living_parent.ai_controller?.blackboard[BB_FRIENDS_LIST]))
 		return // Not our friend, can't boss us around
 
 	INVOKE_ASYNC(src, PROC_REF(prompt_name), clicker)
