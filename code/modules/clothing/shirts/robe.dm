@@ -159,7 +159,7 @@
 	name = "court physician's robe"
 	desc = "The dark red helps hide blood stains, and is elegant."
 	icon_state = "courtrobe"
-	item_state = "crtrobe"
+	item_state = "courtrobe"
 
 /obj/item/clothing/shirt/robe/archivist
 	name = "archivist's robe"

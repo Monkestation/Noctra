@@ -113,4 +113,4 @@
 	desc = "A head and mask covering for the distinguished physician."
 	icon_state = "courtmask"
 	item_state = "courtmask"
-	flags_inv = HIDEFACE
+	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDEHAIR
