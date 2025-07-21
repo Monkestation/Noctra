@@ -32,15 +32,6 @@
 
 	update_appearance(UPDATE_ICON_STATE | UPDATE_DESC)
 
-/obj/item/storage/keyring/attack_hand_secondary(mob/user, params)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	var/datum/component/storage/CP = GetComponent(/datum/component/storage)
-	if(CP)
-		CP.rmb_show(user)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/item/storage/keyring/update_icon_state()
 	icon_state = "keyring[clamp(length(contents), 0, 5)]"
 	return ..()

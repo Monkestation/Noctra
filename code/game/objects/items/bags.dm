@@ -44,18 +44,17 @@
 	else
 		return TRUE
 
-
 /obj/item/storage/sack/attack_hand_secondary(mob/user, params)
+	if(!user.get_active_held_item())
+		var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+		var/list/things = STR.contents()
+		if(things.len)
+			var/obj/item/I = pick(things)
+			STR.remove_from_storage(I, get_turf(user))
+			user.put_in_hands(I)
+			user.changeNext_move(CLICK_CD_MELEE)
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	. = ..()
-	if(.)
-		return
-	user.changeNext_move(CLICK_CD_MELEE)
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	var/list/things = STR.contents()
-	if(things.len)
-		var/obj/item/I = pick(things)
-		STR.remove_from_storage(I, get_turf(user))
-		user.put_in_hands(I)
 
 /obj/item/storage/sack/update_icon_state()
 	. = ..()
