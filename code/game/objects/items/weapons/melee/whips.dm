@@ -88,6 +88,8 @@
 	icon_state = "silverwhip"
 	resistance_flags = FIRE_PROOF
 	smeltresult = /obj/item/ingot/silver
+	last_used = 0
+	is_silver = TRUE
 
 //................ Caning Stick.................//
 /obj/item/weapon/whip/cane
