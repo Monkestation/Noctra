@@ -222,7 +222,7 @@
 /obj/item/natural/infernalash//T1 mage summon loot
 	name = "infernal ash"
 	icon_state = "infernalash"
-	desc = "Ash burnt and burnt again. Smells of brimstone and hellfire. Still has embers within. Symbolic of death and rebi"
+	desc = "Ash burnt and burnt again. Smells of brimstone and hellfire. Still has embers within. Symbolic of death and rebirth."
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
@@ -377,7 +377,7 @@
 /obj/item/natural/elementalfragment
 	name = "elemental fragment"
 	icon_state = "fragment"
-	desc = "A small- fractured piece of a Behemoth's core. Don't hold this for longer than you have to."
+	desc = "A small- fractured piece of a Behemoth's core. Practically Don't hold this for longer than you have to."
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
