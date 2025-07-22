@@ -38,10 +38,9 @@
 		buckled.unbuckle_mob(src,force=1)
 
 	GLOB.mob_living_list -= src
-	for(var/s in ownedSoullinks)
-		var/datum/soullink/S = s
+	for(var/datum/soullink/S as anything in ownedSoullinks)
 		S.ownerDies(FALSE)
-		qdel(s) //If the owner is destroy()'d, the soullink is destroy()'d
+		qdel(S) //If the owner is destroy()'d, the soullink is destroy()'d
 	ownedSoullinks = null
 	for(var/datum/soullink/S as anything in sharedSoullinks)
 		S.sharerDies(FALSE)
@@ -716,10 +715,13 @@
 			visible_message(span_warning("[src] struggles to stand up."), span_danger("I am struggling to stand up."))
 			return FALSE
 
-/mob/living/proc/toggle_rest()
-	set name = "Rest/Stand"
+/mob/living/verb/toggle_rest_verb()
+	set name = "Rest"
 	set category = "IC"
-	set hidden = 1
+
+	toggle_rest()
+
+/mob/living/proc/toggle_rest()
 	if(resting)
 		stand_up()
 	else
@@ -1106,10 +1108,16 @@
 		else if(last_special <= world.time)
 			resist_restraints() //trying to remove cuffs.
 
+/mob/living/carbon/human/verb/ic_pray()
+	set name = "Pray"
+	set category = "IC"
+
+	emote("pray", intentional = TRUE)
+
 /mob/living/verb/submit()
 	set name = "Yield"
 	set category = "IC"
-	set hidden = 1
+
 	if(surrendering)
 		return
 	if(stat)

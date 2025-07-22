@@ -122,7 +122,7 @@ SUBSYSTEM_DEF(ambience)
 	var/used = buzz_to_use
 
 	if(!used)
-		used = my_area.get_current_buzz(has_light_nearby())
+		used = my_area?.get_current_buzz(has_light_nearby())
 	if(cmode && cmode_music)
 		used = cmode_music
 		vol *= 1.2

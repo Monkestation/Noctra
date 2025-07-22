@@ -374,7 +374,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 			GLOB.patreon_races += S.name
 		qdel(S)
 	if(!LAZYLEN(GLOB.roundstart_races))
-		GLOB.roundstart_races += RACE_HUMEN
+		GLOB.roundstart_races += "Humen" // GLOB.species_list uses name and should probably be refactored
 	sortTim(GLOB.roundstart_races, GLOBAL_PROC_REF(cmp_text_dsc))
 
 /proc/get_selectable_species(patreon = TRUE)
@@ -2070,8 +2070,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 		if(leg_clothes)
 			burning_items |= leg_clothes
 
-		for(var/X in burning_items)
-			var/obj/item/I = X
+		for(var/obj/item/I as anything in burning_items)
 			I.fire_act(((H.fire_stacks + H.divine_fire_stacks)* 50)) //damage taken is reduced to 2% of this value by fire_act()
 
 		var/thermal_protection = H.get_thermal_protection()

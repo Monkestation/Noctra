@@ -245,7 +245,7 @@
 		return
 
 	var/list/options = list()
-	for(var/enchantment_path in available_enchantments)
+	for(var/datum/enchantment/enchantment_path in available_enchantments)
 		var/datum/enchantment/temp_enchant = new enchantment_path
 		var/recipe_text = get_recipe_text(enchantment_path)
 		options["[temp_enchant.enchantment_name] - [recipe_text]"] = enchantment_path

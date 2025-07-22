@@ -1,17 +1,16 @@
 /datum/advclass/mercenary/zalad
 	name = "Red Sands"
 	tutorial = "A cutthroat from the western countries, you've headed into foreign lands to make even greater coin than you had prior."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Rakshari",
-		"Elf",
-		"Half-Elf",
-		"Dwarf",
-		"Tiefling",
-		"Dark Elf",
-		"Aasimar",
-		"Half-Orc"
+	allowed_races = list(\
+		SPEC_ID_HUMEN,\
+		SPEC_ID_RAKSHARI,\
+		SPEC_ID_ELF,\
+		SPEC_ID_HALF_ELF,\
+		SPEC_ID_DWARF,\
+		SPEC_ID_TIEFLING,\
+		SPEC_ID_DROW,\
+		SPEC_ID_AASIMAR,\
+		SPEC_ID_HALF_ORC,\
 	)
 	outfit = /datum/outfit/job/mercenary/zalad
 	category_tags = list(CTAG_MERCENARY)

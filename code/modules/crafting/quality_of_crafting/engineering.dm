@@ -217,9 +217,9 @@
 /datum/repeatable_crafting_recipe/engineering/gunpowder
 	name = "blastpowder"
 	requirements = list(
-		/obj/item/natural/stone= 1,
-		/obj/item/reagent_containers/food/snacks/rotten/egg = 1,
-		/obj/item/reagent_containers/food/snacks/produce/fyritius = 1,
+		/obj/item/reagent_containers/food/snacks/badrecipe = 1,
+		/obj/item/alch/coaldust = 1,
+		/obj/item/alch/firedust = 1,
 	)
 	tool_usage = list(
 		/obj/item/pestle = list(span_notice("starts to grind together"), span_notice("start to grind together"), 'sound/foley/mortarpestle.ogg'),
