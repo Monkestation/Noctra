@@ -2,9 +2,9 @@
 	var/used
 	switch(modifiers)
 		if("old")
-			used = getfold(soundin)
+			used = getmold(soundin)
 		if("silenced")
-			used = getfsilenced(soundin)
+			used = getmsilenced(soundin)
 	if(!used)
 		switch(soundin)
 			if("choke")
