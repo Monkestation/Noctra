@@ -32,14 +32,14 @@
 	backr = /obj/item/storage/backpack/satchel
 	backl = /obj/item/storage/backpack/satchel/surgbag
 	gloves = /obj/item/clothing/gloves/leather/feld
-	head = /obj/item/clothing/head/crtphys
-	mask = /obj/item/clothing/face/spectacles/golden
-	neck = /obj/item/clothing/neck/crtphys
+	head = /obj/item/clothing/head/courtphysician
+	mask = /obj/item/clothing/face/courtphysician
+	neck = /obj/item/clothing/neck/courtphysician
 	belt = /obj/item/storage/belt/leather
 	beltl = /obj/item/storage/keyring/physician
 	beltr = /obj/item/weapon/whip/cane/physician
 	shirt = /obj/item/clothing/shirt/undershirt/fancy
-	armor = /obj/item/clothing/shirt/robe/crtphys
+	armor = /obj/item/clothing/shirt/robe/courtphysician
 	pants = /obj/item/clothing/pants/tights/green
 	if(H.gender == FEMALE)
 		pants = /obj/item/clothing/pants/skirt/random

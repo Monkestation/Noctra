@@ -155,7 +155,7 @@
 	icon_state = "surgrobe"
 	item_state = "surgrobe"
 
-/obj/item/clothing/shirt/robe/crtphys
+/obj/item/clothing/shirt/robe/courtphysician
 	name = "court physician's robe"
 	desc = "The dark red helps hide blood stains, and is elegant."
 	icon_state = "courtrobe"

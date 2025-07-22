@@ -108,14 +108,8 @@
 	item_state = "inqhat"
 	sewrepair = TRUE
 
-/obj/item/clothing/head/crtphys
+/obj/item/clothing/head/courtphysician
 	name = "court physician's beret"
-	desc = "A head and mask covering for the distinguished physician."
-	icon_state = "courtmask"
-	item_state = "courtmask"
-	//partially copied from feldsher mask code, let's hope this doesn't break anything
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
-	body_parts_covered = FACE|EARS|EYES|MOUTH|NECK
-	slot_flags = ITEM_SLOT_HEAD
-	sewrepair = TRUE
-	gas_transfer_coefficient = 0.3
+	desc = "A head covering for elegance, and to hide the bald spot."
+	icon_state = "courthat"
+	item_state = "courthat"

@@ -321,7 +321,7 @@
 	item_state = "surgcollar"
 	sellprice = 15
 
-/obj/item/clothing/neck/crtphys
+/obj/item/clothing/neck/courtphysician
 	name = "court physician's collar"
 	desc = "Fits snug."
 	icon_state = "courtcollar"
