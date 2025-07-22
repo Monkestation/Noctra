@@ -103,21 +103,25 @@
 /obj/item/organ/ears/elf
 	name = "elf ears"
 	icon_state = "ear_pointed"
+	use_mob_sprite_as_obj_sprite = FALSE
 	accessory_type = /datum/sprite_accessory/ears/elf
 
 /obj/item/organ/ears/elfw
 	name = "wood elf ears"
 	icon_state = "ear_pointed"
+	use_mob_sprite_as_obj_sprite = FALSE
 	accessory_type = /datum/sprite_accessory/ears/elfw
 
 /obj/item/organ/ears/halforc
 	name = "halforc ears"
 	icon_state = "ear_pointed"
+	use_mob_sprite_as_obj_sprite = FALSE
 	accessory_type = /datum/sprite_accessory/ears/elf
 
 /obj/item/organ/ears/tiefling
 	name = "tiefling ears"
 	icon_state = "ear_pointed"
+	use_mob_sprite_as_obj_sprite = FALSE
 	accessory_type = /datum/sprite_accessory/ears/elfw
 
 /obj/item/organ/ears/anthro
