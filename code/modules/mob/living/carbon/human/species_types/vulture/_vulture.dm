@@ -44,22 +44,22 @@
 	enflamed_icon = "widefire"
 
 	offset_features_f = list(
-		OFFSET_RING = list(0,-1),\
-		OFFSET_GLOVES = list(0,0),\
-		OFFSET_WRISTS = list(0,0),\
-		OFFSET_HANDS = list(0,0),\
-		OFFSET_CLOAK = list(0,0),\
-		OFFSET_FACEMASK = list(0,-1),\
-		OFFSET_HEAD = list(0,-1),\
-		OFFSET_FACE = list(0,-1),\
+		OFFSET_RING = list(0,0),\
+		OFFSET_GLOVES = list(0,1),\
+		OFFSET_WRISTS = list(0,1),\
+		OFFSET_HANDS = list(0,1),\
+		OFFSET_CLOAK = list(0,1),\
+		OFFSET_FACEMASK = list(0,0),\
+		OFFSET_HEAD = list(0,0),\
+		OFFSET_FACE = list(0,0),\
 		OFFSET_BELT = list(0,0),\
-		OFFSET_BACK = list(0,-1),\
-		OFFSET_NECK = list(0,-1),\
-		OFFSET_MOUTH = list(0,-1),\
-		OFFSET_PANTS = list(0,0),\
-		OFFSET_SHIRT = list(0,0),\
-		OFFSET_ARMOR = list(0,0),\
-		OFFSET_UNDIES = list(0,0),\
+		OFFSET_BACK = list(0,0),\
+		OFFSET_NECK = list(0,0),\
+		OFFSET_MOUTH = list(0,0),\
+		OFFSET_PANTS = list(0,1),\
+		OFFSET_SHIRT = list(0,1),\
+		OFFSET_ARMOR = list(0,1),\
+		OFFSET_UNDIES = list(0,1),\
 	)
 
 	organs = list(
@@ -74,11 +74,14 @@
 		ORGAN_SLOT_APPENDIX = /obj/item/organ/appendix,
 		ORGAN_SLOT_GUTS = /obj/item/organ/guts,
 		ORGAN_SLOT_TAIL = /obj/item/organ/tail/medicator,
-		ORGAN_SLOT_NECK_FEATURE = /obj/item/organ/feature/neck/medicator,
+		ORGAN_SLOT_SNOUT = /obj/item/organ/snout/beak,
+		ORGAN_SLOT_NECK_FEATURE = /obj/item/organ/neck_feature/medicator,
 	)
 
 	customizers = list(
+		/datum/customizer/organ/eyes/humanoid,
 		/datum/customizer/organ/tail/medicator,
+		/datum/customizer/organ/snout/beak/thin,
 		/datum/customizer/organ/neck_feature/medicator,
 		/datum/customizer/bodypart_feature/hair/head/humanoid/medicator,
 		/datum/customizer/bodypart_feature/accessory,
