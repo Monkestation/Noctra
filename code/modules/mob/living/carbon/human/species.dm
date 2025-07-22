@@ -746,6 +746,9 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
 
+	for(var/skill as anything in inherent_skills)
+		C.adjust_skillrank(skill, -inherent_skills[skill], TRUE)
+
 	if(inherent_factions)
 		for(var/i in inherent_factions)
 			C.faction -= i
