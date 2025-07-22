@@ -38,6 +38,9 @@
 	limbs_icon_m = 'icons/roguetown/mob/bodies/f/medicator.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/medicator.dmi'
 
+	soundpack_m = /datum/voicepack/medicator
+	soundpack_f = /datum/voicepack/medicator
+
 	swap_male_clothes = TRUE
 
 	exotic_bloodtype = /datum/blood_type/human/medicator

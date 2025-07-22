@@ -2419,6 +2419,7 @@
 #include "code\modules\mob\living\carbon\human\voicepacks\male\zeth.dm"
 #include "code\modules\mob\living\carbon\human\voicepacks\other\goblin.dm"
 #include "code\modules\mob\living\carbon\human\voicepacks\other\lich.dm"
+#include "code\modules\mob\living\carbon\human\voicepacks\other\medicator.dm"
 #include "code\modules\mob\living\carbon\human\voicepacks\other\orc.dm"
 #include "code\modules\mob\living\carbon\human\voicepacks\other\rousman.dm"
 #include "code\modules\mob\living\carbon\human\voicepacks\other\skeleton.dm"
