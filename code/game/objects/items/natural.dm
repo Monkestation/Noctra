@@ -222,13 +222,13 @@
 /obj/item/natural/infernalash//T1 mage summon loot
 	name = "infernal ash"
 	icon_state = "infernalash"
-	desc = "Ash burnt and burnt once again. Smells of brimstone and hellfire. Still has embers within."
+	desc = "Ash burnt and burnt again. Smells of brimstone and hellfire. Still has embers within. Symbolic of death and rebi"
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
 	attunement_values = list(
 		/datum/attunement/fire = 0.05,
-		/datum/attunement/blood = -0.1,
+		/datum/attunement/ice = -0.05,
 		/datum/attunement/death = 0.05,
 		/datum/attunement/life = -0.05,
 	)
@@ -241,11 +241,11 @@
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
 	attunement_values = list(
-		/datum/attunement/fire = 0.1,
-		/datum/attunement/blood = -0.1,
+		/datum/attunement/fire = 0.5,
+		/datum/attunement/ice = -0.25,
 
-		/datum/attunement/death = 0.05,
-		/datum/attunement/life = -0.05,
+		/datum/attunement/death = 0.5,
+		/datum/attunement/life = -0.25,
 	)
 
 /obj/item/natural/moltencore// T3 mage summon loot
@@ -256,40 +256,40 @@
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
 	attunement_values = list(
-		/datum/attunement/fire = 0.15,
-		/datum/attunement/blood = -0.1,
+		/datum/attunement/fire = 1,
+		/datum/attunement/ice = -0.5,
 
-		/datum/attunement/death = 0.1,
-		/datum/attunement/life = -0.1,
+		/datum/attunement/death = 1,
+		/datum/attunement/life = -0.5,
 	)
 
 /obj/item/natural/abyssalflame//T4 mage summon loot
 	name = "abyssal flame"
 	icon_state = "abyssalflame"
-	desc = "A  flickering, black flame contained in a crystal; the heart of an archfiend. Or atleast, what passes for one. It pulses with dense thrums of magick."
+	desc = "One of three ley-keys. \nA  flickering, black flame contained in a crystal; the heart of an archfiend. Or atleast, what passes for one. It pulses with dense thrums of scalding, hellish magicks. "
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
 	attunement_values = list(
-		/datum/attunement/fire = 0.2,
-		/datum/attunement/blood = -0.1,
+		/datum/attunement/fire = 3,
+		/datum/attunement/ice = -1.5,
 
-		/datum/attunement/death = 0.15,
-		/datum/attunement/life = -0.15,
+		/datum/attunement/death = 3,
+		/datum/attunement/life = -1.5,
 	)
 
 //FAIRY
 /obj/item/natural/fairydust	//T1 mage summon loot
 	name = "fairy dust"
 	icon_state = "fairy_dust"
-	desc = "A glittering powder from a fae sprite."
+	desc = "A glittering powder from a fae sprite. It shimmers with a faint light, and smells like tilled earth."
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
 
 	attunement_values = list(
 		/datum/attunement/earth = 0.05,
-		/datum/attunement/electric = -0.1,
+		/datum/attunement/electric = -0.05,
 
 		/datum/attunement/life = 0.05,
 		/datum/attunement/death = -0.05,
@@ -298,131 +298,128 @@
 /obj/item/natural/iridescentscale	//T2 mage summon loot
 	name = "iridescent scales"
 	icon_state = "iridescent_scale"
-	desc = "Tiny, colorful scales from a glimmerwing, they shine with inate magic"
+	desc = "Tiny, colorful scales from a Glimmerwing, they shine with innate magics."
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
 
 	attunement_values = list(
-		/datum/attunement/earth = 0.1,
-		/datum/attunement/electric = -0.1,
+		/datum/attunement/earth = 0.3,
+		/datum/attunement/electric = -0.15,
 
-		/datum/attunement/life = 0.1,
-		/datum/attunement/death = -0.1,
+		/datum/attunement/life = 0.3,
+		/datum/attunement/death = -0.15,
 	)
 
 /obj/item/natural/heartwoodcore	//T3 mage summon loot
 	name = "heartwood core"
 	icon_state = "heartwood_core"
-	desc = "A piece of enchanted wood imbued with the dryad’s essence. Merely holding it transports one's mind to ancient times."
+	desc = "A piece of enchanted wood imbued with a Dryad’s essence. Merely holding it transports one's mind to ancient times."
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
 	attunement_values = list(
-		/datum/attunement/earth = 0.15,
-		/datum/attunement/electric = -0.1,
+		/datum/attunement/earth = 1,
+		/datum/attunement/electric = -0.5,
 
-		/datum/attunement/life = 0.1,
-		/datum/attunement/death = -0.1,
+		/datum/attunement/life = 1,
+		/datum/attunement/death = -0.5,
 	)
 
 /obj/item/natural/sylvanessence	//T4 mage summon loot
 	name = "sylvan essence"
 	icon_state = "sylvanessence"
-	desc = "A swirling, multicolored liquid with emitting a dizzying array of lights."
+	desc = "One of three ley-keys. \nA swirling, multicolored liquid with emitting a dizzying array of lights. As close as you can get to the essence of creation."
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
 	attunement_values = list(
-		/datum/attunement/earth = 0.2,
-		/datum/attunement/electric = -0.1,
+		/datum/attunement/earth = 3,
+		/datum/attunement/electric = -1.5,
 
-		/datum/attunement/life = 0.15,
-		/datum/attunement/death = -0.15,
+		/datum/attunement/life = 3,
+		/datum/attunement/death = -1.5,
 	)
 
 //ELEMENTAL
 /obj/item/natural/elementalmote
 	name = "elemental mote"
 	icon_state = "mote"
-	desc = "A mystical essence embued with the power of Dendor. Merely holding it transports one's mind to ancient times."
+	desc = "A crackling, frigid-cold stone, light as a feather. The remains of a feeble crawler. Still, it makes the hairs on your hand stand on end."
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
 
-	attunement_values = list(
+	attunement_values = list( //Moving some of these attunements around to make things make more sense.
 		/datum/attunement/electric = 0.05,
 		/datum/attunement/ice = 0.05,
-		/datum/attunement/blood = 0.05,
 		/datum/attunement/aeromancy = 0.05,
 
-		/datum/attunement/earth = -0.1,
+		/datum/attunement/fire = -0.05,
 	)
 
 /obj/item/natural/elementalshard
 	name = "elemental shard"
 	icon_state = "shard"
-	desc = "A mystical essence embued with the power of Dendor. Merely holding it transports one's mind to ancient times."
+	desc = "Sharper- jagged, and weightier than a mote. Part of the remains of a Warden. Keep going."
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
 
 	attunement_values = list(
-		/datum/attunement/electric = 0.1,
-		/datum/attunement/ice = 0.1,
-		/datum/attunement/blood = 0.1,
-		/datum/attunement/aeromancy = 0.1,
+		/datum/attunement/electric = 0.3,
+		/datum/attunement/ice = 0.3,
+		/datum/attunement/aeromancy = 0.3,
 
-		/datum/attunement/earth = -0.2,
+		/datum/attunement/fire = -0.15,
 	)
 
 /obj/item/natural/elementalfragment
 	name = "elemental fragment"
 	icon_state = "fragment"
-	desc = "A mystical essence embued with the power of Dendor. Merely holding it transports one's mind to ancient times."
+	desc = "A small- fractured piece of a Behemoth's core. Don't hold this for longer than you have to."
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
 
 	attunement_values = list(
-		/datum/attunement/electric = 0.1,
-		/datum/attunement/ice = 0.1,
-		/datum/attunement/blood = 0.1,
-		/datum/attunement/aeromancy = 0.1,
+		/datum/attunement/electric = 1,
+		/datum/attunement/ice = 1,
+		/datum/attunement/aeromancy = 1,
 
-		/datum/attunement/earth = -0.15,
+		/datum/attunement/earth = -0.5,
 	)
 
 /obj/item/natural/elementalrelic
 	name = "elemental relic"
 	icon_state = "relic"
-	desc = "A mystical essence embued with the power of Dendor. Merely holding it transports one's mind to ancient times."
+	desc = "One of three ley-keys. \nA massive, jagged rock that reminds you of the scale of the world you're dealing with. \nIt crackles and vibrates with power just barely yours."
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
 
 	attunement_values = list(
-		/datum/attunement/electric = 0.1,
-		/datum/attunement/ice = 0.1,
-		/datum/attunement/blood = 0.1,
-		/datum/attunement/aeromancy = 0.1,
+		/datum/attunement/electric = 3,
+		/datum/attunement/ice = 3,
+		/datum/attunement/aeromancy = 3,
 
-		/datum/attunement/earth = -0.1,
+		/datum/attunement/earth = -1.5,
 	)
 
 //Nullmagic
 /obj/item/natural/voidstone
 	name = "voidstone"
 	icon_state = "voidstone"
-	desc = "An incredibly rare substance torn from creatures immune to magick. This material forsakes Noc's gifts."
+	desc = "An incredibly rare substance torn from creatures immune to magick. \nThis material forsakes Noc's gifts- its use could only be described as deeply heretical."
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
 
-	attunement_values = list(
-		/datum/attunement/arcyne = 0.2,
-		/datum/attunement/time = 0.2,
-		/datum/attunement/polymorph = 0.2,
-		/datum/attunement/dark = 0.2,
-		/datum/attunement/illusion = 0.2,
+	attunement_values = list( //Should be the antithesis of Noc's attunements. Should primarily be useful to liches and other dark mages.
+		/datum/attunement/arcyne = -2,
+		/datum/attunement/ice = -2,
+		/datum/attunement/dark = 2,
+		/datum/attunement/death = 2,
+		/datum/attunement/blood = 2,
+
 	)

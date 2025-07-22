@@ -199,7 +199,7 @@
 	spellpoints = CEILING(spellpoints, 1)
 	reader.adjust_spellpoints(spellpoints)
 	if(stored_attunement)
-		user.mana_pool?.adjust_attunement(stored_attunement, 0.1 * (spellpoints / 0.2))
+		user.mana_pool?.adjust_attunement(stored_attunement, 0.75 * (spellpoints / 0.2))
 	user.log_message("successfully studied their spellbook and gained spellpoints", LOG_ATTACK, color="orange")
 	onlearned(user)
 	if(prob(55))
@@ -529,7 +529,7 @@
 
 /obj/item/gem/yellow
 	arcyne_potency = 5
-	attuned = /datum/attunement/light
+	attuned = /datum/attunement/electric
 
 /obj/item/gem/green
 	arcyne_potency = 7
@@ -537,15 +537,23 @@
 
 /obj/item/gem/violet
 	arcyne_potency = 10
-	attuned = /datum/attunement/electric
+	attuned = /datum/attunement/arcyne
 
 /obj/item/gem/blue
 	arcyne_potency = 25
-	attuned = /datum/attunement/blood
+	attuned = /datum/attunement/ice
+
+/obj/item/gem/red
+	arcyne_potency = 20
+	attuned = /datum/attunement/fire
 
 /obj/item/gem/diamond
 	arcyne_potency = 15
 	attuned = /datum/attunement/aeromancy
+
+/obj/item/gem/black
+	arcyne_potency = 20
+	attuned = /datum/attunement/dark
 
 
 
