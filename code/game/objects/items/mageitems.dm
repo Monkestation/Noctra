@@ -579,7 +579,7 @@
 	name = "leyline shards"
 	icon = 'icons/roguetown/items/natural.dmi'
 	icon_state = "leyline"
-	desc = "A shard of a fractured leyline, it glows with lost power."
+	desc = "A shard of a fractured leyline, it glows with lost power. Holding it makes you feel closer attuned to the arcyne."
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_SMALL
 

@@ -345,7 +345,7 @@
 /obj/item/natural/elementalmote
 	name = "elemental mote"
 	icon_state = "mote"
-	desc = "A crackling, frigid-cold stone, light as a feather. The remains of a feeble crawler. Still, it makes the hairs on your hand stand on end."
+	desc = "A crackling, frigid-cold stone, light as a feather. The remains of a feeble crawler. Still, its static energies makes the hairs on your hand stand on end."
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
@@ -377,7 +377,7 @@
 /obj/item/natural/elementalfragment
 	name = "elemental fragment"
 	icon_state = "fragment"
-	desc = "A small- fractured piece of a Behemoth's core. Practically Don't hold this for longer than you have to."
+	desc = "A small- fractured piece of a Behemoth's core. Don't hold this for longer than you have to."
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
@@ -418,8 +418,35 @@
 	attunement_values = list( //Should be the antithesis of Noc's attunements. Should primarily be useful to liches and other dark mages.
 		/datum/attunement/arcyne = -2,
 		/datum/attunement/ice = -2,
-		/datum/attunement/dark = 2,
-		/datum/attunement/death = 2,
-		/datum/attunement/blood = 2,
+		/datum/attunement/dark = 1,
+		/datum/attunement/death = 1,
+		/datum/attunement/blood = 1,
 
+	)
+
+/obj/item/natural/melded/t5
+	name = "arcanic aberation"
+	icon_state = "wessence"
+	desc = "A melding of arcane fusion and voidstone. It pulses erratically, power coiled tightly within and dangerous. This object scorns Noc's gifts. Many would be afraid of going near this, let alone holding it. "
+
+	attunement_values = list( //Might be more interesting for the introduction of a voidstone to increase attunement in the opposite direction. Again, another item that liches and dark(er) mages should LOVE.
+		/datum/attunement/arcyne = -2,
+		/datum/attunement/ice = -2,
+		/datum/attunement/dark = 6,
+		/datum/attunement/death = 6,
+		/datum/attunement/blood = 6,
+	)
+
+//Leyline shard. Should also be used to attune to the arcyne.
+
+/obj/item/natural/leyline
+	name = "leyline shard"
+	icon_state = "leyline"
+	desc = "A shard of a leyline. It pulses with raw, untapped power. It is said that the leyline is the source of all magic."
+	resistance_flags = FIRE_PROOF
+	w_class = WEIGHT_CLASS_SMALL
+
+	attunement_values = list(
+		/datum/attunement/arcyne = 2, //Should be equivalent to an amyhortz.
+		/datum/attunement/dark = -0.5
 	)

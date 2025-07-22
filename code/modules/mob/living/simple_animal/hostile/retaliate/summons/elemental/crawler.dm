@@ -56,6 +56,6 @@
 
 /mob/living/simple_animal/hostile/retaliate/elemental/crawler/death(gibbed)
 	var/turf/deathspot = get_turf(src)
-	for(var/i in 1 to 9) //increased to account for the rarity of primordial quartz, for the sake of attunements.
+	for(var/i in 1 to 6)
 		new /obj/item/natural/elementalmote(deathspot)
 	return ..()
