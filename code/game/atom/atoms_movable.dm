@@ -14,6 +14,7 @@
 	var/datum/language_holder/language_holder
 	var/verb_say = "says"
 	var/verb_ask = "asks"
+	var/verb_sing = "sings"
 	var/verb_exclaim = "exclaims"
 	var/verb_yell = "yells"
 	var/speech_span
@@ -145,8 +146,9 @@
 
 ///allows this movable to hear and adds itself to the important_recursive_contents list of itself and every movable loc its in
 /atom/movable/proc/become_hearing_sensitive(trait_source = TRAIT_GENERIC)
+	var/already_hearing_sensitive = HAS_TRAIT(src, TRAIT_HEARING_SENSITIVE)
 	ADD_TRAIT(src, TRAIT_HEARING_SENSITIVE, trait_source)
-	if(!HAS_TRAIT(src, TRAIT_HEARING_SENSITIVE))
+	if(already_hearing_sensitive || !HAS_TRAIT(src, TRAIT_HEARING_SENSITIVE))
 		return
 
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
@@ -677,7 +679,7 @@
 	if(spatial_grid_key)
 		SSspatial_grid.force_remove_from_grid(src)
 
-	LAZYCLEARLIST(client_mobs_in_contents)
+	LAZYNULL(client_mobs_in_contents)
 
 	. = ..()
 
@@ -686,7 +688,10 @@
 
 	moveToNullspace()
 
-	LAZYCLEARLIST(important_recursive_contents)
+	//This absolutely must be after moveToNullspace()
+	//We rely on Entered and Exited to manage this list, and the copy of this list that is on any /atom/movable "Containers"
+	//If we clear this before the nullspace move, a ref to this object will be hung in any of its movable containers
+	LAZYNULL(important_recursive_contents)
 
 	vis_locs = null
 
