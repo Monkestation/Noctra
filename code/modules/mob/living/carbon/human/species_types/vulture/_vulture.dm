@@ -92,14 +92,23 @@
 		/datum/body_marking/tonage,
 	)
 
-/datum/species/medicator/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+	COOLDOWN_DECLARE(medicator_cough_cooldown)
+
+/datum/species/medicator/on_species_gain(mob/living/carbon/C, datum/species/old_species, datum/preferences/pref_load)
 	. = ..()
 	RegisterSignal(C, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	C.grant_language(/datum/language/common)
 
-/datum/species/medicator/on_species_loss(mob/living/carbon/C)
+/datum/species/medicator/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_SAY)
+
+/datum/species/medicator/spec_life(mob/living/carbon/human/H)
+	. = ..()
+	if(prob(1))
+		if(!COOLDOWN_FINISHED(medicator_cough_cooldown))
+			H.emote(pick("cough", "sneeze"), forced = TRUE)
+			COOLDOWN_START(medicator_cough_cooldown, 10 MINUTES)
 
 /datum/species/medicator/check_roundstart_eligible()
 	return TRUE
