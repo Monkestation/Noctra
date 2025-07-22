@@ -8,6 +8,7 @@
 // END_PREFERENCES
 // BEGIN_INCLUDE
 #include "_maps\_basemap.dm"
+#include "_maps\map_files\roguetest.dm"
 #include "_maps\templates\arcyne_fortress.dm"
 #include "_maps\templates\bog_shack_small.dm"
 #include "_maps\templates\malum_anvil_dungeon_large.dm"
@@ -2213,6 +2214,7 @@
 #include "code\modules\language\beast.dm"
 #include "code\modules\language\cat.dm"
 #include "code\modules\language\common.dm"
+#include "code\modules\language\deepspeak.dm"
 #include "code\modules\language\dwarf.dm"
 #include "code\modules\language\elf.dm"
 #include "code\modules\language\fae.dm"

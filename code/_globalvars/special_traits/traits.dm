@@ -235,6 +235,7 @@
 	character.grant_language(/datum/language/oldpsydonic)
 	character.grant_language(/datum/language/zalad)
 	character.grant_language(/datum/language/thievescant)
+	character.grant_language(/datum/language/deepspeak)
 
 /datum/special_trait/civilizedbarbarian
 	name = "Tavern Brawler"

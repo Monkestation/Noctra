@@ -274,6 +274,24 @@ GLOBAL_LIST_EMPTY(patreon_races)
 /datum/species/proc/get_native_language()
 	return
 
+/proc/is_character_accent(accent_list) 	//If all replacements in the json are single character like "s"
+	for (var/key in accent_list)
+		if (length(key) > 1)
+			return FALSE
+	return TRUE
+
+/proc/apply_species_accent(text, accent_list) //replace single character with
+	var/result = ""
+	for (var/i = 1, i <= length(text), i++)
+		var/char = copytext(text, i, i+1)
+
+		if (accent_list[char])
+			result += accent_list[char]
+		else
+			result += char
+
+	return result
+
 /datum/species/proc/handle_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
 	var/language = speech_args[SPEECH_LANGUAGE]
@@ -337,14 +355,17 @@ GLOBAL_LIST_EMPTY(patreon_races)
 				language_check = language_map[language]
 			if(nativelang != language_check || special_accent)
 				if(species_accent)
-					for(var/key in species_accent)
-						var/value = species_accent[key]
-						if(islist(value))
-							value = pick(value)
+					if (is_character_accent(species_accent))
+						message = apply_species_accent(message, species_accent)
+					else
+						for(var/key in species_accent)
+							var/value = species_accent[key]
+							if(islist(value))
+								value = pick(value)
 
-						message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
-						message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
-						message = replacetextEx(message, " [key]", " [value]")
+							message = replacetextEx(message, " [uppertext(key)]", " [uppertext(value)]")
+							message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
+							message = replacetextEx(message, " [key]", " [value]")
 
 	speech_args[SPEECH_MESSAGE] = trim(message)
 

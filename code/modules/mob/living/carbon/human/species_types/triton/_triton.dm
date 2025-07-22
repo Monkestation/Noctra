@@ -136,10 +136,20 @@
 	. = ..()
 	RegisterSignal(C, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	C.grant_language(/datum/language/common)
+	C.grant_language(/datum/language/deepspeak)
+
+/datum/species/triton/after_creation(mob/living/carbon/C)
+	. = ..()
+	C.grant_language(/datum/language/deepspeak)
+	to_chat(C, "<span class='info'>I can speak Deepspeak with ,f before my speech.</span>")
 
 /datum/species/triton/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_SAY)
+	C.remove_language(/datum/language/deepspeak)
+
+/datum/species/triton/get_accent_list()
+	return strings("accents/triton_replacement.json", "triton")
 
 /datum/species/triton/check_roundstart_eligible()
 	return TRUE
