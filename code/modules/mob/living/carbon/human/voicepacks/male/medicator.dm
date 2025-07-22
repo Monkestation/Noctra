@@ -1,4 +1,4 @@
-/datum/voicepack/medicator/get_sound(soundin, modifiers)
+/datum/voicepack/male/medicator/get_sound(soundin, modifiers)
 	var/used
 	switch(modifiers)
 		if("old")
@@ -36,5 +36,8 @@
 				used = 'sound/vo/medicator/sigh.ogg'
 			if("whimper")
 				used ='sound/vo/medicator/whimper.ogg'
+
+	if(!used)
+		used = ..(soundin, modifiers)
 
 	return used

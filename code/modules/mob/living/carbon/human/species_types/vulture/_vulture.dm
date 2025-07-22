@@ -38,8 +38,8 @@
 	limbs_icon_m = 'icons/roguetown/mob/bodies/f/medicator.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/medicator.dmi'
 
-	soundpack_m = /datum/voicepack/medicator
-	soundpack_f = /datum/voicepack/medicator
+	soundpack_m = /datum/voicepack/male/medicator
+	soundpack_f = /datum/voicepack/female/medicator
 
 	swap_male_clothes = TRUE
 
