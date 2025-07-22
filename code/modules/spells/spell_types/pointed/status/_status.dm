@@ -49,3 +49,4 @@
 	if(extra_args && islist(extra_args))
 		status_args += extra_args
 	cast_on.apply_status_effect(arglist(status_args))
+	cooldown_time = cooldown_time || duration
