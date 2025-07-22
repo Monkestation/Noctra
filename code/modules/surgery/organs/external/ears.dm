@@ -118,7 +118,7 @@
 /obj/item/organ/ears/tiefling
 	name = "tiefling ears"
 	icon_state = "ear_pointed"
-	accessory_type = /datum/sprite_accessory/ears/elf
+	accessory_type = /datum/sprite_accessory/ears/elfw
 
 /obj/item/organ/ears/anthro
 	name = "wild-kin ears"
