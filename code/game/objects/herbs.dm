@@ -63,6 +63,7 @@
 /obj/structure/flora/grass/herb/random
 	name = "random herb"
 	desc = "Haha, im in danger."
+	icon_state = "herb_random"
 
 /obj/structure/flora/grass/herb/random/Initialize()
 	var/type = pick(list(/obj/structure/flora/grass/herb/atropa,/obj/structure/flora/grass/herb/matricaria,

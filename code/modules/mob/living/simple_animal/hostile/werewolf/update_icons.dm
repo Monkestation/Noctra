@@ -28,8 +28,7 @@
 					I.screen_loc = ui_hand_position(get_held_index_of_item(I))
 			client.screen += I
 			if(observers && observers.len)
-				for(var/M in observers)
-					var/mob/dead/observe = M
+				for(var/mob/dead/observe as anything in observers)
 					if(observe.client && observe.client.eye == src)
 						observe.client.screen += I
 					else

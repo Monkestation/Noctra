@@ -38,10 +38,9 @@
 		buckled.unbuckle_mob(src,force=1)
 
 	GLOB.mob_living_list -= src
-	for(var/s in ownedSoullinks)
-		var/datum/soullink/S = s
+	for(var/datum/soullink/S as anything in ownedSoullinks)
 		S.ownerDies(FALSE)
-		qdel(s) //If the owner is destroy()'d, the soullink is destroy()'d
+		qdel(S) //If the owner is destroy()'d, the soullink is destroy()'d
 	ownedSoullinks = null
 	for(var/datum/soullink/S as anything in sharedSoullinks)
 		S.sharerDies(FALSE)

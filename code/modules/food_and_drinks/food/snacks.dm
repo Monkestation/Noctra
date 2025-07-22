@@ -322,13 +322,12 @@ All foods are distributed among various categories. Use common sense.
 			record_round_statistic(STATS_LUXURIOUS_FOOD_EATEN)
 		if(eat_effect == /datum/status_effect/debuff/rotfood)
 			SEND_SIGNAL(eater, COMSIG_ROTTEN_FOOD_EATEN, src)
-		var/atom/current_loc = loc
 		qdel(src)
-		if(isliving(current_loc))
-			var/mob/living/mob_location = current_loc
-			mob_location.put_in_hands(generate_trash(mob_location))
-		else
-			generate_trash(current_loc.drop_location())
+		var/obj/item/trash = generate_trash(drop_location())
+		if(trash && isliving(loc))
+			var/mob/living/L = loc
+			L.put_in_hands(trash)
+
 	update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/reagent_containers/food/snacks/attack_self(mob/user, params)
@@ -587,13 +586,11 @@ All foods are distributed among various categories. Use common sense.
 		if(ispath(trash, /obj/item))
 			. = new trash(location)
 			trash = null
-			return
 		else if(isitem(trash))
 			var/obj/item/trash_item = trash
 			trash_item.forceMove(location)
 			. = trash
 			trash = null
-			return
 
 /obj/item/reagent_containers/food/snacks/proc/update_snack_overlays(obj/item/reagent_containers/food/snacks/S)
 	cut_overlays()

@@ -7,8 +7,7 @@
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL my bodyparts for protection, and averages out the values
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		armorval += checkarmor(BP, type, damage, armor_penetration)
 		organnum++
 	return (armorval/max(organnum, 1))
@@ -369,8 +368,7 @@
 	//attempt to dismember bodyparts
 	if(severity <= 2)
 		var/max_limb_loss = rand(0, floor(3/severity))
-		for(var/X in bodyparts)
-			var/obj/item/bodypart/BP = X
+		for(var/obj/item/bodypart/BP as anything in bodyparts)
 			if(prob(25/severity) && !prob(15) && BP.body_zone != BODY_ZONE_HEAD && BP.body_zone != BODY_ZONE_CHEST)
 				BP.brute_dam = BP.max_damage
 				BP.dismember()

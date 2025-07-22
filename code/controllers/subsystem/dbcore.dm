@@ -30,8 +30,7 @@ SUBSYSTEM_DEF(dbcore)
 	return ..()
 
 /datum/controller/subsystem/dbcore/fire()
-	for(var/I in active_queries)
-		var/datum/DBQuery/Q = I
+	for(var/datum/DBQuery/Q as anything in active_queries)
 		if(world.time - Q.last_activity_time > (5 MINUTES))
 			message_admins("Found undeleted query, please check the server logs and notify coders.")
 			log_sql("Undeleted query: \"[Q.sql]\" LA: [Q.last_activity] LAT: [Q.last_activity_time]")
