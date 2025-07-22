@@ -117,8 +117,6 @@
 
 /obj/item/organ/ears/tiefling
 	name = "tiefling ears"
-	accessory_type = /datum/sprite_accessory/ears
 
 /obj/item/organ/ears/anthro
 	name = "wild-kin ears"
-	accessory_type = /datum/sprite_accessory/ears
