@@ -156,7 +156,7 @@
 
 	starting_atom = /obj/item/natural/stone
 	attacked_atom = /obj/item/natural/stone
-	output = /obj/item/reagent_containers/glass/bucket/pot
+	output = /obj/item/reagent_containers/glass/bucket/pot/stone
 	craftdiff = 0
 	uses_attacked_atom = TRUE
 

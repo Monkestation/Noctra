@@ -42,8 +42,7 @@
 		if(!final)
 			continue
 		passing = TRUE
-		for(var/I in final)
-			var/turf/checking = I
+		for(var/turf/checking as anything in final)
 			if(!(checking.turf_flags & UNUSED_RESERVATION_TURF))
 				passing = FALSE
 				break
@@ -54,8 +53,7 @@
 		return FALSE
 	bottom_left_coords = list(BL.x, BL.y, BL.z)
 	top_right_coords = list(TR.x, TR.y, TR.z)
-	for(var/i in final)
-		var/turf/T = i
+	for(var/turf/T as anything in final)
 		reserved_turfs |= T
 		T.turf_flags &= ~UNUSED_RESERVATION_TURF
 		SSmapping.unused_turfs["[T.z]"] -= T

@@ -265,10 +265,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/list/outfits = list()
 	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job)  - typesof(/datum/outfit/job)
 
-	for(var/path in paths)
-		var/datum/outfit/O = path //not much to initalize here but whatever
+	for(var/datum/outfit/O as anything in paths) //not much to initalize here but whatever
 		if(initial(O.can_be_admin_equipped))
-			outfits[initial(O.name)] = path
+			outfits[initial(O.name)] = O
 
 	var/dresscode = browser_input_list(src, "Select outfit", "Robust quick dress shop", baseoutfits + sortList(outfits))
 	if (isnull(dresscode))
@@ -289,11 +288,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if (dresscode == "As Roguetown Job...")
 		var/list/roguejob_paths = subtypesof(/datum/outfit/job)
 		var/list/roguejob_outfits = list()
-		for(var/path in roguejob_paths)
-			var/datum/outfit/O = path
+		for(var/datum/outfit/O in roguejob_paths)
 			//roguetown coders are morons and didn't give ANY outfits proper fucking names
 			if(initial(O.can_be_admin_equipped))
-				roguejob_outfits["[path]"] = path
+				roguejob_outfits["[O]"] = O
 
 		dresscode = browser_input_list(src, "Select job equipment", "Robust quick dress shop", sortList(roguejob_outfits))
 		dresscode = roguejob_outfits[dresscode]

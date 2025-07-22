@@ -81,8 +81,7 @@
 	if(back)
 		burning_items += back
 
-	for(var/X in burning_items)
-		var/obj/item/I = X
+	for(var/obj/item/I as anything in burning_items)
 		I.fire_act((fire_stacks * 50)) //damage taken is reduced to 2% of this value by fire_act()
 
 	adjust_bodytemperature(BODYTEMP_HEATING_MAX)

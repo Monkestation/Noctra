@@ -20,8 +20,7 @@
 	if(drop_items)
 		var/turf/T = get_turf(src)
 		if(T)
-			for(var/X in bodyparts)
-				var/obj/item/bodypart/BP = X
+			for(var/obj/item/bodypart/BP as anything in bodyparts)
 				for(var/obj/item/I in BP.embedded_objects)
 					I.forceMove(T)
 	return ..()
@@ -58,8 +57,7 @@
 				if(no_brain || !istype(X, /obj/item/organ/brain))
 					qdel(X)
 		else //we're going to drop all bodyparts except chest, so the only organs that needs spilling are those inside it.
-			for(var/X in internal_organs)
-				var/obj/item/organ/O = X
+			for(var/obj/item/organ/O as anything in internal_organs)
 				if(no_brain && istype(O, /obj/item/organ/brain))
 					qdel(O) //so the brain isn't transfered to the head when the head drops.
 					continue
@@ -69,8 +67,7 @@
 					O.forceMove(Tsec)
 					O.throw_at(get_edge_target_turf(src,pick(GLOB.alldirs)),rand(1,3),5)
 	else
-		for(var/X in internal_organs)
-			var/obj/item/organ/I = X
+		for(var/obj/item/organ/I as anything in internal_organs)
 			if(no_brain && istype(I, /obj/item/organ/brain))
 				qdel(I)
 				continue

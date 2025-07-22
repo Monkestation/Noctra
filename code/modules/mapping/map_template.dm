@@ -40,14 +40,12 @@
 							locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
 	var/list/border = block(locate(max(bounds[MAP_MINX]-1, 1),			max(bounds[MAP_MINY]-1, 1),			 bounds[MAP_MINZ]),
 							locate(min(bounds[MAP_MAXX]+1, world.maxx),	min(bounds[MAP_MAXY]+1, world.maxy), bounds[MAP_MAXZ])) - turfs
-	for(var/L in turfs)
-		var/turf/B = L
+	for(var/turf/B as anything in turfs)
 		atoms += B
 		areas |= B.loc
 		for(var/A in B)
 			atoms += A
-	for(var/L in border)
-		var/turf/T = L
+	for(var/turf/T as anything in border)
 		T.air_update_turf(TRUE) //calculate adjacent turfs along the border to prevent runtimes
 
 	if(SSatoms.initialized)

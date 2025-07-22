@@ -114,10 +114,10 @@
 
 	else if(user.used_intent.type == /datum/intent/shovelscoop)
 		if(istype(T, /turf/open/floor/dirt))
-			var/turf/open/floor/dirt/D = T
+			var/obj/structure/closet/dirthole/holie = locate() in T
 			if(heldclod)
-				if(D.holie && D.holie.stage < 4)
-					D.holie.attackby(src, user)
+				if(holie && holie.stage < 4)
+					holie.attackby(src, user)
 				else
 					if(istype(T, /turf/open/floor/dirt/road))
 						qdel(heldclod)
@@ -129,8 +129,8 @@
 					update_appearance(UPDATE_ICON_STATE)
 					return
 			else
-				if(D.holie)
-					D.holie.attackby(src, user)
+				if(holie)
+					holie.attackby(src, user)
 				else
 					if(istype(T, /turf/open/floor/dirt/road))
 						new /obj/structure/closet/dirthole(T)
