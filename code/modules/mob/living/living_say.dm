@@ -298,14 +298,14 @@
 				listening |= player_mob
 				continue
 			// Else if dead check prefs
-			if(player_mob.z != z || get_dist(player_mob, src) > message_range) //they're out of range of normal hearing
+			if(!is_in_zweb(player_mob.z, source.z) || get_dist(player_mob, src) > message_range) //they're out of range of normal hearing
 				if(player_mob.client.prefs)
 					if(eavesdrop_range && !(player_mob.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
 						continue
 					if(!(player_mob.client.prefs.chat_toggles & CHAT_GHOSTEARS)) //they're talking normally and we have hearing at any range off
 						continue
-					the_dead[player_mob] = TRUE
-					listening |= player_mob
+				the_dead[player_mob] = TRUE
+				listening |= player_mob
 
 	var/eavesdropping
 	var/eavesrendered
