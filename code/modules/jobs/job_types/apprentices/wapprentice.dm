@@ -12,7 +12,7 @@
 
 	allowed_races = RACES_PLAYER_ALL
 	allowed_ages = list(AGE_CHILD, AGE_ADULT)
-	allowed_patrons = list(/datum/patron/divine/noc, /datum/patron/inhumen/zizo) //see court mage for explaination
+	allowed_sexes = list(MALE, FEMALE)
 
 	outfit = /datum/outfit/job/mageapprentice
 	display_order = JDO_WAPP
@@ -23,6 +23,7 @@
 	can_have_apprentices = FALSE
 
 /datum/outfit/job/mageapprentice/pre_equip(mob/living/carbon/human/H)
+	allowed_patrons = list(/datum/patron/divine/noc, /datum/patron/inhumen/zizo)//see court mage for explaination
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/tights/random
 		shoes = /obj/item/clothing/shoes/simpleshoes
@@ -42,11 +43,10 @@
 		armor = /obj/item/clothing/shirt/robe/newmage/adept
 		backr = /obj/item/storage/backpack/satchel
 	backpack_contents = list(/obj/item/book/granter/spellbook/apprentice = 1, /obj/item/chalk = 1)
+	H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE) //children can have one spellpoint, as a treat.
 	if (H.age == AGE_ADULT)
-		H.adjust_skillrank(/datum/skill/magic/arcane, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 		H.adjust_spellpoints(4)
-	else
-		H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE) //children can have one spellpoint, as a treat.
 	H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
