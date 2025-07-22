@@ -40,6 +40,10 @@
 	craft_time = 3 SECONDS
 	crafting_message = "starts weaving a canvas"
 	craftdiff = 0
+	subtypes_allowed = TRUE
+
+/datum/repeatable_crafting_recipe/canvas/create_blacklisted_paths()
+	blacklisted_paths = subtypesof(/obj/item/paper)
 
 /datum/repeatable_crafting_recipe/paintbrush
 	name = "paint brush"

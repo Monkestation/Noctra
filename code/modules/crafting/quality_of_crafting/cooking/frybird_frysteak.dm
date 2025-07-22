@@ -67,7 +67,7 @@
 	extra_chance = 100
 
 /datum/repeatable_crafting_recipe/cooking/wiener/cabbage
-	name = "Wiener on Cabbage"
+	name = "Wiener on Whole Cabbage"
 	requirements = list(
 		/obj/item/reagent_containers/food/snacks/cooked/sausage = 1,
 		/obj/item/reagent_containers/food/snacks/produce/vegetable/cabbage = 1,
@@ -77,14 +77,14 @@
 	crafting_message = "combine some sausage and cabbage"
 
 /datum/repeatable_crafting_recipe/cooking/wiener/cabbage_fried
-	hides_from_books = TRUE
+	name = "Wiener on Cooked Cabbage"
 	requirements = list(
 		/obj/item/reagent_containers/food/snacks/cooked/sausage = 1,
 		/obj/item/reagent_containers/food/snacks/cabbage_fried = 1,
 	)
 	starting_atom = /obj/item/reagent_containers/food/snacks/cabbage_fried
 	output = /obj/item/reagent_containers/food/snacks/cooked/sausage_cabbage
-	crafting_message = "combine some sausage and cabbage"
+	crafting_message = "combine some sausage and cooked cabbage"
 
 /datum/repeatable_crafting_recipe/cooking/wiener/potato
 	name = "Wiener on Tato"

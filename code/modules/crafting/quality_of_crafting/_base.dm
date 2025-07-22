@@ -710,6 +710,15 @@
 					qdel(doomed)
 				// Let the user know about progress
 				to_chat(user, span_notice("Successfully crafted \a [name]. ([successful_crafts]/[requested_crafts])"))
+			else
+				move_items_back(to_delete, user)
+				// Crafting unsuccessful, transfer all reagents to the original containers then delete the container copies
+				for(var/obj/item/reagent_containers/key in copied_containers)
+					var/obj/item/reagent_containers/doomed = copied_containers[key]
+					doomed.reagents.trans_to(key, doomed.reagents.total_volume)
+					qdel(doomed)
+
+				// Continue the crafting while loop
 				continue
 
 		if(!crafting_success)
@@ -722,18 +731,20 @@
 				failure_reasons += "missing tools"
 
 			to_chat(user, span_warning("Crafting failed due to [failure_reasons.Join(" and ")]."))
-		// Move items back if failed
-		move_items_back(to_delete, user)
-		move_products(list(), user)
 
-		// Crafting unsuccessful, transfer all reagents to the original containers then delete the container copies
-		for(var/obj/item/reagent_containers/key in copied_containers)
-			var/obj/item/reagent_containers/doomed = copied_containers[key]
-			doomed.reagents.trans_to(key, doomed.reagents.total_volume)
-			qdel(doomed)
+			move_items_back(to_delete, user)
+			move_products(list(), user)
+			// Crafting unsuccessful, transfer all reagents to the original containers then delete the container copies
+			for(var/obj/item/reagent_containers/key in copied_containers)
+				var/obj/item/reagent_containers/doomed = copied_containers[key]
+				doomed.reagents.trans_to(key, doomed.reagents.total_volume)
+				qdel(doomed)
 
-		// End the crafting while loop
-		break
+			// End the crafting while loop
+			break
+
+		// After each successful or failed craft, give the user a moment to react
+		sleep(0.5 SECONDS)
 
 		/* Removed crafting retry due to buggy behavior caused by players moving
 		// If we failed at some point in the process, restore reagents and ask if they want to continue trying
@@ -824,13 +835,10 @@
 
 	if(prob2craft < 1)
 		to_chat(user, "<span class='danger'>I lack the skills for this...</span>")
-		move_products(list(), user)
-		move_items_back(to_delete, user)
 		return FALSE
 
 	if(prob(prob2fail))
 		to_chat(user, "<span class='danger'>MISTAKE! I've completely fumbled the crafting of \the [name]!</span>")
-		move_items_back(to_delete, user)
 		return FALSE
 
 	if(!prob(prob2craft))
@@ -838,7 +846,6 @@
 			to_chat(user, "<span class='danger'>I've failed to craft \the [name]. (Success chance: [prob2craft]%)</span>")
 		else
 			to_chat(user, "<span class='danger'>I've failed to craft \the [name].</span>")
-		move_items_back(to_delete, user)
 		return FALSE
 
 	var/list/outputs = create_outputs(to_delete, user)
@@ -876,7 +883,7 @@
 		if(L.STAINT > 10)
 			prob2craft += ((10-L.STAINT)*-1)*2
 
-	return CLAMP(prob2craft, 5, 99)
+	return CLAMP(prob2craft, 0, 100)
 
 /**
  * Calculates chance of failing crafting
@@ -950,6 +957,7 @@
 	if(amt2raise > 0)
 		user.mind.add_sleep_experience(skillcraft, amt2raise, FALSE)
 
+/// Moves items back to user's location
 /datum/repeatable_crafting_recipe/proc/move_items_back(list/items, mob/user)
 	for(var/obj/item/item in items)
 		var/early_continue = FALSE
@@ -961,6 +969,7 @@
 			item.forceMove(user.drop_location())
 	user.update_inv_hands()
 
+// Attempts to put the tool back in the user's hand as well as a product
 /datum/repeatable_crafting_recipe/proc/move_products(list/products, mob/user)
 	var/list/copied_tool_usage = tool_usage.Copy()
 

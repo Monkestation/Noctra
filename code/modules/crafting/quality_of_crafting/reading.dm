@@ -13,11 +13,13 @@
 	starting_atom = /obj/item/paper
 	craftdiff = 0
 	category = "Paperwork"
+	subtypes_allowed = TRUE
 
 /datum/repeatable_crafting_recipe/reading/confessional
 	name = "confession"
 	output = /obj/item/paper/confession
 	requires_learning = TRUE
+	blacklisted_paths = list(/obj/item/paper/confession)
 
 /datum/repeatable_crafting_recipe/reading/guide
 	name = "blank textbook"

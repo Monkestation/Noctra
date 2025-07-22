@@ -3,6 +3,8 @@
 /datum/repeatable_crafting_recipe/survival
 	abstract_type = /datum/repeatable_crafting_recipe/survival
 	category = "Survival"
+	subtypes_allowed = TRUE
+	craftdiff = 0
 
 /datum/repeatable_crafting_recipe/survival/cloth
 	name = "cloth"
@@ -17,7 +19,6 @@
 	attacked_atom = /obj/item/natural/fibers
 	skillcraft = /datum/skill/misc/sewing
 	output = /obj/item/natural/cloth
-	craftdiff = 0
 
 /datum/repeatable_crafting_recipe/survival/thorn_needle
 	name = "thorn needle"
@@ -30,7 +31,6 @@
 	attacked_atom = /obj/item/natural/thorn
 	allow_inverse_start = TRUE
 	output = /obj/item/needle/thorn
-	craftdiff = 0
 
 /datum/repeatable_crafting_recipe/survival/rope
 	name = "rope"
@@ -41,7 +41,6 @@
 	starting_atom = /obj/item/natural/fibers
 	attacked_atom = /obj/item/natural/fibers
 	output = /obj/item/rope
-	craftdiff = 0
 	crafting_message = "starts to braid some fibers"
 
 /datum/repeatable_crafting_recipe/survival/woodenbucket
@@ -55,9 +54,7 @@
 	attacked_atom = /obj/item/grown/log/tree/small
 	starting_atom = /obj/item/weapon/knife
 	output = /obj/item/reagent_containers/glass/bucket/wooden
-	subtypes_allowed = TRUE
 	craft_time = 5 SECONDS
-	craftdiff = 0
 
 /datum/repeatable_crafting_recipe/survival/torch
 	name = "torch"
@@ -70,7 +67,6 @@
 	attacked_atom = /obj/item/grown/log/tree/stick
 	allow_inverse_start = TRUE
 	output = /obj/item/flashlight/flare/torch
-	craftdiff = 0
 
 /datum/repeatable_crafting_recipe/survival/stake
 	name = "wooden stake"
@@ -81,10 +77,8 @@
 		/obj/item/weapon/knife = list(span_notice("starts to whittle"), span_notice("start to whittle"), 'sound/items/wood_sharpen.ogg'),
 	)
 	attacked_atom = /obj/item/grown/log/tree/stick
-	starting_atom  = /obj/item/weapon/knife
-	subtypes_allowed = TRUE
+	starting_atom = /obj/item/weapon/knife
 	output = /obj/item/grown/log/tree/stake
-	craftdiff = 0
 
 /datum/repeatable_crafting_recipe/survival/wood_hammer
 	name = "wooden hammer"
@@ -96,10 +90,8 @@
 	)
 	attacked_atom = /obj/item/grown/log/tree/small
 	starting_atom= /obj/item/weapon/knife
-	subtypes_allowed = TRUE
 	output = /obj/item/weapon/hammer/wood
 	craft_time = 5 SECONDS
-	craftdiff = 0
 
 /datum/repeatable_crafting_recipe/survival/woodclub
 	name = "wood club"
@@ -111,7 +103,6 @@
 	attacked_atom = /obj/item/natural/fibers
 	allow_inverse_start = TRUE
 	output = /obj/item/weapon/mace/woodclub/crafted
-	craftdiff = 0
 
 /datum/repeatable_crafting_recipe/survival/woodstaff
 	name = "wood staff"
@@ -123,7 +114,6 @@
 	)
 	attacked_atom = /obj/item/grown/log/tree/small
 	starting_atom = /obj/item/weapon/knife
-	subtypes_allowed = TRUE
 	output = /obj/item/weapon/polearm/woodstaff
 	output_amount = 2
 	required_intent = /datum/intent/dagger/cut
@@ -140,7 +130,6 @@
 	starting_atom = /obj/item/grown/log/tree/small
 	allow_inverse_start = TRUE
 	output = /obj/item/weapon/axe/stone
-	craftdiff = 0
 
 /datum/repeatable_crafting_recipe/survival/stone_knife
 	name = "stone knife"
@@ -153,7 +142,6 @@
 	starting_atom = /obj/item/grown/log/tree/stick
 	allow_inverse_start = TRUE
 	output = /obj/item/weapon/knife/stone
-	craftdiff = 0
 
 /datum/repeatable_crafting_recipe/survival/stone_hoe
 	name = "stone hoe"
@@ -167,7 +155,6 @@
 	starting_atom = /obj/item/grown/log/tree/stick
 	allow_inverse_start = TRUE
 	output = /obj/item/weapon/hoe/stone
-	craftdiff = 0
 
 /datum/repeatable_crafting_recipe/survival/stone_pick
 	name = "stone pick"
@@ -180,7 +167,6 @@
 	starting_atom = /obj/item/grown/log/tree/stick
 	allow_inverse_start = TRUE
 	output = /obj/item/weapon/pick/stone
-	craftdiff = 0
 
 /datum/repeatable_crafting_recipe/survival/stone_spear
 	name = "stone spear"
@@ -192,7 +178,6 @@
 	starting_atom = /obj/item/weapon/polearm/woodstaff
 	attacked_atom = /obj/item/natural/stone
 	output = /obj/item/weapon/polearm/spear/stone
-	craftdiff = 0
 
 /datum/repeatable_crafting_recipe/survival/stone_pot
 	name = "stone pot"
@@ -203,7 +188,6 @@
 	starting_atom = /obj/item/natural/stone
 	attacked_atom = /obj/item/natural/stone
 	output = /obj/item/reagent_containers/glass/bucket/pot
-	craftdiff = 0
 
 /datum/repeatable_crafting_recipe/survival/flint
 	name = "flint"
@@ -215,7 +199,6 @@
 	starting_atom  = /obj/item/ingot/iron
 	allow_inverse_start = TRUE
 	output = /obj/item/flint
-	craftdiff = 0
 	skillcraft = /datum/skill/craft/engineering
 
 /datum/repeatable_crafting_recipe/survival/bag
@@ -230,9 +213,29 @@
 	starting_atom = /obj/item/needle
 	attacked_atom = /obj/item/natural/cloth
 	output = /obj/item/storage/sack
-	craftdiff = 0
 	skillcraft = /datum/skill/misc/sewing
-	subtypes_allowed = TRUE
+
+/datum/repeatable_crafting_recipe/survival/clay
+	name = "clay lump"
+	requirements = list(
+		/obj/item/natural/dirtclod= 3,
+	)
+	reagent_requirements = list(
+		/datum/reagent/water = 10
+	)
+	attacked_atom = /obj/item/natural/dirtclod
+	starting_atom = /obj/item/natural/dirtclod
+	output = /obj/item/natural/clay
+
+/datum/repeatable_crafting_recipe/survival/wicker_basket
+	name = "wicker basket"
+	requirements = list(
+		/obj/item/natural/fibers = 6,
+	)
+	attacked_atom = /obj/item/natural/fibers
+	starting_atom  = /obj/item/natural/fibers
+	output = /obj/structure/closet/crate/chest/wicker
+	craftdiff = 1
 
 /datum/repeatable_crafting_recipe/survival/bone_spear
 	name = "bone spear"
@@ -259,25 +262,3 @@
 	output = /obj/item/weapon/axe/boneaxe
 	craftdiff = 2
 
-/datum/repeatable_crafting_recipe/survival/clay
-	name = "clay lump"
-	requirements = list(
-		/obj/item/natural/dirtclod= 3,
-	)
-	reagent_requirements = list(
-		/datum/reagent/water = 10
-	)
-	attacked_atom = /obj/item/natural/dirtclod
-	starting_atom = /obj/item/natural/dirtclod
-	output = /obj/item/natural/clay
-	craftdiff = 0
-
-/datum/repeatable_crafting_recipe/survival/wicker_basket
-	name = "wicker basket"
-	requirements = list(
-		/obj/item/natural/fibers = 6,
-	)
-	attacked_atom = /obj/item/natural/fibers
-	starting_atom  = /obj/item/natural/fibers
-	output = /obj/structure/closet/crate/chest/wicker
-	craftdiff = 1

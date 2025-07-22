@@ -185,8 +185,9 @@
 		/obj/item/weapon/knife = list(span_notice("starts to whittle"), span_notice("start to whittle"), 'sound/items/wood_sharpen.ogg'),
 	)
 	attacked_atom = /obj/item/grown/log/tree/small
-	starting_atom  = /obj/item/weapon/knife
+	starting_atom = /obj/item/weapon/knife
 	output = /obj/item/gun/ballistic/revolver/grenadelauncher/blowgun
+	subtypes_allowed = TRUE
 
 /datum/repeatable_crafting_recipe/crafting/candle
 	name = "candle"
@@ -320,7 +321,8 @@
 		/obj/item/weapon/knife = list(span_notice("starts to whittle"), span_notice("start to whittle"), 'sound/items/wood_sharpen.ogg'),
 	)
 	attacked_atom = /obj/item/grown/log/tree/stick
-	starting_atom  = /obj/item/weapon/knife
+	starting_atom = /obj/item/weapon/knife
+	subtypes_allowed = TRUE
 	allow_inverse_start = FALSE
 	output = /obj/item/weapon/whip/cane
 	craftdiff = 0
@@ -450,9 +452,10 @@
 		/obj/item/weapon/knife = list(span_notice("starts to whittle"), span_notice("start to whittle"), 'sound/items/wood_sharpen.ogg'),
 	)
 	attacked_atom = /obj/item/grown/log/tree/stick
-	starting_atom  = /obj/item/weapon/knife
+	starting_atom = /obj/item/weapon/knife
 	allow_inverse_start = FALSE
 	output = /obj/item/clothing/face/cigarette/pipe/crafted
+	subtypes_allowed = TRUE
 
 /datum/repeatable_crafting_recipe/crafting/broom
 	name = "broom"
@@ -569,12 +572,14 @@
 		/obj/item/paper = 2,
 		/obj/item/natural/fibers = 1,
 	)
-	blacklisted_paths = list(/obj/item/paper/scroll, /obj/item/paper/confession)
 	starting_atom = /obj/item/natural/fibers
 	attacked_atom = /obj/item/paper
 	output = /obj/item/paper/scroll
 	subtypes_allowed = TRUE
 	craftdiff = 0
+
+/datum/repeatable_crafting_recipe/crafting/scroll/create_blacklisted_paths()
+	blacklisted_paths = subtypesof(/obj/item/paper)
 
 /datum/repeatable_crafting_recipe/crafting/cart_upgrade
 	name = "cart upgrade"
@@ -585,7 +590,8 @@
 		/obj/item/weapon/knife = list(span_notice("starts to whittle"), span_notice("start to whittle"), 'sound/items/wood_sharpen.ogg'),
 	)
 	attacked_atom = /obj/item/natural/wood/plank
-	starting_atom  = /obj/item/weapon/knife
+	starting_atom = /obj/item/weapon/knife
+	subtypes_allowed = TRUE
 	allow_inverse_start = FALSE
 	output = /obj/item/gear/wood/basic
 	craftdiff = 3

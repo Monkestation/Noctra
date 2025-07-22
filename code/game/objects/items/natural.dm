@@ -12,7 +12,7 @@
 /obj/item/natural/attackby(obj/item/W, mob/living/user)
 	if(istype(W, /obj/item/natural/bundle))
 		if(item_flags & IN_STORAGE)
-			to_chat(user, span_warning("It's hard to find [W] in my bag."))
+			to_chat(user, span_warning("It's hard to find [src] in my bag."))
 			return
 		var/obj/item/natural/bundle/B = W
 		if(istype(src, B.stacktype))
