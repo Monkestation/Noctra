@@ -22,8 +22,8 @@
 
 	possible_ages = NORMAL_AGES_LIST
 
-	skin_tone_wording = "Tribal Identity"
-	default_color = "9cc2e2"
+	skin_tone_wording = "Spawn"
+	default_color = "3e3e3e"
 	use_skintones = TRUE
 
 	species_traits = list(NO_UNDERWEAR, HAIR, OLDGREY)
@@ -126,30 +126,24 @@
 /datum/species/medicator/get_skin_list()
 	// Manually sorted please sort your new entries
 	return list(
-		"Algae Borne" = SKIN_COLOR_ALGAE,
-		"Deep Borne" = SKIN_COLOR_DEEP,
-		"Jellyfish Borne" = SKIN_COLOR_JELLYFISH,
-		"kelp Borne" = SKIN_COLOR_KELP,
-		"Reef Borne" = SKIN_COLOR_REEF,
-		"Sand Borne" = SKIN_COLOR_SAND,
-		"Shallow Borne" = SKIN_COLOR_SHALLOW,
-		"Urchin Borne" = SKIN_COLOR_URCHIN,
+		"Crude" = SKIN_COLOR_OIL,
+		"Scrap" = SKIN_COLOR_SCRAP,
+		"Smoke" = SKIN_COLOR_SMOKE,
+		"Toxin" = SKIN_COLOR_TOXIN,
+		"Waste" = SKIN_COLOR_WASTE,
 	)
 
 /datum/species/medicator/get_hairc_list()
 	return list(
-		"Abyss" = HAIR_COLOR_ABYSS,
-		"Clown" = HAIR_COLOR_CLOWN,
-		"Hydrothermal" = HAIR_COLOR_HYDROTHERMAL,
-		"Inky" = HAIR_COLOR_INKY,
-		"Sea Foam" = HAIR_COLOR_SEA_FOAM,
+		"Poison" = HAIR_COLOR_POISON,
+		"Smog" = HAIR_COLOR_SMOG,
+		"Steam" = HAIR_COLOR_STEAM,
+		"Slick" = HAIR_COLOR_SLICK,
 	)
 
 /datum/species/medicator/get_oldhc_list()
 	return list(
-		"Fog" = HAIR_COLOR_SEA_FOG,
-		"Gravel" = HAIR_COLOR_GRAVEL,
-		"Mist" = HAIR_COLOR_MIST,
-		"Photic" = HAIR_COLOR_PHOTIC,
-		"Turtle Egg" = HAIR_COLOR_TURTLE,
+		"Concrete" = HAIR_COLOR_CONCRETE,
+		"Smog" = HAIR_COLOR_SMOG,
+		"Steam" = HAIR_COLOR_STEAM,
 	)
