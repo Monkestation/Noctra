@@ -77,7 +77,10 @@
 	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
-/mob/proc/ClickOn( atom/A, params )
+/mob/proc/ClickOn(atom/A, params)
+	if(QDELETED(A)) // :)))))
+		return
+
 	var/list/modifiers = params2list(params)
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK) && LAZYACCESS(modifiers, SHIFT_CLICKED))
@@ -338,8 +341,7 @@
 	return FALSE
 
 /turf/IsObscured()
-	for(var/item in src)
-		var/atom/movable/AM = item
+	for(var/atom/movable/AM as anything in src)
 		if(AM.flags_1 & PREVENT_CLICK_UNDER_1)
 			return TRUE
 	return FALSE
@@ -746,7 +748,7 @@
 			UntargetMob()
 		targetting = target
 		if(!fixedeye) //If fixedeye isn't already enabled, we need to set this var
-			atom_flags |= NO_DIR_CHANGE
+			atom_flags |= NO_DIR_CHANGE_ON_MOVE
 		tempfixeye = TRUE //Change icon to 'target' red eye
 		targeti = image('icons/mouseover.dmi', targetting.loc, "target")
 		var/icon/I = icon(icon, icon_state, dir)
@@ -769,7 +771,7 @@
 	targetting = null
 	tempfixeye = FALSE
 	if(!fixedeye)
-		atom_flags &= ~NO_DIR_CHANGE
+		atom_flags &= ~NO_DIR_CHANGE_ON_MOVE
 	src.client.images -= targeti
 	//clear hud icon
 	for(var/atom/movable/screen/eye_intent/eyet in hud_used.static_inventory)
@@ -809,7 +811,7 @@
 	temptarget = TRUE
 	targetting = swingtarget
 	if(!fixedeye)
-		atom_flags |= NO_DIR_CHANGE
+		atom_flags |= NO_DIR_CHANGE_ON_MOVE
 	tempfixeye = TRUE
 	for(var/atom/movable/screen/eye_intent/eyet in hud_used.static_inventory)
 		eyet.update_appearance(UPDATE_ICON)

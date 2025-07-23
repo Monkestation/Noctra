@@ -139,7 +139,6 @@
 	throw_range = 3
 	hitsound = 'sound/blank.ogg'
 	hit_reaction_chance = 50
-	twohands_required = TRUE
 	obj_flags = CAN_BE_HIT
 	max_integrity = 100
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
@@ -147,6 +146,9 @@
 	sleepy = 0.1
 	var/break_chance = 23 //Likely hood of smashing the chair.
 	var/obj/structure/chair/origin_type = /obj/structure/chair/wood/alt
+
+/obj/item/chair/apply_components()
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE, wield_callback = CALLBACK(src, PROC_REF(on_wield)), unwield_callback = CALLBACK(src, PROC_REF(on_unwield)))
 
 /obj/item/chair/getonmobprop(tag)
 	. = ..()

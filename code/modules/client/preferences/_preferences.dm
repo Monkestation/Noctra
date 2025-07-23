@@ -317,7 +317,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	dat += "</td>"
 
 	dat += "<td style='width:33%;text-align:center'>"
-	dat += "<a href='?_src_=prefs;preference=antag;task=menu'>Villain Selection</a>"
+	dat += "<a href='?_src_=prefs;preference=antag;task=menu'>Special Roles</a>"
 	dat += "</td>"
 
 	dat += "<td style='width:33%;text-align:right'>"
@@ -584,7 +584,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			if(length(job.allowed_ages) && !(user.client.prefs.age in job.allowed_ages))
 				HTML += "<font color=#a36c63>[used_name]</font></td> <td> </td></tr>"
 				continue
-			if(length(job.allowed_races) && !(user.client.prefs.pref_species.name in job.allowed_races))
+			if(length(job.allowed_races) && !(user.client.prefs.pref_species.id in job.allowed_races))
 				if(!(user.client.triumph_ids.Find("race_all")))
 					HTML += "<font color=#a36c63>[used_name]</font></td> <td> </td></tr>"
 					continue
@@ -801,14 +801,12 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/list/dat = list()
 
 	dat += "<style>label { display: inline-block; width: 200px; }</style><body>"
-
-	dat += "<center><a href='?_src_=prefs;preference=antag;task=close'>Done</a></center><br>"
-
+	dat += "<center><a href='?_src_=prefs;preference=antag;task=close' style='display:block;margin-bottom:2px'>Done</a></center>"
+	dat += "<h2 style='margin:5;padding:5;line-height:1.2'>Villains</h2>"
 
 	if(is_total_antag_banned(user.ckey))
 		dat += "<font color=red><b>I am banned from antagonist roles.</b></font><br>"
 		src.be_special = list()
-
 
 	for (var/i in GLOB.special_roles_rogue)
 		if(is_antag_banned(user.ckey, i))
@@ -823,10 +821,9 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			else
 				dat += "<b>[capitalize(i)]:</b> <a href='?_src_=prefs;preference=antag;task=be_special;be_special_type=[i]'>[(i in be_special) ? "Enabled" : "Disabled"]</a><br>"
 
-
 	dat += "</body>"
 
-	var/datum/browser/noclose/popup = new(user, "antag_setup", "<div align='center'>Special Role</div>", 250, 300) //no reason not to reuse the occupation window, as it's cleaner that way
+	var/datum/browser/noclose/popup = new(user, "antag_setup", "<div align='center'>Special Roles</div>", 265, 340) //no reason not to reuse the occupation window, as it's cleaner that way
 	popup.set_window_options(can_close = FALSE)
 	popup.set_content(dat.Join())
 	popup.open(FALSE)
@@ -1549,7 +1546,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		pref_species = new /datum/species/human/northern
 		save_character()
 
-	if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == "human"))
+	if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == SPEC_ID_HUMEN))
 		var/firstspace = findtext(real_name, " ")
 		var/name_length = length(real_name)
 		if(!firstspace)	//we need a surname
@@ -1617,8 +1614,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			qdel(O)
 		character.regenerate_limb(BODY_ZONE_R_ARM)
 		character.regenerate_limb(BODY_ZONE_L_ARM)
-
-		character.charflaw = new charflaw.type(character)
+		character.set_flaw(charflaw.type)
 
 	if(parent)
 		var/datum/role_bans/bans = get_role_bans_for_ckey(parent.ckey)

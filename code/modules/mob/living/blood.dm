@@ -231,7 +231,7 @@
 /mob/living/proc/get_lux_status()
 	var/datum/blood_type/blood = get_blood_type()
 
-	if(has_status_effect(/datum/status_effect/buff/lux_drained))
+	if(has_status_effect(/datum/status_effect/debuff/lux_drained) || has_status_effect(/datum/status_effect/debuff/flaw_lux_taken))//accounts for luxless flaw
 		return LUX_DRAINED
 
 	return blood.contains_lux

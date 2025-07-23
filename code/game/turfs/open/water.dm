@@ -193,7 +193,7 @@
 
 /turf/open/water/river/creatable/proc/try_modify_water(mob/user, obj/item/reagent_containers/glass/bucket/wooden/bucket)
 	if(user.used_intent.type == /datum/intent/splash)
-		if(bucket.reagents)
+		if(bucket.reagents?.total_volume)
 			var/datum/reagent/container_reagent = bucket.reagents.get_master_reagent()
 			var/water_count = bucket.reagents.get_reagent_amount(container_reagent.type)
 			user.visible_message("[user] starts to fill [src].", "You start to fill [src].")
@@ -690,6 +690,8 @@
 /turf/open/water/river/Entered(atom/movable/AM, atom/oldLoc)
 	. = ..()
 	if(!river_processes)
+		return
+	if(locate(/obj/structure/stairs) in src)
 		return
 	if(isliving(AM) || isitem(AM))
 		if(!river_processing)

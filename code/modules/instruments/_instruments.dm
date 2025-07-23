@@ -74,7 +74,6 @@
 	. = ..()
 
 /obj/item/instrument/process()
-	. = ..()
 	var/source
 	if(!ishuman(loc))
 		var/atom/thing = loc

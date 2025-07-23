@@ -37,9 +37,6 @@
 	//need to see their damn face
 	if(!cast_on.get_face_name(null))
 		return FALSE
-	//only migrants and peasants
-	if(!(cast_on.job in GLOB.peasant_positions))
-		return FALSE
 
 	return TRUE
 

@@ -1,8 +1,10 @@
 /datum/container_craft/cooking/drugs
 	abstract_type = /datum/container_craft/cooking/drugs
+	cooking_sound = /datum/looping_sound/boiling
 
 /datum/container_craft/cooking/arcyne
 	abstract_type = /datum/container_craft/cooking/arcyne
+	cooking_sound = /datum/looping_sound/boiling
 
 /datum/container_craft/cooking
 	abstract_type = /datum/container_craft/cooking
@@ -23,6 +25,7 @@
 	var/required_chem_temp = 374
 	///what we add for optionals ie chunks of
 	var/wording_choice = "chunks of"
+	cooking_sound = /datum/looping_sound/boiling
 
 /datum/container_craft/cooking/try_craft(obj/item/crafter, list/pathed_items, mob/initiator, datum/callback/on_craft_start, datum/callback/on_craft_failed)
 	if(crafter.reagents.chem_temp < required_chem_temp)

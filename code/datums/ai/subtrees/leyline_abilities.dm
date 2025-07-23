@@ -145,6 +145,10 @@
 
 		L.apply_damage(damage, BURN)
 
+		// Del on death
+		if(QDELETED(L))
+			continue
+
 		var/knockback_distance = max(1, 4 - dist)
 
 		var/turf/T = get_turf(L)

@@ -136,8 +136,7 @@
 	var/list/cached_reagents = reagent_list
 	if(total_volume > 0)
 		var/part = amount / total_volume
-		for(var/reagent in cached_reagents)
-			var/datum/reagent/R = reagent
+		for(var/datum/reagent/R as anything in cached_reagents)
 			remove_reagent(R.type, R.volume * part)
 
 		update_total()
@@ -148,8 +147,7 @@
 	var/list/cached_reagents = reagent_list
 	var/name
 	var/max_volume = 0
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
+	for(var/datum/reagent/R as anything in cached_reagents)
 		if(R.volume > max_volume)
 			max_volume = R.volume
 			name = R.name
@@ -160,8 +158,7 @@
 	var/list/cached_reagents = reagent_list
 	var/max_type
 	var/max_volume = 0
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
+	for(var/datum/reagent/R as anything in cached_reagents)
 		if(R.volume > max_volume)
 			max_volume = R.volume
 			max_type = R.type
@@ -172,8 +169,7 @@
 	var/list/cached_reagents = reagent_list
 	var/datum/reagent/master
 	var/max_volume = 0
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
+	for(var/datum/reagent/R as anything in cached_reagents)
 		if(R.volume > max_volume)
 			max_volume = R.volume
 			master = R
@@ -205,8 +201,7 @@
 	var/transfer_log = list()
 	if(!round_robin)
 		var/part = amount / src.total_volume
-		for(var/reagent in cached_reagents)
-			var/datum/reagent/T = reagent
+		for(var/datum/reagent/T as anything in cached_reagents)
 			if(remove_blacklisted && !T.can_synth)
 				continue
 			var/transfer_amount = T.volume * part
@@ -268,8 +263,7 @@
 	amount = min(min(amount, total_volume), R.maximum_volume-R.total_volume)
 	var/part = amount / total_volume
 	var/trans_data = null
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/T = reagent
+	for(var/datum/reagent/T as anything in cached_reagents)
 		var/copy_amount = T.volume * part
 		if(preserve_data)
 			trans_data = T.data
@@ -317,8 +311,7 @@
 		if(HAS_TRAIT(C, TRAIT_CRACKHEAD))
 			can_overdose = FALSE
 	var/need_mob_update = 0
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
+	for(var/datum/reagent/R as anything in cached_reagents)
 		if(QDELETED(R.holder))
 			continue
 
@@ -346,8 +339,7 @@
 					if(R.overdosed)
 						need_mob_update += R.overdose_process(C)
 					if(is_type_in_list(R,cached_addictions))
-						for(var/addiction in cached_addictions)
-							var/datum/reagent/A = addiction
+						for(var/datum/reagent/A as anything in cached_addictions)
 							if(istype(R, A))
 								A.addiction_stage = -15 // you're satisfied for a good while.
 				need_mob_update += R.on_mob_life(C)
@@ -355,8 +347,7 @@
 	if(can_overdose)
 		if(addiction_tick == 6)
 			addiction_tick = 1
-			for(var/addiction in cached_addictions)
-				var/datum/reagent/R = addiction
+			for(var/datum/reagent/R as anything in cached_addictions)
 				if(C && R)
 					R.addiction_stage++
 					switch(R.addiction_stage)
@@ -387,8 +378,7 @@
 //Signals that metabolization has stopped, triggering the end of trait-based effects
 /datum/reagents/proc/end_metabolization(mob/living/carbon/C, keep_liverless = TRUE)
 	var/list/cached_reagents = reagent_list
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
+	for(var/datum/reagent/R as anything in cached_reagents)
 		if(QDELETED(R.holder))
 			continue
 		if(keep_liverless && R.self_consuming) //Will keep working without a liver
@@ -401,15 +391,13 @@
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)
 	var/list/cached_reagents = reagent_list
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
+	for(var/datum/reagent/R as anything in cached_reagents)
 		R.on_move (A, Running)
 	update_total()
 
 /datum/reagents/proc/conditional_update(atom/A)
 	var/list/cached_reagents = reagent_list
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
+	for(var/datum/reagent/R as anything in cached_reagents)
 		R.on_update (A)
 	update_total()
 
@@ -425,8 +413,7 @@
 	do
 		var/list/possible_reactions = list()
 		reaction_occurred = 0
-		for(var/reagent in cached_reagents)
-			var/datum/reagent/R = reagent
+		for(var/datum/reagent/R as anything in cached_reagents)
 			for(var/reaction in cached_reactions[R.type]) // Was a big list but now it should be smaller since we filtered it with our reagent id
 				if(!reaction)
 					continue
@@ -550,8 +537,7 @@
 /datum/reagents/proc/update_total()
 	var/list/cached_reagents = reagent_list
 	total_volume = 0
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
+	for(var/datum/reagent/R as anything in cached_reagents)
 		if(R.volume < 0.1)
 			del_reagent(R.type)
 		else
@@ -561,8 +547,7 @@
 
 /datum/reagents/proc/clear_reagents()
 	var/list/cached_reagents = reagent_list
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
+	for(var/datum/reagent/R as anything in cached_reagents)
 		del_reagent(R.type)
 	if(my_atom)
 		my_atom.on_reagent_change(CLEAR_REAGENTS)
@@ -582,8 +567,7 @@
 	else
 		return
 	var/list/cached_reagents = reagent_list
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
+	for(var/datum/reagent/R as anything in cached_reagents)
 		switch(react_type)
 			if("LIVING")
 				var/touch_protection = 0
@@ -631,8 +615,7 @@
 	. = 0
 	var/cached_amount = total_volume		//cache amount
 	var/list/cached_reagents = reagent_list		//cache reagents
-	for(var/I in cached_reagents)
-		var/datum/reagent/R = I
+	for(var/datum/reagent/R as anything in cached_reagents)
 		. += R.specific_heat * (R.volume / cached_amount)
 
 /datum/reagents/proc/adjust_thermal_energy(J, min_temp = 2.7, max_temp = 1000)
@@ -664,8 +647,7 @@
 	//Equalize temperature - Not using specific_heat() because the new chemical isn't in yet.
 	var/specific_heat = 0
 	var/thermal_energy = 0
-	for(var/i in cached_reagents)
-		var/datum/reagent/R = i
+	for(var/datum/reagent/R as anything in cached_reagents)
 		specific_heat += R.specific_heat * (R.volume / new_total)
 		thermal_energy += R.specific_heat * R.volume * cached_temp
 	specific_heat += D.specific_heat * (amount / new_total)
@@ -674,8 +656,7 @@
 	////
 
 	//add the reagent to the existing if it exists
-	for(var/A in cached_reagents)
-		var/datum/reagent/R = A
+	for(var/datum/reagent/R as anything in cached_reagents)
 		if (R.type == reagent)
 			R.volume += amount
 			update_total()
@@ -728,8 +709,7 @@
 
 	var/list/cached_reagents = reagent_list
 
-	for(var/A in cached_reagents)
-		var/datum/reagent/R = A
+	for(var/datum/reagent/R as anything in cached_reagents)
 		if (R.type == reagent)
 			//clamp the removal amount to be between current reagent amount
 			//and zero, to prevent removing more than the holder has stored
@@ -775,8 +755,7 @@
 /datum/reagents/proc/get_reagents()
 	var/list/names = list()
 	var/list/cached_reagents = reagent_list
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
+	for(var/datum/reagent/R as anything in cached_reagents)
 		names += R.name
 
 	return jointext(names, ",")
@@ -787,8 +766,7 @@
 	var/list/cached_reagents = reagent_list
 	var/has_removed_reagent = 0
 
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
+	for(var/datum/reagent/R as anything in cached_reagents)
 		var/matches = 0
 		// Switch between how we check the reagent type
 		if(strict)
@@ -807,15 +785,13 @@
 //two helper functions to preserve data across reactions (needed for xenoarch)
 /datum/reagents/proc/get_data(reagent_id)
 	var/list/cached_reagents = reagent_list
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
+	for(var/datum/reagent/R as anything in cached_reagents)
 		if(R.type == reagent_id)
 			return R.data
 
 /datum/reagents/proc/set_data(reagent_id, new_data)
 	var/list/cached_reagents = reagent_list
-	for(var/reagent in cached_reagents)
-		var/datum/reagent/R = reagent
+	for(var/datum/reagent/R as anything in cached_reagents)
 		if(R.type == reagent_id)
 			R.data = new_data
 
@@ -940,8 +916,7 @@
 	var/increased = FALSE
 	if(old_temp < chem_temp)
 		increased = TRUE
-	for(var/i in reagent_list)
-		var/datum/reagent/R = i
+	for(var/datum/reagent/R as anything in reagent_list)
 		R.on_temp_change(increased)
 	handle_reactions()
 	SEND_SIGNAL(my_atom, COMSIG_REAGENTS_EXPOSE_TEMPERATURE, null, chem_temp)

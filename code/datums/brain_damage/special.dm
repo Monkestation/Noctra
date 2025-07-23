@@ -81,8 +81,7 @@
 												"You simply fade away.")]</span>")
 	owner.forceMove(veil)
 	SEND_SIGNAL(owner, COMSIG_MOVABLE_SECLUDED_LOCATION)
-	for(var/thing in owner)
-		var/atom/movable/AM = thing
+	for(var/atom/movable/AM as anything in owner)
 		SEND_SIGNAL(AM, COMSIG_MOVABLE_SECLUDED_LOCATION)
 	next_crisis = world.time + 600
 	addtimer(CALLBACK(src, PROC_REF(fade_in)), duration)

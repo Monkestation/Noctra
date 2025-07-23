@@ -242,8 +242,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 	if(!LAZYLEN(GLOB.ritualslist))
 		GLOB.ritualslist = list()
 		var/static/list/rituals = subtypesof(/datum/ritual)
-		for(var/path in rituals)
-			var/datum/ritual/G = path
+		for(var/datum/ritual/G as anything in rituals)
 			GLOB.ritualslist[G.name] = G
 
 /obj/effect/decal/cleanable/sigil/proc/consume_ingredients(datum/ritual/R)

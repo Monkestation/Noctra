@@ -14,6 +14,7 @@
 	var/datum/language_holder/language_holder
 	var/verb_say = "says"
 	var/verb_ask = "asks"
+	var/verb_sing = "sings"
 	var/verb_exclaim = "exclaims"
 	var/verb_yell = "yells"
 	var/speech_span
@@ -145,8 +146,9 @@
 
 ///allows this movable to hear and adds itself to the important_recursive_contents list of itself and every movable loc its in
 /atom/movable/proc/become_hearing_sensitive(trait_source = TRAIT_GENERIC)
+	var/already_hearing_sensitive = HAS_TRAIT(src, TRAIT_HEARING_SENSITIVE)
 	ADD_TRAIT(src, TRAIT_HEARING_SENSITIVE, trait_source)
-	if(!HAS_TRAIT(src, TRAIT_HEARING_SENSITIVE))
+	if(already_hearing_sensitive || !HAS_TRAIT(src, TRAIT_HEARING_SENSITIVE))
 		return
 
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
@@ -380,9 +382,9 @@
 	if(pulling)
 		if(pulling != src)
 			pulling.set_pulledby(null)
-			var/mob/living/ex_pulled = pulling
+			var/atom/movable/old_pulling = pulling
 			pulling = null
-			SEND_SIGNAL(ex_pulled, COMSIG_ATOM_NO_LONGER_PULLED, src)
+			SEND_SIGNAL(old_pulling, COMSIG_ATOM_NO_LONGER_PULLED, src)
 	setGrabState(GRAB_PASSIVE)
 
 /atom/movable/proc/Move_Pulled(atom/A)
@@ -446,14 +448,14 @@
 // Here's where we rewrite how byond handles movement except slightly different
 // To be removed on step_ conversion
 // All this work to prevent a second bump
-/atom/movable/Move(atom/newloc, direct=0, glide_size_override = 0)
+/atom/movable/Move(atom/newloc, direct=0, glide_size_override = 0, update_dir = TRUE)
 	. = FALSE
 	if(!newloc || newloc == loc)
 		return
 
 	if(!direct)
 		direct = get_dir(src, newloc)
-	if(!(atom_flags & NO_DIR_CHANGE) && !throwing)
+	if(!(atom_flags & NO_DIR_CHANGE_ON_MOVE) && !throwing && update_dir)
 		setDir(direct)
 
 	if(!loc.Exit(src, newloc))
@@ -495,7 +497,7 @@
 
 ////////////////////////////////////////
 
-/atom/movable/Move(atom/newloc, direct, glide_size_override = 0)
+/atom/movable/Move(atom/newloc, direct, glide_size_override = 0, update_dir = TRUE)
 	var/atom/movable/pullee = pulling
 	var/turf/T = loc
 	if(!moving_from_pull)
@@ -587,7 +589,12 @@
 			//puller and pullee more than one tile away or in diagonal position
 			if(get_dist(src, pulling) > 1 || (moving_diagonally != SECOND_DIAG_STEP && ((pull_dir - 1) & pull_dir)))
 				pulling.moving_from_pull = src
-				pulling.Move(T, get_dir(pulling, T), glide_size) //the pullee tries to reach our previous position
+				var/pulling_update_dir = TRUE
+				for(var/obj/item/grabbing/G in pulling.grabbedby) // only chokeholds prevent turning
+					if(G.chokehold)
+						pulling_update_dir = FALSE
+						break
+				pulling.Move(T, get_dir(pulling, T), glide_size, pulling_update_dir) //the pullee tries to reach our previous position
 				pulling.moving_from_pull = null
 			check_pulling()
 
@@ -597,7 +604,7 @@
 		set_glide_size(glide_size_override)
 
 	last_move = direct
-	if(!(atom_flags & NO_DIR_CHANGE) && !throwing)
+	if(!(atom_flags & NO_DIR_CHANGE_ON_MOVE) && !throwing && update_dir)
 		setDir(direction_to_move)
 	if(. && has_buckled_mobs() && !handle_buckled_mob_movement(loc,direct, glide_size_override)) //movement failed due to buckled mob(s)
 		return FALSE
@@ -677,7 +684,7 @@
 	if(spatial_grid_key)
 		SSspatial_grid.force_remove_from_grid(src)
 
-	LAZYCLEARLIST(client_mobs_in_contents)
+	LAZYNULL(client_mobs_in_contents)
 
 	. = ..()
 
@@ -686,7 +693,10 @@
 
 	moveToNullspace()
 
-	LAZYCLEARLIST(important_recursive_contents)
+	//This absolutely must be after moveToNullspace()
+	//We rely on Entered and Exited to manage this list, and the copy of this list that is on any /atom/movable "Containers"
+	//If we clear this before the nullspace move, a ref to this object will be hung in any of its movable containers
+	LAZYNULL(important_recursive_contents)
 
 	vis_locs = null
 
@@ -737,7 +747,7 @@
 	SEND_SIGNAL(src, COMSIG_MOVABLE_BUMP, A)
 	. = ..()
 	if(!QDELETED(throwing))
-		throwing.hit_atom(A)
+		throwing.finalize(hit = TRUE, target = A)
 		. = TRUE
 		if(QDELETED(A))
 			return
@@ -866,12 +876,12 @@
 		step(src, AM.dir)
 	..()
 
-/atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin = FALSE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG)
+/atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin = FALSE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	if((force < (move_resist * MOVE_FORCE_THROW_RATIO)) || (move_resist == INFINITY))
 		return
-	return throw_at(target, range, speed, thrower, spin, diagonals_first, callback, force)
+	return throw_at(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle = gentle)
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = FALSE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, extra = FALSE) //If this returns FALSE then callback will not be called.
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = FALSE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE) //If this returns FALSE then callback will not be called.
 	. = FALSE
 
 	if(QDELETED(src))
@@ -918,7 +928,7 @@
 	else
 		target_zone = thrower.zone_selected
 
-	var/datum/thrownthing/TT = new(src, target, get_turf(target), get_dir(src, target), range, speed, thrower, diagonals_first, force, callback, thrower, target_zone)
+	var/datum/thrownthing/TT = new(src, target, get_dir(src, target), range, speed, thrower, diagonals_first, force, gentle, callback, target_zone)
 
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
@@ -952,7 +962,6 @@
 			var/turf/above = get_step_multiz(curloc, UP)
 			if(istype(above, /turf/open/transparent/openspace))
 				forceMove(above)
-	spin = FALSE
 	if(spin)
 		SpinAnimation(5, 1)
 
@@ -1039,13 +1048,14 @@
 GLOBAL_VAR_INIT(pixel_diff, 12)
 GLOBAL_VAR_INIT(pixel_diff_time, 1)
 
-/atom/movable/proc/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect, item_animation_override = null, datum/intent/used_intent)
-	if(used_item)
+/atom/movable/proc/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect, item_animation_override = null, datum/intent/used_intent, atom_bounce)
+	if(!no_effect && (visual_effect_icon || used_item))
 		var/animation_type = item_animation_override || used_intent?.get_attack_animation_type()
 		do_item_attack_animation(attacked_atom, visual_effect_icon, used_item, animation_type = animation_type)
 
-	if(attacked_atom == src)
+	if(!atom_bounce || attacked_atom == src)
 		return //don't do an animation if attacking self
+
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
 	var/turn_dir = 1
@@ -1079,12 +1089,13 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 		// The icon should not rotate.
 		attack_image.appearance_flags = APPEARANCE_UI
 		var/atom/movable/flick_visual/attack = attacked_atom.flick_overlay_view(attack_image, 1 SECONDS)
+		attack.dir = get_dir(src, attacked_atom)
 		var/matrix/copy_transform = new(transform)
 		animate(attack, alpha = 175, transform = copy_transform.Scale(0.75), time = 0.3 SECONDS)
 		animate(time = 0.1 SECONDS)
 		animate(alpha = 0, time = 0.3 SECONDS, easing = BACK_EASING|EASE_OUT)
 
-	if (isnull(used_item))
+	if (!used_item)
 		return
 
 	var/image/attack_image = image(icon = used_item, icon_state = used_item.icon_state)
@@ -1412,38 +1423,6 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 			if(. >= GRAB_NECK)
 				REMOVE_TRAIT(pulling, TRAIT_IMMOBILIZED, CHOKEHOLD_TRAIT)
 				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
-
-/obj/item/proc/do_pickup_animation(atom/target)
-	set waitfor = FALSE
-	if(!istype(loc, /turf))
-		return
-	var/image/I = image(icon = src, loc = loc, layer = layer + 0.1)
-	I.plane = GAME_PLANE
-	I.transform *= 0.75
-	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
-	var/turf/T = get_turf(src)
-	var/direction
-	var/to_x = 0
-	var/to_y = 0
-
-	if(!QDELETED(T) && !QDELETED(target))
-		direction = get_dir(T, target)
-	if(direction & NORTH)
-		to_y = 32
-	else if(direction & SOUTH)
-		to_y = -32
-	if(direction & EAST)
-		to_x = 32
-	else if(direction & WEST)
-		to_x = -32
-	if(!direction)
-		to_y = 16
-	flick_overlay(I, GLOB.clients, 6)
-	var/matrix/M = new
-	M.Turn(pick(-30, 30))
-	animate(I, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 3, transform = M, easing = CUBIC_EASING)
-	sleep(1)
-	animate(I, alpha = 0, transform = matrix(), time = 1)
 
 /**
  * meant for movement with zero side effects. only use for objects that are supposed to move "invisibly" (like eye mobs or ghosts)

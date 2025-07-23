@@ -6,18 +6,22 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_OBJ
 	var/carpet_type = /obj/item/natural/carpet_fibers
 
-/obj/structure/carpet/attack_hand(mob/user)
+/obj/structure/carpet/MouseDrop(atom/over_object, src_location, over_location, src_control, over_control, params)
 	. = ..()
-	if(!istype(user.used_intent, /datum/intent/unarmed/grab))
+	var/mob/living/user = usr
+	if(!istype(user) || !(user.mobility_flags & MOBILITY_PICKUP))
 		return
 
-	user.visible_message(span_notice("[user] starts to roll up [src]."), span_notice("You start to roll up [src]."))
-	if(!do_after(user, 3 SECONDS, src))
-		return
+	if(over_object == user && Adjacent(user))
+		user.visible_message(span_notice("[user] starts to roll up [src]."), span_notice("You start to roll up [src]."))
+		if(!do_after(user, 3 SECONDS, src))
+			return
 
-	var/obj/item/natural/carpet_fibers = new carpet_type(get_turf(src))
-	qdel(src)
-	user.put_in_active_hand(carpet_fibers)
+		var/turf/old_turf = get_turf(src)
+		var/obj/item/natural/carpet_fibers = new carpet_type(get_turf(src))
+		qdel(src)
+		QUEUE_SMOOTH_NEIGHBORS(old_turf)
+		user.put_in_active_hand(carpet_fibers)
 
 /obj/structure/carpet/blue
 	icon = 'icons/obj/smooth_structures/carpet_blue.dmi'
@@ -199,3 +203,8 @@
 	name = "fur pelt"
 	desc = "Pelt of a young animal, made into a mat."
 	icon_state = "fur_alt"
+
+/obj/structure/giantfur/smaller
+	name = "fur pelt"
+	desc = "Pelt of some foreign creachur."
+	icon_state = "fur_alt2"

@@ -3,6 +3,7 @@
 	desc = "Make someone a noble, or strip them of their nobility."
 	button_icon_state = "recruit_titlegrant"
 
+	spell_type = NONE
 	cooldown_time = 4 MINUTES
 
 	target_radius = 3

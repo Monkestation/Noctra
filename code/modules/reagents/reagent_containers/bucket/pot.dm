@@ -22,6 +22,11 @@
 /obj/item/reagent_containers/glass/bucket/pot/copper
 	icon_state = "pote_copper"
 
+/obj/item/reagent_containers/glass/bucket/pot/stone
+	icon_state = "pote_stone"
+
+//If you are adding new variants, be sure to add respective reagent filling sprites in icons/obj/reagentfillings.dmi as they do not inherit the base.
+
 /obj/item/reagent_containers/glass/bucket/pot/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/glass/bowl))
 		to_chat(user, "<span class='notice'>Filling the bowl...</span>")
