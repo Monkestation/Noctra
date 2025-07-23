@@ -131,8 +131,8 @@
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	START_PROCESSING(SSfastprocess, src)
 
-/// Callback proc for when the cooldown of the spell would naturally end may not actually end at this time,
-/// Or may have already ended.
+/// Callback proc for when the cooldown of the spell would naturally end,
+/// may not actually end at this time or may have already ended.
 /datum/action/cooldown/proc/CooldownEnded()
 	if(QDELETED(src) || QDELETED(owner))
 		return
