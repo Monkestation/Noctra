@@ -12,7 +12,7 @@
 /datum/action/cooldown/spell/undirected/list_target/grant_title/get_list_targets(atom/center, target_radius)
 	var/list/things = list()
 	if(target_radius)
-		for(var/mob/living/carbon/human/H in view(target_radius, center))
+		for(var/mob/living/carbon/human/H in oview(target_radius, center))
 			if(QDELETED(H))
 				return FALSE
 			if(!H.mind || H.stat != CONSCIOUS)
