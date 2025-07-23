@@ -202,6 +202,15 @@
 	SPEC_ID_DWARF,\
 )
 
+#define RACES_PLAYER_COURT_PHYSICIAN list(\
+	SPEC_ID_HUMEN,\
+	SPEC_ID_DWARF,\
+	SPEC_ID_AASIMAR,\
+	SPEC_ID_ELF,\
+	SPEC_ID_HALF_ELF,\
+	SPEC_ID_MEDICATOR,\
+)
+
 /// Foreigner Nobility Species - No Tiefling (you know why) or hollow-kin
 #define RACES_PLAYER_FOREIGNNOBLE list(\
 	SPEC_ID_HUMEN,\
