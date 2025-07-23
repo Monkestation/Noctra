@@ -16,7 +16,7 @@
 
 /datum/objective/inhumen_scorn/proc/on_spit(datum/source, mob/living/carbon/human/target)
 	SIGNAL_HANDLER
-	if(completed || !istype(target) || target.stat == DEAD || (target.dna?.species.name in RACES_PLAYER_NONHERETICAL))
+	if(completed || !istype(target) || target.stat == DEAD || (target.dna?.species.id in RACES_PLAYER_NONHERETICAL))
 		return
 
 	spits_done++

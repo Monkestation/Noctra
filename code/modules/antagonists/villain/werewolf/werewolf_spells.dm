@@ -4,7 +4,7 @@
 	button_icon_state = "howl"
 	has_visual_effects = FALSE
 	antimagic_flags = NONE
-	ignore_cockblock = TRUE
+	spell_flags = SPELL_IGNORE_SPELLBLOCK
 
 	charge_required = FALSE
 	cooldown_time = 1 MINUTES
@@ -53,7 +53,7 @@
 	button_icon_state = "claws"
 	has_visual_effects = FALSE
 	antimagic_flags = NONE
-	ignore_cockblock = TRUE
+	spell_flags = SPELL_IGNORE_SPELLBLOCK
 
 	charge_required = FALSE
 	cooldown_time = 5 SECONDS

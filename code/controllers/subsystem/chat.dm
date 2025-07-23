@@ -9,8 +9,7 @@ SUBSYSTEM_DEF(chat)
 
 
 /datum/controller/subsystem/chat/fire()
-	for(var/i in payload)
-		var/client/C = i
+	for(var/client/C as anything in payload)
 		C << output(payload[C], "browseroutput:output")
 		payload -= C
 

@@ -6,7 +6,7 @@
  * @return TRUE if parry successful, FALSE otherwise
  */
 /mob/living/proc/attempt_parry(datum/intent/intenty, mob/living/user, prob2defend)
-	if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS) || (pulledby == user && pulledby.grab_state >= GRAB_AGGRESSIVE) || (pulling == user && grab_state >= GRAB_AGGRESSIVE) ||  (world.time < last_parry + setparrytime && !istype(rmb_intent, /datum/rmb_intent/riposte)) || has_status_effect(/datum/status_effect/debuff/feinted) || has_status_effect(/datum/status_effect/debuff/riposted) || (intenty && !intenty.canparry))
+	if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS) || (pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE) || (pulling && grab_state >= GRAB_AGGRESSIVE) ||  (world.time < last_parry + setparrytime && !istype(rmb_intent, /datum/rmb_intent/riposte)) || has_status_effect(/datum/status_effect/debuff/feinted) || has_status_effect(/datum/status_effect/debuff/riposted) || (intenty && !intenty.canparry))
 		return FALSE
 
 	last_parry = world.time
@@ -251,8 +251,11 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 
+		if(H.stamina + parrydrain >= H.maximum_stamina)
+			to_chat(src, span_warning("I'm too tired to parry!"))
+			return FALSE
 		if(!H.adjust_stamina(parrydrain))
-			to_chat(src, "<span class='warning'>I'm too tired to parry!</span>")
+			to_chat(src, span_warning("I'm too tired to parry!"))
 			return FALSE
 		if(W)
 			playsound(get_turf(src), pick(W.parrysound), 100, FALSE)

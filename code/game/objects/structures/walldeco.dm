@@ -331,10 +331,24 @@
 /obj/effect/decal/shadow_floor/corner
 	icon_state = "shad_floorcorn"
 
+/obj/structure/fluff/walldeco/gear
+	icon_state = "gear_norm"
+
+/obj/structure/fluff/walldeco/gear/small
+	icon_state = "gear_small"
+
 /obj/structure/fluff/walldeco/bath/wallpipes
 	icon_state = "wallpipe"
 	pixel_x = 0
 	pixel_y = 32
+
+/obj/structure/fluff/walldeco/bath/wallpipes/innie
+	icon_state = "wallpipe_innie"
+	pixel_y = 0
+
+/obj/structure/fluff/walldeco/bath/wallpipes/outie
+	icon_state = "wallpipe_outie"
+	pixel_y = 0
 
 /obj/structure/fluff/walldeco/bath/random
 	icon_state = "bath"

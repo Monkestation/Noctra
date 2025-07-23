@@ -2,7 +2,7 @@
 /client/verb/wiki(query as text)
 	set name = "Wiki"
 	set desc = ""
-	set category = "Memory"
+	set category = "OOC"
 	var/wikiurl = CONFIG_GET(string/wikiurl)
 	if(wikiurl)
 		if(query)
@@ -30,7 +30,7 @@
 /client/verb/rules()
 	set name = "Rules"
 	set desc = ""
-	set category = "Memory"
+	set category = "OOC"
 	var/rulesurl = CONFIG_GET(string/rulesurl)
 	if(rulesurl)
 		if(alert("This will open the rules in your browser. Are you sure?",,"Yes","No")!="Yes")
@@ -43,7 +43,7 @@
 /client/verb/github()
 	set name = "Github"
 	set desc = ""
-	set category = "Memory"
+	set category = "OOC"
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(githuburl)
 		if(browser_alert(src, "This will open the Github repository in your browser. Are you sure?", null, DEFAULT_INPUT_CHOICES) != CHOICE_YES)

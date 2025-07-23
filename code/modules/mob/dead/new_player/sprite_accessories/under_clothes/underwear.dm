@@ -12,13 +12,13 @@
 	name = "Undiese"
 	icon_state = "male_elf"
 	gender = MALE
-	specuse = list("elf")
+	specuse = list(SPEC_ID_ELF)
 
 /datum/sprite_accessory/underwear/regmd
 	name = "Undiesd"
 	icon_state = "male_dwarf"
 	gender = MALE
-	specuse = list("dwarf")
+	specuse = list(SPEC_ID_DWARF)
 
 /datum/sprite_accessory/underwear/female_bikini
 	name = "Femundies"
@@ -30,7 +30,7 @@
 	name = "FemUndiesD"
 	icon_state = "female_dwarf"
 	gender = FEMALE
-	specuse = list("dwarf")
+	specuse = list(SPEC_ID_DWARF)
 
 /datum/sprite_accessory/underwear/female_leotard
 	name = "Femleotard"

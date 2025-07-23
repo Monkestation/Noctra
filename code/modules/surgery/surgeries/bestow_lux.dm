@@ -50,7 +50,8 @@
 	target.Jitter(100)
 	target.update_body()
 	qdel(tool)
-	target.remove_status_effect(/datum/status_effect/buff/lux_drained)
+	target.remove_status_effect(/datum/status_effect/debuff/lux_drained)
+	target.remove_status_effect(/datum/status_effect/debuff/flaw_lux_taken)
 	return TRUE
 
 /datum/surgery_step/bestow_lux/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent, success_prob)

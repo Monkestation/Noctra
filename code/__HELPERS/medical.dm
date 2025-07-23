@@ -4,6 +4,10 @@
 			return "right hand"
 		if(BODY_ZONE_PRECISE_L_HAND)
 			return "left hand"
+		if(BODY_ZONE_CHEST)
+			return "chest"
+		if(BODY_ZONE_HEAD)
+			return "head"
 		if(BODY_ZONE_L_ARM)
 			return "left arm"
 		if(BODY_ZONE_R_ARM)

@@ -30,6 +30,17 @@
 	pixel_x = -16
 	density = TRUE
 
+/obj/machinery/light/fueledstreet/orange
+	icon_state = "o_slamp1"
+	bulb_colour = "#e9a387"
+	base_state = "o_slamp"
+	state_suffix = "1"
+
+/obj/machinery/light/fueledstreet/orange/wall
+	icon_state = "o_wlamp1_nozap"
+	base_state = "o_wlamp"
+	state_suffix = "_nozap"
+
 /obj/machinery/light/fueledstreet/proc/lights_out(permanent)
 	on = FALSE
 	update()

@@ -76,6 +76,21 @@
 	damage_deflection = 10
 	hardness = 2
 
+/turf/closed/wall/mineral/decorstone/window
+	name = "stone murder hole"
+	desc = "A wall of decorated stone with convenient small indents on it, perfect to let loose arrows against invaders."
+	icon = MAP_SWITCH('icons/turf/smooth/walls/stone_deco.dmi', 'icons/turf/window.dmi')
+	icon_state = "stone_deco"
+	opacity = FALSE
+	max_integrity = 1800
+	explosion_block = 2
+	pass_flags_self = PASSTABLE|PASSGRILLE
+
+/turf/closed/wall/mineral/decorstone/window/Initialize()
+	. = ..()
+	var/mutable_appearance/M = mutable_appearance('icons/turf/window.dmi', "stonehole", layer = ABOVE_NORMAL_TURF_LAYER)
+	add_overlay(M)
+
 /turf/closed/wall/mineral/decorstone/moss
 	icon = 'icons/turf/smooth/walls/stone_d_moss.dmi'
 
@@ -159,7 +174,7 @@
 	hardness = 7
 
 	burn_power = 200
-	spread_chance = 0.8
+	spread_chance = 1.8
 
 /turf/closed/wall/mineral/wood/window
 	name = "wooden window"
@@ -215,7 +230,7 @@
 	explosion_block = 4
 	hardness = 7
 	burn_power = 200
-	spread_chance = 0.8
+	spread_chance = 1.8
 
 /turf/closed/wall/mineral/wooddark/OnCrafted(dirin, mob/user)
 	if(dirin == NORTH || dirin == SOUTH)
@@ -266,7 +281,7 @@
 	hardness = 7
 
 	burn_power = 200
-	spread_chance = 0.4
+	spread_chance = 1.4
 
 
 /turf/closed/wall/mineral/roofwall/center
@@ -299,7 +314,7 @@
 	hardness = 7
 
 	burn_power = 200
-	spread_chance = 0.8
+	spread_chance = 1.8
 
 /turf/closed/wall/mineral/decowood/Initialize()
 	. = ..()

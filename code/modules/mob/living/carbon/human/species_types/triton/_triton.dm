@@ -3,7 +3,7 @@
 
 /datum/species/triton
 	name = "Triton"
-	id = "triton"
+	id = SPEC_ID_TRITON
 	changesource_flags = WABBAJACK
 
 	desc = "The Children of Abyssor, also known as Tritons or their colloquial name, \"Deep Folk,\" \
