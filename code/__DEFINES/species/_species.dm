@@ -44,9 +44,13 @@
 	SPEC_ID_HUMAN_SPACE,\
 	)
 
-/// Species where females get underwear, no underwear for kobold, rakshari and triton, dwarves handled seperately
+/// Species where females get underwear, no underwear for kobold, rakshari, medicator and triton, dwarves handled seperately
 #define RACES_UNDERWEAR_FEMALE list(\
 	SPEC_ID_HUMEN,\
+	SPEC_ID_ELF,\
+	SPEC_ID_HALF_ELF,\
+	SPEC_ID_DROW,\
+	SPEC_ID_HALF_DROW,\
 	SPEC_ID_HOLLOWKIN,\
 	SPEC_ID_HARPY,\
 	SPEC_ID_TIEFLING,\
@@ -54,9 +58,8 @@
 	SPEC_ID_HALF_ORC,\
 	SPEC_ID_ORC,\
 	SPEC_ID_ZIZOMBIE,\
-	SPEC_ID_ELF,\
 	SPEC_ID_HUMAN_SPACE,\
-	)
+)
 
 /// Species where males get underwear, identical to above, elves handled seperately
 #define RACES_UNDERWEAR_MALE list(\
@@ -66,10 +69,12 @@
 	SPEC_ID_TIEFLING,\
 	SPEC_ID_AASIMAR,\
 	SPEC_ID_HALF_ORC,\
+	SPEC_ID_HALF_ELF,\
+	SPEC_ID_HALF_DROW,\
 	SPEC_ID_ORC,\
 	SPEC_ID_ZIZOMBIE,\
 	SPEC_ID_HUMAN_SPACE,\
-	)
+)
 
 // ============ USING NAME
 /// All playable species from character selection menu.
@@ -101,7 +106,6 @@
 )
 
 /// Species who are nonheretical to the church. Excluded species typically have an inhumen god associated, like Zizo. Used for church/faith roles.
-
 #define RACES_PLAYER_NONHERETICAL list(\
 	SPEC_ID_HUMEN,\
 	SPEC_ID_DWARF,\
@@ -192,6 +196,7 @@
 	SPEC_ID_HARPY,\
 	SPEC_ID_RAKSHARI,\
 	SPEC_ID_TRITON,\
+	SPEC_ID_MEDICATOR,\
 )
 
 /// Vanderlin royalty
@@ -211,7 +216,7 @@
 	SPEC_ID_MEDICATOR,\
 )
 
-/// Foreigner Nobility Species - No Tiefling (you know why) or hollow-kin
+/// Foreigner Nobility Species - No Tiefling (you know why) or hollow-kin or medicators (too young to have nobles mayhaps)
 #define RACES_PLAYER_FOREIGNNOBLE list(\
 	SPEC_ID_HUMEN,\
 	SPEC_ID_DWARF,\
