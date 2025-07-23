@@ -3,7 +3,7 @@
 	desc = "The peasants friend, when filled with boiling water it will turn the driest oats to filling oatmeal."
 	icon = 'icons/roguetown/items/cooking.dmi'
 	icon_state = "pote"
-	fill_icon_state = null
+	fill_icon_state = "pote"
 	force = 10
 	drop_sound = 'sound/foley/dropsound/shovel_drop.ogg'
 	var/processing_amount = 0 ///we use this to "reserve" reagents
