@@ -89,7 +89,10 @@
 	resistance_flags = FIRE_PROOF
 	smeltresult = /obj/item/ingot/silver
 	last_used = 0
-	is_silver = TRUE
+
+/obj/item/weapon/whip/silver/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 //................ Caning Stick.................//
 /obj/item/weapon/whip/cane
