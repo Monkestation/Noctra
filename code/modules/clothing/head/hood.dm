@@ -9,17 +9,21 @@
 	connectedc = null
 	return ..()
 
-/obj/item/clothing/head/hooded/attack_right(mob/user)
+/obj/item/clothing/head/hooded/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(connectedc)
 		connectedc.ToggleHood()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/head/hooded/dropped()
-	..()
+	. = ..()
 	if(connectedc)
 		connectedc.RemoveHood()
 
 /obj/item/clothing/head/hooded/equipped(mob/user, slot)
-	..()
+	. = ..()
 	if(!(slot & ITEM_SLOT_HEAD))
 		if(connectedc)
 			connectedc.RemoveHood()

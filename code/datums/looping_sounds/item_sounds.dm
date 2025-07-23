@@ -31,12 +31,21 @@
 	vary = TRUE
 	sound_group = /datum/sound_group/fire_loop
 
-/datum/looping_sound/boilloop
-	mid_sounds = list('sound/misc/boiling.ogg')
-	mid_length = 98
-	volume = 35
-	extra_range = 0
+/datum/looping_sound/boiling
+	mid_sounds = list('sound/foley/bubb (1).ogg','sound/foley/bubb (2).ogg','sound/foley/bubb (3).ogg','sound/foley/bubb (4).ogg','sound/foley/bubb (5).ogg')
+	mid_length = 3 SECONDS
+	volume = 15
+	falloff_exponent = SOUND_FALLOFF_EXPONENT / 2
 	vary = TRUE
+	extra_range = SHORT_RANGE_SOUND_EXTRARANGE
+
+/datum/looping_sound/frying
+	mid_sounds = 'sound/misc/frying.ogg'
+	mid_length = 6 SECONDS
+	volume = 25
+	falloff_exponent = SOUND_FALLOFF_EXPONENT / 2
+	vary = TRUE
+	extra_range = SHORT_RANGE_SOUND_EXTRARANGE
 
 /datum/looping_sound/streetlamp1
 	mid_sounds = list('sound/misc/loops/StLight1.ogg')

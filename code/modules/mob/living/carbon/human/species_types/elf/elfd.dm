@@ -11,7 +11,7 @@
 
 /datum/species/elf/dark
 	name = "Dark Elf"
-	id = "elf"
+	id = SPEC_ID_DROW
 	desc = "Zizo's conquered. \
 	\n\n\
 	These elves hail from an underground expanse of newly-reborn empires. \
@@ -23,6 +23,7 @@
 	To most in Psydonia, a dark elf is nothing more than a servant of Zizo waiting to betray for power, \
 	leading most dark elves to remain within their safe underground strongholds. Those who breach the surface \
 	rarely receive fair treatment. \
+	Dark elves over 500 years old may remember their Ravoxian empire of old, yet few remain who were not killed or converted. \
 	\n\n\
 	THIS IS A DISCRIMINATED SPECIES. EXPECT A MORE DIFFICULT EXPERIENCE. <B>NOBLES EVEN MORE SO.</B> PLAY AT YOUR OWN RISK."
 

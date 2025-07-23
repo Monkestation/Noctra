@@ -3,14 +3,20 @@
 	desc = "A wild "
 	icon_state = "tea2"
 	icon = 'icons/roguetown/misc/crops.dmi'
+	abstract_type = /obj/structure/wild_plant
 	var/datum/plant_def/plant_type
 	var/spread_chance = 75
 
-/obj/structure/wild_plant/Initialize(mapload, ...)
+/obj/structure/wild_plant/Initialize(mapload, incoming_type, incoming_spread)
 	. = ..()
-	if(!plant_type || !istype(plant_type))
-		return
+	if(incoming_type)
+		plant_type = incoming_type
+	if(!plant_type)
+		plant_type = /datum/plant_def/cabbage
 	plant_type = new plant_type
+
+	if(incoming_spread)
+		spread_chance = incoming_spread
 	if(prob(spread_chance))
 		try_spread()
 
@@ -45,6 +51,7 @@
 		if(is_anchored_dense_turf(turf))
 			continue
 		new /obj/structure/wild_plant(turf, plant_type.type, spread_chance - 20)
+
 		if(!prob(spread_chance))
 			return
 
@@ -77,7 +84,7 @@
 
 	record_featured_stat(FEATURED_STATS_FARMERS, user)
 	record_featured_object_stat(FEATURED_STATS_CROPS, plant_type.name)
-	GLOB.vanderlin_round_stats[STATS_PLANTS_HARVESTED]++
+	record_round_statistic(STATS_PLANTS_HARVESTED)
 	to_chat(user, span_notice(feedback))
 	yield_produce(modifier)
 

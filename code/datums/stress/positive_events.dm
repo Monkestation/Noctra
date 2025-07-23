@@ -39,13 +39,13 @@
 	desc = span_green("ZIZOZIZOZIZO")
 
 /datum/stressevent/joke
-	timer = 30 MINUTES
-	stressadd = -5
+	timer = 1 MINUTES
+	stressadd = -2
 	desc = span_green("I heard a good joke.")
 
 /datum/stressevent/tragedy
-	timer = 30 MINUTES
-	stressadd = -5
+	timer = 1 MINUTES
+	stressadd = -2
 	desc = span_green("Life isn't so bad after all.")
 
 /datum/stressevent/blessed
@@ -159,6 +159,12 @@
 	stressadd = -1
 	desc = span_blue("Relaxing.")
 	timer = 15 SECONDS
+
+/datum/stressevent/bathwater/on_apply(mob/living/user)
+	. = ..()
+	if(user.client)
+		record_round_statistic(STATS_BATHS_TAKEN)
+		SEND_SIGNAL(user, COMSIG_BATH_TAKEN)
 
 /datum/stressevent/ozium
 	stressadd = -99

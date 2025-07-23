@@ -17,7 +17,7 @@
 	shirt = /obj/item/clothing/shirt/undershirt/black
 	backl = /obj/item/storage/backpack/satchel
 	belt = /obj/item/storage/belt/leather/rope
-	backpack_contents = list(/obj/item/weapon/pick = 1, /obj/item/weapon/knife/hunting = 1, /obj/item/lockpickring/mundane)
+	backpack_contents = list(/obj/item/weapon/pick = 1, /obj/item/weapon/knife/dagger = 1, /obj/item/lockpickring/mundane)
 	gloves = /obj/item/clothing/gloves/fingerless
 	cloak = /obj/item/clothing/cloak/raincloak/mortus
 	armor = /obj/item/clothing/armor/leather

@@ -4,6 +4,8 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 #define VITAE_LEVEL_HUNGRY 100
 #define VITAE_LEVEL_FED 200
 
+// Originally a a curse of hubris from Psydon Himself, vampires are
+// twisted by hellish influence from Kain's time in Subterra into bloodthirsty monsters who can create spread their curse.
 /datum/antagonist/vampire
 	name = "Vampire"
 	roundend_category = "Vampires"
@@ -71,22 +73,18 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		vampdude.adv_hugboxing_cancel()
 
 	owner.current.cmode_music = 'sound/music/cmode/antag/CombatThrall.ogg'
+
 	owner.current.adjust_skillrank(/datum/skill/magic/blood, 2, TRUE)
-	owner.current.AddSpell(new /obj/effect/proc_holder/spell/targeted/transfix)
+	owner.current.add_spell(/datum/action/cooldown/spell/undirected/transfix, source = src)
 
 	vamp_look()
 	. = ..()
 	equip()
 	after_gain()
 
-/datum/antagonist/vampire/lord/on_gain()
+/datum/antagonist/vampire/on_removal()
 	. = ..()
-	owner.special_role = span_redtext("[name]")
-	owner.current.mana_pool.ethereal_recharge_rate += 0.2
-
-/datum/antagonist/vampire/lord/on_removal()
-	owner.current.mana_pool.ethereal_recharge_rate -= 0.2
-	return ..()
+	owner.current.remove_spells(source = src)
 
 /datum/antagonist/vampire/proc/after_gain()
 	owner.current.verbs |= /mob/living/carbon/human/proc/vamp_regenerate

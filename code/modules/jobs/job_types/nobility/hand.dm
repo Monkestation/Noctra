@@ -14,18 +14,12 @@
 	total_positions = 1
 	spawn_positions = 1
 	spells = list(
-		/obj/effect/proc_holder/spell/self/grant_title,
+		/datum/action/cooldown/spell/undirected/list_target/grant_title,
 	)
 	min_pq = 10
 	bypass_lastclass = TRUE
 
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Elf",
-		"Half-Elf",
-		"Dwarf"
-	)
+	allowed_races = RACES_PLAYER_ROYALTY
 
 	outfit = /datum/outfit/job/hand
 	advclass_cat_rolls = list(CTAG_HAND = 20)

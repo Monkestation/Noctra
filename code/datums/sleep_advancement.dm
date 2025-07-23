@@ -57,6 +57,8 @@
 			return SLEEP_EXP_LEGENDARY
 
 /datum/sleep_adv/proc/enough_sleep_xp_to_advance(skill_type, level_amount)
+	if(level_amount <= 0)
+		return FALSE
 	var/skill_level = mind.current.get_skill_level(skill_type)
 	if(skill_level == SKILL_LEVEL_LEGENDARY)
 		return FALSE
@@ -304,7 +306,7 @@
 	sleep_adv_points -= get_skill_cost(skill_type)
 	adjust_sleep_xp(skill_type, -get_requried_sleep_xp_for_skill(skill_type, 1))
 	mind.current.adjust_skillrank(skill_type, 1, FALSE)
-	GLOB.vanderlin_round_stats[STATS_SKILLS_DREAMED]++
+	record_round_statistic(STATS_SKILLS_DREAMED)
 
 /datum/sleep_adv/proc/grant_inspiration_xp(skill_amt)
 	var/list/viable_skills = list()

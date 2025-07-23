@@ -8,6 +8,7 @@
 	opacity = TRUE
 	layer = OPEN_DOOR_LAYER
 	resistance_flags = FLAMMABLE
+	pass_flags_self = PASSDOORS|PASSSTRUCTURE
 	max_integrity = 1000
 	integrity_failure = 0.5
 	armor = list("blunt" = 10, "slash" = 10, "stab" = 10,  "piercing" = 0, "fire" = 0, "acid" = 0)
@@ -57,12 +58,17 @@
 /obj/structure/door/Initialize()
 	. = ..()
 	if(has_bolt && has_viewport)
-		warning("[src] at [AREACOORD(src)] has both a deadbolt and a viewport, these will conflict as they both use attack_right.")
+		warning("[src] at [AREACOORD(src)] has both a deadbolt and a viewport, these will conflict as they both use attack_hand_secondary.")
 	if(has_bolt && lock?.uses_key)
 		warning("[src] at [AREACOORD(src)] has both a deadbolt and a keylock, while this will work it may produce unintended behaviour.")
 	if(isopenturf(loc))
 		RegisterSignal(loc, COMSIG_ATOM_ATTACK_HAND, PROC_REF(redirect_attack)) // redirect the attack to the door
 	set_init_layer()
+
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/door/Destroy()
 	. = ..()
@@ -183,30 +189,31 @@
 		return
 	return ..()
 
-/obj/structure/door/attack_right(mob/user)
-	if(switching_states)
+/obj/structure/door/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
+	if(user.cmode)
+		return SECONDARY_ATTACK_CALL_NORMAL
 	user.changeNext_move(CLICK_CD_FAST)
-	if(!user.get_active_held_item())
-		if(has_bolt)
-			if(obj_broken)
-				to_chat(user, span_warning("The bolt has nothing to latch to!"))
-				return
-			if(get_dir(src, user) == dir)
-				lock?.toggle(user)
-				return
-			to_chat(user, span_notice("I can't reach the bolt from this side."))
-			return
-		if(has_viewport)
-			if(obj_broken)
-				to_chat(user, span_warning("The viewport is broken!"))
-				return
-			if(get_dir(src, user) == dir)
-				viewport_toggle(user)
-				return
-			to_chat(user, span_notice("The viewport does not open from this side."))
-			return
-	return ..()
+	if(has_bolt)
+		if(obj_broken)
+			to_chat(user, span_warning("The bolt has nothing to latch to!"))
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		if(get_dir(src, user) == dir)
+			lock?.toggle(user)
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		to_chat(user, span_notice("I can't reach the bolt from this side."))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(has_viewport)
+		if(obj_broken)
+			to_chat(user, span_warning("The viewport is broken!"))
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		if(get_dir(src, user) == dir)
+			viewport_toggle(user)
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		to_chat(user, span_notice("The viewport does not open from this side."))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/door/attack_ghost(mob/dead/observer/user)	// lets ghosts click on windows to transport across
 	if(!ghostproof)
@@ -253,23 +260,21 @@
 				else
 					addtimer(CALLBACK(src, PROC_REF(Close), FALSE), delay)
 
-/obj/structure/door/CanAStarPass(ID, to_dir, datum/caller)
+/obj/structure/door/CanAStarPass(ID, to_dir, datum/requester)
 	. = ..()
 	if(.) // we can already go through it
 		return TRUE
 	if(!anchored)
 		return FALSE
-	if(HAS_TRAIT(caller, TRAIT_BASHDOORS))
+	if(HAS_TRAIT(requester, TRAIT_BASHDOORS))
 		return TRUE // bash into it!
 	// it's openable
-	return ishuman(caller) && !locked()
+	return ishuman(requester) && !locked()
 
-/obj/structure/door/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /mob/camera))
-		return TRUE
+/obj/structure/door/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover, /obj/effect/beam))
 		return !opacity
-	return !density
 
 /obj/structure/door/setAnchored(anchorvalue) //called in default_unfasten_wrench() chain
 	. = ..()
@@ -348,9 +353,6 @@
 	layer = OPEN_DOOR_LAYER
 	update_appearance(UPDATE_ICON_STATE)
 	switching_states = FALSE
-
-	if(close_delay > 0)
-		addtimer(CALLBACK(src, PROC_REF(Close)), close_delay)
 
 /obj/structure/door/proc/Close(silent = FALSE)
 	if(switching_states || !door_opened)
@@ -538,3 +540,10 @@
 	repair_skill = /datum/skill/craft/masonry
 	smeltresult = null
 	metalizer_result = null
+
+/// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Open up when someone casts knock.
+/obj/structure/door/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock, mob/living/caster)
+	SIGNAL_HANDLER
+
+	INVOKE_ASYNC(src, PROC_REF(unlock))
+	INVOKE_ASYNC(src, PROC_REF(force_open))

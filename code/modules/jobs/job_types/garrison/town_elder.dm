@@ -14,8 +14,7 @@
 	spawn_positions = 1
 	min_pq = 10 // Requires knowledge and good rp for the classes.
 	bypass_lastclass = TRUE
-	spells = list(/obj/effect/proc_holder/spell/self/convertrole/town_militia)
-	allowed_sexes = list(MALE, FEMALE)
+	spells = list(/datum/action/cooldown/spell/undirected/list_target/convert_role/militia)
 	allowed_ages = list(AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 
@@ -78,26 +77,6 @@
 	var/atom/movable/screen/advsetup/GET_IT_OUT = locate() in H.hud_used?.static_inventory
 	qdel(GET_IT_OUT)
 
-/obj/effect/proc_holder/spell/self/convertrole/town_militia
-	name = "Recruit Militia"
-	new_role = "Town Militiaman"
-	overlay_state = "recruit_guard"
-	recruitment_faction = "Garrison"
-	recruitment_message = "Join the Town Militia, %RECRUIT!"
-	accept_message = "I swear fealty to protect the town!"
-	refuse_message = "I refuse."
-
-/datum/job/militia //just used to change the title
-	title = "Town Militiaman"
-	f_title = "Town Militiawoman"
-	flag = GUARDSMAN
-	department_flag = GARRISON
-	faction = FACTION_TOWN
-	total_positions = 0
-	spawn_positions = 0
-	display_order = JDO_CITYWATCHMEN
-
-
 /datum/advclass/town_elder/mayor
 	name = "Mayor"
 
@@ -138,7 +117,7 @@
 	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/music, 5, TRUE)
 
-	H.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
+	H.add_spell(/datum/action/cooldown/spell/undirected/list_target/vicious_mockery)
 
 	H.change_stat(STATKEY_STR, -1)
 	H.change_stat(STATKEY_PER, 2)
@@ -292,7 +271,7 @@
 		if(/datum/patron/divine/noc)
 			neck = /obj/item/clothing/neck/psycross/noc
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
-			var/language = pickweight(list("Dwarvish" = 1, "Elvish" = 1, "Hellspeak" = 1, "Zybantu" = 1, "Orcish" = 1,))
+			var/language = pickweight(list("Dwarvish" = 1, "Elvish" = 1, "Hellspeak" = 1, "Zaladin" = 1, "Orcish" = 1,))
 			switch(language)
 				if("Dwarvish")
 					H.grant_language(/datum/language/dwarvish)
@@ -309,10 +288,10 @@
 					to_chat(H,span_info("\
 					I learned the tongue of the hellspawn.")
 					)
-				if("Zybantu")
-					H.grant_language(/datum/language/zybantine)
+				if("Zaladin")
+					H.grant_language(/datum/language/zalad)
 					to_chat(H,span_info("\
-					I learned the tongue of Zybantu.")
+					I learned the tongue of Zaladin.")
 					)
 				if("Orcish")
 					H.grant_language(/datum/language/orcish)
@@ -432,7 +411,7 @@
 
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_BARDIC_TRAINING, TRAIT_GENERIC)
-	H.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
+	H.add_spell(/datum/action/cooldown/spell/undirected/list_target/vicious_mockery)
 
 
 /datum/advclass/town_elder/dreamwatcher

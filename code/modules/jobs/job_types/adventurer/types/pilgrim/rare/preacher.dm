@@ -3,7 +3,6 @@
 	tutorial = "A devout follower of Psydon, you came to this land with nothing more than \
 	the clothes on your back and the faith in your heart. \n\
 	Sway these nonbelievers to the right path!"
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_PLAYER_GRENZ
 	outfit = /datum/outfit/job/adventurer/preacher
 	category_tags = list(CTAG_PILGRIM)
@@ -22,7 +21,7 @@
 	pants = /obj/item/clothing/pants/tights/black
 	neck = /obj/item/clothing/neck/psycross
 	head = /obj/item/clothing/head/brimmed
-	r_hand = /obj/item/book/psybibble
+	r_hand = /obj/item/book/bibble/psy
 	beltl = /obj/item/handheld_bell
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/misc/reading, 4, TRUE)

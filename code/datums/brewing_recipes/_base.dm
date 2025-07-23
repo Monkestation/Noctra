@@ -19,7 +19,7 @@
 	///amount of brewed creations used when either canning or bottling
 	var/brewed_amount = 1
 	///each bottle or canning gives how this much reagents
-	var/per_brew_amount = 50
+	var/per_brew_amount = 48
 	///helpful hints
 	var/helpful_hints
 	///if we have a secondary name some do if you want to hide the ugly info

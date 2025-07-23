@@ -15,16 +15,13 @@
 	min_pq = -10
 	bypass_lastclass = TRUE
 
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_PLAYER_NONHERETICAL
-	allowed_patrons = list(/datum/patron/divine/necra)
 
 	outfit = /datum/outfit/job/undertaker
 	give_bank_account = TRUE
 	cmode_music = 'sound/music/cmode/church/CombatGravekeeper.ogg'
 
 /datum/outfit/job/undertaker
-	allowed_patrons = list(/datum/patron/divine/necra)
 	job_bitflag = BITFLAG_CHURCH
 
 /datum/outfit/job/undertaker/pre_equip(mob/living/carbon/human/H)
@@ -38,6 +35,10 @@
 	beltl = /obj/item/storage/keyring/gravetender
 	beltr = /obj/item/storage/belt/pouch/coins/poor
 	backr = /obj/item/weapon/shovel
+
+	if(H.patron != /datum/patron/divine/necra)
+		H.set_patron(/datum/patron/divine/necra)
+
 	H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE) // these are basically the acolyte skills with a bit of other stuff
 	H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)

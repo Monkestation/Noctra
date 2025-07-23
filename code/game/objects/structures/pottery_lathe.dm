@@ -60,13 +60,16 @@
 	. = ..()
 	start_spinning_pottery(user)
 
-/obj/structure/pottery_lathe/attack_right(mob/user)
+/obj/structure/pottery_lathe/attack_hand_secondary(mob/user, params)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	var/choice = input(user, "Set the speed of the lathe.", src) as null|num
 	if(!choice)
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	true_rotations = min(abs(choice), max(1, rotations_per_minute))
 	to_chat(user, span_info("You set the speed of [src] to [true_rotations] RPM."))
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/pottery_lathe/proc/start_spinning_pottery(mob/user)
 	update_appearance(UPDATE_OVERLAYS)

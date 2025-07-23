@@ -157,10 +157,10 @@
 
 		new /obj/item/reagent_containers/lux(get_turf(target))
 
-		H.apply_status_effect(/datum/status_effect/buff/lux_drained)
+		H.apply_status_effect(/datum/status_effect/debuff/lux_drained)
 		SEND_SIGNAL(user, COMSIG_LUX_EXTRACTED, target)
 		record_featured_stat(FEATURED_STATS_CRIMINALS, user)
-		GLOB.vanderlin_round_stats[STATS_LUX_HARVESTED]++
+		record_round_statistic(STATS_LUX_HARVESTED)
 
 		H.add_splatter_floor()
 		H.adjustBruteLoss(20)
@@ -314,10 +314,10 @@
 	QDEL_NULL(FUCK)
 	return ..()
 
-/obj/item/gun/ballistic/revolver/grenadelauncher/bow/turbulenta/attack_self(mob/living/user)
+/obj/item/gun/ballistic/revolver/grenadelauncher/bow/turbulenta/attack_self(mob/living/user, params)
 	if(chambered || !HAS_TRAIT(user, TRAIT_CRACKHEAD))
 		return ..()
-	FUCK.attack_self(user)
+	FUCK.attack_self(user, params)
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/turbulenta/dropped(mob/user, silent)
 	if(FUCK.playing)
@@ -339,9 +339,10 @@
 		old_dam = arrow.damage
 		old_pen = arrow.armor_penetration
 		qdel(arrow)
-	arrow = new /obj/projectile/bullet/reusable/arrow/spiced(chambered)
+	arrow = new /obj/projectile/bullet/reusable/arrow/spiced
 	arrow.damage = old_dam || arrow.damage
 	arrow.armor_penetration = old_pen || arrow.armor_penetration
+	chambered.BB = arrow
 
 /obj/projectile/bullet/reusable/arrow/spiced
 	name = "spiced arrow"

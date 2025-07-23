@@ -163,7 +163,7 @@
 		if(BLACKSMITH_LEVEL_LEGENDARY to INFINITY)
 			I.name = "masterwork [I.name]"
 			modifier = 1.3
-			GLOB.vanderlin_round_stats[STATS_MASTERWORKS_FORGED] += createmultiple ? createditem_num + 1 : 1
+			record_round_statistic(STATS_MASTERWORKS_FORGED, createmultiple ? createditem_num + 1 : 1)
 
 	if(!modifier) // Sanity.
 		return
@@ -178,13 +178,16 @@
 	// Apply inherent weapon modifiers
 	if(istype(I, /obj/item/weapon))
 		var/obj/item/weapon/W = I
-		W.force *= modifier
-		W.force_wielded *= modifier
+		var/datum/component/two_handed/twohanded = I.GetComponent(/datum/component/two_handed)
+		if(twohanded)
+			twohanded.modify_base_force(multiplicative_modifier = modifier)
+		else
+			W.force *= modifier
 		W.throwforce *= modifier
 		W.blade_int *= modifier
 		W.max_blade_int *= modifier
-		W.armor_penetration *= modifier
-		W.wdefense *= modifier
+		// W.armor_penetration *= modifier
+		// W.wdefense *= modifier
 		// Make (ONLY) axes (and the Pick-axe) better at woodcutting too
 		if(istype(I, /obj/item/weapon/axe/iron) || istype(I, /obj/item/weapon/pick/paxe))
 			var/obj/item/weapon/A = I
@@ -198,8 +201,8 @@
 		var/obj/item/clothing/C = I
 		C.damage_deflection *= modifier
 		C.integrity_failure /= modifier
-		C.armor = C.armor.multiplymodifyAllRatings(modifier)
-		C.equip_delay_self *= modifier
+		// C.armor = C.armor.multiplymodifyAllRatings(modifier)
+		// C.equip_delay_self *= modifier
 	// If it's a crossbow, up its damage multiplier
 	if(istype(I,/obj/item/gun/ballistic/revolver/grenadelauncher))
 		var/obj/item/gun/ballistic/revolver/grenadelauncher/R = I

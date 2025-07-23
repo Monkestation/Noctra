@@ -19,11 +19,11 @@
 	if(amount > 0)
 		adjustment_verb = "awarded"
 		if(counted)
-			GLOB.vanderlin_round_stats[STATS_TRIUMPHS_AWARDED] += amount
+			record_round_statistic(STATS_TRIUMPHS_AWARDED, amount)
 	else
 		adjustment_verb = "lost"
 		if(counted)
-			GLOB.vanderlin_round_stats[STATS_TRIUMPHS_STOLEN] += amount
+			record_round_statistic(STATS_TRIUMPHS_STOLEN, amount)
 
 	var/final_text = "[abs(amount)] TRIUMPH\s [adjustment_verb]."
 	if(reason)

@@ -24,12 +24,26 @@
 		_A.mouse_opacity = initial(_A.mouse_opacity)
 	if(drop_all_on_destroy)
 		do_quick_empty()
-	for(var/i in slaves)
-		var/datum/component/storage/slave = i
+	for(var/datum/component/storage/slave as anything in slaves)
 		slave.change_master(null)
 	QDEL_LIST(_contents_limbo)
 	_user_limbo = null
 	return ..()
+
+/datum/component/storage/concrete/dump_harddel_info()
+	if(harddel_deets_dumped)
+		return
+	harddel_deets_dumped = TRUE
+	. = list()
+	if(parent)
+		. += "Parent's Type: [parent.type]"
+	if(master)
+		. += "Master's Type [master.type]"
+	for(var/datum/component/storage/S as anything in slaves)
+		. += "Slave Type: [S.type]"
+	if(is_using)
+		. += "WAS BEING USED [is_using]"
+	return .
 
 /datum/component/storage/concrete/master()
 	return src
@@ -51,8 +65,7 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	if(transfer_contents_on_component_transfer)
-		for(var/i in _contents_limbo)
-			var/atom/movable/AM = i
+		for(var/atom/movable/AM as anything in _contents_limbo)
 			AM.forceMove(parent)
 		_contents_limbo = null
 	if(_user_limbo)
@@ -69,8 +82,7 @@
 
 /datum/component/storage/concrete/refresh_mob_views()
 	. = ..()
-	for(var/i in slaves)
-		var/datum/component/storage/slave = i
+	for(var/datum/component/storage/slave as anything in slaves)
 		slave.refresh_mob_views()
 
 /datum/component/storage/concrete/proc/on_slave_link(datum/component/storage/S)
@@ -95,8 +107,7 @@
 
 /datum/component/storage/concrete/can_see_contents()
 	. = ..()
-	for(var/i in slaves)
-		var/datum/component/storage/slave = i
+	for(var/datum/component/storage/slave as anything in slaves)
 		. |= slave.can_see_contents()
 
 //Resets screen loc and other vars of something being removed from storage.
@@ -191,6 +202,5 @@
 	if(isobj(parent))
 		var/obj/O = parent
 		O.update_appearance()
-	for(var/i in slaves)
-		var/datum/component/storage/slave = i
+	for(var/datum/component/storage/slave as anything in slaves)
 		slave.update_icon()

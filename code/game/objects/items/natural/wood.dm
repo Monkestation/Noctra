@@ -13,7 +13,6 @@
 	static_debris = list(/obj/item/grown/log/tree/small = 2)
 	obj_flags = CAN_BE_HIT
 	resistance_flags = FLAMMABLE
-	twohands_required = TRUE
 	gripped_intents = list(/datum/intent/hit)
 	possible_item_intents = list(/datum/intent/hit)
 	obj_flags = CAN_BE_HIT
@@ -23,6 +22,9 @@
 	var/lumber = /obj/item/grown/log/tree/small //These are solely for lumberjack calculations
 	var/lumber_alt
 	var/lumber_amount = 1
+
+/obj/item/grown/log/tree/apply_components()
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 
 /obj/item/grown/log/tree/attacked_by(obj/item/I, mob/living/user) //This serves to reward woodcutting
 	if(user.used_intent.blade_class == BCLASS_CHOP && lumber_amount && lumber)
@@ -56,10 +58,9 @@
 	. = ..()
 
 
-/obj/item/grown/log/tree/attack_right(mob/living/user)
+/obj/item/grown/log/tree/attackby_secondary(obj/item/I, mob/living/user, params)
 	. = ..()
-	var/obj/item/I = user.get_active_held_item()
-	if(!I)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 
 	if(user.used_intent.blade_class == BCLASS_CHOP && lumber_amount && lumber_alt)
@@ -68,7 +69,7 @@
 		var/minimum = 1
 		playsound(src, 'sound/misc/woodhit.ogg', 100, TRUE)
 		if(!do_after(user, lumber_time, user))
-			return
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		if(skill_level > 0) // If skill level is 1 or higher, we get more minimum wood!
 			minimum = 2
 		lumber_amount = rand(minimum, max(round(skill_level), minimum))
@@ -87,8 +88,7 @@
 		user.mind.add_sleep_experience(/datum/skill/labor/lumberjacking, (user.STAINT*0.5))
 		playsound(src, destroy_sound, 100, TRUE)
 		qdel(src)
-		return TRUE
-	..()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /*
 * Okay so the root of this proc defines dissasemble
@@ -126,7 +126,6 @@
 	max_integrity = 30
 	static_debris = list(/obj/item/grown/log/tree/stick = 3)
 	firefuel = 20 MINUTES
-	twohands_required = FALSE
 	gripped_intents = null
 	w_class = WEIGHT_CLASS_BULKY
 	smeltresult = /obj/item/ore/coal
@@ -135,6 +134,9 @@
 	lumber_amount = 2
 	grid_height = 64
 	grid_width = 64
+
+/obj/item/grown/log/tree/small/apply_components()
+	return
 
 /obj/item/grown/log/tree/stick
 	seed = null
@@ -150,11 +152,13 @@
 	static_debris = null
 	firefuel = 5 MINUTES
 	w_class = WEIGHT_CLASS_NORMAL
-	twohands_required = FALSE
 	gripped_intents = null
 	slot_flags = ITEM_SLOT_MOUTH|ITEM_SLOT_HIP
 	lumber_amount = 0
 	lumber = null
+
+/obj/item/grown/log/tree/stick/apply_components()
+	return
 
 /obj/item/grown/log/tree/stick/Initialize()
 	. = ..()
@@ -175,7 +179,7 @@
 				L.update_sneak_invis(TRUE)
 			L.consider_ambush()
 
-/obj/item/grown/log/tree/stick/attack_self(mob/living/user)
+/obj/item/grown/log/tree/stick/attack_self(mob/living/user, params)
 	user.visible_message("<span class='warning'>[user] snaps [src].</span>")
 	playsound(user,'sound/items/seedextract.ogg', 100, FALSE)
 	qdel(src)
@@ -192,15 +196,18 @@
 		return
 	return ..()
 
-/obj/item/grown/log/tree/stick/attack_right(mob/living/user)
+/obj/item/grown/log/tree/stick/attackby_secondary(obj/item/I, mob/user, params)
 	. = ..()
-	var/obj/item/I = user.get_active_held_item()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
 	if(istype(I, /obj/item/grown/log/tree/stick))
 		var/obj/item/natural/bundle/stick/F = new(get_turf(user))
 		qdel(I)
 		qdel(src)
 		user.put_in_hands(F)
 		to_chat(user, "You collect the [F.stackname] into a bundle.")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/grown/log/tree/stake
 	name = "stake"
@@ -218,12 +225,14 @@
 	max_integrity = 20
 	static_debris = null
 	w_class = WEIGHT_CLASS_SMALL
-	twohands_required = FALSE
 	gripped_intents = null
 	slot_flags = ITEM_SLOT_MOUTH|ITEM_SLOT_HIP
 	lumber = null
 	lumber_amount = 0
 	tool_behaviour = TOOL_IMPROVISED_RETRACTOR
+
+/obj/item/grown/log/tree/stake/apply_components()
+	return
 
 /obj/item/natural/wood/plank
 	name = "wood plank"

@@ -13,7 +13,6 @@
 	spawn_positions = 2
 
 	allowed_races = RACES_PLAYER_ALL
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_ages = list(AGE_CHILD, AGE_ADULT)
 	allowed_patrons = list(/datum/patron/divine/noc, /datum/patron/inhumen/zizo)
 
@@ -37,8 +36,8 @@
 	H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
-	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/projectile/fetch)
-	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+	H.add_spell(/datum/action/cooldown/spell/projectile/fetch)
+	H.add_spell(/datum/action/cooldown/spell/undirected/touch/prestidigitation)
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/tights/random
 		shoes = /obj/item/clothing/shoes/simpleshoes
@@ -48,6 +47,7 @@
 		beltr = /obj/item/storage/magebag/apprentice
 		armor = /obj/item/clothing/shirt/robe/newmage/adept
 		backr = /obj/item/storage/backpack/satchel
+		head = /obj/item/clothing/head/wizhat/gen
 	else
 		shoes = /obj/item/clothing/shoes/sandals
 		shirt = /obj/item/clothing/shirt/dress/silkdress/random
@@ -56,6 +56,7 @@
 		beltr = /obj/item/storage/magebag/apprentice
 		armor = /obj/item/clothing/shirt/robe/newmage/adept
 		backr = /obj/item/storage/backpack/satchel
+		head = /obj/item/clothing/head/wizhat/witch
 	backpack_contents = list(/obj/item/book/granter/spellbook/apprentice = 1, /obj/item/chalk = 1)
 	H.change_stat(STATKEY_INT, 1)
 	H.change_stat(STATKEY_SPD, -1)

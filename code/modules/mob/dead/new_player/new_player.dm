@@ -1,5 +1,4 @@
-#define LINKIFY_READY(string, value) "<a href='byond://?src=[REF(src)];ready=[value]'>[string]</a>"
-GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.json"))
+GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 
 /mob/dead/new_player
 	flags_1 = NONE
@@ -179,11 +178,11 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.json")
 
 /mob/dead/new_player/verb/do_rp_prompt()
 	set name = "Lore Primer"
-	set category = "Memory"
+	set category = "OOC"
 	var/list/dat = list()
 	dat += GLOB.roleplay_readme
 	if(dat)
-		var/datum/browser/popup = new(src, "Primer", "STONEKEEP", 460, 550)
+		var/datum/browser/popup = new(src, "Primer", "VANDERLIN", 650, 900)
 		popup.set_content(dat.Join())
 		popup.open()
 
@@ -319,7 +318,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.json")
 		return JOB_UNAVAILABLE_PLAYTIME
 	if(latejoin && !job.special_check_latejoin(client))
 		return JOB_UNAVAILABLE_GENERIC
-	if(length(job.allowed_races) && !(client.prefs.pref_species.name in job.allowed_races))
+	if(length(job.allowed_races) && !(client.prefs.pref_species.id in job.allowed_races))
 		if(!client.triumph_ids.Find("race_all"))
 			return JOB_UNAVAILABLE_RACE
 /*	if(length(job.allowed_patrons) && !(client.prefs.selected_patron.type in job.allowed_patrons))

@@ -57,8 +57,7 @@ SUBSYSTEM_DEF(server_maint)
 	var/afk_period
 	if(kick_inactive)
 		afk_period = CONFIG_GET(number/afk_period)
-	for(var/I in currentrun)
-		var/client/C = I
+	for(var/client/C as anything in currentrun)
 		//handle kicking inactive players
 		if(round_started && kick_inactive && !C.holder && C.is_afk(afk_period))
 			var/cmob = C.mob

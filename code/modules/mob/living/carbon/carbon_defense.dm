@@ -103,7 +103,7 @@
 	if(used_limb)
 		if(target != src) // No self love here
 			if(used_limb == parse_zone(BODY_ZONE_PRECISE_R_HAND) || used_limb == parse_zone(BODY_ZONE_PRECISE_L_HAND))
-				GLOB.vanderlin_round_stats[STATS_HANDS_HELD]++
+				record_round_statistic(STATS_HANDS_HELD)
 		target.visible_message(span_warning("[src] grabs [target]'s [used_limb]."), \
 						span_warning("[src] grabs my [used_limb]."), span_hear("I hear shuffling."), null, list(src))
 		to_chat(src, span_info("I grab [target]'s [used_limb]."))
@@ -155,6 +155,7 @@
 			used_limb = affecting.body_zone
 	return used_limb
 
+/// Checks which arm is grabbed using index. Returns the found grabbing item.
 /mob/proc/check_arm_grabbed(index)
 	return
 
@@ -168,11 +169,12 @@
 		if(BP)
 			for(var/obj/item/grabbing/G in src.grabbedby)
 				if(G.limb_grabbed == BP)
-					return TRUE
+					return G
 
 /mob/proc/check_leg_grabbed()
 	return
 
+/// Checks which leg is grabbed using index. Returns the found grabbing item.
 /mob/living/carbon/check_leg_grabbed(index)
 	if(pulledby)
 		var/obj/item/bodypart/BP
@@ -183,7 +185,7 @@
 		if(BP)
 			for(var/obj/item/grabbing/G in src.grabbedby)
 				if(G.limb_grabbed == BP)
-					return TRUE
+					return G
 
 
 /mob/living/carbon/attacked_by(obj/item/I, mob/living/user)
@@ -240,7 +242,7 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
-	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_NO_ATTACK_HAND)
+	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		. = TRUE
 
 	if(!lying_attack_check(user))
@@ -297,8 +299,7 @@
 		affecting = get_bodypart(dam_zone)
 	else
 		var/list/things_to_ruin = shuffle(bodyparts.Copy())
-		for(var/B in things_to_ruin)
-			var/obj/item/bodypart/bodypart = B
+		for(var/obj/item/bodypart/bodypart as anything in things_to_ruin)
 			if(bodypart.dismemberable)
 				affecting = bodypart
 	if(affecting)
@@ -327,8 +328,7 @@
 			if(source != carried)
 				shocking_queue += carried
 		//Found our victims, now lets shock them all
-		for(var/victim in shocking_queue)
-			var/mob/living/carbon/C = victim
+		for(var/mob/living/carbon/C as anything in shocking_queue)
 			C.electrocute_act(shock_damage*0.75, src, 1, flags)
 	//Stun
 	var/should_stun = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)

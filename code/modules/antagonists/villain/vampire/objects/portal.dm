@@ -143,7 +143,7 @@
 	return ..()
 
 /* DISABLED FOR NOW
-/obj/item/clothing/neck/portalamulet/attack_self(mob/user)
+/obj/item/clothing/neck/portalamulet/attack_self(mob/user, params)
 	. = ..()
 	if(alert(user, "Create a portal?", "PORTAL GEM", "Yes", "No") == "Yes")
 		uses -= 1

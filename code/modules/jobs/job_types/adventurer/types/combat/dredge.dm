@@ -3,7 +3,6 @@
 	tutorial = "Peasants and nobles. Saints, sinners, madmen and thieves - who you once were is now irrelevant. \
 	Cast from your home for what is undoubtedly a heinous act of violence, your travels have washed you up upon this \
 	shiteheap. All you have are your possessions from your former life. Make some coin for yourself, lest you end up dead and gone."
-	allowed_sexes = list(MALE, FEMALE)
 	outfit = /datum/outfit/job/adventurer/dredge
 	category_tags = list(CTAG_ADVENTURER)
 	maximum_possible_slots = 7
@@ -30,23 +29,23 @@
 	pants = /obj/item/clothing/pants/tights/black
 	backl = /obj/item/storage/backpack/satchel
 
-	if(H.dna.species.id == "human") // This statblock serves to smooth out racial stat-bonuses slightly. Makes room for the RNG to do its shitty work.
+	if(ishumanspecies(H)) // This statblock serves to smooth out racial stat-bonuses slightly. Makes room for the RNG to do its shitty work.
 		H.change_stat(STATKEY_END, -1)
-	if(H.dna.species.id == "dwarf")
+	else if(isdwarf(H))
 		H.change_stat(STATKEY_CON, -1)
 		H.change_stat(STATKEY_END, -1)
-	if(H.dna.species.id == "elf")
+	else if(iself(H))
 		H.change_stat(STATKEY_SPD, -1)
-	if(H.dna.species.id == "aasimar")
+	else if(isaasimar(H))
 		H.change_stat(STATKEY_INT, -1)
-	if(H.dna.species.id == "tiefling")
+	else if(istiefling(H))
 		H.change_stat(STATKEY_PER, -1)
-	if(H.dna.species.id == "halforc") // Get Fucked.
+	else if(ishalforc(H)) // Get Fucked.
 		H.change_stat(STATKEY_STR, -1)
 		H.change_stat(STATKEY_CON, -1)
-	if(H.dna.species.id == "rakshari")
+	else if(israkshari(H))
 		H.change_stat(STATKEY_SPD, -1)
-	if(H.dna.species.id == "kobold") // They have it bad enough as is... Oh my sweet lord do they have it bad.
+	else if(iskobold(H)) // They have it bad enough as is... Oh my sweet lord do they have it bad.
 		H.change_stat(STATKEY_CON, 1)
 		H.change_stat(STATKEY_STR, 1)
 
@@ -468,6 +467,8 @@
 			)
 		if("Mage")
 			H.mana_pool?.set_intrinsic_recharge(MANA_ALL_LEYLINES)
+			if(!(H.patron == /datum/patron/divine/noc || /datum/patron/inhumen/zizo))	//Magicians must follow Noc or Zizo to have access to magic.
+				H.set_patron(/datum/patron/divine/noc)
 			r_hand = /obj/item/weapon/polearm/woodstaff
 			head = /obj/item/clothing/head/roguehood/mage
 			armor = /obj/item/clothing/shirt/robe/mage
@@ -480,8 +481,7 @@
 			H.change_stat(STATKEY_INT, 3)
 			H.change_stat(STATKEY_CON, -2)
 			H.change_stat(STATKEY_SPD, -2)
-			H.mind.adjust_spellpoints(6)
-			H.mind.AddSpell(new /obj/effect/proc_holder/spell/self/learnspell)
+			H.adjust_spellpoints(6)
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatSorcerer.ogg'
 			to_chat(H,span_info("\
 			I've studied the arcane, those who step to me shall perish.")

@@ -1,11 +1,3 @@
-#define COLLECT_ONE 0
-#define COLLECT_EVERYTHING 1
-#define COLLECT_SAME 2
-
-#define DROP_NOTHING 0
-#define DROP_AT_PARENT 1
-#define DROP_AT_LOCATION 2
-
 // External storage-related logic:
 // /mob/proc/ClickOn() in /_onclick/click.dm - clicking items in storages
 // /mob/living/Move() in /modules/mob/living/living.dm - hiding storage boxes on mob movement
@@ -93,7 +85,7 @@
 
 	RegisterSignal(parent, COMSIG_TOPIC, PROC_REF(topic_handle))
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(attackby))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(attackby))
 
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_PAW, PROC_REF(on_attack_hand))
@@ -800,7 +792,7 @@
 	if((user.active_storage == src) && A.Adjacent(user)) //if you're already looking inside the storage item
 		user.active_storage.close(user)
 		close(user)
-		. = COMPONENT_NO_ATTACK_RIGHT
+		. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		return
 
 	if(rustle_sound)
@@ -831,7 +823,7 @@
 				return
 
 	if(A.Adjacent(user))
-		. = COMPONENT_NO_ATTACK_RIGHT
+		. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		if(locked || !allow_look_inside)
 //			to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
 			return
@@ -846,7 +838,7 @@
 	if(user.active_storage == src && A.loc == user) //if you're already looking inside the storage item
 		user.active_storage.close(user)
 		close(user)
-		. = COMPONENT_NO_ATTACK_HAND
+		. = COMPONENT_CANCEL_ATTACK_CHAIN
 		return
 
 	if(rustle_sound)
@@ -877,7 +869,7 @@
 				return
 
 	if(A.loc == user)
-		. = COMPONENT_NO_ATTACK_HAND
+		. = COMPONENT_CANCEL_ATTACK_CHAIN
 		if(locked)
 //			to_chat(user, "<span class='warning'>[parent] seems to be locked!</span>")
 			return

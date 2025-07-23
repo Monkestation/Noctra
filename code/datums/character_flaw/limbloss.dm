@@ -1,6 +1,7 @@
 
 
 /datum/charflaw/limbloss
+	abstract_type = /datum/charflaw/limbloss
 	var/lost_zone
 
 /datum/charflaw/limbloss/on_mob_creation(mob/user)
@@ -11,7 +12,6 @@
 	if(O)
 		O.drop_limb()
 		qdel(O)
-	return
 
 /datum/charflaw/limbloss/arm_r
 	name = "Wooden Arm (R)"

@@ -8,7 +8,7 @@
 	sleevetype = "shirt"
 	slot_flags = ITEM_SLOT_CLOAK
 	allowed_sex = list(MALE)
-	allowed_race = list("human", "tiefling", "aasimar")
+	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_HALF_ELF, SPEC_ID_TIEFLING, SPEC_ID_AASIMAR)
 	nodismemsleeves = TRUE
 
 
@@ -36,7 +36,7 @@
 	sleevetype = "shirt"
 	slot_flags = ITEM_SLOT_CLOAK
 	allowed_sex = list(MALE)
-	allowed_race = list("human", "tiefling", "aasimar")
+	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_HALF_ELF, SPEC_ID_TIEFLING, SPEC_ID_AASIMAR)
 	sellprice = 50
 	nodismemsleeves = TRUE
 
@@ -63,7 +63,7 @@
 	sleevetype = "shirt"
 	slot_flags = ITEM_SLOT_CLOAK
 	allowed_sex = list(MALE)
-	allowed_race = list("human", "tiefling", "aasimar")
+	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_HALF_ELF, SPEC_ID_TIEFLING, SPEC_ID_AASIMAR)
 	sellprice = 50
 	nodismemsleeves = TRUE
 
@@ -84,7 +84,7 @@
 	toggle_icon_state = FALSE
 	color = CLOTHING_SOOT_BLACK
 	allowed_sex = list(MALE, FEMALE)
-	allowed_race = list("human", "tiefling", "elf", "aasimar")
+	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_HALF_ELF, SPEC_ID_TIEFLING, SPEC_ID_ELF, SPEC_ID_AASIMAR)
 
 /obj/item/clothing/cloak/half/Initialize(mapload, ...)
 	. = ..()
@@ -177,7 +177,7 @@
 //.............inquisitor cloaks......... (For inquisitors..)
 /obj/item/clothing/cloak/cape/puritan
 	icon_state = "puritan_cape"
-	allowed_race = list("human", "tiefling", "elf", "dwarf", "aasimar")
+	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_HALF_ELF, SPEC_ID_TIEFLING, SPEC_ID_ELF, SPEC_ID_DWARF, SPEC_ID_AASIMAR)
 
 /obj/item/clothing/cloak/cape/inquisitor
 	name = "Inquisitors Cloak"
@@ -270,7 +270,7 @@
 	sleevetype = "shirt"
 	nodismemsleeves = TRUE
 	inhand_mod = TRUE
-	allowed_race = list("human", "tiefling", "elf", "aasimar")
+	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_HALF_ELF, SPEC_ID_TIEFLING, SPEC_ID_ELF, SPEC_ID_AASIMAR)
 
 /obj/item/clothing/cloak/faceless
 	name = "sash"
@@ -280,12 +280,12 @@
 
 /obj/item/clothing/cloak/half/duelcape
 	name = "duelist cape"
-	desc = "A cape that is designed for specific mercenaries from valoria."
+	desc = "A cape designed for mercenary bands hailing from Valoria."
 	icon_state = "duelistcape"
 	item_state = "duelistcape"
 	color = null
 	nodismemsleeves = TRUE
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
-	allowed_race = list("human", "tiefling", "elf", "aasimar")
+	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_HALF_ELF, SPEC_ID_TIEFLING, SPEC_ID_ELF, SPEC_ID_AASIMAR)
 	inhand_mod = FALSE

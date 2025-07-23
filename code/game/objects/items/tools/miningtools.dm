@@ -52,6 +52,7 @@
 	max_integrity = 600
 	melting_material = /datum/material/steel
 	melt_amount = 75
+	pickmult = 1.2
 
 /obj/item/weapon/pick/stone
 	name = "stone pick"
@@ -63,6 +64,7 @@
 	max_integrity = 250
 	anvilrepair = null
 	melting_material = null
+	pickmult = 0.7 // Worse pick
 
 /obj/item/weapon/pick/drill
 	name = "clockwork drill"
@@ -81,12 +83,12 @@
 	melting_material = /datum/material/steel
 	melt_amount = 150
 	gripsprite = TRUE
+	pickmult = 1.5
 
 /obj/item/weapon/pick/drill/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	AddComponent(/datum/component/steam_storage, 300, 0)
-
 
 /obj/item/weapon/pick/drill/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -96,10 +98,15 @@
 	. = ..()
 	SEND_SIGNAL(src, COMSIG_ATOM_STEAM_USE, 5)
 
+/obj/item/weapon/pick/drill/on_wield(obj/item/source, mob/living/carbon/user)
+	if(!SEND_SIGNAL(src, COMSIG_ATOM_STEAM_USE, 1))
+		to_chat(user, span_warning("[src] doesn't have enough power to be wielded!"))
+		return COMPONENT_TWOHANDED_BLOCK_WIELD
+	. = ..()
+
 /obj/item/weapon/pick/drill/process()
-	if(wielded)
+	if(HAS_TRAIT(src, TRAIT_WIELDED))
 		if(!SEND_SIGNAL(src, COMSIG_ATOM_STEAM_USE, 1))
+			var/datum/component/two_handed/twohanded = GetComponent(/datum/component/two_handed)
 			if(ismob(loc))
-				ungrip(loc, FALSE)
-			else
-				wielded = FALSE
+				twohanded.unwield(loc)

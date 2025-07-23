@@ -13,13 +13,8 @@
 	min_pq = 6
 	bypass_lastclass = TRUE
 
-	spells = list(/obj/effect/proc_holder/spell/self/convertrole/servant)
-	allowed_races = list(
-		"Humen",
-		"Half-Elf",
-		"Elf",
-		"Dwarf"
-	)
+	spells = list(/datum/action/cooldown/spell/undirected/list_target/convert_role/servant)
+	allowed_races = RACES_PLAYER_ROYALTY
 	outfit = /datum/outfit/job/consort
 	advclass_cat_rolls = list(CTAG_CONSORT = 20)
 	give_bank_account = 500
@@ -207,13 +202,3 @@
 	to_chat(H, "<span class='info'>I can gesture in thieves' cant with ,t before my speech.</span>")
 	ADD_TRAIT(H, TRAIT_THIEVESGUILD, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NUTCRACKER, TRAIT_GENERIC)
-
-/obj/effect/proc_holder/spell/self/convertrole/servant
-	name = "Recruit Servant"
-	new_role = "Servant"
-	overlay_state = "recruit_servant"
-	recruitment_faction = "Servants"
-	recruitment_message = "Join the keep's servants, %RECRUIT!"
-	accept_message = "I serve the Crown!"
-	refuse_message = "I refuse."
-	recharge_time = 100

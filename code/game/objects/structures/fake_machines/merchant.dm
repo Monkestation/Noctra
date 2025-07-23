@@ -94,11 +94,6 @@
 /////////////////////////////////////////////////////////////////
 
 #define UPGRADE_NOTAX		(1<<0)
-/*
-#define UPGRADE_ARMOR		(1<<1)
-#define UPGRADE_WEAPONS		(1<<2)
-#define UPGRADE_FOOD		(1<<3)
-*/
 
 /obj/structure/fake_machine/merchantvend
 	name = "GOLDFACE"
@@ -163,10 +158,13 @@
 			cost = picked_pack.cost
 		if(budget >= cost)
 			budget -= cost
+			record_round_statistic(STATS_GOLDFACE_VALUE_SPENT, cost)
 			if(!(upgrade_flags & UPGRADE_NOTAX))
 				SStreasury.give_money_treasury(tax_amt, "goldface import tax")
 				record_featured_stat(FEATURED_STATS_TAX_PAYERS, human_mob, tax_amt)
-				GLOB.vanderlin_round_stats[STATS_TAXES_COLLECTED] += tax_amt
+				record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
+			else
+				record_round_statistic(STATS_TAXES_EVADED, tax_amt)
 		else
 			say("Not enough!")
 			return

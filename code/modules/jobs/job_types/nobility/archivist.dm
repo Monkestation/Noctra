@@ -13,11 +13,13 @@
 	min_pq = 1
 	bypass_lastclass = TRUE
 
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 
 	outfit = /datum/outfit/job/archivist
-	spells = list(/obj/effect/proc_holder/spell/self/learnspell, /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+	spells = list(
+		/datum/action/cooldown/spell/undirected/learn,
+		/datum/action/cooldown/spell/undirected/touch/prestidigitation,
+	)
 	give_bank_account = 100
 
 /datum/outfit/job/archivist
@@ -26,7 +28,7 @@
 /datum/outfit/job/archivist/pre_equip(mob/living/carbon/human/H)
 	..()
 	H.mana_pool?.set_intrinsic_recharge(MANA_ALL_LEYLINES)
-	if(H.dna.species.id == "Dwarf")
+	if(H.dna.species.id == SPEC_ID_DWARF)
 		shirt = /obj/item/clothing/shirt/undershirt/puritan
 		armor = /obj/item/clothing/armor/leather/jacket/apothecary
 		pants = /obj/item/clothing/pants/tights/black
@@ -51,7 +53,7 @@
 
 	H.grant_language(/datum/language/elvish)
 	H.grant_language(/datum/language/dwarvish)
-	H.grant_language(/datum/language/zybantine)
+	H.grant_language(/datum/language/zalad)
 	H.grant_language(/datum/language/celestial)
 	H.grant_language(/datum/language/hellspeak)
 	H.grant_language(/datum/language/oldpsydonic)

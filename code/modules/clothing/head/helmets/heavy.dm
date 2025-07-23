@@ -259,8 +259,10 @@
 	icon_state = "decorated_knight"
 	item_weight = 9 * IRON_MULTIPLIER
 
-/obj/item/clothing/head/helmet/heavy/decorated/knight/attack_right(mob/user)
-	..()
+/obj/item/clothing/head/helmet/heavy/decorated/knight/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(!picked)
 		var/list/icons = HELMET_KNIGHT_DECORATIONS
 		var/choice = input(user, "Choose a crest.", "Knightly crests") as anything in icons
@@ -272,6 +274,7 @@
 		if(loc == user && ishuman(user))
 			var/mob/living/carbon/H = user
 			H.update_inv_head()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 //............... Decorated Hounskull ............... //
 /obj/item/clothing/head/helmet/heavy/decorated/hounskull
@@ -284,8 +287,10 @@
 	item_weight = 9 * IRON_MULTIPLIER
 
 
-/obj/item/clothing/head/helmet/heavy/decorated/hounskull/attack_right(mob/user)
-	..()
+/obj/item/clothing/head/helmet/heavy/decorated/hounskull/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(!picked)
 		var/list/icons = HELMET_HOUNSKULL_DECORATIONS
 		var/choice = input(user, "Choose a crest.", "Knightly crests") as anything in icons
@@ -297,6 +302,7 @@
 		if(loc == user && ishuman(user))
 			var/mob/living/carbon/H = user
 			H.update_inv_head()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 //............... Decorated Great Helm ............... //
 /obj/item/clothing/head/helmet/heavy/decorated/bucket
@@ -306,8 +312,10 @@
 	prevent_crits = ALL_CRITICAL_HITS
 	item_weight = 9 * IRON_MULTIPLIER
 
-/obj/item/clothing/head/helmet/heavy/decorated/bucket/attack_right(mob/user)
-	..()
+/obj/item/clothing/head/helmet/heavy/decorated/bucket/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(!picked)
 		var/list/icons = HELMET_BUCKET_DECORATIONS
 		var/choice = input(user, "Choose a crest.", "Knightly crests") as anything in icons
@@ -319,6 +327,7 @@
 		if(loc == user && ishuman(user))
 			var/mob/living/carbon/H = user
 			H.update_inv_head()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 //............... Decorated Gold Helm ............... //
 /obj/item/clothing/head/helmet/heavy/decorated/golden
@@ -328,8 +337,10 @@
 	prevent_crits = ALL_CRITICAL_HITS
 	item_weight = 7 * GOLD_MULITPLIER
 
-/obj/item/clothing/head/helmet/heavy/decorated/golden/attack_right(mob/user)
-	..()
+/obj/item/clothing/head/helmet/heavy/decorated/golden/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(!picked)
 		var/list/icons = HELMET_GOLD_DECORATIONS
 		var/choice = input(user, "Choose a crest.", "Knightly crests") as anything in icons
@@ -341,6 +352,7 @@
 		if(loc == user && ishuman(user))
 			var/mob/living/carbon/H = user
 			H.update_inv_head()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/head/helmet/heavy/decorated/bascinet
 	name = "bascinet"
@@ -355,8 +367,10 @@
 	body_parts_covered = HEAD|HAIR|EARS
 	item_weight = 9 * STEEL_MULTIPLIER
 
-/obj/item/clothing/head/helmet/heavy/decorated/bascinet/attack_right(mob/user)
-	..()
+/obj/item/clothing/head/helmet/heavy/decorated/bascinet/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(!picked)
 		var/list/icons = BASCINET_DECORATIONS
 		var/choice = input(user, "Choose a crest.", "Knightly crests") as anything in icons
@@ -368,3 +382,4 @@
 		if(loc == user && ishuman(user))
 			var/mob/living/carbon/H = user
 			H.update_inv_head()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

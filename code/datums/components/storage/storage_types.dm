@@ -288,10 +288,10 @@
 	screen_max_rows = 3
 	screen_max_columns = 3
 	insert_verb = "put"
-	insert_preposition = "into"
+	insert_preposition = "in"
 
 /datum/component/storage/concrete/grid/food/cooking/oven
 	screen_max_rows = 2
 	screen_max_columns = 5
 	insert_verb = "slide"
-	insert_preposition = "into"
+	insert_preposition = "in"

@@ -21,7 +21,7 @@
 	else
 		start_connection(machine, user)
 
-/obj/item/essence_connector/attack_self(mob/user)
+/obj/item/essence_connector/attack_self(mob/user, params)
 	cancel_connection(user)
 
 /obj/item/essence_connector/proc/start_connection(obj/machinery/essence/machine, mob/user)
