@@ -2,7 +2,6 @@
 	name = "Transfix"
 	button_icon_state = "transfix"
 	has_visual_effects = FALSE
-	experience_modifer = 0.3
 
 	associated_skill = /datum/skill/magic/blood
 

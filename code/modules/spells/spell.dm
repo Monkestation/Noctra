@@ -161,7 +161,7 @@
 	// Experience gain is dependant on spell cost and the associated skill
 	/// Experience gain modifier, cost is multipled by this to get experience gain.
 	/// Set to 0 to stop experience gain.
-	var/experience_modifer = 0.5
+	var/experience_modifer = 0.4
 	/// Max skill level this spell can raise to.
 	var/experience_max_skill = SKILL_LEVEL_EXPERT
 	// Sleep exp variables are reliant on the caster having a mind
@@ -849,8 +849,8 @@
 				to_chat(owner, span_warning("I don't have enough stamina to cast!"))
 			return FALSE
 
-	if(spell_type == NONE)
-		return
+	if(spell_type == NONE || spell_type == SPELL_STAMINA)
+		return TRUE
 
 	switch(spell_type)
 		if(SPELL_MANA)
@@ -942,24 +942,26 @@
 	return used_cost
 
 /datum/action/cooldown/spell/proc/handle_exp(cost_in)
-	if(experience_modifer <= 0)
-		return
-	if(!associated_skill)
+	if(experience_modifer <= 0 || !associated_skill)
 		return
 
+	if(!experience_max_skill)
+		experience_max_skill = SKILL_LEVEL_LEGENDARY
+
 	var/skill_level = owner.get_skill_level(associated_skill)
-	if(experience_max_skill && (skill_level >= experience_max_skill))
+	if(skill_level >= experience_max_skill)
 		return
 
 	var/mob/living/caster = owner
-	var/stat_modifier = caster.get_stat(associated_stat) * 0.1
+	var/exp_to_gain = caster.get_stat(associated_stat) + (cost_in * experience_modifer) / 2
 
-	var/experience_gain = cost_in * experience_modifer * stat_modifier
-	if(owner.mind)
-		if(experience_sleep || (experience_sleep_threshold && (skill_level >= experience_sleep_threshold)))
-			owner.mind.add_sleep_experience(associated_skill, experience_gain)
-			return
-	owner.adjust_experience(associated_skill, experience_gain)
+	var/datum/mind/owner_mind = owner.mind
+	if(owner_mind && experience_sleep || (experience_sleep_threshold && (skill_level >= experience_sleep_threshold)))
+		// Check to make sure that experience max is adhered to even when using sleep exp
+		if(!owner_mind.sleep_adv.enough_sleep_xp_to_advance(associated_skill, experience_max_skill - skill_level))
+			owner_mind.add_sleep_experience(associated_skill, exp_to_gain)
+		return
+	owner.adjust_experience(associated_skill, exp_to_gain)
 
 /// Try to begin the casting process on mouse down
 /datum/action/cooldown/spell/proc/start_casting(client/source, atom/_target, turf/location, control, params)

@@ -168,8 +168,6 @@
 	soundenv = 15
 	converted_type = /area/rogue/indoors/shelter/woods
 
-
-
 /area/rogue/outdoors/river
 	name = "river"
 	icon_state = "river"
@@ -366,8 +364,11 @@
 	background_track_dusk = null
 	background_track_night = 'sound/music/area/deliverer.ogg'
 
+///// MANOR AREAS //////
+
 /area/rogue/indoors/town/manor
 	name = "Manor"
+	icon = 'icons/turf/areas_manor.dmi'
 	icon_state = "manor"
 	background_track = list('sound/music/area/manor.ogg', 'sound/music/area/manor2.ogg')
 	background_track_dusk = null
@@ -377,6 +378,134 @@
 /area/rogue/indoors/town/manor/Initialize()
 	. = ..()
 	first_time_text = "THE KEEP OF [uppertext(SSmapping.config.map_name)]"
+
+/area/rogue/indoors/town/manor/throne
+	name = "Throne Room"
+	icon_state = "throne"
+
+/area/rogue/indoors/town/manor/lord_appt
+	name = "Lord's Appartment"
+	icon_state = "lord_appt"
+
+/area/rogue/indoors/town/manor/captain
+	name = "Captain's Room"
+	icon_state = "captain"
+
+/area/rogue/indoors/town/manor/hand
+	name = "Hand's Room"
+	icon_state = "hand"
+
+/area/rogue/indoors/town/manor/phys
+	name = "Court Physician's Office"
+	icon_state = "physician"
+
+/area/rogue/indoors/town/manor/heir
+	name = "Heirs' Room"
+	icon_state = "heir"
+
+/area/rogue/indoors/town/manor/heir/heir1
+	name = "First Heir's Room"
+	icon_state = "heir1"
+
+/area/rogue/indoors/town/manor/heir/heir2
+	name = "Second Heir's Room"
+	icon_state = "heir2"
+
+/area/rogue/indoors/town/manor/knight
+	name = "Knights' Quarters"
+	icon_state = "knight"
+
+/area/rogue/indoors/town/manor/knight/knight1
+	name = "First Knight's Quarters"
+	icon_state = "knight1"
+
+/area/rogue/indoors/town/manor/knight/knight2
+	name = "Second Knight's Quarters"
+	icon_state = "knight2"
+
+/area/rogue/indoors/town/manor/squire
+	name = "Squires' Quarters"
+	icon_state = "squire"
+
+/area/rogue/indoors/town/manor/squire/squire1
+	name = "First Squire's Quarters"
+	icon_state = "squire1"
+
+/area/rogue/indoors/town/manor/squire/squire2
+	name = "Second Squire's Quarters"
+	icon_state = "squire2"
+
+/area/rogue/indoors/town/manor/kitchen
+	name = "Keep Kitchen"
+	icon_state = "kitchen"
+
+/area/rogue/indoors/town/manor/servant
+	name = "Servants' Quarters"
+	icon_state = "servant"
+
+/area/rogue/indoors/town/manor/servanthead
+	name = "Head Servant's Quarters"
+	icon_state = "servant_head"
+
+/area/rogue/indoors/town/manor/library
+	name = "Keep Libray"
+	icon_state = "library"
+
+/area/rogue/indoors/town/manor/archivist
+	name = "Archivist's Quarters"
+	icon_state = "archivists_quarters"
+
+/area/rogue/indoors/town/manor/feast
+	name = "Keep Feast Hall"
+	icon_state = "feast_hall"
+
+/area/rogue/indoors/town/manor/dungeoneer
+	name = "Court Dungeoneer's Quarters"
+	icon_state = "dungeoneer"
+
+/area/rogue/indoors/town/manor/jester
+	name = "Jester's Quarters"
+	icon_state = "jester"
+
+/area/rogue/indoors/town/manor/guest
+	name = "Keep Guest Room"
+	icon_state = "guest"
+
+/area/rogue/indoors/town/manor/guest/guest1
+	name = "Keep Guest Room 1"
+	icon_state = "guest1"
+
+/area/rogue/indoors/town/manor/guest/guest2
+	name = "Keep Guest Room 2"
+	icon_state = "guest2"
+
+/area/rogue/indoors/town/manor/guest/meeting
+	name = "Keep Meeting Room"
+	icon_state = "meeting"
+
+/area/rogue/indoors/town/manor/halls
+	name = "Keep Halls"
+	icon_state = "halls"
+
+/area/rogue/indoors/town/manor/halls/n
+	name = "Keep Halls (North)"
+	icon_state = "halls_n"
+
+/area/rogue/indoors/town/manor/halls/e
+	name = "Keep Halls (East)"
+	icon_state = "halls_e"
+
+/area/rogue/indoors/town/manor/halls/s
+	name = "Keep Halls (South)"
+	icon_state = "halls_s"
+
+/area/rogue/indoors/town/manor/halls/w
+	name = "Keep Halls (West)"
+	icon_state = "halls_w"
+
+/area/rogue/indoors/town/manor/garrison
+	name = "Keep Garrison"
+	icon_state = "manorgarri"
 
 /area/rogue/indoors/town/manorgate
 	name = "Manor Gate"
@@ -543,6 +672,14 @@
 /area/rogue/indoors/town/clinic_large
 	first_time_text = "The Clinic"
 	icon_state = "clinic_large"
+
+/area/rogue/indoors/town/clinic_large/apothecary
+	name = "Apothecary's Workshop"
+	icon_state = "clinic_apoth"
+
+/area/rogue/indoors/town/clinic_large/feldsher
+	name = "Feldsher's Office"
+	icon_state = "clinic_feld"
 
 /area/rogue/indoors/town/thieves_guild
 	first_time_text = "Thieves Guild"

@@ -409,15 +409,12 @@
 	var/heat_time = 100
 	var/obj/item/attachment = null
 	var/obj/item/reagent_containers/food/snacks/food = null
-	var/datum/looping_sound/boilloop/boilloop
 	var/rawegg = FALSE
 
 /obj/machinery/light/fueled/hearth/Initialize()
 	. = ..()
-	boilloop = new(src, FALSE)
 
 /obj/machinery/light/fueled/hearth/Destroy()
-	QDEL_NULL(boilloop)
 	. = ..()
 
 /obj/machinery/light/fueled/hearth/attackby(obj/item/W, mob/living/user, params)
@@ -500,24 +497,8 @@
 				fueluse = max(fueluse - 10, 0)
 			if(fueluse == 0)
 				burn_out()
-		if(attachment)
-			if(istype(attachment, /obj/item/cooking/pan))
-				if(food)
-					var/obj/item/C = food.cooking(20, src)
-					if(C)
-						if(rawegg)
-							rawegg = FALSE
-						qdel(food)
-						food = C
-			else if(istype(attachment, /obj/item/reagent_containers/glass/bucket/pot))
-				if(attachment.reagents)
-					attachment.reagents.expose_temperature(400, 0.033)
-					if(attachment.reagents.chem_temp > 374)
-						boilloop.start()
-					else
-						boilloop.stop()
-			else
-				boilloop.stop()
+		if(attachment?.reagents)
+			attachment.reagents.expose_temperature(400, 0.04)
 		update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/light/fueled/hearth/onkick(mob/user)

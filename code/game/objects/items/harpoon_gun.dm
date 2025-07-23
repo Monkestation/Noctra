@@ -25,7 +25,6 @@
 
 	icon = 'icons/obj/guns/harpoon.dmi'
 	icon_state = "harpoon"
-	twohands_required = TRUE
 
 	gripped_intents = list(/datum/intent/mace/smash/heavy, /datum/intent/mace/thrust) //its practically a mace at this size
 	possible_item_intents = list(/datum/intent/mace/strike)
@@ -59,7 +58,9 @@
 	harpoon_sound = new(src)
 	update_appearance(UPDATE_ICON_STATE)
 
+/obj/item/harpoon_gun/apply_components()
 	AddComponent(/datum/component/steam_storage, 300, 0)
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 
 /obj/item/harpoon_gun/Destroy()
 	leash_target = null

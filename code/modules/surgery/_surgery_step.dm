@@ -352,7 +352,6 @@
 	if(!target_detailed)
 		detailed_mobs -= target //The patient can't see well what's going on, unless it's something like getting cut
 	user.visible_message(detailed_message, self_message, vision_distance = 1, ignored_mobs = target_detailed ? null : target)
-	for(var/mob/mob in detailed_mobs)
 	user.visible_message(vague_message, "", ignored_mobs = detailed_mobs)
 	return TRUE
 

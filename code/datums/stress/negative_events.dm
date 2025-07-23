@@ -405,7 +405,7 @@
 
 /datum/stressevent/night_owl_dawn
 	desc = span_warning("I don't like the dae..")
-	stressadd = 3
+	stressadd = 1
 	timer = 10 MINUTES
 
 /datum/stressevent/hithead
@@ -417,3 +417,8 @@
 	timer = 5 MINUTES
 	stressadd = 4
 	desc = span_warning("The gods have not taken kindly to my deeds.")
+
+/datum/stressevent/taken_hostage
+	timer = INFINITY
+	stressadd = 3
+	desc = span_red("I've been taken hostage!")

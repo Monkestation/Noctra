@@ -433,7 +433,7 @@
 	no_attack = TRUE
 
 /obj/item/weapon/pitchfork/afterattack(obj/target, mob/user, proximity)
-	if((!proximity) || (!wielded))
+	if((!proximity) || (!HAS_TRAIT(src, TRAIT_WIELDED)))
 		return ..()
 	if(isopenturf(target))
 		if(forked.len)
@@ -445,7 +445,7 @@
 		return
 	return ..()
 
-/obj/item/weapon/pitchfork/ungrip(mob/living/carbon/user, show_message = TRUE)
+/obj/item/weapon/pitchfork/on_unwield(obj/item/source, mob/living/carbon/user)
 	. = ..()
 	if(forked.len)
 		var/turf/T = get_turf(user)

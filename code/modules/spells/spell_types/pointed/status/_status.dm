@@ -34,23 +34,17 @@
 		return
 	return isliving(cast_on)
 
-/datum/action/cooldown/spell/status/before_cast(atom/cast_on)
-	. = ..()
-	if(. & SPELL_CANCEL_CAST)
-		return
-	if(!isnum(duration))
-		duration = initial(status_effect.duration)
-	if(duration_scaling)
-		if(duration_modification)
-			duration += duration_modification * attuned_strength
-		else
-			duration *= attuned_strength
-
 /datum/action/cooldown/spell/status/cast(mob/living/cast_on)
 	. = ..()
+	var/new_duration = duration ? duration : initial(status_effect.duration)
+	if(duration_scaling)
+		if(duration_modification)
+			new_duration += duration_modification * attuned_strength
+		else
+			new_duration *= attuned_strength
 	var/list/status_args = list(
 		status_effect,
-		duration,
+		new_duration,
 	)
 	if(extra_args && islist(extra_args))
 		status_args += extra_args
