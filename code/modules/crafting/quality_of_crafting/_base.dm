@@ -721,6 +721,12 @@
 				// Continue the crafting while loop
 				continue
 
+		// Crafting unsuccessful, transfer all reagents to the original containers then delete the container copies
+		for(var/obj/item/reagent_containers/key in copied_containers)
+			var/obj/item/reagent_containers/doomed = copied_containers[key]
+			doomed.reagents.trans_to(key, doomed.reagents.total_volume)
+			qdel(doomed)
+
 		if(!crafting_success)
 			var/list/failure_reasons = list()
 			if(length(copied_requirements))
@@ -734,11 +740,6 @@
 
 			move_items_back(to_delete, user)
 			move_products(list(), user)
-			// Crafting unsuccessful, transfer all reagents to the original containers then delete the container copies
-			for(var/obj/item/reagent_containers/key in copied_containers)
-				var/obj/item/reagent_containers/doomed = copied_containers[key]
-				doomed.reagents.trans_to(key, doomed.reagents.total_volume)
-				qdel(doomed)
 
 			// End the crafting while loop
 			break
