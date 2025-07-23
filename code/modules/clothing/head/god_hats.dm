@@ -48,7 +48,7 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/patron_robes.dmi'
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
-/obj/item/clothing/head/padded/operavisage
+/obj/item/clothing/face/clothmask/operavisage
 	name = "opera visage"
 	desc = "A painted wooden opera mask worn by the faithful of Eora, usually during their rituals."
 	icon_state = "eoramask"
