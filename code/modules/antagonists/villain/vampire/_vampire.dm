@@ -106,6 +106,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	var/datum/action/cooldown/spell/blood = new spell_type(src)
 	blood.spell_type = SPELL_VITAE
 	blood.spell_cost *= 10 // Conversion from generally a 100 scale to a 1000 scale
+	blood.antimagic_flags |= MAGIC_RESISTANCE_UNHOLY
 	blood.Grant(owner.current)
 
 /datum/antagonist/vampire/proc/equip()
