@@ -118,7 +118,7 @@
 			lord.current.verbs |= /mob/living/carbon/human/proc/blood_strength
 			lord.current.verbs |= /mob/living/carbon/human/proc/blood_celerity
 			owner.remove_spell(/datum/action/cooldown/spell/undirected/transfix)
-			lord_datum.add_blood_spell(/datum/action/cooldown/spell/undirected/transfix/master,)
+			lord_datum.add_blood_spell(/datum/action/cooldown/spell/undirected/transfix/master)
 			for(var/S in MOBSTATS)
 				lord.current.change_stat(S, 2)
 			to_chat(lord, span_notice("My dominion over others minds and my own body returns to me. I am nearing perfection. The armies of the dead shall now answer my call."))

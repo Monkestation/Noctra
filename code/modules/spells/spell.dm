@@ -903,7 +903,6 @@
 
 			return TRUE
 
-
 /**
  * Charge the owner with the cost of the spell.
  *
