@@ -34,8 +34,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	for (var/alert in alerts)
 		clear_alert(alert, TRUE)
 	if(observers && observers.len)
-		for(var/M in observers)
-			var/mob/dead/observe = M
+		for(var/mob/dead/observe as anything in observers)
 			observe.reset_perspective(null)
 	qdel(hud_used)
 	for(var/cc in client_colours)
@@ -1347,7 +1346,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	stat = new_stat
 	SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, new_stat, .)
 
-/mob/say_mod(input, message_mode)
+/mob/say_mod(input, list/message_mods = list())
 	var/customsayverb = findtext(input, "*")
 	if(customsayverb)
 		return lowertext(copytext(input, 1, customsayverb))

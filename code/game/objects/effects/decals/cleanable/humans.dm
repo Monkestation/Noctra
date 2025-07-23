@@ -411,8 +411,7 @@
 			return
 	if(shoe_types.len)
 		. += "You recognise the footprints as belonging to:\n"
-		for(var/shoe in shoe_types)
-			var/obj/item/clothing/shoes/S = shoe
+		for(var/obj/item/clothing/shoes/S as anything in shoe_types)
 			. += "[icon2html(initial(S.icon), user)] Some <B>[initial(S.name)]</B>.\n"
 
 /obj/effect/decal/cleanable/blood/footprints/replace_decal(obj/effect/decal/cleanable/C)

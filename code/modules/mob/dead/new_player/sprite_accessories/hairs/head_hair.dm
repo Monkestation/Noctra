@@ -54,8 +54,8 @@
 			extensions[s] = TRUE
 		qdel(hair_extensions)
 
-	if(extensions[icon_state+dynamic_hair_suffix])
-		return "[icon_state][dynamic_hair_suffix]"
+	// if(extensions[icon_state+dynamic_hair_suffix])
+	// 	return "[icon_state][dynamic_hair_suffix]"
 
 	return icon_state
 

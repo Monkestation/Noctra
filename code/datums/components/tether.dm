@@ -27,8 +27,7 @@
 			if (T.density)
 				blocker = T
 				break out
-			for(var/a in T)
-				var/atom/A = a
+			for(var/atom/A as anything in T)
 				if(A.density && A != mover && A != tether_target)
 					blocker = A
 					break out

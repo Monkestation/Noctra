@@ -378,8 +378,7 @@ SUBSYSTEM_DEF(mapping)
 	clearing_reserved_turfs = FALSE
 
 /datum/controller/subsystem/mapping/proc/reserve_turfs(list/turfs)
-	for(var/i in turfs)
-		var/turf/T = i
+	for(var/turf/T as anything in turfs)
 		T.empty(RESERVED_TURF_TYPE, RESERVED_TURF_TYPE, null, TRUE)
 		LAZYINITLIST(unused_turfs["[T.z]"])
 		unused_turfs["[T.z]"] |= T
@@ -388,8 +387,7 @@ SUBSYSTEM_DEF(mapping)
 		CHECK_TICK
 
 /datum/controller/subsystem/mapping/proc/reg_in_areas_in_z(list/areas)
-	for(var/B in areas)
-		var/area/A = B
+	for(var/area/A as anything in areas)
 		A.reg_in_areas_in_z()
 
 /datum/controller/subsystem/mapping/proc/get_isolated_ruin_z()

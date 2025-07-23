@@ -61,11 +61,11 @@
 	return
 
 /turf/open/lava/Entered(atom/movable/AM)
+	. = ..()
 	if(burn_stuff(AM))
 		START_PROCESSING(SSobj, src)
 		if(ishuman(AM))
 			playsound(src, 'sound/misc/lava_death.ogg', 100, FALSE)
-//			addomen("lava")
 
 /turf/open/lava/Exited(atom/movable/Obj, atom/newloc)
 	. = ..()

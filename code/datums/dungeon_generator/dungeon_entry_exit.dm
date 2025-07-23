@@ -5,6 +5,10 @@ GLOBAL_LIST_INIT(dungeon_exits, list())
 /obj/structure/dungeon_entry/center
 	dungeon_id = "center"
 
+/obj/structure/dungeon_entry/center/vanderlin
+	icon_state = "portal_noenter"
+	entry_requirements = list("Time" = "day")
+
 /obj/structure/dungeon_entry
 	name = "The Tomb of Matthios"
 	desc = ""
@@ -23,13 +27,26 @@ GLOBAL_LIST_INIT(dungeon_exits, list())
 	var/dungeon_id
 	var/list/dungeon_exits = list()
 	var/can_enter = TRUE
+	/// Requirements for entry/exit
+	/// "Time" = "dat" etc
+	var/list/entry_requirements = list()
+	/// Make the requirements not inclusive
+	var/requires_all = FALSE
 
 
 /obj/structure/dungeon_entry/New(loc, ...)
 	GLOB.dungeon_entries |= src
 	if(!dungeon_id)
 		GLOB.unlinked_dungeon_entries |= src
+	if(LAZYACCESS(entry_requirements, "Time"))
+		GLOB.TodUpdate += src
 	return ..()
+
+/obj/structure/dungeon_entry/update_tod(todd)
+	if(todd == entry_requirements["Time"])
+		icon_state = "portal"
+	else
+		icon_state = "portal_noenter"
 
 /obj/structure/dungeon_entry/Initialize()
 	. = ..()
@@ -56,6 +73,9 @@ GLOBAL_LIST_INIT(dungeon_exits, list())
 	dungeon_exits = null
 	GLOB.dungeon_entries -= src
 	GLOB.unlinked_dungeon_entries -= src
+	if(LAZYACCESS(entry_requirements, "Time"))
+		GLOB.TodUpdate -= src
+
 	return ..()
 
 /obj/structure/dungeon_entry/attack_hand(mob/user)
@@ -72,8 +92,27 @@ GLOBAL_LIST_INIT(dungeon_exits, list())
 	use(user, TRUE)
 	return ..()
 
-/obj/structure/dungeon_entry/proc/use(mob/user, is_ghost)
+/obj/structure/dungeon_entry/proc/attempt_entry(mob/user, is_ghost)
 	if(!is_ghost && !can_enter)
+		return FALSE
+	if(entry_requirements && !is_ghost)
+		if(!has_requirements(user))
+			return FALSE
+	return TRUE
+
+/obj/structure/dungeon_entry/proc/has_requirements(mob/user)
+	var/requirements_met = 0
+	var/time_req = LAZYACCESS(entry_requirements, "Time")
+	if(time_req && GLOB.tod == time_req)
+		requirements_met ++
+	if(!requires_all && requirements_met > 0)
+		return TRUE
+	if(requirements_met < length(entry_requirements))
+		return FALSE
+	return TRUE
+
+/obj/structure/dungeon_entry/proc/use(mob/user, is_ghost)
+	if(!attempt_entry(user, is_ghost))
 		return
 	if(!length(dungeon_exits))
 		return
@@ -96,6 +135,8 @@ GLOBAL_LIST_INIT(dungeon_exits, list())
 
 	var/dungeon_id
 	var/obj/structure/dungeon_entry/entry
+	var/list/entry_requirements = list()
+	var/requires_all = FALSE
 
 /obj/structure/dungeon_exit/Initialize()
 	. = ..()
@@ -138,10 +179,33 @@ GLOBAL_LIST_INIT(dungeon_exits, list())
 	return ..()
 
 /obj/structure/dungeon_exit/proc/use(mob/user, is_ghost)
-	if(!entry)
+	if(!attempt_entry(user, is_ghost))
 		return
 	if(!is_ghost)
 		playsound(src, 'sound/foley/ladder.ogg', 100, FALSE)
 		if(!do_after(user, 3 SECONDS, src))
 			return
 	movable_travel_z_level(user, get_turf(entry))
+
+/*
+	suggest making this proc shared beftween the two, or a refatoring that makes that work
+	instead of repeating code that is
+*/
+/obj/structure/dungeon_exit/proc/attempt_entry(mob/user, is_ghost)
+	if(!is_ghost && !entry)
+		return FALSE
+	if(entry_requirements && !is_ghost)
+		if(!has_requirements(user))
+			return FALSE
+	return TRUE
+
+/obj/structure/dungeon_exit/proc/has_requirements(mob/user)
+	var/requirements_met = 0
+	var/time_req = LAZYACCESS(entry_requirements, "Time")
+	if(time_req && GLOB.tod == time_req)
+		requirements_met ++
+	if(!requires_all && requirements_met > 0)
+		return TRUE
+	if(requirements_met < length(entry_requirements))
+		return FALSE
+	return TRUE

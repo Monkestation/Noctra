@@ -1,6 +1,6 @@
-/datum/action/cooldown/spell/beam/ray_of_frost
-	name = "Ray of Frost"
-	desc = "Shoots a ray of frost out, slowing anyone hit by it."
+/datum/action/cooldown/spell/beam/beam_of_frost
+	name = "Beam of Frost"
+	desc = "Shoots a beam of frost out, slowing anyone hit by it."
 	button_icon_state = "rayoffrost"
 
 	point_cost = 3
@@ -23,21 +23,21 @@
 
 	var/list/hit_targets
 
-/datum/action/cooldown/spell/beam/ray_of_frost/Destroy()
+/datum/action/cooldown/spell/beam/beam_of_frost/Destroy()
 	hit_targets = null
 	return ..()
 
-/datum/action/cooldown/spell/beam/ray_of_frost/cast(atom/cast_on)
+/datum/action/cooldown/spell/beam/beam_of_frost/cast(atom/cast_on)
 	. = ..()
 	addtimer(VARSET_CALLBACK(src, hit_targets, null), time + 5 DECISECONDS)
 
-/datum/action/cooldown/spell/beam/ray_of_frost/on_beam_connect(atom/victim, mob/caster)
+/datum/action/cooldown/spell/beam/beam_of_frost/on_beam_connect(atom/victim, mob/caster)
 	if(!isliving(victim))
 		return
 	var/mob/living/frozen_guy = victim
 	do_freeze(frozen_guy, 1.3)
 
-/datum/action/cooldown/spell/beam/ray_of_frost/beam_entered(datum/beam/source, obj/effect/ebeam/hit, atom/movable/entered)
+/datum/action/cooldown/spell/beam/beam_of_frost/beam_entered(datum/beam/source, obj/effect/ebeam/hit, atom/movable/entered)
 	if(!isliving(entered))
 		return
 	if(entered == owner)
@@ -45,7 +45,7 @@
 	var/mob/living/frozen_guy = entered
 	do_freeze(frozen_guy)
 
-/datum/action/cooldown/spell/beam/ray_of_frost/proc/do_freeze(mob/living/victim, extra_modifer = 1)
+/datum/action/cooldown/spell/beam/beam_of_frost/proc/do_freeze(mob/living/victim, extra_modifer = 1)
 	if(LAZYACCESS(hit_targets, victim))
 		return
 
@@ -84,11 +84,10 @@
 
 /datum/status_effect/debuff/frostbite/on_creation(mob/living/new_owner, duration_override, strength = 1)
 	strength_multiplier = strength
-	duration *= strength
-	effectedstats = list(STATKEY_SPD = round(-2 * strength))
 	return ..()
 
 /datum/status_effect/debuff/frostbite/on_apply()
+	effectedstats = list(STATKEY_SPD = round(-2 * strength_multiplier))
 	. = ..()
 	owner.add_overlay(frost)
 	owner.add_atom_colour(atom_color, TEMPORARY_COLOUR_PRIORITY)

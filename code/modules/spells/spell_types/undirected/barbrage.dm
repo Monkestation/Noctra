@@ -16,16 +16,6 @@
 	spell_type = SPELL_STAMINA
 	spell_cost = 10
 
-/datum/action/cooldown/spell/undirected/barbrage/can_cast_spell(feedback)
-	. = ..()
-	if(!.)
-		return
-
-	if(!isliving(owner))
-		if(feedback)
-			to_chat(owner, span_warning("I can't seem to get angry..."))
-		return FALSE
-
 /datum/action/cooldown/spell/undirected/barbrage/cast(mob/living/cast_on)
 	. = ..()
 	cast_on.emote("rage", forced = TRUE)

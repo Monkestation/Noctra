@@ -39,8 +39,7 @@ SUBSYSTEM_DEF(atoms)
 	initialized = INITIALIZATION_INNEW_REGULAR
 
 	if(late_loaders.len)
-		for(var/I in late_loaders)
-			var/atom/A = I
+		for(var/atom/A as anything in late_loaders)
 			A.LateInitialize()
 		late_loaders.Cut()
 

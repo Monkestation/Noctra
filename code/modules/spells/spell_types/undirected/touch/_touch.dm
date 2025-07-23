@@ -166,6 +166,7 @@
 		INVOKE_ASYNC(src, PROC_REF(do_secondary_hand_hit), source, victim, caster, modifiers)
 	else
 		INVOKE_ASYNC(src, PROC_REF(do_hand_hit), source, victim, caster, modifiers)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Checks if the passed victim can be cast on by the caster.
 /datum/action/cooldown/spell/undirected/touch/proc/can_hit_with_hand(atom/victim, mob/caster)

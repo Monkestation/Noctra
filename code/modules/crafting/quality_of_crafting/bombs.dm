@@ -2,6 +2,7 @@
 	abstract_type = /datum/repeatable_crafting_recipe/bomb
 	skillcraft = /datum/skill/craft/bombs
 	craftdiff = 2
+	category = "Bombs"
 
 /datum/repeatable_crafting_recipe/bomb/homemade
 	name = "homemade bottle bomb"
@@ -19,7 +20,6 @@
 	attacked_atom = /obj/item/reagent_containers/glass/bottle
 	output = /obj/item/bomb/homemade
 	craft_time = 1 SECONDS
-	uses_attacked_atom = TRUE
 	subtypes_allowed = TRUE
 	reagent_subtypes_allowed = TRUE
 
@@ -32,9 +32,8 @@
 		/obj/item/ash = 2,
 	)
 
-	starting_atom = /obj/item/reagent_containers/glass/bottle
-	attacked_atom = /obj/item/ash
+	starting_atom = /obj/item/ash
+	attacked_atom = /obj/item/reagent_containers/glass/bottle
 	output = /obj/item/smokebomb
 	craft_time = 1 SECONDS
-	uses_attacked_atom = TRUE
 	subtypes_allowed = TRUE

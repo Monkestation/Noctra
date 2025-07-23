@@ -195,7 +195,10 @@
 	wdefense = MEDIOCHRE_PARRY
 	minstr = 6
 	sellprice = 60
-	is_silver = TRUE
+
+/obj/item/weapon/axe/psydon/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 /obj/item/weapon/axe/psydon/getonmobprop(tag)
 	. = ..()

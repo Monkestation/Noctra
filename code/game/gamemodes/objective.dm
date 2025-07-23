@@ -118,8 +118,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		dupe_search_range = get_owners()
 	var/list/possible_targets = list()
 	var/try_target_late_joiners = FALSE
-	for(var/I in owners)
-		var/datum/mind/O = I
+	for(var/datum/mind/O as anything in owners)
 		if(O.late_joiner)
 			try_target_late_joiners = TRUE
 	for(var/datum/mind/possible_target in get_crewmember_minds())
@@ -128,8 +127,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 				possible_targets += possible_target
 	if(try_target_late_joiners)
 		var/list/all_possible_targets = possible_targets.Copy()
-		for(var/I in all_possible_targets)
-			var/datum/mind/PT = I
+		for(var/datum/mind/PT as anything in all_possible_targets)
 			if(!PT.late_joiner)
 				possible_targets -= PT
 		if(!possible_targets.len)
@@ -526,9 +524,8 @@ GLOBAL_LIST_EMPTY(possible_items)
 		/datum/objective/custom
 	),GLOBAL_PROC_REF(cmp_typepaths_asc))
 
-	for(var/T in allowed_types)
-		var/datum/objective/X = T
-		GLOB.admin_objective_list[initial(X.name)] = T
+	for(var/datum/objective/objective as anything in allowed_types)
+		GLOB.admin_objective_list[initial(objective.name)] = objective
 
 /datum/objective/contract
 	var/payout = 0

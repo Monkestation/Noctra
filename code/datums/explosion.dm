@@ -186,8 +186,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/iteration = 0
 	var/affTurfLen = length(affected_turfs)
 	var/expBlockLen = length(cached_exp_block)
-	for(var/TI in affected_turfs)
-		var/turf/T = TI
+	for(var/turf/T as anything in affected_turfs)
 		++iteration
 		var/init_dist = cheap_hypotenuse(T.x, T.y, x0, y0)
 		var/dist = init_dist
@@ -215,12 +214,10 @@ GLOBAL_LIST_EMPTY(explosions)
 		var/atom/target
 		if(T == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
 			var/list/items = list()
-			for(var/I in T)
-				var/atom/A = I
+			for(var/atom/A as anything in T)
 				if (!(A.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
 					items += A.GetAllContents()
-			for(var/O in items)
-				var/atom/A = O
+			for(var/atom/A as anything in items)
 				if(!QDELETED(A))
 					A.ex_act(dist, target, epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range)
 
@@ -280,14 +277,12 @@ GLOBAL_LIST_EMPTY(explosions)
 
 			var/circumference = (PI * (init_dist + 4) * 2) //+4 to radius to prevent shit gaps
 			if(exploded_this_tick.len > circumference)	//only do this every revolution
-				for(var/Unexplode in exploded_this_tick)
-					var/turf/UnexplodeT = Unexplode
+				for(var/turf/UnexplodeT as anything in exploded_this_tick)
 					UnexplodeT.explosion_level = 0
 				exploded_this_tick.Cut()
 
 	//unfuck the shit
-	for(var/Unexplode in exploded_this_tick)
-		var/turf/UnexplodeT = Unexplode
+	for(var/turf/UnexplodeT as anything in exploded_this_tick)
 		UnexplodeT.explosion_level = 0
 	exploded_this_tick.Cut()
 
@@ -409,8 +404,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(wipe_color_and_text), wipe_colours), 100)
 
 /proc/wipe_color_and_text(list/atom/wiping)
-	for(var/i in wiping)
-		var/atom/A = i
+	for(var/atom/A as anything in wiping)
 		A.color = null
 		A.maptext = ""
 

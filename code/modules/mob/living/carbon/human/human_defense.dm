@@ -7,8 +7,7 @@
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL my bodyparts for protection, and averages out the values
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		armorval += checkarmor(BP, type, damage, armor_penetration)
 		organnum++
 	return (armorval/max(organnum, 1))
@@ -220,9 +219,11 @@
 	var/useder = user.zone_selected
 	if(!lying_attack_check(user,I))
 		return 0
+	var/accurate = FALSE
 	if(user.tempatarget)
 		useder = user.tempatarget
 		user.tempatarget = null
+		accurate = TRUE
 	affecting = get_bodypart(check_zone(useder)) //precise attacks, on yourself or someone you are grabbing
 //	else
 //		affecting = get_bodypart_complex(user.used_intent.height2limb(user.aimheight)) //this proc picks a bodypart at random as long as it's in the height list
@@ -236,7 +237,7 @@
 	SSblackbox.record_feedback("tally", "zone_targeted", 1, useder)
 
 	// the attacked_by code varies among species
-	return dna.species.spec_attacked_by(I, user, affecting, used_intent, src, useder)
+	return dna.species.spec_attacked_by(I, user, affecting, used_intent, src, useder, accurate)
 
 /mob/living/carbon/human/attack_hand(mob/user)
 	if(..())	//to allow surgery to return properly.
@@ -369,8 +370,7 @@
 	//attempt to dismember bodyparts
 	if(severity <= 2)
 		var/max_limb_loss = rand(0, floor(3/severity))
-		for(var/X in bodyparts)
-			var/obj/item/bodypart/BP = X
+		for(var/obj/item/bodypart/BP as anything in bodyparts)
 			if(prob(25/severity) && !prob(15) && BP.body_zone != BODY_ZONE_HEAD && BP.body_zone != BODY_ZONE_CHEST)
 				BP.brute_dam = BP.max_damage
 				BP.dismember()

@@ -49,14 +49,6 @@
 		if(!has_gravity(loc))
 			return
 
-		if(hostage) // If we have a hostage.
-			hostage.hostagetaker = null
-			hostage = null
-			to_chat(src, "<span class='danger'>I need to stand still to make sure I don't lose concentration on my hostage!</span>")
-
-		if(hostagetaker) // If we are TAKEN hostage. Confusing vars at first but then it makes sense.
-			attackhostage()
-
 		if(wear_armor)
 			if(body_position != LYING_DOWN)
 				var/obj/item/clothing/C = wear_armor
@@ -102,7 +94,7 @@
 			for(var/obj/item/I in held_items)
 				if(I.minstr)
 					var/effective = I.minstr
-					if(I.wielded)
+					if(HAS_TRAIT(I, TRAIT_WIELDED))
 						if(!is_child(src))
 							effective = max(I.minstr / 2, 1)
 					if(effective > STASTR)

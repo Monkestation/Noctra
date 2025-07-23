@@ -10,7 +10,7 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	slowdown = 7
-	breakouttime = 30 SECONDS
+	breakouttime = 10 SECONDS
 
 /obj/item/restraints/legcuffs/beartrap
 	icon = 'icons/roguetown/items/misc.dmi'

@@ -9,7 +9,7 @@
 	var/move_delay = 4
 
 	///volume at which the sound plays.
-	var/volume = 100
+	var/volume = 40
 	///does the sound vary?
 	var/sound_vary = TRUE
 	///extra-range for this component's sound.

@@ -40,14 +40,12 @@
 	if(left_click) //rectangular
 		if(alt_click)
 			var/list/deletion_area = block(get_turf(cornerA),get_turf(cornerB))
-			for(var/beep in deletion_area)
-				var/turf/T = beep
+			for(var/turf/T as anything in deletion_area)
 				for(var/atom/movable/AM in T)
 					qdel(AM)
 				// extreme haircut
 				T.ScrapeAway(INFINITY, CHANGETURF_DEFER_CHANGE)
-			for(var/beep in deletion_area)
-				var/turf/T = beep
+			for(var/turf/T as anything in deletion_area)
 				T.AfterChange()
 			log_admin("Build Mode: [key_name(c)] deleted turfs from [AREACOORD(cornerA)] through [AREACOORD(cornerB)]")
 			// if there's an analogous proc for this on tg lmk
