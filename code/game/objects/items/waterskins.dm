@@ -19,10 +19,18 @@
 	grid_width = 32
 	grid_height = 64
 	can_label_bottle = FALSE
+	fancy = TRUE
 
 /obj/item/reagent_containers/glass/bottle/waterskin/Initialize()
 	. = ..()
-	icon_state = initial(icon_state)
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/reagent_containers/glass/bottle/update_overlays()
+	. = ..()
+	if(closed)
+		. += "[initial(icon_state)]_corked"
+	else
+		. += "[initial(icon_state)]_uncorked"
 
 /obj/item/reagent_containers/glass/bottle/waterskin/milk // Filled subtype used by the cheesemaker
 	list_reagents = list(/datum/reagent/consumable/milk = 64)
