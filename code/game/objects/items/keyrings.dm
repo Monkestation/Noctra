@@ -202,7 +202,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/lockpickring/update_icon_state()
-	icon_state = "keyring[clamp(length(contents), 0, 3)]"
+	icon_state = "pickring[clamp(length(contents), 0, 3)]"
 	return ..()
 
 /obj/item/lockpickring/update_desc()
