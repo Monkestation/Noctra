@@ -8,24 +8,18 @@
  * * [/obj/item/proc/afterattack]. The return value does not matter.
  */
 /obj/item/proc/melee_attack_chain(mob/user, atom/target, params)
-	// This should be somewhere else
-	if(user.check_arm_grabbed(user.active_hand_index))
-		var/mob/living/G = user.pulledby
-		var/mob/living/U = user
-		var/userskill = 1
-		if(U?.get_skill_level(/datum/skill/combat/wrestling))
-			userskill = ((U.get_skill_level(/datum/skill/combat/wrestling) * 0.1) + 1)
-		var/grabberskill = 1
-		if(G?.get_skill_level(/datum/skill/combat/wrestling))
-			grabberskill = ((G.get_skill_level(/datum/skill/combat/wrestling) * 0.1) + 1)
-		if(((U.STASTR + rand(1, 6)) * userskill) < ((G.STASTR + rand(1, 6)) * grabberskill))
-			to_chat(user, span_notice("I can't move my arm!"))
-			user.changeNext_move(CLICK_CD_GRABBING)
-			return TRUE
+	var/obj/item/grabbing/arm_grab = user.check_arm_grabbed(user.active_hand_index)
+	if(arm_grab)
+		to_chat(user, span_notice("I can't move my arm!"))
+		if(HAS_TRAIT(src, TRAIT_WIELDED))
+			if(iscarbon(user))
+				var/mob/living/carbon/carbon_user = user
+				carbon_user.dna?.species.disarm(user, arm_grab.grabbee)
 		else
 			user.resist_grab()
+		return TRUE
 	if(!user.has_hand_for_held_index(user.active_hand_index, TRUE)) //we obviously have a hand, but we need to check for fingers/prosthetics
-		to_chat(user, "<span class='warning'>I can't move the fingers of my [user.active_hand_index == 1 ? "left" : "right"] hand.</span>")
+		to_chat(user, span_warning("I can't move the fingers of my [user.active_hand_index == 1 ? "left" : "right"] hand.</span>"))
 		return TRUE
 	if(!istype(src, /obj/item/grabbing))
 		if(HAS_TRAIT(user, TRAIT_CHUNKYFINGERS))
@@ -90,19 +84,11 @@
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	interact(user)
-	if(twohands_required)
-		return
-	if(altgripped || wielded) //Trying to unwield it
-		ungrip(user)
-		return
-	if(alt_intents)
-		altgrip(user)
-	if(gripped_intents)
-		wield(user)
 
 /obj/item/proc/attack_self_secondary(mob/user, params)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF_SECONDARY, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
+	toggle_altgrip(user)
 
 /**
  * Called on the item before it hits something
@@ -220,6 +206,7 @@
 
 
 /mob/living/attackby_secondary(obj/item/weapon, mob/living/user, params)
+	. = ..()
 	if(user.cmode)
 		if(user.rmb_intent)
 			user.rmb_intent.special_attack(user, src)
@@ -238,9 +225,9 @@
 
 		return result
 
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(weapon.item_flags & ABSTRACT)
 		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(src == user)
 		if(offered_item)
 			offered_item = null
@@ -262,7 +249,7 @@
 	)
 	to_chat(user, span_smallnotice("I will hold [offer_attempt] out for 10 seconds. \
 	If I switch hands or take it out my hand it will not be able to be taken.\n \
-	I can stop offering the item by using the same hand."))
+	I can stop offering the item by using the same hand on myself."))
 	to_chat(src, span_notice("[user] offers [offer_attempt] to me..."))
 	addtimer(VARSET_CALLBACK(user, offered_item, null), 10 SECONDS)
 
@@ -459,8 +446,8 @@
 
 	if(I.minstr)
 		var/effective = I.minstr
-		if(I.wielded)
-			effective = max(I.minstr / 2, 1)
+		if(HAS_TRAIT(I, TRAIT_WIELDED))
+			effective = I.minstr * 0.75
 		//Strength influence is reduced to 30%
 		if(effective > user.STASTR)
 			newforce = max(newforce*0.3, 1)
@@ -727,6 +714,15 @@
  * * click_parameters - is the params string from byond [/atom/proc/Click] code, see that documentation.
  */
 /obj/item/proc/afterattack_secondary(atom/target, mob/user, proximity_flag, click_parameters)
+	var/signal_result = SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK_SECONDARY, target, user, proximity_flag, click_parameters)
+
+	if(signal_result & COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+	if(signal_result & COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+
+	// This allows afterattack() to be called
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 // Called if the target gets deleted by our attack

@@ -441,6 +441,9 @@
 /atom/proc/get_inspect_button()
 	return ""
 
+/atom/proc/get_inspect_entries()
+	return list()
+
 /**
  * Called when a mob examines (shift click or verb) this atom
  *

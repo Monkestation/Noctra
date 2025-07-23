@@ -39,13 +39,13 @@
 	desc = span_green("ZIZOZIZOZIZO")
 
 /datum/stressevent/joke
-	timer = 30 MINUTES
-	stressadd = -5
+	timer = 1 MINUTES
+	stressadd = -2
 	desc = span_green("I heard a good joke.")
 
 /datum/stressevent/tragedy
-	timer = 30 MINUTES
-	stressadd = -5
+	timer = 1 MINUTES
+	stressadd = -2
 	desc = span_green("Life isn't so bad after all.")
 
 /datum/stressevent/blessed

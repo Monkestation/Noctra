@@ -96,7 +96,7 @@
 	for(var/obj/item/I in held_items)
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			if(I.bigboy)
-				if(I.wielded)
+				if(HAS_TRAIT(I, TRAIT_WIELDED))
 					I.screen_loc = "WEST-4:16,SOUTH+7:-16"
 				else
 					if(get_held_index_of_item(I) == 1)
@@ -104,7 +104,7 @@
 					else
 						I.screen_loc = "WEST-3:0,SOUTH+7:-16"
 			else
-				if(I.wielded)
+				if(HAS_TRAIT(I, TRAIT_WIELDED))
 					I.screen_loc = "WEST-3:0,SOUTH+7"
 				else
 					I.screen_loc = ui_hand_position(get_held_index_of_item(I))
@@ -127,7 +127,7 @@
 			if(I.altgripped)
 				used_prop = "altgrip"
 				prop = I.getonmobprop(used_prop)
-			if(!prop && I.wielded)
+			if(!prop && HAS_TRAIT(I, TRAIT_WIELDED))
 				used_prop = "wielded"
 				prop = I.getonmobprop(used_prop)
 			if(!prop)

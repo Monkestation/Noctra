@@ -47,6 +47,7 @@
 		beltr = /obj/item/storage/magebag/apprentice
 		armor = /obj/item/clothing/shirt/robe/newmage/adept
 		backr = /obj/item/storage/backpack/satchel
+		head = /obj/item/clothing/head/wizhat/gen
 	else
 		shoes = /obj/item/clothing/shoes/sandals
 		shirt = /obj/item/clothing/shirt/dress/silkdress/random
@@ -55,6 +56,7 @@
 		beltr = /obj/item/storage/magebag/apprentice
 		armor = /obj/item/clothing/shirt/robe/newmage/adept
 		backr = /obj/item/storage/backpack/satchel
+		head = /obj/item/clothing/head/wizhat/witch
 	backpack_contents = list(/obj/item/book/granter/spellbook/apprentice = 1, /obj/item/chalk = 1)
 	H.change_stat(STATKEY_INT, 1)
 	H.change_stat(STATKEY_SPD, -1)

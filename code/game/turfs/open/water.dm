@@ -691,6 +691,8 @@
 	. = ..()
 	if(!river_processes)
 		return
+	if(locate(/obj/structure/stairs) in src)
+		return
 	if(isliving(AM) || isitem(AM))
 		if(!river_processing)
 			river_processing = addtimer(CALLBACK(src, PROC_REF(process_river)), 5, TIMER_STOPPABLE)

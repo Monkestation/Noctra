@@ -95,7 +95,7 @@
 
 /datum/skill/craft/tanning
 	name = "Skincrafting"
-	desc = "Skinning is a skill that represents your character's ability to skin animals. The higher your skill in Skinning, the better the hides you can get from animals and the more you can get from them."
+	desc = "Skincrafting is a skill that represents your character's ability to process and use animal hide. The higher your skill in Skinning, the more leather you can create and the more you can make with them."
 	dreams = list(
 		"...you stare down at the rabbit, its eyes wide and unblinking... you feel the knife in your hand, and the blood on your hands... and the warmth of the pelt..."
 	)

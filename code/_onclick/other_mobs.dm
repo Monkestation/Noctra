@@ -16,9 +16,10 @@
 		to_chat(src, span_warning("I can't move this hand."))
 		return
 
-	if(check_arm_grabbed(used_hand))
-		to_chat(src, "<span class='warning'>Someone is grabbing my arm!</span>")
-		resist_grab()
+	var/obj/item/grabbing/arm_grab = check_arm_grabbed(active_hand_index)
+	if(arm_grab)
+		// to_chat(src, span_warning("Someone is grabbing my arm!"))
+		grab_counter_attack(arm_grab.grabbee)
 		return
 
 	// Special glove functions:
@@ -31,11 +32,16 @@
 	if(SEND_SIGNAL(src, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, A, proximity) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return
 	SEND_SIGNAL(src, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, A, proximity)
+	var/rmb_stam_penalty = 1
+	if(istype(rmb_intent, /datum/rmb_intent/strong) || istype(rmb_intent, /datum/rmb_intent/swift))
+		rmb_stam_penalty = 1.5	//Uses a modifer instead of a flat addition, less than weapons no matter what rn. 50% extra stam cost basically.
 	if(isliving(A))
 		var/mob/living/L = A
 		if(!used_intent.noaa)
 			playsound(get_turf(src), pick(GLOB.unarmed_swingmiss), 100, FALSE)
 //			src.emote("attackgrunt")
+		var/intent_drain = used_intent.get_releasedrain()
+		adjust_stamina(ceil(intent_drain * rmb_stam_penalty))
 		if(L.checkmiss(src))
 			return
 		if(!L.checkdefense(used_intent, src))
@@ -171,7 +177,7 @@
 		to_chat(user, span_warning("Nothing to bite."))
 		return
 
-	user.do_attack_animation(src, ATTACK_EFFECT_BITE)
+	user.do_attack_animation(src, ATTACK_EFFECT_BITE, atom_bounce = TRUE)
 	next_attack_msg.Cut()
 
 	var/nodmg = FALSE
@@ -268,7 +274,7 @@
 					var/mob/living/M = A
 					if(src.used_intent)
 
-						src.do_attack_animation(M, visual_effect_icon = src.used_intent.animname)
+						do_attack_animation(M, visual_effect_icon = ATTACK_EFFECT_KICK, atom_bounce = TRUE)
 						playsound(src, pick(PUNCHWOOSH), 100, FALSE, -1)
 
 						sleep(src.used_intent.swingdelay)
@@ -512,6 +518,7 @@
 			jrange = 1
 
 	jump_action_resolve(A, jadded, jrange, jextra)
+	return TRUE
 
 #define FLIP_DIRECTION_CLOCKWISE 1
 #define FLIP_DIRECTION_ANTICLOCKWISE 0

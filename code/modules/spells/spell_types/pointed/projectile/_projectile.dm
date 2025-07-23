@@ -108,4 +108,4 @@
 	if(victim.stat == DEAD)
 		return
 
-	handle_exp(get_adjusted_cost() / 2)
+	handle_exp(get_adjusted_cost() / 4)
