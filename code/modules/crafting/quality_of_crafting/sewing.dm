@@ -322,11 +322,17 @@
 					/obj/item/alch/rosa = 2)
 	output = /obj/item/clothing/head/flowercrown/rosa
 
+/datum/repeatable_crafting_recipe/sewing/flowercrown/rosa/create_blacklisted_paths()
+	blacklisted_paths = subtypesof(/obj/item/rope)
+
 /datum/repeatable_crafting_recipe/sewing/flowercrown/salvia
 	name = "salvia crown"
 	requirements = list(/obj/item/rope = 1,\
 					/obj/item/alch/salvia = 2)
 	output = /obj/item/clothing/head/flowercrown/salvia
+
+/datum/repeatable_crafting_recipe/sewing/flowercrown/salvia/create_blacklisted_paths()
+	blacklisted_paths = subtypesof(/obj/item/rope)
 
 /*.............. recipes requiring skill 2 ..............*/
 /datum/repeatable_crafting_recipe/sewing/gambeson

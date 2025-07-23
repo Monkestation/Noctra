@@ -89,7 +89,7 @@
 		/obj/item/weapon/knife = list(span_notice("starts to whittle"), span_notice("start to whittle"), 'sound/items/wood_sharpen.ogg'),
 	)
 	attacked_atom = /obj/item/grown/log/tree/small
-	starting_atom= /obj/item/weapon/knife
+	starting_atom = /obj/item/weapon/knife
 	output = /obj/item/weapon/hammer/wood
 	craft_time = 5 SECONDS
 

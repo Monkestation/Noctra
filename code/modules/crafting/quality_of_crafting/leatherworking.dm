@@ -80,14 +80,20 @@
 	output = /obj/item/storage/backpack/satchel
 	craftdiff = 1
 
+/datum/repeatable_crafting_recipe/leather/storage/satchel/create_blacklisted_paths()
+	blacklisted_paths = subtypesof(/obj/item/rope)
+
 /datum/repeatable_crafting_recipe/leather/storage/backpack
 	name = "leather backpack"
 	requirements = list(
 		/obj/item/natural/hide/cured = 3,
-		/obj/item/rope = 2,
+		/obj/item/rope = 1,
 	)
 	output = /obj/item/storage/backpack/backpack
 	craftdiff = 2
+
+/datum/repeatable_crafting_recipe/leather/storage/backpack/create_blacklisted_paths()
+	blacklisted_paths = subtypesof(/obj/item/rope)
 
 /// Misc Leatherworking
 /datum/repeatable_crafting_recipe/leather/bedsheetpelt
@@ -116,6 +122,9 @@
 				/obj/item/rope = 1)
 	craftdiff = 2
 	category = "Misc Leather"
+
+/datum/repeatable_crafting_recipe/leather/sleepingbag_deluxe/create_blacklisted_paths()
+	blacklisted_paths = subtypesof(/obj/item/rope)
 
 /datum/repeatable_crafting_recipe/leather/saddle
 	name = "saddle"
