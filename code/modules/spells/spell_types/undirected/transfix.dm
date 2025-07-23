@@ -7,7 +7,7 @@
 
 	charge_required = FALSE
 	cooldown_time = 15 SECONDS
-	spell_cost = 100
+	spell_cost = 15
 
 	/// Ignore crosses and give a different message
 	var/powerful = FALSE
@@ -126,6 +126,6 @@
 	name = "Subjugate"
 	button_icon_state = "transfixmaster"
 
-	spell_cost = 150
+	spell_cost = 20
 
 	powerful = TRUE
