@@ -1585,6 +1585,8 @@
 						cnt++
 						already_printed += CS
 				var/ddesc = S.desc
+				if(!desc)
+					continue
 				if(islist(S.desc))
 					ddesc = pick(S.desc)
 				if(cnt > 1)
