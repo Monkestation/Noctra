@@ -100,15 +100,15 @@
 	var/mob/living/owner = lord_datum.owner.current
 	switch(++power_level)
 		if(1)
-			owner.add_spell(/datum/action/cooldown/spell/undirected/shapeshift/bat, source = lord_datum)
+			lord_datum.add_blood_spell(/datum/action/cooldown/spell/undirected/shapeshift/bat)
 			for(var/statkey in MOBSTATS)
 				owner.change_stat(statkey, 2)
 			to_chat(lord, "<font color='red'>I am refreshed and have grown stronger. The visage of the bat is once again available to me. I can also once again access my portals.</font>")
 
 		if(2)
-			owner.add_spell(/datum/action/cooldown/spell/projectile/blood_steal, source = lord_datum)
-			owner.add_spell(/datum/action/cooldown/spell/projectile/blood_bolt, source = lord_datum)
-			owner.add_spell(/datum/action/cooldown/spell/undirected/shapeshift/mist, source = lord_datum)
+			lord_datum.add_blood_spell(/datum/action/cooldown/spell/projectile/blood_steal)
+			lord_datum.add_blood_spell(/datum/action/cooldown/spell/projectile/blood_bolt)
+			lord_datum.add_blood_spell(/datum/action/cooldown/spell/undirected/shapeshift/mist)
 			lord.current.adjust_skillrank(/datum/skill/magic/blood, 2, TRUE)
 			for(var/S in MOBSTATS)
 				lord.current.change_stat(S, 2)
@@ -118,7 +118,7 @@
 			lord.current.verbs |= /mob/living/carbon/human/proc/blood_strength
 			lord.current.verbs |= /mob/living/carbon/human/proc/blood_celerity
 			owner.remove_spell(/datum/action/cooldown/spell/undirected/transfix)
-			owner.add_spell(/datum/action/cooldown/spell/undirected/transfix/master, source = lord_datum)
+			lord_datum.add_blood_spell(/datum/action/cooldown/spell/undirected/transfix/master,)
 			for(var/S in MOBSTATS)
 				lord.current.change_stat(S, 2)
 			to_chat(lord, span_notice("My dominion over others minds and my own body returns to me. I am nearing perfection. The armies of the dead shall now answer my call."))

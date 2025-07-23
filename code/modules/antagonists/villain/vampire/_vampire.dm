@@ -75,8 +75,7 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	owner.current.cmode_music = 'sound/music/cmode/antag/CombatThrall.ogg'
 
 	owner.current.adjust_skillrank(/datum/skill/magic/blood, 2, TRUE)
-	owner.current.add_spell(/datum/action/cooldown/spell/undirected/transfix, source = src)
-
+	add_blood_spell(/datum/action/cooldown/spell/undirected/transfix)
 	vamp_look()
 	. = ..()
 	equip()
@@ -98,6 +97,15 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		to_chat(owner.current, span_danger("I am no longer a [job_rank]!"))
 	owner.special_role = null
 	return ..()
+
+/datum/antagonist/vampire/proc/add_blood_spell(spell_type)
+	if(!spell_type)
+		return
+	if(owner.current.get_spell(spell_type))
+		return
+	var/datum/action/cooldown/spell/blood = new spell_type(src)
+	blood.spell_type = SPELL_VITAE
+	blood.Grant(owner.current)
 
 /datum/antagonist/vampire/proc/equip()
 	return

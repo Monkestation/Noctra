@@ -39,10 +39,10 @@
 
 /datum/action/cooldown/spell/undirected/transfix/proc/get_targets()
 	var/list/selection = list()
-	for(var/mob/living/carbon/human/target in viewers(6, owner))
+	for(var/mob/living/carbon/human/target in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, owner))
 		if(!target.mind || target.stat != CONSCIOUS)
 			continue
-		if(target.mind.has_antag_datum(/datum/antagonist/vampire))
+		if(target.mind?.has_antag_datum(/datum/antagonist/vampire))
 			continue
 		selection += target
 
@@ -67,7 +67,7 @@
 		owner.visible_message("<font color='red'>[owner]'s eyes glow a ghastly red as they project their will outwards!</font>")
 
 	for(var/mob/living/carbon/human/target as anything in targets)
-		if(target.cmode)
+		if(target.cmode || get_dist(target, owner) >= COMBAT_MESSAGE_RANGE + 2)
 			will_dice++
 		var/willpower = round(target.STAINT / int_divisor, 1)
 		var/willroll = roll(willpower, will_dice)

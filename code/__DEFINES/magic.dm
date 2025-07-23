@@ -135,6 +135,7 @@ DEFINE_BITFIELD(antimagic_flags, list(
 	"MAGIC_RESISTANCE" = MAGIC_RESISTANCE,
 	"MAGIC_RESISTANCE_HOLY" = MAGIC_RESISTANCE_HOLY,
 	"MAGIC_RESISTANCE_MIND" = MAGIC_RESISTANCE_MIND,
+	"MAGIC_RESISTANCE_UNHOLY" = MAGIC_RESISTANCE_UNHOLY,
 ))
 
 // Spell types
@@ -146,6 +147,8 @@ DEFINE_BITFIELD(antimagic_flags, list(
 #define SPELL_MIRACLE 3
 /// Casted with the essence gauntlet, using essence vials
 #define SPELL_ESSENCE 4
+/// Casted with vitae by a vampire
+#define SPELL_VITAE 5
 
 // Generic Bitflags for spells
 /// Ignore the trait [TRAIT_SPELLBLOCK]

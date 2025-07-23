@@ -890,6 +890,20 @@
 
 			return TRUE
 
+		if(SPELL_VITAE)
+			var/datum/antagonist/vampire/vampire_datum = owner.mind?.has_antag_datum(/datum/antagonist/vampire)
+			if(!vampire_datum)
+				if(feedback)
+					to_chat(owner, span_warning("I cannot grasp these magicks..."))
+				return FALSE
+			if(!vampire_datum.has_vitae(used_cost))
+				if(feedback)
+					to_chat(owner, span_warning("My vitae pool is too dry..."))
+				return FALSE
+
+			return TRUE
+
+
 /**
  * Charge the owner with the cost of the spell.
  *
@@ -930,6 +944,7 @@
 			var/mob/living/carbon/human/H = owner
 			if(!istype(H) || !H.cleric)
 				return invoke_cost(used_cost, SPELL_MANA, TRUE)
+
 			H.cleric.update_devotion(-used_cost)
 
 		if(SPELL_ESSENCE)
@@ -938,6 +953,13 @@
 				return invoke_cost(used_cost, SPELL_MANA, TRUE)
 
 			gaunt.consume_essence(used_cost, attunements)
+
+		if(SPELL_VITAE)
+			var/datum/antagonist/vampire/vampire_datum = owner.mind?.has_antag_datum(/datum/antagonist/vampire)
+			if(!vampire_datum)
+				return invoke_cost(used_cost, SPELL_MANA, TRUE)
+
+			vampire_datum.adjust_vitae(-used_cost)
 
 	return used_cost
 
