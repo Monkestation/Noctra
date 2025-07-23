@@ -415,7 +415,7 @@
 			continue
 		total_value += total_attunements[attunement] * attunements[attunement]
 
-	attuned_strength = max(total_value, 0.5)
+	attuned_strength = clamp(total_value, 0.5, 2)
 
 /// Checks if the owner of the spell can currently cast it.
 /// Does not check anything involving potential targets.
