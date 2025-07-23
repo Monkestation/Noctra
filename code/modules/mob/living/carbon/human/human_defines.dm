@@ -142,9 +142,6 @@
 
 	fovangle = FOV_DEFAULT // our fov
 
-	var/mob/living/carbon/human/hostagetaker //Stores the person that took us hostage in a var, allows us to force them to attack the mob and such
-	var/mob/living/carbon/human/hostage //What hostage we have
-
 //Checking the highest armor class worn
 //Limb armors use the second highest armor class
 /mob/living/carbon/human/proc/check_armor_class()

@@ -9,16 +9,22 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/dummy/Initialize()
 	. = ..()
-	GLOB.human_list -= src //we dont want dummies in this list
+	// Can we PLEASE get a consistent way to wipe these dummies no matter how we spawn in?
+	GLOB.human_list -= src
 	GLOB.carbon_list -= src
 	GLOB.mob_living_list -= src
 	GLOB.alive_mob_list -= src
+	GLOB.mob_list -= src
 
 /mob/living/carbon/human/dummy/Destroy()
 	in_use = FALSE
 	return ..()
 
 /mob/living/carbon/human/dummy/Life()
+	return
+
+// no reason for these to ever be hearing sensitive, it just wastes time on spatial grid stuff
+/mob/living/carbon/human/dummy/become_hearing_sensitive(trait_source)
 	return
 
 /mob/living/carbon/human/dummy/proc/wipe_state()

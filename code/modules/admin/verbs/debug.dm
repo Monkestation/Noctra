@@ -288,7 +288,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if (dresscode == "As Roguetown Job...")
 		var/list/roguejob_paths = subtypesof(/datum/outfit/job)
 		var/list/roguejob_outfits = list()
-		for(var/datum/outfit/O in roguejob_paths)
+		for(var/datum/outfit/O as anything in roguejob_paths)
 			//roguetown coders are morons and didn't give ANY outfits proper fucking names
 			if(initial(O.can_be_admin_equipped))
 				roguejob_outfits["[O]"] = O

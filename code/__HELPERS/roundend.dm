@@ -454,7 +454,7 @@
 	else if(failed_chosen > 0)
 		if(showed_any_champions)
 			parts += "<br>"
-		parts += "<div style='text-align: center;'>[failed_chosen] god's chosen [failed_chosen == 1 ? "has" : "have"] failed to become [failed_chosen == 1 ? "a champion" : "champions"].</div>"
+		parts += "<div style='text-align: center;'>[failed_chosen] of gods' chosen [failed_chosen == 1 ? "has" : "have"] failed to become [failed_chosen == 1 ? "a champion" : "champions"].</div>"
 
 	parts += "</div>"
 	return parts.Join("<br>")

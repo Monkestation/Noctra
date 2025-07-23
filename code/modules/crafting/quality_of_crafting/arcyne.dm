@@ -2,6 +2,8 @@
 	abstract_type = /datum/repeatable_crafting_recipe/arcyne
 	skillcraft = /datum/skill/magic/arcane
 	craftdiff = 0
+	category = "Arcyne"
+	allow_inverse_start = TRUE
 
 /datum/repeatable_crafting_recipe/arcyne/arcana
 	name = "amethyst transmutation"
@@ -18,6 +20,7 @@
 
 	attacked_atom = /obj/item/natural/stone
 	starting_atom = /obj/item/weapon/knife
+	allow_inverse_start = FALSE
 	subtypes_allowed = TRUE // so you can use any subtype of knife
 	reagent_subtypes_allowed = TRUE // so normal mana potions can be used as well as weak ones.
 
@@ -32,7 +35,6 @@
 	output = /obj/item/natural/feather/infernal
 	attacked_atom = /obj/item/natural/feather
 	starting_atom = /obj/item/natural/infernalash
-	uses_attacked_atom = TRUE
 	craftdiff = 2
 
 /datum/repeatable_crafting_recipe/arcyne/sending_stone
@@ -46,7 +48,6 @@
 	starting_atom = /obj/item/gem/amethyst
 	attacked_atom = /obj/item/natural/stone
 	output = /obj/item/sendingstonesummoner
-	uses_attacked_atom = TRUE
 	craftdiff = 2
 
 /datum/repeatable_crafting_recipe/arcyne/voidlamptern
@@ -61,7 +62,6 @@
 	output = /obj/item/flashlight/flare/torch/lantern/voidlamptern
 	starting_atom = /obj/item/flashlight/flare/torch/lantern
 	attacked_atom = /obj/item/natural/obsidian
-	uses_attacked_atom = TRUE
 	craftdiff = 2
 
 /datum/repeatable_crafting_recipe/arcyne/nomagicglove
@@ -74,9 +74,9 @@
 		/obj/item/gem = 1,
 	)
 	output = /obj/item/clothing/gloves/nomagic
-	starting_atom = /obj/item/clothing/gloves/leather
-	attacked_atom = /obj/item/gem
-	uses_attacked_atom = TRUE
+	starting_atom = /obj/item/gem
+	attacked_atom = /obj/item/clothing/gloves/leather
+	allow_inverse_start = FALSE
 	subtypes_allowed = TRUE
 	craftdiff = 3
 
@@ -93,7 +93,6 @@
 	output = /obj/item/hourglass/temporal
 	starting_atom = /obj/item/natural/glass
 	attacked_atom = /obj/item/natural/melded/t2
-	uses_attacked_atom = TRUE
 	subtypes_allowed = TRUE
 	craftdiff = 3
 
@@ -109,7 +108,6 @@
 	output = /obj/item/clothing/ring/shimmeringlens
 	starting_atom = /obj/item/natural/iridescentscale
 	attacked_atom = /obj/item/natural/leyline
-	uses_attacked_atom = TRUE
 	craftdiff = 2
 
 /datum/repeatable_crafting_recipe/arcyne/mimictrinket
@@ -123,7 +121,6 @@
 	output = /obj/item/mimictrinket
 	starting_atom = /obj/item/natural/wood/plank
 	attacked_atom = /obj/item/natural/melded/t2
-	uses_attacked_atom = TRUE
 	craftdiff = 3
 
 /datum/repeatable_crafting_recipe/arcyne/binding
@@ -137,11 +134,10 @@
 	output = /obj/item/rope/chain/bindingshackles
 	starting_atom = /obj/item/ingot/iron
 	attacked_atom = /obj/item/natural/melded/t2
-	uses_attacked_atom = TRUE
 	craftdiff = 2
 
 /datum/repeatable_crafting_recipe/arcyne/focus
-	name = "Primordial Quartz Focus"
+	name = "primordial quartz focus"
 	requirements = list(
 		/obj/item/natural/melded/t2  = 1,
 		/obj/item/ingot/gold = 1,
@@ -152,7 +148,6 @@
 	attacked_atom = /obj/item/mana_battery/mana_crystal/small
 
 	output = /obj/item/mana_battery/mana_crystal/small/focus
-	uses_attacked_atom = TRUE
 	craftdiff = 2
 
 /datum/repeatable_crafting_recipe/arcyne/sigil
@@ -166,11 +161,10 @@
 	output = /obj/item/clothing/ring/arcanesigil
 	starting_atom = /obj/item/natural/leyline
 	attacked_atom = /obj/item/natural/melded/t3
-	uses_attacked_atom = TRUE
 	craftdiff = 2
 
 /datum/repeatable_crafting_recipe/arcyne/mana_chalk
-	name = "Mana Infused Chalk"
+	name = "mana infused chalk"
 	requirements = list(
 		/obj/item/ore/cinnabar = 1,
 	)
@@ -185,7 +179,7 @@
 	subtypes_allowed = TRUE
 
 /datum/repeatable_crafting_recipe/arcyne/mana_chalk_natural
-	name = "Natural Mana Infused Chalk"
+	name = "natural mana infused chalk"
 	requirements = list(
 		/obj/item/reagent_containers/powder/manabloom = 1,
 		/obj/item/mana_battery/mana_crystal/small = 1
@@ -209,7 +203,6 @@
 	output = /obj/item/natural/melded/t1
 	starting_atom = /obj/item/natural/infernalash
 	attacked_atom = /obj/item/natural/elementalmote
-	uses_attacked_atom = TRUE
 	craftdiff = 2
 
 /datum/repeatable_crafting_recipe/arcyne/t2_meld
@@ -224,7 +217,6 @@
 	output = /obj/item/natural/melded/t2
 	starting_atom = /obj/item/natural/hellhoundfang
 	attacked_atom = /obj/item/natural/elementalshard
-	uses_attacked_atom = TRUE
 	craftdiff = 2
 
 /datum/repeatable_crafting_recipe/arcyne/t3_meld
@@ -239,7 +231,6 @@
 	output = /obj/item/natural/melded/t3
 	starting_atom = /obj/item/natural/heartwoodcore
 	attacked_atom = /obj/item/natural/moltencore
-	uses_attacked_atom = TRUE
 	craftdiff = 2
 
 /datum/repeatable_crafting_recipe/arcyne/t4_meld
@@ -254,7 +245,6 @@
 	output = /obj/item/natural/melded/t4
 	starting_atom = /obj/item/natural/abyssalflame
 	attacked_atom = /obj/item/natural/elementalrelic
-	uses_attacked_atom = TRUE
 	craftdiff = 2
 
 /datum/repeatable_crafting_recipe/arcyne/t5_meld
@@ -268,5 +258,4 @@
 	output = /obj/item/natural/melded/t5
 	starting_atom = /obj/item/natural/voidstone
 	attacked_atom = /obj/item/natural/melded/t4
-	uses_attacked_atom = TRUE
 	craftdiff = 2

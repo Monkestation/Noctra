@@ -6,16 +6,15 @@
 	possible_item_intents = list(/datum/intent/use)
 	gripped_intents = list(/datum/intent/use, /datum/intent/mace/strike/wood)
 	force = 2
-	force_wielded = 4
 	throwforce = 1
 	firefuel = 10 MINUTES
 	resistance_flags = FLAMMABLE
 	slot_flags = ITEM_SLOT_BACK
 	smeltresult = /obj/item/ash
 
-/obj/item/broom/Initialize()
-	. = ..()
+/obj/item/broom/apply_components()
 	AddComponent(/datum/component/walking_stick)
+	AddComponent(/datum/component/two_handed, force_unwielded=2, force_wielded=4, wield_callback = CALLBACK(src, PROC_REF(on_wield)), unwield_callback = CALLBACK(src, PROC_REF(on_unwield)))
 
 /obj/item/broom/getonmobprop(tag)
 	. = ..()
@@ -28,24 +27,59 @@
 			if("onback")
 				return list("shrink" = 0.5,"sx" = -1,"sy" = 2,"nx" = 0,"ny" = 2,"wx" = 2,"wy" = 1,"ex" = 0,"ey" = 1,"nturn" = 0,"sturn" = 0,"wturn" = 70,"eturn" = 15,"nflip" = 1,"sflip" = 1,"wflip" = 1,"eflip" = 1,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
-/obj/item/broom/attack_obj(obj/O, mob/living/user)
-	if(do_after(user, 3 SECONDS, O))
-		if(istype(O, /obj/effect/decal/cleanable/dirt))
-			user.visible_message("<span class='notice'>[user] sweeps \the [O.name].</span>", "<span class='notice'>I sweep \the [O.name].</span>")
-			playsound(user, "clothwipe", 100, TRUE)
-			qdel(O)
-		if(istype(O, /obj/effect/decal/cleanable/blood))
-			add_blood_DNA(GET_ATOM_BLOOD_DNA(O))
-			return
+/**
+ * Handles registering the sweep proc when the broom is wielded
+ *
+ * Arguments:
+ * * source - The source of the on_wield proc call
+ * * user - The user which is wielding the broom
+ */
+/obj/item/broom/on_wield(obj/item/source, mob/user)
+	. = ..()
+	to_chat(user, span_notice("You brace the [src] against the ground in a firm sweeping stance."))
+	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(sweep))
 
-/obj/item/broom/attack_turf(turf/T, mob/living/user)
-	if(do_after(user, 3 SECONDS, T))
-		if(istype(T, /turf/open/water))
-			..()
-		for(var/obj/effect/decal/cleanable/dirt/C in T)
-			user.visible_message("<span class='notice'>[user] sweeps \the [T.name].</span>", "<span class='notice'>I sweep \the [T.name].</span>")
-			playsound(user, "clothwipe", 100, TRUE)
-			qdel(C)
-		for(var/obj/effect/decal/cleanable/blood/O in T)
-			add_blood_DNA(GET_ATOM_BLOOD_DNA(O))
-			return
+/**
+ * Handles unregistering the sweep proc when the broom is unwielded
+ *
+ * Arguments:
+ * * source - The source of the on_unwield proc call
+ * * user - The user which is unwielding the broom
+ */
+/obj/item/broom/on_unwield(obj/item/source, mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
+
+/obj/item/broom/afterattack(atom/A, mob/user, proximity)
+	. = ..()
+	if(!proximity)
+		return
+	sweep(user, A, show_message = TRUE)
+	return
+	// return . | AFTERATTACK_PROCESSED_ITEM
+
+/**
+ *
+ * Arguments:
+ * * user - The user of the pushbroom
+ * * A - The atom which is located at the location to push atoms from
+ */
+/obj/item/broom/proc/sweep(mob/user, atom/A, show_message)
+	SIGNAL_HANDLER
+
+	var/turf/current_item_loc = isturf(A) ? A : A.loc
+	if (!isturf(current_item_loc))
+		return
+
+	var/found_dirt = FALSE
+	for(var/obj/effect/decal/cleanable/dirt/C in current_item_loc)
+		if(show_message)
+			user.visible_message(span_notice("[user] sweeps \the [C] away."), span_notice("I sweep \the [C] away."))
+		qdel(C)
+		found_dirt = TRUE
+
+	if(found_dirt)
+		playsound(user, "clothwipe", 100, TRUE)
+
+	for(var/obj/effect/decal/cleanable/blood/O in current_item_loc)
+		add_blood_DNA(GET_ATOM_BLOOD_DNA(O))

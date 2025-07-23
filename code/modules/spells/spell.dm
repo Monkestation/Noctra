@@ -849,8 +849,8 @@
 				to_chat(owner, span_warning("I don't have enough stamina to cast!"))
 			return FALSE
 
-	if(spell_type == NONE)
-		return
+	if(spell_type == NONE || spell_type == SPELL_STAMINA)
+		return TRUE
 
 	switch(spell_type)
 		if(SPELL_MANA)

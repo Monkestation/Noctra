@@ -219,9 +219,11 @@
 	var/useder = user.zone_selected
 	if(!lying_attack_check(user,I))
 		return 0
+	var/accurate = FALSE
 	if(user.tempatarget)
 		useder = user.tempatarget
 		user.tempatarget = null
+		accurate = TRUE
 	affecting = get_bodypart(check_zone(useder)) //precise attacks, on yourself or someone you are grabbing
 //	else
 //		affecting = get_bodypart_complex(user.used_intent.height2limb(user.aimheight)) //this proc picks a bodypart at random as long as it's in the height list
@@ -235,7 +237,7 @@
 	SSblackbox.record_feedback("tally", "zone_targeted", 1, useder)
 
 	// the attacked_by code varies among species
-	return dna.species.spec_attacked_by(I, user, affecting, used_intent, src, useder)
+	return dna.species.spec_attacked_by(I, user, affecting, used_intent, src, useder, accurate)
 
 /mob/living/carbon/human/attack_hand(mob/user)
 	if(..())	//to allow surgery to return properly.

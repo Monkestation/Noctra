@@ -51,7 +51,8 @@
 		else
 			to_chat(user, span_notice("You decide not to upload the manuscript."))
 		return
-	if(istype(O, /obj/item/paper) && !has_paper)
+	// THIS IS FOR LOADING BLANK PAPER AS MATERIAL
+	if((O.type == /obj/item/paper) && !has_paper)
 		var/obj/item/paper/paper = O
 		if(paper.info)
 			to_chat(user, span_warning("The paper needs to be blank to be put into [src]."))
@@ -192,7 +193,7 @@
 	var/dat = "<h3>Manuscript Search Results:</h3><br>"
 	dat += "<table><tr><th>Author</th><th>Title</th><th>Category</th><th>Print</th></tr>"
 	var/list/decoded_books = SSlibrarian.pull_player_book_titles()
-	var/index = 0
+	var/index = 1
 	for(var/list/book in books)
 		dat += "<tr><td>[book["author"]]</td><td>[book["book_title"]]</td><td>[book["category"]]</td><td><a href='byond://?src=[REF(src)];print=1;id=[decoded_books[index]]'>Print</a></td></tr>"
 		index++

@@ -293,7 +293,10 @@
 	max_integrity = 240 // .8 of steel
 	sellprice = 45
 	last_used = 0
-	is_silver = TRUE
+
+/obj/item/weapon/knife/dagger/silver/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 //................ Psydonian Dagger ............... //
 /obj/item/weapon/knife/dagger/psydon
@@ -302,7 +305,10 @@
 	icon_state = "psydagger"
 	melting_material = null
 	sellprice = 60
-	is_silver = TRUE
+
+/obj/item/weapon/knife/dagger/psydon/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 //................ Profane Dagger ............... //
 /obj/item/weapon/knife/dagger/steel/profane
@@ -547,7 +553,10 @@
 	wdefense = 3
 	icon_state = "throw_knifes"
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 50, "embedded_fall_chance" = 0)
-	is_silver = TRUE
 	sellprice = 65
 	melting_material = /datum/material/silver
 	melt_amount = 50
+
+/obj/item/weapon/knife/throwingknife/psydon/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
