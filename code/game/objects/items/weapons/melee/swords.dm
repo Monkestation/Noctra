@@ -576,7 +576,10 @@
 	smeltresult = /obj/item/ingot/silver
 	sellprice = 160
 	last_used = 0
-	is_silver = TRUE
+
+/obj/item/weapon/sword/long/decorated/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 //................ Greatsword ............... //
 /obj/item/weapon/sword/long/greatsword
