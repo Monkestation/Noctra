@@ -748,7 +748,6 @@
 		var/datum/skill/skill = href_list["skill"]
 		M.adjust_skillrank(text2path(skill), 1)
 		log_admin("[key_name_admin(usr)] increased [key_name_admin(M)]'s [initial(skill.name)] skill.")
-		message_admins("[key_name_admin(usr)] increased [key_name_admin(M)]'s [initial(skill.name)] skill.")
 		show_player_panel_next(M, "skills")
 
 	else if(href_list["decrease_skill"])
@@ -756,7 +755,6 @@
 		var/datum/skill/skill = href_list["skill"]
 		M.adjust_skillrank(text2path(skill), -1)
 		log_admin("[key_name_admin(usr)] decreased [key_name_admin(M)]'s [initial(skill.name)] skill.")
-		message_admins("[key_name_admin(usr)] decreased [key_name_admin(M)]'s [initial(skill.name)] skill.")
 		show_player_panel_next(M, "skills")
 
 	else if(href_list["add_language"])
@@ -1247,8 +1245,7 @@
 		message_admins("[key_name_admin(usr)] changed [key_name_admin(M)]'s flaw from [being_changed.charflaw ? being_changed.charflaw : "NA"] to [flaw_to_change_to]")
 		log_admin("[key_name_admin(usr)] changed [key_name_admin(M)]'s flaw from [being_changed.charflaw ? being_changed.charflaw : "NA"] to [flaw_to_change_to]")
 
-		var/datum/charflaw/C = new flaw_to_change_to()
-		being_changed.charflaw = C
+		being_changed.set_flaw(flaw_to_change_to)
 
 	else if(href_list["modifycurses"])
 

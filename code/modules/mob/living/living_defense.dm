@@ -213,10 +213,9 @@
 		playsound(src.loc, 'sound/foley/struggle.ogg', 100, FALSE, -1)
 		user.Immobilize(1 SECONDS)
 		user.changeNext_move(1 SECONDS)
-		user.adjust_stamina(rand(7,15))
+		user.adjust_stamina(rand(4,10))
 		src.Immobilize(0.5 SECONDS)
 		src.changeNext_move(0.5 SECONDS)
-		src.adjust_stamina(rand(7,15))
 		return
 
 	if(!instant)
@@ -227,12 +226,11 @@
 	if(user.active_hand_index == 1)
 		if(user.r_grab)
 			user.r_grab.grab_state = GRAB_AGGRESSIVE
+			user.r_grab.update_grab_intents()
 	if(user.active_hand_index == 2)
 		if(user.l_grab)
 			user.l_grab.grab_state = GRAB_AGGRESSIVE
-
-	if(iscarbon(user))
-		user.update_grab_intents()
+			user.l_grab.update_grab_intents()
 
 	var/add_log = ""
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
@@ -244,32 +242,6 @@
 		user.set_pull_offsets(src, user.grab_state)
 	log_combat(user, src, "grabbed", addition="aggressive grab[add_log]")
 	return 1
-
-/mob/living/proc/update_grab_intents(mob/living/target)
-	return
-
-/mob/living/carbon/update_grab_intents()
-	var/obj/item/grabbing/G = get_active_held_item()
-	if(!istype(G))
-		return
-	if(ismob(G.grabbed))
-		if(isitem(G.sublimb_grabbed))
-			var/obj/item/I = G.sublimb_grabbed
-			G.possible_item_intents = I.grabbedintents(src, G.sublimb_grabbed)
-		else
-			if(iscarbon(G.grabbed) && G.limb_grabbed)
-				var/obj/item/I = G.limb_grabbed
-				G.possible_item_intents = I.grabbedintents(src, G.sublimb_grabbed)
-			else
-				var/mob/M = G.grabbed
-				G.possible_item_intents = M.grabbedintents(src, G.sublimb_grabbed)
-	if(isobj(G.grabbed))
-		var/obj/I = G.grabbed
-		G.possible_item_intents = I.grabbedintents(src, G.sublimb_grabbed)
-	if(isturf(G.grabbed))
-		var/turf/T = G.grabbed
-		G.possible_item_intents = T.grabbedintents(src)
-	update_a_intents()
 
 /turf/proc/grabbedintents(mob/living/user)
 	//RTD up and down
@@ -437,7 +409,7 @@
 /mob/living/proc/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
 	return
 
-/mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, item_animation_override = null, datum/intent/used_intent)
+/mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, item_animation_override = null, datum/intent/used_intent, atom_bounce)
 	if(!used_item)
 		used_item = get_active_held_item()
 	..()

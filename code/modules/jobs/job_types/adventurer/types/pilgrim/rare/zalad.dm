@@ -1,14 +1,7 @@
-/datum/advclass/pilgrim/rare/zalad
-	name = "Zalad Emir"
+/datum/advclass/pilgrim/rare/zybantine
+	name = "Zybantine Emir"
 	tutorial = "An Emir hailing from Deshret, here on business for the Mercator's Guild."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Rakshari",
-		"Elf",
-		"Half-Elf",
-		"Dwarf"
-	)
+	allowed_races = RACES_PLAYER_ZYBANTINE
 	outfit = /datum/outfit/job/adventurer/zalad
 	category_tags = list(CTAG_PILGRIM)
 	maximum_possible_slots = 1

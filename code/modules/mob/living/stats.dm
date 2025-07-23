@@ -244,6 +244,13 @@
 		(STATKEY_LCK) = STALUC,
 	)
 
+/// Return mob's stat value by stat_key
+/mob/living/proc/get_stat(stat_key)
+	if(!stat_key)
+		return
+
+	return LAZYACCESS(get_all_stats(), stat_key)
+
 ///Returns: the difference in value between the opponents stat key and ours.
 ///EG: Our endurace - opp endurance.
 /mob/living/proc/stat_difference_to(mob/living/opponent,stat_key)
@@ -267,41 +274,12 @@
 	return
 ///Returns: Difference betwen our_stat and opponents opp_stat.
 ///EG: Our STR - opp CON
-/mob/living/proc/stat_fight(mob/living/opponent, opp_stat_key, our_stat_key)
+/mob/living/proc/stat_compare(mob/living/opponent, our_stat_key, opp_stat_key)
 	if(!opponent || !opp_stat_key || !our_stat_key)
 		return
-	var/opponent_stat
-	var/our_stat
-	switch(opp_stat_key)
-		if(STATKEY_STR)
-			opponent_stat = opponent.STASTR
-		if(STATKEY_PER)
-			opponent_stat = opponent.STAPER
-		if(STATKEY_END)
-			opponent_stat = opponent.STAEND
-		if(STATKEY_CON)
-			opponent_stat = opponent.STACON
-		if(STATKEY_INT)
-			opponent_stat = opponent.STAINT
-		if(STATKEY_SPD)
-			opponent_stat = opponent.STASPD
-		if(STATKEY_LCK)
-			opponent_stat = opponent.STALUC
-	switch(our_stat_key)
-		if(STATKEY_STR)
-			our_stat = STASTR
-		if(STATKEY_PER)
-			our_stat = STAPER
-		if(STATKEY_END)
-			our_stat = STAEND
-		if(STATKEY_CON)
-			our_stat = STACON
-		if(STATKEY_INT)
-			our_stat = STAINT
-		if(STATKEY_SPD)
-			our_stat = STASPD
-		if(STATKEY_LCK)
-			our_stat = STALUC
+	var/our_stat = get_stat_level(our_stat_key)
+	var/opponent_stat = opponent.get_stat_level(opp_stat_key)
+
 	return our_stat - opponent_stat
 
 ///Effectively rolls a d20, with each point in the stat being a chance_per_point% chance to succeed per point in the stat. If no stat is provided, just returns 0.

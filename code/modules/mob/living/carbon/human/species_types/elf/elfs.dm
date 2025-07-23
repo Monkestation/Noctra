@@ -12,7 +12,7 @@
 
 /datum/species/elf/snow
 	name = "Elf"
-	id = "elf"
+	id = SPEC_ID_ELF
 	desc = "Necra's guides.\
 	\n\n\
 	Elves, created by Necra to guide humenity, are characterized by lengthened age, \

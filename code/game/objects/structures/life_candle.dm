@@ -65,8 +65,7 @@
 		STOP_PROCESSING(SSobj, src)
 		return
 
-	for(var/m in linked_minds)
-		var/datum/mind/mind = m
+	for(var/datum/mind/mind as anything in linked_minds)
 		if(!mind.current || (mind.current && mind.current.stat == DEAD))
 			addtimer(CALLBACK(src, PROC_REF(respawn), mind), respawn_time, TIMER_UNIQUE)
 

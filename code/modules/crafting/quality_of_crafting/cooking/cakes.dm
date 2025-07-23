@@ -11,7 +11,6 @@
 	attacked_atom = /obj/item/reagent_containers/food/snacks/cake
 	starting_atom = /obj/item/reagent_containers/food/snacks/produce/fruit/jacksberry/poison
 	output = /obj/item/reagent_containers/food/snacks/chescake_poison
-	uses_attacked_atom = TRUE
 	required_table = TRUE
 	craft_time = 6 SECONDS
 	crafting_sound = 'sound/foley/dropsound/food_drop.ogg'
@@ -30,7 +29,6 @@
 	attacked_atom = /obj/item/reagent_containers/food/snacks/cake
 	starting_atom = /obj/item/reagent_containers/food/snacks/raisins/poison
 	output = /obj/item/reagent_containers/food/snacks/chescake_poison
-	uses_attacked_atom = TRUE
 	required_table = TRUE
 	craft_time = 6 SECONDS
 	crafting_sound = 'sound/foley/dropsound/food_drop.ogg'
@@ -48,7 +46,6 @@
 	attacked_atom = /obj/item/reagent_containers/food/snacks/cake
 	starting_atom = /obj/item/reagent_containers/food/snacks/produce/fruit/jacksberry
 	output = /obj/item/reagent_containers/food/snacks/chescake
-	uses_attacked_atom = TRUE
 	required_table = TRUE
 	craft_time = 6 SECONDS
 	crafting_sound = 'sound/foley/dropsound/food_drop.ogg'
@@ -66,7 +63,6 @@
 	attacked_atom = /obj/item/reagent_containers/food/snacks/cake
 	starting_atom = /obj/item/reagent_containers/food/snacks/raisins
 	output = /obj/item/reagent_containers/food/snacks/chescake
-	uses_attacked_atom = TRUE
 	required_table = TRUE
 	craft_time = 6 SECONDS
 	crafting_sound = 'sound/foley/dropsound/food_drop.ogg'
@@ -84,7 +80,6 @@
 	attacked_atom = /obj/item/reagent_containers/food/snacks/butterdough
 	starting_atom = /obj/item/reagent_containers/food/snacks/egg
 	output = /obj/item/reagent_containers/food/snacks/cake
-	uses_attacked_atom = TRUE
 	required_table = TRUE
 	craft_time = 6 SECONDS
 	crafting_sound = 'sound/foley/dropsound/food_drop.ogg'
@@ -105,7 +100,6 @@
 	attacked_atom = /obj/item/reagent_containers/food/snacks/cake
 	starting_atom = /obj/item/reagent_containers/food/snacks/produce/fruit/pear
 	output = /obj/item/reagent_containers/food/snacks/zybcake
-	uses_attacked_atom = TRUE
 	craft_time = 9 SECONDS
 	crafting_sound = 'sound/foley/dropsound/gen_drop.ogg'
 	crafting_message = "add mouth-watering pear filling"
@@ -123,7 +117,6 @@
 	attacked_atom = /obj/item/reagent_containers/food/snacks/cake
 	starting_atom = /obj/item/reagent_containers/food/snacks/produce/fruit/plum
 	output = /obj/item/reagent_containers/food/snacks/crimsoncake
-	uses_attacked_atom = TRUE
 	craft_time = 9 SECONDS
 	crafting_sound = 'sound/foley/dropsound/gen_drop.ogg'
 	crafting_message = "add some fine plum filling"
@@ -141,7 +134,6 @@
 	attacked_atom = /obj/item/reagent_containers/food/snacks/cake
 	starting_atom = /obj/item/reagent_containers/food/snacks/produce/fruit/tangerine
 	output = /obj/item/reagent_containers/food/snacks/tangerinecake
-	uses_attacked_atom = TRUE
 	craft_time = 9 SECONDS
 	crafting_sound = 'sound/foley/dropsound/gen_drop.ogg'
 	crafting_message = "add some tangy tangerine filling"
@@ -159,7 +151,6 @@
 	attacked_atom = /obj/item/reagent_containers/food/snacks/cake
 	starting_atom = /obj/item/reagent_containers/food/snacks/produce/fruit/strawberry
 	output = /obj/item/reagent_containers/food/snacks/strawbycake
-	uses_attacked_atom = TRUE
 	craft_time = 9 SECONDS
 	crafting_sound = 'sound/foley/dropsound/gen_drop.ogg'
 	crafting_message = "add some tangy tangerine filling"
@@ -177,7 +168,6 @@
 	attacked_atom = /obj/item/reagent_containers/food/snacks/chescake
 	starting_atom = /obj/item/reagent_containers/food/snacks/cheese
 	output = /obj/item/reagent_containers/food/snacks/chescake_ready
-	uses_attacked_atom = TRUE
 	craft_time = 9 SECONDS
 	crafting_sound = 'sound/foley/dropsound/gen_drop.ogg'
 	crafting_message = "spread fresh cheese on the cake"
@@ -196,7 +186,6 @@
 	attacked_atom = /obj/item/reagent_containers/food/snacks/chescake_poison
 	starting_atom = /obj/item/reagent_containers/food/snacks/cheese
 	output = /obj/item/reagent_containers/food/snacks/chescake_poison_ready
-	uses_attacked_atom = TRUE
 	craft_time = 9 SECONDS
 	crafting_sound = 'sound/foley/dropsound/gen_drop.ogg'
 	crafting_message = "spread fresh cheese on the cake"
@@ -214,7 +203,6 @@
 	attacked_atom = /obj/item/reagent_containers/food/snacks/zybcake
 	starting_atom = /obj/item/reagent_containers/food/snacks/spiderhoney
 	output = /obj/item/reagent_containers/food/snacks/zybcake_ready
-	uses_attacked_atom = TRUE
 	craft_time = 9 SECONDS
 	crafting_sound = 'sound/foley/dropsound/gen_drop.ogg'
 	crafting_message = "spread spider-honey on the cake"
@@ -232,7 +220,6 @@
 	attacked_atom = /obj/item/reagent_containers/food/snacks/strawbycake
 	starting_atom = /obj/item/reagent_containers/food/snacks/sugar
 	output = /obj/item/reagent_containers/food/snacks/strawbycake_ready
-	uses_attacked_atom = TRUE
 	craft_time = 9 SECONDS
 	crafting_sound = 'sound/foley/dropsound/gen_drop.ogg'
 	crafting_message = "spread sugar frosting on the cake"
@@ -250,7 +237,6 @@
 	attacked_atom = /obj/item/reagent_containers/food/snacks/crimsoncake
 	starting_atom = /obj/item/reagent_containers/food/snacks/chocolate
 	output = /obj/item/reagent_containers/food/snacks/crimsoncake_ready
-	uses_attacked_atom = TRUE
 	craft_time = 9 SECONDS
 	crafting_sound = 'sound/foley/dropsound/gen_drop.ogg'
 	crafting_message = "add chocolate to the dough"
@@ -268,7 +254,6 @@
 	attacked_atom = /obj/item/reagent_containers/food/snacks/tangerinecake
 	starting_atom = /obj/item/reagent_containers/food/snacks/sugar
 	output = /obj/item/reagent_containers/food/snacks/tangerinecake_ready
-	uses_attacked_atom = TRUE
 	craft_time = 9 SECONDS
 	crafting_sound = 'sound/foley/dropsound/gen_drop.ogg'
 	crafting_message = "spread sugar frosting on the cake"

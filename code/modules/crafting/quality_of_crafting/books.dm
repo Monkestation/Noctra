@@ -4,7 +4,6 @@
 	grid_width = 32
 	grid_height = 64
 	var/list/types = list()
-	var/mob/current_reader
 	var/open
 	var/base_icon_state
 	var/can_spawn = TRUE
@@ -120,14 +119,11 @@
 
 /obj/item/recipe_book/dropped(mob/user, silent)
 	. = ..()
-	if(current_reader)
-		current_reader << browse(null,"window=recipe")
-		current_reader = null
+	user << browse(null,"window=recipe")
 
 /obj/item/recipe_book/attack_self(mob/user, params)
 	. = ..()
-	current_reader = user
-	current_reader << browse(generate_html(user),"window=recipe;size=800x810")
+	user << browse(generate_html(user),"window=recipe;size=800x810")
 
 /obj/item/recipe_book/proc/generate_html(mob/user)
 	var/client/client = user
@@ -289,7 +285,7 @@
 		</style>
 
 		<body>
-			<h1>Recipe Book</h1>
+			<h1>[capitalize(name)]</h1>
 
 			<div class="book-content">
 				<div class="sidebar">
@@ -566,14 +562,14 @@
 			var/category = href_list["category"]
 			if(category)
 				current_category = category
-				current_reader << browse(generate_html(current_reader), "window=recipe;size=800x810")
+				usr << browse(generate_html(usr), "window=recipe;size=800x810")
 			return
 
 		if("search")
 			var/query = href_list["query"]
 			if(query)
 				search_query = query
-				current_reader << browse(generate_html(current_reader), "window=recipe;size=800x810")
+				usr << browse(generate_html(usr), "window=recipe;size=800x810")
 			return
 
 		if("remember_query")
@@ -587,39 +583,39 @@
 			if(recipe_path)
 				var/datum/path = text2path(recipe_path)
 				current_recipe = path
-				current_reader << browse(generate_html(current_reader), "window=recipe;size=800x810")
+				usr << browse(generate_html(usr), "window=recipe;size=800x810")
 			return
 
 		if("clear_recipe")
 			current_recipe = null
-			current_reader << browse(generate_html(current_reader), "window=recipe;size=800x810")
+			usr << browse(generate_html(usr), "window=recipe;size=800x810")
 			return
 
 	if(href_list["set_category"])
 		current_category = href_list["set_category"]
-		current_reader << browse(generate_html(current_reader), "window=recipe;size=800x810")
+		usr << browse(generate_html(usr), "window=recipe;size=800x810")
 		return
 
 	if(href_list["search"])
 		search_query = href_list["search"]
-		current_reader << browse(generate_html(current_reader), "window=recipe;size=800x810")
+		usr << browse(generate_html(usr), "window=recipe;size=800x810")
 		return
 
 	if(href_list["view_recipe"])
 		var/datum/path = text2path(href_list["view_recipe"])
 		current_recipe = path
-		current_reader << browse(generate_html(current_reader), "window=recipe;size=800x810")
+		usr << browse(generate_html(usr), "window=recipe;size=800x810")
 		return
 
 	if(href_list["clear_recipe"])
 		current_recipe = null
-		current_reader << browse(generate_html(current_reader), "window=recipe;size=800x810")
+		usr << browse(generate_html(usr), "window=recipe;size=800x810")
 		return
 
 	if(href_list["pick_recipe"])
 		var/datum/path = text2path(href_list["pick_recipe"])
 		current_recipe = path
-		current_reader << browse(generate_html(current_reader), "window=recipe;size=800x810")
+		usr << browse(generate_html(usr), "window=recipe;size=800x810")
 
 /obj/item/recipe_book/getonmobprop(tag)
 	. = ..()
@@ -680,7 +676,7 @@
 
 /obj/item/recipe_book/leatherworking
 	name = "The Tanned Hide Tome: Mastery of Leather and Craft"
-	desc = "Penned by Orym Vaynore, fourth generation leatherworker"
+	desc = "Penned by Orym Vaynore, Fourth Generation Leatherworker."
 	icon_state ="book8_0"
 	base_icon_state = "book8"
 
@@ -688,18 +684,30 @@
 
 /obj/item/recipe_book/sewing
 	name = "Threads of Destiny: A Tailor's Codex"
-	desc = "Penned by Elise Heiran, second generation court tailor"
+	desc = "Penned by Elise Heiran, Second Generation Court Tailor."
 	icon_state ="book7_0"
 	base_icon_state = "book7"
 
 	types = list(
 		/datum/repeatable_crafting_recipe/sewing,
-		/datum/orderless_slapcraft/flowercrown,
+		/datum/orderless_slapcraft/bouquet,
+		)
+
+/obj/item/recipe_book/sewing_leather
+	can_spawn = FALSE
+	name = "High Fashion Encyclopedia"
+	desc = "The combined works of famed Elise Heiran and Orym Vayore."
+	icon_state ="book7_0"
+	base_icon_state = "book7"
+	types = list(
+		/datum/repeatable_crafting_recipe/sewing,
+		/datum/orderless_slapcraft/bouquet,
+		/datum/repeatable_crafting_recipe/leather,
 		)
 
 /obj/item/recipe_book/cooking
 	name = "The Hearthstone Grimoire: Culinary Secrets of the Realm"
-	desc = "Penned by Aric Dunswell, Head Court Chef, Third Generation"
+	desc = "Penned by Aric Dunswell, Head Court Chef, Third Generation."
 	icon_state ="book6_0"
 	base_icon_state = "book6"
 
@@ -715,12 +723,12 @@
 		/datum/repeatable_crafting_recipe/salo,
 		/datum/repeatable_crafting_recipe/saltfish,
 		/datum/repeatable_crafting_recipe/raisins,
-		/datum/orderless_slapcraft/pie,
+		/datum/orderless_slapcraft/food/pie,
 	)
 
 /obj/item/recipe_book/survival
 	name = "The Wilderness Guide: Secrets of Survival"
-	desc = "Penned by Kaelen Stormrider, Fourth Generation Trailblazer"
+	desc = "Penned by Kaelen Stormrider, Fourth Generation Trailblazer."
 	icon_state ="book5_0"
 	base_icon_state = "book5"
 
@@ -740,11 +748,12 @@
 		/datum/repeatable_crafting_recipe/raisins,
 		/datum/repeatable_crafting_recipe/parchment,
 		/datum/repeatable_crafting_recipe/crafting,
+		/datum/repeatable_crafting_recipe/projectile,
 	)
 
 /obj/item/recipe_book/underworld
 	name = "The Smuggler’s Guide: A Treatise on Elixirs of the Guild"
-	desc = "Penned by Thorne Ashveil, Thieves Guild's Alchemist, Second Generation"
+	desc = "Penned by Thorne Ashveil, Thieves Guild's Alchemist, Second Generation."
 	icon_state ="book4_0"
 	base_icon_state = "book4"
 	can_spawn = FALSE
@@ -757,7 +766,7 @@
 
 /obj/item/recipe_book/carpentry
 	name = "The Woodwright's Codex: Crafting with Timber and Grain"
-	desc = "Penned by Eadric Hollowell, Master Carpenter, Fourth Generation"
+	desc = "Penned by Eadric Hollowell, Master Carpenter, Fourth Generation."
 	icon_state ="book3_0"
 	base_icon_state = "book3"
 
@@ -767,7 +776,7 @@
 
 /obj/item/recipe_book/engineering
 	name = "The Engineer’s Primer: Machines, Mechanisms, and Marvels"
-	desc = "Penned by Liora Brasslock, Chief Engineer, Second Generation"
+	desc = "Penned by Liora Brasslock, Chief Engineer, Second Generation."
 	icon_state ="book2_0"
 	base_icon_state = "book2"
 
@@ -781,7 +790,7 @@
 
 /obj/item/recipe_book/masonry
 	name = "The Stonebinder’s Manual: Foundations of Craft and Fortitude"
-	desc = "Penned by Garrin Ironvein, Master Mason, Third Generation"
+	desc = "Penned by Garrin Ironvein, Master Mason, Third Generation."
 	icon_state ="book_0"
 	base_icon_state = "book"
 
@@ -792,7 +801,7 @@
 
 /obj/item/recipe_book/art
 	name = "The Artisan's Palette"
-	desc = "Created by Elara Moondance, Visionary Painter and Culinary Alchemist"
+	desc = "Created by Elara Moondance, Visionary Painter and Esteemed Tutor."
 	icon_state ="book3_0"
 	base_icon_state = "book3"
 
@@ -801,11 +810,14 @@
 		/datum/repeatable_crafting_recipe/paint_palette,
 		/datum/repeatable_crafting_recipe/paintbrush,
 		/datum/slapcraft_recipe/carpentry/structure/easel,
+		/datum/repeatable_crafting_recipe/parchment,
+		/datum/repeatable_crafting_recipe/crafting/scroll,
+		/datum/repeatable_crafting_recipe/reading/guide,
 	)
 
 /obj/item/recipe_book/blacksmithing
 	name = "The Smith’s Legacy"
-	desc = "Penned by Aldric Forgeheart, Master Blacksmith and Keeper of the Ancestral Flame"
+	desc = "Penned by Aldric Forgeheart, Master Blacksmith and Keeper of the Ancestral Flame."
 	icon_state ="book3_0"
 	base_icon_state = "book3"
 
@@ -816,7 +828,7 @@
 
 /obj/item/recipe_book/arcyne
 	name = "The Arcanum of Arcyne"
-	desc = "Penned by Elyndor Starforge, Grand Arcanist and Keeper of the Ethereal Crucible"
+	desc = "Penned by Elyndor Starforge, Grand Arcanist and Keeper of the Ethereal Crucible."
 	icon_state ="book4_0"
 	base_icon_state = "book4"
 
@@ -833,7 +845,7 @@
 
 /obj/item/recipe_book/alchemy
 	name = "Codex Virellia"
-	desc = "Transcribed by Maerion Duskwind, avid hater of gnomes."
+	desc = "Transcribed by Maerion Duskwind, Avid Hater of Gnomes."
 	icon_state ="book4_0"
 	base_icon_state = "book4"
 
@@ -850,3 +862,10 @@
 		/datum/slapcraft_recipe/alchemy,
 		/datum/repeatable_crafting_recipe/alchemy,
 	)
+
+// Shown when MMBing the /atom/movable/screen/craft "craft" HUD element
+/obj/item/recipe_book/always_known
+	name = "Survival"
+	can_spawn = FALSE
+	types = list(
+		/datum/repeatable_crafting_recipe/survival)

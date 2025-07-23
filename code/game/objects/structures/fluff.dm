@@ -143,6 +143,26 @@
 		return FALSE
 	return TRUE
 
+/obj/structure/fluff/railing/woodfence
+	name = "wooden fence"
+	desc = "A sturdy fence of wooden planks."
+	icon = 'icons/roguetown/misc/tallwoodenrailing.dmi'
+	icon_state = "tallwoodenrailing"
+	density = TRUE
+	opacity = FALSE
+	anchored = TRUE
+	layer = 2.91
+	climbable = FALSE
+	max_integrity = 500
+	passcrawl = FALSE
+	climb_offset = 6
+
+/obj/structure/fluff/railing/woodfence/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(get_dir(loc, target) == dir)
+		return FALSE
+	return TRUE
+
 /obj/structure/bars
 	name = "bars"
 	desc = "Iron bars made to keep things in or out."
@@ -578,6 +598,12 @@
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+/obj/structure/fluff/statue/bullet_act(obj/projectile/P)
+	. = ..()
+	if(. != BULLET_ACT_FORCE_PIERCE)
+		P.handle_drop()
+		return BULLET_ACT_HIT
+
 /obj/structure/fluff/statue/attack_hand_secondary(mob/user, params)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
@@ -784,8 +810,23 @@
 	if(!ishuman(user))
 		return
 
+	flick("globe1", src)
 	var/mob/living/carbon/human/H = user
-	var/random_message = pick("You spin the globe!", "You land on Rockhill!", "You land on Vanderlin!", "You land on Heartfelt!", "You land on Zaladin!", "You land on Port Thornvale!", "You land on Grenzelhoft!", "You land on Valoria!", "You land on the Fog Islands!")
+	var/random_message = pick(
+	"You spin the globe!",
+	"You land on Rockhill!",
+	"You land on Vanderlin!",
+	"You land on Heartfelt!",
+	"You land on Zaladin!",
+	"You land on Grenzelhoft!",
+	"You land on Valoria!",
+	"You land on Rosewood!",
+	"You land on Wintermare!",
+	"You land on Deshret!",
+	"You land on Kingsfield",
+	"You land on Amber Hollow!",
+	"You land on the lands of Z!",
+	"You land on the Fog Islands!")
 	to_chat(H, "<span class='notice'>[random_message]</span>")
 
 /obj/structure/fluff/statue/femalestatue/Initialize()
@@ -1303,3 +1344,16 @@
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 
+/obj/structure/fluff/steamvent
+	name = "steam vent"
+	desc = "An underground heating pipe outlet."
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "steam_vent"
+	density = FALSE
+	anchored = TRUE
+	max_integrity = 300
+	layer = 2.1
+
+/obj/structure/fluff/steamvent/Initialize()
+	. = ..()
+	MakeParticleEmitter(/particles/smoke/cig/big)

@@ -87,7 +87,7 @@
 	softcap = maximum_mana_capacity
 
 /obj/item/mana_battery/mana_crystal/standard
-	name = "Stabilized Primordial Quartz Crystal"
+	name = "stabilized primordial quartz crystal"
 	desc = "A stabilized Primordial Quartz Crystal, one of the few objects capable of stably storing mana without binding."
 	icon_state = "standard"
 
@@ -110,8 +110,8 @@
 /datum/mana_pool/mana_battery/mana_crystal/standard // basically, just, bog standard, none of the variables need to be changed
 
 /obj/item/mana_battery/mana_crystal/small
-	name = "Small Primordial Quartz Crystal"
-	desc = "A miniaturized Primordial Quartz crystal, formed using the run-off of cutting larger ones. Able to hold mana still, although not as much as a proper formation."
+	name = "small primordial quartz crystal"
+	desc = "A miniaturized Primordial Quartz Crystal, formed using the run-off of cutting larger ones. Able to hold mana still, although not as much as a proper formation."
 	icon_state = "small"
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -119,7 +119,7 @@
 	return /datum/mana_pool/mana_battery/mana_crystal/small
 
 /obj/item/mana_battery/mana_crystal/cut
-	name = "Cut Primordial Quartz Crystal"
+	name = "cut primordial quartz crystal"
 	desc = "A cut and shaped Primordial Quartz Crystal, using a standardized square cut. It lacks power until it is slotted into a proper amulet."
 	icon_state = "cut"
 	w_class = WEIGHT_CLASS_SMALL
@@ -141,7 +141,7 @@
 
 /obj/item/clothing/neck/mana_star
 	name = "primordial quartz amulet"
-	desc = "A cut priomrodial quartz crystal placed within a gilded amulet. It naturally draws and fixes mana for your use."
+	desc = "A cut Primordial Quartz Crystal placed within a gilded amulet. It naturally draws and fixes mana for your use."
 	has_initial_mana_pool = TRUE
 	icon = 'icons/obj/crystals.dmi'
 	icon_state = "amulet"
@@ -178,8 +178,8 @@
 		mana_pool.transfer_specific_mana(user.mana_pool, drawn_mana, decrement_budget = TRUE)
 
 /obj/item/mana_battery/mana_crystal/small/focus //really only exists for debug.
-	name = "Focused Small Primordial Quartz Crystal"
-	desc = "A crystal entwined in gold and arcyne meld. You can draw mana from this while casting."
+	name = "focused small primordial quartz crystal"
+	desc = "A Primordial Quartz Crystal entwined in gold and arcyne meld. You can draw mana from this while casting."
 	icon_state = "foci"
 
 /obj/item/mana_battery/mana_crystal/small/focus/get_initial_mana_pool_type()

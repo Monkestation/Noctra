@@ -105,7 +105,7 @@
 
 	// attack with weapon if we have one
 	if(Weapon)
-		if(!Weapon.wielded)
+		if(!HAS_TRAIT(Weapon, TRAIT_WIELDED))
 			if(Weapon.force_wielded > Weapon.force)
 				if(!OffWeapon)
 					Weapon.attack_self(src)

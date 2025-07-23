@@ -8,18 +8,26 @@
 		skills.set_current(src)
 	return skills
 
+/// Make a mob an apprentice to the skill_holder
 /mob/proc/make_apprentice(mob/youngling)
 	return ensure_skills().make_apprentice(youngling)
 
-/mob/proc/get_learning_boon(skill)
-	return ensure_skills().get_learning_boon(skill)
+/// Adjust the experience of the apprentices
+/mob/proc/adjust_apprentice_exp(skill, amt, silent)
+	return ensure_skills().adjust_apprentice_exp(skill, amt, silent)
 
+/// Return the max amount of apprentices of the skill_holder
+/mob/proc/return_max_apprentices()
+	return ensure_skills().max_apprentices
+
+/// Return the list of apprentices from the skill_holder
 /mob/proc/return_apprentices()
 	return ensure_skills().apprentices
 
 /mob/proc/is_apprentice()
 	return ensure_skills().apprentice
 
+/// Return the apprentice name from the skill_holder
 /mob/proc/return_apprentice_name()
 	return ensure_skills().apprentice_name
 
@@ -32,13 +40,11 @@
 /mob/proc/set_apprentice_training_skills(list/trainable_skills = list())
 	ensure_skills().apprentice_training_skills = trainable_skills
 
+/// Get the exp modifier for the skill
+/mob/proc/get_learning_boon(skill)
+	return ensure_skills().get_learning_boon(skill)
 
-/mob/proc/return_max_apprentices()
-	return ensure_skills().max_apprentices
-
-/mob/proc/adjust_apprentice_exp(skill, amt, silent)
-	return ensure_skills().adjust_apprentice_exp(skill, amt, silent)
-
+/// Print all skill levels
 /mob/proc/print_levels()
 	return ensure_skills().print_levels(src)
 
@@ -48,6 +54,7 @@
 /mob/proc/get_skill_dodge_drain(skill)
 	return ensure_skills().get_skill_dodge_drain(skill)
 
+/// Get the current level of the skill
 /mob/proc/get_skill_level(skill)
 	return ensure_skills().get_skill_level(skill)
 
@@ -312,7 +319,6 @@
 		return TRUE
 	else
 		to_chat(current, span_warning("My [skill_ref.name] has weakened to [SSskills.level_names[known_skills[skill_ref]]]!"))
-
 
 /**
  * adjusts the skill level

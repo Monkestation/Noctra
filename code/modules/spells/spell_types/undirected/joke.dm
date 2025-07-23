@@ -6,8 +6,12 @@
 
 	invocation_type = INVOCATION_SHOUT
 
-	charge_drain = FALSE
+	spell_type = NONE
+	charge_required = FALSE
+	sound = null
 	has_visual_effects = FALSE
+
+	charge_required = FALSE
 	cooldown_time = 1 MINUTES
 
 	var/message
@@ -30,7 +34,7 @@
 	for(var/mob/living/carbon/C in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, owner) - owner)
 		if(C.stat > CONSCIOUS)
 			continue
-		if(C.stress <= 0)
+		if(C.stress < STRESS_NEUTRAL)
 			continue
 		addtimer(CALLBACK(src, PROC_REF(reaction), C), rand(2 SECONDS, 2.5 SECONDS))
 

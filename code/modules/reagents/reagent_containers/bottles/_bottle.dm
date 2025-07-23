@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	amount_per_transfer_from_this = 6
 	possible_transfer_amounts = list(6)
 	volume = 70
-	fill_icon_thresholds = list(0, 25, 50, 75, 100)
+	fill_icon_thresholds = list(0, 10, 25, 50, 75, 100)
 	dropshrink = 0.8
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_MOUTH
 	obj_flags = CAN_BE_HIT
@@ -173,7 +173,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	amount_per_transfer_from_this = 6
 	possible_transfer_amounts = list(6)
 	volume = 30
-	fill_icon_thresholds = list(0, 25, 50, 75, 100)
+	fill_icon_thresholds = list(0, 10, 25, 50, 75, 100)
 	dropshrink = 0.8
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_MOUTH
 	obj_flags = CAN_BE_HIT

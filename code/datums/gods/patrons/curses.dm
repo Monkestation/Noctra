@@ -26,8 +26,7 @@
 	return
 
 /mob/living/carbon/human/proc/handle_curses()
-	for(var/curse in curses)
-		var/datum/curse/C = curse
+	for(var/datum/curse/C as anything in curses)
 		C.on_life(src)
 
 /mob/living/carbon/human/proc/add_curse(datum/curse/C, silent = FALSE)

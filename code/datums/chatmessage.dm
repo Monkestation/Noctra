@@ -55,6 +55,14 @@
 	return ..()
 
 /**
+ * Calls qdel on the chatmessage when its parent is deleted, used to register qdel signal
+ */
+/datum/chatmessage/proc/on_parent_qdel()
+	SIGNAL_HANDLER
+
+	qdel(src)
+
+/**
  * Generates a chat message image representation
  *
  * Arguments:
@@ -69,7 +77,7 @@
 	var/static/list/language_icons
 	// Register client who owns this message
 	owned_by = owner.client
-	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, PROC_REF(qdel), src)
+	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_qdel))
 
 	// Clip message
 	var/maxlen = owned_by.prefs.max_chat_length
@@ -148,7 +156,7 @@
 	if(!target || QDELETED(target))
 		return qdel(src)
 	approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
-	message_loc = target
+	message_loc = isturf(target) ? target : get_atom_on_turf(target)
 	// Translate any existing messages upwards, apply exponential decay factors to timers
 	if (owned_by.seen_messages)
 //		var/idx = 1
@@ -208,9 +216,8 @@
  * * message_language - The language that the message is said in
  * * raw_message - The text content of the message
  * * spans - Additional classes to be added to the message
- * * message_mode - Bitflags relating to the mode of the message
  */
-/mob/proc/create_chat_message(atom/movable/speaker, datum/language/message_language, raw_message, list/spans, message_mode)
+/mob/proc/create_chat_message(atom/movable/speaker, datum/language/message_language, raw_message, list/spans)
 	if(HAS_TRAIT(speaker, TRAIT_RUNECHAT_HIDDEN))
 		return
 	// Ensure the list we are using, if present, is a copy so we don't modify the list provided to us
