@@ -43,7 +43,6 @@
 	owner.current.verbs -= /mob/living/carbon/human/proc/demand_submission
 	owner.current.verbs -= /mob/living/carbon/human/proc/vamp_regenerate
 	owner.current.verbs -= /mob/living/carbon/human/proc/punish_spawn
-	owner.current.mana_pool.ethereal_recharge_rate -= 0.2
 
 /datum/antagonist/vampire/lord/greet()
 	to_chat(owner.current, span_userdanger("I am ancient. I am the Land. And I am now awoken to trespassers upon my domain."))
