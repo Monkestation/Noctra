@@ -1,5 +1,5 @@
 /datum/job/mageapprentice
-	title = "Magician's Apprentice"
+	title = "Magician Apprentice"
 	tutorial = "Your family managed to send you to college to learn the Arcyne Arts.\
 	 It's been stressful, but you'll earn your degree and become a fully fleged Magician one dae.\
 	  As long as you can keep your grades up, that is..."
