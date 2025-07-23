@@ -34,8 +34,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	for (var/alert in alerts)
 		clear_alert(alert, TRUE)
 	if(observers && observers.len)
-		for(var/M in observers)
-			var/mob/dead/observe = M
+		for(var/mob/dead/observe as anything in observers)
 			observe.reset_perspective(null)
 	qdel(hud_used)
 	for(var/cc in client_colours)
@@ -428,7 +427,7 @@ GLOBAL_VAR_INIT(mobids, 1)
  */
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
 	set name = "Point To"
-	set category = "Object"
+	set category = "IC"
 
 	if(istype(A, /obj/effect/temp_visual/point))
 		return FALSE
@@ -543,8 +542,8 @@ GLOBAL_VAR_INIT(mobids, 1)
  * This actually gets the mind datums notes
  */
 /mob/verb/memory()
-	set name = "Notes"
-	set category = "Memory"
+	set name = "Memories"
+	set category = "IC"
 	set desc = ""
 	if(mind)
 		mind.show_memory(src)
@@ -555,8 +554,8 @@ GLOBAL_VAR_INIT(mobids, 1)
  * Add a note to the mind datum
  */
 /mob/verb/add_memory(msg as message)
-	set name = "AddNote"
-	set category = "Memory"
+	set name = "Add Memory"
+	set category = "IC"
 	if(mind)
 		if (world.time < memory_throttle_time)
 			return
@@ -1175,9 +1174,9 @@ GLOBAL_VAR_INIT(mobids, 1)
 	var/turf/mob_location = get_turf(src)
 	var/area/mob_area = get_area(src)
 
-	if(mob_location.get_lumcount() > light_amount)
+	if(mob_location?.get_lumcount() > light_amount)
 		return TRUE
-	else if(mob_area.dynamic_lighting == DYNAMIC_LIGHTING_DISABLED)
+	else if(mob_area?.dynamic_lighting == DYNAMIC_LIGHTING_DISABLED)
 		return TRUE
 
 	return FALSE
@@ -1347,7 +1346,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	stat = new_stat
 	SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, new_stat, .)
 
-/mob/say_mod(input, message_mode)
+/mob/say_mod(input, list/message_mods = list())
 	var/customsayverb = findtext(input, "*")
 	if(customsayverb)
 		return lowertext(copytext(input, 1, customsayverb))

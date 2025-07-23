@@ -238,7 +238,6 @@
 
 	var/muddy = FALSE
 	var/bloodiness = 20
-	var/obj/structure/closet/dirthole/holie
 	var/dirt_amt = 3
 
 /turf/open/floor/dirt/attack_hand_secondary(mob/user, params)
@@ -256,12 +255,6 @@
 		else
 			qdel(I)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/turf/open/floor/dirt/Destroy()
-	if(holie)
-		QDEL_NULL(holie)
-	return ..()
-
 
 /turf/open/floor/dirt/Crossed(atom/movable/O)
 	..()
@@ -419,6 +412,16 @@
 /turf/open/floor/volcanic/Initialize()
 	dir = pick(GLOB.cardinals)
 	. = ..()
+
+/turf/open/floor/hay
+	name = "hay"
+	desc = "A light covering of hay strewn across the ground."
+	icon_state = "hay"
+	footstep = FOOTSTEP_GRASS
+	barefootstep = FOOTSTEP_SOFT_BAREFOOT
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	landsound = 'sound/foley/jumpland/grassland.ogg'
+	slowdown = 0
 
 /*	..................   Stone Block Floors   ................... */
 /turf/open/floor/blocks
@@ -761,6 +764,21 @@
 
 /turf/open/floor/tile/masonic/spiral
 	icon_state = "masonicspiral"
+
+/turf/open/floor/tile/brick
+	icon_state = "bricktile"
+
+/turf/open/floor/tile/brownbrick
+	icon_state = "brown"
+
+/turf/open/floor/tile/diamond
+	icon_state = "dia_tile"
+
+/turf/open/floor/tile/diamond/blue
+	icon_state = "dia_tile1"
+
+/turf/open/floor/tile/diamond/purple
+	icon_state = "dia_tile2"
 
 /turf/open/floor/tile/bath
 	icon_state = "bathtile"

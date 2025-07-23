@@ -51,8 +51,11 @@
 	var/obj/item/weapon/I = parent
 	switch(enchant_type)
 		if(FORCE_BLADE_ENCHANT)
-			I.force += FORCE_BLADE_FORCE
-			I.force_wielded += FORCE_BLADE_FORCE
+			var/datum/component/two_handed/twohanded = I.GetComponent(/datum/component/two_handed)
+			if(twohanded)
+				twohanded.modify_base_force(additive_modifier = FORCE_BLADE_FORCE)
+			else
+				I.force += FORCE_BLADE_FORCE
 			I.add_filter(FORCE_FILTER, 2, outline_filter(1, "#9400D3"))
 		if(SEARING_BLADE_ENCHANT)
 			I.add_filter(SEARING_FILTER, 2, outline_filter(1, "#64af18"))
@@ -93,8 +96,11 @@
 	var/obj/item/weapon/I = parent
 	switch(enchant_type)
 		if(FORCE_BLADE_ENCHANT)
-			I.force -= FORCE_BLADE_FORCE
-			I.force_wielded -= FORCE_BLADE_FORCE
+			var/datum/component/two_handed/twohanded = I.GetComponent(/datum/component/two_handed)
+			if(twohanded)
+				twohanded.modify_base_force(additive_modifier = -1 * FORCE_BLADE_FORCE)
+			else
+				I.force -= FORCE_BLADE_FORCE
 			I.remove_filter(FORCE_FILTER)
 		if(SEARING_BLADE_ENCHANT)
 			I.remove_filter(SEARING_FILTER)

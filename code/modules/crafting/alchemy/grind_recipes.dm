@@ -104,6 +104,11 @@
 	valid_outputs = list(/obj/item/alch/coaldust = 1)
 	bonus_chance_outputs = list(/obj/item/alch/coaldust = 33)
 
+/datum/alch_grind_recipe/charcoal_ore
+	valid_input = /obj/item/ore/coal/charcoal
+	valid_outputs = list(/obj/item/alch/coaldust = 1)
+	bonus_chance_outputs = list(/obj/item/alch/coaldust = 33)
+
 /datum/alch_grind_recipe/gold_bar
 	valid_input = /obj/item/ingot/gold
 	valid_outputs = list(/obj/item/alch/golddust = 1)

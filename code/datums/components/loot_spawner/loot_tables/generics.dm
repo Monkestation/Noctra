@@ -136,7 +136,7 @@
 			/obj/item/weapon/flail/militia = 10,
 			/obj/item/weapon/sword/short = 10,
 			/obj/item/weapon/sword/long/greatsword/zwei = 10,
-			/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve = 10,
+			/obj/item/gun/ballistic/revolver/grenadelauncher/bow/short = 10,
 			/obj/item/gun/ballistic/revolver/grenadelauncher/bow = 10,
 			/obj/item/gun/ballistic/revolver/grenadelauncher/bow/long = 5,
 			/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow = 5,

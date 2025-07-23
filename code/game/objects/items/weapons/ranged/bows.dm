@@ -239,26 +239,26 @@
 
 
 /*------------\
-| Recurve Bow |
+| Short Bow |
 \------------*/
 
-/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-	name = "recurve bow"
+/obj/item/gun/ballistic/revolver/grenadelauncher/bow/short
+	name = "short bow"
 	desc = "As the eagle was killed by the arrow winged with his own feather, so the hand of the world is wounded by its own skill."
-	icon_state = "recurve"
+	icon_state = "recurve" // sprite should be changed eventually
 	base_icon = "recurve"
-	possible_item_intents = list(/datum/intent/shoot/bow/recurve, /datum/intent/arc/bow/recurve,INTENT_GENERIC)
+	possible_item_intents = list(/datum/intent/shoot/bow/short, /datum/intent/arc/bow/short,INTENT_GENERIC)
 	randomspread = 1
 	spread = 1
 	force = 9
 	damfactor = 0.9
 
-/datum/intent/shoot/bow/recurve
+/datum/intent/shoot/bow/short
 	chargetime = 0.75
 	chargedrain = 1.5
 	charging_slowdown = 2.5
 
-/datum/intent/arc/bow/recurve
+/datum/intent/arc/bow/short
 	chargetime = 0.75
 	chargedrain = 1.5
 	charging_slowdown = 2.5

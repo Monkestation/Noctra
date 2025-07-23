@@ -53,8 +53,7 @@
 		parent.Add_children(kids)
 		return
 
-	for(var/thing in kids)
-		var/datum/verbs/item = thing
+	for(var/datum/verbs/item as anything in kids)
 		item.Set_parent(src)
 		if (!item.abstract)
 			children += item

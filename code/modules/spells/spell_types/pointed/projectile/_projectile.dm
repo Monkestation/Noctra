@@ -13,6 +13,7 @@
  */
 /datum/action/cooldown/spell/projectile
 	self_cast_possible = FALSE
+	experience_modifer = 0.3 // More earned when hitting a target
 
 	/// What projectile we create when we shoot our spell.
 	var/obj/projectile/magic/projectile_type = /obj/projectile/magic/teleport
@@ -96,3 +97,15 @@
 	SIGNAL_HANDLER
 
 	SEND_SIGNAL(src, COMSIG_SPELL_PROJECTILE_HIT, hit, firer, source)
+
+	if(QDELETED(owner))
+		return
+
+	if(!ismob(hit))
+		return
+
+	var/mob/victim = hit
+	if(victim.stat == DEAD)
+		return
+
+	handle_exp(get_adjusted_cost() / 4)

@@ -32,13 +32,15 @@
 	if(isitem(cast_on))
 		if(istype(cast_on, /obj/item/reagent_containers/food/snacks))
 			var/obj/item/reagent_containers/food/snacks/food = cast_on
-			food.rotprocess = 0
+			if(!food.become_rotten())
+				to_chat(owner, span_warning("[food] rots away into nothing."))
+				qdel(food)
 		return
 	// DATUMISE ROT PLEASE
 	if(isanimal(cast_on))
 		var/mob/living/simple_animal/SA = cast_on
 		var/datum/component/rot/rot = SA.GetComponent(/datum/component/rot/simple)
-		if(rot?.amount < 9.9 MINUTES)
+		if(rot && rot.amount < 9.9 MINUTES)
 			rot.amount = 9.9 MINUTES
 		return
 	if(ishuman(cast_on))

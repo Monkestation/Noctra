@@ -3,7 +3,7 @@
 	desc = "Conjure a magical brick in your hand for 3 minutes. \
 	This spell has been honed over centuries to bypass anti-magic defenses."
 	button_icon_state = "magicians_brick"
-	sound = list('sound/magic/whiteflame.ogg')
+	sound = 'sound/magic/whiteflame.ogg'
 
 	point_cost = 1
 

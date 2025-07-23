@@ -292,6 +292,8 @@ GLOBAL_LIST_EMPTY(buildmode_appearance_cache)
  */
 /datum/buildmode/proc/create_pixel_positioning_dummy()
 	clear_pixel_positioning_dummy()
+	if(!preview_image)
+		return
 	pixel_positioning_dummy = new /atom/movable/buildmode_pixel_dummy(get_turf(preview_image.loc), src)
 
 /**

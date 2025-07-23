@@ -8,6 +8,7 @@
 		)
 	result_type = /obj/structure/fluff/statue/carving_block
 	craftdiff = 3
+	category = "Statues"
 
 /* tallstructure.dmi */
 
@@ -17,6 +18,7 @@
 	step_order = SLAP_ORDER_FIRST_AND_LAST
 	dense_assembly = TRUE
 	repeat_perform_time = 2 SECONDS
+	category = "Statues"
 
 /datum/slapcraft_recipe/masonry/structure/statue/gargoyle
 	name = "gargoyle"

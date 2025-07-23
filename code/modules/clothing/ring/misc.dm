@@ -5,7 +5,7 @@
 	sellprice = 33
 
 /obj/item/clothing/ring/silver/makers_guild
-	name = "Makers ring"
+	name = "makers' ring"
 	desc = "The wearer is a proud member of the Makers' guild."
 	icon_state = "guild_mason"
 	sellprice = 0

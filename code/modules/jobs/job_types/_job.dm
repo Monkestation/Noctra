@@ -255,9 +255,7 @@
 
 	var/datum/job/target_job = humanguy?.mind?.assigned_role
 	if(target_job?.forced_flaw)
-		if(humanguy.charflaw)
-			QDEL_NULL(humanguy.charflaw)
-		humanguy.charflaw = new target_job.forced_flaw.type(humanguy)
+		humanguy.set_flaw(target_job.forced_flaw.type)
 
 	if(humanguy.charflaw)
 		humanguy.charflaw.after_spawn(humanguy)
@@ -356,13 +354,13 @@
 	if(H.mind)
 		if(H.dna)
 			H.dna.species.random_underwear(H.gender)
-			if(H.dna.species)
-				if(H.dna.species.id == "elf")
-					H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-				if(H.dna.species.id == "dwarf")
-					H.adjust_skillrank(/datum/skill/labor/mining, 1, TRUE)
-				if(isharpy(H))
-					H.adjust_skillrank(/datum/skill/misc/music, 1, TRUE)
+
+		if(ishumanspecies(H))
+			H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
+		else if(isdwarf(H))
+			H.adjust_skillrank(/datum/skill/labor/mining, 1, TRUE)
+		else if(isharpy(H))
+			H.adjust_skillrank(/datum/skill/misc/music, 1, TRUE)
 	H.underwear_color = null
 	H.update_body()
 

@@ -137,19 +137,19 @@ DEFINE_BITFIELD(antimagic_flags, list(
 	"MAGIC_RESISTANCE_MIND" = MAGIC_RESISTANCE_MIND,
 ))
 
-// Spell types, fallback to mana if not possible i.e non vampire with blood magic
-/// Doesn't have any sort of magical cost
-#define SPELL_NONE 0
+// Spell types
 /// Uses mana, normal behaviour
 #define SPELL_MANA 1
-/// Casted with the essence gauntlet
-#define SPELL_ESSENCE 2
+/// Use stamina, all spells use stamina but this makes it the only cost and at full price instead of half
+#define SPELL_STAMINA 2
 /// Miracle, uses devotion and thus requires a devotion holder
 #define SPELL_MIRACLE 3
-/// Uses vitae
-#define SPELL_BLOOD 4
-/// Use energy
-#define SPELL_ENERGY 5
+/// Casted with the essence gauntlet, using essence vials
+#define SPELL_ESSENCE 4
+
+// Generic Bitflags for spells
+/// Ignore the trait [TRAIT_SPELLBLOCK]
+#define SPELL_IGNORE_SPELLBLOCK (1 << 0)
 
 // Bitflags for spell requirements
 /// Whether the spell requires wizard clothes to cast.
