@@ -23,6 +23,8 @@
 	var/click_cd_override = CLICK_CD_CLICK_ABILITY
 	/// If TRUE, we will unset after using our click intercept.
 	var/unset_after_click = TRUE
+	/// If TRUE, after the cooldown finishes naturally we re trigger the spell if possible.
+	var/retrigger_after_cooldown = TRUE
 	/// What icon to replace our mouse cursor with when active. Optional
 	var/ranged_mousepointer
 	/// The base icon_state of this action's background
@@ -121,12 +123,34 @@
 /// Starts a cooldown time for this ability only
 /// Will use default cooldown time if an override is not specified
 /datum/action/cooldown/proc/StartCooldownSelf(override_cooldown_time)
+	var/real_time = cooldown_time
 	if(isnum(override_cooldown_time))
-		next_use_time = world.time + override_cooldown_time
-	else
-		next_use_time = world.time + cooldown_time
+		real_time = override_cooldown_time
+	next_use_time = world.time + real_time
+	addtimer(CALLBACK(src, PROC_REF(CooldownEnded)), real_time)
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	START_PROCESSING(SSfastprocess, src)
+
+/// Callback proc for when the cooldown of the spell would naturally end may not actually end at this time,
+/// Or may have already ended.
+/datum/action/cooldown/proc/CooldownEnded()
+	if(QDELETED(src) || QDELETED(owner))
+		return
+
+	SEND_SIGNAL(src, COMSIG_ACTION_COOLDOWN_ENDED)
+
+	if(!retrigger_after_cooldown || !click_to_activate)
+		return
+
+	// Lets just have a cut off for reset
+	if(cooldown_time > 1 MINUTES)
+		return
+
+	// Another spell has been selected
+	if(owner.click_intercept)
+		return
+
+	Trigger()
 
 /datum/action/cooldown/Trigger(trigger_flags, atom/target)
 	. = ..()
