@@ -39,6 +39,8 @@
 	var/base_icon_state
 	/// The active icon state of the spell's button icon, used for editing the icon "on"
 	var/active_icon_state
+	/// Timer for retriggering the spell
+	var/retrigger_timer
 
 /datum/action/cooldown/New(Target)
 	if(active_background_icon_state)
@@ -128,6 +130,12 @@
 		real_time = override_cooldown_time
 	next_use_time = world.time + real_time
 	addtimer(CALLBACK(src, PROC_REF(CooldownEnded)), real_time)
+	if(retrigger_after_cooldown && click_to_activate)
+		if(real_time > 0)
+			RegisterSignal(owner, COMSIG_MOB_SPELL_ACTIVATED, PROC_REF(cancel_retrigger))
+			retrigger_timer = addtimer(CALLBACK(src, PROC_REF(retrigger)), real_time, TIMER_STOPPABLE)
+			return
+		retrigger()
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	START_PROCESSING(SSfastprocess, src)
 
@@ -139,18 +147,26 @@
 
 	SEND_SIGNAL(src, COMSIG_ACTION_COOLDOWN_ENDED)
 
-	if(!retrigger_after_cooldown || !click_to_activate)
-		return
-
+/// Retrigger the spell after starting the cooldown if possible
+/datum/action/cooldown/proc/retrigger()
+	UnregisterSignal(owner, COMSIG_MOB_SPELL_ACTIVATED)
 	// Lets just have a cut off for reset
 	if(cooldown_time > 1 MINUTES)
 		return
 
-	// Another spell has been selected
+	// Another spell is been selected or another click intercept is active
 	if(owner.click_intercept)
 		return
 
 	Trigger()
+
+/// Cancel retriggering by removing the timer
+/datum/action/cooldown/proc/cancel_retrigger()
+	SIGNAL_HANDLER
+
+	UnregisterSignal(owner, COMSIG_MOB_SPELL_ACTIVATED)
+
+	deltimer(retrigger_timer)
 
 /datum/action/cooldown/Trigger(trigger_flags, atom/target)
 	. = ..()
@@ -200,7 +216,6 @@
 
 	// And if we reach here, the action was completed successfully
 	if(unset_after_click)
-		StartCooldown()
 		unset_click_ability(clicker, refund_cooldown = FALSE)
 	clicker.next_click = world.time + click_cd_override
 
@@ -217,7 +232,7 @@
 
 /// To be implemented by subtypes
 /datum/action/cooldown/proc/Activate(atom/target)
-	return
+	StartCooldown()
 
 /**
  * Set our action as the click override on the passed mob.
