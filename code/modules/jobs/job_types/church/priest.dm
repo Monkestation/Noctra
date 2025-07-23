@@ -175,11 +175,9 @@
 					to_chat(src, span_danger("I wasn't able to do that!"))
 					return FALSE
 				H.cleric?.excommunicate()
+				GLOB.excommunicated_players += inputty
+				priority_announce("[real_name] has excommunicated [inputty]! The Ten have turned away from them!", title = "SHAME", sound = 'sound/misc/excomm.ogg')
 				break
-			return FALSE
-
-		GLOB.excommunicated_players += inputty
-		priority_announce("[real_name] has excommunicated [inputty]! The Ten have turned away from them!", title = "SHAME", sound = 'sound/misc/excomm.ogg')
 
 /mob/living/carbon/human/proc/churchcurse()
 	set name = "Curse"
@@ -207,11 +205,10 @@
 					to_chat(src, span_danger("I wasn't able to do that!"))
 					return FALSE
 				H.add_stress(/datum/stressevent/psycurse)
+				GLOB.heretical_players += inputty
+				priority_announce("[real_name] has put Xylix's curse of woe on [inputty] for offending the church!", title = "SHAME", sound = 'sound/misc/excomm.ogg')
 				break
-			return FALSE
 
-		GLOB.heretical_players += inputty
-		priority_announce("[real_name] has put Xylix's curse of woe on [inputty] for offending the church!", title = "SHAME", sound = 'sound/misc/excomm.ogg')
 
 /mob/living/carbon/human/proc/churchannouncement()
 	set name = "Announcement"
