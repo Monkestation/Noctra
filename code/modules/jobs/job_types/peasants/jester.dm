@@ -39,7 +39,7 @@
 	H.adjust_skillrank(/datum/skill/combat/knives, pick(1,2,3,4,5), TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, pick(1,2,3,4,5,6), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/riding, pick(1,2,3,4,5,6), TRUE)
-	H.adjust_skillrank(/datum/skill/craft/bombs, pick(1,2,3,4,5,6), TRUE)
+	H.adjust_skillrank(/datum/skill/craft/engineering, pick(1,2,3,4,5,6), TRUE) // local physics degree heartfelian to ends up as jester
 	H.adjust_skillrank(/datum/skill/labor/fishing, pick(1,2,3,4,5,6), TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, pick(1,2,3), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, pick(1,2,3,4,5,6), TRUE)

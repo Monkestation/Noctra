@@ -79,12 +79,12 @@
 	else if(HAS_TRAIT(mind?.current, TRAIT_LEGENDARY_ALCHEMIST))
 		REMOVE_TRAIT(mind?.current, TRAIT_LEGENDARY_ALCHEMIST, type)
 
-/datum/skill/craft/bombs
-	name = "Bombcrafting"
-	desc = "Bombcrafting is a skill that represents your character's ability to craft bombs. The higher your skill in Bombcrafting, the better the bombs you can create and the more you can make with your materials."
-	dreams = list(
-		"...you pour the powder down the barrel of the cannon, and without a projectile to follow the dust, you cut off a finger, and toss it in there... you turn to light the fuse..."
-	)
+///datum/skill/craft/bombs
+//	name = "Bombcrafting"
+//	desc = "Bombcrafting is a skill that represents your character's ability to craft bombs. The higher your skill in Bombcrafting, the better the bombs you can create and the more you can make with your materials."
+//	dreams = list(
+//		"...you pour the powder down the barrel of the cannon, and without a projectile to follow the dust, you cut off a finger, and toss it in there... you turn to light the fuse..."
+//	)
 
 /datum/skill/craft/engineering
 	name = "Engineering"

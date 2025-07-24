@@ -217,16 +217,3 @@
 	output = /obj/item/reagent_containers/powder/blastpowder
 	output_amount = 3
 	craft_time = 5 SECONDS
-
-/datum/repeatable_crafting_recipe/engineering/breaching_charge
-	name = "breaching charge"
-	requirements = list(
-		/obj/item/reagent_containers/powder/blastpowder = 2,
-		/obj/item/natural/fibers = 1,
-		/obj/item/natural/cloth = 1,
-	)
-
-	attacked_atom = /obj/item/natural/cloth
-	starting_atom = /obj/item/reagent_containers/powder/blastpowder
-	output = /obj/item/breach_charge
-	craft_time = 5 SECONDS

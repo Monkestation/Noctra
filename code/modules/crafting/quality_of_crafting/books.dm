@@ -761,7 +761,7 @@
 	types = list(
 		/datum/repeatable_crafting_recipe/narcotics,
 		/datum/container_craft/cooking/drugs,
-		/datum/repeatable_crafting_recipe/bomb,
+		/datum/repeatable_crafting_recipe/engineering/bomb/homemade
 	)
 
 /obj/item/recipe_book/carpentry

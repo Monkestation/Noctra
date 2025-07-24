@@ -93,7 +93,7 @@
 		return FALSE
 
 	if(minimum_skill_level)
-		if(user?.get_skill_level(skillcraft) <= minimum_skill_level)
+		if(user?.get_skill_level(skillcraft) < minimum_skill_level)
 			return FALSE
 
 	if(required_table && !locate(/obj/structure/table) in get_turf(attacked_item))

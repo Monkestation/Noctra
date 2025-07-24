@@ -51,7 +51,7 @@
 		H.cmode_music = 'sound/music/cmode/adventurer/CombatOutlander2.ogg'
 		H.adjust_skillrank(/datum/skill/combat/axesmaces, 4, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/shields, 2, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/bombs, 4, TRUE) // Dwarves get to make bombs.
+		H.adjust_skillrank(/datum/skill/craft/engineering, 1, TRUE) // Dwarves get to make bombs.
 		head = /obj/item/clothing/head/helmet/leather/minershelm
 		beltl = /obj/item/weapon/pick/paxe // Dorfs get a pick as their primary weapon and axes/maces to use it
 		backr = /obj/item/weapon/shield/wood
