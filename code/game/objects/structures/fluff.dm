@@ -1095,109 +1095,124 @@
 	icon_state = "shrine_dendor_gote"
 
 /obj/structure/fluff/psycross/attackby(obj/item/W, mob/living/carbon/human/user, params)
-	if(user.mind)
-		if((is_priest_job(user.mind.assigned_role)) || (is_monk_job(user.mind.assigned_role) && (user.patron.type == /datum/patron/divine/eora)))
-			if(istype(W, /obj/item/reagent_containers/food/snacks/produce/fruit/apple))
+	if(!user.mind)
+		return ..()
 
-				var/secret_marriage = FALSE
-				var/in_church = FALSE
+	var/is_priest = is_priest_job(user.mind.assigned_role)
+	var/is_eoran_acolyte = is_monk_job(user.mind.assigned_role) && (user.patron.type == /datum/patron/divine/eora)
+	if(!is_priest && !is_eoran_acolyte)
+		return ..()
 
-				if(istype(get_area(user), /area/rogue/indoors/town/church/chapel))
-					in_church = TRUE
+	if(!istype(W, /obj/item/reagent_containers/food/snacks/produce/fruit/apple))
+		return ..()
 
-				if(!in_church && HAS_TRAIT(user, TRAIT_SECRET_OFFICIANT))
-					secret_marriage = TRUE
-				else if(!in_church)
-					to_chat(user, span_warning("I can conduct wedding ceremony only inside the chapel!"))
-					return FALSE
+	var/obj/item/reagent_containers/food/snacks/produce/fruit/apple/apple = W
+	if(length(apple.bitten_names) != 2)
+		to_chat(user, span_warning("Apple must be bitten only once by exactly two different people to conduct a wedding ceremony!"))
+		return FALSE
 
-				var/obj/item/reagent_containers/food/snacks/produce/fruit/apple/A = W
-				if(length(A.bitten_names) == 2)
-					var/mob/living/carbon/human/thegroom
-					var/mob/living/carbon/human/thebride
-					for(var/mob/living/carbon/human/C in range(5, src))
-						if(thegroom && thebride)
-							break
-						var/name_placement = 1
-						for(var/X in A.bitten_names)
-							if(C.real_name == X)
-								switch(name_placement)
-									if(1)
-										if(thegroom)
-											continue
-										thegroom = C
-									if(2)
-										if(thebride)
-											continue
-										thebride = C
-							name_placement++
+	var/in_church = istype(get_area(user), /area/rogue/indoors/town/church/chapel)
+	var/secret_marriage = !in_church && HAS_TRAIT(user, TRAIT_SECRET_OFFICIANT)
 
-					if(!thegroom || !thebride)
-						to_chat(user, span_warning("Either one or both soon to be wed are outside of the holy shrine's gaze!"))
-						return FALSE
+	if(!in_church && !secret_marriage)
+		to_chat(user, span_warning("I can conduct wedding ceremony only inside the chapel!"))
+		return FALSE
 
-					if(thegroom.age == AGE_CHILD)
-						to_chat(user, span_warning("[thegroom.real_name] is a child!"))
-						return FALSE
-					if(thegroom.stat == DEAD)
-						to_chat(user, span_warning("[thegroom.real_name] is dead!"))
-						return FALSE
-					if(!thegroom.client)
-						to_chat(user, span_warning("[thegroom.real_name] absent in spirit!"))
-						return FALSE
-					if(thegroom.IsWedded())
-						to_chat(user, span_warning("[thegroom.real_name] is already married!"))
-						return FALSE
+	var/mob/living/carbon/human/groom
+	var/mob/living/carbon/human/bride
 
-					if(thebride.age == AGE_CHILD)
-						to_chat(user, span_warning("[thebride.real_name] is a child!"))
-						return FALSE
-					if(thebride.stat == DEAD)
-						to_chat(user, span_warning("[thebride.real_name] is dead!"))
-						return FALSE
-					if(!thebride.client)
-						to_chat(user, span_warning("[thebride.real_name] absent in spirit!"))
-						return FALSE
-					if(thebride.IsWedded())
-						to_chat(user, span_warning("[thebride.real_name] is already married!"))
-						return FALSE
+	for(var/mob/living/carbon/human/candidate in range(5, src))
+		if(groom && bride)
+			break
 
-					var/surname2use
-					var/index = findtext(thegroom.real_name, " ")
-					var/bridefirst
-					thegroom.original_name = thegroom.real_name
-					thebride.original_name = thebride.real_name
-					if(!index)
-						surname2use = thegroom.dna.species.random_surname()
-					else
-						if(findtext(thegroom.real_name, " of ") || findtext(thegroom.real_name, " the "))
-							surname2use = thegroom.dna.species.random_surname()
-							thegroom.change_name(copytext(thegroom.real_name, 1,index))
-						else
-							surname2use = copytext(thegroom.real_name, index)
-							thegroom.change_name(copytext(thegroom.real_name, 1,index))
-					index = findtext(thebride.real_name, " ")
-					if(index)
-						thebride.change_name(copytext(thebride.real_name, 1,index))
-					bridefirst = thebride.real_name
-					thegroom.change_name(thegroom.real_name + surname2use)
-					thebride.change_name(thebride.real_name + surname2use)
-					thegroom.MarryTo(thebride)
-					thegroom.adjust_triumphs(1)
-					thebride.adjust_triumphs(1)
-					if(!secret_marriage)
-						if(thegroom.gender == thebride.gender)
-							priority_announce("Eora begrudgingly accepts the marriage between [thegroom.real_name] and [bridefirst].", title = "Holy Union!", sound = 'sound/misc/bell.ogg')
-						else
-							priority_announce("Eora proudly embraces the marriage between [thegroom.real_name] and [bridefirst]!", title = "Holy Union!", sound = 'sound/misc/bell.ogg')
-					thegroom.remove_stress(/datum/stressevent/eora_matchmaking)
-					thebride.remove_stress(/datum/stressevent/eora_matchmaking)
-					SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_MARRIAGE, thegroom, thebride)
-					record_round_statistic(STATS_MARRIAGES)
-					playsound(loc, 'sound/misc/frying.ogg', 30, FALSE)
-					A.burn()
-					return TRUE
-	return ..()
+		var/name_position = 1
+		for(var/name in apple.bitten_names)
+			if(candidate.real_name == name)
+				switch(name_position)
+					if(1)
+						if(!groom)
+							groom = candidate
+					if(2)
+						if(!bride)
+							bride = candidate
+			name_position++
+
+	if(!groom || !bride)
+		to_chat(user, span_warning("Either one or both soon to be wed are outside of the holy shrine's gaze!"))
+		return FALSE
+	if(user == groom || user == bride)
+		to_chat(user, span_warning("You cannot conduct your own marriage ceremony!"))
+		return FALSE
+
+	// Groom checks
+	if(groom.age == AGE_CHILD)
+		to_chat(user, span_warning("[groom.real_name] is a child!"))
+		return FALSE
+	if(groom.stat == DEAD)
+		to_chat(user, span_warning("[groom.real_name] is dead!"))
+		return FALSE
+	if(!groom.client)
+		to_chat(user, span_warning("[groom.real_name] absent in spirit!"))
+		return FALSE
+	if(groom.IsWedded())
+		to_chat(user, span_warning("[groom.real_name] is already married!"))
+		return FALSE
+
+	// Bride checks
+	if(bride.age == AGE_CHILD)
+		to_chat(user, span_warning("[bride.real_name] is a child!"))
+		return FALSE
+	if(bride.stat == DEAD)
+		to_chat(user, span_warning("[bride.real_name] is dead!"))
+		return FALSE
+	if(!bride.client)
+		to_chat(user, span_warning("[bride.real_name] absent in spirit!"))
+		return FALSE
+	if(bride.IsWedded())
+		to_chat(user, span_warning("[bride.real_name] is already married!"))
+		return FALSE
+
+	var/surname
+	var/name_index = findtext(groom.real_name, " ")
+	var/bride_first_name = bride.real_name
+
+	groom.original_name = groom.real_name
+	bride.original_name = bride.real_name
+
+	if(!name_index)
+		surname = groom.dna.species.random_surname()
+	else
+		if(findtext(groom.real_name, " of ") || findtext(groom.real_name, " the "))
+			surname = groom.dna.species.random_surname()
+			groom.change_name(copytext(groom.real_name, 1, name_index))
+		else
+			surname = copytext(groom.real_name, name_index)
+			groom.change_name(copytext(groom.real_name, 1, name_index))
+
+	name_index = findtext(bride.real_name, " ")
+	if(name_index)
+		bride.change_name(copytext(bride.real_name, 1, name_index))
+
+	bride_first_name = bride.real_name
+
+	groom.change_name(groom.real_name + surname)
+	bride.change_name(bride.real_name + surname)
+
+	groom.MarryTo(bride)
+	groom.adjust_triumphs(1)
+	bride.adjust_triumphs(1)
+
+	if(!secret_marriage)
+		var/announcement_message = "Eora [groom.gender == bride.gender ? "begrudgingly accepts" : "proudly embraces"] the marriage between [groom.real_name] and [bride_first_name]!"
+		priority_announce(announcement_message, title = "Holy Union!", sound = 'sound/misc/bell.ogg')
+
+	groom.remove_stress(/datum/stressevent/eora_matchmaking)
+	bride.remove_stress(/datum/stressevent/eora_matchmaking)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_MARRIAGE, groom, bride)
+	record_round_statistic(STATS_MARRIAGES)
+	playsound(loc, 'sound/misc/frying.ogg', 30, FALSE)
+	apple.burn()
+	return TRUE
 
 /obj/structure/fluff/psycross/copper/Destroy()
 	addomen("psycross")
