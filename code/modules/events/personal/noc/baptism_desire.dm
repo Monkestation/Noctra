@@ -16,6 +16,9 @@
 	if(!.)
 		return FALSE
 
+	if(!length(GLOB.mana_fountains))
+		return FALSE
+
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(!istype(H) || H.stat == DEAD || !H.client)
 			continue
@@ -28,6 +31,9 @@
 	return FALSE
 
 /datum/round_event/noc_baptism/start()
+	if(!length(GLOB.mana_fountains))
+		return
+
 	var/list/valid_targets = list()
 
 	for(var/mob/living/carbon/human/human_mob in GLOB.player_list)

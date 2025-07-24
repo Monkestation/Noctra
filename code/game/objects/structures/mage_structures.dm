@@ -1,3 +1,4 @@
+GLOBAL_LIST_EMPTY(mana_fountains)
 
 /obj/structure/fluff/walldeco/mageguild
 	name = "Mage's Guild"
@@ -100,6 +101,14 @@
 	pixel_x = -16
 	layer = -0.1
 	has_initial_mana_pool = TRUE
+
+/obj/structure/well/fountain/mana/Initialize()
+	. = ..()
+	GLOB.mana_fountains |= src
+
+/obj/structure/well/fountain/mana/Destroy()
+	GLOB.mana_fountains -= src
+	return ..()
 
 /obj/structure/well/fountain/mana/get_initial_mana_pool_type()
 	return /datum/mana_pool/mana_fountain
