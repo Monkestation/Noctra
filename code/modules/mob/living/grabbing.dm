@@ -191,14 +191,14 @@
 
 	if(grabbee)
 		// Dont stop the pull if another hand grabs the person
-		var/stop_pull = FALSE
+		var/stop_pull = TRUE
 		if(grabbee.r_grab == src)
-			if(!grabbee.l_grab || grabbee.l_grab.grabbed != grabbee.r_grab.grabbed)
-				stop_pull = TRUE
+			if(grabbee.l_grab && grabbee.l_grab.grabbed == grabbee.r_grab.grabbed)
+				stop_pull = FALSE
 			grabbee.r_grab = null
 		if(grabbee.l_grab == src)
-			if(!grabbee.r_grab || grabbee.r_grab.grabbed != grabbee.l_grab.grabbed)
-				stop_pull = TRUE
+			if(grabbee.r_grab && grabbee.r_grab.grabbed == grabbee.l_grab.grabbed)
+				stop_pull = FALSE
 			grabbee.l_grab = null
 		if(grabbee.mouth == src)
 			grabbee.mouth = null
