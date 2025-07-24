@@ -8,7 +8,6 @@
 
 /datum/outfit/job/heartfelt/lord/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.mana_pool.set_intrinsic_recharge(MANA_ALL_LEYLINES)
 	shirt = /obj/item/clothing/shirt/undershirt
 	belt = /obj/item/storage/belt/leather/black
 	neck = /obj/item/clothing/neck/gorget
@@ -70,15 +69,21 @@
 			armor = /obj/item/clothing/armor/gambeson/heavy/dress/alt
 		else
 			armor = /obj/item/clothing/armor/gambeson/heavy/dress
-	beltl = /obj/item/flashlight/flare/torch/lantern
-	beltr =  /obj/item/storage/belt/pouch
+	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
+	backl = /obj/item/storage/backpack/satchel
+	belt = /obj/item/storage/belt/leather/black
+	beltl = /obj/item/ammo_holder/quiver/arrows
+	beltr = /obj/item/weapon/knife/dagger/steel/special
+	neck =  /obj/item/storage/belt/pouch/coins/rich
 	ring = /obj/item/clothing/ring/silver
 	shoes = /obj/item/clothing/shoes/shortboots
+	pants = /obj/item/clothing/pants/tights/random
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/craft/engineering, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/stealing, 4, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/sneaking, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/bows, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
@@ -164,7 +169,7 @@
 	else
 		r_hand = /obj/item/weapon/mace/goden/steel
 	if(H.mind)
-		H.adjust_skillrank(/datum/skill/craft/engineering, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/engineering, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE)
@@ -210,6 +215,10 @@
 			honorary = "Dame"
 		H.real_name = "[honorary] [prev_real_name]"
 		H.name = "[honorary] [prev_name]"
+		if(H.backl && istype(H.backl, /obj/item/clothing/cloak/boiler))
+			var/obj/item/clothing/cloak/boiler/B = H.backl
+			SEND_SIGNAL(B, COMSIG_ATOM_STEAM_INCREASE, rand(500, 900))
+			B.update_armor()
 
 /datum/migrant_role/heartfelt/magos
 	name = "Magos of Heartfelt"
@@ -229,6 +238,7 @@
 
 /datum/outfit/job/heartfelt/magos/pre_equip(mob/living/carbon/human/H)
 	..()
+	H.mana_pool?.set_intrinsic_recharge(MANA_ALL_LEYLINES)
 	neck = /obj/item/clothing/neck/talkstone
 	cloak = /obj/item/clothing/cloak/black_cloak
 	armor = /obj/item/clothing/shirt/robe/black
@@ -338,7 +348,7 @@
 	belt = /obj/item/storage/belt/leather
 	beltr = /obj/item/storage/belt/pouch/coins/mid
 	mask = /obj/item/clothing/face/goggles
-	backl = /obj/item/storage/backpack/backpack
+	backl = /obj/item/storage/backpack/backpack/artibackpack
 	ring = /obj/item/clothing/ring/silver/makers_guild
 	neck = /obj/item/reagent_containers/glass/bottle/waterskin/purifier
 	backpack_contents = list(/obj/item/weapon/hammer/steel = 1, /obj/item/weapon/knife/villager = 1, /obj/item/weapon/chisel = 1)
@@ -412,4 +422,3 @@
 		/datum/migrant_role/heartfelt/lord = 1,
 	)
 	greet_text = "Fleeing disaster, you have come together as a court, united in a final effort to restore the former glory and promise of Heartfelt. But disaster followed hot on your heels, from Heartfelt to this very place! You are the last one remaining, oh how tragic!"
-
