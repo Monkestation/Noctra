@@ -599,7 +599,7 @@
 		for(var/obj/item/item in turf_in_front.contents)
 			usable_contents |= item
 
-		var/list/turfs_to_search = orange(1, owner_turf)
+		var/list/turfs_to_search = orange(1, owner_turf) - turf_in_front
 		for(var/turf/listed_turf in turfs_to_search)
 			for(var/obj/item/item in listed_turf.contents)
 				usable_contents |= item
