@@ -1108,7 +1108,7 @@
 
 	var/obj/item/reagent_containers/food/snacks/produce/fruit/apple/apple = W
 	if(length(apple.bitten_names) != 2)
-		to_chat(user, span_warning("Apple must be bitten only once by exactly two different people to conduct a wedding ceremony!"))
+		to_chat(user, span_warning("Apple must be bitten once by two different people to conduct a wedding ceremony!"))
 		return FALSE
 
 	var/in_church = istype(get_area(user), /area/rogue/indoors/town/church/chapel)
@@ -1210,8 +1210,7 @@
 	bride.remove_stress(/datum/stressevent/eora_matchmaking)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_MARRIAGE, groom, bride)
 	record_round_statistic(STATS_MARRIAGES)
-	playsound(loc, 'sound/misc/frying.ogg', 30, FALSE)
-	apple.burn()
+	qdel(apple)
 	return TRUE
 
 /obj/structure/fluff/psycross/copper/Destroy()
