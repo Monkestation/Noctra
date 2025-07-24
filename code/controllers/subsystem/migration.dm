@@ -286,11 +286,11 @@ SUBSYSTEM_DEF(migrants)
 	var/reason
 	if(role.allowed_races && !(prefs.pref_species.id in role.allowed_races))
 		if(!(player.triumph_ids.Find("race_all")))
-			reason += "Wrong species. Your prioritized role only allows [role.allowed_races.Join(", ")]. "
+			reason += "<br>Wrong species. Your prioritized role only allows [role.allowed_races.Join(", ")]. "
 	if(role.allowed_sexes && !(prefs.gender in role.allowed_sexes))
-		reason += "Wrong gender. Your prioritized role only allows [role.allowed_sexes.Join(", ")]. "
+		reason += "<br>Wrong gender. Your prioritized role only allows [role.allowed_sexes.Join(", ")]. "
 	if(role.allowed_ages && !(prefs.age in role.allowed_ages))
-		reason += "Wrong age. Your prioritized role only allows [role.allowed_ages.Join(", ")]. "
+		reason += "<br>Wrong age. Your prioritized role only allows [role.allowed_ages.Join(", ")]. "
 	if(reason)
 		return reason
 	return TRUE
