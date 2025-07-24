@@ -1108,7 +1108,7 @@
 				if(!in_church && HAS_TRAIT(user, TRAIT_SECRET_OFFICIANT))
 					secret_marriage = TRUE
 				else if(!in_church)
-					to_chat(user, span_warning("I can conduct wedding ceremony only inside the chapel."))
+					to_chat(user, span_warning("I can conduct wedding ceremony only inside the chapel!"))
 					return FALSE
 
 				var/obj/item/reagent_containers/food/snacks/produce/fruit/apple/A = W
@@ -1118,15 +1118,8 @@
 					for(var/mob/living/carbon/human/C in range(5, src))
 						if(thegroom && thebride)
 							break
-
 						var/name_placement = 1
 						for(var/X in A.bitten_names)
-							if(C.stat == DEAD)
-								continue
-							if(!C.client)
-								continue
-							if(C.IsWedded())
-								continue
 							if(C.real_name == X)
 								switch(name_placement)
 									if(1)
@@ -1140,6 +1133,33 @@
 							name_placement++
 
 					if(!thegroom || !thebride)
+						to_chat(user, span_warning("Either one or both soon to be wed are outside of the holy shrine's gaze!"))
+						return FALSE
+
+					if(thegroom.age == AGE_CHILD)
+						to_chat(user, span_warning("[thegroom.real_name] is a child!"))
+						return FALSE
+					if(thegroom.stat == DEAD)
+						to_chat(user, span_warning("[thegroom.real_name] is dead!"))
+						return FALSE
+					if(!thegroom.client)
+						to_chat(user, span_warning("[thegroom.real_name] absent in spirit!"))
+						return FALSE
+					if(thegroom.IsWedded())
+						to_chat(user, span_warning("[thegroom.real_name] is already married!"))
+						return FALSE
+
+					if(thebride.age == AGE_CHILD)
+						to_chat(user, span_warning("[thebride.real_name] is a child!"))
+						return FALSE
+					if(thebride.stat == DEAD)
+						to_chat(user, span_warning("[thebride.real_name] is dead!"))
+						return FALSE
+					if(!thebride.client)
+						to_chat(user, span_warning("[thebride.real_name] absent in spirit!"))
+						return FALSE
+					if(thebride.IsWedded())
+						to_chat(user, span_warning("[thebride.real_name] is already married!"))
 						return FALSE
 
 					var/surname2use
@@ -1166,7 +1186,7 @@
 					thegroom.adjust_triumphs(1)
 					thebride.adjust_triumphs(1)
 					if(!secret_marriage)
-						if(thegroom.gender == thebride.gender)	//Homophobic dog stare. Pack it up, skittles squad.
+						if(thegroom.gender == thebride.gender)
 							priority_announce("Eora begrudgingly accepts the marriage between [thegroom.real_name] and [bridefirst].", title = "Holy Union!", sound = 'sound/misc/bell.ogg')
 						else
 							priority_announce("Eora proudly embraces the marriage between [thegroom.real_name] and [bridefirst]!", title = "Holy Union!", sound = 'sound/misc/bell.ogg')
