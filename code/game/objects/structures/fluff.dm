@@ -1096,108 +1096,87 @@
 
 /obj/structure/fluff/psycross/attackby(obj/item/W, mob/living/carbon/human/user, params)
 	if(user.mind)
-		if((is_priest_job(user.mind.assigned_role)) \
-			|| (is_monk_job(user.mind.assigned_role) && (user.patron.type == /datum/patron/divine/eora)))
-
+		if((is_priest_job(user.mind.assigned_role)) || (is_monk_job(user.mind.assigned_role) && (user.patron.type == /datum/patron/divine/eora)))
 			if(istype(W, /obj/item/reagent_containers/food/snacks/produce/fruit/apple))
-				if(!istype(get_area(user), /area/rogue/indoors/town/church/chapel))
-					to_chat(user, "<span class='warning'>I need to do this in the chapel.</span>")
+
+				var/secret_marriage = FALSE
+				var/in_church = FALSE
+
+				if(istype(get_area(user), /area/rogue/indoors/town/church/chapel))
+					in_church = TRUE
+
+				if(!in_church && HAS_TRAIT(user, TRAIT_SECRET_OFFICIANT))
+					secret_marriage = TRUE
+				else if(!in_church)
+					to_chat(user, span_warning("I can conduct wedding ceremony only inside the chapel."))
 					return FALSE
-				var/marriage
+
 				var/obj/item/reagent_containers/food/snacks/produce/fruit/apple/A = W
+				if(length(A.bitten_names) == 2)
+					var/mob/living/carbon/human/thegroom
+					var/mob/living/carbon/human/thebride
+					for(var/mob/living/carbon/human/C in range(5, src))
+						if(thegroom && thebride)
+							break
 
-				//The MARRIAGE TEST BEGINS
-				if(A.bitten_names.len)
-					if(A.bitten_names.len == 2)
-						//Groom provides the surname that the bride will take
-						var/mob/living/carbon/human/thegroom
-						var/mob/living/carbon/human/thebride
-						//Did anyone get cold feet on the wedding?
-						for(var/mob/M in viewers(src, 2))
-							if(thegroom && thebride)
-								break
-							if(!ishuman(M))
+						var/name_placement = 1
+						for(var/X in A.bitten_names)
+							if(C.stat == DEAD)
 								continue
-							var/mob/living/carbon/human/C = M
-							/*
-							* This is for making the first biters name
-							* always be applied to the groom.
-							* second. This seems to be the best way
-							* to use the least amount of variables.
-							*/
-							var/name_placement = 1
-							for(var/X in A.bitten_names)
-								//I think that guy is dead.
-								if(C.stat == DEAD)
-									continue
-								//That person is not a player or afk.
-								if(!C.client)
-									continue
-								//Gotta get a divorce first
-								if(C.IsWedded())
-									continue
-								if(C.real_name == X)
-									//I know this is very sloppy but its alot less code.
-									switch(name_placement)
-										if(1)
-											if(thegroom)
-												continue
-											thegroom = C
-										if(2)
-											if(thebride)
-												continue
-											thebride = C
-								name_placement++
+							if(!C.client)
+								continue
+							if(C.IsWedded())
+								continue
+							if(C.real_name == X)
+								switch(name_placement)
+									if(1)
+										if(thegroom)
+											continue
+										thegroom = C
+									if(2)
+										if(thebride)
+											continue
+										thebride = C
+							name_placement++
 
-						//WE FOUND THEM LETS GET THIS SHOW ON THE ROAD!
-						if(!thegroom || !thebride)
-							return
-						//Alright now for the boring surname formatting.
-						var/surname2use
-						var/index = findtext(thegroom.real_name, " ")
-						var/bridefirst
-						thegroom.original_name = thegroom.real_name
-						thebride.original_name = thebride.real_name
-						if(!index)
+					if(!thegroom || !thebride)
+						return FALSE
+
+					var/surname2use
+					var/index = findtext(thegroom.real_name, " ")
+					var/bridefirst
+					thegroom.original_name = thegroom.real_name
+					thebride.original_name = thebride.real_name
+					if(!index)
+						surname2use = thegroom.dna.species.random_surname()
+					else
+						if(findtext(thegroom.real_name, " of ") || findtext(thegroom.real_name, " the "))
 							surname2use = thegroom.dna.species.random_surname()
+							thegroom.change_name(copytext(thegroom.real_name, 1,index))
 						else
-							/*
-							* This code prevents inheriting the last name of
-							* " of wolves" or " the wolf"
-							* remove this if you want "Skibbins of wolves" to
-							* have his bride become "Sarah of wolves".
-							*/
-							if(findtext(thegroom.real_name, " of ") || findtext(thegroom.real_name, " the "))
-								surname2use = thegroom.dna.species.random_surname()
-								thegroom.change_name(copytext(thegroom.real_name, 1,index))
-							else
-								surname2use = copytext(thegroom.real_name, index)
-								thegroom.change_name(copytext(thegroom.real_name, 1,index))
-						index = findtext(thebride.real_name, " ")
-						if(index)
-							thebride.change_name(copytext(thebride.real_name, 1,index))
-						bridefirst = thebride.real_name
-						thegroom.change_name(thegroom.real_name + surname2use)
-						thebride.change_name(thebride.real_name + surname2use)
-						thegroom.MarryTo(thebride)
-						thegroom.adjust_triumphs(1)
-						thebride.adjust_triumphs(1)
-						//Bite the apple first if you want to be the groom.
+							surname2use = copytext(thegroom.real_name, index)
+							thegroom.change_name(copytext(thegroom.real_name, 1,index))
+					index = findtext(thebride.real_name, " ")
+					if(index)
+						thebride.change_name(copytext(thebride.real_name, 1,index))
+					bridefirst = thebride.real_name
+					thegroom.change_name(thegroom.real_name + surname2use)
+					thebride.change_name(thebride.real_name + surname2use)
+					thegroom.MarryTo(thebride)
+					thegroom.adjust_triumphs(1)
+					thebride.adjust_triumphs(1)
+					if(!secret_marriage)
 						if(thegroom.gender == thebride.gender)	//Homophobic dog stare. Pack it up, skittles squad.
 							priority_announce("Eora begrudgingly accepts the marriage between [thegroom.real_name] and [bridefirst].", title = "Holy Union!", sound = 'sound/misc/bell.ogg')
 						else
 							priority_announce("Eora proudly embraces the marriage between [thegroom.real_name] and [bridefirst]!", title = "Holy Union!", sound = 'sound/misc/bell.ogg')
-						thegroom.remove_stress(/datum/stressevent/eora_matchmaking)
-						thebride.remove_stress(/datum/stressevent/eora_matchmaking)
-						SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_MARRIAGE, thegroom, thebride)
-						record_round_statistic(STATS_MARRIAGES)
-						marriage = TRUE
-						qdel(A)
-
-				if(!marriage)
-					playsound(src.loc, 'sound/misc/frying.ogg', 60, FALSE)
+					thegroom.remove_stress(/datum/stressevent/eora_matchmaking)
+					thebride.remove_stress(/datum/stressevent/eora_matchmaking)
+					SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_MARRIAGE, thegroom, thebride)
+					record_round_statistic(STATS_MARRIAGES)
+					playsound(loc, 'sound/misc/frying.ogg', 30, FALSE)
 					A.burn()
-					return
+					return TRUE
 	return ..()
 
 /obj/structure/fluff/psycross/copper/Destroy()
