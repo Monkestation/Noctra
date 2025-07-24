@@ -1114,7 +1114,7 @@
 			resist_restraints() //trying to remove cuffs.
 
 /mob/living/carbon/human/verb/ic_pray()
-	set name = "Pray"
+	set name = "Prayer"
 	set category = "IC"
 
 	emote("pray", intentional = TRUE)
