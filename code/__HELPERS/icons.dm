@@ -1127,7 +1127,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 				SSassets.transport.send_assets(client_target, name)
 			if(sourceonly)
 				return SSassets.transport.get_asset_url(name)
-			return "<img class='[extra_classes] icon icon-[icon_state]' src='[SSassets.transport.get_asset_url(name)]'>"
+			return "<img class='[extra_classes] icon icon-misc' src='[SSassets.transport.get_asset_url(name)]'>"
 
 		icon2collapse = thing.icon
 		if(isnull(icon_state))
