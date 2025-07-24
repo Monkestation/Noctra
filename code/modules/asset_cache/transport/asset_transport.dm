@@ -60,7 +60,8 @@
 /datum/asset_transport/proc/get_asset_url(asset_name, datum/asset_cache_item/asset_cache_item)
 	if (!istype(asset_cache_item))
 		asset_cache_item = SSassets.cache[asset_name]
-	if (dont_mutate_filenames || asset_cache_item.legacy || (asset_cache_item.namespace && !asset_cache_item.namespace_parent)) // to ensure code that breaks on cdns breaks in local testing, we only use the normal filename on legacy assets and name space assets.
+	// to ensure code that breaks on cdns breaks in local testing, we only use the normal filename on legacy assets and name space assets.
+	if (dont_mutate_filenames || asset_cache_item.legacy || (asset_cache_item.namespace && !asset_cache_item.namespace_parent))
 		return url_encode(asset_cache_item.name)
 	return url_encode("asset.[asset_cache_item.hash][asset_cache_item.ext]")
 
