@@ -13,20 +13,16 @@
 	var/namespace_parent = FALSE //! True if this is the parent css or html file for an asset's namespace
 
 /datum/asset_cache_item/New(name, file)
-	if (!isfile(file))
+	if(!isfile(file))
 		file = fcopy_rsc(file)
-	hash = md5(file)
-	if (!hash)
-		hash = md5(fcopy_rsc(file))
-		if (!hash)
-			CRASH("invalid asset sent to asset cache")
-		debug_world_log("asset cache unexpected success of second fcopy_rsc")
+	hash = md5asfile(file) //icons sent to the rsc sometimes md5 incorrectly
+	if(!hash)
+		CRASH("invalid asset sent to asset cache")
 	src.name = name
 	var/extstart = findlasttext(name, ".")
 	if (extstart)
 		ext = ".[copytext(name, extstart+1)]"
 	resource = file
-
 
 /datum/asset_cache_item/vv_edit_var(var_name, var_value)
 	return FALSE
