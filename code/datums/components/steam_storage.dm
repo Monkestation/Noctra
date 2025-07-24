@@ -59,8 +59,8 @@
 	return TRUE
 
 /datum/component/steam_storage/proc/register_usage(atom/source, mob/living/equipped)
-	RegisterSignal(equipped, COMSIG_ATOM_PROXY_STEAM_USE, PROC_REF(try_proxy_use_steam))
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(unregister_usage))
+	RegisterSignal(equipped, COMSIG_ATOM_PROXY_STEAM_USE, PROC_REF(try_proxy_use_steam), override = TRUE)
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(unregister_usage), override = TRUE)
 
 /datum/component/steam_storage/proc/unregister_usage(atom/source, mob/living/dropper)
 	UnregisterSignal(parent, COMSIG_ITEM_DROPPED)
