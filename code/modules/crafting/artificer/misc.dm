@@ -82,13 +82,13 @@
 	hammers_per_item = 6
 	craftdiff = 3
 
-///datum/artificer_recipe/gold/headhook //this ones devsprite is so ass I am just going to make it inaccasible
-	//name = "Royal Headhook"
-	//required_item = /obj/item/ingot/gold
-	//created_item = /obj/item/storage/hip/headhook/royal
-	//additional_items = list(/obj/item/ingot/silver, /obj/item/natural/silk = 2)
-	//hammers_per_item = 6
-	//craftdiff = 4
+/datum/artificer_recipe/gold/headhook
+	name = "Royal Headhook"
+	required_item = /obj/item/ingot/gold
+	created_item = /obj/item/storage/hip/headhook/royal
+	additional_items = list(/obj/item/natural/silk = 2)
+	hammers_per_item = 6
+	craftdiff = 3
 
 // --------- TOOLS -----------
 
@@ -117,7 +117,6 @@
 	created_item = /obj/item/lockpickring
 	hammers_per_item = 5
 	craftdiff = 2
-
 
 // --------- WEAPON -----------
 
