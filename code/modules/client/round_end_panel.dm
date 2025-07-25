@@ -93,7 +93,7 @@
 	data += "<div style='display: table-cell; width: 30%; vertical-align: top; padding-right: 15px;'>"
 	data += "<div style='height: 38px; text-align: center;'>"
 	data += "<a href='byond://?src=[REF(src)];viewstats=1;featured_stat=[prev_stat]' style='color: #e6b327; text-decoration: none; font-weight: bold; margin-right: 10px; font-size: 1.2em;'>&#9664;</a>"
-	data += "<span style='font-weight: bold; color: #bd1717;'>Featured Statistics</span>"
+	data += "<a href='byond://?src=[REF(src)];select_featured_stat=1' style='font-weight: bold; color: #bd1717; text-decoration: none;'>Featured Statistics</a>"
 	data += "<a href='byond://?src=[REF(src)];viewstats=1;featured_stat=[next_stat]' style='color: #e6b327; text-decoration: none; font-weight: bold; margin-left: 10px; font-size: 1.2em;'>&#9654;</a>"
 	data += "</div>"
 	data += "<div style='border-top: 1px solid #444; width: 80%; margin: 0 auto 15px auto;'></div>"
@@ -221,10 +221,20 @@
 
 	data += "</div></div>"
 
-	src.mob << browse(null, "window=vanderlin_influences")
-	var/datum/browser/popup = new(src.mob, "vanderlin_round_end", "<center>The Chronicle</center>", 1075, 800)
+	mob << browse(null, "window=vanderlin_influences")
+	var/datum/browser/popup = new(mob, "vanderlin_round_end", "<center>The Chronicle</center>", 1075, 800)
 	popup.set_content(data.Join())
 	popup.open()
+
+/client/proc/select_featured_stat()
+	var/list/stat_choices = list()
+	for(var/stat in GLOB.featured_stats)
+		var/list/stat_data = GLOB.featured_stats[stat]
+		stat_choices[stat_data["name"]] = stat
+
+	var/chosen = browser_input_list(mob, "Select featured statistic", "Featured Statistics", stat_choices)
+	if(chosen && (chosen in stat_choices))
+		show_round_stats(stat_choices[chosen])
 
 /// Shows chronicle page
 /client/proc/show_chronicle(tab = "The Realm")
@@ -538,8 +548,8 @@
 
 	data += "</div>"
 
-	src.mob << browse(null, "window=vanderlin_influences")
-	var/datum/browser/popup = new(src.mob, "vanderlin_round_end", "<center>The Chronicle</center>", 1075, 800)
+	mob << browse(null, "window=vanderlin_influences")
+	var/datum/browser/popup = new(mob, "vanderlin_round_end", "<center>The Chronicle</center>", 1075, 800)
 	popup.set_content(data.Join())
 	popup.open()
 
@@ -706,8 +716,8 @@
 
 	data += "</div></div>"
 
-	src.mob << browse(null, "window=vanderlin_round_end")
-	var/datum/browser/popup = new(src.mob, "vanderlin_influences", "<center>Gods Influences</center>", 1325, 875)
+	mob << browse(null, "window=vanderlin_round_end")
+	var/datum/browser/popup = new(mob, "vanderlin_influences", "<center>Gods Influences</center>", 1325, 875)
 	popup.set_content(data.Join())
 	popup.open()
 
