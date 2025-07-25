@@ -794,6 +794,7 @@
 #include "code\datums\components\spawner.dm"
 #include "code\datums\components\squeak.dm"
 #include "code\datums\components\steam_storage.dm"
+#include "code\datums\components\stillness_timer.dm"
 #include "code\datums\components\strong_pull.dm"
 #include "code\datums\components\summoning.dm"
 #include "code\datums\components\swarming.dm"
