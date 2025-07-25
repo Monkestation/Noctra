@@ -22,8 +22,10 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	fillsounds = list('sound/items/fillcup.ogg')
 	poursounds = list('sound/items/fillbottle.ogg')
 	experimental_onhip = TRUE
-	var/can_label_bottle = TRUE	// Determines if the bottle can be labeled with paper
-	var/fancy		// for bottles with custom descriptors that you don't want to change when bottle manipulated
+	/// Determines if the bottle can be labeled with paper
+	var/can_label_bottle = TRUE
+	/// for bottles with custom descriptors that you don't want to change when bottle manipulated
+	var/fancy
 
 /obj/item/reagent_containers/glass/bottle/Initialize()
 	icon_state = "clear_bottle[rand(1,4)]"

@@ -410,7 +410,7 @@
 	weight = 20
 
 /datum/special_trait/outlaw/on_apply(mob/living/carbon/human/character, silent)
-	GLOB.outlawed_players += character.real_name
+	GLOB.outlawed_players |= character.real_name
 
 /datum/special_trait/unlucky
 	name = "Unlucky"
