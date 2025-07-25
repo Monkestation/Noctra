@@ -25,6 +25,31 @@
 	name = "medicator plumage"
 	desc = "A foul smelling substance drips from the tips, even without its host."
 	accessory_type = /datum/sprite_accessory/tail/medicator
+	var/datum/component/stillness_timer/stillness
+
+/obj/item/organ/tail/medicator/Insert(mob/living/carbon/M, special, drop_if_replaced)
+	. = ..()
+	if(!istype(owner, /mob/living/carbon/human/dummy))
+		stillness = AddComponent(/datum/component/stillness_timer, 15 SECONDS, null, CALLBACK(src, PROC_REF(do_goop)))
+
+/obj/item/organ/tail/medicator/Remove(mob/living/carbon/human/H, special)
+	. = ..()
+	if(stillness)
+		stillness.RemoveComponent()
+
+/obj/item/organ/tail/medicator/proc/do_goop()
+	if(!owner || QDELETED(src))
+		return
+	if(!isturf(owner.loc))
+		return
+	var/turf/owner_turf = owner.loc
+	if(locate(/obj/effect/decal/cleanable/greenglow) in owner_turf)
+		return
+	var/obj/effect/decal/cleanable/greenglow/mess = new(owner_turf)
+	mess.name = "goo"
+	mess.transform = matrix().Scale(0.3)
+	mess.pixel_x += rand(-15, 15)
+	mess.pixel_y += rand(-15, 15)
 
 /obj/item/organ/tail/kobold
 	name = "small lizard tail"
