@@ -48,6 +48,7 @@ abstract types are automatically excluded.
 		"rousman",
 		"rare",
 		"vampire", // TODO (?)
+		"cult", // TODO (?)
 	)
 
 /datum/unit_test/craftable_clothes/Run()
