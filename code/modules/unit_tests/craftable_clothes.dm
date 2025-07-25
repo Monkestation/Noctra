@@ -49,6 +49,8 @@ abstract types are automatically excluded.
 		"rare",
 		"vampire", // TODO (?)
 		"cult", // TODO (?)
+		"feld", // testing
+		"phys" // testing
 	)
 
 /datum/unit_test/craftable_clothes/Run()
