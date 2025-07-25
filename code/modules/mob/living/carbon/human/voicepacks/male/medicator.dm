@@ -9,6 +9,8 @@
 		switch(soundin)
 			if("choke")
 				used = 'sound/vo/medicator/choke.ogg'
+			if("clearthroat")
+				used = 'sound/vo/medicator/clearthroat.ogg'
 			if("cough")
 				used = pick(
 					'sound/vo/medicator/cough1.ogg',

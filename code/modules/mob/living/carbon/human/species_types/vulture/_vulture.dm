@@ -108,14 +108,15 @@
 
 /datum/species/medicator/spec_life(mob/living/carbon/human/H)
 	. = ..()
-	if(prob(1))
+	if(prob(0.1))
 		if(!COOLDOWN_FINISHED(src, medicator_cough_cooldown))
 			return
-		var/list/emotes = list("cough", "sneeze")
-		if(prob(10))
+		var/list/emotes = list("cough", "sneeze", "clearthroat")
+		if(prob(15))
 			emotes = list("choke")
 		H.emote(pick(emotes), forced = TRUE)
-		COOLDOWN_START(src, medicator_cough_cooldown, 10 MINUTES)
+
+		COOLDOWN_START(src, medicator_cough_cooldown, 15 MINUTES)
 
 /datum/species/medicator/check_roundstart_eligible()
 	return TRUE
