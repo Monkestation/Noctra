@@ -572,7 +572,7 @@
 		<div style='margin: 10px 0;'>
 			[get_headshot_icon(holder)]
 			<div style='margin: 10px 0;'>
-				<font color='#e6a962'>[holder.real_name]</font><br>
+				<font color='#e6a962'>[holder.real_name]</font>[jobtext]<br>
 				<i>[holder.job]</i><br>
 				(with <font color='[stat_data["title_color"]]'>[stat_data["value_text"]]</font>)
 			</div>
