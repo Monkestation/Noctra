@@ -11,6 +11,8 @@ abstract types are automatically excluded.
 		/* special uncraftables designed for specific roles next */
 		/obj/item/clothing/neck/portalamulet, // vampire antag item
 		/obj/item/clothing/head/cyberdeck, // fluff item for maniac
+		/obj/item/clothing/shirt/formal, // fluff item for maniac
+		/obj/item/clothing/pants/tights/formal, // fluff item for maniac
 		/obj/item/clothing/head/helmet/visored/royalknight, // royal knight only
 		/obj/item/clothing/head/helmet/medium/decorated/skullmet,
 		/obj/item/clothing/head/helmet/visored/zizo, // zizo knight only
