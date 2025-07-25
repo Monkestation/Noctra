@@ -294,6 +294,7 @@
 			data += "</div></div>"
 
 		if("The Realm")
+			// Notable People Section
 			data += "<div style='text-align: center;'>"
 			data += "<div style='color: #e6a962; font-size: 1.2em; margin-bottom: 15px; text-transform: uppercase;'>NOTABLE PEOPLE</div>"
 			data += "<div style='border-top: 1.5px solid #e6a962; margin: 0 auto 25px auto; width: 90%;'></div>"
@@ -304,102 +305,26 @@
 
 			// First Column (25%)
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
-			// First Row - STRONGEST
-			var/mob/living/strongest = get_chronicle_stat_holder(CHRONICLE_STATS_STRONGEST_PERSON)
-			data += "<div style='margin-bottom: 15px;'><font color='#bd1717'>STRONGMAN</font></div>"
-			data += "<div style='margin: 10px 0;'>"
-			if(strongest)
-				data += get_headshot_icon(strongest)
-				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[strongest.real_name]</font><br><i>[strongest.job]</i><br>(with <font color='#bd1717'>[strongest.STASTR] strength</font>)</div>"
-			else
-				data += "Nobody"
-			data += "</div>"
-
-			// Second Row - FASTEST
-			var/mob/living/fastest = get_chronicle_stat_holder(CHRONICLE_STATS_FASTEST_PERSON)
-			data += "<div style='margin: 30px 0 15px 0;'><font color='#54d6c2'>SPEEDSTER</font></div>"
-			data += "<div style='margin: 10px 0;'>"
-			if(fastest)
-				data += get_headshot_icon(fastest)
-				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[fastest.real_name]</font><br><i>[fastest.job]</i><br>(with <font color='#54d6c2'>[fastest.STASPD] speed</font>)</div>"
-			else
-				data += "Nobody"
-			data += "</div>"
+			data += create_chronicle_holder_block(CHRONICLE_STATS_STRONGEST_PERSON)
+			data += create_chronicle_holder_block(CHRONICLE_STATS_FASTEST_PERSON)
 			data += "</div>"
 
 			// Second Column (25%)
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
-			// First Row - SMARTEST
-			var/mob/living/wisest = get_chronicle_stat_holder(CHRONICLE_STATS_WISEST_PERSON)
-			data += "<div style='margin-bottom: 15px;'><font color='#5eb6e6'>GENIUS</font></div>"
-			data += "<div style='margin: 10px 0;'>"
-			if(wisest)
-				data += get_headshot_icon(wisest)
-				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[wisest.real_name]</font><br><i>[wisest.job]</i><br>(with <font color='#5eb6e6'>[wisest.STAINT] intelligence</font>)</div>"
-			else
-				data += "Nobody"
-			data += "</div>"
-
-			// Second Row - DUMBEST
-			var/mob/living/dumbest = get_chronicle_stat_holder(CHRONICLE_STATS_DUMBEST_PERSON)
-			data += "<div style='margin: 30px 0 15px 0;'><font color='#e67e22'>IDIOT</font></div>"
-			data += "<div style='margin: 10px 0;'>"
-			if(dumbest)
-				data += get_headshot_icon(dumbest)
-				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[dumbest.real_name]</font><br><i>[dumbest.job]</i><br>(with <font color='#e67e22'>[dumbest.STAINT] intelligence</font>)</div>"
-			else
-				data += "Nobody"
-			data += "</div>"
+			data += create_chronicle_holder_block(CHRONICLE_STATS_WISEST_PERSON)
+			data += create_chronicle_holder_block(CHRONICLE_STATS_DUMBEST_PERSON)
 			data += "</div>"
 
 			// Third Column (25%)
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
-			// First Row - RICHEST
-			var/mob/living/richest = get_chronicle_stat_holder(CHRONICLE_STATS_RICHEST_PERSON)
-			data += "<div style='margin-bottom: 15px;'><font color='#d8dd90'>MAGNATE</font></div>"
-			data += "<div style='margin: 10px 0;'>"
-			if(richest)
-				data += get_headshot_icon(richest)
-				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[richest.real_name]</font><br><i>[richest.job]</i><br>(with <font color='#d8dd90'>[get_mammons_in_atom(richest)] mammons</font>)</div>"
-			else
-				data += "Nobody"
-			data += "</div>"
-
-			// Second Row - SLOWEST
-			var/mob/living/slowest = get_chronicle_stat_holder(CHRONICLE_STATS_SLOWEST_PERSON)
-			data += "<div style='margin: 30px 0 15px 0;'><font color='#a569bd'>TURTLE</font></div>"
-			data += "<div style='margin: 10px 0;'>"
-			if(slowest)
-				data += get_headshot_icon(slowest)
-				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[slowest.real_name]</font><br><i>[slowest.job]</i><br>(with <font color='#a569bd'>[slowest.STASPD] speed</font>)</div>"
-			else
-				data += "Nobody"
-			data += "</div>"
+			data += create_chronicle_holder_block(CHRONICLE_STATS_RICHEST_PERSON)
+			data += create_chronicle_holder_block(CHRONICLE_STATS_SLOWEST_PERSON)
 			data += "</div>"
 
 			// Fourth Column (25%)
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
-			// First Row - LUCKIEST
-			var/mob/living/luckiest = get_chronicle_stat_holder(CHRONICLE_STATS_LUCKIEST_PERSON)
-			data += "<div style='margin-bottom: 15px;'><font color='#54d666'>LUCKY DEVIL</font></div>"
-			data += "<div style='margin: 10px 0;'>"
-			if(luckiest)
-				data += get_headshot_icon(luckiest)
-				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[luckiest.real_name]</font><br><i>[luckiest.job]</i><br>(with <font color='#54d666'>[luckiest.STALUC] luck</font>)</div>"
-			else
-				data += "Nobody"
-			data += "</div>"
-
-			// Second Row - UNLUCKIEST
-			var/mob/living/unluckiest = get_chronicle_stat_holder(CHRONICLE_STATS_UNLUCKIEST_PERSON)
-			data += "<div style='margin: 30px 0 15px 0;'><font color='#e74c3c'>WALKING DISASTER</font></div>"
-			data += "<div style='margin: 10px 0;'>"
-			if(unluckiest)
-				data += get_headshot_icon(unluckiest)
-				data += "<div style='margin: 10px 0;'><font color='#e6a962'>[unluckiest.real_name]</font><br><i>[unluckiest.job]</i><br>(with <font color='#e74c3c'>[unluckiest.STALUC] luck</font>)</div>"
-			else
-				data += "Nobody"
-			data += "</div>"
+			data += create_chronicle_holder_block(CHRONICLE_STATS_LUCKIEST_PERSON)
+			data += create_chronicle_holder_block(CHRONICLE_STATS_UNLUCKIEST_PERSON)
 			data += "</div>"
 
 			data += "</div></div></div>"
@@ -419,7 +344,7 @@
 			data += "<div style='margin-bottom: 4px;'><font color='#f7d474'>Realm's Treasury: </font>[SStreasury.treasury_value]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#e6b327'>Regular Vault Income: </font>[GLOB.vanderlin_round_stats[STATS_REGULAR_VAULT_INCOME]]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#caa64a'>Total Vault Revenue: </font>[GLOB.vanderlin_round_stats[STATS_VAULT_TOTAL_REVENUE]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#e67e22'>Noble Estates Income: </font>[GLOB.vanderlin_round_stats[STATS_NOBLE_INCOME_TOTAL]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#e67e22'>Noble Estates Revenue: </font>[GLOB.vanderlin_round_stats[STATS_NOBLE_INCOME_TOTAL]]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#f5c02e'>Royal Taxes Collected: </font>[GLOB.vanderlin_round_stats[STATS_TAXES_COLLECTED]]</div>"
 			data += "<div><font color='#e74c3c'>Royal Taxes Evaded: </font>[GLOB.vanderlin_round_stats[STATS_TAXES_EVADED]]</div>"
 			data += "</div></div>"
@@ -441,8 +366,8 @@
 			data += "<div style='margin-bottom: 4px;'><font color='#c78445'>Fines Collected: </font>[GLOB.vanderlin_round_stats[STATS_FINES_INCOME]]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#90b34f'>Stockpile Exports: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_EXPORTS_VALUE]]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#dbd24e'>Stockpile Imports: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_IMPORTS_VALUE]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#8abd6c'>Stockpile Sold: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_REVENUE]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#c57e62'>Stockpile Bought: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_EXPANSES]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#80af64'>Bought from Stockpile: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_REVENUE]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#c57e62'>Sold to Stockpile: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_EXPANSES]]</div>"
 			data += "<div><font color='#7495d3'>Peddler Revenue: </font>[GLOB.vanderlin_round_stats[STATS_PEDDLER_REVENUE]]</div>"
 			data += "</div></div>"
 
@@ -622,6 +547,38 @@
 	var/datum/browser/popup = new(src.mob, "vanderlin_round_end", "<center>The Chronicle</center>", 1075, 800)
 	popup.set_content(data.Join())
 	popup.open()
+
+/// Creates a chronicle holder block for display
+/proc/create_chronicle_holder_block(stat_name)
+	var/list/stat_data = GLOB.chronicle_stats[stat_name]
+	if(!stat_data)
+		return "<div style='margin: 10px 0;'>Nobody</div>"
+
+	var/datum/weakref/mob_weakref = stat_data["holder"]
+	var/mob/living/holder = mob_weakref?.resolve()
+	if(!holder)
+		return "<div style='margin: 10px 0;'>Nobody</div>"
+
+	var/jobtext = ""
+	if(holder.mind)
+		if(holder.mind.special_role)
+			jobtext = " the <b>[holder.mind.special_role]</b>"
+		else if(holder.mind.assigned_role && holder.mind.current)
+			jobtext = " the <b>[holder.mind.assigned_role.get_informed_title(holder.mind.current)]</b>"
+
+	return {"
+	<div style='margin: 10px 0;'>
+		<div style='margin-bottom: 15px;'><font color='[stat_data["title_color"]]'>[stat_data["title"]]</font></div>
+		<div style='margin: 10px 0;'>
+			[get_headshot_icon(holder)]
+			<div style='margin: 10px 0;'>
+				<font color='#e6a962'>[holder.real_name]</font><br>
+				<i>[holder.job]</i><br>
+				(with <font color='[stat_data["title_color"]]'>[stat_data["value_text"]]</font>)
+			</div>
+		</div>
+	</div>
+	"}
 
 /// Shows Gods influences menu
 /client/proc/show_influences(debug = FALSE)

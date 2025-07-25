@@ -825,7 +825,7 @@ SUBSYSTEM_DEF(gamemode)
 /// Loads config values from game_options.txt
 /datum/controller/subsystem/gamemode/proc/load_config_vars()
 	point_gain_multipliers[EVENT_TRACK_MUNDANE] = CONFIG_GET(number/mundane_point_gain_multiplier)
-	point_gain_multipliers[EVENT_TRACK_PERSONAL] = CONFIG_GET(number/moderate_point_gain_multiplier) * 1.15
+	point_gain_multipliers[EVENT_TRACK_PERSONAL] = CONFIG_GET(number/moderate_point_gain_multiplier) * 1.2
 	point_gain_multipliers[EVENT_TRACK_MODERATE] = CONFIG_GET(number/moderate_point_gain_multiplier)
 	point_gain_multipliers[EVENT_TRACK_INTERVENTION] = CONFIG_GET(number/major_point_gain_multiplier)
 	point_gain_multipliers[EVENT_TRACK_CHARACTER_INJECTION] = CONFIG_GET(number/roleset_point_gain_multiplier)
@@ -1481,42 +1481,45 @@ SUBSYSTEM_DEF(gamemode)
 			// Chronicle statistics
 			if(human_mob.STASTR > highest_strength)
 				highest_strength = human_mob.STASTR
-				set_chronicle_stat(CHRONICLE_STATS_STRONGEST_PERSON, human_mob)
+				set_chronicle_stat(CHRONICLE_STATS_STRONGEST_PERSON, human_mob, "STRONGMAN", "#bd1717", "[human_mob.STASTR] strength")
+
 			if(human_mob.STAINT > highest_intelligence)
 				highest_intelligence = human_mob.STAINT
-				set_chronicle_stat(CHRONICLE_STATS_WISEST_PERSON, human_mob)
+				set_chronicle_stat(CHRONICLE_STATS_WISEST_PERSON, human_mob, "GENIUS", "#5eb6e6", "[human_mob.STAINT] intelligence")
+
 			if(human_mob.STALUC > highest_luck)
 				highest_luck = human_mob.STALUC
-				set_chronicle_stat(CHRONICLE_STATS_LUCKIEST_PERSON, human_mob)
+				set_chronicle_stat(CHRONICLE_STATS_LUCKIEST_PERSON, human_mob, "LUCKY DEVIL", "#54d666", "[human_mob.STALUC] luck")
+
 			if(human_mob.STASPD > highest_speed)
 				highest_speed = human_mob.STASPD
-				set_chronicle_stat(CHRONICLE_STATS_FASTEST_PERSON, human_mob)
+				set_chronicle_stat(CHRONICLE_STATS_FASTEST_PERSON, human_mob, "SPEEDSTER", "#54d6c2", "[human_mob.STASPD] speed")
 
 			var/wealth = get_mammons_in_atom(human_mob)
 			if(wealth > highest_wealth)
 				highest_wealth = wealth
-				set_chronicle_stat(CHRONICLE_STATS_RICHEST_PERSON, human_mob)
+				set_chronicle_stat(CHRONICLE_STATS_RICHEST_PERSON, human_mob, "MAGNATE", "#d8dd90", "[wealth] mammons")
 
 			if(!lowest_intelligence)
 				lowest_intelligence = human_mob.STAINT
-				set_chronicle_stat(CHRONICLE_STATS_DUMBEST_PERSON, human_mob)
+				set_chronicle_stat(CHRONICLE_STATS_DUMBEST_PERSON, human_mob, "IDIOT", "#e67e22","[human_mob.STAINT] intelligence")
 			else if(human_mob.STAINT < lowest_intelligence)
 				lowest_intelligence = human_mob.STAINT
-				set_chronicle_stat(CHRONICLE_STATS_DUMBEST_PERSON, human_mob)
+				set_chronicle_stat(CHRONICLE_STATS_DUMBEST_PERSON, human_mob, "IDIOT", "#e67e22", "[human_mob.STAINT] intelligence")
 
 			if(!lowest_speed)
 				lowest_speed = human_mob.STASPD
-				set_chronicle_stat(CHRONICLE_STATS_SLOWEST_PERSON, human_mob)
+				set_chronicle_stat(CHRONICLE_STATS_SLOWEST_PERSON, human_mob, "TURTLE", "#a569bd", "[human_mob.STASPD] speed")
 			else if(human_mob.STASPD < lowest_speed)
 				lowest_speed = human_mob.STASPD
-				set_chronicle_stat(CHRONICLE_STATS_SLOWEST_PERSON, human_mob)
+				set_chronicle_stat(CHRONICLE_STATS_SLOWEST_PERSON, human_mob, "TURTLE", "#a569bd", "[human_mob.STASPD] speed")
 
 			if(!lowest_luck)
 				lowest_luck = human_mob.STALUC
-				set_chronicle_stat(CHRONICLE_STATS_UNLUCKIEST_PERSON, human_mob)
+				set_chronicle_stat(CHRONICLE_STATS_UNLUCKIEST_PERSON, human_mob, "WALKING DISASTER", "#e74c3c", "[human_mob.STALUC] luck")
 			else if(human_mob.STALUC < lowest_luck)
 				lowest_luck = human_mob.STALUC
-				set_chronicle_stat(CHRONICLE_STATS_UNLUCKIEST_PERSON, human_mob)
+				set_chronicle_stat(CHRONICLE_STATS_UNLUCKIEST_PERSON, human_mob, "WALKING DISASTER", "#e74c3c", "[human_mob.STALUC] luck")
 
 /// Returns total follower influence for the given storyteller
 /datum/controller/subsystem/gamemode/proc/get_follower_influence(datum/storyteller/chosen_storyteller)

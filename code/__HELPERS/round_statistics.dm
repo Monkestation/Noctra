@@ -585,14 +585,19 @@ GLOBAL_LIST_EMPTY(chronicle_stats)
 
 	stat_data["entries"][object_name] = (stat_data["entries"][object_name] || 0) + increment
 
-/// Records a chronicle stat (weakref to an atom/mob)
-/proc/set_chronicle_stat(stat_name, atom/target)
+/// Records a chronicle stat with all display information
+/proc/set_chronicle_stat(stat_name, atom/target, title, title_color, value_text)
 	if(SSticker.current_state == GAME_STATE_FINISHED)
 		return
 	if(!stat_name || !target || !GLOB.chronicle_stats)
 		return
 
-	GLOB.chronicle_stats[stat_name] = WEAKREF(target)
+	GLOB.chronicle_stats[stat_name] = list(
+		"holder" = WEAKREF(target),
+		"title" = title,
+		"title_color" = title_color,
+		"value_text" = value_text
+	)
 
 /// Gets the recorded chronicle stat holder (returns the resolved weakref or null)
 /proc/get_chronicle_stat_holder(stat_name)
