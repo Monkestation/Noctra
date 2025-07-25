@@ -12,14 +12,14 @@
 	icon_state = "fat"
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_POOR)
 	eat_effect = /datum/status_effect/debuff/uncookedfood
-	possible_item_intents = list(/datum/intent/splash, /datum/intent/food)
+	possible_item_intents = list(/datum/intent/food, /datum/intent/splash)
 
-/obj/item/reagent_containers/food/snacks/attack(mob/living/M, mob/user, proximity)
+/obj/item/reagent_containers/food/snacks/fat/attack(mob/living/M, mob/user, proximity)
 	if(user.used_intent.type == /datum/intent/food)
 		return ..()
 
-	if(!isliving(M))
-		return
+	if(!isliving(M) || (M != user))
+		return ..()
 
 	user.visible_message("[user] starts to oil up [M]", "You start to oil up [M]")
 	if(!do_after(user, 5 SECONDS, M))

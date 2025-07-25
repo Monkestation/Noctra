@@ -36,9 +36,9 @@
 
 	if(istype(mover))
 		if(is_jester_job(mover.mind?.assigned_role))
-			mover.liquid_slip(total_time = 1.6 SECONDS, stun_duration = 1.6 SECONDS, height = 30, flip_count = 10)
+			mover.liquid_slip(total_time = 1 SECONDS, stun_duration = 1 SECONDS, height = 30, flip_count = 10)
 		else
-			mover.liquid_slip(total_time = 1.6 SECONDS, stun_duration = 1.6 SECONDS, height = 12, flip_count = 0)
+			mover.liquid_slip(total_time = 1 SECONDS, stun_duration = 1 SECONDS, height = 12, flip_count = 0)
 
 /atom/movable/screen/alert/status_effect/oiled
 	name = "Oiled"
