@@ -190,6 +190,32 @@ SUBSYSTEM_DEF(gamemode)
 	var/roundvoteend = FALSE
 	var/reb_end_time = 0
 
+	var/list/chronicle_sets = list(
+		"Strength" = list(
+			CHRONICLE_STATS_STRONGEST_PERSON,
+			CHRONICLE_STATS_WEAKEST_PERSON,
+		),
+		"Intelligence" = list(
+			CHRONICLE_STATS_WISEST_PERSON,
+			CHRONICLE_STATS_DUMBEST_PERSON,
+		),
+		"Speed" = list(
+			CHRONICLE_STATS_FASTEST_PERSON,
+			CHRONICLE_STATS_SLOWEST_PERSON,
+		),
+		"Wealth" = list(
+			CHRONICLE_STATS_RICHEST_PERSON,
+			CHRONICLE_STATS_POOREST_PERSON,
+		),
+		"Luck" = list(
+			CHRONICLE_STATS_LUCKIEST_PERSON,
+			CHRONICLE_STATS_UNLUCKIEST_PERSON,
+		),
+	)
+
+	/// Chosen chronicle stats of the notable people, which show at the end round panel
+	var/list/chosen_chronicle_stats = list()
+
 /datum/controller/subsystem/gamemode/Initialize(time, zlevel)
 #if defined(UNIT_TESTS) || defined(AUTOWIKI) // lazy way of doing this but idc
 	flags |= SS_NO_FIRE
@@ -407,6 +433,9 @@ SUBSYSTEM_DEF(gamemode)
 		event_pools[event.track] += event //Add it to the categorized event pools
 
 	load_roundstart_data()
+
+	pick_chronicle_stats()
+
 	. = ..()
 
 /datum/controller/subsystem/gamemode/fire(resumed = FALSE)
@@ -1246,6 +1275,37 @@ SUBSYSTEM_DEF(gamemode)
 				continue
 			listed.occurrences++
 
+/// Chooses a number of chronicle stats from the chronicle sets which will be shown at the round end panel
+/datum/controller/subsystem/gamemode/proc/pick_chronicle_stats()
+	var/list/available_sets = chronicle_sets.Copy()
+
+	while(length(chosen_chronicle_stats) < 8 && length(available_sets))
+		var/picked_set_name = pick(available_sets)
+		var/list/picked_set = available_sets[picked_set_name]
+
+		var/stats_needed = 8 - length(chosen_chronicle_stats)
+		var/stats_to_take = min(length(picked_set), stats_needed)
+
+		for(var/i in 1 to stats_to_take)
+			chosen_chronicle_stats += picked_set[i]
+
+		available_sets -= picked_set_name
+
+	if(length(chosen_chronicle_stats) < 8)
+		for(var/set_name in chronicle_sets)
+			if(length(chosen_chronicle_stats) >= 8)
+				break
+
+			if(!(set_name in available_sets))
+				continue
+
+			var/list/remaining_set = chronicle_sets[set_name]
+			var/stats_needed = 8 - length(chosen_chronicle_stats)
+			var/stats_to_take = min(length(remaining_set), stats_needed)
+
+			for(var/i in 1 to stats_to_take)
+				chosen_chronicle_stats += remaining_set[i]
+
 /// Compares influence of all storytellers and sets a new storyteller with a highest influence
 /datum/controller/subsystem/gamemode/proc/pick_most_influential(roundstart = FALSE)
 	refresh_alive_stats(roundstart)
@@ -1364,9 +1424,11 @@ SUBSYSTEM_DEF(gamemode)
 	var/highest_luck = -1
 	var/highest_speed = -1
 
+	var/lowest_strength
 	var/lowest_intelligence
-	var/lowest_speed
+	var/lowest_wealth
 	var/lowest_luck
+	var/lowest_speed
 
 	for(var/client/client in GLOB.clients)
 		if(roundstart)
@@ -1500,9 +1562,16 @@ SUBSYSTEM_DEF(gamemode)
 				highest_wealth = wealth
 				set_chronicle_stat(CHRONICLE_STATS_RICHEST_PERSON, human_mob, "MAGNATE", "#d8dd90", "[wealth] mammons")
 
+			if(!lowest_strength)
+				lowest_strength = human_mob.STASTR
+				set_chronicle_stat(CHRONICLE_STATS_WEAKEST_PERSON, human_mob, "WIMP", "#b38c6a", "[human_mob.STASTR] strength")
+			else if(human_mob.STASTR < lowest_strength)
+				lowest_strength = human_mob.STASTR
+				set_chronicle_stat(CHRONICLE_STATS_WEAKEST_PERSON, human_mob, "WIMP", "#b38c6a", "[human_mob.STASTR] strength")
+
 			if(!lowest_intelligence)
 				lowest_intelligence = human_mob.STAINT
-				set_chronicle_stat(CHRONICLE_STATS_DUMBEST_PERSON, human_mob, "IDIOT", "#e67e22","[human_mob.STAINT] intelligence")
+				set_chronicle_stat(CHRONICLE_STATS_DUMBEST_PERSON, human_mob, "IDIOT", "#e67e22", "[human_mob.STAINT] intelligence")
 			else if(human_mob.STAINT < lowest_intelligence)
 				lowest_intelligence = human_mob.STAINT
 				set_chronicle_stat(CHRONICLE_STATS_DUMBEST_PERSON, human_mob, "IDIOT", "#e67e22", "[human_mob.STAINT] intelligence")
@@ -1520,6 +1589,13 @@ SUBSYSTEM_DEF(gamemode)
 			else if(human_mob.STALUC < lowest_luck)
 				lowest_luck = human_mob.STALUC
 				set_chronicle_stat(CHRONICLE_STATS_UNLUCKIEST_PERSON, human_mob, "WALKING DISASTER", "#e74c3c", "[human_mob.STALUC] luck")
+
+			if(!lowest_wealth)
+				lowest_wealth = get_mammons_in_atom(human_mob)
+				set_chronicle_stat(CHRONICLE_STATS_POOREST_PERSON, human_mob, "PAUPER", "#aabb6b", "[lowest_wealth] mammons")
+			else if(get_mammons_in_atom(human_mob) < lowest_wealth)
+				lowest_wealth = get_mammons_in_atom(human_mob)
+				set_chronicle_stat(CHRONICLE_STATS_POOREST_PERSON, human_mob, "PAUPER", "#aabb6b", "[lowest_wealth] mammons")
 
 /// Returns total follower influence for the given storyteller
 /datum/controller/subsystem/gamemode/proc/get_follower_influence(datum/storyteller/chosen_storyteller)

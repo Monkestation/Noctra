@@ -313,25 +313,24 @@
 			data += "<div style='display: table; width: 100%;'>"
 			data += "<div style='display: table-row;'>"
 
-			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
-			data += create_chronicle_holder_block(CHRONICLE_STATS_STRONGEST_PERSON)
-			data += create_chronicle_holder_block(CHRONICLE_STATS_FASTEST_PERSON, FALSE, TRUE)
-			data += "</div>"
+			var/stats_per_column = CEILING(length(SSgamemode.chosen_chronicle_stats)/4, 1)
+			var/current_stat = 1
 
-			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
-			data += create_chronicle_holder_block(CHRONICLE_STATS_WISEST_PERSON)
-			data += create_chronicle_holder_block(CHRONICLE_STATS_DUMBEST_PERSON, FALSE, TRUE)
-			data += "</div>"
+			for(var/col in 1 to 4)
+				data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
 
-			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
-			data += create_chronicle_holder_block(CHRONICLE_STATS_RICHEST_PERSON)
-			data += create_chronicle_holder_block(CHRONICLE_STATS_SLOWEST_PERSON, FALSE, TRUE)
-			data += "</div>"
+				for(var/i in 1 to stats_per_column)
+					if(current_stat > length(SSgamemode.chosen_chronicle_stats))
+						break
 
-			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
-			data += create_chronicle_holder_block(CHRONICLE_STATS_LUCKIEST_PERSON)
-			data += create_chronicle_holder_block(CHRONICLE_STATS_UNLUCKIEST_PERSON, FALSE, TRUE)
-			data += "</div>"
+					var/stat_name = SSgamemode.chosen_chronicle_stats[current_stat]
+					var/include_title = (i == 1)
+					var/is_second_block = (i > 1)
+
+					data += create_chronicle_holder_block(stat_name, include_title, is_second_block)
+					current_stat++
+
+				data += "</div>"
 
 			data += "</div></div></div>"
 			data += "<div style='height: 20px;'></div>"
