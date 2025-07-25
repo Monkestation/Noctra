@@ -150,3 +150,9 @@
 		"Smog" = HAIR_COLOR_SMOG,
 		"Steam" = HAIR_COLOR_STEAM,
 	)
+
+/datum/species/medicator/get_possible_names(gender)
+	return world.file2list('strings/rt/names/other/medicator.txt')
+
+/datum/species/aasimar/get_possible_surnames(gender)
+	return null
