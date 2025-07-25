@@ -32,7 +32,7 @@
 	beltr = /obj/item/storage/belt/pouch/coins/poor
 	mask = /obj/item/clothing/face/facemask
 	pants = /obj/item/clothing/pants/trou/leather
-	shirt = /obj/item/clothing/armor/gambeson/light/black
+	shirt = /obj/item/clothing/armor/gambeson/light/colored/black
 	wrists = /obj/item/clothing/neck/psycross/silver
 
 // Brutal Zealot, a class balanced to town guard, with 1 more strength but less intelligence and perception. Axe/Mace and shield focus.

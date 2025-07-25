@@ -28,7 +28,7 @@
 
 	head = pick(/obj/item/clothing/head/hatfur, /obj/item/clothing/head/hatblu)
 	armor = /obj/item/clothing/armor/leather/vest
-	cloak = /obj/item/clothing/cloak/apron/waist/brown
+	cloak = /obj/item/clothing/cloak/apron/waist/colored/brown
 	neck = /obj/item/storage/belt/pouch/coins/mid
 	pants = /obj/item/clothing/pants/trou
 	shirt = /obj/item/clothing/shirt/undershirt/colored/random

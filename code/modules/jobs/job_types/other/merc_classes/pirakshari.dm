@@ -40,7 +40,7 @@
 	shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 	armor = /obj/item/clothing/armor/leather/splint
 	backr = /obj/item/storage/backpack/satchel
-	head = /obj/item/clothing/neck/keffiyeh/uncolored
+	head = /obj/item/clothing/neck/keffiyeh/colored/uncolored
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/poor, /obj/item/weapon/knife/dagger)
 
 	H.merctype = 1 //Desert Rider chain, 0 for Desert Rider Medal

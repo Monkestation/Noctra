@@ -46,7 +46,7 @@
 	shirt = /obj/item/clothing/shirt/undershirt/colored/red
 	armor = /obj/item/clothing/armor/leather/splint
 	backl = /obj/item/storage/backpack/satchel
-	head = /obj/item/clothing/neck/keffiyeh/red
+	head = /obj/item/clothing/neck/keffiyeh/colored/red
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/poor, /obj/item/lockpick)
 	if(!H.has_language(/datum/language/zalad))
 		H.grant_language(/datum/language/zalad)

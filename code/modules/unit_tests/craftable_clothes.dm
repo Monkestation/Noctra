@@ -36,11 +36,11 @@ abstract types are automatically excluded.
 		/obj/item/clothing/head/crown/serpcrown // should only be one
 
 	)
-	/// excludes paths that are subtypes of these types
+	/// excludes paths that are subtypes of these types and only subtypes
 	var/list/excluded_paths_subtypes_only = list(
-		/obj/item/clothing/neck/keffiyeh,
-		/* temporary solution to subtypes that change color only below */
+
 	)
+
 	/// if the path of the item contains this keyword, it will be excluded
 	var/list/excluded_paths_by_text = list(
 		"goblin",

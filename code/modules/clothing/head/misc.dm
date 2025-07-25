@@ -26,7 +26,7 @@
 /obj/item/clothing/head/headband/colored
 	misc_flags = CRAFTING_TEST_EXCLUDE
 
-/obj/item/clothing/head/headband/red
+/obj/item/clothing/head/headband/colored/red
 	color = CLOTHING_BLOOD_RED
 
 /obj/item/clothing/head/softcap

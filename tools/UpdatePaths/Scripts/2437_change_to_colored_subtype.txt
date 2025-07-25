@@ -88,4 +88,13 @@
 /obj/item/clothing/cloak/apron/waist/brown : /obj/item/clothing/cloak/apron/waist/colored/brown{@OLD}
 /obj/item/clothing/cloak/apron/waist/bar : /obj/item/clothing/cloak/apron/waist/colored/bar{@OLD}
 /obj/item/clothing/head/headband/red : /obj/item/clothing/head/headband/colored/red{@OLD}
+/obj/item/clothing/neck/keffiyeh/uncolored : /obj/item/clothing/neck/keffiyeh/colored/uncolored{@OLD}
+/obj/item/clothing/neck/keffiyeh/red : /obj/item/clothing/neck/keffiyeh/colored/red{@OLD}
+/obj/item/clothing/neck/keffiyeh/yellow : /obj/item/clothing/neck/keffiyeh/colored/yellow{@OLD}
+/obj/item/clothing/neck/keffiyeh/orange : /obj/item/clothing/neck/keffiyeh/colored/orange{@OLD}
+/obj/item/clothing/neck/keffiyeh/green : /obj/item/clothing/neck/keffiyeh/colored/green{@OLD}
+/obj/item/clothing/neck/keffiyeh/blue : /obj/item/clothing/neck/keffiyeh/colored/blue{@OLD}
+/obj/item/clothing/neck/keffiyeh/purple : /obj/item/clothing/neck/keffiyeh/colored/purple{@OLD}
+/obj/item/clothing/neck/keffiyeh/black : /obj/item/clothing/neck/keffiyeh/colored/black{@OLD}
+/obj/item/clothing/neck/keffiyeh/white : /obj/item/clothing/neck/keffiyeh/colored/white{@OLD}
 

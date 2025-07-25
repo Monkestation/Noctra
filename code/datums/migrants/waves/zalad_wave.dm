@@ -190,7 +190,7 @@
 	beltl= /obj/item/flashlight/flare/torch/lantern
 	shirt = /obj/item/clothing/shirt/undershirt/colored/black
 	pants = /obj/item/clothing/pants/tights/colored/red
-	neck = /obj/item/clothing/neck/keffiyeh/red
+	neck = /obj/item/clothing/neck/keffiyeh/colored/red
 	backl = /obj/item/storage/backpack/satchel
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/poor)
 	if(!H.has_language(/datum/language/zalad))
@@ -260,7 +260,7 @@
 	shirt = /obj/item/clothing/shirt/undershirt/colored/red
 	armor = /obj/item/clothing/armor/leather/splint
 	backl = /obj/item/storage/backpack/satchel
-	head = /obj/item/clothing/neck/keffiyeh/red
+	head = /obj/item/clothing/neck/keffiyeh/colored/red
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/poor, /obj/item/lockpick)
 	if(!H.has_language(/datum/language/zalad))
 		H.grant_language(/datum/language/zalad)

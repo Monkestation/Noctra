@@ -37,7 +37,7 @@
 
 /datum/outfit/job/inquisitor/pre_equip(mob/living/carbon/human/H)
 	..()
-	shirt = /obj/item/clothing/armor/gambeson/heavy/dark
+	shirt = /obj/item/clothing/armor/gambeson/heavy/colored/dark
 	belt = /obj/item/storage/belt/leather/black
 	shoes = /obj/item/clothing/shoes/otavan/inqboots
 	pants = /obj/item/clothing/pants/trou/leather

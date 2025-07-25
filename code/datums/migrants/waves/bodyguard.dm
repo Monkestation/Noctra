@@ -22,7 +22,7 @@
 	belt = /obj/item/storage/belt/leather/steel
 	backr = /obj/item/storage/backpack/satchel
 	ring = /obj/item/clothing/ring/silver
-	head = /obj/item/clothing/neck/keffiyeh/black
+	head = /obj/item/clothing/neck/keffiyeh/colored/black
 
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)

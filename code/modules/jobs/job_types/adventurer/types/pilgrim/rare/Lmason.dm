@@ -31,7 +31,7 @@
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 	head = /obj/item/clothing/head/hatblu
 	armor = /obj/item/clothing/armor/leather/vest
-	cloak = /obj/item/clothing/cloak/apron/waist/bar
+	cloak = /obj/item/clothing/cloak/apron/waist/colored/bar
 	pants = /obj/item/clothing/pants/trou
 	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	shoes = /obj/item/clothing/shoes/boots/leather

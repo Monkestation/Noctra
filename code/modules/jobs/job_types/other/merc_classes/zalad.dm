@@ -29,7 +29,7 @@
 	beltl= /obj/item/flashlight/flare/torch/lantern
 	shirt = /obj/item/clothing/shirt/undershirt/colored/black
 	pants = /obj/item/clothing/pants/tights/colored/red
-	neck = /obj/item/clothing/neck/keffiyeh/red
+	neck = /obj/item/clothing/neck/keffiyeh/colored/red
 	backl = /obj/item/storage/backpack/satchel
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/poor)
 	if(!H.has_language(/datum/language/zalad))
