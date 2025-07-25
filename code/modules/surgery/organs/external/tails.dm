@@ -27,6 +27,11 @@
 	accessory_type = /datum/sprite_accessory/tail/medicator
 	var/datum/component/stillness_timer/stillness
 
+/obj/item/organ/tail/medicator/Destroy()
+	if(stillness)
+		QDEL_NULL(stillness)
+	return ..()
+
 /obj/item/organ/tail/medicator/Insert(mob/living/carbon/M, special, drop_if_replaced)
 	. = ..()
 	if(!istype(owner, /mob/living/carbon/human/dummy))
@@ -35,7 +40,7 @@
 /obj/item/organ/tail/medicator/Remove(mob/living/carbon/human/H, special)
 	. = ..()
 	if(stillness)
-		stillness.RemoveComponent()
+		QDEL_NULL(stillness)
 
 /obj/item/organ/tail/medicator/proc/do_goop()
 	if(!owner || QDELETED(src))
