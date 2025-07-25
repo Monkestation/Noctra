@@ -30,7 +30,7 @@
 /obj/item/organ/tail/medicator/Insert(mob/living/carbon/M, special, drop_if_replaced)
 	. = ..()
 	if(!istype(owner, /mob/living/carbon/human/dummy))
-		stillness = AddComponent(/datum/component/stillness_timer, 15 SECONDS, null, CALLBACK(src, PROC_REF(do_goop)))
+		stillness = owner.AddComponent(/datum/component/stillness_timer, 25 SECONDS, null, CALLBACK(src, PROC_REF(do_goop)))
 
 /obj/item/organ/tail/medicator/Remove(mob/living/carbon/human/H, special)
 	. = ..()
@@ -50,6 +50,8 @@
 	mess.transform = matrix().Scale(0.3)
 	mess.pixel_x += rand(-15, 15)
 	mess.pixel_y += rand(-15, 15)
+
+	QDEL_IN(mess, 30 SECONDS)
 
 /obj/item/organ/tail/kobold
 	name = "small lizard tail"
