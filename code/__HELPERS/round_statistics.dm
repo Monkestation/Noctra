@@ -476,7 +476,7 @@ GLOBAL_LIST_INIT(featured_stats, list(
 #define CHRONICLE_STATS_LEAST_SKILLS_PERSON "least_skills_person"
 #define CHRONICLE_STATS_STRONGEST_PERSON "strongest_person"
 #define CHRONICLE_STATS_WEAKEST_PERSON "weakest_person"
-#define CHRONICLE_STATS_WISEST_PERSON "wisest_person"
+#define CHRONICLE_STATS_SMARTEST_PERSON "smartest_person"
 #define CHRONICLE_STATS_RICHEST_PERSON "richest_person"
 #define CHRONICLE_STATS_POOREST_PERSON "poorest_person"
 #define CHRONICLE_STATS_LUCKIEST_PERSON "luckiest_person"

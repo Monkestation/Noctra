@@ -200,7 +200,7 @@ SUBSYSTEM_DEF(gamemode)
 			CHRONICLE_STATS_WEAKEST_PERSON,
 		),
 		"Intelligence" = list(
-			CHRONICLE_STATS_WISEST_PERSON,
+			CHRONICLE_STATS_SMARTEST_PERSON,
 			CHRONICLE_STATS_DUMBEST_PERSON,
 		),
 		"Speed" = list(
@@ -1559,7 +1559,7 @@ SUBSYSTEM_DEF(gamemode)
 
 			if(human_mob.STAINT > highest_intelligence)
 				highest_intelligence = human_mob.STAINT
-				set_chronicle_stat(CHRONICLE_STATS_WISEST_PERSON, human_mob, "GENIUS", "#5eb6e6", "[human_mob.STAINT] intelligence")
+				set_chronicle_stat(CHRONICLE_STATS_SMARTEST_PERSON, human_mob, "GENIUS", "#5eb6e6", "[human_mob.STAINT] intelligence")
 
 			if(human_mob.STALUC > highest_luck)
 				highest_luck = human_mob.STALUC
@@ -1576,10 +1576,10 @@ SUBSYSTEM_DEF(gamemode)
 
 			if(!lowest_total_stats)
 				lowest_total_stats = total_stats
-				set_chronicle_stat(CHRONICLE_STATS_LEAST_SKILLS_PERSON, human_mob, "HOPELESS", "#646260", "[total_stats] total stats")
+				set_chronicle_stat(CHRONICLE_STATS_LEAST_SKILLS_PERSON, human_mob, "HOPELESS", "#8a8887", "[total_stats] total stats")
 			else if(total_stats < lowest_total_stats)
 				lowest_total_stats = total_stats
-				set_chronicle_stat(CHRONICLE_STATS_LEAST_SKILLS_PERSON, human_mob, "HOPELESS", "#646260", "[total_stats] total stats")
+				set_chronicle_stat(CHRONICLE_STATS_LEAST_SKILLS_PERSON, human_mob, "HOPELESS", "#8a8887", "[total_stats] total stats")
 
 			if(!lowest_strength)
 				lowest_strength = human_mob.STASTR

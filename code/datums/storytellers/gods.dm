@@ -116,13 +116,13 @@
 	influence_sets = list(
 		"Set 1" = list(
 			STATS_FISH_CAUGHT = list("name" = "Fish caught:", "points" = 1.5, "capacity" = 85),
-			STATS_ALIVE_TRITONS = list("name" = "Number of tritons:", "points" = 8, "capacity" = 70),
+			STATS_ALIVE_TRITONS = list("name" = "Number of tritons:", "points" = 9, "capacity" = 85),
 		),
 		"Set 2" = list(
 			STATS_WATER_CONSUMED = list("name" = "Water consumed:", "points" = 0.0125, "capacity" = 90),
 		),
 		"Set 3" = list(
-			STATS_ABYSSOR_REMEMBERED = list("name" = "Abyssor remembered:", "points" = 0.8, "capacity" = 40),
+			STATS_ABYSSOR_REMEMBERED = list("name" = "Abyssor remembered:", "points" = 0.85, "capacity" = 40),
 		),
 		"Set 4" = list(
 			STATS_LEECHES_EMBEDDED = list("name" = "Leeches embedded:", "points" = 0.165, "capacity" = 70),
@@ -238,7 +238,7 @@
 			STATS_LUX_REVIVALS = list("name" = "Lux revivals:", "points" = 16, "capacity" = 70),
 		),
 		"Set 4" = list(
-			STATS_ANIMALS_BRED = list("name" = "Animals bred:", "points" = 5.5, "capacity" = 65),
+			STATS_ANIMALS_BRED = list("name" = "Animals bred:", "points" = 5.75, "capacity" = 65),
 		),
 		"Set 5" = list(
 			STATS_FOOD_ROTTED = list("name" = "Food rotted:", "points" = 0.175, "capacity" = 80),
