@@ -263,6 +263,27 @@
 	craftdiff = 1
 	category = "Neck"
 
+/datum/repeatable_crafting_recipe/sewing/keffiyeh
+	name = "keffiyeh"
+	requirements = list(/obj/item/natural/cloth = 2, /obj/item/natural/fibers = 1,)
+	output = /obj/item/clothing/neck/keffiyeh
+	craftdiff = 1
+	category = "Neck"
+
+/datum/repeatable_crafting_recipe/sewing/feld
+	name = "feldsher's collar"
+	requirements = list(/obj/item/natural/cloth = 2, /obj/item/natural/fibers = 2,)
+	output = /obj/item/clothing/neck/feld
+	craftdiff = 1
+	category = "Neck"
+
+/datum/repeatable_crafting_recipe/sewing/phys
+	name = "physicker's collar"
+	requirements = list(/obj/item/natural/cloth = 1, /obj/item/natural/fibers = 2,)
+	output = /obj/item/clothing/neck/phys
+	craftdiff = 1
+	category = "Neck"
+
 /datum/repeatable_crafting_recipe/sewing/roguehood
 	name = "cloth hood"
 	requirements = list(/obj/item/natural/cloth = 1, /obj/item/natural/fibers = 1,)
@@ -434,6 +455,20 @@
 /datum/repeatable_crafting_recipe/sewing/wizardrobes
 	name = "wizard robes"
 	output = /obj/item/clothing/shirt/robe/wizard
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+
+/datum/repeatable_crafting_recipe/sewing/feld
+	name = "feldsher robes"
+	output = /obj/item/clothing/shirt/robe/feld
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 2)
+	craftdiff = 3
+
+/datum/repeatable_crafting_recipe/sewing/phys
+	name = "physicker robes"
+	output = /obj/item/clothing/shirt/robe/phys
 	requirements = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3

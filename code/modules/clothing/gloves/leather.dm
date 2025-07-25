@@ -50,7 +50,6 @@
 	desc = "Thick leather gloves for pulling thorny plants... or cracking skulls."
 	icon_state = "apothgloves"
 
-
 /obj/item/clothing/gloves/otavan
 	name = "otavan leather gloves"
 	desc = "A pair of heavy Otavan leather gloves, commonly used by fencers, renowned for their quality."

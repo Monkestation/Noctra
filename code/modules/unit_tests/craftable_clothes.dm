@@ -18,18 +18,18 @@ abstract types are automatically excluded.
 		/obj/item/clothing/head/helmet/visored/warden, // warden only
 		/obj/item/clothing/neck/mana_star, // court mage only
 		/obj/item/clothing/head/helmet/visored/knight/black, // deathknight item
-		/obj/item/clothing/neck/gorget/hoplite, // mercenary item
 	)
-	// these don't use misc_flags = CRAFTING_TEST_EXCLUDE because we want to explicitly know which
+	// these don't use misc_flags = CRAFTING_TEST_EXCLUDE because we want to explicitly know which paths we are excluding.
 	/// excludes paths along with their subtypes
 	var/list/excluded_paths_with_their_subtypes = list(
 		/obj/item/clothing/neck/mercmedal, // only earnable via hermes
 		/obj/item/clothing/neck/shalal, // this is a medal
 		/obj/item/clothing/neck/psycross/silver/holy, // unimplemented
 		/obj/item/clothing/armor/skin_armor, // bruh
-		/obj/item/clothing/head/hooded, // abstract items connected to a cloak
+		/obj/item/clothing/head/hooded, // abstract items connected to a cloak, shouldn't be craftable
 		/obj/item/clothing/ring, // TEMPORARY (TODO)
 		/obj/item/clothing/accessory, // ???
+		/obj/item/clothing/head/crown/serpcrown // should only be one
 
 	)
 	/// excludes paths that are subtypes of these types
@@ -51,53 +51,73 @@ abstract types are automatically excluded.
 	/// list of all clothes paths, which we will remove paths that have a recipe or a supply_pack entry from.
 	var/list/obj/clothes_list = subtypesof(/obj/item/clothing) - excluded_paths
 
+	/* exclusions removed */
+
+	// abstract typepaths and CRAFTING_TEST_EXCLUDE
 	for(var/obj/item/clothing/path as anything in clothes_list)
 		if(is_abstract(path) || (path.misc_flags & CRAFTING_TEST_EXCLUDE))
 			clothes_list -= path
 
+	// paths by text
 	for(var/path as anything in clothes_list)
 		for(var/text_to_find as anything in excluded_paths_by_text)
 			if(findtextEx("[path]", "/[text_to_find]"))
 				clothes_list -= path
 				break
 
+	// paths with subtypes
 	for(var/paths_to_exclude as anything in excluded_paths_with_their_subtypes)
 		for(var/path in clothes_list)
 			if(ispath(path, paths_to_exclude))
 				clothes_list -= path
 
+	// paths by subtypes only
 	for(var/paths_to_exclude as anything in excluded_paths_subtypes_only)
 		for(var/path in clothes_list)
 			if(ispath(path, paths_to_exclude) && (paths_to_exclude != path))
 				clothes_list -= path
 
+	/* misc checks go next */
+
+	// check loot tables
+	for(var/datum/loot_table/loot_datum in subtypesof(/datum/loot_table))
+		for(var/obj/loot as anything in loot_datum.loot_table)
+			clothes_list -= path
+
+	// supply pack clothes
+	for(var/datum/supply_pack/supply_pack_being_checked as anything in supply_pack_list)
+		var/list/supply_pack_contents = list()
+		supply_pack_contents += supply_pack_being_checked.contains // some contains definitions are not lists
+		for(var/path_in_contents as anything in supply_pack_contents)
+			if(isclothing_path(path_in_contents))
+				clothes_list -= path_in_contents
+
+	/* crafting recipes go next */
+
+	// repeatables
 	for(var/datum/repeatable_crafting_recipe/recipe as anything in subtypesof(/datum/repeatable_crafting_recipe))
 		if(isclothing_path(recipe.output))
 			clothes_list -= recipe.output
 
+	// orderless slapcraft
 	for(var/datum/orderless_slapcraft/recipe as anything in subtypesof(/datum/orderless_slapcraft))
 		if(isclothing_path(recipe.output_item))
 			clothes_list -= recipe.output_item
 
+	// anvil recipes
 	for(var/datum/anvil_recipe/recipe as anything in subtypesof(/datum/anvil_recipe))
 		if(isclothing_path(recipe.created_item))
 			clothes_list -= recipe.created_item
 
+	// crafting recipes
 	for(var/datum/crafting_recipe/recipe as anything in subtypesof(/datum/crafting_recipe))
 		if(isclothing_path(recipe.result))
 			clothes_list -= recipe.result
 
+	// artificer recipes
 	for(var/datum/artificer_recipe/recipe as anything in subtypesof(/datum/artificer_recipe))
 		if(isclothing_path(recipe.created_item))
 			clothes_list -= recipe.created_item
-
-	// also exclude supply pack clothes
-	for(var/datum/supply_pack/supply_pack_being_checked as anything in supply_pack_list)
-		var/list/supply_pack_contents = list()
-		LAZYADD(supply_pack_contents, supply_pack_being_checked.contains) // some contains definitions are not lists (should be unit tested tbh)
-		for(var/path_in_contents as anything in supply_pack_contents)
-			if(isclothing_path(path_in_contents))
-				clothes_list -= path_in_contents
 
 	if(!clothes_list.len)
 		return

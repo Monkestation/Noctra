@@ -53,6 +53,22 @@
 	craftdiff = 3
 	category = "Cloak"
 
+/datum/repeatable_crafting_recipe/sewing/weaving/feldhood
+	name = "hood (feldsher)"
+	output = /obj/item/clothing/face/feld
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/silk = 2)
+	craftdiff = 3
+	category = "Hat"
+
+/datum/repeatable_crafting_recipe/sewing/weaving/feldhood
+	name = "hood (physicker)"
+	output = /obj/item/clothing/face/phys
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/silk = 1)
+	craftdiff = 3
+	category = "Hat"
+
 /datum/repeatable_crafting_recipe/sewing/weaving/nochood
 	name = "hood (moon/Noc)"
 	output = /obj/item/clothing/head/roguehood/nochood

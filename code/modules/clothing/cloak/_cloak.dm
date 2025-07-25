@@ -12,6 +12,7 @@
 	sewrepair = TRUE
 	anvilrepair = null
 	smeltresult = /obj/item/ash
+	abstract_type = /obj/item/clothing/cloak
 
 	grid_width = 64
 	grid_height = 64

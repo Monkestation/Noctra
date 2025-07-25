@@ -86,6 +86,12 @@
 	created_item = /obj/item/clothing/neck/highcollier/iron
 	craftdiff = 1
 
+/datum/anvil_recipe/armor/iron/highcollier
+	name = "Iron Renegade Collar"
+	recipe_name = "a renegade collar"
+	created_item = /obj/item/clothing/neck/highcollier/iron/renegadecollar
+	craftdiff = 1
+
 /datum/anvil_recipe/armor/iron/chainglove
 	name = "2x Iron Chain Gauntlets"
 	recipe_name = "two pairs of Chain Gauntlets"
@@ -146,6 +152,12 @@
 	recipe_name = "a heavy iron helmet"
 	additional_items = list(/obj/item/ingot/iron)
 	created_item = /obj/item/clothing/head/helmet/heavy/ironplate
+	craftdiff = 1
+
+/datum/anvil_recipe/armor/iron/cage_helmet
+	name = "feldsher's cage"
+	recipe_name = "a cage helmet"
+	created_item = /obj/item/clothing/head/helmet/feld
 	craftdiff = 1
 
 /datum/anvil_recipe/armor/iron/pothelmet

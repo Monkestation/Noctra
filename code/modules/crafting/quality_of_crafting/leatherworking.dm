@@ -133,6 +133,30 @@
 	output_amount = 2
 	output = /obj/item/clothing/gloves/leather
 
+/datum/repeatable_crafting_recipe/leather/gloves/feld
+	name = "feldsher gloves"
+	requirements = list(
+		/obj/item/natural/hide/cured = 1,
+		/obj/item/natural/fibers = 2
+	)
+	output = /obj/item/clothing/gloves/leather/feld
+
+/datum/repeatable_crafting_recipe/leather/gloves/phys
+	name = "physicker gloves"
+	requirements = list(
+		/obj/item/natural/hide/cured = 1,
+		/obj/item/natural/fibers = 1
+	)
+	output = /obj/item/clothing/gloves/leather/phys
+
+/datum/repeatable_crafting_recipe/leather/gloves/phys
+	name = "apothecary gloves"
+	requirements = list(
+		/obj/item/natural/hide/cured = 1,
+		/obj/item/natural/fibers = 1
+	)
+	output = /obj/item/clothing/gloves/leather/apothecary
+
 /datum/repeatable_crafting_recipe/leather/bracers
 	name = "leather bracers"
 	output_amount = 2

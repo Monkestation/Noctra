@@ -400,6 +400,9 @@
 	prevent_crits = BLUNT_AND_MINOR_CRITS
 	item_weight = 5.5 * STEEL_MULTIPLIER
 
+/obj/item/clothing/head/helmet/blacksteel
+	abstract_type = /obj/item/clothing/head/helmet/blacksteel
+
 /obj/item/clothing/head/helmet/blacksteel/bucket
 	name = "Blacksteel Great Helm"
 	desc = "A bucket helmet forged of durable blacksteel. None shall pass.."
