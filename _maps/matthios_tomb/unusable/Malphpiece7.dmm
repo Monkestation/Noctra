@@ -40,20 +40,10 @@
 /turf/closed/wall/mineral/stone,
 /area/rogue/under/tomb/sewer)
 "v" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve,
-/obj/item/ammo_holder/quiver/arrows,
-/obj/item/clothing/head/rare/elfplate/welfplate,
-/obj/item/clothing/cloak/raincloak/colored/green,
-/obj/effect/decal/remains/human,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/short,
 /obj/item/ammo_holder/quiver/arrows,
 /obj/item/clothing/head/rare/elfplate/welfplate,
-/obj/item/clothing/cloak/raincloak/green,
+/obj/item/clothing/cloak/raincloak/colored/green,
 /obj/effect/decal/remains/human,
 /turf/open/floor/blocks/paving,
 /area/rogue/under/tomb/sewer)

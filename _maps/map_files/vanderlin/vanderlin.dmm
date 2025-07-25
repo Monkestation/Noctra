@@ -3695,10 +3695,10 @@
 /area/rogue/outdoors/river)
 "cpt" = (
 /obj/structure/closet/crate/crafted_closet/crafted,
-/obj/item/clothing/pants/tights/guard,
-/obj/item/clothing/pants/tights/guard,
-/obj/item/clothing/shirt/undershirt/guard,
-/obj/item/clothing/shirt/undershirt/guard,
+/obj/item/clothing/pants/tights/colored/guard,
+/obj/item/clothing/pants/tights/colored/guard,
+/obj/item/clothing/shirt/undershirt/colored/guard,
+/obj/item/clothing/shirt/undershirt/colored/guard,
 /obj/machinery/light/fueled/torchholder/c,
 /obj/machinery/light/fueled/wallfire/candle{
 	pixel_x = -32;
@@ -4497,23 +4497,6 @@
 /obj/structure/bed/wool,
 /turf/open/floor/wood,
 /area/rogue/indoors/town/smithy)
-"cRx" = (
-/obj/structure/rack/shelf/biggest,
-/obj/item/clothing/pants/loincloth,
-/obj/item/clothing/pants/loincloth,
-/obj/item/clothing/pants/loincloth/colored/black,
-/obj/item/clothing/pants/loincloth/colored/black,
-/obj/item/clothing/pants/loincloth/colored/brown,
-/obj/item/clothing/pants/loincloth/colored/pink,
-/obj/item/natural/cloth,
-/obj/item/natural/cloth,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/closed/mineral,
-/area/rogue/under/town/sewer)
 "cRD" = (
 /obj/item/key/tower,
 /obj/item/key/tower,
@@ -5643,10 +5626,10 @@
 "dzE" = (
 /obj/structure/closet/crate/crafted_closet/inn,
 /obj/item/clothing/shoes/boots,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/shirt/undershirt/fancy,
 /obj/machinery/light/fueled/wallfire/candle/blue,
-/obj/item/clothing/shirt/tunic/green,
+/obj/item/clothing/shirt/tunic/colored/green,
 /obj/item/clothing/gloves/leather/phys,
 /obj/item/clothing/face/spectacles/golden,
 /turf/open/floor/carpet/royalblack,
@@ -7631,10 +7614,10 @@
 /area/rogue/under/town/sewer)
 "eFA" = (
 /obj/structure/closet/crate/crafted_closet,
-/obj/item/clothing/shirt/dress/gen/purple,
+/obj/item/clothing/shirt/dress/gen/colored/purple,
 /obj/item/clothing/head/headdress,
 /obj/item/clothing/head/headdress/alt,
-/obj/item/clothing/shirt/dress/silkdress/random,
+/obj/item/clothing/shirt/dress/silkdress/colored/random,
 /obj/item/storage/backpack/satchel,
 /obj/item/clothing/cloak/half,
 /obj/item/clothing/armor/gambeson/heavy/winterdress,
@@ -7643,7 +7626,7 @@
 /obj/item/clothing/wrists/royalsleeves,
 /obj/item/clothing/cloak/lordcloak/ladycloak,
 /obj/item/clothing/pants/loincloth,
-/obj/item/clothing/pants/loincloth/black,
+/obj/item/clothing/pants/loincloth/colored/black,
 /obj/item/clothing/pants/tights/sailor,
 /obj/item/clothing/shirt/ornate/tunic,
 /obj/machinery/light/fueled/wallfire/candle{
@@ -8232,7 +8215,7 @@
 /obj/structure/closet/crate/crafted_closet/crafted,
 /obj/item/clothing/cloak/matron,
 /obj/item/clothing/pants/trou/beltpants,
-/obj/item/clothing/shirt/undershirt/black,
+/obj/item/clothing/shirt/undershirt/colored/black,
 /turf/open/floor/herringbone,
 /area/rogue/indoors/town)
 "eVk" = (
@@ -9123,8 +9106,8 @@
 /obj/structure/closet/crate/crafted_closet/inn,
 /obj/item/clothing/head/fancyhat,
 /obj/item/clothing/head/bardhat,
-/obj/item/clothing/head/chaperon/greyscale/random,
-/obj/item/clothing/head/roguehood/black,
+/obj/item/clothing/head/chaperon/colored/greyscale/random,
+/obj/item/clothing/head/roguehood/colored/black,
 /obj/item/clothing/head/hatfur,
 /obj/item/clothing/head/helmet/leather/headscarf,
 /turf/open/floor/ruinedwood,
@@ -10014,20 +9997,6 @@
 	},
 /turf/open/floor/blocks/newstone/alt,
 /area/rogue/indoors/town/manor/heir/heir2)
-"gdv" = (
-/obj/structure/closet/crate/crafted_closet,
-/obj/item/reagent_containers/food/snacks/hardtack,
-/obj/item/clothing/cloak/tabard/knight,
-/obj/item/clothing/shoes/boots/leather,
-/obj/item/clothing/pants/tights/colored/black,
-/obj/item/clothing/shirt/undershirt/fancy,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/open/floor/blocks,
-/area/rogue/under/town/basement)
 "gdx" = (
 /obj/structure/door,
 /obj/effect/mapping_helpers/access/locker,
@@ -11449,23 +11418,6 @@
 /obj/structure/fluff/statue/knight/interior/r,
 /turf/open/floor/churchmarble,
 /area/rogue/indoors/town/manor/phys)
-"gTx" = (
-/obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/shoes/boots,
-/obj/item/clothing/pants/tights/colored/black,
-/obj/item/clothing/shirt/undershirt/fancy,
-/obj/machinery/light/fueled/wallfire/candle/blue,
-/obj/item/clothing/shirt/tunic/colored/green,
-/obj/item/clothing/gloves/leather/phys,
-/obj/item/clothing/face/spectacles/golden,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/fluff/walldeco/vinez,
-/turf/closed/wall/mineral/decorstone,
-/area/rogue/indoors/town/manor/phys)
 "gTO" = (
 /obj/structure/chair/stool,
 /obj/machinery/light/fueled/wallfire/candle{
@@ -12072,7 +12024,7 @@
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/natural/cloth,
 /obj/item/natural/cloth,
-/obj/item/clothing/pants/loincloth/pink,
+/obj/item/clothing/pants/loincloth/colored/pink,
 /obj/item/clothing/pants/loincloth,
 /obj/machinery/light/fueled/wallfire/candle/blue{
 	pixel_x = -32;
@@ -13121,7 +13073,7 @@
 "hWO" = (
 /obj/structure/closet/crate/crafted_closet/dark,
 /obj/item/clothing/shirt/undershirt/fancy,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/shoes/nobleboot,
 /obj/item/clothing/cloak/tabard/knight,
 /obj/item/reagent_containers/food/snacks/hardtack,
@@ -15098,23 +15050,6 @@
 /turf/open/floor/tile,
 /area/rogue/indoors/town/magician)
 "jfj" = (
-/obj/structure/closet/crate/crafted_closet,
-/obj/item/clothing/shirt/dress/gen/colored/purple,
-/obj/item/clothing/head/headdress,
-/obj/item/clothing/head/headdress/alt,
-/obj/item/clothing/shirt/dress/silkdress/colored/random,
-/obj/item/storage/backpack/satchel,
-/obj/item/clothing/cloak/half,
-/obj/item/clothing/armor/gambeson/heavy/winterdress,
-/obj/item/clothing/armor/leather/vest/winterjacket,
-/obj/item/clothing/shirt/dress/royal,
-/obj/item/clothing/wrists/royalsleeves,
-/obj/item/clothing/cloak/lordcloak/ladycloak,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/structure/closet/crate/crafted_closet/lord,
 /obj/item/clothing/armor/plate/blkknight,
 /obj/item/clothing/head/helmet/heavy/blkknight,
@@ -19621,19 +19556,6 @@
 	},
 /turf/open/floor/blocks,
 /area/rogue/indoors/town/church)
-"meJ" = (
-/obj/structure/closet/crate/crafted_closet/crafted,
-/obj/item/clothing/pants/tights/colored/guard,
-/obj/item/clothing/pants/tights/colored/guard,
-/obj/item/clothing/shirt/undershirt/colored/guard,
-/obj/item/clothing/shirt/undershirt/colored/guard,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/closed/wall/mineral/decorstone,
-/area/rogue/indoors/town/manor/garrison)
 "meL" = (
 /turf/open/floor/ruinedwood,
 /area/rogue/indoors/town/manor/guest/guest1)
@@ -20781,20 +20703,6 @@
 "mOk" = (
 /turf/closed/mineral,
 /area/rogue/outdoors/mountains)
-"mOn" = (
-/obj/structure/closet/crate/crafted_closet/dark,
-/obj/item/clothing/shirt/undershirt/fancy,
-/obj/item/clothing/pants/tights/colored/black,
-/obj/item/clothing/shoes/nobleboot,
-/obj/item/clothing/cloak/tabard/knight,
-/obj/item/reagent_containers/food/snacks/hardtack,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/closed/wall/mineral/decorstone,
-/area/rogue/indoors/town/manor/knight/knight1)
 "mOo" = (
 /obj/machinery/light/fueled/firebowl/standing,
 /turf/open/floor/dirt,
@@ -27975,17 +27883,6 @@
 /turf/open/floor/cobble,
 /area/rogue/indoors/villagegarrison)
 "rlk" = (
-/obj/structure/closet/crate/crafted_closet,
-/obj/item/reagent_containers/food/snacks/hardtack,
-/obj/item/clothing/cloak/tabard/knight,
-/obj/item/clothing/shoes/boots/leather,
-/obj/item/clothing/pants/tights/colored/black,
-/obj/item/clothing/shirt/undershirt/fancy,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /turf/open/floor/woodturned/nosmooth,
 /area/rogue/indoors/town/manor/knight/knight2)
 "rly" = (
@@ -29882,15 +29779,6 @@
 /obj/item/clothing/cloak/half/colored/random,
 /obj/item/clothing/cloak/half/colored/random,
 /obj/item/clothing/cloak/raincloak/colored/green,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/closet/crate/crafted_closet,
-/obj/item/clothing/cloak/half/random,
-/obj/item/clothing/cloak/half/random,
-/obj/item/clothing/cloak/raincloak/green,
 /obj/machinery/light/fueled/wallfire/candle/r,
 /turf/open/floor/tile,
 /area/rogue/indoors/town/manor/halls/s)
@@ -33419,19 +33307,6 @@
 "uyc" = (
 /turf/closed/wall/mineral/decorstone,
 /area/rogue/indoors/town/manor/halls/s)
-"uyC" = (
-/obj/structure/closet/crate/crafted_closet,
-/obj/item/natural/cloth,
-/obj/item/natural/cloth,
-/obj/item/clothing/pants/loincloth/colored/pink,
-/obj/item/clothing/pants/loincloth,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/closed/mineral,
-/area/rogue/under/town/sewer)
 "uyK" = (
 /obj/machinery/light/fueled/wallfire/candle{
 	pixel_x = 32;
@@ -35183,21 +35058,6 @@
 	},
 /turf/open/floor/concrete,
 /area/rogue/outdoors/town/roofs)
-"vBV" = (
-/obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/head/fancyhat,
-/obj/item/clothing/head/bardhat,
-/obj/item/clothing/head/chaperon/colored/greyscale/random,
-/obj/item/clothing/head/roguehood/colored/black,
-/obj/item/clothing/head/hatfur,
-/obj/item/clothing/head/helmet/leather/headscarf,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/open/floor/blocks/newstone/alt,
-/area/rogue/indoors/town/merc_guild)
 "vCn" = (
 /obj/structure/fluff/walldeco/wantedposter/r,
 /turf/open/floor/metal,
@@ -37382,7 +37242,7 @@
 /obj/item/reagent_containers/food/snacks/hardtack,
 /obj/item/clothing/cloak/tabard/knight,
 /obj/item/clothing/shoes/boots/leather,
-/obj/item/clothing/pants/tights/black,
+/obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/shirt/undershirt/fancy,
 /turf/open/floor/woodturned/nosmooth,
 /area/rogue/indoors/town/manor/squire)
@@ -38446,24 +38306,6 @@
 /obj/item/clothing/head/bardhat,
 /obj/item/clothing/shoes/nobleboot,
 /obj/item/clothing/shirt/tunic/colored/random,
-/obj/item/clothing/face/shepherd/clothmask,
-/obj/item/clothing/face/shepherd/clothmask,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/closet/crate/crafted_closet,
-/obj/item/clothing/pants/tights/random,
-/obj/item/clothing/shirt/undershirt/random,
-/obj/item/clothing/shirt/undershirt/fancy,
-/obj/item/clothing/head/fancyhat,
-/obj/item/clothing/cloak/raincloak/furcloak,
-/obj/item/clothing/head/roguehood/random,
-/obj/item/clothing/cloak/raincloak/random,
-/obj/item/clothing/head/bardhat,
-/obj/item/clothing/shoes/nobleboot,
-/obj/item/clothing/shirt/tunic/random,
 /obj/item/clothing/face/shepherd/clothmask,
 /obj/item/clothing/face/shepherd/clothmask,
 /obj/machinery/light/fueled/wallfire/candle{
@@ -39555,24 +39397,6 @@
 /obj/item/clothing/shirt/tunic/colored/random,
 /obj/item/clothing/pants/tights,
 /obj/item/clothing/pants/tights/colored/black,
-/obj/structure/fluff/railing/border{
-	dir = 4
-	},
-/obj/machinery/light/fueled/wallfire/candle/l{
-	pixel_x = 0;
-	pixel_y = 32
-	},
-/obj/item/clothing/face/spectacles/golden,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/structure/closet/crate/drawer/random,
-/obj/item/clothing/shirt/tunic/random,
-/obj/item/clothing/shirt/tunic/random,
-/obj/item/clothing/pants/tights,
-/obj/item/clothing/pants/tights/black,
 /obj/structure/fluff/railing/border{
 	dir = 4
 	},
@@ -56310,7 +56134,7 @@ nYn
 nYn
 nYn
 oDG
-cRx
+nZs
 nZs
 nZs
 nZs
@@ -56512,7 +56336,7 @@ nYn
 lwU
 nYn
 oDG
-cRx
+nZs
 nZs
 nZs
 nZs
@@ -57319,7 +57143,7 @@ nYn
 xfD
 nYn
 oDG
-uyC
+nZs
 nZs
 nZs
 nZs
@@ -57931,7 +57755,7 @@ nZs
 nZs
 nZs
 nZs
-uyC
+nZs
 lfU
 oDG
 oDG
@@ -95359,7 +95183,7 @@ ttR
 kEx
 txv
 kEx
-vBV
+ksa
 jMD
 pGO
 pGO
@@ -100490,7 +100314,7 @@ jsy
 hVu
 iPN
 tAZ
-meJ
+jsy
 jsy
 jpZ
 jsy
@@ -105547,7 +105371,7 @@ oZw
 mjp
 uIj
 iAJ
-mOn
+iAJ
 iAJ
 iAJ
 iAJ
@@ -106555,7 +106379,7 @@ hEF
 bET
 bET
 bET
-gdv
+bET
 nzz
 aNg
 uhb
@@ -137873,7 +137697,7 @@ gGd
 gGd
 gGd
 gGd
-gTx
+aZU
 aZU
 gGd
 gGd
