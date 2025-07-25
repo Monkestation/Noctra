@@ -52,9 +52,12 @@
 		return
 	var/obj/effect/decal/cleanable/greenglow/mess = new(owner_turf)
 	mess.name = "goo"
-	mess.transform = matrix().Scale(0.3)
-	mess.pixel_x += rand(-15, 15)
-	mess.pixel_y += rand(-15, 15)
+	var/matrix/goo_matrix = matrix()
+	goo_matrix.Scale(0.3)
+	goo_matrix.Turn(-60, 60)
+	mess.transform = goo_matrix
+	mess.pixel_x += rand(-5, 5)
+	mess.pixel_y += rand(-5, 5)
 
 	QDEL_IN(mess, 30 SECONDS)
 
