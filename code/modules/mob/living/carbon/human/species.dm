@@ -114,9 +114,9 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	/// Food we (SHOULD) get a mood buff from
 	var/liked_food = NONE
 	/// Food we (SHOULD) get a mood debuff from
-	var/disliked_food = GROSS
+	var/disliked_food = NONE
 	/// Food that (SHOULD) be toxic to us
-	var/toxic_food = TOXIC
+	var/toxic_food = NONE
 
 	/// List of slots this species cannot equip things to
 	var/list/no_equip = list()
