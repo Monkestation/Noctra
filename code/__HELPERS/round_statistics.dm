@@ -472,6 +472,8 @@ GLOBAL_LIST_INIT(featured_stats, list(
 ))
 
 // Chronicle statistics
+#define CHRONICLE_STATS_MOST_SKILLS_PERSON "most_skills_person"
+#define CHRONICLE_STATS_LEAST_SKILLS_PERSON "least_skills_person"
 #define CHRONICLE_STATS_STRONGEST_PERSON "strongest_person"
 #define CHRONICLE_STATS_WEAKEST_PERSON "weakest_person"
 #define CHRONICLE_STATS_WISEST_PERSON "wisest_person"

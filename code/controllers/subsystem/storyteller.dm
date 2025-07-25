@@ -191,6 +191,10 @@ SUBSYSTEM_DEF(gamemode)
 	var/reb_end_time = 0
 
 	var/list/chronicle_sets = list(
+		"Total Skills" = list(
+			CHRONICLE_STATS_MOST_SKILLS_PERSON,
+			CHRONICLE_STATS_LEAST_SKILLS_PERSON,
+		),
 		"Strength" = list(
 			CHRONICLE_STATS_STRONGEST_PERSON,
 			CHRONICLE_STATS_WEAKEST_PERSON,
@@ -1418,12 +1422,14 @@ SUBSYSTEM_DEF(gamemode)
 	for(var/stat_name in statistics_to_clear)
 		force_set_round_statistic(stat_name, 0)
 
+	var/highest_total_stats = -1
 	var/highest_strength = -1
 	var/highest_intelligence = -1
 	var/highest_wealth = -1
 	var/highest_luck = -1
 	var/highest_speed = -1
 
+	var/lowest_total_stats
 	var/lowest_strength
 	var/lowest_intelligence
 	var/lowest_wealth
@@ -1541,6 +1547,12 @@ SUBSYSTEM_DEF(gamemode)
 				record_round_statistic(STATS_ALIVE_TRITONS)
 
 			// Chronicle statistics
+
+			var/total_stats = human_mob.STASTR + human_mob.STAINT + human_mob.STAEND + human_mob.STACON + human_mob.STAPER + human_mob.STASPD + human_mob.STALUC
+			if(total_stats > highest_total_stats)
+				highest_total_stats = total_stats
+				set_chronicle_stat(CHRONICLE_STATS_MOST_SKILLS_PERSON, human_mob, "PRODIGY", "#e9de43", "[total_stats] total stats")
+
 			if(human_mob.STASTR > highest_strength)
 				highest_strength = human_mob.STASTR
 				set_chronicle_stat(CHRONICLE_STATS_STRONGEST_PERSON, human_mob, "STRONGMAN", "#bd1717", "[human_mob.STASTR] strength")
@@ -1562,12 +1574,19 @@ SUBSYSTEM_DEF(gamemode)
 				highest_wealth = wealth
 				set_chronicle_stat(CHRONICLE_STATS_RICHEST_PERSON, human_mob, "MAGNATE", "#d8dd90", "[wealth] mammons")
 
+			if(!lowest_total_stats)
+				lowest_total_stats = total_stats
+				set_chronicle_stat(CHRONICLE_STATS_LEAST_SKILLS_PERSON, human_mob, "HOPELESS", "#646260", "[total_stats] total stats")
+			else if(total_stats < lowest_total_stats)
+				lowest_total_stats = total_stats
+				set_chronicle_stat(CHRONICLE_STATS_LEAST_SKILLS_PERSON, human_mob, "HOPELESS", "#646260", "[total_stats] total stats")
+
 			if(!lowest_strength)
 				lowest_strength = human_mob.STASTR
-				set_chronicle_stat(CHRONICLE_STATS_WEAKEST_PERSON, human_mob, "WIMP", "#b38c6a", "[human_mob.STASTR] strength")
+				set_chronicle_stat(CHRONICLE_STATS_WEAKEST_PERSON, human_mob, "WIMP", "#a0836a", "[human_mob.STASTR] strength")
 			else if(human_mob.STASTR < lowest_strength)
 				lowest_strength = human_mob.STASTR
-				set_chronicle_stat(CHRONICLE_STATS_WEAKEST_PERSON, human_mob, "WIMP", "#b38c6a", "[human_mob.STASTR] strength")
+				set_chronicle_stat(CHRONICLE_STATS_WEAKEST_PERSON, human_mob, "WIMP", "#a0836a", "[human_mob.STASTR] strength")
 
 			if(!lowest_intelligence)
 				lowest_intelligence = human_mob.STAINT
@@ -1591,11 +1610,11 @@ SUBSYSTEM_DEF(gamemode)
 				set_chronicle_stat(CHRONICLE_STATS_UNLUCKIEST_PERSON, human_mob, "WALKING DISASTER", "#e74c3c", "[human_mob.STALUC] luck")
 
 			if(!lowest_wealth)
-				lowest_wealth = get_mammons_in_atom(human_mob)
-				set_chronicle_stat(CHRONICLE_STATS_POOREST_PERSON, human_mob, "PAUPER", "#aabb6b", "[lowest_wealth] mammons")
-			else if(get_mammons_in_atom(human_mob) < lowest_wealth)
-				lowest_wealth = get_mammons_in_atom(human_mob)
-				set_chronicle_stat(CHRONICLE_STATS_POOREST_PERSON, human_mob, "PAUPER", "#aabb6b", "[lowest_wealth] mammons")
+				lowest_wealth = wealth
+				set_chronicle_stat(CHRONICLE_STATS_POOREST_PERSON, human_mob, "PAUPER", "#909c63", "[wealth] mammons")
+			else if(wealth < lowest_wealth)
+				lowest_wealth = wealth
+				set_chronicle_stat(CHRONICLE_STATS_POOREST_PERSON, human_mob, "PAUPER", "#909c63", "[wealth] mammons")
 
 /// Returns total follower influence for the given storyteller
 /datum/controller/subsystem/gamemode/proc/get_follower_influence(datum/storyteller/chosen_storyteller)
