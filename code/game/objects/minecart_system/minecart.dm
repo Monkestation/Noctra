@@ -355,7 +355,7 @@
 			momentum = 0
 			return
 		check_powered()
-		momentum -= 1
+		momentum -= 0.7
 
 	// No more momentum = STOP
 	if(momentum <= 0)

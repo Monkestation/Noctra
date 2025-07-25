@@ -334,7 +334,7 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	if(I)
 		if(!used_cat && I.altgripped)
 			used_cat = "altgrip"
-		if(!used_cat && I.wielded)
+		if(!used_cat && HAS_TRAIT(I, TRAIT_WIELDED))
 			used_cat = "wielded"
 		if(!used_cat)
 			used_cat = "gen"
@@ -385,7 +385,7 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	if(I)
 		if(!used_cat && I.altgripped)
 			used_cat = "altgrip"
-		if(!used_cat && I.wielded)
+		if(!used_cat && HAS_TRAIT(I, TRAIT_WIELDED))
 			used_cat = "wielded"
 		if(!used_cat)
 			used_cat = "gen"
@@ -436,7 +436,7 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	if(I)
 		if(!used_cat && I.altgripped)
 			used_cat = "altgrip"
-		if(!used_cat && I.wielded)
+		if(!used_cat && HAS_TRAIT(I, TRAIT_WIELDED))
 			used_cat = "wielded"
 		if(!used_cat)
 			used_cat = "gen"
@@ -487,7 +487,7 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	if(I)
 		if(!used_cat && I.altgripped)
 			used_cat = "altgrip"
-		if(!used_cat && I.wielded)
+		if(!used_cat && HAS_TRAIT(I, TRAIT_WIELDED))
 			used_cat = "wielded"
 		if(!used_cat)
 			used_cat = "gen"
@@ -538,7 +538,7 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	if(I)
 		if(!used_cat && I.altgripped)
 			used_cat = "altgrip"
-		if(!used_cat && I.wielded)
+		if(!used_cat && HAS_TRAIT(I, TRAIT_WIELDED))
 			used_cat = "wielded"
 		if(!used_cat)
 			used_cat = "gen"
@@ -602,7 +602,7 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	if(I)
 		if(!used_cat && I.altgripped)
 			used_cat = "altgrip"
-		if(!used_cat && I.wielded)
+		if(!used_cat && HAS_TRAIT(I, TRAIT_WIELDED))
 			used_cat = "wielded"
 		if(!used_cat)
 			used_cat = "gen"
@@ -655,7 +655,7 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	if(I)
 		if(!used_cat && I.altgripped)
 			used_cat = "altgrip"
-		if(!used_cat && I.wielded)
+		if(!used_cat && HAS_TRAIT(I, TRAIT_WIELDED))
 			used_cat = "wielded"
 		if(!used_cat)
 			used_cat = "gen"
@@ -699,7 +699,7 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	if(I)
 		if(!used_cat && I.altgripped)
 			used_cat = "altgrip"
-		if(!used_cat && I.wielded)
+		if(!used_cat && HAS_TRAIT(I, TRAIT_WIELDED))
 			used_cat = "wielded"
 		if(!used_cat)
 			used_cat = "gen"
@@ -737,7 +737,7 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	if(I)
 		if(!used_cat && I.altgripped)
 			used_cat = "altgrip"
-		if(!used_cat && I.wielded)
+		if(!used_cat && HAS_TRAIT(I, TRAIT_WIELDED))
 			used_cat = "wielded"
 		if(!used_cat)
 			used_cat = "gen"

@@ -39,6 +39,24 @@
 "r" = (
 /turf/closed/wall/mineral/stone,
 /area/rogue/under/tomb/sewer)
+"v" = (
+/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve,
+/obj/item/ammo_holder/quiver/arrows,
+/obj/item/clothing/head/rare/elfplate/welfplate,
+/obj/item/clothing/cloak/raincloak/colored/green,
+/obj/effect/decal/remains/human,
+/obj/merge_conflict_marker{
+	name = "---Merge Conflict Marker---";
+	
+	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
+	},
+/obj/item/gun/ballistic/revolver/grenadelauncher/bow/short,
+/obj/item/ammo_holder/quiver/arrows,
+/obj/item/clothing/head/rare/elfplate/welfplate,
+/obj/item/clothing/cloak/raincloak/green,
+/obj/effect/decal/remains/human,
+/turf/open/floor/blocks/paving,
+/area/rogue/under/tomb/sewer)
 "x" = (
 /obj/item/weapon/shield/tower,
 /obj/item/clothing/cloak/stabard/templar/dendor,
@@ -91,14 +109,6 @@
 /area/rogue/under/tomb/cave)
 "W" = (
 /turf/open/floor/blocks/paving/vert,
-/area/rogue/under/tomb/sewer)
-"X" = (
-/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve,
-/obj/item/ammo_holder/quiver/arrows,
-/obj/item/clothing/head/rare/elfplate/welfplate,
-/obj/item/clothing/cloak/raincloak/colored/green,
-/obj/effect/decal/remains/human,
-/turf/open/floor/blocks/paving,
 /area/rogue/under/tomb/sewer)
 
 (1,1,1) = {"
@@ -320,7 +330,7 @@ d
 W
 Q
 W
-X
+v
 r
 "}
 (7,1,2) = {"

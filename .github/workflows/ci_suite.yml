@@ -53,7 +53,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cargo
-          key: ${{ runner.os }}-rust
+          key: ${{ runner.os }}-rust-${{ hashFiles('tools/ci/ci_dependencies.sh')}}
+          restore-keys: |
+            ${{ runner.os }}-rust-
       - name: Install OpenDream
         uses: robinraju/release-downloader@v1.12
         with:
@@ -171,9 +173,6 @@ jobs:
           mysql -u root -proot tg_ci_prefixed < SQL/tgstation_schema_prefixed.sql
       - name: Install rust-g
         run: |
-          sudo dpkg --add-architecture i386
-          sudo apt update || true
-          sudo apt install zlib1g-dev:i386
           bash tools/ci/install_rust_g.sh
       - name: Restore BYOND from cache
         uses: ./.github/actions/restore_or_install_byond

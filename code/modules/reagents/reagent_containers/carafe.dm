@@ -27,7 +27,10 @@
 	dropshrink = 0.8
 	sellprice = 45
 	last_used = 0
-	is_silver = TRUE
+
+/obj/item/reagent_containers/glass/carafe/silver/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 /obj/item/reagent_containers/glass/carafe/silver/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	. = ..()

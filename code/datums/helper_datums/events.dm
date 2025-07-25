@@ -38,8 +38,7 @@
 /datum/events/proc/fireEvent(eventName, ...)
 	var/list/event = listgetindex(events,eventName)
 	if(istype(event))
-		for(var/E in event)
-			var/datum/callback/cb = E
+		for(var/datum/callback/cb as anything in event)
 			cb.InvokeAsync(arglist(args.Copy(2)))
 
 // Arguments: event_type as text, E as /datum/event

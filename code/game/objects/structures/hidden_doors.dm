@@ -87,7 +87,7 @@ GLOBAL_LIST_EMPTY(thieves_guild_doors)
 		return
 	..()
 
-/obj/structure/door/secret/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, original_message)
+/obj/structure/door/secret/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), original_message)
 	var/mob/living/carbon/human/H = speaker
 	if(speaker == src) //door speaking to itself
 		return FALSE
@@ -102,16 +102,17 @@ GLOBAL_LIST_EMPTY(thieves_guild_doors)
 	var/message2recognize = sanitize_hear_message(original_message)
 
 	if(is_type_in_list(H.mind?.assigned_role, vip)) //are they a VIP?
+		var/list/mods = list(WHISPER_MODE = MODE_WHISPER)
 		if(findtext(message2recognize, "help"))
-			send_speech(span_purple("'say phrase'... 'set phrase'..."), speaking_distance, src, message_language = lang, message_mode = MODE_WHISPER)
+			send_speech(span_purple("'say phrase'... 'set phrase'..."), speaking_distance, src, message_language = lang, message_mods = mods)
 			return TRUE
 		if(findtext(message2recognize, "say phrase"))
-			send_speech(span_purple("[open_phrase]..."), speaking_distance, src, message_language = lang, message_mode = MODE_WHISPER)
+			send_speech(span_purple("[open_phrase]..."), speaking_distance, src, message_language = lang, message_mods = mods)
 			return TRUE
 		if(findtext(message2recognize, "set phrase"))
 			var/new_pass = stripped_input(H, "What should the new close phrase be?")
 			open_phrase = new_pass
-			send_speech(span_purple("It is done, [flavor_name()]..."), speaking_distance, src, message_language = lang, message_mode = MODE_WHISPER)
+			send_speech(span_purple("It is done, [flavor_name()]..."), speaking_distance, src, message_language = lang, message_mods = mods)
 			return TRUE
 
 	if(findtext(message2recognize, open_phrase))
@@ -299,7 +300,7 @@ GLOBAL_LIST_EMPTY(thieves_guild_doors)
 	GLOB.keep_doors -= src
 	return ..()
 
-/obj/structure/door/secret/keep/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/structure/door/secret/keep/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	if(!..())
 		return FALSE
 	var/mob/living/carbon/human/H = speaker
@@ -341,7 +342,7 @@ GLOBAL_LIST_EMPTY(thieves_guild_doors)
 	GLOB.thieves_guild_doors -= src
 	return ..()
 
-/obj/structure/door/secret/thieves_guild/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/structure/door/secret/thieves_guild/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	if(!..())
 		return FALSE
 	var/mob/living/carbon/human/H = speaker

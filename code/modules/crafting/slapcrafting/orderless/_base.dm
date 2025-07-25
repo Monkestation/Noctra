@@ -5,26 +5,19 @@
 
 	///if set we read this incases of creating radials
 	var/recipe_name
+	/// The object that needs to be attacked for each step. Does not get deducted from requirements.
 	var/obj/item/starting_item
 	var/list/requirements = list()
 	///if set we check for this at the end to finish crafting
 	var/obj/item/finishing_item
+	///Keep null if you don't want the hosted_source to be deleted at the end of the recipe
 	var/obj/item/output_item
 	var/obj/item/hosted_source
 	var/datum/skill/related_skill
 	var/skill_xp_gained
-	///tldr say you want mince and fish mince pies but don't want fish mince to work as a mince for mince pie set fallback on mince pies
-	var/fallback = FALSE
 	var/action_time = 3 SECONDS
-
-	/// Quality tracking - list of ingredients and their qualities
-	var/list/used_ingredients = list()
-	/// Tracks the total freshness of ingredients
-	var/total_freshness = 0
-	/// Tracks number of ingredients with freshness
-	var/ingredient_count = 0
-	/// Tracks highest quality ingredient
-	var/highest_quality = 0
+	///list of atoms we pass to the output item
+	var/list/atoms_to_pass = list()
 
 /datum/orderless_slapcraft/New(loc, _source)
 	. = ..()
@@ -32,17 +25,12 @@
 		return
 	hosted_source = _source
 	RegisterSignal(hosted_source, COMSIG_PARENT_QDELETING, PROC_REF(early_end))
-	// Initialize tracking lists
-	used_ingredients = list()
-	total_freshness = 0
-	ingredient_count = 0
-	highest_quality = 0
 
 /datum/orderless_slapcraft/Destroy(force, ...)
 	. = ..()
+	UnregisterSignal(hosted_source, COMSIG_PARENT_QDELETING)
 	hosted_source?.in_progress_slapcraft = null
-	hosted_source = null
-	used_ingredients = null
+	QDEL_LIST(atoms_to_pass)
 
 /datum/orderless_slapcraft/proc/early_end()
 	qdel(src)
@@ -59,39 +47,55 @@
 			return TRUE
 	return FALSE
 
+/datum/orderless_slapcraft/proc/get_action_time(obj/item/attacking_item, mob/user)
+	return action_time
+
+/// Return FALSE to qdel attacking_item. Return TRUE if otherwise.
+/datum/orderless_slapcraft/proc/before_process_item(obj/item/attacking_item, mob/user)
+	return
+
+/// Return FALSE to qdel attacking_item. Return TRUE if otherwise.
+/datum/orderless_slapcraft/proc/process_finishing_item(obj/item/attacking_item, mob/user)
+	return
+
 /datum/orderless_slapcraft/proc/try_process_item(obj/item/attacking_item, mob/user)
 	var/return_value = FALSE
-	var/short_cooktime = (action_time - ((user?.get_skill_level(related_skill)) * 5))
+	var/modified_action_time = get_action_time(attacking_item, user)
 
-	// Track ingredient quality and freshness before processing
-	track_ingredient_quality(attacking_item)
-
-	for(var/obj/item/item as anything in requirements)
-		if(islist(item))
-			for(var/listed_item in item)
+	for(var/requirement as anything in requirements)
+		if(islist(requirement))
+			for(var/listed_item in requirement)
 				if(!istype(attacking_item, listed_item))
 					continue
-				if(!do_after(user, short_cooktime, hosted_source))
+				if(!do_after(user, modified_action_time, hosted_source))
 					return
 				playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 30, TRUE, -1)
-				requirements[item]--
-				if(requirements[item] <= 0)
-					requirements -= list(item) // See Remove() behavior documentation
+				requirements[requirement]--
+				if(requirements[requirement] <= 0)
+					requirements -= list(requirement) // See Remove() behavior documentation
 				return_value = TRUE
+				var/keep_item = before_process_item(attacking_item, user)
 				step_process(user, attacking_item)
-				qdel(attacking_item)
+				if(keep_item)
+					attacking_item.forceMove(locate(1,1,1))
+				else
+					qdel(attacking_item)
 				break
 
-		if(istype(attacking_item, item))
-			if(!do_after(user, short_cooktime, hosted_source))
+		if(istype(attacking_item, requirement))
+			if(!do_after(user, modified_action_time, hosted_source))
 				return
 			playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 30, TRUE, -1)
-			requirements[item]--
-			if(requirements[item] <= 0)
-				requirements -= item
+			requirements[requirement]--
+			if(requirements[requirement] <= 0)
+				requirements -= requirement
 			return_value = TRUE
+			var/keep_item = before_process_item(attacking_item, user)
 			step_process(user, attacking_item)
-			qdel(attacking_item)
+			if(keep_item)
+				attacking_item.forceMove(locate(1,1,1))
+			else
+				qdel(attacking_item)
 			break
 
 	if(!length(requirements) && !finishing_item)
@@ -101,10 +105,12 @@
 	if(!length(requirements) && finishing_item && !QDELETED(attacking_item))
 		if(!istype(attacking_item, finishing_item))
 			return FALSE
-		// Track the finishing item's quality as well
-		track_ingredient_quality(attacking_item)
+		var/keep_item = process_finishing_item(attacking_item, user)
 		playsound(get_turf(user), 'sound/foley/dropsound/gen_drop.ogg', 30, TRUE, -1)
-		qdel(attacking_item)
+		if(keep_item)
+			attacking_item.forceMove(locate(1,1,1))
+		else
+			qdel(attacking_item)
 		try_finish(user)
 		return TRUE
 
@@ -113,54 +119,31 @@
 /datum/orderless_slapcraft/proc/step_process(mob/user, obj/item/attacking_item)
 	return
 
-/datum/orderless_slapcraft/proc/track_ingredient_quality(obj/item/food_item)
-	// Track the ingredient for quality calculation
-	used_ingredients += food_item
-
-	// Track freshness and quality
-	if(istype(food_item, /obj/item/reagent_containers/food/snacks) || istype(food_item, /obj/item/grown))
-		ingredient_count++
-
-		// Check warming value for freshness (higher means fresher)
-		if(istype(food_item, /obj/item/reagent_containers/food/snacks))
-			var/obj/item/reagent_containers/food/snacks/F = food_item
-			total_freshness += max(0, (F.warming + F.rotprocess))
-			highest_quality = max(highest_quality, F.quality)
-
-		// Handle crops/grown items
-		else if(istype(food_item, /obj/item/reagent_containers/food/snacks/produce))
-			var/obj/item/reagent_containers/food/snacks/produce/G = food_item
-			highest_quality = max(highest_quality, G.crop_quality - 1)
-
 /datum/orderless_slapcraft/proc/try_finish(mob/user)
+	user.adjust_experience(related_skill, skill_xp_gained)
 	var/turf/source_turf = get_turf(hosted_source)
 	if(output_item)
-		var/obj/item/reagent_containers/food/snacks/new_item = new output_item(source_turf)
+		var/obj/item/new_item = new output_item(source_turf)
 
-		if(istype(new_item))
-			// Calculate average freshness
-			var/average_freshness = (ingredient_count > 0) ? (total_freshness / ingredient_count) : 0
-
-			// Get the user's cooking skill
-			var/cooking_skill = user.get_skill_level(/datum/skill/craft/cooking)
-
-			// Apply freshness to the new food item
-			new_item.warming = min(5 MINUTES, average_freshness)
-
-			// Calculate final quality based on ingredients, skill, and freshness
-			var/final_quality = calculate_food_quality(cooking_skill, highest_quality, average_freshness)
-			new_item.quality = round(final_quality)
-
-			// Apply descriptive modifications based on quality
-			apply_food_quality(new_item, final_quality)
+		handle_output_item(user, new_item)
 
 		// Handle item-specific post-processing by passing used ingredients
-		if(length(used_ingredients))
-			new_item.CheckParts(used_ingredients)
+		if(length(atoms_to_pass))
+			new_item.CheckParts(atoms_to_pass)
 
 		new_item.OnCrafted(user.dir, user)
+		qdel(hosted_source)
+	else
+		handle_output_item(user, hosted_source)
+		// Handle item-specific post-processing by passing used ingredients
+		if(length(atoms_to_pass))
+			hosted_source.CheckParts(atoms_to_pass)
 
-	qdel(hosted_source)
+		hosted_source.OnCrafted(user.dir, user)
+
+/datum/orderless_slapcraft/proc/handle_output_item(mob/user, obj/item/new_item)
+	to_chat(user, span_notice("You finish crafting [new_item]"))
+	return
 
 /mob/living/proc/try_orderless_slapcraft(obj/item/attacking_item, obj/item/attacked_object)
 	if(!isitem(attacked_object))
@@ -182,8 +165,6 @@
 		return list()
 
 	return passed_recipes
-
-
 
 /datum/orderless_slapcraft/proc/generate_html(mob/user)
 	var/client/client = user
@@ -235,20 +216,23 @@
 		    <h1>[name]</h1>
 		    <div>
 		"}
+	html += "<strong>With the use of [related_skill.name] skill:</strong><br>"
 	html += "[icon2html(new starting_item, user)] <strong class=class='scroll'>Start the process with [initial(starting_item.name)]</strong><br>"
-	html += "<strong> then add </strong> <br>"
+	html += "<strong> then add </strong> <br><hr>"
 	for(var/atom/path as anything in requirements)
 		var/count = requirements[path]
 		if(islist(path))
 			var/first = TRUE
 			var/list/paths = path
+			html += "up to [count] of<br>"
 			for(var/atom/sub_path as anything in paths)
 				if(!first)
 					html += "or <br>"
-				html += "[icon2html(new sub_path, user)] [count] of any [initial(sub_path.name)]<br>"
+				html += "[icon2html(new sub_path, user)] any [initial(sub_path.name)]<br>"
 				first = FALSE
 		else
 			html += "[icon2html(new path, user)] [count] of any [initial(path.name)]<br>"
+		html += "<hr>"
 
 	html += {"
 		</div>

@@ -19,7 +19,15 @@
 
 /datum/antagonist/bandit/examine_friendorfoe(datum/antagonist/examined_datum, mob/examiner, mob/examined)
 	if(istype(examined_datum, /datum/antagonist/bandit))
-		return "<span class='boldnotice'>Another free man. My ally.</span>"
+		if(examiner.real_name in GLOB.outlawed_players)
+			if(examined.real_name in GLOB.outlawed_players)
+				return span_boldnotice("Another free man. My ally.")
+			else
+				return span_boldnotice("Pardoned free man?! Can I still trust [examined.p_them()]?!")
+		else if(examined.real_name in GLOB.outlawed_players)
+			return span_boldnotice("Free man still on the run. Fool.")
+		else
+			return span_boldnotice("Fellow pardoned free man.")
 
 /datum/antagonist/bandit/on_gain()
 	owner.special_role = "Bandit"
@@ -30,6 +38,7 @@
 	. = ..()
 	finalize_bandit()
 	equip_bandit()
+	addtimer(CALLBACK(owner.current, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup), "BANDIT"), 5 SECONDS)
 
 /datum/antagonist/bandit/proc/finalize_bandit()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/music/traitor.ogg', 80, FALSE, pressure_affected = FALSE)

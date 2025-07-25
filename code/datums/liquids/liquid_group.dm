@@ -1055,8 +1055,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		return list()
 
 	var/list/returned =  list()
-	for(var/tur in members)
-		var/turf/open/member = tur
+	for(var/turf/open/member as anything in members)
 		returned |= member
 
 	current_temperature_queue = returned

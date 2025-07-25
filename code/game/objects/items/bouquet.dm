@@ -1,10 +1,10 @@
 // BOUQUETS & FLOWER CROWNS
 
 /obj/item/bouquet
-	name = ""
-	desc = ""
+	name = "bouquet"
+	desc = "The bouquet people love the most is one that produces a beautiful display of flowers."
 	icon = 'icons/roguetown/items/misc.dmi'
-	icon_state = ""
+	icon_state = "bouquet_base"
 	item_state = ""
 
 	grid_width = 32
@@ -12,7 +12,7 @@
 
 /obj/item/bouquet/rosa
 	name = "rosa bouquet"
-	desc =  "A bouquet of rosas, one of eora's most beautiful flowers. They are a symbol of love and devotion."
+	desc =  "A bouquet of rosas, one of Eora's most beautiful flowers. They are a symbol of love and devotion."
 	icon_state = "bouquet_rosa"
 
 /obj/item/bouquet/salvia
@@ -22,12 +22,12 @@
 
 /obj/item/bouquet/matricaria
 	name = "matricaria bouquet"
-	desc = "A bouqet of maricaria"
+	desc = "A bouqet of maricaria."
 	icon_state = "bouquet_matricaria"
 
 /obj/item/bouquet/calendula
 	name = "calendula bouquet"
-	desc = "A bouquet of calendula, a flower used in herbal medicine, said to have healing properties"
+	desc = "A bouquet of calendula, a flower used in herbal medicine due to its supposed healing properties"
 	icon_state = "bouquet_calendula"
 
 /obj/item/clothing/head/flowercrown

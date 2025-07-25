@@ -1,4 +1,4 @@
-/**
+w/**
  * If your mob is concious, drop the item in the active hand
  *
  * This is a hidden verb, likely for binding with winset for hotkeys
@@ -218,32 +218,37 @@
  * Called by client/Move()
  */
 /client/proc/Process_Grab()
-	if(mob.pulledby)
-		if(mob.pulledby == mob)
-			return FALSE
-		if(mob.pulledby == mob.pulling)			//Don't autoresist grabs if we're grabbing them too.
-			move_delay = world.time + 10
-			to_chat(src, "<span class='warning'>I can't move!</span>")
-			return TRUE
-		else if(HAS_TRAIT(mob, TRAIT_INCAPACITATED))
-			move_delay = world.time + 10
-			to_chat(src, "<span class='warning'>I can't move!</span>")
+	if(mob.pulledby && mob.pulledby != mob)
+		if(HAS_TRAIT(mob, TRAIT_INCAPACITATED))
+			COOLDOWN_START(src, move_delay, 1 SECONDS)
+			to_chat(src, span_warning("I can't move!"))
 			return TRUE
 		else if(HAS_TRAIT(mob, TRAIT_RESTRAINED))
-			move_delay = world.time + 10
-			to_chat(src, "<span class='warning'>I'm restrained! I can't move!</span>")
+			COOLDOWN_START(src, move_delay, 1 SECONDS)
+			to_chat(src, span_warning("I'm restrained! I can't move!"))
 			return TRUE
-		else
+		else if(mob.pulledby != mob.pulling || mob.pulledby.grab_state != GRAB_PASSIVE || mob.cmode)	//Don't autoresist passive grabs if we're grabbing them too.
 			return mob.resist_grab(TRUE)
-			// move_delay = world.time + 10
-			// to_chat(src, "<span class='warning'>I can't move!</span>")
-			// return TRUE
+
+	if(mob.pulling && isliving(mob.pulling))
+		var/mob/living/L = mob.pulling
+		var/mob/living/M = mob
+		// If passive grab and trying to pull someone who doesn't want to be pulled
+		if(M.grab_state == GRAB_PASSIVE && !isanimal(L) && L.cmode && L.body_position != LYING_DOWN && !HAS_TRAIT(L, TRAIT_INCAPACITATED))
+			// Reuse shove check probability
+			if(!prob(clamp(30 + (M.stat_compare(L, STATKEY_STR, STATKEY_CON)*10),0,100)))
+				COOLDOWN_START(src, move_delay, 1 SECONDS)
+				to_chat(src, span_warning("[L]'s footing is too sturdy!"))
+				return TRUE
+
 	var/mob/living/simple_animal/bound = mob.pulling
 	if(istype(bound))
 		if(bound?.binded)
-			move_delay = world.time + 10
+			COOLDOWN_START(src, move_delay, 1 SECONDS)
 			to_chat(src, span_warning("[bound] is bound in a summoning circle. I can't move them!"))
 			return TRUE
+
+	return FALSE
 
 /**
  * Allows mobs to ignore density and phase through objects
@@ -645,10 +650,10 @@
 	if(fixedeye)
 		fixedeye = 0
 		if(!tempfixeye)
-			atom_flags &= ~NO_DIR_CHANGE
+			atom_flags &= ~NO_DIR_CHANGE_ON_MOVE
 	else
 		fixedeye = 1
-		atom_flags |= NO_DIR_CHANGE
+		atom_flags |= NO_DIR_CHANGE_ON_MOVE
 
 	for(var/atom/movable/screen/eye_intent/eyet in hud_used.static_inventory)
 		eyet.update_appearance(UPDATE_ICON)

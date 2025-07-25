@@ -552,13 +552,13 @@
 	spell_type = /datum/action/cooldown/spell/gravity
 
 
-/datum/spell_node/ray_of_frost
+/datum/spell_node/beam_of_frost
 	name = "Ray of Frost"
 	desc = "A frigid beam of blue-white light."
 	node_x = UP_X_RIGHT
 	node_y = UP_Y_TIER_2
 	prerequisites = list(/datum/spell_node/frost_affinity)
-	spell_type = /datum/action/cooldown/spell/beam/ray_of_frost
+	spell_type = /datum/action/cooldown/spell/beam/beam_of_frost
 
 /datum/spell_node/chill_touch
 	name = "Chill Touch"
@@ -581,7 +581,7 @@
 	desc = "Launch a shard of ice at your enemy."
 	node_x = UP_X_RIGHT
 	node_y = UP_Y_TIER_3
-	prerequisites = list(/datum/spell_node/ray_of_frost)
+	prerequisites = list(/datum/spell_node/beam_of_frost)
 	spell_type = /datum/action/cooldown/spell/projectile/frost_bolt
 
 

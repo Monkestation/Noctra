@@ -144,8 +144,7 @@
 		M.do_game_over()
 		M.playsound_local(M, 'sound/music/credits.ogg', 100, FALSE)
 
-	for(var/I in round_end_events)
-		var/datum/callback/cb = I
+	for(var/datum/callback/cb as anything in round_end_events)
 		cb.InvokeAsync()
 	LAZYCLEARLIST(round_end_events)
 
@@ -455,7 +454,7 @@
 	else if(failed_chosen > 0)
 		if(showed_any_champions)
 			parts += "<br>"
-		parts += "<div style='text-align: center;'>[failed_chosen] god's chosen [failed_chosen == 1 ? "has" : "have"] failed to become [failed_chosen == 1 ? "a champion" : "champions"].</div>"
+		parts += "<div style='text-align: center;'>[failed_chosen] of gods' chosen [failed_chosen == 1 ? "has" : "have"] failed to become [failed_chosen == 1 ? "a champion" : "champions"].</div>"
 
 	parts += "</div>"
 	return parts.Join("<br>")
@@ -557,13 +556,12 @@
 	var/usede = get_display_ckey(ply.key)
 	var/text = "<b>[usede]</b> was <b>[ply.name]</b>[jobtext] and"
 	if(ply.current)
-		if(ply.current.real_name != ply.name)
+		if(ply.current.stat == DEAD)
 			text += span_redtext(" died.")
 		else
-			if(ply.current.stat == DEAD)
-				text += span_redtext(" died.")
-			else
-				text += span_greentext(" survived.")
+			text += span_greentext(" survived.")
+	else
+		text += span_redtext(" died.")
 	return text
 
 /proc/printplayerlist(list/datum/mind/players,fleecheck)

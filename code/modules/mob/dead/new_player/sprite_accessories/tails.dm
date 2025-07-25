@@ -343,21 +343,21 @@
 	icon = 'icons/roguetown/mob/bodies/attachments.dmi'
 	name = "TiebTail"
 	icon_state = "tiebtail"
-	specuse = list("tiefling")
+	specuse = list(SPEC_ID_TIEFLING)
 	color_key_defaults = list(KEY_SKIN_COLOR)
 
 /datum/sprite_accessory/tail/triton
 	name = "Triton Bell"
 	icon = 'icons/mob/sprite_accessory/tails/triton.dmi'
 	icon_state = "triton"
-	specuse = list("triton")
+	specuse = list(SPEC_ID_TRITON)
 	color_key_defaults = list(KEY_SKIN_COLOR)
 
 /datum/sprite_accessory/tail/kobold
 	name = "Kobold Curly"
 	icon = 'icons/mob/sprite_accessory/tails/lizard.dmi'
 	icon_state = "kobold"
-	specuse = list("kobold")
+	specuse = list(SPEC_ID_KOBOLD)
 	color_key_defaults = list(KEY_SKIN_COLOR)
 
 /datum/sprite_accessory/tail/kobold/alt

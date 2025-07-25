@@ -1,3 +1,29 @@
+#define ORISON_FILL /datum/intent/orison/fill
+#define ORISON_TOUCH /datum/intent/orison/touch
+#define ORISON_LIGHT /datum/intent/orison/light
+
+/datum/intent/orison
+	noaa = TRUE
+	misscost = 0
+	releasedrain = 0
+	candodge = FALSE
+	canparry = FALSE
+
+/datum/intent/orison/fill
+	reach = 1
+	name = "fill"
+	icon_state = "infill"
+
+/datum/intent/orison/touch
+	reach = 7
+	name = "touch"
+	icon_state = "intouch"
+
+/datum/intent/orison/light
+	reach = 1
+	name = "use"
+	icon_state = "inuse"
+
 /datum/action/cooldown/spell/undirected/touch/orison
 	name = "Orison"
 	desc = "The basic precept of holy magic orients around the power of prayer and soliciting a Divine Patron for a tiny sliver of Their might."
@@ -24,73 +50,50 @@
 		return FALSE
 
 /datum/action/cooldown/spell/undirected/touch/orison/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster, list/modifiers)
-	var/holy_skill = caster.get_skill_level(associated_skill)
-	var/mob/living/carbon/human/blessing_mob = caster
-	if(victim == blessing_mob)
-		if(blessing_mob.has_status_effect(/datum/status_effect/thaumaturgy))
-			blessing_mob.remove_status_effect((/datum/status_effect/thaumaturgy))
-			to_chat(blessing_mob, span_notice("The feeling in my throat wanes, I will speak normally."))
-			return FALSE
-		// give us a buff that makes our next spoken victim really loud and also cause any linked, un-muted scom to shriek out the phrase at a 15% chance
-		var/cast_time = 50 - (holy_skill * 5)
-		blessing_mob.visible_message(span_notice("[blessing_mob] lowers [blessing_mob.p_their()] head solemnly, whispered prayers spilling from [blessing_mob.p_their()] lips..."))
-		blessing_mob.audible_message(span_silver("O holy [blessing_mob.patron.name], share unto me a sliver of your power..."), runechat_message = TRUE)
+	switch(caster.used_intent.type)
+		if(ORISON_FILL)
+			create_water(victim, caster)
+		if(ORISON_TOUCH)
+			thaumaturgy(victim, caster)
+		if(ORISON_LIGHT)
+			cast_light(victim, caster)
+	return FALSE
 
-		if(!do_after(blessing_mob, cast_time, blessing_mob))
-			return FALSE
-
-		blessing_mob.apply_status_effect(/datum/status_effect/thaumaturgy)
-		blessing_mob.visible_message(
-			span_notice("[blessing_mob] throws open [blessing_mob.p_their()] eyes, suddenly emboldened!"),
-			span_notice("A feeling of power wells up in my throat: speak, and many will hear!"),
-		)
-		return TRUE
-
+/datum/action/cooldown/spell/undirected/touch/orison/cast_on_secondary_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster, list/modifiers)
 	if(isliving(victim))
 		var/mob/living/blessed_mob = victim
+		if(blessed_mob.has_status_effect(/datum/status_effect/light_buff))
+			blessed_mob.remove_status_effect(/datum/status_effect/light_buff)
+			caster.visible_message(span_notice("[caster] issues a reserved gesture towards [victim], and the holy light leaves [victim.p_them()]."),\
+			span_notice("I gesture towards [victim], and [victim.p_their()] blessing of light recedes."))
 
-		var/cast_time = 35 - (holy_skill * 3)
-		if (victim != blessing_mob)
-			blessing_mob.visible_message(span_notice("[blessing_mob] reaches gently towards [victim], beads of light glimmering at [blessing_mob.p_their()] fingertips..."), span_notice("Blessed [blessing_mob.patron.name], I ask but for a light to guide the way..."))
-		else
-			blessing_mob.visible_message(span_notice("[blessing_mob] closes [blessing_mob.p_their()] eyes and places a glowing hand upon [blessing_mob.p_their()] chest..."), span_notice("Blessed [blessing_mob.patron.name], I ask but for a light to guide the way..."))
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-		if(do_after(blessing_mob, cast_time, victim))
-			var/light_power = clamp(4 + (holy_skill - 3), 4, 7)
+/obj/item/melee/touch_attack/orison
+	name = "\improper lesser prayer"
+	desc = "The fundamental teachings of theology return to you:\n \
+		<b>Fill</b>: Beseech your Divine to create a small quantity of holy water in a container that you touch for some devotion.\n \
+		<b>Touch</b>: Direct a sliver of divine thaumaturgy into your being, causing your voice to become LOUD when you next speak. Can be used on light sources at range, and it will cause them flicker.\n \
+		<b>Use</b>: Issue a prayer for illumination, causing you or another living creature to begin glowing with light for five minutes - this stacks each time you cast it, with no upper limit. Blessings can be removed with RMB."
+	possible_item_intents = list(ORISON_FILL, ORISON_TOUCH, ORISON_LIGHT)
 
-			if (blessed_mob.has_status_effect(/datum/status_effect/light_buff))
-				blessing_mob.visible_message(span_notice("The holy light emanating from [blessed_mob] becomes brighter!"), span_notice("I feed further devotion into [blessed_mob]'s blessing of light."))
-			else
-				blessing_mob.visible_message(span_notice("A gentle illumination suddenly blossoms into being around [blessed_mob]!"), span_notice("I grant [blessed_mob] a blessing of light."))
-
-			blessed_mob.apply_status_effect(/datum/status_effect/light_buff, light_power)
-
-		return TRUE
-
-	if(isturf(victim) || istype(victim, /obj/machinery/light))
-		var/did_flicker = FALSE
-		for(var/obj/machinery/light/other_lights in view(3 + holy_skill, get_turf(victim)))
-			other_lights.flicker(holy_skill * 5)
-			blessing_mob.cleric?.update_devotion(-1)
-			did_flicker = TRUE
-
-		if(did_flicker)
-			to_chat(blessing_mob, span_notice("I direct the weight of my faith towards nearby flames, causing them to flicker!"))
-
-		return TRUE
-
+/datum/action/cooldown/spell/undirected/touch/orison/proc/create_water(atom/victim, mob/living/carbon/human/user)
 	if(victim.is_refillable())
 		if(victim.reagents.holder_full())
-			to_chat(blessing_mob, span_warning("[victim] is full."))
+			to_chat(user, span_warning("[victim] is full."))
 			return FALSE
 
-		blessing_mob.visible_message(span_info("[blessing_mob] closes [blessing_mob.p_their()] eyes in prayer and extends a hand over [victim] as water begins to stream from [blessing_mob.p_their()] fingertips..."), span_notice("I utter forth a plea to [blessing_mob.patron.name] for succour, and hold my hand out above [victim]..."))
+		user.visible_message(
+			span_info("[user] closes [user.p_their()] eyes in prayer and extends a hand over [victim] as water begins to stream from [user.p_their()] fingertips..."),
+			span_notice("I utter forth a plea to [user.patron.name] for succour, and hold my hand out above [victim]...")
+		)
 
+		var/holy_skill = user.get_skill_level(associated_skill)
 		var/drip_speed = 5.6 SECONDS - (holy_skill * 8)
 		var/fatigue_spent = 0
 		var/fatigue_used = max(3, holy_skill)
-		while(do_after(blessing_mob, drip_speed, victim))
-			if(victim.reagents.holder_full() || (blessing_mob.cleric.devotion - fatigue_used <= 0))
+		while(do_after(user, drip_speed, victim))
+			if(victim.reagents.holder_full() || (user.cleric.devotion - fatigue_used <= 0))
 				break
 
 			var/water_qty = max(1, holy_skill) + 1
@@ -98,33 +101,85 @@
 
 			var/datum/reagents/reagents_to_add = new()
 			reagents_to_add.add_reagent_list(water_contents)
-			reagents_to_add.trans_to(victim, reagents_to_add.total_volume, transfered_by = blessing_mob, method = INGEST)
+			reagents_to_add.trans_to(victim, reagents_to_add.total_volume, transfered_by = user, method = INGEST)
 
 			fatigue_spent += fatigue_used
-			blessing_mob.adjust_stamina(fatigue_used)
-			blessing_mob.cleric?.update_devotion(-1)
+			user.adjust_stamina(fatigue_used)
+			user.cleric?.update_devotion(-1)
 
 			if(prob(80))
-				playsound(blessing_mob, 'sound/items/fillcup.ogg', 55, TRUE)
+				playsound(user, 'sound/items/fillcup.ogg', 55, TRUE)
+
+		handle_xp(user, fatigue_spent)
+		return TRUE
+
+/datum/action/cooldown/spell/undirected/touch/orison/proc/thaumaturgy(atom/victim, mob/living/carbon/human/user)
+	var/holy_skill = user.get_skill_level(associated_skill)
+
+	if(victim == user)
+		if(user.has_status_effect(/datum/status_effect/thaumaturgy))
+			user.remove_status_effect((/datum/status_effect/thaumaturgy))
+			to_chat(user, span_notice("The feeling in my throat wanes, I will speak normally."))
+			return FALSE
+		// give us a buff that makes our next spoken victim really loud and also cause any linked, un-muted scom to shriek out the phrase at a 15% chance
+		var/cast_time = 50 - (holy_skill * 5)
+		user.visible_message(span_notice("[user] lowers [user.p_their()] head solemnly, whispered prayers spilling from [user.p_their()] lips..."))
+		user.audible_message(span_silver("O holy [user.patron.name], share unto me a sliver of your power..."), runechat_message = TRUE)
+
+		if(!do_after(user, cast_time, user))
+			return FALSE
+
+		user.apply_status_effect(/datum/status_effect/thaumaturgy)
+		user.visible_message(
+			span_notice("[user] throws open [user.p_their()] eyes, suddenly emboldened!"),
+			span_notice("A feeling of power wells up in my throat: speak, and many will hear!"),
+		)
+		handle_xp(user, 10)
+		return TRUE
+
+	if(isturf(victim) || istype(victim, /obj/machinery/light))
+		var/did_flicker = FALSE
+		for(var/obj/machinery/light/other_lights in view(3 + holy_skill, get_turf(victim)))
+			other_lights.flicker(holy_skill * 5)
+			user.cleric?.update_devotion(-1)
+			did_flicker = TRUE
+
+		if(did_flicker)
+			to_chat(user, span_notice("I direct the weight of my faith towards nearby flames, causing them to flicker!"))
+			handle_xp(user, 10)
 
 		return TRUE
 
-/datum/action/cooldown/spell/undirected/touch/orison/cast_on_secondary_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster, list/modifiers)
+/datum/action/cooldown/spell/undirected/touch/orison/proc/cast_light(atom/victim, mob/living/carbon/human/user)
 	if(isliving(victim))
 		var/mob/living/blessed_mob = victim
-		if(blessed_mob.has_status_effect(/datum/status_effect/light_buff))
-			blessed_mob.remove_status_effect(/datum/status_effect/light_buff)
+		var/holy_skill = user.get_skill_level(associated_skill)
+		var/cast_time = 35 - (holy_skill * 3)
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		if (victim != user)
+			user.visible_message(span_notice("[user] reaches gently towards [victim], beads of light glimmering at [user.p_their()] fingertips..."), span_silver("Blessed [user.patron.name], I ask but for a light to guide the way..."))
+		else
+			user.visible_message(span_notice("[user] closes [user.p_their()] eyes and places a glowing hand upon [user.p_their()] chest..."), span_silver("Blessed [user.patron.name], I ask but for a light to guide the way..."))
 
-/obj/item/melee/touch_attack/orison
-	name = "\improper lesser prayer"
-	desc = "The fundamental teachings of theology return to you:\n \
-	<b>Touch Object</b>: Beseech your Divine to create a small quantity of holy water in a container that you touch for some devotion.\n \
-	<b>Touch Turf</b>: Cause light sources in range to flicker.\n \
-	<b>Touch Self</b>: Direct a sliver of divine thaumaturgy into your being, causing your voice to become LOUD when you next speak. It will be removed if applied.\n \
-	<b>Touch Other</b>: Issue a prayer for illumination, causing you or another living creature to begin glowing with light for five minutes \
-	- this stacks each time you cast it, with no upper limit. Blessings can be removed with a touch of the right hand."
+		if(do_after(user, cast_time, victim))
+			var/light_power = clamp(4 + (holy_skill - 3), 4, 7)
+
+			var/datum/status_effect/light_buff/light_buff_status = /datum/status_effect/light_buff
+			if (blessed_mob.has_status_effect(light_buff_status))
+				user.visible_message(span_notice("The holy light emanating from [blessed_mob] becomes brighter!"), span_notice("I feed further devotion into [blessed_mob]'s blessing of light."))
+			else
+				user.visible_message(span_notice("A gentle illumination suddenly blossoms into being around [blessed_mob]!"), span_notice("I grant [blessed_mob] a blessing of light."))
+
+			blessed_mob.apply_status_effect(light_buff_status, initial(light_buff_status.duration), light_power)
+			handle_xp(user, 5)
+
+		return TRUE
+
+/datum/action/cooldown/spell/undirected/touch/orison/proc/handle_xp(mob/living/carbon/human/user, base_xp)
+	if(user && associated_skill)
+		var/skill_level = user.get_skill_level(associated_skill)
+		if(skill_level <= SKILL_LEVEL_EXPERT)
+			adjust_experience(user, associated_skill, base_xp)
 
 /datum/action/cooldown/spell/undirected/touch/orison/lesser
 	name = "Lesser Orison"
@@ -132,50 +187,14 @@
 	hand_path = /obj/item/melee/touch_attack/orison/lesser
 	charges = 3
 
-/datum/action/cooldown/spell/undirected/touch/orison/lesser/cast_on_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
-	var/mob/living/carbon/human/blessing_mob = caster
-
-	if(victim.is_refillable())
-		if(victim.reagents.holder_full())
-			to_chat(blessing_mob, span_warning("[victim] is full."))
-			return FALSE
-
-		blessing_mob.visible_message(
-			span_info("[blessing_mob] closes [blessing_mob.p_their()] eyes in prayer and extends a hand over [victim] as water begins to stream from [blessing_mob.p_their()] fingertips..."),
-			span_notice("I utter forth a plea to [blessing_mob.patron.name] for succour, and hold my hand out above [victim]...")
-		)
-
-		var/holy_skill = caster.get_skill_level(associated_skill)
-		var/drip_speed = 5.6 SECONDS - (holy_skill * 8)
-		var/fatigue_spent = 0
-		var/fatigue_used = max(3, holy_skill)
-		while(do_after(blessing_mob, drip_speed, victim))
-			if(victim.reagents.holder_full() || (blessing_mob.cleric.devotion - fatigue_used <= 0))
-				break
-
-			var/water_qty = max(1, holy_skill) + 1
-			var/list/water_contents = list(/datum/reagent/water/blessed = water_qty)
-
-			var/datum/reagents/reagents_to_add = new()
-			reagents_to_add.add_reagent_list(water_contents)
-			reagents_to_add.trans_to(victim, reagents_to_add.total_volume, transfered_by = blessing_mob, method = INGEST)
-
-			fatigue_spent += fatigue_used
-			blessing_mob.adjust_stamina(fatigue_used)
-			blessing_mob.cleric?.update_devotion(-1)
-
-			if(prob(80))
-				playsound(blessing_mob, 'sound/items/fillcup.ogg', 55, TRUE)
-
-		return TRUE
-
 /datum/action/cooldown/spell/undirected/touch/orison/lesser/cast_on_secondary_hand_hit(obj/item/melee/touch_attack/hand, atom/victim, mob/living/carbon/caster)
 	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/item/melee/touch_attack/orison/lesser
 	name = "\improper lesser prayer"
 	desc = "The fundamental teachings of theology return to you:\n \
-	<b>Touch Object</b>: Beseech your Divine to create a small quantity of holy water in a container that you touch for some devotion."
+		<b>Fill</b>: Beseech your Divine to create a small quantity of holy water in a container that you touch for some devotion."
+	possible_item_intents = list(ORISON_FILL)
 
 /datum/reagent/water/blessed
 	name = "blessed water"
@@ -256,6 +275,7 @@
 	speech_args[SPEECH_SPANS] |= list(SPAN_REALLYBIG)
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 	owner.remove_status_effect(/datum/status_effect/thaumaturgy)
+	playsound(owner, 'sound/magic/invoke_general.ogg', 33, TRUE)
 
 /atom/movable/screen/alert/status_effect/light_buff
 	name = "Miraculous Light"
@@ -310,3 +330,7 @@
 	to_chat(owner, span_notice("The miraculous light surrounding me has fled..."))
 	owner.remove_filter("blessing_of_light")
 	remove_light(owner)
+
+#undef ORISON_FILL
+#undef ORISON_TOUCH
+#undef ORISON_LIGHT

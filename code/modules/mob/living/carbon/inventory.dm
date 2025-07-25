@@ -68,8 +68,7 @@
 	if(client)
 		client.screen -= I
 	if(observers && observers.len)
-		for(var/M in observers)
-			var/mob/dead/observe = M
+		for(var/mob/dead/observe as anything in observers)
 			if(observe.client)
 				observe.client.screen -= I
 	I.forceMove(src)

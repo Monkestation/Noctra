@@ -374,7 +374,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 			GLOB.patreon_races += S.name
 		qdel(S)
 	if(!LAZYLEN(GLOB.roundstart_races))
-		GLOB.roundstart_races += RACE_HUMEN
+		GLOB.roundstart_races += "Humen" // GLOB.species_list uses name and should probably be refactored
 	sortTim(GLOB.roundstart_races, GLOBAL_PROC_REF(cmp_text_dsc))
 
 /proc/get_selectable_species(patreon = TRUE)
@@ -1344,7 +1344,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 		target.lastattackerckey = user.ckey
 		user.dna.species.spec_unarmedattacked(user, target)
 
-		user.do_attack_animation(target, visual_effect_icon = user.used_intent.animname)
+		user.do_attack_animation(target, visual_effect_icon = user.used_intent.animname, atom_bounce = TRUE)
 		target.next_attack_msg.Cut()
 
 		var/nodmg = FALSE
@@ -1419,7 +1419,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	if(user.loc == target.loc)
 		return FALSE
 	else
-		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
+		user.do_attack_animation(target, ATTACK_EFFECT_DISARM, atom_bounce = TRUE)
 		playsound(target, 'sound/combat/shove.ogg', 100, TRUE, -1)
 
 		if(target.wear_pants)
@@ -1434,7 +1434,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 //		var/obj/machinery/disposal/bin/target_disposal_bin
 		var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
 
-		if(prob(clamp(30 + (user.stat_fight(target,STATKEY_CON,STATKEY_STR)*10),0,100)))//check if we actually shove them
+		if(prob(clamp(30 + (user.stat_compare(target, STATKEY_STR, STATKEY_CON)*10),0,100)))//check if we actually shove them
 			//Thank you based whoneedsspace
 			target_collateral_mob = locate(/mob/living) in target_shove_turf.contents
 			if(target_collateral_mob)
@@ -1446,6 +1446,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	//				target_disposal_bin = locate(/obj/machinery/disposal/bin) in target_shove_turf.contents
 					if(target_table)
 						shove_blocked = TRUE
+			qdel(user.check_arm_grabbed(user.active_hand_index))
 
 /*		if(target.IsKnockdown() && !target.IsParalyzed())
 			target.Paralyze(SHOVE_CHAIN_PARALYZE)
@@ -1530,22 +1531,12 @@ GLOBAL_LIST_EMPTY(patreon_races)
 		return FALSE
 	if(user.check_leg_grabbed(1) || user.check_leg_grabbed(2))
 		if(user.check_leg_grabbed(1) && user.check_leg_grabbed(2))		//If both legs are grabbed
-			to_chat(user, span_notice("I can't move my leg!"))
+			to_chat(user, span_notice("I can't move my legs!"))
 			return
 		else															//If only one leg is grabbed
-			var/mob/living/G = user.pulledby
-			var/userskill = 1
-			if(user.mind)
-				userskill = ((user.get_skill_level(/datum/skill/combat/wrestling) * 0.1) + 1)
-			var/grabberskill = 1
-			if(G?.mind)
-				grabberskill = ((G.get_skill_level(/datum/skill/combat/wrestling) * 0.1) + 1)
-			if(((user.STASTR + rand(1, 6)) * userskill) < ((G.STASTR + rand(1, 6)) * grabberskill))
-				to_chat(user, span_notice("I can't move my leg!"))
-				user.changeNext_move(CLICK_CD_GRABBING)
-				return
-			else
-				user.resist_grab()
+			to_chat(user, span_notice("I can't move my leg!"))
+			user.resist_grab()
+		return
 
 	if(user.stamina >= user.maximum_stamina)
 		return FALSE
@@ -1724,7 +1715,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	if(istype(M.used_intent, /datum/intent/unarmed))
 		harm(M, H, attacker_style)
 
-/datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H, selzone)
+/datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H, selzone, accurate = FALSE)
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		if(H.can_see_cone(user))
@@ -1737,7 +1728,10 @@ GLOBAL_LIST_EMPTY(patreon_races)
 
 	var/hit_area
 
-	selzone = accuracy_check(user.zone_selected, user, H, I.associated_skill, user.used_intent, I)
+	if(!selzone)
+		selzone = user.zone_selected
+	if(!accurate)
+		selzone = accuracy_check(selzone, user, H, I.associated_skill, user.used_intent, I)
 	affecting = H.get_bodypart(check_zone(selzone))
 
 	if(!affecting)
@@ -1783,6 +1777,13 @@ GLOBAL_LIST_EMPTY(patreon_races)
 					user.put_in_hands(I)
 					H.emote("pain", TRUE)
 					playsound(H.loc, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)
+			if(istype(user.used_intent, /datum/intent/effect) && selzone)
+				var/datum/intent/effect/effect_intent = user.used_intent
+				if(LAZYLEN(effect_intent.target_parts))
+					if(selzone in effect_intent.target_parts)
+						H.apply_status_effect(effect_intent.intent_effect)
+				else
+					H.apply_status_effect(effect_intent.intent_effect)
 //		if(H.used_intent.blade_class == BCLASS_BLUNT && I.force >= 15 && affecting.body_zone == "chest")
 //			var/turf/target_shove_turf = get_step(H.loc, get_dir(user.loc,H.loc))
 //			H.throw_at(target_shove_turf, 1, 1, H, spin = FALSE)
@@ -2070,8 +2071,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 		if(leg_clothes)
 			burning_items |= leg_clothes
 
-		for(var/X in burning_items)
-			var/obj/item/I = X
+		for(var/obj/item/I as anything in burning_items)
 			I.fire_act(((H.fire_stacks + H.divine_fire_stacks)* 50)) //damage taken is reduced to 2% of this value by fire_act()
 
 		var/thermal_protection = H.get_thermal_protection()
