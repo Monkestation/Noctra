@@ -101,7 +101,7 @@
  */
 /datum/action/cooldown/spell/undirected/jaunt/proc/on_jaunt_exited(obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
 	SHOULD_CALL_PARENT(TRUE)
-	check_flags &= ~AB_CHECK_PHASED
+	spell_requirements &= ~SPELL_CASTABLE_WHILE_PHASED
 	unjaunter.remove_traits(list(TRAIT_MAGICALLY_PHASED, TRAIT_RUNECHAT_HIDDEN, TRAIT_WEATHER_IMMUNE), REF(src))
 	// This needs to happen at the end, after all the traits and stuff is handled
 	SEND_SIGNAL(unjaunter, COMSIG_MOB_AFTER_EXIT_JAUNT, src)
