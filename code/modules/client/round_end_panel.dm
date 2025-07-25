@@ -303,32 +303,27 @@
 			data += "<div style='display: table; width: 100%;'>"
 			data += "<div style='display: table-row;'>"
 
-			// First Column (25%)
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
 			data += create_chronicle_holder_block(CHRONICLE_STATS_STRONGEST_PERSON)
-			data += create_chronicle_holder_block(CHRONICLE_STATS_FASTEST_PERSON)
+			data += create_chronicle_holder_block(CHRONICLE_STATS_FASTEST_PERSON, FALSE, TRUE)
 			data += "</div>"
 
-			// Second Column (25%)
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
 			data += create_chronicle_holder_block(CHRONICLE_STATS_WISEST_PERSON)
-			data += create_chronicle_holder_block(CHRONICLE_STATS_DUMBEST_PERSON)
+			data += create_chronicle_holder_block(CHRONICLE_STATS_DUMBEST_PERSON, FALSE, TRUE)
 			data += "</div>"
 
-			// Third Column (25%)
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
 			data += create_chronicle_holder_block(CHRONICLE_STATS_RICHEST_PERSON)
-			data += create_chronicle_holder_block(CHRONICLE_STATS_SLOWEST_PERSON)
+			data += create_chronicle_holder_block(CHRONICLE_STATS_SLOWEST_PERSON, FALSE, TRUE)
 			data += "</div>"
 
-			// Fourth Column (25%)
 			data += "<div style='display: table-cell; width: 25%; text-align: center; padding: 0 15px; vertical-align: top;'>"
 			data += create_chronicle_holder_block(CHRONICLE_STATS_LUCKIEST_PERSON)
-			data += create_chronicle_holder_block(CHRONICLE_STATS_UNLUCKIEST_PERSON)
+			data += create_chronicle_holder_block(CHRONICLE_STATS_UNLUCKIEST_PERSON, FALSE, TRUE)
 			data += "</div>"
 
 			data += "</div></div></div>"
-
 			data += "<div style='height: 20px;'></div>"
 
 			// Economy Section
@@ -339,7 +334,7 @@
 			data += "<div style='display: flex; justify-content: space-between; gap: 0;'>"
 
 			// Left column
-			data += "<div style='width: 34.5%; display: flex; justify-content: flex-end;'>"
+			data += "<div style='width: 35%; display: flex; justify-content: flex-end;'>"
 			data += "<div style='text-align: left; padding-right: 20px;'>"
 			data += "<div style='margin-bottom: 4px;'><font color='#f7d474'>Realm's Treasury: </font>[SStreasury.treasury_value]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#e6b327'>Regular Vault Income: </font>[GLOB.vanderlin_round_stats[STATS_REGULAR_VAULT_INCOME]]</div>"
@@ -350,7 +345,7 @@
 			data += "</div></div>"
 
 			// Middle column
-			data += "<div style='width: 31.5%; display: flex; justify-content: center;'>"
+			data += "<div style='width: 31%; display: flex; justify-content: center;'>"
 			data += "<div style='text-align: left; padding-left: 5px;'>"
 			data += "<div style='margin-bottom: 4px;'><font color='#b6a17f'>Salary Payments: </font>[GLOB.vanderlin_round_stats[STATS_WAGES_PAID]]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#aac484'>Treasury Transfers: </font>[GLOB.vanderlin_round_stats[STATS_DIRECT_TREASURY_TRANSFERS]]</div>"
@@ -363,10 +358,10 @@
 			// Right column
 			data += "<div style='width: 33%; display: flex; justify-content: flex-start;'>"
 			data += "<div style='text-align: left; padding-left: 20px;'>"
-			data += "<div style='margin-bottom: 4px;'><font color='#c78445'>Fines Collected: </font>[GLOB.vanderlin_round_stats[STATS_FINES_INCOME]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#c78445'>Royal Fines Collected: </font>[GLOB.vanderlin_round_stats[STATS_FINES_INCOME]]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#90b34f'>Stockpile Exports: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_EXPORTS_VALUE]]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#dbd24e'>Stockpile Imports: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_IMPORTS_VALUE]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#80af64'>Bought from Stockpile: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_REVENUE]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#32b985'>Bought from Stockpile: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_REVENUE]]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#c57e62'>Sold to Stockpile: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_EXPANSES]]</div>"
 			data += "<div><font color='#7495d3'>Peddler Revenue: </font>[GLOB.vanderlin_round_stats[STATS_PEDDLER_REVENUE]]</div>"
 			data += "</div></div>"
@@ -548,37 +543,33 @@
 	popup.set_content(data.Join())
 	popup.open()
 
-/// Creates a chronicle holder block for display
-/proc/create_chronicle_holder_block(stat_name)
+/// Creates a chronicle holder block
+/proc/create_chronicle_holder_block(stat_name, include_title = TRUE, is_second_block = FALSE)
 	var/list/stat_data = GLOB.chronicle_stats[stat_name]
 	if(!stat_data)
-		return "<div style='margin: 10px 0;'>Nobody</div>"
+		return is_second_block ? "<div style='margin: 30px 0 15px 0;'><font color='[initial(GLOB.chronicle_stats[stat_name]["title_color"])]'>[initial(GLOB.chronicle_stats[stat_name]["title"])]</font></div>Nobody" : "Nobody"
 
 	var/datum/weakref/mob_weakref = stat_data["holder"]
 	var/mob/living/holder = mob_weakref?.resolve()
 	if(!holder)
-		return "<div style='margin: 10px 0;'>Nobody</div>"
+		return is_second_block ? "<div style='margin: 30px 0 15px 0;'><font color='[stat_data["title_color"]]'>[stat_data["title"]]</font></div>Nobody" : "Nobody"
 
-	var/jobtext = ""
-	if(holder.mind)
-		if(holder.mind.special_role)
-			jobtext = " the <b>[holder.mind.special_role]</b>"
-		else if(holder.mind.assigned_role && holder.mind.current)
-			jobtext = " the <b>[holder.mind.assigned_role.get_informed_title(holder.mind.current)]</b>"
+	var/list/output = list()
+	if(include_title)
+		output += "<div style='margin-bottom: 15px;'><font color='[stat_data["title_color"]]'>[stat_data["title"]]</font></div>"
+	else if(is_second_block)
+		output += "<div style='margin: 30px 0 15px 0;'><font color='[stat_data["title_color"]]'>[stat_data["title"]]</font></div>"
 
-	return {"
+	output += {"
+	[get_headshot_icon(holder)]
 	<div style='margin: 10px 0;'>
-		<div style='margin-bottom: 15px;'><font color='[stat_data["title_color"]]'>[stat_data["title"]]</font></div>
-		<div style='margin: 10px 0;'>
-			[get_headshot_icon(holder)]
-			<div style='margin: 10px 0;'>
-				<font color='#e6a962'>[holder.real_name]</font>[jobtext]<br>
-				<i>[holder.job]</i><br>
-				(with <font color='[stat_data["title_color"]]'>[stat_data["value_text"]]</font>)
-			</div>
-		</div>
+		<font color='#e6a962'>[holder.real_name]</font><br>
+		<i>[holder.job]</i><br>
+		(with <font color='[stat_data["title_color"]]'>[stat_data["value_text"]]</font>)
 	</div>
 	"}
+
+	return output.Join("")
 
 /// Shows Gods influences menu
 /client/proc/show_influences(debug = FALSE)
