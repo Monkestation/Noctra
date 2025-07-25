@@ -7629,8 +7629,8 @@
 /area/rogue/outdoors/mountains)
 "eed" = (
 /obj/structure/closet/crate/crafted_closet/inn/south,
-/obj/item/clothing/cloak/apron/waist/bar,
-/obj/item/clothing/cloak/apron/waist/brown,
+/obj/item/clothing/cloak/apron/waist/colored/bar,
+/obj/item/clothing/cloak/apron/waist/colored/brown,
 /obj/item/clothing/cloak/apron/waist,
 /obj/item/clothing/head/hatfur,
 /obj/item/clothing/shirt/undershirt/colored/random,
@@ -36146,7 +36146,7 @@
 /area/rogue/outdoors/town)
 "tNY" = (
 /obj/structure/rack,
-/obj/item/clothing/cloak/apron/waist/brown,
+/obj/item/clothing/cloak/apron/waist/colored/brown,
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/indoors/soilsons)
 "tOe" = (

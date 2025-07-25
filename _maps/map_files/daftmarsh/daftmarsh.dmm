@@ -10989,7 +10989,7 @@
 /area/rogue/outdoors/town)
 "kKm" = (
 /obj/structure/table/wood/plain_alt,
-/obj/item/clothing/cloak/apron/waist/bar,
+/obj/item/clothing/cloak/apron/waist/colored/bar,
 /turf/open/floor/ruinedwood/spiralfade,
 /area/rogue/indoors/town/tavern)
 "kKX" = (

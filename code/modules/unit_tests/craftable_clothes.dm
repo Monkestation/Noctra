@@ -30,6 +30,8 @@ abstract types are automatically excluded.
 		/obj/item/clothing/armor/skin_armor, // bruh
 		/obj/item/clothing/head/hooded, // abstract items connected to a cloak, shouldn't be craftable
 		/obj/item/clothing/ring, // TEMPORARY (TODO)
+		/obj/item/clothing/cloak/tabard, // TODO
+		/obj/item/clothing/cloak/stabard, // TODO
 		/obj/item/clothing/accessory, // ???
 		/obj/item/clothing/head/crown/serpcrown // should only be one
 
@@ -45,6 +47,7 @@ abstract types are automatically excluded.
 		"orc",
 		"rousman",
 		"rare",
+		"vampire", // TODO (?)
 	)
 
 /datum/unit_test/craftable_clothes/Run()

@@ -23,6 +23,9 @@
 	fiber_salvage = FALSE
 	salvage_amount = 1
 
+/obj/item/clothing/head/headband/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
 /obj/item/clothing/head/headband/red
 	color = CLOTHING_BLOOD_RED
 

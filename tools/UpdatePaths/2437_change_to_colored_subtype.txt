@@ -83,3 +83,9 @@
 /obj/item/clothing/cloak/raincloak/green : /obj/item/clothing/cloak/raincloak/colored/green{@OLD}
 /obj/item/clothing/cloak/raincloak/blue : /obj/item/clothing/cloak/raincloak/colored/blue{@OLD}
 /obj/item/clothing/cloak/raincloak/random : /obj/item/clothing/cloak/raincloak/colored/random{@OLD}
+/obj/item/clothing/armor/gambeson/light/black : /obj/item/clothing/armor/gambeson/light/colored/black{@OLD}
+/obj/item/clothing/armor/gambeson/heavy/dark : /obj/item/clothing/armor/gambeson/heavy/colored/dark{@OLD}
+/obj/item/clothing/cloak/apron/waist/brown : /obj/item/clothing/cloak/apron/waist/colored/brown{@OLD}
+/obj/item/clothing/cloak/apron/waist/bar : /obj/item/clothing/cloak/apron/waist/colored/bar{@OLD}
+/obj/item/clothing/head/headband/red : /obj/item/clothing/head/headband/colored/red{@OLD}
+

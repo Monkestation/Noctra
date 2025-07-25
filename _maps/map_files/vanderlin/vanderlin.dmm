@@ -16793,7 +16793,7 @@
 /area/rogue/indoors/town/orphanage)
 "khQ" = (
 /obj/structure/closet/crate/crafted_closet/crafted,
-/obj/item/clothing/cloak/apron/waist/bar,
+/obj/item/clothing/cloak/apron/waist/colored/bar,
 /obj/item/clothing/shirt/dress/silkdress/colored/random,
 /turf/open/floor/ruinedwood/spiralfade,
 /area/rogue/under/town/basement)
