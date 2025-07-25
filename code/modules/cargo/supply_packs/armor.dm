@@ -167,8 +167,3 @@
 	name = "Plate Boots"
 	cost = 32
 	contains = /obj/item/clothing/shoes/boots/armor
-
-/obj/item/clothing/neck/mercator
-	name = "Mercator Eye"
-	cost = 200
-	contains = /obj/item/clothing/neck/mercator
