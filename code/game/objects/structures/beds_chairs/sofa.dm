@@ -21,10 +21,10 @@
 	icon = 'icons/roguetown/misc/couch.dmi'
 	icon_state = "couch_single"
 	greyscale_config = /datum/greyscale_config/couch
-	greyscale_colors = "#df3636"
+	greyscale_colors = CLOTHING_ROYAL_RED
 
 /obj/structure/chair/bench/couch/alt
-	greyscale_colors = "#3f3f3f"
+	greyscale_colors = CLOTHING_ROYAL_BLACK
 
 /obj/structure/chair/bench/couch/lord_primary
 	uses_lord_coloring = LORD_PRIMARY
@@ -36,7 +36,7 @@
 	icon_state = "couch_left"
 
 /obj/structure/chair/bench/couch/left/alt
-	greyscale_colors = "#3f3f3f"
+	greyscale_colors = CLOTHING_ROYAL_BLACK
 
 /obj/structure/chair/bench/couch/left/lord_primary
 	uses_lord_coloring = LORD_PRIMARY
@@ -48,7 +48,7 @@
 	icon_state = "couch_middle"
 
 /obj/structure/chair/bench/couch/middle/alt
-	greyscale_colors = "#3f3f3f"
+	greyscale_colors = CLOTHING_ROYAL_BLACK
 
 /obj/structure/chair/bench/couch/middle/lord_primary
 	uses_lord_coloring = LORD_PRIMARY
@@ -60,7 +60,7 @@
 	icon_state = "couch_right"
 
 /obj/structure/chair/bench/couch/right/alt
-	greyscale_colors = "#3f3f3f"
+	greyscale_colors = CLOTHING_ROYAL_BLACK
 
 /obj/structure/chair/bench/couch/right/lord_primary
 	uses_lord_coloring = LORD_PRIMARY
@@ -72,7 +72,7 @@
 	icon_state = "couch_corner"
 
 /obj/structure/chair/bench/couch/corner/alt
-	greyscale_colors = "#3f3f3f"
+	greyscale_colors = CLOTHING_ROYAL_BLACK
 
 /obj/structure/chair/bench/couch/corner/lord_primary
 	uses_lord_coloring = LORD_PRIMARY
