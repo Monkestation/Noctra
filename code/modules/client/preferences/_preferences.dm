@@ -1092,9 +1092,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 					var/voicetype_input = browser_input_list(user, "CHOOSE YOUR HERO'S VOICE TYPE", "DISCARD SOCIETY'S EXPECTATIONS", allowed_voices)
 					if(voicetype_input)
 						voice_type = voicetype_input
-						// TODO: remove the notice when we have a sound pack for androgynous voices
 						if(voicetype_input == VOICE_TYPE_ANDRO)
-							to_chat(user, span_warning("Heads up, we don't have a soundpack for androgynous voices, so it will use the fem voicepack by default, pitched down a bit to achieve a more androgynous sound."))
+							to_chat(user, span_warning("This will use the feminine voicepack pitched down a bit to achieve a more androgynous sound."))
 						to_chat(user, span_warning("Your character will now vocalize with a [lowertext(voice_type)] affect."))
 				if("faith")
 					var/list/faiths_named = list()
@@ -1173,18 +1172,17 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 							to_chat(user, span_warning("This species does not have any allowed pronouns. Please contact a coder to add them."))
 						else if (length(pref_species.allowed_pronouns) == 1)
 							pronouns = pref_species.allowed_pronouns[1]
-						else
-							if(!(pronouns in pref_species.allowed_pronouns))
-								pronouns = pref_species.allowed_pronouns[1]
+						else if(!(pronouns in pref_species.allowed_pronouns))
+							pronouns = pref_species.allowed_pronouns[1]
 
 						//Now that we changed our species, we must verify that the mutant colour is still allowed.
 						real_name = pref_species.random_name(gender,1)
 						ResetJobs(user)
+						randomise_appearance_prefs(~(RANDOMIZE_SPECIES))
 						customizer_entries = list()
 						validate_customizer_entries()
 						reset_all_customizer_accessory_colors()
 						randomize_all_customizer_accessories()
-						randomise_appearance_prefs(~(RANDOMIZE_SPECIES))
 						accessory = "Nothing"
 
 				if("charflaw")

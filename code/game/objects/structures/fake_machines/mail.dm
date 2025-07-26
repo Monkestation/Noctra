@@ -505,6 +505,16 @@ GLOBAL_LIST_EMPTY(letters_sent)
 			cost = 2,
 			max_purchases = 4
 		),
+		"Silver Mask (2)" = list(
+			list(type = /obj/item/clothing/face/facemask/silver, count = 1),
+			cost = 2,
+			max_purchases = 4
+		),
+		"Adept's Cowl (1)" = list(
+			list(type = /obj/item/clothing/head/adeptcowl, count = 1),
+			cost = 1,
+			max_purchases = 4
+		),
 		"Valorian Cloak (2)" = list(
 			list(type = /obj/item/clothing/cloak/cape/inquisitor, count = 1),
 			cost = 2,

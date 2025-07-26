@@ -7,6 +7,7 @@
 	equip_delay_self = 4 SECONDS
 	unequip_delay_self = 4 SECONDS
 	equip_sound = 'sound/foley/equip/equip_armor_plate.ogg'
+	pickup_sound = "rustle"
 	sellprice = VALUE_STEEL_ARMOR
 	clothing_flags = CANT_SLEEP_IN
 	//Plate doesn't protect a lot against blunt
@@ -133,3 +134,26 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
 	sleeved = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
 	sellprice = 0 // See above comment
+
+//.............. Graggar Armor .................//
+
+/obj/item/clothing/armor/plate/full/graggar
+	name = "vicious full-plate"
+	desc = "A sinister set full plate. Untold violence stirs from within."
+	icon_state = "graggarplate"
+	icon = 'icons/roguetown/clothing/special/evilarmor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sleeved = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sellprice = 0 // See above comment
+
+//.............. Silver Armor .................//
+
+/obj/item/clothing/armor/plate/full/silver
+	name = "silver fullplate"
+	desc = "A finely forged set of full silver plate, with long tassets protecting the legs."
+	icon_state = "silverarmor"
+	allowed_ages = ALL_AGES_LIST //placeholder until younglings have onmob sprites for this item
+	armor = ARMOR_PLATE_SILVER
+	smeltresult = /obj/item/ingot/silver
+	item_weight = 12 * SILVER_MULTIPLIER
+	sellprice = VALUE_SILVER_ITEM * 3

@@ -289,3 +289,21 @@
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
 	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_HALF_ELF, SPEC_ID_TIEFLING, SPEC_ID_ELF, SPEC_ID_AASIMAR)
 	inhand_mod = FALSE
+
+/obj/item/clothing/cloak/graggar
+	name = "vicious cloak"
+	desc = "A cloak with a sinister aura set to bring about violence on the world."
+	icon_state = "graggarcloak"
+	icon_state = "graggarcloak"
+	icon = 'icons/roguetown/clothing/special/evilarmor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sleeved = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sellprice = 0 // See above comment
+
+/obj/item/clothing/cloak/silktabard
+	name = "fine silk tabard"
+	desc = "A finely crafted long tabard weaved from silk. Fashionable, and a symbol of status and wealth."
+	icon_state = "silktabard"
+	item_state = "silktabard"
+	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
+	allowed_ages = ALL_AGES_LIST //placeholder until younglings have onmob sprites for this item

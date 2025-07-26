@@ -23,6 +23,7 @@
 	jaunter.forceMove(src)
 	if(ismob(jaunter))
 		var/mob/mob_jaunter = jaunter
+		RegisterSignal(mob_jaunter, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_change))
 		mob_jaunter.reset_perspective(src)
 
 /obj/effect/dummy/phased_mob/Destroy()
@@ -56,19 +57,24 @@
 /obj/effect/dummy/phased_mob/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == jaunter)
+		UnregisterSignal(jaunter, COMSIG_MOB_STATCHANGE)
+		SEND_SIGNAL(src, COMSIG_MOB_EJECTED_FROM_JAUNT, jaunter)
 		jaunter = null
 
 /obj/effect/dummy/phased_mob/ex_act()
 	return FALSE
 
-/obj/effect/dummy/phased_mob/bullet_act(blah)
+/obj/effect/dummy/phased_mob/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	return BULLET_ACT_FORCE_PIERCE
 
 /obj/effect/dummy/phased_mob/relaymove(mob/living/user, direction)
 	var/turf/newloc = phased_check(user, direction)
 	if(!newloc)
 		return
-	setDir(direction)
+
+	if(direction in GLOB.alldirs)
+		setDir(direction)
+
 	forceMove(newloc)
 
 /// Checks if the conditions are valid to be able to phase. Returns a turf destination if positive.
@@ -76,7 +82,7 @@
 	RETURN_TYPE(/turf)
 	if (movedelay > world.time || !direction)
 		return
-	var/turf/newloc = get_step(src,direction)
+	var/turf/newloc = get_step_multiz(src, direction)
 	if(!newloc)
 		return
 	var/area/destination_area = newloc.loc
@@ -88,3 +94,10 @@
 		to_chat(user, span_danger("Some dull, universal force is blocking the way. It's overwhelmingly oppressive force feels dangerous."))
 		return
 	return newloc
+
+/// Signal proc for [COMSIG_MOB_STATCHANGE], to throw us out of the jaunt if we lose consciousness.
+/obj/effect/dummy/phased_mob/proc/on_stat_change(mob/living/source, new_stat, old_stat)
+	SIGNAL_HANDLER
+
+	if(source == jaunter && source.stat != CONSCIOUS)
+		eject_jaunter()

@@ -80,6 +80,20 @@
 	smeltresult = /obj/item/ingot/steel
 	sellprice = 50
 
+
+//................ Silver Whip ............... //
+/obj/item/weapon/whip/silver
+	name = "silver whip"
+	desc = "A whip with a silver handle, core and tip. It has been modified for inflicting burning pain on Nitebeasts."
+	icon_state = "silverwhip"
+	resistance_flags = FIRE_PROOF
+	smeltresult = /obj/item/ingot/silver
+	last_used = 0
+
+/obj/item/weapon/whip/silver/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
+
 //................ Caning Stick.................//
 /obj/item/weapon/whip/cane
 	name = "caning stick"

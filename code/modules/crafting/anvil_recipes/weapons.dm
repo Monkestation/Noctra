@@ -15,6 +15,15 @@
 	created_item = /obj/item/weapon/knife/dagger/silver
 	craftdiff = 2
 
+/datum/anvil_recipe/weapons/silver/silver_whip
+	name = "Silver Whip (+2 Cured Hide)"
+	recipe_name = "a whip made modified with silver"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	req_bar = /obj/item/ingot/silver
+	additional_items = list(/obj/item/natural/hide/cured,/obj/item/natural/hide/cured)
+	created_item = /obj/item/weapon/whip/silver
+	craftdiff = 3
+
 /datum/anvil_recipe/weapons/silver/sword_silver
 	name = "Silver Sword"
 	recipe_name = "a Silver Sword"
@@ -578,3 +587,11 @@
 	additional_items = list(/obj/item/ingot/gold)
 	created_item = /obj/item/weapon/mace/elvenclub/steel
 	craftdiff = 2
+
+/datum/anvil_recipe/weapons/silver/declong
+	name = "Decorated Silver Longsword (+Silver bar, +Gold bar)"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	req_bar = /obj/item/ingot/silver
+	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/gold)
+	created_item = /obj/item/weapon/sword/long/decorated
+	craftdiff = 4

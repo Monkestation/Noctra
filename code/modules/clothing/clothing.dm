@@ -58,6 +58,7 @@
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
 	var/list/allowed_sex = list(MALE, FEMALE)
+	var/list/allowed_ages = ALL_AGES_LIST_CHILD
 	var/list/allowed_race = ALL_RACES_LIST
 	var/armor_class = ARMOR_CLASS_NONE
 
@@ -233,6 +234,8 @@
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.dna)
+					if(!(H.age in allowed_ages))
+						return FALSE
 					if(H.dna.species.id in allowed_race)
 						return TRUE
 					else

@@ -381,6 +381,21 @@
 
 /// Standalones
 
+/datum/repeatable_crafting_recipe/leather/leathercollar
+	name = "leather collar"
+	output = /obj/item/clothing/neck/leathercollar
+	requirements = list(/obj/item/natural/hide/cured = 1,
+				/obj/item/natural/fibers = 2)
+	craftdiff = 2
+
+/datum/repeatable_crafting_recipe/leather/bellcollar
+	name = "bell collar"
+	output = /obj/item/clothing/neck/bellcollar
+	requirements = list(/obj/item/natural/hide/cured = 1,
+				/obj/item/natural/fibers = 2,
+				/obj/item/jingle_bells = 1)
+	craftdiff = 2
+
 /datum/repeatable_crafting_recipe/leather/standalone
 	abstract_type = /datum/repeatable_crafting_recipe/leather/standalone
 	category = "Special Leather"
