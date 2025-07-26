@@ -521,10 +521,6 @@
 	else
 		return ..()
 
-
-
-
-
 /obj/item/book/granter/spellbook/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	if(istype(P, /obj/item/gem))
 		if(!stored_gem)
