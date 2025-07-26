@@ -107,23 +107,23 @@ abstract types are automatically excluded.
 
 	// repeatables
 	for(var/datum/repeatable_crafting_recipe/recipe as anything in subtypesof(/datum/repeatable_crafting_recipe))
-		clothes_list -= recipe.output
+		clothes_list -= initial(recipe.output)
 
 	// orderless slapcraft
 	for(var/datum/orderless_slapcraft/recipe as anything in subtypesof(/datum/orderless_slapcraft))
-		clothes_list -= recipe.output_item
+		clothes_list -= initial(recipe.output_item)
 
 	// anvil recipes
 	for(var/datum/anvil_recipe/recipe as anything in subtypesof(/datum/anvil_recipe))
-		clothes_list -= recipe.created_item
+		clothes_list -= initial(recipe.created_item)
 
 	// crafting recipes
 	for(var/datum/crafting_recipe/recipe as anything in subtypesof(/datum/crafting_recipe))
-		clothes_list -= recipe.result
+		clothes_list -= initial(recipe.result)
 
 	// artificer recipes
 	for(var/datum/artificer_recipe/recipe as anything in subtypesof(/datum/artificer_recipe))
-		clothes_list -= recipe.created_item
+		clothes_list -= initial(recipe.created_item)
 
 	if(!clothes_list.len)
 		return
