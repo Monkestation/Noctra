@@ -2780,7 +2780,7 @@
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/indoors/soilsons)
 "bAm" = (
-/obj/structure/chair/bench/couch,
+/obj/structure/chair/bench/coucha,
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/indoors/soilsons)
 "bAo" = (
@@ -3689,7 +3689,7 @@
 /turf/open/floor/grass/cold,
 /area/rogue/outdoors/town)
 "bXm" = (
-/obj/structure/chair/bench/couch/redright,
+/obj/structure/chair/bench/coucha/redright,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
 "bXB" = (
@@ -6018,7 +6018,7 @@
 /turf/open/floor/naturalstone,
 /area/rogue/under/town/sewer)
 "dhO" = (
-/obj/structure/chair/bench/couch/redleft,
+/obj/structure/chair/bench/coucha/redleft,
 /turf/open/floor/carpet,
 /area/rogue/indoors/town/tavern)
 "dif" = (
@@ -6462,7 +6462,7 @@
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/indoors/town/manor)
 "dtZ" = (
-/obj/structure/chair/bench/couch/redright,
+/obj/structure/chair/bench/coucha/redright,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/orphanage)
 "duj" = (
@@ -8424,7 +8424,7 @@
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/indoors/town/theatre)
 "eCJ" = (
-/obj/structure/chair/bench/couch/redright,
+/obj/structure/chair/bench/coucha/redright,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/tavern)
 "eCQ" = (
@@ -11732,7 +11732,7 @@
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/magician)
 "gui" = (
-/obj/structure/chair/bench/couch/redleft,
+/obj/structure/chair/bench/coucha/redleft,
 /turf/open/floor/cobble,
 /area/rogue/outdoors/town/roofs)
 "gus" = (
@@ -12329,7 +12329,7 @@
 /turf/open/floor/hexstone,
 /area/rogue/indoors/town/shop)
 "gNX" = (
-/obj/structure/chair/bench/couch/r,
+/obj/structure/chair/bench/coucha/r,
 /obj/effect/landmark/start/wapprentice,
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/magician)
@@ -13666,7 +13666,7 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/indoors/town)
 "hAS" = (
-/obj/structure/chair/bench/couch/redright,
+/obj/structure/chair/bench/coucha/redright,
 /turf/open/floor/cobble,
 /area/rogue/outdoors/town/roofs)
 "hAX" = (
@@ -14026,7 +14026,7 @@
 /turf/open/floor/wood,
 /area/rogue/indoors/town/manor)
 "hKk" = (
-/obj/structure/chair/bench/couch/redleft,
+/obj/structure/chair/bench/coucha/redleft,
 /obj/machinery/light/fueled/wallfire/candle/l,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
@@ -16216,7 +16216,7 @@
 /turf/closed/wall/mineral/decostone/moss/blue,
 /area/rogue/outdoors/town)
 "jak" = (
-/obj/structure/chair/bench/couch/r,
+/obj/structure/chair/bench/coucha/r,
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/indoors/soilsons)
 "jaO" = (
@@ -23642,7 +23642,7 @@
 /turf/open/floor/blocks,
 /area/rogue/indoors/town/church/chapel)
 "neQ" = (
-/obj/structure/chair/bench/couch/redright,
+/obj/structure/chair/bench/coucha/redright,
 /turf/open/floor/carpet,
 /area/rogue/indoors/town/tavern)
 "nfe" = (
@@ -24954,7 +24954,7 @@
 /obj/machinery/light/fueled/wallfire{
 	pixel_y = 32
 	},
-/obj/structure/chair/bench/couch/redleft,
+/obj/structure/chair/bench/coucha/redleft,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/tavern)
 "nSk" = (
@@ -25514,7 +25514,7 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/under/town/basement)
 "odM" = (
-/obj/structure/chair/bench/couch/redleft,
+/obj/structure/chair/bench/coucha/redleft,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/orphanage)
 "odP" = (
@@ -27627,7 +27627,7 @@
 /turf/open/floor/carpet/green,
 /area/rogue/indoors/soilsons)
 "pfX" = (
-/obj/structure/chair/bench/couch/redright,
+/obj/structure/chair/bench/coucha/redright,
 /turf/open/floor/wood,
 /area/rogue/indoors/town/tavern)
 "pga" = (
@@ -31654,7 +31654,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/mountains)
 "rve" = (
-/obj/structure/chair/bench/couch/redleft,
+/obj/structure/chair/bench/coucha/redleft,
 /turf/open/floor/cobblerock,
 /area/rogue/outdoors/town/roofs)
 "rvj" = (
@@ -34271,7 +34271,7 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/indoors/town/magician)
 "sPu" = (
-/obj/structure/chair/bench/couch/r,
+/obj/structure/chair/bench/coucha/r,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
 "sPC" = (
@@ -36085,7 +36085,7 @@
 /turf/open/floor/cobblerock/snow,
 /area/rogue/outdoors/town)
 "tLQ" = (
-/obj/structure/chair/bench/couch,
+/obj/structure/chair/bench/coucha,
 /obj/effect/landmark/start/wapprentice,
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/magician)
@@ -38960,7 +38960,7 @@
 /turf/open/floor/ruinedwood/chevron,
 /area/rogue/indoors/town/merc_guild)
 "vnk" = (
-/obj/structure/chair/bench/couch/redleft,
+/obj/structure/chair/bench/coucha/redleft,
 /turf/open/floor/wood,
 /area/rogue/indoors/town/tavern)
 "vnl" = (
@@ -41489,7 +41489,7 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/indoors/town/smithy)
 "wHI" = (
-/obj/structure/chair/bench/couch,
+/obj/structure/chair/bench/coucha,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
 "wHR" = (
