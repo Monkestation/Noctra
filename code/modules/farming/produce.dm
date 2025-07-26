@@ -136,11 +136,10 @@
 	var/list/bitten_names = list()
 
 /obj/item/reagent_containers/food/snacks/produce/fruit/apple/on_consume(mob/living/eater)
-	..()
+	. = ..()
 	if(ishuman(eater))
 		var/mob/living/carbon/human/H = eater
-		if(!(H.real_name in bitten_names))
-			bitten_names += H.real_name
+		bitten_names |= H.real_name
 
 /obj/item/reagent_containers/food/snacks/produce/fruit/apple/blockproj(mob/living/carbon/human/H)
 	if(prob(98))

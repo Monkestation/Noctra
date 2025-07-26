@@ -120,6 +120,7 @@
 			H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
 		if(/datum/patron/divine/xylix)
 			wrists = /obj/item/clothing/neck/psycross/silver/xylix
+			head = /obj/item/clothing/head/helmet/heavy/necked/xylix
 			H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)

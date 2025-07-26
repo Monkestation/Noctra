@@ -137,3 +137,19 @@
 		COOLDOWN_START(src, bell_ring, 5 SECONDS)
 	else
 		return ..()
+
+//////////Jingle Bells
+
+/obj/item/jingle_bells
+	name = "jingling bells"
+	desc = "A set of small bells that jingle when shaken."
+	icon = 'icons/roguetown/items/misc.dmi'
+	icon_state =  "jingle_bells"
+	throwforce = 5
+	dropshrink = 0.5
+	pickup_sound = SFX_JINGLE_BELLS
+	drop_sound = SFX_JINGLE_BELLS
+
+/obj/item/jingle_bells/Initialize()
+	. = ..()
+	AddComponent(/datum/component/item_equipped_movement_rustle, custom_sounds = list(SFX_JINGLE_BELLS))

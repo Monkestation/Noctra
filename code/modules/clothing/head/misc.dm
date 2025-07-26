@@ -203,7 +203,14 @@
 	user.dropItemToGround(src)
 	target.equip_to_slot_if_possible(src, ITEM_SLOT_HEAD)
 
+//............... Adept's Cowl ............... //
 
+/obj/item/clothing/head/adeptcowl
+	name = "adept's cowl"
+	desc = "A black cowl worn by the Adepts of the Inquisitorial Lodge"
+	icon_state = "adeptscowl"
+	item_state = "adeptscowl"
+	flags_inv = HIDEEARS|HIDEHAIR
 
 /*----------\
 | Graveyard |	- Not used or ingame in any way except admeme spawning them.
