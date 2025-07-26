@@ -17,6 +17,8 @@
 	var/list/slot_adjust
 	/// Jobs that have species adjustments /datum/job = list("humen")
 	var/list/species_adjust
+	/// Jobs that have gender adjustments /datum/job = list(MALE, FEMALE)
+	var/list/sexes_adjust
 
 /// called on map config is loaded.
 /// You need to change things manually here.
@@ -34,6 +36,9 @@
 	for(var/job as anything in species_adjust)
 		var/datum/job/J = SSjob.GetJobType(job)
 		J?.allowed_races = species_adjust[job]
+	for(var/job as anything in sexes_adjust)
+		var/datum/job/J = SSjob.GetJobType(job)
+		J?.allowed_sexes = sexes_adjust[job]
 
 /**
  * job_type`</datum/job/J>`: Type of the job that's being adjusted \
