@@ -375,6 +375,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 /obj/structure/fermentation_keg/proc/start_brew()
 	brewing = TRUE
 	ready_to_bottle = FALSE
+	tapped = FALSE
 
 	for(var/obj/item/reagent_containers/food/item as anything in selected_recipe.needed_crops)
 		if(!(item in recipe_crop_stocks))
@@ -440,11 +441,6 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	if(brewing)
 		if(user)
 			to_chat(user, span_notice("This keg is already brewing a mix!"))
-		return FALSE
-
-	if(tapped)
-		if(user)
-			to_chat(user, span_notice("This keg is tapped and cannot brew!"))
 		return FALSE
 
 	var/ready = TRUE
