@@ -70,13 +70,6 @@
 			add_dye_pack(pack)
 
 		return
-
-
-	if(!I.sewrepair) // ????
-		if(I.force < 8) // ?????????
-			to_chat(user, span_warning("I do not think \the [I] can be dyed this way."))
-		return ..()
-
 	/* ---------- */
 	. = TRUE
 
@@ -92,6 +85,10 @@
 		return
 	if(!user.transferItemToLoc(I, src))
 		to_chat(user, span_warning("I can not let go of [I]!"))
+		return
+	if(istype(I, /obj/item/weapon))
+		to_chat(user, span_warning("I dont think the [I] can be dyed"))
+		user.put_in_hands(I)
 		return
 
 	user.visible_message( \
