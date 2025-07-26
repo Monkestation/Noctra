@@ -6,6 +6,7 @@
 #define STATS_ALIVE_RAKSHARI "alive_rakshari"
 #define STATS_ALIVE_AASIMAR "alive_aasimar"
 #define STATS_ALIVE_HOLLOWKINS "alive_hollowkins"
+#define STATS_ALIVE_MEDICATORS "alive_medicators"
 #define STATS_VAMPIRES "vampires"
 #define STATS_ALIVE_GARRISON "alive_garrison"
 #define STATS_ALIVE_CLERGY "alive_clergy"
@@ -245,6 +246,7 @@ GLOBAL_LIST_INIT(vanderlin_round_stats, list(
 	STATS_ALIVE_HOLLOWKINS = 0,
 	STATS_ALIVE_HARPIES = 0,
 	STATS_ALIVE_TRITONS = 0,
+	STATS_ALIVE_MEDICATORS = 0,
 	STATS_PEOPLE_DROWNED = 0,
 	STATS_MANA_SPENT = 0,
 	STATS_WATER_CONSUMED  = 0,
@@ -517,7 +519,7 @@ GLOBAL_LIST_EMPTY(chronicle_stats)
 	sortTim(entries, GLOBAL_PROC_REF(cmp_stat_count_desc))
 
 	var/list/result = list()
-	for(var/i in 1 to min(13, entries.len))
+	for(var/i in 1 to min(14, entries.len))
 		var/list/entry = entries[i]
 		var/rounded_count = round(entry["count"])
 		result += "[i]. [entry["name"]] - [rounded_count]"
@@ -536,7 +538,7 @@ GLOBAL_LIST_EMPTY(chronicle_stats)
 	sortTim(entries, GLOBAL_PROC_REF(cmp_stat_count_desc))
 
 	var/list/result = list()
-	for(var/i in 1 to min(13, entries.len))
+	for(var/i in 1 to min(14, entries.len))
 		var/list/entry = entries[i]
 		var/rounded_count = round(entry["count"])
 		result += "[i]. [entry["name"]] - [rounded_count]"
