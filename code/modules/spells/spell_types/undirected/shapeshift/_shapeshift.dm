@@ -5,9 +5,9 @@
 	/// Whehter we revert to our human form on death.
 	var/revert_on_death = TRUE
 	/// Whether we die when our shapeshifted form is killed
-	var/die_with_shapeshifted_form = TRUE
+	var/die_with_shapeshifted_form = FALSE
 	/// Whether we convert our health from one form to another
-	var/convert_damage = TRUE
+	var/convert_damage = FALSE
 	/// If convert damage is true, the damage type we deal when converting damage back and forth
 	var/convert_damage_type = BRUTE
 
