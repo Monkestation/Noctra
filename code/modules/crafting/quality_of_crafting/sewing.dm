@@ -277,14 +277,14 @@
 	craftdiff = 1
 	category = "Neck"
 
-/datum/repeatable_crafting_recipe/sewing/feld
+/datum/repeatable_crafting_recipe/sewing/feld_collar
 	name = "feldsher's collar"
 	requirements = list(/obj/item/natural/cloth = 2, /obj/item/natural/fibers = 2,)
 	output = /obj/item/clothing/neck/feld
 	craftdiff = 1
 	category = "Neck"
 
-/datum/repeatable_crafting_recipe/sewing/phys
+/datum/repeatable_crafting_recipe/sewing/phys_collar
 	name = "physicker's collar"
 	requirements = list(/obj/item/natural/cloth = 1, /obj/item/natural/fibers = 2,)
 	output = /obj/item/clothing/neck/phys
@@ -487,14 +487,14 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
 
-/datum/repeatable_crafting_recipe/sewing/feld
+/datum/repeatable_crafting_recipe/sewing/feld_robe
 	name = "feldsher robes"
 	output = /obj/item/clothing/shirt/robe/feld
 	requirements = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 2)
 	craftdiff = 3
 
-/datum/repeatable_crafting_recipe/sewing/phys
+/datum/repeatable_crafting_recipe/sewing/phys_robes
 	name = "physicker robes"
 	output = /obj/item/clothing/shirt/robe/phys
 	requirements = list(/obj/item/natural/cloth = 3,

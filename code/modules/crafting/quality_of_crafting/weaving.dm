@@ -53,7 +53,7 @@
 	craftdiff = 3
 	category = "Cloak"
 
-/datum/repeatable_crafting_recipe/sewing/weaving/feldhood
+/datum/repeatable_crafting_recipe/sewing/weaving/feld_hood
 	name = "hood (feldsher)"
 	output = /obj/item/clothing/head/roguehood/feld
 	requirements = list(/obj/item/natural/cloth = 2,
@@ -61,7 +61,7 @@
 	craftdiff = 3
 	category = "Hat"
 
-/datum/repeatable_crafting_recipe/sewing/weaving/feldhood
+/datum/repeatable_crafting_recipe/sewing/weaving/phys_hood
 	name = "hood (physicker)"
 	output = /obj/item/clothing/head/roguehood/phys
 	requirements = list(/obj/item/natural/cloth = 2,
@@ -115,7 +115,7 @@
 			/obj/item/natural/silk = 1)
 	craftdiff = 3
 
-/datum/repeatable_crafting_recipe/sewing/weaving/mask_fel
+/datum/repeatable_crafting_recipe/sewing/weaving/feld_mask
 	name = "feldsher mask"
 	output = /obj/item/clothing/face/feld
 	requirements = list(/obj/item/natural/cloth = 3,
@@ -123,7 +123,7 @@
 	craftdiff = 1
 	category = "Mask"
 
-/datum/repeatable_crafting_recipe/sewing/weaving/mask_fel
+/datum/repeatable_crafting_recipe/sewing/weaving/phys_mask
 	name = "physicker mask"
 	output = /obj/item/clothing/face/phys
 	requirements = list(/obj/item/natural/cloth = 2,
