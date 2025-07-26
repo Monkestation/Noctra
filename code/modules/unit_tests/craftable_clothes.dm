@@ -36,10 +36,10 @@ abstract types are automatically excluded.
 		/obj/item/clothing/cloak/tabard, // TODO
 		/obj/item/clothing/cloak/stabard, // TODO
 		/obj/item/clothing/accessory, // ???
-		/obj/item/clothing/head/crown/serpcrown // should only be one
+		/obj/item/clothing/head/crown/serpcrown, // should only be one
 		/obj/item/clothing/face/cigarette, // ???
-
 	)
+
 	/// excludes paths that are subtypes of these types and only subtypes
 	var/list/excluded_paths_subtypes_only = list(
 
