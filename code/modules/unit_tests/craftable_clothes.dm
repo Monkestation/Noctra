@@ -128,6 +128,4 @@ abstract types are automatically excluded.
 	if(!clothes_list.len)
 		return
 
-	var/list/recipes = subtypesof(/datum/repeatable_crafting_recipe)
-
-	TEST_FAIL("The following clothing subtypes do not have a crafting recipe: [clothes_list.Join(", ")] \n also there is these recipes [recipes.Join(", ")]")
+	TEST_FAIL("The following clothing subtypes do not have a crafting recipe: [clothes_list.Join(", ")]")
