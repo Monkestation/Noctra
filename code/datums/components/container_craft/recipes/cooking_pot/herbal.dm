@@ -60,7 +60,7 @@
 	reagent_requirements = list(
 		/datum/reagent/consumable/ethanol = 20
 	)
-	subtype_reagents_allowed = TURE
+	subtype_reagents_allowed = TRUE
 	craft_verb = "preparing "
 	required_chem_temp = 320 // Lower temp for salves
 	pollute_amount = 150

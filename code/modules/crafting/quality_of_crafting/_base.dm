@@ -143,14 +143,8 @@
 			var/required_amount = reagent_requirements[required_path]
 			var/available_amount = 0
 
-			var/list/reagent_paths
-			if(reagent_subtypes_allowed)
-				reagent_paths = typesof(required_path)
-			else
-				reagent_paths = list(required_path)
-
 			for(var/path in reagent_values)
-				if(!(path in reagent_paths))
+				if(reagent_subtypes_allowed ? !ispath(path, required_path) : path != required_path)
 					continue
 				available_amount += reagent_values[path]
 				if(available_amount >= required_amount)
@@ -201,15 +195,9 @@
 			var/required_amount = reagent_requirements[required_path]
 			var/available_amount = 0
 
-			var/list/reagent_paths
-			if(reagent_subtypes_allowed)
-				reagent_paths = typesof(required_path)
-			else
-				reagent_paths = list(required_path)
-
 			// Count available reagents that match this requirement
 			for(var/path in reagent_values)
-				if(!(path in reagent_paths))
+				if(reagent_subtypes_allowed ? !ispath(path, required_path) : path != required_path)
 					continue
 				available_amount += reagent_values[path]
 

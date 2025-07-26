@@ -53,7 +53,6 @@
 	desc = "What a disgusting thing, what type of maniac would make this!?"
 	icon = 'icons/roguetown/maniac/creations.dmi'
 	icon_state = "creation1"
-	resistance_flags = INDESTRUCTIBLE
 	density = TRUE
 	anchored = TRUE
 	/// The maniac that made this structure
