@@ -922,6 +922,7 @@
 #include "code\datums\gods\patrons\inhumen_pantheon.dm"
 #include "code\datums\gods\patrons\patrons_blessings.dm"
 #include "code\datums\greyscale\_greyscale_config.dm"
+#include "code\datums\greyscale\greyscale_configs.dm"
 #include "code\datums\greyscale\json_reader.dm"
 #include "code\datums\greyscale\layer.dm"
 #include "code\datums\helper_datums\events.dm"

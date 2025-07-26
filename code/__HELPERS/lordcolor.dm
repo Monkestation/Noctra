@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(lordcolor)
-
 GLOBAL_VAR(lordprimary)
 GLOBAL_VAR(lordsecondary)
 

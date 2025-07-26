@@ -11,6 +11,10 @@
 	/// Reference to the dmi file for this config
 	var/icon_file
 
+	/// An optional var to set that tells the material system what material this configuration is for.
+	/// Use a typepath here, not an instance.
+	var/datum/material/material_skin
+
 	///////////////////////////////////////////////////////////////////////////////////////////
 	// Do not set any further vars, the json file specified above is what generates the object
 
@@ -23,11 +27,23 @@
 	/// String path to the json file, used for reloading
 	var/string_json_config
 
+	/// The md5 file hash for the json configuration. Used to check if the file has changed
+	var/json_config_hash
+
 	/// String path to the icon file, used for reloading
 	var/string_icon_file
 
+	/// The md5 file hash for the icon file. Used to check if the file has changed
+	var/icon_file_hash
+
 	/// A list of icon states and their layers
 	var/list/icon_states
+
+	/// A list of all layers irrespective of nesting
+	var/list/flat_all_layers
+
+	/// A list of types to update in the world whenever a config changes
+	var/list/live_edit_types
 
 	/// How many colors are expected to be given when building the sprite
 	var/expected_colors = 0
@@ -47,11 +63,34 @@
 	if(!name)
 		stack_trace("Greyscale config object [DebugName()] is missing a name, make sure `name` has been assigned a value.")
 
+/datum/greyscale_config/Destroy(force, ...)
+	if(!force)
+		return QDEL_HINT_LETMELIVE
+	return ..()
+
 /// Call this proc to handle all the data extraction from the json configuration. Can be forced to load values from disk instead of memory.
 /datum/greyscale_config/proc/Refresh(loadFromDisk=FALSE)
 	if(loadFromDisk)
+		var/changed = FALSE
+
 		json_config = file(string_json_config)
+		var/json_hash = md5asfile(json_config)
+		if(json_config_hash != json_hash)
+			json_config_hash = json_hash
+			changed = TRUE
+
 		icon_file = file(string_icon_file)
+		var/icon_hash = md5asfile(icon_file)
+		if(icon_file_hash != icon_hash)
+			icon_file_hash = icon_hash
+			changed = TRUE
+
+		for(var/datum/greyscale_layer/layer as anything in flat_all_layers)
+			if(layer.DiskRefresh())
+				changed = TRUE
+
+		if(!changed)
+			return FALSE
 
 	var/list/raw = json_decode(file2text(json_config))
 	ReadIconStateConfiguration(raw)
@@ -62,6 +101,8 @@
 	icon_cache = list()
 
 	ReadMetadata()
+
+	return TRUE
 
 /// Called after every config has refreshed, this proc handles data verification that depends on multiple entwined configurations.
 /datum/greyscale_config/proc/CrossVerify()
@@ -118,23 +159,28 @@
 	width = source.Width()
 
 	var/list/datum/greyscale_layer/all_layers = list()
-	var/list/to_process = list()
 	for(var/state in icon_states)
-		to_process += icon_states[state]
-	while(length(to_process))
-		var/current = to_process[length(to_process)]
-		to_process.len--
-		if(islist(current))
-			to_process += current
-		else
-			all_layers += current
+		var/list/to_process = list(icon_states[state])
+		var/list/state_layers = list()
 
-	if(length(all_layers) > MAX_SANE_LAYERS)
-		stack_trace("[DebugName()] has [length(all_layers)] layers which is larger than the max of [MAX_SANE_LAYERS].")
+		while(length(to_process))
+			var/current = to_process[length(to_process)]
+			to_process.len--
+			if(islist(current))
+				to_process += current
+			else
+				state_layers += current
 
+		all_layers += state_layers
+
+		if(length(state_layers) > MAX_SANE_LAYERS)
+			stack_trace("[DebugName()] icon state '[state]' has [length(state_layers)] layers which is larger than the max of [MAX_SANE_LAYERS].")
+
+	flat_all_layers = list()
 	var/list/color_groups = list()
 	var/largest_id = 0
 	for(var/datum/greyscale_layer/layer as anything in all_layers)
+		flat_all_layers += layer
 		for(var/id in layer.color_ids)
 			if(!isnum(id))
 				continue
@@ -148,56 +194,61 @@
 
 	expected_colors = length(color_groups)
 
+/// For saving a dmi to disk, useful for debug mainly
+/datum/greyscale_config/proc/SaveOutput(color_string)
+	var/icon/icon_output = GenerateBundle(color_string)
+	fcopy(icon_output, "tmp/gags_debug_output.dmi")
+
 /// Actually create the icon and color it in, handles caching
-/datum/greyscale_config/proc/Generate(color_string)
+/datum/greyscale_config/proc/Generate(color_string, icon/last_external_icon)
 	var/key = color_string
 	var/icon/new_icon = icon_cache[key]
 	if(new_icon)
 		return icon(new_icon)
 
-	var/icon/icon_bundle = GenerateBundle(color_string)
-
-	// This block is done like this because generated icons are unable to be scaled before getting added to the rsc
+	var/icon/icon_bundle = GenerateBundle(color_string, last_external_icon=last_external_icon)
 	icon_bundle = fcopy_rsc(icon_bundle)
-	icon_bundle = icon(icon_bundle)
-	icon_bundle.Scale(width, height)
-	icon_bundle = fcopy_rsc(icon_bundle)
-
 	icon_cache[key] = icon_bundle
 	var/icon/output = icon(icon_bundle)
 	return output
 
 /// Handles the actual icon manipulation to create the spritesheet
-/datum/greyscale_config/proc/GenerateBundle(list/colors, list/render_steps)
+/datum/greyscale_config/proc/GenerateBundle(list/colors, list/render_steps, icon/last_external_icon)
 	if(!istype(colors))
 		colors = SSgreyscale.ParseColorString(colors)
 	if(length(colors) != expected_colors)
-		CRASH("[DebugName()] expected [expected_colors] color arguments but only received [length(colors)]")
+		CRASH("[DebugName()] expected [expected_colors] color arguments but received [length(colors)]")
 
 	var/list/generated_icons = list()
 	for(var/icon_state in icon_states)
-		var/icon/generated_icon = GenerateLayerGroup(colors, icon_states[icon_state], render_steps)
+		var/list/icon_state_steps
+		if(render_steps)
+			icon_state_steps = render_steps[icon_state] = list()
+		var/icon/generated_icon = GenerateLayerGroup(colors, icon_states[icon_state], icon_state_steps, last_external_icon)
 		// We read a pixel to force the icon to be fully generated before we let it loose into the world
 		// I hate this
 		generated_icon.GetPixel(1, 1)
 		generated_icons[icon_state] = generated_icon
 
-	var/icon/icon_bundle = icon('icons/testing/greyscale_error.dmi')
+	var/icon/icon_bundle = generated_icons[""] || icon('icons/Testing/greyscale_error.dmi')
+	icon_bundle.Scale(width, height)
+	generated_icons -= ""
+
 	for(var/icon_state in generated_icons)
 		icon_bundle.Insert(generated_icons[icon_state], icon_state)
 
 	return icon_bundle
 
 /// Internal recursive proc to handle nested layer groups
-/datum/greyscale_config/proc/GenerateLayerGroup(list/colors, list/group, list/render_steps)
+/datum/greyscale_config/proc/GenerateLayerGroup(list/colors, list/group, list/render_steps, icon/last_external_icon)
 	var/icon/new_icon
 	for(var/datum/greyscale_layer/layer as anything in group)
 		var/icon/layer_icon
 		if(islist(layer))
-			layer_icon = GenerateLayerGroup(colors, layer, render_steps)
+			layer_icon = GenerateLayerGroup(colors, layer, render_steps, new_icon || last_external_icon)
 			layer = layer[1] // When there are multiple layers in a group like this we use the first one's blend mode
 		else
-			layer_icon = layer.Generate(colors, render_steps)
+			layer_icon = layer.Generate(colors, render_steps, new_icon || last_external_icon)
 
 		if(!new_icon)
 			new_icon = layer_icon
@@ -207,8 +258,9 @@
 		// These are so we can see the result of every step of the process in the preview ui
 		if(render_steps)
 			var/list/icon_data = list()
-			render_steps[icon(layer_icon)] = icon_data
+			render_steps += list(icon_data)
 			icon_data["config_name"] = name
+			icon_data["step"] = icon(layer_icon)
 			icon_data["result"] = icon(new_icon)
 	return new_icon
 
