@@ -86,7 +86,7 @@
 	created_item = /obj/item/clothing/neck/highcollier/iron
 	craftdiff = 1
 
-/datum/anvil_recipe/armor/iron/highcollier
+/datum/anvil_recipe/armor/iron/highcollier_renegade
 	name = "Iron Renegade Collar"
 	recipe_name = "a renegade collar"
 	created_item = /obj/item/clothing/neck/highcollier/iron/renegadecollar
