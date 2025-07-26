@@ -521,39 +521,7 @@
 	else
 		return ..()
 
-// qualityoflearn buff shit
 
-/obj/item/gem
-	var/arcyne_potency = 20
-	var/datum/attunement/attuned
-
-/obj/item/gem/yellow
-	arcyne_potency = 5
-	attuned = /datum/attunement/electric
-
-/obj/item/gem/green
-	arcyne_potency = 7
-	attuned = /datum/attunement/earth
-
-/obj/item/gem/violet
-	arcyne_potency = 10
-	attuned = /datum/attunement/arcyne
-
-/obj/item/gem/blue
-	arcyne_potency = 25
-	attuned = /datum/attunement/ice
-
-/obj/item/gem/red
-	arcyne_potency = 20
-	attuned = /datum/attunement/fire
-
-/obj/item/gem/diamond
-	arcyne_potency = 15
-	attuned = /datum/attunement/light
-
-/obj/item/gem/black
-	arcyne_potency = 20
-	attuned = /datum/attunement/dark
 
 
 

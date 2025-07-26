@@ -61,6 +61,8 @@
 	playsound(loc, pick('sound/items/gems (1).ogg','sound/items/gems (2).ogg'), 100, TRUE, -2)
 	..()
 
+//Qualityoflearn variables applied to the book, not the user.
+
 /obj/item/gem/green
 	name = "gemerald"
 	desc = "Glints with verdant brilliance."
