@@ -232,6 +232,7 @@
 	character.grant_language(/datum/language/hellspeak)
 	character.grant_language(/datum/language/celestial)
 	character.grant_language(/datum/language/orcish)
+	character.grant_language(/datum/language/deepspeak)
 	character.grant_language(/datum/language/oldpsydonic)
 	character.grant_language(/datum/language/zalad)
 	character.grant_language(/datum/language/thievescant)
