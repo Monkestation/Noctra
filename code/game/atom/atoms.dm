@@ -486,7 +486,7 @@
 				. += "It's empty."
 		else if(reagents.flags & AMOUNT_VISIBLE)
 			if(reagents.total_volume)
-				. += "<span class='notice'>It has [round(reagents.total_volume / 3)] oz left.</span>"
+				. += "<span class='notice'>It has [round(reagents.total_volume / 3, 0.1)] oz left.</span>"
 			else
 				. += "<span class='danger'>It's empty.</span>"
 		//SNIFFING

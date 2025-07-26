@@ -731,6 +731,7 @@
 #include "code\datums\brewing_recipes\tea.dm"
 #include "code\datums\brewing_recipes\vodden.dm"
 #include "code\datums\brewing_recipes\wine.dm"
+#include "code\datums\brewing_recipes\items\butter.dm"
 #include "code\datums\brewing_recipes\items\cheese.dm"
 #include "code\datums\browser\_browser.dm"
 #include "code\datums\browser\modal\_modal.dm"

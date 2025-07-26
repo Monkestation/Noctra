@@ -480,7 +480,7 @@
 				"sell_value" = recipe.sell_value,
 				"brewed_amount" = recipe.brewed_amount,
 				"per_brew_amount" = recipe.per_brew_amount,
-				"ages" = recipe.ages,
+				"ages" = length(recipe.age_times),
 				"heat_required" = recipe.heat_required,
 				"pre_reqs" = recipe.pre_reqs
 			)

@@ -185,7 +185,7 @@
 		combat_modifier = 2
 
 	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
-		combat_modifier += 0.25
+		combat_modifier += 0.4
 
 	if(body_position == LYING_DOWN && user.body_position != LYING_DOWN)
 		combat_modifier += 0.05
@@ -201,7 +201,7 @@
 		if(G.chokehold)
 			combat_modifier += 0.15
 
-	var/probby = clamp((((4 + (((user.STASTR - STASTR)/2) + skill_diff)) * 10 + rand(-5, 5)) * combat_modifier), 5, 95)
+	var/probby = clamp((((8 + (((user.STASTR - STASTR)/4) + skill_diff)) * 5 + rand(-5, 5)) * combat_modifier), 5, 95)
 
 	if(!prob(probby) && !instant && !stat && cmode)
 		var/self_message
@@ -213,7 +213,7 @@
 		playsound(src.loc, 'sound/foley/struggle.ogg', 100, FALSE, -1)
 		user.Immobilize(1 SECONDS)
 		user.changeNext_move(1 SECONDS)
-		user.adjust_stamina(rand(4,10))
+		user.adjust_stamina(rand(2,6))
 		src.Immobilize(0.5 SECONDS)
 		src.changeNext_move(0.5 SECONDS)
 		return

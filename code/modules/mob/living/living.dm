@@ -1369,6 +1369,7 @@
 	. = TRUE
 
 	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
+		to_chat(src, span_warning("I'm restrained!"))
 		return
 
 	if(!MOBTIMER_FINISHED(pulledby, MT_RESIST_GRAB, 2 SECONDS))

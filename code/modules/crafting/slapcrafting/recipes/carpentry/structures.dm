@@ -5,6 +5,7 @@
 		/datum/slapcraft_step/use_item/carpentry/hammer
 		)
 	result_type = /obj/structure/fermentation_keg
+	craftdiff = 0
 
 /datum/slapcraft_recipe/carpentry/structure/door
 	name = "wooden door"

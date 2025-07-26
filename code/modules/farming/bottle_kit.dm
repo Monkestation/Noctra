@@ -4,8 +4,14 @@
 	icon = 'icons/obj/brewing.dmi'
 	icon_state = "bottler_box"
 	w_class = WEIGHT_CLASS_NORMAL
+	grid_width = 32
+	grid_height = 32
 	var/glass_colour = "brew_bottle"
 	var/fake_glass_name = "Kinda Blue"
+
+/obj/item/bottle_kit/examine(mob/user)
+	. = ..()
+	. += "[src] will make [lowertext(fake_glass_name)] bottles."
 
 /obj/item/bottle_kit/attack_self(mob/user as mob)
 	..()
@@ -45,3 +51,38 @@
 
 	fake_glass_name = choice
 	glass_colour = printing_choice
+
+/obj/item/reagent_containers/glass/bottle/brewing_bottle
+	name = "brewer's bottle"
+	desc = "A bottle with a special cork. When sealed, it is valuable commodity for trade."
+	icon =  'icons/obj/bottle.dmi'
+	icon_state = "brew_bottle"
+	volume = 50
+	can_label_bottle = FALSE
+
+	// var/glass_name
+	// var/glass_desc
+
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/examine(mob/user)
+	. = ..()
+	if(sellprice)
+		. += span_notice("The bottle is sealed and can be sold on the market.")
+
+/obj/item/reagent_containers/glass/bottle/brewing_bottle/toggle_cork(mob/user)
+	if(closed && sellprice && reagents?.total_volume)
+		to_chat(user, span_boldwarning("You start to unseal [src], ruining its economic value."))
+		if(!do_after(user, 5 SECONDS, src))
+			return
+		sellprice = initial(sellprice)
+	. = ..()
+
+// /obj/item/reagent_containers/glass/bottle/brewing_bottle/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+// 	. = ..()
+// 	if(target.type in (typesof(/obj/item/reagent_containers/glass) - typesof(/obj/item/reagent_containers/glass/bottle)))
+// 		if(glass_name)
+// 			target.name = glass_name
+// 		if(glass_desc)
+// 			target.desc = glass_desc
+// 	if(reagents.total_volume <= 0)
+// 		glass_desc = null
+// 		glass_name = null
