@@ -154,6 +154,27 @@
 	created_item = /obj/item/clothing/head/helmet/heavy/ironplate
 	craftdiff = 1
 
+/datum/anvil_recipe/armor/steel/bastion_helm
+	name = "Bastion helm (+Bar X2)"
+	recipe_name = "a heavy steel bastion helmet"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/helmet/heavy/necked
+	craftdiff = 2
+
+/datum/anvil_recipe/armor/steel/bastion_helm
+	name = "Crusader helm (+Bar X2)"
+	recipe_name = "a heavy steel crusader helmet"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/helmet/heavy/crusader
+	craftdiff = 2
+
+/datum/anvil_recipe/armor/steel/bastion_helm
+	name = "Totod Crusader helm (+Bar X2)"
+	recipe_name = "a heavy steel totod crusader helmet"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/helmet/heavy/crusader/t
+	craftdiff = 2
+
 /datum/anvil_recipe/armor/iron/cage_helmet
 	name = "feldsher's cage"
 	recipe_name = "a cage helmet"
@@ -214,6 +235,13 @@
 	recipe_name = "a gorget"
 	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/clothing/neck/gorget
+	craftdiff = 0
+
+/datum/anvil_recipe/armor/iron/gorget
+	name = "Bronze Gorget"
+	recipe_name = "a bronze gorget"
+	req_bar = /obj/item/ingot/bronze
+	created_item = /obj/item/clothing/neck/gorget/hoplite
 	craftdiff = 0
 
 /datum/anvil_recipe/armor/iron/bevor

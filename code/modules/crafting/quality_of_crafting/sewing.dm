@@ -241,6 +241,13 @@
 	craftdiff = 1
 	category = "Hat"
 
+/datum/repeatable_crafting_recipe/sewing/fisherhat
+	name = "shawl"
+	output = /obj/item/clothing/head/shawl
+	requirements = list(/obj/item/natural/fibers = 3)
+	craftdiff = 1
+	category = "Hat"
+
 /datum/repeatable_crafting_recipe/sewing/sack
 	name = "sack hood"
 	output = /obj/item/clothing/head/menacing
@@ -288,6 +295,27 @@
 	name = "cloth hood"
 	requirements = list(/obj/item/natural/cloth = 1, /obj/item/natural/fibers = 1,)
 	output = /obj/item/clothing/head/roguehood
+	craftdiff = 1
+	category = "Hat"
+
+/datum/repeatable_crafting_recipe/sewing/articap
+	name = "artificer cap"
+	requirements = list(/obj/item/natural/cloth = 1, /obj/item/natural/fibers = 1,)
+	output = /obj/item/clothing/head/articap
+	craftdiff = 1
+	category = "Hat"
+
+/datum/repeatable_crafting_recipe/sewing/cookhat
+	name = "cook hat"
+	requirements = list(/obj/item/natural/cloth = 1, /obj/item/natural/fibers = 1,)
+	output = /obj/item/clothing/head/cookhat
+	craftdiff = 1
+	category = "Hat"
+
+/datum/repeatable_crafting_recipe/sewing/chefhat
+	name = "chef hat"
+	requirements = list(/obj/item/natural/cloth = 1, /obj/item/natural/fibers = 1,)
+	output = /obj/item/clothing/head/cookhat/chef
 	craftdiff = 1
 	category = "Hat"
 

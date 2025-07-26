@@ -403,6 +403,48 @@
 	output = /obj/item/clothing/head/helmet/leather/tricorn
 	craftdiff = 2
 
+/datum/repeatable_crafting_recipe/leather/headscarf
+	name = "headscarf"
+	requirements = list(
+		/obj/item/natural/hide/cured = 1,
+	)
+	output = /obj/item/clothing/head/helmet/leather/headscarf
+	craftdiff = 1
+
+/datum/repeatable_crafting_recipe/leather/buckled_hat
+	name = "buckled hat"
+	requirements = list(
+		/obj/item/natural/hide/cured = 3,
+	)
+	output = /obj/item/clothing/head/helmet/leather/inquisitor
+	craftdiff = 3
+
+/datum/repeatable_crafting_recipe/leather/hardened_conical
+	name = "hardened conical helmet"
+	requirements = list(
+		/obj/item/natural/hide/cured = 2,
+		/obj/item/ingot/iron = 1,
+	)
+	output = /obj/item/clothing/head/helmet/leather/conical
+	craftdiff = 3
+
+/datum/repeatable_crafting_recipe/leather/top_hat
+	name = "top hat"
+	requirements = list(
+		/obj/item/natural/hide/cured = 2,
+	)
+	output = /obj/item/clothing/head/stewardtophat
+	craftdiff = 2
+
+/datum/repeatable_crafting_recipe/leather/duelhat
+	name = "duelist hat"
+	requirements = list(
+		/obj/item/natural/hide/cured = 2,
+		/obj/item/natural/feather = 1,
+	)
+	output = /obj/item/clothing/head/leather/duelhat
+	craftdiff = 2
+
 /// Standalones
 
 /datum/repeatable_crafting_recipe/leather/standalone

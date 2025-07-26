@@ -1,6 +1,7 @@
 /obj/item/clothing/head/padded	// slightly armored subtype for convenience
 	armor = ARMOR_MINIMAL
 	prevent_crits = MINOR_CRITICALS
+	abstract_type = /obj/item/clothing/head/padded
 
 //................ Simple Hats ............... //
 /obj/item/clothing/head/menacing
@@ -28,12 +29,6 @@
 
 /obj/item/clothing/head/headband/colored/red
 	color = CLOTHING_BLOOD_RED
-
-/obj/item/clothing/head/softcap
-	name = "soft cap"
-	desc = "A white cap worn by most manual laborers to protect from sunburn."
-	icon_state = "armingcap"
-	flags_inv = HIDEEARS
 
 /obj/item/clothing/head/shawl
 	name = "shawl"
