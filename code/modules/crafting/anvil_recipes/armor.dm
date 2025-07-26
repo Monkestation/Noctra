@@ -237,7 +237,7 @@
 	created_item = /obj/item/clothing/neck/gorget
 	craftdiff = 0
 
-/datum/anvil_recipe/armor/iron/gorget
+/datum/anvil_recipe/armor/bronze/gorget
 	name = "Bronze Gorget"
 	recipe_name = "a bronze gorget"
 	req_bar = /obj/item/ingot/bronze

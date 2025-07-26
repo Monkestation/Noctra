@@ -89,10 +89,13 @@ abstract types are automatically excluded.
 
 	/* misc checks go next */
 
+	var/list/typepaths_of_loot_tables = list()
+
 	// check loot tables
 	for(var/datum/loot_table/loot_datum in subtypesof(/datum/loot_table))
 		for(var/loot_path as anything in loot_datum.loot_table)
 			clothes_list -= loot_path
+			typepaths_of_loot_tables += loot_path
 
 	// supply pack clothes
 	for(var/datum/supply_pack/supply_pack_being_checked as anything in supply_pack_list)
@@ -126,4 +129,4 @@ abstract types are automatically excluded.
 	if(!clothes_list.len)
 		return
 
-	TEST_FAIL("The following clothing subtypes do not have a crafting recipe: [clothes_list.Join(", ")]")
+	TEST_FAIL("The following clothing subtypes do not have a crafting recipe: [clothes_list.Join(", ")]\n \n also these are all the loot table stuff: [typepaths_of_loot_tables.Join(", ")]")
