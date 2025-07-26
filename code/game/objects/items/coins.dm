@@ -252,14 +252,15 @@
 		qdel(G)
 	playsound(loc, 'sound/foley/coins1.ogg', 100, TRUE, -2)
 
-/obj/item/coin/attack_right(mob/user)
-	if(user.get_active_held_item())
-		return ..()
+/obj/item/coin/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(quantity == 1)
 		if(HAS_TRAIT(user, TRAIT_BLACKLEG))
 			var/outcome = alert(user, "What will you rig the next coin flip to?","XYLIX","Heads","Tails","Play fair")
 			if(QDELETED(src) || !user.is_holding(src))
-				return
+				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 			switch(outcome)
 				if("Heads")
 					rigged_outcome = 1
@@ -267,13 +268,13 @@
 					rigged_outcome = 2
 				if("Play fair")
 					rigged_outcome = 0
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 	user.put_in_active_hand(new type(user.loc, 1))
 	set_quantity(quantity - 1)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-
-
-/obj/item/coin/attack_self(mob/living/user)
+/obj/item/coin/attack_self(mob/living/user, params)
 	if(quantity > 1 || !base_type)
 		return
 	if(world.time < flip_cd + 30)
@@ -281,13 +282,22 @@
 	flip_cd = world.time
 	playsound(user, 'sound/foley/coinphy (1).ogg', 100, FALSE)
 	var/flip_outcome = rigged_outcome ? rigged_outcome : prob(50)
+	if(rigged_outcome)
+		record_featured_stat(FEATURED_STATS_CRIMINALS, user)
+		record_round_statistic(STATS_GAMES_RIGGED)
+	var/outcome_text
 	switch(flip_outcome)
 		if(1)
-			user.visible_message("<span class='info'>[user] flips the coin. Heads!</span>")
+			user.visible_message(span_info("[user] flips the coin. Heads!"))
 			heads_tails = TRUE
+			outcome_text = "heads"
 		if(0,2)
-			user.visible_message("<span class='info'>[user] flips the coin. Tails!</span>")
+			user.visible_message(span_info("[user] flips the coin. Tails!"))
 			heads_tails = FALSE
+			outcome_text = "tails"
+
+	SEND_SIGNAL(user, COMSIG_COIN_FLIPPED, user, src, outcome_text)
+
 	rigged_outcome = 0
 	update_appearance(UPDATE_ICON_STATE)
 
@@ -377,6 +387,13 @@
 	. = ..()
 	if(!coin_amount)
 		set_quantity(rand(4,14))
+
+/obj/item/coin/silver/pile/xylix
+	name = MAP_SWITCH("ziliqua", "INFINTE COIN PILE")
+
+/obj/item/coin/silver/pile/xylix/Initialize()
+	. = ..()
+	set_quantity(rand(6,9))
 
 #undef CTYPE_GOLD
 #undef CTYPE_SILV

@@ -55,11 +55,9 @@
 		held_index = (active_hand_index % held_items.len)+1
 
 	var/obj/item/item_in_hand = src.get_active_held_item()
-	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		if(istype(item_in_hand))
-			if(item_in_hand.wielded == 1)
-				to_chat(usr, "<span class='warning'>My other hand is too busy holding [item_in_hand].</span>")
-				return FALSE
+	if(SEND_SIGNAL(src, COMSIG_MOB_SWAPPING_HANDS, item_in_hand) & COMPONENT_BLOCK_SWAP)
+		to_chat(src, span_warning("My other hand is too busy holding [item_in_hand]."))
+		return FALSE
 	if(atkswinging || atkreleasing)
 		stop_attack(FALSE)
 	var/oindex = active_hand_index
@@ -75,12 +73,10 @@
 		if(H)
 			H.update_appearance()
 		H = hud_used.action_intent
-	oactive = FALSE
+
 	update_a_intents()
 
-	givingto = null
 	return TRUE
-
 
 /mob/living/carbon/activate_hand(selhand) //l/r OR 1-held_items.len
 	if(!selhand)
@@ -505,7 +501,7 @@
 			I.safe_throw_at(target,I.throw_range,I.throw_speed,src, force = move_force)
 
 /mob/living/carbon/proc/get_str_arms(num)
-	if(!domhand || !num)
+	if(!domhand || !num || HAS_TRAIT(src, TRAIT_DUALWIELDER))
 		return STASTR
 	var/used = STASTR
 	if(num == domhand)
@@ -528,12 +524,6 @@
 		stat("END: \Roman[STAEND]")
 		stat("SPD: \Roman[STASPD]")
 		stat("PATRON: [uppertext(patron)]")
-
-/mob/living/carbon/Stat()
-	..()
-	if(!client)
-		return
-	add_abilities_to_panel()
 
 /mob/living/carbon/attack_ui(slot)
 	if(!has_hand_for_held_index(active_hand_index))
@@ -726,11 +716,11 @@
 
 	if(HAS_TRAIT(src, TRAIT_BESTIALSENSE))
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_DARKVISION)
-		see_in_dark = 4
+		see_in_dark = max(see_in_dark, 4)
 
 	if(HAS_TRAIT(src, TRAIT_DARKVISION))
 		lighting_alpha = min(lighting_alpha, LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE)
-		see_in_dark = 6
+		see_in_dark = max(see_in_dark, 6)
 
 	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
 		sight |= (SEE_MOBS)
@@ -995,7 +985,7 @@
 	else
 		clear_alert("handcuffed")
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "handcuffed")
-	update_action_buttons_icon() //some of our action buttons might be unusable when we're handcuffed.
+	update_mob_action_buttons()
 	update_inv_handcuffed()
 	update_hud_handcuffed()
 
@@ -1004,8 +994,7 @@
 		reagents.clear_reagents()
 		for(var/addi in reagents.addiction_list)
 			reagents.remove_addiction(addi)
-	for(var/O in internal_organs)
-		var/obj/item/organ/organ = O
+	for(var/obj/item/organ/organ as anything in internal_organs)
 		organ.setOrganDamage(0)
 	var/obj/item/organ/brain/B = getorgan(/obj/item/organ/brain)
 	if(B)
@@ -1043,8 +1032,7 @@
 	if(QDELETED(src))
 		return
 	var/organs_amt = 0
-	for(var/X in internal_organs)
-		var/obj/item/organ/O = X
+	for(var/obj/item/organ/O as anything in internal_organs)
 		if(prob(50))
 			organs_amt++
 			O.Remove(src)

@@ -13,7 +13,6 @@
 	min_pq = 8
 	bypass_lastclass = TRUE
 
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 	allowed_patrons = ALL_TEMPLAR_PATRONS
 
@@ -71,6 +70,7 @@
 			cloak = /obj/item/clothing/cloak/stabard/templar/noc
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
 			H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
+			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 		if(/datum/patron/divine/dendor)
 			wrists = /obj/item/clothing/neck/psycross/silver/dendor
 			head = /obj/item/clothing/head/helmet/heavy/necked/dendorhelm
@@ -89,6 +89,7 @@
 			cloak = /obj/item/clothing/cloak/stabard/templar/pestra
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
 			beltr = /obj/item/reagent_containers/glass/bottle/poison //Jackberry poison, Pestrans are Alchemists, Physicians.
+			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/combat/knives, 4, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)
 		if(/datum/patron/divine/eora)
@@ -119,6 +120,7 @@
 			H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
 		if(/datum/patron/divine/xylix)
 			wrists = /obj/item/clothing/neck/psycross/silver/xylix
+			head = /obj/item/clothing/head/helmet/heavy/necked/xylix
 			H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
@@ -129,7 +131,7 @@
 	C.grant_spells_templar(H)
 	H.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
 	if(H.dna?.species)
-		if(H.dna.species.id == "human")
+		if(H.dna.species.id == SPEC_ID_HUMEN)
 			H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 
 /datum/outfit/job/templar/post_equip(mob/living/carbon/human/H, visualsOnly)

@@ -64,6 +64,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	var/disabling = FALSE
 	/// If TRUE, this is a crit wound
 	var/critical = FALSE
+	/// Some wounds cause instant death for CRITICAL_WEAKNESS
+	var/mortal = FALSE
 
 	/// Amount we heal passively while sleeping
 	var/sleep_healing = 1
@@ -238,7 +240,8 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 		deltimer(werewolf_infection_timer)
 		werewolf_infection_timer = null
 		werewolf_infect_attempt()
-
+	if(mortal && HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS))
+		affected.death()
 
 /// Removes this wound from a given, simpler than adding to a bodypart - No extra effects
 /datum/wound/proc/remove_from_mob()
@@ -300,7 +303,7 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 	passive_healing = max(passive_healing, 1)
 	if(mob_overlay != old_overlay)
 		owner?.update_damage_overlays()
-	GLOB.vanderlin_round_stats[STATS_WOUNDS_SEWED]++
+	record_round_statistic(STATS_WOUNDS_SEWED)
 	return TRUE
 
 /// Checks if this wound has a special infection (zombie or werewolf)

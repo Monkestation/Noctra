@@ -48,6 +48,8 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 	var/complete_message = "Something smells good!"
 	var/datum/skill/used_skill = /datum/skill/craft/cooking
 	var/quality_modifier = 1.0  // Default modifier, recipes can override this
+	///Path of looping_sound to use while cooking
+	var/datum/looping_sound/cooking_sound
 
 /**
  * Validates if recipe requirements are still met during crafting
@@ -138,8 +140,19 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 	// Create the crafting operation
 	if(!initiator)
 		initiator = get_mob_by_ckey(crafter.fingerprintslast)
-	new /datum/container_craft_operation(crafter, src, initiator, highest_multiplier, on_craft_start, on_craft_failed)
+	var/datum/callback/on_craft_start_ref = on_craft_start
+	var/datum/callback/on_craft_fail_ref = on_craft_failed
+	if(!on_craft_start_ref && !on_craft_fail_ref)
+		on_craft_start_ref = create_start_callback(crafter, initiator, highest_multiplier)
+		on_craft_fail_ref = create_fail_callback(crafter, initiator, highest_multiplier)
+	new /datum/container_craft_operation(crafter, src, initiator, highest_multiplier, on_craft_start_ref, on_craft_fail_ref, cooking_sound)
 	return TRUE
+
+/datum/container_craft/proc/create_start_callback(crafter, initiator, highest_multiplier)
+	return CALLBACK(crafter, TYPE_PROC_REF(/atom, visible_message), "The [lowertext(name)] starts to cook.")
+
+/datum/container_craft/proc/create_fail_callback(crafter, initiator, highest_multiplier)
+	return CALLBACK(crafter, TYPE_PROC_REF(/atom, visible_message), "The [lowertext(name)] stops cooking.")
 
 /**
  * Handles the final execution of the craft after processing is complete
@@ -310,7 +323,7 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 		for(var/obj/item/item_to_delete in items_to_delete)
 			qdel(item_to_delete)
 		var/turf/turf = get_turf(crafter)
-		turf.visible_message(span_notice(complete_message))
+		turf.visible_message(span_green(complete_message))
 
 /datum/container_craft/proc/create_item(obj/item/crafter, mob/initiator, list/found_optional_requirements, list/found_optional_wildcards, list/found_optional_reagents, list/removing_items)
 	// Variables for quality calculation

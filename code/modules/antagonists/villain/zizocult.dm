@@ -191,7 +191,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 
 	if(stat >= UNCONSCIOUS || !can_speak_vocal())
 		return
-	GLOB.vanderlin_round_stats[STATS_ZIZO_PRAISED]++
+	record_round_statistic(STATS_ZIZO_PRAISED)
 	audible_message("\The [src] praises <span class='bold'>Zizo</span>!")
 	playsound(src.loc, 'sound/vo/cult/praise.ogg', 45, 1)
 	log_say("[src] has praised zizo! (zizo cultist verb)")
@@ -242,8 +242,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 	if(!LAZYLEN(GLOB.ritualslist))
 		GLOB.ritualslist = list()
 		var/static/list/rituals = subtypesof(/datum/ritual)
-		for(var/path in rituals)
-			var/datum/ritual/G = path
+		for(var/datum/ritual/G as anything in rituals)
 			GLOB.ritualslist[G.name] = G
 
 /obj/effect/decal/cleanable/sigil/proc/consume_ingredients(datum/ritual/R)

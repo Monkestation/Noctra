@@ -107,7 +107,7 @@
 	if(obj_integrity == null)
 		obj_integrity = max_integrity
 	if(lockid)
-		log_mapping("[src] ([type]) at [AREACOORD(src)] has a depreciated lockid varedit.")
+		//log_mapping("[src] ([type]) at [AREACOORD(src)] has a depreciated lockid varedit.")
 		if(!lockids)
 			lockids = list(lockid)
 			lockid = null
@@ -136,7 +136,7 @@
 	SEND_SIGNAL(src, COMSIG_OBJ_SETANCHORED, anchorvalue)
 	anchored = anchorvalue
 
-/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
+/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE)
 	..()
 	if(obj_flags & FROZEN)
 		visible_message("<span class='danger'>[src] shatters into a million pieces!</span>")
@@ -212,6 +212,10 @@
 	return get_turf(src)
 
 /obj/proc/CanAStarPass(ID, to_dir, requester)
+	if(ismovable(requester))
+		var/atom/movable/AM = requester
+		if(AM.pass_flags & pass_flags_self)
+			return TRUE
 	. = !density
 
 /obj/proc/check_uplink_validity()

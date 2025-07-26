@@ -59,14 +59,14 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
 //Human sub-species
-#define ishumanbasic(A) (is_species(A, /datum/species/human))
+#define ishumanspecies(A) (is_species(A, /datum/species/human))
+#define isdwarf(A) (is_species(A, /datum/species/dwarf))
+#define iself(A) (is_species(A, /datum/species/elf))
 #define isvampire(A) (is_species(A,/datum/species/vampire))
 
 //RT species
 #define ishumannorthern(A) (is_species(A, /datum/species/human/northern))
-#define isdwarf(A) (is_species(A, /datum/species/dwarf))
 #define isdwarfmountain(A) (is_species(A, /datum/species/dwarf/mountain))
-#define iself(A) (is_species(A, /datum/species/elf))
 #define isdarkelf(A) (is_species(A, /datum/species/elf/dark))
 #define issnowelf(A) (is_species(A, /datum/species/elf/snow))
 #define ishalfelf(A) (is_species(A, /datum/species/human/halfelf))
@@ -108,8 +108,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
-#define isovermind(A) (istype(A, /mob/camera/blob))
-
 #define iscameramob(A) (istype(A, /mob/camera))
 
 //Objects
@@ -117,7 +115,7 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isitem(A) (istype(A, /obj/item))
 
-#define isidcard(I) (istype(I, /obj/item/card/id))
+#define isweapon(A) (istype(A, /obj/item/weapon))
 
 #define isstructure(A) (istype(A, /obj/structure))
 
@@ -128,8 +126,6 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 #define isorgan(A) (istype(A, /obj/item/organ))
 
 #define isclothing(A) (istype(A, /obj/item/clothing))
-
-#define iscash(A) (istype(A, /obj/item/stack/spacecash) || istype(A, /obj/item/holochip))
 
 GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 	/obj/item/kitchen/fork)))
@@ -144,8 +140,6 @@ GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 
 
 #define iseffect(O) (istype(O, /obj/effect))
-
-#define isblobmonster(O) (istype(O, /mob/living/simple_animal/hostile/blob))
 
 GLOBAL_LIST_INIT(RATS_DONT_EAT, typecacheof(list(
 	/obj/item/reagent_containers/food/snacks/smallrat,

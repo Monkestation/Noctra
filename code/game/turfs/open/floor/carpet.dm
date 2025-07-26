@@ -3,7 +3,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "carpet"
 	flags_1 = NONE
-	landsound = 'sound/foley/jumpland/carpetland.wav'
+	landsound = 'sound/foley/jumpland/carpetland.ogg'
 	footstep = FOOTSTEP_CARPET
 	barefootstep = FOOTSTEP_SOFT_BAREFOOT
 	clawfootstep = FOOTSTEP_CARPET_BAREFOOT
@@ -11,7 +11,7 @@
 
 	smoothing_groups = SMOOTH_GROUP_OPEN_FLOOR + SMOOTH_GROUP_FLOOR_CARPET
 
-	spread_chance = 0.6
+	spread_chance = 1.6
 
 /turf/open/floor/carpet/Initialize()
 	. = ..()

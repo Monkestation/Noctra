@@ -41,7 +41,7 @@
 	. = ..()
 	reading = FALSE
 
-/obj/item/book/granter/attack_self(mob/user)
+/obj/item/book/granter/attack_self(mob/user, params)
 	if(user.mind?.has_studied == TRUE)
 		to_chat(user, span_notice("I struggle to study my arcane notes more- Perhaps a good rest would help."))
 		return FALSE
@@ -112,27 +112,24 @@
 	grid_width = 64
 	grid_height = 32
 
-	var/spell
+	var/datum/action/cooldown/spell/spell
 	var/spellname = "conjure bugs"
 
-/obj/item/book/granter/spell/already_known(mob/user)
+/obj/item/book/granter/spell/already_known(mob/living/user)
 	if(!spell)
 		return TRUE
-	for(var/obj/effect/proc_holder/spell/knownspell in user.mind.spell_list)
-		if(knownspell.type == spell)
-			if(user.mind)
-				to_chat(user,"<span class='warning'>You've already read this one!</span>")
-			return TRUE
+	if(user.get_spell(spell))
+		to_chat(user,"<span class='warning'>You've already read this one!</span>")
+		return TRUE
 	return FALSE
 
 /obj/item/book/granter/spell/on_reading_start(mob/user)
 	to_chat(user, "<span class='notice'>I start reading about casting [spellname]...</span>")
 
-/obj/item/book/granter/spell/on_reading_finished(mob/user)
+/obj/item/book/granter/spell/on_reading_finished(mob/living/user)
 	to_chat(user, "<span class='notice'>I feel like you've experienced enough to cast [spellname]!</span>")
-	var/obj/effect/proc_holder/spell/S = new spell
-	user.mind.AddSpell(S)
-	user.log_message("learned the spell [spellname] ([S])", LOG_ATTACK, color="orange")
+	user.add_spell(spell)
+	user.log_message("learned the spell [spellname]", LOG_ATTACK, color="orange")
 	onlearned(user)
 
 /obj/item/book/granter/spell/recoil(mob/user)
@@ -160,42 +157,42 @@
 
 /obj/item/book/granter/spell/magick/fireball
 	name = "Scroll of Fireball"
-	spell = /obj/effect/proc_holder/spell/invoked/projectile/fireball
+	spell = /datum/action/cooldown/spell/projectile/fireball
 	spellname = "fireball"
 	icon_state = "scrollred"
 	remarks = list("Ignis et oleum..", "Flammam continere ad momentum..", "Flammam iactare..", "Sit flamma constructum..")
 
 /obj/item/book/granter/spell/magick/greaterfireball
 	name = "Scroll of Greater Fireball"
-	spell = /obj/effect/proc_holder/spell/invoked/projectile/fireball/greater
+	spell =  /datum/action/cooldown/spell/projectile/fireball/greater
 	spellname = "greater fireball"
 	icon_state = "scrolldarkred"
 	remarks = list("Ignis et oleum..", "Flammam continere ad momentum..", "Flammam iactare..", "Sit flamma constructum..")
 
 /obj/item/book/granter/spell/magick/lightning
 	name = "Scroll of Lightning"
-	spell = /obj/effect/proc_holder/spell/invoked/projectile/lightningbolt
+	spell =  /datum/action/cooldown/spell/projectile/lightning
 	spellname = "lightning"
 	icon_state = "scrollyellow"
 	remarks = list("Essentia fulgurum digitorum..", "Fulgur de nubibus desuper..", "Fulgur eiecit digitos..", "Praecipe intus aedificatur..")
 
 /obj/item/book/granter/spell/magick/fetch
 	name = "Scroll of Fetch"
-	spell = /obj/effect/proc_holder/spell/invoked/projectile/fetch
+	spell =  /datum/action/cooldown/spell/projectile/fetch
 	spellname = "fetch"
 	icon_state = "scrollpurple"
 	remarks = list("Returnus Revico..", "Manus de reverti..", "Menus de returnus..")
 
 /obj/item/book/granter/spell/magick/blindness
 	name = "Scroll of Blindness"
-	spell = /obj/effect/proc_holder/spell/invoked/blindness
+	spell = /datum/action/cooldown/spell/blindness
 	spellname = "blindness"
 	icon_state = "scrollpurple"
 	remarks = list("Occultare oculos..", "Vivus amoevtar..", "Visioner removan..")
 
 /obj/item/book/granter/spell/magick/invisibility
 	name = "Scroll of Invisibility"
-	spell = /obj/effect/proc_holder/spell/invoked/invisibility
+	spell = /datum/action/cooldown/spell/status/invisibility
 	spellname = "invisibility"
 	icon_state = "scrollpurple"
 	remarks = list("Pallium nihilum..", "Occultare veritatem..", "Veritatem removan menor..")
@@ -209,11 +206,11 @@
 	drop_sound = 'sound/foley/dropsound/paper_drop.ogg'
 	pickup_sound =  'sound/blank.ogg'
 
-/obj/item/book/granter/spell_points/on_reading_finished(mob/user)
+/obj/item/book/granter/spell_points/on_reading_finished(mob/living/user)
 	var/arcaneskill = user.get_skill_level(/datum/skill/magic/arcane)
 	if(arcaneskill >= SKILL_LEVEL_NOVICE) //Required arcane skill of NOVICE or higher to use the granter
 		to_chat(user, span_notice("I absorb the insights on the scroll, and feel more adept at spellcraft!"))
-		user.mind.adjust_spellpoints(1)
+		user.adjust_spellpoints(1)
 		onlearned(user)
 	else
 		to_chat(user, span_notice("I don't know what to make of this."))

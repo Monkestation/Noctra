@@ -48,23 +48,20 @@
 	aggressive = 1
 	body_eater = FALSE
 
-
-
 	ai_controller = /datum/ai_controller/lycan
 
+	del_on_death = TRUE
 
 /mob/living/simple_animal/hostile/retaliate/leylinelycan/simple_add_wound(datum/wound/wound, silent = FALSE, crit_message = FALSE)	//No wounding the lycan.
 	return
 
 /mob/living/simple_animal/hostile/retaliate/leylinelycan/death(gibbed)
-	..()
 	var/obj/structure/leyline/source = ai_controller.blackboard[BB_LEYLINE_SOURCE]
 	source?.guardian = null
 	var/turf/deathspot = get_turf(src)
 	new /obj/item/natural/leyline(deathspot)
 	spill_embedded_objects()
-	update_appearance()
-	qdel(src)
+	return ..()
 
 /obj/effect/temp_visual/lycan
 	icon = 'icons/effects/effects.dmi'

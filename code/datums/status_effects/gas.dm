@@ -41,6 +41,7 @@
 			owner.remove_status_effect(/datum/status_effect/freon)
 
 /datum/status_effect/freon/on_remove()
+	. = ..()
 	if(!owner.stat)
 		to_chat(owner, "<span class='notice'>The cube melts!</span>")
 	owner.cut_overlay(cube)

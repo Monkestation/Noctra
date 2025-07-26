@@ -317,7 +317,7 @@ GLOBAL_LIST_INIT(t2buffrunerituallist, generate_t2buff_rituallist())
 
 /datum/runerituals/buff/nightvision
 	name = "darksight"
-	buff = /datum/status_effect/buff/duration_modification/darkvision
+	buff = /datum/status_effect/buff/darkvision
 	blacklisted = FALSE
 	required_atoms = list(/obj/item/mana_battery/mana_crystal/small = 2, /obj/item/natural/iridescentscale = 1, /obj/item/natural/elementalshard = 1)
 

@@ -121,7 +121,7 @@
 
 /datum/species/goblin
 	name = "goblin"
-	id = "goblin"
+	id = SPEC_ID_GOBLIN
 	species_traits = list(NO_UNDERWEAR)
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE, TRAIT_EASYDISMEMBER, TRAIT_CRITICAL_WEAKNESS, TRAIT_NASTY_EATER, TRAIT_LEECHIMMUNE, TRAIT_INHUMENCAMP)
 
@@ -129,6 +129,8 @@
 	offset_features_m = list(OFFSET_HANDS = list(0,-4))
 	offset_features_f = list(OFFSET_HANDS = list(0,-4))
 
+	dam_icon_f = null
+	dam_icon_m = null
 	damage_overlay_type = ""
 	changesource_flags = WABBAJACK
 	var/raceicon = "goblin"
@@ -197,7 +199,7 @@
 	apply_overlay(ARMOR_LAYER)
 
 
-/mob/living/carbon/human/species/goblin/update_inv_head()
+/mob/living/carbon/human/species/goblin/update_inv_head(hide_nonstandard = FALSE)
 	update_wearable()
 /mob/living/carbon/human/species/goblin/update_inv_armor()
 	update_wearable()

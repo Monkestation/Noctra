@@ -15,17 +15,18 @@
 	if(contents.len)
 		. += span_notice("[contents.len] thing[contents.len > 1 ? "s" : ""] in the pouch.")
 
-/obj/item/storage/magebag/attack_right(mob/user)
+/obj/item/storage/magebag/attack_hand_secondary(mob/user, params)
 	. = ..()
-	if(.)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	var/list/things = STR.contents()
-	if(things.len)
+	if(length(things))
 		var/obj/item/I = pick(things)
 		STR.remove_from_storage(I, get_turf(user))
 		user.put_in_hands(I)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/storage/magebag/update_icon_state()
 	. = ..()
@@ -66,8 +67,9 @@
 /obj/item/chalk
 	name = "stick of chalk"
 	desc = "A stark-white stick of chalk, possibly made from quicksilver. "
-	icon = 'icons/roguetown/items/misc.dmi'
+	icon = 'icons/roguetown/misc/rituals.dmi'
 	icon_state = "chalk"
+	dropshrink = 0.7
 	throw_speed = 2
 	throw_range = 5
 	throwforce = 5
@@ -94,7 +96,7 @@
 	else
 		return ..()
 
-/obj/item/chalk/attack_self(mob/living/carbon/human/user)
+/obj/item/chalk/attack_self(mob/living/carbon/human/user, params)
 	if(!isarcyne(user))//We'll set up other items for other types of rune rituals
 		to_chat(user, span_cult("Nothing comes in mind to draw with the chalk."))
 		return
@@ -163,7 +165,7 @@
 	else
 		return ..()
 
-/obj/item/weapon/knife/dagger/silver/arcyne/attack_self(mob/living/carbon/human/user)
+/obj/item/weapon/knife/dagger/silver/arcyne/attack_self(mob/living/carbon/human/user, params)
 	if(!isarcyne(user))
 		return
 	var/obj/effect/decal/cleanable/roguerune/pickrune
@@ -239,7 +241,7 @@
 	var/ready = TRUE
 	var/timing_id
 
-/obj/item/mimictrinket/attack_self(mob/living/carbon/human/user)
+/obj/item/mimictrinket/attack_self(mob/living/carbon/human/user, params)
 	revert()
 
 /obj/item/mimictrinket/proc/revert()
@@ -314,7 +316,7 @@
 	var/cdtime = 30 MINUTES
 	var/ready = TRUE
 
-/obj/item/clothing/ring/arcanesigil/attack_self(mob/living/carbon/human/user)
+/obj/item/clothing/ring/arcanesigil/attack_self(mob/living/carbon/human/user, params)
 	if(ready)
 		if(do_after(user, 25, target = src))
 			to_chat(user,span_notice("[src] heats up to an almost burning temperature, flooding you with overwhelming arcane knowledge!"))
@@ -336,7 +338,10 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/active = FALSE
 
-/obj/item/clothing/ring/shimmeringlens/attack_right(mob/user)
+/obj/item/clothing/ring/shimmeringlens/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(loc != user)
 		return
 	if(!active)
@@ -346,6 +351,7 @@
 	else
 		user.visible_message(span_warning("[user] stops looking through the [src]!"))
 		demagicify()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/ring/shimmeringlens/proc/activate(mob/user)
 	ADD_TRAIT(user, TRAIT_SEE_LEYLINES, "[type]")
@@ -379,7 +385,7 @@
 	desc = "One of a pair of sending stones."
 	var/obj/item/natural/stone/sending/paired_with
 
-/obj/item/natural/stone/sending/attack_self(mob/user)
+/obj/item/natural/stone/sending/attack_self(mob/user, params)
 	var/input_text = input(user, "Enter your message:", "Message")
 	if(input_text)
 		paired_with.say(input_text)
@@ -651,7 +657,7 @@
 	icon = 'icons/roguetown/misc/mana.dmi'
 	icon_state = "soul"
 
-	plane = PLANE_LEYLINES
+	plane = LEYLINE_PLANE
 	invisibility = INVISIBILITY_LEYLINES
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF

@@ -68,12 +68,10 @@
 	if(client)
 		client.screen -= I
 	if(observers && observers.len)
-		for(var/M in observers)
-			var/mob/dead/observe = M
+		for(var/mob/dead/observe as anything in observers)
 			if(observe.client)
 				observe.client.screen -= I
 	I.forceMove(src)
-	I.layer = ABOVE_HUD_LAYER
 	I.plane = ABOVE_HUD_PLANE
 	I.appearance_flags |= NO_CLIENT_COLOR
 	var/not_handled = FALSE

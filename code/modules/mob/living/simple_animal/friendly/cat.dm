@@ -14,7 +14,6 @@
 	speak_chance = 1
 	see_in_dark = 6
 	ventcrawler = VENTCRAWLER_ALWAYS
-	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
 	density = FALSE // moveblocking cat is annoying as hell
 	pass_flags = PASSMOB

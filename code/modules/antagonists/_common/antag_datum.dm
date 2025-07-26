@@ -2,7 +2,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist
 	var/name = "\improper Antagonist"
-	var/roundend_category = "other antagonists"				//Section of roundend report, datums with same category will be displayed together, also default header for the section
+	var/roundend_category = "other villains"				//Section of roundend report, datums with same category will be displayed together, also default header for the section
 	var/show_in_roundend = TRUE								//Set to false to hide the antagonists from roundend report
 	var/prevent_roundtype_conversion = TRUE		//If false, the roundtype will still convert with this antag active
 	var/datum/mind/owner						//Mind that owns this datum
@@ -97,7 +97,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/remove_antag_hud(antag_hud_type, antag_hud_name, mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
-	hud.leave_hud(M)
+	hud?.leave_hud(M)
 	set_antag_hud(M, null)
 
 //Assign default team and creates one for one of a kind team antagonists
@@ -147,9 +147,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(owner)
 		LAZYREMOVE(owner.antag_datums, src)
 		if(owner.current)
+			// Maniac sigh
+			owner.current.refresh_looping_ambience()
 			if(was_pacifist)
 				var/mob/living/carbon/human/human_user = owner.current
-				human_user.charflaw = new /datum/charflaw/pacifist(human_user)
+				human_user.set_flaw(/datum/charflaw/pacifist)
 				human_user.charflaw.after_spawn(human_user, TRUE)
 			if(!silent)
 				farewell()

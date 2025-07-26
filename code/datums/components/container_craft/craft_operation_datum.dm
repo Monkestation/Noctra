@@ -28,11 +28,13 @@
 	var/timeout_period = 30 SECONDS // 30 seconds default
 	///do we need the initator near us
 	var/requires_proximity = FALSE
+	///Path of looping_sound to use while cooking
+	var/datum/looping_sound/cooking_sound
 
 /**
  * Initialize a new crafting operation
  */
-/datum/container_craft_operation/New(obj/item/crafter, datum/container_craft/recipe, mob/initiator, estimated_multiplier, datum/callback/on_craft_start, datum/callback/on_craft_failed)
+/datum/container_craft_operation/New(obj/item/crafter, datum/container_craft/recipe, mob/initiator, estimated_multiplier, datum/callback/on_craft_start, datum/callback/on_craft_failed, datum/looping_sound/cooking_sound)
 	src.crafter = crafter
 	src.recipe = recipe
 	src.initiator = initiator
@@ -55,6 +57,14 @@
 
 	if(on_craft_start)
 		on_craft_start.InvokeAsync(crafter, initiator)
+
+	if(cooking_sound)
+		src.cooking_sound = new cooking_sound(get_turf(crafter), TRUE)
+
+/datum/container_craft_operation/Destroy()
+	if(cooking_sound)
+		QDEL_NULL(cooking_sound)
+	. = ..()
 
 /**
  * Refreshes the stored items list from the crafter's contents

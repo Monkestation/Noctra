@@ -33,8 +33,6 @@
 			role_preferences += role_type
 			var/datum/migrant_role/role = MIGRANT_ROLE(role_type)
 			to_chat(prefs.parent, span_nicegreen("You have prioritized the [role.name]. This does not guarantee getting the role"))
-		else
-			to_chat(prefs.parent, span_warning("You can't be this role. (Wrong species, gender or age)"))
 
 /datum/migrant_pref/proc/post_spawn()
 	set_active(FALSE, TRUE)
@@ -101,7 +99,7 @@
 	to_chat(src, span_warning("I will be in danger once I start moving."))
 	status_flags |= GODMODE
 	ADD_TRAIT(src, TRAIT_PACIFISM, "hugbox")
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(adv_hugboxing_moved))
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(adv_hugboxing_moved), TRUE)
 	//Lies, it goes away even if you don't move after enough time
 	if(GLOB.adventurer_hugbox_duration_still)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/carbon/human, adv_hugboxing_end)), GLOB.adventurer_hugbox_duration_still)

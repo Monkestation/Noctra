@@ -99,23 +99,22 @@ There are several things that need to be remembered:
 		offsets = is_child ? species.offset_features_child : species.offset_features_m
 		limb_icon = is_child ? species.child_dam_icon : species.dam_icon_m
 
-	var/hidechest = FALSE
-	var/list/limb_overlaysa = list()
-	var/list/limb_overlaysb = list()
-	var/list/limb_overlaysc = list()
-
+	var/hidechest = TRUE
 	if(use_female_sprites)
 		var/obj/item/bodypart/CH = get_bodypart(BODY_ZONE_CHEST)
 		if(CH)
 			if(wear_armor?.flags_inv & HIDEBOOB)
 				hidechest = TRUE
-			if(wear_shirt?.flags_inv & HIDEBOOB)
+			else if(wear_shirt?.flags_inv & HIDEBOOB)
 				hidechest = TRUE
-			if(cloak?.flags_inv & HIDEBOOB)
+			else if(cloak?.flags_inv & HIDEBOOB)
 				hidechest = TRUE
-	else
-		hidechest = TRUE
+			else
+				hidechest = FALSE
 
+	var/list/limb_overlaysa = list()
+	var/list/limb_overlaysb = list()
+	var/list/limb_overlaysc = list()
 	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		var/list/damage_overlays = list()
 		var/list/legdam_overlays = list()
@@ -220,7 +219,6 @@ There are several things that need to be remembered:
 				armdam_overlays += armdam_overlay
 
 		var/used_offset = BP.offset
-
 		for(var/mutable_appearance/M as anything in damage_overlays)
 			if(used_offset in offsets)
 				M.pixel_x += offsets[used_offset][1]
@@ -575,7 +573,7 @@ There are several things that need to be remembered:
 	apply_overlay(SHOES_LAYER)
 	apply_overlay(SHOESLEEVE_LAYER)
 
-/mob/living/carbon/human/update_inv_head()
+/mob/living/carbon/human/update_inv_head(hide_nonstandard = FALSE)
 	remove_overlay(HEAD_LAYER)
 
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
@@ -586,6 +584,10 @@ There are several things that need to be remembered:
 		inv?.update_appearance()
 
 	if(head)
+		if(hide_nonstandard && (head.worn_x_dimension != 32 || head.worn_y_dimension != 32))
+			update_hud_head(head)
+			return
+
 		update_hud_head(head)
 		var/datum/species/species = dna?.species
 		var/use_female_sprites = FALSE
@@ -609,7 +611,7 @@ There are several things that need to be remembered:
 	apply_overlay(HEAD_LAYER)
 	update_body() //hoodies
 
-/mob/living/carbon/human/update_inv_belt()
+/mob/living/carbon/human/update_inv_belt(hide_experimental = FALSE)
 	remove_overlay(BELT_LAYER)
 	remove_overlay(BELT_BEHIND_LAYER)
 
@@ -654,7 +656,7 @@ There are several things that need to be remembered:
 		if(!(cloak && (cloak.flags_inv & HIDEBELT)))
 			var/mutable_appearance/onbelt_overlay
 			var/mutable_appearance/onbelt_behind
-			if(beltr.experimental_onhip)
+			if(beltr.experimental_onhip && !hide_experimental)
 				var/list/prop
 				if(beltr.force_reupdate_inhand)
 					prop = beltr.onprop?["onbelt"]
@@ -694,7 +696,7 @@ There are several things that need to be remembered:
 		if(!(cloak && (cloak.flags_inv & HIDEBELT)))
 			var/mutable_appearance/onbelt_overlay
 			var/mutable_appearance/onbelt_behind
-			if(beltl.experimental_onhip)
+			if(beltl.experimental_onhip && !hide_experimental)
 				var/list/prop
 				if(beltl.force_reupdate_inhand)
 					prop = beltl.onprop?["onbelt"]
@@ -777,7 +779,7 @@ There are several things that need to be remembered:
 
 	apply_overlay(MASK_LAYER)
 
-/mob/living/carbon/human/update_inv_back()
+/mob/living/carbon/human/update_inv_back(hide_experimental = FALSE)
 	remove_overlay(BACK_LAYER)
 	remove_overlay(BACK_BEHIND_LAYER)
 	remove_overlay(UNDER_CLOAK_LAYER)
@@ -814,7 +816,7 @@ There are several things that need to be remembered:
 			var/mutable_appearance/back_overlay
 			var/mutable_appearance/behindback_overlay
 			update_hud_backr(backr)
-			if(backr.experimental_onback)
+			if(backr.experimental_onback && !hide_experimental)
 				var/list/prop
 				if(backr.force_reupdate_inhand)
 					prop = backr.onprop?["onback"]
@@ -852,7 +854,7 @@ There are several things that need to be remembered:
 			update_hud_backl(backl)
 			var/mutable_appearance/back_overlay
 			var/mutable_appearance/behindback_overlay
-			if(backl.experimental_onback)
+			if(backl.experimental_onback && !hide_experimental)
 				var/list/prop
 				if(backl.force_reupdate_inhand)
 					prop = backl.onprop?["onback"]

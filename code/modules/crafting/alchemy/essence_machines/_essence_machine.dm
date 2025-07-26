@@ -1,16 +1,12 @@
 /atom/proc/on_transfer_in(essence_type, amount, datum/essence_storage/source)
 
 /obj/machinery/essence
-	plane = GAME_PLANE_UPPER
-	layer = ABOVE_MOB_LAYER
-
 	var/processing = FALSE
 	var/datum/essence_storage/input_storage
 	var/datum/essence_storage/output_storage
 	var/list/output_connections = list()
 	var/list/input_connections = list()
 	var/connection_processing = FALSE
-
 	var/processing_priority
 
 /obj/machinery/essence/Destroy()
@@ -78,14 +74,16 @@
 
 	return prioritized
 
-/obj/machinery/essence/attack_right(mob/user, list/modifiers)
-	var/obj/item/essence_connector/held = user.get_active_held_item()
-	if(!istype(held))
-		return ..()
+/obj/machinery/essence/attackby_secondary(obj/item/weapon, mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!istype(weapon, /obj/item/essence_connector))
+		return
 	if(length(output_connections) || length(input_connections))
 		show_connection_menu(user)
-		return
-	return ..()
+
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/essence/proc/show_connection_menu(mob/user)
 	var/list/options = list()

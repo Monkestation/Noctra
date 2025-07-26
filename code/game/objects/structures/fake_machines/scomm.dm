@@ -63,9 +63,11 @@
 	to_chat(user, "<span class='info'>I [speaking ? "unmute" : "mute"] the SCOM.</span>")
 	update_appearance(UPDATE_ICON_STATE)
 
-/obj/structure/fake_machine/scomm/attack_right(mob/user)
-	if(.)
+/obj/structure/fake_machine/scomm/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	var/canread = user.can_read(src, TRUE)
@@ -113,7 +115,7 @@
 		say(message, language = message_language)
 	voicecolor_override = null
 
-/obj/structure/fake_machine/scomm/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/structure/fake_machine/scomm/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	if(speaker == src)
 		return
 	if(speaker.loc != loc)
@@ -188,7 +190,11 @@
 	return ..()
 
 //wip
-/obj/item/scomstone/attack_right(mob/user)
+/obj/item/scomstone/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.changeNext_move(CLICK_CD_MELEE)
 	var/input_text = input(user, "Enter your message:", "Message")
 	if(input_text)
@@ -241,7 +247,7 @@
 	else
 		send_speech(message, 1, src, , spans, message_language=language)
 
-/obj/item/scomstone/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/item/scomstone/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	if(speaker == src)
 		return
 	if(loc != speaker)

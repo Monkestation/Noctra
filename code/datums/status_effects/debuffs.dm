@@ -1,5 +1,3 @@
-#define TRAIT_STATUS_EFFECT(effect_id) "[effect_id]-trait"
-
 //Largely negative status effects go here, even if they have small benificial effects
 //STUN EFFECTS
 /datum/status_effect/incapacitating
@@ -8,9 +6,7 @@
 	alert_type = null
 	var/needs_update_stat = FALSE
 
-/datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration)
-	if(isnum(set_duration))
-		duration = set_duration
+/datum/status_effect/incapacitating/on_creation(mob/living/new_owner, duration_override, ...)
 	. = ..()
 	if(. && needs_update_stat)
 		owner.update_stat()
@@ -148,16 +144,11 @@
 	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 
 	owner.cmode = FALSE
-	SSdroning.kill_droning(owner.client)
-	SSdroning.kill_loop(owner.client)
-	SSdroning.kill_rain(owner.client)
 	owner.set_typing_indicator(FALSE)
 
 /datum/status_effect/incapacitating/sleeping/on_remove()
 	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
-	var/area/this_area = get_area(owner)
-	SSdroning.play_area_sound(this_area, owner.client)
-	SSdroning.play_loop(this_area, owner.client)
+	owner.refresh_looping_ambience()
 
 	if(ishuman(owner) && sleptonground)
 		var/mob/living/carbon/human/human_owner = owner
@@ -225,17 +216,12 @@
 			to_chat(mob_viewer, "<span class='notice'>I succesfuly remove the durathread strand.</span>")
 			L.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 
-
-/datum/status_effect/pacify/on_creation(mob/living/new_owner, set_duration)
-	if(isnum(set_duration))
-		duration = set_duration
-	. = ..()
-
 /datum/status_effect/pacify/on_apply()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
 	return ..()
 
 /datum/status_effect/pacify/on_remove()
+	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
 
 //OTHER DEBUFFS
@@ -246,16 +232,12 @@
 	duration = 100
 	alert_type = null
 
-/datum/status_effect/pacify/on_creation(mob/living/new_owner, set_duration)
-	if(isnum(set_duration))
-		duration = set_duration
-	. = ..()
-
 /datum/status_effect/pacify/on_apply()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
 	return ..()
 
 /datum/status_effect/pacify/on_remove()
+	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
 
 /datum/status_effect/neck_slice
@@ -299,6 +281,7 @@
 	owner.dizziness = 20
 
 /datum/status_effect/trance/on_apply()
+	. = ..()
 	if(!iscarbon(owner))
 		return FALSE
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, PROC_REF(hypnotize))
@@ -308,12 +291,12 @@
 	"<span class='warning'>[pick("You feel my thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
 	return TRUE
 
-/datum/status_effect/trance/on_creation(mob/living/new_owner, _duration, _stun = TRUE)
-	duration = _duration
+/datum/status_effect/trance/on_creation(mob/living/new_owner, duration_override, _stun = TRUE)
 	stun = _stun
 	return ..()
 
 /datum/status_effect/trance/on_remove()
+	. = ..()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	REMOVE_TRAIT(owner, TRAIT_MUTE, "trance")
 	owner.dizziness = 0
@@ -395,7 +378,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/go_away
 	var/direction
 
-/datum/status_effect/go_away/on_creation(mob/living/new_owner, set_duration)
+/datum/status_effect/go_away/on_creation(mob/living/new_owner, duration_override, ...)
 	. = ..()
 	direction = pick(NORTH, SOUTH, EAST, WEST)
 	new_owner.setDir(direction)

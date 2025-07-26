@@ -2,13 +2,11 @@
 	category = CATEGORY_HUMAN
 	weight = WEIGHT_MOB
 
-
 /datum/keybinding/living/can_use(client/user)
 	return isliving(user.mob)
 
 /datum/keybinding/living/swap_left
 	hotkey_keys = list("Q")
-	classic_keys = list("Q") // PAGEUP
 	name = "swap_left"
 	full_name = "Swap to left hand"
 	description = ""
@@ -30,7 +28,6 @@
 
 /datum/keybinding/living/swap_right
 	hotkey_keys = list("E")
-	classic_keys = list("E") // PAGEUP
 	name = "swap_right"
 	full_name = "Swap to right hand"
 	description = ""

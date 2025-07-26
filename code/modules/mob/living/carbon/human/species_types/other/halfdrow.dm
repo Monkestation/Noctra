@@ -9,14 +9,14 @@
 
 /datum/species/human/halfdrow
 	name = "Half-Drow"
-	id = "human"
+	id = SPEC_ID_HALF_DROW
 	desc = "The child of a Dark Elf and Humen. \
 	\n\n\
 	The distinction between Half-Elves and 'Half-Drow' has been a subject of debate for centuries. \
 	While similar in physicality and longevity to their non-drow cousins, their origins cause them to face discrimination akin to their elven side. \
 	\n\n\
 	Groups of half-elves and half-drow have been known to congregate together and consider themselves one species. \
-	According to some radical academic scholars, they might be one species indeed- yet the people of Psydonia certainly do not believe the same at large. \
+	According to some radical academic scholars, they might be one and the same species indeed- yet the people of Psydonia certainly do not believe the same at large. \
 	\n\
 	THIS IS A DISCRIMINATED SPECIES. EXPECT A MORE DIFFICULT EXPERIENCE. <B>NOBLES EVEN MORE SO.</B> PLAY AT YOUR OWN RISK."
 
@@ -143,6 +143,8 @@
 	"blond - dirty" = "88754f",
 	"blond - drywheat" = "d5ba7b",
 	"blond - strawberry" = "c69b71",
+
+	"white - ice" = "f4f4f4",
 	"white - cavedew" = "dee9ed",
 	"white - spiderweb" = "f4f4f4"
 

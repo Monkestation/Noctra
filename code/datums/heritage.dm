@@ -240,6 +240,7 @@
 		return FALSE
 
 	spouses += spouse
+	person.spouse_mob = spouse.person
 
 	// Only add reciprocal relationship if not already doing so
 	if(!skip_reciprocal && !(src in spouse.spouses))
@@ -593,7 +594,7 @@
 	if(!relationship)
 		return null
 
-	var/p_He = p_they(TRUE)
+	var/p_He = lookee.p_they(TRUE)
 	var/relationship_text = "[p_He] is my [relationship]"
 
 	if(lookee_member.adoption_status && (relationship in list("son", "daughter", "child")))
@@ -687,7 +688,7 @@
 	// Build mix string
 	if(istype(dad_species, /datum/species/human/northern) || istype(mom_species, /datum/species/human/northern))
 		mix_text += "human+"
-	if(istype(dad_species, /datum/species/elf) || istype(mom_species, /datum/species/elf))
+	if(istype(dad_species, /datum/species/elf/snow) || istype(mom_species, /datum/species/elf/snow))
 		mix_text += "elf+"
 	if(istype(dad_species, /datum/species/elf/dark) || istype(mom_species, /datum/species/elf/dark))
 		mix_text += "darkelf+"
@@ -750,7 +751,7 @@
 
 /mob/living/carbon/human/verb/ReturnFamilyList()
 	set name = "List Family"
-	set category = "Memory"
+	set category = "IC"
 	if(spouse_mob)
 		to_chat(src, span_info("[spouse_mob.real_name] the [spouse_mob.dna.species.name] [spouse_mob.mind?.assigned_role.get_informed_title(spouse_mob)] is your lover."))
 	if(family_datum)
@@ -759,8 +760,8 @@
 		to_chat(src, "You're not part of any notable family.")
 
 /mob/living/carbon/human/verb/ToggleFamilyUI()
-	set name = "Toggle Family UI"
-	set category = "Memory"
+	set name = "Family UI"
+	set category = "IC"
 	ShowFamilyUI(FALSE)
 
 /mob/living/carbon/human/proc/ShowFamilyUI(silent)
@@ -777,7 +778,7 @@
 		to_chat(src, "FamilyUI Toggled [family_UI ? "On" : "Off"]")
 
 /mob/living/carbon/human/proc/ApplySpouseUI(toggle_true = FALSE)
-	if(!spouse_mob)
+	if(!spouse_mob || !client)
 		return
 	if(!spouse_indicator)
 		spouse_indicator = new('icons/relations.dmi', loc = spouse_mob, icon_state = "related")

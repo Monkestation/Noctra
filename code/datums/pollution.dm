@@ -69,6 +69,8 @@
 
 /// When a user smells this pollution
 /datum/pollution/proc/smell_act(mob/living/sniffer)
+	if(!sniffer.can_smell())
+		return
 	var/list/singleton_cache = SSpollution.singletons
 	var/datum/pollutant/dominant_pollutant
 	var/dominiant_smell_power
@@ -107,6 +109,8 @@
 		to_chat(sniffer, span_warning(smell_string))
 	else
 		to_chat(sniffer, span_info(smell_string))
+
+	dominant_pollutant.on_smell(sniffer)
 
 /datum/pollution/proc/scrub_amount(amount_to_scrub, update_active = TRUE)
 	if(amount_to_scrub >= total_amount || !isopenturf(my_turf) || QDELING(my_turf))

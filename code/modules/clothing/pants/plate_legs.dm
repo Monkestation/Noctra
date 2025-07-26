@@ -3,8 +3,8 @@
 	name = "plated chausses"
 	desc = "Cuisses made of plated steel, offering additional protection against blunt force."
 	gender = PLURAL
-	icon_state = "heavyleggies" // Finally a sprite
-	item_state = "heavyleggies"
+	icon_state = "plate_legs"
+	item_state = "plate_legs"
 	sewrepair = FALSE
 	blocksound = PLATEHIT
 	equip_delay_self = 30
@@ -30,6 +30,17 @@
 /obj/item/clothing/pants/platelegs/Initialize()
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, custom_sounds = SFX_PLATE_STEP)
+
+/obj/item/clothing/pants/platelegs/iron
+	name = "iron plated chausses"
+	desc = "Cuisses made of plated iron, offering additional protection against blunt force."
+	icon_state = "iplate_legs"
+	item_state = "iplate_legs"
+	smeltresult = /obj/item/ingot/iron
+
+	armor = ARMOR_PLATE_BAD
+	max_integrity = INTEGRITY_STANDARD
+	item_weight = 9 * IRON_MULTIPLIER
 
 /obj/item/clothing/pants/platelegs/captain
 	name = "captain's chausses"
@@ -80,3 +91,24 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
 	sleeved = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
 	sellprice = 0 // See above comment
+
+/obj/item/clothing/pants/platelegs/graggar
+	name = "vicious leggings"
+	desc = "A sinister pair of plate chausses that have born witness many violent atrocities."
+	icon_state = "graggarplatelegs"
+	icon = 'icons/roguetown/clothing/special/evilarmor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sleeved = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sellprice = 0 // See above comment
+
+//.............. Silver Platelegs .................//
+
+/obj/item/clothing/pants/platelegs/silver
+	name = "silver platelegs"
+	desc = "A finely forged pair of silver plate leggings, offering additional protection against blunt force."
+	icon_state = "silverlegs"
+	allowed_ages = ALL_AGES_LIST //placeholder until younglings have onmob sprites for this item
+	armor = ARMOR_PLATE_SILVER
+	smeltresult = /obj/item/ingot/silver
+	item_weight = 9 * SILVER_MULTIPLIER
+	sellprice = VALUE_SILVER_ARMOR

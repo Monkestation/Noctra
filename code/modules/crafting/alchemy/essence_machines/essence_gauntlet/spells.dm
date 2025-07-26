@@ -1,33 +1,31 @@
-/obj/effect/proc_holder/spell/invoked/utility
+// These do not all confirm to spell standards but if someone wants to go through all 60 odd of these and add proper
+// Valid target / Can cast then be my guest
+/datum/action/cooldown/spell/essence
 	name = "Utility Spell"
 	desc = "A minor utility spell."
 	school = "utility"
-	releasedrain = 5
-	chargedrain = 0
-	chargetime = 0
-	recharge_time = 30 SECONDS
-	warnie = "spellwarning"
-	no_early_release = TRUE
-	movement_interrupt = FALSE
-	cost = 2
-	spell_flag = SPELL_ESSENCE
-	uses_mana = TRUE
+	spell_cost = 5
+	charge_drain = 0
+	charge_required = FALSE
+	cooldown_time = 30 SECONDS
+	point_cost = 2
+	spell_type = SPELL_ESSENCE
 
-/obj/effect/proc_holder/spell/invoked/utility/breeze
+/datum/action/cooldown/spell/essence/breeze
 	name = "Gentle Breeze"
 	desc = "Creates a small breeze that can blow out candles or scatter light objects."
-	overlay_state = "breeze"
+	button_icon_state = "breeze"
 	//sound = 'sound/magic/whiff.ogg'
-	range = 3
+	cast_range = 3
 	attunements = list(/datum/attunement/aeromancy = 0.2)
 
-/obj/effect/proc_holder/spell/invoked/utility/breeze/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/breeze/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
 
-	visible_message(span_notice("[user] gestures, creating a gentle breeze."))
-	//playsound(target_turf, 'sound/magic/whiff.ogg', 50, TRUE)
+	owner.visible_message(span_notice("[owner] gestures, creating a gentle breeze."))
 
 	for(var/obj/item/candle/C in range(1, target_turf))
 		if(C.lit)
@@ -35,45 +33,43 @@
 
 	for(var/obj/item/I in target_turf)
 		if(I.w_class <= WEIGHT_CLASS_SMALL && prob(50))
-			step_rand(I)
+			SSmove_manager.move_rand(I)
 
-	return ..()
-
-/obj/effect/proc_holder/spell/invoked/utility/cleanse
+/datum/action/cooldown/spell/essence/cleanse
 	name = "Cleanse"
 	desc = "Removes dirt and minor stains from objects or surfaces."
-	overlay_state = "cleanse"
+	button_icon_state = "cleanse"
 	//sound = 'sound/magic/splash.ogg'
-	range = 1
+	cast_range = 1
 	attunements = list(/datum/attunement/blood)
 
-/obj/effect/proc_holder/spell/invoked/utility/cleanse/cast(list/targets, mob/user)
-	var/atom/target = targets[1]
+/datum/action/cooldown/spell/essence/cleanse/cast(atom/cast_on)
+	. = ..()
+	var/atom/target = cast_on
 	if(!target)
 		return FALSE
 
-	visible_message(span_notice("[user] gestures, creating a cleansing mist around [target]."))
+	owner.visible_message(span_notice("[owner] gestures, creating a cleansing mist around [target]."))
 	//playsound(get_turf(target), 'sound/magic/splash.ogg', 50, TRUE)
 
 	target.wash(CLEAN_WASH)
 
-	return ..()
-
-/obj/effect/proc_holder/spell/invoked/utility/spark
+/datum/action/cooldown/spell/essence/spark
 	name = "Spark"
 	desc = "Creates a small spark that can light candles or torches."
-	overlay_state = "spark"
+	button_icon_state = "spark"
 	sound = 'sound/magic/fireball.ogg'
-	range = 1
+	cast_range = 1
 	attunements = list(/datum/attunement/fire)
 
-/obj/effect/proc_holder/spell/invoked/utility/spark/cast(list/targets, mob/user)
-	var/atom/target = targets[1]
+/datum/action/cooldown/spell/essence/spark/cast(atom/cast_on)
+	. = ..()
+	var/atom/target = cast_on
 	if(!target)
 		return FALSE
 	target = get_turf(target)
 
-	visible_message(span_notice("[user] creates a small spark near [target]."))
+	owner.visible_message(span_notice("[owner] creates a small spark near [target]."))
 	playsound(get_turf(target), 'sound/magic/fireball.ogg', 30, TRUE)
 
 	for(var/obj/item/item in target.contents)
@@ -88,23 +84,22 @@
 				T.fuel += 5 MINUTES
 				T.fire_act()
 
-	return ..()
-
-/obj/effect/proc_holder/spell/invoked/utility/mend
+/datum/action/cooldown/spell/essence/mend
 	name = "Minor Mend"
 	desc = "Repairs minor damage to simple objects."
-	overlay_state = "mend"
+	button_icon_state = "mend"
 	//sound = 'sound/magic/staff_healing.ogg'
-	range = 1
+	cast_range = 1
 	attunements = list(/datum/attunement/earth)
-	cost = 3
+	point_cost = 3
 
-/obj/effect/proc_holder/spell/invoked/utility/mend/cast(list/targets, mob/user)
-	var/obj/item/target = targets[1]
+/datum/action/cooldown/spell/essence/mend/cast(atom/cast_on)
+	. = ..()
+	var/obj/item/target = cast_on
 	if(!isobj(target))
 		return FALSE
 
-	visible_message(span_notice("[user] gestures, mending minor damage to [target]."))
+	owner.visible_message(span_notice("[owner] gestures, mending minor damage to [target]."))
 	//playsound(get_turf(target), 'sound/magic/staff_healing.ogg', 50, TRUE)
 
 	// Restore some durability or repair minor damage
@@ -112,23 +107,22 @@
 		target.obj_integrity = min(target.max_integrity, target.obj_integrity + 10)
 		target.update_appearance()
 
-	return ..()
-
-/obj/effect/proc_holder/spell/invoked/utility/chill
+/datum/action/cooldown/spell/essence/chill
 	name = "Frost Touch"
 	desc = "Creates a small patch of frost that can preserve food or cool drinks."
-	overlay_state = "chill"
+	button_icon_state = "chill"
 	//sound = 'sound/magic/whiff.ogg'
-	range = 1
+	cast_range = 1
 	attunements = list(/datum/attunement/ice)
 
-/obj/effect/proc_holder/spell/invoked/utility/chill/cast(list/targets, mob/user)
-	var/atom/target = targets[1]
+/datum/action/cooldown/spell/essence/chill/cast(atom/cast_on)
+	. = ..()
+	var/atom/target = cast_on
 	if(!target)
 		return FALSE
 	target = get_turf(target)
 
-	visible_message(span_notice("[user] gestures, creating a small patch of frost around [target]."))
+	owner.visible_message(span_notice("[owner] gestures, creating a small patch of frost around [target]."))
 	//playsound(get_turf(target), 'sound/magic/whiff.ogg', 50, TRUE)
 
 	// Cool down hot food/drinks and reduce rot buildup on foods
@@ -138,65 +132,61 @@
 			var/obj/item/reagent_containers/food/snacks/food = item
 			food.warming += 5 MINUTES
 
-	return ..()
-
-/obj/effect/proc_holder/spell/invoked/utility/illuminate
+/datum/action/cooldown/spell/essence/illuminate
 	name = "Illuminate"
 	desc = "Creates a small, temporary light source."
-	overlay_state = "light"
+	button_icon_state = "light"
 	//sound = 'sound/magic/staff_healing.ogg'
-	range = 0
+	cast_range = 0
 	attunements = list(/datum/attunement/light)
-	cost = 1
+	point_cost = 1
 
-/obj/effect/proc_holder/spell/invoked/utility/illuminate/cast(list/targets, mob/user)
-	visible_message(span_notice("[user] creates a small orb of light."))
-	//playsound(get_turf(user), 'sound/magic/staff_healing.ogg', 30, TRUE)
+/datum/action/cooldown/spell/essence/illuminate/cast(atom/cast_on)
+	. = ..()
+	owner.visible_message(span_notice("[owner] creates a small orb of light."))
+	//playsound(get_turf(owner), 'sound/magic/staff_healing.ogg', 30, TRUE)
 
 	// Create temporary light
-	var/obj/effect/temp_visual/light_orb/orb = new(get_turf(user))
+	var/obj/effect/temp_visual/light_orb/orb = new(get_turf(owner))
 	orb.set_light(3, 1, "#FFFFFF")
 	QDEL_IN(orb, 30 SECONDS)
 
-	return ..()
-
-/obj/effect/proc_holder/spell/invoked/utility/haste
+/datum/action/cooldown/spell/essence/haste
 	name = "Swift Step"
 	desc = "Briefly increases movement speed."
-	overlay_state = "haste"
+	button_icon_state = "haste"
 	//sound = 'sound/magic/whiff.ogg'
-	range = 0
-	cost = 4
+	cast_range = 0
+	point_cost = 4
 	attunements = list(/datum/attunement/aeromancy)
 
-/obj/effect/proc_holder/spell/invoked/utility/haste/cast(list/targets, mob/living/user)
-	visible_message(span_notice("[user] moves with enhanced speed."))
-	//playsound(get_turf(user), 'sound/magic/whiff.ogg', 50, TRUE)
+/datum/action/cooldown/spell/essence/haste/cast(atom/cast_on)
+	. = ..()
+	owner.visible_message(span_notice("[owner] moves with enhanced speed."))
+	//playsound(get_turf(owner), 'sound/magic/whiff.ogg', 50, TRUE)
 
-	user.apply_status_effect(/datum/status_effect/buff/duration_modification/haste, 10 SECONDS)
+	var/mob/living/L = owner
+	L.apply_status_effect(/datum/status_effect/buff/haste, 10 SECONDS)
 
-	return ..()
-
-/obj/effect/proc_holder/spell/invoked/utility/refresh
+/datum/action/cooldown/spell/essence/refresh
 	name = "Refresh"
 	desc = "Removes minor fatigue and restores a small amount of stamina."
-	overlay_state = "refresh"
+	button_icon_state = "refresh"
 	//sound = 'sound/magic/staff_healing.ogg'
-	range = 1
-	cost = 3
+	cast_range = 1
+	point_cost = 3
 	attunements = list(/datum/attunement/life)
 
-/obj/effect/proc_holder/spell/invoked/utility/refresh/cast(list/targets, mob/user)
-	var/mob/living/target = targets[1]
+/datum/action/cooldown/spell/essence/refresh/cast(atom/cast_on)
+	. = ..()
+	var/mob/living/target = cast_on
 	if(!istype(target))
-		target = user
-	visible_message(span_notice("[target] appears refreshed."))
-	//playsound(get_turf(user), 'sound/magic/staff_healing.ogg', 50, TRUE)
+		target = owner
+	owner.visible_message(span_notice("[target] appears refreshed."))
+	//playsound(get_turf(owner), 'sound/magic/staff_healing.ogg', 50, TRUE)
 
 	target.adjust_stamina(20)
 	target.adjust_energy(20)
-
-	return ..()
 
 // Temporary light effect
 /obj/effect/temp_visual/light_orb
@@ -207,150 +197,153 @@
 	duration = 30 SECONDS
 
 // Air Essence Spells
-/obj/effect/proc_holder/spell/invoked/utility/air_walk
+/datum/action/cooldown/spell/essence/air_walk
 	name = "Air Walk"
 	desc = "Allows brief movement over chasms or gaps by creating temporary air platforms."
-	overlay_state = "air_walk"
-	range = 0
-	cost = 5
+	button_icon_state = "air_walk"
+	cast_range = 0
+	point_cost = 5
 	attunements = list(/datum/attunement/aeromancy)
 
-/obj/effect/proc_holder/spell/invoked/utility/air_walk/cast(list/targets, mob/living/user)
-	visible_message(span_notice("[user] steps onto solidified air."))
-	user.apply_status_effect(/datum/status_effect/buff/air_walking, 15 SECONDS)
-	return ..()
+/datum/action/cooldown/spell/essence/air_walk/cast(atom/cast_on)
+	. = ..()
+	owner.visible_message(span_notice("[owner] steps onto solidified air."))
+	var/mob/living/L = owner
+	L.apply_status_effect(/datum/status_effect/buff/air_walking, 15 SECONDS)
 
 // Water Essence Spells
-/obj/effect/proc_holder/spell/invoked/utility/water_breathing
+/datum/action/cooldown/spell/essence/water_breathing
 	name = "Water Breathing"
 	desc = "Allows breathing underwater for a short duration."
-	overlay_state = "water_breathing"
-	range = 1
-	cost = 4
+	button_icon_state = "water_breathing"
+	cast_range = 1
+	point_cost = 4
 	attunements = list(/datum/attunement/blood)
 
-/obj/effect/proc_holder/spell/invoked/utility/water_breathing/cast(list/targets, mob/living/user)
-	var/mob/living/target = targets[1]
+/datum/action/cooldown/spell/essence/water_breathing/cast(atom/cast_on)
+	. = ..()
+	var/mob/living/target = cast_on
 	if(!istype(target))
-		target = user
-	visible_message(span_notice("[target] gains the ability to breathe underwater."))
+		target = owner
+	owner.visible_message(span_notice("[target] gains the ability to breathe underwater."))
 	target.apply_status_effect(/datum/status_effect/buff/water_breathing, 60 SECONDS)
-	return ..()
 
 // Fire Essence Spells
-/obj/effect/proc_holder/spell/invoked/utility/warmth
+/datum/action/cooldown/spell/essence/warmth
 	name = "Warmth"
 	desc = "Provides resistance to cold and warms the body."
-	overlay_state = "warmth"
-	range = 1
-	cost = 3
+	button_icon_state = "warmth"
+	cast_range = 1
+	point_cost = 3
 	attunements = list(/datum/attunement/fire)
 
-/obj/effect/proc_holder/spell/invoked/utility/warmth/cast(list/targets, mob/living/user)
-	var/mob/living/target = targets[1]
+/datum/action/cooldown/spell/essence/warmth/cast(atom/cast_on)
+	. = ..()
+	var/mob/living/target = cast_on
 	if(!istype(target))
-		target = user
-	visible_message(span_notice("[target] radiates gentle warmth."))
+		target = owner
+	owner.visible_message(span_notice("[target] radiates gentle warmth."))
 	target.apply_status_effect(/datum/status_effect/buff/warmth, 120 SECONDS)
-	return ..()
 
 // Earth Essence Spells
-/obj/effect/proc_holder/spell/invoked/utility/stone_shape
+/datum/action/cooldown/spell/essence/stone_shape
 	name = "Stone Shape"
 	desc = "Slightly reshapes stone surfaces or creates small stone implements."
-	overlay_state = "stone_shape"
-	range = 2
-	cost = 4
+	button_icon_state = "stone_shape"
+	cast_range = 2
+	point_cost = 4
 	attunements = list(/datum/attunement/earth)
 
-/obj/effect/proc_holder/spell/invoked/utility/stone_shape/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/stone_shape/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] shapes the stone with magical force."))
+	owner.visible_message(span_notice("[owner] shapes the stone with magical force."))
 
 	// Create small stone tools or reshape minor features
 	if(prob(30))
 		new /obj/item/natural/stone(target_turf)
-	return ..()
 
 // Frost Essence Spells
-/obj/effect/proc_holder/spell/invoked/utility/preserve
+/datum/action/cooldown/spell/essence/preserve
 	name = "Preserve"
 	desc = "Prevents food from spoiling and extends its freshness."
-	overlay_state = "preserve"
-	range = 1
-	cost = 2
+	button_icon_state = "preserve"
+	cast_range = 1
+	point_cost = 2
 	attunements = list(/datum/attunement/ice)
 
-/obj/effect/proc_holder/spell/invoked/utility/preserve/cast(list/targets, mob/user)
-	var/atom/target = targets[1]
+/datum/action/cooldown/spell/essence/preserve/cast(atom/cast_on)
+	. = ..()
+	var/atom/target = cast_on
 	if(!target)
 		return FALSE
-	visible_message(span_notice("[user] preserves [target] with frost magic."))
+	owner.visible_message(span_notice("[owner] preserves [target] with frost magic."))
 
 	if(istype(target, /obj/item/reagent_containers/food/snacks))
 		var/obj/item/reagent_containers/food/snacks/food = target
 		food.warming += 2 HOURS
-	return ..()
 
 // Light Essence Spells
-/obj/effect/proc_holder/spell/invoked/utility/daylight
+/datum/action/cooldown/spell/essence/daylight
 	name = "Daylight"
 	desc = "Creates a bright light that mimics natural sunlight."
-	overlay_state = "daylight"
-	range = 0
-	cost = 4
+	button_icon_state = "daylight"
+	cast_range = 0
+	point_cost = 4
 	attunements = list(/datum/attunement/light)
 
-/obj/effect/proc_holder/spell/invoked/utility/daylight/cast(list/targets, mob/user)
-	visible_message(span_notice("[user] creates a brilliant daylight orb."))
-	var/obj/effect/temp_visual/daylight_orb/orb = new(get_turf(user))
+/datum/action/cooldown/spell/essence/daylight/cast(atom/cast_on)
+	. = ..()
+	owner.visible_message(span_notice("[owner] creates a brilliant daylight orb."))
+	var/obj/effect/temp_visual/daylight_orb/orb = new(get_turf(owner))
 	orb.set_light(5, 2, "#FFFFAA")
 	QDEL_IN(orb, 60 SECONDS)
-	return ..()
 
 // Motion Essence Spells
-/obj/effect/proc_holder/spell/invoked/utility/phase_step
+/datum/action/cooldown/spell/essence/phase_step
 	name = "Phase Step"
 	desc = "Allows brief passage through solid objects."
-	overlay_state = "phase_step"
-	range = 0
-	cost = 6
+	button_icon_state = "phase_step"
+	cast_range = 0
+	point_cost = 6
 	attunements = list(/datum/attunement/aeromancy)
 
-/obj/effect/proc_holder/spell/invoked/utility/phase_step/cast(list/targets, mob/living/user)
-	visible_message(span_notice("[user] becomes translucent momentarily."))
-	user.apply_status_effect(/datum/status_effect/buff/phase_walking, 5 SECONDS)
-	return ..()
+/datum/action/cooldown/spell/essence/phase_step/cast(atom/cast_on)
+	. = ..()
+	owner.visible_message(span_notice("[owner] becomes translucent momentarily."))
+	var/mob/living/L = owner
+	L.apply_status_effect(/datum/status_effect/buff/phase_walking, 5 SECONDS)
 
 // Life Essence Spells
-/obj/effect/proc_holder/spell/invoked/utility/vigor
+/datum/action/cooldown/spell/essence/vigor
 	name = "Vigor"
 	desc = "Increases physical strength and endurance temporarily."
-	overlay_state = "vigor"
-	range = 1
-	cost = 4
+	button_icon_state = "vigor"
+	cast_range = 1
+	point_cost = 4
 	attunements = list(/datum/attunement/life)
 
-/obj/effect/proc_holder/spell/invoked/utility/vigor/cast(list/targets, mob/living/user)
-	var/mob/living/target = targets[1]
+/datum/action/cooldown/spell/essence/vigor/cast(atom/cast_on)
+	. = ..()
+	var/mob/living/target = cast_on
 	if(!istype(target))
-		target = user
-	visible_message(span_notice("[target] appears invigorated."))
+		target = owner
+	owner.visible_message(span_notice("[target] appears invigorated."))
 	target.apply_status_effect(/datum/status_effect/buff/vigor, 60 SECONDS)
-	return ..()
 
-/obj/effect/proc_holder/spell/invoked/utility/stabilize
+/datum/action/cooldown/spell/essence/stabilize
 	name = "Stabilize"
 	desc = "Prevents objects from moving or falling for a short time."
-	overlay_state = "stabilize"
-	range = 2
-	cost = 4
+	button_icon_state = "stabilize"
+	cast_range = 2
+	point_cost = 4
 	attunements = list(/datum/attunement/earth)
 
-/obj/effect/proc_holder/spell/invoked/utility/stabilize/cast(list/targets, mob/user)
-	var/obj/target = targets[1]
+/datum/action/cooldown/spell/essence/stabilize/cast(atom/cast_on)
+	. = ..()
+	var/obj/target = cast_on
 	if(!target)
 		return FALSE
 	if(!istype(target))
@@ -358,25 +351,24 @@
 	if(target.anchored)
 		return
 
-	visible_message(span_notice("[user] stabilizes [target] with magical force."))
+	owner.visible_message(span_notice("[owner] stabilizes [target] with magical force."))
 	target.anchored = TRUE
 	addtimer(VARSET_CALLBACK(target, anchored, FALSE), 30 SECONDS)
 
-	return ..()
-
-/obj/effect/proc_holder/spell/invoked/utility/randomize
+/datum/action/cooldown/spell/essence/randomize
 	name = "Randomize"
 	desc = "Causes minor random effects in the area."
-	overlay_state = "randomize"
-	range = 2
-	cost = 3
+	button_icon_state = "randomize"
+	cast_range = 2
+	point_cost = 3
 	attunements = list(/datum/attunement/fire)
 
-/obj/effect/proc_holder/spell/invoked/utility/randomize/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/randomize/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] causes unpredictable magical effects."))
+	owner.visible_message(span_notice("[owner] causes unpredictable magical effects."))
 
 	switch(rand(1, 4))
 		if(1)
@@ -388,60 +380,60 @@
 			playsound(target_turf, pick('sound/magic/fireball.ogg'), 30, TRUE)
 		if(4)
 			target_turf.visible_message(span_notice("The air shimmers with chaotic energy."))
-	return ..()
 
 // Void Essence Spells
-/obj/effect/proc_holder/spell/invoked/utility/silence
+/datum/action/cooldown/spell/essence/silence
 	name = "Silence"
 	desc = "Creates a zone of magical silence that muffles all sounds."
-	overlay_state = "silence"
-	range = 2
-	cost = 4
+	button_icon_state = "silence"
+	cast_range = 2
+	point_cost = 4
 	attunements = list(/datum/attunement/fire)
 
-/obj/effect/proc_holder/spell/invoked/utility/silence/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/silence/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] creates a zone of absolute silence."))
+	owner.visible_message(span_notice("[owner] creates a zone of absolute silence."))
 
 	var/obj/effect/temp_visual/silence_zone/zone = new(target_turf)
 	QDEL_IN(zone, 30 SECONDS)
-	return ..()
 
 // Poison Essence Spells
-/obj/effect/proc_holder/spell/invoked/utility/neutralize
+/datum/action/cooldown/spell/essence/neutralize
 	name = "Neutralize"
 	desc = "Removes harmful toxins and poisons from objects or creatures."
-	overlay_state = "neutralize"
-	range = 1
-	cost = 4
+	button_icon_state = "neutralize"
+	cast_range = 1
+	point_cost = 4
 	attunements = list(/datum/attunement/life)
 
-/obj/effect/proc_holder/spell/invoked/utility/neutralize/cast(list/targets, mob/user)
-	var/atom/target = targets[1]
+/datum/action/cooldown/spell/essence/neutralize/cast(atom/cast_on)
+	. = ..()
+	var/atom/target = cast_on
 	if(!target)
 		return FALSE
-	visible_message(span_notice("[user] neutralizes toxins in [target]."))
+	owner.visible_message(span_notice("[owner] neutralizes toxins in [target]."))
 
 	if(istype(target, /mob/living))
 		var/mob/living/L = target
 		L.reagents?.remove_all_type(/datum/reagent/toxin, 5)
-	return ..()
 
-/obj/effect/proc_holder/spell/invoked/utility/detect_poison
+/datum/action/cooldown/spell/essence/detect_poison
 	name = "Detect Poison"
 	desc = "Reveals the presence of toxins or poisons in nearby objects."
-	overlay_state = "detect_poison"
-	range = 2
-	cost = 2
+	button_icon_state = "detect_poison"
+	cast_range = 2
+	point_cost = 2
 	attunements = list(/datum/attunement/life)
 
-/obj/effect/proc_holder/spell/invoked/utility/detect_poison/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/detect_poison/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] scans for toxins in the area."))
+	owner.visible_message(span_notice("[owner] scans for toxins in the area."))
 
 	var/found_poison = FALSE
 	for(var/obj/item/I in range(1, target_turf))
@@ -450,22 +442,22 @@
 			found_poison = TRUE
 
 	if(!found_poison)
-		to_chat(user, span_notice("No toxins detected in the area."))
-	return ..()
+		to_chat(owner, span_notice("No toxins detected in the area."))
 
-/obj/effect/proc_holder/spell/invoked/utility/gem_detect
+/datum/action/cooldown/spell/essence/gem_detect
 	name = "Gem Detect"
 	desc = "Reveals the location of precious stones and crystals nearby."
-	overlay_state = "gem_detect"
-	range = 3
-	cost = 4
+	button_icon_state = "gem_detect"
+	cast_range = 3
+	point_cost = 4
 	attunements = list(/datum/attunement/earth)
 
-/obj/effect/proc_holder/spell/invoked/utility/gem_detect/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/gem_detect/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] searches for precious stones."))
+	owner.visible_message(span_notice("[owner] searches for precious stones."))
 
 	var/found_gems = FALSE
 	for(var/obj/item/gem/G in range(2, target_turf))
@@ -482,39 +474,39 @@
 				found_gems = TRUE
 
 	if(!found_gems)
-		to_chat(user, span_notice("No gems detected in the area."))
-	return ..()
+		to_chat(owner, span_notice("No gems detected in the area."))
 
-/obj/effect/proc_holder/spell/invoked/utility/arcane_mark
+/datum/action/cooldown/spell/essence/arcane_mark
 	name = "Arcane Mark"
 	desc = "Places an invisible magical mark on an object for identification."
-	overlay_state = "arcane_mark"
-	range = 1
-	cost = 2
+	button_icon_state = "arcane_mark"
+	cast_range = 1
+	point_cost = 2
 	attunements = list(/datum/attunement/light)
 
-/obj/effect/proc_holder/spell/invoked/utility/arcane_mark/cast(list/targets, mob/user)
-	var/obj/item/target = targets[1]
+/datum/action/cooldown/spell/essence/arcane_mark/cast(atom/cast_on)
+	. = ..()
+	var/obj/item/target = cast_on
 	if(!isobj(target))
 		return FALSE
-	visible_message(span_notice("[user] places an arcane mark on [target]."))
+	owner.visible_message(span_notice("[owner] places an arcane mark on [target]."))
 	target.desc += " <i>It bears a faint magical mark.</i>"
-	return ..()
 
 // Energia Essence Spells
-/obj/effect/proc_holder/spell/invoked/utility/energize
+/datum/action/cooldown/spell/essence/energize
 	name = "Energize"
 	desc = "Restores energy to magical devices or provides a burst of vitality."
-	overlay_state = "energize"
-	range = 1
-	cost = 4
+	button_icon_state = "energize"
+	cast_range = 1
+	point_cost = 4
 	attunements = list(/datum/attunement/light)
 
-/obj/effect/proc_holder/spell/invoked/utility/energize/cast(list/targets, mob/user)
-	var/atom/target = targets[1]
+/datum/action/cooldown/spell/essence/energize/cast(atom/cast_on)
+	. = ..()
+	var/atom/target = cast_on
 	if(!target)
 		return FALSE
-	visible_message(span_notice("[user] channels energy into [target]."))
+	owner.visible_message(span_notice("[owner] channels energy into [target]."))
 
 	if(istype(target, /mob/living))
 		var/mob/living/L = target
@@ -525,39 +517,38 @@
 		var/obj/structure/mana_pylon/pylon = target
 		pylon.mana_pool.adjust_mana(30)
 
-	return ..()
-
-/obj/effect/proc_holder/spell/invoked/utility/power_surge
+/datum/action/cooldown/spell/essence/power_surge
 	name = "Power Surge"
 	desc = "Creates a brief surge of magical energy that can power devices."
-	overlay_state = "power_surge"
-	range = 2
-	cost = 5
+	button_icon_state = "power_surge"
+	cast_range = 2
+	point_cost = 5
 	attunements = list(/datum/attunement/light)
 
-/obj/effect/proc_holder/spell/invoked/utility/power_surge/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/power_surge/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] creates a surge of magical power."))
+	owner.visible_message(span_notice("[owner] creates a surge of magical power."))
 
 	var/obj/effect/temp_visual/power_surge/surge = new(target_turf)
 	QDEL_IN(surge, 10 SECONDS)
-	return ..()
 
 // Cycle Essence Spells
-/obj/effect/proc_holder/spell/invoked/utility/seasonal_attune
+/datum/action/cooldown/spell/essence/seasonal_attune
 	name = "Seasonal Attune"
 	desc = "Attunes the caster to natural cycles, providing minor benefits."
-	overlay_state = "seasonal_attune"
-	range = 0
-	cost = 3
+	button_icon_state = "seasonal_attune"
+	cast_range = 0
+	point_cost = 3
 	attunements = list(/datum/attunement/light)
 
-/obj/effect/proc_holder/spell/invoked/utility/seasonal_attune/cast(list/targets, mob/living/user)
-	visible_message(span_notice("[user] harmonizes with the natural cycles."))
-	user.apply_status_effect(/datum/status_effect/buff/seasonal_attunement, 600 SECONDS)
-	return ..()
+/datum/action/cooldown/spell/essence/seasonal_attune/cast(atom/cast_on)
+	. = ..()
+	owner.visible_message(span_notice("[owner] harmonizes with the natural cycles."))
+	var/mob/living/L = owner
+	L.apply_status_effect(/datum/status_effect/buff/seasonal_attunement, 600 SECONDS)
 
 // Temporary visual effects for spells
 /obj/effect/temp_visual/daylight_orb
@@ -584,23 +575,23 @@
 // COMBO SPELLS - Two Essence Combinations
 
 // Fire + Air Combo
-/obj/effect/proc_holder/spell/invoked/utility/flame_jet
+/datum/action/cooldown/spell/essence/flame_jet
 	name = "Flame Jet"
 	desc = "Creates a controlled jet of flame for precise heating or light welding."
-	overlay_state = "flame_jet"
-	range = 2
-	cost = 6
+	button_icon_state = "flame_jet"
+	cast_range = 2
+	point_cost = 6
 	attunements = list(/datum/attunement/fire, /datum/attunement/aeromancy)
 
-/obj/effect/proc_holder/spell/invoked/utility/flame_jet/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/flame_jet/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] creates a precise jet of flame."))
+	owner.visible_message(span_notice("[owner] creates a precise jet of flame."))
 
 	var/obj/effect/temp_visual/flame_jet/jet = new(target_turf)
 	QDEL_IN(jet, 15 SECONDS)
-	return ..()
 
 /obj/effect/temp_visual/flame_jet
 	name = "flame jet"
@@ -611,214 +602,215 @@
 
 /obj/effect/temp_visual/flame_jet/Initialize()
 	. = ..()
-	propagate_temp_change(40, 12, 0.8, 1) // High heat, high weight, low falloff, very short range (focused)
+	propagate_temp_change(40, 12, 0.8, 1) // High heat, high weight, low falloff, very short cast_range (focused)
 
 /obj/effect/temp_visual/flame_jet/Destroy()
 	remove_temp_effect()
 	return ..()
 
 // Water + Earth Combo
-/obj/effect/proc_holder/spell/invoked/utility/mud_shape
+/datum/action/cooldown/spell/essence/mud_shape
 	name = "Mud Shape"
 	desc = "Combines water and earth to create moldable mud for construction."
-	overlay_state = "mud_shape"
-	range = 2
-	cost = 5
+	button_icon_state = "mud_shape"
+	cast_range = 2
+	point_cost = 5
 	attunements = list(/datum/attunement/blood, /datum/attunement/earth)
 
-/obj/effect/proc_holder/spell/invoked/utility/mud_shape/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/mud_shape/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] creates moldable mud from earth and water."))
+	owner.visible_message(span_notice("[owner] creates moldable mud from earth and water."))
 	new /obj/item/natural/clay(target_turf)
-	return ..()
 
-/obj/effect/proc_holder/spell/invoked/utility/fertile_soil
+/datum/action/cooldown/spell/essence/fertile_soil
 	name = "Fertile Soil"
 	desc = "Enriches soil to promote plant growth."
-	overlay_state = "fertile_soil"
-	range = 2
-	cost = 4
+	button_icon_state = "fertile_soil"
+	cast_range = 2
+	point_cost = 4
 	attunements = list(/datum/attunement/blood, /datum/attunement/earth)
 
-/obj/effect/proc_holder/spell/invoked/utility/fertile_soil/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/fertile_soil/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] enriches the soil with life-giving properties."))
+	owner.visible_message(span_notice("[owner] enriches the soil with life-giving properties."))
 
 	for(var/obj/structure/soil/plant in range(1, target_turf))
 		plant.bless_soil()
-	return ..()
 
 // Fire + Earth Combo
-/obj/effect/proc_holder/spell/invoked/utility/forge_heat
+/datum/action/cooldown/spell/essence/forge_heat
 	name = "Forge Heat"
 	desc = "Generates intense heat suitable for metalworking."
-	overlay_state = "forge_heat"
-	range = 1
-	cost = 6
+	button_icon_state = "forge_heat"
+	cast_range = 1
+	point_cost = 6
 	attunements = list(/datum/attunement/fire, /datum/attunement/earth)
 
-/obj/effect/proc_holder/spell/invoked/utility/forge_heat/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/forge_heat/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] generates forge-level heat."))
+	owner.visible_message(span_notice("[owner] generates forge-level heat."))
 
 	var/obj/effect/temp_visual/forge_heat/heat = new(target_turf)
 	heat.set_light(3, 2, "#FF4400")
 	QDEL_IN(heat, 60 SECONDS)
-	return ..()
 
 // Frost + Water Combo
-/obj/effect/proc_holder/spell/invoked/utility/ice_bridge
+/datum/action/cooldown/spell/essence/ice_bridge
 	name = "Ice Bridge"
 	desc = "Creates a temporary bridge of solid ice over gaps or water."
-	overlay_state = "ice_bridge"
-	range = 3
-	cost = 7
+	button_icon_state = "ice_bridge"
+	cast_range = 3
+	point_cost = 7
 	attunements = list(/datum/attunement/ice, /datum/attunement/blood)
 
-/obj/effect/proc_holder/spell/invoked/utility/ice_bridge/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/ice_bridge/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] creates a bridge of solid ice."))
+	owner.visible_message(span_notice("[owner] creates a bridge of solid ice."))
 
 	var/obj/structure/ice_bridge/bridge = new(target_turf)
 	QDEL_IN(bridge, 300 SECONDS)
-	return ..()
 
-/obj/effect/proc_holder/spell/invoked/utility/frozen_storage
+/datum/action/cooldown/spell/essence/frozen_storage
 	name = "Frozen Storage"
 	desc = "Creates a magical ice chest that preserves items indefinitely."
-	overlay_state = "frozen_storage"
-	range = 1
-	cost = 6
+	button_icon_state = "frozen_storage"
+	cast_range = 1
+	point_cost = 6
 	attunements = list(/datum/attunement/ice, /datum/attunement/blood)
 
-/obj/effect/proc_holder/spell/invoked/utility/frozen_storage/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/frozen_storage/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] creates a chest of magical ice."))
+	owner.visible_message(span_notice("[owner] creates a chest of magical ice."))
 
 	var/obj/structure/closet/crate/chest/magical/chest = new(target_turf)
 	QDEL_IN(chest, 5 MINUTES)
-	return ..()
 
 // Light + Fire Combo Spells
-/obj/effect/proc_holder/spell/invoked/utility/brilliant_flame
+/datum/action/cooldown/spell/essence/brilliant_flame
 	name = "Brilliant Flame"
 	desc = "Creates an intensely bright flame that provides both light and heat."
-	overlay_state = "brilliant_flame"
-	range = 2
-	cost = 6
+	button_icon_state = "brilliant_flame"
+	cast_range = 2
+	point_cost = 6
 	attunements = list(/datum/attunement/light, /datum/attunement/fire)
 
-/obj/effect/proc_holder/spell/invoked/utility/brilliant_flame/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/brilliant_flame/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] creates a brilliant flame that illuminates the area."))
+	owner.visible_message(span_notice("[owner] creates a brilliant flame that illuminates the area."))
 
 	var/obj/effect/temp_visual/brilliant_flame/flame = new(target_turf)
 	flame.set_light(6, 3, "#FFFFDD")
 	QDEL_IN(flame, 120 SECONDS)
-	return ..()
 
-/obj/effect/proc_holder/spell/invoked/utility/solar_focus
+/datum/action/cooldown/spell/essence/solar_focus
 	name = "Solar Focus"
 	desc = "Concentrates light and heat into a precise beam for cutting or heating."
-	overlay_state = "solar_focus"
-	range = 3
-	cost = 7
+	button_icon_state = "solar_focus"
+	cast_range = 3
+	point_cost = 7
 	attunements = list(/datum/attunement/light, /datum/attunement/fire)
 
-/obj/effect/proc_holder/spell/invoked/utility/solar_focus/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/solar_focus/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] focuses solar energy into a concentrated beam."))
+	owner.visible_message(span_notice("[owner] focuses solar energy into a concentrated beam."))
 
 	var/obj/effect/temp_visual/solar_beam/beam = new(target_turf)
 	QDEL_IN(beam, 20 SECONDS)
-	return ..()
 
 // Life + Water Combo Spells
-/obj/effect/proc_holder/spell/invoked/utility/healing_spring
+/datum/action/cooldown/spell/essence/healing_spring
 	name = "Healing Spring"
 	desc = "Creates a small spring of healing water that slowly restores health."
-	overlay_state = "healing_spring"
-	range = 2
-	cost = 8
+	button_icon_state = "healing_spring"
+	cast_range = 2
+	point_cost = 8
 	attunements = list(/datum/attunement/life, /datum/attunement/blood)
 
-/obj/effect/proc_holder/spell/invoked/utility/healing_spring/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/healing_spring/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] causes a healing spring to bubble forth from the ground."))
+	owner.visible_message(span_notice("[owner] causes a healing spring to bubble forth from the ground."))
 
 	var/obj/structure/healing_spring/spring = new(target_turf)
 	QDEL_IN(spring, 600 SECONDS)
-	return ..()
 
-/obj/effect/proc_holder/spell/invoked/utility/purify_water
+/datum/action/cooldown/spell/essence/purify_water
 	name = "Purify Water"
 	desc = "Removes all impurities and toxins from water, making it pure and safe."
-	overlay_state = "purify_water"
-	range = 1
-	cost = 5
+	button_icon_state = "purify_water"
+	cast_range = 1
+	point_cost = 5
 	attunements = list(/datum/attunement/life, /datum/attunement/blood)
 
-/obj/effect/proc_holder/spell/invoked/utility/purify_water/cast(list/targets, mob/user)
-	var/obj/item/target = targets[1]
+/datum/action/cooldown/spell/essence/purify_water/cast(atom/cast_on)
+	. = ..()
+	var/obj/item/target = cast_on
 	if(!isobj(target))
 		return FALSE
-	visible_message(span_notice("[user] purifies [target] with life-giving energy."))
+	owner.visible_message(span_notice("[owner] purifies [target] with life-giving energy."))
 
 	if(target.reagents)
 		target.reagents.remove_all_type(/datum/reagent/toxin)
 		target.reagents.remove_reagent(/datum/reagent/water/gross, 999)
 		target.reagents.add_reagent(/datum/reagent/water, 20)
-	return ..()
 
 // Earth + Crystal Combo Spells
-/obj/effect/proc_holder/spell/invoked/utility/gem_growth
+/datum/action/cooldown/spell/essence/gem_growth
 	name = "Gem Growth"
 	desc = "Encourages the natural formation of gems within suitable stone."
-	overlay_state = "gem_growth"
-	range = 2
-	cost = 8
+	button_icon_state = "gem_growth"
+	cast_range = 2
+	point_cost = 8
 	attunements = list(/datum/attunement/earth, /datum/attunement/earth)
 
-/obj/effect/proc_holder/spell/invoked/utility/gem_growth/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/gem_growth/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] encourages gem formation in the surrounding stone."))
+	owner.visible_message(span_notice("[owner] encourages gem formation in the surrounding stone."))
 
 	if(prob(40))
 		new /obj/item/gem(target_turf)
-		visible_message(span_notice("A gem crystallizes from the stone!"))
-	return ..()
+		owner.visible_message(span_notice("A gem crystallizes from the stone!"))
 
-/obj/effect/proc_holder/spell/invoked/utility/mineral_sense
+/datum/action/cooldown/spell/essence/mineral_sense
 	name = "Mineral Sense"
 	desc = "Detects valuable minerals and ores hidden within stone."
-	overlay_state = "mineral_sense"
-	range = 4
-	cost = 6
+	button_icon_state = "mineral_sense"
+	cast_range = 4
+	point_cost = 6
 	attunements = list(/datum/attunement/earth, /datum/attunement/earth)
 
-/obj/effect/proc_holder/spell/invoked/utility/mineral_sense/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/mineral_sense/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] senses for valuable minerals in the area."))
+	owner.visible_message(span_notice("[owner] senses for valuable minerals in the area."))
 
 	var/found_minerals = FALSE
 	for(var/obj/item/natural/stone/S in range(3, target_turf))
@@ -826,50 +818,52 @@
 		found_minerals = TRUE
 
 	if(!found_minerals)
-		to_chat(user, span_notice("No valuable minerals detected nearby."))
-	return ..()
+		to_chat(owner, span_notice("No valuable minerals detected nearby."))
 
 // Motion + Air Combo Spells
-/obj/effect/proc_holder/spell/invoked/utility/wind_step
+/datum/action/cooldown/spell/essence/wind_step
 	name = "Wind Step"
 	desc = "Allows rapid movement by riding currents of air."
-	overlay_state = "wind_step"
-	range = 0
-	cost = 6
+	button_icon_state = "wind_step"
+	cast_range = 0
+	point_cost = 6
 	attunements = list(/datum/attunement/aeromancy, /datum/attunement/aeromancy)
 
-/obj/effect/proc_holder/spell/invoked/utility/wind_step/cast(list/targets, mob/living/user)
-	visible_message(span_notice("[user] steps upon the wind itself."))
-	user.apply_status_effect(/datum/status_effect/buff/wind_walking, 30 SECONDS)
-	return ..()
+/datum/action/cooldown/spell/essence/wind_step/cast(atom/cast_on)
+	. = ..()
+	owner.visible_message(span_notice("[owner] steps upon the wind itself."))
+	var/mob/living/L = owner
+	L.apply_status_effect(/datum/status_effect/buff/wind_walking, 30 SECONDS)
 
-/obj/effect/proc_holder/spell/invoked/utility/aerial_dash
+/datum/action/cooldown/spell/essence/aerial_dash
 	name = "Aerial Dash"
 	desc = "Provides a burst of speed through magical air currents."
-	overlay_state = "aerial_dash"
-	range = 0
-	cost = 5
+	button_icon_state = "aerial_dash"
+	cast_range = 0
+	point_cost = 5
 	attunements = list(/datum/attunement/aeromancy, /datum/attunement/aeromancy)
 
-/obj/effect/proc_holder/spell/invoked/utility/aerial_dash/cast(list/targets, mob/living/user)
-	visible_message(span_notice("[user] is propelled by rushing air currents."))
-	user.apply_status_effect(/datum/status_effect/buff/aerial_speed, 15 SECONDS)
-	return ..()
+/datum/action/cooldown/spell/essence/aerial_dash/cast(atom/cast_on)
+	. = ..()
+	owner.visible_message(span_notice("[owner] is propelled by rushing air currents."))
+	var/mob/living/L = owner
+	L.apply_status_effect(/datum/status_effect/buff/aerial_speed, 15 SECONDS)
 
 // Order + Light Combo Spells
-/obj/effect/proc_holder/spell/invoked/utility/divine_order
+/datum/action/cooldown/spell/essence/divine_order
 	name = "Divine Order"
 	desc = "Brings perfect organization to an area through divine light."
-	overlay_state = "divine_order"
-	range = 3
-	cost = 7
+	button_icon_state = "divine_order"
+	cast_range = 3
+	point_cost = 7
 	attunements = list(/datum/attunement/earth, /datum/attunement/light)
 
-/obj/effect/proc_holder/spell/invoked/utility/divine_order/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/divine_order/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] calls upon divine light to bring perfect order."))
+	owner.visible_message(span_notice("[owner] calls upon divine light to bring perfect order."))
 
 	for(var/obj/item/I in range(2, target_turf))
 		I.pixel_x = 0
@@ -879,40 +873,40 @@
 	var/obj/effect/temp_visual/divine_light/light = new(target_turf)
 	light.set_light(4, 2, "#FFFFFF")
 	QDEL_IN(light, 60 SECONDS)
-	return ..()
 
-/obj/effect/proc_holder/spell/invoked/utility/sacred_geometry
+/datum/action/cooldown/spell/essence/sacred_geometry
 	name = "Sacred Geometry"
 	desc = "Creates perfect geometric patterns that provide structural stability."
-	overlay_state = "sacred_geometry"
-	range = 2
-	cost = 6
+	button_icon_state = "sacred_geometry"
+	cast_range = 2
+	point_cost = 6
 	attunements = list(/datum/attunement/earth, /datum/attunement/light)
 
-/obj/effect/proc_holder/spell/invoked/utility/sacred_geometry/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/sacred_geometry/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] inscribes sacred geometric patterns."))
+	owner.visible_message(span_notice("[owner] inscribes sacred geometric patterns."))
 
 	var/obj/effect/temp_visual/sacred_pattern/pattern = new(target_turf)
 	QDEL_IN(pattern, 300 SECONDS)
-	return ..()
 
 // Chaos + Void Combo Spells
-/obj/effect/proc_holder/spell/invoked/utility/reality_shift
+/datum/action/cooldown/spell/essence/reality_shift
 	name = "Reality Shift"
 	desc = "Temporarily alters local reality in unpredictable ways."
-	overlay_state = "reality_shift"
-	range = 2
-	cost = 8
+	button_icon_state = "reality_shift"
+	cast_range = 2
+	point_cost = 8
 	attunements = list(/datum/attunement/fire, /datum/attunement/fire)
 
-/obj/effect/proc_holder/spell/invoked/utility/reality_shift/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/reality_shift/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] causes reality to shift and warp."))
+	owner.visible_message(span_notice("[owner] causes reality to shift and warp."))
 
 	switch(rand(1, 6))
 		if(1)
@@ -927,170 +921,171 @@
 			playsound(target_turf, 'sound/magic/ethereal_exit.ogg', 50, TRUE)
 		if(6)
 			target_turf.visible_message(span_danger("Reality tears briefly!"))
-	return ..()
 
-/obj/effect/proc_holder/spell/invoked/utility/probability_warp
+/datum/action/cooldown/spell/essence/probability_warp
 	name = "Probability Warp"
 	desc = "Alters the likelihood of minor events occurring."
-	overlay_state = "probability_warp"
-	range = 3
-	cost = 7
+	button_icon_state = "probability_warp"
+	cast_range = 3
+	point_cost = 7
 	attunements = list(/datum/attunement/fire, /datum/attunement/fire)
 
-/obj/effect/proc_holder/spell/invoked/utility/probability_warp/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/probability_warp/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] warps probability in the local area."))
+	owner.visible_message(span_notice("[owner] warps probability in the local area."))
 
 	for(var/mob/living/M in range(2, target_turf))
 		M.apply_status_effect(/datum/status_effect/buff/probability_flux, 60 SECONDS)
-	return ..()
 
-/obj/effect/proc_holder/spell/invoked/utility/toxic_cleanse
+/datum/action/cooldown/spell/essence/toxic_cleanse
 	name = "Toxic Cleanse"
 	desc = "Completely purges an area of all toxic substances and poisons."
-	overlay_state = "toxic_cleanse"
-	range = 3
-	cost = 7
+	button_icon_state = "toxic_cleanse"
+	cast_range = 3
+	point_cost = 7
 	attunements = list(/datum/attunement/life, /datum/attunement/blood)
 
-/obj/effect/proc_holder/spell/invoked/utility/toxic_cleanse/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/toxic_cleanse/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] cleanses all toxins from the area."))
+	owner.visible_message(span_notice("[owner] cleanses all toxins from the area."))
 
 	for(var/mob/living/M in range(2, target_turf))
 		M.reagents?.remove_all_type(/datum/reagent/toxin)
 		M.apply_status_effect(/datum/status_effect/buff/toxin_immunity, 300 SECONDS)
-	return ..()
 
 // Magic + Crystal Combo Spells
-/obj/effect/proc_holder/spell/invoked/utility/spell_crystal
+/datum/action/cooldown/spell/essence/spell_crystal
 	name = "Spell Crystal"
 	desc = "Creates a crystal that can store and later release a spell."
-	overlay_state = "spell_crystal"
-	range = 1
-	cost = 9
+	button_icon_state = "spell_crystal"
+	cast_range = 1
+	point_cost = 9
 	attunements = list(/datum/attunement/light, /datum/attunement/earth)
 
-/obj/effect/proc_holder/spell/invoked/utility/spell_crystal/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/spell_crystal/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] creates a crystal capable of storing magical energy."))
+	owner.visible_message(span_notice("[owner] creates a crystal capable of storing magical energy."))
 
 	new /obj/item/spell_crystal(target_turf)
-	return ..()
 
-/obj/effect/proc_holder/spell/invoked/utility/arcane_focus
+/datum/action/cooldown/spell/essence/arcane_focus
 	name = "Arcane Focus"
 	desc = "Creates a crystal focus that enhances magical abilities."
-	overlay_state = "arcane_focus"
-	range = 0
-	cost = 8
+	button_icon_state = "arcane_focus"
+	cast_range = 0
+	point_cost = 8
 	attunements = list(/datum/attunement/light, /datum/attunement/earth)
 
-/obj/effect/proc_holder/spell/invoked/utility/arcane_focus/cast(list/targets, mob/living/user)
-	visible_message(span_notice("[user] creates an arcane focusing crystal."))
-	user.apply_status_effect(/datum/status_effect/buff/arcane_focus, 600 SECONDS)
-	return ..()
+/datum/action/cooldown/spell/essence/arcane_focus/cast(atom/cast_on)
+	. = ..()
+	owner.visible_message(span_notice("[owner] creates an arcane focusing crystal."))
+	var/mob/living/L = owner
+	L.apply_status_effect(/datum/status_effect/buff/arcane_focus, 600 SECONDS)
 
 // Energia + Motion Combo Spells
-/obj/effect/proc_holder/spell/invoked/utility/kinetic_burst
+/datum/action/cooldown/spell/essence/kinetic_burst
 	name = "Kinetic Burst"
 	desc = "Releases stored energy as a burst of kinetic force."
-	overlay_state = "kinetic_burst"
-	range = 3
-	cost = 7
+	button_icon_state = "kinetic_burst"
+	cast_range = 3
+	point_cost = 7
 	attunements = list(/datum/attunement/light, /datum/attunement/aeromancy)
 
-/obj/effect/proc_holder/spell/invoked/utility/kinetic_burst/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/kinetic_burst/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] releases a burst of kinetic energy."))
+	owner.visible_message(span_notice("[owner] releases a burst of kinetic energy."))
 
 	for(var/obj/item/I in range(1, target_turf))
 		if(I.w_class <= WEIGHT_CLASS_NORMAL)
-			var/distfromcaster = get_dist(user, I)
-			var/throwtarget = get_edge_target_turf(user, get_dir(user, get_step_away(I, user)))
-			I.safe_throw_at(throwtarget, ((CLAMP((5 - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, 5))), 1,user, force = 5)
+			var/distfromcaster = get_dist(owner, I)
+			var/throwtarget = get_edge_target_turf(owner, get_dir(owner, get_step_away(I, owner)))
+			I.safe_throw_at(throwtarget, ((CLAMP((5 - (CLAMP(distfromcaster - 2, 0, distfromcaster))), 3, 5))), 1,owner, force = 5)
 
 
 	var/obj/effect/temp_visual/kinetic_burst/burst = new(target_turf)
 	QDEL_IN(burst, 5 SECONDS)
-	return ..()
 
-/obj/effect/proc_holder/spell/invoked/utility/momentum_transfer
+/datum/action/cooldown/spell/essence/momentum_transfer
 	name = "Momentum Transfer"
 	desc = "Transfers kinetic energy between objects or creatures."
-	overlay_state = "momentum_transfer"
-	range = 2
-	cost = 6
+	button_icon_state = "momentum_transfer"
+	cast_range = 2
+	point_cost = 6
 	attunements = list(/datum/attunement/light, /datum/attunement/aeromancy)
 
-/obj/effect/proc_holder/spell/invoked/utility/momentum_transfer/cast(list/targets, mob/user)
-	var/atom/target = targets[1]
+/datum/action/cooldown/spell/essence/momentum_transfer/cast(atom/cast_on)
+	. = ..()
+	var/atom/target = cast_on
 	if(!target)
 		return FALSE
-	visible_message(span_notice("[user] transfers momentum to [target]."))
+	owner.visible_message(span_notice("[owner] transfers momentum to [target]."))
 
 	if(ismob(target))
 		var/mob/living/M = target
 		M.apply_status_effect(/datum/status_effect/buff/momentum_boost, 30 SECONDS)
-	return ..()
 
 // Cycle + Life Combo Spells
-/obj/effect/proc_holder/spell/invoked/utility/regeneration_cycle
+/datum/action/cooldown/spell/essence/regeneration_cycle
 	name = "Regeneration Cycle"
 	desc = "Establishes a cycle of continuous healing over time."
-	overlay_state = "regeneration_cycle"
-	range = 1
-	cost = 8
+	button_icon_state = "regeneration_cycle"
+	cast_range = 1
+	point_cost = 8
 	attunements = list(/datum/attunement/light, /datum/attunement/life)
 
-/obj/effect/proc_holder/spell/invoked/utility/regeneration_cycle/cast(list/targets, mob/living/user)
-	var/mob/living/target = targets[1]
+/datum/action/cooldown/spell/essence/regeneration_cycle/cast(atom/cast_on)
+	. = ..()
+	var/mob/living/target = cast_on
 	if(!istype(target))
-		target = user
-	visible_message(span_notice("[target] begins a cycle of natural regeneration."))
+		target = owner
+	owner.visible_message(span_notice("[target] begins a cycle of natural regeneration."))
 	target.apply_status_effect(/datum/status_effect/buff/regeneration_cycle, 300 SECONDS)
-	return ..()
 
-/obj/effect/proc_holder/spell/invoked/utility/growth_acceleration
+/datum/action/cooldown/spell/essence/growth_acceleration
 	name = "Growth Acceleration"
 	desc = "Dramatically speeds up natural growth processes."
-	overlay_state = "growth_acceleration"
-	range = 2
-	cost = 7
+	button_icon_state = "growth_acceleration"
+	cast_range = 2
+	point_cost = 7
 	attunements = list(/datum/attunement/light, /datum/attunement/life)
 
-/obj/effect/proc_holder/spell/invoked/utility/growth_acceleration/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/growth_acceleration/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] accelerates natural growth in the area."))
+	owner.visible_message(span_notice("[owner] accelerates natural growth in the area."))
 
 	for(var/obj/structure/soil/plant in range(1, target_turf))
 		plant.accellerated_growth = world.time + 600 SECONDS
-	return ..()
 
 // RACIAL COMBO SPELLS
 
 // Dwarf Racial Spells
-/obj/effect/proc_holder/spell/invoked/utility/create_beer
+/datum/action/cooldown/spell/essence/create_beer
 	name = "Create Beer"
 	desc = "A dwarven secret - transforms water and grain into fine ale."
-	overlay_state = "create_beer"
-	range = 1
-	cost = 4
+	button_icon_state = "create_beer"
+	cast_range = 1
+	point_cost = 4
 	attunements = list(/datum/attunement/earth, /datum/attunement/blood)
 
-/obj/effect/proc_holder/spell/invoked/utility/create_beer/cast(list/targets, mob/user)
-	var/atom/movable/target = targets[1]
-	visible_message(span_notice("[user] works dwarven brewing magic."))
+/datum/action/cooldown/spell/essence/create_beer/cast(atom/cast_on)
+	. = ..()
+	var/atom/movable/target = cast_on
+	owner.visible_message(span_notice("[owner] works dwarven brewing magic."))
 
 	if(isopenturf(target))
 		var/turf/open/open = target
@@ -1107,66 +1102,67 @@
 		var/obj/item/reagent_containers/glass/glass = target
 		glass.reagents.add_reagent(/datum/reagent/consumable/ethanol/beer, 20)
 
-	return ..()
-
-/obj/effect/proc_holder/spell/invoked/utility/master_forge
+/datum/action/cooldown/spell/essence/master_forge
 	name = "Master Forge"
 	desc = "Creates a temporary forge of legendary dwarven quality."
-	overlay_state = "master_forge"
-	range = 2
-	cost = 8
+	button_icon_state = "master_forge"
+	cast_range = 2
+	point_cost = 8
 	attunements = list(/datum/attunement/fire, /datum/attunement/earth)
 
-/obj/effect/proc_holder/spell/invoked/utility/master_forge/cast(list/targets, mob/user)
-	var/turf/target_turf = get_turf(targets[1])
+/datum/action/cooldown/spell/essence/master_forge/cast(atom/cast_on)
+	. = ..()
+	var/turf/target_turf = get_turf(cast_on)
 	if(!target_turf)
 		return FALSE
-	visible_message(span_notice("[user] creates a forge worthy of the greatest dwarven smiths."))
+	owner.visible_message(span_notice("[owner] creates a forge worthy of the greatest dwarven smiths."))
 
 	var/obj/machinery/light/fueled/forge/arcane/forge = new(target_turf)
 	QDEL_IN(forge, 1800 SECONDS)
-	return ..()
 
-/obj/effect/proc_holder/spell/invoked/utility/ancestral_smithing
+/datum/action/cooldown/spell/essence/ancestral_smithing
 	name = "Ancestral Smithing"
 	desc = "Channels the spirits of ancient dwarven smiths to guide crafting."
-	overlay_state = "ancestral_smithing"
-	range = 0
-	cost = 7
+	button_icon_state = "ancestral_smithing"
+	cast_range = 0
+	point_cost = 7
 	attunements = list(/datum/attunement/fire, /datum/attunement/earth)
 
-/obj/effect/proc_holder/spell/invoked/utility/ancestral_smithing/cast(list/targets, mob/living/user)
-	visible_message(span_notice("[user] calls upon the wisdom of ancient dwarven smiths."))
-	user.apply_status_effect(/datum/status_effect/buff/ancestral_smithing, 600 SECONDS)
-	return ..()
+/datum/action/cooldown/spell/essence/ancestral_smithing/cast(atom/cast_on)
+	. = ..()
+	owner.visible_message(span_notice("[owner] calls upon the wisdom of ancient dwarven smiths."))
+	var/mob/living/L = owner
+	L.apply_status_effect(/datum/status_effect/buff/ancestral_smithing, 600 SECONDS)
 
 // Elf Racial Spells
-/obj/effect/proc_holder/spell/invoked/utility/elven_grace
+/datum/action/cooldown/spell/essence/elven_grace
 	name = "Elven Grace"
 	desc = "Grants the ethereal grace and agility of the ancient elves."
-	overlay_state = "elven_grace"
-	range = 0
-	cost = 6
+	button_icon_state = "elven_grace"
+	cast_range = 0
+	point_cost = 6
 	attunements = list(/datum/attunement/life, /datum/attunement/light)
 
-/obj/effect/proc_holder/spell/invoked/utility/elven_grace/cast(list/targets, mob/living/user)
-	visible_message(span_notice("[user] moves with the grace of the ancient elves."))
-	user.apply_status_effect(/datum/status_effect/buff/elven_grace, 300 SECONDS)
-	return ..()
+/datum/action/cooldown/spell/essence/elven_grace/cast(atom/cast_on)
+	. = ..()
+	owner.visible_message(span_notice("[owner] moves with the grace of the ancient elves."))
+	var/mob/living/L = owner
+	L.apply_status_effect(/datum/status_effect/buff/elven_grace, 300 SECONDS)
 
 // Human Racial Spells
-/obj/effect/proc_holder/spell/invoked/utility/balanced_mind
+/datum/action/cooldown/spell/essence/balanced_mind
 	name = "Balanced Mind"
 	desc = "Achieves perfect mental balance between order and chaos."
-	overlay_state = "balanced_mind"
-	range = 0
-	cost = 6
+	button_icon_state = "balanced_mind"
+	cast_range = 0
+	point_cost = 6
 	attunements = list(/datum/attunement/earth, /datum/attunement/fire)
 
-/obj/effect/proc_holder/spell/invoked/utility/balanced_mind/cast(list/targets, mob/living/user)
-	visible_message(span_notice("[user] achieves perfect mental equilibrium."))
-	user.apply_status_effect(/datum/status_effect/buff/balanced_mind, 450 SECONDS)
-	return ..()
+/datum/action/cooldown/spell/essence/balanced_mind/cast(atom/cast_on)
+	. = ..()
+	owner.visible_message(span_notice("[owner] achieves perfect mental equilibrium."))
+	var/mob/living/L = owner
+	L.apply_status_effect(/datum/status_effect/buff/balanced_mind, 450 SECONDS)
 
 // Supporting structures and items for the new spells
 /obj/effect/temp_visual/brilliant_flame
@@ -1178,7 +1174,7 @@
 
 /obj/effect/temp_visual/brilliant_flame/Initialize()
 	. = ..()
-	propagate_temp_change(30, 8, 0.6, 3) // Moderate heat, good range
+	propagate_temp_change(30, 8, 0.6, 3) // Moderate heat, good cast_range
 
 /obj/effect/temp_visual/brilliant_flame/Destroy()
 	remove_temp_effect()
@@ -1235,7 +1231,7 @@
 /obj/effect/temp_visual/forge_heat/Initialize()
 	. = ..()
 	// Start heat propagation when created
-	propagate_temp_change(50, 10, 0.7, 2) // High heat, medium weight, decent falloff, short range
+	propagate_temp_change(50, 10, 0.7, 2) // High heat, medium weight, decent falloff, short cast_range
 
 /obj/effect/temp_visual/forge_heat/Destroy()
 	remove_temp_effect()
@@ -1302,10 +1298,12 @@
 	duration = 30 SECONDS
 
 /datum/status_effect/buff/wind_walking/on_apply()
+	. = ..()
 	owner.add_movespeed_modifier("wind_walking", multiplicative_slowdown = -0.3)
 	to_chat(owner, span_notice("You step upon the wind itself!"))
 
 /datum/status_effect/buff/wind_walking/on_remove()
+	. = ..()
 	owner.remove_movespeed_modifier("wind_walking")
 
 /datum/status_effect/buff/aerial_speed
@@ -1313,12 +1311,13 @@
 	alert_type = /atom/movable/screen/alert/status_effect/aerial_speed
 	duration = 15 SECONDS
 
-
 /datum/status_effect/buff/aerial_speed/on_apply()
+	. = ..()
 	owner.add_movespeed_modifier("aerial_speed", multiplicative_slowdown = -0.5)
 	to_chat(owner, span_notice("Air currents propel you forward!"))
 
 /datum/status_effect/buff/aerial_speed/on_remove()
+	. = ..()
 	owner.remove_movespeed_modifier("aerial_speed")
 
 /datum/status_effect/buff/probability_flux
@@ -1333,10 +1332,12 @@
 	duration = 300 SECONDS
 
 /datum/status_effect/buff/toxin_immunity/on_apply()
+	. = ..()
 	ADD_TRAIT(owner, TRAIT_TOXINLOVER, MAGIC_TRAIT)
 	to_chat(owner, span_notice("Toxins cannot harm you!"))
 
 /datum/status_effect/buff/toxin_immunity/on_remove()
+	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_TOXINLOVER, MAGIC_TRAIT)
 
 /datum/status_effect/buff/arcane_focus
@@ -1345,11 +1346,20 @@
 	duration = 600 SECONDS
 
 /datum/status_effect/buff/arcane_focus/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		for(var/obj/effect/proc_holder/spell/S in H.mind?.spell_list)
-			S.charge_counter = S.recharge_time
-	to_chat(owner, span_notice("Your magical focus intensifies!"))
+	. = ..()
+	if(isliving(owner))
+		var/mob/living/L = owner
+		for(var/datum/action/cooldown/spell/spell in L.actions)
+			spell.charge_required = FALSE
+		to_chat(owner, span_notice("Your magical focus intensifies!"))
+
+/datum/status_effect/buff/arcane_focus/on_remove()
+	. = ..()
+	if(isliving(owner))
+		var/mob/living/L = owner
+		for(var/datum/action/cooldown/spell/spell in L.actions)
+			spell.charge_required = initial(spell.charge_required)
+		to_chat(owner, span_notice("Your magical focus returns to normal!"))
 
 /datum/status_effect/buff/momentum_boost
 	id = "momentum_boost"
@@ -1357,11 +1367,13 @@
 	duration = 30 SECONDS
 
 /datum/status_effect/buff/momentum_boost/on_apply()
+	. = ..()
 	owner.add_movespeed_modifier("momentum", multiplicative_slowdown = -0.4)
 	ADD_TRAIT(owner, TRAIT_PUSHIMMUNE, MAGIC_TRAIT)
 	to_chat(owner, span_notice("Kinetic energy surges through you!"))
 
 /datum/status_effect/buff/momentum_boost/on_remove()
+	. = ..()
 	owner.remove_movespeed_modifier("momentum")
 	REMOVE_TRAIT(owner, TRAIT_PUSHIMMUNE, MAGIC_TRAIT)
 
@@ -1387,9 +1399,11 @@
 	duration = 300 SECONDS
 
 /datum/status_effect/buff/elven_grace/on_apply()
+	. = ..()
 	owner.add_movespeed_modifier("elven_grace", multiplicative_slowdown = -0.2)
 
 /datum/status_effect/buff/elven_grace/on_remove()
+	. = ..()
 	owner.remove_movespeed_modifier("elven_grace")
 
 /datum/status_effect/buff/balanced_mind
@@ -1480,11 +1494,13 @@
 	duration = 15 SECONDS
 
 /datum/status_effect/buff/air_walking/on_apply()
+	. = ..()
 	ADD_TRAIT(owner, TRAIT_HOLLOWBONES, MAGIC_TRAIT)
 	owner.movement_type |= FLYING
 	to_chat(owner, span_notice("You feel light as air, able to step over gaps and chasms."))
 
 /datum/status_effect/buff/air_walking/on_remove()
+	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_HOLLOWBONES, MAGIC_TRAIT)
 	owner.movement_type &= ~FLYING
 	to_chat(owner, span_notice("Your feet return to solid ground."))
@@ -1495,10 +1511,12 @@
 	duration = 60 SECONDS
 
 /datum/status_effect/buff/water_breathing/on_apply()
+	. = ..()
 	ADD_TRAIT(owner, TRAIT_WATER_BREATHING, MAGIC_TRAIT)
 	to_chat(owner, span_notice("You can now breathe underwater."))
 
 /datum/status_effect/buff/water_breathing/on_remove()
+	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_WATER_BREATHING, MAGIC_TRAIT)
 	to_chat(owner, span_notice("Your ability to breathe underwater fades."))
 
@@ -1508,11 +1526,13 @@
 	duration = 120 SECONDS
 
 /datum/status_effect/buff/warmth/on_apply()
+	. = ..()
 	ADD_TRAIT(owner, TRAIT_RESISTCOLD, MAGIC_TRAIT)
 	owner.bodytemperature = max(owner.bodytemperature, BODYTEMP_NORMAL)
 	to_chat(owner, span_notice("A gentle warmth spreads through your body."))
 
 /datum/status_effect/buff/warmth/on_remove()
+	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_RESISTCOLD, MAGIC_TRAIT)
 	to_chat(owner, span_notice("The magical warmth fades away."))
 
@@ -1522,11 +1542,13 @@
 	duration = 5 SECONDS
 
 /datum/status_effect/buff/phase_walking/on_apply()
+	. = ..()
 	owner.pass_flags |= PASSMOB | PASSBLOB | PASSTABLE | PASSGLASS
 	owner.alpha = 128
 	to_chat(owner, span_notice("You become translucent and can pass through objects."))
 
 /datum/status_effect/buff/phase_walking/on_remove()
+	. = ..()
 	owner.pass_flags &= ~(PASSMOB | PASSBLOB | PASSTABLE | PASSGLASS)
 	owner.alpha = 255
 	to_chat(owner, span_notice("You return to solid form."))
@@ -1538,6 +1560,7 @@
 	effectedstats = list("strength" = 1, "endurance" = 1)
 
 /datum/status_effect/buff/vigor/on_apply()
+	. = ..()
 	if(isliving(owner))
 		var/mob/living/L = owner
 		L.adjust_stamina(50)
@@ -1545,6 +1568,7 @@
 		to_chat(owner, span_notice("You feel invigorated with supernatural strength."))
 
 /datum/status_effect/buff/vigor/on_remove()
+	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_STRONG_GRABBER, MAGIC_TRAIT)
 	to_chat(owner, span_notice("The supernatural vigor fades."))
 
@@ -1554,12 +1578,14 @@
 	duration = 600 SECONDS
 
 /datum/status_effect/buff/seasonal_attunement/on_apply()
+	. = ..()
 	// Minor resistances based on current season/time
 	ADD_TRAIT(owner, TRAIT_RESISTCOLD, MAGIC_TRAIT)
 	ADD_TRAIT(owner, TRAIT_RESISTHEAT, MAGIC_TRAIT)
 	to_chat(owner, span_notice("You harmonize with the natural cycles."))
 
 /datum/status_effect/buff/seasonal_attunement/on_remove()
+	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_RESISTCOLD, MAGIC_TRAIT)
 	REMOVE_TRAIT(owner, TRAIT_RESISTHEAT, MAGIC_TRAIT)
 	to_chat(owner, span_notice("Your connection to natural cycles fades."))

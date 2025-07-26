@@ -338,7 +338,7 @@
 
 
 /obj/item/weapon/mace/goden/steel/malum
-	name = "Forgefiend"
+	name = "forgefiend"
 	desc = "This hammer's creation took a riddle in its own making. A great sacrifice for perfect quality"
 	icon_state = "malumhammer"
 	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash/heavy)
@@ -356,7 +356,10 @@
 	sellprice = 100
 	wdefense = GOOD_PARRY
 	minstr = 11
-	is_silver = TRUE
+
+/obj/item/weapon/mace/goden/psydon/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 /obj/item/weapon/mace/goden/psydon/getonmobprop(tag)
 	. = ..()

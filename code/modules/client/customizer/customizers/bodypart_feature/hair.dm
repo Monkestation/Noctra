@@ -179,7 +179,7 @@
 		/datum/sprite_accessory/hair/head/warrior,
 		/datum/sprite_accessory/hair/head/wildside,
 		/datum/sprite_accessory/hair/head/woodsman_elf,
-		/datum/sprite_accessory/hair/head/zybantu,
+		/datum/sprite_accessory/hair/head/zaladin,
 		/datum/sprite_accessory/hair/head/vagabond,
 		/datum/sprite_accessory/hair/head/steward,
 		/datum/sprite_accessory/hair/head/amazon,
@@ -318,6 +318,21 @@
 		/datum/sprite_accessory/hair/head/triton/gorgon,
 		/datum/sprite_accessory/hair/head/triton/lion,
 		/datum/sprite_accessory/hair/head/triton/betta,
+	)
+
+/datum/customizer/bodypart_feature/hair/head/humanoid/medicator
+	customizer_choices = list(/datum/customizer_choice/bodypart_feature/hair/head/humanoid/medicator)
+
+/datum/customizer_choice/bodypart_feature/hair/head/humanoid/medicator
+	sprite_accessories = list(
+		/datum/sprite_accessory/hair/head/bald,
+		/datum/sprite_accessory/hair/head/medicator/windswept,
+		/datum/sprite_accessory/hair/head/medicator/curl,
+		/datum/sprite_accessory/hair/head/medicator/spencer,
+		/datum/sprite_accessory/hair/head/medicator/dynamic,
+		/datum/sprite_accessory/hair/head/medicator/jockey,
+		/datum/sprite_accessory/hair/head/medicator/hook,
+		/datum/sprite_accessory/hair/head/medicator/crown,
 	)
 
 // ===== FACIAL HAIR

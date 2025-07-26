@@ -3,16 +3,18 @@
 
 /datum/species/harpy
 	name = "Harpy"
-	id = "harpy"
+	id = SPEC_ID_HARPY
 	desc = "Harpies, or less ceremoniously known as 'magpies,' resemble the despised hollow-kin in appearance at first glance. \
 	One would rightfully assume they are similar in nature- with accuracy even, much to the harpies' chagrin. \
 	Harpies have been uplifted and reconnected to divinity by Eora, having developed culture of music and song which caught the attention of such a goddess. \
 	Their songs and voices may be their own, or proud mimicking other voices they've heard with unnatural accuracy. \
 	\
 	Whilst harpies may fly, their freedom is weighed by corruption of fleshcrafting to this day. Complete open-air freedom is still foreign to them. \
-	Harpies tend to live and gather in colonies at the tops of great sequoia forests and in nearby cliffs. Due to their burden, they must employ use of updrafts and proximity to large objects or structures to bolster their limited flight and air-dancing performances. \
-	Their serene songs and blissful music can be heard echoing far below, guiding travelers and thieves both to respite... or treasure. For as lifted into grace as they might be, these 'magpies' earn such a nickname from Matthiosan greed and love for anything that shines. \
-	Yet if one can work past that distrust and compensate them well, harpies make for unparalleled couriers. "
+	Harpies tend to live and gather in colonies at the tops of great sequoia forests and in nearby cliffs. Due to their laden flight, they must employ use of updrafts and proximity to large objects or structures to bolster their limited range and air-dancing performances. \
+	Their serene songs and blissful music can be heard echoing far below, guiding travelers and thieves both to respite... or treasure. For as lifted into grace as they might be, these 'magpies' earn such a nickname from instinctual Matthiosan greed and love for anything that shines. \
+	Yet if one can work past that distrust and compensate them well, harpies make for unparalleled couriers. \
+	\
+	Harpies and Feculents often find themselves in conflict, mirroring the quarrels of their patrons, whether of conscious faith or not."
 
 	skin_tone_wording = "Heritage"
 	default_color = "FFFFFF"
@@ -153,7 +155,7 @@
 
 /datum/species/harpy/on_species_gain(mob/living/carbon/foreign, datum/species/old_species)
 	..()
-	foreign.AddComponent(/datum/component/abberant_eater, list(/obj/item/herbseed, /obj/item/neuFarm/seed))
+	foreign.AddComponent(/datum/component/abberant_eater, list(/obj/item/neuFarm/seed))
 	foreign.grant_language(/datum/language/common)
 
 /datum/species/harpy/get_skin_list()

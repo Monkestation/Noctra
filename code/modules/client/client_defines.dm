@@ -84,6 +84,8 @@
 	var/mouse_up_icon = null
 	///used to make a special mouse cursor, this one for mouse up icon
 	var/mouse_down_icon = null
+	///used to override the mouse cursor so it doesnt get reset
+	var/mouse_override_icon = null
 
 	///datum that controls the displaying and hiding of tooltips
 	var/datum/tooltip/tooltips
@@ -134,13 +136,15 @@
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
+	var/datum/viewData/view_size
 
 	var/list/current_weathers = list()
 	var/last_lighting_update = 0
 
 	var/loop_sound = FALSE
 	var/rain_sound = FALSE
-	var/last_droning_sound
-	var/sound/droning_sound
+
+	///Which ambient sound this client is currently being provided
+	var/current_ambient_sound
 
 	var/list/triumph_ids = list() //I am not sure if i should put it here, but if it work? this check for specific triumph IDs.

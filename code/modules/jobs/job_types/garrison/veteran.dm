@@ -15,7 +15,7 @@
 	//Should...probably actually be a veteran of at least a few weeks before trying to teach others
 	min_pq = 10
 
-	spells = list(/obj/effect/proc_holder/spell/self/convertrole/town_militia)
+	spells = list(/datum/action/cooldown/spell/undirected/list_target/convert_role/militia)
 	allowed_sexes = list(MALE, FEMALE) //same as town guard
 	allowed_ages = list(AGE_OLD, AGE_IMMORTAL)
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
@@ -214,14 +214,14 @@
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 
 	H.adjust_blindness(-3)
-	var/weapons = list("Sword + Recurve Bow","Axe + Crossbow","Spear + Shield")
+	var/weapons = list("Sword + Short Bow","Axe + Crossbow","Spear + Shield")
 	var/weapon_choice = input("Choose your weapon.", "TAKE UP ARMS") as anything in weapons
 	H.set_blindness(0)
 	switch(weapon_choice)
-		if("Sword + Recurve Bow")
+		if("Sword + Short Bow")
 			r_hand = /obj/item/weapon/sword/long
 			beltl = /obj/item/ammo_holder/quiver/arrows
-			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/short
 
 		if("Axe + Crossbow")
 			r_hand = /obj/item/weapon/axe/steel

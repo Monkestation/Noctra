@@ -51,7 +51,7 @@
 
 	ai_controller = /datum/ai_controller/watcher
 
-
+	del_on_death = TRUE
 
 /mob/living/simple_animal/hostile/retaliate/infernal/watcher/Initialize()
 	. = ..()
@@ -61,7 +61,6 @@
 	return
 
 /mob/living/simple_animal/hostile/retaliate/infernal/watcher/death(gibbed)
-	..()
 	var/turf/deathspot = get_turf(src)
 	new /obj/item/natural/moltencore(deathspot)
 	new /obj/item/natural/moltencore(deathspot)
@@ -70,7 +69,5 @@
 	new /obj/item/natural/infernalash(deathspot)
 	new /obj/item/natural/infernalash(deathspot)
 	new /obj/item/natural/melded/t1(deathspot)
-
-	update_appearance()
 	spill_embedded_objects()
-	qdel(src)
+	return ..()

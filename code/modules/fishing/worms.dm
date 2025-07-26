@@ -37,7 +37,7 @@
 		/obj/item/reagent_containers/food/snacks/fish/clownfish = 1,
 	)
 
-/obj/item/natural/worms/grub_silk/attack_self(mob/living/user)
+/obj/item/natural/worms/grub_silk/attack_self(mob/living/user, params)
 	user.visible_message(span_notice("[user] crushes [src], forcing the silk out."), span_notice("I crush [src], forcing the silk out."))
 	playsound(get_turf(src), 'sound/foley/meatslap.ogg', 100, TRUE, -1)
 	var/obj/item/natural/silk/M = new

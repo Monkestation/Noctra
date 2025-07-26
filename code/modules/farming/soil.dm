@@ -10,6 +10,23 @@
 #define QUALITY_GOLD 4
 #define QUALITY_DIAMOND 5
 
+#define BLESSING_WEED_DECAY_RATE 10 / (1 MINUTES)
+#define WEED_GROWTH_RATE 3 / (1 MINUTES)
+#define WEED_DECAY_RATE 5 / (1 MINUTES)
+#define WEED_RESISTANCE_DECAY_RATE 20 / (1 MINUTES)
+
+// These get multiplied by 0.0 to 1.0 depending on amount of weeds
+#define WEED_WATER_CONSUMPTION_RATE 5 / (1 MINUTES)
+#define WEED_NUTRITION_CONSUMPTION_RATE 5 / (1 MINUTES)
+
+#define PLANT_REGENERATION_RATE 10 / (1 MINUTES)
+#define PLANT_DECAY_RATE 10 / (1 MINUTES)
+#define PLANT_BLESS_HEAL_RATE 20 / (1 MINUTES)
+#define PLANT_WEEDS_HARM_RATE 10 / (1 MINUTES)
+
+#define SOIL_WATER_DECAY_RATE 0.5 / (1 MINUTES)
+#define SOIL_NUTRIMENT_DECAY_RATE 0.5 / (1 MINUTES)
+
 /obj/structure/soil
 	name = "soil"
 	desc = "Dirt, ready to give life like a womb."
@@ -89,7 +106,7 @@
 
 	record_featured_stat(FEATURED_STATS_FARMERS, user)
 	record_featured_object_stat(FEATURED_STATS_CROPS, plant.name)
-	GLOB.vanderlin_round_stats[STATS_PLANTS_HARVESTED]++
+	record_round_statistic(STATS_PLANTS_HARVESTED)
 	to_chat(user, span_notice(feedback))
 	yield_produce(modifier)
 
@@ -113,7 +130,7 @@
 		if(LAZYLEN(seeds))
 			attacking_item = pick(seeds)
 
-	if(istype(attacking_item, /obj/item/neuFarm/seed) || istype(attacking_item, /obj/item/herbseed)) //SLOP OBJECT PROC SHARING
+	if(istype(attacking_item, /obj/item/neuFarm/seed)) //SLOP OBJECT PROC SHARING
 		playsound(src, pick('sound/foley/touch1.ogg','sound/foley/touch2.ogg','sound/foley/touch3.ogg'), 170, TRUE)
 		if(do_after(user, get_farming_do_time(user, 15), src))
 			if(old_item)
@@ -245,14 +262,23 @@
 		return
 	. = ..()
 
-/obj/structure/soil/attack_right(mob/user)
+/obj/structure/soil/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	user.changeNext_move(CLICK_CD_FAST)
-	var/obj/item = user.get_active_held_item()
-	if(try_handle_deweed(item, user, null))
+	if(try_handle_deweed(null, user, null))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/structure/soil/attackby_secondary(obj/item/weapon, mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(try_handle_flatten(item, user, null))
-		return
-	return ..()
+	user.changeNext_move(CLICK_CD_FAST)
+	if(try_handle_deweed(weapon, user, null))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(try_handle_flatten(weapon, user, null))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/soil/attackby(obj/item/attacking_item, mob/user, params)
 	user.changeNext_move(CLICK_CD_FAST)
@@ -388,16 +414,20 @@
 		. += "weeds-1"
 
 /obj/structure/soil/proc/get_water_overlay()
-	var/mutable_appearance/water_ma = mutable_appearance(icon, "soil-overlay")
-	water_ma.color = "#000033"
-	water_ma.alpha = 100 * (water / MAX_PLANT_WATER)
-	return water_ma
+	return mutable_appearance(
+		icon,\
+		"soil-overlay",\
+		color = "#000033",\
+		alpha = (100 * (water / MAX_PLANT_WATER)),\
+	)
 
 /obj/structure/soil/proc/get_nutri_overlay()
-	var/mutable_appearance/nutri_ma = mutable_appearance(icon, "soil-overlay")
-	nutri_ma.color = "#6d3a00"
-	nutri_ma.alpha = 50 * (nutrition / MAX_PLANT_NUTRITION)
-	return nutri_ma
+	return mutable_appearance(
+		icon,\
+		"soil-overlay",\
+		color = "#6d3a00",\
+		alpha = (50 * (nutrition / MAX_PLANT_NUTRITION)),\
+	)
 
 /obj/structure/soil/proc/get_plant_overlay()
 	var/plant_color
@@ -415,9 +445,14 @@
 			plant_state = "[plant.icon_state]1"
 		else
 			plant_state = "[plant.icon_state]0"
-	var/mutable_appearance/plant_ma = mutable_appearance(plant.icon, plant_state)
-	plant_ma.color = plant_color
-	return plant_ma
+
+	if(istype(plant, /datum/plant_def/alchemical))
+		if(plant_state == "[plant.icon_state]0")
+			plant_state = "herb0"
+		else if(plant_state == "[plant.icon_state]3")
+			plant_state = "herb3"
+
+	return mutable_appearance(plant.icon, plant_state, color = plant_color)
 
 /obj/structure/soil/examine(mob/user)
 	. = ..()
@@ -466,15 +501,6 @@
 	if(pollination_time > 0)
 		. += span_good("The soil has been pollinated.")
 
-#define BLESSING_WEED_DECAY_RATE 10 / (1 MINUTES)
-#define WEED_GROWTH_RATE 3 / (1 MINUTES)
-#define WEED_DECAY_RATE 5 / (1 MINUTES)
-#define WEED_RESISTANCE_DECAY_RATE 20 / (1 MINUTES)
-
-// These get multiplied by 0.0 to 1.0 depending on amount of weeds
-#define WEED_WATER_CONSUMPTION_RATE 5 / (1 MINUTES)
-#define WEED_NUTRITION_CONSUMPTION_RATE 5 / (1 MINUTES)
-
 /obj/structure/soil/proc/process_weeds(dt)
 	// Blessed soil will have the weeds die
 	if(blessed_time > 0)
@@ -493,12 +519,6 @@
 	adjust_nutrition(-dt * weed_factor * WEED_NUTRITION_CONSUMPTION_RATE)
 	if(nutrition > 0)
 		adjust_weeds(dt * WEED_GROWTH_RATE)
-
-
-#define PLANT_REGENERATION_RATE 10 / (1 MINUTES)
-#define PLANT_DECAY_RATE 10 / (1 MINUTES)
-#define PLANT_BLESS_HEAL_RATE 20 / (1 MINUTES)
-#define PLANT_WEEDS_HARM_RATE 10 / (1 MINUTES)
 
 /obj/structure/soil/proc/process_plant(dt)
 	if(!plant)
@@ -687,9 +707,6 @@
 		produce_ready = TRUE
 		return TRUE
 
-#define SOIL_WATER_DECAY_RATE 0.5 / (1 MINUTES)
-#define SOIL_NUTRIMENT_DECAY_RATE 0.5 / (1 MINUTES)
-
 /obj/structure/soil/proc/process_soil(dt)
 	var/found_irrigation = FALSE
 	for(var/obj/structure/irrigation_channel/channel in range(1, src))
@@ -755,15 +772,16 @@
 
 	// Quality modifiers
 	var/quality_modifier = 0
-	switch(crop_quality)
-		if(QUALITY_BRONZE)
-			quality_modifier = 1
-		if(QUALITY_SILVER)
-			quality_modifier = 2
-		if(QUALITY_GOLD)
-			quality_modifier = 3
-		if(QUALITY_DIAMOND)
-			quality_modifier = 4
+	if(!istype(plant, /datum/plant_def/alchemical))
+		switch(crop_quality)
+			if(QUALITY_BRONZE)
+				quality_modifier = 1
+			if(QUALITY_SILVER)
+				quality_modifier = 2
+			if(QUALITY_GOLD)
+				quality_modifier = 3
+			if(QUALITY_DIAMOND)
+				quality_modifier = 4
 
 	// Calculate final yield amount
 	var/spawn_amount = max(base_amount + modifier + quality_modifier, 1)
@@ -815,3 +833,31 @@
 	insert_plant(GLOB.plant_defs[initial(seed_to_grow.plant_def_type)])
 	add_growth(plant.maturation_time)
 	add_growth(plant.produce_time)
+
+#undef MAX_PLANT_HEALTH
+#undef MAX_PLANT_WATER
+#undef MAX_PLANT_NUTRITION
+#undef MAX_PLANT_WEEDS
+#undef SOIL_DECAY_TIME
+
+#undef QUALITY_REGULAR
+#undef QUALITY_BRONZE
+#undef QUALITY_SILVER
+#undef QUALITY_GOLD
+#undef QUALITY_DIAMOND
+
+#undef BLESSING_WEED_DECAY_RATE
+#undef WEED_GROWTH_RATE
+#undef WEED_DECAY_RATE
+#undef WEED_RESISTANCE_DECAY_RATE
+
+#undef WEED_WATER_CONSUMPTION_RATE
+#undef WEED_NUTRITION_CONSUMPTION_RATE
+
+#undef PLANT_REGENERATION_RATE
+#undef PLANT_DECAY_RATE
+#undef PLANT_BLESS_HEAL_RATE
+#undef PLANT_WEEDS_HARM_RATE
+
+#undef SOIL_WATER_DECAY_RATE
+#undef SOIL_NUTRIMENT_DECAY_RATE

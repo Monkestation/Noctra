@@ -35,17 +35,23 @@
 
 	///Cache of the possible light overlays, according to size.
 	var/static/list/light_overlays = list(
-		"32" = 'icons/effects/light_overlays/light_32.dmi',
+		"32" = 'icons/effects/light_overlays/light_32.dmi', // range = 1
 		"64" = 'icons/effects/light_overlays/light_64.dmi',
-		"96" = 'icons/effects/light_overlays/light_96.dmi',
+		"96" = 'icons/effects/light_overlays/light_96.dmi', // range = 2
 		"128" = 'icons/effects/light_overlays/light_128.dmi',
-		"160" = 'icons/effects/light_overlays/light_160.dmi',
+		"160" = 'icons/effects/light_overlays/light_160.dmi', // range = 3
 		"192" = 'icons/effects/light_overlays/light_192.dmi',
-		"224" = 'icons/effects/light_overlays/light_224.dmi',
+		"224" = 'icons/effects/light_overlays/light_224.dmi', // range = 4
 		"256" = 'icons/effects/light_overlays/light_256.dmi',
-		"288" = 'icons/effects/light_overlays/light_288.dmi',
+		"288" = 'icons/effects/light_overlays/light_288.dmi', // range = 5
 		"320" = 'icons/effects/light_overlays/light_320.dmi',
-		"352" = 'icons/effects/light_overlays/light_352.dmi',
+		"352" = 'icons/effects/light_overlays/light_352.dmi', // range = 6
+		"384" = 'icons/effects/light_overlays/light_384.dmi',
+		"416" = 'icons/effects/light_overlays/light_416.dmi', // range = 7
+		"448" = 'icons/effects/light_overlays/light_448.dmi',
+		"480" = 'icons/effects/light_overlays/light_480.dmi', // range = 8
+		"512" = 'icons/effects/light_overlays/light_512.dmi',
+		"544" = 'icons/effects/light_overlays/light_544.dmi', // range = 9
 		)
 
 	///Overlay effect to cut into the darkness and provide light.
@@ -86,7 +92,7 @@
 /datum/component/overlay_lighting/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_parent_moved))
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_RANGE, PROC_REF(set_range)) // proc handles old values
+	RegisterSignal(parent, COMSIG_ATOM_SET_LIGHT_RANGE, PROC_REF(set_range)) // proc handles old values
 	RegisterSignal(parent, COMSIG_ATOM_SET_LIGHT_POWER, PROC_REF(set_power))
 	RegisterSignal(parent, COMSIG_ATOM_SET_LIGHT_COLOR, PROC_REF(set_color))
 	RegisterSignal(parent, COMSIG_ATOM_SET_LIGHT_ON, PROC_REF(on_toggle))
@@ -98,7 +104,6 @@
 	check_holder()
 	if(movable_parent.light_on)
 		turn_on()
-
 
 /datum/component/overlay_lighting/UnregisterFromParent()
 	overlay_lighting_flags &= ~LIGHTING_ATTACHED
@@ -266,7 +271,7 @@
 	make_luminosity_update()
 
 
-///Changes the range which the light reaches. 0 means no light, 6 is the maximum value.
+///Changes the range which the light reaches. 0 means no light, 9 is the maximum value.
 /datum/component/overlay_lighting/proc/set_range(atom/source, old_inner_range, old_outer_range)
 	SIGNAL_HANDLER
 	var/new_range = source.light_outer_range
@@ -274,7 +279,7 @@
 		return
 	if(range == 0)
 		turn_off()
-	range = clamp(CEILING(new_range, 0.5), 1, 6)
+	range = clamp(CEILING(new_range, 0.5), 1, 9)
 	var/pixel_bounds = ((range - 1) * 64) + 32
 	lumcount_range = CEILING(range, 1)
 	visible_mask.icon = light_overlays["[pixel_bounds]"]

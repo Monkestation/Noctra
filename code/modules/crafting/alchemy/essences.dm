@@ -13,7 +13,7 @@
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/item/essence_vial/attack_self(mob/user)
+/obj/item/essence_vial/attack_self(mob/user, params)
 	if(extract_amount == 10)
 		extract_amount = 1
 	else
@@ -28,15 +28,9 @@
 	. = ..()
 	if(!contained_essence || essence_amount < 0)
 		return
-	icon_state = "essence_vial"
-	var/mutable_appearance/essence_overlay = mutable_appearance(icon, "essence_liquid")
-	essence_overlay.color = contained_essence.color
-	essence_overlay.alpha = min(255, 100 + (essence_amount * 15))
-	. += essence_overlay
-	var/mutable_appearance/emissive = mutable_appearance(icon, "essence_liquid")
-	emissive.plane = EMISSIVE_PLANE
-	emissive.alpha = min(255, 100 + (essence_amount * 15))
-	. += emissive
+	var/used_alpha = min(255, 100 + (essence_amount * 15))
+	. += mutable_appearance(icon, "essence_liquid", alpha = used_alpha, color = contained_essence.color)
+	. += emissive_appearance(icon, "essence_liquid", alpha = used_alpha)
 
 /obj/item/essence_vial/examine(mob/user)
 	. = ..()

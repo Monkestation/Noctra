@@ -1,9 +1,3 @@
-/obj/effect/faux_density
-	name = ""
-	desc = ""
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	density = TRUE
-
 /obj/structure/mana_pylon
 	name = "mana pylon"
 	desc = ""
@@ -15,12 +9,10 @@
 	layer = ABOVE_MOB_LAYER
 	light_outer_range = MINIMUM_USEFUL_LIGHT_RANGE
 	light_color = COLOR_CYAN
-
-	extra_directions = list(SOUTH)
+	density = TRUE
 
 	var/obj/structure/mana_pylon/linked_pylon
 	var/datum/beam/created_beam
-	var/obj/effect/faux_density/fake_density
 
 	var/list/transferring_mobs = list()
 
@@ -36,14 +28,6 @@
 
 /obj/structure/mana_pylon/Initialize()
 	. = ..()
-	fake_density = new(get_turf(src))
-	fake_density.icon = icon
-	fake_density.icon_state = icon_state
-
-	pixel_y = -32
-	var/turf/step_up = get_step(src, NORTH) //this is dumb but for beams it makes it work
-	if(step_up)
-		forceMove(step_up)
 
 	update_appearance(UPDATE_OVERLAYS)
 	set_light(1.4, 1.4, 0.75, l_color = COLOR_CYAN)
@@ -51,7 +35,6 @@
 /obj/structure/mana_pylon/Destroy()
 	if(linked_pylon)
 		unlink_pylon(linked_pylon)
-	QDEL_NULL(fake_density)
 	return ..()
 
 /obj/structure/mana_pylon/update_overlays()
@@ -95,7 +78,17 @@
 		unlink_pylon(linked_pylon)
 
 	if(pylon_to_link.z == z)
-		created_beam = LeyBeam(pylon_to_link, icon_state = "medbeam", maxdistance = world.maxx, time = INFINITY)
+		created_beam = Beam(
+			pylon_to_link,
+			icon_state = "medbeam",
+			time = INFINITY,
+			max_distance = world.maxx,
+			beam_layer = LOWER_LEYLINE_LAYER,
+			beam_plane = LEYLINE_PLANE,
+			invisibility = INVISIBILITY_LEYLINES,
+			override_origin_pixel_y = 32,
+			override_target_pixel_y = 32,
+		)
 
 	if(pylon_to_link.z != z)
 		different_z = TRUE
@@ -121,7 +114,7 @@
 		if(!length(mana_pools))
 			return
 
-	var/datum/beam/transfer_beam = user.Beam(src, icon_state = "drain_life", time = INFINITY)
+	var/datum/beam/transfer_beam = user.Beam(src, icon_state = "drain_life", time = INFINITY, override_target_pixel_y = 32)
 
 	var/failed = FALSE
 	while(!failed)
@@ -144,8 +137,11 @@
 		else
 			mana_pool.transfer_specific_mana(user.mana_pool, transfer_amount, decrement_budget = TRUE)
 
-/obj/structure/mana_pylon/attack_right(mob/user)
+/obj/structure/mana_pylon/attack_hand_secondary(mob/user, params)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(user.client)
 		drain_mana(user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

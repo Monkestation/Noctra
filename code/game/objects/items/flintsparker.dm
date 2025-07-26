@@ -14,7 +14,7 @@
 	grid_width = 32
 	var/flintcd = 0
 
-/obj/item/flint/attack_self(mob/living/user)
+/obj/item/flint/attack_self(mob/living/user, params)
 	if(world.time < flintcd + 10)
 		return
 	flintcd = world.time

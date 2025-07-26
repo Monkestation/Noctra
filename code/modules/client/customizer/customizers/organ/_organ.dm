@@ -1,4 +1,3 @@
-
 /datum/customizer_choice/organ
 	abstract_type = /datum/customizer_choice/organ
 	name = "Organ"

@@ -4,7 +4,7 @@
 	name = "Lancer"
 	tutorial = "Working for many years as a famous mercenary in the southern Humen kingdoms, you've started heading north to avoid the skeletons of your past. With your polearm by your side, you can face down any foe."
 	allowed_sexes = list(MALE)
-	allowed_races = list("Humen")
+	allowed_races = list(SPEC_ID_HUMEN)
 	outfit = /datum/outfit/job/adventurer/lancer
 	maximum_possible_slots = 1
 	pickprob = 15
@@ -47,8 +47,8 @@
 	head = /obj/item/clothing/head/rare/zybanplate
 	wrists = /obj/item/clothing/wrists/bracers
 	neck = /obj/item/clothing/neck/chaincoif
-	if(!H.has_language(/datum/language/zybantine))
-		H.grant_language(/datum/language/zybantine)
-		to_chat(H, "<span class='info'>I can speak Zybean with ,z before my speech.</span>")
+	if(!H.has_language(/datum/language/zalad))
+		H.grant_language(/datum/language/zalad)
+		to_chat(H, "<span class='info'>I can speak Zalad with ,z before my speech.</span>")
 
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)

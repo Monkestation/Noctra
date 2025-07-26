@@ -36,12 +36,16 @@
 			return
 	..()
 
-/obj/structure/fluff/millstone/attack_right(mob/living/carbon/human/user)
+/obj/structure/fluff/millstone/attack_hand_secondary(mob/living/carbon/human/user, params)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	var/obj/item/item = input("Choose an item to remove") as anything in millable_contents
 	if(!item)
-		return
-	if(QDELETED(item) || !(item in millable_contents))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(QDELETED(item))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(item in millable_contents)
 		item.forceMove(get_turf(src))
 		millable_contents -= item
 		var/wound_prob = 60
@@ -52,6 +56,7 @@
 			user.flash_fullscreen("redflash3")
 			user.emote("painscream")
 			user.take_overall_damage(4 + rotations_per_minute)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/fluff/millstone/attack_hand(mob/user)
 	var/running = TRUE

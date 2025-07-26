@@ -39,7 +39,7 @@
 		ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC) // Years of mistreatment has culminated in this.
 	H.cmode_music = 'sound/music/cmode/towner/CombatPrisoner.ogg'
-	GLOB.outlawed_players += H.real_name // Don't get caught!
+	GLOB.outlawed_players |= H.real_name // Don't get caught!
 
 /datum/migrant_wave/escprisoner
 	name = "Escaped Prisoner"

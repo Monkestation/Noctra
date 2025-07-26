@@ -62,6 +62,10 @@
 	#endif
 #endif
 
+	// If we have called dump_harddel_info already. Used to avoid duped calls (since we call it immediately in some cases on failure to process)
+	// Create and destroy is weird and I wanna cover my bases
+	var/harddel_deets_dumped = FALSE
+
 #ifdef DATUMVAR_DEBUGGING_MODE
 	var/list/cached_vars
 #endif
@@ -99,8 +103,7 @@
 
 	var/list/timers = active_timers
 	active_timers = null
-	for(var/thing in timers)
-		var/datum/timedevent/timer = thing
+	for(var/datum/timedevent/timer as anything in timers)
 		if(timer.spent && !(timer.flags & TIMER_DELETE_ME))
 			continue
 		qdel(timer)
@@ -118,9 +121,8 @@
 	if(dc)
 		var/all_components = dc[/datum/component]
 		if(length(all_components))
-			for(var/I in all_components)
-				var/datum/component/C = I
-				qdel(C, FALSE)
+			for(var/datum/component/component as anything in all_components)
+				qdel(component)
 		else
 			var/datum/component/C = all_components
 			qdel(C, FALSE)
@@ -139,8 +141,7 @@
 		for(var/sig in lookup)
 			var/list/comps = lookup[sig]
 			if(length(comps))
-				for(var/i in comps)
-					var/datum/component/comp = i
+				for(var/datum/component/comp as anything in comps)
 					comp.UnregisterSignal(src, sig)
 			else
 				var/datum/component/comp = comps
@@ -275,3 +276,15 @@
 /// Returns whether a type is an abstract type.
 /proc/is_abstract(datum/datum_type)
 	return (initial(datum_type.abstract_type) == datum_type)
+
+/// Return text from this proc to provide extra context to hard deletes that happen to it
+/// Optional, you should use this for cases where replication is difficult and extra context is required
+/datum/proc/dump_harddel_info()
+	return
+
+///images are pretty generic, this should help a bit with tracking harddels related to them
+/image/dump_harddel_info()
+	if(harddel_deets_dumped)
+		return
+	harddel_deets_dumped = TRUE
+	return "Image icon: [icon] - icon_state: [icon_state] [loc ? "loc: [loc] ([loc.x],[loc.y],[loc.z])" : ""]"

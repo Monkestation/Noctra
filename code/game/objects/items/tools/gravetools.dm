@@ -114,10 +114,10 @@
 
 	else if(user.used_intent.type == /datum/intent/shovelscoop)
 		if(istype(T, /turf/open/floor/dirt))
-			var/turf/open/floor/dirt/D = T
+			var/obj/structure/closet/dirthole/holie = locate() in T
 			if(heldclod)
-				if(D.holie && D.holie.stage < 4)
-					D.holie.attackby(src, user)
+				if(holie && holie.stage < 4)
+					holie.attackby(src, user)
 				else
 					if(istype(T, /turf/open/floor/dirt/road))
 						qdel(heldclod)
@@ -129,8 +129,8 @@
 					update_appearance(UPDATE_ICON_STATE)
 					return
 			else
-				if(D.holie)
-					D.holie.attackby(src, user)
+				if(holie)
+					holie.attackby(src, user)
 				else
 					if(istype(T, /turf/open/floor/dirt/road))
 						new /obj/structure/closet/dirthole(T)
@@ -247,7 +247,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/unfoldedbag_path = /obj/structure/closet/burial_shroud
 
-/obj/item/burial_shroud/attack_self(mob/user)
+/obj/item/burial_shroud/attack_self(mob/user, params)
 	deploy_bodybag(user, user.loc)
 
 /obj/item/burial_shroud/afterattack(atom/target, mob/user, proximity)
@@ -270,6 +270,7 @@
 	desc = ""
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "shroud"
+	base_icon_state = "shroud"
 	density = FALSE
 	mob_storage_capacity = 1
 	open_sound = 'sound/blank.ogg'
@@ -324,7 +325,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/unfoldedbag_path = /obj/structure/closet/body_bag
 
-/obj/item/bodybag/attack_self(mob/user)
+/obj/item/bodybag/attack_self(mob/user, params)
 	deploy_bodybag(user, user.loc)
 
 /obj/item/bodybag/afterattack(atom/target, mob/user, proximity)

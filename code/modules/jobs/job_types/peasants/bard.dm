@@ -12,7 +12,6 @@
 	total_positions = 4
 	spawn_positions = 4
 
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_PLAYER_ALL
 	outfit = /datum/outfit/job/bard
 	cmode_music = 'sound/music/cmode/adventurer/CombatIntense.ogg'
@@ -33,7 +32,7 @@
 	H.adjust_skillrank(/datum/skill/misc/lockpicking, 1, TRUE)
 	H.clamped_adjust_skillrank(/datum/skill/misc/music, 4, 4, TRUE) //Due to Harpy's innate music skill giving them legendary
 	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/mockery)
+	H.add_spell(/datum/action/cooldown/spell/undirected/list_target/vicious_mockery)
 	head = /obj/item/clothing/head/bardhat
 	shoes = /obj/item/clothing/shoes/boots
 	pants = /obj/item/clothing/pants/tights/random
@@ -49,7 +48,7 @@
 	beltr = /obj/item/weapon/knife/dagger/steel/special
 	beltl = /obj/item/storage/belt/pouch/coins/poor
 	backpack_contents = list(/obj/item/flint)
-	if(H.dna?.species?.id == "dwarf")
+	if(H.dna?.species?.id == SPEC_ID_DWARF)
 		H.cmode_music = 'sound/music/cmode/combat_dwarf.ogg'
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_BARDIC_TRAINING, TRAIT_GENERIC)

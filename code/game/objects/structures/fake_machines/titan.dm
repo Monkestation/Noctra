@@ -8,6 +8,7 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 #define MODE_MAKE_LAW "make_law"
 #define MODE_MAKE_DECREE "make_decree"
 #define MODE_DECLARE_OUTLAW "declare_outlaw"
+#define MODE_PARDON_OUTLAW "pardon_outlaw"
 
 /proc/initialize_laws_of_the_land()
 	var/list/laws = strings("laws_of_the_land.json", "lawsets")
@@ -34,12 +35,13 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 		"Summon Crown",
 		"Summon Key",
 		"Make Announcement",
-		"Make Decree",
 		"Make Law",
 		"Remove Law",
+		"Make Decree",
 		"Remove Decree",
 		"Purge Laws",
 		"Declare Outlaw",
+		"Pardon Outlaw",
 		"Set Taxes",
 		"Change Position",
 		"Appoint Regent",
@@ -146,6 +148,10 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 		say("Who should be outlawed?")
 		playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
 		mode = MODE_DECLARE_OUTLAW
+	if(findtext(message, "pardon outlaw") && perform_check(user))
+		say("Who should be pardoned?")
+		playsound(src, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
+		mode = MODE_PARDON_OUTLAW
 	if(findtext(message, "help") && is_valid_mob(user))
 		help()
 	if(findtext(message, "summon crown") && is_valid_mob(user))
@@ -241,7 +247,7 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 				user.mind.adjust_triumphs(1)
 			SSmapping.retainer.head_rebel_decree = TRUE
 	GLOB.lord_decrees += message
-	GLOB.vanderlin_round_stats[STATS_LAWS_AND_DECREES_MADE]++
+	record_round_statistic(STATS_LAWS_AND_DECREES_MADE)
 	SScommunications.make_announcement(user, TRUE, message)
 	reset_mode()
 
@@ -265,7 +271,7 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 	if(!SScommunications.can_announce(user))
 		return
 	GLOB.laws_of_the_land += message
-	GLOB.vanderlin_round_stats[STATS_LAWS_AND_DECREES_MADE]++
+	record_round_statistic(STATS_LAWS_AND_DECREES_MADE)
 	priority_announce("[length(GLOB.laws_of_the_land)]. [message]", "A LAW IS DECLARED", 'sound/misc/lawdeclaration.ogg', "Captain")
 	reset_mode()
 
@@ -295,10 +301,10 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 /// Declares someone an outlaw
 /obj/structure/fake_machine/titan/proc/declare_outlaw(mob/living/carbon/human/user, message)
 	if(message in GLOB.outlawed_players)
-		GLOB.outlawed_players -= message
-		priority_announce("[message] is no longer an outlaw in Vanderlin lands.", "[user.real_name], The [user.get_role_title()] Decrees", 'sound/misc/alert.ogg', "Captain")
+		say("That person is already an outlaw!")
+		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		reset_mode()
-		return
+		return FALSE
 	var/found = FALSE
 	for(var/mob/living/carbon/human/to_be_outlawed in GLOB.player_list)
 		if(to_be_outlawed.real_name == message)
@@ -313,10 +319,23 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 		reset_mode()
 		return FALSE
-	GLOB.outlawed_players += message
+	GLOB.outlawed_players |= message
 	priority_announce("[message] has been declared an outlaw and must be captured or slain.", "[user.real_name], The [user.get_role_title()] Decrees", 'sound/misc/alert.ogg', "Captain")
 	reset_mode()
 	return TRUE
+
+/// Pardons an outlaw
+/obj/structure/fake_machine/titan/proc/pardon_outlaw(mob/living/carbon/human/user, message)
+	if(message in GLOB.outlawed_players)
+		GLOB.outlawed_players -= message
+		priority_announce("[message] is no longer an outlaw in Vanderlin lands.", "[user.real_name], The [user.get_role_title()] Decrees", 'sound/misc/alert.ogg', "Captain")
+		reset_mode()
+		return TRUE
+	else
+		say("That person is not an outlaw!")
+		playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
+		reset_mode()
+		return FALSE
 
 /// Sets the taxes of the realm
 /obj/structure/fake_machine/titan/proc/set_taxes(mob/living/carbon/human/user)
@@ -404,7 +423,7 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 /obj/structure/fake_machine/titan/proc/reset_mode()
 	mode = MODE_NONE
 
-/obj/structure/fake_machine/titan/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode, original_message)
+/obj/structure/fake_machine/titan/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), original_message)
 	. = ..()
 	if(speaker == src)
 		return
@@ -427,6 +446,8 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 			make_law(speaker, raw_message)
 		if(MODE_DECLARE_OUTLAW)
 			declare_outlaw(speaker, raw_message)
+		if(MODE_PARDON_OUTLAW)
+			pardon_outlaw(speaker, raw_message)
 		if(MODE_MAKE_DECREE)
 			make_decree(speaker, raw_message)
 
@@ -435,3 +456,4 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 #undef MODE_MAKE_LAW
 #undef MODE_MAKE_DECREE
 #undef MODE_DECLARE_OUTLAW
+#undef MODE_PARDON_OUTLAW

@@ -14,14 +14,7 @@
 	min_pq = 10
 	bypass_lastclass = TRUE
 
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Elf",
-		"Half-Elf",
-		"Dwarf",
-		"Aasimar"
-	)
+	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 
 	outfit = /datum/outfit/job/gatemaster	//Default outfit.
 	advclass_cat_rolls = list(CTAG_GATEMASTER = 20)	//Handles class selection.
@@ -52,35 +45,6 @@
 	H.advsetup = TRUE
 	H.invisibility = INVISIBILITY_MAXIMUM
 	H.become_blind("advsetup")
-
-/datum/outfit/job/gatemaster/whip/pre_equip(mob/living/carbon/human/H)
-	..()
-	gloves = /obj/item/clothing/gloves/chain
-	neck = /obj/item/clothing/neck/gorget
-	armor = /obj/item/clothing/armor/leather/jacket/gatemaster_jacket
-	beltr = /obj/item/weapon/mace/cudgel
-	beltl = /obj/item/weapon/whip/chain
-	backl = /obj/item/storage/backpack/satchel/black
-	backpack_contents = list(/obj/item/storage/keyring/manorguard = 1, /obj/item/weapon/knife/dagger/steel/special = 1, /obj/item/rope/chain = 1)
-
-	H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sneaking, 1, TRUE)
-	H.change_stat(STATKEY_STR, 1)
-	H.change_stat(STATKEY_END, 2)
-	H.change_stat(STATKEY_PER, -1)
-	H.verbs |= /mob/proc/haltyell
-	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_KNOWBANDITS, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 
 /datum/advclass/gatemaster/gatemaster_whip
 	name = "Chainguard Gatemaster"

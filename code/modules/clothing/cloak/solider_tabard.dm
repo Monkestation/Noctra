@@ -12,7 +12,11 @@
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
 	var/picked
 
-/obj/item/clothing/cloak/stabard/attack_right(mob/user)
+/obj/item/clothing/cloak/stabard/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(picked)
 		return
 	var/the_time = world.time
@@ -63,7 +67,11 @@
 	detail_color = CLOTHING_PLUM_PURPLE
 	uses_lord_coloring = LORD_PRIMARY | LORD_DETAIL_AND_COLOR
 
-/obj/item/clothing/cloak/stabard/guard/attack_right(mob/user)
+/obj/item/clothing/cloak/stabard/guard/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(picked)
 		return
 	var/the_time = world.time
@@ -97,7 +105,7 @@
 /obj/item/clothing/cloak/stabard/dungeon
 	color = CLOTHING_SOOT_BLACK
 
-/obj/item/clothing/cloak/stabard/dungeon/attack_right(mob/user)
+/obj/item/clothing/cloak/stabard/dungeon/attack_hand_secondary(mob/user, params)
 	return
 
 /obj/item/clothing/cloak/stabard/mercenary
@@ -195,7 +203,11 @@
 	name = "jupon"
 	icon_state = "surcoat"
 
-/obj/item/clothing/cloak/stabard/surcoat/attack_right(mob/user)
+/obj/item/clothing/cloak/stabard/surcoat/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(picked)
 		return
 	var/the_time = world.time
@@ -246,7 +258,11 @@
 	detail_color = CLOTHING_PLUM_PURPLE
 	uses_lord_coloring = LORD_PRIMARY | LORD_DETAIL_AND_COLOR
 
-/obj/item/clothing/cloak/stabard/surcoat/guard/attack_right(mob/user)
+/obj/item/clothing/cloak/stabard/surcoat/guard/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(picked)
 		return
 	var/the_time = world.time

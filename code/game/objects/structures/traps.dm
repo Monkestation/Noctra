@@ -21,7 +21,7 @@
 	///see on_active_perception
 	var/perception_dc = 6
 
-	var/list/static/ignore_typecache
+	var/static/list/ignore_typecache
 	var/list/mob/immune_minds = list()
 
 	var/sparks = TRUE
@@ -37,7 +37,7 @@
 	spark_system.set_up(4,1,src)
 	spark_system.attach(src)
 
-	if(!ignore_typecache)
+	if(isnull(ignore_typecache))
 		ignore_typecache = typecacheof(list(
 			/obj/effect,
 			/mob/dead))
@@ -124,7 +124,7 @@
 		return FALSE
 	if(victim.mind in immune_minds)
 		return FALSE
-	if(checks_antimagic && victim.anti_magic_check())
+	if(checks_antimagic && victim.can_block_magic(MAGIC_RESISTANCE))
 		flare(TRUE)
 		return FALSE
 	return TRUE

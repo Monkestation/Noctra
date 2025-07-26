@@ -289,7 +289,7 @@
 
 	animal_species = null
 	mob_size = MOB_SIZE_SMALL
-	pass_flags = PASSTABLE | PASSMOB
+	pass_flags = PASSMOB
 
 	botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/mince/beef = 1)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/steak = 1)

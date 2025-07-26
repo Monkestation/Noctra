@@ -1,8 +1,7 @@
 /datum/advclass/mercenary/anthrax
 	name = "Anthrax"
 	tutorial = "With the brutal dismantlement of drow society, the talents of the redeemed Anthraxi were no longer needed. Yet where one door closes, another opens - the decadent mortals of the overworld clamber over each other to bid for your blade. Show them your craft."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list("Dark Elf")
+	allowed_races = list(SPEC_ID_DROW)
 	outfit = /datum/outfit/job/mercenary/anthrax
 	category_tags = list(CTAG_MERCENARY)
 	maximum_possible_slots = 5
@@ -58,7 +57,7 @@
 			gloves = /obj/item/clothing/gloves/fingerless/shadowgloves
 			mask = /obj/item/clothing/face/shepherd/shadowmask
 			neck = /obj/item/clothing/neck/chaincoif/iron
-			backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve //Coupled with the racial PER malus, abysmal damage, but good for poison arrows.
+			backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/short //Coupled with the racial PER malus, abysmal damage, but good for poison arrows.
 			beltr = /obj/item/ammo_holder/quiver/arrows
 			beltl = /obj/item/weapon/sword/sabre/stalker
 

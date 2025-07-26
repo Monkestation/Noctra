@@ -6,10 +6,9 @@
 	outfit = /datum/outfit/job/adventurer/assassin
 	category_tags = list(CTAG_PILGRIM)
 	maximum_possible_slots = 2
-	min_pq = 0
 	pickprob = 100
 	displays_adv_job = FALSE //this prevents advjob from being set back to "Assassin" in equipme
-	min_pq = 10
+	min_pq = 6
 
 /datum/outfit/job/adventurer/assassin/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -38,7 +37,7 @@
 	H.become_blind("TRAIT_GENERIC")
 	H.advjob = "Assassin"
 	// Assassin now spawns disguised as one of the non-combat drifters. You never know who will stab you in the back.
-	var/disguises = list("Bard", "Beggar", "Fisher", "Hunter", "Miner", "Noble", "Peasant", "Carpenter", "Thief", "Ranger", "Servant", "Assassin", "Faceless One")
+	var/disguises = list("Bard", "Beggar", "Fisher", "Hunter", "Miner", "Noble", "Peasant", "Carpenter", "Thief", "Ranger", "Servant", "Faceless One")
 	var/disguisechoice = input("Choose your cover", "Available disguises") as anything in disguises
 
 	if(disguisechoice)
@@ -59,13 +58,13 @@
 			beltl = /obj/item/storage/belt/pouch/coins/poor
 			backpack_contents = list(/obj/item/flint)
 			if(H.dna?.species)
-				if(H.dna.species.id == "human")
+				if(ishuman(H))
 					backr = /obj/item/instrument/lute
-				if(H.dna.species.id == "dwarf")
+				else if(isdwarf(H))
 					backr = /obj/item/instrument/accord
-				if(H.dna.species.id == "elf")
+				else if(iself(H))
 					backr = /obj/item/instrument/harp
-				if(H.dna.species.id == "tiefling")
+				else if(istiefling(H))
 					backr = /obj/item/instrument/guitar
 		if("Beggar") //The sole "town" disguise available.
 			H.job = "Beggar"
@@ -285,7 +284,7 @@
 
 	H.change_stat(STATKEY_PER, 2)
 	H.change_stat(STATKEY_SPD, 2)
-	if(H.dna.species.id == "human")
+	if(H.dna.species.id == SPEC_ID_HUMEN)
 		if(H.gender == "male")
 			H.dna.species.soundpack_m = new /datum/voicepack/male/assassin()
 		else

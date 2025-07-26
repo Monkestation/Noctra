@@ -233,7 +233,7 @@
 	character.grant_language(/datum/language/celestial)
 	character.grant_language(/datum/language/orcish)
 	character.grant_language(/datum/language/oldpsydonic)
-	character.grant_language(/datum/language/zybantine)
+	character.grant_language(/datum/language/zalad)
 	character.grant_language(/datum/language/thievescant)
 
 /datum/special_trait/civilizedbarbarian
@@ -318,7 +318,7 @@
 	name = "Giant"
 	greet_text = span_notice("I've always been called a giant. I am valued for my stature, but, this world made for smaller folk has forced me to move cautiously.")
 	req_text = "Not a kobold or dwarf"
-	restricted_races = list(/datum/species/dwarf/mountain, /datum/species/kobold)
+	restricted_races = list(SPEC_ID_DWARF, SPEC_ID_KOBOLD)
 	weight = 50
 
 /datum/special_trait/backproblems/on_apply(mob/living/carbon/human/character)
@@ -410,7 +410,7 @@
 	weight = 20
 
 /datum/special_trait/outlaw/on_apply(mob/living/carbon/human/character, silent)
-	GLOB.outlawed_players += character.real_name
+	GLOB.outlawed_players |= character.real_name
 
 /datum/special_trait/unlucky
 	name = "Unlucky"
@@ -573,9 +573,8 @@
 	character.change_stat("endurance", -1)
 	character.adjust_skillrank(/datum/skill/magic/arcane, 5, TRUE)
 	character.set_skillrank(/datum/skill/combat/swords, 2, TRUE) //Average only.
-	character.mind.adjust_spellpoints(14) //Less points than Court Mage, why do Court mage get 17 points? what even?
-	character.mind.AddSpell(new /obj/effect/proc_holder/spell/self/learnspell)
-	character.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/prestidigitation)
+	character.adjust_spellpoints(14) //Less points than Court Mage, why do Court mage get 17 points? what even?
+	character.add_spell(/datum/action/cooldown/spell/undirected/touch/prestidigitation, silent = TRUE)
 	character.generate_random_attunements(rand(4,6))
 	character.mana_pool.set_intrinsic_recharge(MANA_ALL_LEYLINES)
 	character.mana_pool.adjust_mana(100) //I don't know, they don't spawn with their full mana bar, so we give them a bit more mana at the start.

@@ -15,8 +15,6 @@
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Debug Two") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-
 /* 21st Sept 2010
 Updated by Skie -- Still not perfect but better!
 Stuff you can't do:
@@ -267,10 +265,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/list/outfits = list()
 	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job)  - typesof(/datum/outfit/job)
 
-	for(var/path in paths)
-		var/datum/outfit/O = path //not much to initalize here but whatever
+	for(var/datum/outfit/O as anything in paths) //not much to initalize here but whatever
 		if(initial(O.can_be_admin_equipped))
-			outfits[initial(O.name)] = path
+			outfits[initial(O.name)] = O
 
 	var/dresscode = browser_input_list(src, "Select outfit", "Robust quick dress shop", baseoutfits + sortList(outfits))
 	if (isnull(dresscode))
@@ -291,11 +288,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if (dresscode == "As Roguetown Job...")
 		var/list/roguejob_paths = subtypesof(/datum/outfit/job)
 		var/list/roguejob_outfits = list()
-		for(var/path in roguejob_paths)
-			var/datum/outfit/O = path
+		for(var/datum/outfit/O as anything in roguejob_paths)
 			//roguetown coders are morons and didn't give ANY outfits proper fucking names
 			if(initial(O.can_be_admin_equipped))
-				roguejob_outfits["[path]"] = path
+				roguejob_outfits["[O]"] = O
 
 		dresscode = browser_input_list(src, "Select job equipment", "Robust quick dress shop", sortList(roguejob_outfits))
 		dresscode = roguejob_outfits[dresscode]
@@ -336,19 +332,28 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	for(var/path in SSgarbage.items)
 		var/datum/qdel_item/I = SSgarbage.items[path]
 		dellog += "<li><u>[path]</u><ul>"
-		if (I.failures)
+		if(I.qdel_flags & QDEL_ITEM_SUSPENDED_FOR_LAG)
+
+			dellog += "<li>SUSPENDED FOR LAG</li>"
+		if(I.failures)
 			dellog += "<li>Failures: [I.failures]</li>"
 		dellog += "<li>qdel() Count: [I.qdels]</li>"
 		dellog += "<li>Destroy() Cost: [I.destroy_time]ms</li>"
-		if (I.hard_deletes)
+		if(I.hard_deletes)
 			dellog += "<li>Total Hard Deletes [I.hard_deletes]</li>"
 			dellog += "<li>Time Spent Hard Deleting: [I.hard_delete_time]ms</li>"
-		if (I.slept_destroy)
+			dellog += "<li>Highest Time Spent Hard Deleting: [I.hard_delete_max]ms</li>"
+			if (I.hard_deletes_over_threshold)
+				dellog += "<li>Hard Deletes Over Threshold: [I.hard_deletes_over_threshold]</li>"
+		if(I.slept_destroy)
 			dellog += "<li>Sleeps: [I.slept_destroy]</li>"
-		if (I.no_respect_force)
+		if(I.no_respect_force)
 			dellog += "<li>Ignored force: [I.no_respect_force]</li>"
-		if (I.no_hint)
+		if(I.no_hint)
 			dellog += "<li>No hint: [I.no_hint]</li>"
+		if(LAZYLEN(I.extra_details))
+			var/details = I.extra_details.Join("</li><li>")
+			dellog += "<li>Extra Info: <ul><li>[details]</li></ul>"
 		dellog += "</ul></li>"
 
 	dellog += "</ol>"
