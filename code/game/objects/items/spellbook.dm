@@ -549,7 +549,7 @@
 
 /obj/item/gem/diamond
 	arcyne_potency = 15
-	attuned = /datum/attunement/aeromancy
+	attuned = /datum/attunement/light
 
 /obj/item/gem/black
 	arcyne_potency = 20

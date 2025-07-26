@@ -15,6 +15,9 @@
 	experimental_inhand = FALSE
 	///For Mappers; gem_path = weight
 	var/list/valid_gems = list()
+	//For attunement and magic
+	var/arcyne_potency = 20
+	var/datum/attunement/attuned
 
 /obj/item/gem/Initialize()
 	. = ..()
@@ -65,6 +68,7 @@
 	icon_state = "emerald_cut"
 	sellprice = 44
 	attuned = /datum/attunement/earth
+	arcyne_potency = 7
 
 /obj/item/gem/blue
 	name = "blortz"
@@ -73,6 +77,7 @@
 	icon_state = "quartz_cut"
 	sellprice = 88
 	attuned = /datum/attunement/ice
+	arcyne_potency = 25
 
 /obj/item/gem/yellow
 	name = "toper"
@@ -81,6 +86,7 @@
 	icon_state = "topaz_cut"
 	sellprice = 25
 	attuned = /datum/attunement/electric
+	arcyne_potency = 5
 
 /obj/item/gem/violet
 	name = "saffira"
@@ -89,6 +95,7 @@
 	icon_state = "sapphire_cut"
 	sellprice = 56
 	attuned = /datum/attunement/arcyne
+	arcyne_potency = 10
 
 /obj/item/gem/diamond
 	name = "dorpel"
@@ -97,6 +104,7 @@
 	icon_state = "diamond_cut"
 	sellprice = 121
 	attuned = /datum/attunement/light
+	arcyne_potency = 15
 
 /obj/item/gem/red
 	name = "rubor"
@@ -105,6 +113,7 @@
 	icon_state = "ruby_cut"
 	sellprice = 100
 	attuned = /datum/attunement/fire
+	arcyne_potency = 20
 
 /obj/item/gem/black
 	name = "onyxa"
@@ -113,6 +122,7 @@
 	sellprice = 76
 	dropshrink = 0.7
 	attuned = /datum/attunement/dark
+	arcyne_potency = 20
 
 /// riddle
 
