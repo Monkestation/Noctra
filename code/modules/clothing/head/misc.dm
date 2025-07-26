@@ -228,7 +228,7 @@
 /obj/item/clothing/head/headdress/alt
 	icon_state = "headdressalt"
 
-/obj/item/clothing/head/armingcap/dwarf // gnome hat I guess?
+/obj/item/clothing/head/armingcap/colored/dwarf // gnome hat I guess?
 	color = "#cb3434"
 
 /obj/item/clothing/head/vampire

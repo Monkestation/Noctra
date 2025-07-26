@@ -913,7 +913,7 @@
 /obj/item/weapon/hammer/iron,
 /obj/item/weapon/tongs,
 /obj/item/clothing/shoes/boots/leather,
-/obj/item/clothing/head/softcap,
+/obj/item/clothing/head/armingcap,
 /obj/effect/mapping_helpers/floor_clothing_equipper,
 /turf/open/floor/naturalstone,
 /area/rogue/under/mountains/anvil/dungeon/lower)

@@ -20,6 +20,9 @@ abstract types are automatically excluded.
 		/obj/item/clothing/head/helmet/visored/warden, // warden only
 		/obj/item/clothing/neck/mana_star, // court mage only
 		/obj/item/clothing/head/helmet/visored/knight/black, // deathknight item
+		/obj/item/clothing/head/peaceflower, // spawns naturally
+		/obj/item/clothing/head/corruptflower, // spawns naturally
+		/obj/item/clothing/face/facemask/prisoner, // shouldn't be attainable
 	)
 	// these don't use misc_flags = CRAFTING_TEST_EXCLUDE because we want to explicitly know which paths we are excluding.
 	/// excludes paths along with their subtypes
@@ -34,6 +37,7 @@ abstract types are automatically excluded.
 		/obj/item/clothing/cloak/stabard, // TODO
 		/obj/item/clothing/accessory, // ???
 		/obj/item/clothing/head/crown/serpcrown // should only be one
+		/obj/item/clothing/face/cigarette, // ???
 
 	)
 	/// excludes paths that are subtypes of these types and only subtypes

@@ -97,4 +97,6 @@
 /obj/item/clothing/neck/keffiyeh/purple : /obj/item/clothing/neck/keffiyeh/colored/purple{@OLD}
 /obj/item/clothing/neck/keffiyeh/black : /obj/item/clothing/neck/keffiyeh/colored/black{@OLD}
 /obj/item/clothing/neck/keffiyeh/white : /obj/item/clothing/neck/keffiyeh/colored/white{@OLD}
+/obj/item/clothing/head/softcap : /obj/item/clothing/head/armingcap{@OLD}
+/obj/item/clothing/head/armingcap/dwarf : /obj/item/clothing/head/armingcap/colored/dwarf{@OLD}
 

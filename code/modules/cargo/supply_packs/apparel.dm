@@ -33,6 +33,16 @@
 	cost = 5
 	contains = /obj/item/clothing/head/hatfur
 
+/datum/supply_pack/apparel/hatblu
+	name = "Blue Fur Hat"
+	cost = 5
+	contains = /obj/item/clothing/head/hatblu
+
+/datum/supply_pack/apparel/hatblu
+	name = "Engineering goggles"
+	cost = 50
+	contains = /obj/item/clothing/face/goggles
+
 /datum/supply_pack/apparel/chaperon
 	name = "Chaperon"
 	cost = 7

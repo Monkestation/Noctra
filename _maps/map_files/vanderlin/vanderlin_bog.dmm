@@ -2930,7 +2930,7 @@
 "PK" = (
 /obj/structure/closet/crate/crafted_closet/inn,
 /obj/item/clothing/shirt/dress,
-/obj/item/clothing/head/softcap,
+/obj/item/clothing/head/armingcap,
 /turf/open/floor/wood/nosmooth,
 /area/rogue/indoors/shelter/bog)
 "PO" = (
