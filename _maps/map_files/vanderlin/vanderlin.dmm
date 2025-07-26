@@ -16388,8 +16388,8 @@
 /turf/open/floor/cobble,
 /area/rogue/under/town/basement)
 "jJS" = (
-/obj/structure/chair/bench/couch/normal{
-	dir = 5
+/obj/structure/chair/bench/couch/left{
+	dir = 4
 	},
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/magician)
@@ -19178,7 +19178,7 @@
 /turf/open/floor/dirt,
 /area/rogue/outdoors/town)
 "lEc" = (
-/obj/structure/chair/bench/couch/normal/long_or_corner,
+/obj/structure/chair/bench/couch/corner,
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/magician)
 "lEd" = (
@@ -22604,10 +22604,8 @@
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/indoors/town)
 "nHD" = (
-/obj/structure/chair/bench/couch/normal{
-	dir = 2
-	},
 /obj/structure/fake_machine/mail,
+/obj/structure/chair/bench/couch/right,
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/magician)
 "nHG" = (
@@ -22966,9 +22964,7 @@
 /area/rogue/outdoors/rtfield/safe)
 "nPo" = (
 /obj/effect/landmark/start/magician,
-/obj/structure/chair/bench/couch/normal/long_or_corner{
-	dir = 2
-	},
+/obj/structure/chair/bench/couch/middle,
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/magician)
 "nPB" = (
@@ -31102,9 +31098,7 @@
 /area/rogue/indoors/town/manor/heir/heir2)
 "sYA" = (
 /obj/machinery/light/fueled/wallfire/candle/blue,
-/obj/structure/chair/bench/couch/normal/long_or_corner{
-	dir = 2
-	},
+/obj/structure/chair/bench/couch/middle,
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/magician)
 "sYD" = (
@@ -34858,9 +34852,7 @@
 /turf/open/floor/carpet/lord/left,
 /area/rogue/indoors/town/manor/halls/w)
 "vpX" = (
-/obj/structure/chair/bench/couch/normal/alt{
-	dir = 2
-	},
+/obj/structure/chair/bench/couch/right,
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/magician)
 "vqf" = (
@@ -37400,7 +37392,7 @@
 /turf/closed/mineral,
 /area/rogue/outdoors/town/roofs)
 "wUs" = (
-/obj/structure/chair/bench/couch/normal/alt,
+/obj/structure/chair/bench/couch/left,
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/magician)
 "wUv" = (
@@ -39333,9 +39325,7 @@
 /turf/open/floor/metal/alt,
 /area/rogue/outdoors/rtfield/safe)
 "yhy" = (
-/obj/structure/chair/bench/couch/normal/long_or_corner/alt{
-	dir = 2
-	},
+/obj/structure/chair/bench/couch/middle,
 /turf/open/floor/carpet/stellar,
 /area/rogue/indoors/town/magician)
 "yhz" = (

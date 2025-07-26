@@ -23,14 +23,59 @@
 	greyscale_config = /datum/greyscale_config/couch
 	greyscale_colors = "#df3636"
 
-/obj/structure/chair/bench/couch/normal
+/obj/structure/chair/bench/couch/alt
+	greyscale_colors = "#3f3f3f"
+
+/obj/structure/chair/bench/couch/lord_primary
+	uses_lord_coloring = LORD_PRIMARY
+
+/obj/structure/chair/bench/couch/lord_secondary
+	uses_lord_coloring = LORD_SECONDARY
+
+/obj/structure/chair/bench/couch/left
 	icon_state = "couch_left"
 
-/obj/structure/chair/bench/couch/normal/long_or_corner
+/obj/structure/chair/bench/couch/left/alt
+	greyscale_colors = "#3f3f3f"
+
+/obj/structure/chair/bench/couch/left/lord_primary
+	uses_lord_coloring = LORD_PRIMARY
+
+/obj/structure/chair/bench/couch/left/lord_secondary
+	uses_lord_coloring = LORD_SECONDARY
+
+/obj/structure/chair/bench/couch/middle
+	icon_state = "couch_middle"
+
+/obj/structure/chair/bench/couch/middle/alt
+	greyscale_colors = "#3f3f3f"
+
+/obj/structure/chair/bench/couch/middle/lord_primary
+	uses_lord_coloring = LORD_PRIMARY
+
+/obj/structure/chair/bench/couch/middle/lord_secondary
+	uses_lord_coloring = LORD_SECONDARY
+
+/obj/structure/chair/bench/couch/right
 	icon_state = "couch_right"
 
-/obj/structure/chair/bench/couch/normal/alt
+/obj/structure/chair/bench/couch/right/alt
 	greyscale_colors = "#3f3f3f"
 
-/obj/structure/chair/bench/couch/normal/long_or_corner/alt
+/obj/structure/chair/bench/couch/right/lord_primary
+	uses_lord_coloring = LORD_PRIMARY
+
+/obj/structure/chair/bench/couch/right/lord_secondary
+	uses_lord_coloring = LORD_SECONDARY
+
+/obj/structure/chair/bench/couch/corner
+	icon_state = "couch_corner"
+
+/obj/structure/chair/bench/couch/corner/alt
 	greyscale_colors = "#3f3f3f"
+
+/obj/structure/chair/bench/couch/corner/lord_primary
+	uses_lord_coloring = LORD_PRIMARY
+
+/obj/structure/chair/bench/couch/corner/lord_secondary
+	uses_lord_coloring = LORD_SECONDARY

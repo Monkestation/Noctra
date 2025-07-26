@@ -67,7 +67,6 @@
 /proc/pathflatten(path)
 	return replacetext(path, "/", "_")
 
-
 /// Returns the md5 of a file at a given path.
 /proc/md5filepath(path)
 	. = md5(file(path))
