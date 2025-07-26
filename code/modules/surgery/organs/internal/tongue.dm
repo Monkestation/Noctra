@@ -62,9 +62,11 @@
 	var/static/regex/fishtongue_z = new("z", "g")
 	var/static/regex/fishtongue_Z = new("Z", "g")
 	var/message = speech_args[SPEECH_MESSAGE]
-	var/datum/language/lang = GLOB.language_datum_instances[speech_args[SPEECH_LANGUAGE]]
+	if(!message)
+		return
 
-	if(!message || (lang && istype(lang, /datum/language/deepspeak)))
+	var/datum/language/lang = speech_args[SPEECH_LANGUAGE]
+	if(lang && ispath(lang, /datum/language/deepspeak))
 		return
 
 	if(message[1] != "*")
