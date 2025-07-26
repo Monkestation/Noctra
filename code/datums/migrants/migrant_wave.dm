@@ -59,6 +59,7 @@
 		/datum/migrant_role/bandit = 4,
 	)
 	can_roll = FALSE
+	greet_text = "An aggravated, aggravating bunch of self-serving Matthiosians. Just the worst. Like spiderbees to euphorbias, they come to steal the already stolen. Will they get what they deserve?"
 
 /datum/migrant_wave/merc
 	name = "Band of Mercenaries"
@@ -66,4 +67,4 @@
 	roles = list(
 		/datum/migrant_role/mercenary = 4,
 	)
-	greet_text = "A group of mercenaries, hired by the Vanderlin nobility to protect the city from threats, has arrived. They are well equipped and ready to face any challenge that comes their way."
+	greet_text = "A group of mercenaries, attracted like drooling dogs to the chink of mammon flowing through the city. Friends, enemies, ambivalent sellswords - All here to fill their purse."
