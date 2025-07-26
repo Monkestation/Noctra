@@ -52,14 +52,15 @@
 	max_optionals = 1
 	finished_smell = /datum/pollutant/food/roasted_seeds
 
-// Calendula Salve Recipe (uses oil instead of water)
+// Calendula Salve Recipe (uses alcohol instead of water)
 /datum/container_craft/cooking/herbal_salve
 	abstract_type = /datum/container_craft/cooking/herbal_salve
 	category = "Herbal Remedies"
 	crafting_time = 15 SECONDS
 	reagent_requirements = list(
-		/datum/reagent/consumable/ethanol/aqua_vitae = 20
+		/datum/reagent/consumable/ethanol = 20
 	)
+	subtype_reagents_allowed = TURE
 	craft_verb = "preparing "
 	required_chem_temp = 320 // Lower temp for salves
 	pollute_amount = 150
