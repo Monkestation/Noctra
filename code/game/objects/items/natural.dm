@@ -393,7 +393,7 @@
 /obj/item/natural/elementalrelic
 	name = "elemental relic"
 	icon_state = "relic"
-	desc = "One of three ley-keys. \nA massive, jagged rock that reminds you of the scale of the world you're dealing with. \nIt crackles and vibrates with power just barely yours."
+	desc = "One of three ley-keys. \nA massive, jagged rock that reminds you of the scale of the world you're dealing with. It crackles and vibrates with power just barely yours."
 	resistance_flags = FIRE_PROOF
 	w_class = WEIGHT_CLASS_SMALL
 	sellprice = 20
@@ -437,7 +437,7 @@
 		/datum/attunement/blood = 6,
 	)
 
-//Leyline shard. Should also be used to attune to the arcyne.
+//Leyline shard. Should be used to attune to the arcyne.
 
 /obj/item/natural/leyline
 	name = "leyline shard"
