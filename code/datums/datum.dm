@@ -121,8 +121,8 @@
 	if(dc)
 		var/all_components = dc[/datum/component]
 		if(length(all_components))
-			for(var/datum/component/C as anything in all_components)
-				qdel(C, FALSE)
+			for(var/datum/component/component as anything in all_components)
+				qdel(component)
 		else
 			var/datum/component/C = all_components
 			qdel(C, FALSE)

@@ -423,7 +423,7 @@
 			continue
 		total_value += total_attunements[attunement] * attunements[attunement]
 
-	attuned_strength = max(total_value, 0.5)
+	attuned_strength = clamp(total_value, 0.5, 2.5)
 
 /// Checks if the owner of the spell can currently cast it.
 /// Does not check anything involving potential targets.
@@ -849,8 +849,8 @@
 				to_chat(owner, span_warning("I don't have enough stamina to cast!"))
 			return FALSE
 
-	if(spell_type == NONE)
-		return
+	if(spell_type == NONE || spell_type == SPELL_STAMINA)
+		return TRUE
 
 	switch(spell_type)
 		if(SPELL_MANA)

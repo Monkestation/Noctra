@@ -31,7 +31,7 @@
 	if(istype(I, /obj/item/weapon/pitchfork))
 		if(user.used_intent.type == DUMP_INTENT)
 			var/obj/item/weapon/pitchfork/W = I
-			if(I.wielded)
+			if(HAS_TRAIT(I, TRAIT_WIELDED))
 				if(isturf(loc))
 					var/stuff = 0
 					for(var/obj/item/natural/chaff/R in loc)

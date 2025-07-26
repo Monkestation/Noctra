@@ -407,8 +407,8 @@ GLOBAL_LIST_EMPTY(letters_sent)
 			cost = 5,
 			max_purchases = 1
 		),
-		"Recurve Bow and Quiver (3)" = list(
-			list(type = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve, count = 1),
+		"Short Bow and Quiver (3)" = list(
+			list(type = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/short, count = 1),
 			list(type = /obj/item/ammo_holder/quiver/arrows, count = 1),
 			cost = 3,
 			max_purchases = 1
@@ -503,6 +503,16 @@ GLOBAL_LIST_EMPTY(letters_sent)
 		"Silver Psycross (2)" = list(
 			list(type = /obj/item/clothing/neck/psycross/silver, count = 1),
 			cost = 2,
+			max_purchases = 4
+		),
+		"Silver Mask (2)" = list(
+			list(type = /obj/item/clothing/face/facemask/silver, count = 1),
+			cost = 2,
+			max_purchases = 4
+		),
+		"Adept's Cowl (1)" = list(
+			list(type = /obj/item/clothing/head/adeptcowl, count = 1),
+			cost = 1,
 			max_purchases = 4
 		),
 		"Valorian Cloak (2)" = list(

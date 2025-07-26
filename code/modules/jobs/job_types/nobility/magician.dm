@@ -42,7 +42,7 @@
 
 /datum/outfit/job/magician/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/wizhat/gen
+	head = /obj/item/clothing/head/wizhat
 	backr = /obj/item/storage/backpack/satchel
 	armor = /obj/item/clothing/shirt/robe/black
 	cloak = /obj/item/clothing/cloak/black_cloak
@@ -71,7 +71,6 @@
 		if(H.dna.species.id == SPEC_ID_HUMEN)
 			belt = /obj/item/storage/belt/leather/plaquegold
 			cloak = null
-			head = /obj/item/clothing/head/wizhat
 			if(H.gender == FEMALE)
 				armor = /obj/item/clothing/shirt/robe/courtmage
 			if(H.gender == MALE)

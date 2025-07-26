@@ -202,7 +202,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/lockpickring/update_icon_state()
-	icon_state = "keyring[clamp(length(contents), 0, 3)]"
+	icon_state = "pickring[clamp(length(contents), 0, 3)]"
 	return ..()
 
 /obj/item/lockpickring/update_desc()
@@ -276,7 +276,7 @@
 	keys = list(/obj/item/key/veteran, /obj/item/key/walls, /obj/item/key/elder, /obj/item/key/butcher, /obj/item/key/soilson, /obj/item/key/manor)
 
 /obj/item/storage/keyring/feldsher
-	keys = list(/obj/item/key/feldsher, /obj/item/key/clinic, /obj/item/key/bathhouse)
+	keys = list(/obj/item/key/feldsher, /obj/item/key/clinic, /obj/item/key/bathhouse, /obj/item/key/apothecary)
 
 /obj/item/storage/keyring/artificer
 	keys = list(/obj/item/key/artificer, /obj/item/key/blacksmith, /obj/item/key/miner)

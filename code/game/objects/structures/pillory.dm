@@ -29,6 +29,12 @@
 	LAZYINITLIST(buckled_mobs)
 	. = ..()
 
+/obj/structure/pillory/OnCrafted(dirin, mob/user)
+	. = ..()
+	for(var/obj/item/customlock/finished/new_lock in contents)
+		lock = new /datum/lock/key(src, new_lock.lockids)
+		break
+
 /obj/structure/pillory/examine(mob/user)
 	. = ..()
 	. += span_info("It is [latched ? "latched" : "unlatched"].")

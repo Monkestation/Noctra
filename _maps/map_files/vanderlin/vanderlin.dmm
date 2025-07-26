@@ -7133,7 +7133,7 @@
 /area/rogue/indoors/town/manor/heir/heir1)
 "eig" = (
 /obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/key/apartments/apartment13,
+/obj/item/key/apartments/apartment11,
 /turf/open/floor/wood,
 /area/rogue/indoors/town)
 "eik" = (
@@ -30869,10 +30869,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/river)
 "sOy" = (
-/obj/structure/dungeon_entry/center{
-	can_enter = 0;
-	icon_state = "portal_noenter"
-	},
+/obj/structure/dungeon_entry/center/vanderlin,
 /turf/open/floor/cobble/mossy,
 /area/rogue/under/cavewet)
 "sOG" = (

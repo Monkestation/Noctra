@@ -1,6 +1,7 @@
 /datum/repeatable_crafting_recipe/engineering
 	abstract_type = /datum/repeatable_crafting_recipe/engineering
 	skillcraft = /datum/skill/craft/engineering
+	category = "Artificing"
 
 /datum/repeatable_crafting_recipe/engineering/shaft
 	name = "wooden shaft"
@@ -15,7 +16,6 @@
 	output = /obj/item/rotation_contraption/shaft
 	output_amount = 12
 	craft_time = 5 SECONDS
-	uses_attacked_atom = FALSE
 
 /datum/repeatable_crafting_recipe/engineering/cog
 	name = "cogwheel"
@@ -31,7 +31,6 @@
 	output = /obj/item/rotation_contraption/cog
 	output_amount = 5
 	craft_time = 5 SECONDS
-	uses_attacked_atom = FALSE
 
 /datum/repeatable_crafting_recipe/engineering/waterwheel
 	name = "waterwheel"
@@ -46,7 +45,6 @@
 	starting_atom= /obj/item/weapon/knife
 	output = /obj/item/rotation_contraption/waterwheel
 	craft_time = 5 SECONDS
-	uses_attacked_atom = FALSE
 
 /datum/repeatable_crafting_recipe/engineering/large_cog
 	name = "large cogwheel"
@@ -62,7 +60,6 @@
 	output = /obj/item/rotation_contraption/large_cog
 	output_amount = 3
 	craft_time = 5 SECONDS
-	uses_attacked_atom = FALSE
 
 /datum/repeatable_crafting_recipe/engineering/gearbox
 	name = "gearbox"
@@ -77,7 +74,6 @@
 	starting_atom= /obj/item/weapon/knife
 	output = /obj/item/rotation_contraption/horizontal
 	craft_time = 5 SECONDS
-	uses_attacked_atom = FALSE
 
 /datum/repeatable_crafting_recipe/engineering/vertical_gearbox
 	name = "vertical gearbox"
@@ -92,7 +88,6 @@
 	starting_atom= /obj/item/weapon/knife
 	output = /obj/item/rotation_contraption/vertical
 	craft_time = 5 SECONDS
-	uses_attacked_atom = FALSE
 
 /datum/repeatable_crafting_recipe/engineering/rails
 	name = "minecart rails"
@@ -108,7 +103,6 @@
 	output = /obj/item/rotation_contraption/minecart_rail
 	output_amount = 10
 	craft_time = 5 SECONDS
-	uses_attacked_atom = FALSE
 
 /datum/repeatable_crafting_recipe/engineering/railbreak
 	name = "minecart rail break"
@@ -124,7 +118,6 @@
 	output = /obj/item/rotation_contraption/minecart_rail/railbreak
 	output_amount = 2
 	craft_time = 5 SECONDS
-	uses_attacked_atom = FALSE
 
 /datum/repeatable_crafting_recipe/engineering/water_pipe
 	name = "fluid transport pipe"
@@ -139,7 +132,6 @@
 	output = /obj/item/rotation_contraption/water_pipe
 	output_amount = 12
 	craft_time = 5 SECONDS
-	uses_attacked_atom = FALSE
 
 /datum/repeatable_crafting_recipe/engineering/minecart
 	name = "minecart"
@@ -153,7 +145,6 @@
 	starting_atom= /obj/item/weapon/hammer
 	output = /obj/structure/closet/crate/miningcar
 	craft_time = 5 SECONDS
-	uses_attacked_atom = FALSE
 
 /datum/repeatable_crafting_recipe/engineering/boiler
 	name = "boiler"
@@ -167,7 +158,6 @@
 	starting_atom= /obj/item/weapon/hammer
 	output = /obj/item/rotation_contraption/boiler
 	craft_time = 5 SECONDS
-	uses_attacked_atom = FALSE
 
 /datum/repeatable_crafting_recipe/engineering/pump
 	name = "liquid pump"
@@ -183,7 +173,6 @@
 	starting_atom= /obj/item/weapon/knife
 	output = /obj/item/rotation_contraption/pump
 	craft_time = 5 SECONDS
-	uses_attacked_atom = FALSE
 
 /datum/repeatable_crafting_recipe/engineering/water_vent
 	name = "fluid vent"
@@ -198,7 +187,6 @@
 	output = /obj/item/rotation_contraption/water_vent
 	output_amount = 2
 	craft_time = 5 SECONDS
-	uses_attacked_atom = FALSE
 
 /datum/repeatable_crafting_recipe/engineering/steam_recharger
 	name = "steam recharger"
@@ -212,7 +200,6 @@
 	starting_atom= /obj/item/weapon/hammer
 	output = /obj/item/rotation_contraption/steam_recharger
 	craft_time = 5 SECONDS
-	uses_attacked_atom = FALSE
 
 /datum/repeatable_crafting_recipe/engineering/gunpowder
 	name = "blastpowder"
@@ -230,7 +217,6 @@
 	output = /obj/item/reagent_containers/powder/blastpowder
 	output_amount = 3
 	craft_time = 5 SECONDS
-	uses_attacked_atom = FALSE
 
 /datum/repeatable_crafting_recipe/engineering/breaching_charge
 	name = "breaching charge"

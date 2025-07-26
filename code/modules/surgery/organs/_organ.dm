@@ -32,28 +32,36 @@
 	var/low_threshold_cleared
 	dropshrink = 0.85
 
-	/// Whether the organ is fully internal and should not be seen by bare eyes.
-	var/visible_organ = FALSE
-	/// Description when the organ is visible and examined while it's attached to a bodypart.
-	var/bodypart_desc = "This is an organ."
-	/// Icon of the organ when it's on a bodypart.
-	var/bodypart_icon
-	/// Icon state of the organ when it's on a bodypart.
-	var/bodypart_icon_state
-	/// Layer of the overlay this organs renders for being on limbs.
-	var/bodypart_layer = BODY_LAYER
-	/// Instead of creating an overlay from above variables we can use a sprite accessory.
-	var/accessory_type
-	/// Color list string for complex overlay generation through sprite accessory.
-	var/accessory_colors
-	/// Whether the bodypart organ overlay is an emissive blocker
-	var/bodypart_emissive_blocker = TRUE
-	/// Type of organ DNA that this organ will create.
-	var/organ_dna_type = /datum/organ_dna
 	/// What food typepath should be used when eaten
 	var/food_type = /obj/item/reagent_containers/food/snacks/organ
 	/// Original owner of the organ, the one who had it inside them last
 	var/mob/living/carbon/last_owner = null
+
+/obj/item/organ/Initialize()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+	if(use_mob_sprite_as_obj_sprite)
+		update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/organ/Destroy()
+	if(owner)
+		Remove(owner, special=TRUE)
+	last_owner = null
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/organ/attack(mob/living/carbon/M, mob/user)
+	if(M == user && ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(status == ORGAN_ORGANIC)
+			var/obj/item/reagent_containers/food/snacks/S = prepare_eat(H)
+			if(S && H.put_in_active_hand(S))
+				S.attack(H, H)
+	else
+		..()
+
+/obj/item/organ/item_action_slot_check(slot,mob/user)
+	return //so we don't grant the organ's action to mobs who pick up the organ.
 
 /obj/item/organ/proc/Insert(mob/living/carbon/M, special = 0, drop_if_replaced = TRUE)
 	if(!iscarbon(M) || owner == M)
@@ -88,9 +96,9 @@
 			M.death()
 	for(var/datum/action/A as anything in actions)
 		A.Remove(M)
+	if(visible_organ)
+		M.update_body_parts(TRUE)
 	update_appearance(UPDATE_ICON_STATE)
-//	START_PROCESSING(SSobj, src)
-
 
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
@@ -195,32 +203,6 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT, /datum/reagent/organpoison = 2)
 	grind_results = list(/datum/reagent/organpoison = 6)
 
-/obj/item/organ/Initialize()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/organ/Destroy()
-	if(owner)
-		// The special flag is important, because otherwise mobs can die
-		// while undergoing transformation into different mobs.
-		Remove(owner, special=TRUE)
-	last_owner = null
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/organ/attack(mob/living/carbon/M, mob/user)
-	if(M == user && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(status == ORGAN_ORGANIC)
-			var/obj/item/reagent_containers/food/snacks/S = prepare_eat(H)
-			if(S && H.put_in_active_hand(S))
-				S.attack(H, H)
-	else
-		..()
-
-/obj/item/organ/item_action_slot_check(slot,mob/user)
-	return //so we don't grant the organ's action to mobs who pick up the organ.
-
 ///Adjusts an organ's damage by the amount "d", up to a maximum amount, which is by default max damage
 /obj/item/organ/proc/applyOrganDamage(d, maximum = maxHealth)	//use for damaging effects
 	if(!d) //Micro-optimization.
@@ -265,105 +247,6 @@
 			return high_threshold_cleared
 		if(prev_damage == maxHealth)
 			return now_fixed
-
-/// Gets organ description for when its attached to a bodypart.
-/obj/item/organ/proc/get_bodypart_desc()
-	return bodypart_desc
-
-/// Whether the organ is visible and should appear on a bodypart.
-/obj/item/organ/proc/is_visible()
-	/// It's an internal organ, always hidden.
-	if(!visible_organ)
-		return FALSE
-	/// Doesn't have an owner so it couldn't be covered by anything.
-	if(!owner)
-		return TRUE
-	if(!is_visible_on_owner())
-		return FALSE
-	return TRUE
-
-/obj/item/organ/proc/is_visible_on_owner()
-	return TRUE
-
-/// Gets the organ overlay.
-/obj/item/organ/proc/get_bodypart_overlay(obj/item/bodypart/bodypart)
-	if(!bodypart_icon && !accessory_type)
-		return
-
-	if(accessory_type)
-		var/datum/sprite_accessory/accessory = SPRITE_ACCESSORY(accessory_type)
-		var/list/appearances = accessory.get_appearance(src, bodypart, accessory_colors)
-		if(!appearances)
-			return
-		for(var/standing in appearances)
-			bodypart_icon(standing)
-			bodypart_overlays(standing)
-		return appearances
-	else
-		var/mutable_appearance/organ_overlay = mutable_appearance(bodypart_icon, bodypart_icon_state, layer = -bodypart_layer)
-		organ_overlay.color = color
-		bodypart_icon(organ_overlay)
-
-		/*
-		if(bodypart_emissive_blocker)
-			organ_overlay.overlays += emissive_blocker(bodypart_icon, bodypart_icon_state)
-		*/
-
-		bodypart_overlays(organ_overlay)
-		return organ_overlay
-
-/// Proc to customize the base icon of the organ.
-/obj/item/organ/proc/bodypart_icon(mutable_appearance/standing)
-	return
-
-/// This proc can add overlays to the organ image that is to be attached to a bodypart.
-/obj/item/organ/proc/bodypart_overlays(mutable_appearance/standing)
-	return
-
-/obj/item/organ/proc/get_availability(datum/species/owner_species)
-	return TRUE
-
-/// Sets an accessory type and optionally colors too.
-/obj/item/organ/proc/set_accessory_type(new_accessory_type, colors)
-	accessory_type = new_accessory_type
-	if(!isnull(colors))
-		accessory_colors = colors
-	var/datum/sprite_accessory/accessory = SPRITE_ACCESSORY(accessory_type)
-	if(accessory)
-		accessory_colors = accessory.validate_color_keys_for_owner(owner, colors)
-	update_accessory_colors()
-
-/obj/item/organ/proc/build_colors_for_accessory(list/source_key_list)
-	if(!accessory_type)
-		return
-	var/datum/sprite_accessory/accessory = SPRITE_ACCESSORY(accessory_type)
-	if(!accessory)
-		return
-	if(accessory.use_static)
-		return
-	if(!source_key_list)
-		if(!owner)
-			return
-		source_key_list = color_key_source_list_from_carbon(owner)
-	accessory_colors = accessory.get_default_colors(source_key_list)
-	accessory_colors = accessory.validate_color_keys_for_owner(owner, accessory_colors)
-	update_accessory_colors()
-
-/// Creates, imprints and returns an organ DNA datum.
-/obj/item/organ/proc/create_organ_dna()
-	var/datum/organ_dna/organ_dna = new organ_dna_type()
-	imprint_organ_dna(organ_dna)
-	return organ_dna
-
-/// Imprints an organ DNA datum.
-/obj/item/organ/proc/imprint_organ_dna(datum/organ_dna/organ_dna)
-	organ_dna.organ_type = type
-	if(accessory_type)
-		organ_dna?.accessory_type = accessory_type
-		organ_dna.accessory_colors = accessory_colors
-
-/obj/item/organ/proc/update_accessory_colors()
-	return
 
 /obj/item/organ/on_enter_storage(datum/component/storage/concrete/S)
 	. = ..()

@@ -12,7 +12,7 @@
 /obj/item/natural/attackby(obj/item/W, mob/living/user)
 	if(istype(W, /obj/item/natural/bundle))
 		if(item_flags & IN_STORAGE)
-			to_chat(user, span_warning("It's hard to find [W] in my bag."))
+			to_chat(user, span_warning("It's hard to find [src] in my bag."))
 			return
 		var/obj/item/natural/bundle/B = W
 		if(istype(src, B.stacktype))
@@ -25,8 +25,7 @@
 			else
 				to_chat(user, span_warning("There's not enough space in [W]."))
 			return
-	else
-		return ..()
+	return ..()
 
 /obj/item/natural/pre_attack_secondary(atom/A, mob/living/user, params)
 	. = ..()
@@ -93,6 +92,7 @@
 				B.amount += amount
 				B.update_bundle()
 				qdel(src)
+			return
 	else if(istype(W, stacktype))
 		if(item_flags & IN_STORAGE)
 			return
@@ -103,8 +103,8 @@
 			qdel(W)
 		else
 			to_chat(user, span_warning("There's not enough space in [src]."))
-	else
-		return ..()
+		return
+	return ..()
 
 /obj/item/natural/bundle/attack_hand_secondary(mob/user, params)
 	. = ..()
@@ -123,8 +123,9 @@
 			if(!user.temporarilyRemoveItemFromInventory(src))
 				return
 			var/obj/F = new stacktype(get_turf(src))
-			new stacktype(get_turf(src))
+			var/obj/F2 = new stacktype(get_turf(src))
 			H.put_in_hands(F)
+			H.put_in_hands(F2)
 			qdel(src)
 			return
 		if(1)

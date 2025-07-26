@@ -55,11 +55,9 @@
 		held_index = (active_hand_index % held_items.len)+1
 
 	var/obj/item/item_in_hand = src.get_active_held_item()
-	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
-		if(istype(item_in_hand))
-			if(item_in_hand.wielded == 1)
-				to_chat(usr, "<span class='warning'>My other hand is too busy holding [item_in_hand].</span>")
-				return FALSE
+	if(SEND_SIGNAL(src, COMSIG_MOB_SWAPPING_HANDS, item_in_hand) & COMPONENT_BLOCK_SWAP)
+		to_chat(src, span_warning("My other hand is too busy holding [item_in_hand]."))
+		return FALSE
 	if(atkswinging || atkreleasing)
 		stop_attack(FALSE)
 	var/oindex = active_hand_index

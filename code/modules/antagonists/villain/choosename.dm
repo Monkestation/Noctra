@@ -26,6 +26,9 @@
 	if(mind.special_role == "Vampire Lord")
 		new_name = "[(gender == FEMALE ? "Lady" : "Lord")] [new_name]"
 
+	if(mind.special_role == "Bandit")
+		GLOB.outlawed_players |= new_name
+
 	fully_replace_character_name(old_name, new_name)
 	var/fakekey = get_display_ckey(ckey)
 	GLOB.character_list[mobid] = "[fakekey] was [new_name] ([input])<BR>"

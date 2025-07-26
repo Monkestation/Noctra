@@ -17,7 +17,10 @@
 	resistance_flags = FIRE_PROOF
 	sellprice = 50
 	smeltresult = /obj/item/ingot/silver
-	is_silver = TRUE
+
+/obj/item/clothing/neck/psycross/silver/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 // PANTHEON SILVER PSYCROSSES START
 
