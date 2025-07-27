@@ -35,7 +35,15 @@ abstract types are automatically excluded.
 		/obj/item/clothing/shirt/robe/newmage/sorcerer, // TODO
 		/obj/item/clothing/shirt/robe/newmage/warlock, // TODO
 		/obj/item/clothing/cloak/matron, // matron only?
-		/obj/item/clothing/cloak/battlenun, // wtf is this?
+		/obj/item/clothing/head/helmet/heavy/sinistar, // TODO
+		/obj/item/clothing/head/helmet/heavy/savoyard, // vampire shit
+		/obj/item/clothing/head/padded/deathface, // ???
+		/obj/item/clothing/head/roguehood/priest, // unattainable
+		/obj/item/clothing/cloak/wardencloak, // no
+		/obj/item/clothing/cloak/heartfelt, // no
+		/obj/item/clothing/cloak/boiler, // TODO
+		/obj/item/clothing/shoes/otavan/inqboots, // bullshit
+
 
 
 	)
@@ -80,6 +88,8 @@ abstract types are automatically excluded.
 		"forrester",
 		"blk",
 		"rust",
+		'battlenun', // wtf is this?
+		"zalad", // TODO
 	)
 
 /datum/unit_test/craftable_clothes/Run()

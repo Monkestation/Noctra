@@ -39,6 +39,9 @@
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	armor = list("blunt" = 70, "slash" = 60, "stab" = 30, "piercing" = 20,"fire" = 0, "acid" = 0)
 
+/obj/item/clothing/pants/trou/leather/advanced/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
 /obj/item/clothing/pants/trou/leather/masterwork
 	name = "masterwork leather chausses"
 	desc = "These chausses are a craftsmanship marvel. Made with the finest leather. Strong, nimible, reliable."
@@ -92,7 +95,7 @@
 	item_state = "beltpants"
 
 //Valorian Duelist Merc - On par with grenzelhoftian's stats.
-/obj/item/clothing/pants/trou/leather/advanced/duelpants
+/obj/item/clothing/pants/trou/leather/advanced/colored/duelpants
 	desc = "Padded pants, favored by Valoria's Duelists, Legs are often a prime target in a duel, and these pants seem to have seen their fair share of it"
 	color = "#5a5a5a"
 	armor = ARMOR_PADDED

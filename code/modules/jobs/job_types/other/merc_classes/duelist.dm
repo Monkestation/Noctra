@@ -21,7 +21,7 @@
 	armor = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
 	shirt = /obj/item/clothing/shirt/undershirt
 	gloves = /obj/item/clothing/gloves/leather/duelgloves
-	pants = /obj/item/clothing/pants/trou/leather/advanced/duelpants
+	pants = /obj/item/clothing/pants/trou/leather/advanced/colored/duelpants
 	shoes = /obj/item/clothing/shoes/nobleboot/duelboots
 	belt = /obj/item/storage/belt/leather/mercenary
 	backl = /obj/item/storage/backpack/satchel

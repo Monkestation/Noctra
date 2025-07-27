@@ -263,6 +263,20 @@
 	created_item = /obj/item/clothing/head/helmet/nasal
 	craftdiff = 1
 
+/datum/anvil_recipe/armor/iron/town_watch_helmet
+	name = "Town Watch helmet"
+	recipe_name = "a Town Watch helmet"
+	req_bar = /obj/item/ingot/iron
+	created_item = /obj/item/clothing/head/helmet/townwatch
+	craftdiff = 1
+
+/datum/anvil_recipe/armor/iron/town_watch_helmet_alt
+	name = "Town Watch helmet (alt)"
+	recipe_name = "a Town Watch helmet"
+	req_bar = /obj/item/ingot/iron
+	created_item = /obj/item/clothing/head/helmet/townwatch/alt
+	craftdiff = 1
+
 /datum/anvil_recipe/armor/iron/skullcap
 	name = "Skullcap"
 	recipe_name = "a skullcap"

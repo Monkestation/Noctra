@@ -206,6 +206,10 @@
 	name = "leather pants"
 	output = /obj/item/clothing/pants/trou/leather
 
+/datum/repeatable_crafting_recipe/leather/pants
+	name = "mourning pants"
+	output = /obj/item/clothing/pants/trou/leather/mourning
+
 /datum/repeatable_crafting_recipe/leather/shoes
 	name = "leather shoes"
 	output_amount = 2
@@ -256,6 +260,14 @@
 		/obj/item/natural/fur = 1,
 	)
 	output = /obj/item/clothing/cloak/raincloak/furcloak
+
+/datum/repeatable_crafting_recipe/leather/cloakfur_black
+	name = "fur lined black cloak"
+	requirements = list(
+		/obj/item/natural/hide/cured = 2,
+		/obj/item/natural/fur = 2,
+	)
+	output = /obj/item/clothing/cloak/black_cloak
 
 /datum/repeatable_crafting_recipe/leather/belt
 	name = "leather belt"
@@ -507,6 +519,13 @@
 /datum/repeatable_crafting_recipe/leather/standalone/boots
 	name = "hardened leather boots"
 	output = /obj/item/clothing/shoes/boots/leather/advanced
+	requirements = list(/obj/item/natural/hide/cured = 1,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/leather/standalone/leather_bracers
+	name = "hardened leather bracers"
+	output = /obj/item/clothing/wrists/bracers/leather/advanced
 	requirements = list(/obj/item/natural/hide/cured = 1,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 4

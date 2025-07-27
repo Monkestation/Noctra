@@ -528,7 +528,7 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 2
 
-/datum/repeatable_crafting_recipe/sewing/apron_waist
+/datum/repeatable_crafting_recipe/sewing/apron_cook
 	name = "cook apron"
 	output = /obj/item/clothing/cloak/apron/cook
 	requirements = list(/obj/item/natural/cloth = 1,

@@ -115,6 +115,7 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/ornate_tunic.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/ornate_tunic.dmi'
 	boobed = TRUE
+	abstract_type = /obj/item/clothing/shirt/ornate
 
 /obj/item/clothing/shirt/ornate/tunic
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR
