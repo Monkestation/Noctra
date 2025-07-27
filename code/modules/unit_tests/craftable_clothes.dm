@@ -88,7 +88,7 @@ abstract types are automatically excluded.
 		"forrester",
 		"blk",
 		"rust",
-		'battlenun', // wtf is this?
+		"battlenun", // wtf is this?
 		"zalad", // TODO
 	)
 
