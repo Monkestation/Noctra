@@ -171,7 +171,7 @@
 		/obj/item/natural/hide/cured = 2,
 		/obj/item/natural/fibers = 1
 	)
-	/obj/item/clothing/pants/trou/artipants
+	output = /obj/item/clothing/pants/trou/artipants
 
 /datum/repeatable_crafting_recipe/leather/gloves/leather_tights
 	name = "leather tights"
@@ -179,7 +179,7 @@
 		/obj/item/natural/hide/cured = 2,
 		/obj/item/natural/fibers = 1
 	)
-	/obj/item/clothing/pants/trou/leathertights
+	output = /obj/item/clothing/pants/trou/leathertights
 
 /datum/repeatable_crafting_recipe/leather/gloves/beltpants
 	name = "belt pants"
@@ -187,7 +187,7 @@
 		/obj/item/natural/hide/cured = 2,
 		/obj/item/natural/fibers = 1
 	)
-	/obj/item/clothing/pants/trou/beltpants
+	output = /obj/item/clothing/pants/trou/beltpants
 
 /datum/repeatable_crafting_recipe/leather/gloves/duelist_gloves
 	name = "dueslist gloves"
@@ -195,7 +195,7 @@
 		/obj/item/natural/hide/cured = 3,
 		/obj/item/natural/fibers = 1
 	)
-	/obj/item/clothing/gloves/leather/duelgloves
+	output = /obj/item/clothing/gloves/leather/duelgloves
 
 /datum/repeatable_crafting_recipe/leather/bracers
 	name = "leather bracers"
