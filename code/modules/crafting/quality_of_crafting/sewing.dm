@@ -186,6 +186,12 @@
 	requirements = list(/obj/item/natural/fibers = 1, /obj/item/natural/cloth = 1)
 	category = "Mask"
 
+/datum/repeatable_crafting_recipe/sewing/cmask_rag
+	name = "rag mask"
+	output = /obj/item/clothing/face/shepherd/rag
+	requirements = list(/obj/item/natural/fibers = 1, /obj/item/natural/cloth = 1)
+	category = "Mask"
+
 /datum/repeatable_crafting_recipe/sewing/linedanklet
 	name = "cloth anklet"
 	output = /obj/item/clothing/shoes/boots/clothlinedanklets
@@ -486,6 +492,13 @@
 	requirements = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
+
+/datum/repeatable_crafting_recipe/sewing/normal_robes
+	name = "robes"
+	output = /obj/item/clothing/shirt/robe
+	requirements = list(/obj/item/natural/cloth = 1,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 1
 
 /datum/repeatable_crafting_recipe/sewing/feld_robe
 	name = "feldsher robes"

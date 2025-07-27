@@ -156,7 +156,7 @@
 /datum/supply_pack/apparel/silkdress_random
 	name = "Silk Dress"
 	cost = 30
-	contains = /obj/item/clothing/shirt/dress/silkdress/colored/random
+	contains = /obj/item/clothing/shirt/dress/silkdress
 
 /datum/supply_pack/apparel/robe
 	name = "Robe"

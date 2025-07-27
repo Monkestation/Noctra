@@ -75,6 +75,20 @@
 	created_item = /obj/item/statue/gold
 	craftdiff = 2
 
+/datum/anvil_recipe/valuables/gold_mask
+	name = "Golden Half Mask"
+	recipe_name = "a golden half mask"
+	req_bar = /obj/item/ingot/gold
+	created_item = /obj/item/clothing/face/lordmask
+	craftdiff = 2
+
+/datum/anvil_recipe/valuables/gold_mask_left
+	name = "Golden Half Mask (Left)"
+	recipe_name = "a golden half mask"
+	req_bar = /obj/item/ingot/gold
+	created_item = /obj/item/clothing/face/lordmask/l
+	craftdiff = 2
+
 /datum/anvil_recipe/valuables/iron
 	name = "Iron Statue"
 	recipe_name = "a Statue"
@@ -137,6 +151,14 @@
 	additional_items = list(/obj/item/gem)
 	created_item = /obj/item/clothing/ring/silver/rontz
 	craftdiff = 1
+
+
+/datum/anvil_recipe/valuables/rontzs
+	name = "Silver Face Mask"
+	recipe_name = "a silver face mask"
+	req_bar = /obj/item/ingot/silver
+	created_item = /obj/item/clothing/face/facemask/silver
+	craftdiff = 2
 
 /datum/anvil_recipe/valuables/steel
 	name = "Steel Statue"
