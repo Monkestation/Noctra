@@ -521,6 +521,27 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
 
+/datum/repeatable_crafting_recipe/sewing/apron_waist
+	name = "apron"
+	output = /obj/item/clothing/cloak/apron/waist
+	requirements = list(/obj/item/natural/cloth = 1,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 2
+
+/datum/repeatable_crafting_recipe/sewing/apron_waist
+	name = "cook apron"
+	output = /obj/item/clothing/cloak/apron/cook
+	requirements = list(/obj/item/natural/cloth = 1,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 2
+
+/datum/repeatable_crafting_recipe/sewing/fisher_hat
+	name = "fisher hat"
+	output = /obj/item/clothing/head/fisherhat
+	requirements = list(/obj/item/natural/cloth = 1,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 2
+
 /datum/repeatable_crafting_recipe/sewing/cape
 	name = "cape"
 	output = /obj/item/clothing/cloak/cape

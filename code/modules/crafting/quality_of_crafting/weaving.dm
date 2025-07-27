@@ -221,6 +221,69 @@
 				/obj/item/natural/silk = 1)
 	craftdiff = 4
 
+/datum/repeatable_crafting_recipe/sewing/weaving/abyssor_robe
+	name = "robes (Abyssor)"
+	output = /obj/item/clothing/shirt/robe/abyssor
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/silk = 1)
+	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/sewing/weaving/merchant_robe
+	name = "merchant robe"
+	output = /obj/item/clothing/shirt/robe/merchant
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/silk = 1)
+	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/sewing/weaving/archivist_robe
+	name = "archivist robe"
+	output = /obj/item/clothing/shirt/robe/archivist
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/silk = 1)
+	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/sewing/weaving/heartfelt_suit
+	name = "heartfeltian suit"
+	output = /obj/item/clothing/shirt/undershirt/artificer
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/silk = 2)
+	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/sewing/weaving/fancy_tunic
+	name = "fancy tunic"
+	output = /obj/item/clothing/shirt/undershirt/fancy
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/silk = 2)
+	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/sewing/weaving/winter_jacket
+	name = "winter jacket"
+	output = /obj/item/clothing/armor/leather/vest/winterjacket
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/silk = 4)
+	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/sewing/weaving/artificer_jacket
+	name = "artificer jacket"
+	output = /obj/item/clothing/armor/leather/jacket/artijacket
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/silk = 2)
+	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/sewing/weaving/hand_jacket
+	name = "hand jacket"
+	output = /obj/item/clothing/armor/leather/jacket/hand
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/silk = 4)
+	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/sewing/weaving/hand_jacket_alt
+	name = "hand jacket (alt)"
+	output = /obj/item/clothing/armor/leather/jacket/handjacket
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/silk = 4)
+	craftdiff = 4
+
 /datum/repeatable_crafting_recipe/sewing/weaving/paddedgambeson
 	name = "padded gambeson"
 	output = /obj/item/clothing/armor/gambeson/heavy
@@ -269,6 +332,14 @@
 	craftdiff = 5
 	category = "Dress"
 
+/datum/repeatable_crafting_recipe/sewing/weaving/steward_dress
+	name = "steward dress (silk)"
+	output = /obj/item/clothing/shirt/dress/stewarddress
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/silk = 2)
+	craftdiff = 5
+	category = "Dress"
+
 /datum/repeatable_crafting_recipe/sewing/weaving/silkdress
 	name = "dress (chemise, silk)"
 	output = /obj/item/clothing/shirt/dress/silkdress/colored/random
@@ -279,6 +350,72 @@
 
 /* craftdif of 6 = LEGENDARY */
 // IDK how to balance these
+
+/datum/repeatable_crafting_recipe/sewing/weaving/royal_gown
+	name = "royal gown"
+	output = /obj/item/clothing/shirt/dress/royal
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/silk = 4)
+	craftdiff = 6
+	sellprice = 85
+	category = "Dress"
+
+
+
+/datum/repeatable_crafting_recipe/sewing/weaving/royal_headdress
+	name = "foreign headdress"
+	output = /obj/item/clothing/head/headdress
+	requirements = list(/obj/item/natural/cloth = 1,
+				/obj/item/natural/silk = 2)
+	craftdiff = 6
+	sellprice = 30
+	category = "Hat"
+
+/datum/repeatable_crafting_recipe/sewing/weaving/royal_headdress_alt
+	name = "foreign headdress (alt)"
+	output = /obj/item/clothing/head/headdress/alt
+	requirements = list(/obj/item/natural/cloth = 1,
+				/obj/item/natural/silk = 2)
+	craftdiff = 6
+	sellprice = 30
+	category = "Hat"
+
+/datum/repeatable_crafting_recipe/sewing/weaving/royal_sleeves
+	name = "royal sleeves"
+	output = /obj/item/clothing/wrists/royalsleeves
+	requirements = list(/obj/item/natural/cloth = 1,
+				/obj/item/natural/silk = 1)
+	craftdiff = 6
+	sellprice = 30
+	category = "Dress"
+
+/datum/repeatable_crafting_recipe/sewing/weaving/royal_gown
+	name = "winter dress"
+	output = /obj/item/clothing/armor/gambeson/heavy/winterdress
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/silk = 4)
+	craftdiff = 6
+	sellprice = 85
+	category = "Dress"
+
+/datum/repeatable_crafting_recipe/sewing/weaving/royal_gown_prince
+	name = "gilded dress shirt"
+	output = /obj/item/clothing/shirt/dress/royal/prince
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/silk = 2)
+	craftdiff = 6
+	sellprice = 85
+	category = "Dress"
+
+/datum/repeatable_crafting_recipe/sewing/weaving/royal_gown_princess
+	name = "pristine dress"
+	output = /obj/item/clothing/shirt/dress/royal/princess
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/silk = 2)
+	craftdiff = 6
+	sellprice = 85
+	category = "Dress"
+
 /datum/repeatable_crafting_recipe/sewing/weaving/springgown
 	name = "gown (spring)"
 	output = /obj/item/clothing/shirt/dress/gown

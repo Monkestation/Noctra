@@ -28,12 +28,12 @@
 	// Beneath the arms and armor is a simple loincloth, and it doesn't start with any money. This should encourage them to find someone to serve or work alongside with very quickly
 	pants = /obj/item/clothing/pants/loincloth/colored/brown
 	beltr = /obj/item/flashlight/flare/torch/lantern
-	shoes = /obj/item/clothing/shoes/hoplite
+	shoes = /obj/item/clothing/shoes/rare/hoplite
 	cloak = /obj/item/clothing/cloak/half/colored/red
 	belt = /obj/item/storage/belt/leather/rope
 	armor = /obj/item/clothing/armor/rare/hoplite
 	head = /obj/item/clothing/head/rare/hoplite
-	wrists = /obj/item/clothing/wrists/bracers/hoplite
+	wrists = /obj/item/clothing/wrists/bracers/rare/hoplite
 	neck = /obj/item/clothing/neck/gorget/hoplite
 	backl = /obj/item/weapon/shield/tower/hoplite
 	var/weapontype = pickweight(list("Khopesh" = 5, "Spear" = 3, "WingedSpear" = 2)) // Rolls for various weapon options based on weighted list

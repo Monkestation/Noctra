@@ -15,8 +15,6 @@ abstract types are automatically excluded.
 		/obj/item/clothing/pants/tights/formal, // fluff item for maniac
 		/obj/item/clothing/head/helmet/visored/royalknight, // royal knight only
 		/obj/item/clothing/head/helmet/medium/decorated/skullmet,
-		/obj/item/clothing/head/helmet/visored/zizo, // zizo knight only
-		/obj/item/clothing/head/helmet/visored/captain, // captain only
 		/obj/item/clothing/head/helmet/visored/warden, // warden only
 		/obj/item/clothing/neck/mana_star, // court mage only
 		/obj/item/clothing/head/helmet/visored/knight/black, // deathknight item
@@ -30,6 +28,15 @@ abstract types are automatically excluded.
 		/obj/item/clothing/head/leather/inqhat, // this stinks
 		/obj/item/clothing/face/facemask/steel/harlequin, // antag only
 		/obj/item/clothing/shirt/dress/gen/sexy, // we wanted to keep it but don't want it craftable ig
+		/obj/item/clothing/shirt/robe/necromancer, // antag
+		/obj/item/clothing/shirt/robe/priest, // unattainable
+		/obj/item/clothing/shirt/robe/magus, // loot
+		/obj/item/clothing/shirt/robe/newmage/adept, // TODO
+		/obj/item/clothing/shirt/robe/newmage/sorcerer, // TODO
+		/obj/item/clothing/shirt/robe/newmage/warlock, // TODO
+		/obj/item/clothing/cloak/matron, // matron only?
+		/obj/item/clothing/cloak/battlenun, // wtf is this?
+
 
 	)
 	// these don't use misc_flags = CRAFTING_TEST_EXCLUDE because we want to explicitly know which paths we are excluding.
@@ -46,6 +53,8 @@ abstract types are automatically excluded.
 		/obj/item/clothing/accessory, // ???
 		/obj/item/clothing/head/crown/serpcrown, // should only be one
 		/obj/item/clothing/face/cigarette, // ???
+		/obj/item/clothing/cloak/cape, // TODO
+		/obj/item/clothing/cloak/half, // TODO
 	)
 
 	/// excludes paths that are subtypes of these types and only subtypes
@@ -69,7 +78,8 @@ abstract types are automatically excluded.
 		"grenzel",
 		"steam",
 		"forrester",
-		"blkknight",
+		"blk",
+		"rust",
 	)
 
 /datum/unit_test/craftable_clothes/Run()

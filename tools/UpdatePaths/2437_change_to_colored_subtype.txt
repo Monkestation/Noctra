@@ -100,4 +100,5 @@
 /obj/item/clothing/head/softcap : /obj/item/clothing/head/armingcap{@OLD}
 /obj/item/clothing/head/armingcap/dwarf : /obj/item/clothing/head/armingcap/colored/dwarf{@OLD}
 /obj/item/clothing/cloak/cape/rogue : /obj/item/clothing/cloak/chasuble{@OLD}
-
+/obj/item/clothing/shirt/robe/courtmage : /obj/item/clothing/shirt/robe/colored/courtmage{@OLD}
+/obj/item/clothing/shirt/robe/mage : /obj/item/clothing/shirt/robe/colored/mage{@OLD}

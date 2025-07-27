@@ -471,7 +471,7 @@
 				H.set_patron(/datum/patron/divine/noc)
 			r_hand = /obj/item/weapon/polearm/woodstaff
 			head = /obj/item/clothing/head/roguehood/colored/mage
-			armor = /obj/item/clothing/shirt/robe/mage
+			armor = /obj/item/clothing/shirt/robe/colored/mage
 			beltl = /obj/item/reagent_containers/glass/bottle/manapot
 			beltr = /obj/item/book/granter/spellbook/apprentice
 			H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)

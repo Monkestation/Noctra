@@ -17,7 +17,7 @@
 	H.mana_pool?.set_intrinsic_recharge(MANA_ALL_LEYLINES)
 	head = /obj/item/clothing/head/roguehood/colored/mage
 	shoes = /obj/item/clothing/shoes/simpleshoes
-	armor = /obj/item/clothing/shirt/robe/mage
+	armor = /obj/item/clothing/shirt/robe/colored/mage
 	belt = /obj/item/storage/belt/leather/rope
 	backr = /obj/item/storage/backpack/satchel
 	beltr = /obj/item/storage/magebag/poor

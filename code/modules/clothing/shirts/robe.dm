@@ -103,10 +103,10 @@
 
 
 //................ Wizard Robes ............... //
-/obj/item/clothing/shirt/robe/courtmage
+/obj/item/clothing/shirt/robe/colored/courtmage
 	color = CLOTHING_ASH_GREY
 
-/obj/item/clothing/shirt/robe/mage/Initialize()
+/obj/item/clothing/shirt/robe/colored/mage/Initialize()
 	color = pick( CLOTHING_PEASANT_BROWN, CLOTHING_SPRING_GREEN, CLOTHING_CHESTNUT, CLOTHING_YELLOW_OCHRE)
 	. = ..()
 
