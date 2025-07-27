@@ -5,9 +5,9 @@
 	/// Whehter we revert to our human form on death.
 	var/revert_on_death = TRUE
 	/// Whether we die when our shapeshifted form is killed
-	var/die_with_shapeshifted_form = TRUE
+	var/die_with_shapeshifted_form = FALSE
 	/// Whether we convert our health from one form to another
-	var/convert_damage = TRUE
+	var/convert_damage = FALSE
 	/// If convert damage is true, the damage type we deal when converting damage back and forth
 	var/convert_damage_type = BRUTE
 
@@ -113,9 +113,9 @@
 	var/restoring = FALSE
 	var/datum/action/cooldown/spell/undirected/shapeshift/source
 
-/obj/shapeshift_holder/Initialize(mapload, datum/action/cooldown/spell/undirected/shapeshift/_source, mob/living/caster)
+/obj/shapeshift_holder/Initialize(mapload, datum/action/cooldown/spell/undirected/shapeshift/source, mob/living/caster)
 	. = ..()
-	source = _source
+	src.source = source
 	shape = loc
 	if(!istype(shape))
 		stack_trace("shapeshift holder created outside mob/living")
@@ -126,11 +126,15 @@
 	stored.forceMove(src)
 	stored.notransform = TRUE
 	if(source.convert_damage)
-		var/damage_percent = (stored.maxHealth - stored.health) / stored.maxHealth;
-		var/damapply = damage_percent * shape.maxHealth;
+		var/damage_percent = (stored.maxHealth - stored.health) / stored.maxHealth
+		var/damapply = damage_percent * shape.maxHealth
 
-		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE);
-		shape.blood_volume = stored.blood_volume;
+		shape.apply_damage(damapply, source.convert_damage_type, forced = TRUE)
+		shape.blood_volume = stored.blood_volume
+
+	if(!shape.get_spell(source.type, TRUE))
+		var/datum/action/cooldown/spell/undirected/shapeshift/copy = new source.type(src)
+		copy.Grant(shape)
 
 	RegisterSignal(shape, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(shape_death))
 	RegisterSignal(stored, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(caster_death))

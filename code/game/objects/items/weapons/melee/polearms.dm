@@ -239,7 +239,10 @@
 	wdefense = AVERAGE_PARRY
 	wbalance = EASY_TO_DODGE
 	sellprice = 60
-	is_silver = TRUE
+
+/obj/item/weapon/polearm/spear/psydon/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 /obj/item/weapon/polearm/spear/psydon/getonmobprop(tag)
 	. = ..()
@@ -360,7 +363,10 @@
 	minstr = 11
 	axe_cut = 10
 	sellprice = 100
-	is_silver = TRUE
+
+/obj/item/weapon/polearm/halberd/psydon/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 /obj/item/weapon/polearm/halberd/psydon/getonmobprop(tag)
 	. = ..()

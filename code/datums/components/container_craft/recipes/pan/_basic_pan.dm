@@ -5,6 +5,7 @@
 	category = "Pan"
 
 	var/datum/pollutant/cooked_smell
+	cooking_sound = /datum/looping_sound/frying
 
 /datum/container_craft/pan/get_real_time(atom/host, mob/user, estimated_multiplier)
 	var/real_cooking_time = crafting_time * estimated_multiplier

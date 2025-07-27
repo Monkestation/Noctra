@@ -11,7 +11,7 @@
 
 /datum/species/human/northern
 	name = "Humen"
-	id = "human"
+	id = SPEC_ID_HUMEN
 	desc = "Humenity, created in Psydon's image. \
 	\n\n\
 	Humens come from a vast swathe of cultures and ethnicities all around Psydonia, most of which \

@@ -36,76 +36,19 @@
 			to_chat(owner, "I need a hammer to cast this.")
 		return FALSE
 
-/datum/action/cooldown/spell/hammer_fall/cast(atom/cast_on)
+/datum/action/cooldown/spell/hammer_fall/before_cast(atom/cast_on)
 	. = ..()
+	if(. & SPELL_CANCEL_CAST)
+		return
 	var/turf/target = get_turf(cast_on)
 	if(target != get_turf(owner))
-		if(!leap_towards(target))
-			return
+		var/mob/living/living_owner = owner
+		if(!living_owner.jump_action(target))
+			return . | SPELL_CANCEL_CAST
+
+/datum/action/cooldown/spell/hammer_fall/cast(atom/cast_on)
+	. = ..()
 	do_slam()
-
-/datum/action/cooldown/spell/hammer_fall/proc/leap_towards(atom/A)
-	if(!isliving(owner))
-		return FALSE
-	var/mob/living/living_owner = owner
-	if(istype(get_turf(owner), /turf/open/water))
-		to_chat(owner, span_warning("I can't jump while floating."))
-		return FALSE
-	if(living_owner.usable_legs < 2)
-		return FALSE
-	if(living_owner.IsOffBalanced())
-		to_chat(living_owner, span_warning("I haven't regained my balance yet."))
-		return FALSE
-	if(living_owner.pulledby && living_owner.pulledby != living_owner)
-		to_chat(src, span_warning("I'm being grabbed."))
-		living_owner.resist_grab()
-		return FALSE
-	if(living_owner.body_position == LYING_DOWN)
-		to_chat(living_owner, span_warning("I should stand up first."))
-		return FALSE
-	if(A.z != living_owner.z)
-		if(!HAS_TRAIT(src, TRAIT_ZJUMP))
-			return FALSE
-	//Time to fly
-	living_owner.changeNext_move(CLICK_CD_MELEE)
-	living_owner.face_atom(A)
-	var/jadded
-	var/jrange
-	var/jextra = FALSE
-	if(living_owner.m_intent == MOVE_INTENT_RUN)
-		living_owner.OffBalance(30)
-		jadded = 15
-		jrange = 3
-		jextra = TRUE
-	else
-		living_owner.OffBalance(20)
-		jadded = 10
-		jrange = 2
-	if(ishuman(living_owner))
-		var/mob/living/carbon/human/H = living_owner
-		jadded += H.get_complex_pain() / 50
-		if(H.get_encumbrance() > 0.6)
-			jadded += 50
-			jrange = 1
-	if(living_owner.adjust_stamina(min(jadded, 100)))
-		if(jextra)
-			living_owner.throw_at(A, jrange, 1, living_owner, spin = FALSE)
-			while(living_owner.throwing)
-				sleep(1)
-			living_owner.throw_at(get_step(living_owner, living_owner.dir), 1, 1, living_owner, spin = FALSE)
-		else
-			living_owner.throw_at(A, jrange, 1, living_owner, spin = FALSE)
-			while(living_owner.throwing)
-				sleep(1)
-		if(isopenturf(living_owner.loc))
-			var/turf/open/T = living_owner.loc
-			if(T.landsound)
-				playsound(T, T.landsound, 100, FALSE)
-			T.Entered(living_owner)
-	else
-		living_owner.throw_at(A, 1, 1, living_owner, spin = FALSE)
-
-	return TRUE
 
 /datum/action/cooldown/spell/hammer_fall/proc/do_slam()
 	var/static/damage = 250 //Structural damage the spell does. At 250, it would take 4 casts (12 minutes and 320 devotion) to destroy a normal door.

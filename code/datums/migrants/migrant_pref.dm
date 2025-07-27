@@ -33,8 +33,6 @@
 			role_preferences += role_type
 			var/datum/migrant_role/role = MIGRANT_ROLE(role_type)
 			to_chat(prefs.parent, span_nicegreen("You have prioritized the [role.name]. This does not guarantee getting the role"))
-		else
-			to_chat(prefs.parent, span_warning("You can't be this role. (Wrong species, gender or age)"))
 
 /datum/migrant_pref/proc/post_spawn()
 	set_active(FALSE, TRUE)

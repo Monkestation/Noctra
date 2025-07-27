@@ -79,6 +79,16 @@
 	screen_max_rows = 10
 	screen_max_columns = 10
 
+/datum/component/storage/concrete/grid/mailmaster/show_to(mob/M)
+	. = ..()
+	if(!.)
+		return
+	if(istype(parent, /obj/item/roguemachine/mastermail))
+		var/obj/item/roguemachine/mastermail/mail_machine = parent
+		if(mail_machine.new_mail)
+			mail_machine.new_mail = FALSE
+			mail_machine.update_appearance(UPDATE_ICON_STATE)
+
 /datum/component/storage/concrete/grid/bin
 	max_w_class = WEIGHT_CLASS_HUGE
 	screen_max_rows = 8
@@ -288,10 +298,10 @@
 	screen_max_rows = 3
 	screen_max_columns = 3
 	insert_verb = "put"
-	insert_preposition = "into"
+	insert_preposition = "in"
 
 /datum/component/storage/concrete/grid/food/cooking/oven
 	screen_max_rows = 2
 	screen_max_columns = 5
 	insert_verb = "slide"
-	insert_preposition = "into"
+	insert_preposition = "in"

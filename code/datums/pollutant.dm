@@ -34,7 +34,7 @@
 	return
 
 
-/datum/pollutant/fragrance/on_life(parent)
+/datum/pollutant/fragrance/on_smell(parent)
 	. = ..()
 	for(var/mob/living/carbon/human/H in view(1, parent))
 		if(!H)

@@ -128,7 +128,7 @@ h1.alert, h2.alert	{color: #c9c1ba;font-family: Pterra, TrueType;}
 .human					{font-family: "Honoka Mincho", Pterra;}
 .elf					{font-family: "Dauphin", cursive, Pterra;}
 .oldpsydonic			{font-family: "Breitkopf Fraktur", Pterra; font-size: 120%;}
-.zalad				{font-family: "Byzantine", Pterra;}
+.zalad					{font-family: "Byzantine", Pterra;}
 .dwarf					{font-family: "MasonAlternate", Pterra;}
 .sandspeak				{font-family: "Arabolical", Pterra;}
 .delf					{font-family: "Dauphin", Pterra;}
@@ -136,6 +136,7 @@ h1.alert, h2.alert	{color: #c9c1ba;font-family: Pterra, TrueType;}
 .undead					{font-family: "FriskyVampire", Pterra;}
 .orc					{font-family: "Thief by The Riddler", Pterra;}
 .beast					{font-family: "Thief by The Riddler", Pterra;}
+.deepspeak				{font-family: "Underwater Love", Pterra;}
 
 .torture				{color: #42ff20}
 

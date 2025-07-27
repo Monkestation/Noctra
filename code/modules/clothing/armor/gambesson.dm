@@ -70,7 +70,7 @@
 	name = "padded dress"
 	desc = "Favored by the female nobility, to maintain both vitality and good taste while out hunting."
 	icon_state = "armordress"
-	allowed_race = list("human", "tiefling", "elf", "aasimar")
+	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_TIEFLING, SPEC_ID_ELF, SPEC_ID_AASIMAR)
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	sellprice = VALUE_PADDED_DRESS

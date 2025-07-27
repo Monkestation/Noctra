@@ -26,6 +26,8 @@
 
 	var/set_bleed_rate = 0.5
 
+	ignore_bloody = TRUE
+
 	werewolf_infection_probability = 0
 	/// Whether or not we can be surgically set
 	var/can_set = TRUE

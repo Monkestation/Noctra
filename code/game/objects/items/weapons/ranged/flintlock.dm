@@ -24,7 +24,6 @@
 	drop_sound = 'sound/foley/gun_drop.ogg'
 	dropshrink = 0.7
 	associated_skill = /datum/skill/combat/firearms
-	possible_item_intents = list(INTENT_GENERIC)
 	possible_item_intents = list(/datum/intent/shoot/musket, /datum/intent/shoot/musket/arc, INTENT_GENERIC)
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/musk
 	gripped_intents = null

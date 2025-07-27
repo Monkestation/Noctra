@@ -110,6 +110,8 @@
 	else
 		to_chat(sniffer, span_info(smell_string))
 
+	dominant_pollutant.on_smell(sniffer)
+
 /datum/pollution/proc/scrub_amount(amount_to_scrub, update_active = TRUE)
 	if(amount_to_scrub >= total_amount || !isopenturf(my_turf) || QDELING(my_turf))
 		qdel(src)

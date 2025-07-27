@@ -1,4 +1,4 @@
-GLOBAL_LIST_EMPTY(last_messages)
+GLOBAL_LIST_EMPTY(last_words)
 
 /mob/living/gib(no_brain, no_organs, no_bodyparts)
 	var/prev_lying = lying_angle
@@ -106,14 +106,12 @@ GLOBAL_LIST_EMPTY(last_messages)
 		addtimer(CALLBACK(H, TYPE_PROC_REF(/atom/movable/screen/gameover, Fade), TRUE), 100)
 		add_client_colour(/datum/client_colour/monochrome/death)
 		client?.verbs |= /client/proc/descend
-		if(last_message)
-			GLOB.last_messages |= last_message
+		if(last_words)
+			GLOB.last_words |= last_words
 
-	for(var/s in ownedSoullinks)
-		var/datum/soullink/S = s
+	for(var/datum/soullink/S as anything in ownedSoullinks)
 		S.ownerDies(gibbed)
-	for(var/s in sharedSoullinks)
-		var/datum/soullink/S = s
+	for(var/datum/soullink/S as anything in sharedSoullinks)
 		S.sharerDies(gibbed)
 
 //	for(var/datum/death_tracker/D in target.death_trackers)

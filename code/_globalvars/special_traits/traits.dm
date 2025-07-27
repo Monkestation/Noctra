@@ -232,6 +232,7 @@
 	character.grant_language(/datum/language/hellspeak)
 	character.grant_language(/datum/language/celestial)
 	character.grant_language(/datum/language/orcish)
+	character.grant_language(/datum/language/deepspeak)
 	character.grant_language(/datum/language/oldpsydonic)
 	character.grant_language(/datum/language/zalad)
 	character.grant_language(/datum/language/thievescant)
@@ -318,7 +319,7 @@
 	name = "Giant"
 	greet_text = span_notice("I've always been called a giant. I am valued for my stature, but, this world made for smaller folk has forced me to move cautiously.")
 	req_text = "Not a kobold or dwarf"
-	restricted_races = list(/datum/species/dwarf/mountain, /datum/species/kobold)
+	restricted_races = list(SPEC_ID_DWARF, SPEC_ID_KOBOLD)
 	weight = 50
 
 /datum/special_trait/backproblems/on_apply(mob/living/carbon/human/character)
@@ -410,7 +411,7 @@
 	weight = 20
 
 /datum/special_trait/outlaw/on_apply(mob/living/carbon/human/character, silent)
-	GLOB.outlawed_players += character.real_name
+	GLOB.outlawed_players |= character.real_name
 
 /datum/special_trait/unlucky
 	name = "Unlucky"

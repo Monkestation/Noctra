@@ -1,23 +1,23 @@
 /datum/element/divine_intervention
-	element_flags = ELEMENT_DETACH
+	element_flags = ELEMENT_BESPOKE
+	id_arg_index = 2
 	var/datum/stressevent/stress_event
 	var/datum/patron/patron
 	var/allows_pantheon
 	var/sets_alight
 
-/datum/element/divine_intervention/Attach(obj/item/item, patron = /datum/patron/divine/astrata, allows_pantheon = PUNISHMENT_NONE, stress_event = null, sets_alight = FALSE)
+/datum/element/divine_intervention/Attach(datum/target, patron = /datum/patron/divine/astrata, allows_pantheon = PUNISHMENT_NONE, stress_event = null, sets_alight = FALSE)
 	. = ..()
-	if(!istype(item))
+	if(!istype(target))
 		return ELEMENT_INCOMPATIBLE
 	src.patron = GLOB.patronlist[patron]
 	src.allows_pantheon = allows_pantheon
 	src.stress_event = stress_event
 	src.sets_alight = sets_alight
-	RegisterSignal(item, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
+	RegisterSignal(target, COMSIG_ITEM_PICKUP, PROC_REF(on_pickup))
 
 /datum/element/divine_intervention/Detach(obj/item/item)
 	. = ..()
-	patron = null
 	UnregisterSignal(item, COMSIG_ITEM_PICKUP)
 
 /datum/element/divine_intervention/proc/on_pickup(obj/item/source, mob/user)

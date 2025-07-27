@@ -76,7 +76,7 @@
 
 /obj/item/natural/head/volf
 	name = "volf head"
-	desc = "the head of a fearsome volf."
+	desc = "The severed head of a fearsome volf."
 	icon_state = "volfhead"
 	layer = 3.1
 	grid_height = 64
@@ -86,7 +86,7 @@
 
 /obj/item/natural/head/saiga
 	name = "saiga head"
-	desc = "the head of a proud saiga."
+	desc = "The severed head of a proud saiga."
 	icon_state = "saigahead"
 	layer = 3.1
 	grid_height = 64
@@ -95,17 +95,19 @@
 
 /obj/item/natural/head/troll
 	name = "troll head"
-	desc = "the head of a giant troll."
+	desc = "The severed head of a giant troll."
 	icon_state = "trollhead"
 	layer = 3.1
 	w_class = WEIGHT_CLASS_HUGE
-	twohands_required = TRUE
 	headpricemin = 80
 	headpricemax = 230
 
+/obj/item/natural/head/troll/apply_components()
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+
 /obj/item/natural/head/troll/axe
 	name = "troll head"
-	desc = "The head of a once mighty warrior troll."
+	desc = "The severed head of a once mighty warrior troll."
 	icon_state = "trollhead_axe"
 	headpricemin = 90
 	headpricemax = 250
@@ -118,7 +120,7 @@
 
 /obj/item/natural/head/rous
 	name = "rous head"
-	desc = "the head of an unusually large rat."
+	desc = "The severed head of an unusually large rat."
 	icon_state = "roushead"
 	layer = 3.1
 	grid_height = 64
@@ -128,7 +130,7 @@
 
 /obj/item/natural/head/spider
 	name = "honeyspider head"
-	desc = "the head of a venomous honeyspider."
+	desc = "The severed head of a venomous honeyspider."
 	icon_state = "spiderhead"
 	layer = 3.1
 	grid_height = 64
@@ -138,7 +140,7 @@
 
 /obj/item/natural/head/bug
 	name = "bogbug head"
-	desc = "the head of a gross bogbug."
+	desc = "The severed head of a gross bogbug."
 	icon_state = "boghead"
 	layer = 3.1
 	grid_height = 64
@@ -148,17 +150,19 @@
 
 /obj/item/natural/head/mole
 	name = "mole head"
-	desc = "the head of a lesser mole."
+	desc = "The severed head of a lesser mole."
 	icon_state = "molehead"
 	layer = 3.1
 	w_class = WEIGHT_CLASS_HUGE
-	twohands_required = TRUE
 	headpricemin = 3
 	headpricemax = 7
 
+/obj/item/natural/head/mole/apply_components()
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+
 /obj/item/natural/head/gote
 	name = "gote head"
-	desc = "the head of a fiery gote."
+	desc = "The severed head of a fiery gote."
 	icon_state = "gotehead"
 	layer = 3.1
 	headprice = 2
@@ -175,7 +179,9 @@
 	force = 0
 	throwforce = 0
 	sellprice = 80
-	twohands_required = TRUE
+
+/obj/item/natural/saddle/apply_components()
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 
 /obj/item/natural/saddle/attack(mob/living/target, mob/living/carbon/human/user)
 	if(istype(target, /mob/living/simple_animal))

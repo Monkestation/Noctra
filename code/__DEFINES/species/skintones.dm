@@ -116,22 +116,34 @@
 #define SKIN_COLOR_SANDSWEPT "fcccb3" //White - Tan
 
 // TRITON SKIN TONES
-/// Very Light Blue
+/// Very Light Blue "#9cc2e2"
 #define SKIN_COLOR_SHALLOW "9cc2e2"
-/// Light Blue
+/// Light Blue "#3f5f96"
 #define SKIN_COLOR_DEEP "3f5f96"
-/// Red
+/// Red "#cc6c6c"
 #define SKIN_COLOR_REEF "cc6c6c"
-/// White/Pink
+/// White/Pink "#dba6da"
 #define SKIN_COLOR_JELLYFISH "dba6da"
-/// Grey/Purple
+/// Grey/Purple "#5b54a3"
 #define SKIN_COLOR_URCHIN "5b54a3"
-/// Yellowish/Green
+/// Yellowish/Green "#6ebf4c"
 #define SKIN_COLOR_ALGAE "6ebf4c"
-/// Blueish/Green
+/// Blueish/Green "#0d844e"
 #define SKIN_COLOR_KELP "0d844e"
-/// Brownish/Yellow
+/// Brownish/Yellow "#bcbb7a"
 #define SKIN_COLOR_SAND "bcbb7a"
+
+// MEDICATOR SKIN TONES
+/// Gray "#5e5e5e"
+#define SKIN_COLOR_SMOKE "4e4e4e"
+/// Black "#1f1f1f"
+#define SKIN_COLOR_OIL "1f1f1f"
+/// Brown "#ba893a"
+#define SKIN_COLOR_SCRAP "ba893a"
+/// Purple "#4f2d61"
+#define SKIN_COLOR_WASTE "4f2d61"
+/// Pale Orange "#d69558"
+#define SKIN_COLOR_TOXIN "d69558"
 
 // SPECIAL SKIN TONES
 /// Sickly green

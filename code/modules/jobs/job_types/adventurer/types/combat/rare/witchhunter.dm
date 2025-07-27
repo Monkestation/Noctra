@@ -2,7 +2,6 @@
 /datum/advclass/combat/puritan
 	name = "Witch Hunter"
 	tutorial = "Witch Hunters dedicate their lives to the eradication of the varied evils infesting Psydonia. They know the vile sorcery of the necromancer, the insidious nature of the cultist and monstrousness of vampires and werevolfs. They also know how best to end them."
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_PLAYER_NONEXOTIC
 	outfit = /datum/outfit/job/adventurer/puritan
 	maximum_possible_slots = 1
@@ -17,12 +16,15 @@
 	belt = /obj/item/storage/belt/leather
 	shoes = /obj/item/clothing/shoes/boots
 	pants = /obj/item/clothing/pants/tights/black
-	armor = /obj/item/clothing/armor/leather/vest/winterjacket
-	beltr = /obj/item/storage/belt/pouch/coins/mid
+	armor = /obj/item/clothing/armor/leather/splint
+	cloak = /obj/item/clothing/cloak/cape/puritan
 	head = /obj/item/clothing/head/helmet/leather/inquisitor
 	gloves = /obj/item/clothing/gloves/angle
 	beltl = /obj/item/weapon/sword/rapier/silver
+	beltr = /obj/item/weapon/whip/silver
 	neck = /obj/item/clothing/neck/chaincoif
+	backl = /obj/item/storage/backpack/satchel
+	backpack_contents = list(/obj/item/storage/belt/pouch/coins/mid)
 
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
@@ -54,5 +56,5 @@
 			else
 				wrists = /obj/item/clothing/wrists/bracers/leather
 	H.verbs |= /mob/living/carbon/human/proc/torture_victim
-	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)		//Witch Hunter is more of a duelist in combat and should be dodging and parrying, and not tanking hits
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)		//If they have torture variables, they shouldn't be effected by stuff.

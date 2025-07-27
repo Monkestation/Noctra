@@ -79,43 +79,31 @@
 			user.visible_message("<span class='warning'>[user] kicks [src]!</span>", \
 				"<span class='warning'>I kick [src]!</span>")
 
-/obj/item/bin/attack_hand(mob/user)
-	var/datum/component/storage/CP = GetComponent(/datum/component/storage)
-	if(CP)
-		CP.rmb_show(user)
-		return TRUE
-
 /obj/item/bin/attack_hand_secondary(mob/user, params)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(kover)
 		user.visible_message("<span class='notice'>[user] starts to pick up [src]...</span>", \
 			"<span class='notice'>I start to pick up [src]...</span>")
 		if(do_after(user, 3 SECONDS, src))
 			kover = FALSE
 			update_appearance(UPDATE_ICON_STATE)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return
 
 	if(user.cmode)
 		return
 
 	try_wash(user, user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/bin/attackby_secondary(obj/item/weapon, mob/user, params)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 	if(user.cmode)
 		return
 
 	try_wash(weapon, user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/bin/proc/try_wash(atom/to_wash, mob/user)
-	if(!reagents || !reagents.maximum_volume)
+	if(!reagents || !reagents.maximum_volume || kover)
 		return
 	var/removereg = /datum/reagent/water
 	if(!reagents.has_reagent(/datum/reagent/water, 5))
@@ -156,6 +144,9 @@
 	return FALSE
 
 /obj/item/bin/attackby(obj/item/I, mob/user, params)
+	if(kover)
+		return ..()
+
 	if(istype(I, /obj/item/dye_pack))
 		var/obj/item/dye_pack/pack = I
 		user.visible_message(span_info("[user] begins to add [pack] to [src]..."))

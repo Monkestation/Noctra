@@ -356,7 +356,10 @@
 	sellprice = 100
 	wdefense = GOOD_PARRY
 	minstr = 11
-	is_silver = TRUE
+
+/obj/item/weapon/mace/goden/psydon/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 /obj/item/weapon/mace/goden/psydon/getonmobprop(tag)
 	. = ..()
