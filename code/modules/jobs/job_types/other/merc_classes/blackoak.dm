@@ -10,10 +10,10 @@
 	..()
 	shoes = /obj/item/clothing/shoes/boots/leather
 	cloak = /obj/item/clothing/cloak/half/colored/red
-	head = /obj/item/clothing/head/helmet/sallet/elven
+	head = /obj/item/clothing/head/helmet/sallet/rare/elven
 	gloves = /obj/item/clothing/gloves/angle
 	belt = /obj/item/storage/belt/leather/mercenary/black
-	armor = /obj/item/clothing/armor/cuirass/elven
+	armor = /obj/item/clothing/armor/cuirass/rare/elven
 	backl = /obj/item/storage/backpack/satchel
 	beltl = /obj/item/weapon/knife/dagger/steel/special
 	shirt = /obj/item/clothing/shirt/undershirt/colored/black

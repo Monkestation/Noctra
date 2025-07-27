@@ -293,6 +293,22 @@
 	output = /obj/item/clothing/armor/leather/jacket/sea
 	craftdiff = 3
 
+/datum/repeatable_crafting_recipe/leather/apothecary_shirt
+	name = "apothecary shirt"
+	requirements = list(
+		/obj/item/natural/hide/cured = 1,
+	)
+	output = /obj/item/clothing/shirt/apothshirt
+	craftdiff = 3
+
+/datum/repeatable_crafting_recipe/leather/jester_shirt
+	name = "jester's tunick"
+	requirements = list(
+		/obj/item/natural/hide/cured = 2,
+	)
+	output = /obj/item/clothing/shirt/jester
+	craftdiff = 3
+
 /datum/repeatable_crafting_recipe/leather/apron
 	name = "leather apron"
 	requirements = list(
@@ -521,6 +537,21 @@
 	output = /obj/item/clothing/shoes/boots/leather/advanced
 	requirements = list(/obj/item/natural/hide/cured = 1,
 				/obj/item/natural/fibers = 1)
+	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/leather/standalone/gatemaster_coat
+	name = "gatemaster's coat"
+	output = /obj/item/clothing/armor/leather/jacket/gatemaster_jacket
+	requirements = list(/obj/item/natural/hide/cured = 4,
+				/obj/item/natural/fibers = 2)
+	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/leather/standalone/gatemaster_coat_armored
+	name = "gatemaster's coat (armored)"
+	output = /obj/item/clothing/armor/leather/jacket/gatemaster_jacket/armored
+	requirements = list(/obj/item/natural/hide/cured = 4,
+				/obj/item/natural/fibers = 2,
+				/obj/item/ingot/iron)
 	craftdiff = 4
 
 /datum/repeatable_crafting_recipe/leather/standalone/leather_bracers

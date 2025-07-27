@@ -127,6 +127,14 @@
 	craftdiff = 3
 	category = "Hat"
 
+/datum/repeatable_crafting_recipe/sewing/weaving/pestrahood
+	name = "hood (pestra)"
+	output = /obj/item/clothing/head/padded/pestra
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/silk = 1)
+	craftdiff = 3
+	category = "Hat"
+
 /datum/repeatable_crafting_recipe/sewing/weaving/eoramask
 	name = "mask (Eora)"
 	output = /obj/item/clothing/head/padded/operavisage
@@ -138,6 +146,14 @@
 /datum/repeatable_crafting_recipe/sewing/weaving/astratahood
 	name = "hood (solar/Astrata)"
 	output = /obj/item/clothing/head/roguehood/astrata
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/silk = 1)
+	craftdiff = 3
+	category = "Hat"
+
+/datum/repeatable_crafting_recipe/sewing/weaving/wizard_hat_gen
+	name = "wizard hat"
+	output = /obj/item/clothing/head/wizhat/gen
 	requirements = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/silk = 1)
 	craftdiff = 3
@@ -270,7 +286,7 @@
 				/obj/item/natural/silk = 1)
 	craftdiff = 4
 
-/datum/repeatable_crafting_recipe/sewing/weaving/abyssor_robe
+/datum/repeatable_crafting_recipe/sewing/weaving/pestra_robe
 	name = "robes (Pestra)"
 	output = /obj/item/clothing/shirt/robe/pestra
 	requirements = list(/obj/item/natural/cloth = 3,
@@ -495,7 +511,7 @@
 	sellprice = 30
 	category = "Dress"
 
-/datum/repeatable_crafting_recipe/sewing/weaving/royal_gown
+/datum/repeatable_crafting_recipe/sewing/weaving/royal_gown_winter
 	name = "winter dress"
 	output = /obj/item/clothing/armor/gambeson/heavy/winterdress
 	requirements = list(/obj/item/natural/cloth = 3,

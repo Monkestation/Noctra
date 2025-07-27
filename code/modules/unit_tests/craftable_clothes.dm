@@ -43,8 +43,15 @@ abstract types are automatically excluded.
 		/obj/item/clothing/cloak/heartfelt, // no
 		/obj/item/clothing/cloak/boiler, // TODO
 		/obj/item/clothing/shoes/otavan/inqboots, // bullshit
-
-
+		/obj/item/clothing/head/helmet/leather/saiga, // todo?
+		/obj/item/clothing/head/crown/nyle/consortcrown, // TOOD?
+		/obj/item/clothing/head/crown/sparrowcrown, // unattainable
+		/obj/item/clothing/head/priestmask, // unattainable
+		/obj/item/clothing/head/priesthat, // unattainable
+		/obj/item/clothing/head/mob_holder, // change this shit to not clothing, wtf.
+		/obj/item/clothing/gloves/leather/otavan, // TODO?
+		/obj/item/clothing/gloves/otavan/inqgloves, // ugh
+		/obj/item/clothing/armor/amazon_chainkini, // no horni
 
 	)
 	// these don't use misc_flags = CRAFTING_TEST_EXCLUDE because we want to explicitly know which paths we are excluding.
@@ -63,6 +70,7 @@ abstract types are automatically excluded.
 		/obj/item/clothing/face/cigarette, // ???
 		/obj/item/clothing/cloak/cape, // TODO
 		/obj/item/clothing/cloak/half, // TODO
+		/obj/item/clothing/armor/medium/surcoat, // TODO
 	)
 
 	/// excludes paths that are subtypes of these types and only subtypes

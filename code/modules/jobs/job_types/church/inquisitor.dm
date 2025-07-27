@@ -43,7 +43,7 @@
 	pants = /obj/item/clothing/pants/trou/leather
 	cloak = /obj/item/clothing/cloak/cape/inquisitor
 	head = /obj/item/clothing/head/leather/inqhat
-	gloves = /obj/item/clothing/gloves/otavan/inqgloves
+	gloves = /obj/item/clothing/gloves/leather/otavan/inqgloves
 	wrists = /obj/item/clothing/neck/psycross/silver
 	backr = /obj/item/storage/backpack/satchel
 	backl = /obj/item/weapon/sword/long/forgotten

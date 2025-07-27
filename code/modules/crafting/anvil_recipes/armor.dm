@@ -161,14 +161,14 @@
 	created_item = /obj/item/clothing/head/helmet/heavy/necked
 	craftdiff = 2
 
-/datum/anvil_recipe/armor/steel/bastion_helm
+/datum/anvil_recipe/armor/steel/crusader_helm
 	name = "Crusader helm (+Bar X2)"
 	recipe_name = "a heavy steel crusader helmet"
 	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/helmet/heavy/crusader
 	craftdiff = 2
 
-/datum/anvil_recipe/armor/steel/bastion_helm
+/datum/anvil_recipe/armor/steel/totod_crusader_helm
 	name = "Totod Crusader helm (+Bar X2)"
 	recipe_name = "a heavy steel totod crusader helmet"
 	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
@@ -210,7 +210,15 @@
 	recipe_name = "a Visored Sallet"
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/ingot/iron)
-	created_item = (/obj/item/clothing/head/helmet/visored/sallet/iron)
+	created_item = /obj/item/clothing/head/helmet/visored/sallet/iron
+	craftdiff = 2
+
+/datum/anvil_recipe/armor/iron/eoran_sallet
+	name = "Eoran Sallet (+Bar)"
+	recipe_name = "an Eoran Sallet"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/head/helmet/sallet/eoran
 	craftdiff = 2
 
 /datum/anvil_recipe/armor/iron/helmetknight
@@ -317,6 +325,12 @@
 	created_item = (/obj/item/clothing/head/helmet/heavy/bucket)
 	craftdiff = 2
 
+/datum/anvil_recipe/armor/iron/shadow_plate_gauntlets
+	name = "Shadow Plate Gauntlets"
+	recipe_name = "a pair of Shadow Plate Gauntlets"
+	created_item = /obj/item/clothing/gloves/chain/iron/shadowgauntlets
+	craftdiff = 3
+
 /datum/anvil_recipe/armor/steel/templar
 	craftdiff = 3
 
@@ -326,7 +340,7 @@
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/noc
 	additional_items = list(/obj/item/ingot/silver)
 
-/datum/anvil_recipe/armor/steel/templar/helmet_noc
+/datum/anvil_recipe/armor/steel/templar/gold_helmet
 	name = "Gold Helmet"
 	recipe_name = "a golden helmet"
 	created_item = /obj/item/clothing/head/helmet/heavy/bucket/gold
@@ -366,6 +380,12 @@
 	name = "Ravox Helmet"
 	recipe_name = "a ravoxian helmet"
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/ravox
+	additional_items = list(/obj/item/ingot/iron)
+
+/datum/anvil_recipe/armor/steel/templar/helmet_ravox
+	name = "Xylix Helmet"
+	recipe_name = "a xylixian helmet"
+	created_item = /obj/item/clothing/head/helmet/heavy/necked/xylix
 	additional_items = list(/obj/item/ingot/iron)
 
 /datum/anvil_recipe/armor/steel/chainleg
