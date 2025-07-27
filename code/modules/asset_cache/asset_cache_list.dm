@@ -57,11 +57,12 @@
 		var/datum/language/L = new path()
 		L.get_icon()
 
-/datum/asset/spritesheet/simple/achievements
+/datum/asset/spritesheet_batched/achievements
 	name = "achievements"
 
-/datum/asset/spritesheet/simple/achievements/create_spritesheets()
-	return
+/datum/asset/spritesheet_batched/achievements/create_spritesheets()
+	// Needs this proc and can't be empty and not removing entirely
+	insert_icon("blank", uni_icon('icons/hud/storage.dmi', "blank"))
 
 /datum/asset/simple/permissions
 	assets = list(
@@ -77,19 +78,19 @@
 
 /datum/asset/simple/notes
 
-/datum/asset/spritesheet/goonchat
+/datum/asset/spritesheet_batched/goonchat
 	name = "chat"
 
-/datum/asset/spritesheet/goonchat/create_spritesheets()
+/datum/asset/spritesheet_batched/goonchat/create_spritesheets()
 	// pre-loading all lanugage icons also helps to avoid meta
-	InsertAll("language", 'icons/language.dmi')
+	insert_all_icons("language", 'icons/language.dmi')
 	// catch languages which are pulling icons from another file
 	for(var/path in typesof(/datum/language))
 		var/datum/language/L = path
 		var/icon = initial(L.icon)
 		if(icon != 'icons/language.dmi')
 			var/icon_state = initial(L.icon_state)
-			Insert("language-[icon_state]", icon, icon_state=icon_state)
+			insert_icon("language-[icon_state]", uni_icon(icon, icon_state))
 
 /datum/asset/group/tgui
 
@@ -98,7 +99,7 @@
 		/datum/asset/simple/jquery,
 		/datum/asset/simple/purify,
 		/datum/asset/simple/namespaced/goonchat,
-		/datum/asset/spritesheet/goonchat,
+		/datum/asset/spritesheet_batched/goonchat,
 		/datum/asset/simple/namespaced/fontawesome,
 		/datum/asset/simple/namespaced/roguefonts
 	)
