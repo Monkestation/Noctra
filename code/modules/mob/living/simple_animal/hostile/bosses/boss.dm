@@ -31,8 +31,7 @@
 /mob/living/simple_animal/hostile/boss/Destroy()
 	qdel(atb)
 	atb = null
-	for(var/ab in boss_abilities)
-		var/datum/action/boss/AB = ab
+	for(var/datum/action/boss/AB as anything in boss_abilities)
 		AB.boss = null
 		AB.Remove(src)
 		qdel(AB)
@@ -97,8 +96,7 @@
 	if(!L)
 		return 0
 	abilities = L
-	for(var/ab in abilities)
-		var/datum/action/boss/AB = ab
+	for(var/datum/action/boss/AB as anything in abilities)
 		if(AB.boss_cost > highest_cost)
 			highest_cost = AB.boss_cost
 
@@ -125,8 +123,7 @@
 			return //Let's save our points for a better ability (unless we're at max points, in which case we can't save anymore!)
 		if(!boss.client)
 			abilities = shuffle(abilities)
-			for(var/ab in abilities)
-				var/datum/action/boss/AB = ab
+			for(var/datum/action/boss/AB as anything in abilities)
 				if(prob(AB.usage_probability) && AB.Trigger())
 					break
 

@@ -13,7 +13,7 @@
  */
 /datum/action/cooldown/spell/projectile
 	self_cast_possible = FALSE
-	experience_modifer = 0.4 // More earned when hitting a target
+	experience_modifer = 0.3 // More earned when hitting a target
 
 	/// What projectile we create when we shoot our spell.
 	var/obj/projectile/magic/projectile_type = /obj/projectile/magic/teleport
@@ -108,4 +108,4 @@
 	if(victim.stat == DEAD)
 		return
 
-	handle_exp(get_adjusted_cost() / 2)
+	handle_exp(get_adjusted_cost() / 4)

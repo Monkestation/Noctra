@@ -102,6 +102,16 @@
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+/obj/structure/chair/wood/alt/uncomfortable
+	icon_state = "chair_bronze"
+	desc = "This has to be the most uncomfortable chair in Psydonia. It looks like it will *violate* your backside." //This is a DE reference don't be fucking weird about it.
+	item_chair = /obj/item/chair/bronze
+	attacked_sound = "sound/combat/hits/onmetal/metalimpact (1).ogg"
+
+/obj/item/chair/bronze
+	icon_state = "chair_bronze"
+	origin_type = /obj/structure/chair/wood/alt/uncomfortable
+
 /obj/structure/chair/wood/alt/chair3
 	icon_state = "chair3"
 	icon = 'icons/roguetown/misc/structure.dmi'

@@ -441,6 +441,9 @@
 /atom/proc/get_inspect_button()
 	return ""
 
+/atom/proc/get_inspect_entries()
+	return list()
+
 /**
  * Called when a mob examines (shift click or verb) this atom
  *
@@ -759,8 +762,7 @@
  * Default behaviour is to loop through atom contents and call their HandleTurfChange() proc
  */
 /atom/proc/HandleTurfChange(turf/T)
-	for(var/a in src)
-		var/atom/A = a
+	for(var/atom/A as anything in src)
 		A.HandleTurfChange(T)
 
 /**

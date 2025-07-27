@@ -72,7 +72,7 @@
 	set_stress_use(64 * (speed / 8))
 
 /obj/structure/fluff/millstone/update_animation_effect()
-	if(!rotation_network || length(rotation_network) == 1)
+	if(!rotation_network || length(rotation_network.connected) == 1)
 		animate(src, icon_state = "millstone", time = 1)
 		return
 	if(rotation_network?.overstressed || !rotations_per_minute || !rotation_network?.total_stress)

@@ -10,6 +10,7 @@
 /datum/action/cooldown/spell/undirected/list_target
 	charge_required = FALSE
 	has_visual_effects = FALSE
+	sound = null
 
 	/// The message displayed as the title of the tgui target input list.
 	var/choose_target_message = "Choose a target."

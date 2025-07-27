@@ -384,6 +384,21 @@
 	sellprice = 0 // Incredibly evil Zizoid armor, this should be burnt, nobody wants this
 	item_weight = 5 * STEEL_MULTIPLIER
 
+//................. Silver Bascinet .............. //
+
+/obj/item/clothing/head/helmet/visored/silver
+	name = "silver bascinet"
+	desc = "A finely forged silver bascinet, with adjustable visor to protect the face."
+	icon_state = "silverbascinet"
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	smeltresult = /obj/item/ingot/silver
+	allowed_ages = ALL_AGES_LIST //placeholder until younglings have onmob sprites for this item
+	armor = ARMOR_PLATE_SILVER
+	sellprice = VALUE_SILVER_ARMOR
+	item_weight = 6 * SILVER_MULTIPLIER
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+
 //............... Feldshers Cage ............... //
 /obj/item/clothing/head/helmet/feld
 	name = "feldsher's cage"

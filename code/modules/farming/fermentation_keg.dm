@@ -1,10 +1,5 @@
 GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 
-/datum/looping_sound/boiling
-	mid_sounds = list('sound/foley/bubb (1).ogg' = 1,'sound/foley/bubb (2).ogg' = 1,'sound/foley/bubb (3).ogg' = 1,'sound/foley/bubb (4).ogg' = 1,'sound/foley/bubb (5).ogg' = 1)
-	mid_length = 2 SECONDS
-	volume = 25
-
 /obj/structure/fermentation_keg
 	name = "fermentation keg"
 	desc = "A simple keg that is meant for making booze."

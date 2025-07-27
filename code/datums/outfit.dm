@@ -207,11 +207,11 @@
 					var/obj/item/item = H.get_item_by_slot(ITEM_SLOT_BACK_L)
 					if(!item)
 						item = H.get_item_by_slot(ITEM_SLOT_BACK_R)
-					if(!item || !SEND_SIGNAL(item, COMSIG_TRY_STORAGE_INSERT, new_item, null, TRUE, TRUE))
+					if(!item || !attempt_insert_with_flipping(item, new_item, null, TRUE, TRUE))
 						item = H.get_item_by_slot(ITEM_SLOT_BACK_R)
-						if(!item || !SEND_SIGNAL(item, COMSIG_TRY_STORAGE_INSERT, new_item, null, TRUE, TRUE))
+						if(!item || !attempt_insert_with_flipping(item, new_item, null, TRUE, TRUE))
 							item = H.get_item_by_slot(ITEM_SLOT_BELT)
-							if(!item || !SEND_SIGNAL(item, COMSIG_TRY_STORAGE_INSERT, new_item, null, TRUE, TRUE))
+							if(!item || !attempt_insert_with_flipping(item, new_item, null, TRUE, TRUE))
 								new_item.forceMove(get_turf(H))
 								message_admins("[type] had backpack_contents set but no room to store:[new_item]")
 
@@ -223,6 +223,14 @@
 
 	H.update_body()
 	return TRUE
+
+/datum/outfit/proc/attempt_insert_with_flipping(obj/item/storage_item, obj/item/object_to_insert, mob/living/carbon/human/H, silent, force)
+	var/success = FALSE
+	success = SEND_SIGNAL(storage_item, COMSIG_TRY_STORAGE_INSERT, object_to_insert, H, silent, force)
+	if(!success)
+		object_to_insert.inventory_flip()
+		success = SEND_SIGNAL(storage_item, COMSIG_TRY_STORAGE_INSERT, object_to_insert, H, silent, force)
+	return success
 
 /client/proc/test_spawn_outfits()
 	for(var/path in subtypesof(/datum/outfit/job))

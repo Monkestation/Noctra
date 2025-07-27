@@ -15,3 +15,6 @@
 
 /obj/item/weapon/shield/heater/crafted
 	sellprice = 6
+
+/obj/item/fishingrod/crafted
+	sellprice = 8

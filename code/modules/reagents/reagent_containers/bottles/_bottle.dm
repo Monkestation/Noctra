@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	amount_per_transfer_from_this = 6
 	possible_transfer_amounts = list(6)
 	volume = 70
-	fill_icon_thresholds = list(0, 25, 50, 75, 100)
+	fill_icon_thresholds = list(0, 10, 25, 50, 75, 100)
 	dropshrink = 0.8
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_MOUTH
 	obj_flags = CAN_BE_HIT
@@ -22,8 +22,10 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	fillsounds = list('sound/items/fillcup.ogg')
 	poursounds = list('sound/items/fillbottle.ogg')
 	experimental_onhip = TRUE
-	var/can_label_bottle = TRUE	// Determines if the bottle can be labeled with paper
-	var/fancy		// for bottles with custom descriptors that you don't want to change when bottle manipulated
+	/// Determines if the bottle can be labeled with paper
+	var/can_label_bottle = TRUE
+	/// for bottles with custom descriptors that you don't want to change when bottle manipulated
+	var/fancy
 
 /obj/item/reagent_containers/glass/bottle/Initialize()
 	icon_state = "clear_bottle[rand(1,4)]"
@@ -173,7 +175,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	amount_per_transfer_from_this = 6
 	possible_transfer_amounts = list(6)
 	volume = 30
-	fill_icon_thresholds = list(0, 25, 50, 75, 100)
+	fill_icon_thresholds = list(0, 10, 25, 50, 75, 100)
 	dropshrink = 0.8
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_MOUTH
 	obj_flags = CAN_BE_HIT

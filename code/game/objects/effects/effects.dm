@@ -41,3 +41,9 @@
 
 /obj/effect/abstract/has_gravity(turf/T)
 	return FALSE
+
+/obj/effect/abstract/faux_density
+	name = ""
+	desc = ""
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	density = TRUE

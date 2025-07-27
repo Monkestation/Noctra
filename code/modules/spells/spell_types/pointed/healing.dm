@@ -73,11 +73,11 @@
 					conditional_buff = TRUE
 			if(/datum/patron/divine/dendor)
 				cast_on.visible_message(span_info("A rush of primal energy spirals about [cast_on]!"), span_notice("I'm infused with primal energies!"))
-				var/static/list/natural_stuff = list(/obj/structure/flora/grass, /obj/structure/flora/tree, /obj/structure/flora/shroom_tree, /obj/structure/fluff/clodpile)
+				var/static/list/natural_stuff = typecacheof(list(/obj/structure/flora/grass, /obj/structure/chair/bench/ancientlog, /obj/structure/flora))
 				situational_bonus = 0
 				// the more natural stuff around US, the more we heal
 				for(var/obj/O in oview(5, owner))
-					if(O in natural_stuff)
+					if(is_type_in_typecache(O, natural_stuff))
 						situational_bonus = min(situational_bonus + 1, 25)
 				if(situational_bonus > 0)
 					conditional_buff = TRUE

@@ -8,7 +8,6 @@
 
 /datum/outfit/job/heartfelt/lord/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.mana_pool.set_intrinsic_recharge(MANA_ALL_LEYLINES)
 	shirt = /obj/item/clothing/shirt/undershirt
 	belt = /obj/item/storage/belt/leather/black
 	neck = /obj/item/clothing/neck/gorget
@@ -18,11 +17,14 @@
 	cloak = /obj/item/clothing/cloak/heartfelt
 	armor = /obj/item/clothing/armor/medium/surcoat/heartfelt
 	beltr = /obj/item/storage/belt/pouch/coins/rich
-	beltl = /obj/item/scomstone
+	ring = /obj/item/scomstone
 	gloves = /obj/item/clothing/gloves/leather/black
 	neck = /obj/item/clothing/neck/chaincoif
 	beltl = /obj/item/weapon/sword/long
+	backl = /obj/item/storage/backpack/satchel/heartfelt
+	backpack_contents = list(/obj/item/reagent_containers/glass/bottle/waterskin/purifier)
 	if(H.mind)
+		H.adjust_skillrank(/datum/skill/craft/engineering, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/crossbows, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
@@ -67,14 +69,21 @@
 			armor = /obj/item/clothing/armor/gambeson/heavy/dress/alt
 		else
 			armor = /obj/item/clothing/armor/gambeson/heavy/dress
-	beltl = /obj/item/flashlight/flare/torch/lantern
-	beltr =  /obj/item/storage/belt/pouch
+	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
+	backl = /obj/item/storage/backpack/satchel
+	belt = /obj/item/storage/belt/leather/black
+	beltl = /obj/item/ammo_holder/quiver/arrows
+	beltr = /obj/item/weapon/knife/dagger/steel/special
+	neck =  /obj/item/storage/belt/pouch/coins/rich
 	ring = /obj/item/clothing/ring/silver
 	shoes = /obj/item/clothing/shoes/shortboots
+	pants = /obj/item/clothing/pants/tights/random
 	if(H.mind)
+		H.adjust_skillrank(/datum/skill/craft/engineering, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/stealing, 4, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/sneaking, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/bows, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
@@ -109,11 +118,12 @@
 	beltr = /obj/item/storage/belt/pouch/coins/rich
 	gloves = /obj/item/clothing/gloves/leather/black
 	beltl = /obj/item/weapon/sword/decorated
-	beltr = /obj/item/scomstone
-	backr = /obj/item/storage/backpack/satchel/heartfelt
+	ring = /obj/item/scomstone
+	backr = /obj/item/storage/backpack/satchel
 	mask = /obj/item/clothing/face/spectacles/golden
 	neck = /obj/item/clothing/neck/chaincoif
 	if(H.mind)
+		H.adjust_skillrank(/datum/skill/craft/engineering, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/axesmaces, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
@@ -141,14 +151,15 @@
 
 /datum/outfit/job/heartfelt/knight/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/helmet
-	gloves = /obj/item/clothing/gloves/plate
-	pants = /obj/item/clothing/pants/platelegs
+	backl = /obj/item/clothing/cloak/boiler
+	armor = /obj/item/clothing/armor/steam
+	shoes = /obj/item/clothing/shoes/boots/armor/steam
+	gloves = /obj/item/clothing/gloves/plate/steam
+	head = /obj/item/clothing/head/helmet/heavy/steam
+	pants = /obj/item/clothing/pants/trou/artipants
 	cloak = /obj/item/clothing/cloak/tabard/knight/guard
 	neck = /obj/item/clothing/neck/bevor
-	shirt = /obj/item/clothing/armor/chainmail
-	armor = /obj/item/clothing/armor/plate/full
-	shoes = /obj/item/clothing/shoes/boots/armor
+	shirt = /obj/item/clothing/shirt/undershirt/artificer
 	beltr = /obj/item/weapon/sword/long
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	belt = /obj/item/storage/belt/leather/steel
@@ -158,6 +169,7 @@
 	else
 		r_hand = /obj/item/weapon/mace/goden/steel
 	if(H.mind)
+		H.adjust_skillrank(/datum/skill/craft/engineering, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE)
@@ -171,11 +183,12 @@
 		H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/riding, 4, TRUE)
 		H.adjust_skillrank(/datum/skill/labor/mathematics, 3, TRUE)
-		H.change_stat(STATKEY_STR, 3)
+		H.change_stat(STATKEY_STR, 2)
 		H.change_stat(STATKEY_PER, 1)
-		H.change_stat(STATKEY_CON, 2)
-		H.change_stat(STATKEY_END, 2)
+		H.change_stat(STATKEY_CON, 1)
+		H.change_stat(STATKEY_END, 1)
 		H.change_stat(STATKEY_SPD, -1)
+		H.change_stat(STATKEY_INT, 2)
 	H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
@@ -202,6 +215,10 @@
 			honorary = "Dame"
 		H.real_name = "[honorary] [prev_real_name]"
 		H.name = "[honorary] [prev_name]"
+		if(H.backl && istype(H.backl, /obj/item/clothing/cloak/boiler))
+			var/obj/item/clothing/cloak/boiler/B = H.backl
+			SEND_SIGNAL(B, COMSIG_ATOM_STEAM_INCREASE, rand(500, 900))
+			B.update_armor()
 
 /datum/migrant_role/heartfelt/magos
 	name = "Magos of Heartfelt"
@@ -221,6 +238,7 @@
 
 /datum/outfit/job/heartfelt/magos/pre_equip(mob/living/carbon/human/H)
 	..()
+	H.mana_pool?.set_intrinsic_recharge(MANA_ALL_LEYLINES)
 	neck = /obj/item/clothing/neck/talkstone
 	cloak = /obj/item/clothing/cloak/black_cloak
 	armor = /obj/item/clothing/shirt/robe/black
@@ -235,6 +253,7 @@
 	backpack_contents = list(/obj/item/reagent_containers/glass/bottle/poison,/obj/item/reagent_containers/glass/bottle/healthpot)
 	ADD_TRAIT(H, TRAIT_SEEPRICES, "[type]")
 	H.cmode_music = 'sound/music/cmode/nobility/CombatCourtMagician.ogg'
+	H.adjust_skillrank(/datum/skill/craft/engineering, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 6, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/magic/arcane, 5, TRUE)
@@ -292,6 +311,7 @@
 		/obj/item/needle/blessed = 1,
 	)
 	if(H.mind)
+		H.adjust_skillrank(/datum/skill/craft/engineering, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
@@ -311,6 +331,50 @@
 	H.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
 	H.cmode_music = 'sound/music/cmode/church/CombatInquisitor.ogg'
 
+/datum/migrant_role/heartfelt/artificer
+	name = "Supreme Artificer"
+	greet_text = "You are the Supreme Artificer, the foremost expert on anything brass and steam. Your knowledge helped advance your kingdom, before ultimately leading it to ruin..."
+	outfit = /datum/outfit/job/heartfelt/artificer
+	allowed_races = RACES_PLAYER_NONDISCRIMINATED
+	grant_lit_torch = TRUE
+
+/datum/outfit/job/heartfelt/artificer/pre_equip(mob/living/carbon/human/H)
+	..()
+	head = /obj/item/clothing/head/articap
+	armor = /obj/item/clothing/armor/leather/jacket/artijacket
+	pants = /obj/item/clothing/pants/trou/artipants
+	shirt = /obj/item/clothing/shirt/undershirt/artificer
+	shoes = /obj/item/clothing/shoes/simpleshoes/buckle
+	belt = /obj/item/storage/belt/leather
+	beltr = /obj/item/storage/belt/pouch/coins/mid
+	mask = /obj/item/clothing/face/goggles
+	backl = /obj/item/storage/backpack/backpack/artibackpack
+	ring = /obj/item/clothing/ring/silver/makers_guild
+	neck = /obj/item/reagent_containers/glass/bottle/waterskin/purifier
+	backpack_contents = list(/obj/item/weapon/hammer/steel = 1, /obj/item/weapon/knife/villager = 1, /obj/item/weapon/chisel = 1)
+	if(H.mind)
+		H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/labor/lumberjacking, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/masonry, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/crafting, 4, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/engineering, 6, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/lockpicking, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/labor/mining, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/smelting, 4, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
+		H.change_stat(STATKEY_STR, 1)
+		H.change_stat(STATKEY_INT, 2)
+		H.change_stat(STATKEY_END, 1)
+		H.change_stat(STATKEY_CON, 1)
+		H.change_stat(STATKEY_SPD, -1)
+	ADD_TRAIT(H, TRAIT_SEEPRICES, TRAIT_GENERIC)
+	H.cmode_music = 'sound/music/cmode/towner/CombatTowner.ogg'
+
 /datum/migrant_wave/heartfelt
 	name = "The Court of Heartfelt"
 	max_spawns = 1
@@ -323,7 +387,7 @@
 		/datum/migrant_role/heartfelt/hand = 1,
 		/datum/migrant_role/heartfelt/knight = 1,
 		/datum/migrant_role/heartfelt/magos = 1,
-		/datum/migrant_role/heartfelt/prior = 1,
+		/datum/migrant_role/heartfelt/artificer = 1,
 	)
 	greet_text = "Fleeing disaster, you have come together as a court, united in a final effort to restore the former glory and promise of Heartfelt. Stay close and watch out for each other, for all of your sakes!"
 
@@ -331,9 +395,30 @@
 	name = "The Court of Heartfelt"
 	shared_wave_type = list(/datum/migrant_wave/grenzelhoft_visit,/datum/migrant_wave/zalad_wave,/datum/migrant_wave/rockhill_wave,/datum/migrant_wave/heartfelt)
 	can_roll = FALSE
+	downgrade_wave = /datum/migrant_wave/heartfelt_down_one
 	roles = list(
 		/datum/migrant_role/heartfelt/lord = 1,
 		/datum/migrant_role/heartfelt/lady = 1,
 		/datum/migrant_role/heartfelt/hand = 1,
 	)
-	greet_text = "Fleeing disaster, you have come together as a court, united in a final effort to restore the former glory and promise of Heartfelt. Stay close and watch out for each other, for all of your sakes! Your Knight, Magos and Prior died on the way here..."
+	greet_text = "Fleeing disaster, you have come together as a court, united in a final effort to restore the former glory and promise of Heartfelt. Stay close and watch out for each other, for all of your sakes! Your Knight, Magos and Artificer did not make it..."
+
+/datum/migrant_wave/heartfelt_down_one
+	name = "The Court of Heartfelt"
+	shared_wave_type = list(/datum/migrant_wave/grenzelhoft_visit,/datum/migrant_wave/zalad_wave,/datum/migrant_wave/rockhill_wave,/datum/migrant_wave/heartfelt)
+	can_roll = FALSE
+	downgrade_wave = /datum/migrant_wave/heartfelt_down_two
+	roles = list(
+		/datum/migrant_role/heartfelt/lord = 1,
+		/datum/migrant_role/heartfelt/hand = 1,
+	)
+	greet_text = "Fleeing disaster, you have come together as a court, united in a final effort to restore the former glory and promise of Heartfelt. Stay close and watch out for each other, for all of your sakes! The journey took its heavy toll. Only you two made it, the rest..."
+
+/datum/migrant_wave/heartfelt_down_two
+	name = "The Court of Heartfelt"
+	shared_wave_type = list(/datum/migrant_wave/grenzelhoft_visit,/datum/migrant_wave/zalad_wave,/datum/migrant_wave/rockhill_wave,/datum/migrant_wave/heartfelt)
+	can_roll = FALSE
+	roles = list(
+		/datum/migrant_role/heartfelt/lord = 1,
+	)
+	greet_text = "Fleeing disaster, you have come together as a court, united in a final effort to restore the former glory and promise of Heartfelt. But disaster followed hot on your heels, from Heartfelt to this very place! You are the last one remaining, oh how tragic!"

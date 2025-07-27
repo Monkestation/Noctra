@@ -96,7 +96,7 @@
 	for(var/obj/item/I in held_items)
 		if(client && hud_used && hud_used.hud_version != HUD_STYLE_NOHUD)
 			if(I.bigboy)
-				if(I.wielded)
+				if(HAS_TRAIT(I, TRAIT_WIELDED))
 					I.screen_loc = "WEST-4:16,SOUTH+7:-16"
 				else
 					if(get_held_index_of_item(I) == 1)
@@ -104,14 +104,13 @@
 					else
 						I.screen_loc = "WEST-3:0,SOUTH+7:-16"
 			else
-				if(I.wielded)
+				if(HAS_TRAIT(I, TRAIT_WIELDED))
 					I.screen_loc = "WEST-3:0,SOUTH+7"
 				else
 					I.screen_loc = ui_hand_position(get_held_index_of_item(I))
 			client.screen += I
 			if(observers && observers.len)
-				for(var/M in observers)
-					var/mob/dead/observe = M
+				for(var/mob/dead/observe as anything in observers)
 					if(observe.client && observe.client.eye == src)
 						observe.client.screen += I
 					else
@@ -128,7 +127,7 @@
 			if(I.altgripped)
 				used_prop = "altgrip"
 				prop = I.getonmobprop(used_prop)
-			if(!prop && I.wielded)
+			if(!prop && HAS_TRAIT(I, TRAIT_WIELDED))
 				used_prop = "wielded"
 				prop = I.getonmobprop(used_prop)
 			if(!prop)
@@ -211,8 +210,7 @@
 	var/mutable_appearance/damage_overlay = mutable_appearance('icons/mob/dam_mob.dmi', "blank", -DAMAGE_LAYER)
 	overlays_standing[DAMAGE_LAYER] = damage_overlay
 
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		if(BP.dmg_overlay_type)
 			if(BP.brutestate)
 				damage_overlay.add_overlay("[BP.dmg_overlay_type]_[BP.body_zone]_[BP.brutestate]0")	//we're adding icon_states of the base image as overlays
@@ -389,8 +387,7 @@
 
 	remove_overlay(BODYPARTS_LAYER)
 
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		BP.update_limb()
 
 	//LOAD ICONS
@@ -400,8 +397,7 @@
 
 	//GENERATE NEW LIMBS
 	var/list/new_limbs = list()
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		new_limbs += BP.get_limb_icon()
 	if(new_limbs.len)
 		overlays_standing[BODYPARTS_LAYER] = new_limbs
@@ -429,8 +425,7 @@
 //produces a key based on the mob's limbs
 
 /mob/living/carbon/proc/generate_icon_render_key()
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		. += "-[BP.body_zone]"
 		if(BP.animal_origin)
 			. += "-[BP.animal_origin]"

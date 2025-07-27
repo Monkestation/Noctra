@@ -23,9 +23,11 @@
 	. = ..()
 	var/obj/item/held_item = owner.get_active_held_item()
 	if(held_item?.is_open_container())
+		to_chat(owner, span_warning("The cloud can't escape this!"))
 		return
 	var/datum/reagents/reagents = held_item.reagents
-	if(!reagents.total_volume)
+	if(!reagents?.total_volume)
+		to_chat(owner, span_warning("It's empty!"))
 		return
 	var/datum/effect_system/smoke_spread/chem/smoke = new
 	smoke.set_up(reagents, 3, get_turf(owner), FALSE)

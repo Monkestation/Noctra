@@ -9,7 +9,7 @@
 	var/list/reagent_requirements = list()
 	///this is a list of tool usage in their order which executes after requirements and reagents are fufilled these are assoc lists going path = list(text, self_text, sound)
 	var/list/tool_usage = list()
-	///these typepaths and their subtypes won't be considered as requirements for recipes
+	///these typepaths and their subtypes (by default) won't be considered as requirements for recipes. override create_blacklisted_paths() for custom blacklist behavior.
 	var/list/blacklisted_paths = list()
 
 	///do we need to be learned
@@ -19,7 +19,7 @@
 	var/sellprice = null
 
 	///this is the things we check for in our offhand ie herb pouch or something to repeat the craft
-	var/list/offhand_repeat_check = list(
+	var/list/offhand_contents_check = list(
 		/obj/item/storage/backpack
 	)
 	///if this is set we also check the floor on the ground
@@ -28,6 +28,8 @@
 	var/atom/starting_atom
 	///this is the thing we need to hit to start
 	var/atom/attacked_atom
+	///do we allow the recipe to start by flipping starting and attacked atom?
+	var/allow_inverse_start = FALSE
 
 	///our crafting difficulty
 	var/craftdiff = 1
@@ -53,7 +55,7 @@
 	///intent we require
 	var/datum/intent/required_intent
 	///do we also use the attacked_atom in the recipe?
-	var/uses_attacked_atom = FALSE
+	// var/uses_attacked_atom = TRUE
 	///do we also count subtypes?
 	var/subtypes_allowed = FALSE
 	///do we also count reagent subtypes?
@@ -68,6 +70,16 @@
 	var/crafting_sound
 	var/sound_volume = 40
 
+/datum/repeatable_crafting_recipe/New()
+	. = ..()
+	create_blacklisted_paths()
+
+/datum/repeatable_crafting_recipe/proc/create_blacklisted_paths()
+	var/list/new_blacklist = list()
+	for(var/path in blacklisted_paths)
+		new_blacklist |= typesof(path)
+	blacklisted_paths = new_blacklist
+
 /**
  * Checks if the recipe can be started with the given items
  *
@@ -77,24 +89,28 @@
  * @return {boolean} - TRUE if recipe can start, FALSE otherwise
  */
 /datum/repeatable_crafting_recipe/proc/check_start(obj/item/attacked_item, obj/item/attacking_item, mob/user)
-	if((!istype(attacked_item, attacked_atom) && !istype(attacked_item, /obj/item/natural/bundle)) || (required_intent && user.used_intent.type != required_intent))
+	if(required_intent && user.used_intent.type != required_intent)
 		return FALSE
 
 	if(minimum_skill_level)
 		if(user?.get_skill_level(skillcraft) <= minimum_skill_level)
 			return FALSE
 
-	if(istype(attacked_item, /obj/item/natural/bundle))
-		var/bundle_path = attacked_item:stacktype
-		if(!ispath(bundle_path, attacked_atom))
-			return FALSE
-
-	for(var/path in blacklisted_paths)
-		if(attacked_item in typesof(path))
-			return FALSE
-
 	if(required_table && !locate(/obj/structure/table) in get_turf(attacked_item))
 		return FALSE
+
+	var/attacked_item_path = attacked_item.type
+	if(istype(attacked_item, /obj/item/natural/bundle))
+		attacked_item_path = attacked_item:stacktype
+	var/attacking_item_path = attacking_item.type
+	if(istype(attacking_item, /obj/item/natural/bundle))
+		attacking_item_path = attacking_item:stacktype
+
+	if(!check_matches_requirement(attacked_item_path, attacked_atom) || !check_matches_requirement(attacking_item_path, starting_atom))
+		if(!allow_inverse_start)
+			return FALSE
+		if(!check_matches_requirement(attacked_item_path, starting_atom) || !check_matches_requirement(attacking_item_path, attacked_atom))
+			return FALSE
 
 	var/list/copied_requirements = requirements.Copy()
 	var/list/copied_reagent_requirements = reagent_requirements.Copy()
@@ -104,22 +120,10 @@
 	gather_usable_contents(user, usable_contents)
 
 	var/list/total_list = usable_contents
-	var/list/all_blacklisted = typesof_list(blacklisted_paths)
 
 	for(var/path as anything in total_list)
 		for(var/required_path as anything in requirements)
-			// Check if path matches the requirement
-			var/type_matches = FALSE
-
-			if(subtypes_allowed)
-				// Allow both exact matches and subtypes
-				type_matches = ispath(path, required_path)
-			else
-				// Allow only exact matches
-				type_matches = (path == required_path)
-
-			// Skip if type doesn't match or is blacklisted
-			if(!type_matches || (path in all_blacklisted))
+			if(!check_matches_requirement(path, required_path))
 				continue
 
 			copied_requirements[required_path] -= total_list[path]
@@ -135,15 +139,25 @@
 	if(length(reagent_requirements))
 		var/list/reagent_values = gather_reagents(user)
 
-		for(var/path in reagent_values)
-			for(var/required_path as anything in reagent_requirements)
-				if(!ispath(path, required_path))
-					continue
-				if(reagent_values[path] < reagent_requirements[required_path])
-					return FALSE
-				copied_reagent_requirements -= required_path
+		for(var/required_path as anything in reagent_requirements)
+			var/required_amount = reagent_requirements[required_path]
+			var/available_amount = 0
 
-	return !(length(copied_requirements) || length(copied_reagent_requirements) || length(copied_tool_usage))
+			var/list/reagent_paths
+			if(reagent_subtypes_allowed)
+				reagent_paths = typesof(required_path)
+			else
+				reagent_paths = list(required_path)
+
+			for(var/path in reagent_values)
+				if(!(path in reagent_paths))
+					continue
+				available_amount += reagent_values[path]
+				if(available_amount >= required_amount)
+					copied_reagent_requirements -= required_path
+					break
+
+	return !(length(copied_requirements) && !length(copied_reagent_requirements) && !length(copied_tool_usage))
 
 /**
  * Checks the maximum number of repeats possible with available resources
@@ -158,20 +172,8 @@
 
 	gather_usable_contents(user, usable_contents)
 
-	// Handle uses_attacked_atom properly - if we use the attacked atom, we need to include it in our calculations
-	if(uses_attacked_atom)
-		var/attacked_type = attacked_item.type
-		if(istype(attacked_item, /obj/item/natural/bundle))
-			attacked_type = attacked_item:stacktype
-			usable_contents |= attacked_type
-			usable_contents[attacked_type] += attacked_item:amount
-		else
-			usable_contents |= attacked_type
-			usable_contents[attacked_type] += 1
-
 	var/max_crafts = 10000
 	var/list/total_list = usable_contents
-	var/list/all_blacklisted = typesof_list(blacklisted_paths)
 
 	// Check each requirement against available items
 	for(var/required_path as anything in requirements)
@@ -180,18 +182,7 @@
 
 		// Count available items that match this requirement
 		for(var/path as anything in total_list)
-			// Check if path matches the requirement
-			var/type_matches = FALSE
-
-			if(subtypes_allowed)
-				// Allow both exact matches and subtypes
-				type_matches = ispath(path, required_path)
-			else
-				// Allow only exact matches
-				type_matches = (path == required_path)
-
-			// Skip if type doesn't match or is blacklisted
-			if(!type_matches || (path in all_blacklisted))
+			if(!check_matches_requirement(path, required_path))
 				continue
 
 			available_amount += total_list[path]
@@ -210,11 +201,15 @@
 			var/required_amount = reagent_requirements[required_path]
 			var/available_amount = 0
 
+			var/list/reagent_paths
+			if(reagent_subtypes_allowed)
+				reagent_paths = typesof(required_path)
+			else
+				reagent_paths = list(required_path)
+
 			// Count available reagents that match this requirement
 			for(var/path in reagent_values)
-				if(!ispath(path, required_path))
-					continue
-				if(!reagent_subtypes_allowed && (path in subtypesof(required_path)))
+				if(!(path in reagent_paths))
 					continue
 				available_amount += reagent_values[path]
 
@@ -225,12 +220,6 @@
 			max_crafts = min(max_crafts, holder_max_crafts)
 
 	return max_crafts
-
-/datum/repeatable_crafting_recipe/proc/item_in_requirements(obj/item/item, list/requirement_list)
-	for(var/required_type in requirement_list)
-		if(item_matches_requirement(item, required_type))
-			return TRUE
-	return FALSE
 
 /**
  * Gathers usable contents from the user and surroundings
@@ -249,7 +238,7 @@
 			usable_contents[I.type]++
 
 	var/obj/item/inactive_hand = user.get_inactive_held_item()
-	if(item_in_requirements(inactive_hand, offhand_repeat_check))
+	if(item_in_requirements(inactive_hand, offhand_contents_check))
 		for(var/obj/item/item in inactive_hand.contents)
 			if(istype(item, /obj/item/natural/bundle))
 				var/bundle_path = item:stacktype
@@ -318,23 +307,28 @@
  * @param {mob} user - The user performing the crafting
  * @param {list} copied_requirements - Current requirements list
  * @param {list} to_delete - List of items marked for deletion
- * @param {list} all_blacklisted - List of blacklisted item types
+ * @param {list} blacklisted_paths - List of blacklisted item types
  * @return {boolean} - TRUE if processing should stop, FALSE otherwise
  */
-/datum/repeatable_crafting_recipe/proc/process_bundle(obj/item/natural/bundle/item, mob/user, list/copied_requirements, list/to_delete, list/all_blacklisted)
+/datum/repeatable_crafting_recipe/proc/process_bundle(obj/item/natural/bundle/item, mob/user, list/copied_requirements, list/to_delete, list/blacklisted_paths)
 	var/obj/item/bundle_path = item:stacktype
-	if(bundle_path in all_blacklisted)
+	if(bundle_path in blacklisted_paths)
 		return FALSE
 
 	// Check if this bundle type matches any of our requirements
 	var/matching_requirement = null
 	for(var/path in copied_requirements)
-		if(type_matches_requirement(bundle_path, path))
+		if(check_matches_requirement(bundle_path, path))
 			matching_requirement = path
 			break
 
 	if(!matching_requirement)
 		return FALSE
+
+	// Remove requirement if fulfilled
+	if(copied_requirements[matching_requirement] <= 0)
+		copied_requirements -= matching_requirement
+		return TRUE // Early break since requirement is fulfilled
 
 	// Calculate how many items we need from this bundle
 	var/needed_amount = copied_requirements[matching_requirement]
@@ -371,12 +365,13 @@
 	// Clean up the bundle if empty
 	if(item:amount <= 0)
 		qdel(item)
+	else
+		item.update_bundle()
 
 	// Remove requirement if fulfilled
 	if(copied_requirements[matching_requirement] <= 0)
 		copied_requirements -= matching_requirement
 		return TRUE // Early break since requirement is fulfilled
-
 	return FALSE
 
 /**
@@ -426,15 +421,16 @@
  * @return {boolean} - TRUE if successful, FALSE otherwise
  */
 /datum/repeatable_crafting_recipe/proc/process_reagent_container(obj/item/reagent_containers/container, list/copied_reagent_requirements, mob/user, atom/return_loc, is_storage, stored_pixel_x = 0, stored_pixel_y = 0, list/copied_containers)
-	var/obj/item/reagent_containers/concopy = null
-	concopy = new /obj/item/reagent_containers() // We make a new container to pair with the original
-	concopy.loc = null // We banish the copy to nullspace before adding it to the copy list
+	// We make a new container to pair with the original, and banish it to nullspace before adding it to the copy list
+	var/obj/item/reagent_containers/concopy = new /obj/item/reagent_containers(null)
 	copied_containers[container] += concopy
 
 	for(var/required_path as anything in copied_reagent_requirements)
-		var/list/reagent_paths = list(required_path)
+		var/list/reagent_paths
 		if(reagent_subtypes_allowed)
-			reagent_paths |= subtypesof(required_path)
+			reagent_paths = typesof(required_path)
+		else
+			reagent_paths = list(required_path)
 
 		for(var/possible_reagent_path in reagent_paths)
 			if(!copied_reagent_requirements[required_path])
@@ -570,7 +566,7 @@
 /datum/repeatable_crafting_recipe/proc/get_storage_contents(mob/user)
 	var/list/storage_contents = list()
 	var/obj/item/inactive_hand = user.get_inactive_held_item()
-	if(item_in_requirements(inactive_hand, offhand_repeat_check))
+	if(item_in_requirements(inactive_hand, offhand_contents_check))
 		for(var/obj/item/item in inactive_hand.contents)
 			storage_contents |= item
 	return storage_contents
@@ -614,10 +610,6 @@
 
 	requested_crafts = CLAMP(requested_crafts, 1, max_crafts)
 
-	if((!istype(attacked_item, attacked_atom) && !istype(attacked_item, /obj/item/natural/bundle)) || (istype(attacked_item, /obj/item/natural/bundle) && !ispath(attacked_item:stacktype, attacked_atom)))
-		return FALSE
-
-	var/list/all_blacklisted = typesof_list(blacklisted_paths)
 	var/attempts = 0
 	var/max_attempts = requested_crafts * 20 // Safety to prevent infinite loops
 
@@ -644,12 +636,11 @@
 			if(!length(copied_requirements))
 				break
 
-			if((!item_in_requirements(item, copied_requirements) && !istype(item, /obj/item/natural/bundle)) || (item.type in all_blacklisted))
+			if(!item_in_requirements(item, copied_requirements) && !istype(item, /obj/item/natural/bundle))
 				continue
 
 			if(istype(item, /obj/item/natural/bundle))
-				if(process_bundle(item, user, copied_requirements, to_delete, all_blacklisted))
-					break
+				process_bundle(item, user, copied_requirements, to_delete, blacklisted_paths)
 				continue
 
 			user.visible_message(span_info("[user] starts picking up [item]."), span_info("I start picking up [item]."))
@@ -659,7 +650,7 @@
 					user.put_in_active_hand(item)
 
 				for(var/requirement in copied_requirements)
-					if(!item_matches_requirement(item, requirement))
+					if(!check_matches_requirement(item, requirement))
 						continue
 					copied_requirements[requirement]--
 					if(copied_requirements[requirement] <= 0)
@@ -677,7 +668,7 @@
 				if(!length(copied_requirements))
 					break
 
-				if(!item_in_requirements(item, copied_requirements) || (item.type in all_blacklisted))
+				if(!item_in_requirements(item, copied_requirements))
 					continue
 
 				to_chat(user, "You start grabbing [item] from your bag.")
@@ -689,7 +680,7 @@
 						user.put_in_active_hand(item)
 
 					for(var/requirement in copied_requirements)
-						if(!item_matches_requirement(item, requirement))
+						if(!check_matches_requirement(item, requirement))
 							continue
 						copied_requirements[requirement]--
 						if(copied_requirements[requirement] <= 0)
@@ -719,11 +710,43 @@
 					qdel(doomed)
 				// Let the user know about progress
 				to_chat(user, span_notice("Successfully crafted \a [name]. ([successful_crafts]/[requested_crafts])"))
+			else
+				move_items_back(to_delete, user)
+				// Crafting unsuccessful, transfer all reagents to the original containers then delete the container copies
+				for(var/obj/item/reagent_containers/key in copied_containers)
+					var/obj/item/reagent_containers/doomed = copied_containers[key]
+					doomed.reagents.trans_to(key, doomed.reagents.total_volume)
+					qdel(doomed)
+
+				// Continue the crafting while loop
 				continue
 
-		// Move items back if failed
-		move_items_back(to_delete, user)
+		if(!crafting_success)
+			var/list/failure_reasons = list()
+			if(length(copied_requirements))
+				failure_reasons += "not enough material"
+			if(length(copied_reagent_requirements))
+				failure_reasons += "insufficient reagents"
+			if(length(copied_tool_usage))
+				failure_reasons += "missing tools"
 
+			to_chat(user, span_warning("Crafting failed due to [failure_reasons.Join(" and ")]."))
+
+			move_items_back(to_delete, user)
+			move_products(list(), user)
+			// Crafting unsuccessful, transfer all reagents to the original containers then delete the container copies
+			for(var/obj/item/reagent_containers/key in copied_containers)
+				var/obj/item/reagent_containers/doomed = copied_containers[key]
+				doomed.reagents.trans_to(key, doomed.reagents.total_volume)
+				qdel(doomed)
+
+			// End the crafting while loop
+			break
+
+		// After each successful or failed craft, give the user a moment to react
+		sleep(0.5 SECONDS)
+
+		/* Removed crafting retry due to buggy behavior caused by players moving
 		// If we failed at some point in the process, restore reagents and ask if they want to continue trying
 		if(!crafting_success && successful_crafts < requested_crafts)
 
@@ -745,27 +768,33 @@
 
 		// After each successful or failed craft, give the user a moment to react
 		sleep(0.5 SECONDS)
+		*/
 
 	// Final completion message
 	if(successful_crafts > 0)
-		to_chat(user, span_notice("Finished crafting [successful_crafts] [name][successful_crafts > 1 ? "s" : ""]."))
+		to_chat(user, span_green("Finished crafting [successful_crafts] [name][successful_crafts > 1 ? "s" : ""]."))
 	else
 		to_chat(user, span_warning("Failed to craft any [name]."))
 
 	return TRUE
 
+/datum/repeatable_crafting_recipe/proc/item_in_requirements(obj/item/item, list/requirement_list)
+	for(var/required_type in requirement_list)
+		if(check_matches_requirement(item, required_type))
+			return TRUE
+	return FALSE
 
-/datum/repeatable_crafting_recipe/proc/item_matches_requirement(obj/item/item, atom/required_type)
+/// thing_to_check can handle both paths and atoms. Also checks against blacklisted_paths.
+/datum/repeatable_crafting_recipe/proc/check_matches_requirement(datum/thing_to_check, required_type)
+	if(!thing_to_check)
+		return FALSE
+	var/path_to_check = ispath(thing_to_check) ? thing_to_check : thing_to_check.type
+	if(path_to_check in blacklisted_paths)
+		return FALSE
 	if(subtypes_allowed)
-		return istype(item, required_type)
+		return ispath(path_to_check, required_type)
 	else
-		return (item?.type == required_type)
-
-/datum/repeatable_crafting_recipe/proc/type_matches_requirement(atom/item_type, atom/required_type)
-	if(subtypes_allowed)
-		return ispath(item_type, required_type)
-	else
-		return (item_type == required_type)
+		return (path_to_check == required_type)
 
 /**
  * Handles placing active item somewhere safe
@@ -806,13 +835,10 @@
 
 	if(prob2craft < 1)
 		to_chat(user, "<span class='danger'>I lack the skills for this...</span>")
-		move_products(list(), user)
-		move_items_back(to_delete, user)
 		return FALSE
 
 	if(prob(prob2fail))
 		to_chat(user, "<span class='danger'>MISTAKE! I've completely fumbled the crafting of \the [name]!</span>")
-		move_items_back(to_delete, user)
 		return FALSE
 
 	if(!prob(prob2craft))
@@ -820,7 +846,6 @@
 			to_chat(user, "<span class='danger'>I've failed to craft \the [name]. (Success chance: [prob2craft]%)</span>")
 		else
 			to_chat(user, "<span class='danger'>I've failed to craft \the [name].</span>")
-		move_items_back(to_delete, user)
 		return FALSE
 
 	var/list/outputs = create_outputs(to_delete, user)
@@ -858,7 +883,7 @@
 		if(L.STAINT > 10)
 			prob2craft += ((10-L.STAINT)*-1)*2
 
-	return CLAMP(prob2craft, 5, 99)
+	return CLAMP(prob2craft, 0, 100)
 
 /**
  * Calculates chance of failing crafting
@@ -932,6 +957,7 @@
 	if(amt2raise > 0)
 		user.mind.add_sleep_experience(skillcraft, amt2raise, FALSE)
 
+/// Moves items back to user's location
 /datum/repeatable_crafting_recipe/proc/move_items_back(list/items, mob/user)
 	for(var/obj/item/item in items)
 		var/early_continue = FALSE
@@ -943,6 +969,7 @@
 			item.forceMove(user.drop_location())
 	user.update_inv_hands()
 
+// Attempts to put the tool back in the user's hand as well as a product
 /datum/repeatable_crafting_recipe/proc/move_products(list/products, mob/user)
 	var/list/copied_tool_usage = tool_usage.Copy()
 
@@ -1008,7 +1035,7 @@
 		</style>
 		<body>
 		  <div>
-		    <h1>[name]</h1>
+		    <h1>[icon2html(new output, user)] [name][output_amount > 1 ? " x[output_amount]" : ""]</h1>
 		    <div>
 		      <h2>Requirements</h2>
 		"}
@@ -1045,7 +1072,7 @@
 		html += {"
 		<br>
 		<div>
-		    <strong>Required Liquids</strong>
+		    <strong>Required Liquids:</strong>
 			<br>
 			  "}
 		for(var/atom/path as anything in reagent_requirements)
@@ -1056,6 +1083,13 @@
 		<div>
 		"}
 
+	if(minimum_skill_level)
+		html += "<br><strong class=class='scroll'>[SSskills.level_names[min(craftdiff, length(SSskills.level_names))]] [skillcraft.name] skill REQUIRED</strong><br>"
+	else if(craftdiff)
+		html += "<br><strong class=class='scroll'>[SSskills.level_names[min(craftdiff, length(SSskills.level_names))]] [skillcraft.name] skill recommended</strong><br>"
+	else
+		html += "<br><strong class=class='scroll'>No [skillcraft.name] skill needed</strong><br>"
+
 	html += "<h1>Steps</h1><br>"
 	if(subtypes_allowed)
 		html += " [icon2html(new starting_atom, user)] <strong class=class='scroll'>start the process by using any [initial(starting_atom.name)] </strong><br>"
@@ -1063,6 +1097,8 @@
 		html += "[icon2html(new starting_atom, user)] <strong class=class='scroll'>start the process by using [initial(starting_atom.name)] </strong><br>"
 
 	html += "[icon2html(new attacked_atom, user)] <strong class=class='scroll'>on [initial(attacked_atom.name)]</strong><br>"
+	if(allow_inverse_start)
+		html += "<strong class=class='scroll'>or vice versa</strong><br>"
 
 	html += {"
 		</div>

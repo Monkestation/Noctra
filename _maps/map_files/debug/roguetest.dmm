@@ -2773,6 +2773,10 @@
 /mob/living/simple_animal/hostile/retaliate/cow,
 /turf/open/floor/grass/yel,
 /area/rogue/outdoors)
+"XG" = (
+/obj/effect/landmark/start/adventurerlate,
+/turf/open/floor/grass/yel,
+/area/rogue/outdoors)
 "XL" = (
 /obj/structure/hotspring/border/twelve,
 /turf/open/floor/dirt/road,
@@ -15124,7 +15128,7 @@ qi
 RC
 QN
 Wg
-QN
+XG
 qc
 jC
 fS

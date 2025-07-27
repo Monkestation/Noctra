@@ -33,6 +33,7 @@
 		beltr = /obj/item/storage/magebag/apprentice
 		armor = /obj/item/clothing/shirt/robe/newmage/adept
 		backr = /obj/item/storage/backpack/satchel
+		head = /obj/item/clothing/head/wizhat/gen
 	else
 		shoes = /obj/item/clothing/shoes/simpleshoes
 		shirt =/obj/item/clothing/shirt/dress/silkdress/black
@@ -42,6 +43,7 @@
 		beltr = /obj/item/storage/magebag/apprentice
 		armor = /obj/item/clothing/shirt/robe/newmage/adept
 		backr = /obj/item/storage/backpack/satchel
+		head = /obj/item/clothing/head/wizhat/witch
 	backpack_contents = list(/obj/item/book/granter/spellbook/apprentice = 1, /obj/item/chalk = 1)
 	H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE) //children can have one spellpoint, as a treat.
 	if (H.age == AGE_ADULT)

@@ -276,7 +276,7 @@
 		if(recipe.starting_atom)
 			ingredients += recipe.starting_atom
 
-		if(recipe.uses_attacked_atom && recipe.attacked_atom)
+		if(recipe.attacked_atom)
 			ingredients += recipe.attacked_atom
 
 		add_recipe_to_cache(
@@ -329,7 +329,6 @@
 				"action_time" = recipe.action_time,
 				"related_skill" = recipe.related_skill,
 				"skill_xp" = recipe.skill_xp_gained,
-				"fallback" = recipe.fallback
 			)
 		)
 

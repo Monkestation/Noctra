@@ -128,9 +128,9 @@
 	contains = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/long
 
 /datum/supply_pack/weapons/rbow
-	name = "Imported Recurve Bow"
+	name = "Imported Short Bow"
 	cost = 30
-	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve)
+	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow/short)
 
 /datum/supply_pack/weapons/quivers
 	name = "Empty Quiver"
