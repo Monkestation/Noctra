@@ -1,6 +1,3 @@
-/// When sending mutiple assets, how many before we give the client a quaint little sending resources message
-#define ASSET_CACHE_TELL_CLIENT_AMOUNT 8
-
 /// Base browse_rsc asset transport
 /datum/asset_transport
 	var/name = "Simple browse_rsc asset transport"
@@ -105,8 +102,8 @@
 			continue
 		unreceived[asset_name] = ACI
 
-	if (unreceived.len)
-		if (unreceived.len >= ASSET_CACHE_TELL_CLIENT_AMOUNT)
+	if (length(unreceived))
+		if (length(unreceived) >= ASSET_CACHE_TELL_CLIENT_AMOUNT)
 			to_chat(client, "Sending Resources...")
 
 		for (var/asset_name in unreceived)
@@ -140,5 +137,3 @@
 /// Returns TRUE or FALSE
 /datum/asset_transport/proc/validate_config(log = TRUE)
 	return TRUE
-
-#undef ASSET_CACHE_TELL_CLIENT_AMOUNT

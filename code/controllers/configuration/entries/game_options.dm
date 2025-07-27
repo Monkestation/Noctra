@@ -356,3 +356,6 @@
 
 /datum/config_entry/flag/cache_assets
 	default = TRUE
+
+/datum/config_entry/flag/save_spritesheets
+	default = FALSE
