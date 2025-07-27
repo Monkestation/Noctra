@@ -23,6 +23,11 @@ abstract types are automatically excluded.
 		/obj/item/clothing/head/peaceflower, // spawns naturally
 		/obj/item/clothing/head/corruptflower, // spawns naturally
 		/obj/item/clothing/face/facemask/prisoner, // shouldn't be attainable
+		/obj/item/clothing/cloak/cape/inquisitor,
+		/obj/item/clothing/head/leather/inqhat,
+		/obj/item/clothing/face/spectacles/inqglasses,
+		/obj/item/clothing/armor/medium/scale/inqcoat,
+		/obj/item/clothing/head/leather/inqhat, // this stinks
 	)
 	// these don't use misc_flags = CRAFTING_TEST_EXCLUDE because we want to explicitly know which paths we are excluding.
 	/// excludes paths along with their subtypes
@@ -88,7 +93,6 @@ abstract types are automatically excluded.
 				clothes_list -= path
 
 	/* misc checks go next */
-
 
 	// check loot tables
 	for(var/datum/loot_table/loot_datum as anything in subtypesof(/datum/loot_table))

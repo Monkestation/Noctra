@@ -228,6 +228,9 @@
 /obj/item/clothing/head/headdress/alt
 	icon_state = "headdressalt"
 
+/obj/item/clothing/head/armingcap/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
 /obj/item/clothing/head/armingcap/colored/dwarf // gnome hat I guess?
 	color = "#cb3434"
 

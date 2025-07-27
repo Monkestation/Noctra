@@ -38,7 +38,7 @@
 	cost = 5
 	contains = /obj/item/clothing/head/hatblu
 
-/datum/supply_pack/apparel/hatblu
+/datum/supply_pack/apparel/engineering_goggles
 	name = "Engineering goggles"
 	cost = 50
 	contains = /obj/item/clothing/face/goggles
