@@ -138,6 +138,9 @@ GLOBAL_LIST_INIT_TYPED(blood_types, /datum/blood_type, init_subtypes_w_path_keys
 	reagent_type = /datum/reagent/blood
 	contains_lux = TRUE
 
+/datum/blood_type/human/medicator
+	name = "Medicator"
+
 /datum/blood_type/human/a_plus
 	name = "A+"
 	compatible_types = list(

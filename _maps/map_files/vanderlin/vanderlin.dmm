@@ -6828,7 +6828,7 @@
 /area/rogue/outdoors/town)
 "eig" = (
 /obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/key/apartments/apartment13,
+/obj/item/key/apartments/apartment11,
 /turf/open/floor/wood,
 /area/rogue/indoors/town)
 "ein" = (

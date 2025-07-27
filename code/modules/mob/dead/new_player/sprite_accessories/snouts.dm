@@ -43,40 +43,6 @@
 	color_keys = 2
 	color_key_names = list("Snout", "Inner")
 
-/datum/sprite_accessory/snout/bird
-	name = "Beak"
-	icon_state = "bird"
-	color_keys = 3
-	color_key_names = list("Beak", "Detail", "Top")
-
-/datum/sprite_accessory/snout/bigbeak
-	name = "Big Beak"
-	icon_state = "bigbeak"
-
-/datum/sprite_accessory/snout/bigbeakshort
-	name = "Big Beak Short"
-	icon_state = "bigbeakshort"
-
-/datum/sprite_accessory/snout/slimbeak
-	name = "Slim Beak"
-	icon_state = "slimbeak"
-
-/datum/sprite_accessory/snout/slimbeakshort
-	name = "Slim Beak Short"
-	icon_state = "slimbeakshort"
-
-/datum/sprite_accessory/snout/slimbeakalt
-	name = "Slim Beak Alt"
-	icon_state = "slimbeakalt"
-
-/datum/sprite_accessory/snout/hookbeak
-	name = "Hook Beak"
-	icon_state = "hookbeak"
-
-/datum/sprite_accessory/snout/hookbeakbig
-	name = "Hook Beak Big"
-	icon_state = "hookbeakbig"
-
 /datum/sprite_accessory/snout/bug
 	name = "Bug"
 	icon_state = "bug"
@@ -463,3 +429,71 @@
 	icon_state = "stubbyalt"
 	color_keys = 2
 	color_key_names = list("Snout", "Nose")
+
+/datum/sprite_accessory/snout/bird
+	name = "Beak"
+	icon_state = "bird"
+	color_keys = 3
+	color_key_names = list("Beak", "Detail", "Top")
+
+/datum/sprite_accessory/snout/bigbeak
+	name = "Big Beak"
+	icon_state = "bigbeak"
+
+/datum/sprite_accessory/snout/bigbeakshort
+	name = "Big Beak Short"
+	icon_state = "bigbeakshort"
+
+/datum/sprite_accessory/snout/slimbeak
+	name = "Slim Beak"
+	icon_state = "slimbeak"
+
+/datum/sprite_accessory/snout/slimbeakshort
+	name = "Slim Beak Short"
+	icon_state = "slimbeakshort"
+
+/datum/sprite_accessory/snout/slimbeakalt
+	name = "Slim Beak Alt"
+	icon_state = "slimbeakalt"
+
+/datum/sprite_accessory/snout/hookbeak
+	name = "Hook Beak"
+	icon_state = "hookbeak"
+
+/datum/sprite_accessory/snout/hookbeakbig
+	name = "Hook Beak Big"
+	icon_state = "hookbeakbig"
+
+// Sorry
+/datum/sprite_accessory/snout/thin_beak
+	abstract_type = /datum/sprite_accessory/snout/thin_beak
+	icon = 'icons/mob/sprite_accessory/snouts/thin.dmi'
+	default_colors = list("#5e5e5e")
+
+/datum/sprite_accessory/snout/thin_beak/bigbeak
+	name = "Big Beak"
+	icon_state = "bigbeak"
+
+/datum/sprite_accessory/snout/thin_beak/bigbeakshort
+	name = "Big Beak Short"
+	icon_state = "bigbeakshort"
+
+/datum/sprite_accessory/snout/thin_beak/slimbeak
+	name = "Slim Beak"
+	icon_state = "slimbeak"
+
+/datum/sprite_accessory/snout/thin_beak/slimbeakshort
+	name = "Slim Beak Short"
+	icon_state = "slimbeakshort"
+
+/datum/sprite_accessory/snout/thin_beak/slimbeakalt
+	name = "Slim Beak Alt"
+	icon_state = "slimbeakalt"
+
+/datum/sprite_accessory/snout/thin_beak/hookbeak
+	name = "Hook Beak"
+	icon_state = "hookbeak"
+
+/datum/sprite_accessory/snout/thin_beak/hookbeakbig
+	name = "Hook Beak Big"
+	icon_state = "hookbeakbig"

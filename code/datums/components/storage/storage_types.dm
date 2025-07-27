@@ -79,6 +79,16 @@
 	screen_max_rows = 10
 	screen_max_columns = 10
 
+/datum/component/storage/concrete/grid/mailmaster/show_to(mob/M)
+	. = ..()
+	if(!.)
+		return
+	if(istype(parent, /obj/item/roguemachine/mastermail))
+		var/obj/item/roguemachine/mastermail/mail_machine = parent
+		if(mail_machine.new_mail)
+			mail_machine.new_mail = FALSE
+			mail_machine.update_appearance(UPDATE_ICON_STATE)
+
 /datum/component/storage/concrete/grid/bin
 	max_w_class = WEIGHT_CLASS_HUGE
 	screen_max_rows = 8

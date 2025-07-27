@@ -58,6 +58,7 @@
 	H.grant_language(/datum/language/hellspeak)
 	H.grant_language(/datum/language/oldpsydonic)
 	H.grant_language(/datum/language/orcish)
+	H.grant_language(/datum/language/deepspeak)
 	H.adjust_skillrank(/datum/skill/misc/reading, 6, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 3, TRUE)
