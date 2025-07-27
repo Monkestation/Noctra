@@ -133,4 +133,4 @@ abstract types are automatically excluded.
 	if(!clothes_list.len)
 		return
 
-	TEST_FAIL("The following clothing subtypes do not have a crafting recipe: [clothes_list.Join(", ")]\n \n also these are all the loot table stuff: [typepaths_of_loot_tables.Join(", ")]")
+	TEST_FAIL("The following clothing subtypes do not have a crafting recipe: [clothes_list.Join(", ")]\n \n also these are all the loot table stuff: [typepaths_of_loot_tables.Join(", ")] \n \n subtypes of loot datum: [subtypes_of_loot_tables.Join(", ")]")
