@@ -324,6 +324,7 @@
 #include "code\_onclick\hud\monkey.dm"
 #include "code\_onclick\hud\mouseover.dm"
 #include "code\_onclick\hud\movable_screen_objects.dm"
+#include "code\_onclick\hud\new_player.dm"
 #include "code\_onclick\hud\plane_master.dm"
 #include "code\_onclick\hud\plane_master_controller.dm"
 #include "code\_onclick\hud\radial.dm"
