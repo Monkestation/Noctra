@@ -40,7 +40,7 @@
 	can_add_lock = TRUE
 	lock = /datum/lock/key
 
-	var/base_icon_state
+	base_icon_state
 	var/alternative_icon_handling = FALSE
 
 /obj/structure/closet/crate/Initialize()

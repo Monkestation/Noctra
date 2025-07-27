@@ -188,7 +188,7 @@
 #include "code\__DEFINES\dcs\signals\signals_objectives.dm"
 #include "code\__DEFINES\dcs\signals\signals_spatial_grid.dm"
 #include "code\__DEFINES\dcs\signals\signals_spell.dm"
-#include "code\__DEFINES\dcs\signals\signals_ticker.dm"
+#include "code\__DEFINES\dcs\signals\signals_subsystems.dm"
 #include "code\__DEFINES\dcs\signals\signals_tram.dm"
 #include "code\__DEFINES\dcs\signals\signals_turf.dm"
 #include "code\__DEFINES\dcs\signals\signals_twohand.dm"
