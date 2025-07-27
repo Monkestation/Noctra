@@ -61,7 +61,14 @@ abstract types are automatically excluded.
 		"rare",
 		"vampire", // TODO (?)
 		"cult", // TODO (?)
-		"faceless" // antag shit
+		"faceless", // antag shit
+		"graggar",
+		"zizo",
+		"matthios",
+		"captain", // bitch please
+		"grenzel",
+		"steam",
+		"forrester",
 	)
 
 /datum/unit_test/craftable_clothes/Run()

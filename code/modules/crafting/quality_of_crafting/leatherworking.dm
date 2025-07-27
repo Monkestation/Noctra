@@ -507,6 +507,20 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 4
 
+/datum/repeatable_crafting_recipe/leather/standalone/apothecary_overcoat
+	name = "apothecary overcoat"
+	output = /obj/item/clothing/armor/gambeson/apothecary
+	requirements = list(/obj/item/natural/hide/cured = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/leather/standalone/steward_coat
+	name = "steward coat"
+	output = /obj/item/clothing/armor/gambeson/steward
+	requirements = list(/obj/item/natural/hide/cured = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 4
+
 /datum/repeatable_crafting_recipe/leather/standalone/gloves
 	name = "hardened leather gloves"
 	output = /obj/item/clothing/gloves/leather/advanced

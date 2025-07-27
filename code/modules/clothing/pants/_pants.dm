@@ -179,6 +179,3 @@
 	. = ..()
 	if(freshly_laundered)
 		. += "It looks fresh and clean."
-
-/obj/item/clothing/pants/rank
-	dying_key = DYE_REGISTRY_UNDER
