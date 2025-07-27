@@ -139,6 +139,14 @@
 	created_item = /obj/item/clothing/armor/plate/full/iron
 	craftdiff = 2
 
+/datum/anvil_recipe/armor/iron/platefull_shadow
+	name = "Iron Plate Shadow Armor (+Bar x3)"
+	recipe_name = "a full set of Full-Plate Shadow Armor"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron,/obj/item/ingot/iron,/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/armor/cuirass/iron/shadowplate
+	craftdiff = 2
+
 /datum/anvil_recipe/armor/iron/halfplate
 	name = "Iron Half-plate (+Bar x2)"
 	recipe_name = "a Half-Plate Armor"
@@ -152,6 +160,25 @@
 	recipe_name = "a heavy iron helmet"
 	additional_items = list(/obj/item/ingot/iron)
 	created_item = /obj/item/clothing/head/helmet/heavy/ironplate
+	craftdiff = 1
+
+/datum/anvil_recipe/armor/iron/barred_helmet
+	name = "Barred Helmet (+Bar)"
+	recipe_name = "a heavy iron helmet"
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/head/helmet/townwatch/gatemaster
+	craftdiff = 1
+
+/datum/anvil_recipe/armor/iron/winged_helmet
+	name = "Winged Helmet"
+	recipe_name = "an iron helmet"
+	created_item = /obj/item/clothing/head/helmet/winged
+	craftdiff = 1
+
+/datum/anvil_recipe/armor/iron/horned_helmet
+	name = "Horned Helmet"
+	recipe_name = "an iron helmet"
+	created_item = /obj/item/clothing/head/helmet/horned
 	craftdiff = 1
 
 /datum/anvil_recipe/armor/steel/bastion_helm
@@ -382,7 +409,7 @@
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/ravox
 	additional_items = list(/obj/item/ingot/iron)
 
-/datum/anvil_recipe/armor/steel/templar/helmet_ravox
+/datum/anvil_recipe/armor/steel/templar/helmet_xylix
 	name = "Xylix Helmet"
 	recipe_name = "a xylixian helmet"
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/xylix
