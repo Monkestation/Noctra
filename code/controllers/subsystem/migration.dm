@@ -283,14 +283,18 @@ SUBSYSTEM_DEF(migrants)
 		return FALSE
 	if(is_migrant_banned(player.ckey, role.name))
 		return FALSE
+	var/can_join = TRUE
 	if(role.allowed_races && !(prefs.pref_species.id in role.allowed_races))
 		if(!(player.triumph_ids.Find("race_all")))
-			return FALSE
+			to_chat(player, span_warning("Wrong species. Your prioritized role only allows [role.allowed_races.Join(", ")]."))
+			can_join = FALSE
 	if(role.allowed_sexes && !(prefs.gender in role.allowed_sexes))
-		return FALSE
+		to_chat(player, span_warning("Wrong gender. Your prioritized role only allows [role.allowed_sexes.Join(", ")]."))
+		can_join = FALSE
 	if(role.allowed_ages && !(prefs.age in role.allowed_ages))
-		return FALSE
-	return TRUE
+		to_chat(player, span_warning("Wrong age. Your prioritized role only allows [role.allowed_ages.Join(", ")]."))
+		can_join = FALSE
+	return can_join
 
 /datum/controller/subsystem/migrants/proc/process_next_wave(dt)
 	time_until_next_wave -= dt

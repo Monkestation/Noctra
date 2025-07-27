@@ -2,10 +2,10 @@
 	name = "ears"
 	icon_state = "ear"
 	desc = ""
+	visible_organ = TRUE
 	zone = BODY_ZONE_PRECISE_EARS
 	slot = ORGAN_SLOT_EARS
 	gender = PLURAL
-	visible_organ = TRUE
 
 	healing_factor = STANDARD_ORGAN_HEALING
 	decay_factor = STANDARD_ORGAN_DECAY
@@ -94,32 +94,35 @@
 	if(ears)
 		ears.minimumDeafTicks(value)
 
-
 /obj/item/organ/ears/cat
 	name = "cat ears"
 	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "kitty"
 	damage_multiplier = 2
 
-/obj/item/organ/ears/penguin
-	name = "penguin ears"
-	desc = ""
-	var/datum/component/waddle
+/obj/item/organ/ears/elf
+	name = "elf ears"
+	icon_state = "ear_pointed"
+	use_mob_sprite_as_obj_sprite = FALSE
+	accessory_type = /datum/sprite_accessory/ears/elf
 
-/obj/item/organ/ears/penguin/Insert(mob/living/carbon/human/H, special = 0, drop_if_replaced = TRUE)
-	. = ..()
-	if(istype(H))
-		to_chat(H, "<span class='notice'>I suddenly feel like you've lost my balance.</span>")
-		waddle = H.AddComponent(/datum/component/waddling)
+/obj/item/organ/ears/elfw
+	name = "wood elf ears"
+	icon_state = "ear_pointed"
+	use_mob_sprite_as_obj_sprite = FALSE
+	accessory_type = /datum/sprite_accessory/ears/elfw
 
-/obj/item/organ/ears/penguin/Remove(mob/living/carbon/human/H,  special = 0)
-	. = ..()
-	if(istype(H))
-		to_chat(H, "<span class='notice'>My sense of balance comes back to you.</span>")
-		QDEL_NULL(waddle)
+/obj/item/organ/ears/halforc
+	name = "halforc ears"
+	icon_state = "ear_pointed"
+	use_mob_sprite_as_obj_sprite = FALSE
+	accessory_type = /datum/sprite_accessory/ears/elf
 
-/obj/item/organ/ears/bronze
-	name = "tin ears"
-	desc = ""
-	damage_multiplier = 0.1 //STRONK
-	bang_protect = 1 //Fear me weaklings.
+/obj/item/organ/ears/tiefling
+	name = "tiefling ears"
+	icon_state = "ear_pointed"
+	use_mob_sprite_as_obj_sprite = FALSE
+	accessory_type = /datum/sprite_accessory/ears/elfw
+
+/obj/item/organ/ears/anthro
+	name = "wild-kin ears"

@@ -114,9 +114,9 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	/// Food we (SHOULD) get a mood buff from
 	var/liked_food = NONE
 	/// Food we (SHOULD) get a mood debuff from
-	var/disliked_food = GROSS
+	var/disliked_food = NONE
 	/// Food that (SHOULD) be toxic to us
-	var/toxic_food = TOXIC
+	var/toxic_food = NONE
 
 	/// List of slots this species cannot equip things to
 	var/list/no_equip = list()
@@ -746,6 +746,9 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
 
+	for(var/skill as anything in inherent_skills)
+		C.adjust_skillrank(skill, -inherent_skills[skill], TRUE)
+
 	if(inherent_factions)
 		for(var/i in inherent_factions)
 			C.faction -= i
@@ -864,13 +867,14 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	H.apply_overlay(ABOVE_BODY_FRONT_LAYER)
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
 		H.setOxyLoss(0)
 		H.losebreath = 0
 
-		var/takes_crit_damage = (!HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
-		if((H.health < H.crit_threshold) && takes_crit_damage)
-			H.adjustBruteLoss(1)
+	if((H.health < H.crit_threshold) && !HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
+		H.adjustBruteLoss(1)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return

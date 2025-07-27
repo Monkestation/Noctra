@@ -251,15 +251,6 @@
 /obj/item/storage/backpack/satchel/black
 	color = CLOTHING_SOOT_BLACK
 
-/obj/item/storage/backpack/attack_hand_secondary(mob/user, params)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	var/datum/component/storage/CP = GetComponent(/datum/component/storage)
-	if(CP)
-		CP.rmb_show(user)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/item/storage/backpack/backpack
 	name = "backpack"
 	desc = "A bulky backpack worn on the back which can store many items."

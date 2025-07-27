@@ -7133,7 +7133,7 @@
 /area/rogue/indoors/town/manor/heir/heir1)
 "eig" = (
 /obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/key/apartments/apartment13,
+/obj/item/key/apartments/apartment11,
 /turf/open/floor/wood,
 /area/rogue/indoors/town)
 "eik" = (
