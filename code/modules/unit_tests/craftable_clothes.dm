@@ -50,7 +50,7 @@ abstract types are automatically excluded.
 		/obj/item/clothing/head/priesthat, // unattainable
 		/obj/item/clothing/head/mob_holder, // change this shit to not clothing, wtf.
 		/obj/item/clothing/gloves/leather/otavan, // TODO?
-		/obj/item/clothing/gloves/otavan/inqgloves, // ugh
+		/obj/item/clothing/gloves/leather/otavan/inqgloves, // ugh
 		/obj/item/clothing/armor/amazon_chainkini, // no horni
 
 	)
