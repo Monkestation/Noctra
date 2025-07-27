@@ -66,7 +66,7 @@
 	appro_skill = /datum/skill/craft/weaponsmithing
 	req_bar = /obj/item/ingot/copper
 	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/weapon/mace/copperbludgeon
+	created_item = /obj/item/weapon/mace/bludgeon/copper
 	craftdiff = 0
 
 /datum/anvil_recipe/weapons/copper/cdagger
@@ -230,6 +230,14 @@
 	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/grown/log/tree/stick)
 	created_item = /obj/item/weapon/mace
+
+/datum/anvil_recipe/weapons/iron/ibludgeon
+	name = "Iron Bludgeon (+Stick)"
+	recipe_name = "a Bludgeon"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/grown/log/tree/stick)
+	created_item = /obj/item/weapon/mace/bludgeon
 
 /datum/anvil_recipe/weapons/iron/warhammer
 	name = "Iron Warhammer (+1 Stick)"
