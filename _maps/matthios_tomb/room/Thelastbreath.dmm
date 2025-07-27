@@ -523,7 +523,7 @@
 	base_endurance = 12;
 	base_constitution = 12
 	},
-/obj/item/clothing/shirt/robe/courtmage,
+/obj/item/clothing/shirt/robe/colored/courtmage,
 /obj/item/clothing/neck/psycross/silver,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/under/tomb/indoors)

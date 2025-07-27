@@ -5985,10 +5985,10 @@
 /area/rogue/indoors/town/dwarfin)
 "dgK" = (
 /obj/structure/closet/crate/crafted_closet,
-/obj/item/clothing/shirt/robe/mage,
-/obj/item/clothing/shirt/robe/mage,
-/obj/item/clothing/shirt/robe/mage,
-/obj/item/clothing/shirt/robe/mage,
+/obj/item/clothing/shirt/robe/colored/mage,
+/obj/item/clothing/shirt/robe/colored/mage,
+/obj/item/clothing/shirt/robe/colored/mage,
+/obj/item/clothing/shirt/robe/colored/mage,
 /turf/open/floor/cobblerock,
 /area/rogue/indoors/town/magician)
 "dgR" = (

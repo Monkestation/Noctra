@@ -102,3 +102,6 @@
 /obj/item/clothing/cloak/cape/rogue : /obj/item/clothing/cloak/chasuble{@OLD}
 /obj/item/clothing/shirt/robe/courtmage : /obj/item/clothing/shirt/robe/colored/courtmage{@OLD}
 /obj/item/clothing/shirt/robe/mage : /obj/item/clothing/shirt/robe/colored/mage{@OLD}
+/obj/item/clothing/wrists/bracers/hoplite : /obj/item/clothing/wrists/bracers/rare/hoplite{@OLD}
+/obj/item/clothing/shirt/robe/mage : /obj/item/clothing/shirt/robe/colored/mage{@OLD}
+/obj/item/clothing/shirt/robe/courtmage : /obj/item/clothing/shirt/robe/colored/courtmage{@OLD}

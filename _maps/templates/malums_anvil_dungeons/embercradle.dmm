@@ -3044,7 +3044,7 @@
 /area/rogue/under/mountains/anvil/dungeon)
 "Ou" = (
 /obj/item/clothing/face/facemask/goldmask,
-/obj/item/clothing/wrists/bracers/hoplite,
+/obj/item/clothing/wrists/bracers/rare/hoplite,
 /obj/item/clothing/neck/gorget/hoplite,
 /obj/item/weapon/polearm/spear/hoplite/winged,
 /obj/item/weapon/shield/tower/hoplite,

@@ -32068,8 +32068,8 @@
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/shirt/robe/newmage/sorcerer,
 /obj/item/clothing/shirt/robe/newmage/sorcerer,
-/obj/item/clothing/shirt/robe/mage,
-/obj/item/clothing/shirt/robe/mage,
+/obj/item/clothing/shirt/robe/colored/mage,
+/obj/item/clothing/shirt/robe/colored/mage,
 /turf/open/floor/carpet/purple,
 /area/rogue/indoors/town/magician)
 "tJd" = (

@@ -6141,8 +6141,8 @@
 /area/rogue/outdoors/rtfield/safe)
 "fWU" = (
 /obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/shirt/robe/mage,
-/obj/item/clothing/shirt/robe/courtmage,
+/obj/item/clothing/shirt/robe/colored/mage,
+/obj/item/clothing/shirt/robe/colored/courtmage,
 /obj/item/clothing/head/roguehood/colored/mage,
 /obj/item/clothing/head/wizhat,
 /obj/item/clothing/shirt/robe/wizard,
@@ -15575,10 +15575,10 @@
 /area/rogue/indoors/town/smithy)
 "oGo" = (
 /obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/shirt/robe/mage,
-/obj/item/clothing/shirt/robe/courtmage,
+/obj/item/clothing/shirt/robe/colored/mage,
+/obj/item/clothing/shirt/robe/colored/courtmage,
 /obj/item/clothing/head/roguehood/colored/mage,
-/obj/item/clothing/shirt/robe/mage,
+/obj/item/clothing/shirt/robe/colored/mage,
 /obj/item/clothing/head/wizhat,
 /obj/item/clothing/shirt/robe/wizard,
 /obj/item/clothing/head/wizhat/witch,
@@ -25171,8 +25171,8 @@
 /area/rogue/under/town/basement)
 "xDI" = (
 /obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/shirt/robe/courtmage,
-/obj/item/clothing/shirt/robe/mage,
+/obj/item/clothing/shirt/robe/colored/courtmage,
+/obj/item/clothing/shirt/robe/colored/mage,
 /obj/item/clothing/head/roguehood/colored/mage,
 /obj/item/clothing/head/wizhat,
 /obj/item/clothing/shirt/robe/wizard,
