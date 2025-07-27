@@ -68,7 +68,7 @@ abstract types are automatically excluded.
 		if(is_abstract(path) || (path.misc_flags & CRAFTING_TEST_EXCLUDE))
 			clothes_list -= path
 
-	// paths by text
+	// paths by text, if a piece of this text is found in the typepath it's excluded
 	for(var/path as anything in clothes_list)
 		for(var/text_to_find as anything in excluded_paths_by_text)
 			if(findtextEx("[path]", "/[text_to_find]"))
@@ -93,9 +93,8 @@ abstract types are automatically excluded.
 
 	// check loot tables
 	for(var/datum/loot_table/loot_datum in subtypesof(/datum/loot_table))
-		for(var/loot_path as anything in loot_datum.loot_table)
-			if(islist(loot_path))
-				for(var/loot_path2 as anything in loot_path)
+		for(var/list/parent_list as anything in loot_datum.loot_table)
+			for(var/loot_path as anything in parent_list)
 					clothes_list -= loot_path
 					typepaths_of_loot_tables += loot_path
 
