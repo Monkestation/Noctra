@@ -69,6 +69,7 @@ abstract types are automatically excluded.
 		"grenzel",
 		"steam",
 		"forrester",
+		"blkknight",
 	)
 
 /datum/unit_test/craftable_clothes/Run()
