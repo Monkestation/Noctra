@@ -21,11 +21,12 @@ abstract types are automatically excluded.
 		/obj/item/clothing/head/peaceflower, // spawns naturally
 		/obj/item/clothing/head/corruptflower, // spawns naturally
 		/obj/item/clothing/face/facemask/prisoner, // shouldn't be attainable
-		/obj/item/clothing/cloak/cape/inquisitor,
-		/obj/item/clothing/head/leather/inqhat,
-		/obj/item/clothing/face/spectacles/inqglasses,
-		/obj/item/clothing/armor/medium/scale/inqcoat,
-		/obj/item/clothing/head/leather/inqhat, // this stinks
+		/obj/item/clothing/cloak/cape/inquisitor, // inquisitor bullshit
+		/obj/item/clothing/head/leather/inqhat, // inquisitor bullshit
+		/obj/item/clothing/face/spectacles/inqglasses, // inquisitor bullshit
+		/obj/item/clothing/armor/medium/scale/inqcoat, // inquisitor bullshit
+		/obj/item/clothing/head/adeptcowl, // inquisitor bullshit
+		/obj/item/clothing/head/leather/inqhat, // inquisitor bullshit
 		/obj/item/clothing/face/facemask/steel/harlequin, // antag only
 		/obj/item/clothing/shirt/dress/gen/sexy, // we wanted to keep it but don't want it craftable ig
 		/obj/item/clothing/shirt/robe/necromancer, // antag
@@ -50,7 +51,7 @@ abstract types are automatically excluded.
 		/obj/item/clothing/head/priesthat, // unattainable
 		/obj/item/clothing/head/mob_holder, // change this shit to not clothing, wtf.
 		/obj/item/clothing/gloves/leather/otavan, // TODO?
-		/obj/item/clothing/gloves/leather/otavan/inqgloves, // ugh
+		/obj/item/clothing/gloves/leather/otavan/inqgloves,  // inquisitor bullshit
 		/obj/item/clothing/armor/amazon_chainkini, // no horni
 
 	)
