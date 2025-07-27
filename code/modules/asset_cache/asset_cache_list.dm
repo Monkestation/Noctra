@@ -54,18 +54,20 @@
 /datum/asset/language/register()
 	for(var/path in typesof(/datum/language))
 		set waitfor = FALSE
-		var/datum/language/L = new path ()
+		var/datum/language/L = new path()
 		L.get_icon()
 
 /datum/asset/spritesheet/simple/achievements
-	name ="achievements"
+	name = "achievements"
+
+/datum/asset/spritesheet/simple/achievements/create_spritesheets()
+	return
 
 /datum/asset/simple/permissions
 	assets = list(
 		"search.js" = 'html/admin/search.js',
 		"panels.css" = 'html/admin/panels.css'
 	)
-
 
 /datum/asset/group/permissions
 	children = list(
