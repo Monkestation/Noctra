@@ -36,7 +36,7 @@
 		head = /obj/item/clothing/head/wizhat/gen
 	else
 		shoes = /obj/item/clothing/shoes/simpleshoes
-		shirt =/obj/item/clothing/shirt/dress/silkdress/black
+		shirt = /obj/item/clothing/shirt/dress/silkdress/black
 		pants = /obj/item/clothing/pants/tights/random
 		belt = /obj/item/storage/belt/leather/rope
 		beltl = /obj/item/storage/keyring/mageapprentice
