@@ -28,7 +28,7 @@ abstract types are automatically excluded.
 		/obj/item/clothing/face/spectacles/inqglasses,
 		/obj/item/clothing/armor/medium/scale/inqcoat,
 		/obj/item/clothing/head/leather/inqhat, // this stinks
-		/obj/item/clothing/face/mask/facemask/steel/harlequin, // antag only
+		/obj/item/clothing/face/facemask/steel/harlequin, // antag only
 		/obj/item/clothing/shirt/dress/gen/sexy, // we wanted to keep it but don't want it craftable ig
 
 	)

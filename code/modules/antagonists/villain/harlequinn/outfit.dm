@@ -3,7 +3,7 @@
 	. = ..()
 	shoes = /obj/item/clothing/shoes/boots/leather
 	neck = /obj/item/clothing/neck/gorget
-	mask = /obj/item/clothing/face/mask/facemask/steel/harlequin
+	mask = /obj/item/clothing/face/facemask/steel/harlequin
 	gloves = /obj/item/clothing/gloves/fingerless
 	belt = /obj/item/storage/belt/leather/black
 	pants = /obj/item/clothing/pants/trou/leather
