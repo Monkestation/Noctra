@@ -99,6 +99,7 @@ abstract types are automatically excluded.
 			for(var/loot_path as anything in parent_list)
 				clothes_list -= loot_path
 				typepaths_of_loot += loot_path
+		qdel(loot_table_to_check)
 
 	// supply pack clothes
 	for(var/datum/supply_pack/supply_pack_being_checked as anything in supply_pack_list)
