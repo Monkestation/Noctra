@@ -1,6 +1,8 @@
+#define SHUTTER_MOVEMENT_DURATION 1 SECONDS
+#define SHUTTER_WAIT_DURATION 1 SECONDS
+
 /datum/hud/new_player/New(mob/owner)
 	..()
-
 
 /datum/hud/new_player
 	///Whether the menu is currently on the client's screen or not
@@ -28,8 +30,6 @@
 		if (!lobbyscreen.always_shown)
 			lobbyscreen.RegisterSignal(src, COMSIG_HUD_LOBBY_COLLAPSED, TYPE_PROC_REF(/atom/movable/screen/lobby, collapse_button))
 			lobbyscreen.RegisterSignal(src, COMSIG_HUD_LOBBY_EXPANDED, TYPE_PROC_REF(/atom/movable/screen/lobby, expand_button))
-
-
 
 //copypaste begin
 
@@ -190,7 +190,6 @@
 	var/mob/dead/new_player/new_player = hud.mymob
 	ready = !ready
 	if(ready)
-		new_player.auto_deadmin_on_ready_or_latejoin()
 		new_player.ready = PLAYER_READY_TO_PLAY
 		base_icon_state = "ready"
 	else
