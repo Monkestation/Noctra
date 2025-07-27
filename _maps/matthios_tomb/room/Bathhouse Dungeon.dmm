@@ -2254,7 +2254,7 @@
 /area/rogue/under/tomb/sewer)
 "Yg" = (
 /obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/cloak/cape/rogue,
+/obj/item/clothing/cloak/chasuble,
 /turf/open/floor/hexstone,
 /area/rogue/under/tomb/indoors)
 "Yj" = (
