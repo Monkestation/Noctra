@@ -35,7 +35,7 @@
 		backr = /obj/item/storage/backpack/satchel
 	else
 		shoes = /obj/item/clothing/shoes/simpleshoes
-		shirt = /obj/item/clothing/shirt/dress
+		shirt =/obj/item/clothing/shirt/dress/silkdress/black
 		pants = /obj/item/clothing/pants/tights/random
 		belt = /obj/item/storage/belt/leather/rope
 		beltl = /obj/item/storage/keyring/mageapprentice
