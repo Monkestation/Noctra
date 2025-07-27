@@ -93,7 +93,7 @@ abstract types are automatically excluded.
 
 	// check loot tables
 	for(var/datum/loot_table/loot_datum in subtypesof(/datum/loot_table))
-		for(var/list/parent_list as anything in loot_datum.loot_table)
+		for(var/list/parent_list as anything in initial(loot_datum.loot_table))
 			for(var/loot_path as anything in parent_list)
 				clothes_list -= loot_path
 				typepaths_of_loot_tables += loot_path
