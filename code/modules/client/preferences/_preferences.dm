@@ -444,9 +444,9 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/mob/dead/new_player/N = user
 	if(istype(N))
 		dat += "<a href='?_src_=prefs;preference=bespecial'><b>[next_special_trait ? "<font color='red'>SPECIAL</font>" : "BE SPECIAL"]</b></a><BR>"
-	else
-		dat += "<a href='?_src_=prefs;preference=finished'>DONE</a>"
-		dat += "</center>"
+
+	dat += "<a href='?_src_=prefs;preference=finished'>DONE</a>"
+	dat += "</center>"
 
 	dat += "</td>"
 	dat += "<td width='33%' align='right'>"
@@ -461,11 +461,11 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	winshow(user, "stonekeep_prefwin", TRUE)
 	winshow(user, "stonekeep_prefwin.character_preview_map", TRUE)
 	var/datum/browser/popup = new(user, "preferences_browser", "<div align='center'>Character Sheet</div>")
-	popup.set_window_options(can_close = FALSE)
+	popup.set_window_options(can_close = TRUE)
 	popup.set_content(dat.Join())
 	popup.open(FALSE)
 	update_preview_icon()
-	//onclose(user, "stonekeep_prefwin", src)
+	onclose(user, "stonekeep_prefwin", src)
 
 #undef APPEARANCE_CATEGORY_COLUMN
 #undef MAX_MUTANT_ROWS
@@ -1446,6 +1446,17 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 										Good voices could be rewarded with PQ by staff for answering meditations, while bad ones are punished.</span>")
 					else
 						to_chat(user, span_warning("You are no longer a voice."))
+
+				if("migrants")
+					migrant.show_ui()
+					return
+
+				if("loreprimer")
+					LorePopup(user)
+
+				if("manifest")
+					parent.view_actors_manifest()
+					return
 
 				if("finished")
 					user << browse(null, "window=latechoices") //closes late choices window

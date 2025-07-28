@@ -52,9 +52,6 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 		sleep(0.5 SECONDS)
 		new_player_panel()
 		return
-	if(client)
-		if(client.prefs)
-			client.prefs.ShowChoices(src, 4)
 
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr)

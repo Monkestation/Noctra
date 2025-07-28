@@ -146,9 +146,7 @@
 	if(!.)
 		return
 
-	var/datum/preferences/preferences = hud.mymob.client.prefs
-	preferences.update_static_data(usr)
-	preferences.ui_interact(usr)
+	hud.mymob.client?.setup_character()
 
 /atom/movable/screen/lobby/button/character_setup/proc/enable_character_setup()
 	SIGNAL_HANDLER
