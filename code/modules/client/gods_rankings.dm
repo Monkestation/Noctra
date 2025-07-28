@@ -1,5 +1,5 @@
 /proc/check_roundstart_gods_rankings()
-	var/json_file = file("data/god_rankings.json")
+	var/json_file = file("data/gods_rankings.json")
 	if(!fexists(json_file))
 		return
 
@@ -21,7 +21,7 @@
 		WRITE_FILE(json_file, json_encode(json))
 
 /proc/get_god_rankings()
-	var/json_file = file("data/god_rankings.json")
+	var/json_file = file("data/gods_rankings.json")
 	if(!fexists(json_file))
 		WRITE_FILE(json_file, "{}")
 		return list()
@@ -46,7 +46,7 @@
 	if(!most_influential)
 		return
 
-	var/json_file = file("data/god_rankings.json")
+	var/json_file = file("data/gods_rankings.json")
 	if(!fexists(json_file))
 		WRITE_FILE(json_file, "{}")
 	var/list/json = json_decode(file2text(json_file))
