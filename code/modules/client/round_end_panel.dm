@@ -290,7 +290,6 @@
 
 			var/list/god_rankings = get_god_rankings()
 
-			// Display all storytellers with their theme colors
 			for(var/storyteller_name in SSgamemode.storytellers)
 				var/datum/storyteller/S = SSgamemode.storytellers[storyteller_name]
 				if(!S)
@@ -299,7 +298,7 @@
 				var/points = god_rankings[S.name] || 0
 				data += create_god_ranking_entry(S.name, points, S.color_theme)
 
-			data += "</div>" // Close Rankings section
+			data += "</div>"
 
 			// Gods Interventions section
 			data += "<div>"
