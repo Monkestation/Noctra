@@ -11,6 +11,7 @@ fi
 
 mkdir -p \
   $1/_maps \
+  $1/code/datums/greyscale/json_configs \
   $1/data/spritesheets \
   $1/icons \
   $1/strings \
@@ -22,6 +23,7 @@ fi
 
 cp vanderlin.dmb vanderlin.rsc $1/
 cp -r _maps/* $1/_maps/
+cp -r code/datums/greyscale/json_configs/* $1/code/datums/greyscale/json_configs/
 cp -r icons/* $1/icons/
 cp -r strings/* $1/strings/
 
