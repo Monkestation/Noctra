@@ -13,6 +13,7 @@ mkdir -p \
   $1/_maps \
   $1/data/spritesheets \
 	$1/icons \
+  $1/strings \
 
 if [ -d ".git" ]; then
   mkdir -p $1/.git/logs
