@@ -8,3 +8,4 @@
 		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
 	)
 	wording_choice = "mashed"
+	crafting_time = 30 SECONDS
