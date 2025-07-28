@@ -438,6 +438,8 @@ SUBSYSTEM_DEF(gamemode)
 
 	load_roundstart_data()
 
+	check_roundstart_gods_rankings()
+
 	pick_chronicle_stats()
 
 	. = ..()
@@ -750,7 +752,6 @@ SUBSYSTEM_DEF(gamemode)
 	if(!length(storytellers))
 		for(var/type in subtypesof(/datum/storyteller))
 			storytellers[type] = new type()
-	set_storyteller(/datum/storyteller/astrata)
 	calculate_ready_players()
 	roll_pre_setup_points()
 	//handle_pre_setup_roundstart_events()

@@ -18,11 +18,13 @@
 
 	// Chronicle sub-tabs
 	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Gods' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #4a4a5a, #2a2a3a); border: 1px solid #6a6a7a; border-bottom: 2px solid #9a9aaa; color: #e0e0f0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>GODS</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Messages' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a1a, #1a120a); border: 1px solid #5a4a3a; border-bottom: 2px solid #8a7a6a; color: #d4c4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>WHISPERS</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=The Realm' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #2a2a3a, #0a0a1a); border: 1px solid #4a4a5a; border-bottom: 2px solid #7a7a8a; color: #c4c4d4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>THE REALM</a>"
 	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a0a, #1a1200); border: 1px solid #5a4a1a; border-bottom: 2px solid #8a7a3a; color: #dec97a; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>STATISTICS</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Heroes' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a4a5a, #1a1b2a); border: 1px solid #6a7b8a; border-bottom: 2px solid #8f9caa; color: #c0c0d0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>HEROES</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Villains' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a1a1a, #1a0a0a); border: 1px solid #5a3a3a; border-bottom: 2px solid #8a6a6a; color: #d4b4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>VILLAINS</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Outlaws' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #5a3a0a, #3a1a0a); border: 1px solid #7a5a2a; border-bottom: 2px solid #aa8a5a; color: #ffd494; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>OUTLAWS</a>"
 	data += "</div>"
 
 	// Content
@@ -265,16 +267,47 @@
 
 	// Chronicle sub-tabs
 	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Gods' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #4a4a5a, #2a2a3a); border: 1px solid #6a6a7a; border-bottom: 2px solid #9a9aaa; color: #e0e0f0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>GODS</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Messages' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a1a, #1a120a); border: 1px solid #5a4a3a; border-bottom: 2px solid #8a7a6a; color: #d4c4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>WHISPERS</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=The Realm' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #2a2a3a, #0a0a1a); border: 1px solid #4a4a5a; border-bottom: 2px solid #7a7a8a; color: #c4c4d4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>THE REALM</a>"
 	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a0a, #1a1200); border: 1px solid #5a4a1a; border-bottom: 2px solid #8a7a3a; color: #dec97a; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>STATISTICS</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Heroes' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a4a5a, #1a1b2a); border: 1px solid #6a7b8a; border-bottom: 2px solid #8f9caa; color: #c0c0d0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>HEROES</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Villains' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a1a1a, #1a0a0a); border: 1px solid #5a3a3a; border-bottom: 2px solid #8a6a6a; color: #d4b4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>VILLAINS</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Outlaws' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #5a3a0a, #3a1a0a); border: 1px solid #7a5a2a; border-bottom: 2px solid #aa8a5a; color: #ffd494; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>OUTLAWS</a>"
 	data += "</div>"
 
 	// Content
 	data += "<div style='margin: 35px;'>"
 	switch(tab)
+		if("Gods")
+			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.2em; margin-bottom: 15px;'>GODS OF THE REALM</div>"
+			data += "<div style='border-top: 1.5px solid #9a9aaa; margin: 0 auto 20px auto; width: 65%;'></div>"
+
+			// Gods Rankings section
+			data += "<div style='margin-bottom: 30px;'>"
+			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.1em; margin-bottom: 10px;'>GODS RANKINGS</div>"
+			data += "<div style='border-top: 1px solid #9a9aaa; margin: 0 auto 10px auto; width: 80%;'></div>"
+
+			var/list/god_rankings = get_god_rankings()
+
+			// Display all storytellers with their theme colors
+			for(var/storyteller_name in SSgamemode.storytellers)
+				var/datum/storyteller/S = SSgamemode.storytellers[storyteller_name]
+				if(!S)
+					continue
+
+				var/points = god_rankings[S.name] || 0
+				data += create_god_ranking_entry(S.name, points, S.color_theme)
+
+			data += "</div>" // Close Rankings section
+
+			// Gods Interventions section
+			data += "<div>"
+			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.1em; margin-bottom: 10px;'>GODS INTERVENTIONS</div>"
+			data += "<div style='border-top: 1px solid #9a9aaa; margin: 0 auto 10px auto; width: 80%;'></div>"
+			data += "<div style='text-align: center; color: #999; font-style: italic; padding: 20px 0;'>TBA</div>"
+			data += "</div>"
+
 		if("Messages")
 			data += "<div style='display: table; width: 100%; table-layout: fixed;'>"
 			data += "<div style='display: table-row;'>"
@@ -553,6 +586,126 @@
 
 				if(all_antagonists.len)
 					data += "</div></div>"
+
+		if("Outlaws")
+			data += "<div style='text-align: center; color: #ffd494; font-size: 1.2em; margin-bottom: 15px;'>WANTED OUTLAWS</div>"
+			data += "<div style='border-top: 1.5px solid #aa8a5a; margin: 0 auto 20px auto; width: 65%;'></div>"
+
+			var/list/outlaws = list()
+			for(var/mob/living/carbon/human/outlaw in GLOB.human_list)
+				if(outlaw.real_name in GLOB.outlawed_players)
+					var/icon/credit_icon = SScrediticons.get_credit_icon(outlaw, TRUE)
+					outlaws += list(list(
+						"name" = outlaw.real_name,
+						"icon" = credit_icon
+					))
+
+			if(!length(outlaws))
+				data += "<div style='text-align: center; color: #999; font-style: italic;'>The Realm is peaceful, its inhabitants kind</div>"
+			else
+				data += {"
+				<style>
+					.wanted-container {
+						display: flex;
+						flex-wrap: wrap;
+						justify-content: center;
+						gap: 20px;
+						padding: 15px;
+						max-width: calc(175px * 3 + 20px * 2);
+						margin: 0 auto;
+					}
+					.wanted-poster {
+						width: 175px;
+						height: 228px;
+						border: 3px double #5c2c0f;
+						background-color: #f5e7d0;
+						padding: 8px;
+						box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
+						font-family: 'Times New Roman', serif;
+						display: flex;
+						flex-direction: column;
+					}
+					.wanted-header {
+						color: #c70404;
+						font-size: 28px;
+						font-weight: bold;
+						text-align: center;
+						margin-bottom: 5px;
+						text-transform: uppercase;
+					}
+					.wanted-divider {
+						border-bottom: 2px solid #8B0000;
+						margin: 5px 0;
+					}
+					.wanted-footer {
+						color: #8B0000;
+						font-size: 16px;
+						font-weight: bold;
+						text-align: center;
+						margin-bottom: 8px;
+						text-transform: uppercase;
+					}
+					.wanted-icon-container {
+						width: 120px;
+						height: 85px;
+						margin: 0 auto;
+						border: 2px solid #5c2c0f;
+						background-color: #ccac74;
+						padding: 3px;
+					}
+					.wanted-icon {
+						width: 100%;
+						height: 90%;
+						object-fit: cover;
+						image-rendering: pixelated;
+					}
+					.wanted-name-container {
+						flex-grow: 1;
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						min-height: 60px;
+						margin-top: 5px;
+					}
+					.wanted-name {
+						color: #000000;
+						font-size: 18px;
+						font-weight: bold;
+						text-align: center;
+						padding: 0 5px;
+						text-transform: uppercase;
+						word-break: break-word;
+						overflow: hidden;
+						display: -webkit-box;
+						-webkit-line-clamp: 3;
+						-webkit-box-orient: vertical;
+					}
+				</style>
+				<div class='wanted-container'>
+				"}
+
+				for(var/list/outlaw_data in outlaws)
+					var/icon_html = ""
+					if(outlaw_data["icon"])
+						icon_html = "<img class='wanted-icon' src='data:image/png;base64,[icon2base64(outlaw_data["icon"])]'>"
+					else
+						icon_html = "<div class='wanted-icon' style='background:#8B4513;'></div>"
+
+					data += {"
+					<div class='wanted-poster'>
+						<div class='wanted-header'>WANTED</div>
+						<div class='wanted-divider'></div>
+						<div class='wanted-footer'>DEAD OR ALIVE</div>
+						<div class='wanted-icon-container'>
+							[icon_html]
+						</div>
+						<div class='wanted-name-container'>
+							<div class='wanted-name'>[outlaw_data["name"]]</div>
+						</div>
+					</div>
+					"}
+
+				data += "</div>"
 
 	data += "</div>"
 

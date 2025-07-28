@@ -5,7 +5,7 @@
 	weight = 8
 	earliest_start = 15 MINUTES
 	max_occurrences = 1
-	min_players = 20
+	min_players = 25
 	todreq = list("dusk", "dawn", "day")
 	allowed_storytellers = list(/datum/storyteller/astrata)
 

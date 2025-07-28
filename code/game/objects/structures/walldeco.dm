@@ -43,7 +43,7 @@
 /obj/structure/fluff/walldeco/wantedposter/proc/show_outlaw_headshot(mob/living/carbon/human/user)
 	var/list/outlaws = list()
 
-	for(var/mob/living/carbon/human/outlaw in GLOB.player_list)
+	for(var/mob/living/carbon/human/outlaw in GLOB.human_list)
 		if(outlaw.real_name in GLOB.outlawed_players)
 			var/icon/credit_icon = SScrediticons.get_credit_icon(outlaw, TRUE)
 			outlaws += list(list(

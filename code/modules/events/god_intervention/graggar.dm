@@ -81,7 +81,7 @@ GLOBAL_LIST_EMPTY(graggar_cullings)
 	track = EVENT_TRACK_INTERVENTION
 	typepath = /datum/round_event/graggar_culling
 	weight = 8
-	earliest_start = 25 MINUTES
+	earliest_start = 20 MINUTES
 	max_occurrences = 1
 	min_players = 35
 	allowed_storytellers = list(/datum/storyteller/graggar)
