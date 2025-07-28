@@ -34,7 +34,7 @@
 
 /obj/item/clothing/head/helmet/orc
 	name = "Orc Marauder Helmet"
-	icon_state = "marauder_helm_item"
+	icon_state = "marauder_helm"
 	item_state = "marauder_helm"
 	allowed_race = list(SPEC_ID_ORC)
 	smeltresult = /obj/item/ingot/iron
