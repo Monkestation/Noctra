@@ -207,7 +207,9 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/set_tod_override,
 	/client/proc/check_timer_sources,
 	/client/proc/debug_spell_requirements,
-	)
+	/client/proc/cmd_regenerate_asset_cache,
+	/client/proc/cmd_clear_smart_asset_cache,
+)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, GLOBAL_PROC_REF(release)))
 GLOBAL_PROTECT(admin_verbs_possess)
 GLOBAL_LIST_INIT(admin_verbs_permissions, list(/client/proc/edit_admin_permissions))
