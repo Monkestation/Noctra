@@ -137,6 +137,10 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		show_round_stats(href_list["featured_stat"])
 		return
 
+	if(href_list["select_featured_stat"])
+		select_featured_stat()
+		return
+
 	if(href_list["viewinfluences"])
 		var/debug_mode = text2num(href_list["debug"])
 		show_influences(debug_mode)

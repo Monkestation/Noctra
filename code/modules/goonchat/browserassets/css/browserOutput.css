@@ -66,6 +66,11 @@ body {
 }
 
 @font-face {
+  font-family: "Underwater Love";
+  src: url('deepspeak.ttf') format('truetype');
+}
+
+@font-face {
   font-family: "Kingthings Petrock";
   src: url('draconic.ttf') format('truetype');
 }
@@ -743,6 +748,7 @@ h1.alert, h2.alert	{color: #c9c1ba;font-family: Pterra, TrueType;}
 .orc					{font-family: "Thief by The Riddler", Pterra;}
 .beast					{font-family: "Thief by The Riddler", Pterra;}
 .reptile				{font-family: "Kingthings Petrock", Pterra; font-size: 120%;}
+.deepspeak				{font-family: "Underwater Love", Pterra;}
 .lupian					{font-family: "Emperialisme", Pterra; font-size: 120%;}
 
 .torture				{color: #42ff20}

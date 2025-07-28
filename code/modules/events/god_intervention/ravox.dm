@@ -3,7 +3,7 @@
 	track = EVENT_TRACK_INTERVENTION
 	typepath = /datum/round_event/ravox_resolve
 	weight = 8
-	earliest_start = 25 MINUTES
+	earliest_start = 20 MINUTES
 	max_occurrences = 1
 	min_players = 30
 	allowed_storytellers = list(/datum/storyteller/ravox)
@@ -38,8 +38,8 @@
 	if(!weakest)
 		return
 
-	weakest.set_stat_modifier("ravox_resolve", STATKEY_STR, 1)
-	weakest.set_stat_modifier("ravox_resolve", STATKEY_END, 1)
-	weakest.set_stat_modifier("ravox_resolve", STATKEY_CON, 1)
-	to_chat(weakest, span_green("You may be weak compared to your fellow warriors of justice, but still you persevere. Ravox honors those who fight even when victory seems impossible. Let his gift of strength be your whetstone — now strike!"))
+	weakest.set_stat_modifier("ravox_resolve", STATKEY_STR, 2)
+	weakest.set_stat_modifier("ravox_resolve", STATKEY_END, 2)
+	weakest.set_stat_modifier("ravox_resolve", STATKEY_CON, 2)
+	to_chat(weakest, span_green("You may be weak compared to your fellow warriors of justice, but still you persevere. Ravox honors those who fight even when victory seems impossible. May his gift of strength help you overcome the odds."))
 	weakest.playsound_local(weakest, 'sound/vo/male/knight/rage (6).ogg', 70)

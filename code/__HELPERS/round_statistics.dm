@@ -6,6 +6,7 @@
 #define STATS_ALIVE_RAKSHARI "alive_rakshari"
 #define STATS_ALIVE_AASIMAR "alive_aasimar"
 #define STATS_ALIVE_HOLLOWKINS "alive_hollowkins"
+#define STATS_ALIVE_MEDICATORS "alive_medicators"
 #define STATS_VAMPIRES "vampires"
 #define STATS_ALIVE_GARRISON "alive_garrison"
 #define STATS_ALIVE_CLERGY "alive_clergy"
@@ -245,6 +246,7 @@ GLOBAL_LIST_INIT(vanderlin_round_stats, list(
 	STATS_ALIVE_HOLLOWKINS = 0,
 	STATS_ALIVE_HARPIES = 0,
 	STATS_ALIVE_TRITONS = 0,
+	STATS_ALIVE_MEDICATORS = 0,
 	STATS_PEOPLE_DROWNED = 0,
 	STATS_MANA_SPENT = 0,
 	STATS_WATER_CONSUMED  = 0,
@@ -472,9 +474,13 @@ GLOBAL_LIST_INIT(featured_stats, list(
 ))
 
 // Chronicle statistics
+#define CHRONICLE_STATS_MOST_SKILLS_PERSON "most_skills_person"
+#define CHRONICLE_STATS_LEAST_SKILLS_PERSON "least_skills_person"
 #define CHRONICLE_STATS_STRONGEST_PERSON "strongest_person"
-#define CHRONICLE_STATS_WISEST_PERSON "wisest_person"
+#define CHRONICLE_STATS_WEAKEST_PERSON "weakest_person"
+#define CHRONICLE_STATS_SMARTEST_PERSON "smartest_person"
 #define CHRONICLE_STATS_RICHEST_PERSON "richest_person"
+#define CHRONICLE_STATS_POOREST_PERSON "poorest_person"
 #define CHRONICLE_STATS_LUCKIEST_PERSON "luckiest_person"
 #define CHRONICLE_STATS_FASTEST_PERSON "fastest_person"
 #define CHRONICLE_STATS_DUMBEST_PERSON "dumbest_person"
@@ -513,7 +519,7 @@ GLOBAL_LIST_EMPTY(chronicle_stats)
 	sortTim(entries, GLOBAL_PROC_REF(cmp_stat_count_desc))
 
 	var/list/result = list()
-	for(var/i in 1 to min(13, entries.len))
+	for(var/i in 1 to min(14, entries.len))
 		var/list/entry = entries[i]
 		var/rounded_count = round(entry["count"])
 		result += "[i]. [entry["name"]] - [rounded_count]"
@@ -532,7 +538,7 @@ GLOBAL_LIST_EMPTY(chronicle_stats)
 	sortTim(entries, GLOBAL_PROC_REF(cmp_stat_count_desc))
 
 	var/list/result = list()
-	for(var/i in 1 to min(13, entries.len))
+	for(var/i in 1 to min(14, entries.len))
 		var/list/entry = entries[i]
 		var/rounded_count = round(entry["count"])
 		result += "[i]. [entry["name"]] - [rounded_count]"
@@ -585,14 +591,19 @@ GLOBAL_LIST_EMPTY(chronicle_stats)
 
 	stat_data["entries"][object_name] = (stat_data["entries"][object_name] || 0) + increment
 
-/// Records a chronicle stat (weakref to an atom/mob)
-/proc/set_chronicle_stat(stat_name, atom/target)
+/// Records a chronicle stat with all display information
+/proc/set_chronicle_stat(stat_name, atom/target, title, title_color, value_text)
 	if(SSticker.current_state == GAME_STATE_FINISHED)
 		return
 	if(!stat_name || !target || !GLOB.chronicle_stats)
 		return
 
-	GLOB.chronicle_stats[stat_name] = WEAKREF(target)
+	GLOB.chronicle_stats[stat_name] = list(
+		"holder" = WEAKREF(target),
+		"title" = title,
+		"title_color" = title_color,
+		"value_text" = value_text
+	)
 
 /// Gets the recorded chronicle stat holder (returns the resolved weakref or null)
 /proc/get_chronicle_stat_holder(stat_name)
