@@ -2,7 +2,7 @@
 	name = "Ultimate Sacrifice"
 	track = EVENT_TRACK_PERSONAL
 	typepath = /datum/round_event/ultimate_sacrifice
-	weight = 7
+	weight = 5
 	earliest_start = 20 MINUTES
 	max_occurrences = 1
 	min_players = 35
@@ -37,6 +37,7 @@
 			continue
 		if(human_mob.age == AGE_CHILD)
 			continue
+		valid_targets += human_mob
 
 	if(!length(valid_targets))
 		return
@@ -47,7 +48,7 @@
 	chosen_one.mind.add_personal_objective(new_objective)
 
 	to_chat(chosen_one, span_userdanger("YOU ARE RAVOX'S CHOSEN!"))
-	to_chat(chosen_one, span_notice("There is an honor in sacrifice. You have been granted a power by Ravox to sacrifice your own life to revive another. Beware, as you won't be able to be revived ever again."))
+	to_chat(chosen_one, span_notice("There is an honor in sacrifice. You have been granted a power by Ravox to sacrifice your own life to revive another. Beware, as you won't be able to be revived ever again. Use it only as a last resort to see a truly heinous injustice undone."))
 	chosen_one.playsound_local(chosen_one, 'sound/vo/male/knight/rage (6).ogg', 70)
 
 	chosen_one.mind.announce_personal_objectives()
