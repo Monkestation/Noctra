@@ -50,7 +50,7 @@
 /atom/movable/screen/lobby/proc/collapse_button()
 	SIGNAL_HANDLER
 	animate(src, transform = transform.Translate(x = 0, y = -10), time = LOBBY_SCREEN_SLIDE_UP_DURATION, easing = CUBIC_EASING|EASE_IN)
-	animate(transform = transform.Translate(x = 0, y = MOVE_AMOUNT), time = LOBBY_SCREEN_SLIDE_UP_DURATION, easing = CIRCULAR_EASING|EASE_IN)
+	animate(transform = transform.Translate(x = 0, y = MOVE_AMOUNT), time = LOBBY_SCREEN_SLIDE_UP_DURATION, easing = CUBIC_EASING|EASE_IN)
 
 ///Animates moving the button back into place
 /atom/movable/screen/lobby/proc/expand_button()
@@ -83,6 +83,7 @@
 
 	if(!enabled)
 		return
+
 	flick("[base_icon_state]_pressed", src)
 	update_appearance(UPDATE_ICON)
 	return TRUE
@@ -125,7 +126,7 @@
 ///Prefs menu
 /atom/movable/screen/lobby/button/character_setup
 	name = "View Character Setup"
-	screen_loc = "WEST:19,TOP:-65"
+	screen_loc = "WEST:19,TOP:-35"
 	icon = 'icons/hud/lobby/character_sheet.dmi'
 	icon_state = "character_sheet_disabled"
 	base_icon_state = "character_sheet"
@@ -157,7 +158,7 @@
 ///Button that appears before the game has started
 /atom/movable/screen/lobby/button/ready
 	name = "Toggle Readiness"
-	screen_loc = "WEST:20,TOP:-4"
+	screen_loc = "WEST:20,TOP:-93"
 	icon = 'icons/hud/lobby/ready.dmi'
 	icon_state = "not_ready"
 	base_icon_state = "not_ready"
@@ -201,7 +202,7 @@
 ///Shown when the game has started
 /atom/movable/screen/lobby/button/join
 	name = "Join Game"
-	screen_loc = "WEST:20,TOP-4"
+	screen_loc = "WEST:20,TOP:-93"
 	icon = 'icons/hud/lobby/join_game.dmi'
 	icon_state = "" //Default to not visible
 	base_icon_state = "join_game"
@@ -261,6 +262,51 @@
 /atom/movable/screen/lobby/button/join/proc/hide_join_button()
 	SIGNAL_HANDLER
 	set_button_status(FALSE)
+
+/atom/movable/screen/lobby/button/lore
+	name = "Lore Primer"
+	screen_loc = "WEST:20,TOP:-126"
+	icon = 'icons/hud/lobby/lore.dmi'
+	icon_state = "lore"
+	base_icon_state = "lore"
+
+/atom/movable/screen/lobby/button/lore/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+
+	var/datum/preferences/prefs = hud.mymob.client?.prefs
+	prefs?.LorePopup(hud.mymob)
+
+/atom/movable/screen/lobby/button/migration
+	name = "Migration"
+	screen_loc = "WEST:20,TOP:-159"
+	icon = 'icons/hud/lobby/migration.dmi'
+	icon_state = "migration"
+	base_icon_state = "migration"
+
+/atom/movable/screen/lobby/button/migration/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+
+	var/datum/migrant_pref/migrant = hud.mymob.client?.prefs.migrant
+
+	migrant.show_ui()
+
+/atom/movable/screen/lobby/button/actors
+	name = "Actors"
+	screen_loc = "WEST:20,TOP:-192"
+	icon = 'icons/hud/lobby/actors.dmi'
+	icon_state = "actors"
+	base_icon_state = "actors"
+
+/atom/movable/screen/lobby/button/actors/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+
+	hud.mymob.client?.view_actors_manifest()
 
 /atom/movable/screen/lobby/button/collapse
 	name = "Collapse Lobby Menu"

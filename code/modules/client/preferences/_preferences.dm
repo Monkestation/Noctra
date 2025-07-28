@@ -440,24 +440,10 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	// well.... one empty slot here for something I suppose lol
 	dat += "<table width='100%'>"
 	dat += "<tr>"
-	dat += "<td width='33%' align='left'><a href='?_src_=prefs;preference=loreprimer'>LORE PRIMER</a></td>"
 	dat += "<td width='33%' align='center'>"
 	var/mob/dead/new_player/N = user
 	if(istype(N))
 		dat += "<a href='?_src_=prefs;preference=bespecial'><b>[next_special_trait ? "<font color='red'>SPECIAL</font>" : "BE SPECIAL"]</b></a><BR>"
-		if(SSticker.current_state <= GAME_STATE_PREGAME)
-			switch(N.ready)
-				if(PLAYER_NOT_READY)
-					dat += "<b>UNREADY</b> <a href='byond://?src=[REF(N)];ready=[PLAYER_READY_TO_PLAY]'>READY</a>"
-				if(PLAYER_READY_TO_PLAY)
-					dat += "<a href='byond://?src=[REF(N)];ready=[PLAYER_NOT_READY]'>UNREADY</a> <b>READY</b>"
-		else
-			if(!is_active_migrant())
-				dat += "<a href='byond://?src=[REF(N)];late_join=1'>JOINLATE</a>"
-			else
-				dat += "<a class='linkOff' href='byond://?src=[REF(N)];late_join=1'>JOINLATE</a>"
-			dat += " - <a href='?_src_=prefs;preference=migrants'>MIGRATION</a>"
-			dat += "<br><a href='?_src_=prefs;preference=manifest'>ACTORS</a>"
 	else
 		dat += "<a href='?_src_=prefs;preference=finished'>DONE</a>"
 		dat += "</center>"
@@ -474,7 +460,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	winshow(user, "stonekeep_prefwin", TRUE)
 	winshow(user, "stonekeep_prefwin.character_preview_map", TRUE)
-	var/datum/browser/noclose/popup = new(user, "preferences_browser", "<div align='center'>Character Sheet</div>")
+	var/datum/browser/popup = new(user, "preferences_browser", "<div align='center'>Character Sheet</div>")
 	popup.set_window_options(can_close = FALSE)
 	popup.set_content(dat.Join())
 	popup.open(FALSE)
@@ -1460,17 +1446,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 										Good voices could be rewarded with PQ by staff for answering meditations, while bad ones are punished.</span>")
 					else
 						to_chat(user, span_warning("You are no longer a voice."))
-
-				if("migrants")
-					migrant.show_ui()
-					return
-
-				if("loreprimer")
-					LorePopup(user)
-
-				if("manifest")
-					parent.view_actors_manifest()
-					return
 
 				if("finished")
 					user << browse(null, "window=latechoices") //closes late choices window
