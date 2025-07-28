@@ -15,6 +15,8 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 	/// Used to make sure someone doesn't get spammed with messages if they're ineligible for roles
 	var/ineligible_for_roles = FALSE
 
+	hud_type = /datum/hud/new_player
+
 /mob/dead/new_player/Initialize()
 	if(length(GLOB.newplayer_start))
 		forceMove(pick(GLOB.newplayer_start))
