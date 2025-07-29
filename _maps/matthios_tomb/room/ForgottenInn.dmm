@@ -430,11 +430,11 @@
 /turf/open/floor/ruinedwood/spiralfade,
 /area/rogue/under/tomb/indoors)
 "Wx" = (
-/obj/structure/chair/bench/couch/redright,
+/obj/structure/chair/bench/coucha/redright,
 /turf/open/floor/ruinedwood/spiralfade,
 /area/rogue/under/tomb/indoors)
 "WD" = (
-/obj/structure/chair/bench/couch/redleft,
+/obj/structure/chair/bench/coucha/redleft,
 /turf/open/floor/ruinedwood/spiralfade,
 /area/rogue/under/tomb/indoors)
 "Xl" = (

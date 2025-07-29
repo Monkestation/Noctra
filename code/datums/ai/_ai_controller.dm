@@ -80,18 +80,27 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	PossessPawn(new_pawn)
 
 /datum/ai_controller/Destroy(force, ...)
-	set_ai_status(AI_STATUS_OFF)
-	if(ai_movement)
-		ai_movement.stop_moving_towards(src)
 	UnpossessPawn(FALSE)
+	if(ai_status)
+		GLOB.ai_controllers_by_status[ai_status] -= src
 	our_cells = null
+	set_movement_target(type, null)
+	if(ai_movement.moving_controllers[src])
+		ai_movement.stop_moving_towards(src)
 	return ..()
 
 ///Sets the current movement target, with an optional param to override the movement behavior
 /datum/ai_controller/proc/set_movement_target(source, atom/target, datum/ai_movement/new_movement)
-	SEND_SIGNAL(pawn, COMSIG_AI_MOVEMENT_SET, current_movement_target, target)
+	if(current_movement_target)
+		UnregisterSignal(current_movement_target, list(COMSIG_PARENT_PREQDELETED))
+	if(!isnull(target) && !isatom(target))
+		stack_trace("[pawn]'s current movement target is not an atom, rather a [target.type]! Did you accidentally set it to a weakref?")
+		CancelActions()
+		return
 	movement_target_source = source
 	current_movement_target = target
+	if(!isnull(current_movement_target))
+		RegisterSignal(current_movement_target, COMSIG_PARENT_PREQDELETED, PROC_REF(on_movement_target_delete))
 	if(new_movement)
 		change_ai_movement_type(new_movement)
 
@@ -194,6 +203,10 @@ have ways of interacting with a specific atom and control it. They posses a blac
 /datum/ai_controller/proc/update_grid(datum/source, datum/spatial_grid_cell/new_cell)
 	SIGNAL_HANDLER
 	set_new_cells()
+
+/datum/ai_controller/proc/on_movement_target_delete(atom/source)
+	SIGNAL_HANDLER
+	set_movement_target(source = type, target = null)
 
 /datum/ai_controller/proc/set_new_cells()
 	var/turf/our_turf = get_turf(pawn)
