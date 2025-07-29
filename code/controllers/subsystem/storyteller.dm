@@ -753,8 +753,8 @@ SUBSYSTEM_DEF(gamemode)
 		for(var/type in subtypesof(/datum/storyteller))
 			storytellers[type] = new type()
 
-	for(var/storyteller_name in SSgamemode.storytellers)
-		var/datum/storyteller/initialized_storyteller = SSgamemode.storytellers[storyteller_name]
+	for(var/storyteller_name in storytellers)
+		var/datum/storyteller/initialized_storyteller = storytellers[storyteller_name]
 		if(initialized_storyteller?.ascendant)
 			to_chat(world, "<br>")
 			to_chat(world, span_reallybig("[initialized_storyteller.name] is ascendant!"))
