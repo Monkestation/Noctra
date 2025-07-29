@@ -311,31 +311,48 @@
 			data += "<div style='display: table; width: 100%; table-layout: fixed;'>"
 			data += "<div style='display: table-row;'>"
 
-			// Last Words Column (50%)
-			data += "<div style='display: table-cell; width: 50%; vertical-align: top; padding: 0 15px;'>"
+			// Last Words Column (33%)
+			data += "<div style='display: table-cell; width: 33%; vertical-align: top; padding: 0 15px;'>"
 			data += "<div style='color: #bd1717; font-size: 1.2em; font-weight: bold; text-align: center; margin-bottom: 10px;'>LAST WORDS</div>"
-			data += "<div style='border-top: 1px solid #bd1717; width: 80%; margin: 0 auto 15px auto;'></div>"
+			data += "<div style='border-top: 1px solid #bd1717; width: 90%; margin: 0 auto 15px auto;'></div>"
 
 			if(length(GLOB.last_words))
 				for(var/entry in GLOB.last_words)
-					data += "<div style='color: #ff6b6b; margin: 0 0 12px 30px; padding: 8px; background: rgba(189, 23, 23, 0.08); border-left: 3px solid #bd1717; border-radius: 0 3px 3px 0;'>"
+					data += "<div style='color: #ff6b6b; margin: 0 0 12px 0px; padding: 8px; background: rgba(189, 23, 23, 0.08); border-left: 3px solid #bd1717; border-radius: 0 3px 3px 0;'>"
 					data += "[entry]"
 					data += "</div>"
 			else
 				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>No last words told</div>"
 			data += "</div>"
 
-			// Vertical Divider
+			// First Vertical Divider
 			data += "<div style='display: table-cell; width: 1px; background-color: #444; height: 100%;'></div>"
 
-			// Correspondence Column (50%)
-			data += "<div style='display: table-cell; width: 50%; vertical-align: top; padding: 0 15px;'>"
-			data += "<div style='color: #e6b327; font-size: 1.2em; font-weight: bold; text-align: center; margin-bottom: 10px;'>CORRESPONDENCE</div>"
-			data += "<div style='border-top: 1px solid #e6b327; width: 80%; margin: 0 auto 15px auto;'></div>"
+			// Prayers Column (33%)
+			data += "<div style='display: table-cell; width: 33%; vertical-align: top; padding: 0 15px;'>"
+			data += "<div style='color: #e6b327; font-size: 1.2em; font-weight: bold; text-align: center; margin-bottom: 10px;'>PRAYERS</div>"
+			data += "<div style='border-top: 1px solid #e6b327; width: 90%; margin: 0 auto 15px auto;'></div>"
+
+			if(length(GLOB.prayers))
+				for(var/entry in GLOB.prayers)
+					data += "<div style='color: #dbd9d9; margin: 0 0 12px 0px; padding: 8px; background: rgba(230, 179, 39, 0.08); border-left: 3px solid #e6b327; border-radius: 0 3px 3px 0;'>"
+					data += "[entry]"
+					data += "</div>"
+			else
+				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>No prayers sent</div>"
+			data += "</div>"
+
+			// Second Vertical Divider
+			data += "<div style='display: table-cell; width: 1px; background-color: #444; height: 100%;'></div>"
+
+			// Correspondence Column (33%)
+			data += "<div style='display: table-cell; width: 33%; vertical-align: top; padding: 0 15px;'>"
+			data += "<div style='color: #a0c4e0; font-size: 1.2em; font-weight: bold; text-align: center; margin-bottom: 10px;'>CORRESPONDENCE</div>"
+			data += "<div style='border-top: 1px solid #a0c4e0; width: 90%; margin: 0 auto 15px auto;'></div>"
 
 			if(length(GLOB.letters_sent))
 				for(var/entry in GLOB.letters_sent)
-					data += "<div style='color: #dbd9d9; margin: 0 0 12px 30px; padding: 8px; background: rgba(230, 179, 39, 0.08); border-left: 3px solid #e6b327; border-radius: 0 3px 3px 0;'>"
+					data += "<div style='color: #e0e8f0; margin: 0 0 12px 0px; padding: 8px; background: rgba(160, 196, 224, 0.08); border-left: 3px solid #a0c4e0; border-radius: 0 3px 3px 0;'>"
 					data += "[entry]"
 					data += "</div>"
 			else
