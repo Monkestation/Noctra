@@ -280,13 +280,8 @@
 	data += "<div style='margin: 35px;'>"
 	switch(tab)
 		if("Gods")
-			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.2em; margin-bottom: 15px;'>GODS OF THE REALM</div>"
-			data += "<div style='border-top: 1.5px solid #9a9aaa; margin: 0 auto 20px auto; width: 65%;'></div>"
-
-			// Gods Rankings section
-			data += "<div style='margin-bottom: 30px;'>"
-			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.1em; margin-bottom: 10px;'>GODS RANKINGS</div>"
-			data += "<div style='border-top: 1px solid #9a9aaa; margin: 0 auto 10px auto; width: 80%;'></div>"
+			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.2em; margin-bottom: 15px;'>RANKING OF THE GODS</div>"
+			data += "<div style='border-top: 1.5px solid #9a9aaa; margin: 0 auto 20px auto; width: 90%;'></div>"
 
 			var/list/god_rankings = get_god_rankings()
 
@@ -298,13 +293,25 @@
 				var/points = god_rankings[S.name] || 0
 				data += create_god_ranking_entry(S.name, points, S.color_theme)
 
-			data += "</div>"
+			data += "<div style='height: 30px;'></div>"
 
 			// Gods Interventions section
 			data += "<div>"
-			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.1em; margin-bottom: 10px;'>GODS INTERVENTIONS</div>"
-			data += "<div style='border-top: 1px solid #9a9aaa; margin: 0 auto 10px auto; width: 80%;'></div>"
-			data += "<div style='text-align: center; color: #999; font-style: italic; padding: 20px 0;'>TBA</div>"
+			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.2em; margin-bottom: 10px;'>GODS' INTERVENTIONS</div>"
+			data += "<div style='border-top: 1px solid #9a9aaa; margin: 30px auto 10px auto; width: 85%;'></div>"
+
+			if(length(SSmapping.active_world_traits))
+				data += "<div style='display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; margin-top: 15px;'>"
+				for(var/datum/world_trait/trait in SSmapping.active_world_traits)
+					data += "<div style='background: #2a2a3a; border: 1px solid #4a4a5a; padding: 10px; border-radius: 4px;'>"
+					data += "<div style='color: #e0e0f0; font-weight: bold; margin-bottom: 5px;'>[trait.name]</div>"
+					data += "<div style='color: #b0b0b0; font-style: italic;'>[trait.desc]</div>"
+					data += "</div>"
+
+				data += "</div>"
+			else
+				data += "<div style='text-align: center; color: #999; font-style: italic; padding: 20px 0;'>The Gods are silent</div>"
+
 			data += "</div>"
 
 		if("Messages")
@@ -894,7 +901,7 @@
 	data += "</div></div>"
 
 	mob << browse(null, "window=vanderlin_round_end")
-	var/datum/browser/popup = new(mob, "vanderlin_influences", "<center>Gods Influences</center>", 1325, 875)
+	var/datum/browser/popup = new(mob, "vanderlin_influences", "<center>Gods' Influences</center>", 1325, 875)
 	popup.set_content(data.Join())
 	popup.open()
 
@@ -966,7 +973,7 @@
 
 /// Global proc to show debug version of gods influences
 /client/proc/debug_influences()
-	set name = "Debug Gods Influences"
+	set name = "Debug Gods' Influences"
 	set category = "Debug"
 
 	show_influences(debug = TRUE)
