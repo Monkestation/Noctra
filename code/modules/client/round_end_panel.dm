@@ -296,7 +296,7 @@
 					"color" = S.color_theme
 				))
 
-			sorted_gods = sortTim(sorted_gods, GLOBAL_PROC_REF(cmp_god_ranking), TRUE)
+			sortTim(sorted_gods, GLOBAL_PROC_REF(cmp_god_ranking))
 
 			for(var/list/god_data in sorted_gods)
 				data += create_god_ranking_entry(god_data["name"], god_data["points"], god_data["color"])
@@ -306,7 +306,7 @@
 			// Gods Interventions section
 			data += "<div>"
 			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.2em; margin-bottom: 10px;'>GODS' INTERVENTIONS</div>"
-			data += "<div style='border-top: 1px solid #9a9aaa; margin: 30px auto 10px auto; width: 85%;'></div>"
+			data += "<div style='border-top: 1px solid #9a9aaa; margin: 20px auto 10px auto; width: 85%;'></div>"
 
 			if(length(SSmapping.active_world_traits))
 				data += "<div style='display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; margin-top: 15px;'>"
@@ -493,7 +493,7 @@
 
 				data += "</div>"
 			else
-				data += "<div style='text-align: center; color: #999; font-style: italic;'>The Realm has no heroes</div>"
+				data += "<div style='text-align: center; color: #999; font-style: italic;'>Psydon was the last hero to live</div>"
 
 		if("Villains")
 			data += "<div style='text-align: center; color: #d4b4b4; font-size: 1.2em; margin-bottom: 15px;'>VILLAINS OF THE REALM</div>"
@@ -519,7 +519,7 @@
 						all_antagonists |= A
 
 			if(!length(all_teams) && !length(all_antagonists) && !length(GLOB.confessors))
-				data += "<div style='text-align: center; color: #999; font-style: italic;'>The Realm has no villains</div>"
+				data += "<div style='text-align: center; color: #999; font-style: italic;'>The Realm has no villains... for now</div>"
 			else
 				if(length(GLOB.confessors))
 					data += "<div style='background: #1a0a0a; border: 1px solid #5a3a3a; padding: 12px; border-radius: 4px; margin-bottom: 15px;'>"

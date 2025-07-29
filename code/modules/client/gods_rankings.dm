@@ -11,10 +11,10 @@
 			json[god_name] = 0
 			modified = TRUE
 			for(var/storyteller_name in SSgamemode.storytellers)
-				var/datum/storyteller/S = SSgamemode.storytellers[storyteller_name]
-				if(S && S.name == god_name)
-					S.ascendant = TRUE
-					adjust_storyteller_influence(S.name, 300)
+				var/datum/storyteller/initialized_storyteller = SSgamemode.storytellers[storyteller_name]
+				if(initialized_storyteller?.name == god_name)
+					initialized_storyteller.ascendant = TRUE
+					adjust_storyteller_influence(initialized_storyteller.name, 400)
 					break
 
 	if(modified)
@@ -81,7 +81,7 @@
 	return {"
 	<div style='margin-bottom: 8px;'>
 		<div style='display: flex; align-items: center; gap: 8px;'>
-			<div style='width: 120px; color: [color_theme];'>[god_name]</div>
+			<div style='width: 80px; margin-left: 40px; color: [color_theme];'>[god_name]</div>
 			<div style='flex-grow: 1; background: #333; height: 20px;'>
 				<div style='width: [percentage]%; height: 100%; background: [color_theme];'></div>
 			</div>
