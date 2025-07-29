@@ -52,10 +52,12 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		if(!holder)
 			return
 		var/title = href_list["id"]
+		if(!title)
+			return
 		message_admins("[key_name_admin(src)] has initiated player made painting deletion: [title]")
 		if(SSpaintings.del_player_painting(title))
 			SSpaintings.update_paintings()
-		manage_paintings()
+			manage_paintings()
 
 	// asset_cache
 	var/asset_cache_job
