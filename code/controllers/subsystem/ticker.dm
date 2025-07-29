@@ -283,6 +283,13 @@ SUBSYSTEM_DEF(ticker)
 	message_admins(span_boldannounce("Starting game..."))
 	var/init_start = world.timeofday
 
+	for(var/storyteller_name in SSgamemode.storytellers)
+		var/datum/storyteller/initialized_storyteller = SSgamemode.storytellers[storyteller_name]
+		if(initialized_storyteller?.ascendant)
+			to_chat(world, "<br>")
+			to_chat(world, span_reallybig("[initialized_storyteller.name] is ascendant!"))
+			to_chat(world, "<br>")
+
 	CHECK_TICK
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = 0

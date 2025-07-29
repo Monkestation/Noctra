@@ -284,14 +284,22 @@
 			data += "<div style='border-top: 1.5px solid #9a9aaa; margin: 0 auto 20px auto; width: 90%;'></div>"
 
 			var/list/god_rankings = get_god_rankings()
+			var/list/sorted_gods = list()
 
 			for(var/storyteller_name in SSgamemode.storytellers)
 				var/datum/storyteller/S = SSgamemode.storytellers[storyteller_name]
 				if(!S)
 					continue
+				sorted_gods += list(list(
+					"name" = S.name,
+					"points" = god_rankings[S.name] || 0,
+					"color" = S.color_theme
+				))
 
-				var/points = god_rankings[S.name] || 0
-				data += create_god_ranking_entry(S.name, points, S.color_theme)
+			sorted_gods = sortTim(sorted_gods, GLOBAL_PROC_REF(cmp_god_ranking), TRUE)
+
+			for(var/list/god_data in sorted_gods)
+				data += create_god_ranking_entry(god_data["name"], god_data["points"], god_data["color"])
 
 			data += "<div style='height: 30px;'></div>"
 
@@ -346,7 +354,7 @@
 					data += "[entry]"
 					data += "</div>"
 			else
-				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>No prayers sent</div>"
+				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>No prayers made</div>"
 			data += "</div>"
 
 			// Second Vertical Divider
