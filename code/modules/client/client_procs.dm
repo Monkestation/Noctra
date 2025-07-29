@@ -54,8 +54,8 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		var/title = href_list["id"]
 		if(!title)
 			return
-		message_admins("[key_name_admin(src)] has initiated player made painting deletion: [title]")
 		if(SSpaintings.del_player_painting(title))
+			message_admins("[key_name_admin(src)] has deleted player made painting called: [title]")
 			SSpaintings.update_paintings()
 			manage_paintings()
 
