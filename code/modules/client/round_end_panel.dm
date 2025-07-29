@@ -287,7 +287,7 @@
 			data += "<div style='border-top: 1px solid #9a9aaa; margin: 20px auto 10px auto; width: 90%;'></div>"
 
 			if(length(SSmapping.active_world_traits))
-				data += "<div style='display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; margin-top: 20px; margin-bottom: 30px;'>"
+				data += "<div style='display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; margin-bottom: 30px;'>"
 				for(var/datum/world_trait/trait in SSmapping.active_world_traits)
 					data += "<div style='background: #2a2a3a; border: 1px solid #4a4a5a; padding: 10px; border-radius: 4px;'>"
 					data += "<div style='color: #e0e0f0; font-weight: bold; margin-bottom: 5px;'>[trait.name]</div>"
