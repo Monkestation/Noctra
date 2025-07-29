@@ -25,12 +25,12 @@
 	name = "railing"
 	icon = 'icons/roguetown/misc/railing.dmi'
 	icon_state = "railing"
-	density = FALSE
+	density = TRUE
 	anchored = TRUE
 	deconstructible = FALSE
 	flags_1 = ON_BORDER_1
 	climbable = TRUE
-	pass_flags_self = PASSTABLE|LETPASSTHROW
+	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
 	var/passcrawl = TRUE
 	layer = ABOVE_MOB_LAYER
 
@@ -57,18 +57,14 @@
 			layer = ABOVE_MOB_LAYER
 			plane = GAME_PLANE_UPPER
 
-/obj/structure/fluff/railing/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/fluff/railing/CanPass(atom/movable/mover, turf/target)
 	. = ..()
-	if(dir in CORNERDIRS)
-		return TRUE
-	if(mover.throwing || mover.movement_type & (FLOATING|FLYING))
-		return TRUE
 	if(get_dir(loc, target) == dir)
-		if(!passcrawl || !isliving(mover))
-			return FALSE
-		var/mob/living/M = mover
-		if(M.body_position != LYING_DOWN)
-			return FALSE
+		if(passcrawl && isliving(mover))
+			var/mob/living/M = mover
+			if(M.body_position == LYING_DOWN)
+				return TRUE
+		return . || mover.throwing || (mover.movement_type & (FLOATING|FLYING))
 	return TRUE
 
 /obj/structure/fluff/railing/CanAStarPass(ID, to_dir, requester)
@@ -137,10 +133,31 @@
 	layer = 2.91
 	climbable = FALSE
 	max_integrity = 400
+	pass_flags_self = PASSSTRUCTURE
 	passcrawl = FALSE
 	climb_offset = 6
 
 /obj/structure/fluff/railing/fence/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(get_dir(loc, target) == dir)
+		return FALSE
+	return TRUE
+
+/obj/structure/fluff/railing/woodfence
+	name = "wooden fence"
+	desc = "A sturdy fence of wooden planks."
+	icon = 'icons/roguetown/misc/tallwoodenrailing.dmi'
+	icon_state = "tallwoodenrailing"
+	density = TRUE
+	opacity = FALSE
+	anchored = TRUE
+	layer = 2.91
+	climbable = FALSE
+	max_integrity = 500
+	passcrawl = FALSE
+	climb_offset = 6
+
+/obj/structure/fluff/railing/woodfence/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	if(get_dir(loc, target) == dir)
 		return FALSE
@@ -298,7 +315,7 @@
 	desc = "An intricately-carved grandfather clock. On its pendulum is engraved the sigil of clan Kharzarad, a sickle behind an hourglass."
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "clock"
-	density = FALSE
+	density = TRUE
 	anchored = FALSE
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
@@ -373,10 +390,11 @@
 		. += "Oh no, it's [station_time_timestamp("hh:mm")] on a [day]."
 		// . += span_info("(Round Time: [gameTimestamp("hh:mm:ss", REALTIMEOFDAY - SSticker.round_start_irl)].)")
 
-/obj/structure/fluff/clock/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/fluff/clock/CanPass(atom/movable/mover, turf/target)
 	. = ..()
-	if(get_dir(loc, mover) == dir)
-		return FALSE
+	if(get_dir(loc, target) == dir)
+		return
+	return TRUE
 
 /obj/structure/fluff/clock/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
 	SIGNAL_HANDLER
@@ -566,7 +584,7 @@
 	desc = ""
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "bstatue"
-	density = FALSE
+	density = TRUE
 	anchored = TRUE
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
@@ -578,6 +596,12 @@
 	. = ..()
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
 	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/structure/fluff/statue/bullet_act(obj/projectile/P)
+	. = ..()
+	if(. != BULLET_ACT_FORCE_PIERCE)
+		P.handle_drop()
+		return BULLET_ACT_HIT
 
 /obj/structure/fluff/statue/attack_hand_secondary(mob/user, params)
 	. = ..()
@@ -595,10 +619,11 @@
 						user.put_in_hands(I)
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/structure/fluff/statue/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/fluff/statue/CanPass(atom/movable/mover, turf/target)
 	. = ..()
-	if(get_dir(loc, mover) == dir)
-		return FALSE
+	if(get_dir(loc, target) == dir)
+		return
+	return TRUE
 
 /obj/structure/fluff/statue/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
 	SIGNAL_HANDLER
@@ -779,8 +804,23 @@
 	if(!ishuman(user))
 		return
 
+	flick("globe1", src)
 	var/mob/living/carbon/human/H = user
-	var/random_message = pick("You spin the globe!", "You land on Rockhill!", "You land on Vanderlin!", "You land on Heartfelt!", "You land on Zaladin!", "You land on Port Thornvale!", "You land on Grenzelhoft!", "You land on Valoria!", "You land on the Fog Islands!")
+	var/random_message = pick(
+	"You spin the globe!",
+	"You land on Rockhill!",
+	"You land on Vanderlin!",
+	"You land on Heartfelt!",
+	"You land on Zaladin!",
+	"You land on Grenzelhoft!",
+	"You land on Valoria!",
+	"You land on Rosewood!",
+	"You land on Wintermare!",
+	"You land on Deshret!",
+	"You land on Kingsfield",
+	"You land on Amber Hollow!",
+	"You land on the lands of Z!",
+	"You land on the Fog Islands!")
 	to_chat(H, "<span class='notice'>[random_message]</span>")
 
 /obj/structure/fluff/statue/femalestatue/Initialize()
@@ -960,7 +1000,7 @@
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	break_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
-	density = FALSE
+	density = TRUE
 	anchored = TRUE
 	blade_dulling = DULLING_BASHCHOP
 	layer = BELOW_MOB_LAYER
@@ -995,10 +1035,11 @@
 	..()
 	M.reset_offsets("bed_buckle")
 
-/obj/structure/fluff/psycross/CanAllowThrough(atom/movable/mover, turf/target)
+/obj/structure/fluff/psycross/CanPass(atom/movable/mover, turf/target)
 	. = ..()
 	if(get_dir(loc, mover) == dir)
-		return FALSE
+		return
+	return TRUE
 
 /obj/structure/fluff/psycross/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
 	SIGNAL_HANDLER
@@ -1048,110 +1089,123 @@
 	icon_state = "shrine_dendor_gote"
 
 /obj/structure/fluff/psycross/attackby(obj/item/W, mob/living/carbon/human/user, params)
-	if(user.mind)
-		if((is_priest_job(user.mind.assigned_role)) \
-			|| (is_monk_job(user.mind.assigned_role) && (user.patron.type == /datum/patron/divine/eora)))
+	if(!user.mind)
+		return ..()
 
-			if(istype(W, /obj/item/reagent_containers/food/snacks/produce/fruit/apple))
-				if(!istype(get_area(user), /area/rogue/indoors/town/church/chapel))
-					to_chat(user, "<span class='warning'>I need to do this in the chapel.</span>")
-					return FALSE
-				var/marriage
-				var/obj/item/reagent_containers/food/snacks/produce/fruit/apple/A = W
+	var/is_priest = is_priest_job(user.mind.assigned_role)
+	var/is_eoran_acolyte = is_monk_job(user.mind.assigned_role) && (user.patron.type == /datum/patron/divine/eora)
+	if(!is_priest && !is_eoran_acolyte)
+		return ..()
 
-				//The MARRIAGE TEST BEGINS
-				if(A.bitten_names.len)
-					if(A.bitten_names.len == 2)
-						//Groom provides the surname that the bride will take
-						var/mob/living/carbon/human/thegroom
-						var/mob/living/carbon/human/thebride
-						//Did anyone get cold feet on the wedding?
-						for(var/mob/M in viewers(src, 2))
-							if(thegroom && thebride)
-								break
-							if(!ishuman(M))
-								continue
-							var/mob/living/carbon/human/C = M
-							/*
-							* This is for making the first biters name
-							* always be applied to the groom.
-							* second. This seems to be the best way
-							* to use the least amount of variables.
-							*/
-							var/name_placement = 1
-							for(var/X in A.bitten_names)
-								//I think that guy is dead.
-								if(C.stat == DEAD)
-									continue
-								//That person is not a player or afk.
-								if(!C.client)
-									continue
-								//Gotta get a divorce first
-								if(C.IsWedded())
-									continue
-								if(C.real_name == X)
-									//I know this is very sloppy but its alot less code.
-									switch(name_placement)
-										if(1)
-											if(thegroom)
-												continue
-											thegroom = C
-										if(2)
-											if(thebride)
-												continue
-											thebride = C
-								name_placement++
+	if(!istype(W, /obj/item/reagent_containers/food/snacks/produce/fruit/apple))
+		return ..()
 
-						//WE FOUND THEM LETS GET THIS SHOW ON THE ROAD!
-						if(!thegroom || !thebride)
-							return
-						//Alright now for the boring surname formatting.
-						var/surname2use
-						var/index = findtext(thegroom.real_name, " ")
-						var/bridefirst
-						thegroom.original_name = thegroom.real_name
-						thebride.original_name = thebride.real_name
-						if(!index)
-							surname2use = thegroom.dna.species.random_surname()
-						else
-							/*
-							* This code prevents inheriting the last name of
-							* " of wolves" or " the wolf"
-							* remove this if you want "Skibbins of wolves" to
-							* have his bride become "Sarah of wolves".
-							*/
-							if(findtext(thegroom.real_name, " of ") || findtext(thegroom.real_name, " the "))
-								surname2use = thegroom.dna.species.random_surname()
-								thegroom.change_name(copytext(thegroom.real_name, 1,index))
-							else
-								surname2use = copytext(thegroom.real_name, index)
-								thegroom.change_name(copytext(thegroom.real_name, 1,index))
-						index = findtext(thebride.real_name, " ")
-						if(index)
-							thebride.change_name(copytext(thebride.real_name, 1,index))
-						bridefirst = thebride.real_name
-						thegroom.change_name(thegroom.real_name + surname2use)
-						thebride.change_name(thebride.real_name + surname2use)
-						thegroom.MarryTo(thebride)
-						thegroom.adjust_triumphs(1)
-						thebride.adjust_triumphs(1)
-						//Bite the apple first if you want to be the groom.
-						if(thegroom.gender == thebride.gender)	//Homophobic dog stare. Pack it up, skittles squad.
-							priority_announce("Eora begrudgingly accepts the marriage between [thegroom.real_name] and [bridefirst].", title = "Holy Union!", sound = 'sound/misc/bell.ogg')
-						else
-							priority_announce("Eora proudly embraces the marriage between [thegroom.real_name] and [bridefirst]!", title = "Holy Union!", sound = 'sound/misc/bell.ogg')
-						thegroom.remove_stress(/datum/stressevent/eora_matchmaking)
-						thebride.remove_stress(/datum/stressevent/eora_matchmaking)
-						SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_MARRIAGE, thegroom, thebride)
-						record_round_statistic(STATS_MARRIAGES)
-						marriage = TRUE
-						qdel(A)
+	var/obj/item/reagent_containers/food/snacks/produce/fruit/apple/apple = W
+	if(length(apple.bitten_names) != 2)
+		to_chat(user, span_warning("Apple must be bitten once by two different people to conduct a wedding ceremony!"))
+		return FALSE
 
-				if(!marriage)
-					playsound(src.loc, 'sound/misc/frying.ogg', 60, FALSE)
-					A.burn()
-					return
-	return ..()
+	var/in_church = istype(get_area(user), /area/rogue/indoors/town/church/chapel)
+	var/secret_marriage = !in_church && HAS_TRAIT(user, TRAIT_SECRET_OFFICIANT)
+
+	if(!in_church && !secret_marriage)
+		to_chat(user, span_warning("I can conduct wedding ceremony only inside the chapel!"))
+		return FALSE
+
+	var/mob/living/carbon/human/groom
+	var/mob/living/carbon/human/bride
+
+	for(var/mob/living/carbon/human/candidate in range(5, src))
+		if(groom && bride)
+			break
+
+		var/name_position = 1
+		for(var/name in apple.bitten_names)
+			if(candidate.real_name == name)
+				switch(name_position)
+					if(1)
+						if(!groom)
+							groom = candidate
+					if(2)
+						if(!bride)
+							bride = candidate
+			name_position++
+
+	if(!groom || !bride)
+		to_chat(user, span_warning("Either one or both soon to be wed are outside of the holy shrine's gaze!"))
+		return FALSE
+	if(user == groom || user == bride)
+		to_chat(user, span_warning("You cannot conduct your own marriage ceremony!"))
+		return FALSE
+
+	// Groom checks
+	if(groom.age == AGE_CHILD)
+		to_chat(user, span_warning("[groom.real_name] is a child!"))
+		return FALSE
+	if(groom.stat == DEAD)
+		to_chat(user, span_warning("[groom.real_name] is dead!"))
+		return FALSE
+	if(!groom.client)
+		to_chat(user, span_warning("[groom.real_name] absent in spirit!"))
+		return FALSE
+	if(groom.IsWedded())
+		to_chat(user, span_warning("[groom.real_name] is already married!"))
+		return FALSE
+
+	// Bride checks
+	if(bride.age == AGE_CHILD)
+		to_chat(user, span_warning("[bride.real_name] is a child!"))
+		return FALSE
+	if(bride.stat == DEAD)
+		to_chat(user, span_warning("[bride.real_name] is dead!"))
+		return FALSE
+	if(!bride.client)
+		to_chat(user, span_warning("[bride.real_name] absent in spirit!"))
+		return FALSE
+	if(bride.IsWedded())
+		to_chat(user, span_warning("[bride.real_name] is already married!"))
+		return FALSE
+
+	var/surname
+	var/name_index = findtext(groom.real_name, " ")
+	var/bride_first_name = bride.real_name
+
+	groom.original_name = groom.real_name
+	bride.original_name = bride.real_name
+
+	if(!name_index)
+		surname = groom.dna.species.random_surname()
+	else
+		if(findtext(groom.real_name, " of ") || findtext(groom.real_name, " the "))
+			surname = groom.dna.species.random_surname()
+			groom.change_name(copytext(groom.real_name, 1, name_index))
+		else
+			surname = copytext(groom.real_name, name_index)
+			groom.change_name(copytext(groom.real_name, 1, name_index))
+
+	name_index = findtext(bride.real_name, " ")
+	if(name_index)
+		bride.change_name(copytext(bride.real_name, 1, name_index))
+
+	bride_first_name = bride.real_name
+
+	groom.change_name(groom.real_name + surname)
+	bride.change_name(bride.real_name + surname)
+
+	groom.MarryTo(bride)
+	groom.adjust_triumphs(1)
+	bride.adjust_triumphs(1)
+
+	if(!secret_marriage)
+		var/announcement_message = "Eora [groom.gender == bride.gender ? "begrudgingly accepts" : "proudly embraces"] the marriage between [groom.real_name] and [bride_first_name]!"
+		priority_announce(announcement_message, title = "Holy Union!", sound = 'sound/misc/bell.ogg')
+
+	groom.remove_stress(/datum/stressevent/eora_matchmaking)
+	bride.remove_stress(/datum/stressevent/eora_matchmaking)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_MARRIAGE, groom, bride)
+	record_round_statistic(STATS_MARRIAGES)
+	qdel(apple)
+	return TRUE
 
 /obj/structure/fluff/psycross/copper/Destroy()
 	addomen("psycross")
@@ -1297,3 +1351,16 @@
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 
+/obj/structure/fluff/steamvent
+	name = "steam vent"
+	desc = "An underground heating pipe outlet."
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "steam_vent"
+	density = FALSE
+	anchored = TRUE
+	max_integrity = 300
+	layer = 2.1
+
+/obj/structure/fluff/steamvent/Initialize()
+	. = ..()
+	MakeParticleEmitter(/particles/smoke/cig/big)

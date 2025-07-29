@@ -14,8 +14,7 @@
 	min_pq = 15
 	bypass_lastclass = TRUE
 
-	allowed_races = list(MALE, FEMALE)
-	allowed_races = list("Humen")
+	allowed_races = list(SPEC_ID_HUMEN)
 
 	outfit = /datum/outfit/job/inquisitor
 	is_foreigner = TRUE

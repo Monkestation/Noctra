@@ -460,7 +460,9 @@
 			else
 				to_examine = possible_a_intents[numb]
 	if(to_examine)
-		to_examine.examine(src)
+		var/list/result = to_examine.examine(src)
+		result += "<br>----------------------"
+		to_chat(src, "[result.Join()]")
 
 /mob/verb/rog_intent_change(numb as num,offhand as num)
 	set name = "intent-change"
@@ -524,7 +526,7 @@
 	var/obj/item/Masteritem = get_active_held_item()
 	if(Masteritem)
 		intents = Masteritem.possible_item_intents
-		if(Masteritem.wielded)
+		if(HAS_TRAIT(Masteritem, TRAIT_WIELDED) && LAZYLEN(Masteritem.gripped_intents))
 			intents = Masteritem.gripped_intents
 		if(Masteritem.altgripped)
 			intents = Masteritem.alt_intents
@@ -542,7 +544,7 @@
 	Masteritem = get_inactive_held_item()
 	if(Masteritem)
 		intents = Masteritem.possible_item_intents
-		if(Masteritem.wielded)
+		if(HAS_TRAIT(Masteritem, TRAIT_WIELDED))
 			intents = Masteritem.gripped_intents
 		if(Masteritem.altgripped)
 			intents = Masteritem.alt_intents

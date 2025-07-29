@@ -273,7 +273,7 @@
 
 /obj/item/reagent_containers/powder/blastpowder
 	name = "blastpowder"
-	desc = "explosive powder known to be produced by the dwarves. It's used in many explosives."
+	desc = "Explosive powder known to be produced by the dwarves. It's used in many explosives."
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "blastpowder"
 	volume = 15

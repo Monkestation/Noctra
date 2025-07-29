@@ -6,6 +6,7 @@
 #define STATS_ALIVE_RAKSHARI "alive_rakshari"
 #define STATS_ALIVE_AASIMAR "alive_aasimar"
 #define STATS_ALIVE_HOLLOWKINS "alive_hollowkins"
+#define STATS_ALIVE_MEDICATORS "alive_medicators"
 #define STATS_VAMPIRES "vampires"
 #define STATS_ALIVE_GARRISON "alive_garrison"
 #define STATS_ALIVE_CLERGY "alive_clergy"
@@ -26,6 +27,22 @@
 #define STATS_KISSES_MADE "kisses_made"
 #define STATS_SKILLS_LEARNED "skills_learned"
 #define STATS_DEADITES_ALIVE "deadites_alive"
+#define STATS_REGULAR_VAULT_INCOME "vault_regular"
+#define STATS_VAULT_TOTAL_REVENUE "vault_total"
+#define STATS_WAGES_PAID "wages_paid"
+#define STATS_FINES_INCOME "fines_income"
+#define STATS_TRADE_VALUE_EXPORTED "trade_exported"
+#define STATS_TRADE_VALUE_IMPORTED "trade_imported"
+#define STATS_GOLDFACE_VALUE_SPENT "goldface_spent"
+#define STATS_PURITY_VALUE_SPENT "purity_spent"
+#define STATS_TAXES_EVADED "taxes_evaded"
+#define STATS_NOBLE_INCOME_TOTAL "noble_income_total"
+#define STATS_DIRECT_TREASURY_TRANSFERS "direct_treasury_transfers"
+#define STATS_STOCKPILE_EXPORTS_VALUE "stockpile_exports_value"
+#define STATS_STOCKPILE_IMPORTS_VALUE "stockpile_imports_value"
+#define STATS_STOCKPILE_EXPANSES "stockpile_expanses"
+#define STATS_STOCKPILE_REVENUE "stockpile_revenue"
+#define STATS_PEDDLER_REVENUE "peddler_revenue"
 
 // Influence related statistics
 
@@ -229,6 +246,7 @@ GLOBAL_LIST_INIT(vanderlin_round_stats, list(
 	STATS_ALIVE_HOLLOWKINS = 0,
 	STATS_ALIVE_HARPIES = 0,
 	STATS_ALIVE_TRITONS = 0,
+	STATS_ALIVE_MEDICATORS = 0,
 	STATS_PEOPLE_DROWNED = 0,
 	STATS_MANA_SPENT = 0,
 	STATS_WATER_CONSUMED  = 0,
@@ -266,6 +284,22 @@ GLOBAL_LIST_INIT(vanderlin_round_stats, list(
 	STATS_HANDS_HELD = 0,
 	STATS_ANIMALS_TAMED = 0,
 	STATS_BATHS_TAKEN = 0,
+	STATS_REGULAR_VAULT_INCOME = 0,
+	STATS_VAULT_TOTAL_REVENUE = 0,
+	STATS_WAGES_PAID = 0,
+	STATS_FINES_INCOME = 0,
+	STATS_TRADE_VALUE_EXPORTED = 0,
+	STATS_TRADE_VALUE_IMPORTED = 0,
+	STATS_GOLDFACE_VALUE_SPENT = 0,
+	STATS_PURITY_VALUE_SPENT = 0,
+	STATS_TAXES_EVADED = 0,
+	STATS_NOBLE_INCOME_TOTAL = 0,
+	STATS_DIRECT_TREASURY_TRANSFERS = 0,
+	STATS_STOCKPILE_EXPORTS_VALUE = 0,
+	STATS_STOCKPILE_IMPORTS_VALUE = 0,
+	STATS_STOCKPILE_EXPANSES = 0,
+	STATS_STOCKPILE_REVENUE = 0,
+	STATS_PEDDLER_REVENUE = 0,
 ))
 
 GLOBAL_LIST_EMPTY(patron_follower_counts)
@@ -439,6 +473,22 @@ GLOBAL_LIST_INIT(featured_stats, list(
 	),
 ))
 
+// Chronicle statistics
+#define CHRONICLE_STATS_MOST_SKILLS_PERSON "most_skills_person"
+#define CHRONICLE_STATS_LEAST_SKILLS_PERSON "least_skills_person"
+#define CHRONICLE_STATS_STRONGEST_PERSON "strongest_person"
+#define CHRONICLE_STATS_WEAKEST_PERSON "weakest_person"
+#define CHRONICLE_STATS_SMARTEST_PERSON "smartest_person"
+#define CHRONICLE_STATS_RICHEST_PERSON "richest_person"
+#define CHRONICLE_STATS_POOREST_PERSON "poorest_person"
+#define CHRONICLE_STATS_LUCKIEST_PERSON "luckiest_person"
+#define CHRONICLE_STATS_FASTEST_PERSON "fastest_person"
+#define CHRONICLE_STATS_DUMBEST_PERSON "dumbest_person"
+#define CHRONICLE_STATS_SLOWEST_PERSON "slowest_person"
+#define CHRONICLE_STATS_UNLUCKIEST_PERSON "unluckiest_person"
+
+GLOBAL_LIST_EMPTY(chronicle_stats)
+
 /// Increment a round statistic by a given amount
 /proc/record_round_statistic(name, amount = 1)
 	if(SSticker.current_state == GAME_STATE_FINISHED)
@@ -469,7 +519,7 @@ GLOBAL_LIST_INIT(featured_stats, list(
 	sortTim(entries, GLOBAL_PROC_REF(cmp_stat_count_desc))
 
 	var/list/result = list()
-	for(var/i in 1 to min(13, entries.len))
+	for(var/i in 1 to min(14, entries.len))
 		var/list/entry = entries[i]
 		var/rounded_count = round(entry["count"])
 		result += "[i]. [entry["name"]] - [rounded_count]"
@@ -488,7 +538,7 @@ GLOBAL_LIST_INIT(featured_stats, list(
 	sortTim(entries, GLOBAL_PROC_REF(cmp_stat_count_desc))
 
 	var/list/result = list()
-	for(var/i in 1 to min(13, entries.len))
+	for(var/i in 1 to min(14, entries.len))
 		var/list/entry = entries[i]
 		var/rounded_count = round(entry["count"])
 		result += "[i]. [entry["name"]] - [rounded_count]"
@@ -540,3 +590,25 @@ GLOBAL_LIST_INIT(featured_stats, list(
 		stat_data["entries"] = list()
 
 	stat_data["entries"][object_name] = (stat_data["entries"][object_name] || 0) + increment
+
+/// Records a chronicle stat with all display information
+/proc/set_chronicle_stat(stat_name, atom/target, title, title_color, value_text)
+	if(SSticker.current_state == GAME_STATE_FINISHED)
+		return
+	if(!stat_name || !target || !GLOB.chronicle_stats)
+		return
+
+	GLOB.chronicle_stats[stat_name] = list(
+		"holder" = WEAKREF(target),
+		"title" = title,
+		"title_color" = title_color,
+		"value_text" = value_text
+	)
+
+/// Gets the recorded chronicle stat holder (returns the resolved weakref or null)
+/proc/get_chronicle_stat_holder(stat_name)
+	if(!stat_name || !GLOB.chronicle_stats)
+		return null
+
+	var/datum/weakref/ref = GLOB.chronicle_stats[stat_name]
+	return ref?.resolve()

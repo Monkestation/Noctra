@@ -65,13 +65,11 @@
 		if(mind)
 			mind.transfer_to(O)
 
-		for(var/X in internal_organs)
-			var/obj/item/organ/I = X
+		for(var/obj/item/organ/I as anything in internal_organs)
 			int_organs += I
 			I.Remove(src, 1)
 
-		for(var/X in int_organs)
-			var/obj/item/organ/I = X
+		for(var/obj/item/organ/I as anything in int_organs)
 			I.Insert(O, 1)
 
 	var/obj/item/bodypart/chest/torso = O.get_bodypart(BODY_ZONE_CHEST)
@@ -198,13 +196,11 @@
 
 		if(mind)
 			mind.transfer_to(O)
-		for(var/X in internal_organs)
-			var/obj/item/organ/I = X
+		for(var/obj/item/organ/I as anything in internal_organs)
 			int_organs += I
 			I.Remove(src, 1)
 
-		for(var/X in int_organs)
-			var/obj/item/organ/I = X
+		for(var/obj/item/organ/I as anything in int_organs)
 			I.Insert(O, 1)
 
 

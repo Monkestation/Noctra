@@ -39,8 +39,7 @@
 	var/turf/T = loc
 	if(isturf(T))
 		T.hotspot_expose(1000,100)
-		for(var/A in T)
-			var/atom/AT = A
+		for(var/atom/AT as anything in T)
 			if(!QDELETED(AT) && AT != src)
 				AT.spark_act()
 	QDEL_IN(src, 20)
@@ -49,8 +48,7 @@
 	var/turf/T = loc
 	if(isturf(T))
 		T.hotspot_expose(1000,100)
-		for(var/A in T)
-			var/atom/AT = A
+		for(var/atom/AT as anything in T)
 			if(!QDELETED(AT) && AT != src)
 				AT.spark_act()
 	return ..()
@@ -60,8 +58,7 @@
 	var/turf/T = loc
 	if(isturf(T))
 		T.hotspot_expose(1000,100)
-		for(var/A in T)
-			var/atom/AT = A
+		for(var/atom/AT as anything in T)
 			if(!QDELETED(AT) && AT != src)
 				AT.spark_act()
 

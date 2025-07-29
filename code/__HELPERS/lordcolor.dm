@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(lordcolor)
-
 GLOBAL_VAR(lordprimary)
 GLOBAL_VAR(lordsecondary)
 
@@ -10,6 +8,8 @@ GLOBAL_VAR(lordsecondary)
 #define LORD_SECONDARY (1<<2)
 /// Clothing only, updates detail color and handles the rest by updating overlays
 #define LORD_DETAIL_AND_COLOR (1<<3)
+
+// I HATE THIS ALL AND I REWROTE IT
 
 /obj/proc/lordcolor()
 	SIGNAL_HANDLER
@@ -32,6 +32,13 @@ GLOBAL_VAR(lordsecondary)
 		M = mutable_appearance(icon, "[icon_state]_secondary", used_layer)
 		M.color = GLOB.lordsecondary
 		add_overlay(M)
+	UnregisterSignal(SSdcs, COMSIG_LORD_COLORS_SET)
+
+/obj/structure/chair/bench/couch/lordcolor()
+	if(uses_lord_coloring & LORD_PRIMARY)
+		set_greyscale(list(GLOB.lordprimary))
+	if(uses_lord_coloring & LORD_SECONDARY)
+		set_greyscale(list(GLOB.lordsecondary))
 	UnregisterSignal(SSdcs, COMSIG_LORD_COLORS_SET)
 
 /obj/item/clothing/lordcolor()

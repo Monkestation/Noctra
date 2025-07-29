@@ -105,7 +105,7 @@
 
 	if(!mob.fixedeye) //If fixedeye isn't already enabled, we need to set this var
 		mob.tempfixeye = TRUE //Change icon to 'target' red eye
-		mob.atom_flags |= NO_DIR_CHANGE
+		mob.atom_flags |= NO_DIR_CHANGE_ON_MOVE
 
 	for(var/atom/movable/screen/eye_intent/eyet in mob.hud_used.static_inventory)
 		eyet.update_appearance(UPDATE_ICON)
@@ -187,7 +187,7 @@
 
 	if(!mob.fixedeye)
 		mob.tempfixeye = FALSE
-		mob.atom_flags &= ~NO_DIR_CHANGE
+		mob.atom_flags &= ~NO_DIR_CHANGE_ON_MOVE
 
 	if(mob.hud_used)
 		for(var/atom/movable/screen/eye_intent/eyet in mob.hud_used.static_inventory)
@@ -250,10 +250,6 @@
 		doneset = FALSE
 		chargedprog = 0
 		START_PROCESSING(SSmousecharge, src)
-
-/client/Destroy()
-	STOP_PROCESSING(SSmousecharge, src)
-	return ..()
 
 /client/process()
 	if(!mob || !isliving(mob))

@@ -43,7 +43,10 @@
 	dropshrink = 0.65
 	sellprice = 30
 	last_used = 0
-	is_silver = TRUE
+
+/obj/item/reagent_containers/glass/cup/silver/Initialize(mapload, vol)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 /obj/item/reagent_containers/glass/cup/golden
 	name = "golden goblet"

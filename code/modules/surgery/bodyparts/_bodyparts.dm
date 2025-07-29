@@ -82,7 +82,6 @@
 	var/skeletonized = FALSE
 
 	var/fingers = TRUE
-	var/is_prosthetic = FALSE
 
 	/// Visual markings to be rendered alongside the bodypart
 	var/list/markings
@@ -414,6 +413,8 @@
 			UnregisterSignal(old_owner, list(
 				SIGNAL_REMOVETRAIT(TRAIT_NOLIMBDISABLE),
 				SIGNAL_ADDTRAIT(TRAIT_NOLIMBDISABLE),
+				SIGNAL_ADDTRAIT(TRAIT_PARALYSIS),
+				SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS),
 				))
 	if(owner)
 		if(initial(can_be_disabled))

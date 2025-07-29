@@ -106,6 +106,7 @@
 					playsound(loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
 				if(!SStreasury.give_money_account(amt, H, "+[amt] from [R.name] bounty") && message == TRUE)
 					say("No account found. Submit your fingers to a Meister for inspection.")
+				record_round_statistic(STATS_STOCKPILE_EXPANSES, amt)
 				return amt
 			continue
 		else if(I.type == R.item_type)
@@ -135,6 +136,7 @@
 			if(amt)
 				if(!SStreasury.give_money_account(amt, H, "+[amt] from [R.name] bounty") && message == TRUE)
 					say("No account found. Submit your fingers to a Meister for inspection.")
+			record_round_statistic(STATS_STOCKPILE_EXPANSES, amt)
 			return amt
 
 /obj/structure/fake_machine/stockpile/attackby(obj/item/P, mob/user, params)
@@ -224,6 +226,7 @@
 		else
 			D.held_items--
 			budget -= total_price
+			record_round_statistic(STATS_STOCKPILE_REVENUE, total_price)
 			SStreasury.give_money_treasury(D.withdraw_price, "stockpile withdraw")
 			var/obj/item/I = new D.item_type(parent_structure.loc)
 			var/mob/user = usr

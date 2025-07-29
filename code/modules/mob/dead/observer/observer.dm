@@ -817,6 +817,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 //see /mob/verb/examinate() in mob.dm for more info
 //overridden here and in /mob/living for different point span classes and sanity checks
 /mob/dead/observer/pointed(atom/A as mob|obj|turf in view(client.view, src))
+	set category = "Spirit"
 	if(!..())
 		return FALSE
 	usr.visible_message("<span class='deadsay'><b>[src]</b> points to [A].</span>")

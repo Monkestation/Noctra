@@ -1033,11 +1033,21 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	if(outfit)
 		body.equipOutfit(outfit, TRUE)
 
+	body.update_inv_hands(hide_experimental = TRUE)
+	body.update_inv_belt(hide_experimental = TRUE)
+	body.update_inv_back(hide_experimental = TRUE)
+	body.update_inv_head(hide_nonstandard = TRUE)
+
 	var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
 	for(var/D in showDirs)
 		body.setDir(D)
 		var/icon/partial = getFlatIcon(body, defdir=D)
 		out_icon.Insert(partial,dir=D)
+
+	body.update_inv_hands()
+	body.update_inv_belt()
+	body.update_inv_back()
+	body.update_inv_head()
 
 	humanoid_icon_cache[icon_id] = out_icon
 	dummy_key ? unset_busy_human_dummy(dummy_key) : qdel(body)
@@ -1086,58 +1096,66 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	var/list/partial = splittext(iconData, "{")
 	return replacetext(copytext(partial[2], 3, -5), "\n", "")
 
-/proc/icon2html(thing, target, icon_state, dir, frame = 1, moving = FALSE)
-	if (!thing)
+/proc/icon2html(atom/thing, client/target, icon_state, dir = SOUTH, frame = 1, moving = FALSE, sourceonly = FALSE, extra_classes = null)
+	if(!thing || !target)
 		return
 
-	var/key
-	var/icon/I = thing
-	if (!target)
-		return
-	if (target == world)
+	if(target == world)
 		target = GLOB.clients
 
 	var/list/targets
-	if (!islist(target))
+	if(!islist(target))
 		targets = list(target)
 	else
 		targets = target
-		if (!targets.len)
-			return
-	if (!isicon(I))
-		if (isfile(thing)) //special snowflake
-			var/name = sanitize_filename("[generate_asset_name(thing)].png")
-			SSassets.transport.register_asset(name, thing)
-			for (var/mob/thing2 in targets)
-				if(!istype(thing2) || !thing2.client)
-					continue
-				SSassets.transport.send_assets(thing2?.client, key)
-			return "<img class='icon icon-misc' src=\"[url_encode(name)]\">"
-		var/atom/A = thing
-		if (isnull(dir))
-			dir = A.dir
-		if (isnull(icon_state))
-			icon_state = A.icon_state
-		I = A.icon
-		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
-			var/icon/temp = I
-			I = icon()
-			I.Insert(temp, dir = SOUTH)
+	if(!length(targets))
+		return
+
+	var/key
+	var/icon/icon2collapse = thing
+	if(isicon(icon2collapse))
+		if(isnull(dir))
 			dir = SOUTH
-	else
-		if (isnull(dir))
-			dir = SOUTH
-		if (isnull(icon_state))
+		if(isnull(icon_state))
 			icon_state = ""
+	else
+		if(isfile(thing)) //special snowflake
+			var/name = sanitize_filename("[generate_asset_name(thing)].png")
+			if(!SSassets.cache[name])
+				SSassets.transport.register_asset(name, icon2collapse)
+			for(var/client_target in targets)
+				SSassets.transport.send_assets(client_target, name)
+			if(sourceonly)
+				return SSassets.transport.get_asset_url(name)
+			return "<img class='[extra_classes] icon icon-misc' src='[SSassets.transport.get_asset_url(name)]'>"
 
-	I = icon(I, icon_state, dir, frame, moving)
+		icon2collapse = thing.icon
+		if(isnull(icon_state))
+			icon_state = thing.icon_state
+			if(isnull(icon_state))
+				icon_state = initial(thing.icon_state)
+				if(isnull(dir))
+					dir = initial(thing.dir)
 
-	key = "[generate_asset_name(I)].png"
-	SSassets.transport.register_asset(key, I)
-	for (var/thing2 in targets)
-		SSassets.transport.send_assets(thing2, key)
+		if(isnull(dir))
+			dir = thing.dir
 
-	return "<img class='icon icon-[icon_state]' src='[SSassets.transport.get_asset_url(key)]'>"
+		if(ishuman(thing)) // Shitty workaround for a BYOND issue.
+			var/icon/temp = icon2collapse
+			icon2collapse = icon()
+			icon2collapse.Insert(temp, dir = SOUTH)
+			dir = SOUTH
+
+	icon2collapse = icon(icon2collapse, icon_state, dir, frame, moving)
+
+	key = "[generate_asset_name(icon2collapse)].png"
+	if(!SSassets.cache[key])
+		SSassets.transport.register_asset(key, icon2collapse)
+	for(var/client_target in targets)
+		SSassets.transport.send_assets(client_target, key)
+	if(sourceonly)
+		return SSassets.transport.get_asset_url(key)
+	return "<img class='[extra_classes] icon icon-[icon_state]' src='[SSassets.transport.get_asset_url(key)]'>"
 
 /proc/icon2base64html(thing)
 	if (!thing)
@@ -1353,3 +1371,57 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 		var/icon/my_icon = icon(icon_path)
 		GLOB.icon_dimensions[icon_path] = list("width" = my_icon.Width(), "height" = my_icon.Height())
 	return GLOB.icon_dimensions[icon_path]
+
+GLOBAL_LIST_EMPTY(headshot_cache)
+
+/proc/get_headshot_icon(mob/living/carbon/human/target, size = 64, crop_height = 32)
+	if(!target || !istype(target))
+		return ""
+
+	var/datum/weakref/weak_target = WEAKREF(target)
+	var/cache_key = weak_target
+	var/appearance_signature = "[target.icon]-[target.icon_state]-[length(target.overlays)]-[length(target.underlays)]-[target.color]"
+
+	var/list/cache_entry = GLOB.headshot_cache[cache_key]
+	if(cache_entry)
+		var/mob/living/cached_target = weak_target.resolve()
+		if(cached_target && cache_entry["signature"] == appearance_signature)
+			return cache_entry["html"]
+		else
+			GLOB.headshot_cache -= cache_key
+
+	target.update_inv_hands(hide_experimental = TRUE)
+	target.update_inv_belt(hide_experimental = TRUE)
+	target.update_inv_back(hide_experimental = TRUE)
+	target.update_inv_head(hide_nonstandard = TRUE)
+	var/was_typing = target.typing
+	if(was_typing)
+		target.set_typing_indicator(FALSE)
+
+	var/image/dummy = image(target.icon, target, target.icon_state, target.layer, target.dir)
+	dummy.appearance = target.appearance
+	dummy.dir = SOUTH
+
+	target.update_inv_hands()
+	target.update_inv_belt()
+	target.update_inv_back()
+	target.update_inv_head()
+	if(was_typing)
+		target.set_typing_indicator(TRUE)
+
+	var/icon/headshot = getFlatIcon(dummy, SOUTH, no_anim = TRUE)
+	headshot.Scale(size, size)
+	headshot.Crop(1, size - crop_height + 1, size, size)
+
+	var/icon_html = "<img src='data:image/png;base64,[icon2base64(headshot)]' style='width:[size]px;height:[crop_height]px;image-rendering:pixelated;'>"
+
+	if(length(GLOB.headshot_cache) >= 200)
+		var/num_to_remove = round(200 * 0.15)
+		for(var/i in 1 to num_to_remove)
+			GLOB.headshot_cache.Cut(1, 2)
+
+	GLOB.headshot_cache[cache_key] = list(
+		"signature" = appearance_signature,
+		"html" = icon_html
+	)
+	return icon_html

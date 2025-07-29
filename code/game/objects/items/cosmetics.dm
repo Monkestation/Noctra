@@ -1,25 +1,39 @@
+
+
+
 /obj/item/lipstick
 	gender = PLURAL
 	name = "red lipstick"
 	desc = ""
-	icon = 'icons/obj/items_and_weapons.dmi'
+	icon = 'icons/roguetown/items/perfume.dmi'
 	icon_state = "lipstick"
 	w_class = WEIGHT_CLASS_TINY
-	var/colour = "red"
+	var/colour = "#821d2c"
 	var/open = FALSE
 
 /obj/item/lipstick/purple
 	name = "purple lipstick"
-	colour = "purple"
+	colour = "#3f1462"
 
 /obj/item/lipstick/jade
-	//It's still called Jade, but theres no HTML color for jade, so we use lime.
 	name = "jade lipstick"
-	colour = "lime"
+	colour = "#0f5335"
 
 /obj/item/lipstick/black
 	name = "black lipstick"
-	colour = "black"
+	colour = "#010517"
+
+/obj/item/lipstick/green
+	name = "green lipstick"
+	colour = "#27853c"
+
+/obj/item/lipstick/blue
+	name = "blue lipstick"
+	colour = "#241e80"
+
+/obj/item/lipstick/white
+	name = "white lipstick"
+	colour = "#efeff7"
 
 /obj/item/lipstick/random
 	name = "lipstick"
@@ -27,8 +41,8 @@
 
 /obj/item/lipstick/random/Initialize()
 	. = ..()
-	colour = pick("red","purple","lime","black","green","blue","white")
-	name = "[colour] lipstick"
+	colour = pick("#821d2c","#3f1462","#0f5335","#010517","#27853c","#241e80","#efeff7")
+	name = "lipstick"
 
 /obj/item/lipstick/update_icon_state()
 	. = ..()

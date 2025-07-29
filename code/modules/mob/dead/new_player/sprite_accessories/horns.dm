@@ -185,14 +185,14 @@
 	icon = 'icons/roguetown/mob/bodies/attachments.dmi'
 	name = "TiebHorns"
 	icon_state = "tiebhorns"
-	specuse = list("tiefling")
+	specuse = list(SPEC_ID_TIEFLING)
 	color_key_defaults = list(KEY_SKIN_COLOR)
 
 /datum/sprite_accessory/horns/tiefling/alt
 	icon = 'icons/roguetown/mob/bodies/attachments.dmi'
 	name = "TiebHornies"
 	icon_state = "tiebhornsalt"
-	specuse = list("tiefling")
+	specuse = list(SPEC_ID_TIEFLING)
 	color_key_defaults = list(KEY_SKIN_COLOR)
 
 /datum/sprite_accessory/horns/triton

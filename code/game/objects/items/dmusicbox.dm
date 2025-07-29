@@ -21,7 +21,6 @@
 	desc = "A renown design of the Dwarven Cult of Malum, bombastic machine with odd musical functions."
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "mbox0"
-	gripped_intents = list(INTENT_GENERIC)
 	w_class = WEIGHT_CLASS_HUGE
 	force = 20
 	throwforce = 20
@@ -29,7 +28,7 @@
 	var/datum/looping_sound/dmusloop/soundloop
 	var/curfile
 	var/playing = FALSE
-	var/loaded = TRUE
+	var/loaded = FALSE
 	var/lastfilechange = 0
 	var/curvol = 100
 
@@ -37,6 +36,10 @@
 	. = ..()
 	soundloop = new(src, FALSE)
 	update_appearance(UPDATE_ICON_STATE)
+
+/obj/item/dmusicbox/examine(mob/user)
+	. = ..()
+	. += span_notice("Right click [src] to select a .ogg file. Interact with self to toggle music.")
 
 /obj/item/dmusicbox/Destroy()
 	if(soundloop)

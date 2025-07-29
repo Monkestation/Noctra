@@ -558,7 +558,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stealth Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/drop_bomb()
-	set category = "Special Verbs"
+	set category = "Special"
 	set name = "Drop Bomb"
 	set desc = ""
 
@@ -600,7 +600,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Bomb") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/drop_dynex_bomb()
-	set category = "Special Verbs"
+	set category = "Special"
 	set name = "Drop DynEx Bomb"
 	set desc = ""
 
@@ -713,7 +713,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Remove Spell") //If you are copy-pasting this, ensure the 2nd parameter is unique
 
 /client/proc/object_say(obj/O in world)
-	set category = "Special Verbs"
+	set category = "Special"
 	set name = "OSay"
 	set desc = ""
 	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
@@ -725,7 +725,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Object Say") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
-	set category = "Special Verbs"
+	set category = "Special"
 	if (!(holder.rank.rights & R_BUILD))
 		return
 	if(src.mob)
@@ -837,24 +837,25 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	var/dat = "<table><tr><th>Preview</th><th>Title</th><th>Author</th><th>Delete</th></tr>"
 
 	if(SSpaintings?.paintings && length(SSpaintings.paintings))
-		for(var/paint_name in SSpaintings.paintings)
-			var/list/painting = SSpaintings.paintings[paint_name]
+		for(var/encoded_title in SSpaintings.paintings)
+			var/list/painting = SSpaintings.paintings[encoded_title]
 			if(!painting || !islist(painting))
 				continue
 
-			var/title = painting["painting_title"]
+			var/raw_title = painting["painting_title"]
 			var/author = painting["author_ckey"]
-			var/filename = "data/player_generated_paintings/paintings/[title].png"
+			var/disk_filename = SSpaintings.get_painting_filename(raw_title)
 
-			if(fexists(filename))
-				var/icon/painting_icon = icon(filename)
+			if(fexists(disk_filename))
+				var/icon/painting_icon = icon(disk_filename)
 				if(painting_icon)
-					src << browse_rsc(painting_icon, "[title].png")
+					var/res_name = "painting_[md5(raw_title)].png"
+					src << browse_rsc(painting_icon, res_name)
 					dat += "<tr>"
-					dat += "<td><img src='[title].png' height=64 width=64></td>"
-					dat += "<td>[title]</td>"
+					dat += "<td><img src='[res_name]' height=64 width=64></td>"
+					dat += "<td>[raw_title]</td>"
 					dat += "<td>[author]</td>"
-					dat += "<td><a href='?src=[REF(src)];delete_painting=1;id=[title]'>Delete</a></td>"
+					dat += "<td><a href='?src=[REF(src)];delete_painting=1;id=[url_encode(raw_title)]'>Delete</a></td>"
 					dat += "</tr>"
 	else
 		dat += "<tr><td colspan='4'>No paintings found</td></tr>"

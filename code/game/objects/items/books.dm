@@ -707,10 +707,11 @@
 	force_wielded = 4
 	throwforce = 1
 	possible_item_intents = list(/datum/intent/use, /datum/intent/mace/strike/wood)
+	var/verses_file = "strings/bibble.txt"
 
 /obj/item/book/bibble/read(mob/user)
 	if(!open)
-		to_chat(user, "<span class='info'>Open me first.</span>")
+		to_chat(user, span_info("Open me first."))
 		return FALSE
 	if(!user.client || !user.hud_used)
 		return
@@ -722,7 +723,7 @@
 	if(in_range(user, src) || isobserver(user))
 		user.changeNext_move(CLICK_CD_MELEE)
 		var/m
-		var/list/verses = world.file2list("strings/bibble.txt")
+		var/list/verses = world.file2list(verses_file)
 		m = pick(verses)
 		if(m)
 			user.say(m)
@@ -732,7 +733,7 @@
 		if(!user.can_read(src))
 			return
 		M.apply_status_effect(/datum/status_effect/buff/blessed)
-		user.visible_message("<span class='notice'>[user] blesses [M].</span>")
+		user.visible_message(span_notice("[user] blesses [M]."))
 		playsound(user, 'sound/magic/bless.ogg', 100, FALSE)
 		return
 
@@ -1253,42 +1254,20 @@ ____________End of Example*/
 	base_icon_state = "book8"
 	bookfile = "Neu_cooking.json"
 
-/obj/item/book/psybibble
+/obj/item/book/bibble/psy
 	name = "The Book"
 	icon_state = "psybibble_0"
 	base_icon_state = "psybibble"
 	title = "bible"
 	dat = "gott.json"
-	force = 2
-	force_wielded = 4
-	throwforce = 1
-	possible_item_intents = list(/datum/intent/use, /datum/intent/mace/strike/wood)
+	verses_file = "strings/psybibble.txt"
 
-/obj/item/book/psybibble/read(mob/user)
-	if(!open)
-		to_chat(user, "<span class='info'>Open me first.</span>")
-		return FALSE
-	if(!user.client || !user.hud_used)
-		return
-	if(!user.hud_used.reads)
-		return
-	if(!user.can_read(src))
-		user.adjust_experience(/datum/skill/misc/reading, 4, FALSE)
-		return
-	if(in_range(user, src) || isobserver(user))
-		user.changeNext_move(CLICK_CD_MELEE)
-		var/m
-		var/list/verses = world.file2list("strings/psybibble.txt")
-		m = pick(verses)
-		if(m)
-			user.say(m)
-
-/obj/item/book/psybibble/attack(mob/living/M, mob/user)
-	if(is_priest_job(user.mind.assigned_role))
+/obj/item/book/bibble/psy/attack(mob/living/M, mob/living/user)
+	if(istype(user) && user.patron.type == /datum/patron/psydon)
 		if(!user.can_read(src))
 			return
 		M.apply_status_effect(/datum/status_effect/buff/blessed)
-		user.visible_message("<span class='notice'>[user] blesses [M].</span>")
+		user.visible_message(span_notice("[user] blesses [M]."))
 		playsound(user, 'sound/magic/bless.ogg', 100, FALSE)
 		return
 
@@ -1300,7 +1279,7 @@ ____________End of Example*/
 
 /atom/movable/screen/alert/status_effect/buff/blessed
 	name = "Blessed"
-	desc = "Astrata's light flows through me."
+	desc = "Divine power flows through me."
 	icon_state = "buff"
 
 /datum/status_effect/buff/blessed/on_apply()

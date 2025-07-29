@@ -280,6 +280,7 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			var/turf/front = get_step(user, user.dir)
 			S.set_up(1, 1, front)
 			S.start()
+		user.changeNext_move(CLICK_CD_FAST)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(istype(weapon, /obj/item/natural/rock))
 		user.visible_message(span_info("[user] strikes the stone against the rock.</span>"))
@@ -289,13 +290,14 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 			var/turf/front = get_step(user, user.dir)
 			S.set_up(1, 1, front)
 			S.start()
+		user.changeNext_move(CLICK_CD_FAST)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/natural/stone/attackby(obj/item/W, mob/living/user, params)
-	user.changeNext_move(CLICK_CD_MELEE)
 	var/list/offhand_types = typecacheof(list(/obj/item/weapon/hammer, /obj/item/natural/stone, /obj/item/natural/stoneblock))
 	var/item = user.get_inactive_held_item()
 	if(user.used_intent.type == /datum/intent/chisel && is_type_in_typecache(item, offhand_types))
+		user.changeNext_move(CLICK_CD_MELEE)
 		var/skill_level = user.get_skill_level(/datum/skill/craft/masonry)
 		var/work_time = (4 SECONDS - (skill_level * 5))
 		if(istype(W, /obj/item/weapon/chisel))
@@ -328,7 +330,6 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 	force_wielded = 15
 	gripped_intents = list(INTENT_GENERIC)
 	w_class = WEIGHT_CLASS_HUGE
-	twohands_required = TRUE
 	var/obj/item/ore/mineralType = null
 	var/mineralAmt = 1
 	blade_dulling = DULLING_BASH
@@ -336,6 +337,8 @@ GLOBAL_LIST_INIT(stone_personality_descs, list(
 	destroy_sound = 'sound/foley/smash_rock.ogg'
 	attacked_sound = 'sound/foley/hit_rock.ogg'
 
+/obj/item/natural/rock/apply_components()
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 
 /obj/item/natural/rock/Initialize()
 	. = ..()

@@ -23,8 +23,8 @@
 		if(!human_mob.patron || !istype(human_mob.patron, /datum/patron/divine/xylix))
 			continue
 
-		var/luck_roll = rand(-1, 2)
+		var/luck_roll = rand(-2, 4)
 		human_mob.set_stat_modifier("xylix_fortune", STATKEY_LCK, luck_roll)
 
-		to_chat(human_mob, span_biginfo("You have caught Xylix's attention! Whether you'll laugh or weep about that later... well, that's part of the fun!"))
+		to_chat(human_mob, span_biginfo("You have caught Xylix's attention and you can feel your fortune changing... Whether you'll laugh or weep about that later... well, that's part of the fun!"))
 		human_mob.playsound_local(human_mob, 'sound/misc/gods/xylix_omen_male_female.ogg', 100)

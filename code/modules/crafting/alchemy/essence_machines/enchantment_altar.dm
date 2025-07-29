@@ -240,34 +240,30 @@
 /obj/machinery/essence/enchantment_altar/proc/show_recipe_selection(mob/user, browse_only = FALSE)
 	var/list/available_enchantments = get_all_enchantments()
 
-	if(!available_enchantments.len)
+	if(!length(available_enchantments))
 		to_chat(user, span_warning("No enchantment recipes are available."))
 		return
 
 	var/list/options = list()
-	for(var/enchantment_path in available_enchantments)
-		var/datum/enchantment/temp_enchant = new enchantment_path
+	for(var/datum/enchantment/enchantment_path as anything in available_enchantments)
 		var/recipe_text = get_recipe_text(enchantment_path)
-		options["[temp_enchant.enchantment_name] - [recipe_text]"] = enchantment_path
-		qdel(temp_enchant)
+		options["[initial(enchantment_path.enchantment_name)] - [recipe_text]"] = enchantment_path
 
-	options["Cancel"] = "cancel"
-
-	var/choice = input(user, browse_only ? "Browse Available Recipes:" : "Select a recipe for [placed_item]:", "Recipe Selection") in options
-	if(!choice || choice == "cancel")
+	var/choice = browser_input_list(user, browse_only ? "Browse Available Recipes:" : "Select a recipe for [placed_item]:", "Recipe Selection", options)
+	if(!choice)
 		return
 
-	var/enchantment_path = options[choice]
+	var/datum/enchantment/enchant = options[choice]
 
-	if(!enchantment_path)
+	if(!enchant)
 		return
 
 	if(browse_only)
-		var/datum/enchantment/temp_enchant = new enchantment_path
+		var/datum/enchantment/temp_enchant = new enchant
 		show_single_recipe_details(temp_enchant, user)
 		qdel(temp_enchant)
 	else
-		select_recipe(enchantment_path, user)
+		select_recipe(enchant, user)
 
 /obj/machinery/essence/enchantment_altar/proc/select_recipe(enchantment_path, mob/user)
 	if(selected_recipe)

@@ -51,8 +51,13 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	if(href_list["delete_painting"])
 		if(!holder)
 			return
-		SSpaintings.del_player_painting(href_list["id"])
-		SSpaintings.update_paintings()
+		var/title = href_list["id"]
+		if(!title)
+			return
+		if(SSpaintings.del_player_painting(title))
+			message_admins("[key_name_admin(src)] has deleted player made painting called: [title]")
+			SSpaintings.update_paintings()
+			manage_paintings()
 
 	// asset_cache
 	var/asset_cache_job
@@ -137,9 +142,18 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		show_round_stats(href_list["featured_stat"])
 		return
 
+	if(href_list["select_featured_stat"])
+		select_featured_stat()
+		return
+
 	if(href_list["viewinfluences"])
 		var/debug_mode = text2num(href_list["debug"])
 		show_influences(debug_mode)
+		return
+
+	if(href_list["viewchronicle"])
+		var/tab = href_list["chronicletab"] || "The Realm"
+		show_chronicle(tab)
 		return
 
 	switch(href_list["_src_"])
@@ -618,6 +632,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	return ..()
 
 /client/Destroy()
+	STOP_PROCESSING(SSmousecharge, src)
 	if(holder)
 		for(var/I in GLOB.clients)
 			if(!I || I == src)
@@ -1227,7 +1242,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	commendation_popup(forced)
 
 /client/proc/view_stats()
-	set name = "View Statistics"
+	set name = "View Chronicle"
 	set category = "OOC"
 
 	show_round_stats(pick_assoc(GLOB.featured_stats))

@@ -357,6 +357,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WATER_BREATHING			"Waterbreathing"
 #define TRAIT_MOONWATER_ELIXIR			"Moonwater Elixir"
 #define TRAIT_FLOWERFIELD_IMMUNITY		"Flower Strider"
+#define TRAIT_SECRET_OFFICIANT			"Secret Officiant"
 /// applied to orphans
 #define TRAIT_ORPHAN 					"Orphan"
 #define TRAIT_RECRUITED					"Recruit" //Trait used to give foreigners their new title
@@ -469,3 +470,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define AI_ATTACK_TRAIT "ai_attack_trait"
 
 #define TRAIT_DUALWIELDER "Dual Wielder"
+
+/// Properly wielded two handed item
+#define TRAIT_WIELDED "wielded"
+/// The items needs two hands to be carried
+#define TRAIT_NEEDS_TWO_HANDS "needstwohands"

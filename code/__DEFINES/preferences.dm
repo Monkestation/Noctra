@@ -134,10 +134,10 @@
 #define ALL_AGES_LIST_CHILD			list(AGE_CHILD, AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
 
 // Pronouns
-#define HE_HIM			"he/him"
-#define SHE_HER			"she/her"
-#define THEY_THEM		"they/them"
-#define IT_ITS			"it/its"
+#define HE_HIM			"He/Him"
+#define SHE_HER			"She/Her"
+#define THEY_THEM		"They/Them"
+#define IT_ITS			"It/Its"
 
 #define PRONOUNS_LIST list(HE_HIM, SHE_HER, THEY_THEM, IT_ITS)
 #define PRONOUNS_LIST_NO_IT list(HE_HIM, SHE_HER, THEY_THEM)

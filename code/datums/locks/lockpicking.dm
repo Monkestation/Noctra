@@ -99,6 +99,7 @@
 	locked = TRUE
 	plane = HUD_PLANE
 	layer = 1
+	mouse_drag_pointer = null
 
 	///Angle of the lock itself. Determined by holding down mouse1.
 	var/lock_angle = 0

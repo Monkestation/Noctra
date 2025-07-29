@@ -17,7 +17,6 @@
 	selection_color = "#c2a45d"
 	cmode_music = 'sound/music/cmode/church/CombatAstrata.ogg'
 
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 
 	outfit = /datum/outfit/job/priest
@@ -162,7 +161,7 @@
 		if(inputty in GLOB.excommunicated_players)
 			GLOB.excommunicated_players -= inputty
 			priority_announce("[real_name] has forgiven [inputty]. The Ten hear their prayers once more!", title = "Hail the Ten!", sound = 'sound/misc/bell.ogg')
-			for(var/mob/living/carbon/human/H in GLOB.player_list)
+			for(var/mob/living/carbon/human/H in GLOB.human_list)
 				if(H.real_name == inputty)
 					H.cleric?.recommunicate()
 			return
@@ -170,17 +169,15 @@
 			to_chat(src, span_warning("I cannot excommunicate anyone during the schism!"))
 			return FALSE
 
-		for(var/mob/living/carbon/human/H in GLOB.player_list)
+		for(var/mob/living/carbon/human/H in GLOB.human_list)
 			if(H.real_name == inputty)
 				if(H.advjob == "Faceless One")
 					to_chat(src, span_danger("I wasn't able to do that!"))
 					return FALSE
 				H.cleric?.excommunicate()
+				GLOB.excommunicated_players += inputty
+				priority_announce("[real_name] has excommunicated [inputty]! The Ten have turned away from them!", title = "SHAME", sound = 'sound/misc/excomm.ogg')
 				break
-			return FALSE
-
-		GLOB.excommunicated_players += inputty
-		priority_announce("[real_name] has excommunicated [inputty]! The Ten have turned away from them!", title = "SHAME", sound = 'sound/misc/excomm.ogg')
 
 /mob/living/carbon/human/proc/churchcurse()
 	set name = "Curse"
@@ -208,11 +205,10 @@
 					to_chat(src, span_danger("I wasn't able to do that!"))
 					return FALSE
 				H.add_stress(/datum/stressevent/psycurse)
+				GLOB.heretical_players += inputty
+				priority_announce("[real_name] has put Xylix's curse of woe on [inputty] for offending the church!", title = "SHAME", sound = 'sound/misc/excomm.ogg')
 				break
-			return FALSE
 
-		GLOB.heretical_players += inputty
-		priority_announce("[real_name] has put Xylix's curse of woe on [inputty] for offending the church!", title = "SHAME", sound = 'sound/misc/excomm.ogg')
 
 /mob/living/carbon/human/proc/churchannouncement()
 	set name = "Announcement"
