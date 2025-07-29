@@ -16,6 +16,7 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 	abstract_type = /datum/container_craft
 
 	var/atom/output
+	/// How many times the output is made. Preferrably for item outputs.
 	var/output_amount = 1
 	var/category
 
@@ -93,7 +94,16 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 		var/list/fake_reagents = reagent_requirements.Copy()
 		for(var/datum/reagent/listed_reagent as anything in crafter.reagents.reagent_list) // this isn't perfect since it excludes blood reagent types like tiefling blood from recipes
 			if(!(listed_reagent.type in fake_reagents))
-				continue
+				if(subtype_reagents_allowed)
+					var/reagent_found = FALSE
+					for(var/datum/reagent/reagent_requirement in fake_reagents)
+						if(ispath(listed_reagent.type, reagent_requirement))
+							reagent_found = TRUE
+							break
+					if(!reagent_found)
+						continue
+				else
+					continue
 			var/potential_multiplier = FLOOR(listed_reagent.volume / fake_reagents[listed_reagent.type], 1)
 			if(!highest_multiplier)
 				highest_multiplier = potential_multiplier
