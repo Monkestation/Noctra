@@ -115,7 +115,7 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_FISH_CAUGHT = list("name" = "Fish caught:", "points" = 1.5, "capacity" = 85),
+			STATS_FISH_CAUGHT = list("name" = "Fish caught:", "points" = 1.65, "capacity" = 85),
 			STATS_ALIVE_TRITONS = list("name" = "Number of tritons:", "points" = 9, "capacity" = 85),
 		),
 		"Set 2" = list(
@@ -129,7 +129,7 @@
 		),
 		"Set 5" = list(
 			STATS_PEOPLE_DROWNED = list("name" = "People drowned:", "points" = 9, "capacity" = 75),
-			STATS_BATHS_TAKEN = list("name" = "Baths taken:", "points" = 3, "capacity" = 50),
+			STATS_BATHS_TAKEN = list("name" = "Baths taken:", "points" = 3.5, "capacity" = 50),
 		)
 	)
 
@@ -159,7 +159,7 @@
 		),
 		"Set 2" = list(
 			STATS_GAMES_RIGGED = list("name" = "Games rigged:", "points" = 3.75, "capacity" = 40),
-			STATS_MOAT_FALLERS = list("name" = "Moat fallers:", "points" = 4.25, "capacity" = 45),
+			STATS_MOAT_FALLERS = list("name" = "Moat fallers:", "points" = 4, "capacity" = 45),
 		),
 		"Set 3" = list(
 			STATS_PEOPLE_MOCKED = list("name" = "People mocked:", "points" = 6, "capacity" = 60),
@@ -168,7 +168,7 @@
 			STATS_CRITS_MADE = list("name" = "Crits made:", "points" = 0.275, "capacity" = 90),
 		),
 		"Set 5" = list(
-			STATS_SONGS_PLAYED = list("name" = "Songs played:", "points" = 0.775, "capacity" = 70),
+			STATS_SONGS_PLAYED = list("name" = "Songs played:", "points" = 0.75, "capacity" = 70),
 		)
 	)
 
@@ -199,7 +199,7 @@
 			STATS_DEATHS = list("name" = "Total deaths:", "points" = 1.35, "capacity" = 110),
 		),
 		"Set 2" = list(
-			STATS_GRAVES_CONSECRATED = list("name" = "Graves consecrated:", "points" = 6.25, "capacity" = 90),
+			STATS_GRAVES_CONSECRATED = list("name" = "Graves consecrated:", "points" = 6, "capacity" = 80),
 		),
 		"Set 3" = list(
 			STATS_GRAVES_ROBBED = list("name" = "Graves robbed:", "points" = -4, "capacity" = -40),
@@ -210,7 +210,7 @@
 		),
 		"Set 5" = list(
 			STATS_VAMPIRES_KILLED = list("name" = "Vampires killed:", "points" = 12, "capacity" = 70),
-			STATS_SOULS_REINCARNATED = list("name" = "Souls reincarnated:", "points" = 2.35, "capacity" = 65),
+			STATS_SOULS_REINCARNATED = list("name" = "Souls reincarnated:", "points" = 2.25, "capacity" = 65),
 		)
 	)
 
@@ -308,7 +308,7 @@
 	influence_sets = list(
 		"Set 1" = list(
 			STATS_PARENTS = list("name" = "Number of parents:", "points" = 9, "capacity" = 90),
-			STATS_CHILD_POPULATION = list("name" = "Number of children:", "points" = 6.5, "capacity" = 70),
+			STATS_CHILD_POPULATION = list("name" = "Number of children:", "points" = 6.75, "capacity" = 70),
 		),
 		"Set 2" = list(
 			STATS_MARRIAGES = list("name" = "Marriages made:", "points" = 25, "capacity" = 75),
@@ -318,11 +318,11 @@
 			STATS_HUGS_MADE = list("name" = "Hugs made:", "points" = 2, "capacity" = 60),
 		),
 		"Set 4" = list(
-			STATS_HANDS_HELD = list("name" = "Hands held:", "points" = 1.75, "capacity" = 60),
+			STATS_HANDS_HELD = list("name" = "Hands held:", "points" = 1.85, "capacity" = 60),
 		),
 		"Set 5" = list(
-			STATS_CLINGY_PEOPLE = list("name" = "Clingy people:", "points" = 6.5, "capacity" = 75),
-			STATS_PACIFISTS = list("name" = "Number of pacifists:", "points" = 13, "capacity" = 70),
+			STATS_CLINGY_PEOPLE = list("name" = "Clingy people:", "points" = 6.75, "capacity" = 75),
+			STATS_PACIFISTS = list("name" = "Number of pacifists:", "points" = 13.5, "capacity" = 70),
 		)
 	)
 
@@ -410,7 +410,7 @@
 			STATS_CLERGY_DEATHS = list("name" = "Clergy killed:", "points" = 9, "capacity" = 80),
 		),
 		"Set 5" = list(
-			STATS_TORTURES = list("name" = "Tortures performed:", "points" = 4.75, "capacity" = 70),
+			STATS_TORTURES = list("name" = "Tortures performed:", "points" = 5, "capacity" = 70),
 		)
 	)
 
@@ -532,10 +532,10 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_ITEMS_PICKPOCKETED = list("name" = "Items pickpocketed:", "points" = 5, "capacity" = 85),
+			STATS_ITEMS_PICKPOCKETED = list("name" = "Items pickpocketed:", "points" = 4.75, "capacity" = 80),
 		),
 		"Set 2" = list(
-			STATS_SHRINE_VALUE = list("name" = "Value offered to his idol:", "points" = 0.0875, "capacity" = 70),
+			STATS_SHRINE_VALUE = list("name" = "Value offered to his idol:", "points" = 0.085, "capacity" = 70),
 		),
 		"Set 3" = list(
 			STATS_GREEDY_PEOPLE = list("name" = "Number of greedy people:", "points" = 7, "capacity" = 70),

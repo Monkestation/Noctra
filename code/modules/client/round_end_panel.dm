@@ -280,6 +280,27 @@
 	data += "<div style='margin: 35px;'>"
 	switch(tab)
 		if("Gods")
+
+			// Gods' Interventions Section
+			data += "<div>"
+			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.2em; margin-bottom: 10px;'>GODS' INTERVENTIONS</div>"
+			data += "<div style='border-top: 1px solid #9a9aaa; margin: 20px auto 10px auto; width: 90%;'></div>"
+
+			if(length(SSmapping.active_world_traits))
+				data += "<div style='display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; margin-top: 20px; margin-bottom: 30px;'>"
+				for(var/datum/world_trait/trait in SSmapping.active_world_traits)
+					data += "<div style='background: #2a2a3a; border: 1px solid #4a4a5a; padding: 10px; border-radius: 4px;'>"
+					data += "<div style='color: #e0e0f0; font-weight: bold; margin-bottom: 5px;'>[trait.name]</div>"
+					data += "<div style='color: #b0b0b0; font-style: italic;'>[trait.desc]</div>"
+					data += "</div>"
+
+				data += "</div>"
+			else
+				data += "<div style='text-align: center; color: #999; font-style: italic; padding: 30px 0;'>The Gods are silent</div>"
+
+			data += "</div>"
+
+			// Ranking of the Gods Section
 			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.2em; margin-bottom: 15px;'>RANKING OF THE GODS</div>"
 			data += "<div style='border-top: 1.5px solid #9a9aaa; margin: 0 auto 20px auto; width: 90%;'></div>"
 
@@ -300,27 +321,6 @@
 
 			for(var/list/god_data in sorted_gods)
 				data += create_god_ranking_entry(god_data["name"], god_data["points"], god_data["color"])
-
-			data += "<div style='height: 30px;'></div>"
-
-			// Gods Interventions section
-			data += "<div>"
-			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.2em; margin-bottom: 10px;'>GODS' INTERVENTIONS</div>"
-			data += "<div style='border-top: 1px solid #9a9aaa; margin: 20px auto 10px auto; width: 85%;'></div>"
-
-			if(length(SSmapping.active_world_traits))
-				data += "<div style='display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; margin-top: 15px;'>"
-				for(var/datum/world_trait/trait in SSmapping.active_world_traits)
-					data += "<div style='background: #2a2a3a; border: 1px solid #4a4a5a; padding: 10px; border-radius: 4px;'>"
-					data += "<div style='color: #e0e0f0; font-weight: bold; margin-bottom: 5px;'>[trait.name]</div>"
-					data += "<div style='color: #b0b0b0; font-style: italic;'>[trait.desc]</div>"
-					data += "</div>"
-
-				data += "</div>"
-			else
-				data += "<div style='text-align: center; color: #999; font-style: italic; padding: 20px 0;'>The Gods are silent</div>"
-
-			data += "</div>"
 
 		if("Messages")
 			data += "<div style='display: table; width: 100%; table-layout: fixed;'>"
