@@ -26,19 +26,20 @@ THE SOFTWARE.
 '''
 
 from __future__ import print_function
-import yaml, os, glob, sys, re, time, argparse
+import json, os, glob, sys, re, time, argparse
 from datetime import datetime, date, timedelta
 from time import time
 
 today = date.today()
+today_string = today.strftime("%Y-%m-%d")
 
 fileDateFormat = "%Y-%m"
 
 opt = argparse.ArgumentParser()
-opt.add_argument('ymlDir', help='The directory of YAML changelogs we will use.')
+opt.add_argument('directory', help='The directory of changelogs we will use.')
 
 args = opt.parse_args()
-archiveDir = os.path.join(args.ymlDir, 'archive')
+archiveDir = os.path.join(args.directory, 'archive')
 
 all_changelog_entries = {}
 
@@ -63,65 +64,31 @@ validPrefixes = [
     'server',
     'sound',
     'image',
+    'map',
 ]
 
 def dictToTuples(inp):
     return [(k, v) for k, v in inp.items()]
 
-old_changelog_cache = os.path.join(args.ymlDir, '.all_changelog.yml')
-
-if os.path.isfile(old_changelog_cache):
-    try:
-        print('Reading old changelog cache...')
-        data = {}
-        with open(old_changelog_cache,encoding='utf-8') as f:
-            (_, all_changelog_entries) = yaml.load_all(f, Loader=yaml.SafeLoader)
-
-            # Categorize changes by year and month
-            for _date in all_changelog_entries.keys():
-                ty = type(_date).__name__
-                formattedDate = _date.strftime(fileDateFormat)
-                if not formattedDate in data:
-                    data[formattedDate] = {}
-                data[formattedDate][_date] = all_changelog_entries[_date]
-            # Write files with changes by year and month
-            for month in data.keys():
-                print("Writing " + month + ".yml...")
-                if not os.path.exists(archiveDir):
-                    os.makedirs(archiveDir)
-                currentFile = os.path.join(archiveDir, month + '.yml')
-                with open(currentFile, 'w', encoding='utf-8') as f:
-                    yaml.dump(data[month], f, default_flow_style=False)
-        # Remove the old changelog cache, as we won't use it anymore
-        print("Removing old changelog cache...")
-        os.remove(old_changelog_cache)
-        old_changelog_html = os.path.join(args.ymlDir, '..', 'changelog.html')
-        if os.path.isfile(old_changelog_html):
-            print("Removing old changelog html...")
-            os.remove(old_changelog_html)
-    except Exception as e:
-        print("Failed to read old changelog cache:")
-        print(e, file=sys.stderr)
-
 print('Reading changelogs...')
-for fileName in glob.glob(os.path.join(args.ymlDir, "*.yml")):
+for fileName in glob.glob(os.path.join(args.directory, "*.json")):
     name, ext = os.path.splitext(os.path.basename(fileName))
     if name.startswith('.'): continue
     if name == 'example': continue
     fileName = os.path.abspath(fileName)
     formattedDate = today.strftime(fileDateFormat)
-    monthFile = os.path.join(archiveDir, formattedDate + '.yml')
-    print(' Reading {}...'.format(fileName))
+    monthFile = os.path.join(archiveDir, formattedDate + '.json')
+    print('Reading {}...'.format(fileName))
     cl = {}
-    with open(fileName, 'r',encoding='utf-8') as f:
-        cl = yaml.load(f, Loader=yaml.SafeLoader)
+    with open(fileName, 'r',encoding='utf-8-sig') as f:
+        cl = json.load(f)
     currentEntries = {}
     if os.path.exists(monthFile):
-        with open(monthFile,'r',encoding='utf-8') as f:
-            currentEntries = yaml.load(f, Loader=yaml.SafeLoader)
-    if today not in currentEntries:
-        currentEntries[today] = {}
-    author_entries = currentEntries[today].get(cl['author'], [])
+        with open(monthFile,'r',encoding='utf-8-sig') as f:
+            currentEntries = json.load(f)
+    if today_string not in currentEntries:
+        currentEntries[today_string] = {}
+    author_entries = currentEntries[today_string].get(cl['author'], [])
     if len(cl['changes']):
         new = 0
         for change in cl['changes']:
@@ -132,7 +99,7 @@ for fileName in glob.glob(os.path.join(args.ymlDir, "*.yml")):
                     sys.exit(1)
                 author_entries += [change]
                 new += 1
-        currentEntries[today][cl['author']] = author_entries
+        currentEntries[today_string][cl['author']] = author_entries
         if new > 0:
             print('  Added {0} new changelog entries.'.format(new))
 
@@ -142,4 +109,4 @@ for fileName in glob.glob(os.path.join(args.ymlDir, "*.yml")):
             os.remove(fileName)
 
     with open(monthFile, 'w', encoding='utf-8') as f:
-        yaml.dump(currentEntries, f, default_flow_style=False)
+        json.dump(currentEntries, f, indent = 4)
