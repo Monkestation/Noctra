@@ -46,10 +46,11 @@
 	for(var/mob/living/carbon/human/outlaw in GLOB.human_list)
 		if(outlaw.real_name in GLOB.outlawed_players)
 			var/icon/credit_icon = SScrediticons.get_credit_icon(outlaw, TRUE)
-			outlaws += list(list(
-				"name" = outlaw.real_name,
-				"icon" = credit_icon
-			))
+			if(credit_icon)
+				outlaws += list(list(
+					"name" = outlaw.real_name,
+					"icon" = credit_icon
+				))
 
 	if(!length(outlaws))
 		to_chat(user, span_warning("There are no wanted criminals at the moment..."))

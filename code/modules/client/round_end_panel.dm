@@ -327,7 +327,7 @@
 			data += "<div style='display: table-row;'>"
 
 			// Last Words Column (33%)
-			data += "<div style='display: table-cell; width: 33%; vertical-align: top; padding: 0 15px;'>"
+			data += "<div style='display: table-cell; width: 33%; vertical-align: top; padding: 0 5px;'>"
 			data += "<div style='color: #bd1717; font-size: 1.2em; font-weight: bold; text-align: center; margin-bottom: 10px;'>LAST WORDS</div>"
 			data += "<div style='border-top: 1px solid #bd1717; width: 90%; margin: 0 auto 15px auto;'></div>"
 
@@ -340,11 +340,8 @@
 				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>No last words told</div>"
 			data += "</div>"
 
-			// First Vertical Divider
-			data += "<div style='display: table-cell; width: 1px; background-color: #444; height: 100%;'></div>"
-
 			// Prayers Column (33%)
-			data += "<div style='display: table-cell; width: 33%; vertical-align: top; padding: 0 15px;'>"
+			data += "<div style='display: table-cell; width: 33%; vertical-align: top; padding: 0 5px;'>"
 			data += "<div style='color: #e6b327; font-size: 1.2em; font-weight: bold; text-align: center; margin-bottom: 10px;'>PRAYERS</div>"
 			data += "<div style='border-top: 1px solid #e6b327; width: 90%; margin: 0 auto 15px auto;'></div>"
 
@@ -357,11 +354,8 @@
 				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>No prayers made</div>"
 			data += "</div>"
 
-			// Second Vertical Divider
-			data += "<div style='display: table-cell; width: 1px; background-color: #444; height: 100%;'></div>"
-
 			// Correspondence Column (33%)
-			data += "<div style='display: table-cell; width: 33%; vertical-align: top; padding: 0 15px;'>"
+			data += "<div style='display: table-cell; width: 33%; vertical-align: top; padding: 0 5px;'>"
 			data += "<div style='color: #a0c4e0; font-size: 1.2em; font-weight: bold; text-align: center; margin-bottom: 10px;'>CORRESPONDENCE</div>"
 			data += "<div style='border-top: 1px solid #a0c4e0; width: 90%; margin: 0 auto 15px auto;'></div>"
 
@@ -626,10 +620,11 @@
 			for(var/mob/living/carbon/human/outlaw in GLOB.human_list)
 				if(outlaw.real_name in GLOB.outlawed_players)
 					var/icon/credit_icon = SScrediticons.get_credit_icon(outlaw, TRUE)
-					outlaws += list(list(
-						"name" = outlaw.real_name,
-						"icon" = credit_icon
-					))
+					if(credit_icon)
+						outlaws += list(list(
+							"name" = outlaw.real_name,
+							"icon" = credit_icon
+						))
 
 			if(!length(outlaws))
 				data += "<div style='text-align: center; color: #999; font-style: italic;'>The Realm is peaceful, its inhabitants kind</div>"
@@ -642,7 +637,7 @@
 						justify-content: center;
 						gap: 20px;
 						padding: 15px;
-						max-width: calc(175px * 3 + 20px * 2);
+						max-width: calc(200px * 3 + 20px * 2);
 						margin: 0 auto;
 					}
 					.wanted-poster {
