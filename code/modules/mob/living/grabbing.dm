@@ -12,12 +12,12 @@
 	id = "oiled"
 	duration = 5 MINUTES
 	alert_type = /atom/movable/screen/alert/status_effect/oiled
+	var/slip_chance = 8 // chance to slip when moving
 
 /atom/movable/screen/alert/status_effect/oiled
 	name = "Oiled"
 	desc = "I'm covered in oil, making me slippery and harder to grab!"
 	icon_state = "debuff"
-	var/slip_chance = 8 // chance to slip when moving
 
 /datum/status_effect/buff/oiled/on_apply()
 	. = ..()
@@ -47,8 +47,6 @@
 			mover.liquid_slip(total_time = 1.6 SECONDS, stun_duration = 1.6 SECONDS, height = 12, flip_count = 0)
 
 /atom/proc/liquid_slip(total_time = 0.5 SECONDS, stun_duration = 0.5 SECONDS, height = 16, flip_count = 1)
-	animate(src) // cleanse animations as funny as a ton of stacked flips would be it would be an eye sore
-	var/matrix/M = transform
 	var/turn = 90
 	if(dir == EAST)
 		turn = 90
@@ -62,6 +60,7 @@
 		living.Immobilize(total_time)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living, Knockdown), total_time), stun_duration)
 
+	var/matrix/transform_before = transform
 	var/flip_anim_step_time = total_time / (1 + 4 * flip_count)
 
 	animate(src, transform = transform.Turn(turn), time = flip_anim_step_time, flags = ANIMATION_PARALLEL)
