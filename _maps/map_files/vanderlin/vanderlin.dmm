@@ -17723,9 +17723,7 @@
 /turf/open/floor/dirt/road,
 /area/rogue/outdoors/town)
 "kxQ" = (
-/obj/structure/chair/bench/ultimacouch/r{
-	icon_state = "ultimacochright"
-	},
+/obj/structure/chair/bench/ultimacouch/r,
 /turf/open/floor/carpet/green,
 /area/rogue/indoors/town)
 "kyv" = (
@@ -26658,9 +26656,7 @@
 /turf/open/floor/wood,
 /area/rogue/indoors/town/manor/garrison)
 "qiB" = (
-/obj/structure/chair/bench/ultimacouch/r{
-	icon_state = "ultimacochright"
-	},
+/obj/structure/chair/bench/ultimacouch/r,
 /turf/open/floor/carpet,
 /area/rogue/indoors/town)
 "qje" = (

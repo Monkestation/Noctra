@@ -6771,9 +6771,7 @@
 /turf/open/floor/cobble,
 /area/rogue/outdoors/town)
 "dCi" = (
-/obj/structure/chair/bench/ultimacouch/r{
-	icon_state = "ultimacochright"
-	},
+/obj/structure/chair/bench/ultimacouch/r,
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/indoors/town)
 "dCk" = (
@@ -13364,9 +13362,7 @@
 /turf/open/floor/ruinedwood/chevron,
 /area/rogue/indoors/town/magician)
 "hrI" = (
-/obj/structure/chair/bench/ultimacouch/r{
-	icon_state = "ultimacochright"
-	},
+/obj/structure/chair/bench/ultimacouch/r,
 /turf/open/floor/carpet/green,
 /area/rogue/indoors/town)
 "hrQ" = (
