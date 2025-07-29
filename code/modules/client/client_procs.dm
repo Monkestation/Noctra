@@ -51,8 +51,13 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	if(href_list["delete_painting"])
 		if(!holder)
 			return
-		SSpaintings.del_player_painting(href_list["id"])
-		SSpaintings.update_paintings()
+		var/title = href_list["id"]
+		if(!title)
+			return
+		if(SSpaintings.del_player_painting(title))
+			message_admins("[key_name_admin(src)] has deleted player made painting called: [title]")
+			SSpaintings.update_paintings()
+			manage_paintings()
 
 	// asset_cache
 	var/asset_cache_job
