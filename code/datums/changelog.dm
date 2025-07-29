@@ -13,7 +13,7 @@
 	<html>
 	<head>
 		<title>Vanderlin Changelog</title>
-		<link rel="stylesheet" type="text/css" href="changelog.css">
+		<link rel="stylesheet" type="text/css" href="[SSassets.transport.get_asset_url("changelog.css")]">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	</head>
 
@@ -42,7 +42,7 @@
 
 	<div>
 		[format_logs()]
-	<div>
+	</div>
 
 	<b>GoonStation 13 Development Team</b>
 		<div class = "top">
@@ -100,7 +100,7 @@
 				ammend = "[key_to_text[tag]] - "
 			var/description = change[tag]
 			changes += {"
-				<li>[ammend][description]</li>
+				<li class='[tag]'>[ammend][description]</li>
 			"}
 
 		authors_data += {"
