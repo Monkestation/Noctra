@@ -29,11 +29,10 @@ export function changelogToJson(changelog, login) {
 	}
 
 	for (const change of changelog.changes) {
-		const change_list = [
-			`${change.type.changelogKey}`,
-			`${safeYml(change.description)}`,
-		]
-		changelog_json.changes.push(change_list);
+		const change_json = {
+			[`${change.type.changelogKey}`] : `${safeYml(change.description)}`
+		}
+		changelog_json.changes.push(change_json);
 	}
 
 	return changelog_json;

@@ -91,20 +91,20 @@
 /datum/changelog/proc/format_authors(list/authors)
 	var/list/authors_data = list()
 	for(var/author in authors)
-		var/html_return = {"<h3 class="author">[author["author"]] updated:</h3>"}
-
+		var/data = authors[author]
 		var/list/changes = list()
-		for(var/change in author["changes"])
-			var/tag = ""
-			if(key_to_text[change[1]])
-				tag = "[key_to_text[tag]] - "
-			var/description = change[2]
+		for(var/change in data)
+			var/ammend = ""
+			var/tag = change[1]
+			if(key_to_text[tag])
+				ammend = "[key_to_text[tag]] - "
+			var/description = change[tag]
 			changes += {"
-				<li>[tag][description]</li>
+				<li>[ammend][description]</li>
 			"}
 
 		authors_data += {"
-			[html_return]
+			<h3 class="author">[author] updated:</h3>
 			<ul class="changes bgimages16">
 				[changes.Join()]
 			</ul>
