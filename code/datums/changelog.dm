@@ -1,3 +1,4 @@
+/// Global changelog singleton
 /datum/changelog
 	var/static/built_html
 	var/static/list/key_to_text = list(
