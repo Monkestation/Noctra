@@ -3,13 +3,13 @@
 	var/static/list/key_to_text = list(
 		"rscadd" = "ADDITION",
 		"rscdel" = "REMOVAL",
-		"image" = "ICONS"
+		"image" = "ICONS",
 		"imageadd" = "ADDED ICONS",
 		"imagedel" = "REMOVED ICONS",
-		"sound" = "SOUNDS"
-		"soundadd" = "ADDED SOUNDS"
+		"sound" = "SOUNDS",
+		"soundadd" = "ADDED SOUNDS",
 		"sounddel" = "REMOVED SOUNDS",
-		"map" = "MAPPING"
+		"map" = "MAPPING",
 		"bugfix" = "BUGFIX",
 		"wip" = "WORK IN PROGRESS",
 		"qol" = "QUALITY OF LIFE",
