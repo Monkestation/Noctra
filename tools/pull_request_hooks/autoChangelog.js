@@ -45,7 +45,7 @@ export async function processAutoChangelog({ github, context }) {
 		return;
 	}
 
-	const json = changelog_json(
+	const json = changelogToJson(
 		changelog,
 		context.payload.pull_request.user.login
 	);
