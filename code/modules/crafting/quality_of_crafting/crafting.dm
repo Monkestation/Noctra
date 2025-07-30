@@ -484,7 +484,7 @@
 /datum/repeatable_crafting_recipe/crafting/bottle_kit
 	name = "bottle kit"
 	requirements = list(
-		/obj/item/reagent_containers/glass/bottle = 1,
+		/obj/item/reagent_containers/glass/bottle = 2,
 		/obj/item/paper = 2,
 	)
 	attacked_atom = /obj/item/paper
@@ -493,7 +493,6 @@
 	output = /obj/item/bottle_kit
 	craft_time = 5 SECONDS
 	subtypes_allowed = TRUE
-	craftdiff = 0
 
 /datum/repeatable_crafting_recipe/crafting/bottle_kit/create_blacklisted_paths()
 	blacklisted_paths = subtypesof(/obj/item/paper)

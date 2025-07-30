@@ -60,7 +60,7 @@
 /obj/proc/on_unlock(mob/user, silent = FALSE)
 	if(!silent && unlock_sound)
 		playsound(get_turf(src), unlock_sound, 100)
-		user.visible_message(span_notice("[user] unlocks \the [src]."), span_notice("I unlock \the [src]"), span_notice("I hear a click."))
+		user.visible_message(span_notice("[user] unlocks \the [src]."), span_notice("I unlock \the [src]."), span_notice("I hear a click."))
 		return
 	to_chat(user, span_notice("I unlock \the [src]."))
 

@@ -44,7 +44,6 @@
 	var/can_gain_with_sight = FALSE
 	var/can_gain_by_walking = FALSE
 	var/check_other_side = FALSE
-	var/invis_without_trait = FALSE
 	var/list/revealed_to = list()
 
 /obj/structure/fluff/traveltile/Initialize()
@@ -57,7 +56,7 @@
 	. = ..()
 
 /obj/structure/fluff/traveltile/proc/hide_if_needed()
-	if(invis_without_trait && required_trait)
+	if(required_trait)
 		invisibility = INVISIBILITY_OBSERVER
 		var/image/I = image(icon = 'icons/turf/floors.dmi', icon_state = "travel", layer = ABOVE_OPEN_TURF_LAYER, loc = src)
 		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/traveltile, required_trait, I)
@@ -157,7 +156,7 @@
 		reveal_travel_trait_to_others(user)
 	if(can_gain_by_walking && the_tile.required_trait && !HAS_TRAIT(user, the_tile.required_trait) && !HAS_TRAIT(user, TRAIT_BLIND)) // If you're blind you can't find your way
 		ADD_TRAIT(user, the_tile.required_trait, TRAIT_GENERIC)
-	if(invis_without_trait && !revealed_to.Find(user))
+	if(required_trait && !revealed_to.Find(user))
 		show_travel_tile(user)
 		the_tile.show_travel_tile(user)
 	user.log_message("[user.mind?.key ? user.mind?.key : user.real_name] has travelled to [loc_name(the_tile)] from", LOG_GAME, color = "#0000ff")
