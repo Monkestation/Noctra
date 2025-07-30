@@ -22,6 +22,10 @@
 	banned_leprosy = FALSE
 	can_have_apprentices = FALSE
 
+	spells = list(
+		/datum/action/cooldown/spell/undirected/touch/prestidigitation,
+	)
+
 /datum/outfit/job/mageapprentice/pre_equip(mob/living/carbon/human/H)
 	allowed_patrons = list(/datum/patron/divine/noc, /datum/patron/inhumen/zizo)//see court mage for explaination
 	if(H.gender == MALE)
@@ -55,7 +59,6 @@
 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
-	H.add_spell(/datum/action/cooldown/spell/undirected/touch/prestidigitation)
 	H.change_stat(STATKEY_INT, 1)
 	H.change_stat(STATKEY_SPD, -1)
 	H.mana_pool?.set_intrinsic_recharge(MANA_ALL_LEYLINES)
