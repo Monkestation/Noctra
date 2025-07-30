@@ -26,12 +26,12 @@ export function changelogToJson(changelog, login) {
 		"author" : `author: "${safeYml(author)}"`,
 		"delete-after" : true,
 		"changes" : []
-	}
+	};
 
 	for (const change of changelog.changes) {
 		const change_json = {
 			[`${change.type.changelogKey}`] : `${safeYml(change.description)}`
-		}
+		};
 		changelog_json.changes.push(change_json);
 	}
 
