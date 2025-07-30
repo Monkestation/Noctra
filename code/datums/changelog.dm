@@ -1,8 +1,26 @@
 /datum/changelog
-	var/static/list/changelog_items = list()
-	var/built_html
+	var/static/built_html
 	var/static/list/key_to_text = list(
-		"rscadd" = "ADDITION"
+		"rscadd" = "ADDITION",
+		"rscdel" = "REMOVAL",
+		"image" = "ICONS"
+		"imageadd" = "ADDED ICONS",
+		"imagedel" = "REMOVED ICONS",
+		"sound" = "SOUNDS"
+		"soundadd" = "ADDED SOUNDS"
+		"sounddel" = "REMOVED SOUNDS",
+		"map" = "MAPPING"
+		"bugfix" = "BUGFIX",
+		"wip" = "WORK IN PROGRESS",
+		"qol" = "QUALITY OF LIFE",
+		"spellcheck" = "SPELLING",
+		"experiment" = "EXPERIMENTAL",
+		"balance" = "BALANCE",
+		"code_imp" = "CODE IMPROVEMENT",
+		"refactor" = "REFACTOR",
+		"config" = "CONFIG",
+		"admin" = "ADMIN",
+		"server" = "SERVER",
 	)
 
 /datum/changelog/New()
