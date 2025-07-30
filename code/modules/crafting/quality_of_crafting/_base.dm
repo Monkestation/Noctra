@@ -151,7 +151,7 @@
 					copied_reagent_requirements -= required_path
 					break
 
-	return !(length(copied_requirements) && !length(copied_reagent_requirements) && !length(copied_tool_usage))
+	return !length(copied_requirements) && !length(copied_reagent_requirements) && !length(copied_tool_usage)
 
 /**
  * Checks the maximum number of repeats possible with available resources
