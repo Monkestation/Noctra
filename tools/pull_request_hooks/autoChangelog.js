@@ -55,6 +55,6 @@ export async function processAutoChangelog({ github, context }) {
 		repo: context.repo.repo,
 		path: `html/changelogs/AutoChangeLog-pr-${context.payload.pull_request.number}.json`,
 		message: `Automatic changelog for PR #${context.payload.pull_request.number} [ci skip]`,
-		content: Buffer.from(JSON.parse(json)).toString("base64"),
+		content: Buffer.from(JSON.stringify(json)).toString("base64"),
 	});
 }
