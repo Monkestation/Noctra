@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ag" = (
-/obj/structure/chair/bench/couch/redright,
+/obj/structure/chair/bench/coucha/redright,
 /turf/open/floor/carpet,
 /area/rogue/under/tomb/indoors/magic)
 "ax" = (
@@ -230,7 +230,7 @@
 /turf/open/floor/twig,
 /area/rogue/under/tomb/indoors)
 "ii" = (
-/obj/structure/chair/bench/couch/redleft,
+/obj/structure/chair/bench/coucha/redleft,
 /turf/open/floor/carpet,
 /area/rogue/under/tomb/indoors/magic)
 "ji" = (
@@ -816,7 +816,7 @@
 /turf/open/floor/ruinedwood/chevron,
 /area/rogue/under/tomb/indoors/magic)
 "Fu" = (
-/obj/structure/chair/bench/couch/redleft,
+/obj/structure/chair/bench/coucha/redleft,
 /turf/open/floor/carpet,
 /area/rogue/under/tomb/indoors)
 "Ge" = (
@@ -928,7 +928,7 @@
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/under/tomb/indoors)
 "Ma" = (
-/obj/structure/chair/bench/couch/redright,
+/obj/structure/chair/bench/coucha/redright,
 /turf/open/floor/carpet,
 /area/rogue/under/tomb/indoors)
 "Mm" = (

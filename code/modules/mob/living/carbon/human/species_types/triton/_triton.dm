@@ -112,7 +112,7 @@
 		ORGAN_SLOT_LUNGS = /obj/item/organ/lungs,
 		ORGAN_SLOT_EYES = /obj/item/organ/eyes/triton,
 		ORGAN_SLOT_EARS = /obj/item/organ/ears,
-		ORGAN_SLOT_TONGUE = /obj/item/organ/tongue,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/tongue/fish,
 		ORGAN_SLOT_LIVER = /obj/item/organ/liver,
 		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach,
 		ORGAN_SLOT_APPENDIX = /obj/item/organ/appendix,
@@ -136,10 +136,20 @@
 	. = ..()
 	RegisterSignal(C, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	C.grant_language(/datum/language/common)
+	C.grant_language(/datum/language/deepspeak)
+
+/datum/species/triton/after_creation(mob/living/carbon/C)
+	. = ..()
+	C.grant_language(/datum/language/deepspeak)
+	to_chat(C, "<span class='info'>I can speak Deepspeak with ,f before my speech.</span>")
 
 /datum/species/triton/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_SAY)
+	C.remove_language(/datum/language/deepspeak)
+
+/datum/species/triton/get_accent_list()
+	return strings("accents/triton_replacement.json", "triton")
 
 /datum/species/triton/check_roundstart_eligible()
 	return TRUE
@@ -177,3 +187,6 @@
 		"Photic" = HAIR_COLOR_PHOTIC,
 		"Turtle Egg" = HAIR_COLOR_TURTLE,
 	)
+
+/datum/species/triton/get_native_language()
+	return "Deepspeak"

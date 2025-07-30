@@ -19,7 +19,8 @@
 		/datum/language/hellspeak,
 		/datum/language/beast,
 		/datum/language/thievescant,
-		/datum/language/orcish
+		/datum/language/orcish,
+		/datum/language/deepspeak
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)
@@ -48,21 +49,31 @@
 /obj/item/organ/tongue/could_speak_in_language(datum/language/dt)
 	return is_type_in_typecache(dt, languages_possible)
 
-/obj/item/organ/tongue/lizard
-	name = "forked tongue"
+/obj/item/organ/tongue/fish
+	name = "basihyal tongue"
 	desc = ""
-	icon_state = "tonguelizard"
-	say_mod = "hisses"
-	taste_sensitivity = 10 // combined nose + tongue, extra sensitive
+	icon_state = "tonguefish"
+	taste_sensitivity = 20
 	modifies_speech = TRUE
 
-/obj/item/organ/tongue/lizard/handle_speech(datum/source, list/speech_args)
-	var/static/regex/lizard_hiss = new("s+", "g")
-	var/static/regex/lizard_hiSS = new("S+", "g")
+/obj/item/organ/tongue/fish/handle_speech(datum/source, list/speech_args)
+	var/static/regex/fishtongue_s = new("s", "g")
+	var/static/regex/fishtongue_S = new("S", "g")
+	var/static/regex/fishtongue_z = new("z", "g")
+	var/static/regex/fishtongue_Z = new("Z", "g")
 	var/message = speech_args[SPEECH_MESSAGE]
+	if(!message)
+		return
+
+	var/datum/language/lang = speech_args[SPEECH_LANGUAGE]
+	if(lang && ispath(lang, /datum/language/deepspeak))
+		return
+
 	if(message[1] != "*")
-		message = lizard_hiss.Replace(message, "sss")
-		message = lizard_hiSS.Replace(message, "SSS")
+		message = fishtongue_s.Replace(message, "sss")
+		message = fishtongue_S.Replace(message, "SSS")
+		message = fishtongue_z.Replace(message, "zzz")
+		message = fishtongue_Z.Replace(message, "ZZZ")
 	speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/organ/tongue/fly
