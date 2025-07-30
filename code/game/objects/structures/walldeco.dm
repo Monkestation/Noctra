@@ -126,7 +126,7 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
-			min-height: 60px;
+			min-height: 65px;
 			margin-top: 5px;
 		}
 		.wanted-name {
