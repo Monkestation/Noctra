@@ -40,18 +40,47 @@
 		</tr>
 	</table>
 
-	<div>
-		[format_logs()]
-	</div>
+	<table align='center' class="top">
+		<tr>
+			<td valign='top'>
+				[format_logs()]
+			</td>
+		</tr>
+	</table>
 
 	<b>GoonStation 13 Development Team</b>
-		<div class = "top">
+	<div class = "top">
 		<b>Coders:</b> Stuntwaffle, Showtime, Pantaloons, Nannek, Keelin, Exadv1, hobnob, Justicefries, 0staf, sniperchance, AngriestIBM, BrianOBlivion<br>
 		<b>Spriters:</b> Supernorn, Haruhi, Stuntwaffle, Pantaloons, Rho, SynthOrange, I Said No<br>
-		</div>
-	<br>
-	<p class="lic"><a name="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img src="88x31.png" alt="Creative Commons License" /></a><br><i>Except where otherwise noted, Goon Station 13 is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-Noncommercial-Share Alike 3.0 License</a>.<br>Rights are currently extended to <a href="http://forums.somethingawful.com/">SomethingAwful Goons</a> only.</i></p>
-	<p class="lic">Some icons by <a href="http://p.yusukekamiyamane.com/">Yusuke Kamiyamane</a>. All rights reserved. Licensed under a <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution 3.0 License</a>.</p>
+	</div>
+
+	<table align='center' class="top">
+		<tr>
+			<td valign='top'>
+				<p class="lic">
+					Except where otherwise noted, Goon Station 13 is licensed under a <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-Noncommercial-Share Alike 3.0 License</a>.
+					Rights are currently extended to \
+					<a href="http://forums.somethingawful.com/">SomethingAwful Goons</a> only.
+					<b><p>
+						All code after \
+						<a href="https://github.com/tgstation/tgstation/commit/333c566b88108de218d882840e61928a9b759d8">TG station commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST</a> \
+						is licenced under <a href="https://www.gnu.org/licenses/agpl-3.0.html>GNU AGPL v3</a>. \
+						All code after that commit is licensed under <a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU GPL v3</a>, \
+						including tools unless their readme specifies otherwise, see <a href="https://github.com/Monkestation/Vanderlin/blob/main/LICENSE">LICENSE</a>.
+					</p>
+					<p>
+						Rogue Town was orginally forked from \
+						<a href="https://github.com/tgstation/tgstation/commit/c28b351807bad950d2b323ada048190844bbda32">TG station commit c28b351807bad950d2b323ada048190844bbda32 on 2019/17/11</a>
+					</p>
+					<p>
+						All assets including icons and sound are under a \
+						<a href="https://creativecommons.org/licenses/by-sa/3.0/">Creative Commons 3.0 BY-SA license</a> unless otherwise indicated.
+					</p></b>
+				</p>
+			</td>
+		</tr>
+	</table>
+
 	</td></tr></table>
 	</body>
 	</html>
