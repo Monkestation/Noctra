@@ -1096,58 +1096,66 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	var/list/partial = splittext(iconData, "{")
 	return replacetext(copytext(partial[2], 3, -5), "\n", "")
 
-/proc/icon2html(thing, target, icon_state, dir, frame = 1, moving = FALSE)
-	if (!thing)
+/proc/icon2html(atom/thing, client/target, icon_state, dir = SOUTH, frame = 1, moving = FALSE, sourceonly = FALSE, extra_classes = null)
+	if(!thing || !target)
 		return
 
-	var/key
-	var/icon/I = thing
-	if (!target)
-		return
-	if (target == world)
+	if(target == world)
 		target = GLOB.clients
 
 	var/list/targets
-	if (!islist(target))
+	if(!islist(target))
 		targets = list(target)
 	else
 		targets = target
-		if (!targets.len)
-			return
-	if (!isicon(I))
-		if (isfile(thing)) //special snowflake
-			var/name = sanitize_filename("[generate_asset_name(thing)].png")
-			SSassets.transport.register_asset(name, thing)
-			for (var/mob/thing2 in targets)
-				if(!istype(thing2) || !thing2.client)
-					continue
-				SSassets.transport.send_assets(thing2?.client, key)
-			return "<img class='icon icon-misc' src=\"[url_encode(name)]\">"
-		var/atom/A = thing
-		if (isnull(dir))
-			dir = A.dir
-		if (isnull(icon_state))
-			icon_state = A.icon_state
-		I = A.icon
-		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
-			var/icon/temp = I
-			I = icon()
-			I.Insert(temp, dir = SOUTH)
+	if(!length(targets))
+		return
+
+	var/key
+	var/icon/icon2collapse = thing
+	if(isicon(icon2collapse))
+		if(isnull(dir))
 			dir = SOUTH
-	else
-		if (isnull(dir))
-			dir = SOUTH
-		if (isnull(icon_state))
+		if(isnull(icon_state))
 			icon_state = ""
+	else
+		if(isfile(thing)) //special snowflake
+			var/name = sanitize_filename("[generate_asset_name(thing)].png")
+			if(!SSassets.cache[name])
+				SSassets.transport.register_asset(name, icon2collapse)
+			for(var/client_target in targets)
+				SSassets.transport.send_assets(client_target, name)
+			if(sourceonly)
+				return SSassets.transport.get_asset_url(name)
+			return "<img class='[extra_classes] icon icon-misc' src='[SSassets.transport.get_asset_url(name)]'>"
 
-	I = icon(I, icon_state, dir, frame, moving)
+		icon2collapse = thing.icon
+		if(isnull(icon_state))
+			icon_state = thing.icon_state
+			if(isnull(icon_state))
+				icon_state = initial(thing.icon_state)
+				if(isnull(dir))
+					dir = initial(thing.dir)
 
-	key = "[generate_asset_name(I)].png"
-	SSassets.transport.register_asset(key, I)
-	for (var/thing2 in targets)
-		SSassets.transport.send_assets(thing2, key)
+		if(isnull(dir))
+			dir = thing.dir
 
-	return "<img class='icon icon-[icon_state]' src='[SSassets.transport.get_asset_url(key)]'>"
+		if(ishuman(thing)) // Shitty workaround for a BYOND issue.
+			var/icon/temp = icon2collapse
+			icon2collapse = icon()
+			icon2collapse.Insert(temp, dir = SOUTH)
+			dir = SOUTH
+
+	icon2collapse = icon(icon2collapse, icon_state, dir, frame, moving)
+
+	key = "[generate_asset_name(icon2collapse)].png"
+	if(!SSassets.cache[key])
+		SSassets.transport.register_asset(key, icon2collapse)
+	for(var/client_target in targets)
+		SSassets.transport.send_assets(client_target, key)
+	if(sourceonly)
+		return SSassets.transport.get_asset_url(key)
+	return "<img class='[extra_classes] icon icon-[icon_state]' src='[SSassets.transport.get_asset_url(key)]'>"
 
 /proc/icon2base64html(thing)
 	if (!thing)

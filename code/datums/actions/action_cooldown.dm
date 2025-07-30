@@ -149,7 +149,11 @@
 
 /// Retrigger the spell after starting the cooldown if possible
 /datum/action/cooldown/proc/retrigger()
+	if(QDELETED(src) || QDELETED(owner))
+		return
+
 	UnregisterSignal(owner, COMSIG_MOB_SPELL_ACTIVATED)
+
 	// Lets just have a cut off for reset
 	if(cooldown_time > 1 MINUTES)
 		return
