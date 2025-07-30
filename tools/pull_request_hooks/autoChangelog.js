@@ -23,7 +23,7 @@ export function changelogToYml(changelog, login) {
 export function changelogToJson(changelog, login) {
 	const author = changelog.author || login;
 	const changelog_json = {
-		"author" : `author: "${safeYml(author)}"`,
+		"author" : `${safeYml(author)}`,
 		"delete-after" : true,
 		"changes" : []
 	};
