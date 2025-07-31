@@ -24,14 +24,14 @@
 //................. City Watchmen Base .............. //
 /datum/outfit/job/guardsman/pre_equip(mob/living/carbon/human/H)
 	. = ..()
-	cloak = pick(/obj/item/clothing/cloak/half/guard, /obj/item/clothing/cloak/half/guardsecond)
+	cloak = /obj/item/clothing/cloak/half/guard
 	pants = /obj/item/clothing/pants/trou/leather
 	wrists = /obj/item/rope/chain
 	shoes = /obj/item/clothing/shoes/boots
 	belt = /obj/item/storage/belt/leather
 	gloves = /obj/item/clothing/gloves/leather
 	if(H.dna && !(H.dna.species.id in RACES_PLAYER_NONDISCRIMINATED)) // to prevent examine stress
-		mask = /obj/item/clothing/face/shepherd
+		mask = /obj/item/clothing/face/shepherd/guard
 
 /datum/outfit/job/guardsman/post_equip(mob/living/carbon/human/H)
 	. = ..()
@@ -54,7 +54,7 @@
 	head = /obj/item/clothing/head/helmet/townwatch
 	neck = /obj/item/clothing/neck/gorget
 	armor = /obj/item/clothing/armor/chainmail
-	shirt = /obj/item/clothing/armor/gambeson
+	shirt = /obj/item/clothing/armor/gambeson/guard
 	backr = /obj/item/weapon/shield/heater
 	backl = /obj/item/storage/backpack/satchel
 	beltr = /obj/item/weapon/sword/short
@@ -92,7 +92,7 @@
 	..()
 	head = /obj/item/clothing/head/helmet/townwatch/alt
 	neck = /obj/item/clothing/neck/chaincoif
-	armor = /obj/item/clothing/armor/gambeson/heavy
+	armor = /obj/item/clothing/armor/gambeson/heavy/guard
 	shirt = pick(/obj/item/clothing/shirt/undershirt/guard, /obj/item/clothing/shirt/undershirt/guardsecond)
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 	backl = /obj/item/storage/backpack/satchel
@@ -131,7 +131,7 @@
 	..()
 	head = /obj/item/clothing/head/helmet/townwatch
 	armor = /obj/item/clothing/armor/chainmail
-	shirt = /obj/item/clothing/armor/gambeson
+	shirt = /obj/item/clothing/armor/gambeson/guard
 	neck = /obj/item/clothing/neck/gorget
 	backl = /obj/item/storage/backpack/satchel
 	backr = /obj/item/weapon/polearm/spear

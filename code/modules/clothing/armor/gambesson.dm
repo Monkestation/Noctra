@@ -21,6 +21,10 @@
 	body_parts_covered = COVERAGE_FULL
 	prevent_crits = ALL_EXCEPT_CHOP_AND_STAB
 
+/obj/item/clothing/armor/gambeson/guard
+	color = CLOTHING_BLOOD_RED
+	uses_lord_coloring = LORD_SECONDARY
+
 /obj/item/clothing/armor/gambeson/light
 	name = "light gambeson"
 	desc = "Thin and the maker skimped on the padding, typically worn by the peasantry to give some protection against cold for the whole body."
@@ -32,7 +36,7 @@
 	prevent_crits = MINOR_CRITICALS
 
 /obj/item/clothing/armor/gambeson/light/black
-		color = CLOTHING_SOOT_BLACK
+	color = CLOTHING_SOOT_BLACK
 
 /obj/item/clothing/armor/gambeson/heavy
 	name = "padded gambeson"
@@ -42,6 +46,9 @@
 
 	armor = ARMOR_PADDED_GOOD
 
+/obj/item/clothing/armor/gambeson/heavy/guard
+	color = CLOTHING_BLOOD_RED
+	uses_lord_coloring = LORD_SECONDARY
 
 /obj/item/clothing/armor/gambeson/apothecary
 	name = "apothecary overcoat"
