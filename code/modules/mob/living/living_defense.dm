@@ -293,7 +293,7 @@
 		return FALSE
 	if(!M.Adjacent(src))
 		return FALSE
-	if(M.incapacitated(ignore_grab = TRUE))
+	if(M.incapacitated(IGNORE_GRAB))
 		return FALSE
 
 	if(checkmiss(M))

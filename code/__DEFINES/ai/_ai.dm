@@ -7,7 +7,7 @@
 ///Carbon checks
 #define SHOULD_RESIST(source) (source.on_fire || source.buckled || HAS_TRAIT(source, TRAIT_RESTRAINED) || (source.pulledby && (source.pulledby != source) && source.pulledby.grab_state > GRAB_PASSIVE))
 #define SHOULD_STAND(source) (source.resting)
-#define IS_DEAD_OR_INCAP(source) (source.incapacitated(ignore_grab = TRUE) || source.stat)
+#define IS_DEAD_OR_INCAP(source) (source.incapacitated(IGNORE_GRAB) || source.stat)
 
 
 // How far should we, by default, be looking for interesting things to de-idle?

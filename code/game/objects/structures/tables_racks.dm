@@ -476,20 +476,28 @@
 	climbable = FALSE
 	dir = SOUTH
 	pixel_y = 32
+	density = FALSE
+	climb_offset = 0
 
 /obj/structure/rack/shelf/big
 	icon_state = "shelf_big"
 	climbable = FALSE
 	dir = SOUTH
 	pixel_y = 16
+	density = FALSE
+	climb_offset = 0
 
 /obj/structure/rack/shelf/biggest
 	icon_state = "shelf_biggest"
 	pixel_y = 0
+	density = TRUE
+	climb_offset = 10
 
-/obj/structure/rack/shelf/notdense // makes the wall mounted one less weird in a way, got downside of offset when loaded again tho
+// Shelves have been made nondense. The only functional difference this has now is a lower pixel_y
+/obj/structure/rack/shelf/notdense
 	density = FALSE
 	pixel_y = 24
+	climb_offset = 0
 
 // Necessary to avoid a critical bug with disappearing weapons.
 /obj/structure/rack/attackby(obj/item/I, mob/user, params)

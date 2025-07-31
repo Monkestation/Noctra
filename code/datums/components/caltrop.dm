@@ -52,7 +52,7 @@
 		H.apply_damage(damage, BRUTE, picked_def_zone)
 
 		if(cooldown < world.time - 10) //cooldown to avoid message spam.
-			if(!H.incapacitated(ignore_restraints = TRUE, ignore_grab = TRUE))
+			if(!H.incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB))
 				H.visible_message("<span class='danger'>[H] steps on [A].</span>", \
 						"<span class='danger'>I step on [A]!</span>")
 			else
