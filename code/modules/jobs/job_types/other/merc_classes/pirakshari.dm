@@ -41,6 +41,7 @@
 	armor = /obj/item/clothing/armor/leather/splint
 	backr = /obj/item/storage/backpack/satchel
 	head = /obj/item/clothing/neck/keffiyeh/uncolored
+	scabbards = list(/obj/item/weapon/scabbard/sword)
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/poor, /obj/item/weapon/knife/dagger)
 
 	H.merctype = 1 //Desert Rider chain, 0 for Desert Rider Medal

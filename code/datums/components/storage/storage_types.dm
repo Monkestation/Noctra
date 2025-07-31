@@ -1,5 +1,4 @@
 /datum/component/storage/concrete/scabbard
-	drop_all_on_destroy = TRUE
 	max_items = 1
 	rustle_sound = 'sound/foley/equip/scabbard_holster.ogg'
 	max_w_class = WEIGHT_CLASS_BULKY
@@ -14,4 +13,4 @@
 
 /datum/component/storage/concrete/scabbard/sword/New(list/raw_args)
 	. = ..()
-	set_holdable(list(/obj/item/weapon/sword), list(/obj/item/weapon/sword/long/exe))
+	set_holdable(list(/obj/item/weapon/sword), list(/obj/item/weapon/sword/long/exe, /obj/item/weapon/sword/long/greatsword))

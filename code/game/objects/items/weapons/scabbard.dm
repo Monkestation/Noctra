@@ -1,5 +1,3 @@
-/// I guess this is a weapon? Let's just make it equivalent to a wooden sword
-
 /obj/item/weapon/scabbard
 	icon = 'icons/roguetown/weapons/scabbard.dmi'
 	alternate_worn_layer = UNDER_CLOAK_LAYER
@@ -10,11 +8,6 @@
 	sharpness = IS_BLUNT
 	blade_dulling = DULLING_BASHCHOP
 	possible_item_intents = list(SHIELD_BASH)
-
-/obj/item/weapon/scabbard/Initialize(mapload, weapon_path)
-	. = ..()
-	if(weapon_path)
-		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, new weapon_path(get_turf(src)), null, TRUE, TRUE)
 
 /obj/item/weapon/scabbard/update_icon_state()
 	icon_state = initial(icon_state)
@@ -36,10 +29,9 @@
 /*
 	GENERIC SCABBARDS
 */
-
 /obj/item/weapon/scabbard/knife
 	name = "knife sheath"
-	desc = "A slingable sheath made of leather, meant to host surprises in smaller sizes."
+	desc = "A slingable sheath made of leather, meant to host surprises of smaller sizes."
 	icon_state = "sheath"
 
 	force = 3

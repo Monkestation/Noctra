@@ -48,6 +48,7 @@
 	beltr = /obj/item/weapon/knife/dagger/steel/special
 	beltl = /obj/item/storage/belt/pouch/coins/poor
 	backpack_contents = list(/obj/item/flint)
+	scabbards = list(/obj/item/weapon/scabbard/knife)
 	if(H.dna?.species?.id == SPEC_ID_DWARF)
 		H.cmode_music = 'sound/music/cmode/combat_dwarf.ogg'
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
