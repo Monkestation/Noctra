@@ -18,7 +18,7 @@
 	allowed_races = RACES_PLAYER_ALL
 
 	outfit = /datum/outfit/job/merchant
-	give_bank_account = 100
+	give_bank_account = 200
 
 /datum/outfit/job/merchant/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -55,3 +55,4 @@
 	H.adjust_skillrank(/datum/skill/misc/lockpicking, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/riding, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/mathematics, 5, TRUE)
+	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)

@@ -4,8 +4,8 @@
 	department_flag = SERFS
 	faction = "Station"
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE )
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 
 	allowed_races = RACES_PLAYER_ALL
 	//I say we let all races be the gaffer, this is job concerns the adventurers and mercs, and those come in all types and sizes,
