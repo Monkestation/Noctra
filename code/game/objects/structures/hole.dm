@@ -152,7 +152,8 @@
 				attacking_shovel.heldclod = new(attacking_shovel)
 				attacking_shovel.update_appearance(UPDATE_ICON_STATE)
 				playsound(our_turf,'sound/items/dig_shovel.ogg', 100, TRUE)
-				our_turf.ChangeTurf(/turf/open/transparent/openspace)
+				our_turf.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+				qdel(src)
 				return
 			to_chat(user, "<span class='warning'>I think that's deep enough.</span>")
 			return
