@@ -321,7 +321,7 @@
 
 /obj/structure/material_bin
 	name = "auto anvil hopper"
-	desc = "The storage can be opened and closed with MMB."
+	desc = "The storage can be opened and closed with RMB."
 
 	icon = 'icons/obj/autosmithy.dmi'
 	icon_state = "material"
@@ -344,10 +344,8 @@
 	else
 		icon_state = initial(icon_state)
 
-/obj/structure/material_bin/MiddleClick(mob/user, params)
-	. = ..()
-	if(user.get_active_held_item())
-		return
+/obj/structure/material_bin/attack_hand_secondary(mob/user, params)
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.visible_message(span_danger("[user] starts to [opened ? "close" : "open"] [src]."), span_danger("You start to [opened ? "close" : "open"] [src]."))
 	if(!do_after(user, 2.5 SECONDS, src))
 		return
