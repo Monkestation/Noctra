@@ -103,10 +103,10 @@
 	hammers_per_item = 9
 	craftdiff = 2
 
-/datum/artificer_recipe/tools/lamptern
-	name = "Clockwork Drill (+1 Steel) (+1 Metal Gear) (+1 Wooden Plank)"
-	required_item = /obj/item/ingot/steel
-	additional_items = list(/obj/item/ingot/steel = 1, /obj/item/gear/metal = 1, /obj/item/natural/wood/plank = 1)
+/datum/artificer_recipe/tools/drill
+	name = "Clockwork Drill (+1 Bronze Bar) (+1 Metal Gear) (+1 Wooden Plank)"
+	required_item = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/ingot/bronze = 1, /obj/item/gear/metal/bronze = 1, /obj/item/natural/wood/plank = 1)
 	created_item = /obj/item/weapon/pick/drill
 	hammers_per_item = 6
 	craftdiff = 4
