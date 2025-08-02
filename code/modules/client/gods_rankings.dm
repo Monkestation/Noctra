@@ -26,11 +26,11 @@
 			initialized_storyteller.influence_modifier = 0.975
 
 		// Bottom 3 bonuses
-		else if(i == storytellers.len)
+		else if(i == length(storytellers))
 			initialized_storyteller.influence_modifier = 1.1
-		else if(i == storytellers.len - 1)
+		else if(i == length(storytellers) - 1)
 			initialized_storyteller.influence_modifier = 1.05
-		else if(i == storytellers.len - 2)
+		else if(i == length(storytellers) - 2)
 			initialized_storyteller.influence_modifier = 1.025
 
 		// Handle ascension
