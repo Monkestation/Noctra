@@ -14,7 +14,7 @@
 
 	sortTim(storytellers, GLOBAL_PROC_REF(cmp_storyteller_ranking))
 
-	for(var/i in 1 to storytellers.len)
+	for(var/i in 1 to length(storytellers))
 		var/datum/storyteller/initialized_storyteller = storytellers[i]
 
 		// Top 3 penalties
