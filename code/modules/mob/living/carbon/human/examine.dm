@@ -582,7 +582,7 @@
 
 	// Characters with the hunted flaw will freak out if they can't see someone's face.
 	if(!appears_dead)
-		if(skipface && user.has_flaw(/datum/charflaw/hunted))
+		if(skipface && user.has_flaw(/datum/charflaw/hunted) && user != src)
 			user.add_stress(/datum/stressevent/hunted)
 
 	if(!obscure_name && (flavortext || (headshot_link && src.client?.patreon?.has_access(ACCESS_ASSISTANT_RANK)))) // only show flavor text if there is a flavor text and we show headshot
