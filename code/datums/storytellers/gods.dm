@@ -155,7 +155,7 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_LAUGHS_MADE = list("name" = "Laughs had:", "points" = 0.24, "capacity" = 85),
+			STATS_LAUGHS_MADE = list("name" = "Laughs had:", "points" = 0.23, "capacity" = 85),
 		),
 		"Set 2" = list(
 			STATS_GAMES_RIGGED = list("name" = "Games rigged:", "points" = 3.5, "capacity" = 40),
@@ -490,17 +490,17 @@
 			STATS_ASSASSINATIONS = list("name" = "Successful assasinations:", "points" = 17.5, "capacity" = 80),
 		),
 		"Set 2" = list(
-			STATS_BLOOD_SPILT = list("name" = "Blood spilt:", "points" = 0.0285, "capacity" = 90),
+			STATS_BLOOD_SPILT = list("name" = "Blood spilt:", "points" = 0.02825, "capacity" = 90),
 		),
 		"Set 3" = list(
-			STATS_ORGANS_EATEN = list("name" = "Organs eaten:", "points" = 4.5, "capacity" = 70),
+			STATS_ORGANS_EATEN = list("name" = "Organs eaten:", "points" = 4.25, "capacity" = 70),
 		),
 		"Set 4" = list(
-			STATS_LIMBS_BITTEN = list("name" = "Limbs bitten:", "points" = 1, "capacity" = 70),
+			STATS_LIMBS_BITTEN = list("name" = "Limbs bitten:", "points" = 0.9, "capacity" = 70),
 			STATS_ALIVE_HALF_ORCS = list("name" = "Number of half-orcs:", "points" = 6.25, "capacity" = 65),
 		),
 		"Set 5" = list(
-			STATS_PEOPLE_GIBBED = list("name" = "People gibbed:", "points" = 3.25, "capacity" = 55),
+			STATS_PEOPLE_GIBBED = list("name" = "People gibbed:", "points" = 3, "capacity" = 55),
 		)
 	)
 
@@ -543,7 +543,7 @@
 			STATS_KLEPTOMANIACS = list("name" = "Number of kleptomaniacs:", "points" = 12, "capacity" = 70),
 		),
 		"Set 4" = list(
-			STATS_DODGES = list("name" = "Dodges made:", "points" = 0.09, "capacity" = 100),
+			STATS_DODGES = list("name" = "Dodges made:", "points" = 0.085, "capacity" = 100),
 		),
 		"Set 5" = list(
 			STATS_LOCKS_PICKED = list("name" = "Locks picked:", "points" = 3.5, "capacity" = 80),
