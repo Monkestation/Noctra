@@ -20,7 +20,7 @@
 	to_chat(owner.current, span_greentext("You have extracted lux and completed Pestra's objective!"))
 	owner.current.adjust_triumphs(triumph_count)
 	completed = TRUE
-	adjust_storyteller_influence("Pestra", 15)
+	adjust_storyteller_influence(PESTRA, 15)
 	escalate_objective()
 	UnregisterSignal(owner.current, COMSIG_LUX_EXTRACTED)
 

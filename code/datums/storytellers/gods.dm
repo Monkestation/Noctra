@@ -1,5 +1,5 @@
 /datum/storyteller/astrata
-	name = "Astrata"
+	name = ASTRATA
 	desc = "Astrata will provide a balanced and varied experience. Consider this the default experience."
 	weight = 6
 	always_votable = TRUE
@@ -28,7 +28,7 @@
 	)
 
 /datum/storyteller/noc
-	name = "Noc"
+	name = NOC
 	desc = "Noc will try to send more magical events."
 	welcome_text = "The veil between realms shimmers in your presence."
 	weight = 4
@@ -61,7 +61,7 @@
 	)
 
 /datum/storyteller/ravox
-	name = "Ravox"
+	name = RAVOX
 	desc = "Ravox will cause raids to happen naturally instead of only when people are dying a lot."
 	welcome_text = "The drums of war grow louder."
 	weight = 4
@@ -101,7 +101,7 @@
 	)
 
 /datum/storyteller/abyssor
-	name = "Abyssor"
+	name = ABYSSOR
 	desc = "Abyssor likes to send water and trade-related events."
 	welcome_text = "The tides of fate shift in your favor."
 	weight = 4
@@ -134,7 +134,7 @@
 	)
 
 /datum/storyteller/xylix
-	name = "Xylix"
+	name = XYLIX
 	desc = "Xylix is a wildcard, spinning the wheels of fate."
 	welcome_text = "The dice have been cast, let chaos reign."
 	weight = 4
@@ -173,7 +173,7 @@
 	)
 
 /datum/storyteller/necra
-	name = "Necra"
+	name = NECRA
 	desc = "Necra takes things very slow, rarely bringing in newcomers."
 	welcome_text = "The grave whispers, patience is virtue."
 	weight = 4
@@ -215,7 +215,7 @@
 	)
 
 /datum/storyteller/pestra
-	name = "Pestra"
+	name = PESTRA
 	desc = "Pestra keeps things simple, with a slight bias towards alchemy."
 	welcome_text = "The balance of life and craft tilts in your favor."
 	color_theme = "#AADDAA"
@@ -246,7 +246,7 @@
 	)
 
 /datum/storyteller/malum
-	name = "Malum"
+	name = MALUM
 	desc = "Malum believes in hard work, intervening more often than others."
 	welcome_text = "Toil and perseverance shall shape your destiny."
 	color_theme = "#D4A56C"
@@ -285,7 +285,7 @@
 	)
 
 /datum/storyteller/eora
-	name = "Eora"
+	name = EORA
 	desc = "Eora hates death and promotes love. Raids will never naturally progress, only death will bring them."
 	welcome_text = "Life shall flourish under my watchful gaze."
 	color_theme = "#9966CC"
@@ -327,7 +327,7 @@
 	)
 
 /datum/storyteller/dendor
-	name = "Dendor"
+	name = DENDOR
 	desc = "Dendor likes to send nature-themed events."
 	welcome_text = "The wilds whisper your name."
 	weight = 4
@@ -370,7 +370,7 @@
 // INHUMEN
 
 /datum/storyteller/zizo
-	name = "Zizo"
+	name = ZIZO
 	desc = "Zizo thrives on risk and reward, favoring the daring and unpredictable."
 	welcome_text = "You will kneel."
 	weight = 4
@@ -417,7 +417,7 @@
 	cost_variance = 50  // Events will be highly variable in cost
 
 /datum/storyteller/baotha
-	name = "Baotha"
+	name = BAOTHA
 	desc = "Baotha revels in chaos, making events and reality unpredictable."
 	welcome_text = "The world bends to my whims."
 	weight = 4
@@ -462,7 +462,7 @@
 	cost_variance = 30  // Makes events more erratic in timing
 
 /datum/storyteller/graggar
-	name = "Graggar"
+	name = GRAGGAR
 	desc = "Graggar encourages war and conquest, making combat the solution to all."
 	welcome_text = "Victory or death!"
 	weight = 4
@@ -507,7 +507,7 @@
 	cost_variance = 10  // Less randomness, more direct
 
 /datum/storyteller/matthios
-	name = "Matthios"
+	name = MATTHIOS
 	desc = "Matthios manipulates wealth and corruption, rewarding those who make deals."
 	welcome_text = "Fortune favors the cunning."
 	weight = 4
