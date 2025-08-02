@@ -59,6 +59,7 @@
 	var/most_frequent
 	var/highest_influence = -1
 	var/highest_chosen = -1
+	var/ascendant_round = FALSE
 
 	for(var/storyteller_name in SSgamemode.storytellers)
 		var/datum/storyteller/initialized_storyteller = SSgamemode.storytellers[storyteller_name]
@@ -66,7 +67,7 @@
 			continue
 
 		if(initialized_storyteller.ascendant)
-			continue
+			ascendant_round = TRUE
 
 		var/influence = SSgamemode.calculate_storyteller_influence(initialized_storyteller.type)
 		if(influence > highest_influence)
@@ -77,7 +78,7 @@
 			highest_chosen = initialized_storyteller.times_chosen
 			most_frequent = initialized_storyteller.name
 
-	if(!most_influential || !most_frequent)
+	if(!most_influential || !most_frequent || ascendant_round)
 		return
 
 	var/json_file = file("data/gods_rankings.json")
