@@ -55,4 +55,3 @@
 	H.adjust_skillrank(/datum/skill/misc/lockpicking, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/riding, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/mathematics, 5, TRUE)
-	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
