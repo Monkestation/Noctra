@@ -58,11 +58,6 @@
 		if(initialized_storyteller.times_chosen > max_chosen)
 			max_chosen = initialized_storyteller.times_chosen
 			most_frequent = initialized_storyteller
-		else if(initialized_storyteller.times_chosen == max_chosen)
-			if(!most_frequent || influence > SSgamemode.calculate_storyteller_influence(most_frequent.type))
-				most_frequent = initialized_storyteller
-			else if(influence == SSgamemode.calculate_storyteller_influence(most_frequent.type) && prob(50))
-				most_frequent = initialized_storyteller
 
 	// Gods display
 	data += "<div style='text-align: center; margin: 25px auto; width: 80%; max-width: 800px;'>"
@@ -936,7 +931,7 @@
 			for(var/stat in current_set)
 				var/list/stat_data = current_set[stat]
 				var/stat_value = GLOB.vanderlin_round_stats[stat] || 0
-				var/influence_value = stat_value * stat_data["points"]
+				var/influence_value = (stat_value * stat_data["points"]) * initialized_storyteller.influence_modifier
 				var/is_active = (stat in initialized_storyteller.influence_factors)
 
 				dynamic_content += "<span style='color: [is_active ? "#88f088" : "#f79090"];'>"
