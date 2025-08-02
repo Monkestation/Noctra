@@ -67,7 +67,7 @@
 /mob/living/carbon/handle_random_events() //BP/WOUND BASED PAIN
 	if(HAS_TRAIT(src, TRAIT_NOPAIN))
 		return
-	if(!stat)
+	if(stat != DEAD)
 		// Calculate current shock level
 		var/current_shock = calculate_shock_stage()
 		var/raw_pain = get_complex_pain()
@@ -77,22 +77,22 @@
 		painpercent = painpercent * 100
 
 		// Endurance-based pain resistance - higher endurance = better pain tolerance
-		var/endurance_resistance = 1.0 - (STAEND * 0.03) // 3% reduction per endurance point
-		endurance_resistance = max(0.4, endurance_resistance) // Minimum 40% pain felt
+		var/endurance_resistance = 1.0 - (STAEND * 0.015) // 1.5% reduction per endurance point
+		endurance_resistance = max(0.7, endurance_resistance) // Minimum 70% pain felt
 		painpercent *= endurance_resistance
 
 		// Shock reduces pain perception (adrenaline effect)
-		if(current_shock >= 30)
-			var/shock_reduction = min(0.6, current_shock * 0.01) // Max 60% reduction
+		if(current_shock >= 120)
+			var/shock_reduction = min(0.3, current_shock * 0.01) // Max 30% reduction
 			painpercent *= (1.0 - shock_reduction)
 
 		// Pain tolerance system - builds up to prevent infinite stunning
 		// High endurance characters build tolerance faster and lose it slower
-		var/tolerance_gain_rate = 5 + (STAEND * 0.5) // More endurance = faster adaptation
-		var/tolerance_decay_rate = max(1, 3 - (STAEND * 0.2)) // More endurance = slower decay
+		var/tolerance_gain_rate = 0.5 + (STAEND * 0.025) // More endurance = faster adaptation
+		var/tolerance_decay_rate = max(1, 3 - (STAEND * 0.1)) // More endurance = slower decay
 
-		if(world.time - last_major_pain_time < 30 SECONDS)
-			pain_tolerance = min(pain_tolerance + tolerance_gain_rate, 60 + (STAEND * 2)) // Higher max tolerance with endurance
+		if(world.time - last_major_pain_time < 20 SECONDS)
+			pain_tolerance = min(pain_tolerance + tolerance_gain_rate, 60 + (STAEND * 1)) // Higher max tolerance with endurance
 		else
 			pain_tolerance = max(pain_tolerance - tolerance_decay_rate, 0)
 
@@ -100,26 +100,18 @@
 		var/effective_pain = painpercent * (1.0 - (pain_tolerance * 0.01))
 
 		// Endurance-based pain threshold - higher endurance means higher pain threshold
-		var/pain_threshold = 100 - (STAEND * 1) // 1% lower threshold per endurance point
-		pain_threshold = max(70, pain_threshold) // Minimum threshold of 70%
-
+		var/pain_threshold = 50 + (STAEND * 1) // 1% higher threshold per endurance point
 		if(world.time > mob_timers[MT_PAINSTUN])
 			mob_timers[MT_PAINSTUN] = world.time + 10 SECONDS
 
 			// Base stun probability - endurance makes you much more resistant
 			var/probby = max(5, 50 - (STAEND * 1)) // 1% reduction per endurance point, minimum 5%
 
-			// Endurance affects recovery from stuns - higher endurance = shorter cooldowns
-			var/endurance_cooldown_reduction = STAEND * 0.25 // 0.25 seconds per endurance point
-
 			// Reduce stun probability based on shock stage and pain tolerance
-			if(current_shock >= 40)
-				probby *= 0.5 // Shock makes you less likely to be stunned by pain
-			if(pain_tolerance > 20)
-				probby *= (1.0 - (pain_tolerance * 0.008)) // Tolerance reduces stun chance
-
+			if(current_shock >= 160)
+				probby *= 0.75 // Shock makes you less likely to be stunned by pain
 			if(body_position == LYING_DOWN || HAS_TRAIT(src, TRAIT_FLOORED))
-				if(prob(3) && (effective_pain >= 80))
+				if(prob(3) && (effective_pain >= 40))
 					emote("painmoan")
 			else
 				if(effective_pain >= pain_threshold) // Dynamic threshold based on endurance
@@ -129,12 +121,12 @@
 						last_major_pain_time = world.time
 
 						// Endurance affects stun duration - tougher people recover faster
-						var/base_stun = current_shock >= 50 ? 60 : 110
-						var/endurance_stun_reduction = STAEND * 2 // 2 deciseconds per endurance point
+						var/base_stun = 6 SECONDS
+						var/endurance_stun_reduction = STAEND * 1 // 2 deciseconds per endurance point
 						var/stun_duration = max(30, base_stun - endurance_stun_reduction)
 
-						var/base_immobilize = current_shock >= 50 ? 5 : 10
-						var/immobilize_duration = max(2, base_immobilize - (STAEND * 0.1))
+						var/base_immobilize = 1 SECONDS
+						var/immobilize_duration = max(2, base_immobilize - (STAEND * 0.05))
 
 						Immobilize(immobilize_duration)
 						emote("painscream")
@@ -142,23 +134,20 @@
 						addtimer(CALLBACK(src, PROC_REF(Stun), stun_duration), immobilize_duration)
 						addtimer(CALLBACK(src, PROC_REF(Knockdown), stun_duration), immobilize_duration)
 
-						// Shorter cooldown with higher endurance
-						var/base_cooldown = current_shock >= 50 ? 20 SECONDS : 16 SECONDS
-						var/cooldown = max(8 SECONDS, base_cooldown - (endurance_cooldown_reduction SECONDS))
-						mob_timers[MT_PAINSTUN] = world.time + cooldown
+						mob_timers[MT_PAINSTUN] = world.time + (8 SECONDS + (STAEND * 0.25))
 					else
 						emote("painmoan")
 						stuttering += max(1, 5 - STAEND)
 				else
 					// Lower threshold for minor pain with high endurance
-					var/minor_pain_threshold = 80 - STAEND
+					var/minor_pain_threshold = 30 + (STAEND * 1)
 					if(effective_pain >= minor_pain_threshold)
 						if(prob(probby * 0.5)) // Reduced chance for minor pain reactions
 							emote("painmoan")
 
 		// Stress effects - endurance helps resist stress from pain
 		if(effective_pain >= pain_threshold)
-			if(current_shock < 40) // Only add stress if not in shock-induced numbness
+			if(current_shock < 160) // Only add stress if not in shock-induced numbness
 				// High endurance characters are less stressed by pain
 				if(prob(max(20, 100 - (STAEND * 2)))) // 2% less likely per endurance point (40% at 20 )
 					add_stress(/datum/stressevent/painmax)
@@ -434,10 +423,10 @@
 	if(reagents)
 		// Ozium
 		if(reagents.has_reagent(/datum/reagent/ozium))
-			multiplier *= 0.3 // 70% pain reduction
+			multiplier *= 0.6 // 40% pain reduction
 
 		if(reagents.has_reagent(/datum/reagent/buff/herbal/battle_stim))
-			multiplier *= 0.4 // 60% pain reduction
+			multiplier *= 0.8 // 20% pain reduction
 
 		// Alcohol (mild pain relief)
 		if(reagents.has_reagent(/datum/reagent/consumable/ethanol))
@@ -464,14 +453,10 @@
 	if(pain_level > 80)
 		shock += (pain_level - 80) * 0.5
 
-	// Endurance helps resist going into shock
-	shock *= (1.0 - (STAEND * 0.02)) // 2% shock resistance per endurance point (40% at 20)
-	shock = max(0, shock)
-
 	// Gradually reduce shock over time if conditions improve
 	if(shock < shock_stage)
 		// Higher endurance = faster shock recovery
-		var/recovery_rate = 2 + (STAEND * 0.3)
+		var/recovery_rate = 1 + (STAEND * 0.15)
 		shock_stage = max(shock, shock_stage - recovery_rate)
 	else
 		shock_stage = shock
