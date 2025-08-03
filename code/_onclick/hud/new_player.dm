@@ -352,3 +352,7 @@
 	//we use sleep here so it can work during game setup, as addtimer would not work until the game would finish setting up
 	sleep(1.25 * LOBBY_SCREEN_SLIDE_UP_DURATION + LOBBY_SCREEN_SLIDE_DOWN_DURATION)
 	set_button_status(TRUE)
+
+#undef LOBBY_SCREEN_SLIDE_UP_DURATION
+#undef LOBBY_SCREEN_SLIDE_DOWN_DURATION
+#undef MOVE_AMOUNT
