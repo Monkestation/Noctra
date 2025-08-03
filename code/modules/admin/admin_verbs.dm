@@ -33,7 +33,7 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/cmd_admin_say,
 	/client/proc/deadmin,				/*destroys our own admin datum so we can play as a regular player*/
 	/client/proc/toggle_context_menu,
-	/client/proc/delete_player_book,
+	/client/proc/manage_books,
 	/client/proc/manage_paintings,
 	/client/proc/ShowAllFamilies,
 	/datum/admins/proc/anoint_priest,
@@ -819,20 +819,101 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		SSticker.end_party=FALSE
 		to_chat(src, "<span class='interface'>Ending DISABLED.</span>")
 
-/client/proc/delete_player_book()
+/client/proc/manage_books()
 	set category = "Admin"
-	set name = "Delete Player Made Book"
+	set name = "Manage Books"
 	if(!holder)
 		return
-	var/book = input(src, "What is the book file you want to delete?") in SSlibrarian.books
-	if(SSlibrarian.del_player_book(book))
-		to_chat(src, "<span class='notice'>Book has been successfully deleted</span>")
-	else
-		to_chat(src, "<span class='notice'> Either the book file doesn't exist or you have failed to type it in properly (remember characters have been url encoded for the file name)</span>")
+
+	var/dat = "<h3>Book Management</h3><br>"
+	dat += "<table><tr><th>Title</th><th>Author</th><th>Category</th><th>Actions</th></tr>"
+
+	var/list/decoded_books = SSlibrarian.pull_player_book_titles()
+	for(var/encoded_title in decoded_books)
+		var/list/book = SSlibrarian.file2playerbook(encoded_title)
+		if(!book || !book["book_title"])
+			continue
+
+		dat += "<tr>"
+		dat += "<td>[book["book_title"]]</td>"
+		dat += "<td>[book["author"]]</td>"
+		dat += "<td>[book["category"]]</td>"
+		dat += "<td>"
+		dat += "<a href='?src=[REF(src)];show_book=1;id=[encoded_title]'>View</a> | "
+		dat += "<a href='?src=[REF(src)];delete_book=1;id=[encoded_title]'>Delete</a>"
+		dat += "</td>"
+		dat += "</tr>"
+
+	if(!length(decoded_books))
+		dat += "<tr><td colspan='4'>No books found</td></tr>"
+
+	dat += "</table>"
+	var/datum/browser/popup = new(usr, "book_management", "Book Management", 800, 600)
+	popup.set_content(dat)
+	popup.open()
+
+/client/proc/show_book_content(title)
+	var/list/book = SSlibrarian.file2playerbook(title)
+	if(!book || !book["book_title"])
+		to_chat(src, "<span class='warning'>Book not found!</span>")
+		return
+
+	var/content = book["text"]
+	var/dat = {"
+		<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+		<html>
+			<head>
+				<style>
+					body {
+						font-family: 'Times New Roman', serif;
+						background-color: #f5f5f5;
+						margin: 20px;
+						color: #3e2723;
+					}
+					.book-header {
+						text-align: center;
+						margin-bottom: 20px;
+						border-bottom: 1px solid #8b4513;
+						padding-bottom: 10px;
+					}
+					.book-content {
+						white-space: pre-wrap;
+						line-height: 1.6;
+						font-size: 14px;
+					}
+					.close-btn {
+						position: absolute;
+						top: 10px;
+						right: 10px;
+						padding: 5px 10px;
+						background-color: #8b4513;
+						color: white;
+						border: none;
+						border-radius: 3px;
+						cursor: pointer;
+					}
+				</style>
+			</head>
+			<body>
+				<div class='book-header'>
+					<h2>[book["book_title"]]</h2>
+					<h3>by [book["author"]]</h3>
+				</div>
+				<div class='book-content'>
+					[html_encode(content)]
+				</div>
+				<button class='close-btn' onclick='window.close()'>Close</button>
+			</body>
+		</html>
+	"}
+
+	var/datum/browser/popup = new(usr, "book_viewer", "[book["book_title"]] by [book["author"]]", 700, 800)
+	popup.set_content(dat)
+	popup.open()
 
 /client/proc/manage_paintings()
 	set category = "Admin"
-	set name = "Manage Player Made Paintings"
+	set name = "Manage Paintings"
 	if(!holder)
 		return
 
