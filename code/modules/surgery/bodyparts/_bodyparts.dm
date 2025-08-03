@@ -318,7 +318,7 @@
 	var/current_damage_percent = ((brute_dam + burn_dam) / max_damage) * 100
 	if(current_damage_percent > 40) // Only significant injuries cause lingering pain
 		var/new_lingering = (current_damage_percent - 40) * 0.5 // Scale factor
-		lingering_pain += max(0, (new_lingering - lingering_pain) / 2)
+		lingering_pain += max(0, (new_lingering - lingering_pain) / 4)
 
 		// Track severe injuries for chronic pain development
 		if(current_damage_percent > 60)

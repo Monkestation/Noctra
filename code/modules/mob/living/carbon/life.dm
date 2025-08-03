@@ -100,7 +100,7 @@
 		var/effective_pain = painpercent * (1.0 - (pain_tolerance * 0.01))
 
 		// Endurance-based pain threshold - higher endurance means higher pain threshold
-		var/pain_threshold = 50 + (STAEND * 1) // 1% higher threshold per endurance point
+		var/pain_threshold = 55 + (STAEND * 1) // 1% higher threshold per endurance point
 		if(world.time > mob_timers[MT_PAINSTUN])
 			mob_timers[MT_PAINSTUN] = world.time + 10 SECONDS
 
@@ -140,7 +140,7 @@
 						stuttering += max(1, 5 - STAEND)
 				else
 					// Lower threshold for minor pain with high endurance
-					var/minor_pain_threshold = 30 + (STAEND * 1)
+					var/minor_pain_threshold = 35 + (STAEND * 1)
 					if(effective_pain >= minor_pain_threshold)
 						if(prob(probby * 0.5)) // Reduced chance for minor pain reactions
 							emote("painmoan")
@@ -386,7 +386,7 @@
 
 		// Process lingering pain decay
 		if(BP.lingering_pain > 0)
-			var/decay_rate = max(0.375, BP.lingering_pain * 0.015)
+			var/decay_rate = max(0.5, BP.lingering_pain * 0.02)
 
 			if(nutrition > 300 && !has_status_effect(/datum/status_effect/debuff/sleepytime))
 				decay_rate *= 1.25
