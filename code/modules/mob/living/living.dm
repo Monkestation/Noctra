@@ -2639,14 +2639,14 @@
 	if(QDELETED(src))
 		return
 
-	var/warn_individual = FALSE
+	var/silent_individual = TRUE
 	if(!silent && source)
-		warn_individual = TRUE
+		silent_individual = FALSE
 
 	for(var/datum/action/cooldown/spell/spell in actions)
 		if(source && (spell.target != source))
 			continue
-		remove_spell(spell, return_skill_points, warn_individual)
+		remove_spell(spell, return_skill_points, silent_individual)
 
 	if(!silent && !warn_individual)
 		to_chat(src, span_boldwarning("I forgot all my spells!"))

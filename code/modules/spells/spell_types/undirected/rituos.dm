@@ -18,7 +18,6 @@
 		/datum/attunement/death = 0.5
 	)
 
-	var/list/excluded_bodypart_types = list(/obj/item/bodypart/head)
 	var/datum/action/cooldown/spell/granted_spell
 
 /datum/action/cooldown/spell/undirected/rituos/Destroy(force, ...)
@@ -96,6 +95,8 @@
 	cast_on.add_spell(granted_spell)
 
 /datum/action/cooldown/spell/undirected/rituos/proc/get_unskeletonized_bodyparts(mob/living/carbon/caster)
+	var/static/list/excluded_bodypart_types = list(/obj/item/bodypart/head)
+
 	var/list/possible_parts = list()
 	for(var/obj/item/bodypart/BP in caster.bodyparts)
 		if(BP.skeletonized)
