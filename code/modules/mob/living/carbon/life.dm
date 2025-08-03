@@ -238,16 +238,6 @@
 		if(!BP.lingering_pain)
 			BP.lingering_pain = 0
 
-		// Add new lingering pain when taking significant damage
-		var/current_damage_percent = ((BP.brute_dam + BP.burn_dam) / BP.max_damage) * 100
-		if(current_damage_percent > 20) // Only significant injuries cause lingering pain
-			var/new_lingering = (current_damage_percent - 20) * 0.5 // Scale factor
-			BP.lingering_pain = max(BP.lingering_pain, new_lingering)
-
-			// Track severe injuries for chronic pain development
-			if(current_damage_percent > 60)
-				BP.last_severe_injury_time = world.time
-
 		// Chronic pain system
 		if(!BP.chronic_pain)
 			BP.chronic_pain = 0
@@ -396,12 +386,12 @@
 
 		// Process lingering pain decay
 		if(BP.lingering_pain > 0)
-			var/decay_rate = 0.5
+			var/decay_rate = max(0.375, BP.lingering_pain * 0.015)
 
 			if(nutrition > 300 && !has_status_effect(/datum/status_effect/debuff/sleepytime))
-				decay_rate *= 1.5
+				decay_rate *= 1.25
 			if(getToxLoss() > 20 || getOxyLoss() > 20)
-				decay_rate *= 0.5
+				decay_rate *= 0.75
 
 			BP.lingering_pain = max(0, BP.lingering_pain - decay_rate)
 
@@ -451,7 +441,8 @@
 
 	// Gradually reduce shock over time if conditions improve
 	if(shock < shock_stage)
-		shock_stage = max(shock, shock_stage * 0.98)
+		shock_stage -= max(0.5, shock_stage * 0.02)
+		shock_stage = max(shock, shock_stage)
 	else
 		shock_stage = shock
 

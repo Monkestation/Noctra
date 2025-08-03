@@ -314,6 +314,16 @@
 		if(updating_health)
 			owner.updatehealth()
 
+	// Add new lingering pain when taking significant damage
+	var/current_damage_percent = ((brute_dam + burn_dam) / max_damage) * 100
+	if(current_damage_percent > 40) // Only significant injuries cause lingering pain
+		var/new_lingering = (current_damage_percent - 40) * 0.5 // Scale factor
+		lingering_pain += max(0, (new_lingering - lingering_pain) / 2)
+
+		// Track severe injuries for chronic pain development
+		if(current_damage_percent > 60)
+			last_severe_injury_time = world.time
+
 	return update_bodypart_damage_state() || .
 
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
