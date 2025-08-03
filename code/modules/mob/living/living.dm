@@ -2648,7 +2648,7 @@
 			continue
 		remove_spell(spell, return_skill_points, silent_individual)
 
-	if(!silent && !warn_individual)
+	if(!silent && !silent_individual)
 		to_chat(src, span_boldwarning("I forgot all my spells!"))
 
 /**
