@@ -115,6 +115,9 @@
 /datum/action/cooldown/spell/undirected/rituos/proc/on_dream_end(mob/living/carbon/user)
 	SIGNAL_HANDLER
 
+	if(QDELETED(src))
+		return
+
 	var/datum/action/cooldown/spell = granted_spell?.resolve()
 	if(spell)
 		to_chat(user, span_warning("My glimpse of [spell.name] fades as I awaken..."))
