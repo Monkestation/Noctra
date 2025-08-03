@@ -83,8 +83,15 @@
 		return
 
 	flick("[base_icon_state]_pressed", src)
+	hud.mymob.playsound_local(soundin = 'sound/menu/button_press.ogg', vol = 50, vary = TRUE)
 	update_appearance(UPDATE_ICON)
 	return TRUE
+
+/atom/movable/screen/lobby/button/MouseEntered(location, control, params)
+	. = ..()
+	if(!enabled)
+		return
+	hud.mymob.playsound_local(soundin = 'sound/menu/button_highlight.ogg', vol = 50, vary = TRUE)
 
 /atom/movable/screen/lobby/button/MouseEntered(location,control,params)
 	if(!usr.client)
