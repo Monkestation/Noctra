@@ -71,6 +71,14 @@ GLOBAL_LIST_EMPTY(respawncounts)
 				message_admins("[key_name_admin(src)] has deleted player made book called: '[title]'")
 				manage_books()
 
+	if(href_list["show_book"])
+		if(!holder)
+			return
+		var/title = href_list["id"]
+		if(!title)
+			return
+		show_book_content(title)
+
 	// asset_cache
 	var/asset_cache_job
 	if(href_list["asset_cache_confirm_arrival"])
