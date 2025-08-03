@@ -43,6 +43,8 @@
 	var/retrigger_timer
 
 /datum/action/cooldown/New(Target)
+	. = ..()
+
 	if(active_background_icon_state)
 		base_background_icon_state ||= background_icon_state
 	if(active_overlay_icon_state)
