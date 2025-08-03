@@ -98,7 +98,6 @@
 	if(GLOB.round_id)
 		local_template = replacetext(local_template, "## Round ID:\n", "## Round ID:\n[GLOB.round_id]")
 
-
 	// Insert testmerges
 	if(length(GLOB.revdata.testmerge))
 		var/list/all_tms = list()
@@ -135,7 +134,7 @@
 		json_encode(body_structure), //this is slow slow slow but no other options buckaroo
 		list(
 			"Accept"="application/vnd.github+json",
-			"Authorization"="Bearer [local_template]",
+			"Authorization"="Bearer [issue_key]",
 			"X-GitHub-Api-Version"="2022-11-28"
 		)
 	)
