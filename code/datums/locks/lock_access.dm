@@ -36,7 +36,7 @@
 	var/used_message = "This isn't the right key for [src]."
 	if(message)
 		used_message = message
-	to_chat(user, span_notice(used_message))
+	to_chat(user, span_warning(used_message))
 	rattle(silent)
 
 /// Shake a bit make a noise
