@@ -1,6 +1,5 @@
-#define LOBBY_SCREEN_SLIDE_UP_DURATION 1.25 SECONDS
-#define LOBBY_SCREEN_SLIDE_DOWN_DURATION 0.25 SECONDS
-#define MOVE_AMOUNT 410
+#define LOBBY_SCREEN_SLIDE_DURATION 1.25 SECONDS
+#define MOVE_AMOUNT 400
 
 /datum/hud/new_player
 	///Whether the menu is currently on the client's screen or not
@@ -49,13 +48,12 @@
 ///Animates moving the button off-screen
 /atom/movable/screen/lobby/proc/collapse_button()
 	SIGNAL_HANDLER
-	animate(src, transform = transform.Translate(x = 0, y = -10), time = LOBBY_SCREEN_SLIDE_UP_DURATION, easing = CUBIC_EASING|EASE_IN)
-	animate(transform = transform.Translate(x = 0, y = MOVE_AMOUNT), time = LOBBY_SCREEN_SLIDE_UP_DURATION, easing = CUBIC_EASING|EASE_IN)
+	animate(src, transform = transform.Translate(x = 0, y = MOVE_AMOUNT), time = LOBBY_SCREEN_SLIDE_DURATION, easing = CUBIC_EASING|EASE_IN|EASE_OUT)
 
 ///Animates moving the button back into place
 /atom/movable/screen/lobby/proc/expand_button()
 	SIGNAL_HANDLER
-	animate(src, transform = matrix(), time = LOBBY_SCREEN_SLIDE_UP_DURATION, easing = CUBIC_EASING|EASE_OUT)
+	animate(src, transform = matrix(), time = LOBBY_SCREEN_SLIDE_DURATION, easing = CUBIC_EASING|EASE_IN|EASE_OUT)
 
 /atom/movable/screen/lobby/background
 	icon = 'icons/hud/lobby/background.dmi'
@@ -63,7 +61,7 @@
 	plane = LOBBY_MENU_PLANE
 	layer = LOBBY_BACKGROUND_LAYER
 	screen_loc = "WEST:10,TOP:10"
-	alpha = 130
+	alpha = 100
 
 /atom/movable/screen/lobby/button
 	mouse_over_pointer = MOUSE_HAND_POINTER
@@ -350,9 +348,8 @@
 
 	//re-enable clicking the button when the shutter animation finishes
 	//we use sleep here so it can work during game setup, as addtimer would not work until the game would finish setting up
-	sleep(1.25 * LOBBY_SCREEN_SLIDE_UP_DURATION + LOBBY_SCREEN_SLIDE_DOWN_DURATION)
+	sleep(1.25 * LOBBY_SCREEN_SLIDE_DURATION)
 	set_button_status(TRUE)
 
-#undef LOBBY_SCREEN_SLIDE_UP_DURATION
-#undef LOBBY_SCREEN_SLIDE_DOWN_DURATION
+#undef LOBBY_SCREEN_SLIDE_DURATION
 #undef MOVE_AMOUNT
