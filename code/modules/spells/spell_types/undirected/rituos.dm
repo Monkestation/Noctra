@@ -127,4 +127,3 @@
 	to_chat(user, span_smallnotice("The toil of invoking Her Lesser Work slips away. I may begin anew…"))
 	reset_spell_cooldown()
 	UnregisterSignal(user, COMSIG_LIVING_DREAM_END)
-
