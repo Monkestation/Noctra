@@ -35,7 +35,8 @@
 		SSroguemachine.crown = src
 
 /obj/item/clothing/head/crown/serpcrown/Destroy()
-	SSroguemachine.crown = null
+	if(SSroguemachine.crown == src)
+		SSroguemachine.crown = null
 	return ..()
 
 /obj/item/clothing/head/crown/serpcrown/proc/anti_stall()
