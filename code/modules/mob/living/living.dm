@@ -2658,7 +2658,7 @@
  * * points - amount of points to grant or reduce
  * * used_points - ajust used points
 */
-/mob/living/proc/adjust_spellpoints(points, used_points = FALSE)
+/mob/living/proc/adjust_spell_points(points, used_points = FALSE)
 	if(QDELETED(src))
 		return
 
@@ -2691,7 +2691,7 @@
 	// Because of kobolds spellpoints can be decimal, but you can't do anything with that if below 1
 	if(floor(spell_points - used_spell_points) > 0)
 		if(!spell)
-			add_spell(spell)
+			add_spell(/datum/action/cooldown/spell/undirected/learn)
 	else if(spell)
 		remove_spell(spell)
 

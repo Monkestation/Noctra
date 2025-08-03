@@ -76,7 +76,7 @@
 	if(!length(get_unskeletonized_bodyparts(cast_on)))
 		cast_on.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
 		cast_on.add_spell(/datum/action/cooldown/spell/undirected/touch/prestidigitation)
-		cast_on.adjust_spellpoints(18)
+		cast_on.adjust_spell_points(18)
 		cast_on.visible_message(
 			span_boldwarning("[cast_on]'s form swells with terrible power as they cast away almost all of \
 			the remnants of their mortal flesh, arcyne runes glowing upon their exposed bones..."),

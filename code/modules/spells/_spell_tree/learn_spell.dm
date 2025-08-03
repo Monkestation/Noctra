@@ -57,7 +57,7 @@
 			qdel(node)
 			return
 
-		user.adjust_spellpoints(cost, TRUE)
+		user.adjust_spell_points(cost, TRUE)
 		unlocked_spells += spell_type
 
 		if(node.is_passive)
