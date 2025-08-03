@@ -18,7 +18,8 @@
 		/datum/attunement/death = 0.5
 	)
 
-	var/datum/action/cooldown/spell/granted_spell
+	/// Weakref to granted spell, for the dream ending
+	var/datum/weakref/granted_spell
 
 /datum/action/cooldown/spell/undirected/rituos/Destroy(force, ...)
 	granted_spell = null // Deleted with us
@@ -28,6 +29,9 @@
 	. = ..()
 	if(. & SPELL_CANCEL_CAST)
 		return
+
+	if(istype(granted_spell))
+		return . | SPELL_CANCEL_CAST
 
 	if(!length(get_unskeletonized_bodyparts(cast_on)))
 		to_chat(cast_on, span_notice("I have completed Her Lesser Work. Only lichdom awaits me now, but just out of reach..."))
@@ -90,9 +94,10 @@
 		return
 
 	RegisterSignal(cast_on, COMSIG_LIVING_DREAM_END, PROC_REF(on_dream_end))
-	granted_spell = new spell_type(src)
-	to_chat(cast_on, span_notice("The Lesser Work of Rituos floods my mind with stolen arcyne knowledge: I can now cast [granted_spell.name] until I next rest..."))
-	cast_on.add_spell(granted_spell)
+	var/datum/action/cooldown/spell = new spell_type(src)
+	to_chat(cast_on, span_notice("The Lesser Work of Rituos floods my mind with stolen arcyne knowledge: I can now cast [spell.name] until I next rest..."))
+	cast_on.add_spell(spell)
+	granted_spell = WEAKREF(spell)
 
 /datum/action/cooldown/spell/undirected/rituos/proc/get_unskeletonized_bodyparts(mob/living/carbon/caster)
 	var/static/list/excluded_bodypart_types = list(/obj/item/bodypart/head)
@@ -110,11 +115,13 @@
 /datum/action/cooldown/spell/undirected/rituos/proc/on_dream_end(mob/living/carbon/user)
 	SIGNAL_HANDLER
 
-	if(granted_spell)
-		to_chat(user, span_warning("My glimpse of [granted_spell.name] fades as I awaken..."))
+	var/datum/action/cooldown/spell = granted_spell?.resolve()
+	if(spell)
+		to_chat(user, span_warning("My glimpse of [spell.name] fades as I awaken..."))
 		user.remove_spells(source = src)
 		granted_spell = null
 
 	to_chat(user, span_smallnotice("The toil of invoking Her Lesser Work slips away. I may begin anew…"))
 	reset_spell_cooldown()
 	UnregisterSignal(user, COMSIG_LIVING_DREAM_END)
+
