@@ -1,0 +1,15 @@
+{
+    "2025-08-03": {
+        "PotatoTomahto": [
+            {
+                "rscadd": "scabbards"
+            },
+            {
+                "qol": "inventory click behavior closer to tg"
+            },
+            {
+                "balance": "fire spread tweaks"
+            }
+        ]
+    }
+}
