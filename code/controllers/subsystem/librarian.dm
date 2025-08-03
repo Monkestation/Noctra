@@ -111,7 +111,9 @@ SUBSYSTEM_DEF(librarian)
 		text2file(json_encode(_book_titles_contents), "data/player_generated_books/_book_titles.json")
 		update_books()
 		return TRUE
-	return FALSE
+	else
+		message_admins("!!! _book_titles.json no longer exists, previous book title list has been lost. !!!")
+		return FALSE
 
 /datum/controller/subsystem/librarian/proc/pull_player_book_titles()
 	if(fexists(file("data/player_generated_books/_book_titles.json")))
