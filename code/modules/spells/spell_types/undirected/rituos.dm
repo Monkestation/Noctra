@@ -118,8 +118,8 @@
 	var/datum/action/cooldown/spell = granted_spell?.resolve()
 	if(spell)
 		to_chat(user, span_warning("My glimpse of [spell.name] fades as I awaken..."))
-		user.remove_spells(source = src)
 
+	user.remove_spells(source = src)
 	granted_spell = null
 	to_chat(user, span_smallnotice("The toil of invoking Her Lesser Work slips away. I may begin anew…"))
 	reset_spell_cooldown()
