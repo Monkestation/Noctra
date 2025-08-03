@@ -149,7 +149,7 @@
 
 /datum/config_entry/flag/show_game_type_odds	//if set this allows players to see the odds of each roundtype on the get revision screen
 
-/datum/config_entry/keyed_list/roundstart_races	//races you can play as from the get go.
+/datum/config_entry/keyed_list/roundstart_races	//species you can play as from the get go.
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_FLAG
 

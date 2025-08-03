@@ -61,8 +61,8 @@
 	body_parts_covered = HEAD|EARS|HAIR
 
 
-//............... Kataphract/bastion/spear/zyban Helmet ............... //
-/obj/item/clothing/head/rare/zybanplate // Unique Freelancer kit
+//............... Kataphract/bastion/spear/zaladian Helmet ............... //
+/obj/item/clothing/head/rare/zaladplate // Unique Freelancer kit
 	name = "bastion helm"
 	desc = "The Zaladin Kataphractoe are the ancestral guardians of the first Despot, \
 			their helms designed in the fashion of the capital's majestic sky-piercing tower \

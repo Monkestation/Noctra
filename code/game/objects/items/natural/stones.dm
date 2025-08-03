@@ -117,7 +117,7 @@ GLOBAL_LIST_INIT(stone_personalities, list(
 
 GLOBAL_LIST_INIT(stone_personality_descs, list(
 	"This stone is full of personality!",
-	"They say the intelligent races built their foundations with stones.",
+	"They say the intelligent species built their foundations with stones.",
 	"One must think, where did this stone come from?",
 	"If all stones were like this, then they would be some pretty great stones.",
 	"I wish my personality was like this stone's...",

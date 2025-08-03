@@ -185,7 +185,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/paranoid
 	name = "Paranoid"
-	desc = "I'm even more anxious than most towners. I'm extra paranoid of other races, the price of higher intelligence."
+	desc = "I'm even more anxious than most towners. I'm extra paranoid of other species, the price of higher intelligence."
 	var/last_check = 0
 
 /datum/charflaw/paranoid/flaw_on_life(mob/user)

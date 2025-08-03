@@ -2672,10 +2672,10 @@
 /area/rogue/outdoors/bog)
 "pP" = (
 /obj/structure/rack/shelf/biggest,
-/obj/item/clothing/shoes/boots/rare/zybanplate,
-/obj/item/clothing/gloves/rare/zybanplate,
-/obj/item/clothing/armor/rare/zybanplate,
-/obj/item/clothing/head/rare/zybanplate,
+/obj/item/clothing/shoes/boots/rare/zaladplate,
+/obj/item/clothing/gloves/rare/zaladplate,
+/obj/item/clothing/armor/rare/zaladplate,
+/obj/item/clothing/head/rare/zaladplate,
 /turf/open/floor/twig,
 /area/rogue/indoors/mountains)
 "pT" = (
