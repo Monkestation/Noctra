@@ -88,10 +88,10 @@
 
 		// Pain tolerance system - builds up to prevent infinite stunning
 		// High endurance characters build tolerance faster and lose it slower
-		var/tolerance_gain_rate = 0.5 + (STAEND * 0.025) // More endurance = faster adaptation
+		var/tolerance_gain_rate = 1 + (STAEND * 0.25) // More endurance = faster adaptation
 		var/tolerance_decay_rate = max(1, 3 - (STAEND * 0.1)) // More endurance = slower decay
 
-		if(world.time - last_major_pain_time < 20 SECONDS)
+		if(world.time - last_major_pain_time < 30 SECONDS)
 			pain_tolerance = min(pain_tolerance + tolerance_gain_rate, 60 + (STAEND * 1)) // Higher max tolerance with endurance
 		else
 			pain_tolerance = max(pain_tolerance - tolerance_decay_rate, 0)
@@ -134,7 +134,7 @@
 						addtimer(CALLBACK(src, PROC_REF(Stun), stun_duration), immobilize_duration)
 						addtimer(CALLBACK(src, PROC_REF(Knockdown), stun_duration), immobilize_duration)
 
-						mob_timers[MT_PAINSTUN] = world.time + (8 SECONDS + (STAEND * 0.25))
+						mob_timers[MT_PAINSTUN] = world.time + (10 SECONDS + (STAEND * 0.25))
 					else
 						emote("painmoan")
 						stuttering += max(1, 5 - STAEND)
@@ -445,19 +445,13 @@
 	shock += getToxLoss() * 0.4
 
 	// Blood loss is a major shock factor
-	if(blood_volume < 100)
-		shock += max(0, 100 - blood_volume) * 1.2
-
-	// Severe pain itself can cause shock
-	var/pain_level = get_complex_pain()
-	if(pain_level > 80)
-		shock += (pain_level - 80) * 0.5
+	var/shock_threshold = BLOOD_VOLUME_NORMAL / 2
+	if(blood_volume < shock_threshold)
+		shock += max(0, shock_threshold - blood_volume) * 0.5
 
 	// Gradually reduce shock over time if conditions improve
 	if(shock < shock_stage)
-		// Higher endurance = faster shock recovery
-		var/recovery_rate = 1 + (STAEND * 0.15)
-		shock_stage = max(shock, shock_stage - recovery_rate)
+		shock_stage = max(shock, shock_stage * 0.98)
 	else
 		shock_stage = shock
 

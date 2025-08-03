@@ -4,7 +4,7 @@
 	bleed_rate = 0
 	clotting_threshold = null
 	sewn_clotting_threshold = null
-	woundpain = 15
+	woundpain = 13
 	sew_threshold = 50
 	can_sew = FALSE
 	can_cauterize = FALSE
@@ -20,7 +20,7 @@
 /datum/wound/bruise/small
 	name = "bruise"
 	whp = 15
-	woundpain = 10
+	woundpain = 8
 	sew_threshold = 25
 
 /datum/wound/bruise/large
@@ -30,4 +30,4 @@
 	clotting_rate = 0.02
 	clotting_threshold = 0.3
 	sew_threshold = 75
-	woundpain = 30
+	woundpain = 25
