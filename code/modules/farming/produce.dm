@@ -209,7 +209,7 @@
 
 /obj/item/reagent_containers/food/snacks/produce/fruit/jacksberry
 	name = "jacksberries"
-	desc = "Common berries found throughout Enigma and surrounding lands. A traveler's repast, or Dendor's wrath."
+	desc = "Common berries found throughout most of Faience. A traveler's repast, or Dendor's wrath."
 	icon_state = "berriesc0"
 	seed = /obj/item/neuFarm/seed/berry
 	tastes = list("berry" = 1)
