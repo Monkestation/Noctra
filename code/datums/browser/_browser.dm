@@ -45,7 +45,7 @@
 	return ..()
 
 /datum/browser/noclose
-/datum/browser/noclose/New(mob/user, window_id, title = "", width, height)
+/datum/browser/noclose/New(mob/user, window_id, title = "", width, height, atom/owner)
 	. = ..()
 	var/client/user_client = isclient(user) ? user : user.client
 	UnregisterSignal(user_client, COMSIG_MOB_CLIENT_MOVED)
