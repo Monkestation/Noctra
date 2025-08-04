@@ -208,7 +208,8 @@
 	if(ref)
 		param = "[REF(ref)]"
 
-	browser_holder.handle_window_close()
+	if(browser_holder)
+		browser_holder.handle_window_close()
 
 	winset(user, windowid, "on-close=\".windowclose [param]\"")
 

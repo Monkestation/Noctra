@@ -479,7 +479,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	popup.set_content(dat.Join())
 	popup.open()
 	update_preview_icon()
-	//onclose(user, "stonekeep_prefwin", src)
 
 #undef APPEARANCE_CATEGORY_COLUMN
 #undef MAX_MUTANT_ROWS
@@ -507,7 +506,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/datum/browser/noclose/popup = new(user, "capturekeypress", "<div align='center'>Keybindings</div>", 350, 300, use_onclose = FALSE)
 	popup.set_content(HTML)
 	popup.open()
-	onclose(user, "capturekeypress", src)
+	onclose(user, "capturekeypress", src, popup)
 
 /datum/preferences/proc/SetChoices(mob/user, limit = 15, list/splitJobs = list("Captain", "Priest", "Merchant", "Butler", "Village Elder"), widthPerColumn = 295, height = 620) //295 620
 	if(!SSjob)
