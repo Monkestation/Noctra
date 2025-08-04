@@ -95,15 +95,6 @@
 	for(var/file in stylesheets)
 		head_content += "<link rel='stylesheet' type='text/css' href='[SSassets.transport.get_asset_url(file)]'>"
 
-	if(user.client?.window_scaling && width && height)
-		head_content += {"
-			<style>
-				body {
-					zoom: [100 / user.client?.window_scaling]%;
-				}
-			</style>
-			"}
-
 	for(var/file in scripts)
 		head_content += "<script type='text/javascript' src='[SSassets.transport.get_asset_url(file)]'></script>"
 
