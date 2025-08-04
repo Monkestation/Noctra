@@ -183,6 +183,14 @@
 		for(var/atom/movable/screen/scannies/S in screen)
 			S.alpha = 70
 
+/client/verb/ui_scaling()
+	set name = "UI Scaling"
+	set category = "OOC"
+	var/new_scaling = input(usr, "Enter UI Scaling (default is 100%)", "New UI Scaling", 100) as null|num
+	if(!isnull(new_scaling))
+		window_scaling = new_scaling
+		SEND_SIGNAL(src, COMSIG_UI_SCALE_CHANGED)
+
 /client/verb/keybind_menu()
 	set category = "Options"
 	set name = "Adjust Keybinds"
