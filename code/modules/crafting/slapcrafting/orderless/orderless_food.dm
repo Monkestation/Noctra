@@ -23,19 +23,25 @@
 	if(istype(new_item))
 		// Calculate average freshness
 		var/average_freshness = (ingredient_count > 0) ? (total_freshness / ingredient_count) : 0
-
 		// Get the user's cooking skill
 		var/cooking_skill = user.get_skill_level(/datum/skill/craft/cooking)
-
 		// Apply freshness to the new food item
 		new_item.warming = min(5 MINUTES, average_freshness)
 
-		// Calculate final quality based on ingredients, skill, and freshness
-		var/final_quality = calculate_food_quality(cooking_skill, highest_quality, average_freshness)
-		new_item.quality = round(final_quality)
+		var/datum/quality_calculator/cooking/cook_calc = new(
+			base_qual = 0,
+			mat_qual = highest_quality,
+			skill_qual = cooking_skill,
+			perf_qual = 0,
+			diff_mod = 0,
+			components = 1,
+			fresh = average_freshness,
+			recipe_mod = 1.0
+		)
 
 		// Apply descriptive modifications based on quality
-		apply_food_quality(new_item, final_quality)
+		cook_calc.apply_quality_to_item(new_item)
+		qdel(cook_calc)
 
 /datum/orderless_slapcraft/food/proc/track_ingredient_quality(obj/item/food_item)
 	// Track the ingredient for quality calculation

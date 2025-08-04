@@ -8,7 +8,7 @@
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	blocksound = SOFTHIT
 	resistance_flags = FLAMMABLE // Made of leather
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 	anvilrepair = null
 	sewrepair = TRUE
 	sellprice = VALUE_LEATHER_HELMET

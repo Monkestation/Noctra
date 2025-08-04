@@ -300,6 +300,7 @@
 				to_chat(user, "<span class='warning'>Intentional surgery fail... [success_prob]%</span>")
 			else
 				to_chat(user, "<span class='warning'>Surgery fail... [success_prob]%</span>")
+		if(repeating && can_do_step(user, target, target_zone, tool, intent, try_to_fail))
 			initiate(user, target, target_zone, tool, intent, try_to_fail)
 		return FALSE
 

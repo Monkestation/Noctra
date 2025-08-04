@@ -17,6 +17,7 @@
 	backr = /obj/item/fishingrod/fisher
 	beltl = /obj/item/weapon/sword/sabre/cutlass
 	beltr = /obj/item/weapon/knife/dagger
+	scabbards = list(/obj/item/weapon/scabbard/sword, /obj/item/weapon/scabbard/knife)
 	shoes = /obj/item/clothing/shoes/boots
 
 /datum/outfit/job/adventurer/corsair/pre_equip(mob/living/carbon/human/H)

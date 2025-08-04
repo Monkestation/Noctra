@@ -32,6 +32,7 @@
 	armor = /obj/item/clothing/shirt/robe/merchant
 	head = /obj/item/clothing/head/chaperon/greyscale/silk/random
 	ring = /obj/item/clothing/ring/gold/guild_mercator
+	scabbards = list(/obj/item/weapon/scabbard/sword)
 
 	if(H.gender == MALE)
 		shirt = /obj/item/clothing/shirt/undershirt/sailor

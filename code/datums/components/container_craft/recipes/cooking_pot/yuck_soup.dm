@@ -3,7 +3,7 @@
 	created_reagent = /datum/reagent/yuck/cursed_soup
 	requirements = list(/obj/item/reagent_containers/food/snacks/produce/fruit/jacksberry/poison = 1)
 	max_optionals = 0
-	crafting_time = 60 SECONDS
+	crafting_time = 30 SECONDS
 	hides_from_books = TRUE
 
 /datum/container_craft/cooking/yuck_soup/poo
@@ -30,7 +30,7 @@
 	created_reagent = /datum/reagent/consumable/soup/stew/gross
 	requirements = list(/obj/item/reagent_containers/food/snacks/smallrat/dead = 1)
 	max_optionals = 0
-	crafting_time = 60 SECONDS
+	crafting_time = 30 SECONDS
 	hides_from_books = TRUE
 
 /datum/container_craft/cooking/gross_stew/bad_recipe

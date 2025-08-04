@@ -95,6 +95,25 @@
 /datum/repeatable_crafting_recipe/leather/storage/backpack/create_blacklisted_paths()
 	blacklisted_paths = subtypesof(/obj/item/rope)
 
+/datum/repeatable_crafting_recipe/leather/storage/knife_sheath
+	name = "knife sheath"
+	output = /obj/item/weapon/scabbard/knife
+	requirements = list(
+		/obj/item/natural/hide/cured = 2,
+		/obj/item/grown/log/tree/stick = 2,
+	)
+	craftdiff = 2
+
+/datum/repeatable_crafting_recipe/leather/storage/sword_scabbard
+	name = "scabbard"
+	output = /obj/item/weapon/scabbard/sword
+	requirements = list(
+		/obj/item/natural/hide/cured = 2,
+		/obj/item/grown/log/tree/small = 1,
+		/obj/item/rope = 1,
+	)
+	craftdiff = 2
+
 /// Misc Leatherworking
 /datum/repeatable_crafting_recipe/leather/bedsheetpelt
 	name = "leather bedsheet"

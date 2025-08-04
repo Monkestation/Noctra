@@ -298,7 +298,7 @@
 		return
 	if(user.get_active_held_item() != src)
 		return
-	if(user.incapacitated(ignore_grab = TRUE))
+	if(user.incapacitated(IGNORE_GRAB))
 		return
 	if((M.body_position != LYING_DOWN))
 		if(M.checkmiss(user))

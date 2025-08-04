@@ -1,7 +1,5 @@
-#define MAX_PLANT_HEALTH 100
-#define MAX_PLANT_WATER 150
+
 #define MAX_PLANT_NUTRITION 300
-#define MAX_PLANT_WEEDS 100
 #define SOIL_DECAY_TIME 20 MINUTES
 
 #define QUALITY_REGULAR 1
@@ -39,12 +37,15 @@
 	var/water = 0
 	/// Amount of weeds in the soil. The more of them the more water and nutrition they eat.
 	var/weeds = 0
-	/// Amount of nutrition in the soil. Nutrition is drained for the plant to mature and produce, also makes weeds grow
-	var/nutrition = 0
+	var/nitrogen = MAX_PLANT_NITROGEN * 0.5        // N - For leafy growth, chlorophyll production
+	var/phosphorus = MAX_PLANT_PHOSPHORUS * 0.5    // P - For root development, flowering, fruiting
+	var/potassium = MAX_PLANT_POTASSIUM * 0.5      // K - For overall plant health, disease resistance
 	/// Amount of plant health, if it drops to zero the plant won't grow, make produce and will have to be uprooted.
 	var/plant_health = MAX_PLANT_HEALTH
 	/// The plant that is currently planted, it is a reference to a singleton
 	var/datum/plant_def/plant = null
+	///our plant genetics
+	var/datum/plant_genetics/plant_genetics
 	/// Time of growth so far
 	var/growth_time = 0
 	/// Time of making produce so far
@@ -83,6 +84,7 @@
 	apply_farming_fatigue(user, 4)
 	add_sleep_experience(user, /datum/skill/labor/farming, user.STAINT * 2)
 
+	return_nutrients_to_soil()
 	var/farming_skill = user.get_skill_level(/datum/skill/labor/farming)
 	var/chance_to_ruin = 50 - (farming_skill * 25)
 	if(prob(chance_to_ruin))
@@ -189,22 +191,39 @@
 	return FALSE
 
 /obj/structure/soil/proc/try_handle_fertilizing(obj/item/attacking_item, mob/user, params)
-	var/fertilize_amount = 0
-	if(istype(attacking_item, /obj/item/ash))
-		fertilize_amount = 50
-	else if (istype(attacking_item, /obj/item/natural/poo))
-		fertilize_amount = 150
-	else if (istype(attacking_item, /obj/item/compost))
-		fertilize_amount = 150
-	if(fertilize_amount > 0)
-		if(nutrition >= MAX_PLANT_NUTRITION * 0.8)
-			to_chat(user, span_warning("The soil is already fertilized!"))
+	var/fertilize_success = FALSE
+
+	if(istype(attacking_item, /obj/item/fertilizer))
+		var/obj/item/fertilizer/fert = attacking_item
+		fertilize_success = apply_fertilizer(fert, user)
+	else if(istype(attacking_item, /obj/item/natural/poo))
+		// Manure is balanced NPK with high nitrogen
+		if(can_accept_fertilizer())
+			to_chat(user, span_notice("I fertilize the soil with manure."))
+			adjust_nitrogen(60)
+			adjust_phosphorus(40)
+			adjust_potassium(50)
+			fertilize_success = TRUE
 		else
-			to_chat(user, span_notice("I fertilize the soil."))
-			adjust_nutrition(fertilize_amount)
-			qdel(attacking_item)
+			to_chat(user, span_warning("The soil is already well fertilized!"))
+	if(fertilize_success)
+		qdel(attacking_item)
 		return TRUE
 	return FALSE
+
+/obj/structure/soil/proc/can_accept_fertilizer()
+	return (nitrogen < MAX_PLANT_NITROGEN * 0.8 || phosphorus < MAX_PLANT_PHOSPHORUS * 0.8 || potassium < MAX_PLANT_POTASSIUM * 0.8)
+
+/obj/structure/soil/proc/apply_fertilizer(obj/item/fertilizer/fert, mob/user)
+	if(!can_accept_fertilizer())
+		to_chat(user, span_warning("The soil is already well fertilized!"))
+		return FALSE
+
+	to_chat(user, span_notice("I fertilize the soil with [fert.name]."))
+	adjust_nitrogen(fert.nitrogen_content)
+	adjust_phosphorus(fert.phosphorus_content)
+	adjust_potassium(fert.potassium_content)
+	return TRUE
 
 /obj/structure/soil/proc/try_handle_deweed(obj/item/attacking_item, mob/living/user, params)
 	if(weeds < MAX_PLANT_WEEDS * 0.3)
@@ -331,12 +350,19 @@
 		plant_dead = FALSE
 		plant_health = 10.0
 		update_icon()
-	// If low on nutrition, Dendor provides
-	if(nutrition < 30)
-		adjust_nutrition(max(30 - nutrition, 0))
+
+	// Dendor provides balanced nutrients if low
+	if(nitrogen < 30)
+		adjust_nitrogen(max(30 - nitrogen, 0))
+	if(phosphorus < 30)
+		adjust_phosphorus(max(30 - phosphorus, 0))
+	if(potassium < 30)
+		adjust_potassium(max(30 - potassium, 0))
+
 	// If low on water, Dendor provides
 	if(water < 30)
 		adjust_water(max(30 - water, 0))
+
 	// And it grows a little!
 	if(plant)
 		if(add_growth(2 MINUTES))
@@ -346,9 +372,17 @@
 /obj/structure/soil/proc/adjust_water(adjust_amount)
 	water = clamp(water + adjust_amount, 0, MAX_PLANT_WATER)
 
-/// adjust nutrition
-/obj/structure/soil/proc/adjust_nutrition(adjust_amount)
-	nutrition = clamp(nutrition + adjust_amount, 0, MAX_PLANT_NUTRITION)
+/obj/structure/soil/proc/adjust_nitrogen(amount)
+	nitrogen = clamp(nitrogen + amount, 0, MAX_PLANT_NITROGEN)
+
+/obj/structure/soil/proc/adjust_phosphorus(amount)
+	phosphorus = clamp(phosphorus + amount, 0, MAX_PLANT_PHOSPHORUS)
+
+/obj/structure/soil/proc/adjust_potassium(amount)
+	potassium = clamp(potassium + amount, 0, MAX_PLANT_POTASSIUM)
+
+/obj/structure/soil/proc/get_total_npk()
+	return nitrogen + phosphorus + potassium
 
 /// adjust weeds
 /obj/structure/soil/proc/adjust_weeds(adjust_amount)
@@ -426,7 +460,7 @@
 		icon,\
 		"soil-overlay",\
 		color = "#6d3a00",\
-		alpha = (50 * (nutrition / MAX_PLANT_NUTRITION)),\
+		alpha = (50 * (get_total_npk() / MAX_PLANT_NUTRITION)),\
 	)
 
 /obj/structure/soil/proc/get_plant_overlay()
@@ -481,12 +515,12 @@
 	else
 		. += span_info("The soil is wet.")
 	// Nutrition feedback
-	if(nutrition <= MAX_PLANT_NUTRITION * 0.15)
-		. += span_warning("The soil is hungry.")
-	else if (nutrition <= MAX_PLANT_NUTRITION * 0.5)
-		. += span_info("The soil is sated.")
-	else
-		. += span_info("The soil looks fertile.")
+	if(nitrogen < MAX_PLANT_NITROGEN * 0.15)
+		. += span_info("The plant is lacking Nitrogen")
+	if(potassium < MAX_PLANT_POTASSIUM * 0.15)
+		. += span_info("The plant is lacking Potassium")
+	if(phosphorus < MAX_PLANT_PHOSPHORUS * 0.15)
+		. += span_info("The plant is lacking Phosphorus")
 	// Weeds feedback
 	if(weeds >= MAX_PLANT_WEEDS * 0.6)
 		. += span_warning("It's overtaken by the weeds!")
@@ -513,12 +547,14 @@
 		// Weeds die without water in soil
 		adjust_weeds(-dt * WEED_DECAY_RATE)
 		return
-	// Weeds eat water and nutrition to grow
+
+	// Weeds eat water and NPK nutrients to grow
 	var/weed_factor = weeds / MAX_PLANT_WEEDS
 	adjust_water(-dt * weed_factor * WEED_WATER_CONSUMPTION_RATE)
-	adjust_nutrition(-dt * weed_factor * WEED_NUTRITION_CONSUMPTION_RATE)
-	if(nutrition > 0)
-		adjust_weeds(dt * WEED_GROWTH_RATE)
+
+	if((get_total_npk() > 0 )&& plant_genetics)
+		var/genetic_value = (100 - plant_genetics.disease_resistance) * 0.03
+		adjust_weeds(dt * WEED_GROWTH_RATE * genetic_value)
 
 /obj/structure/soil/proc/process_plant(dt)
 	if(!plant)
@@ -536,82 +572,186 @@
 	if(!plant || plant_dead || !matured || produce_ready)
 		return
 
-	// Get the baseline quality potential from the plant_def
-	var/quality_potential = 1.0
+	var/quality_potential = 0.5  // Start lower
 
-	// Factor in growth time - shorter growing crops get higher potential
-	// Base formula creates a range from ~0.5 to ~1.5 based on maturation time
-	// 3 MINUTES would get ~1.5 potential, 12 MINUTES would get ~0.5 potential
-	quality_potential = clamp(1 + (1 - (plant.maturation_time / (12 MINUTES))), 0.5, 1.5)
+	if(plant_genetics)
+		var/genetics_trait = plant_genetics.quality_trait
+		// Convert trait value to quality potential
+		// Below average (0-40): 0.2-0.5 potential
+		// Average (40-60): 0.5-0.7 potential
+		// Above average (60-100): 0.7-1.2 potential
+		if(genetics_trait <= 40)
+			quality_potential = 0.2 + (genetics_trait / 20) * 0.3
+		else if(genetics_trait <= 60)
+			quality_potential = 0.5 + ((genetics_trait - 30) / 20) * 0.2
+		else
+			quality_potential = 0.7 + ((genetics_trait - 50) / 40) * 0.5
 
-	// Calculate current conditions quality multiplier
-	var/conditions_quality = 1.0
+	var/growth_bonus = clamp((1 - (plant.maturation_time / (12 MINUTES))) * 0.3, -0.2, 0.3)
+	quality_potential += growth_bonus
+	quality_potential = clamp(quality_potential, 0.1, 1.5)
+
+	var/conditions_quality = 0.7  // Start lower, need good care to reach 1.0
 
 	if(tilled_time > 0)
-		conditions_quality *= 1.1
+		conditions_quality += 0.1
 	if(pollination_time > 0)
-		conditions_quality *= 1.3
+		conditions_quality += 0.15
 	if(blessed_time > 0)
-		conditions_quality *= 1.5
+		conditions_quality += 0.2
 	if(has_world_trait(/datum/world_trait/dendor_fertility))
-		conditions_quality *= 1.5
+		conditions_quality += 0.2
 
-	if(nutrition >= MAX_PLANT_NUTRITION * 0.9)
-		conditions_quality *= 1.3
-	else if(nutrition >= MAX_PLANT_NUTRITION * 0.7)
-		conditions_quality *= 1.1
-	else if(nutrition < MAX_PLANT_NUTRITION * 0.4)
-		conditions_quality *= 0.7
+	var/npk_balance_quality = calculate_npk_quality_modifier()
+	conditions_quality *= npk_balance_quality
 
-	// Water levels affect quality
 	if(water >= MAX_PLANT_WATER * 0.9)
-		conditions_quality *= 1.2
+		conditions_quality += 0.2
 	else if(water >= MAX_PLANT_WATER * 0.7)
-		conditions_quality *= 1.1
+		conditions_quality += 0.1
 	else if(water < MAX_PLANT_WATER * 0.5)
-		conditions_quality *= 0.8
+		conditions_quality *= 0.7
 	else if(water < MAX_PLANT_WATER * 0.3)
-		conditions_quality *= 0.6
+		conditions_quality *= 0.5
 
-	// Weeds negatively affect quality
-	if(weeds >= MAX_PLANT_WEEDS * 0.3)
-		conditions_quality *= 0.9
+	// Weeds more severely affect quality
 	if(weeds >= MAX_PLANT_WEEDS * 0.6)
+		conditions_quality *= 0.6
+	else if(weeds >= MAX_PLANT_WEEDS * 0.3)
 		conditions_quality *= 0.8
 
-	// Final quality rate combines potential and conditions
+	// Cap conditions quality
+	conditions_quality = clamp(conditions_quality, 0.1, 1.8)
+
 	var/quality_rate = quality_potential * conditions_quality
 
-	// Maximum quality points scaled by maturation time
-	// This prevents long-growing crops from guaranteed max quality
 	var/max_quality_points = 30 * (plant.maturation_time / (6 MINUTES))
 
-	// Add quality points, but apply diminishing returns as we approach the max
 	var/progress_ratio = quality_points / max_quality_points
-	var/diminishing_returns = 1 - (progress_ratio * 0.7)
+	var/diminishing_returns = 1 - (progress_ratio * 0.9)  // Stronger diminishing returns
+	quality_points += dt * quality_rate * 0.025 * diminishing_returns  // Slower accumulation
+	quality_points = min(quality_points, max_quality_points)
 
-	quality_points += dt * quality_rate * 0.03 * diminishing_returns
-	quality_points = min(quality_points, max_quality_points)  // Cap at the maximum
-
-	if(quality_points >= max_quality_points * 0.9)
+	if(quality_points >= max_quality_points * 0.95)
 		crop_quality = QUALITY_DIAMOND
-	else if(quality_points >= max_quality_points * 0.7)
+	else if(quality_points >= max_quality_points * 0.85)
 		crop_quality = QUALITY_GOLD
-	else if(quality_points >= max_quality_points * 0.5)
+	else if(quality_points >= max_quality_points * 0.7)
 		crop_quality = QUALITY_SILVER
-	else if(quality_points >= max_quality_points * 0.3)
+	else if(quality_points >= max_quality_points * 0.5)
 		crop_quality = QUALITY_BRONZE
 	else
 		crop_quality = QUALITY_REGULAR
+
+// Calculate quality modifier based on NPK balance
+/obj/structure/soil/proc/calculate_npk_quality_modifier()
+	if(!plant)
+		return 1.0
+
+	// Check which nutrients are actually required
+	var/needs_nitrogen = plant.nitrogen_requirement > 0
+	var/needs_phosphorus = plant.phosphorus_requirement > 0
+	var/needs_potassium = plant.potassium_requirement > 0
+	var/nutrients_needed = needs_nitrogen + needs_phosphorus + needs_potassium
+
+	// If plant needs no nutrients, return perfect quality
+	if(nutrients_needed == 0)
+		return 1.4
+
+	// Calculate sufficiency for each required nutrient
+	var/quality_factors = list()
+
+	if(needs_nitrogen)
+		var/n_sufficiency = min(nitrogen / plant.nitrogen_requirement, 2.0)
+		quality_factors += n_sufficiency
+
+	if(needs_phosphorus)
+		var/p_sufficiency = min(phosphorus / plant.phosphorus_requirement, 2.0)
+		quality_factors += p_sufficiency
+
+	if(needs_potassium)
+		var/k_sufficiency = min(potassium / plant.potassium_requirement, 2.0)
+		quality_factors += k_sufficiency
+
+	// For single-nutrient plants, use simple sufficiency
+	if(nutrients_needed == 1)
+		var/sufficiency = quality_factors[1]
+		// Convert sufficiency to quality modifier (0.5 to 1.4 range)
+		if(sufficiency <= 0.1)
+			return 0.5  // Severe deficiency
+		else if(sufficiency >= 1.0)
+			return clamp(1.0 + (sufficiency - 1.0) * 0.4, 1.0, 1.4)  // Bonus for excess
+		else
+			return clamp(0.5 + (sufficiency * 0.5), 0.5, 1.0)  // Scaling up to normal
+
+	// For multi-nutrient plants, calculate balance
+	var/total_requirements = plant.nitrogen_requirement + plant.phosphorus_requirement + plant.potassium_requirement
+	var/total_available = 0
+
+	if(needs_nitrogen)
+		total_available += nitrogen
+	if(needs_phosphorus)
+		total_available += phosphorus
+	if(needs_potassium)
+		total_available += potassium
+
+	if(total_available <= 0)
+		return 0.5  // Severe nutrient deficiency
+
+	// Calculate ideal vs actual ratios only for required nutrients
+	var/deviation_sum = 0
+
+	if(needs_nitrogen)
+		var/ideal_n_ratio = plant.nitrogen_requirement / total_requirements
+		var/actual_n_ratio = nitrogen / total_available
+		deviation_sum += abs(actual_n_ratio - ideal_n_ratio)
+
+	if(needs_phosphorus)
+		var/ideal_p_ratio = plant.phosphorus_requirement / total_requirements
+		var/actual_p_ratio = phosphorus / total_available
+		deviation_sum += abs(actual_p_ratio - ideal_p_ratio)
+
+	if(needs_potassium)
+		var/ideal_k_ratio = plant.potassium_requirement / total_requirements
+		var/actual_k_ratio = potassium / total_available
+		deviation_sum += abs(actual_k_ratio - ideal_k_ratio)
+
+	// Convert deviation to balance modifier
+	var/balance_modifier = clamp(1.4 - (deviation_sum * 2), 0.6, 1.4)
+
+	// Overall availability modifier
+	var/availability_ratio = total_available / total_requirements
+	var/availability_modifier = clamp(0.5 + (availability_ratio * 0.5), 0.5, 1.4)
+
+	// Average sufficiency of required nutrients
+	var/avg_sufficiency = 0
+	for(var/factor in quality_factors)
+		avg_sufficiency += factor
+	avg_sufficiency /= nutrients_needed
+	avg_sufficiency = min(avg_sufficiency, 1.0)
+
+	// Combine all factors
+	return balance_modifier * availability_modifier * (0.8 + avg_sufficiency * 0.4)
 
 /obj/structure/soil/proc/process_plant_health(dt)
 	if(!plant)
 		return
 	var/drain_rate = plant.water_drain_rate
 	var/should_update = FALSE
+
+	if(plant_genetics)
+		var/efficiency_modifier = (plant_genetics.water_efficiency - TRAIT_GRADE_AVERAGE) / 100
+		drain_rate *= (1 - efficiency_modifier * 0.4) // Up to 20% less water consumption
+
+	var/weed_damage_multiplier = 1.0
+	if(plant_genetics)
+		var/hardiness_modifier = (plant_genetics.cold_resistance - TRAIT_GRADE_AVERAGE) / 100
+		weed_damage_multiplier = (1 - hardiness_modifier * 0.5) // Up to 25% less weed damage
+
 	// Lots of weeds harm the plant
 	if(weeds >= MAX_PLANT_WEEDS * 0.6)
-		should_update |= adjust_plant_health(-dt * PLANT_WEEDS_HARM_RATE)
+		should_update |= adjust_plant_health(-dt * PLANT_WEEDS_HARM_RATE * weed_damage_multiplier)
+
 	// Regenerate plant health if we dont drain water, or we have the water
 	if(drain_rate <= 0 || water > 0)
 		should_update |= adjust_plant_health(dt * PLANT_REGENERATION_RATE)
@@ -620,12 +760,39 @@
 		if(water <= 0)
 			should_update |= adjust_plant_health(-dt * PLANT_DECAY_RATE)
 		else
-			// Drain water
+			// Drain water with genetics modifier
 			adjust_water(-dt * drain_rate)
 	// Blessed plants heal!!
 	if(blessed_time > 0)
 		should_update |= adjust_plant_health(dt * PLANT_BLESS_HEAL_RATE)
 	return should_update
+
+/obj/structure/soil/proc/improve_genetics_naturally()
+	if(!plant_genetics)
+		return new /datum/plant_genetics()
+
+	var/datum/plant_genetics/improved = plant_genetics.copy()
+
+	// Small chance to improve each trait based on growing conditions
+	var/improvement_chance = 10
+
+	// Better conditions = higher improvement chance
+	if(blessed_time > 0)
+		improvement_chance += 15
+	if(tilled_time > 0)
+		improvement_chance += 10
+	if(pollination_time > 0)
+		improvement_chance += 10
+	if(crop_quality >= QUALITY_GOLD)
+		improvement_chance += 20
+
+	// Try to improve each trait
+	if(prob(improvement_chance))
+		improved.mutate_trait()
+		improved.mutate_trait()
+
+	improved.generation += 1
+	return improved
 
 /obj/structure/soil/proc/process_plant_nutrition(dt)
 	if(!plant)
@@ -640,57 +807,158 @@
 	// If we drain water, and have no water, we can't grow
 	if(drain_rate > 0 && water <= 0)
 		return
+
 	var/growth_multiplier = 1.0
-	var/nutriment_eat_mutliplier = 1.0
-	// If soil is tilled, grow faster
+	var/nutriment_eat_multiplier = 1.0
+
+	// Environmental modifiers
 	if(tilled_time > 0)
 		growth_multiplier *= 1.6
-	// If soil is blessed, grow faster and take up less nutriments
 	if(blessed_time > 0)
 		growth_multiplier *= 2.0
-		nutriment_eat_mutliplier *= 0.4
-
+		nutriment_eat_multiplier *= 0.4
 	if(pollination_time > 0)
 		growth_multiplier *= 1.75
-		nutriment_eat_mutliplier *= 0.6
-
+		nutriment_eat_multiplier *= 0.6
 	if(has_world_trait(/datum/world_trait/dendor_fertility))
 		growth_multiplier *= 2.0
-		nutriment_eat_mutliplier *= 0.4
-
+		nutriment_eat_multiplier *= 0.4
 	if(has_world_trait(/datum/world_trait/fertility))
 		growth_multiplier *= 1.5
-
 	if(has_world_trait(/datum/world_trait/dendor_drought))
 		growth_multiplier *= 0.4
-		nutriment_eat_mutliplier *= 2
+		nutriment_eat_multiplier *= 2
 
-	// If there's too many weeds, they hamper the growth of the plant
+	// Weed interference
 	if(weeds >= MAX_PLANT_WEEDS * 0.3)
 		growth_multiplier *= 0.75
 	if(weeds >= MAX_PLANT_WEEDS * 0.6)
 		growth_multiplier *= 0.75
-	// If we're low on health, also grow slower
+
+	// Health-based growth reduction
 	if(plant_health <= MAX_PLANT_HEALTH * 0.6)
 		growth_multiplier *= 0.75
 	if(plant_health <= MAX_PLANT_HEALTH * 0.3)
 		growth_multiplier *= 0.75
-	var/target_growth_time = growth_multiplier * dt
-	return process_growth(target_growth_time)
 
-/obj/structure/soil/proc/process_growth(target_growth_time)
+	var/target_growth_time = growth_multiplier * dt
+	return process_npk_growth(target_growth_time, nutriment_eat_multiplier, dt)
+
+/obj/structure/soil/proc/process_npk_growth(target_growth_time, nutriment_multiplier = 1.0, dt)
 	if(!plant)
 		return
-	var/target_nutrition
-	if(!matured)
-		target_nutrition = (plant.maturation_nutrition / plant.maturation_time) * target_growth_time
+
+	// Calculate base NPK requirements for this time step
+	var/nitrogen_needed = 0
+	var/phosphorus_needed = 0
+	var/potassium_needed = 0
+	var/total_growth_time
+
+	if(plant.perennial) //perennials are hungry fucks
+		if(!matured)
+			// Maturation phase
+			total_growth_time = plant.maturation_time
+			if(plant.nitrogen_requirement > 0)
+				nitrogen_needed = (plant.nitrogen_requirement / total_growth_time) * target_growth_time
+			if(plant.phosphorus_requirement > 0)
+				phosphorus_needed = (plant.phosphorus_requirement / total_growth_time) * target_growth_time
+			if(plant.potassium_requirement > 0)
+				potassium_needed = (plant.potassium_requirement / total_growth_time) * target_growth_time
+		else
+			// Production phase
+			total_growth_time = plant.produce_time
+			if(plant.nitrogen_requirement > 0)
+				nitrogen_needed = (plant.nitrogen_requirement / total_growth_time) * target_growth_time
+			if(plant.phosphorus_requirement > 0)
+				phosphorus_needed = (plant.phosphorus_requirement / total_growth_time) * target_growth_time
+			if(plant.potassium_requirement > 0)
+				potassium_needed = (plant.potassium_requirement / total_growth_time) * target_growth_time
 	else
-		target_nutrition = (plant.produce_nutrition / plant.produce_time) * target_growth_time
-	var/possible_nutrition = min(target_nutrition, nutrition)
-	var/factor = possible_nutrition / target_nutrition
-	var/possible_growth_time = target_growth_time * factor
-	adjust_nutrition(-possible_nutrition)
-	return add_growth(possible_growth_time)
+		total_growth_time = plant.maturation_time + plant.produce_time
+		if(plant.nitrogen_requirement > 0)
+			nitrogen_needed = (plant.nitrogen_requirement / total_growth_time) * target_growth_time
+		if(plant.phosphorus_requirement > 0)
+			phosphorus_needed = (plant.phosphorus_requirement / total_growth_time) * target_growth_time
+		if(plant.potassium_requirement > 0)
+			potassium_needed = (plant.potassium_requirement / total_growth_time) * target_growth_time
+
+	// Apply nutrient multipliers only to nutrients that are actually needed
+	if(nitrogen_needed > 0)
+		nitrogen_needed *= nutriment_multiplier
+	if(phosphorus_needed > 0)
+		phosphorus_needed *= nutriment_multiplier
+	if(potassium_needed > 0)
+		potassium_needed *= nutriment_multiplier
+
+	// Apply genetics modifiers if available
+	if(plant_genetics)
+		var/efficiency_modifier = (plant_genetics.water_efficiency - TRAIT_GRADE_AVERAGE) / 100
+		if(nitrogen_needed > 0)
+			nitrogen_needed *= (1 - efficiency_modifier * 0.3)
+		if(phosphorus_needed > 0)
+			phosphorus_needed *= (1 - efficiency_modifier * 0.3)
+		if(potassium_needed > 0)
+			potassium_needed *= (1 - efficiency_modifier * 0.3)
+
+	// Check availability and calculate factors for each nutrient that's actually needed
+	var/nitrogen_factor = 0
+	var/phosphorus_factor = 0
+	var/potassium_factor = 0
+
+	if(nitrogen_needed > 0)
+		var/nitrogen_available = min(nitrogen_needed, nitrogen)
+		nitrogen_factor = nitrogen_available / nitrogen_needed
+
+	if(phosphorus_needed > 0)
+		var/phosphorus_available = min(phosphorus_needed, phosphorus)
+		phosphorus_factor = phosphorus_available / phosphorus_needed
+
+	if(potassium_needed > 0)
+		var/potassium_available = min(potassium_needed, potassium)
+		potassium_factor = potassium_available / potassium_needed
+
+	// Find the best available nutrient (highest satisfaction ratio)
+	var/limiting_factor = max(nitrogen_factor, phosphorus_factor, potassium_factor)
+
+	// If no nutrients are needed, allow full growth
+	if(nitrogen_needed == 0 && phosphorus_needed == 0 && potassium_needed == 0)
+		limiting_factor = 1.0
+
+	// Consume only the nutrient that's providing the growth
+	if(limiting_factor > 0)
+		if(nitrogen_factor == limiting_factor && nitrogen_needed > 0)
+			adjust_nitrogen(-nitrogen_needed * limiting_factor)
+		else if(phosphorus_factor == limiting_factor && phosphorus_needed > 0)
+			adjust_phosphorus(-phosphorus_needed * limiting_factor)
+		else if(potassium_factor == limiting_factor && potassium_needed > 0)
+			adjust_potassium(-potassium_needed * limiting_factor)
+
+	// Apply growth based on limiting factor
+	var/actual_growth_time = target_growth_time * limiting_factor
+
+	// Nutrient deficiency affects plant health only if nutrients are required but unavailable
+	var/any_nutrients_needed = (nitrogen_needed > 0 || phosphorus_needed > 0 || potassium_needed > 0)
+	if(any_nutrients_needed && limiting_factor < 0.1)
+		adjust_plant_health(-dt * NUTRIENT_DEFICIENCY_DAMAGE_RATE)
+
+	return add_growth(actual_growth_time)
+
+/obj/structure/soil/proc/return_nutrients_to_soil()
+	if(!plant)
+		return
+
+	adjust_nitrogen(plant.nitrogen_production)
+	adjust_phosphorus(plant.phosphorus_production)
+	adjust_potassium(plant.potassium_production)
+
+	for(var/direction in GLOB.cardinals)
+		var/turf/cardinal_turf = get_step(src, direction)
+		for(var/obj/structure/soil/soil in cardinal_turf)
+			if(soil == src)
+				continue
+			soil.adjust_nitrogen(FLOOR(plant.nitrogen_production, 1))
+			soil.adjust_phosphorus(FLOOR(plant.phosphorus_production, 1))
+			soil.adjust_potassium(FLOOR(plant.potassium_production, 1))
 
 /obj/structure/soil/proc/add_growth(added_growth)
 	if(!plant)
@@ -719,7 +987,7 @@
 		START_PROCESSING(SSobj, channel.water_parent)
 		break
 	// If plant exists and is not dead, nutriment or water is not zero, reset the decay timer
-	if(nutrition > 0 || water > 0 || (plant != null && plant_health > 0))
+	if(get_total_npk() > 0 || water > 0 || (plant != null && plant_health > 0))
 		soil_decay_time = SOIL_DECAY_TIME
 	else
 		// Otherwise, "decay" the soil
@@ -729,7 +997,6 @@
 		adjust_water(-dt * SOIL_WATER_DECAY_RATE, FALSE)
 	else
 		adjust_water(dt)
-	adjust_nutrition(-dt * SOIL_NUTRIMENT_DECAY_RATE, FALSE)
 
 	tilled_time = max(tilled_time - dt, 0)
 	blessed_time = max(blessed_time - dt, 0)
@@ -737,6 +1004,7 @@
 
 /obj/structure/soil/proc/decay_soil()
 	plant = null
+	plant_genetics = null
 	qdel(src)
 
 /obj/structure/soil/proc/uproot(loot = TRUE)
@@ -748,6 +1016,7 @@
 	if(produce_ready)
 		ruin_produce()
 	plant = null
+	plant_genetics = null
 	update_appearance(UPDATE_OVERLAYS)
 
 /// Spawns uproot loot, such as a long from an apple tree when removing the tree
@@ -763,12 +1032,16 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 /// Yields produce on its tile if it's ready for harvest
+
 /obj/structure/soil/proc/yield_produce(modifier = 0)
-	if(!produce_ready)
+	if(!produce_ready || !plant_genetics)
 		return
 
-	// Base yield calculation
+	// GENETICS: Enhanced yield calculation
 	var/base_amount = rand(plant.produce_amount_min, plant.produce_amount_max)
+
+	// Genetics yield bonus - more significant impact
+	var/genetics_yield_bonus = round((plant_genetics.yield_trait - TRAIT_GRADE_AVERAGE) / 5) // Every 5 points = +1 produce
 
 	// Quality modifiers
 	var/quality_modifier = 0
@@ -784,13 +1057,24 @@
 				quality_modifier = 4
 
 	// Calculate final yield amount
-	var/spawn_amount = max(base_amount + modifier + quality_modifier, 1)
+	var/spawn_amount = max(base_amount + modifier + quality_modifier + genetics_yield_bonus, 1)
 
 	for(var/i in 1 to spawn_amount)
 		var/obj/item/produce = new plant.produce_type(loc)
 		if(produce && istype(produce, /obj/item/reagent_containers/food/snacks/produce))
 			var/obj/item/reagent_containers/food/snacks/produce/P = produce
 			P.set_quality(crop_quality)
+			// Pass genetics to the produce for seed extraction
+			P.source_genetics = plant_genetics.copy()
+
+	if(plant_genetics && plant_genetics.yield_trait > TRAIT_GRADE_GOOD)
+		var/seed_chance = (plant_genetics.yield_trait - TRAIT_GRADE_GOOD) * 2 // Up to 50% chance at max yield
+		if(prob(seed_chance))
+			// Create improved genetics for the seed
+			var/datum/plant_genetics/new_genetics = improve_genetics_naturally()
+			var/obj/item/neuFarm/seed/bonus_seed = new(loc, new_genetics)
+			bonus_seed.plant_def_type = plant.type
+			bonus_seed.forceMove(loc)
 
 	// Reset produce state
 	produce_ready = FALSE
@@ -804,7 +1088,8 @@
 
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/structure/soil/proc/insert_plant(datum/plant_def/new_plant)
+
+/obj/structure/soil/proc/insert_plant(datum/plant_def/new_plant, datum/plant_genetics/new_genetics)
 	if(plant)
 		return
 	plant = new_plant
@@ -814,6 +1099,7 @@
 	matured = FALSE
 	produce_ready = FALSE
 	plant_dead = FALSE
+	plant_genetics = new_genetics
 	// Reset quality values
 	crop_quality = QUALITY_REGULAR
 	quality_points = 0
@@ -835,7 +1121,6 @@
 	add_growth(plant.produce_time)
 
 #undef MAX_PLANT_HEALTH
-#undef MAX_PLANT_WATER
 #undef MAX_PLANT_NUTRITION
 #undef MAX_PLANT_WEEDS
 #undef SOIL_DECAY_TIME

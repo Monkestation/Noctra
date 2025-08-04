@@ -345,16 +345,13 @@
 		icon_state = initial(icon_state)
 
 /obj/structure/material_bin/attack_hand_secondary(mob/user, params)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.visible_message(span_danger("[user] starts to [opened ? "close" : "open"] [src]."), span_danger("You start to [opened ? "close" : "open"] [src]."))
 	if(!do_after(user, 2.5 SECONDS, src))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return
 	opened = !opened
 	update_appearance(UPDATE_ICON_STATE)
 	SEND_SIGNAL(src, COMSIG_TRY_STORAGE_HIDE_ALL)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 #undef STEP_FIDDLE
 #undef STEP_LEVER

@@ -5,18 +5,11 @@
 
 /obj/structure/vampire/portalmaker/attack_hand(mob/living/user)
 	var/list/possibleportals = list()
-	var/datum/antagonist/vampire/lord/lord_datum = user.mind.has_antag_datum(/datum/antagonist/vampire/lord)
-	if(!lord_datum)
-		return
-	var/datum/team/vampires/vamp_team = lord_datum.team
 
 	. = TRUE
 
-	if(vamp_team.power_level < 1)
-		to_chat(user, span_warning("I've yet to regain this aspect of my power!"))
-		return
 
-	if(!lord_datum.has_vitae(1000))
+	if(!user.has_bloodpool_cost(1000))
 		to_chat(user, span_warning("This costs 1000 vitae, I lack that."))
 		return
 	var/list/choices = list("RETURN", "SENDING", CHOICE_CANCEL)
@@ -34,7 +27,7 @@
 			if(!do_after(user, 3 SECONDS, src))
 				return
 
-			lord_datum.adjust_vitae(-1000)
+			user.has_bloodpool_cost(-1000)
 			if(istype(choice, /obj/item/clothing/neck/portalamulet))
 				var/obj/item/clothing/neck/portalamulet/A = choice
 				A.uses -= 1
@@ -56,7 +49,7 @@
 				return
 			user.visible_message("[user] begins to summon a portal.", "I begin to summon a portal.")
 			if(do_after(user, 3 SECONDS, src))
-				lord_datum.adjust_vitae(-1000)
+				user.has_bloodpool_cost(-1000)
 				if(istype(choice, /obj/item/clothing/neck/portalamulet))
 					var/obj/item/clothing/neck/portalamulet/A = choice
 					A.uses -= 1

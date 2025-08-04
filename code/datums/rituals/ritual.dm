@@ -401,7 +401,7 @@ GLOBAL_LIST_INIT(t2buffrunerituallist, generate_t2buff_rituallist())
 	desc = "summons an infernal imp"
 	blacklisted = FALSE
 	tier = 1
-	required_atoms = list(/obj/item/ash = 2, /obj/item/natural/obsidian = 1)
+	required_atoms = list(/obj/item/fertilizer/ash = 2, /obj/item/natural/obsidian = 1)
 	mob_to_summon = /mob/living/simple_animal/hostile/retaliate/infernal/imp//temporary rat 4 testing
 
 /datum/runerituals/summoning/hellhound

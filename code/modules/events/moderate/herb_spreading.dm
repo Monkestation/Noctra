@@ -21,7 +21,7 @@ GLOBAL_LIST_INIT(herb_locations, list())
 		var/list/turfs = list()
 		var/list/range_atoms = view(5, herb)
 		for(var/turf/open/turf in range_atoms)
-			if(istransparentturf(turf) || islava(turf) || istype(turf, /turf/open/water))
+			if(isopenspace(turf) || islava(turf) || istype(turf, /turf/open/water))
 				continue
 			turfs |= turf
 		for(var/num = 1 to rand(3, 5))

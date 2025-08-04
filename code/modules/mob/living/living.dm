@@ -46,8 +46,6 @@
 		S.sharerDies(FALSE)
 		S.removeSoulsharer(src) //If a sharer is destroy()'d, they are simply removed
 	sharedSoullinks = null
-	if(craftingthing)
-		QDEL_NULL(craftingthing)
 	return ..()
 
 /mob/living/update_appearance(updates)
@@ -622,7 +620,7 @@
 
 //same as above
 /mob/living/pointed(atom/A as mob|obj|turf in view(client.view, src))
-	if(incapacitated(ignore_grab = TRUE))
+	if(incapacitated(IGNORE_GRAB))
 		return FALSE
 	return ..()
 
@@ -651,9 +649,30 @@
 //			to_chat(src, "<span class='userdanger'>I have given up life and succumbed to death.</span>")
 		death()
 
-/mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
-	if(HAS_TRAIT(src, TRAIT_INCAPACITATED) || (!ignore_restraints && (HAS_TRAIT(src, TRAIT_RESTRAINED) || (!ignore_grab && pulledby && (pulledby != src) && pulledby.grab_state >= GRAB_AGGRESSIVE))))
+/**
+ * Checks if a mob is incapacitated
+ *
+ * Normally being restrained, agressively grabbed, or in stasis counts as incapacitated
+ * unless there is a flag being used to check if it's ignored
+ *
+ * args:
+ * * flags (optional) bitflags that determine if special situations are exempt from being considered incapacitated
+ *
+ * bitflags: (see code/__DEFINES/status_effects.dm)
+ * * IGNORE_RESTRAINTS - mob in a restraint (handcuffs) is not considered incapacitated
+ * * IGNORE_STASIS - mob in stasis (stasis bed, etc.) is not considered incapacitated
+ * * IGNORE_GRAB - mob that is agressively grabbed is not considered incapacitated
+**/
+/mob/living/incapacitated(flags)
+	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		return TRUE
+	if(!(flags & IGNORE_RESTRAINTS) && HAS_TRAIT(src, TRAIT_RESTRAINED))
+		return TRUE
+	if(!(flags & IGNORE_GRAB) && pulledby && (pulledby != src) && pulledby.grab_state >= GRAB_AGGRESSIVE)
+		return TRUE
+	// if(!(flags & IGNORE_STASIS) && HAS_TRAIT(src, TRAIT_STASIS))
+	// 	return TRUE
+	return FALSE
 
 /mob/living/canUseStorage()
 	if (num_hands <= 0)
@@ -1073,7 +1092,7 @@
 		return pick("trails_1", "trails_2")
 
 /mob/living/can_resist()
-	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE, ignore_stasis = TRUE))
+	return !((next_move > world.time) || incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
 
 /mob/living/verb/resist()
 	set name = "Resist"
@@ -1369,6 +1388,7 @@
 	. = TRUE
 
 	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
+		to_chat(src, span_warning("I'm restrained!"))
 		return
 
 	if(!MOBTIMER_FINISHED(pulledby, MT_RESIST_GRAB, 2 SECONDS))
@@ -1552,13 +1572,17 @@
 
 	if(!who.Adjacent(src))
 		return
-
-	who.visible_message("<span class='warning'>[src] tries to remove [who]'s [what.name].</span>", \
-					"<span class='danger'>[src] tries to remove my [what.name].</span>", null, null, src)
+	if(!enhanced_strip)
+		who.visible_message("<span class='warning'>[src] tries to remove [who]'s [what.name].</span>", \
+						"<span class='danger'>[src] tries to remove my [what.name].</span>", null, null, src)
 	to_chat(src, "<span class='danger'>I try to remove [who]'s [what.name]...</span>")
 	what.add_fingerprint(src)
-	if(do_after(src, what.strip_delay * surrender_mod, who))
-		if(what && Adjacent(who))
+	var/strip_delayed = what.strip_delay
+	if(enhanced_strip)
+		strip_delayed = 0.1 SECONDS
+	if(do_after(src, strip_delayed * surrender_mod, who))
+		if(what && (Adjacent(who) || (enhanced_strip && (get_dist(src, who) <= 3))))
+			enhanced_strip = FALSE
 			if(islist(where))
 				var/list/L = where
 				if(what == who.get_item_for_held_index(L[2]))
@@ -2221,7 +2245,7 @@
 
 ///Checks if the user is incapacitated or on cooldown.
 /mob/living/proc/can_look_up()
-	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE, ignore_grab = TRUE))
+	return !((next_move > world.time) || incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB))
 
 /mob/living/proc/look_around()
 	if(!client)
@@ -2535,91 +2559,143 @@
 /mob/proc/get_punch_dmg()
 	return
 
-/// Check if mob knows spell
+/**
+ * Get spell instance or null from mob actions with instance or typepath.
+ *
+ * Args
+ * * spell_type - Action instance or typepath
+ * * specific - Ignore subtypes
+ */
 /mob/living/proc/get_spell(datum/action/cooldown/spell/spell_type, specific = FALSE)
-	if(!length(actions))
+	if(QDELETED(src) || !length(actions))
 		return
-	if(istype(spell_type, /datum/action/cooldown/spell))
+
+	if(istype(spell_type))
 		spell_type = spell_type.type
+
 	if(!specific)
 		return locate(spell_type) in actions
+
 	for(var/datum/action/cooldown/spell/spell in actions)
 		if(spell.type == spell_type)
 			return spell
 
-/// Add a spell to the mob via typepath
-/mob/living/proc/add_spell(datum/action/cooldown/spell/spell_type, silent = TRUE, source, forced = FALSE)
+/**
+ * Add action to mob via typepath or instance, only one spell of each type may be present at a time.
+ *
+ * Args
+ * * spell_type - spell to add, if an instance source is not relevant
+ * * silent - whether we give a message
+ * * source - target of the action, handles deletion on parent removal
+ *			  defaults to src and mind makes it transfer with the mind to new mobs.
+ * * override - Replace existing spell if present, instead of returning early
+ */
+/mob/living/proc/add_spell(datum/action/cooldown/spell/spell_type, silent = TRUE, source, override = FALSE)
 	if(QDELETED(src))
 		return
-	if(!forced && get_spell(spell_type))
-		return
-	if(!source)
-		source = src
-	var/datum/action/spell = new spell_type(source)
+
+	var/datum/action/cooldown/spell = get_spell(spell_type, TRUE)
+	if(spell)
+		if(!override)
+			return
+		QDEL_NULL(spell)
+
+	if(istype(spell_type))
+		spell = spell_type
+	else
+		if(!source)
+			source = src
+		spell = new spell_type(source)
+
 	if(!silent)
 		to_chat(src, span_nicegreen("I learnt [spell.name]!"))
+
 	spell.Grant(src)
 
 /mob/living/proc/remove_spell(datum/action/cooldown/spell/spell, return_skill_points = FALSE, silent = TRUE)
 	if(QDELETED(src))
 		return
-	var/datum/action/cooldown/spell/real_spell = get_spell(spell)
+
+	var/datum/action/cooldown/spell/real_spell = get_spell(spell, TRUE)
 	if(!real_spell)
 		return
+
 	if(return_skill_points)
 		used_spell_points = max(used_spell_points - real_spell.point_cost, 0)
 		spell_points = max(spell_points + real_spell.point_cost, 0)
 		check_learnspell()
+
 	if(!silent)
 		to_chat(src, span_boldwarning("I forgot [real_spell.name]!"))
+
 	qdel(real_spell)
 
 /**
- * purges all spells known by the mob
- * Vars:
- ** return_skill_points - do we return the skillpoints for the spells?
- ** silent - do we notify the player of this change?
-*/
+ * Remove all spells from a mob with the same arguments as single removal
+ *
+ * Args
+ * * return_skill_points - do we return the skillpoints for the spells?
+ * * silent - do we notify the player of this change?
+ * * source - Instead of removing all spells, remove all spells from this source.
+ */
 /mob/living/proc/remove_spells(return_skill_points = FALSE, silent = TRUE, source)
 	if(QDELETED(src))
 		return
+
+	var/silent_individual = TRUE
+	if(!silent && source)
+		silent_individual = FALSE
+
 	for(var/datum/action/cooldown/spell/spell in actions)
 		if(source && (spell.target != source))
 			continue
-		remove_spell(spell, return_skill_points, silent)
-	if(!silent)
-		to_chat(src, span_boldwarning("I forget all my spells!"))
+		remove_spell(spell, return_skill_points, silent_individual)
 
-/mob/living/proc/purge_all_spellpoints(silent = TRUE)
-	if(QDELETED(src))
-		return
-	spell_points = 0
-	used_spell_points = 0
-	if(!silent)
-		to_chat(src, span_boldwarning("I lose all my spellpoints!"))
+	if(!silent && !silent_individual)
+		to_chat(src, span_boldwarning("I forgot all my spells!"))
 
 /**
  * adjusts the amount of available spellpoints
- * Vars:
- ** points - amount of points to grant or reduce
+ *
+ * Args
+ * * points - amount of points to grant or reduce
+ * * used_points - ajust used points
 */
-/mob/living/proc/adjust_spellpoints(points)
+/mob/living/proc/adjust_spell_points(points, used_points = FALSE)
 	if(QDELETED(src))
 		return
-	spell_points += points
+
+	if(used_points)
+		used_spell_points += points
+	else
+		spell_points += points
+
 	check_learnspell()
 
+/// Reset spell points and used spell points
+/mob/living/proc/reset_spell_points(silent = TRUE)
+	if(QDELETED(src))
+		return
+
+	spell_points = 0
+	used_spell_points = 0
+
+	if(!silent)
+		to_chat(src, span_boldwarning("I lost all my spellpoints!"))
+
+	check_learnspell()
+
+/// Check if learnspell should be removed or granted
 /mob/living/proc/check_learnspell()
 	if(QDELETED(src))
 		return
-	var/datum/action/cooldown/spell/undirected/learn/spell = LAZYACCESS(actions, /datum/action/cooldown/spell/undirected/learn)
-	if(((spell_points - used_spell_points) > 0))
-		if(!spell)
-			spell = /datum/action/cooldown/spell/undirected/learn
-			add_spell(spell)
+
+	if(get_spell(/datum/action/cooldown/spell/undirected/learn))
 		return
-	if(spell)
-		remove_spell(spell)
+
+	// Because of kobolds spellpoints can be decimal, but you can't do anything with that if below 1
+	if(floor(spell_points - used_spell_points) > 0)
+		add_spell(/datum/action/cooldown/spell/undirected/learn)
 
 /**
  * purges all spells and skills
@@ -2629,4 +2705,4 @@
 /mob/living/proc/purge_combat_knowledge(silent = TRUE)
 	purge_all_skills(silent)
 	remove_spells(silent = silent)
-	purge_all_spellpoints(silent)
+	reset_spell_points(silent)

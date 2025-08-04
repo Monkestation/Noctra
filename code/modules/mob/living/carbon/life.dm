@@ -178,8 +178,10 @@
 			adjustOxyLoss(5)
 	if(isopenturf(loc))
 		var/turf/open/T = loc
-		if(reagents&& T.pollution)
+		if(reagents && T.pollution)
 			T.pollution.breathe_act(src)
+			if(HAS_TRAIT(src, TRAIT_NOSTINK))
+				return
 			if(next_smell <= world.time)
 				next_smell = world.time + 30 SECONDS
 				T.pollution.smell_act(src)
