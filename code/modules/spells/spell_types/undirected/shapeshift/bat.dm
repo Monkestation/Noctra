@@ -12,3 +12,8 @@
 
 	possible_shapes = list(/mob/living/simple_animal/hostile/retaliate/bat)
 	die_with_shapeshifted_form = FALSE
+
+/datum/action/cooldown/spell/undirected/shapeshift/bat/can_cast_spell(feedback)
+	if(HAS_TRAIT(owner, TRAIT_COVEN_BANE))
+		return FALSE
+	. = ..()

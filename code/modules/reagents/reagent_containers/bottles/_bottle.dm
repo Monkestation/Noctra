@@ -268,3 +268,17 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	. = ..()
 	name = "[lowertext(initial(main_material.name))] clay teapot"
 
+
+/obj/item/reagent_containers/glass/bottle/glazed_teacup
+	name = "fancy teacup"
+	desc = "A fancy tea cup made out of ceramic. Used to serve tea."
+	icon_state = "cup_fancy"
+	volume = 30
+	dropshrink = 0.7
+
+/obj/item/reagent_containers/glass/bottle/glazed_teapot
+	name = "fancy teapot"
+	desc = "A fancy tea pot made out of ceramic. Used to hold tea."
+	icon_state = "teapot_fancy"
+	volume = 99
+	dropshrink = 0.7

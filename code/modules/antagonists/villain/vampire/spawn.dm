@@ -1,7 +1,6 @@
 /datum/antagonist/vampire/lesser
 	name = "Vampire Spawn"
 	antag_hud_name = "Vspawn"
-	autojoin_team = TRUE
 	confess_lines = list(
 		"THE CRIMSON MASTER CALLS!",
 		"MY MASTER COMMANDS!",
@@ -48,11 +47,6 @@
 /datum/antagonist/vampire/lesser/greet()
 	to_chat(owner.current, span_userdanger("We are awakened from our slumber, Spawn of the feared Vampire Lord."))
 	. = ..()
-
-/datum/antagonist/vampire/lesser/vamp_look()
-	. = ..()
-	var/mob/living/carbon/human/V = owner.current
-	V.vampire_disguise()
 
 /datum/antagonist/vampire/lesser/move_to_spawnpoint()
 	owner.current.forceMove(pick(GLOB.vspawn_starts))

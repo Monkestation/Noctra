@@ -46,7 +46,7 @@
 	beltr = /obj/item/weapon/knife/hunting
 	var/obj/item/weapon/pitchfork/P = new()
 	H.put_in_hands(P, forced = TRUE)
-	backpack_contents = list(/obj/item/neuFarm/seed/wheat=1,/obj/item/neuFarm/seed/apple=1,/obj/item/neuFarm/seed/cabbage=1,/obj/item/neuFarm/seed/potato=1,/obj/item/neuFarm/seed/onion=1,/obj/item/ash=2,/obj/item/flint=1,/obj/item/storage/belt/pouch/coins/mid=1)
+	backpack_contents = list(/obj/item/neuFarm/seed/wheat=1,/obj/item/neuFarm/seed/apple=1,/obj/item/neuFarm/seed/cabbage=1,/obj/item/neuFarm/seed/potato=1,/obj/item/neuFarm/seed/onion=1,/obj/item/fertilizer/ash=2,/obj/item/flint=1,/obj/item/storage/belt/pouch/coins/mid=1)
 	H.change_stat(STATKEY_STR, 2)
 	H.change_stat(STATKEY_CON, 1)
 	H.change_stat(STATKEY_END, 2)

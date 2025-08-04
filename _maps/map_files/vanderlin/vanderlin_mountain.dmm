@@ -1430,7 +1430,7 @@
 /turf/open/floor/volcanic,
 /area/rogue/under/mountains/anvil/lower/building)
 "vo" = (
-/obj/item/ash,
+/obj/item/fertilizer/ash,
 /turf/open/floor/naturalstone,
 /area/rogue/under/mountains/anvil/lower)
 "vs" = (
@@ -2207,12 +2207,12 @@
 /area/rogue/under/mountains/anvil/lower)
 "Iz" = (
 /obj/item/clothing/head/helmet/leather/minershelm,
-/obj/item/ash,
-/obj/item/ash{
+/obj/item/fertilizer/ash,
+/obj/item/fertilizer/ash{
 	pixel_x = 8;
 	pixel_y = 4
 	},
-/obj/item/ash{
+/obj/item/fertilizer/ash{
 	pixel_y = 8;
 	pixel_x = -11
 	},

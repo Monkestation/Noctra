@@ -175,6 +175,19 @@
 	crafting_message = "starts drying a pear"
 	craftdiff = 0
 
+/datum/repeatable_crafting_recipe/driedtea
+	name = "dried tea"
+	output = /obj/item/reagent_containers/food/snacks/produce/tealeaves_dry
+	starting_atom = /obj/item/reagent_containers/food/snacks/produce/tea
+	requirements = list(
+		/obj/item/reagent_containers/food/snacks/produce/tea = 1,
+	)
+	attacked_atom = /obj/machinery/tanningrack
+
+	craft_time = 1.5 SECONDS
+	crafting_message = "starts drying some tea"
+	craftdiff = 0
+
 /datum/repeatable_crafting_recipe/parchment
 	name = "parchment"
 	output = /obj/item/paper

@@ -1,11 +1,5 @@
 GLOBAL_LIST_EMPTY(vampire_objects)
 
-#define VITAE_LEVEL_STARVING 20
-#define VITAE_LEVEL_HUNGRY 100
-#define VITAE_LEVEL_FED 200
-
-// Originally a a curse of hubris from Psydon Himself, vampires are
-// twisted by hellish influence from Kain's time in Subterra into bloodthirsty monsters who can create spread their curse.
 /datum/antagonist/vampire
 	name = "Vampire"
 	roundend_category = "Vampires"
@@ -18,38 +12,21 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		"DRINK THE BLOOD!",
 		"CHILD OF KAIN!",
 	)
+	var/datum/clan/default_clan = /datum/clan/nosferatu
+	// New variables for clan selection
+	var/clan_selected = FALSE
+	var/custom_clan_name = ""
+	var/list/selected_covens = list()
+	var/forced = FALSE
+	var/datum/clan/forcing_clan
 
-	/// This vampire's Team.
-	var/datum/team/vampires/team = null
-	/// If the vampire will autojoin on spawn.
-	var/autojoin_team = FALSE //! shouldn't exist, need to find a better method
-
-	/// TRAITs that the datum will grant.
-	innate_traits = list(
-		TRAIT_STRONGBITE,
-		TRAIT_NOSTAMINA,
-		TRAIT_NOHUNGER,
-		TRAIT_NOBREATH,
-		TRAIT_NOPAIN,
-		TRAIT_TOXIMMUNE,
-		TRAIT_STEELHEARTED,
-		TRAIT_NOSLEEP,
-		TRAIT_VAMPMANSION,
-		TRAIT_VAMP_DREAMS,
-		TRAIT_NOAMBUSH,
-		TRAIT_DARKVISION,
-		TRAIT_LIMBATTACHMENT,
-	)
-
-	var/vitae = 1000
-	var/vmax = 3000
-	var/list/ability_cooldowns = list()
-
-	COOLDOWN_DECLARE(last_transform)
-	var/disguised = FALSE //! spawn
-	var/cache_skin
-	var/cache_eyes
-	var/cache_hair
+/datum/antagonist/vampire/New(incoming_clan = /datum/clan/nosferatu, forced_clan = FALSE)
+	. = ..()
+	if(forced_clan)
+		forced = forced_clan
+		forcing_clan = incoming_clan
+	else
+		default_clan = incoming_clan
 
 /datum/antagonist/vampire/examine_friendorfoe(datum/antagonist/examined_datum, mob/examiner, mob/examined)
 	if(istype(examined_datum, /datum/antagonist/vampire/lord))
@@ -62,8 +39,6 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		return span_boldnotice("Another deadite.")
 
 /datum/antagonist/vampire/on_gain()
-	owner.current.has_reflection = FALSE
-	owner.current.cut_overlay(owner.current.reflective_icon)
 	SSmapping.retainer.vampires |= owner
 	move_to_spawnpoint()
 	owner.special_role = name
@@ -72,28 +47,119 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 		var/mob/living/carbon/human/vampdude = owner.current
 		vampdude.adv_hugboxing_cancel()
 
-	owner.current.cmode_music = 'sound/music/cmode/antag/CombatThrall.ogg'
+		if(!forced)
+			// Show clan selection interface
+			if(!clan_selected)
+				show_clan_selection(vampdude)
+			else
+				// Apply the selected clan
+				vampdude.set_clan(default_clan)
+		else
+			vampdude.set_clan_direct(forcing_clan)
+			forcing_clan = null
 
-	owner.current.adjust_skillrank(/datum/skill/magic/blood, 2, TRUE)
-	owner.current.add_spell(/datum/action/cooldown/spell/undirected/transfix, source = src)
-
-	vamp_look()
+	// The clan system now handles most of the setup, but we can still do antagonist-specific things
+	after_gain()
 	. = ..()
 	equip()
-	after_gain()
 
-/datum/antagonist/vampire/on_removal()
-	. = ..()
-	owner.current.remove_spells(source = src)
+/datum/antagonist/vampire/proc/show_clan_selection(mob/living/carbon/human/vampdude)
+	var/list/clan_options = list()
+	var/list/available_clans = list()
+
+	for(var/clan_type in subtypesof(/datum/clan))
+		var/datum/clan/temp_clan = new clan_type
+		if(temp_clan.selectable_by_vampires)
+			available_clans += clan_type
+			clan_options[temp_clan.name] = clan_type
+		qdel(temp_clan)
+
+	clan_options["Create Custom Clan"] = "custom"
+
+	var/choice = input(vampdude, "Choose your vampire clan:", "Clan Selection") as null|anything in clan_options
+
+	if(!choice)
+		// Default to nosferatu if no choice made
+		default_clan = /datum/clan/nosferatu
+		vampdude.set_clan(default_clan)
+		clan_selected = TRUE
+		return
+
+	if(clan_options[choice] == "custom")
+		create_custom_clan(vampdude)
+	else
+		default_clan = clan_options[choice]
+		vampdude.set_clan(default_clan)
+		clan_selected = TRUE
+
+/datum/antagonist/vampire/proc/create_custom_clan(mob/living/carbon/human/vampdude)
+	// Get custom clan name
+	custom_clan_name = input(vampdude, "Enter your custom clan name:", "Custom Clan", "Custom Clan") as text|null
+	if(!custom_clan_name)
+		custom_clan_name = "Custom Clan"
+
+	// Show coven selection
+	show_coven_selection(vampdude)
+
+/datum/antagonist/vampire/proc/show_coven_selection(mob/living/carbon/human/vampdude)
+	var/list/coven_options = list()
+	var/list/available_covens = list()
+
+	// Get all available covens
+	for(var/coven_type in subtypesof(/datum/coven))
+		var/datum/coven/temp_coven = new coven_type
+		// Only show covens that aren't clan-restricted or can be used by custom clans
+		if(!temp_coven.clan_restricted)
+			available_covens += coven_type
+			coven_options[temp_coven.name] = coven_type
+		qdel(temp_coven)
+
+	if(!length(coven_options))
+		to_chat(vampdude, span_warning("No covens available for selection."))
+		finalize_custom_clan(vampdude)
+		return
+
+	// Select first coven
+	var/first_choice = input(vampdude, "Choose your first coven:", "Coven Selection") as null|anything in coven_options
+	if(first_choice)
+		selected_covens += coven_options[first_choice]
+		coven_options -= first_choice
+
+	// Select second coven
+	if(length(coven_options))
+		var/second_choice = input(vampdude, "Choose your second coven:", "Coven Selection") as null|anything in coven_options
+		if(second_choice)
+			selected_covens += coven_options[second_choice]
+			coven_options -= second_choice
+
+	if(length(coven_options))
+		var/third_choice = input(vampdude, "Choose your third coven:", "Coven Selection") as null|anything in coven_options
+		if(third_choice)
+			selected_covens += coven_options[third_choice]
+			coven_options -= third_choice
+
+	finalize_custom_clan(vampdude)
+
+/datum/antagonist/vampire/proc/finalize_custom_clan(mob/living/carbon/human/vampdude)
+	// Create a custom clan instance
+	var/datum/clan/custom/new_clan = new /datum/clan/custom()
+	new_clan.name = custom_clan_name
+	new_clan.clane_covens = selected_covens.Copy()
+
+	// Apply the custom clan
+	vampdude.set_clan_direct(new_clan)
+	clan_selected = TRUE
+
+	to_chat(vampdude, span_notice("You are now a member of the [custom_clan_name] clan with [length(selected_covens)] coven(s)."))
 
 /datum/antagonist/vampire/proc/after_gain()
-	owner.current.verbs |= /mob/living/carbon/human/proc/vamp_regenerate
-	owner.current.verbs |= /mob/living/carbon/human/proc/disguise_button
+	return
 
 /datum/antagonist/vampire/on_removal()
-	owner.current.has_reflection = TRUE
-	owner.current.create_reflection()
-	owner.current.update_reflection()
+	if(ishuman(owner.current))
+		var/mob/living/carbon/human/vampdude = owner.current
+		// Remove the clan when losing antagonist status
+		vampdude.set_clan(null)
 	if(!silent && owner.current)
 		to_chat(owner.current, span_danger("I am no longer a [job_rank]!"))
 	owner.special_role = null
@@ -102,127 +168,10 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 /datum/antagonist/vampire/proc/equip()
 	return
 
-/datum/antagonist/vampire/greet()
-	SHOULD_CALL_PARENT(TRUE)
-	owner.current.playsound_local(get_turf(owner.current), 'sound/music/vampintro.ogg', 80, FALSE, pressure_affected = FALSE)
-	. = ..()
-
-/datum/antagonist/vampire/proc/vamp_look()
-	var/mob/living/carbon/human/V = owner.current
-	var/obj/item/organ/eyes/eyes = V.getorganslot(ORGAN_SLOT_EYES)
-	cache_skin = V.skin_tone
-	cache_eyes = V.get_eye_color()
-	cache_hair = V.get_hair_color()
-	V.skin_tone = "c9d3de"
-	V.set_hair_color("#181a1d", FALSE)
-	V.set_facial_hair_color("#181a1d", FALSE)
-
-	eyes.heterochromia = FALSE
-	eyes.eye_color = "#FF0000"
-
-	V.update_body()
-	V.update_body_parts(redraw = TRUE)
-	V.mob_biotypes = MOB_UNDEAD
-
-/datum/antagonist/vampire/on_life(mob/user)
-	if(!user)
-		return
-	var/mob/living/carbon/human/H = user
-	if(H.stat == DEAD)
-		return
-	if(H.advsetup)
-		return
-	if(world.time % 5)
-		if(GLOB.tod != "night")
-			if(isturf(H.loc))
-				var/turf/T = H.loc
-				if(T.can_see_sky())
-					if(T.get_lumcount() > 0.15)
-						exposed_to_sunlight()
-
-	if(H.on_fire)
-		if(disguised)
-			last_transform = world.time
-			H.vampire_undisguise(src)
-		H.freak_out()
-
-	if(H.stat)
-		if(istype(H.loc, /obj/structure/closet/crate/coffin))
-			H.fully_heal()
-
-	if(vitae > 0)
-		H.blood_volume = BLOOD_VOLUME_NORMAL
-		if(vitae < 200)
-			if(disguised)
-				to_chat(H, span_warning("My disguise fails!"))
-				H.vampire_undisguise(src)
-	adjust_vitae(-1)
-	handle_vitae()
-
-/datum/antagonist/vampire/proc/exposed_to_sunlight()
-	var/mob/living/H = owner.current
-	if(!disguised)
-		H.fire_act(1, 5)
-		adjust_vitae(-10)
-
-/datum/antagonist/vampire/proc/has_vitae(change)
-	return (vitae >= change)
-
-/datum/antagonist/vampire/proc/adjust_vitae(change, tribute)
-	if(tribute)
-		team?.vitae_pool?.update_pool(tribute)
-	vitae = clamp(vitae + change, 0, vmax)
-
-/datum/antagonist/vampire/proc/handle_vitae()
-	//copy-paste from hunger code
-	switch(vitae)
-		if(VITAE_LEVEL_HUNGRY to VITAE_LEVEL_FED)
-			owner.current.apply_status_effect(/datum/status_effect/debuff/thirstyt1)
-			owner.current.remove_status_effect(/datum/status_effect/debuff/thirstyt2)
-			owner.current.remove_status_effect(/datum/status_effect/debuff/thirstyt3)
-		if(VITAE_LEVEL_STARVING to VITAE_LEVEL_HUNGRY)
-			owner.current.apply_status_effect(/datum/status_effect/debuff/thirstyt2)
-			owner.current.remove_status_effect(/datum/status_effect/debuff/thirstyt1)
-			owner.current.remove_status_effect(/datum/status_effect/debuff/thirstyt3)
-		if(-INFINITY to VITAE_LEVEL_STARVING)
-			owner.current.apply_status_effect(/datum/status_effect/debuff/thirstyt3)
-			owner.current.remove_status_effect(/datum/status_effect/debuff/thirstyt1)
-			owner.current.remove_status_effect(/datum/status_effect/debuff/thirstyt2)
-			if(prob(3))
-				playsound(get_turf(owner.current), pick('sound/vo/hungry1.ogg','sound/vo/hungry2.ogg','sound/vo/hungry3.ogg'), 100, TRUE, -1)
-
-/datum/antagonist/vampire/create_team(datum/team/vampires/new_team)
-	var/static/datum/team/vampires/vampire_team //only one team for now
-	if(!new_team)
-		if(!vampire_team)
-			vampire_team = new()
-		if(autojoin_team)
-			new_team = vampire_team
-
-	if(istype(new_team) && (new_team != vampire_team))
-		message_admins("[owner.name] just revealed that a second vampire team exists, this is pretty bad, should notify coders")
-		stack_trace("two vampire teams were created, and the wrong one tried to be assigned")
-
-	team = new_team
-
-///proc used for non spells vampire action
-/datum/antagonist/vampire/proc/check_vampire_cooldown(mob/user, ability_name, cooldown_time)
-
-	if(!ability_name || !user)
-		return FALSE
-
-	/// Check if on cooldown
-	if(src.ability_cooldowns[ability_name] > world.time)
-		var/time_left = src.ability_cooldowns[ability_name] - world.time
-		to_chat(user, span_warning("[ability_name] on cooldown! Wait [DisplayTimeText(time_left)]."))
-		return FALSE
-
-	// Set new cooldown
-	src.ability_cooldowns[ability_name] = world.time + cooldown_time
-	return TRUE
-
-/datum/antagonist/vampire/get_team()
-	return team
+// Custom clan datum for player-created clans
+/datum/clan/custom
+	name = "Custom Clan"
+	selectable_by_vampires = FALSE
 
 /obj/structure/vampire
 	icon = 'icons/roguetown/topadd/death/vamp-lord.dmi'
@@ -237,7 +186,6 @@ GLOBAL_LIST_EMPTY(vampire_objects)
 	return ..()
 
 // LANDMARKS
-
 /obj/effect/landmark/start/vampirelord
 	name = "Vampire Lord"
 	icon_state = "arrow"

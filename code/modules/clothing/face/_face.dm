@@ -43,9 +43,6 @@
 
 /obj/item/clothing/face/proc/handle_speech()
 
-/obj/item/clothing/face/worn_overlays(isinhands = FALSE)
-	. = list()
-
 /obj/item/clothing/face/update_clothes_damaged_state(damaging = TRUE)
 	..()
 	if(ismob(loc))

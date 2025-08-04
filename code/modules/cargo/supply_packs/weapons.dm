@@ -101,7 +101,7 @@
 /datum/supply_pack/weapons/bomb
 	name = "Bottle Bomb"
 	cost = 40
-	contains = /obj/item/bomb/homemade
+	contains = /obj/item/explosive/bottle/homemade
 
 /*
 /datum/supply_pack/weapons/nets

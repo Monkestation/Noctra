@@ -22,7 +22,7 @@
 	sewrepair = TRUE
 	anvilrepair = null
 	resistance_flags = FLAMMABLE // Made of leather
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 
 	armor = ARMOR_LEATHER
 	body_parts_covered = NECK|HAIR|EARS|HEAD
@@ -78,7 +78,7 @@
 	sewrepair = TRUE
 	anvilrepair = null
 	resistance_flags = FLAMMABLE
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 
 	armor = ARMOR_LEATHER
 	max_integrity = INTEGRITY_WORST
@@ -96,7 +96,7 @@
 	sewrepair = TRUE
 	anvilrepair = null
 	resistance_flags = FLAMMABLE
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 
 	armor = ARMOR_LEATHER
 	max_integrity = INTEGRITY_WORST

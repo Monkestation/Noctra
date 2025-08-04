@@ -799,7 +799,7 @@
 			I forgot to remember to forget. I don't know who I am anymore.")
 			)
 		if("Bomb")
-			backpack_contents = list(/obj/item/bomb = 1, /obj/item/flint = 1)
+			backpack_contents = list(/obj/item/explosive/bottle = 1, /obj/item/flint = 1)
 			to_chat(H,span_info("\
 			If ever I am struck down, my last act of defiance shall be sending me and my enemy straight to the depths of hell.")
 			)
