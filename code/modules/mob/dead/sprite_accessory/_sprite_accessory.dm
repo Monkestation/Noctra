@@ -34,8 +34,6 @@
 	var/gendered_variants = FALSE
 	/// List of generated icons based on the [type x icon_state x colors] combination.
 	var/static/list/accessory_icon_cache = list()
-	///are we emissive
-	var/glows = FALSE
 
 /datum/sprite_accessory/New()
 	if(color_keys > 1)
@@ -105,13 +103,13 @@
 	var/icon_state_to_use = get_icon_state(organ, bodypart, owner)
 	if(!icon_state_to_use)
 		return null
-	var/list/appearance_list = get_overlay(icon_state_to_use, color_string, dummy_block = istype(owner, /mob/living/carbon/human/dummy))
+	var/list/appearance_list = get_overlay(icon_state_to_use, color_string)
 	adjust_appearance_list(appearance_list, organ, bodypart, owner)
 	return appearance_list
 
-/datum/sprite_accessory/proc/get_overlay(overlay_icon_state, color_string, dummy_block = FALSE)
+/datum/sprite_accessory/proc/get_overlay(overlay_icon_state, color_string)
 	color_string = sanitize_color_string(color_string)
-	var/key = "[type]-[overlay_icon_state]-[color_string]-[glows]"
+	var/key = "[type]-[overlay_icon_state]-[color_string]"
 	if(!accessory_icon_cache[key])
 		var/list/icon_states = generate_icon_states(overlay_icon_state, color_string)
 		var/icon/icon_bundle = icon('icons/testing/greyscale_error.dmi')
@@ -128,27 +126,14 @@
 			var/mutable_appearance/appearance = mutable_appearance(cached_icon, "[overlay_icon_state]_[get_layer_suffix(iterated_layer)]", layer = -iterated_layer)
 			appearance.pixel_x = pixel_x
 			appearance.pixel_y = pixel_y
-			if(!dummy_block)
-				appearance.overlays += emissive_blocker(cached_icon, "[overlay_icon_state]_[get_layer_suffix(iterated_layer)]")
+			//appearance.overlays += emissive_blocker(cached_icon, "[overlay_icon_state]_[get_layer_suffix(iterated_layer)]")
 			appearance_list += appearance
-			if(glows)
-				var/mutable_appearance/emissive = emissive_appearance(icon, "[overlay_icon_state]_[get_layer_suffix(iterated_layer)]", layer = -iterated_layer, appearance_flags = KEEP_TOGETHER)
-				emissive.pixel_x = pixel_x
-				emissive.pixel_y = pixel_y
-				appearance_list += emissive
 	else
 		var/mutable_appearance/appearance = mutable_appearance(cached_icon, overlay_icon_state, layer = -layer)
 		appearance.pixel_x = pixel_x
 		appearance.pixel_y = pixel_y
-		if(!dummy_block)
-			appearance.overlays += emissive_blocker(cached_icon, overlay_icon_state)
+		//appearance.overlays += emissive_blocker(cached_icon, overlay_icon_state)
 		appearance_list += appearance
-		if(glows)
-			var/mutable_appearance/emissive = emissive_appearance(icon, overlay_icon_state, layer = -layer)
-			emissive.pixel_x = pixel_x
-			emissive.pixel_y = pixel_y
-			appearance_list += emissive
-
 	return appearance_list
 
 /datum/sprite_accessory/proc/sanitize_color_string(color_string)

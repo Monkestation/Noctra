@@ -980,7 +980,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	if(!source_turf.atmos_adjacent_turfs[new_turf])
 		return
 
-	if(isopenspace(new_turf))
+	if(istransparentturf(new_turf))
 		var/turf/Z_turf_below = GET_TURF_BELOW(new_turf)
 		if(!Z_turf_below)
 			return

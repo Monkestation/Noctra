@@ -62,7 +62,8 @@
 
 /datum/antagonist/zombie/examine_friendorfoe(datum/antagonist/examined_datum, mob/examiner, mob/examined)
 	if(istype(examined_datum, /datum/antagonist/vampire))
-		if(!SEND_SIGNAL(examined_datum.owner, COMSIG_DISGUISE_STATUS))
+		var/datum/antagonist/vampire/V = examined_datum
+		if(!V.disguised)
 			return "<span class='boldnotice'>Another kind of deadite.</span>"
 	if(istype(examined_datum, /datum/antagonist/zombie))
 		return "<span class='boldnotice'>Another deadite. My ally.</span>"
@@ -95,7 +96,7 @@
 	owner.current.skills?.known_skills = list()
 	owner.current.skills?.skill_experience = list()
 	zombie.cmode_music ='sound/music/cmode/combat_weird.ogg'
-	zombie.bloodpool = 0 // Deadites have no vitae to drain from
+	zombie.vitae_pool = 0 // Deadites have no vitae to drain from
 	var/datum/language_holder/mob_language = zombie.get_language_holder()
 	prev_language = mob_language.copy()
 	zombie.remove_all_languages()
@@ -223,7 +224,7 @@
 	zombie.set_stat_modifier("[type]", STATKEY_INT, offset_intelligence)
 	zombie.set_stat_modifier("[type]", STATKEY_CON, offset_constitution)
 
-	zombie.bloodpool = 0 // Again, just in case.
+	zombie.vitae_pool = 0 // Again, just in case.
 
 	// zombies cant rp, thus shouldnt be playable for most people
 	zombie.ghostize()

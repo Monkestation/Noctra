@@ -11,10 +11,6 @@
 /obj/item/organ/wings/anthro
 	name = "wild-kin wings"
 
-/obj/item/organ/wings/flight/night_kin
-	name = "Vampire Wings"
-	accessory_type = /datum/sprite_accessory/wings/large/gargoyle
-
 /datum/customizer/organ/wings/harpy
 	customizer_choices = list(/datum/customizer_choice/organ/wings/harpy)
 	allows_disabling = FALSE

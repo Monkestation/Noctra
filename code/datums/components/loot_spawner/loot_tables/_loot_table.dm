@@ -273,11 +273,7 @@
 	</html>
 	"}
 
-	var/size_string = "size=800x600"
-	if(user?.client.window_scaling)
-		size_string = "size=[800 * user?.client?.window_scaling]x[600 * user?.client?.window_scaling]"
-
-	user << browse(html, "window=loot_debug;[size_string]")
+	user << browse(html, "window=loot_debug;size=800x600")
 
 /datum/loot_table/proc/simulate_loot_generation(mob/living/user, times = 100)
 	var/list/results = list()

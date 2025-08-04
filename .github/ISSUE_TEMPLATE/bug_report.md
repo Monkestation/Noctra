@@ -1,5 +1,3 @@
-## Map:
-
 ## Round ID:
 
 ## Client Information:

@@ -12482,7 +12482,7 @@
 /area/rogue/indoors/town/dwarfin)
 "mgn" = (
 /obj/structure/table/wood/plain_alt,
-/obj/item/explosive/bottle,
+/obj/item/bomb,
 /turf/open/floor/blocks/newstone/alt,
 /area/rogue/indoors/town/dwarfin)
 "mgr" = (

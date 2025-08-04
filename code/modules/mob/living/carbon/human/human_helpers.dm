@@ -125,7 +125,6 @@
 	if(istype(BP))
 		damage *= BP.punch_modifier
 
-	damage += dna.species.punch_damage
 	return damage
 
 /mob/living/carbon/human/proc/get_kick_damage(multiplier = 1)

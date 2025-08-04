@@ -43,9 +43,9 @@
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
 		return FALSE
-	if(!isopenspace(target) && !istype(target, /turf/open/water))
+	if(!istransparentturf(target) && !istype(target, /turf/open/water))
 		return FALSE
-	if(isopenspace(target))
+	if(istransparentturf(target))
 		var/turf/bottom_turf = GET_TURF_BELOW(target)
 		while(istransparentturf(bottom_turf))
 			bottom_turf = GET_TURF_BELOW(bottom_turf)

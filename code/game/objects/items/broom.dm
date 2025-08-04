@@ -10,7 +10,7 @@
 	firefuel = 10 MINUTES
 	resistance_flags = FLAMMABLE
 	slot_flags = ITEM_SLOT_BACK
-	smeltresult = /obj/item/fertilizer/ash
+	smeltresult = /obj/item/ash
 
 /obj/item/broom/apply_components()
 	AddComponent(/datum/component/walking_stick)

@@ -220,10 +220,6 @@
 	name = "herbal smell"
 	scent = "herbal smell"
 
-/datum/pollutant/food/coffee
-	name = "rich smell"
-	scent = "rich smell"
-
 /datum/pollutant/food/fried_eggs
 	name = "fried egg"
 	scent = "fried egg"

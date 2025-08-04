@@ -84,7 +84,7 @@
 
 /datum/mana_pool/mana_battery/mana_crystal/New(atom/parent, amount)
 	. = ..()
-	amount = maximum_mana_capacity
+	softcap = maximum_mana_capacity
 
 /obj/item/mana_battery/mana_crystal/standard
 	name = "stabilized primordial quartz crystal"

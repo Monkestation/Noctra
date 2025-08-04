@@ -19,7 +19,7 @@
 	sewrepair = TRUE
 	anvilrepair = null
 	resistance_flags = FLAMMABLE // Made of leather
-	smeltresult = /obj/item/fertilizer/ash
+	smeltresult = /obj/item/ash
 
 	armor = ARMOR_PADDED
 	prevent_crits = MINOR_CRITICALS

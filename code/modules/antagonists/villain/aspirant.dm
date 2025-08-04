@@ -60,7 +60,7 @@
 			to_chat(owner, span_notice("I can retrieve my item from a statue, tree or clock by right clicking it."))
 
 		if(CHOICE_BOMB)
-			owner.special_items["Bomb"] = /obj/item/explosive/bottle
+			owner.special_items["Bomb"] = /obj/item/bomb
 			to_chat(owner, span_notice("I can retrieve my item from a statue, tree or clock by right clicking it."))
 
 

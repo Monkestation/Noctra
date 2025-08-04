@@ -27,7 +27,7 @@
 	max_integrity = 100
 	blade_dulling = DULLING_BASHCHOP
 	anvilrepair = /datum/skill/craft/armorsmithing
-	smeltresult = /obj/item/fertilizer/ash
+	smeltresult = /obj/item/ash
 	melting_material = null
 	COOLDOWN_DECLARE(shield_bang)
 	var/design_chosen

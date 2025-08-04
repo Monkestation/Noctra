@@ -129,9 +129,13 @@
 	if(world.time < lastclick + 3 SECONDS)
 		return
 	lastclick = world.time
-	if(!HAS_TRAIT(usr, TRAIT_BLUEPRINT_VISION))
-		var/mob/vision = usr
-		vision.enter_blueprint()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.playsound_local(H, 'sound/misc/click.ogg', 100)
+		if(H.craftingthing)
+			last_craft = world.time
+			var/datum/component/personal_crafting/C = H.craftingthing
+			C.roguecraft(location, control, params, H)
 
 /atom/movable/screen/craft/Destroy()
 	QDEL_NULL(book)

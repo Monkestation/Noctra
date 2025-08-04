@@ -46,6 +46,8 @@
 		S.sharerDies(FALSE)
 		S.removeSoulsharer(src) //If a sharer is destroy()'d, they are simply removed
 	sharedSoullinks = null
+	if(craftingthing)
+		QDEL_NULL(craftingthing)
 	return ..()
 
 /mob/living/update_appearance(updates)
@@ -1572,17 +1574,13 @@
 
 	if(!who.Adjacent(src))
 		return
-	if(!enhanced_strip)
-		who.visible_message("<span class='warning'>[src] tries to remove [who]'s [what.name].</span>", \
-						"<span class='danger'>[src] tries to remove my [what.name].</span>", null, null, src)
+
+	who.visible_message("<span class='warning'>[src] tries to remove [who]'s [what.name].</span>", \
+					"<span class='danger'>[src] tries to remove my [what.name].</span>", null, null, src)
 	to_chat(src, "<span class='danger'>I try to remove [who]'s [what.name]...</span>")
 	what.add_fingerprint(src)
-	var/strip_delayed = what.strip_delay
-	if(enhanced_strip)
-		strip_delayed = 0.1 SECONDS
-	if(do_after(src, strip_delayed * surrender_mod, who))
-		if(what && (Adjacent(who) || (enhanced_strip && (get_dist(src, who) <= 3))))
-			enhanced_strip = FALSE
+	if(do_after(src, what.strip_delay * surrender_mod, who))
+		if(what && Adjacent(who))
 			if(islist(where))
 				var/list/L = where
 				if(what == who.get_item_for_held_index(L[2]))

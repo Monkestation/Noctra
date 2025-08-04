@@ -130,7 +130,6 @@
 	var/signedname
 	var/signedjob
 	var/list/orders = list()
-	var/list/reputation_orders = list()
 	var/list/fufilled_orders = list()
 	open = TRUE
 	textper = 150

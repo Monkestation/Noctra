@@ -10,8 +10,6 @@
 /obj/abstract/visual_ui_element/hoverable/MouseEntered(location,control,params)
 	start_hovering(location,control,params)
 	hovering = 1
-	if(element_flags & MINDUI_FLAG_HOVERINFO)
-		. = ..()
 
 /obj/abstract/visual_ui_element/hoverable/MouseExited()
 	stop_hovering()
