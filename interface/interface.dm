@@ -94,6 +94,8 @@
 	// Get a local copy of the template for modification
 	var/local_template = issue_template
 
+	local_template = replacetext(local_template, "## Map:\n", "## Map:\n[SSmapping.config.map_name]")
+
 	// Insert round
 	if(GLOB.round_id)
 		local_template = replacetext(local_template, "## Round ID:\n", "## Round ID:\n[GLOB.round_id]")
