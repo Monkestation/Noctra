@@ -160,6 +160,8 @@
 	desc = "The dark red helps hide blood stains, and is elegant."
 	icon_state = "courtrobe"
 	item_state = "courtrobe"
+	icon = 'icons/roguetown/clothing/courtphys.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/courtphys.dmi'
 
 /obj/item/clothing/shirt/robe/archivist
 	name = "archivist's robe"

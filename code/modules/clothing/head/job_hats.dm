@@ -113,3 +113,5 @@
 	desc = "A head covering for elegance, and to hide the bald spot."
 	icon_state = "courthat"
 	item_state = "courthat"
+	icon = 'icons/roguetown/clothing/courtphys.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/courtphys.dmi'
