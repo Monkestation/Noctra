@@ -34,8 +34,8 @@
 	for(var/button in buttons)
 		options += "<button type='submit' name='choice' value='[button]' [NULLABLE(buttons[1] == button) && "autofocus"]>[button]</button>"
 
-	var/window_width = 345 + (length(buttons) > 2 ? 55 : 0)
-	var/window_height = 120 + (length(message) > 30 ? ceil(length(message) / 4) : 0)
+	var/window_width = 350 + (length(buttons) > 2 ? 50 : 0)
+	var/window_height = 125 + (length(message) > 30 ? ceil(length(message) / 4) : 0)
 
 	..(user, ckey("[user]-[message]-[title]-[world.time]-[rand(1, 10000)]"), title, window_width, window_height, src, autofocus, timeout)
 	set_content({"
