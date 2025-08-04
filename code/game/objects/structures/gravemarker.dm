@@ -1,27 +1,3 @@
-/datum/crafting_recipe/gravemarker
-	name = "grave marker"
-	result = /obj/structure/gravemarker
-	reqs = list(/obj/item/grown/log/tree/stick = 1)
-	time = 10 SECONDS
-	verbage = "tie"
-	verbage_tp = "ties"
-	craftsound = 'sound/foley/Building-01.ogg'
-	structurecraft = /obj/structure/closet/dirthole
-	craftdiff = 0
-
-/datum/crafting_recipe/gravemarker/TurfCheck(mob/user, turf/T)
-	if(!(locate(/obj/structure/closet/dirthole) in T))
-		to_chat(user, "<span class='warning'>There is no grave here.</span>")
-		return FALSE
-	for(var/obj/structure/closet/dirthole/D in T)
-		if(D.stage != 4)
-			to_chat(user, "<span class='warning'>I can't tie a grave marker on an open grave.</span>")
-			return FALSE
-	if(locate(/obj/structure/gravemarker) in T)
-		to_chat(user, "<span class='warning'>This grave is already hallowed.</span>")
-		return FALSE
-	return TRUE
-
 /obj/structure/gravemarker
 	name = "grave marker"
 	icon = 'icons/turf/floors.dmi'

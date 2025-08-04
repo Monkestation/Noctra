@@ -130,87 +130,20 @@
 	user.visible_message("<span class='info'>[user] adds a [needed_item_text].</span>")
 	needed_item_text = null
 
-/datum/anvil_recipe/proc/handle_creation(obj/item/I)
-	numberofhits = ceil(numberofhits / num_of_materials) // Divide the hits equally among the number of bars required, rounded up.
-	if(numberofbreakthroughs) // Hitting the bar the perfect way should be rewarding quality-wise
-		numberofhits -= numberofbreakthroughs
-	material_quality = floor(material_quality/num_of_materials)-2
-	skill_quality = floor((skill_quality/num_of_materials)/1500)+material_quality
-	// Finally, the more hits the thing required, the less quality it will be, to prevent low level smiths from dishing good stuff
-	skill_quality -= floor(numberofhits * 0.25)
-	var/modifier // Multiplier which will determine quality of final product depending on final skill_quality calculation
-	switch(skill_quality)
-		if(-INFINITY to BLACKSMITH_LEVEL_SPOIL)
-			I.name = "ruined [I.name]"
-			modifier = 0.3
-		if(BLACKSMITH_LEVEL_AWFUL)
-			I.name = "awful [I.name]"
-			modifier = 0.5
-		if(BLACKSMITH_LEVEL_CRUDE)
-			I.name = "crude [I.name]"
-			modifier = 0.8
-		if(BLACKSMITH_LEVEL_ROUGH)
-			I.name = "rough [I.name]"
-			modifier = 0.9
-		if(BLACKSMITH_LEVEL_COMPETENT)
-			modifier = 1
-		if(BLACKSMITH_LEVEL_FINE)
-			I.name = "fine [I.name]"
-			modifier = 1.1
-		if(BLACKSMITH_LEVEL_FLAWLESS)
-			I.name = "flawless [I.name]"
-			modifier = 1.2
-		if(BLACKSMITH_LEVEL_LEGENDARY to INFINITY)
-			I.name = "masterwork [I.name]"
-			modifier = 1.3
-			record_round_statistic(STATS_MASTERWORKS_FORGED, createmultiple ? createditem_num + 1 : 1)
 
-	if(!modifier) // Sanity.
-		return
-	// Finally, modify the smithed item's stats based on modifier multiplier
-	I.max_integrity  *= modifier
-	I.obj_integrity *= modifier
-	I.sellprice *= modifier
-	// Make lockpicks better at their job
-	if(istype(I, /obj/item/lockpick))
-		var/obj/item/lockpick/L = I
-		L.picklvl = modifier
-	// Apply inherent weapon modifiers
-	if(istype(I, /obj/item/weapon))
-		var/obj/item/weapon/W = I
-		var/datum/component/two_handed/twohanded = I.GetComponent(/datum/component/two_handed)
-		if(twohanded)
-			twohanded.modify_base_force(multiplicative_modifier = modifier)
-		else
-			W.force *= modifier
-		W.throwforce *= modifier
-		W.blade_int *= modifier
-		W.max_blade_int *= modifier
-		// W.armor_penetration *= modifier
-		// W.wdefense *= modifier
-		// Make (ONLY) axes (and the Pick-axe) better at woodcutting too
-		if(istype(I, /obj/item/weapon/axe/iron) || istype(I, /obj/item/weapon/pick/paxe))
-			var/obj/item/weapon/A = I
-			A.axe_cut += (A.force * modifier) * 0.5 // Multiply the axe's damage by the modifier, and add half of this as axe_cut
-		// If it's a pick, make it better at its job
-		if(istype(I, /obj/item/weapon/pick))
-			var/obj/item/weapon/pick/P = I
-			P.pickmult *= modifier
-	// Apply inherent armor modifiers
-	if(istype(I, /obj/item/clothing))
-		var/obj/item/clothing/C = I
-		C.damage_deflection *= modifier
-		C.integrity_failure /= modifier
-		// C.armor = C.armor.multiplymodifyAllRatings(modifier)
-		// C.equip_delay_self *= modifier
-	// If it's a crossbow, up its damage multiplier
-	if(istype(I,/obj/item/gun/ballistic/revolver/grenadelauncher))
-		var/obj/item/gun/ballistic/revolver/grenadelauncher/R = I
-		R.damfactor = modifier
-	// Modify beartrap's damage.
-	if(istype(I, /obj/item/restraints/legcuffs/beartrap))
-		var/obj/item/restraints/legcuffs/beartrap/B
-		B.trap_damage *= modifier
+/datum/anvil_recipe/proc/handle_creation(obj/item/I)
+	var/datum/quality_calculator/blacksmithing/quality_calc = new(
+		base_qual = 0,
+		mat_qual = material_quality,
+		skill_qual = skill_quality,
+		perf_qual = numberofhits,
+		diff_mod = craftdiff,
+		components = num_of_materials
+	)
+	if(numberofbreakthroughs)
+		quality_calc.performance_quality -= numberofbreakthroughs
+	quality_calc.apply_quality_to_item(I, TRUE) // TRUE enables masterwork tracking
+	qdel(quality_calc)
 
 /datum/anvil_recipe/proc/show_menu(mob/user)
 	user << browse(generate_html(user),"window=recipe;size=500x810")

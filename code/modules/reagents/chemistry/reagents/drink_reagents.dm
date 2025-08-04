@@ -89,3 +89,40 @@
 	if(!HAS_TRAIT(M,TRAIT_NOSTAMINA))
 		M.adjust_stamina(-0.3, internal_regen = FALSE)
 	..()
+
+/datum/reagent/consumable/caffeine
+	name = "Caffeine"
+	description = "Why are you seeing this?"
+	hydration_factor = 5
+	overdose_threshold = 60
+
+/datum/reagent/consumable/caffeine/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	M.adjust_stamina(5)
+	M.apply_status_effect(/datum/status_effect/buff/vigor)
+
+/datum/reagent/consumable/caffeine/overdose_process(mob/living/carbon/M)
+	. = ..()
+	M.Jitter(2)
+	if(prob(5))
+		M.heart_attack()
+
+/datum/reagent/consumable/caffeine/coffee
+	name = "Coffee"
+	description = "Coffee beans brewed into a hot drink. With a hint of bitterness. Rejuvenating."
+	reagent_state = LIQUID
+	color = "#482000"
+	taste_description = "caramelized bitterness" // coffee has so many flavors I am going for one
+	metabolization_rate = REAGENTS_METABOLISM
+	alpha = 173
+	quality = DRINK_GOOD
+
+/datum/reagent/consumable/caffeine/tea
+	name = "Exotic Tea"
+	description = "Tea leaves brewed into a hot drink. Slight hint of bitterness. Smooth."
+	reagent_state = LIQUID
+	color = "#508141" // Deeper green to make it look better
+	taste_description = "smooth grassiness" // Yeah, uh.
+	metabolization_rate = REAGENTS_METABOLISM
+	alpha = 173
+	quality = DRINK_GOOD

@@ -17,3 +17,17 @@
 		armor += local_candidate
 	if(armor.len)
 		return pick(armor)
+
+/datum/ai_behavior/find_and_set/armor/atom_allowed(atom/movable/checking, locate_path, atom/pawn)
+	if(checking == pawn)
+		return FALSE
+	if(!istype(checking, /obj/item/clothing))
+		return FALSE
+	var/obj/item/clothing/clothing = checking
+	var/mob/living/carbon/living_pawn = pawn
+	var/datum/ai_controller/controller = living_pawn.ai_controller
+	if(clothing.armor_class != controller.blackboard[BB_ARMOR_CLASS])
+		return FALSE
+	if(!(living_pawn?.dna?.species?.id in clothing.allowed_race))
+		return FALSE
+	return TRUE

@@ -45,23 +45,21 @@
 		if(isliving(user))
 			var/mob/living/lmob = user
 			perint = FLOOR((lmob.STAPER + lmob.STAINT)/2,1)
-		if(HAS_TRAIT(user,TRAIT_LEGENDARY_ALCHEMIST))
-			if(!isnull(major_name))
-				. += span_notice(" Strongly attuned to making [major_name].")
-			if(!isnull(med_name))
-				. += span_notice(" Moderately attuned to making [med_name].")
-			if(!isnull(minor_name))
-				. += span_notice(" Minorly attuned to making [minor_name].")
-		else
-			if(!isnull(major_smell))
-				if(alch_skill >= SKILL_LEVEL_NOVICE || perint >= 6)
-					. += span_notice(" Smells strongly of [major_smell].")
-			if(!isnull(med_smell))
-				if(alch_skill >= SKILL_LEVEL_APPRENTICE || perint >= 10)
-					. += span_notice(" Smells slightly of [med_smell].")
-			if(!isnull(minor_smell))
-				if(alch_skill >= SKILL_LEVEL_EXPERT || perint >= 16)
-					. += span_notice(" Smells weakly of [minor_smell].")
+
+		var/datum/natural_precursor/precursor = get_precursor_data(src)
+		for(var/datum/thaumaturgical_essence/essence as anything in precursor.essence_yields)
+			var/amount = precursor.essence_yields[essence]
+			var/smell = initial(essence.smells_like)
+			switch(amount)
+				if(10 to 1000)
+					if(alch_skill >= SKILL_LEVEL_NOVICE || perint >= 6)
+						. += span_notice(" Smells strongly of [smell].")
+				if(5 to 9)
+					if(alch_skill >= SKILL_LEVEL_APPRENTICE || perint >= 10)
+						. += span_notice(" Smells slightly of [smell].")
+				if(1 to 4)
+					if(alch_skill >= SKILL_LEVEL_EXPERT || perint >= 16)
+						. += span_notice(" Smells weakly of [smell].")
 /obj/item/alch/viscera
 	name = "viscera"
 	icon_state = "viscera"
@@ -75,13 +73,6 @@
 	major_pot = /datum/alch_cauldron_recipe/int_potion
 	med_pot = /datum/alch_cauldron_recipe/big_mana_potion
 	minor_pot = /datum/alch_cauldron_recipe/per_potion
-
-/obj/item/alch/bonemeal
-	name = "bone meal"
-	icon_state = "bonemeal"
-	major_pot = /datum/alch_cauldron_recipe/mana_potion
-	med_pot = /datum/alch_cauldron_recipe/per_potion
-	minor_pot = /datum/alch_cauldron_recipe/antidote
 
 /obj/item/alch/seeddust
 	name = "seed dust"
@@ -397,44 +388,3 @@
 	major_pot = /datum/alch_cauldron_recipe/lck_potion
 	med_pot = /datum/alch_cauldron_recipe/spd_potion
 	minor_pot = /datum/alch_cauldron_recipe/health_potion
-
-//dust mix crafting
-/datum/crafting_recipe/alch/feaudust
-	name = "feau dust"
-	result = list(/obj/item/alch/feaudust,
-				/obj/item/alch/feaudust)
-	reqs = list(/obj/item/alch/irondust = 1,
-				/obj/item/alch/golddust = 1)
-	structurecraft = /obj/structure/table
-	verbage = "mix"
-	verbage_tp = "mixes"
-	craftsound = 'sound/foley/scribble.ogg'
-	skillcraft = /datum/skill/craft/alchemy
-	craftdiff = 2
-
-/datum/crafting_recipe/alch/magicdust
-	name = "magic dust"
-	result = list(/obj/item/alch/magicdust)
-	reqs = list(/obj/item/alch/waterdust = 1, /obj/item/alch/firedust = 1,
-				/obj/item/alch/airdust = 1, /obj/item/alch/earthdust = 1)
-	structurecraft = /obj/structure/table
-	verbage = "mix"
-	verbage_tp = "mixes"
-	craftsound = 'sound/foley/scribble.ogg'
-	skillcraft = /datum/skill/craft/alchemy
-	craftdiff = 3
-
-/datum/crafting_recipe/alch/transistus
-	name = "transis dust"
-	result = /obj/item/alch/transisdust
-	reqs = list(/obj/item/alch/artemisia = 1,
-		/obj/item/alch/benedictus = 1,
-		/obj/item/alch/hypericum = 1,
-		/obj/item/alch/salvia = 1,
-		/obj/item/alch/atropa = 1,
-		/obj/item/alch/taraxacum =1)
-	structurecraft = /obj/structure/table
-	verbage = "mix"
-	verbage_tp = "mixes"
-	skillcraft = /datum/skill/craft/alchemy
-	craftdiff = 4

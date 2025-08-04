@@ -1,11 +1,11 @@
 # VANDERLIN
 
-[![BYOND Build](https://github.com/Vanderlin-Tales-Of-Wine/Vanderlin/actions/workflows/ci_suite.yml/badge.svg)](https://github.com/Vanderlin-Tales-Of-Wine/Vanderlin/actions/workflows/ci_suite.yml)
+[![BYOND Build](https://github.com/Monkestation/Vanderlin/actions/workflows/ci_suite.yml/badge.svg)](https://github.com/Monkestation/Vanderlin/actions/workflows/ci_suite.yml)
 
 | Website                   | Link                                           |
 |---------------------------|------------------------------------------------|
 | Discord | [https://discord.monkestation.com](https://discord.monkestation.com) |
-| Code    | [https://github.com/Vanderlin-Tales-Of-Wine/Vanderlin](https://github.com/Vanderlin-Tales-Of-Wine/Vanderlin)    |
+| Code    | [https://github.com/Monkestation/Vanderlin](https://github.com/Monkestation/Vanderlin)    |
 | Wiki    | N/A |
 
 ## LICENSE
