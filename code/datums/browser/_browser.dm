@@ -11,8 +11,6 @@
 	var/final/width
 	/// The window's height in pixels.
 	var/final/height
-	/// If the window setups on close when opened
-	var/final/use_onclose
 	/// Params for the window on creation.
 	VAR_PROTECTED/window_options = "can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;"
 	/// A list of paths to CSS files.
@@ -47,7 +45,7 @@
 	return ..()
 
 /datum/browser/noclose
-/datum/browser/noclose/New(mob/user, window_id, title = "", width, height, atom/owner, use_onclose)
+/datum/browser/noclose/New(mob/user, window_id, title = "", width, height)
 	. = ..()
 	var/client/user_client = isclient(user) ? user : user.client
 	UnregisterSignal(user_client, COMSIG_MOB_CLIENT_MOVED)
@@ -152,7 +150,7 @@
 	set waitfor = 0 //winexists sleeps, so we don't need to.
 	for (var/i in 1 to 10)
 		if (user && winexists(user, window_id))
-			onclose(user, window_id, owner, src)
+			onclose(user, window_id, owner)
 			break
 
 /datum/browser/proc/close()

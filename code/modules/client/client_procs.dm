@@ -622,7 +622,8 @@ GLOBAL_LIST_EMPTY(respawncounts)
 
 /// This grabs the DPI of the user per their skin
 /client/proc/acquire_dpi()
-	window_scaling = text2num(winget(src, null, "dpi"))
+	if(isnull(window_scaling))
+		window_scaling = text2num(winget(src, null, "dpi"))
 
 	debug_admins("scalies: [window_scaling]")
 
