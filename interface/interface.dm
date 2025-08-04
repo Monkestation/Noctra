@@ -247,7 +247,7 @@
 	set name = "UI Scaling"
 	set category = "OOC"
 	var/current_scaling = window_scaling * 100
-	var/new_scaling = input(usr, "Enter UI Scaling (Your current scaling is [current_scaling]%)", "New UI Scaling", window_scaling * 100) as null|num
+	var/new_scaling = input(usr, "Enter UI Scaling (Your current scaling is [current_scaling]%, changes take effect when opening new windows)", "New UI Scaling", window_scaling * 100) as null|num
 	if(!isnull(new_scaling))
 		window_scaling = new_scaling / 100
 
