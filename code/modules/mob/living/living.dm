@@ -2688,13 +2688,12 @@
 	if(QDELETED(src))
 		return
 
-	var/datum/action/cooldown/spell/undirected/learn/spell = get_spell(/datum/action/cooldown/spell/undirected/learn)
+	if(get_spell(/datum/action/cooldown/spell/undirected/learn))
+		return
+
 	// Because of kobolds spellpoints can be decimal, but you can't do anything with that if below 1
 	if(floor(spell_points - used_spell_points) > 0)
-		if(!spell)
-			add_spell(/datum/action/cooldown/spell/undirected/learn)
-	else if(spell)
-		remove_spell(spell)
+		add_spell(/datum/action/cooldown/spell/undirected/learn)
 
 /**
  * purges all spells and skills
