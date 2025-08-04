@@ -102,7 +102,7 @@
 
 	if(has_world_trait(/datum/world_trait/dendor_fertility))
 		feedback = "Praise Dendor for our harvest is bountiful."
-		modifier += 3
+		modifier += is_ascendant(DENDOR) ? 4 : 3
 
 	record_featured_stat(FEATURED_STATS_FARMERS, user)
 	record_featured_object_stat(FEATURED_STATS_CROPS, plant.name)
@@ -554,7 +554,7 @@
 	if(blessed_time > 0)
 		conditions_quality *= 1.5
 	if(has_world_trait(/datum/world_trait/dendor_fertility))
-		conditions_quality *= 1.5
+		conditions_quality *= is_ascendant(DENDOR) ? 2 : 1.5
 
 	if(nutrition >= MAX_PLANT_NUTRITION * 0.9)
 		conditions_quality *= 1.3
@@ -655,15 +655,15 @@
 		nutriment_eat_mutliplier *= 0.6
 
 	if(has_world_trait(/datum/world_trait/dendor_fertility))
-		growth_multiplier *= 2.0
-		nutriment_eat_mutliplier *= 0.4
+		growth_multiplier *= is_ascendant(DENDOR) ? 2.5 : 2.0
+		nutriment_eat_mutliplier *= is_ascendant(DENDOR) ? 0.3 : 0.4
 
 	if(has_world_trait(/datum/world_trait/fertility))
 		growth_multiplier *= 1.5
 
 	if(has_world_trait(/datum/world_trait/dendor_drought))
-		growth_multiplier *= 0.4
-		nutriment_eat_mutliplier *= 2
+		growth_multiplier *= is_ascendant(DENDOR) ? 0.3 : 0.4
+		nutriment_eat_mutliplier *= is_ascendant(DENDOR) ? 2.5 : 2
 
 	// If there's too many weeds, they hamper the growth of the plant
 	if(weeds >= MAX_PLANT_WEEDS * 0.3)
