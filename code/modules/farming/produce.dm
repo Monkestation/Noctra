@@ -492,7 +492,7 @@
 	icon_state = "sugarcane"
 	seed = /obj/item/neuFarm/seed/sugarcane
 	throwforce = 0
-	faretype = FINE //Reasoning: Sugarcane is a rare import. You can also chew sugarcane fibers. Try some out next time you have some!
+	faretype = FARE_FINE //Reasoning: Sugarcane is a rare import. You can also chew sugarcane fibers. Try some out next time you have some!
 	w_class = WEIGHT_CLASS_TINY
 	throw_speed = 1
 	throw_range = 3
