@@ -40,5 +40,5 @@
 		H.change_stat(STATKEY_CON, -2)
 		H.change_stat(STATKEY_END, -1)
 		H.change_stat(STATKEY_SPD, -2)
-		H.adjust_spellpoints(5)
+		H.adjust_spell_points(5)
 		H.add_spell(/datum/action/cooldown/spell/undirected/touch/prestidigitation)

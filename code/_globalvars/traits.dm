@@ -156,6 +156,8 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"Loved By Kittens" = TRAIT_KITTEN_MOM,
 		"Waterbreathing" = TRAIT_WATER_BREATHING,
 		"Moonwater Elixir" = TRAIT_MOONWATER_ELIXIR,
+		"Violator of the Coven" = TRAIT_VIOLATOR,
+		"Endless Slumber" = TRAIT_TORPOR,
 	),
 	/obj/item/bodypart = list(
 		"TRAIT_PARALYSIS" = TRAIT_PARALYSIS

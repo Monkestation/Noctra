@@ -100,11 +100,11 @@
 	for(var/file in stylesheets)
 		head_content += "<link rel='stylesheet' type='text/css' href='[SSassets.transport.get_asset_url(file)]'>"
 
-	if(user.client?.window_scaling && user.client?.window_scaling != 100 && width && height)
+	if(user.client?.window_scaling && width && height)
 		head_content += {"
 			<style>
 				body {
-					zoom: [user.client?.window_scaling]%;
+					zoom: [100 / user.client?.window_scaling]%;
 				}
 			</style>
 			"}
@@ -136,12 +136,11 @@
 		to_chat(user, "<span class='danger'>The [title] browser you tried to open failed a sanity check! Please report this on github!</span>")
 		return
 	var/window_size = ""
+	var/scaling = 1
+	if(user?.client.window_scaling)
+		scaling = user?.client.window_scaling
 	if(width && height)
-		if(user.client?.window_scaling != 100)
-			var/scaling = user.client.window_scaling/100
-			window_size = "size=[width * scaling]x[height * scaling];"
-		else
-			window_size = "size=[width]x[height];"
+		window_size = "size=[width * scaling]x[height * scaling];"
 	var/datum/asset/simple/namespaced/common/common_asset = get_asset_datum(/datum/asset/simple/namespaced/common)
 	common_asset.send(user)
 	if (stylesheets.len)

@@ -46,20 +46,20 @@
 		H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
-		H.mind.teach_crafting_recipe(/datum/crafting_recipe/dendor/shillelagh)
-		H.mind.teach_crafting_recipe(/datum/crafting_recipe/dendor/forestdelight)
+		H.mind.teach_crafting_recipe(/datum/repeatable_crafting_recipe/dendor/shillelagh)
+		H.mind.teach_crafting_recipe(/datum/repeatable_crafting_recipe/dendor/forestdelight)
 
 		if(H.age == AGE_OLD)
 			H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
 
 		// the unique Dendor crafting recipes. Dendor shrines (pantheon cross) and alt cosmetic helmet
-		H.mind.teach_crafting_recipe(/datum/crafting_recipe/dendor/visage)
-		H.mind.teach_crafting_recipe(/datum/crafting_recipe/dendor/shrine)
-		H.mind.teach_crafting_recipe(/datum/crafting_recipe/dendor/shrine/saiga)
-		H.mind.teach_crafting_recipe(/datum/crafting_recipe/dendor/shrine/volf)
-		H.mind.teach_crafting_recipe(/datum/crafting_recipe/dendor/sacrifice_growing)
-		H.mind.teach_crafting_recipe(/datum/crafting_recipe/dendor/sacrifice_stinging)
-		H.mind.teach_crafting_recipe(/datum/crafting_recipe/dendor/sacrifice_devouring)
+		H.mind.teach_crafting_recipe(/datum/repeatable_crafting_recipe/dendor/visage)
+		H.mind.teach_crafting_recipe(/datum/blueprint_recipe/dendor/shrine)
+		H.mind.teach_crafting_recipe(/datum/blueprint_recipe/dendor/shrine/saiga)
+		H.mind.teach_crafting_recipe(/datum/blueprint_recipe/dendor/shrine/volf)
+		H.mind.teach_crafting_recipe(/datum/repeatable_crafting_recipe/dendor/sacrifice_growing)
+		H.mind.teach_crafting_recipe(/datum/repeatable_crafting_recipe/dendor/sacrifice_stinging)
+		H.mind.teach_crafting_recipe(/datum/repeatable_crafting_recipe/dendor/sacrifice_devouring)
 
 	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(H, H.patron)
 	H.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
@@ -72,89 +72,6 @@
 	..()
 	to_chat(H, tutorial)
 
-
-/*	.................   Unique Dendor recipes   ................... */
-/datum/crafting_recipe/dendor
-	always_availible = FALSE
-	craftdiff = 0
-	category = CAT_NONE
-	subtype_reqs = TRUE // so you can use any subtype of the items
-	req_table = FALSE
-
-/datum/crafting_recipe/dendor/visage
-	name = "druids mask (unique)"
-	reqs = list(/obj/item/grown/log/tree/small = 1)
-	result = /obj/item/clothing/face/druid
-
-/datum/crafting_recipe/dendor/shrine
-	name = "growing shrine to Dendor (unique)"
-	reqs = list(/obj/item/grown/log/tree/small = 1,
-				/obj/item/natural/thorn = 3,
-				/obj/item/natural/head/gote = 1)
-	result = /obj/structure/fluff/psycross/crafted/shrine/dendor_gote
-	verbage = "consecrate"
-	verbage_tp = "consecrates"
-	craftsound = 'sound/foley/Building-01.ogg'
-
-/datum/crafting_recipe/dendor/shillelagh
-	name = "Shillelagh (unique)"
-	result = /obj/item/weapon/mace/goden/shillelagh
-	reqs = list(/obj/item/grown/log/tree/small = 1,
-				/obj/item/ash = 1,
-				/obj/item/reagent_containers/food/snacks/fat =1 )
-	craftdiff = 1
-
-/datum/crafting_recipe/dendor/forestdelight
-	name = "forest guardian offering (unique)"
-	reqs = list(/obj/item/bait/bloody = 1,
-				/obj/item/reagent_containers/food/snacks/produce/swampweed_dried = 1,
-				/obj/item/reagent_containers/food/snacks/raisins = 1 )
-	result = /obj/item/bait/forestdelight
-
-/datum/crafting_recipe/dendor/shrine/saiga
-	name = "stinging shrine to Dendor (unique)"
-	reqs = list(/obj/item/grown/log/tree/small = 1,
-				/obj/item/natural/thorn = 3,
-				/obj/item/natural/head/saiga = 1)
-	result = /obj/structure/fluff/psycross/crafted/shrine/dendor_saiga
-
-/datum/crafting_recipe/dendor/shrine/volf
-	name = "devouring shrine to Dendor (unique)"
-	reqs = list(/obj/item/grown/log/tree/small = 1,
-				/obj/item/natural/thorn = 3,
-				/obj/item/natural/head/volf = 1)
-	result = /obj/structure/fluff/psycross/crafted/shrine/dendor_volf
-
-/datum/crafting_recipe/dendor/sacrifice_growing
-	name = "green sacrifice to Dendor (unique)"
-	structurecraft = /obj/structure/fluff/psycross/crafted/shrine/dendor_gote
-	reqs = list(/obj/item/natural/worms/grub_silk = 1,
-				/obj/item/reagent_containers/food/snacks/produce/swampweed = 1,
-				/obj/item/reagent_containers/food/snacks/produce/poppy = 1)
-	result = /obj/item/blessing_of_dendor_growing
-	verbage = "make"
-	verbage_tp = "make"
-	craftsound = 'sound/foley/burning_sacrifice.ogg'
-
-/datum/crafting_recipe/dendor/sacrifice_stinging
-	name = "yellow sacrifice to Dendor (unique)"
-	structurecraft = /obj/structure/fluff/psycross/crafted/shrine/dendor_saiga
-	reqs = list(/obj/item/reagent_containers/food/snacks/fish/eel = 1,
-				/obj/item/reagent_containers/food/snacks/produce/westleach = 1,
-				/obj/item/reagent_containers/food/snacks/produce/fruit/jacksberry = 1)
-	result = /obj/item/blessing_of_dendor_stinging
-	verbage = "make"
-	verbage_tp = "make"
-	craftsound = 'sound/foley/burning_sacrifice.ogg'
-
-/datum/crafting_recipe/dendor/sacrifice_devouring
-	name = "red sacrifice to Dendor (unique)"
-	structurecraft = /obj/structure/fluff/psycross/crafted/shrine/dendor_volf
-	reqs = list(/obj/item/bait/bloody = 2)
-	result = /obj/item/blessing_of_dendor_devouring
-	verbage = "make a"
-	verbage_tp = "make a"
-	craftsound = 'sound/foley/burning_sacrifice.ogg'
 
 /*	.................   Green Blessings of Dendor   ................... */
 /obj/item/blessing_of_dendor_growing

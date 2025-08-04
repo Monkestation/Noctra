@@ -147,7 +147,4 @@
 	///Which ambient sound this client is currently being provided
 	var/current_ambient_sound
 
-	/// The DPI scale of the client. Default is 100% window scaling
-	var/window_scaling = 100
-
 	var/list/triumph_ids = list() //I am not sure if i should put it here, but if it work? this check for specific triumph IDs.

@@ -84,6 +84,13 @@
 		to_chat(caster, span_warning("You're already shapeshifted!"))
 		CRASH("[type] called do_shapeshift while shapeshifted.")
 
+	for(var/listed_coven as anything in caster.covens)
+		var/datum/coven/coven = caster.covens[listed_coven]
+		var/datum/coven_power/power = coven?.current_power
+		if(!power)
+			continue
+		power.try_deactivate(direct = TRUE, alert = FALSE)
+
 	var/mob/living/new_shape = new shapeshift_type(caster.loc)
 	var/obj/shapeshift_holder/new_shape_holder = new(new_shape, src, caster)
 
@@ -190,6 +197,10 @@
 	stored.notransform = FALSE
 	if(shape.mind)
 		shape.mind.transfer_to(stored)
+
+	if(HAS_SPATIAL_GRID_CONTENTS(stored))
+		SSspatial_grid.enter_cell(stored, shape.loc)
+
 	if(death)
 		stored.death()
 	else if(source.convert_damage)
@@ -202,10 +213,15 @@
 	if(source.convert_damage)
 		stored.blood_volume = shape.blood_volume;
 
+	var/mob/old_stored = stored
+	var/turf/old_loc = shape.loc
 	// This guard is important because restore() can also be called on COMSIG_PARENT_QDELETING for shape, as well as on death.
 	// This can happen in, for example, [/proc/wabbajack] where the mob hit is qdel'd.
 	if(!QDELETED(shape))
 		QDEL_NULL(shape)
+
+	if(HAS_SPATIAL_GRID_CONTENTS(old_stored))
+		SSspatial_grid.enter_cell(old_stored, old_loc)
 
 	qdel(src)
 	return stored

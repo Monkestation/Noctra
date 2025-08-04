@@ -166,8 +166,8 @@
 	weight = 100
 
 /datum/special_trait/arsonist/on_apply(mob/living/carbon/human/character, silent)
-	character.mind.special_items["Firebomb One"] = /obj/item/bomb
-	character.mind.special_items["Firebomb Two"] = /obj/item/bomb
+	character.mind.special_items["Firebomb One"] = /obj/item/explosive/bottle
+	character.mind.special_items["Firebomb Two"] = /obj/item/explosive/bottle
 	character.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
 
 /datum/special_trait/tombraider
@@ -574,7 +574,7 @@
 	character.change_stat("endurance", -1)
 	character.adjust_skillrank(/datum/skill/magic/arcane, 5, TRUE)
 	character.set_skillrank(/datum/skill/combat/swords, 2, TRUE) //Average only.
-	character.adjust_spellpoints(14) //Less points than Court Mage, why do Court mage get 17 points? what even?
+	character.adjust_spell_points(14) //Less points than Court Mage, why do Court mage get 17 points? what even?
 	character.add_spell(/datum/action/cooldown/spell/undirected/touch/prestidigitation, silent = TRUE)
 	character.generate_random_attunements(rand(4,6))
 	character.mana_pool.set_intrinsic_recharge(MANA_ALL_LEYLINES)

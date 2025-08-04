@@ -472,6 +472,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	if(user.client.is_new_player())
 		dat = list("<center>REGISTER!</center>")
 
+	user?.client.acquire_dpi()
 	winshow(user, "stonekeep_prefwin", TRUE)
 	winshow(user, "stonekeep_prefwin.character_preview_map", TRUE)
 	var/datum/browser/noclose/popup = new(user, "preferences_browser", "<div align='center'>Character Sheet</div>", 716, 636, use_onclose = FALSE)

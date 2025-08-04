@@ -226,9 +226,9 @@
 /area/rogue/under/tomb)
 "zf" = (
 /obj/structure/closet/crate/chest/wicker,
-/obj/item/alch/bonemeal,
-/obj/item/alch/bonemeal,
-/obj/item/alch/bonemeal,
+/obj/item/fertilizer/bone_meal,
+/obj/item/fertilizer/bone_meal,
+/obj/item/fertilizer/bone_meal,
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/under/tomb/indoors)
 "zM" = (

@@ -28,6 +28,8 @@
 
 	. = ..()
 
+	SEND_SIGNAL(src, COMSIG_HUMAN_LIFE)
+
 	if (QDELETED(src))
 		return 0
 

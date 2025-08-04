@@ -361,7 +361,7 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 	var/average_freshness = (ingredient_count > 0) ? (total_freshness / ingredient_count) : 0
 
 	// Get the initiator's cooking skill
-	var/cooking_skill = initiator.get_skill_level(/datum/skill/craft/cooking)
+	var/cooking_skill = initiator.get_skill_level(used_skill)
 
 	// Create the output items
 	for(var/j = 1 to output_amount)
@@ -374,10 +374,7 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 			food_item.warming = min(5 MINUTES, average_freshness)
 
 			// Calculate final quality based on ingredients, skill, and recipe
-			var/final_quality = calculate_quality(cooking_skill, highest_quality, average_freshness)
-			food_item.quality = round(final_quality)
-
-			apply_quality_description(food_item, final_quality)
+			apply_food_quality(food_item, cooking_skill, highest_quality, average_freshness)
 
 		SEND_SIGNAL(crafter, COMSIG_TRY_STORAGE_INSERT, created_output, null, null, TRUE, TRUE)
 		after_craft(created_output, crafter, initiator, found_optional_requirements, found_optional_wildcards, found_optional_reagents, removing_items)
@@ -392,17 +389,20 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
  * @param quality_modifier Optional modifier from the recipe
  * @return The calculated quality value
  */
-/datum/container_craft/proc/calculate_quality(cooking_skill, ingredient_quality, freshness, quality_modifier = 1.0)
-	return calculate_food_quality(cooking_skill, ingredient_quality, freshness, quality_modifier)
+/datum/container_craft/proc/apply_food_quality(obj/item/reagent_containers/food/snacks/food_item, cooking_skill, ingredient_quality, freshness, quality_modifier = 1.0)
+    var/datum/quality_calculator/cooking/cook_calc = new(
+        base_qual = 0,
+        mat_qual = ingredient_quality,
+        skill_qual = cooking_skill,
+        perf_qual = 0,
+        diff_mod = 0,
+        components = 1,
+        fresh = freshness,
+        recipe_mod = quality_modifier
+    )
+    cook_calc.apply_quality_to_item(food_item)
+    qdel(cook_calc)
 
-/**
- * Applies visual and descriptive modifications to food based on its quality.
- *
- * @param food_item The food item to modify
- * @param quality The calculated quality value
- */
-/datum/container_craft/proc/apply_quality_description(obj/item/reagent_containers/food/snacks/food_item, quality)
-	apply_food_quality(food_item, quality)
 
 /datum/container_craft/proc/after_craft(atom/created_output, obj/item/crafter, mob/initiator, list/found_optional_requirements, list/found_optional_wildcards, list/found_optional_reagents, list/removing_items)
 	// This is an extension point for specific crafting types to do additional processing

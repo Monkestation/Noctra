@@ -64,7 +64,7 @@
 	H.change_stat(STATKEY_INT, -1)
 	ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_SEEDKNOW, TRAIT_GENERIC)
-	backpack_contents = list(/obj/item/recipe_book/cooking = 1, /obj/item/bottle_kit)
+	backpack_contents = list(/obj/item/recipe_book/cooking = 1, /obj/item/bottle_kit = 1, /obj/item/recipe_book/agriculture = 1)
 
 	neck = /obj/item/storage/belt/pouch/coins/poor
 	if(H.gender == MALE)
