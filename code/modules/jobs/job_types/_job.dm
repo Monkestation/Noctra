@@ -215,7 +215,7 @@
 		spawned.set_apprentice_name(apprentice_name)
 
 	add_spells(spawned)
-	spawned.adjust_spellpoints(spell_points)
+	spawned.adjust_spell_points(spell_points)
 	spawned.generate_random_attunements(rand(attunements_min, attunements_max))
 
 	var/list/used_stats = ((spawned.gender == FEMALE) && jobstats_f) ? jobstats_f : jobstats

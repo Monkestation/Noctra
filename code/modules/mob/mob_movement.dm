@@ -227,7 +227,7 @@ w/**
 			COOLDOWN_START(src, move_delay, 1 SECONDS)
 			to_chat(src, span_warning("I'm restrained! I can't move!"))
 			return TRUE
-		else if(mob.pulledby != mob.pulling || mob.pulledby.grab_state != GRAB_PASSIVE || mob.cmode)	//Don't autoresist passive grabs if we're grabbing them too.
+		else if(mob.pulledby != mob.pulling || mob.pulledby.grab_state > GRAB_PASSIVE || mob.cmode || mob.pulledby.cmode)	//Don't autoresist passive grabs if we're grabbing them too.
 			return mob.resist_grab(TRUE)
 
 	if(mob.pulling && isliving(mob.pulling))

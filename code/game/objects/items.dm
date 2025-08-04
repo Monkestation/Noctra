@@ -860,7 +860,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	set hidden = 1
 	set name = "Pick up"
 
-	if(usr.incapacitated(ignore_grab = TRUE) || !Adjacent(usr))
+	if(usr.incapacitated(IGNORE_GRAB) || !Adjacent(usr))
 		return
 
 	if(isliving(usr))

@@ -48,15 +48,15 @@ GLOBAL_LIST_EMPTY(graggar_cullings)
 /datum/culling_duel/proc/process_win(mob/living/winner, mob/living/loser)
 	winner.remove_stress(/datum/stressevent/graggar_culling_unfinished)
 	winner.verbs -= /mob/living/carbon/human/proc/remember_culling
-	winner.set_stat_modifier("graggar_culling", STATKEY_STR, 1)
-	winner.set_stat_modifier("graggar_culling", STATKEY_END, 1)
-	winner.set_stat_modifier("graggar_culling", STATKEY_CON, 1)
-	winner.set_stat_modifier("graggar_culling", STATKEY_PER, 1)
-	winner.set_stat_modifier("graggar_culling", STATKEY_INT, 1)
-	winner.set_stat_modifier("graggar_culling", STATKEY_SPD, 1)
-	winner.set_stat_modifier("graggar_culling", STATKEY_LCK, 1)
+	winner.set_stat_modifier("graggar_culling", STATKEY_STR, 2)
+	winner.set_stat_modifier("graggar_culling", STATKEY_END, 2)
+	winner.set_stat_modifier("graggar_culling", STATKEY_CON, 2)
+	winner.set_stat_modifier("graggar_culling", STATKEY_PER, 2)
+	winner.set_stat_modifier("graggar_culling", STATKEY_INT, 2)
+	winner.set_stat_modifier("graggar_culling", STATKEY_SPD, 2)
+	winner.set_stat_modifier("graggar_culling", STATKEY_LCK, 2)
 	to_chat(winner, span_notice("You have proven your strength to Graggar by consuming your rival's heart! Your rival's power is now YOURS!"))
-	winner.adjust_triumphs(2)
+	winner.adjust_triumphs(3)
 	winner.add_stress(/datum/stressevent/graggar_culling_finished)
 	winner.playsound_local(winner, 'sound/misc/gods/graggar_omen.ogg', 100)
 
@@ -81,7 +81,7 @@ GLOBAL_LIST_EMPTY(graggar_cullings)
 	track = EVENT_TRACK_INTERVENTION
 	typepath = /datum/round_event/graggar_culling
 	weight = 8
-	earliest_start = 25 MINUTES
+	earliest_start = 20 MINUTES
 	max_occurrences = 1
 	min_players = 35
 	allowed_storytellers = list(/datum/storyteller/graggar)
@@ -111,8 +111,8 @@ GLOBAL_LIST_EMPTY(graggar_cullings)
 	if(length(contenders) < 2)
 		return
 
-	// 25% chance for grand culling (multiple pairs)
-	var/grand_culling = prob(25)
+	// 33% chance for grand culling (multiple pairs)
+	var/grand_culling = prob(33)
 	var/max_pairs = grand_culling ? floor(length(contenders) / 2) : 1
 
 	for(var/i in 1 to max_pairs)

@@ -14,7 +14,7 @@
 
 	invocation = "Rot, take them!"
 	invocation_type = INVOCATION_SHOUT
-
+	spell_flags = SPELL_RITUOS
 	charge_time = 1 SECONDS
 	cooldown_time = 20 SECONDS
 	spell_cost = 20

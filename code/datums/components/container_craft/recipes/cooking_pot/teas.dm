@@ -31,7 +31,7 @@
 
 /datum/container_craft/cooking/tea/taraxamint
 	name = "Taraxacum-Mentha tea"
-	crafting_time = 60 SECONDS
+	crafting_time = 50 SECONDS
 	water_conversion = 0.6
 	created_reagent = /datum/reagent/consumable/tea/taraxamint
 	requirements = list(
@@ -41,14 +41,14 @@
 
 /datum/container_craft/cooking/tea/utricasalvia
 	name = "Urtica-Salvia tea"
-	crafting_time = 60 SECONDS
+	crafting_time = 50 SECONDS
 	water_conversion = 0.6
 	created_reagent = /datum/reagent/consumable/tea/utricasalvia
 	requirements = list(/obj/item/alch/urtica = 1, /obj/item/alch/salvia = 1)
 
 /datum/container_craft/cooking/tea/badidea
 	name = "westleach tar tea"
-	crafting_time = 40 SECONDS
+	crafting_time = 30 SECONDS
 	water_conversion = 0.2
 	created_reagent = /datum/reagent/consumable/tea/badidea
 	requirements = list(/obj/item/reagent_containers/food/snacks/produce/dry_westleach = 3)
@@ -56,7 +56,7 @@
 
 /datum/container_craft/cooking/tea/fourtwenty
 	name = "swampweed brew"
-	crafting_time = 40 SECONDS
+	crafting_time = 30 SECONDS
 	water_conversion = 0.6
 	created_reagent = /datum/reagent/consumable/tea/fourtwenty
 	requirements = list(/obj/item/reagent_containers/food/snacks/produce/swampweed_dried = 2)
@@ -64,7 +64,7 @@
 
 /datum/container_craft/cooking/tea/manabloom
 	name = "Manabloom tea"
-	crafting_time = 40 SECONDS
+	crafting_time = 30 SECONDS
 	water_conversion = 0.6
 	created_reagent = /datum/reagent/consumable/tea/manabloom
 	requirements = list(/obj/item/reagent_containers/food/snacks/produce/manabloom = 2)
@@ -72,7 +72,7 @@
 
 /datum/container_craft/cooking/tea/compot
 	name = "Compot"
-	crafting_time = 90 SECONDS
+	crafting_time = 60 SECONDS
 	water_conversion = 0.3
 	created_reagent = /datum/reagent/consumable/tea/compot
 	requirements = list(/obj/item/reagent_containers/food/snacks/raisins = 2)
@@ -80,7 +80,7 @@
 
 /datum/container_craft/cooking/tea/tiefbloodtea
 	name = "Tiefing Blood Tea"
-	crafting_time = 120 SECONDS
+	crafting_time = 80 SECONDS
 	water_conversion = 0.8
 	created_reagent = /datum/reagent/consumable/tea/tiefbloodtea
 	requirements = list(/obj/item/reagent_containers/food/snacks/tiefsugar = 1)

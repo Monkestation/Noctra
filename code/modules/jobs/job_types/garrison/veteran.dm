@@ -58,6 +58,7 @@
 	beltl = /obj/item/weapon/sword/sabre
 	beltr = /obj/item/storage/keyring/veteran
 	backr = /obj/item/storage/backpack/satchel/black
+	scabbards = list(/obj/item/weapon/scabbard/sword)
 	cloak = /obj/item/clothing/cloak/half/vet
 	belt = /obj/item/storage/belt/leather/black
 	H.cmode_music = 'sound/music/cmode/adventurer/CombatWarrior.ogg'

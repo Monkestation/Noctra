@@ -36,9 +36,9 @@
 
 	if(istype(mover))
 		if(is_jester_job(mover.mind?.assigned_role))
-			mover.liquid_slip(total_time = 1.6 SECONDS, stun_duration = 1.6 SECONDS, height = 30, flip_count = 10)
+			mover.liquid_slip(total_time = 1 SECONDS, stun_duration = 1 SECONDS, height = 30, flip_count = 10)
 		else
-			mover.liquid_slip(total_time = 1.6 SECONDS, stun_duration = 1.6 SECONDS, height = 12, flip_count = 0)
+			mover.liquid_slip(total_time = 1 SECONDS, stun_duration = 1 SECONDS, height = 12, flip_count = 0)
 
 /atom/movable/screen/alert/status_effect/oiled
 	name = "Oiled"
@@ -191,14 +191,14 @@
 
 	if(grabbee)
 		// Dont stop the pull if another hand grabs the person
-		var/stop_pull = FALSE
+		var/stop_pull = TRUE
 		if(grabbee.r_grab == src)
-			if(!grabbee.l_grab || grabbee.l_grab.grabbed != grabbee.r_grab.grabbed)
-				stop_pull = TRUE
+			if(grabbee.l_grab && grabbee.l_grab.grabbed == grabbee.r_grab.grabbed)
+				stop_pull = FALSE
 			grabbee.r_grab = null
 		if(grabbee.l_grab == src)
-			if(!grabbee.r_grab || grabbee.r_grab.grabbed != grabbee.l_grab.grabbed)
-				stop_pull = TRUE
+			if(grabbee.r_grab && grabbee.r_grab.grabbed == grabbee.l_grab.grabbed)
+				stop_pull = FALSE
 			grabbee.l_grab = null
 		if(grabbee.mouth == src)
 			grabbee.mouth = null

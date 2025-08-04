@@ -14,7 +14,7 @@
 	charge_drain = 1
 	cooldown_time = 25 SECONDS
 	spell_cost = 50
-
+	spell_flags = SPELL_RITUOS
 	status_effect = /datum/status_effect/debuff/frostbite
 
 /datum/action/cooldown/spell/status/frostbite/cast(mob/living/cast_on)

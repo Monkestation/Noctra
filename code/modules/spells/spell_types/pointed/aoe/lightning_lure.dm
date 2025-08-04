@@ -16,7 +16,7 @@
 	charge_slowdown = 1.3
 	cooldown_time = 40 MINUTES
 	spell_cost = 45
-
+	spell_flags = SPELL_RITUOS
 	aoe_radius = 4
 	max_targets = 3
 

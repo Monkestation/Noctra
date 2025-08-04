@@ -6,6 +6,7 @@
 	antimagic_flags = NONE
 
 	spell_type = NONE
+
 	charge_required = FALSE
 	sound = null
 	has_visual_effects = FALSE

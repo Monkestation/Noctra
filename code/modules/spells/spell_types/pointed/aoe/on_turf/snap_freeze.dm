@@ -11,7 +11,7 @@
 
 	invocation = "Air be still!"
 	invocation_type = INVOCATION_SHOUT
-
+	spell_flags = SPELL_RITUOS
 	charge_time = 3 SECONDS
 	charge_drain = 2
 	charge_slowdown = 1.3

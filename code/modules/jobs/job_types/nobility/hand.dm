@@ -68,6 +68,7 @@
 	armor = /obj/item/clothing/armor/leather/jacket/handjacket
 	pants = /obj/item/clothing/pants/tights/black
 	beltr = /obj/item/weapon/sword/rapier/dec
+	scabbards = list(/obj/item/weapon/scabbard/sword)
 	H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/crossbows, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)

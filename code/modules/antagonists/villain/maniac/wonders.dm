@@ -54,7 +54,7 @@
 	icon = 'icons/roguetown/maniac/creations.dmi'
 	icon_state = "creation1"
 	resistance_flags = INDESTRUCTIBLE
-	density = TRUE
+	density = FALSE
 	anchored = TRUE
 	/// The maniac that made this structure
 	var/datum/antagonist/maniac/dream_master

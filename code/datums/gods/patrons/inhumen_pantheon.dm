@@ -28,6 +28,10 @@
 	sins = "Pearl-clutching, Moralism, Wastefulness"
 	boons = "You may perform fleshcrafting. Access to roles with magic."
 	//added_traits = list(TRAIT_CABAL)	No need for this. They have fleshcrafting now.
+	t0 = /datum/action/cooldown/spell/undirected/touch/orison //Cursed water, btw
+	t1 = /datum/action/cooldown/spell/projectile/profane
+	t2 = /datum/action/cooldown/spell/conjure/raise_lesser_undead
+	t3 = /datum/action/cooldown/spell/undirected/rituos
 	confess_lines = list(
 		"I FOLLOW THE PATH OF ZIZO!",
 		"LONG LIVE QUEEN ZIZO!",
@@ -48,6 +52,10 @@
 	sins = "Compassion, Frailty, Servility"
 	boons = "You are drawn to the flavour of raw flesh and organs, and may consume without worry."
 	added_traits = list(TRAIT_ORGAN_EATER)
+	t0 = /datum/action/cooldown/spell/undirected/bloodrage
+	t1 = /datum/action/cooldown/spell/undirected/call_to_slaughter
+	t2 = /datum/action/cooldown/spell/projectile/blood_net
+	t3 = /datum/action/cooldown/spell/revel_in_slaughter
 	confess_lines = list(
 		"GRAGGAR IS THE BEAST I WORSHIP!",
 		"GRAGGAR WILL RAVAGE YOU!",
@@ -64,6 +72,10 @@
 	sins = "Clumsiness, Stupidity, Humility"
 	boons = "You can see the most expensive item someone is carrying."
 	added_traits = list(TRAIT_MATTHIOS_EYES)
+	t0 = /datum/action/cooldown/spell/appraise/holy //what the point if he got matthios's eyes though?
+	t1 = /datum/action/cooldown/spell/transact
+	t2 = /datum/action/cooldown/spell/beam/equalize
+	t3 = /datum/action/cooldown/spell/churn_wealthy
 	confess_lines = list(
 		"MATTHIOS STEALS FROM THE WORTHLESS!",
 		"MATTHIOS IS JUSTICE FOR THE COMMON MAN!",
@@ -80,6 +92,10 @@
 	sins = "Sobriety, Self-Sacrifice, Faltering Willpower"
 	boons = "You will never overdose on drugs."
 	added_traits = list(TRAIT_CRACKHEAD)
+	t0 = /datum/action/cooldown/spell/find_flaw
+	t1 = /datum/action/cooldown/spell/baothablessings
+	t2 = /datum/action/cooldown/spell/projectile/blowingdust
+	t3 = /datum/action/cooldown/spell/painkiller
 	confess_lines = list(
 		"LIVE, LAUGH, LOVE! IN BAOTHA'S NAME!",
 		"JOY AT ALL COSTS! BAOTHA'S TEACHINGS REIGN!",

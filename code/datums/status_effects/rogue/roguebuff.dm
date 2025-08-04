@@ -92,6 +92,18 @@
 			var/mob/living/carbon/C = owner
 			C.remove_stress(/datum/stressevent/high)
 
+/datum/status_effect/buff/druqks/baotha
+
+/datum/status_effect/buff/druqks/baotha/on_apply()
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_GENERIC)
+
+/datum/status_effect/buff/druqks/baotha/on_remove()
+	. = ..()
+	REMOVE_TRAIT(owner, TRAIT_CRACKHEAD, TRAIT_GENERIC)
+	owner.visible_message("[owner]'s eyes appear to return to normal.")
+
+
 /atom/movable/screen/alert/status_effect/buff/druqks
 	name = "High"
 	desc = span_nicegreen("Holy shit, I am tripping balls!")
@@ -459,6 +471,109 @@
 	desc = span_notice("I am inspired to create!")
 	icon_state = "malum_buff"
 
+
+/*-----------------\
+|   Inhumen Miracles |
+\-----------------*/
+
+/datum/status_effect/buff/call_to_slaughter
+	id = "call_to_slaughter"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/call_to_slaughter
+	duration = 2.5 MINUTES
+	effectedstats = list(STATKEY_STR = 1, STATKEY_END = 1, STATKEY_CON = 1)
+
+/atom/movable/screen/alert/status_effect/buff/call_to_slaughter
+	name = "Call to Slaughter"
+	desc = span_bloody("LAMBS TO THE SLAUGHTER!")
+	icon_state = "call_to_slaughter"
+
+
+#define BLOODRAGE_FILTER "bloodrage"
+
+/atom/movable/screen/alert/status_effect/buff/graggar_bloodrage
+	name = "BLOODRAGE"
+	desc = "GRAGGAR! GRAGGAR! GRAGGAR!"
+	icon_state = "bloodrage"
+
+/datum/status_effect/buff/bloodrage
+	id = "bloodrage"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/graggar_bloodrage
+	var/outline_color = "#ad0202"
+	duration = 15 SECONDS
+
+/datum/status_effect/buff/bloodrage/on_creation(mob/living/new_owner, duration_override, ...)
+	var/holyskill = owner.get_skill_level(/datum/skill/magic/holy)
+	duration = ((15 SECONDS) * holyskill)
+	if(holyskill >= SKILL_LEVEL_APPRENTICE)
+		effectedstats = list(STATKEY_STR = 2)
+	else
+		effectedstats = list(STATKEY_STR = 1)
+	return ..()
+
+/datum/status_effect/buff/bloodrage/on_apply()
+	. = ..()
+	owner.add_filter(BLOODRAGE_FILTER, 2, outline_filter(2, outline_color))
+
+
+
+/datum/status_effect/buff/bloodrage/on_remove()
+	. = ..()
+	owner.visible_message(span_warning("[owner] wavers, their rage simmering down."))
+	owner.OffBalance(3 SECONDS)
+	owner.remove_filter(BLOODRAGE_FILTER)
+	owner.emote("breathgasp", forced = TRUE)
+	owner.Slowdown(3)
+
+#undef BLOODRAGE_FILTER
+
+/atom/movable/screen/alert/status_effect/buff/matthioshealing
+	name = "Healing Miracle"
+	desc = "Strange Divine intervention relieves me of my ailments."
+	icon_state = "buff"
+
+#define MIRACLE_HEALING_FILTER "miracle_heal_glow"
+
+/datum/status_effect/buff/matthioshealing
+	id = "healing"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/matthioshealing
+	duration = 10 SECONDS
+	examine_text = "SUBJECTPRONOUN is bathed in a restorative aura!"
+	var/healing_on_tick = 1
+	var/outline_colour = "#c42424"
+
+/datum/status_effect/buff/matthioshealing/on_creation(mob/living/new_owner, new_healing_on_tick)
+	healing_on_tick = new_healing_on_tick
+	return ..()
+
+/datum/status_effect/buff/matthioshealing/on_apply()
+	. = ..()
+	owner.add_filter(MIRACLE_HEALING_FILTER, 2,  outline_filter(2, outline_colour))
+	return TRUE
+
+/datum/status_effect/buff/matthioshealing/on_remove()
+	. = ..()
+	owner.remove_filter(MIRACLE_HEALING_FILTER)
+	return TRUE
+
+
+/datum/status_effect/buff/matthioshealing/tick()
+	if(owner.blood_volume < BLOOD_VOLUME_NORMAL)
+		owner.blood_volume = min(owner.blood_volume+10, BLOOD_VOLUME_NORMAL)
+	if(owner.get_wounds())
+		owner.heal_wounds(healing_on_tick)
+		owner.update_damage_overlays()
+		owner.adjustBruteLoss(-healing_on_tick, 0)
+		owner.adjustFireLoss(-healing_on_tick, FALSE)
+		owner.adjustOxyLoss(-healing_on_tick, FALSE)
+		owner.adjustToxLoss(-healing_on_tick, FALSE)
+		owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -healing_on_tick)
+
+#undef MIRACLE_HEALING_FILTER //Why is this a thing?
+
+/datum/status_effect/buff/lux_drank/baothavitae
+	id = "druqks"
+	duration = 1 MINUTES
+
 // BARDIC BUFFS BELOW
 
 /datum/status_effect/bardicbuff
@@ -760,7 +875,7 @@
 /datum/status_effect/buff/lux_drank
 	id = "lux_drank"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/lux_drank
-	effectedstats = list("fortune" = 2)
+	effectedstats = list(STATKEY_LCK = 2)
 	duration = 10 SECONDS
 
 /datum/status_effect/buff/lux_drank/on_apply()

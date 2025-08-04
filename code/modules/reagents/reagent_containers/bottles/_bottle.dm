@@ -62,6 +62,10 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
+	toggle_cork(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/reagent_containers/glass/bottle/proc/toggle_cork(mob/user)
 	closed = !closed
 	user.changeNext_move(CLICK_CD_RAPID)
 	if(closed)
@@ -82,7 +86,6 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 		if(!fancy)
 			desc = "An open bottle, hopefully a cork is close by."
 	update_appearance(UPDATE_OVERLAYS)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/reagent_containers/glass/bottle/toxin
 	name = "toxin bottle"

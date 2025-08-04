@@ -565,14 +565,14 @@
 			if(l_grab.grabbed == target)
 				backnotshoulder = TRUE
 
-	if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
+	if(can_be_firemanned(target) && !incapacitated(IGNORE_GRAB))
 		if(backnotshoulder)
 			visible_message("<span class='notice'>[src] starts lifting [target] onto their back...</span>")
 		else
 			visible_message("<span class='notice'>[src] starts lifting [target] onto their shoulder...</span>")
 		if(do_after(src, carrydelay, target))
 			//Second check to make sure they're still valid to be carried
-			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
+			if(can_be_firemanned(target) && !incapacitated(IGNORE_GRAB))
 				buckle_mob(target, TRUE, TRUE, 90, 0, 0)
 				return
 	to_chat(src, "<span class='warning'>I fail to carry [target].</span>")
@@ -582,7 +582,7 @@
 		visible_message("<span class='notice'>[target] starts to climb onto [src]...</span>")
 		if(do_after(target, 1.5 SECONDS, src))
 			if(can_piggyback(target))
-				if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+				if(target.incapacitated(IGNORE_GRAB) || incapacitated(IGNORE_GRAB))
 					to_chat(target, "<span class='warning'>I can't piggyback ride [src].</span>")
 					return
 				buckle_mob(target, TRUE, TRUE, FALSE, 0, 0)

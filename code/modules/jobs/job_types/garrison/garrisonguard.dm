@@ -59,6 +59,7 @@
 	backl = /obj/item/storage/backpack/satchel
 	beltr = /obj/item/weapon/sword/short
 	beltl = /obj/item/weapon/mace/cudgel
+	scabbards = list(/obj/item/weapon/scabbard/sword)
 	backpack_contents = list(/obj/item/storage/keyring/guard, /obj/item/weapon/knife/dagger/steel/special)
 
 
@@ -137,6 +138,7 @@
 	backr = /obj/item/weapon/polearm/spear
 	beltl = /obj/item/weapon/sword/short
 	beltr = /obj/item/weapon/mace/cudgel
+	scabbards = list(/obj/item/weapon/scabbard/sword)
 	backpack_contents = list(/obj/item/storage/keyring/guard, /obj/item/weapon/knife/dagger/steel/special)
 
 	//Stats for class

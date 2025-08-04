@@ -19,17 +19,22 @@ body {
 .var.selected {
 	background-color: "#ffee88";
 }
+
 table.matrix {
 	border-collapse: collapse; border-spacing: 0;
 	font-size: 7pt;
 }
+
 .matrix td{
 	text-align: center;
 	padding: 0 1ex 0ex 1ex;
 }
+
 table.matrixbrak {
+
 	border-collapse: collapse; border-spacing: 0;
 }
+
 table.matrixbrak td.lbrak {
 	width: 0.8ex;
 	font-size: 50%;
@@ -38,11 +43,12 @@ table.matrixbrak td.lbrak {
 	border-left: solid 0.5ex black;
 	border-right: none;
 }
+
 table.matrixbrak td.rbrak {
-		width: 0.8ex;
-		font-size: 50%;
-		border-top: solid 0.25ex black;
-		border-bottom: solid 0.25ex black;
-		border-right: solid 0.5ex black;
-		border-left: none;
+	width: 0.8ex;
+	font-size: 50%;
+	border-top: solid 0.25ex black;
+	border-bottom: solid 0.25ex black;
+	border-right: solid 0.5ex black;
+	border-left: none;
 }

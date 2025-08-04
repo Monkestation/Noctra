@@ -3,9 +3,9 @@
 	track = EVENT_TRACK_INTERVENTION
 	typepath = /datum/round_event/zizo_defilement
 	weight = 8
-	earliest_start = 25 MINUTES
+	earliest_start = 20 MINUTES
 	max_occurrences = 2
-	min_players = 35
+	min_players = 30
 	allowed_storytellers = list(/datum/storyteller/zizo)
 
 /datum/round_event/zizo_defilement/start()

@@ -481,7 +481,7 @@
 			H.change_stat(STATKEY_INT, 3)
 			H.change_stat(STATKEY_CON, -2)
 			H.change_stat(STATKEY_SPD, -2)
-			H.adjust_spellpoints(6)
+			H.adjust_spell_points(6)
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatSorcerer.ogg'
 			to_chat(H,span_info("\
 			I've studied the arcane, those who step to me shall perish.")

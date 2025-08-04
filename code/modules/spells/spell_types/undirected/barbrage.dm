@@ -12,7 +12,6 @@
 	charge_required = FALSE
 	has_visual_effects = FALSE
 	cooldown_time = 1 MINUTES
-
 	spell_type = SPELL_STAMINA
 	spell_cost = 10
 

@@ -11,7 +11,7 @@
 
 	invocation = "Blades, be dulled!"
 	invocation_type = INVOCATION_SHOUT
-
+	spell_flags = SPELL_RITUOS
 	attunements = list(
 		/datum/attunement/arcyne = 0.3,
 	)

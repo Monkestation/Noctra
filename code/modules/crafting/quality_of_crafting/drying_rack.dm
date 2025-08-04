@@ -178,7 +178,7 @@
 /datum/repeatable_crafting_recipe/parchment
 	name = "parchment"
 	output = /obj/item/paper
-	output_amount = 6
+	output_amount = 4
 	starting_atom = /obj/item/weapon/knife
 	tool_usage = list(
 		/obj/item/weapon/knife = list("starts to prepare the hide", "start to prepare the hide", 'sound/combat/hits/bladed/genstab (1).ogg'),

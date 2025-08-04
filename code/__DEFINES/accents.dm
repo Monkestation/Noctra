@@ -5,6 +5,7 @@
 #define ACCENT_ELF "Elf Accent"
 #define ACCENT_TIEFLING "Tiefling Accent"
 #define ACCENT_HORC "Half-Orc Accent"
+#define ACCENT_TRITON "Triton Accent"
 #define ACCENT_GRENZ "Grenzelhoft Acccent"
 #define ACCENT_PIRATE "Pirate Accent"
 #define ACCENT_MIDDLE_SPEAK "Middle Speak (Old Half-Orc)"
@@ -18,6 +19,7 @@ GLOBAL_LIST_INIT(accent_list, list(
 	ACCENT_ELF = strings("accents/russian_replacement.json", "russian"),
 	ACCENT_TIEFLING = strings("accents/spanish_replacement.json", "spanish"),
 	ACCENT_HORC = strings("accents/halforc_replacement.json", "halforc"),
+	ACCENT_TRITON = strings("accents/triton_replacement.json", "triton"),
 	ACCENT_GRENZ = strings("accents/grenz_replacement.json", "grenz"),
 	ACCENT_PIRATE = strings("accents/pirate_replacement.json", "pirate"),
 	ACCENT_MIDDLE_SPEAK = strings("accents/middlespeak.json", "full"),

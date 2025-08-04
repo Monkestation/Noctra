@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(department_radio_prefixes, list(":", "."))
+GLOBAL_LIST_INIT(department_radio_prefixes, list(":"))
 
 GLOBAL_LIST_INIT(department_radio_keys, list(
 	// Location

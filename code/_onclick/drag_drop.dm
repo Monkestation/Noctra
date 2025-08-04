@@ -73,7 +73,7 @@
 /client/MouseDown(datum/object, location, control, params)
 	if(!control || QDELETED(object))
 		return
-	if(mob.incapacitated(ignore_grab = TRUE))
+	if(mob.incapacitated(IGNORE_GRAB))
 		return
 	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDOWN, object, location, control, params)
 	if(istype(object, /obj/abstract/visual_ui_element/hoverable/movable))
@@ -344,7 +344,7 @@
 	. = 1
 
 /client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
-	if(mob.incapacitated(ignore_grab = TRUE))
+	if(mob.incapacitated(IGNORE_GRAB))
 		return
 
 	var/list/modifiers = params2list(params)

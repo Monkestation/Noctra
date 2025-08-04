@@ -323,15 +323,6 @@ GLOBAL_LIST_EMPTY(letters_sent)
 	. = ..()
 	icon_state = "mailspecial[new_mail ? "-get" : ""]"
 
-/obj/item/roguemachine/mastermail/attack_hand(mob/user)
-	var/datum/component/storage/CP = GetComponent(/datum/component/storage)
-	if(CP)
-		if(new_mail)
-			new_mail = FALSE
-			update_appearance(UPDATE_ICON_STATE)
-		CP.rmb_show(user)
-		return TRUE
-
 /obj/item/roguemachine/mastermail/attackby(obj/item/P, mob/user, params)
 	if(istype(P, /obj/item/paper))
 		var/obj/item/paper/PA = P

@@ -7,7 +7,6 @@
 	antimagic_flags = NONE
 
 	charge_required = FALSE
-
 	invocation = "RAVOX, HEAR MY PLEA!"
 	invocation_type = INVOCATION_SHOUT
 

@@ -16,6 +16,7 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 	abstract_type = /datum/container_craft
 
 	var/atom/output
+	/// How many times the output is made. Preferrably for item outputs.
 	var/output_amount = 1
 	var/category
 
@@ -33,6 +34,8 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 	var/list/optional_requirements
 	var/list/optional_wildcard_requirements
 	var/list/optional_reagent_requirements
+
+	var/subtype_reagents_allowed = FALSE
 
 	///Maximum number of optional ingredients to use per craft, set to 0 for unlimited
 	var/max_optionals = 0
@@ -60,7 +63,7 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 /datum/container_craft/proc/requirements_still_met(obj/item/crafter, list/pathed_items)
 	if(length(reagent_requirements))
 		for(var/reagent_type in reagent_requirements)
-			if(!crafter.reagents.has_reagent(reagent_type, reagent_requirements[reagent_type]))
+			if(!crafter.reagents.has_reagent(reagent_type, reagent_requirements[reagent_type], check_subtypes = subtype_reagents_allowed))
 				return FALSE
 
 	// Clone the lists for validation
@@ -91,7 +94,16 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 		var/list/fake_reagents = reagent_requirements.Copy()
 		for(var/datum/reagent/listed_reagent as anything in crafter.reagents.reagent_list) // this isn't perfect since it excludes blood reagent types like tiefling blood from recipes
 			if(!(listed_reagent.type in fake_reagents))
-				continue
+				if(subtype_reagents_allowed)
+					var/reagent_found = FALSE
+					for(var/datum/reagent/reagent_requirement in fake_reagents)
+						if(ispath(listed_reagent.type, reagent_requirement))
+							reagent_found = TRUE
+							break
+					if(!reagent_found)
+						continue
+				else
+					continue
 			var/potential_multiplier = FLOOR(listed_reagent.volume / fake_reagents[listed_reagent.type], 1)
 			if(!highest_multiplier)
 				highest_multiplier = potential_multiplier
@@ -179,7 +191,7 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 
 		if(length(reagent_requirements))
 			for(var/reagent as anything in reagent_requirements)
-				if(!crafter.reagents.has_reagent(reagent, reagent_requirements[reagent]))
+				if(!crafter.reagents.has_reagent(reagent, reagent_requirements[reagent], check_subtypes = subtype_reagents_allowed))
 					return FALSE
 				passed_reagents |= reagent
 				passed_reagents[reagent] = reagent_requirements[reagent]
@@ -257,7 +269,7 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 		// Check optional reagents
 		if(length(optional_reagent_requirements))
 			for(var/opt_reagent in optional_reagent_requirements)
-				if(crafter.reagents.has_reagent(opt_reagent, optional_reagent_requirements[opt_reagent]))
+				if(crafter.reagents.has_reagent(opt_reagent, optional_reagent_requirements[opt_reagent], check_subtypes = subtype_reagents_allowed))
 					potential_optionals += list(list(
 						"type" = "reagent",
 						"reagent" = opt_reagent,

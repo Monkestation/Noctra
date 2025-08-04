@@ -8326,7 +8326,7 @@
 /turf/open/floor/ruinedwood,
 /area/rogue/indoors/town/church)
 "ijJ" = (
-/obj/structure/chair/bench/couch/redright,
+/obj/structure/chair/bench/coucha/redright,
 /turf/open/floor/hexstone,
 /area/rogue/under/town/sewer)
 "ikG" = (
@@ -20481,7 +20481,7 @@
 /turf/open/floor/dirt,
 /area/rogue/under/town/sewer)
 "tXH" = (
-/obj/structure/chair/bench/couch/redleft,
+/obj/structure/chair/bench/coucha/redleft,
 /turf/open/floor/hexstone,
 /area/rogue/under/town/sewer)
 "tXI" = (

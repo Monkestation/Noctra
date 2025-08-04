@@ -140,6 +140,7 @@ GLOBAL_LIST_EMPTY(job_respawn_delays)
 #define CTAG_FORGARRISON	"CAT_FORGARRISON"
 #define CTAG_ADEPT			"CAT_ADEPT" // Used for Adept class selection
 #define CTAG_SQUIRE 		"CAT_SQUIRE" // Squire Love, Classes, as above.
+#define CTAG_MAGIE			"CAT_MAGIE" //for Mage Associate
 #define CTAG_HEIR			"CAT_HEIR"
 #define CTAG_HAND			"CAT_HAND"			// Hand class - Handles Hand class selector
 #define CTAG_CONSORT 		"CAT_CONSORT" 		// Consort classes

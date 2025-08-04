@@ -8,7 +8,7 @@
 	charge_time = 1 SECONDS
 	cooldown_time = 5 MINUTES
 	spell_cost = 15
-
+	spell_flags = SPELL_RITUOS
 	attunements = list(
 		/datum/attunement/dark = 0.4
 	)

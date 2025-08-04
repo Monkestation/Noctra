@@ -10,7 +10,7 @@
 	faction = FACTION_TOWN
 	total_positions = 1
 	spawn_positions = 1
-	min_pq = 1
+	min_pq = 4
 	bypass_lastclass = TRUE
 
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
@@ -35,6 +35,7 @@
 	else
 		if(H.gender == FEMALE)
 			armor = /obj/item/clothing/shirt/robe/archivist
+			pants = /obj/item/clothing/pants/tights/black
 		else
 			shirt = /obj/item/clothing/shirt/undershirt/puritan
 			armor = /obj/item/clothing/shirt/robe/archivist
@@ -58,6 +59,7 @@
 	H.grant_language(/datum/language/hellspeak)
 	H.grant_language(/datum/language/oldpsydonic)
 	H.grant_language(/datum/language/orcish)
+	H.grant_language(/datum/language/deepspeak)
 	H.adjust_skillrank(/datum/skill/misc/reading, 6, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 3, TRUE)

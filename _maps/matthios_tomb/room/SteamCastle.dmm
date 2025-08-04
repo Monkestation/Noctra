@@ -287,7 +287,7 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "dH" = (
-/obj/structure/chair/bench/couch/redright,
+/obj/structure/chair/bench/coucha/redright,
 /turf/open/floor/carpet/red,
 /area/rogue/under/tomb/indoors)
 "dP" = (
@@ -3285,7 +3285,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb/indoors)
 "JW" = (
-/obj/structure/chair/bench/couch/redleft,
+/obj/structure/chair/bench/coucha/redleft,
 /turf/open/floor/carpet/red,
 /area/rogue/under/tomb/indoors)
 "Kb" = (

@@ -5,7 +5,6 @@
 
 	spell_type = NONE
 	cooldown_time = 4 MINUTES
-
 	target_radius = 3
 
 	var/title

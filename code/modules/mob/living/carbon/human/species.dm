@@ -330,7 +330,8 @@ GLOBAL_LIST_EMPTY(patreon_races)
 				/datum/language/hellspeak = "Infernal",
 				/datum/language/orcish = "Orcish",
 				/datum/language/celestial = "Celestial",
-				/datum/language/zalad = "Zalad"
+				/datum/language/zalad = "Zalad",
+				/datum/language/deepspeak = "Deepspeak"
 			)
 
 			if (language in language_map)
@@ -1324,7 +1325,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 			return FALSE
 		if(!target.Adjacent(user))
 			return
-		if(user.incapacitated(ignore_grab = TRUE))
+		if(user.incapacitated(IGNORE_GRAB))
 			return
 
 		var/damage = user.get_punch_dmg()

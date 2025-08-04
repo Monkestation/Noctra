@@ -18,7 +18,7 @@
 	name = "Reliable Wooden Gear (+1 Essence of Lumber)"
 	required_item = /obj/item/natural/wood/plank
 	created_item = /obj/item/gear/wood/reliable
-	additional_items = list(/obj/item/grown/log/tree/small/essence = 1)
+	additional_items = list(/obj/item/grown/log/tree/essence = 1)
 	hammers_per_item = 5
 	craftdiff = 2
 

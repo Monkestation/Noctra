@@ -341,7 +341,7 @@
 	name = "forgefiend"
 	desc = "This hammer's creation took a riddle in its own making. A great sacrifice for perfect quality"
 	icon_state = "malumhammer"
-	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash/heavy)
+	gripped_intents = list(/datum/intent/mace/strike/heavy, /datum/intent/mace/smash/heavy)
 	max_integrity = 200
 
 //................ Psydonian Grand Mace ............... //

@@ -160,7 +160,7 @@
 /turf/open/floor/churchmarble,
 /area/rogue/under/tomb/indoors/church)
 "fe" = (
-/obj/structure/chair/bench/couch,
+/obj/structure/chair/bench/coucha,
 /turf/open/floor/churchmarble,
 /area/rogue/under/tomb/indoors/church)
 "fs" = (
@@ -497,7 +497,7 @@
 /turf/open/floor/churchrough,
 /area/rogue/under/tomb)
 "qB" = (
-/obj/structure/chair/bench/couch/r,
+/obj/structure/chair/bench/coucha/r,
 /turf/open/floor/churchmarble,
 /area/rogue/under/tomb/indoors/church)
 "qC" = (

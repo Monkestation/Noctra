@@ -74,6 +74,9 @@
 /// from base of [datum/devotion/cleric_holder/update_devotion()]
 #define COMSIG_LIVING_DEVOTION_CHANGED "living_devotion_changed"
 
+///from base of
+#define COMSIG_LIVING_DREAM_END  "living_sleep_advancement_end"
+
 ///called on /living when attempting to pick up an item, from base of /mob/living/put_in_hand_check(): (obj/item/I)
 #define COMSIG_LIVING_TRY_PUT_IN_HAND "living_try_put_in_hand"
 	/// Can't pick up
