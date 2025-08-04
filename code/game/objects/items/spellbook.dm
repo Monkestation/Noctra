@@ -236,43 +236,43 @@
 /// Book Types:
 /obj/item/book/granter/spellbook/horrible	//makeable with magic stones (bad quality ones)
 	name = "poorly made tome of the arcyne"
-	desc = "A poorly made book,  it barely glows with arcane and has only small notes on arcane symbols."
+	desc = "A poorly made book,  it barely glows with arcyne and has only small notes on arcyne symbols."
 	bookquality = 1
 	sellprice = 15
 
 /obj/item/book/granter/spellbook/mid	//decent magic stones and basic crafting materials
 	name = "beginners tome of the arcyne"
-	desc = "An obviously handcrafted book, it glows occasionally with arcane and has a meager amount notes on arcane symbols."
+	desc = "An obviously handcrafted book, it glows occasionally with arcyne and has a meager amount notes on arcyne symbols."
 	bookquality = 2
 	sellprice = 30
 
 /obj/item/book/granter/spellbook/apprentice	//apprentices get made with obsidian
 	name = "apprentice tome of the arcyne"
-	desc = "A carefully made book,  faintly glowing with arcane and half filled with notes and theory on arcane symbols."
+	desc = "A carefully made book,  faintly glowing with arcyne and half filled with notes and theory on arcyne symbols."
 	bookquality = 3
 	sellprice = 75
 
 /obj/item/book/granter/spellbook/adept	//refugee mages &normal loot
 	name = "adept tome of the arcyne"
-	desc = "A well made book,  it shines moderately with arcane light. It has been filled with notes of varying degrees on the arcane "
+	desc = "A well made book,  it shines moderately with arcyne light. It has been filled with notes of varying degrees on the arcyne "
 	bookquality = 4
 	sellprice = 150
 
 /obj/item/book/granter/spellbook/expert	//made from 2nd tier loot item
 	name = "expert tome of the arcyne"
-	desc = "A well cared for book, shining brightly with arcane. It has many runes and arcane symbols scribed within, with detailed notes."
+	desc = "A well cared for book, shining brightly with arcyne. It has many runes and arcyne symbols scribed within, with detailed notes."
 	bookquality = 6
 	sellprice = 200
 
 /obj/item/book/granter/spellbook/master	// Court mage & made from 3rd tier loot item
 	name = "masterful tome of the arcyne"
-	desc = "A crackling, glowing book, filled with advanced arcane runes and symbols that hurt the mind to stare at. A true master of the arcane has left their mark behind."
+	desc = "A crackling, glowing book, filled with advanced arcyne runes and symbols that hurt the mind to stare at. A true master of the arcyne has left their mark behind."
 	bookquality = 8
 	sellprice = 250
 
 /obj/item/book/granter/spellbook/legendary	//max tier lootmade item
 	name = "legendary tome of the arcyne"
-	desc = "An incredible book that gives off glowing arcane motes,  it is filled with runes and arcane theories that is hard for even masters of arcane to understand. The arcane script glows and practically whispers from the page.."
+	desc = "An incredible book that gives off glowing arcyne motes,  it is filled with runes and arcyne theories that is hard for even masters of arcyne to understand. The arcyne script glows and practically whispers from the page.."
 	bookquality = 12
 	sellprice = 400
 
@@ -459,7 +459,7 @@
 					qdel(P)
 					qdel(src)
 				else
-					user.visible_message(span_warning("[user] sets down [P] upon the surface of [src] and watches expectantly. Without warning, the [P] lets out a burst of arcane energy!"), \
+					user.visible_message(span_warning("[user] sets down [P] upon the surface of [src] and watches expectantly. Without warning, the [P] lets out a burst of arcyne energy!"), \
 					span_notice("I should have known messing with the arcyne as dangerous!"))
 					user.electrocute_act(20, src)
 					qdel(P)

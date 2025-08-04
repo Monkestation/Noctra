@@ -18,7 +18,7 @@
 
 /obj/item/dmusicbox
 	name = "dwarven music box"
-	desc = "A renown design of the Dwarven Cult of Malum, bombastic machine with odd musical functions."
+	desc = "A personal device heralding the new era of machine and steam. Dwarven artificers both prize and fear this device for its broad musical range, which notably have made it an object of great value to Baothans' newfound 'Star-Song' rituals."
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "mbox0"
 	w_class = WEIGHT_CLASS_HUGE

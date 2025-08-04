@@ -188,7 +188,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/troll/cave
 	name = "cave troll"
-	desc = "Dwarven tales of giants and trolls often contain these creatures, horrifying amalgamations of flesh and crystal who have long since abandoned Malum's ways."
+	desc = "Dwarven tales of giants and trolls often contain these creatures, for the fear of mining into one runs deep."
 	icon = 'icons/mob/creacher/trolls/troll_cave.dmi'
 	health = CAVETROLL_HEALTH
 	maxHealth = CAVETROLL_HEALTH

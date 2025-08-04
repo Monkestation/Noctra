@@ -71,7 +71,7 @@
 
 /obj/item/clothing/shoes/simpleshoes/lord
 	name = "shoes"
-	desc = "Shoes typically worn by the King himself."
+	desc = "Shoes typically worn by the Monarch themselves."
 	gender = PLURAL
 	icon_state = "simpleshoe"
 	item_state = "simpleshoe"

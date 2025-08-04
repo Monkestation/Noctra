@@ -1,6 +1,6 @@
 /obj/machinery/essence/research_matrix
 	name = "thaumaturgical research matrix"
-	desc = "A complex crystalline construct that allows researchers to visualize and unlock the interconnected web of thaumaturgical knowledge. The surface shimmers with arcane symbols."
+	desc = "A complex crystalline construct that allows researchers to visualize and unlock the interconnected web of thaumaturgical knowledge. The surface shimmers with alchemical symbols."
 	icon = 'icons/roguetown/misc/alchemy.dmi'
 	icon_state = "placeholder"
 	density = TRUE
@@ -131,7 +131,7 @@
 				message_admins("test")
 		qdel(temp_node)
 
-	visible_message(span_notice("The research matrix pulses with arcane energy as new knowledge is unlocked!"))
+	visible_message(span_notice("The research matrix pulses with alchemic energy as new knowledge is unlocked!"))
 
 	var/boon = user.get_learning_boon(/datum/skill/craft/alchemy)
 	user.adjust_experience(/datum/skill/craft/alchemy, selected_research.experience_reward * boon, FALSE)

@@ -484,7 +484,7 @@
 			H.adjust_spell_points(6)
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatSorcerer.ogg'
 			to_chat(H,span_info("\
-			I've studied the arcane, those who step to me shall perish.")
+			I've studied the arcyne, those who step to me shall perish.")
 			)
 		if("Sword2")
 			beltl = /obj/item/weapon/sword/short
