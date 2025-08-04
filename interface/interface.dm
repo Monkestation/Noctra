@@ -246,10 +246,10 @@
 /client/verb/ui_scaling()
 	set name = "UI Scaling"
 	set category = "OOC"
-	var/new_scaling = input(usr, "Enter UI Scaling (default is 100%)", "New UI Scaling", 100) as null|num
+	var/current_scaling = window_scaling * 100
+	var/new_scaling = input(usr, "Enter UI Scaling (Your current scaling is [current_scaling]%)", "New UI Scaling", window_scaling * 100) as null|num
 	if(!isnull(new_scaling))
 		window_scaling = new_scaling / 100
-		SEND_SIGNAL(src, COMSIG_UI_SCALE_CHANGED)
 
 /client/verb/keybind_menu()
 	set category = "Options"

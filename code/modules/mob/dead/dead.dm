@@ -118,7 +118,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 			else
 				dat += "<B>[str_job]</B> ([readied_as])<br>"
 
-	var/datum/browser/popup = new(src, "lobby_window", "<div align='center'>LOBBY</div>", 330, 430, use_onclose = FALSE)
+	var/datum/browser/popup = new(src, "lobby_window", "<div align='center'>LOBBY</div>", 330, 430)
 	popup.set_window_options(can_minimize = FALSE, can_maximize = FALSE, can_resize = TRUE)
 	popup.set_content(dat.Join())
 	if(!client)
@@ -128,7 +128,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		qdel(popup)
 		return
 	else
-		popup.open()
+		popup.open(FALSE)
 
 /mob/dead/proc/server_hop()
 	set category = "OOC"

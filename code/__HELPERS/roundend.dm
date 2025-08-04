@@ -340,7 +340,7 @@
 	return "data/roundend_reports/[ckey].html"
 
 /datum/controller/subsystem/ticker/proc/show_roundend_report(client/C, previous = FALSE)
-	var/datum/browser/roundend_report = new(C, "roundend", use_onclose = FALSE)
+	var/datum/browser/roundend_report = new(C, "roundend")
 	roundend_report.width = 800
 	roundend_report.height = 600
 	var/content
@@ -356,7 +356,7 @@
 	roundend_report.set_content(content)
 //	roundend_report.add_stylesheet("roundend", 'html/browser/roundend.css')
 //	roundend_report.add_stylesheet("font-awesome", 'html/font-awesome/css/all.min.css')
-	roundend_report.open()
+	roundend_report.open(FALSE)
 
 /datum/controller/subsystem/ticker/proc/personal_report(client/C, popcount)
 	var/list/parts = list()

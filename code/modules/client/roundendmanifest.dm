@@ -12,6 +12,6 @@
 	for(var/X in GLOB.actors_list)
 		dat += "[GLOB.actors_list[X]]"
 
-	var/datum/browser/popup = new(src, "actors", "<center>The people of [SSmapping.config.map_name]</center>", 387, 420, use_onclose = FALSE)
+	var/datum/browser/popup = new(src, "actors", "<center>The people of [SSmapping.config.map_name]</center>", 387, 420)
 	popup.set_content(dat)
-	popup.open()
+	popup.open(FALSE)

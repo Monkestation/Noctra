@@ -475,10 +475,10 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	user?.client.acquire_dpi()
 	winshow(user, "stonekeep_prefwin", TRUE)
 	winshow(user, "stonekeep_prefwin.character_preview_map", TRUE)
-	var/datum/browser/noclose/popup = new(user, "preferences_browser", "<div align='center'>Character Sheet</div>", 716, 636, use_onclose = FALSE)
+	var/datum/browser/noclose/popup = new(user, "preferences_browser", "<div align='center'>Character Sheet</div>", 716, 636)
 	popup.set_window_options(can_close = FALSE)
 	popup.set_content(dat.Join())
-	popup.open()
+	popup.open(FALSE)
 	update_preview_icon()
 
 #undef APPEARANCE_CATEGORY_COLUMN
@@ -504,10 +504,10 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	</script>
 	"}
 	winshow(user, "capturekeypress", TRUE)
-	var/datum/browser/noclose/popup = new(user, "capturekeypress", "<div align='center'>Keybindings</div>", 350, 300, use_onclose = FALSE)
+	var/datum/browser/noclose/popup = new(user, "capturekeypress", "<div align='center'>Keybindings</div>", 350, 300)
 	popup.set_content(HTML)
-	popup.open()
-	onclose(user, "capturekeypress", src, popup)
+	popup.open(FALSE)
+	onclose(user, "capturekeypress", src)
 
 /datum/preferences/proc/SetChoices(mob/user, limit = 15, list/splitJobs = list("Captain", "Priest", "Merchant", "Butler", "Village Elder"), widthPerColumn = 295, height = 620) //295 620
 	if(!SSjob)
@@ -683,10 +683,10 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			HTML += "<br>"
 		HTML += "<center><a href='?_src_=prefs;preference=job;task=reset'>Reset</a></center>"
 
-	var/datum/browser/noclose/popup = new(user, "mob_occupation", "<div align='center'>Class Selection</div>", width, height, use_onclose = FALSE)
+	var/datum/browser/noclose/popup = new(user, "mob_occupation", "<div align='center'>Class Selection</div>", width, height)
 	popup.set_window_options(can_close = FALSE)
 	popup.set_content(HTML)
-	popup.open()
+	popup.open(FALSE)
 
 /datum/preferences/proc/SetJobPreferenceLevel(datum/job/job, level)
 	if (!job)
@@ -792,10 +792,10 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	dat += "<a href ='?_src_=prefs;preference=keybinds;task=keybindings_reset'>\[Reset to default\]</a>"
 	dat += "</body>"
 
-	var/datum/browser/noclose/popup = new(user, "keybind_setup", "<div align='center'>Keybinds</div>", 600, 600, use_onclose = FALSE) //no reason not to reuse the occupation window, as it's cleaner that way
+	var/datum/browser/noclose/popup = new(user, "keybind_setup", "<div align='center'>Keybinds</div>", 600, 600) //no reason not to reuse the occupation window, as it's cleaner that way
 	popup.set_window_options(can_close = FALSE)
 	popup.set_content(dat.Join())
-	popup.open()
+	popup.open(FALSE)
 
 /datum/preferences/proc/SetAntag(mob/user)
 	var/list/dat = list()
@@ -823,19 +823,19 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	dat += "</body>"
 
-	var/datum/browser/noclose/popup = new(user, "antag_setup", "<div align='center'>Special Roles</div>", 265, 340, use_onclose = FALSE) //no reason not to reuse the occupation window, as it's cleaner that way
+	var/datum/browser/noclose/popup = new(user, "antag_setup", "<div align='center'>Special Roles</div>", 265, 340) //no reason not to reuse the occupation window, as it's cleaner that way
 	popup.set_window_options(can_close = FALSE)
 	popup.set_content(dat.Join())
-	popup.open()
+	popup.open(FALSE)
 
 /datum/preferences/proc/LorePopup(mob/user)
 	if(!user || !user.client)
 		return
 	var/list/dat = list()
-	var/datum/browser/noclose/popup  = new(user, "lore_primer", "<div align='center'>Lore Primer</div>", 650, 900, use_onclose = FALSE)
+	var/datum/browser/noclose/popup  = new(user, "lore_primer", "<div align='center'>Lore Primer</div>", 650, 900)
 	dat += GLOB.roleplay_readme
 	popup.set_content(dat.Join())
-	popup.open()
+	popup.open(FALSE)
 
 /datum/preferences/Topic(href, href_list, hsrc)			//yeah, gotta do this I guess..
 	. = ..()

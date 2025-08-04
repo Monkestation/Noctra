@@ -292,9 +292,9 @@ GLOBAL_LIST_EMPTY(letters_sent)
 		else
 			dat += "#[X.ournum] [capitalize(get_area_name(X))]<br>"
 
-	var/datum/browser/popup = new(user, "hermes_directory", "<center>HERMES DIRECTORY</center>", 387, 420, use_onclose = FALSE)
+	var/datum/browser/popup = new(user, "hermes_directory", "<center>HERMES DIRECTORY</center>", 387, 420)
 	popup.set_content(dat)
-	popup.open()
+	popup.open(FALSE)
 
 /obj/item/roguemachine/mastermail
 	name = "MASTER OF MAILS"

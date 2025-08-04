@@ -24,27 +24,24 @@
 	/// Text containing the contents of the \<body\> element.
 	VAR_PRIVATE/final/body = ""
 
-/datum/browser/New(mob/user, window_id, title = "", width = 0, height = 0, atom/owner = null, use_onclose = TRUE)
+/datum/browser/New(mob/user, window_id, title = "", width = 0, height = 0, atom/owner = null)
 	if(!user)
 		CRASH("created a browser for no user")
 	if(!window_id)
 		CRASH("created a browser with no window id")
 	src.user = user
 	RegisterSignal(user, COMSIG_PARENT_QDELETING, PROC_REF(user_deleted))
-	RegisterSignal(user.client, COMSIG_UI_SCALE_CHANGED, PROC_REF(ui_scale_changed))
 	src.owner = owner
 	RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(owner_deleted))
 	src.window_id = window_id
 	src.title = format_text(title)
 	src.width = width
 	src.height = height
-	src.use_onclose = use_onclose
 
 /datum/browser/Destroy(force, ...)
 	if(!isnull(user))
 		var/client/user_client = isclient(user) ? user : user.client
 		UnregisterSignal(user_client, COMSIG_MOB_CLIENT_MOVED)
-		UnregisterSignal(user_client, COMSIG_UI_SCALE_CHANGED)
 	user = null
 	owner = null
 	return ..()
@@ -130,7 +127,7 @@
 			</body>
 		</html>"}
 
-/datum/browser/proc/open()
+/datum/browser/proc/open(use_onclose = TRUE)
 	if(isnull(window_id))	//null check because this can potentially nuke goonchat
 		stack_trace("Browser [title] tried to open with a null ID")
 		to_chat(user, "<span class='danger'>The [title] browser you tried to open failed a sanity check! Please report this on github!</span>")
@@ -161,14 +158,8 @@
 /datum/browser/proc/close()
 	if(!isnull(window_id))//null check because this can potentially nuke goonchat
 		user << browse(null, "window=[window_id]")
-		handle_window_close()
 	else
 		stack_trace("Browser [title] tried to close with a null ID")
-
-/datum/browser/proc/handle_window_close()
-	var/client/user_client = isclient(user) ? user : user.client
-	if(user_client)
-		UnregisterSignal(user_client, COMSIG_UI_SCALE_CHANGED)
 
 /datum/browser/proc/user_deleted(datum/source)
 	SIGNAL_HANDLER
@@ -177,13 +168,6 @@
 /datum/browser/proc/owner_deleted(datum/source)
 	SIGNAL_HANDLER
 	owner = null
-
-/datum/browser/proc/ui_scale_changed(datum/source)
-	SIGNAL_HANDLER
-	INVOKE_ASYNC(src, PROC_REF(handle_scale_update))
-
-/datum/browser/proc/handle_scale_update()
-	open()
 
 /**
  * Registers the on-close verb for a browse window (client/verb/.windowclose)
@@ -200,15 +184,12 @@
  * to pass a "close=1" parameter to the atom's Topic() proc for special handling.
  * Otherwise, the user mob's machine var will be reset directly.
  **/
-/proc/onclose(mob/user, windowid, atom/ref=null, datum/browser/browser_holder)
+/proc/onclose(mob/user, windowid, atom/ref=null)
 	if(!user.client)
 		return
 	var/param = "null"
 	if(ref)
 		param = "[REF(ref)]"
-
-	if(browser_holder)
-		browser_holder.handle_window_close()
 
 	winset(user, windowid, "on-close=\".windowclose [param]\"")
 

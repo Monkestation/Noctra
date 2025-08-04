@@ -14,10 +14,10 @@ GLOBAL_VAR_INIT(year_integer, text2num(year)) // = 2013???
 		if(flavortext)
 			dat += "<br>"
 			dat += "<div align='center'>[flavortext]</div>"
-		var/datum/browser/popup = new(user, "[src]", "<center>[src]</center>", 480, 700, use_onclose = FALSE)
+		var/datum/browser/popup = new(user, "[src]", "<center>[src]</center>", 480, 700)
 
 		popup.set_content(dat.Join())
-		popup.open()
+		popup.open(FALSE)
 		return
 
 	if(href_list["view_descriptors"] && (isobserver(usr) || usr.can_perform_action(src, NEED_LIGHT)))
