@@ -41,10 +41,10 @@
 	)
 	/// Wonder recipes
 	var/static/list/recipe_progression = list(
-		/datum/crafting_recipe/structure/wonder/first,
-		/datum/crafting_recipe/structure/wonder/second,
-		/datum/crafting_recipe/structure/wonder/third,
-		/datum/crafting_recipe/structure/wonder/fourth,
+		/datum/blueprint_recipe/structure/wonder/first,
+		/datum/blueprint_recipe/structure/wonder/second,
+		/datum/blueprint_recipe/structure/wonder/third,
+		/datum/blueprint_recipe/structure/wonder/fourth,
 	)
 	/// Key number > Key text
 	var/list/num_keys = list()

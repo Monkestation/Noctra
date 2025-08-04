@@ -327,7 +327,7 @@
 					to_chat(owner, "<span class='warning'>My leg spasms!</span>")
 					step(owner, pick(GLOB.cardinals))
 			if(2)
-				if(owner.incapacitated(ignore_grab = TRUE))
+				if(owner.incapacitated(IGNORE_GRAB))
 					return
 				var/obj/item/I = owner.get_active_held_item()
 				if(I)
@@ -359,7 +359,7 @@
 				owner.ClickOn(owner)
 				owner.a_intent = prev_intent
 			if(5)
-				if(owner.incapacitated(ignore_grab = TRUE))
+				if(owner.incapacitated(IGNORE_GRAB))
 					return
 				var/obj/item/I = owner.get_active_held_item()
 				var/list/turf/targets = list()

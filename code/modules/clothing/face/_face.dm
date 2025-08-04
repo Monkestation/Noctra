@@ -43,9 +43,6 @@
 
 /obj/item/clothing/face/proc/handle_speech()
 
-/obj/item/clothing/face/worn_overlays(isinhands = FALSE)
-	. = list()
-
 /obj/item/clothing/face/update_clothes_damaged_state(damaging = TRUE)
 	..()
 	if(ismob(loc))
@@ -54,7 +51,7 @@
 
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
 /obj/item/clothing/face/proc/adjustmask(mob/living/user)
-	if(user && user.incapacitated(ignore_grab = TRUE))
+	if(user && user.incapacitated(IGNORE_GRAB))
 		return
 	mask_adjusted = !mask_adjusted
 	if(!mask_adjusted)

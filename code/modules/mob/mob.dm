@@ -242,7 +242,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	return null
 
 ///Is the mob incapacitated
-/mob/proc/incapacitated(ignore_restraints = FALSE, ignore_grab = TRUE)
+/mob/proc/incapacitated(flags)
 	return
 
 /**
@@ -528,7 +528,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	set hidden = 1
 	set src = usr
 
-	if(incapacitated(ignore_grab = TRUE))
+	if(incapacitated(IGNORE_GRAB))
 		return
 
 	var/obj/item/I = get_active_held_item()

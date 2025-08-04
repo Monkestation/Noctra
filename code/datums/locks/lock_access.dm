@@ -36,7 +36,7 @@
 	var/used_message = "This isn't the right key for [src]."
 	if(message)
 		used_message = message
-	to_chat(user, span_notice(used_message))
+	to_chat(user, span_warning(used_message))
 	rattle(silent)
 
 /// Shake a bit make a noise
@@ -60,7 +60,7 @@
 /obj/proc/on_unlock(mob/user, silent = FALSE)
 	if(!silent && unlock_sound)
 		playsound(get_turf(src), unlock_sound, 100)
-		user.visible_message(span_notice("[user] unlocks \the [src]."), span_notice("I unlock \the [src]"), span_notice("I hear a click."))
+		user.visible_message(span_notice("[user] unlocks \the [src]."), span_notice("I unlock \the [src]."), span_notice("I hear a click."))
 		return
 	to_chat(user, span_notice("I unlock \the [src]."))
 

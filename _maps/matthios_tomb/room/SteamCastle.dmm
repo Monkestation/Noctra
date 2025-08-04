@@ -991,7 +991,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb)
 "lg" = (
-/obj/item/alch/bonemeal,
+/obj/item/fertilizer/bone_meal,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/metal/barograte,
 /area/rogue/under/tomb)
@@ -1820,7 +1820,7 @@
 /turf/open/floor/wood/nosmooth/saiga,
 /area/rogue/under/tomb/indoors)
 "uF" = (
-/obj/item/alch/bonemeal,
+/obj/item/fertilizer/bone_meal,
 /turf/open/floor/metal/barograte,
 /area/rogue/under/tomb)
 "uT" = (
@@ -1935,7 +1935,7 @@
 /turf/open/floor/cobble,
 /area/rogue/under/tomb)
 "wm" = (
-/obj/item/alch/bonemeal,
+/obj/item/fertilizer/bone_meal,
 /obj/structure/fluff/railing/border{
 	dir = 8
 	},
@@ -1953,7 +1953,7 @@
 /turf/open/floor/cobblerock,
 /area/rogue/under/tomb)
 "wt" = (
-/obj/item/alch/bonemeal,
+/obj/item/fertilizer/bone_meal,
 /obj/structure/fluff/railing/border{
 	dir = 4
 	},
@@ -4575,7 +4575,7 @@
 /turf/open/floor/cobblerock,
 /area/rogue/under/tomb)
 "Xx" = (
-/obj/item/alch/bonemeal,
+/obj/item/fertilizer/bone_meal,
 /obj/item/ammo_casing/caseless/arrow,
 /turf/open/floor/metal/barograte,
 /area/rogue/under/tomb)

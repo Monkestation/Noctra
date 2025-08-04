@@ -37,6 +37,51 @@
 		return potential_enemy
 	return null
 
+/datum/ai_behavior/find_and_set/cat_tresspasser/atom_allowed(atom/movable/checking, locate_path, atom/pawn)
+	if(checking == pawn)
+		return FALSE
+	if(!istype(checking, /mob/living/simple_animal/pet/cat))
+		return FALSE
+	var/mob/living/simple_animal/pet/cat/potential_enemy = checking
+	if(potential_enemy.gender != MALE)
+		return FALSE
+	var/mob/living/living_pawn = pawn
+	var/datum/ai_controller/controller = living_pawn.ai_controller
+	var/list/ignore_types = controller.blackboard[BB_BABIES_CHILD_TYPES]
+	if(is_type_in_list(potential_enemy, ignore_types))
+		return FALSE
+	var/datum/ai_controller/basic_controller/enemy_controller = potential_enemy.ai_controller
+	if(isnull(enemy_controller))
+		return FALSE
+	//theyre already engaged in a battle, leave them alone!
+	if(enemy_controller.blackboard_key_exists(BB_TRESSPASSER_TARGET))
+		return FALSE
+	return TRUE
+
+/datum/ai_behavior/find_and_set/cat_tresspasser/new_atoms_found(list/atom/movable/found, datum/ai_controller/controller, set_key, locate_path, search_range)
+	var/atom/pawn = controller.pawn
+	var/list/accepted_cats = list()
+
+	for(var/maybe_cat as anything in found)
+		if(maybe_cat == pawn)
+			continue
+		if(!atom_allowed(maybe_cat, locate_path, pawn))
+			continue
+		accepted_cats += maybe_cat
+
+	if(!length(accepted_cats))
+		return FALSE
+
+	// Special handling for cat trespasser - set mutual targeting
+	var/mob/living/simple_animal/pet/cat/target_cat = pick(accepted_cats)
+	var/datum/ai_controller/basic_controller/enemy_controller = target_cat.ai_controller
+	//u choose me and i choose u
+	enemy_controller.set_blackboard_key(BB_TRESSPASSER_TARGET, controller.pawn)
+
+	controller.set_blackboard_key(set_key, target_cat)
+	finish_action(controller, succeeded = TRUE)
+	return TRUE
+
 /datum/ai_behavior/territorial_struggle
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
 	action_cooldown = 0.25 SECONDS

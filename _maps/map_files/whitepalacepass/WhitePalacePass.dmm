@@ -6348,8 +6348,8 @@
 /area/rogue/indoors/town)
 "gge" = (
 /obj/structure/closet/crate/chest/old_crate,
-/obj/item/bomb/homemade,
-/obj/item/bomb/homemade,
+/obj/item/explosive/bottle/homemade,
+/obj/item/explosive/bottle/homemade,
 /obj/item/smokebomb,
 /obj/item/smokebomb,
 /obj/item/smokebomb,
@@ -8897,11 +8897,11 @@
 	pixel_x = -8;
 	pixel_y = 7
 	},
-/obj/item/bomb/homemade{
+/obj/item/explosive/bottle/homemade{
 	pixel_x = 4;
 	pixel_y = 10
 	},
-/obj/item/bomb/homemade{
+/obj/item/explosive/bottle/homemade{
 	pixel_x = 16;
 	pixel_y = 10
 	},
@@ -9603,8 +9603,8 @@
 /area/rogue/outdoors/rtfield)
 "jfL" = (
 /obj/structure/closet/crate/chest/neu_iron,
-/obj/item/alch/bonemeal,
-/obj/item/alch/bonemeal,
+/obj/item/fertilizer/bone_meal,
+/obj/item/fertilizer/bone_meal,
 /obj/item/alch/coaldust,
 /obj/item/alch/coaldust,
 /obj/item/alch/airdust,
@@ -21466,8 +21466,8 @@
 /area/rogue/indoors/lich)
 "ucv" = (
 /obj/structure/closet/crate/chest/old_crate,
-/obj/item/bomb/homemade,
-/obj/item/bomb/homemade,
+/obj/item/explosive/bottle/homemade,
+/obj/item/explosive/bottle/homemade,
 /turf/open/floor/naturalstone,
 /area/rogue/under/cavewet)
 "ucx" = (

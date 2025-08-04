@@ -147,6 +147,8 @@ DEFINE_BITFIELD(antimagic_flags, list(
 
 /// Casted with the essence gauntlet, using essence vials
 #define SPELL_ESSENCE 4
+/// Casted using your bloodpool
+#define SPELL_BLOOD 5
 
 // Generic Bitflags for spells
 /// Ignore the trait [TRAIT_SPELLBLOCK]

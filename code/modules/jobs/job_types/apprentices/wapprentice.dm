@@ -52,7 +52,7 @@
 	H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE) //children can have one spellpoint, as a treat.
 	if (H.age == AGE_ADULT)
 		H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
-		H.adjust_spellpoints(4)
+		H.adjust_spell_points(4)
 	H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)

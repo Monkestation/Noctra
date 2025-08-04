@@ -295,7 +295,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(lit)
 		user.visible_message("<span class='notice'>[user] calmly drops and treads on \the [src], putting it out instantly.</span>")
 		new type_butt(user.loc)
-		new /obj/item/ash(user.loc)
+		new /obj/item/fertilizer/ash(user.loc)
 		qdel(src)
 	. = ..()
 
@@ -498,7 +498,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!lit && smoketime > 0)
 		smoketime = 0
 		to_chat(user, "<span class='notice'>I empty [src] onto [location].</span>")
-		new /obj/item/ash(location)
+		new /obj/item/fertilizer/ash(location)
 		packeditem = 0
 		reagents.clear_reagents()
 //		name = "empty [initial(name)]"

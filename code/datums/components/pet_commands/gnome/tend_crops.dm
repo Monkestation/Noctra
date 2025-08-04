@@ -160,7 +160,7 @@
 	// Take seed from storage
 	else if(!carried_item && istype(current_target, /obj/structure/closet))
 		var/obj/structure/closet/storage = current_target
-		var/obj/item/seed = find_seed_in_storage(storage)
+		var/obj/item/neuFarm/seed = find_seed_in_storage(storage)
 		if(seed)
 			SEND_SIGNAL(storage, COMSIG_TRY_STORAGE_TAKE, seed, get_turf(pawn), TRUE)
 			if(seed.forceMove(pawn))
