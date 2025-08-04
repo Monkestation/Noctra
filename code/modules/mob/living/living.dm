@@ -2557,91 +2557,143 @@
 /mob/proc/get_punch_dmg()
 	return
 
-/// Check if mob knows spell
+/**
+ * Get spell instance or null from mob actions with instance or typepath.
+ *
+ * Args
+ * * spell_type - Action instance or typepath
+ * * specific - Ignore subtypes
+ */
 /mob/living/proc/get_spell(datum/action/cooldown/spell/spell_type, specific = FALSE)
-	if(!length(actions))
+	if(QDELETED(src) || !length(actions))
 		return
-	if(istype(spell_type, /datum/action/cooldown/spell))
+
+	if(istype(spell_type))
 		spell_type = spell_type.type
+
 	if(!specific)
 		return locate(spell_type) in actions
+
 	for(var/datum/action/cooldown/spell/spell in actions)
 		if(spell.type == spell_type)
 			return spell
 
-/// Add a spell to the mob via typepath
-/mob/living/proc/add_spell(datum/action/cooldown/spell/spell_type, silent = TRUE, source, forced = FALSE)
+/**
+ * Add action to mob via typepath or instance, only one spell of each type may be present at a time.
+ *
+ * Args
+ * * spell_type - spell to add, if an instance source is not relevant
+ * * silent - whether we give a message
+ * * source - target of the action, handles deletion on parent removal
+ *			  defaults to src and mind makes it transfer with the mind to new mobs.
+ * * override - Replace existing spell if present, instead of returning early
+ */
+/mob/living/proc/add_spell(datum/action/cooldown/spell/spell_type, silent = TRUE, source, override = FALSE)
 	if(QDELETED(src))
 		return
-	if(!forced && get_spell(spell_type))
-		return
-	if(!source)
-		source = src
-	var/datum/action/spell = new spell_type(source)
+
+	var/datum/action/cooldown/spell = get_spell(spell_type, TRUE)
+	if(spell)
+		if(!override)
+			return
+		QDEL_NULL(spell)
+
+	if(istype(spell_type))
+		spell = spell_type
+	else
+		if(!source)
+			source = src
+		spell = new spell_type(source)
+
 	if(!silent)
 		to_chat(src, span_nicegreen("I learnt [spell.name]!"))
+
 	spell.Grant(src)
 
 /mob/living/proc/remove_spell(datum/action/cooldown/spell/spell, return_skill_points = FALSE, silent = TRUE)
 	if(QDELETED(src))
 		return
-	var/datum/action/cooldown/spell/real_spell = get_spell(spell)
+
+	var/datum/action/cooldown/spell/real_spell = get_spell(spell, TRUE)
 	if(!real_spell)
 		return
+
 	if(return_skill_points)
 		used_spell_points = max(used_spell_points - real_spell.point_cost, 0)
 		spell_points = max(spell_points + real_spell.point_cost, 0)
 		check_learnspell()
+
 	if(!silent)
 		to_chat(src, span_boldwarning("I forgot [real_spell.name]!"))
+
 	qdel(real_spell)
 
 /**
- * purges all spells known by the mob
- * Vars:
- ** return_skill_points - do we return the skillpoints for the spells?
- ** silent - do we notify the player of this change?
-*/
+ * Remove all spells from a mob with the same arguments as single removal
+ *
+ * Args
+ * * return_skill_points - do we return the skillpoints for the spells?
+ * * silent - do we notify the player of this change?
+ * * source - Instead of removing all spells, remove all spells from this source.
+ */
 /mob/living/proc/remove_spells(return_skill_points = FALSE, silent = TRUE, source)
 	if(QDELETED(src))
 		return
+
+	var/silent_individual = TRUE
+	if(!silent && source)
+		silent_individual = FALSE
+
 	for(var/datum/action/cooldown/spell/spell in actions)
 		if(source && (spell.target != source))
 			continue
-		remove_spell(spell, return_skill_points, silent)
-	if(!silent)
-		to_chat(src, span_boldwarning("I forget all my spells!"))
+		remove_spell(spell, return_skill_points, silent_individual)
 
-/mob/living/proc/purge_all_spellpoints(silent = TRUE)
-	if(QDELETED(src))
-		return
-	spell_points = 0
-	used_spell_points = 0
-	if(!silent)
-		to_chat(src, span_boldwarning("I lose all my spellpoints!"))
+	if(!silent && !silent_individual)
+		to_chat(src, span_boldwarning("I forgot all my spells!"))
 
 /**
  * adjusts the amount of available spellpoints
- * Vars:
- ** points - amount of points to grant or reduce
+ *
+ * Args
+ * * points - amount of points to grant or reduce
+ * * used_points - ajust used points
 */
-/mob/living/proc/adjust_spellpoints(points)
+/mob/living/proc/adjust_spell_points(points, used_points = FALSE)
 	if(QDELETED(src))
 		return
-	spell_points += points
+
+	if(used_points)
+		used_spell_points += points
+	else
+		spell_points += points
+
 	check_learnspell()
 
+/// Reset spell points and used spell points
+/mob/living/proc/reset_spell_points(silent = TRUE)
+	if(QDELETED(src))
+		return
+
+	spell_points = 0
+	used_spell_points = 0
+
+	if(!silent)
+		to_chat(src, span_boldwarning("I lost all my spellpoints!"))
+
+	check_learnspell()
+
+/// Check if learnspell should be removed or granted
 /mob/living/proc/check_learnspell()
 	if(QDELETED(src))
 		return
-	var/datum/action/cooldown/spell/undirected/learn/spell = LAZYACCESS(actions, /datum/action/cooldown/spell/undirected/learn)
-	if(((spell_points - used_spell_points) > 0))
-		if(!spell)
-			spell = /datum/action/cooldown/spell/undirected/learn
-			add_spell(spell)
+
+	if(get_spell(/datum/action/cooldown/spell/undirected/learn))
 		return
-	if(spell)
-		remove_spell(spell)
+
+	// Because of kobolds spellpoints can be decimal, but you can't do anything with that if below 1
+	if(floor(spell_points - used_spell_points) > 0)
+		add_spell(/datum/action/cooldown/spell/undirected/learn)
 
 /**
  * purges all spells and skills
@@ -2651,4 +2703,4 @@
 /mob/living/proc/purge_combat_knowledge(silent = TRUE)
 	purge_all_skills(silent)
 	remove_spells(silent = silent)
-	purge_all_spellpoints(silent)
+	reset_spell_points(silent)
