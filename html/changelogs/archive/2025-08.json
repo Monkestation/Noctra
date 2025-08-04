@@ -11,5 +11,26 @@
                 "balance": "fire spread tweaks"
             }
         ]
+    },
+    "2025-08-04": {
+        "Arkatos": [
+            {
+                "bugfix": "Fixed an issue where you could duplicate the monarch's crown when summoning it."
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "Learning a spell from the spell tree will override that spell if it is present to assure it stays."
+            },
+            {
+                "bugfix": "Rituos will have it spells removed correctly and will not remove arcyne eye or prestidigitation."
+            },
+            {
+                "bugfix": "The learn spell... spell should get properly removed when appropiate."
+            },
+            {
+                "bugfix": "Removing all spells no longer will give a message for every single spell."
+            }
+        ]
     }
 }
