@@ -108,12 +108,11 @@
 	item_state = "inqhat"
 	sewrepair = TRUE
 
-/*
 /obj/item/clothing/head/physhat
 	name = "court physician's hat"
 	desc = "A head covering for the distinguished physician."
 	icon_state = "physicianhat"
-*/
+	item_state = "physicianhat"
 
 /obj/item/clothing/head/courtphysician
 	name = "court physician's beret"
