@@ -108,7 +108,11 @@
 	item_state = "inqhat"
 	sewrepair = TRUE
 
-/obj/item/clothing/head/physhat
-	name = "court physician's hat"
-	desc = "A head covering for the distinguished physician."
-	icon_state = "physicianhat"
+
+/obj/item/clothing/head/courtphysician
+	name = "court physician's beret"
+	desc = "A head covering for elegance, and to hide the bald spot."
+	icon_state = "courthat"
+	item_state = "courthat"
+	icon = 'icons/roguetown/clothing/courtphys.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/courtphys.dmi'

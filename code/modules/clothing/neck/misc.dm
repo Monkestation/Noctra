@@ -359,6 +359,15 @@
 	item_state = "surgcollar"
 	sellprice = 15
 
+/obj/item/clothing/neck/courtphysician
+	name = "court physician's collar"
+	desc = "Fits snug."
+	icon_state = "courtcollar"
+	item_state = "courtcollar"
+	sellprice = 15
+	icon = 'icons/roguetown/clothing/courtphys.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/courtphys.dmi'
+
 /obj/item/clothing/neck/bogcowl
 	name = "bogcowl"
 	desc = "An odd cowl made using mud, sticks, and fibers."
