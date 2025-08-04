@@ -249,10 +249,10 @@
 			</body>
 		</html>
 	"}
-	var/datum/browser/popup = new(user, "dreams", "<center>Dreams</center>", 350, 450)
+	var/datum/browser/popup = new(user, "dreams", "<center>Dreams</center>", 350, 450, use_onclose = FALSE)
 	popup.set_window_options(can_close = FALSE)
 	popup.set_content(dat.Join())
-	popup.open(FALSE)
+	popup.open()
 
 /datum/sleep_adv/proc/close_ui()
 	if(!mind.current)

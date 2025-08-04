@@ -496,10 +496,10 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 				dat += "</td><td valign='top'>"
 	dat += "</td></tr></table></center>"
 	dat += "</div></div>"
-	var/datum/browser/popup = new(src, "latechoices", "Choose Class", 720, 580)
+	var/datum/browser/popup = new(src, "latechoices", "Choose Class", 720, 580, use_onclose = FALSE)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
 	popup.set_content(jointext(dat, ""))
-	popup.open(FALSE) // 0 is passed to open so that it doesn't use the onclose() proc
+	popup.open()
 
 /// Creates, assigns and returns the new_character to spawn as. Assumes a valid mind.assigned_role exists.
 /mob/dead/new_player/proc/create_character(atom/destination)

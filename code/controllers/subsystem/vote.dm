@@ -28,10 +28,10 @@ SUBSYSTEM_DEF(vote)
 		else
 			var/datum/browser/noclose/client_popup
 			for(var/client/C in voting)
-				client_popup = new(C, "vote", "Voting Panel")
+				client_popup = new(C, "vote", "Voting Panel", use_onclose = FALSE)
 				client_popup.set_window_options(can_close = FALSE)
 				client_popup.set_content(interface(C))
-				client_popup.open(FALSE)
+				client_popup.open()
 
 
 /datum/controller/subsystem/vote/proc/reset()
@@ -388,10 +388,10 @@ SUBSYSTEM_DEF(vote)
 	set category = "OOC"
 	set name = "Vote"
 	set hidden = 1
-	var/datum/browser/noclose/popup = new(src, "vote", "Voting Panel")
+	var/datum/browser/noclose/popup = new(src, "vote", "Voting Panel", use_onclose = FALSE)
 	popup.set_window_options(can_close = FALSE)
 	popup.set_content(SSvote.interface(client))
-	popup.open(FALSE)
+	popup.open()
 
 /datum/action/vote
 	name = "Vote!"

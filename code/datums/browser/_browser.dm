@@ -11,6 +11,8 @@
 	var/final/width
 	/// The window's height in pixels.
 	var/final/height
+	/// If the window setups on close when opened
+	var/final/use_onclose
 	/// Params for the window on creation.
 	VAR_PROTECTED/window_options = "can_close=1;can_minimize=1;can_maximize=0;can_resize=1;titlebar=1;"
 	/// A list of paths to CSS files.
@@ -22,7 +24,7 @@
 	/// Text containing the contents of the \<body\> element.
 	VAR_PRIVATE/final/body = ""
 
-/datum/browser/New(mob/user, window_id, title = "", width = 0, height = 0, atom/owner = null)
+/datum/browser/New(mob/user, window_id, title = "", width = 0, height = 0, atom/owner = null, use_onclose = TRUE)
 	if(!user)
 		CRASH("created a browser for no user")
 	if(!window_id)
@@ -36,6 +38,7 @@
 	src.title = format_text(title)
 	src.width = width
 	src.height = height
+	src.use_onclose = use_onclose
 
 /datum/browser/Destroy(force, ...)
 	if(!isnull(user))
@@ -47,7 +50,7 @@
 	return ..()
 
 /datum/browser/noclose
-/datum/browser/noclose/New(mob/user, window_id, title = "", width, height, atom/owner)
+/datum/browser/noclose/New(mob/user, window_id, title = "", width, height, atom/owner, use_onclose)
 	. = ..()
 	var/client/user_client = isclient(user) ? user : user.client
 	UnregisterSignal(user_client, COMSIG_MOB_CLIENT_MOVED)
@@ -127,7 +130,7 @@
 			</body>
 		</html>"}
 
-/datum/browser/proc/open(use_onclose = TRUE)
+/datum/browser/proc/open()
 	if(isnull(window_id))	//null check because this can potentially nuke goonchat
 		stack_trace("Browser [title] tried to open with a null ID")
 		to_chat(user, "<span class='danger'>The [title] browser you tried to open failed a sanity check! Please report this on github!</span>")

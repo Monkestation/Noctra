@@ -179,9 +179,9 @@
 	var/list/dat = list()
 	dat += "<style>span.color_holder_box{display: inline-block; width: 20px; height: 8px; border:1px solid #000; padding: 0px;}</style>"
 	dat += print_customizers_page()
-	var/datum/browser/popup = new(user, "customization", "<div align='center'>Customization</div>", 630, 730)
+	var/datum/browser/popup = new(user, "customization", "<div align='center'>Customization</div>", 630, 730, use_onclose = FALSE)
 	popup.set_content(dat.Join())
-	popup.open(FALSE)
+	popup.open()
 
 /datum/preferences/proc/get_hair_color()
 	var/datum/customizer_entry/hair/entry = get_customizer_entry_of_type(/datum/customizer_entry/hair/head)

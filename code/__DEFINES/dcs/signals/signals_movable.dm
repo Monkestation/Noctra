@@ -17,6 +17,8 @@
 	#define COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 /// From base of /client/Move(): (direction, old_direction)
 #define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
+/// From base of /client/ui_scaling(): ()
+#define COMSIG_UI_SCALE_CHANGED "ui_scale_changed"
 ///from base of atom/movable/newtonian_move(): (inertia_direction)
 #define COMSIG_MOVABLE_NEWTONIAN_MOVE "movable_newtonian_move"
 	#define COMPONENT_MOVABLE_NEWTONIAN_BLOCK (1<<0)

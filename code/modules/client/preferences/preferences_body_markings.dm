@@ -188,9 +188,9 @@
 	var/list/dat = list()
 	dat += "<style>span.color_holder_box{display: inline-block; width: 20px; height: 8px; border:1px solid #000; padding: 0px;}</style>"
 	dat += print_body_markings_page()
-	var/datum/browser/popup = new(user, "markings_cusotmization", "<div align='center'>Markings customization</div>", 650, 710)
+	var/datum/browser/popup = new(user, "markings_cusotmization", "<div align='center'>Markings customization</div>", 650, 710, use_onclose = FALSE)
 	popup.set_content(dat.Join())
-	popup.open(FALSE)
+	popup.open()
 
 /datum/preferences/proc/reset_body_marking_colors()
 	for(var/zone in body_markings)
