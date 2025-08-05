@@ -1508,6 +1508,10 @@
 /obj/effect/spell_rune,
 /turf/open/floor/tile/bfloorz,
 /area/rogue/indoors)
+"nm" = (
+/obj/effect/landmark/stall,
+/turf/open/floor/grass/yel,
+/area/rogue/outdoors)
 "ny" = (
 /obj/structure/window/openclose{
 	dir = 1
@@ -2395,6 +2399,10 @@
 	},
 /turf/open/floor/dirt/road,
 /area/rogue/outdoors)
+"Kc" = (
+/obj/effect/landmark/stall,
+/turf/open/floor/dirt,
+/area/rogue/indoors)
 "Kd" = (
 /obj/structure/hotspring,
 /obj/effect/lily_petal,
@@ -2420,6 +2428,10 @@
 	},
 /turf/open/floor/dirt/road,
 /area/rogue/outdoors)
+"KG" = (
+/obj/effect/landmark/stall,
+/turf/open/floor/carpet,
+/area/rogue/indoors)
 "KJ" = (
 /turf/open/floor/tile/bfloorz,
 /area/rogue/indoors)
@@ -12565,7 +12577,7 @@ Pg
 EX
 Kr
 Wr
-QN
+nm
 Wr
 QN
 cB
@@ -18216,7 +18228,7 @@ ky
 mo
 hN
 Xa
-aI
+KG
 cX
 mY
 mY
@@ -76288,7 +76300,7 @@ am
 am
 am
 pc
-Mn
+Kc
 pc
 QN
 ky

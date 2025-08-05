@@ -34,6 +34,14 @@
 	icon_state = "salt_pile"
 	clean_type = CLEAN_TYPE_LIGHT_DECAL
 
+/atom/proc/salt_act()
+	return
+
+/obj/effect/decal/cleanable/food/salt/Initialize(mapload)
+	. = ..()
+	for(var/atom/movable/AM in loc)
+		AM.salt_act()
+
 /obj/effect/decal/cleanable/food/flour
 	name = "flour"
 	desc = ""

@@ -15,3 +15,14 @@
 
 	if(valid_homes.len)
 		return pick(valid_homes)
+
+/datum/ai_behavior/find_and_set/home/atom_allowed(atom/movable/checking, locate_path, atom/pawn)
+	if(checking == pawn)
+		return FALSE
+	if(istype(pawn.loc, locate_path))
+		return FALSE // already home
+	if(!istype(checking, /obj/structure))
+		return FALSE
+	if(!SEND_SIGNAL(checking, COMSIG_HABITABLE_HOME, pawn))
+		return FALSE
+	return TRUE

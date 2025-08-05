@@ -820,6 +820,9 @@
 		if(istype(H.wear_neck, /obj/item/clothing/neck/psycross/silver))
 			to_chat(user, span_userdanger("SILVER! HISSS!!!"))
 			return
+		// Add bite animation to the victim
+		H.add_bite_animation()
+
 	last_drink = world.time
 	user.changeNext_move(CLICK_CD_MELEE)
 
@@ -835,10 +838,19 @@
 				to_chat(user, span_danger("I'm going to puke..."))
 				addtimer(CALLBACK(user, TYPE_PROC_REF(/mob/living/carbon, vomit), 0, TRUE), rand(8 SECONDS, 15 SECONDS))
 			else
+				var/blood_handle
+				if(C.stat == DEAD)
+					blood_handle |= BLOOD_PREFERENCE_DEAD
+				else
+					blood_handle |= BLOOD_PREFERENCE_LIVING
+
+				if(C.job in list("Priest", "Priestess", "Cleric", "Acolyte", "Templar", "Churchling", "Crusader", "Inquisitor"))
+					blood_handle |= BLOOD_PREFERENCE_HOLY
 				if(VVictim)
-					to_chat(user, span_warning("I cannot drain vitae from a fellow nitewalker."))
-					return
-				else if(C.vitae_pool > 500)
+					blood_handle |= BLOOD_PREFERENCE_KIN
+					blood_handle  &= ~BLOOD_PREFERENCE_LIVING
+
+				if(C.bloodpool > 0)
 					C.blood_volume = max(C.blood_volume-45, 0)
 					if(ishuman(C))
 						var/mob/living/carbon/human/H = C
@@ -846,19 +858,30 @@
 							to_chat(user, span_love("Virgin blood, delicious!"))
 							var/mob/living/carbon/V = user
 							V.add_stress(/datum/stressevent/vblood)
-							var/used_vitae = 750
+							var/used_vitae = 150
 
-							if(C.vitae_pool >= 750)
-								to_chat(user, span_love("...And empowering!"))
-							else
-								used_vitae = C.vitae_pool // We assume they're left with 250 vitae or less, so we take it all
-								to_chat(user, span_warning("...But alas, only leftovers..."))
-							VDrinker.adjust_vitae(used_vitae, used_vitae)
-							C.vitae_pool -= used_vitae
+							if(C.bloodpool >= 750)
+								to_chat(user, "<span class='love'>...And empowering!</span>")
+							else if(C.bloodpool < used_vitae)
+								used_vitae = C.bloodpool // We assume they're left with 250 vitae or less, so we take it all
+								to_chat(user, "<span class='warning'>...But alas, only leftovers...</span>")
+							user.adjust_bloodpool(used_vitae)
+							user.adjust_hydration(used_vitae * 0.1)
+							if(VVictim)
+								C.adjust_bloodpool(used_vitae)
+							C.bloodpool -= used_vitae
 
 						else
-							VDrinker.adjust_vitae(500, 500)
-							C.vitae_pool -= 500
+							var/used_vitae = 150
+							if(C.bloodpool < used_vitae)
+								used_vitae = C.bloodpool // We assume they're left with 250 vitae or less, so we take it all
+								to_chat(user, "<span class='warning'>...But alas, only leftovers...</span>")
+							user.adjust_bloodpool(used_vitae)
+							user.adjust_hydration(used_vitae * 0.1)
+							if(VVictim)
+								C.adjust_bloodpool(-used_vitae) //twice the loss
+							C.adjust_bloodpool(-used_vitae)
+					user.clan.handle_bloodsuck(user, blood_handle)
 				else
 					to_chat(user, span_warning("No more vitae from this blood..."))
 		else // Don't larp as a vampire, kids.
@@ -867,10 +890,9 @@
 	else
 		if(user.mind) // We're drinking from a mob or a person who disconnected from the game
 			if(user.mind.has_antag_datum(/datum/antagonist/vampire))
-				var/datum/antagonist/vampire/VDrinker = user.mind.has_antag_datum(/datum/antagonist/vampire)
 				C.blood_volume = max(C.blood_volume-45, 0)
-				if(C.vitae_pool >= 250)
-					VDrinker.adjust_vitae(250, 250)
+				if(C.bloodpool >= 250)
+					user.adjust_bloodpool(250, 250)
 				else
 					to_chat(user, span_warning("And yet, not enough vitae can be extracted from them... Tsk."))
 
@@ -885,16 +907,16 @@
 	log_combat(user, C, "drank blood from ")
 
 	if(ishuman(C) && C.mind)
-		var/datum/antagonist/vampire/lord/VDrinker = user.mind.has_antag_datum(/datum/antagonist/vampire/lord)
-		if(VDrinker && C.blood_volume <= BLOOD_VOLUME_SURVIVE)
+		if(user.clan_position?.can_assign_positions && C.bloodpool <= 150)
 			if(browser_alert(user, "Would you like to sire a new spawn?", "THE CURSE OF KAIN", DEFAULT_INPUT_CHOICES) != CHOICE_YES)
 				to_chat(user, span_warning("I decide [C] is unworthy."))
 			else
 				user.visible_message(span_danger("Some dark energy begins to flow from [user] into [C]..."), span_userdanger("I begin siring [C]..."))
 				if(do_after(user, 3 SECONDS, C))
 					C.visible_message(span_red("[C] rises as a new spawn!"))
-					var/datum/antagonist/vampire/new_antag = new /datum/antagonist/vampire()
-					C.mind.add_antag_datum(new_antag, VDrinker.team)
+					var/datum/antagonist/vampire/new_antag = new /datum/antagonist/vampire(user.clan, TRUE)
+					C.mind.add_antag_datum(new_antag)
+					C.adjust_bloodpool(500)
 					// this is bad, should give them a healing buff instead
 					sleep(2 SECONDS)
 					C.fully_heal()

@@ -1,7 +1,8 @@
 /obj/item/grown/log
 	name = "tower-cap log"
 	desc = ""
-	icon_state = "logs"
+	icon = 'icons/roguetown/items/natural.dmi'
+	icon_state = "log"
 	force = 10
 	throwforce = 10
 	w_class = WEIGHT_CLASS_HUGE

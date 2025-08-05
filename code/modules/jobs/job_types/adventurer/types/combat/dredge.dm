@@ -430,7 +430,7 @@
 			)
 		if("Falx")
 			backr = /obj/item/weapon/sword/coppermesser
-			beltl = /obj/item/weapon/mace/copperbludgeon
+			beltl = /obj/item/weapon/mace/bludgeon/copper
 			beltr = /obj/item/flashlight/flare/torch/lantern
 			H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE)
@@ -799,7 +799,7 @@
 			I forgot to remember to forget. I don't know who I am anymore.")
 			)
 		if("Bomb")
-			backpack_contents = list(/obj/item/bomb = 1, /obj/item/flint = 1)
+			backpack_contents = list(/obj/item/explosive/bottle = 1, /obj/item/flint = 1)
 			to_chat(H,span_info("\
 			If ever I am struck down, my last act of defiance shall be sending me and my enemy straight to the depths of hell.")
 			)

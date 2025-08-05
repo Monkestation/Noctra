@@ -187,7 +187,7 @@
 				armor = /obj/item/clothing/shirt/dress/gen/random
 				shirt = /obj/item/clothing/shirt/undershirt
 				pants = null
-			backpack_contents = list(/obj/item/neuFarm/seed/wheat=1,/obj/item/neuFarm/seed/apple=1,/obj/item/ash=1,/obj/item/weapon/knife/villager=1)
+			backpack_contents = list(/obj/item/neuFarm/seed/wheat=1,/obj/item/neuFarm/seed/apple=1,/obj/item/fertilizer/ash=1,/obj/item/weapon/knife/villager=1)
 		if("Carpenter")
 			H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE) //Use the axe...
 			H.adjust_skillrank(/datum/skill/combat/swords, -2, TRUE)

@@ -318,7 +318,7 @@
 	if(ismob(loc))
 		return
 	visible_message(span_warning("[src] begins to twitch and shake violently, before crumbling into ash"))
-	new /obj/item/ash(loc)
+	new /obj/item/fertilizer/ash(loc)
 	qdel(src)
 
 /obj/item/clothing/ring/gold/burden/equipped(mob/user, slot)

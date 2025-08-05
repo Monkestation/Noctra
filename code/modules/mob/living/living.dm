@@ -46,8 +46,6 @@
 		S.sharerDies(FALSE)
 		S.removeSoulsharer(src) //If a sharer is destroy()'d, they are simply removed
 	sharedSoullinks = null
-	if(craftingthing)
-		QDEL_NULL(craftingthing)
 	return ..()
 
 /mob/living/update_appearance(updates)
@@ -1574,13 +1572,17 @@
 
 	if(!who.Adjacent(src))
 		return
-
-	who.visible_message("<span class='warning'>[src] tries to remove [who]'s [what.name].</span>", \
-					"<span class='danger'>[src] tries to remove my [what.name].</span>", null, null, src)
+	if(!enhanced_strip)
+		who.visible_message("<span class='warning'>[src] tries to remove [who]'s [what.name].</span>", \
+						"<span class='danger'>[src] tries to remove my [what.name].</span>", null, null, src)
 	to_chat(src, "<span class='danger'>I try to remove [who]'s [what.name]...</span>")
 	what.add_fingerprint(src)
-	if(do_after(src, what.strip_delay * surrender_mod, who))
-		if(what && Adjacent(who))
+	var/strip_delayed = what.strip_delay
+	if(enhanced_strip)
+		strip_delayed = 0.1 SECONDS
+	if(do_after(src, strip_delayed * surrender_mod, who))
+		if(what && (Adjacent(who) || (enhanced_strip && (get_dist(src, who) <= 3))))
+			enhanced_strip = FALSE
 			if(islist(where))
 				var/list/L = where
 				if(what == who.get_item_for_held_index(L[2]))
@@ -2688,13 +2690,12 @@
 	if(QDELETED(src))
 		return
 
-	var/datum/action/cooldown/spell/undirected/learn/spell = get_spell(/datum/action/cooldown/spell/undirected/learn)
+	if(get_spell(/datum/action/cooldown/spell/undirected/learn))
+		return
+
 	// Because of kobolds spellpoints can be decimal, but you can't do anything with that if below 1
 	if(floor(spell_points - used_spell_points) > 0)
-		if(!spell)
-			add_spell(/datum/action/cooldown/spell/undirected/learn)
-	else if(spell)
-		remove_spell(spell)
+		add_spell(/datum/action/cooldown/spell/undirected/learn)
 
 /**
  * purges all spells and skills

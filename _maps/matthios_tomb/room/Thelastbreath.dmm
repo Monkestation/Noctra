@@ -2066,7 +2066,7 @@
 /turf/open/floor/grass,
 /area/rogue/under/tomb/wilds)
 "DU" = (
-/obj/item/alch/bonemeal,
+/obj/item/fertilizer/bone_meal,
 /obj/item/statue/silver,
 /turf/open/floor/naturalstone,
 /area/rogue/under/tomb/cave/lava)

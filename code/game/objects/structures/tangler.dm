@@ -12,7 +12,7 @@
 	attacked_sound = 'sound/misc/woodhit.ogg'
 	buckle_lying = FALSE
 	buckle_prevents_pull = TRUE
-	var/list/eatablez = list(/obj/item/organ, /obj/item/reagent_containers/food/snacks/meat, /obj/item/compost, /obj/item/natural/poo)
+	var/list/eatablez = list(/obj/item/organ, /obj/item/reagent_containers/food/snacks/meat, /obj/item/fertilizer/compost, /obj/item/natural/poo)
 	var/last_eat
 	var/aggroed = TRUE
 	///Proximity monitor associated with this atom, needed for proximity checks.

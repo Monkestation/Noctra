@@ -163,7 +163,7 @@
 		/obj/item/natural/leyline,
 		/obj/item/reagent_containers/food/snacks/produce/manabloom,
 		/obj/item/mana_battery/mana_crystal,
-		/obj/item/ash,
+		/obj/item/fertilizer/ash,
 		))
 
 /datum/component/storage/concrete/grid/headhook
