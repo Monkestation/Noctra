@@ -341,7 +341,7 @@
  *
  * Otherwise it simply forceMoves the atom into this atom
  */
-/atom/proc/CheckParts(list/parts_list, datum/crafting_recipe/R)
+/atom/proc/CheckParts(list/parts_list)
 	for(var/A in parts_list)
 		if(istype(A, /datum/reagent))
 			if(!reagents)
@@ -356,12 +356,8 @@
 			else
 				M.forceMove(src)
 
-/obj/item/CheckParts(list/parts_list, datum/crafting_recipe/R)
+/obj/item/CheckParts(list/parts_list)
 	..()
-	if(R)
-		if(R.sellprice)
-			sellprice = R.sellprice
-			randomize_price()
 
 ///Hook for multiz???
 /atom/proc/update_multiz(prune_on_fail = FALSE)
@@ -493,7 +489,7 @@
 				. += "It's empty."
 		else if(reagents.flags & AMOUNT_VISIBLE)
 			if(reagents.total_volume)
-				. += "<span class='notice'>It has [round(reagents.total_volume / 3)] oz left.</span>"
+				. += "<span class='notice'>It has [round(reagents.total_volume / 3, 0.1)] oz left.</span>"
 			else
 				. += "<span class='danger'>It's empty.</span>"
 		//SNIFFING

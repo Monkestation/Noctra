@@ -12221,8 +12221,8 @@
 /area/rogue/indoors/town/merc_guild)
 "gLT" = (
 /obj/structure/closet/crate/chest/crate,
-/obj/item/alch/bonemeal,
-/obj/item/alch/bonemeal,
+/obj/item/fertilizer/bone_meal,
+/obj/item/fertilizer/bone_meal,
 /obj/item/alch/bone,
 /obj/item/alch/bone,
 /obj/item/alch/swampdust,
@@ -38732,7 +38732,7 @@
 /area/rogue/indoors/town)
 "vio" = (
 /obj/structure/table/wood/plain_alt,
-/obj/item/bomb,
+/obj/item/explosive/bottle,
 /turf/open/floor/ruinedwood/turned,
 /area/rogue/indoors/town/dwarfin)
 "vix" = (

@@ -86,7 +86,6 @@
 	scan_repeatable_crafting_recipes()
 	scan_orderless_slapcraft_recipes()
 	scan_slapcraft_recipes()
-	scan_crafting_recipes()
 	scan_container_craft_recipes()
 	scan_molten_recipes()
 	scan_anvil_recipes()
@@ -98,6 +97,54 @@
 	scan_natural_precursor_recipes()
 	scan_essence_combination_recipes()
 	scan_essence_infusion_recipes()
+	scan_blueprint_recipes()
+
+
+/datum/recipe_tree_interface/proc/scan_blueprint_recipes()
+	for(var/recipe_path in subtypesof(/datum/blueprint_recipe))
+		var/datum/blueprint_recipe/recipe = new recipe_path()
+
+		if(!recipe.result_type)
+			qdel(recipe)
+			continue
+
+		var/list/ingredients = list()
+
+		// Add the construction tool if specified
+		if(recipe.construct_tool)
+			ingredients += recipe.construct_tool
+
+		// Add required materials
+		if(recipe.required_materials)
+			for(var/material in recipe.required_materials)
+				ingredients += material
+
+		add_recipe_to_cache(
+			recipe.result_type,
+			recipe_path,
+			"blueprint",
+			recipe.name,
+			ingredients,
+			list(
+				"category" = recipe.category,
+				"description" = recipe.desc,
+				"build_time" = recipe.build_time,
+				"craft_difficulty" = recipe.craftdiff,
+				"skill_required" = recipe.skillcraft,
+				"construct_tool" = recipe.construct_tool,
+				"required_materials" = recipe.required_materials,
+				"supports_directions" = recipe.supports_directions,
+				"default_dir" = recipe.default_dir,
+				"floor_object" = recipe.floor_object,
+				"verbage" = recipe.verbage,
+				"verbage_tp" = recipe.verbage_tp,
+				"craftsound" = recipe.craftsound,
+				"edge_density" = recipe.edge_density,
+				"requires_learning" = recipe.requires_learning
+			)
+		)
+
+		qdel(recipe)
 
 /datum/recipe_tree_interface/proc/find_recipes_for_item(item_path)
 	build_recipe_cache()
@@ -137,37 +184,6 @@
 				"skill_required" = recipe.skillcraft,
 				"assembly_weight" = recipe.assembly_weight_class,
 				"can_disassemble" = recipe.can_disassemble
-			)
-		)
-
-		qdel(recipe)
-
-/datum/recipe_tree_interface/proc/scan_crafting_recipes()
-	for(var/recipe_path in subtypesof(/datum/crafting_recipe))
-		var/datum/crafting_recipe/recipe = new recipe_path()
-
-		if(!recipe.result)
-			qdel(recipe)
-			continue
-
-		var/list/ingredients = list()
-		ingredients += recipe.reqs
-		ingredients += recipe.tools
-
-		add_recipe_to_cache(
-			recipe.result,
-			recipe_path,
-			"crafting",
-			recipe.name,
-			ingredients,
-			list(
-				"category" = recipe.category,
-				"subcategory" = recipe.subcategory,
-				"craft_difficulty" = recipe.craftdiff,
-				"skill_required" = recipe.skillcraft,
-				"time" = recipe.time,
-				"req_table" = recipe.req_table,
-				"always_available" = recipe.always_availible
 			)
 		)
 
@@ -480,7 +496,7 @@
 				"sell_value" = recipe.sell_value,
 				"brewed_amount" = recipe.brewed_amount,
 				"per_brew_amount" = recipe.per_brew_amount,
-				"ages" = recipe.ages,
+				"ages" = length(recipe.age_times),
 				"heat_required" = recipe.heat_required,
 				"pre_reqs" = recipe.pre_reqs
 			)
@@ -705,12 +721,20 @@
 		rendered_nodes["\ref[node]"] = TRUE
 
 		var/class_list = "recipe-node"
+
+		// Add recipe type specific classes
 		if(node.recipe_type == "raw_material")
 			class_list += " raw-material"
 			if(node.can_craft)
 				class_list += " obtainable"
 			else
 				class_list += " unavailable"
+		else if(node.recipe_type == "blueprint")
+			class_list += " blueprint"
+			if(node.can_craft)
+				class_list += " craftable"
+			else
+				class_list += " locked"
 		else
 			if(node.can_craft)
 				class_list += " craftable"
@@ -726,7 +750,8 @@
 			"ingredients" = get_ingredient_names(node.ingredients),
 			"result" = node.item_result,
 			"path" = node.recipe_path,
-			"is_raw_material" = (node.recipe_type == "raw_material")
+			"is_raw_material" = (node.recipe_type == "raw_material"),
+			"is_blueprint" = (node.recipe_type == "blueprint")
 		)
 
 		var/item_icon = get_item_icon(node.item_result)
@@ -816,6 +841,8 @@
 			return "AL"
 		if("raw_material")
 			return "RM"
+		if("blueprint")
+			return "BP"
 		else
 			return "??"
 
@@ -927,6 +954,47 @@
 			}
 
 			.recipe-container.dragging { cursor: grabbing; }
+
+			.recipe-node.blueprint {
+				border-radius: 6px;
+				border: 2px solid rgba(70, 130, 180, 0.6); /* Steel blue border for blueprints */
+			}
+
+			.recipe-node.blueprint.craftable {
+				border: 2px solid rgba(30, 144, 255, 0.7); /* Dodger blue if craftable */
+			}
+
+			.recipe-node.blueprint.craftable img {
+				filter: hue-rotate(210deg) brightness(1.1) drop-shadow(0 0 4px rgba(30,144,255,0.6));
+			}
+
+			.recipe-node.blueprint.locked {
+				border: 2px solid rgba(105, 105, 105, 0.7); /* Dim gray if locked */
+				opacity: 0.6;
+			}
+
+			.recipe-node.blueprint.locked img {
+				filter: grayscale(80%) brightness(0.8);
+			}
+
+			.recipe-node.blueprint .recipe-type-tag {
+				background: rgba(70, 130, 180, 0.8);
+				border: 1px solid rgba(100, 149, 237, 0.6);
+			}
+
+			.recipe-node.blueprint.craftable .recipe-type-tag {
+				background: rgba(30, 144, 255, 0.8);
+				border: 1px solid rgba(65, 105, 225, 0.6);
+			}
+
+			.tooltip.blueprint h3 {
+				color: #87CEEB; /* Sky blue for blueprint recipe names */
+				text-shadow: 0 0 4px rgba(135,206,235,0.5);
+			}
+
+			.blueprint-info {
+				color: #87CEEB;
+			}
 
 			.recipe-node.raw-material {
 				border-radius: 8px;
@@ -1239,6 +1307,7 @@
 				try {
 					const nodeData = JSON.parse(node.dataset.nodeinfo);
 					const isCraftable = node.classList.contains('craftable');
+					const isBlueprint = nodeData.is_blueprint;
 
 					let html = '<h3>' + nodeData.name + '</h3>';
 					html += '<p class="recipe-type"><strong>Recipe Type:</strong> ' + nodeData.type + '</p>';
@@ -1250,6 +1319,11 @@
 						});
 					}
 
+					if (isBlueprint) {
+						html += '<p class="blueprint-info"><strong>Category:</strong> Construction</p>';
+						html += '<p class="blueprint-info"><strong>Build Type:</strong> Blueprint</p>';
+					}
+
 					if (isCraftable) {
 						html += '<p class="craftable-info"><strong>Status:</strong> Can Craft</p>';
 					} else {
@@ -1257,7 +1331,11 @@
 					}
 
 					tooltip.innerHTML = html;
-					tooltip.className = 'tooltip' + (isCraftable ? ' craftable' : '');
+					let tooltipClass = 'tooltip';
+					if (isCraftable) tooltipClass += ' craftable';
+					if (isBlueprint) tooltipClass += ' blueprint';
+
+					tooltip.className = tooltipClass;
 					tooltip.style.display = 'block';
 					tooltip.style.left = (e.clientX + 15) + 'px';
 					tooltip.style.top = (e.clientY + 15) + 'px';

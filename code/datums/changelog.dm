@@ -166,7 +166,7 @@
 
 	var/archive_path = "html/changelogs/archive/"
 
-	for(var/archive_file in sortList(flist(archive_path)))
+	for(var/archive_file in sortList(flist(archive_path), GLOBAL_PROC_REF(cmp_text_dsc)))
 		var/archive_date = jsonRegex.Replace(archive_file, "")
 		archive_data += list(
 			"[archive_date]" = json_decode(file2text(archive_path + archive_file))

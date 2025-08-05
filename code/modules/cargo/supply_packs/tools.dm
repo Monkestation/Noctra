@@ -205,3 +205,8 @@
 	name = "Set of Surgical Tools"
 	cost = 65
 	contains = /obj/item/storage/backpack/satchel/surgbag
+
+/datum/supply_pack/tools/bottle_kit
+	name = "Bottle Kit"
+	cost = 50
+	contains = list(/obj/item/bottle_kit)

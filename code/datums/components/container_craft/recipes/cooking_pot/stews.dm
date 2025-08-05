@@ -7,7 +7,7 @@
 		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
 	)
 	finished_smell = /datum/pollutant/food/potato_stew
-	crafting_time = 80 SECONDS
+	crafting_time = 40 SECONDS
 
 /datum/container_craft/cooking/onion_stew
 	name = "Onion Stew"
@@ -18,7 +18,7 @@
 		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
 	)
 	finished_smell = /datum/pollutant/food/onion_stew
-	crafting_time = 60 SECONDS
+	crafting_time = 30 SECONDS
 
 /datum/container_craft/cooking/cabbage_stew
 	name = "Cabbage Stew"
@@ -29,7 +29,7 @@
 		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
 	)
 	finished_smell = /datum/pollutant/food/cabbage_stew
-	crafting_time = 70 SECONDS
+	crafting_time = 35 SECONDS
 
 /datum/container_craft/cooking/turnip_stew
 	name = "Turnip Stew"
@@ -40,7 +40,7 @@
 		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
 	)
 	finished_smell = /datum/pollutant/food/turnip_stew
-	crafting_time = 70 SECONDS
+	crafting_time = 35 SECONDS
 
 /datum/container_craft/cooking/fish_stew
 	name = "Fish Stew"
@@ -51,7 +51,7 @@
 		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
 	)
 	finished_smell = /datum/pollutant/food/fish_stew
-	crafting_time = 80 SECONDS
+	crafting_time = 40 SECONDS
 
 /datum/container_craft/cooking/chicken_stew
 	name = "Chicken Stew"
@@ -62,7 +62,7 @@
 		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
 	)
 	finished_smell = /datum/pollutant/food/chicken_stew
-	crafting_time = 90 SECONDS
+	crafting_time = 45 SECONDS
 
 /datum/container_craft/cooking/chicken_stew/cutlet
 	requirements = list(/obj/item/reagent_containers/food/snacks/meat/poultry/cutlet = 1)
@@ -76,7 +76,7 @@
 		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
 	)
 	finished_smell = /datum/pollutant/food/potato_stew
-	crafting_time = 90 SECONDS
+	crafting_time = 45 SECONDS
 
 /datum/container_craft/cooking/generic_meat_stew //this is a generic so its removed from the subtypes of and added back so its always bottom of the list
 	name = "Meat Stew"
@@ -87,7 +87,7 @@
 		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
 	)
 	finished_smell = /datum/pollutant/food/meat_stew
-	crafting_time = 90 SECONDS
+	crafting_time = 45 SECONDS
 
 /datum/container_craft/cooking/truffle_stew
 	name = "Truffle Stew"
@@ -98,4 +98,4 @@
 		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
 	)
 	finished_smell = /datum/pollutant/food/truffle_stew
-	crafting_time = 80 SECONDS
+	crafting_time = 40 SECONDS

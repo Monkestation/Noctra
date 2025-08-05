@@ -861,6 +861,14 @@
 
 			return TRUE
 
+		if(SPELL_BLOOD)
+			if(!caster.has_bloodpool_cost(used_cost))
+				if(feedback)
+					to_chat(owner, span_warning("I am too drained to cast!"))
+				return FALSE
+
+			return TRUE
+
 		if(SPELL_MIRACLE)
 			var/mob/living/carbon/human/H = caster
 			if(!istype(H) || !H.cleric?.check_devotion(spell_cost))
@@ -938,6 +946,11 @@
 				return invoke_cost(used_cost, SPELL_MANA, TRUE)
 
 			gaunt.consume_essence(used_cost, attunements)
+
+		if(SPELL_BLOOD)
+			var/mob/living/caster = owner
+			caster.adjust_bloodpool(-used_cost)
+
 
 	return used_cost
 

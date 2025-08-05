@@ -102,7 +102,7 @@
 	if(!user.mind)
 		return
 	for(var/crafting_recipe_type in crafting_recipe_types)
-		var/datum/crafting_recipe/R = crafting_recipe_type
+		var/datum/blueprint_recipe/R = crafting_recipe_type
 		user.mind.teach_crafting_recipe(crafting_recipe_type)
 		to_chat(user,"<span class='notice'>I learned how to make [initial(R.name)].</span>")
 
@@ -210,7 +210,7 @@
 	var/arcaneskill = user.get_skill_level(/datum/skill/magic/arcane)
 	if(arcaneskill >= SKILL_LEVEL_NOVICE) //Required arcane skill of NOVICE or higher to use the granter
 		to_chat(user, span_notice("I absorb the insights on the scroll, and feel more adept at spellcraft!"))
-		user.adjust_spellpoints(1)
+		user.adjust_spell_points(1)
 		onlearned(user)
 	else
 		to_chat(user, span_notice("I don't know what to make of this."))

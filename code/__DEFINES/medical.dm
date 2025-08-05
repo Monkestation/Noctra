@@ -57,6 +57,7 @@
 #define BODYPART_FEATURE_FACIAL_HAIR "facehair"
 #define BODYPART_FEATURE_ACCESSORY "accessory"
 #define BODYPART_FEATURE_FACE_DETAIL "facedetail"
+#define BODYPART_FEATURE_BRAND "brand"
 
 //flags for requirements for a surgery step
 #define SURGERY_BLOODY (1<<0)

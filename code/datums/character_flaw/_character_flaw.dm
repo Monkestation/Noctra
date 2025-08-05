@@ -760,7 +760,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 						to_chat(H, span_warning("The weight of your equipment aggravates your chronic back pain!"))
 					BP.lingering_pain += pain_amount
 					break
-          
+
 /datum/charflaw/lux_taken
 	name = "Lux-less"
 	desc = "Through some grand misfortune, or heroic sacrifice- you have given up your link to Psydon, and with it- your soul. A putrid, horrid thing, you cosign yourself to an eternity of nil after death. Perhaps you are fine with this. \
@@ -777,7 +777,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		H.get_random_flaw()
 		return
 	H.apply_status_effect(/datum/status_effect/debuff/flaw_lux_taken)
-  
+
 /datum/charflaw/witless_pixie
 	name = "Witless Pixie"
 	desc = "By some cruel twist of fate, you have been born a dainty-minded, dim-witted klutz. Yours is a life of constant misdirection, confusion and general incompetence. \
@@ -788,7 +788,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		return
 	var/mob/living/L = user
 
-	L.adjust_stat_modifier(REF(src), STATKEY_INT, rand(-2, -5)) //this would probably make the average manorc a vegetable
+	L.adjust_stat_modifier("[REF(src)]", STATKEY_INT, rand(-2, -5)) //this would probably make the average manorc a vegetable
 
 /datum/charflaw/witless_pixie/after_spawn(mob/user)
 	if(!ishuman(user))

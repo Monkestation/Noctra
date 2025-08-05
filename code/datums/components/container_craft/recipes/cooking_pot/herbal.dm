@@ -21,7 +21,6 @@
 	requirements = list(
 		/obj/item/alch/symphitum = 2
 	)
-	output_amount = 35
 	finished_smell = /datum/pollutant/food/teas
 
 // Taraxacum Extract Recipe
@@ -32,7 +31,6 @@
 	requirements = list(
 		/obj/item/alch/taraxacum = 3
 	)
-	output_amount = 30
 	crafting_time = 12 SECONDS
 	wording_choice = "roots of"
 	finished_smell = /datum/pollutant/food/bitter
@@ -48,18 +46,18 @@
 	optional_requirements = list(
 		/obj/item/alch/irondust = 1 // Iron dust enhances blood restoration
 	)
-	output_amount = 35
 	max_optionals = 1
 	finished_smell = /datum/pollutant/food/roasted_seeds
 
-// Calendula Salve Recipe (uses oil instead of water)
+// Calendula Salve Recipe (uses alcohol instead of water)
 /datum/container_craft/cooking/herbal_salve
 	abstract_type = /datum/container_craft/cooking/herbal_salve
 	category = "Herbal Remedies"
 	crafting_time = 15 SECONDS
 	reagent_requirements = list(
-		/datum/reagent/consumable/ethanol/aqua_vitae = 20
+		/datum/reagent/consumable/ethanol = 20
 	)
+	subtype_reagents_allowed = TRUE
 	craft_verb = "preparing "
 	required_chem_temp = 320 // Lower temp for salves
 	pollute_amount = 150
@@ -75,7 +73,6 @@
 	requirements = list(
 		/obj/item/alch/calendula = 3
 	)
-	output_amount = 25
 	finished_smell = /datum/pollutant/food/flower
 
 // Hypericum Tonic Recipe
@@ -89,7 +86,6 @@
 	optional_requirements = list(
 		/obj/item/alch/golddust = 1 // Gold dust enhances mana restoration
 	)
-	output_amount = 30
 	max_optionals = 1
 	finished_smell = /datum/pollutant/food/bitter
 
@@ -101,7 +97,6 @@
 	requirements = list(
 		/obj/item/alch/mentha = 2
 	)
-	output_amount = 35
 	crafting_time = 6 SECONDS
 	finished_smell = /datum/pollutant/food/mint
 
@@ -114,9 +109,8 @@
 		/obj/item/alch/salvia = 2
 	)
 	optional_requirements = list(
-		/obj/item/alch/bonemeal = 1 // Bone meal enhances wisdom
+		/obj/item/fertilizer/bone_meal = 1 // Bone meal enhances wisdom
 	)
-	output_amount = 30
 	max_optionals = 1
 	finished_smell = /datum/pollutant/food/herb
 
@@ -130,7 +124,6 @@
 	optional_requirements = list(
 		/obj/item/alch/silverdust = 1 // Silver dust enhances luck
 	)
-	output_amount = 30
 	max_optionals = 1
 	finished_smell = /datum/pollutant/food/bitter
 
@@ -144,7 +137,6 @@
 	optional_requirements = list(
 		/obj/item/alch/irondust = 1 // irondust enhances strength
 	)
-	output_amount = 30
 	max_optionals = 1
 	finished_smell = /datum/pollutant/food/bitter
 
@@ -156,7 +148,6 @@
 	requirements = list(
 		/obj/item/alch/atropa = 1
 	)
-	output_amount = 40 // More diluted
 	crafting_time = 5 SECONDS
 	finished_smell = /datum/pollutant/food/bitter
 	complete_message = "The extract smells dangerous..."
@@ -168,7 +159,6 @@
 	requirements = list(
 		/obj/item/alch/matricaria = 2
 	)
-	output_amount = 35
 	finished_smell = /datum/pollutant/food/flower
 
 /datum/container_craft/cooking/herbal_tea/rosa_water
@@ -178,7 +168,6 @@
 	requirements = list(
 		/obj/item/alch/rosa = 1
 	)
-	output_amount = 40
 	crafting_time = 4 SECONDS
 	finished_smell = /datum/pollutant/food/flower
 
@@ -189,7 +178,6 @@
 	requirements = list(
 		/obj/item/alch/euphrasia = 2
 	)
-	output_amount = 35
 	finished_smell = /datum/pollutant/food/herb
 
 // Valeriana Sleep Draught (calming/sleep aid)
@@ -201,7 +189,6 @@
 		/obj/item/alch/valeriana = 2,
 		/obj/item/alch/mentha = 1
 	)
-	output_amount = 30
 	crafting_time = 10 SECONDS
 	finished_smell = /datum/pollutant/food/herb
 	complete_message = "The draught smells deeply relaxing..."
@@ -217,7 +204,6 @@
 	optional_requirements = list(
 		/obj/item/alch/irondust = 1 // Iron enhances physical vigor
 	)
-	output_amount = 35
 	max_optionals = 1
 	finished_smell = /datum/pollutant/food/herb
 
@@ -230,7 +216,6 @@
 		/obj/item/alch/paris = 2,
 		/obj/item/alch/calendula = 1
 	)
-	output_amount = 20
 	crafting_time = 18 SECONDS
 	finished_smell = /datum/pollutant/food/bitter
 	complete_message = "The poultice looks thick and medicinal."
@@ -250,7 +235,6 @@
 	optional_requirements = list(
 		/obj/item/alch/rosa = 1 // Rosa enhances the blend
 	)
-	output_amount = 25
 	max_optionals = 1
 	crafting_time = 20 SECONDS
 	finished_smell = /datum/pollutant/food/herb
@@ -268,7 +252,6 @@
 	optional_requirements = list(
 		/obj/item/alch/silverdust = 1 // Silver purifies
 	)
-	output_amount = 30
 	max_optionals = 1
 	crafting_time = 15 SECONDS
 	finished_smell = /datum/pollutant/food/flower
@@ -283,7 +266,6 @@
 		/obj/item/alch/euphrasia = 1,
 		/obj/item/alch/salvia = 1
 	)
-	output_amount = 25
 	crafting_time = 12 SECONDS
 	finished_smell = /datum/pollutant/food/mint
 	complete_message = "The tea shimmers with intellectual clarity!"
@@ -302,7 +284,6 @@
 		/obj/item/alch/silverdust = 1,
 		/obj/item/alch/waterdust = 1
 	)
-	output_amount = 25
 	max_optionals = 2
 	crafting_time = 30 SECONDS // Long brewing time
 	required_chem_temp = 320
@@ -322,7 +303,6 @@
 	optional_requirements = list(
 		/obj/item/alch/irondust = 1  // Strengthens resolve
 	)
-	output_amount = 30
 	max_optionals = 1
 	crafting_time = 16 SECONDS
 	finished_smell = /datum/pollutant/food/herb
@@ -341,7 +321,6 @@
 	optional_requirements = list(
 		/obj/item/alch/golddust = 1 // Gold enhances perception
 	)
-	output_amount = 25
 	max_optionals = 1
 	crafting_time = 14 SECONDS
 	finished_smell = /datum/pollutant/food/herb
@@ -361,7 +340,6 @@
 		/obj/item/alch/silverdust = 1,
 		/obj/item/alch/waterdust = 1
 	)
-	output_amount = 20
 	max_optionals = 2
 	crafting_time = 25 SECONDS
 	finished_smell = /datum/pollutant/food/flower

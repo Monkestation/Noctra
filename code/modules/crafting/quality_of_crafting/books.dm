@@ -54,13 +54,13 @@
 			temp_recipe = new path()
 			var/datum/orderless_slapcraft/r = temp_recipe
 			category = r.category
-		else if(ispath(path, /datum/slapcraft_recipe))
+		else if(ispath(path, /datum/blueprint_recipe))
 			temp_recipe = new path()
-			var/datum/slapcraft_recipe/r = temp_recipe
+			var/datum/blueprint_recipe/r = temp_recipe
 			category = r.category
-		else if(ispath(path, /datum/crafting_recipe))
+		else if(ispath(path, /datum/blueprint_recipe))
 			temp_recipe = new path()
-			var/datum/crafting_recipe/r = temp_recipe
+			var/datum/blueprint_recipe/r = temp_recipe
 			category = r.category
 		else if(ispath(path, /datum/container_craft))
 			temp_recipe = new path()
@@ -110,6 +110,10 @@
 			temp_recipe = new path()
 			var/datum/essence_infusion_recipe/r = temp_recipe
 			category = r.category
+		else if(ispath(path, /datum/plant_def))
+			temp_recipe = new path()
+			var/datum/plant_def/r = temp_recipe
+			category = r.get_family_name()
 
 		// Clean up our temporary instance
 		if(temp_recipe)
@@ -454,15 +458,15 @@
 		var/datum/orderless_slapcraft/r = temp_recipe
 		recipe_name = initial(r.name)
 		recipe_html = get_recipe_specific_html(r, user)
-	else if(ispath(path, /datum/slapcraft_recipe))
+	else if(ispath(path, /datum/blueprint_recipe))
 		temp_recipe = new path()
-		var/datum/slapcraft_recipe/r = temp_recipe
+		var/datum/blueprint_recipe/r = temp_recipe
 		recipe_name = initial(r.name)
 		recipe_description = r.desc || recipe_description
 		recipe_html = get_recipe_specific_html(r, user)
-	else if(ispath(path, /datum/crafting_recipe))
+	else if(ispath(path, /datum/blueprint_recipe))
 		temp_recipe = new path()
-		var/datum/crafting_recipe/r = temp_recipe
+		var/datum/blueprint_recipe/r = temp_recipe
 		recipe_name = initial(r.name)
 		recipe_html = get_recipe_specific_html(r, user)
 	else if(ispath(path, /datum/container_craft))
@@ -525,6 +529,12 @@
 		var/datum/essence_infusion_recipe/r = temp_recipe
 		recipe_name = initial(r.name)
 		recipe_html = get_recipe_specific_html(r, user)
+	else if(ispath(path, /datum/plant_def))
+		temp_recipe = new path()
+		var/datum/plant_def/r = temp_recipe
+		recipe_name = initial(r.name)
+		recipe_html = get_recipe_specific_html(r, user)
+
 
 	if(temp_recipe)
 		qdel(temp_recipe)
@@ -771,7 +781,7 @@
 	base_icon_state = "book3"
 
 	types = list(
-		/datum/slapcraft_recipe/carpentry,
+		/datum/blueprint_recipe/carpentry,
 	)
 
 /obj/item/recipe_book/engineering
@@ -784,7 +794,7 @@
 		/datum/book_entry/rotation_stress,
 		/datum/book_entry/water_pressure,
 		/datum/repeatable_crafting_recipe/engineering,
-		/datum/slapcraft_recipe/engineering,
+		/datum/blueprint_recipe/engineering,
 		/datum/artificer_recipe,
 	)
 
@@ -796,6 +806,7 @@
 
 	types = list(
 		/datum/pottery_recipe,
+		/datum/blueprint_recipe/masonry,
 		/datum/slapcraft_recipe/masonry,
 	)
 
@@ -809,7 +820,7 @@
 		/datum/repeatable_crafting_recipe/canvas,
 		/datum/repeatable_crafting_recipe/paint_palette,
 		/datum/repeatable_crafting_recipe/paintbrush,
-		/datum/slapcraft_recipe/carpentry/structure/easel,
+		/datum/blueprint_recipe/carpentry/easel,
 		/datum/repeatable_crafting_recipe/parchment,
 		/datum/repeatable_crafting_recipe/crafting/scroll,
 		/datum/repeatable_crafting_recipe/reading/guide,
@@ -837,7 +848,7 @@
 		/datum/book_entry/attunement,
 		/datum/book_entry/mana_sources,
 		/datum/repeatable_crafting_recipe/arcyne,
-		/datum/slapcraft_recipe/arcyne,
+		/datum/blueprint_recipe/arcyne,
 		/datum/container_craft/cooking/arcyne,
 		/datum/runerituals,
 	)
@@ -859,7 +870,7 @@
 		/datum/container_craft/cooking/herbal_salve,
 		/datum/container_craft/cooking/herbal_tea,
 		/datum/container_craft/cooking/herbal_oil,
-		/datum/slapcraft_recipe/alchemy,
+		/datum/blueprint_recipe/alchemy,
 		/datum/repeatable_crafting_recipe/alchemy,
 	)
 
@@ -869,3 +880,17 @@
 	can_spawn = FALSE
 	types = list(
 		/datum/repeatable_crafting_recipe/survival)
+
+/obj/item/recipe_book/agriculture
+	name = "The Farmers Almanac: Principles of Growth and Harvest"
+	desc = "Compiled by Elira Greenshade."
+	icon_state = "book_0"
+	base_icon_state = "book"
+
+	types = list(
+		/datum/book_entry/farming_basics,
+		/datum/book_entry/soil_management,
+		/datum/book_entry/plant_families,
+		/datum/book_entry/plant_genetics,
+		/datum/plant_def,
+	)
