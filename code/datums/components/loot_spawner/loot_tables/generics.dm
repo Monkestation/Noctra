@@ -121,7 +121,7 @@
 	name = "generic weapons"
 	loot_table = list(
 		list(
-			/obj/item/weapon/mace/copperbludgeon = 15,
+			/obj/item/weapon/mace/bludgeon/copper = 15,
 			/obj/item/weapon/axe/copper = 15,
 			/obj/item/weapon/knife/copper = 15,
 			/obj/item/weapon/sword/long/rider/copper = 15,

@@ -430,7 +430,7 @@
 			)
 		if("Falx")
 			backr = /obj/item/weapon/sword/coppermesser
-			beltl = /obj/item/weapon/mace/copperbludgeon
+			beltl = /obj/item/weapon/mace/bludgeon/copper
 			beltr = /obj/item/flashlight/flare/torch/lantern
 			H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE)
