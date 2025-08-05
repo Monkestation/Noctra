@@ -846,8 +846,8 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		dat += "<td style='padding: 12px 15px;'>[book["author"]]</td>"
 		dat += "<td style='padding: 12px 15px;'>[book["category"]]</td>"
 		dat += "<td style='padding: 12px 15px;'>"
-		dat += "<a href='?src=[REF(src)];show_book=1;id=[encoded_title]' style='margin-right: 10px;'>View</a>"
-		dat += "<a href='?src=[REF(src)];delete_book=1;id=[encoded_title]'>Delete</a>"
+		dat += "<a href='?src=[REF(src)];show_book=1;id=[url_encode(encoded_title)]' style='margin-right: 10px;'>View</a>"
+		dat += "<a href='?src=[REF(src)];delete_book=1;id=[url_encode(encoded_title)]'>Delete</a>"
 		dat += "</td>"
 		dat += "</tr>"
 
@@ -883,7 +883,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 			</style>
 		</head>
 		<body>
-			[html_encode(content)]
+			[content]
 		</body>
 	</html>
 	"}
