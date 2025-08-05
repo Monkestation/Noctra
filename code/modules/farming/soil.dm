@@ -942,11 +942,11 @@
 	// Apply growth based on limiting factor
 	var/actual_growth_time = target_growth_time * limiting_factor
 	// Each deficient nutrient lowers growth rate by 5%
-	if(nitrogen_factor < 0.1)
+	if(nitrogen_needed && nitrogen_factor < 0.1)
 		actual_growth_time *= 0.95
-	if(phosphorus_factor < 0.1)
+	if(phosphorus_needed && phosphorus_factor < 0.1)
 		actual_growth_time *= 0.95
-	if(potassium_factor < 0.1)
+	if(potassium_needed && potassium_factor < 0.1)
 		actual_growth_time *= 0.95
 
 	// Nutrient deficiency affects plant health only if nutrients are required but unavailable

@@ -12,6 +12,7 @@
 	nitrogen_production = 20
 	phosphorus_production = 0
 	potassium_production = 0
+	seed_identity = "onion seeds"
 
 /datum/plant_def/onion/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	base_genetics.disease_resistance = TRAIT_GRADE_EXCELLENT  // Onions repel pests
