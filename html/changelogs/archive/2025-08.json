@@ -32,5 +32,26 @@
                 "bugfix": "Removing all spells no longer will give a message for every single spell."
             }
         ]
+    },
+    "2025-08-05": {
+        "SarmentiCampbell": [
+            {
+                "rscadd": "Zizo's Cleric/Paladin will be able to create cursed water rather than blessed water, healing the undead rather than living being."
+            },
+            {
+                "bugfix": "Transact won't use kobolds as currency."
+            },
+            {
+                "bugfix": "Bloodrage will now properly apply the status effect."
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "Unfix learn spell removal to fix spell tree visual bug."
+            },
+            {
+                "code_imp": "Issue reports are now uploaded to github via bot and do not require users to use github directly, it is still preferable to use github if possible."
+            }
+        ]
     }
 }

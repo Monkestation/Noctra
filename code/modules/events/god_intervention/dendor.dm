@@ -21,7 +21,7 @@
 
 	qdel(SV)
 
-	var/maxi = 15
+	var/maxi = is_ascendant(DENDOR) ? 25 : 15
 	for(var/i in 1 to rand(5,maxi))
 		if(turfs.len) //Pick a turf to spawn at if we can
 			var/turf/T = pick_n_take(turfs)
@@ -51,7 +51,7 @@
 
 	qdel(SV)
 
-	var/maxi = 15
+	var/maxi = is_ascendant(DENDOR) ? 25 : 15
 	for(var/i in 1 to rand(5,maxi))
 		if(turfs.len) //Pick a turf to spawn at if we can
 			var/turf/T = pick_n_take(turfs)

@@ -49,6 +49,6 @@
 		objective.completed = TRUE
 		owner.adjust_triumphs(objective.triumph_count)
 		objective.escalate_objective()
-		adjust_storyteller_influence("Necra", 25)
+		adjust_storyteller_influence(NECRA, 25)
 
 	qdel(src)
