@@ -193,7 +193,7 @@
 // -------------- POT PIE -----------------
 /obj/item/reagent_containers/food/snacks/pie/cooked/pot
 	name = "pot pie"
-	desc = "A pie made with a host of difference ingredients. May or may not contain meat."
+	desc = "A pie made with a host of different ingredients. May or may not contain meat."
 	slices_num = 6
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEATPIE_NUTRITION)
 	tastes = list("mysterious filling and butterdough" = 1)
