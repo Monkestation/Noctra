@@ -26,7 +26,7 @@
 		to_chat(owner.current, span_greentext("You have mocked the monarch and completed the objective!"))
 		owner.current.adjust_triumphs(triumph_count)
 		completed = TRUE
-		adjust_storyteller_influence("Xylix", 15)
+		adjust_storyteller_influence(XYLIX, 15)
 		escalate_objective()
 		UnregisterSignal(owner.current, COMSIG_VICIOUSLY_MOCKED)
 
@@ -56,7 +56,7 @@
 			to_chat(owner.current, span_greentext("You have mocked enough nobles and completed the objective!"))
 			owner.current.adjust_triumphs(triumph_count)
 			completed = TRUE
-			adjust_storyteller_influence("Xylix", 10)
+			adjust_storyteller_influence(XYLIX, 10)
 			escalate_objective()
 			UnregisterSignal(owner.current, COMSIG_VICIOUSLY_MOCKED)
 		else

@@ -43,7 +43,8 @@
 	eligible_females = shuffle(eligible_females)
 
 	var/list/selected_pairs = list()
-	var/max_pairs = min(3, eligible_males.len, eligible_females.len)
+	var/max_number = is_ascendant(EORA) ? 6 : 3
+	var/max_pairs = min(max_number, eligible_males.len, eligible_females.len)
 
 	for(var/i in 1 to max_pairs)
 		var/found_pair = FALSE

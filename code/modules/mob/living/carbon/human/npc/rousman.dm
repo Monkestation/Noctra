@@ -236,7 +236,7 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 	last_process = world.time
 	amount += amt2add
 	if(has_world_trait(/datum/world_trait/pestra_mercy))
-		amount -= 5 * time_elapsed
+		amount -= (is_ascendant(PESTRA) ? 2.5 : 5) * time_elapsed
 
 	var/mob/living/carbon/C = parent
 	if(!C)

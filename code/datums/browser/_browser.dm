@@ -123,8 +123,9 @@
 		return
 	var/window_size = ""
 	var/scaling = 1
-	if(user?.client.window_scaling)
-		scaling = user?.client.window_scaling
+	var/client/user_client = isclient(user) ? user : user.client
+	if(user_client?.window_scaling)
+		scaling = user_client.window_scaling
 	if (width && height)
 		window_size = "size=[width * scaling]x[height * scaling];"
 	var/datum/asset/simple/namespaced/common/common_asset = get_asset_datum(/datum/asset/simple/namespaced/common)
