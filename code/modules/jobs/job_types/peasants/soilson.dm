@@ -68,24 +68,19 @@
 
 	neck = /obj/item/storage/belt/pouch/coins/poor
 	if(H.gender == MALE)
-		head = /obj/item/clothing/head/roguehood/random
-		if(prob(50))
-			head = /obj/item/clothing/head/strawhat
+		head = /obj/item/clothing/head/strawhat
 		pants = /obj/item/clothing/pants/tights/random
 		armor = /obj/item/clothing/armor/gambeson/light/striped
 		shirt = /obj/item/clothing/shirt/undershirt/random
-		shoes = /obj/item/clothing/shoes/simpleshoes
-		belt = /obj/item/storage/belt/leather/rope
-		beltr = /obj/item/key/soilson
-		beltl = /obj/item/weapon/knife/villager
 	else
 		head = /obj/item/clothing/head/armingcap
 		armor = /obj/item/clothing/shirt/dress/gen/random
 		shirt = /obj/item/clothing/shirt/undershirt
-		shoes = /obj/item/clothing/shoes/simpleshoes
-		belt = /obj/item/storage/belt/leather/rope
-		beltr = /obj/item/key/soilson
-		beltl = /obj/item/weapon/knife/villager
+	shoes = /obj/item/clothing/shoes/simpleshoes
+	belt = /obj/item/storage/belt/leather/rope
+	beltr = /obj/item/key/soilson
+	beltl = /obj/item/weapon/knife/villager
+	backl = /obj/item/storage/backpack/satchel/cloth
 
 /datum/job/soilchild
 	title = "Soilchild"
