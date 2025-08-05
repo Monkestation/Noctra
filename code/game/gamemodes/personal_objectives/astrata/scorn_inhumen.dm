@@ -28,7 +28,7 @@
 		to_chat(owner.current, span_greentext("You have scorned enough inhumen and completed Astrata's objective!"))
 		owner.current.adjust_triumphs(triumph_count)
 		completed = TRUE
-		adjust_storyteller_influence("Astrata", 10)
+		adjust_storyteller_influence(ASTRATA, 10)
 		escalate_objective()
 		UnregisterSignal(owner.current, COMSIG_SPAT_ON)
 

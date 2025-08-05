@@ -24,7 +24,7 @@
 		to_chat(owner.current, span_greentext("You have consumed enough rotten food to complete Pestra's objective!"))
 		owner.current.adjust_triumphs(triumph_count)
 		completed = TRUE
-		adjust_storyteller_influence("Pestra", 10)
+		adjust_storyteller_influence(PESTRA, 10)
 		escalate_objective()
 		UnregisterSignal(owner.current, COMSIG_ROTTEN_FOOD_EATEN)
 	else

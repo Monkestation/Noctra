@@ -111,8 +111,8 @@ GLOBAL_LIST_EMPTY(graggar_cullings)
 	if(length(contenders) < 2)
 		return
 
-	// 33% chance for grand culling (multiple pairs)
-	var/grand_culling = prob(33)
+	// 33% chance for grand culling (multiple pairs) unless ascendant, then it's guaranteed
+	var/grand_culling = is_ascendant(EORA) || prob(33)
 	var/max_pairs = grand_culling ? floor(length(contenders) / 2) : 1
 
 	for(var/i in 1 to max_pairs)

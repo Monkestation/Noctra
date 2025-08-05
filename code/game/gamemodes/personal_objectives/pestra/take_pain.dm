@@ -35,7 +35,7 @@
 		to_chat(owner.current, span_greentext("You have taken enough pain from others, completing Pestra's objective! Your sacrifice is rewarded."))
 		owner.current.adjust_triumphs(triumph_count)
 		completed = TRUE
-		adjust_storyteller_influence("Pestra", 15)
+		adjust_storyteller_influence(PESTRA, 15)
 		escalate_objective()
 		UnregisterSignal(owner.current, COMSIG_PAIN_TRANSFERRED)
 
