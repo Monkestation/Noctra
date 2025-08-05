@@ -882,7 +882,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 				}
 			</style>
 		</head>
-		<body>
+		<body scroll=yes>
 			[content]
 		</body>
 	</html>
