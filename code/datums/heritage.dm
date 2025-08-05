@@ -18,7 +18,7 @@
 /datum/status_effect/misfortune
 	id = "family_misfortune"
 	duration = -1
-	alert_type = /atom/movable/screen/alert/status_effect/misfortune
+	alert_type = /atom/movable/screen/alert/status_effect/family_curse/mmisfortune
 
 /datum/status_effect/misfortune/on_apply()
 	. = ..()
@@ -28,7 +28,7 @@
 	. = ..()
 	owner.remove_stat_modifier("[type]")
 
-/atom/movable/screen/alert/status_effect/misfortune
+/atom/movable/screen/alert/status_effect/family_curse/mmisfortune
 	name = "Family Misfortune"
 	desc = "Your family's curse brings ill fortune to your steps."
 	icon_state = "debuff"
@@ -41,12 +41,12 @@
 		"Your ancestors' misdeeds continue to haunt you."
 	)
 
-/atom/movable/screen/alert/status_effect/misfortune/New()
+/atom/movable/screen/alert/status_effect/family_curse/mmisfortune/New()
 	..()
 	if(desc == initial(desc))
 		desc = "[initial(desc)] [pick(misfortune_tips)]"
 
-/atom/movable/screen/alert/status_effect/misfortune/Click(location, control, params)
+/atom/movable/screen/alert/status_effect/family_curse/Click(location, control, params)
 	. = ..()
 	if(!ishuman(usr))
 		return
@@ -54,15 +54,14 @@
 	if(user.family_datum)
 		var/curse_info = ""
 		for(var/datum/family_curse/curse in user.family_datum.family_curses)
-			if(curse.curse_type == /datum/family_curse/misfortune)
-				curse_info += "<b>[curse.name]</b><br>"
-				curse_info += "[curse.description]<br>"
-				if(curse.cursed_by)
-					var/mob/curser = curse.cursed_by.resolve()
-					if(curser)
-						curse_info += "[curse.blessing ? "Blessed" : "Cursed"] by: [curser.real_name]<br>"
-				curse_info += "Severity: [curse.severity]/3<br>"
-				curse_info += "Time cursed: [DisplayTimeText(world.time - curse.when_cursed)] ago<br>"
+			curse_info += "<b>[curse.name]</b><br>"
+			curse_info += "[curse.description]<br>"
+			if(curse.cursed_by)
+				var/mob/curser = curse.cursed_by.resolve()
+				if(curser)
+					curse_info += "[curse.blessing ? "Blessed" : "Cursed"] by: [curser.real_name]<br>"
+			curse_info += "Severity: [curse.severity]/3<br>"
+			curse_info += "Time cursed: [DisplayTimeText(world.time - curse.when_cursed)] ago<br>"
 
 		if(curse_info)
 			var/datum/browser/popup = new(usr, "curse_info", "Family Modifier Details", 300, 200)

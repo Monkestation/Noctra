@@ -407,3 +407,127 @@
 	SEND_SIGNAL(src, COMSIG_MULTITOOL_REMOVE_BUFFER, source)
 	UnregisterSignal(buffer, COMSIG_PARENT_QDELETING)
 	buffer = null
+
+/obj/item/folding_table_stored
+	name = "folding table"
+	desc = "A folding table, useful for setting up a temporary workspace."
+	icon = 'icons/roguetown/items/gadgets.dmi'
+	icon_state = "folding_table_stored"
+	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = FIRE_PROOF
+	grid_height = 32
+	grid_width = 64
+
+/obj/item/folding_table_stored/attack_self(mob/user)
+	. = ..()
+	var/turf/target_turf = get_step(user,user.dir)
+	if(target_turf.is_blocked_turf(TRUE) || (locate(/mob/living) in target_turf))
+		to_chat(user, span_danger("I can't deploy the folding table here!"))
+		return NONE
+	if(isopenspace(target_turf))
+		return NONE
+	if(isopenturf(target_turf))
+		deploy_folding_table(user, target_turf)
+		return TRUE
+	return NONE
+
+/obj/item/folding_table_stored/proc/deploy_folding_table(mob/user, atom/location)
+	to_chat(user, "<span class='notice'>You deploy the folding table.</span>")
+	new /obj/structure/table/wood/folding(location)
+	qdel(src)
+
+/obj/structure/table/wood/folding
+	name = "folding table"
+	desc = "A folding table, useful for setting up a temporary workspace."
+	icon = 'icons/roguetown/items/gadgets.dmi'
+	icon_state = "folding_table_deployed"
+	resistance_flags = FLAMMABLE
+	max_integrity = 50
+	debris = list(/obj/item/grown/log/tree/small = 1)
+	climbable = TRUE
+	climb_offset = 10
+
+/obj/structure/table/wood/folding/examine()
+	. = ..()
+	. += span_blue("Right-Click to fold the table.")
+
+/obj/structure/table/wood/folding/attack_hand_secondary(mob/user, params)
+	. = ..()
+	user.visible_message(span_notice("[user] folds [src]."), span_notice("You fold [src]."))
+	new /obj/item/folding_table_stored(drop_location())
+	qdel(src)
+	return ..()
+
+/obj/machinery/light/fueled/hearth/mobilestove
+	name = "mobile stove"
+	desc = "A portable bronze stovetop. The underside is covered in an esoteric pattern of small tubes. Whatever heats the hob is hidden inside the body of the device"
+	icon_state = "hobostove1"
+	base_state = "hobostove"
+	brightness = 4
+	bulb_colour ="#4ac77e"
+	density = FALSE
+	anchored = TRUE
+	climbable = FALSE
+	climb_offset = FALSE
+	layer = TABLE_LAYER
+	on = FALSE
+	crossfire = FALSE
+
+/obj/machinery/light/fueled/hearth/mobilestove/MiddleClick(mob/user, params)
+	. = ..()
+	if(.)
+		return
+
+	if(attachment)
+		if(!user.put_in_active_hand(attachment))
+			attachment.forceMove(user.loc)
+		attachment = null
+		update_icon()
+	if(!on)
+		user.visible_message(span_notice("[user] begins packing up \the [src]."))
+		if(!do_after(user, 2 SECONDS, TRUE, src))
+			return
+		var/obj/item/mobilestove/new_mobilestove = new /obj/item/mobilestove(get_turf(src))
+		new_mobilestove.color = src.color
+		qdel(src)
+		return
+
+	var/mob/living/carbon/human/H = user
+	if(!istype(user))
+		return
+	H.visible_message(span_notice("[user] begins packing up \the [src]. It's still hot!"))
+	if(!do_after(H, 4 SECONDS, src))
+		return
+	var/obj/item/bodypart/affecting = H.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
+	to_chat(H, span_warning("HOT! I burned myself!"))
+	if(affecting && affecting.receive_damage(0, 5))
+		H.update_damage_overlays()
+	new /obj/item/mobilestove(get_turf(src))
+	burn_out()
+	qdel(src)
+	return
+
+/obj/item/mobilestove
+	name = "packed stove"
+	desc = "A portable bronze stovetop. The underside is covered in an esoteric pattern of small tubes. Whatever heats the hob is hidden inside the body of the device"
+	icon = 'icons/roguetown/misc/lighting.dmi'
+	icon_state = "hobostovep"
+	w_class = WEIGHT_CLASS_NORMAL
+	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BACK
+	grid_width = 32
+	grid_height = 64
+
+/obj/item/mobilestove/attack_self(mob/user, params)
+	..()
+	var/turf/T = get_turf(loc)
+	if(!isfloorturf(T))
+		to_chat(user, span_warning("I need ground to plant this on!"))
+		return
+	for(var/obj/A in T)
+		if(A.density && !(A.flags_1 & ON_BORDER_1))
+			to_chat(user, span_warning("There is already something here!</span>"))
+			return
+	user.visible_message(span_notice("[user] begins placing \the [src] down on the ground."))
+	if(do_after(user, 2 SECONDS, src))
+		new /obj/machinery/light/fueled/hearth/mobilestove(get_turf(src))
+		qdel(src)

@@ -16,7 +16,7 @@
 	backl = /obj/item/storage/backpack/backpack
 	beltl = /obj/item/weapon/pick
 	beltr = /obj/item/weapon/hammer/iron
-	backpack_contents = list(/obj/item/bomb = 1, /obj/item/flint = 1)
+	backpack_contents = list(/obj/item/explosive/bottle = 1, /obj/item/flint = 1)
 	H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/mining, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/engineering, 5, TRUE)

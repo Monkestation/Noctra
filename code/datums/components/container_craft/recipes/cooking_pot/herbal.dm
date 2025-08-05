@@ -109,7 +109,7 @@
 		/obj/item/alch/salvia = 2
 	)
 	optional_requirements = list(
-		/obj/item/alch/bonemeal = 1 // Bone meal enhances wisdom
+		/obj/item/fertilizer/bone_meal = 1 // Bone meal enhances wisdom
 	)
 	max_optionals = 1
 	finished_smell = /datum/pollutant/food/herb

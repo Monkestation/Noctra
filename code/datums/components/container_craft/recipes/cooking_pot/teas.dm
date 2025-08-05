@@ -85,3 +85,19 @@
 	created_reagent = /datum/reagent/consumable/tea/tiefbloodtea
 	requirements = list(/obj/item/reagent_containers/food/snacks/tiefsugar = 1)
 	finished_smell = /datum/pollutant/food/sugar
+
+/datum/container_craft/cooking/tea/exotic
+	name = "Exotic Tea"
+	crafting_time = 30 SECONDS
+	water_conversion = 1
+	created_reagent = /datum/reagent/consumable/caffeine/tea
+	requirements = list(/obj/item/reagent_containers/food/snacks/produce/tealeaves_ground = 2)
+	finished_smell = /datum/pollutant/food/teas
+
+/datum/container_craft/cooking/tea/coffee
+	name = "Coffee"
+	crafting_time = 30 SECONDS
+	water_conversion = 1
+	created_reagent = /datum/reagent/consumable/caffeine/coffee
+	requirements = list(/obj/item/reagent_containers/food/snacks/produce/coffeebeansroasted = 2)
+	finished_smell = /datum/pollutant/food/coffee

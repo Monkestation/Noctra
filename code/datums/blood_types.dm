@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT_TYPED(blood_types, /datum/blood_type, init_subtypes_w_path_keys
 	/// The short-hand name of the blood type
 	var/name = "?"
 	///this is the color of our blood
-	var/color = LIGHT_COLOR_LIGHT_CYAN
+	var/color = COLOR_BLOOD
 	/// What blood types can this type receive from
 	/// Itself is always included in this list
 	var/list/compatible_types = list()

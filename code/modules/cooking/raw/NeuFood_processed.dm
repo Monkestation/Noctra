@@ -157,7 +157,7 @@
 	dropshrink = 0.6
 	faretype = FARE_POOR
 
-/obj/item/reagent_containers/food/snacks/saltfish/CheckParts(list/parts_list, datum/crafting_recipe/R)
+/obj/item/reagent_containers/food/snacks/saltfish/CheckParts(list/parts_list)
 	for(var/obj/item/reagent_containers/food/snacks/M in parts_list)
 		icon_state = "[initial(M.icon_state)]dried"
 		qdel(M)
@@ -218,7 +218,7 @@
 	foodtype = GRAIN
 	faretype = FARE_POOR
 
-/obj/item/reagent_containers/food/snacks/raisins/CheckParts(list/parts_list, datum/crafting_recipe/R)
+/obj/item/reagent_containers/food/snacks/raisins/CheckParts(list/parts_list)
 	..()
 	for(var/obj/item/reagent_containers/food/snacks/M in parts_list)
 		color = M.filling_color
