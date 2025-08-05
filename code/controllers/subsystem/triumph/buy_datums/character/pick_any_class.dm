@@ -1,13 +1,14 @@
 /datum/triumph_buy/pick_any_class
-	triumph_buy_id = "PickAny"
+	triumph_buy_id = TRIUMPH_BUY_ANY_CLASS
 	desc = "Get single run of a class that can pick any class BYPASSING CLASS RESTRICTIONS on any class selection! WARNING: MAY BE BUGGY"
 	triumph_cost = 20
 	category = TRIUMPH_CAT_CHARACTER
-	pre_round_only = FALSE
 	visible_on_active_menu = TRUE
+	manual_activation = TRUE
 
-// We fire this on activate, also DAMN is this nasty
-/datum/triumph_buy/pick_any_class/on_activate()
+/datum/triumph_buy/pick_any_class/on_post_equip(mob/living/carbon/human/H)
+	. = ..()
+
 	if(!SSrole_class_handler.special_session_queue[ckey_of_buyer])
 		SSrole_class_handler.special_session_queue[ckey_of_buyer] = list()
 
@@ -23,8 +24,9 @@
 // It should be there you know? lol
 // If not we are desyncing somehow
 /datum/triumph_buy/pick_any_class/on_removal()
-	SSrole_class_handler.special_session_queue[ckey_of_buyer].Remove(triumph_buy_id)
-
+	. = ..()
+	if(SSrole_class_handler.special_session_queue[ckey_of_buyer])
+		SSrole_class_handler.special_session_queue[ckey_of_buyer].Remove(triumph_buy_id)
 
 //For triumph buy pick-all
 /datum/advclass/pick_everything
@@ -41,8 +43,6 @@
 	for(var/datum/advclass/CHECKS in SSrole_class_handler.sorted_class_categories[CTAG_ALLCLASS])
 		if(CTAG_DISABLED in CHECKS.category_tags)
 			continue
-		// if(CTAG_MERCENARY in CHECKS.category_tags)
-		// 	continue
 		possible_classes += CHECKS
 
 	var/datum/advclass/C = input(H.client, "What is my class?", "Adventure") as null|anything in possible_classes
