@@ -3650,8 +3650,6 @@
 /obj/machinery/light/fueled/wallfire/candle{
 	pixel_y = -32
 	},
-/obj/item/key/manor,
-/obj/item/key/manor,
 /turf/open/floor/cobble,
 /area/rogue/indoors/town/manor/servant)
 "cbS" = (
@@ -12587,9 +12585,13 @@
 	},
 /area/rogue/indoors/town/manor/lord_appt)
 "hoI" = (
-/obj/item/key/manor,
-/obj/item/key/manor,
 /obj/structure/closet/crate/chest/crafted,
+/obj/item/book/manners,
+/obj/item/recipe_book/cooking{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/recipe_book/cooking,
 /turf/open/floor/wood,
 /area/rogue/indoors/town/manor/servanthead)
 "hoS" = (
@@ -13012,16 +13014,15 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/indoors/town)
 "hDS" = (
-/obj/item/recipe_book/cooking,
-/obj/item/recipe_book/cooking{
-	pixel_x = 5;
-	pixel_y = 5
-	},
 /obj/structure/table/wood{
 	dir = 1;
 	icon_state = "longtable"
 	},
 /obj/machinery/light/fueled/wallfire/candle,
+/obj/item/candle/skull/lit{
+	pixel_x = 3;
+	pixel_y = 11
+	},
 /turf/open/floor/tile,
 /area/rogue/indoors/town/manor/servanthead)
 "hEp" = (
@@ -30054,7 +30055,6 @@
 /area/rogue/indoors/town/tavern)
 "suA" = (
 /obj/structure/table/wood/plain_alt,
-/obj/item/book/manners,
 /turf/open/floor/wood,
 /area/rogue/indoors/town/manor/servanthead)
 "suY" = (
@@ -35761,10 +35761,6 @@
 /obj/structure/table/wood{
 	dir = 1;
 	icon_state = "longtable_mid"
-	},
-/obj/item/candle/skull/lit{
-	pixel_x = 3;
-	pixel_y = 11
 	},
 /turf/open/floor/tile,
 /area/rogue/indoors/town/manor/servanthead)
