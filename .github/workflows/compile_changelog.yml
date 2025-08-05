@@ -35,8 +35,8 @@ jobs:
 
       - name: Commit
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "Changelogs"
+          git config --local user.email "224467185+VANDERLIN-MONARCH@users.noreply.github.com"
+          git config --local user.name "VANDERLIN-MONARCH"
           git pull origin main
           git add html/changelogs
           git commit -m "Automatic changelog compile [ci skip]" -a || true
