@@ -161,7 +161,7 @@
 		</head>
 	</html>
 	"}
-	linked_client << browse(data, "window=triumph_buy_window;size=600x700;can_close=1;can_minimize=0;can_maximize=0;can_resize=0;titlebar=1")
+	linked_client << browse(data, "window=triumph_buy_window;size=600x715;can_close=1;can_minimize=0;can_maximize=0;can_resize=0;titlebar=1")
 
 	// We setup the href_list "close" call if they hit the x on the top right
 	for(var/i in 1 to 10)
