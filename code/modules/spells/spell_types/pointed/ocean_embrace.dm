@@ -34,7 +34,7 @@
 		if(!already_dead && cast_on.stat == DEAD && cast_on.client)
 			record_round_statistic(STATS_PEOPLE_DROWNED)
 		else
-			cast_on.Knockdown(0.5 DECISECONDS)
+			cast_on.Immobilize(0.5 SECONDS)
 			cast_on.Slowdown(30)
 			cast_on.Dizzy(10)
 			cast_on.blur_eyes(10)
