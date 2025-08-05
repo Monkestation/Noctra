@@ -5,7 +5,7 @@
 	sound = 'sound/foley/jumpland/waterland.ogg'
 	charge_sound = 'sound/magic/holycharging.ogg'
 
-	cast_range = 6
+	cast_range = 3
 	spell_type = SPELL_MIRACLE
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	associated_skill = /datum/skill/magic/holy
@@ -16,7 +16,7 @@
 
 	charge_time = 1 SECONDS
 	cooldown_time = 30 SECONDS
-	spell_cost = 50
+	spell_cost = 40
 
 /datum/action/cooldown/spell/ocean_embrace/is_valid_target(atom/cast_on)
 	. = ..()
@@ -30,14 +30,14 @@
 		cast_on.visible_message(span_danger("[cast_on] is drowned by turbulent tides!"), span_userdanger("I'm being drowned by turbulent tides!"))
 		cast_on.safe_throw_at(get_step(cast_on, get_dir(owner, cast_on)), 1, 1, owner, spin = TRUE, force = cast_on.move_force)
 		var/already_dead = cast_on.stat == DEAD ? TRUE : FALSE
-		cast_on.adjustOxyLoss(80)
+		cast_on.adjustOxyLoss(40)
 		if(!already_dead && cast_on.stat == DEAD && cast_on.client)
 			record_round_statistic(STATS_PEOPLE_DROWNED)
 		else
-			cast_on.Knockdown(5)
-			cast_on.Slowdown(60)
+			cast_on.Knockdown(0.5 DECISECONDS)
+			cast_on.Slowdown(30)
 			cast_on.Dizzy(10)
-			cast_on.blur_eyes(20)
+			cast_on.blur_eyes(10)
 			cast_on.emote("drown")
 		return
 
