@@ -32,5 +32,15 @@
                 "bugfix": "Removing all spells no longer will give a message for every single spell."
             }
         ]
+    },
+    "2025-08-05": {
+        "CheffieGithub": [
+            {
+                "bugfix": "Unfix learn spell removal to fix spell tree visual bug."
+            },
+            {
+                "code_imp": "Issue reports are now uploaded to github via bot and do not require users to use github directly, it is still preferable to use github if possible."
+            }
+        ]
     }
 }
