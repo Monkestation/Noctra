@@ -146,6 +146,3 @@
 
 	///Which ambient sound this client is currently being provided
 	var/current_ambient_sound
-
-	/// List of client's triumph buys references
-	var/list/triumph_buys = list()

@@ -49,6 +49,9 @@ SUBSYSTEM_DEF(triumphs)
 	// When the server session is about to end we will write it all in.
 	var/list/triumph_amount_cache = list()
 
+	/// Similiar to the triumph amount cache, but stores triumph buys the ckey has bought
+	var/list/triumph_buy_owners = list()
+
 /*
 	TRIUMPH BUY MENU THINGS
 */
@@ -126,7 +129,11 @@ SUBSYSTEM_DEF(triumphs)
 
 		triumph_buy.key_of_buyer = C.key
 		triumph_buy.ckey_of_buyer = C.ckey
-		C.triumph_buys += triumph_buy
+
+		if(!triumph_buy_owners[C.ckey])
+			triumph_buy_owners[C.ckey] = list()
+		triumph_buy_owners[C.ckey] += triumph_buy
+
 		active_triumph_buy_queue += triumph_buy
 
 		to_chat(C, span_notice("You have bought a new triumph buy for [ref_datum.triumph_cost] triumph\s."))
@@ -155,7 +162,8 @@ SUBSYSTEM_DEF(triumphs)
 	var/refund_amount = triumph_buy.triumph_cost
 	triumph_adjust(refund_amount, previous_owner_ckey)
 	to_chat(C, span_redtext("You were refunded [refund_amount] triumph\s due to \a [reason]."))
-	C.triumph_buys -= triumph_buy
+	if(triumph_buy_owners[triumph_buy.ckey_of_buyer])
+		triumph_buy_owners[triumph_buy.ckey_of_buyer] -= triumph_buy
 	triumph_buy.on_removal()
 	active_triumph_buy_queue -= triumph_buy
 	return TRUE

@@ -661,9 +661,6 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	if(credits)
 		QDEL_LIST(credits)
 
-	if(triumph_buys)
-		QDEL_LIST(triumph_buys)
-
 	if(player_details)
 		player_details.achievements.save()
 
@@ -1249,22 +1246,27 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		return whitelisted
 
 /client/proc/has_triumph_buy(triumph_id)
-	if(!triumph_id || !islist(triumph_buys))
+	if(!triumph_id)
 		return FALSE
 
-	for(var/datum/triumph_buy/T in triumph_buys)
+	var/list/my_triumphs = SStriumphs.triumph_buy_owners[ckey]
+	if(!islist(my_triumphs))
+		return FALSE
+
+	for(var/datum/triumph_buy/T in my_triumphs)
 		if(T.triumph_buy_id == triumph_id)
 			return TRUE
 	return FALSE
 
 /client/proc/activate_triumph_buy(triumph_id)
-	if(!triumph_id || !islist(triumph_buys))
+	if(!triumph_id)
 		return FALSE
 
-	if(!length(triumph_buys))
+	var/list/my_triumphs = SStriumphs.triumph_buy_owners[ckey]
+	if(!islist(my_triumphs) || !length(my_triumphs))
 		return FALSE
 
-	for(var/datum/triumph_buy/T in triumph_buys)
+	for(var/datum/triumph_buy/T in my_triumphs)
 		if(T.triumph_buy_id == triumph_id)
 			T.on_activate()
 	return TRUE

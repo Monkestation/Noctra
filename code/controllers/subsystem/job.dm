@@ -510,8 +510,10 @@ SUBSYSTEM_DEF(job)
 	JobDebug("Player rejected :[player]")
 	to_chat(player, "<b>I couldn't find a job to be..</b>")
 
-	for(var/datum/triumph_buy/race_all_jobs/R in player.client.triumph_buys)
-		SStriumphs.attempt_to_unbuy_triumph_condition(player.client, R, reason = "FAILING TO GET A JOB", force = TRUE)
+	var/list/client_triumphs = SStriumphs.triumph_buy_owners[player.ckey]
+	if(islist(client_triumphs))
+		for(var/datum/triumph_buy/race_all_jobs/R in client_triumphs)
+			SStriumphs.attempt_to_unbuy_triumph_condition(player.client, R, reason = "FAILING TO GET A JOB", force = TRUE)
 
 	unassigned -= player
 	player.ready = PLAYER_NOT_READY
