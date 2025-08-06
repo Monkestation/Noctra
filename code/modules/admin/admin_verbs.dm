@@ -871,6 +871,9 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	<html>
 		<head>
 			<style type=\"text/css\">
+				html, body {
+					overflow: hidden;
+				}
 				body {
 					background-image:url('book.png');
 					background-repeat: repeat;
@@ -879,10 +882,11 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 					line-height: 1.5;
 					padding: 20px;
 					font-family: 'Times New Roman', serif;
+					overflow: auto;
 				}
 			</style>
 		</head>
-		<body scroll=yes>
+		<body>
 			[content]
 		</body>
 	</html>
