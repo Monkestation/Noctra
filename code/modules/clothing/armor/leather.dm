@@ -10,7 +10,7 @@
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	sewrepair = TRUE
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 	sellprice = VALUE_LEATHER_ARMOR
 
 	armor_class = AC_LIGHT

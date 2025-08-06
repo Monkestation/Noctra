@@ -92,11 +92,11 @@
 /turf/open/floor/dirt/road,
 /area/rogue/under/tomb)
 "rG" = (
-/obj/item/bomb{
+/obj/item/explosive/bottle{
 	pixel_x = 9;
 	pixel_y = 17
 	},
-/obj/item/bomb{
+/obj/item/explosive/bottle{
 	pixel_x = -1;
 	pixel_y = 17
 	},

@@ -33,7 +33,7 @@
 	if(istype(target, /obj/item/weapon/tongs))
 		handle_tongs(target)
 		return
-	if(!target.smeltresult || target.smeltresult == /obj/item/ash)
+	if(!target.smeltresult || target.smeltresult == /obj/item/fertilizer/ash)
 		return
 	var/atom/target_loc = target.loc
 	var/obj/item/itemtospawn
@@ -84,7 +84,7 @@
 		handle_tongs(targeteditem)
 		return
 
-	if(!targeteditem.smeltresult || targeteditem.smeltresult == /obj/item/ash)
+	if(!targeteditem.smeltresult || targeteditem.smeltresult == /obj/item/fertilizer/ash)
 		owner.visible_message(
 			"<font color='yellow'>After their incantation, [owner] points at [target], but nothing happens.</font>",
 			"<font color='yellow'>After your incantation, you point at [target], but nothing happens.</font>"
@@ -130,8 +130,8 @@
 		var/chest_damage = damage_to_apply
 		var/obj/item/armor = target.get_item_by_slot(ITEM_SLOT_ARMOR)
 		var/obj/item/shirt = target.get_item_by_slot(ITEM_SLOT_SHIRT)
-		var/armor_can_heat = armor && armor.smeltresult && armor.smeltresult != /obj/item/ash
-		var/shirt_can_heat = shirt && shirt.smeltresult && shirt.smeltresult != /obj/item/ash //Full damage if no shirt
+		var/armor_can_heat = armor && armor.smeltresult && armor.smeltresult != /obj/item/fertilizer/ash
+		var/shirt_can_heat = shirt && shirt.smeltresult && shirt.smeltresult != /obj/item/fertilizer/ash //Full damage if no shirt
 		if(armor_can_heat && (shirt && !shirt_can_heat))
 			chest_damage = damage_to_apply / 2 //Halve the damage if only armor can heat but shirt can't.
 		else if(armor_can_heat && shirt_can_heat)

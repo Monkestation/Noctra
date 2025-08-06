@@ -49,7 +49,7 @@
 	var/A
 
 	A = input(user, "Area to jump to", "BOOYEA", A) as null|anything in GLOB.teleportlocs
-	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated(ignore_grab = TRUE) || !A || !uses)
+	if(!src || QDELETED(src) || !user || !user.is_holding(src) || user.incapacitated(IGNORE_GRAB) || !A || !uses)
 		return
 	var/area/thearea = GLOB.teleportlocs[A]
 

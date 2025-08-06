@@ -104,6 +104,13 @@
 	 */
 	var/list/chameleon_extras
 
+	/**
+	  * The sheaths this job should start with
+	  *
+	  * Format of this list is (typepath, typepath, typepath)
+	  */
+	var/list/scabbards = null
+
 /**
  * Called at the start of the equip proc
  *
@@ -195,6 +202,19 @@
 		if(r_hand)
 		//	H.put_in_hands(new r_hand(get_turf(H)),TRUE)
 			H.equip_to_slot_or_del(new r_hand(H),ITEM_SLOT_HANDS, TRUE)
+		if(scabbards)
+			var/list/copied_scabbards = scabbards.Copy()
+			for(var/obj/item/item as anything in H.get_equipped_items())
+				if(!length(copied_scabbards))
+					break
+				var/slot = H.get_slot_by_item(item)
+				for(var/obj/item/weapon/scabbard/scabbard_path as anything in copied_scabbards)
+					var/obj/item/weapon/scabbard/scabbard = new scabbard_path()
+					if(SEND_SIGNAL(scabbard, COMSIG_TRY_STORAGE_INSERT, item, null, TRUE, FALSE))
+						H.temporarilyRemoveItemFromInventory(item, TRUE)
+						H.equip_to_slot_or_del(scabbard, slot, TRUE)
+						copied_scabbards -= scabbard_path
+						break
 
 	if(!visualsOnly) // Items in pockets or backpack don't show up on mob's icon.
 		if(backpack_contents)

@@ -14,7 +14,7 @@
 	charge_slowdown = 1.4
 	cooldown_time = 60 SECONDS
 	spell_cost = 50
-
+	spell_flags = SPELL_RITUOS
 	aoe_radius = 3
 	ignore_openspace = TRUE
 	staggered = TRUE

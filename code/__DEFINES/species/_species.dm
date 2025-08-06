@@ -237,3 +237,14 @@
 #define RACES_PLAYER_ALIEN list(\
 	SPEC_ID_HUMAN_SPACE,\
 )
+
+/// Species who are heretical to the church.
+#define RACES_PLAYER_HERETICAL_RACE list(\
+	SPEC_ID_DROW,\
+	SPEC_ID_HALF_DROW,\
+	SPEC_ID_TIEFLING,\
+	SPEC_ID_HALF_ORC,\
+	SPEC_ID_KOBOLD,\
+	SPEC_ID_RAKSHARI,\
+	SPEC_ID_HOLLOWKIN,\
+)

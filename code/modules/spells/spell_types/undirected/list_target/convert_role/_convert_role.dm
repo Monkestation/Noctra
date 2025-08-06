@@ -2,7 +2,6 @@
 	name = "Recruit Beggar"
 	desc = "Recruit someone to your cause."
 	button_icon_state = "recruit_bog"
-
 	/// Role given if recruitment is accepted
 	var/new_role = "Beggar"
 	/// Faction shown to the user in the recruitment prompt

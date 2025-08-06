@@ -428,7 +428,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 /mob/living/carbon/human/proc/draw_sigil()
 	set name = "Draw Sigil"
 	set category = "ZIZO"
-	if(incapacitated(ignore_grab = TRUE) || stat >= UNCONSCIOUS)
+	if(incapacitated(IGNORE_GRAB) || stat >= UNCONSCIOUS)
 		return
 
 	var/list/runes = list("Servantry", "Transmutation", "Fleshcrafting")

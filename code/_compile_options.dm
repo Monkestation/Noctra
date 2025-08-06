@@ -59,7 +59,11 @@
 #define GC_FAILURE_HARD_LOOKUP
 #endif // REFERENCE_DOING_IT_LIVE
 
-// #define UNIT_TESTS			//Enables unit tests
+
+// If defined, we will NOT defer asset generation till later in the game, and will instead do it all at once, during initiialize
+//#define DO_NOT_DEFER_ASSETS
+// If defined, we do a single run though of the game setup and tear down process with unit tests in between
+//#define UNIT_TESTS
 
 // If this is uncommented, will attempt to load and initialize prof.dll/libprof.so by default.
 // Even if it's not defined, you can pass "tracy" via -params in order to try to load it.
@@ -103,6 +107,8 @@
 #define REFERENCE_TRACKING_DEBUG
 #define FIND_REF_NO_CHECK_TICK
 #define GC_FAILURE_HARD_LOOKUP
+//Ensures all early assets can actually load early
+#define DO_NOT_DEFER_ASSETS
 //Test at full capacity, the extra cost doesn't matter
 #define TIMER_DEBUG
 #endif

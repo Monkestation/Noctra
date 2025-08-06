@@ -9,6 +9,9 @@ SUBSYSTEM_DEF(paintings)
 	update_paintings()
 	return ..()
 
+/datum/controller/subsystem/paintings/proc/get_painting_filename(title)
+	return "data/player_generated_paintings/paintings/[title].png"
+
 /datum/controller/subsystem/paintings/proc/update_paintings()
 	paintings = list()
 
@@ -37,7 +40,6 @@ SUBSYSTEM_DEF(paintings)
 			return list()
 		return contents
 	return list()
-
 
 /datum/controller/subsystem/paintings/proc/playerpainting2file(icon/painting, painting_title = "Unknown", author = "Unknown", author_ckey = "Unknown", canvas_size, obj/item/canvas/canvas)
 	if(!painting)
@@ -93,19 +95,23 @@ SUBSYSTEM_DEF(paintings)
 /datum/controller/subsystem/paintings/proc/del_player_painting(painting_title)
 	if(!painting_title)
 		return FALSE
-	var/json_file = file("data/player_generated_paintings/[painting_title].json")
+
+	var/encoded_title = url_encode(painting_title)
+	var/json_file = file("data/player_generated_paintings/[encoded_title].json")
 	var/png = file("data/player_generated_paintings/paintings/[painting_title].png")
+
 	if(!fexists(json_file))
 		return FALSE
+
 	if(fexists("data/player_generated_paintings/_painting_titles.json"))
 		fdel(json_file)
 		if(fexists(png))
-			fdel("data/player_generated_paintings/paintings/[painting_title].png")
+			fdel(png)
 		var/list/_painting_titles_contents = json_decode(file2text("data/player_generated_paintings/_painting_titles.json"))
-		_painting_titles_contents -= "[painting_title]"
+		_painting_titles_contents -= encoded_title
 		fdel("data/player_generated_paintings/_painting_titles.json")
 		text2file(json_encode(_painting_titles_contents), "data/player_generated_paintings/_painting_titles.json")
 		return TRUE
 	else
-		message_admins("!!! _painting_titles.json no longer exists, previous painting title list has been lost. !!!")
+		message_admins("!!! _painting_titles.json missing during deletion!")
 		return FALSE

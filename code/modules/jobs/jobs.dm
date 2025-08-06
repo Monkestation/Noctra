@@ -71,7 +71,7 @@ GLOBAL_PROTECT(peasant_positions)
 GLOBAL_LIST_INIT(apprentices_positions, list(
 	/datum/job/squire::title,
 	/datum/job/bapprentice::title,
-	/datum/job/wapprentice::title,
+	/datum/job/mageapprentice::title,
 	/datum/job/servant::title,
 	/datum/job/tapster::title,
 	/datum/job/gaffer_assistant::title,

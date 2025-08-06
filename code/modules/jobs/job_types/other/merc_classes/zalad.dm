@@ -31,6 +31,7 @@
 	pants = /obj/item/clothing/pants/tights/colored/red
 	neck = /obj/item/clothing/neck/keffiyeh/colored/red
 	backl = /obj/item/storage/backpack/satchel
+	scabbards = list(/obj/item/weapon/scabbard/sword)
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/poor)
 	if(!H.has_language(/datum/language/zalad))
 		H.grant_language(/datum/language/zalad)

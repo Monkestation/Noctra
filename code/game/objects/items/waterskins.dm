@@ -3,6 +3,7 @@
 	desc = "A leather waterskin."
 	icon = 'icons/roguetown/items/cooking.dmi'
 	icon_state = "waterskin"
+	fill_icon_state = ""
 	amount_per_transfer_from_this = 6
 	possible_transfer_amounts = list(3,6,9)
 	fill_icon_thresholds = null

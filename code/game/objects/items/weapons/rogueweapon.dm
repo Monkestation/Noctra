@@ -13,7 +13,6 @@
 	sharpness = IS_SHARP
 	possible_item_intents = list(SWORD_CUT, SWORD_THRUST)
 	can_parry = TRUE
-	wlength = 45
 	sellprice = 1
 	has_inspect_verb = TRUE
 	pickup_sound = "rustle" // Sound list define strings are in code/game/sound.dm

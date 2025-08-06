@@ -9,6 +9,7 @@
 	on = FALSE
 	temperature_change = 45
 	var/lastsmoke = 0
+	soundloop = /datum/looping_sound/fireloop
 
 /obj/machinery/light/fueled/oven/Initialize()
 	. = ..()

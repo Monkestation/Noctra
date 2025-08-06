@@ -387,8 +387,8 @@ SUBSYSTEM_DEF(overwatch)
 		if(!postponed)
 			C.log_client_to_db_connection_log()
 		log_access(span_notice("Overwatch: Failed Login: [C.key]/[C.ckey]([C.address])([C.computer_id]) failed to pass ASN ban check."))
-		qdel(C)
-		return
+		return TRUE
+	return FALSE
 
 /datum/controller/subsystem/overwatch/proc/FetchPlayerAge(client/C, connection_data)
 	var/cached_player_age = C.set_client_age_from_db(connection_data) //we have to cache this because other shit may change it and we need it's current value now down below.

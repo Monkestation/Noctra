@@ -34,7 +34,7 @@
 		to_chat(owner.current, span_greentext("You've improved your craft skills enough to please Malum!"))
 		owner.current.adjust_triumphs(triumph_count)
 		completed = TRUE
-		adjust_storyteller_influence("Malum", 10)
+		adjust_storyteller_influence(MALUM, 10)
 		escalate_objective()
 		UnregisterSignal(owner.current, COMSIG_SKILL_RANK_INCREASED)
 	else

@@ -5,7 +5,6 @@
 	has_visual_effects = FALSE
 
 	cast_range = 1
-
 	charge_required = TRUE
 	cooldown_time = 20 SECONDS
 

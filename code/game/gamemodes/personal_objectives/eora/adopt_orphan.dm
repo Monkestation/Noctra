@@ -20,7 +20,7 @@
 	to_chat(owner.current, span_greentext("You've adopted a child, completing Eora's objective!"))
 	owner.current.adjust_triumphs(triumph_count)
 	completed = TRUE
-	adjust_storyteller_influence("Eora", 20)
+	adjust_storyteller_influence(EORA, 20)
 	escalate_objective()
 	UnregisterSignal(owner.current, COMSIG_ORPHAN_ADOPTED)
 

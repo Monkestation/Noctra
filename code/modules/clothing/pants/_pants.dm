@@ -46,8 +46,8 @@
 	var/freshly_laundered = FALSE
 	abstract_type = /obj/item/clothing/pants
 
-/obj/item/clothing/pants/worn_overlays(isinhands = FALSE)
-	. = list()
+/obj/item/clothing/pants/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, dummy_block = FALSE)
+	. = ..()
 	if(!isinhands)
 		if(accessory_overlay)
 			. += accessory_overlay

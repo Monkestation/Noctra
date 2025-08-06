@@ -49,7 +49,7 @@
 			beltl = /obj/item/weapon/sword/rapier/silver //Correct, They have a chance to receive a silver rapier, due to them being from Valoria.
 		if(5 to 6)
 			beltl = /obj/item/weapon/sword/rapier/dec
-
+	scabbards = list(/obj/item/weapon/scabbard/sword)
 	H.merctype = 8
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 	H.change_stat(STATKEY_END, 2)

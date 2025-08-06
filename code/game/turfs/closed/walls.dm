@@ -196,7 +196,6 @@
 	icon_state = ""
 	layer = FLY_LAYER
 	bullet_bounce_sound = null
-	canSmoo
 
 /turf/closed/splashscreen/New()
 	SStitle.splash_turf = src

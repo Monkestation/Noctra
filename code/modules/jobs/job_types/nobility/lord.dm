@@ -60,7 +60,8 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	head = /obj/item/clothing/head/crown/serpcrown
 	backr = /obj/item/storage/backpack/satchel
 	belt = /obj/item/storage/belt/leather/plaquegold
-	backpack_contents = list(/obj/item/weapon/knife/dagger/steel/special = 1)
+	beltl = /obj/item/weapon/knife/dagger/steel/special
+	scabbards = list(/obj/item/weapon/scabbard/knife)
 	ring = /obj/item/clothing/ring/active/nomag
 	l_hand = /obj/item/weapon/lordscepter
 
@@ -112,6 +113,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NOSEGRAB, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_KNOWKEEPPLANS, TRAIT_GENERIC)
 
 /datum/job/exlord //just used to change the lords title

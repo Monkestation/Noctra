@@ -5,6 +5,8 @@
 
 	associated_skill = /datum/skill/magic/blood
 
+	spell_type = SPELL_BLOOD
+
 	charge_required = FALSE
 	cooldown_time = 15 SECONDS
 	spell_cost = 100

@@ -8,7 +8,7 @@
 	attunements = list(
 		/datum/attunement/dark = 0.5,
 	)
-
+	spell_flags = SPELL_RITUOS
 	charge_time = 2 SECONDS
 	charge_drain = 1
 	charge_slowdown = 0.3

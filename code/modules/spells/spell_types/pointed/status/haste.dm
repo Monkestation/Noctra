@@ -14,7 +14,7 @@
 	charge_slowdown = 0.3
 	cooldown_time = 3 MINUTES
 	spell_cost = 40
-
+	spell_flags = SPELL_RITUOS
 	status_effect = /datum/status_effect/buff/haste
 	duration_scaling = TRUE
 	duration_modification = 30 SECONDS

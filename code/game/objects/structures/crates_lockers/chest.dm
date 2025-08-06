@@ -31,7 +31,7 @@
 	var/list/loot = list(
 		/obj/item/storage/fancy/cigarettes/zig/empty=40,
 		/obj/item/reagent_containers/powder/spice=20,
-		/obj/item/bomb=6,
+		/obj/item/explosive/bottle=6,
 		/obj/item/weapon/knife/dagger=33,
 		/obj/item/reagent_containers/food/snacks/produce/fyritius=10,
 		/obj/item/clothing/armor/gambeson=33,
@@ -109,3 +109,12 @@
 	name = "crate"
 	base_icon_state = "woodchest"
 	icon_state = "woodchest"
+
+/obj/structure/closet/crate/chest/crafted
+	name = "handcrafted chest"
+	icon_state = "chest_neu"
+	base_icon_state = "chest_neu"
+	sellprice = 6
+
+/obj/structure/closet/crate/crafted_closet/crafted
+	sellprice = 6

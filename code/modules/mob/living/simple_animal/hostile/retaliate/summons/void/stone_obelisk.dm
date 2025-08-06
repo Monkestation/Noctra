@@ -1,7 +1,7 @@
 /mob/living/simple_animal/hostile/retaliate/voidstoneobelisk/Initialize()
 	. = ..()
 	AddComponent(/datum/component/ai_aggro_system)
-	beam = new(src)
+	beam = new
 	beam.Grant(src)
 	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, beam)
 
@@ -88,8 +88,8 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/voidstoneobelisk/Destroy()
-	. = ..()
 	QDEL_NULL(beam)
+	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/voidstoneobelisk/RangedAttack(atom/target, modifiers)
 	beam.Activate(target = target)

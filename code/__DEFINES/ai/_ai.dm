@@ -7,7 +7,7 @@
 ///Carbon checks
 #define SHOULD_RESIST(source) (source.on_fire || source.buckled || HAS_TRAIT(source, TRAIT_RESTRAINED) || (source.pulledby && (source.pulledby != source) && source.pulledby.grab_state > GRAB_PASSIVE))
 #define SHOULD_STAND(source) (source.resting)
-#define IS_DEAD_OR_INCAP(source) (source.incapacitated(ignore_grab = TRUE) || source.stat)
+#define IS_DEAD_OR_INCAP(source) (source.incapacitated(IGNORE_GRAB) || source.stat)
 
 
 // How far should we, by default, be looking for interesting things to de-idle?
@@ -46,6 +46,12 @@
 
 /// Signal sent when a blackboard key is set to a new value
 #define COMSIG_AI_BLACKBOARD_KEY_SET(blackboard_key) "ai_blackboard_key_set_[blackboard_key]"
+#define COMSIG_AI_BLACKBOARD_KEY_CLEARED(blackboard_key) "ai_blackboard_key_clear_[blackboard_key]"
+
+///sent from ai controllers when they pick behaviors: (list/datum/ai_behavior/old_behaviors, list/datum/ai_behavior/new_behaviors)
+#define COMSIG_AI_CONTROLLER_PICKED_BEHAVIORS "ai_controller_picked_behaviors"
+///sent from ai controllers when a behavior is inserted into the queue: (list/new_arguments)
+#define AI_CONTROLLER_BEHAVIOR_QUEUED(type) "ai_controller_behavior_queued_[type]"
 
 ///Targetting keys for something to run away from, if you need to store this separately from current target
 #define BB_BASIC_MOB_FLEE_TARGET "BB_basic_flee_target"
@@ -274,3 +280,8 @@ F
 #define ALCHEMY_STATE_RETURN_BOTTLE "return_bottle"
 #define ALCHEMY_STATE_RETURN_WATER_CONTAINER "return_container"
 #define ALCHEMY_STATE_RETURN_ESSENCE_VIAL "return_vial"
+
+// Keys used by one and only one behavior
+// Used to hold state without making bigass lists
+/// For /datum/ai_behavior/find_potential_targets, what if any field are we using currently
+#define BB_FIND_TARGETS_FIELD(type) "bb_find_targets_field_[type]"

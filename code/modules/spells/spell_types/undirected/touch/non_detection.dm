@@ -8,7 +8,7 @@
 	attunements = list(
 		/datum/attunement/illusion = 0.4,
 	)
-
+	spell_flags = SPELL_RITUOS
 	cooldown_time = 10 MINUTES
 
 	hand_path = /obj/item/melee/touch_attack/nondetection
@@ -32,7 +32,7 @@
 
 	var/obj/item/sacrifice
 	for(var/obj/item/I in caster.held_items)
-		if(istype(I, /obj/item/ash))
+		if(istype(I, /obj/item/fertilizer/ash))
 			sacrifice = I
 
 	if(!sacrifice)

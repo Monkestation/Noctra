@@ -61,5 +61,5 @@
 		beltr = /obj/item/reagent_containers/glass/bottle/beer/blackgoat
 		H.change_stat(STATKEY_END, 1)
 		H.change_stat(STATKEY_CON, 1)
-	backpack_contents = list(/obj/item/recipe_book/cooking)
+	backpack_contents = list(/obj/item/recipe_book/cooking, /obj/item/bottle_kit)
 	ADD_TRAIT(H, TRAIT_BOOZE_SLIDER, TRAIT_GENERIC)

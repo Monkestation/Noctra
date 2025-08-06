@@ -29,7 +29,7 @@
 	to_chat(owner.current, span_greentext("You've unleashed Abyssor's rage, completing the objective!"))
 	owner.current.adjust_triumphs(triumph_count)
 	completed = TRUE
-	adjust_storyteller_influence("Abyssor", 15)
+	adjust_storyteller_influence(ABYSSOR, 15)
 	escalate_objective()
 	UnregisterSignal(owner.current, COMSIG_SPLASHED_MOB)
 

@@ -166,9 +166,6 @@
 
 	var/list/next_attack_msg = list()
 
-	var/datum/component/personal_crafting/craftingthing
-	var/last_crafted
-
 	var/obj/item/grabbing/r_grab = null
 	var/obj/item/grabbing/l_grab = null
 
