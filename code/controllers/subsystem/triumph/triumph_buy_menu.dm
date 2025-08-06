@@ -112,7 +112,7 @@
 		if(!found_one) // We didn't find anything that could be visible, so cram in the mssage
 			data += {"
 				<tr class='triumph_text_row'>
-					<td class='triumph_text_desc'>CURRENTLY NOTHING</td>
+					<td class='triumph_text_desc'>NOTHING</td>
 					<td class='triumph_cost_wrapper'>ACTIVE</td>
 					<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];'>HERE</a></td>
 				</tr>
@@ -161,7 +161,7 @@
 		</head>
 	</html>
 	"}
-	linked_client << browse(data, "window=triumph_buy_window;size=600x715;can_close=1;can_minimize=0;can_maximize=0;can_resize=0;titlebar=1")
+	linked_client << browse(data, "window=triumph_buy_window;size=615x715;can_close=1;can_minimize=0;can_maximize=0;can_resize=0;titlebar=1")
 
 	// We setup the href_list "close" call if they hit the x on the top right
 	for(var/i in 1 to 10)

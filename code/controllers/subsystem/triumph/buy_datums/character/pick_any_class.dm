@@ -1,6 +1,6 @@
 /datum/triumph_buy/pick_any_class
 	triumph_buy_id = TRIUMPH_BUY_ANY_CLASS
-	desc = "Get single run of a class that can pick any class BYPASSING CLASS RESTRICTIONS on any class selection! WARNING: MAY BE BUGGY"
+	desc = "Get single run of a class that can pick any class BYPASSING CLASS RESTRICTIONS on any class selection!"
 	triumph_cost = 20
 	category = TRIUMPH_CAT_CHARACTER
 	visible_on_active_menu = TRUE
