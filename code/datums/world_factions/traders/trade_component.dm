@@ -439,9 +439,9 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 			qdel(created_container)
 
 		if(product_info[TRADER_PRODUCT_INFO_QUANTITY] <= 0) //Out of stock
-			sell_info += span_notice("&bull; [span_red("(OUT OF STOCK)")] [initial(path_name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name]; [span_red("[tern_op_result]")] left in stock")
+			sell_info += span_notice("&bull; [span_red("(OUT OF STOCK)")] [path_name] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name]; [span_red("[tern_op_result]")] left in stock")
 		else
-			sell_info += span_notice("&bull; [initial(path_name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name]; [span_green("[tern_op_result]")] left in stock")
+			sell_info += span_notice("&bull; [path_name] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name]; [span_green("[tern_op_result]")] left in stock")
 	to_chat(customer, sell_info.Join("\n"))
 
 ///Sets quantity of all products to initial(quanity); this proc is currently called during initialize
