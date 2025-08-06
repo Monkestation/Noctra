@@ -10,7 +10,7 @@
 	/// Ckey of the person who bought it. I don't feel like dealing with the fact zeth used key for triumphs
 	var/ckey_of_buyer = null
     /// Desc shown for it on the menu
-	var/desc = "ERROR "
+	var/desc = "ERROR"
 	/// Cost in triumphs for something
 	var/triumph_cost = 500
 	/// Category we sort something into
