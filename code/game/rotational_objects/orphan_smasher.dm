@@ -240,12 +240,7 @@
 				material_copy -= listed_atom.type
 
 	var/atom/new_atom
-	if(current.createmultiple)
-		for(var/i=1 to current.createditem_num)
-			new_atom = new current.created_item(get_turf(bin))
-			SEND_SIGNAL(bin, COMSIG_TRY_STORAGE_INSERT, new_atom, null, TRUE, FALSE)
-
-	else
+	for(var/i in 1 to current.createditem_extra + 1)
 		new_atom = new current.created_item(get_turf(bin))
 		SEND_SIGNAL(bin, COMSIG_TRY_STORAGE_INSERT, new_atom, null, TRUE, FALSE)
 

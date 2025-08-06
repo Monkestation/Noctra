@@ -221,8 +221,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/mailer = null
 	var/mailedto = null
 
-	var/picklvl = 0
-
 	var/list/examine_effects = list()
 
 	var/list/blocksound //played when an item that is equipped blocks a hit
@@ -353,7 +351,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(experimental_inhand)
 		var/props2gen = list("gen")
 		var/list/prop
-		if(gripped_intents)
+		if(force_wielded || gripped_intents)
 			props2gen += "wielded"
 		for(var/i in props2gen)
 			prop = getonmobprop(i)

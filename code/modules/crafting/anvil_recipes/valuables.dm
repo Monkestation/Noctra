@@ -4,142 +4,155 @@
 	abstract_type = /datum/anvil_recipe/valuables
 	category = "Valuables"
 
-/datum/anvil_recipe/valuables/silver
-	name = "Silver Statue"
-	recipe_name = "a Statue"
-	req_bar = /obj/item/ingot/silver
-	created_item = /obj/item/statue/silver
-	craftdiff = 1
-
-/datum/anvil_recipe/valuables/ringg
-	name = "3x Gold Rings"
-	recipe_name = "three Rings" // For the Elven kings under the sky...
-	req_bar = /obj/item/ingot/gold
-	created_item = /obj/item/clothing/ring/gold
-	createmultiple = TRUE
-	createditem_num = 2
-	craftdiff = 1
-
-/datum/anvil_recipe/valuables/dorpel
-	name = "Golden Dorpel Ring"
-	recipe_name = "a Golden Dorpel Ring"
-	req_bar = /obj/item/ingot/gold
-	additional_items = list(/obj/item/gem/diamond)
-	created_item = /obj/item/clothing/ring/gold/dorpel
-	craftdiff = 2
-
-/datum/anvil_recipe/valuables/blortz
-	name = "Golden Blortz Ring"
-	recipe_name = "a Golden Blortz Ring"
-	req_bar = /obj/item/ingot/gold
-	additional_items = list(/obj/item/gem/blue)
-	created_item = /obj/item/clothing/ring/gold/blortz
-	craftdiff = 2
-
-/datum/anvil_recipe/valuables/saffira
-	name = "Golden Saffira Ring"
-	recipe_name = "a Golden Saffira Ring"
-	req_bar = /obj/item/ingot/gold
-	additional_items = list(/obj/item/gem/violet)
-	created_item = /obj/item/clothing/ring/gold/saffira
-	craftdiff = 2
-
-/datum/anvil_recipe/valuables/gemerald
-	name = "Golden Gemerald Ring"
-	recipe_name = "a Golden Gemerald Ring"
-	req_bar = /obj/item/ingot/gold
-	additional_items = list(/obj/item/gem/green)
-	created_item = /obj/item/clothing/ring/gold/gemerald
-	craftdiff = 2
-
-/datum/anvil_recipe/valuables/toper
-	name = "Golden Toper Ring"
-	recipe_name = "a Golden Toper Ring"
-	req_bar = /obj/item/ingot/gold
-	additional_items = list(/obj/item/gem/yellow)
-	created_item = /obj/item/clothing/ring/gold/toper
-	craftdiff = 2
-
-/datum/anvil_recipe/valuables/rontz
-	name = "Golden Rontz Ring"
-	recipe_name = "a Golden Rontz Ring"
-	req_bar = /obj/item/ingot/gold
-	additional_items = list(/obj/item/gem)
-	created_item = /obj/item/clothing/ring/gold/rontz
-	craftdiff = 2
-
-/datum/anvil_recipe/valuables/gold
-	name = "Golden Statue"
-	recipe_name = "a Statue"
-	req_bar = /obj/item/ingot/gold
-	created_item = /obj/item/statue/gold
-	craftdiff = 2
+// --------- IRON -----------
 
 /datum/anvil_recipe/valuables/iron
+	req_bar = /obj/item/ingot/iron
+	abstract_type = /datum/anvil_recipe/valuables/iron
+	craftdiff = 1
+///////////////////////////////////////////////
+
+/datum/anvil_recipe/valuables/iron/statue
 	name = "Iron Statue"
 	recipe_name = "a Statue"
-	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/statue/iron
 
-/datum/anvil_recipe/valuables/rings
-	name = "3x Silver Rings"
-	recipe_name = "three Rings"
-	req_bar = /obj/item/ingot/silver
-	created_item = /obj/item/clothing/ring/silver
-	createmultiple = TRUE
-	createditem_num = 2
-	craftdiff = 1
-
-/datum/anvil_recipe/valuables/dorpels
-	name = "Silver Dorpel Ring"
-	recipe_name = "a Silver Dorpel Ring"
-	req_bar = /obj/item/ingot/silver
-	additional_items = list(/obj/item/gem/diamond)
-	created_item = /obj/item/clothing/ring/silver/dorpel
-	craftdiff = 1
-
-/datum/anvil_recipe/valuables/blortzs
-	name = "Silver Blortz Ring"
-	recipe_name = "a Silver Blortz Ring"
-	req_bar = /obj/item/ingot/silver
-	additional_items = list(/obj/item/gem/blue)
-	created_item = /obj/item/clothing/ring/silver/blortz
-	craftdiff = 1
-
-/datum/anvil_recipe/valuables/saffiras
-	name = "Silver Saffira Ring"
-	recipe_name = "a Silver Saffira Ring"
-	req_bar = /obj/item/ingot/silver
-	additional_items = list(/obj/item/gem/violet)
-	created_item = /obj/item/clothing/ring/silver/saffira
-	craftdiff = 1
-
-/datum/anvil_recipe/valuables/gemeralds
-	name = "Silver Gemerald Ring"
-	recipe_name = "a Silver Gemerald Ring"
-	req_bar = /obj/item/ingot/silver
-	additional_items = list(/obj/item/gem/green)
-	created_item = /obj/item/clothing/ring/silver/gemerald
-	craftdiff = 1
-
-/datum/anvil_recipe/valuables/topers
-	name = "Silver Toper Ring"
-	recipe_name = "a Silver Toper Ring"
-	req_bar = /obj/item/ingot/silver
-	additional_items = list(/obj/item/gem/yellow)
-	created_item = /obj/item/clothing/ring/silver/toper
-	craftdiff = 1
-
-/datum/anvil_recipe/valuables/rontzs
-	name = "Silver Rontz Ring"
-	recipe_name = "a Silver Rontz Ring"
-	req_bar = /obj/item/ingot/silver
-	additional_items = list(/obj/item/gem)
-	created_item = /obj/item/clothing/ring/silver/rontz
-	craftdiff = 1
+// --------- STEEL -----------
 
 /datum/anvil_recipe/valuables/steel
+	abstract_type = /datum/anvil_recipe/valuables/steel
+	req_bar = /obj/item/ingot/steel
+	craftdiff = 2
+///////////////////////////////////////////////
+
+/datum/anvil_recipe/valuables/steel/statue
 	name = "Steel Statue"
 	recipe_name = "a Statue"
-	req_bar = /obj/item/ingot/steel
 	created_item = /obj/item/statue/steel
+
+// --------- SILVER -----------
+
+/datum/anvil_recipe/valuables/silver
+	abstract_type = /datum/anvil_recipe/valuables/silver
+	req_bar = /obj/item/ingot/silver
+	craftdiff = 3
+///////////////////////////////////////////////
+
+/datum/anvil_recipe/valuables/silver/statue
+	name = "Silver Statue"
+	recipe_name = "a Statue"
+	created_item = /obj/item/statue/silver
+
+/datum/anvil_recipe/valuables/silver/rings
+	name = "3x Silver Rings"
+	recipe_name = "three Rings"
+	created_item = /obj/item/clothing/ring/silver
+	createditem_extra = 2
+
+/datum/anvil_recipe/valuables/silver/dorpels
+	name = "Silver Dorpel Ring"
+	recipe_name = "a Silver Dorpel Ring"
+	additional_items = list(/obj/item/gem/diamond)
+	created_item = /obj/item/clothing/ring/silver/dorpel
+	craftdiff = 4
+
+/datum/anvil_recipe/valuables/silver/blortzs
+	name = "Silver Blortz Ring"
+	recipe_name = "a Silver Blortz Ring"
+	additional_items = list(/obj/item/gem/blue)
+	created_item = /obj/item/clothing/ring/silver/blortz
+	craftdiff = 4
+
+/datum/anvil_recipe/valuables/silver/saffiras
+	name = "Silver Saffira Ring"
+	recipe_name = "a Silver Saffira Ring"
+	additional_items = list(/obj/item/gem/violet)
+	created_item = /obj/item/clothing/ring/silver/saffira
+	craftdiff = 4
+
+/datum/anvil_recipe/valuables/silver/gemeralds
+	name = "Silver Gemerald Ring"
+	recipe_name = "a Silver Gemerald Ring"
+	additional_items = list(/obj/item/gem/green)
+	created_item = /obj/item/clothing/ring/silver/gemerald
+	craftdiff = 4
+
+/datum/anvil_recipe/valuables/silver/topers
+	name = "Silver Toper Ring"
+	recipe_name = "a Silver Toper Ring"
+	additional_items = list(/obj/item/gem/yellow)
+	created_item = /obj/item/clothing/ring/silver/toper
+	craftdiff = 4
+
+/datum/anvil_recipe/valuables/silver/rontzs
+	name = "Silver Rontz Ring"
+	recipe_name = "a Silver Rontz Ring"
+	additional_items = list(/obj/item/gem)
+	created_item = /obj/item/clothing/ring/silver/rontz
+	craftdiff = 4
+
+// --------- GOLD -----------
+
+/datum/anvil_recipe/valuables/gold
+	req_bar = /obj/item/ingot/gold
+	abstract_type = /datum/anvil_recipe/valuables/gold
+	craftdiff = 4
+//////////////////////////////////////////////
+
+/datum/anvil_recipe/valuables/gold/statue
+	name = "Golden Statue"
+	recipe_name = "a Statue"
+	created_item = /obj/item/statue/gold
+
+/datum/anvil_recipe/valuables/gold/circulet
+	name = "Golden Circlet"
+	recipe_name = "a golden circlet"
+	created_item = /obj/item/clothing/head/crown/circlet
+
+/datum/anvil_recipe/valuables/gold/rings
+	name = "3x Gold Rings"
+	recipe_name = "three Rings" // For the Elven kings under the sky...
+	created_item = /obj/item/clothing/ring/gold
+	createditem_extra = 2
+
+/datum/anvil_recipe/valuables/gold/dorpel
+	name = "Golden Dorpel Ring"
+	recipe_name = "a Golden Dorpel Ring"
+	additional_items = list(/obj/item/gem/diamond)
+	created_item = /obj/item/clothing/ring/gold/dorpel
+	craftdiff = 5
+
+/datum/anvil_recipe/valuables/gold/blortz
+	name = "Golden Blortz Ring"
+	recipe_name = "a Golden Blortz Ring"
+	additional_items = list(/obj/item/gem/blue)
+	created_item = /obj/item/clothing/ring/gold/blortz
+	craftdiff = 5
+
+/datum/anvil_recipe/valuables/gold/saffira
+	name = "Golden Saffira Ring"
+	recipe_name = "a Golden Saffira Ring"
+	additional_items = list(/obj/item/gem/violet)
+	created_item = /obj/item/clothing/ring/gold/saffira
+	craftdiff = 5
+
+/datum/anvil_recipe/valuables/gold/gemerald
+	name = "Golden Gemerald Ring"
+	recipe_name = "a Golden Gemerald Ring"
+	additional_items = list(/obj/item/gem/green)
+	created_item = /obj/item/clothing/ring/gold/gemerald
+	craftdiff = 5
+
+/datum/anvil_recipe/valuables/gold/toper
+	name = "Golden Toper Ring"
+	recipe_name = "a Golden Toper Ring"
+	additional_items = list(/obj/item/gem/yellow)
+	created_item = /obj/item/clothing/ring/gold/toper
+	craftdiff = 5
+
+/datum/anvil_recipe/valuables/gold/rontz
+	name = "Golden Rontz Ring"
+	recipe_name = "a Golden Rontz Ring"
+	additional_items = list(/obj/item/gem)
+	created_item = /obj/item/clothing/ring/gold/rontz
+	craftdiff = 5
