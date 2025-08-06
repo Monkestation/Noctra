@@ -131,7 +131,7 @@
 			if(next_rmove > world.time)
 				return
 		if(uses_intents)
-			if(used_intent?.get_chargetime())
+			if(!ispath(used_intent) && used_intent?.get_chargetime())
 				if(used_intent.no_early_release && client?.chargedprog < 100)
 					var/adf = used_intent.clickcd
 					if(istype(rmb_intent, /datum/rmb_intent/aimed))

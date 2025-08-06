@@ -20,7 +20,7 @@
 /* ----------------- */
 
 /datum/patron/inhumen/zizo
-	name = "Zizo"
+	name = ZIZO
 	domain = "Ascended Goddess of Forbidden Magic, Domination, and Power"
 	desc = "Snow elf who slaughtered her kind in ascension, conquered and remade the Dark Elven empires in her name. She proves that any with will can achieve divinity... though at a cost."
 	flaws = "Hubris, Superiority, Fury"
@@ -44,7 +44,7 @@
 	)
 
 /datum/patron/inhumen/graggar
-	name = "Graggar"
+	name = GRAGGAR
 	domain = "Ascended God, the Dark Sini-Star of Unnatural Beasts, Unsated Consumption, and Unbridled Hatred"
 	desc = "Became the first orc upon ascension through his habit of consuming the bodies of those he conquered. His forces continue to ravage the lands in his name. Through him, one may achieve true strength."
 	flaws = "Rage, Hatred, Bloodthirst"
@@ -64,7 +64,7 @@
 	storyteller = /datum/storyteller/graggar
 
 /datum/patron/inhumen/matthios
-	name = "Matthios"
+	name = MATTHIOS
 	domain = "God of Thievery, Ill-Gotten Gains, and Highwaymen"
 	desc = "Legendary humen bandit whose name was attributed to countless great thefts. It is because of his legacy that nobles clutch their coin purses to their chests in town."
 	flaws = "Pride, Greed, Orneryness"
@@ -84,7 +84,7 @@
 	storyteller = /datum/storyteller/matthios
 
 /datum/patron/inhumen/baotha
-	name = "Baotha"
+	name = BAOTHA
 	domain = "Goddess of Drugs, Self-Preservation, and Remorseless Joy"	//Bright-dyed hair falls within 'remorseless joy.' Joy for one's self at expense of the setting. Same for her music taste.
 	desc = "Ascended, formerly disgraced tiefling queen, notorious for having a mind elsewhere. Drove her kingdom into the ground through her demands and addictions. The first tiefling noble, last tiefling noble, and sole reason there are no more tiefling nobles. As she preaches to her followers, 'Joy at all costs!'"
 	flaws = "Manipulation, Self-Destruction, Willingness to Sacrifice Others"

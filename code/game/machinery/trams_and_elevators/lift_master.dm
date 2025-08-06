@@ -616,6 +616,13 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 	var/spent_amount = 0
 	var/list/requested_supplies = list()
 	var/list/request_fufillment = list()
+	var/list/reputation_purchases = list() // Track reputation purchases
+	var/total_reputation_cost = 0
+
+	var/datum/world_faction/faction = SSmerchant.active_faction
+	if(!faction)
+		return
+
 	for(var/obj/structure/industrial_lift/tram/platform in lift_platforms)
 		for(var/atom/movable/listed_atom in platform.lift_load)
 			if(!fence)
@@ -651,7 +658,19 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 		for(var/atom/movable/listed_atom in platform.lift_load)
 			if(istype(listed_atom, /obj/item/paper/scroll/cargo))
 				var/obj/item/paper/scroll/cargo/cargo_manifest = listed_atom
+
+				// Add regular orders
 				requested_supplies.Add(cargo_manifest.orders.Copy())
+
+				if(cargo_manifest.reputation_orders && length(cargo_manifest.reputation_orders))
+					for(var/datum/supply_pack/pack in cargo_manifest.reputation_orders)
+						if(cargo_manifest.reputation_orders[pack])
+							reputation_purchases[pack] = TRUE
+							// Calculate reputation cost
+							var/quantity = cargo_manifest.orders[pack] || 0
+							var/rep_cost = calculate_reputation_cost_for_processing(pack)
+							total_reputation_cost += rep_cost * quantity
+
 				qdel(listed_atom)
 
 			if(istype(listed_atom, /obj/item/coin))
@@ -664,36 +683,130 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 				if(istype(inside, /obj/item/paper/scroll/cargo))
 					var/obj/item/paper/scroll/cargo/cargo_manifest = inside
 					requested_supplies.Add(cargo_manifest.orders.Copy())
-					qdel(inside)
 
+					if(cargo_manifest.reputation_orders && length(cargo_manifest.reputation_orders))
+						for(var/datum/supply_pack/pack in cargo_manifest.reputation_orders)
+							if(cargo_manifest.reputation_orders[pack])
+								reputation_purchases[pack] = TRUE
+								var/quantity = cargo_manifest.orders[pack] || 0
+								var/rep_cost = calculate_reputation_cost_for_processing(pack)
+								total_reputation_cost += rep_cost * quantity
+
+					qdel(inside)
 				if(istype(inside, /obj/item/coin))
 					total_coin_value += inside.get_real_price()
 					qdel(inside)
 
+		// Process platform orders
 		if(!length(requested_supplies))
-			spawn_coins(total_coin_value, platform) // without orders, acts as a coin consolidator without a free chest
+			spawn_coins(total_coin_value, platform) // without orders, acts as a coin consolidator
 			total_coin_value = 0
 			continue
 
+		// Check reputation requirements BEFORE processing any orders
+		if(total_reputation_cost > 0 && faction.faction_reputation < total_reputation_cost)
+			// Create failure note and return coins
+			spawn_coins(total_coin_value, platform, crate_type = /obj/structure/closet/crate/chest/merchant)
+			var/obj/item/paper/failure_note = new(get_turf(platform))
+			failure_note.name = "delivery failure notice"
+			failure_note.info = "Order rejected: Insufficient reputation. Required: [total_reputation_cost], Available: [faction.faction_reputation]. Please improve relations before attempting reputation purchases."
+			total_coin_value = 0
+			continue
+
+		// Calculate costs and process orders (modified for reputation pricing)
+		var/total_required_cost = 0
 		for(var/datum/supply_pack/requested as anything in requested_supplies)
 			if(!requested_supplies[requested])
 				continue
+
 			var/modifier = 1
 			if(fence)
 				if(!requested.contraband)
 					modifier = 1.5
+
+			// Check if this is a reputation purchase (costs 2x mammons)
+			var/reputation_multiplier = 1
+			if(reputation_purchases[requested])
+				reputation_multiplier = 2
+
+			var/quantity = requested_supplies[requested]
+			var/cost_per_item = FLOOR(requested.cost * modifier * reputation_multiplier, 1)
+			total_required_cost += cost_per_item * quantity
+
+		// Check if we have enough coins
+		if(total_coin_value < total_required_cost)
+			// Create failure note and return coins
+			spawn_coins(total_coin_value, platform, crate_type = /obj/structure/closet/crate/chest/merchant)
+			var/obj/item/paper/failure_note = new(get_turf(platform))
+			failure_note.name = "delivery failure notice"
+			failure_note.info = "Order rejected: Insufficient payment. Required: [total_required_cost] mammons, Provided: [total_coin_value]."
+			total_coin_value = 0
+			continue
+
+		// Deduct reputation cost first
+		if(total_reputation_cost > 0)
+			faction.faction_reputation -= total_reputation_cost
+
+		for(var/datum/supply_pack/requested as anything in requested_supplies)
+			if(!requested_supplies[requested])
+				continue
+
+			var/modifier = 1
+			if(fence)
+				if(!requested.contraband)
+					modifier = 1.5
+
+			// Apply reputation multiplier for reputation purchases
+			var/reputation_multiplier = 1
+			if(reputation_purchases[requested])
+				reputation_multiplier = 2
+
 			for(var/i in 1 to requested_supplies[requested])
-				var/cost = FLOOR(requested.cost * modifier, 1)
+				var/cost = FLOOR(requested.cost * modifier * reputation_multiplier, 1)
 				if(total_coin_value >= cost)
 					total_coin_value -= cost
 					spent_amount += cost
-					SSmerchant.requestlist[requested] += 1
 
+					// Check if item is normally available or reputation purchase
+					var/datum/world_faction/active_faction = SSmerchant.active_faction
+					if(active_faction && active_faction.has_supply_pack(requested.type))
+						// Normal purchase - item is in stock
+						SSmerchant.requestlist[requested] += 1
+					else if(reputation_purchases[requested])
+						// Reputation purchase - override stock limitation
+						SSmerchant.requestlist[requested] += 1
+					// If neither condition is met, the item simply isn't processed (shouldn't happen with proper validation)
+
+		// Return remaining coins
 		spawn_coins(total_coin_value, platform, crate_type = /obj/structure/closet/crate/chest/merchant)
+
+		// Create success note if reputation was used
+		if(total_reputation_cost > 0)
+			var/obj/item/paper/success_note = new(get_turf(platform))
+			success_note.name = "reputation purchase confirmation"
+			success_note.info = "Reputation purchase successful! [total_reputation_cost] reputation spent. Remaining: [faction.faction_reputation]"
+
 		total_coin_value = 0
+
+	// Track spending (unchanged)
 	if(spent_amount)
 		record_round_statistic(STATS_TRADE_VALUE_IMPORTED, spent_amount)
 		add_abstract_elastic_data(ELASCAT_ECONOMY, ELASDATA_MAMMONS_SPENT, spent_amount, 1)
+
+/datum/lift_master/tram/proc/calculate_reputation_cost_for_processing(datum/supply_pack/pack)
+	var/datum/world_faction/faction = SSmerchant.active_faction
+	if(!faction)
+		return 50
+
+	var/base_cost = pack.cost
+	var/tier = faction.get_reputation_tier()
+
+	// Base reputation cost scales with item value
+	// Higher tier = lower reputation costs (better relations = better deals)
+	var/reputation_multiplier = max(0.5, 1.5 - (tier * 0.15)) // 15% reduction per tier
+	var/reputation_cost = max(10, round(base_cost * reputation_multiplier))
+
+	return reputation_cost
 
 /datum/lift_master/tram/proc/get_valid_turfs(obj/structure/industrial_lift/tram/platform)
 	var/list/valid_turfs = list()
@@ -759,6 +872,8 @@ GLOBAL_LIST_EMPTY(active_lifts_by_type)
 /datum/lift_master/tram/proc/check_living()
 	for(var/obj/structure/industrial_lift/tram/platform in lift_platforms)
 		var/mob/living/mob = locate(/mob/living) in platform
+		if(istype(mob, /mob/living/simple_animal/hostile/retaliate/trader))
+			continue
 		if(istype(mob))
 			return FALSE
 

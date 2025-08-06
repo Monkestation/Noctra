@@ -11,7 +11,7 @@
 	bloody_icon_state = "bodyblood"
 	sewrepair = TRUE
 	anvilrepair = null
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 
 	grid_width = 64
 	grid_height = 64

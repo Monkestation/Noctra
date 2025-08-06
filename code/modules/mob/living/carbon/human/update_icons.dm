@@ -62,6 +62,11 @@ There are several things that need to be remembered:
 	dna?.species?.handle_body(src) //create destroy moment
 	..()
 
+/mob/living/carbon/human/proc/update_organ_colors()
+	var/list/colors = color_key_source_list_from_carbon(src)
+	for(var/obj/item/organ/organ in internal_organs)
+		organ.build_colors_for_accessory(colors)
+
 /mob/living/carbon/human/update_fire()
 	if(fire_stacks + divine_fire_stacks < 10)
 		return ..("Generic_mob_burning")
@@ -1381,7 +1386,8 @@ generate/load female uniform sprites matching all previously decided variables
 
 	//Get the overlays for this item when it's being worn
 	//eg: ammo counters, primed grenade flashes, etc.
-	var/list/worn_overlays = worn_overlays(isinhands, file2use)
+	var/mob/mob_type = loc
+	var/list/worn_overlays = worn_overlays(standing, isinhands, file2use, dummy_block = istype(mob_type, /mob/living/carbon/human/dummy))
 	if(worn_overlays && worn_overlays.len)
 //		for(var/mutable_appearance/MA in worn_overlays)
 //			MA.blend_mode = BLEND_MULTIPLY

@@ -20,7 +20,7 @@
 		if(!istype(human_mob) || human_mob.stat == DEAD || !human_mob.client)
 			continue
 
-		if(!human_mob.patron || !istype(human_mob.patron, /datum/patron/divine/xylix))
+		if(!human_mob.patron || (!is_ascendant(XYLIX) && !istype(human_mob.patron, /datum/patron/divine/xylix)))
 			continue
 
 		var/luck_roll = rand(-2, 4)

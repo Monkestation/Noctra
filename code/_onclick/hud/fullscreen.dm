@@ -32,6 +32,15 @@
 	flick(state,screen)
 	return screen
 
+/mob/proc/update_fullscreen_alpha(category, alpha = 255, time = 1 SECONDS)
+	var/atom/movable/screen/fullscreen/screen = screens[category]
+	if(!screen)
+		screens -= category
+		return
+	if (client)
+		client.screen -= screen
+		animate(screen, alpha = alpha, time = time)
+		client.screen += screen
 
 /mob/proc/clear_fullscreen(category, animated = 10)
 	var/atom/movable/screen/fullscreen/screen = screens[category]
@@ -280,3 +289,32 @@
 /atom/movable/screen/fullscreen/lighting_backdrop/sunlight/Destroy()
 	. = ..()
 	SSoutdoor_effects.sunlighting_planes -= src
+
+/atom/movable/screen/fullscreen/astral_border
+	icon = 'icons/mob/screens/vampire.dmi'
+	icon_state = "astraloverlay"
+	alpha = 0
+
+/atom/movable/screen/fullscreen/deafmute_border
+	icon = 'icons/mob/screens/vampire.dmi'
+	icon_state = "conversionoverlay"
+	alpha = 0
+
+/atom/movable/screen/fullscreen/confusion_border
+	icon = 'icons/mob/screens/vampire.dmi'
+	icon_state = "conversionoverlay"
+	alpha = 0
+
+/atom/movable/screen/fullscreen/black
+	icon = 'icons/mob/screens/vampire.dmi'
+	screen_loc = "WEST, SOUTH to EAST, NORTH"
+	icon_state = "black"
+	layer = BLIND_LAYER
+	alpha = 0
+
+/atom/movable/screen/fullscreen/white
+	icon = 'icons/mob/screens/vampire.dmi'
+	screen_loc = "WEST, SOUTH to EAST, NORTH"
+	icon_state = "white"
+	layer = BLIND_LAYER
+	alpha = 0
