@@ -865,15 +865,14 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		to_chat(src, "<span class='warning'>Book not found!</span>")
 		return
 
+	src << browse_rsc('html/book.png')
+
 	var/content = book["text"]
 	var/dat = {"
 	<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
 	<html>
 		<head>
 			<style type=\"text/css\">
-				html, body {
-					overflow: hidden;
-				}
 				body {
 					background-image:url('book.png');
 					background-repeat: repeat;
@@ -882,7 +881,6 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 					line-height: 1.5;
 					padding: 20px;
 					font-family: 'Times New Roman', serif;
-					overflow: auto;
 				}
 			</style>
 		</head>
@@ -892,11 +890,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	</html>
 	"}
 
-	src << browse_rsc('html/book.png')
-
-	var/datum/browser/popup = new(usr, "book_viewer", "[book["book_title"]] by [book["author"]]", 800, 600)
-	popup.set_content(dat)
-	popup.open()
+	src << browse(dat, "window=reading;size=800x600;can_close=1;can_minimize=1;can_maximize=1;can_resize=1;border=0")
 
 /client/proc/manage_paintings()
 	set category = "Admin"
