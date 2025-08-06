@@ -45,13 +45,15 @@
 		cast_on.IgniteMob()
 		return
 	if(cast_on.real_name in GLOB.excommunicated_players)
-		cast_on.visible_message(
-			span_warning("The angry Ten the flesh of [cast_on]! a foolish blasphemer and heretic!"),
-			span_notice("I am despised by the Ten, rejected, and they remind me just how unlovable I am with a wave of pain!"),
-		)
-		cast_on.emote("scream")
-		cast_on.adjustFireLoss(base_healing)
-		return
+		if(isliving(owner))
+			var/mob/living/living_owner = owner
+			if(istype(living_owner.patron, /datum/patron/divine))
+				cast_on.visible_message(
+					span_warning("The angry Ten rend the flesh of [cast_on]! a foolish blasphemer and heretic!"),
+					span_notice("I am despised by the Ten, rejected, and they remind me just how unlovable I am with a wave of pain!"),
+				)
+				cast_on.emote("scream")
+				return
 
 	var/conditional_buff = FALSE
 	var/situational_bonus = 10
