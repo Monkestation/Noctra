@@ -26,19 +26,19 @@
 	/// List of things it can conflict with
 	var/list/conflicts_with = list()
 
-/// We fire this when someone buys it, aka right after its made and its being inserted places
+/// We call this when someone buys it in the triumph shop
 /datum/triumph_buy/proc/on_buy()
 	if(!manual_activation)
 		on_activate()
 
-/// We fire this shit when someones trying to remove it aka unbuy or otherwise
+/// We call this when someone is trying to remove it aka on refund or otherwise
 /datum/triumph_buy/proc/on_removal()
 	return
 
-/// We fire this on activate
+/// We call this on when the triumph buy effect is active
 /datum/triumph_buy/proc/on_activate(mob/living/carbon/human/H)
 	activated = TRUE
 
-/// Called upon job post equip
+/// Called upon job post equip if the triumph buy is in post_equip_calls
 /datum/triumph_buy/proc/on_post_equip(mob/living/carbon/human/H)
 	return

@@ -1,12 +1,12 @@
 /datum/triumph_buy/pick_any_class
 	triumph_buy_id = TRIUMPH_BUY_ANY_CLASS
-	desc = "Get single run of a class that can pick any class BYPASSING CLASS RESTRICTIONS on any class selection!"
+	desc = "Get single run of a class that can pick any class BYPASSING CLASS RESTRICTIONS on any class selection! WARNING: PREPARE FOR UNFORESEEN CONSEQUENCES."
 	triumph_cost = 20
 	category = TRIUMPH_CAT_CHARACTER
 	visible_on_active_menu = TRUE
 	manual_activation = TRUE
 
-/datum/triumph_buy/pick_any_class/on_post_equip(mob/living/carbon/human/H)
+/datum/triumph_buy/pick_any_class/on_buy()
 	. = ..()
 
 	if(!SSrole_class_handler.special_session_queue[ckey_of_buyer])
@@ -21,14 +21,11 @@
 		turbo_slop = SSrole_class_handler.special_session_queue[ckey_of_buyer][triumph_buy_id]
 		turbo_slop.maximum_possible_slots += 1
 
-// It should be there you know? lol
-// If not we are desyncing somehow
 /datum/triumph_buy/pick_any_class/on_removal()
 	. = ..()
 	if(SSrole_class_handler.special_session_queue[ckey_of_buyer])
 		SSrole_class_handler.special_session_queue[ckey_of_buyer].Remove(triumph_buy_id)
 
-//For triumph buy pick-all
 /datum/advclass/pick_everything
 	name = "Pick-Classes"
 	tutorial = "This will open up another menu when you spawn allowing you to pick from any class as long as its not disabled."

@@ -383,7 +383,7 @@
 			give_special_items(H)
 	for(var/list_key in SStriumphs.post_equip_calls)
 		var/datum/triumph_buy/bought_triumph_buy = SStriumphs.post_equip_calls[list_key]
-		bought_triumph_buy.on_activate()
+		bought_triumph_buy.on_activate(H)
 		bought_triumph_buy.on_post_equip(H)
 	return
 
