@@ -140,7 +140,6 @@
 /datum/anvil_recipe/tools/iron/chains
 	name = "3x Chains"
 	recipe_name = "three lengths of Chain"
-	appro_skill = /datum/skill/craft/traps // To train trapmaking
 	created_item = /obj/item/rope/chain
 	createditem_extra = 2
 	craftdiff = 0
@@ -173,7 +172,6 @@
 	name = "Mantrap"
 	recipe_name = "a mantrap"
 	created_item = /obj/item/restraints/legcuffs/beartrap/crafted
-	appro_skill = /datum/skill/craft/traps
 
 /datum/anvil_recipe/tools/iron/fishinghooks
 	name = "3x Fishing hooks"
