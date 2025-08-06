@@ -201,7 +201,7 @@
 		dat += "<tr><td colspan='4'>No results found.</td></tr>"
 
 	dat += "</table>"
-	var/datum/browser/popup = new(user, "printing press", "Which book to print?", 400, 240)
+	var/datum/browser/popup = new(user, "printing press", "Which book to print?", 400, 500)
 	popup.set_content(dat)
 	popup.open()
 

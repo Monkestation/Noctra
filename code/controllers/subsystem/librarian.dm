@@ -96,20 +96,24 @@ SUBSYSTEM_DEF(librarian)
 /datum/controller/subsystem/librarian/proc/del_player_book(book_title)
 	if(!book_title)
 		return FALSE
-	var/json_file = file("data/player_generated_books/[book_title].json")
+
+	var/encoded_title = url_encode(book_title)
+	var/json_file = file("data/player_generated_books/[encoded_title].json")
+
 	if(!fexists(json_file))
 		return FALSE
+
 	if(fexists("data/player_generated_books/_book_titles.json"))
 		fdel(json_file)
 		var/list/_book_titles_contents = json_decode(file2text("data/player_generated_books/_book_titles.json"))
-		_book_titles_contents -= "[book_title]"
+		_book_titles_contents -= encoded_title
 		fdel("data/player_generated_books/_book_titles.json")
 		text2file(json_encode(_book_titles_contents), "data/player_generated_books/_book_titles.json")
+		update_books()
 		return TRUE
 	else
 		message_admins("!!! _book_titles.json no longer exists, previous book title list has been lost. !!!")
 		return FALSE
-
 
 /datum/controller/subsystem/librarian/proc/pull_player_book_titles()
 	if(fexists(file("data/player_generated_books/_book_titles.json")))
