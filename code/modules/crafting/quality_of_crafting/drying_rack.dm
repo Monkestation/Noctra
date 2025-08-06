@@ -188,19 +188,6 @@
 	crafting_message = "starts drying some tea"
 	craftdiff = 0
 
-/datum/repeatable_crafting_recipe/coffeebeans
-	name = "coffee beans"
-	output = /obj/item/reagent_containers/food/snacks/produce/coffeebeans
-	starting_atom = /obj/item/reagent_containers/food/snacks/produce/coffee
-	requirements = list(
-		/obj/item/reagent_containers/food/snacks/produce/coffee = 1,
-	)
-	attacked_atom = /obj/machinery/tanningrack
-
-	craft_time = 5 SECONDS
-	crafting_message = "starts drying some tea"
-	craftdiff = 0
-
 /datum/repeatable_crafting_recipe/parchment
 	name = "parchment"
 	output = /obj/item/paper
