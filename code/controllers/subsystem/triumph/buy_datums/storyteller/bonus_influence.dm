@@ -5,7 +5,7 @@
 	category = TRIUMPH_CAT_STORYTELLER
 	visible_on_active_menu = TRUE
 
-/datum/triumph_buy/storyteller_influence/matthios/on_buy()
+/datum/triumph_buy/storyteller_influence/matthios/on_activate()
 	. = ..()
 	adjust_storyteller_influence(MATTHIOS, 25)
 
@@ -16,7 +16,7 @@
 	category = TRIUMPH_CAT_STORYTELLER
 	visible_on_active_menu = TRUE
 
-/datum/triumph_buy/storyteller_influence/graggar/on_buy()
+/datum/triumph_buy/storyteller_influence/graggar/on_activate()
 	. = ..()
 	adjust_storyteller_influence(GRAGGAR, 25)
 
@@ -27,7 +27,7 @@
 	category = TRIUMPH_CAT_STORYTELLER
 	visible_on_active_menu = TRUE
 
-/datum/triumph_buy/storyteller_influence/baotha/on_buy()
+/datum/triumph_buy/storyteller_influence/baotha/on_activate()
 	. = ..()
 	adjust_storyteller_influence(BAOTHA, 25)
 
@@ -38,7 +38,7 @@
 	category = TRIUMPH_CAT_STORYTELLER
 	visible_on_active_menu = TRUE
 
-/datum/triumph_buy/storyteller_influence/zizo/on_buy()
+/datum/triumph_buy/storyteller_influence/zizo/on_activate()
 	. = ..()
 	adjust_storyteller_influence(ZIZO, 25)
 
@@ -49,7 +49,7 @@
 	category = TRIUMPH_CAT_STORYTELLER
 	visible_on_active_menu = TRUE
 
-/datum/triumph_buy/storyteller_influence/dendor/on_buy()
+/datum/triumph_buy/storyteller_influence/dendor/on_activate()
 	. = ..()
 	adjust_storyteller_influence(DENDOR, 25)
 
@@ -60,7 +60,7 @@
 	category = TRIUMPH_CAT_STORYTELLER
 	visible_on_active_menu = TRUE
 
-/datum/triumph_buy/storyteller_influence/eora/on_buy()
+/datum/triumph_buy/storyteller_influence/eora/on_activate()
 	. = ..()
 	adjust_storyteller_influence(EORA, 25)
 
@@ -71,7 +71,7 @@
 	category = TRIUMPH_CAT_STORYTELLER
 	visible_on_active_menu = TRUE
 
-/datum/triumph_buy/storyteller_influence/malum/on_buy()
+/datum/triumph_buy/storyteller_influence/malum/on_activate()
 	. = ..()
 	adjust_storyteller_influence(MALUM, 25)
 
@@ -82,7 +82,7 @@
 	category = TRIUMPH_CAT_STORYTELLER
 	visible_on_active_menu = TRUE
 
-/datum/triumph_buy/storyteller_influence/pestra/on_buy()
+/datum/triumph_buy/storyteller_influence/pestra/on_activate()
 	. = ..()
 	adjust_storyteller_influence(PESTRA, 25)
 
@@ -93,7 +93,7 @@
 	category = TRIUMPH_CAT_STORYTELLER
 	visible_on_active_menu = TRUE
 
-/datum/triumph_buy/storyteller_influence/necra/on_buy()
+/datum/triumph_buy/storyteller_influence/necra/on_activate()
 	. = ..()
 	adjust_storyteller_influence(NECRA, 25)
 
@@ -104,7 +104,7 @@
 	category = TRIUMPH_CAT_STORYTELLER
 	visible_on_active_menu = TRUE
 
-/datum/triumph_buy/storyteller_influence/xylix/on_buy()
+/datum/triumph_buy/storyteller_influence/xylix/on_activate()
 	. = ..()
 	adjust_storyteller_influence(XYLIX, 25)
 
@@ -115,7 +115,7 @@
 	category = TRIUMPH_CAT_STORYTELLER
 	visible_on_active_menu = TRUE
 
-/datum/triumph_buy/storyteller_influence/abyssor/on_buy()
+/datum/triumph_buy/storyteller_influence/abyssor/on_activate()
 	. = ..()
 	adjust_storyteller_influence(ABYSSOR, 25)
 
@@ -126,7 +126,7 @@
 	category = TRIUMPH_CAT_STORYTELLER
 	visible_on_active_menu = TRUE
 
-/datum/triumph_buy/storyteller_influence/ravox/on_buy()
+/datum/triumph_buy/storyteller_influence/ravox/on_activate()
 	. = ..()
 	adjust_storyteller_influence(RAVOX, 25)
 
@@ -137,7 +137,7 @@
 	category = TRIUMPH_CAT_STORYTELLER
 	visible_on_active_menu = TRUE
 
-/datum/triumph_buy/storyteller_influence/noc/on_buy()
+/datum/triumph_buy/storyteller_influence/noc/on_activate()
 	. = ..()
 	adjust_storyteller_influence(NOC, 25)
 
@@ -148,6 +148,6 @@
 	category = TRIUMPH_CAT_STORYTELLER
 	visible_on_active_menu = TRUE
 
-/datum/triumph_buy/storyteller_influence/astrata/on_buy()
+/datum/triumph_buy/storyteller_influence/astrata/on_activate()
 	. = ..()
 	adjust_storyteller_influence(ASTRATA, 25)
