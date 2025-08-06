@@ -90,6 +90,18 @@
 	if(hud_used?.fov)
 		if(hud_used.fov.alpha == 0)
 			return
+	//! IMPORTANT: If Animations break remove this, tested most seemed fine
+	var/image/I = image(src, src)
+
+	I.plane = GAME_PLANE_UPPER
+	I.layer = layer
+	I.override = TRUE
+	I.pixel_x = 0
+	I.pixel_y = 0
+	client.images += I
+	client.hidden_images += I
+	I.appearance_flags = KEEP_TOGETHER
+
 /*	if(hud_used && hud_used.fov_blocker)
 		fov_blocker
 

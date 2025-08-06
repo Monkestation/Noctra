@@ -8,7 +8,7 @@
 /obj/effect/waterfall/Initialize()
 	. = ..()
 	var/turf/open = get_turf(src)
-	if(istransparentturf(open))
+	if(isopenspace(open))
 		return
 	color = initial(water_reagent.color)
 	var/obj/particle_emitter/effect = MakeParticleEmitter(/particles/mist/waterfall)

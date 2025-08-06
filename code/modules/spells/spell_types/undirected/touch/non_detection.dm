@@ -32,7 +32,7 @@
 
 	var/obj/item/sacrifice
 	for(var/obj/item/I in caster.held_items)
-		if(istype(I, /obj/item/ash))
+		if(istype(I, /obj/item/fertilizer/ash))
 			sacrifice = I
 
 	if(!sacrifice)

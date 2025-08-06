@@ -24,7 +24,7 @@
 
 	sewrepair = TRUE
 	anvilrepair = null
-	smeltresult = /obj/item/ash // Helmets have pre-defined smeltresults, this is for hats
+	smeltresult = /obj/item/fertilizer/ash // Helmets have pre-defined smeltresults, this is for hats
 	sellprice = VALUE_CHEAP_CLOTHING
 	edelay_type = 1
 
@@ -54,9 +54,6 @@
 	. = ..()
 	user.update_fov_angles()
 	flags_inv = initial(flags_inv)
-
-/obj/item/clothing/head/worn_overlays(isinhands = FALSE)
-	. = list()
 
 /obj/item/clothing/head/update_clothes_damaged_state(damaging = TRUE)
 	..()

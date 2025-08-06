@@ -63,5 +63,5 @@
 		if(objective && !objective.completed)
 			objective.completed = TRUE
 			owner.adjust_triumphs(objective.triumph_count)
-			adjust_storyteller_influence("Ravox", 20)
+			adjust_storyteller_influence(RAVOX, 20)
 			objective.escalate_objective()

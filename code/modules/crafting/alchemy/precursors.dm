@@ -454,7 +454,7 @@ GLOBAL_LIST_INIT(natural_precursor_registry, list())
 	)
 	init_types = list(
 		/obj/item/alch/bone,
-		/obj/item/alch/bonemeal,
+		/obj/item/fertilizer/bone_meal,
 	)
 
 /datum/natural_precursor/feather
@@ -1333,7 +1333,7 @@ GLOBAL_LIST_INIT(natural_precursor_registry, list())
 		/datum/thaumaturgical_essence/life = 5
 	)
 	init_types = list(
-		/obj/item/alch/bonemeal
+		/obj/item/fertilizer/bone_meal
 	)
 
 /datum/natural_precursor/seeddust

@@ -20,7 +20,7 @@
 	to_chat(owner.current, span_greentext("You've obtained a new apprentice, completing Noc's objective!"))
 	owner.current.adjust_triumphs(triumph_count)
 	completed = TRUE
-	adjust_storyteller_influence("Noc", 15)
+	adjust_storyteller_influence(NOC, 15)
 	escalate_objective()
 	UnregisterSignal(owner.current, COMSIG_APPRENTICE_MADE)
 

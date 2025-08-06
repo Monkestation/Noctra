@@ -106,11 +106,7 @@
 		new_item.warming = min(5 MINUTES, average_freshness)
 
 		// Calculate final quality based on ingredients, skill, and recipe
-		var/final_quality = calculate_quality(cooking_skill, highest_quality, average_freshness)
-		new_item.quality = round(final_quality)
-
-		// Apply descriptive modifications based on quality
-		apply_quality_description(new_item, final_quality)
+		apply_food_quality(new_item, cooking_skill, highest_quality, average_freshness)
 
 		if(length(pass_types_in_end))
 			var/list/parts = list()
@@ -126,8 +122,16 @@
 
 	return outputs
 
-/datum/repeatable_crafting_recipe/cooking/proc/calculate_quality(cooking_skill, ingredient_quality, freshness)
-	return calculate_food_quality(cooking_skill, ingredient_quality, freshness, quality_modifier)
-
-/datum/repeatable_crafting_recipe/cooking/proc/apply_quality_description(obj/item/reagent_containers/food/snacks/food_item, quality)
-	apply_food_quality(food_item, quality)
+/datum/repeatable_crafting_recipe/cooking/proc/apply_food_quality(obj/item/reagent_containers/food/snacks/food_item, cooking_skill, ingredient_quality, freshness)
+	var/datum/quality_calculator/cooking/cook_calc = new(
+		base_qual = 0,
+		mat_qual = ingredient_quality,
+		skill_qual = cooking_skill,
+		perf_qual = 0,
+		diff_mod = 0,
+		components = 1,
+		fresh = freshness,
+		recipe_mod = quality_modifier
+	)
+	cook_calc.apply_quality_to_item(food_item)
+	qdel(cook_calc)

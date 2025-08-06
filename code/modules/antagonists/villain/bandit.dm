@@ -83,21 +83,3 @@
 		else
 			to_chat(world, "[the_name] was a bandit. He stole [amt] triumphs worth of loot.")
 	return
-
-/*	.................   Unique Bandit recipes   ................... */
-/datum/crafting_recipe/bandit_volfhelm
-	name = "(Bandit) Volfhelm"
-	time = 4 SECONDS
-	reqs = list(/obj/item/natural/fur/volf = 2)
-	result = /obj/item/clothing/head/helmet/leather/volfhelm
-	category = CAT_NONE
-	always_availible = FALSE
-
-/datum/crafting_recipe/cult_hood
-	name = "(Cult) Ominous Hood"
-	time = 4 SECONDS
-	reqs = list(/obj/item/natural/hide = 1)
-	result = /obj/item/clothing/head/helmet/leather/hood_ominous
-	category = CAT_NONE
-	always_availible = FALSE
-

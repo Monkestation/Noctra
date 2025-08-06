@@ -3,6 +3,8 @@
 	icon_state = "pan"
 	experimental_inhand = FALSE
 
+	grid_width = 32
+	grid_height = 64
 	force = 20
 	throwforce = 15
 	possible_item_intents = list(/datum/intent/mace/strike/shovel)

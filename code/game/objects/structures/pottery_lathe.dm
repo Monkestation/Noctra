@@ -1,6 +1,6 @@
 /obj/item/natural/clay
 	name = "clay"
-	icon_state = "clay"
+	icon_state = "stone1"
 	main_material = /datum/material/clay
 
 /obj/item/natural/clay/New(loc, ...)

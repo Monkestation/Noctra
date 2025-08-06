@@ -9,7 +9,7 @@
 		/datum/reagent/water = 10,
 	)
 	requirements = list(
-		/obj/item/ash = 1,
+		/obj/item/fertilizer/ash = 1,
 		/obj/item/reagent_containers/food/snacks/fat = 1,
 	)
 	output = /obj/item/soap
@@ -25,7 +25,7 @@
 	)
 
 	requirements = list(
-		/obj/item/ash = 1,
+		/obj/item/fertilizer/ash = 1,
 		/obj/item/reagent_containers/food/snacks/fat = 1,
 		/obj/item/alch/mentha = 1,
 	)

@@ -395,3 +395,27 @@
 /obj/structure/bed/post_unbuckle_mob(mob/living/M)
 	..()
 	M.reset_offsets("bed_buckle")
+
+/obj/structure/chair/wood/alt/chair3/crafted
+	item_chair = /obj/item/chair/chair3/crafted
+	sellprice = 6
+
+/obj/item/chair/chair3/crafted
+	origin_type = /obj/structure/chair/wood/alt/chair3/crafted
+	sellprice = 6
+
+/obj/structure/chair/wood/alt/fancy/crafted
+	item_chair = /obj/item/chair/fancy/crafted
+	sellprice = 12
+
+/obj/item/chair/fancy/crafted
+	origin_type = /obj/structure/chair/wood/alt/fancy/crafted
+	sellprice = 12
+
+/obj/structure/chair/stool/crafted
+	item_chair = /obj/item/chair/stool/bar/crafted
+	sellprice = 6
+
+/obj/item/chair/stool/bar/crafted
+	origin_type = /obj/structure/chair/stool/crafted
+	sellprice = 6

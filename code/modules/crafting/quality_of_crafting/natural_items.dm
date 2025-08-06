@@ -262,3 +262,16 @@
 	output = /obj/item/weapon/axe/boneaxe
 	craftdiff = 2
 
+/datum/repeatable_crafting_recipe/survival/claybrick
+	name = "raw claybrick"
+	requirements = list(
+		/obj/item/natural/clay = 1
+	)
+	tool_usage = list(
+		/obj/item/grown/log = list("starts to mold", "start to mold")
+	)
+
+	starting_atom = /obj/item/grown/log
+	attacked_atom = /obj/item/natural/clay
+	skillcraft = /datum/skill/craft/masonry
+	output = /obj/item/natural/raw_brick

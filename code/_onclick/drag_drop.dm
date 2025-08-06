@@ -66,6 +66,8 @@
 	var/last_charge_process
 	var/datum/patreon_data/patreon
 	var/toggled_leylines = TRUE
+	/// The DPI scale of the client. 1 is equivalent to 100% window scaling, 2 will be 200% window scaling
+	var/window_scaling
 
 /atom/movable/screen
 	blockscharging = TRUE
@@ -153,7 +155,7 @@
 		mob.cast_move = 0
 		mob.used_intent = mob.a_intent
 		if(mob.uses_intents)
-			if(mob.used_intent.get_chargetime() && !AD.blockscharging && !mob.in_throw_mode)
+			if(!ispath(mob.used_intent) && mob.used_intent.get_chargetime() && !AD.blockscharging && !mob.in_throw_mode)
 				updateprogbar()
 			else
 				mouse_pointer_icon = 'icons/effects/mousemice/human_attack.dmi'
