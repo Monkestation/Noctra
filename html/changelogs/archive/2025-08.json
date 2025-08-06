@@ -53,5 +53,20 @@
                 "code_imp": "Issue reports are now uploaded to github via bot and do not require users to use github directly, it is still preferable to use github if possible."
             }
         ]
+    },
+    "2025-08-06": {
+        "Arkatos": [
+            {
+                "bugfix": "Fixed an issue where actors menu was not opening"
+            },
+            {
+                "rscadd": "Added ascendant effects for gods' interventions, which makes them stronger and more impactful when the relevant god is ascendant."
+            }
+        ],
+        "Eagletanker": [
+            {
+                "balance": "Monarch now has Medium Armor"
+            }
+        ]
     }
 }
