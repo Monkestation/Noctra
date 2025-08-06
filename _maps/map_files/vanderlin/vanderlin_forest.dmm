@@ -1019,10 +1019,6 @@
 /obj/item/bait,
 /turf/open/floor/ruinedwood/alt,
 /area/rogue/indoors)
-"si" = (
-/obj/structure/flora/newtree,
-/turf/open/floor/dirt,
-/area/rogue/indoors)
 "sm" = (
 /obj/structure/stairs/stone{
 	dir = 1
@@ -22286,12 +22282,12 @@ wV
 UR
 UR
 UR
-vK
-si
-vK
-LT
-vK
-LT
+wV
+tR
+wV
+UR
+wV
+UR
 aP
 VE
 rT
