@@ -250,6 +250,8 @@ SUBSYSTEM_DEF(job)
 					if(!player.client?.has_triumph_buy(TRIUMPH_BUY_RACE_ALL))
 						JobDebug("DO incompatible with species, Player: [player], Job: [job.title], Race: [player.client.prefs.pref_species.name]")
 						continue
+					else
+						player.client?.activate_triumph_buy(TRIUMPH_BUY_RACE_ALL)
 
 				if(length(job.allowed_patrons) && !(player.client.prefs.selected_patron.type in job.allowed_patrons))
 					JobDebug("DO incompatible with patron, Player: [player], Job: [job.title], Race: [player.client.prefs.pref_species.name]")
