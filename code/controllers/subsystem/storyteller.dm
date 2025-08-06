@@ -438,6 +438,8 @@ SUBSYSTEM_DEF(gamemode)
 
 	load_roundstart_data()
 
+	check_roundstart_gods_rankings()
+
 	pick_chronicle_stats()
 
 	. = ..()
@@ -750,7 +752,15 @@ SUBSYSTEM_DEF(gamemode)
 	if(!length(storytellers))
 		for(var/type in subtypesof(/datum/storyteller))
 			storytellers[type] = new type()
-	set_storyteller(/datum/storyteller/astrata)
+
+	for(var/storyteller_name in storytellers)
+		var/datum/storyteller/initialized_storyteller = storytellers[storyteller_name]
+		if(initialized_storyteller?.ascendant)
+			to_chat(world, "<br>")
+			to_chat(world, span_reallybig("[initialized_storyteller.name] is ascendant!"))
+			to_chat(world, "<br>")
+
+	pick_most_influential(TRUE)
 	calculate_ready_players()
 	roll_pre_setup_points()
 	//handle_pre_setup_roundstart_events()
@@ -858,7 +868,7 @@ SUBSYSTEM_DEF(gamemode)
 /// Loads config values from game_options.txt
 /datum/controller/subsystem/gamemode/proc/load_config_vars()
 	point_gain_multipliers[EVENT_TRACK_MUNDANE] = CONFIG_GET(number/mundane_point_gain_multiplier)
-	point_gain_multipliers[EVENT_TRACK_PERSONAL] = CONFIG_GET(number/moderate_point_gain_multiplier) * 1.2
+	point_gain_multipliers[EVENT_TRACK_PERSONAL] = CONFIG_GET(number/moderate_point_gain_multiplier) * 1.25
 	point_gain_multipliers[EVENT_TRACK_MODERATE] = CONFIG_GET(number/moderate_point_gain_multiplier)
 	point_gain_multipliers[EVENT_TRACK_INTERVENTION] = CONFIG_GET(number/major_point_gain_multiplier)
 	point_gain_multipliers[EVENT_TRACK_CHARACTER_INJECTION] = CONFIG_GET(number/roleset_point_gain_multiplier)
@@ -1342,7 +1352,7 @@ SUBSYSTEM_DEF(gamemode)
 	if(!highest)
 		return
 
-	var/adjustment = min(2.5, 1 + (0.3 * FLOOR(max(0, highest.times_chosen - 5) / 5, 1)))
+	var/adjustment = min(3, 1 + (0.4 * FLOOR(max(0, highest.times_chosen - 5) / 5, 1)))
 
 	if(storytellers_with_influence[highest] > adjustment)
 		highest.bonus_points -= adjustment
@@ -1646,20 +1656,20 @@ SUBSYSTEM_DEF(gamemode)
 
 /// Returns influence value for a given storyteller for his given statistic
 /datum/controller/subsystem/gamemode/proc/calculate_specific_influence(datum/storyteller/chosen_storyteller, statistic)
-	var/datum/storyteller/initalized_storyteller = storytellers[chosen_storyteller]
-	if(!initalized_storyteller)
+	var/datum/storyteller/initialized_storyteller = storytellers[chosen_storyteller]
+	if(!initialized_storyteller)
 		return
 
-	if(!(statistic in initalized_storyteller.influence_factors))
+	if(!(statistic in initialized_storyteller.influence_factors))
 		return
 
 	var/influence = 0
 	var/stat_value = GLOB.vanderlin_round_stats[statistic]
-	var/list/factors = initalized_storyteller.influence_factors[statistic]
+	var/list/factors = initialized_storyteller.influence_factors[statistic]
 	var/modifier = factors["points"]
 	var/capacity = factors["capacity"]
 
-	var/raw_contribution = stat_value * modifier
+	var/raw_contribution = (stat_value * modifier) * initialized_storyteller.influence_modifier
 	influence = (modifier < 0) ? max(raw_contribution, capacity) : min(raw_contribution, capacity)
 
 	return influence
@@ -1694,6 +1704,14 @@ SUBSYSTEM_DEF(gamemode)
 		if(S.name == god_name)
 			return SSgamemode.calculate_storyteller_influence(S.type)
 	return 0
+
+/// Checks if the given storyteller is ascendant
+/proc/is_ascendant(god_name)
+	. = FALSE
+	for(var/storyteller_type in SSgamemode.storytellers)
+		var/datum/storyteller/S = SSgamemode.storytellers[storyteller_type]
+		if(S.ascendant && (S.name == god_name))
+			return TRUE
 
 #undef DEFAULT_STORYTELLER_VOTE_OPTIONS
 #undef MAX_POP_FOR_STORYTELLER_VOTE

@@ -202,7 +202,7 @@
 "rU" = (
 /obj/structure/closet/dirthole/closed,
 /obj/item/weapon/shield/tower,
-/obj/item/weapon/mace/copperbludgeon,
+/obj/item/weapon/mace/bludgeon/copper,
 /obj/effect/mapping_helpers/floor_clothing_equipper,
 /mob/living/carbon/human/species/skeleton/npc/no_equipment,
 /turf/open/floor/dirt,

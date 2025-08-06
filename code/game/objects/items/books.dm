@@ -42,6 +42,7 @@
 	var/textper = 100
 	var/our_font = "Rosemary Roman"
 	var/override_find_book = FALSE
+	var/special_book = FALSE
 
 /obj/item/book/examine(mob/user)
 	. = ..()
@@ -131,6 +132,8 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/book/proc/read(mob/user)
+	if(special_book)
+		return
 	if(!open)
 		to_chat(user, "<span class='info'>Open me first.</span>")
 		return FALSE
@@ -219,14 +222,17 @@
 	base_icon_state = "ledger"
 	title = "Catatoma"
 	dat = "To create a shipping order, use a scroll on me."
+	special_book = TRUE
 	var/fence = FALSE
 	var/mob/current_reader
 	var/current_category = "All"
 	var/search_query = ""
+	var/show_in_stock = FALSE
+	var/allow_reputation_purchase = FALSE
 	var/list/categories = list("All")
 	var/list/types = list()
 	var/list/cart = list() // Track items in cart
-	// Removed selected_item variable as we're not using it anymore
+	var/list/reputation_cart = list()
 
 /obj/item/book/secret/ledger/Initialize()
 	. = ..()
@@ -254,6 +260,9 @@
 		client = user.client
 	SSassets.transport.send_assets(client, list("try4_border.png", "try4.png", "slop_menustyle2.css"))
 	user << browse_rsc('html/book.png')
+
+	// Get faction info for display
+	var/faction_html = generate_faction_info_html()
 
 	var/html = {"
 		<!DOCTYPE html>
@@ -285,24 +294,150 @@
 				padding-bottom: 10px;
 				margin-bottom: 20px;
 			}
+			.faction-info {
+				margin-bottom: 15px;
+				padding: 10px;
+				border: 2px solid var(--faction-color, #3e2723);
+				border-radius: 10px;
+				background-color: rgba(210, 180, 140, 0.1);
+				text-align: left;
+				position: relative;
+			}
+			.faction-header {
+				color: var(--faction-color, #3e2723);
+				margin: 0 0 5px 0;
+				text-align: center;
+				font-size: 1.3em;
+			}
+			.faction-toggle {
+				position: absolute;
+				top: 8px;
+				right: 10px;
+				background: none;
+				border: none;
+				color: var(--faction-color, #3e2723);
+				cursor: pointer;
+				font-size: 1.2em;
+				font-weight: bold;
+			}
+			.faction-details {
+				display: none;
+				margin-top: 10px;
+			}
+			.faction-details.expanded {
+				display: block;
+			}
+			.faction-summary {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				font-size: 0.9em;
+				margin-top: 5px;
+			}
+			.bounty-grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 15px;
+				margin-top: 10px;
+			}
+			.bounty-list {
+				margin: 0;
+				padding-left: 20px;
+			}
+			.bounty-item {
+				padding: 2px 0;
+				font-weight: bold;
+				color: #8b4513;
+				font-size: 0.9em;
+			}
 			.book-content {
 				display: flex;
-				height: 85%;
+				height: 75%;
 			}
 			.sidebar {
 				width: 30%;
 				padding: 10px;
 				border-right: 2px solid #3e2723;
 				overflow-y: auto;
-				max-height: 600px;
+				max-height: 500px;
 			}
 			.main-content {
 				width: 70%;
 				padding: 10px;
 				overflow-y: auto;
-				max-height: 600px;
+				max-height: 500px;
 				text-align: left;
 			}
+			.filter-controls {
+				margin-bottom: 15px;
+				padding: 10px;
+				border: 1px solid #3e2723;
+				border-radius: 5px;
+				background-color: rgba(210, 180, 140, 0.1);
+			}
+
+			.stock-filter {
+				display: flex;
+				align-items: center;
+				margin-bottom: 10px;
+				font-size: 0.9em;
+			}
+
+			.stock-filter-btn {
+				padding: 5px 10px;
+				background-color: #d2b48c;
+				border: 1px solid #3e2723;
+				border-radius: 5px;
+				cursor: pointer;
+				font-family: "Charm", cursive;
+				font-size: 0.9em;
+				margin-right: 10px;
+			}
+
+			.stock-filter-btn.active {
+				background-color: #8b4513;
+				color: white;
+			}
+
+			.reputation-controls {
+				margin-bottom: 15px;
+				padding: 10px;
+				border: 1px solid #8b4513;
+				border-radius: 5px;
+				background-color: rgba(139, 69, 19, 0.1);
+			}
+
+			.reputation-toggle {
+				display: flex;
+				align-items: center;
+				margin-bottom: 10px;
+				font-size: 0.9em;
+			}
+
+			.reputation-toggle-btn {
+				padding: 5px 10px;
+				background-color: #8b4513;
+				color: white;
+				border: 1px solid #3e2723;
+				border-radius: 5px;
+				cursor: pointer;
+				font-family: "Charm", cursive;
+				font-size: 0.9em;
+				margin-right: 10px;
+			}
+
+			.reputation-toggle-btn.inactive {
+				background-color: #d2b48c;
+				color: #3e2723;
+			}
+
+			.reputation-warning {
+				font-size: 0.8em;
+				color: #8b4513;
+				font-style: italic;
+				margin-top: 5px;
+			}
+
 			.categories {
 				margin-bottom: 15px;
 			}
@@ -314,6 +449,7 @@
 				border-radius: 5px;
 				cursor: pointer;
 				font-family: "Charm", cursive;
+				font-size: 0.9em;
 			}
 			.category-btn.active {
 				background-color: #8b4513;
@@ -336,9 +472,24 @@
 				color: #3e2723;
 				text-decoration: none;
 				border-bottom: 1px dotted #d2b48c;
+				position: relative;
 			}
 			.item-link:hover {
 				background-color: rgba(210, 180, 140, 0.3);
+			}
+			.item-link.unavailable {
+				opacity: 0.7;
+				color: #888;
+			}
+			.item-link.reputation-purchase {
+				border-left: 3px solid #8b4513;
+				background-color: rgba(139, 69, 19, 0.1);
+			}
+			.reputation-cost {
+				font-size: 0.8em;
+				color: #8b4513;
+				font-weight: bold;
+				margin-left: 5px;
 			}
 			.add-to-cart-btn {
 				float: right;
@@ -350,6 +501,9 @@
 				cursor: pointer;
 				font-size: 0.8em;
 				margin-left: 5px;
+			}
+			.add-to-cart-btn.reputation-btn {
+				background-color: #d2691e;
 			}
 			.item-content {
 				padding: 10px;
@@ -407,6 +561,11 @@
 				justify-content: space-between;
 				padding: 5px 0;
 				border-bottom: 1px dotted #d2b48c;
+			}
+			.cart-item.reputation-item {
+				background-color: rgba(139, 69, 19, 0.05);
+				border-left: 3px solid #8b4513;
+				padding-left: 8px;
 			}
 			.remove-item {
 				color: #8b4513;
@@ -488,13 +647,40 @@
 				padding: 5px;
 				text-align: center;
 			}
+			.reputation-costs {
+				margin-top: 15px;
+				padding: 10px;
+				border: 1px solid #8b4513;
+				border-radius: 5px;
+				background-color: rgba(139, 69, 19, 0.05);
+			}
 		</style>
 
 		<body>
 			<h1>Catacoma</h1>
 
+			<!-- Faction Information Section -->
+			[faction_html]
+
 			<div class="book-content">
 				<div class="sidebar">
+					<!-- Filter Controls -->
+					<div class="filter-controls">
+						<div class="stock-filter">
+							<button class="stock-filter-btn [show_in_stock ? "active" : ""]"
+									onclick="location.href='byond://?src=\ref[src];action=toggle_stock_filter&show_in_stock=[show_in_stock ? "false" : "true"]'">
+								[show_in_stock ? "Showing: In Stock Only" : "Showing: All Items"]
+							</button>
+						</div>
+						<div class="reputation-toggle">
+							<button class="reputation-toggle-btn [allow_reputation_purchase ? "" : "inactive"]"
+									onclick="location.href='byond://?src=\ref[src];action=toggle_reputation_purchase&allow=[allow_reputation_purchase ? "false" : "true"]'">
+								[allow_reputation_purchase ? "Rep Purchase: ON" : "Rep Purchase: OFF"]
+							</button>
+						</div>
+					</div>
+
+
 					<!-- Search box -->
 					<input type="text" class="search-box" id="searchInput"
 						placeholder="Search items..." value="[search_query]">
@@ -514,17 +700,38 @@
 					<div class="recipe-list" id="itemList">
 	"}
 
+	// Get faction info for calculating reputation costs
+	var/datum/world_faction/current_faction = SSmerchant.active_faction
+
 	for(var/datum/supply_pack/pack in types)
 		var/should_show = TRUE
+		var/is_available = current_faction.has_supply_pack(pack.type)
+
 		if(pack.contraband && !fence)
 			should_show = FALSE
 		if(current_category != "All")
 			if(pack.group != current_category)
 				should_show = FALSE
+		if(!is_available && show_in_stock && !allow_reputation_purchase)
+			should_show = FALSE
 
 		var/display_style = should_show ? "" : "display: none;"
+		var/availability_class = is_available ? "" : "unavailable"
+		var/stock_class = is_available ? "in-stock" : "out-of-stock"
+		var/reputation_class = ""
+		var/reputation_cost_text = ""
 
-		html += "<a class='item-link [display_style]' href='byond://?src=\ref[src];action=add_to_cart&item=\ref[pack]&quantity=1' style='[display_style]'>[pack.name] ([pack.cost] mammons)</a>"
+		// Calculate reputation cost for out-of-stock items
+		if(!is_available && allow_reputation_purchase)
+			var/reputation_cost = calculate_reputation_cost(pack)
+			reputation_class = "reputation-purchase"
+			reputation_cost_text = " <span class='reputation-cost'>([reputation_cost] rep)</span>"
+
+		if(should_show)
+			var/availability_text = is_available ? "" : " (Out of Stock)"
+			var/action_url = is_available ? "add_to_cart" : (allow_reputation_purchase ? "add_to_cart_reputation" : "add_to_cart")
+
+			html += "<a class='item-link [availability_class] [stock_class] [reputation_class]' data-in-stock='[is_available ? "true" : "false"]' href='byond://?src=\ref[src];action=[action_url]&item=\ref[pack]&quantity=1' style='[display_style]'>[pack.name] ([pack.cost] mammons)[availability_text][reputation_cost_text]</a>"
 
 	html += {"
 						<div id="noMatchesMsg" class="no-matches">No matching items found.</div>
@@ -536,18 +743,29 @@
 						<div class="order-section">
 	"}
 
-	// Display cart items
+	// Display cart items with reputation costs
 	if(length(cart) > 0)
 		html += "<table class='cart-table'><tr><th>Item</th><th>Quantity</th><th>Cost</th><th>Actions</th></tr>"
 		var/total_cost = 0
+		var/total_reputation_cost = 0
 
 		for(var/datum/supply_pack/pack in cart)
 			var/item_quantity = cart[pack]
 			var/item_cost = pack.cost * item_quantity
+			var/is_reputation_purchase = (pack in reputation_cart)
+			var/reputation_cost = 0
+
+			if(is_reputation_purchase)
+				item_cost *= 2 // Double mammon cost for reputation purchases
+				reputation_cost = calculate_reputation_cost(pack) * item_quantity
+				total_reputation_cost += reputation_cost
+
 			total_cost += item_cost
 
-			html += "<tr class='cart-item'>"
-			html += "<td>[pack.name]</td>"
+			var/reputation_class = is_reputation_purchase ? "reputation-item" : ""
+
+			html += "<tr class='cart-item [reputation_class]'>"
+			html += "<td>[pack.name][is_reputation_purchase ? " (Rep)" : ""]</td>"
 			html += "<td>"
 			html += "<form class='cart-actions' action='byond://?src=\ref[src];action=update_cart&item=\ref[pack]' method='get'>"
 			html += "<input type='hidden' name='src' value='\ref[src]'>"
@@ -557,12 +775,22 @@
 			html += "<input type='submit' value='Update' class='add-btn' style='padding: 3px 8px; font-size: 0.8em;'>"
 			html += "</form>"
 			html += "</td>"
-			html += "<td>[item_cost] mammons</td>"
+			html += "<td>[item_cost] mammons[is_reputation_purchase ? " + [reputation_cost] rep" : ""]</td>"
 			html += "<td><span class='remove-item' onclick=\"location.href='byond://?src=\ref[src];action=remove_from_cart&item=\ref[pack]'\">✖</span></td>"
 			html += "</tr>"
 
-		html += "<tr><td colspan='2'><strong>Total:</strong></td><td colspan='2'><strong>[total_cost] mammons</strong></td></tr>"
+		html += "<tr><td colspan='2'><strong>Total:</strong></td><td colspan='2'><strong>[total_cost] mammons"
+		if(total_reputation_cost > 0)
+			html += " + [total_reputation_cost] reputation"
+		html += "</strong></td></tr>"
 		html += "</table>"
+
+		if(total_reputation_cost > 0)
+			html += "<div class='reputation-costs'>"
+			html += "<strong>Reputation Cost Warning:</strong> This order will cost [total_reputation_cost] reputation points. "
+			html += "Current reputation: [current_faction.faction_reputation]"
+			html += "</div>"
+
 		html += "<button class='checkout-button' onclick=\"location.href='byond://?src=\ref[src];action=checkout'\">Create Order Scroll</button>"
 
 	else
@@ -576,6 +804,59 @@
 			</div>
 
 			<script>
+				// Faction info toggle
+				function toggleFactionInfo() {
+					const details = document.querySelector('.faction-details');
+					const toggle = document.querySelector('.faction-toggle');
+
+					if (details.classList.contains('expanded')) {
+						details.classList.remove('expanded');
+						toggle.textContent = '+';
+					} else {
+						details.classList.add('expanded');
+						toggle.textContent = '−';
+					}
+				}
+
+				// Stock filter functionality
+				function filterItems(query) {
+						const itemLinks = document.querySelectorAll('.item-link');
+						const currentCategory = "[current_category]";
+						const showInStockOnly = document.querySelector('.stock-filter-btn').classList.contains('active');
+						const allowReputationPurchase = document.querySelector('.reputation-toggle-btn').classList.contains('active');
+						let anyVisible = false;
+
+						itemLinks.forEach(function(link) {
+							const itemName = link.textContent.toLowerCase();
+							const isInStock = link.getAttribute('data-in-stock') === 'true';
+							const isReputationPurchase = link.classList.contains('reputation-purchase');
+
+							// Check if it matches the search query
+							const matchesQuery = query === '' || itemName.includes(query);
+
+							// Check if it matches stock filter
+							let matchesStock = true;
+							if (showInStockOnly && !isInStock && !allowReputationPurchase) {
+								matchesStock = false;
+							}
+
+							// Show if it matches both filters
+							if (matchesQuery && matchesStock) {
+								link.style.display = 'block';
+								anyVisible = true;
+							} else {
+								link.style.display = 'none';
+							}
+						});
+
+						// Show a message if no items match
+						const noMatchesMsg = document.getElementById('noMatchesMsg');
+						noMatchesMsg.style.display = anyVisible ? 'none' : 'block';
+
+						// Remember the query
+						window.location.replace(`byond://?src=\\ref[src];action=remember_query&query=${encodeURIComponent(query)}`);
+					}
+
 				// Live search functionality with debouncing
 				let searchTimeout;
 				document.getElementById('searchInput').addEventListener('keyup', function(e) {
@@ -588,34 +869,6 @@
 					}, 300);
 				});
 
-				function filterItems(query) {
-					const itemLinks = document.querySelectorAll('.item-link');
-					const currentCategory = "[current_category]";
-					let anyVisible = false;
-
-					itemLinks.forEach(function(link) {
-						const itemName = link.textContent.toLowerCase();
-
-						// Check if it matches the search query
-						const matchesQuery = query === '' || itemName.includes(query);
-
-						// If we have both a query and active category, respect both filters
-						if (matchesQuery) {
-							link.style.display = 'block';
-							anyVisible = true;
-						} else {
-							link.style.display = 'none';
-						}
-					});
-
-					// Show a message if no items match
-					const noMatchesMsg = document.getElementById('noMatchesMsg');
-					noMatchesMsg.style.display = anyVisible ? 'none' : 'block';
-
-					// Remember the query
-					window.location.replace(`byond://?src=\\ref[src];action=remember_query&query=${encodeURIComponent(query)}`);
-				}
-
 				// Initialize search based on any current query
 				if ("[search_query]" !== "") {
 					filterItems("[search_query]".toLowerCase());
@@ -626,6 +879,118 @@
 	"}
 
 	return html
+
+/obj/item/book/secret/ledger/proc/generate_faction_info_html()
+	var/datum/world_faction/faction = SSmerchant.active_faction
+	if(!faction)
+		return ""
+
+	faction.schedule_next_boat_traders()
+
+	// Find the earliest bounty expiration time
+	var/earliest_bounty_expiration = 0
+	if(length(faction.bounty_refresh_times))
+		earliest_bounty_expiration = INFINITY
+		for(var/bounty_type in faction.bounty_refresh_times)
+			var/expiration_time = faction.bounty_refresh_times[bounty_type]
+			expiration_time -= world.time
+			if(expiration_time < earliest_bounty_expiration)
+				earliest_bounty_expiration = expiration_time
+
+	var/html = {"
+		<div class="faction-info" style="--faction-color: [faction.faction_color];">
+			<h2 class="faction-header">[faction.faction_name] - [faction.get_reputation_status()]</h2>
+			<button class="faction-toggle" onclick="toggleFactionInfo()">+</button>
+			<div class="faction-summary">
+				<span><strong>[length(faction.faction_supply_packs)]</strong> items in stock</span>
+				<span>Next rotation: <strong>[time_to_text(faction.next_supply_rotation - world.time)]</strong></span>
+			</div>
+			<div class="faction-details">
+				<p style="font-style: italic; margin: 10px 0; text-align: center;">[faction.desc]</p>
+				<div class="bounty-grid">
+					<div>
+						<h3 style="color: [faction.faction_color]; margin: 0 0 10px 0;">Active Bounties:</h3>
+						<ul class="bounty-list">
+	"}
+
+	if(length(faction.bounty_items))
+		for(var/bounty_type in faction.bounty_items)
+			var/obj/temp = new bounty_type()
+			var/bounty_name = temp.name
+			var/multiplier = faction.bounty_items[bounty_type]
+			var/expiration_time = faction.bounty_refresh_times[bounty_type]
+			var/time_remaining = expiration_time - world.time
+			qdel(temp)
+			html += "<li class='bounty-item'>[bounty_name] ([multiplier]x price) - <small>[time_to_text(time_remaining)]</small></li>"
+	else
+		html += "<li>No active bounties</li>"
+
+	html += {"
+						</ul>
+						<p style="font-size: 0.8em; color: [faction.faction_color]; margin-top: 10px;">
+							<strong>Next bounty check:</strong><br>
+							[time_to_text(earliest_bounty_expiration)]
+						</p>
+					</div>
+					<div>
+						<h3 style="color: [faction.faction_color]; margin: 0 0 10px 0;">Supply Status:</h3>
+						<p><strong>[length(faction.faction_supply_packs)]</strong> items in stock</p>
+						<p>Next rotation: <strong>[time_to_text(faction.next_supply_rotation - world.time)]</strong></p>
+						<h3 style="color: [faction.faction_color]; margin: 15px 0 10px 0;">Next Boat Traders:</h3>
+	"}
+
+	// Display trader information
+	if(faction.next_boat_trader_count > 0)
+		html += "<p><strong>[faction.next_boat_trader_count]</strong> traders scheduled</p>"
+		html += "<ul class='bounty-list' style='font-size: 0.9em;'>"
+		for(var/datum/trader_data/trader in faction.next_boat_traders)
+			var/trader_type_name = trader.name || "Unknown Trader"
+			html += "<li class='bounty-item'>[trader_type_name]</li>"
+		html += "</ul>"
+	else
+		html += "<p><em>No traders scheduled</em></p>"
+
+	html += {"
+					</div>
+				</div>
+			</div>
+		</div>
+	"}
+	return html
+
+// Helper proc for color conversion
+/proc/hex_to_rgb(hex_color)
+	// Convert hex color to RGB values for transparency
+	var/r = hex2num(copytext(hex_color, 2, 4))
+	var/g = hex2num(copytext(hex_color, 4, 6))
+	var/b = hex2num(copytext(hex_color, 6, 8))
+	return "[r], [g], [b]"
+
+/proc/time_to_text(time_difference)
+	if(time_difference <= 0)
+		return "Now"
+
+	var/minutes = round(time_difference / (1 MINUTES))
+	if(minutes < 60)
+		return "[minutes] min"
+
+	var/hours = round(minutes / 60)
+	return "[hours]h [minutes % 60]m"
+
+/obj/item/book/secret/ledger/proc/calculate_reputation_cost(datum/supply_pack/pack)
+	var/datum/world_faction/faction = SSmerchant.active_faction
+	if(!faction)
+		return 50
+
+	var/base_cost = pack.cost
+	var/tier = faction.get_reputation_tier()
+
+	// Base reputation cost scales with item value
+	// Higher tier = lower reputation costs (better relations = better deals)
+	var/reputation_multiplier = max(0.5, 1.5 - (tier * 0.15)) // 15% reduction per tier
+	var/reputation_cost = max(10, round(base_cost * reputation_multiplier))
+
+	return reputation_cost
 
 /obj/item/book/secret/ledger/Topic(href, href_list)
 	..()
@@ -638,6 +1003,34 @@
 
 	if(href_list["action"])
 		switch(href_list["action"])
+			if("toggle_reputation_purchase")
+				allow_reputation_purchase = !allow_reputation_purchase
+
+			if("add_to_cart_reputation")
+				var/datum/supply_pack/pack = locate(href_list["item"])
+				if(!pack)
+					return
+
+				var/datum/world_faction/faction = SSmerchant.active_faction
+				if(!faction)
+					to_chat(usr, "<span class='warning'>No active faction found!</span>")
+					return
+
+				var/reputation_cost = calculate_reputation_cost(pack)
+
+				// Check if they have enough reputation
+				if(faction.faction_reputation < reputation_cost)
+					to_chat(usr, "<span class='warning'>You need [reputation_cost] reputation to purchase this item out of stock! Current: [faction.faction_reputation]</span>")
+					return
+
+				var/quantity = text2num(href_list["quantity"]) || 1
+
+				// Add to both regular cart and reputation cart tracking
+				cart[pack] = (cart[pack] || 0) + quantity
+				reputation_cart[pack] = TRUE
+
+			if("toggle_stock_filter")
+				show_in_stock = !show_in_stock
 			if("set_category")
 				current_category = url_decode(href_list["category"])
 				search_query = "" // Reset search when changing category
@@ -648,6 +1041,16 @@
 			if("add_to_cart")
 				var/datum/supply_pack/item = locate(href_list["item"])
 				var/quantity = text2num(href_list["quantity"])
+				if(!item)
+					return
+
+				// Check if item is available
+				var/datum/world_faction/current_faction = SSmerchant.active_faction
+				var/is_available = current_faction.has_supply_pack(item.type)
+
+				if(!is_available)
+					if(!allow_reputation_purchase)
+						return
 
 				if(item && quantity > 0)
 					if(cart[item])
@@ -676,19 +1079,52 @@
 	current_reader << browse(generate_html(current_reader), "window=ledger;size=900x810")
 
 /obj/item/book/secret/ledger/proc/create_order_scroll()
-	if(!current_reader || !length(cart))
+	if(!length(cart))
+		to_chat(usr, "<span class='warning'>Your cart is empty!</span>")
 		return
 
-	var/obj/item/paper/scroll/cargo/C = new(current_reader.loc)
+	var/datum/world_faction/faction = SSmerchant.active_faction
+	if(!faction)
+		to_chat(usr, "<span class='warning'>No active faction found!</span>")
+		return
 
+	// Calculate total reputation cost and check if player has enough
+	var/total_reputation_cost = 0
 	for(var/datum/supply_pack/pack in cart)
-		C.orders[pack] += cart[pack]
+		if(pack in reputation_cart)
+			var/reputation_cost = calculate_reputation_cost(pack)
+			var/quantity = cart[pack]
+			total_reputation_cost += reputation_cost * quantity
 
-	C.rebuild_info()
+	if(total_reputation_cost > 0 && faction.faction_reputation < total_reputation_cost)
+		to_chat(usr, "<span class='warning'>Insufficient reputation! Need [total_reputation_cost], have [faction.faction_reputation].</span>")
+		return
 
-	// Clear cart after creating order
+	var/obj/item/paper/scroll/cargo/order = new(get_turf(usr))
+	order.orders = cart.Copy()
+	order.reputation_orders = reputation_cart.Copy()
+	order.name = "order scroll ([length(cart)] items)"
+
+	// Calculate and display costs
+	var/total_mammon_cost = 0
+	for(var/datum/supply_pack/pack in cart)
+		var/quantity = cart[pack]
+		var/cost_multiplier = (pack in reputation_cart) ? 2 : 1
+		total_mammon_cost += pack.cost * quantity * cost_multiplier
+
+	to_chat(usr, "<span class='notice'>Order scroll created! Cost: [total_mammon_cost] mammons[total_reputation_cost > 0 ? " + [total_reputation_cost] reputation" : ""]</span>")
+
+	if(total_reputation_cost > 0)
+		to_chat(usr, "<span class='boldwarning'>This order includes out-of-stock items that will cost [total_reputation_cost] reputation points when processed!</span>")
+
+	order.rebuild_info()
+
+	// Clear the carts
 	cart.Cut()
-	current_reader.put_in_hands(C)
+	reputation_cart.Cut()
+
+	current_reader.put_in_hands(order)
+
 	to_chat(current_reader, "<span class='notice'>Your order has been written on a scroll.</span>")
 	current_reader << browse(generate_html(current_reader), "window=ledger;size=800x810")
 

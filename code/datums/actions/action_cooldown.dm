@@ -43,6 +43,8 @@
 	var/retrigger_timer
 
 /datum/action/cooldown/New(Target)
+	. = ..()
+
 	if(active_background_icon_state)
 		base_background_icon_state ||= background_icon_state
 	if(active_overlay_icon_state)
@@ -149,7 +151,11 @@
 
 /// Retrigger the spell after starting the cooldown if possible
 /datum/action/cooldown/proc/retrigger()
+	if(QDELETED(src) || QDELETED(owner))
+		return
+
 	UnregisterSignal(owner, COMSIG_MOB_SPELL_ACTIVATED)
+
 	// Lets just have a cut off for reset
 	if(cooldown_time > 1 MINUTES)
 		return

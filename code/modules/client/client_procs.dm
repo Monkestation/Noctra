@@ -51,8 +51,13 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	if(href_list["delete_painting"])
 		if(!holder)
 			return
-		SSpaintings.del_player_painting(href_list["id"])
-		SSpaintings.update_paintings()
+		var/title = href_list["id"]
+		if(!title)
+			return
+		if(SSpaintings.del_player_painting(title))
+			message_admins("[key_name_admin(src)] has deleted player made painting called: [title]")
+			SSpaintings.update_paintings()
+			manage_paintings()
 
 	// asset_cache
 	var/asset_cache_job
@@ -455,6 +460,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		update_movement_keys()
 
 //	chatOutput.start() // Starts the chat
+	INVOKE_ASYNC(src, PROC_REF(acquire_dpi))
 
 	if(alert_mob_dupe_login)
 		spawn()
@@ -613,6 +619,12 @@ GLOBAL_LIST_EMPTY(respawncounts)
 //////////////
 //DISCONNECT//
 //////////////
+
+/// This grabs the DPI of the user per their skin
+/client/proc/acquire_dpi()
+	window_scaling = text2num(winget(src, null, "dpi"))
+
+	debug_admins("scalies: [window_scaling]")
 
 /client/Del()
 	if(!gc_destroyed)
@@ -976,7 +988,8 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	var/failed = FALSE
 	SSoverwatch.CollectClientData(src)
 	failed = SSoverwatch.HandleClientAccessCheck(src)
-	SSoverwatch.HandleASNbanCheck(src)
+	if(!failed)
+		SSoverwatch.HandleASNbanCheck(src)
 
 	var/string
 	if(ip_info)
@@ -997,6 +1010,9 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	return failed
 
 /client/Click(atom/object, atom/location, control, params)
+	if(isatom(object) && HAS_TRAIT(mob, TRAIT_IN_FRENZY))
+		return
+
 	if(click_intercept_time)
 		if(click_intercept_time >= world.time)
 			click_intercept_time = 0 //Reset and return. Next click should work, but not this one.

@@ -16,7 +16,7 @@
 	associated_skill = /datum/skill/combat/whipsflails
 	anvilrepair = /datum/skill/craft/tanning
 	resistance_flags = FLAMMABLE // Fully made of leather
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 	can_parry = FALSE
 	swingsound = WHIPWOOSH
 	throwforce = 5

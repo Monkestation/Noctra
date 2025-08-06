@@ -81,8 +81,6 @@ have ways of interacting with a specific atom and control it. They posses a blac
 
 /datum/ai_controller/Destroy(force, ...)
 	UnpossessPawn(FALSE)
-	if(ai_status)
-		GLOB.ai_controllers_by_status[ai_status] -= src
 	our_cells = null
 	set_movement_target(type, null)
 	if(ai_movement.moving_controllers[src])
@@ -279,11 +277,12 @@ have ways of interacting with a specific atom and control it. They posses a blac
 		GLOB.ai_controllers_by_zlevel[pawn_turf.z] -= src
 	if(ai_status)
 		GLOB.ai_controllers_by_status[ai_status] -= src
+	stop_previous_processing()
+	CancelActions()
 	pawn.ai_controller = null
 	pawn = null
 	if(destroy)
 		qdel(src)
-	return
 
 /// Turn the controller on or off based on if you're alive, we only register to this if the flag is present so don't need to check again
 /datum/ai_controller/proc/on_stat_changed(mob/living/source, new_stat)
@@ -369,11 +368,12 @@ have ways of interacting with a specific atom and control it. They posses a blac
 			CancelActions()
 			return
 
+	SEND_SIGNAL(src, COMSIG_AI_CONTROLLER_PICKED_BEHAVIORS, current_behaviors, planned_behaviors)
 	for(var/datum/ai_behavior/current_behavior as anything in current_behaviors)
 		// Convert the current behaviour action cooldown to realtime seconds from deciseconds.current_behavior
 		// Then pick the max of this and the delta_time passed to ai_controller.process()
 		// Action cooldowns cannot happen faster than delta_time, so delta_time should be the value used in this scenario.
-		var/action_delta_time = max(current_behavior.action_cooldown * 0.1, delta_time)
+		var/action_delta_time = max(current_behavior.get_cooldown(src) * 0.1, delta_time)
 
 		if(current_behavior.behavior_flags & AI_BEHAVIOR_REQUIRE_MOVEMENT) //Might need to move closer
 			if(!current_movement_target)
@@ -483,6 +483,9 @@ have ways of interacting with a specific atom and control it. They posses a blac
 /datum/ai_controller/proc/PauseAi(time)
 	paused_until = world.time + time
 
+/datum/ai_controller/proc/modify_cooldown(datum/ai_behavior/behavior, new_cooldown)
+	behavior_cooldowns[behavior.type] = new_cooldown
+
 ///Call this to add a behavior to the stack.
 /datum/ai_controller/proc/queue_behavior(behavior_type, ...)
 	var/datum/ai_behavior/behavior = GET_AI_BEHAVIOR(behavior_type)
@@ -506,6 +509,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 		behavior_args[behavior_type] = arguments
 	else
 		behavior_args -= behavior_type
+	SEND_SIGNAL(src, AI_CONTROLLER_BEHAVIOR_QUEUED(behavior_type), arguments)
 
 /datum/ai_controller/proc/ProcessBehavior(delta_time, datum/ai_behavior/behavior)
 	var/list/arguments = list(delta_time, src)
@@ -607,6 +611,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 
 	TRACK_AI_DATUM_TARGET(thing, key)
 	blackboard[key] = thing
+	post_blackboard_key_set(key)
 
 /**
  * Sets the key at index thing to the passed value
@@ -623,6 +628,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	TRACK_AI_DATUM_TARGET(thing, key)
 	TRACK_AI_DATUM_TARGET(value, key)
 	blackboard[key][thing] = value
+	post_blackboard_key_set(key)
 
 /**
  * Similar to [proc/set_blackboard_key_assoc] but operates under the assumption the key is a lazylist (so it will create a list)
@@ -637,6 +643,15 @@ have ways of interacting with a specific atom and control it. They posses a blac
 	TRACK_AI_DATUM_TARGET(thing, key)
 	TRACK_AI_DATUM_TARGET(value, key)
 	blackboard[key][thing] = value
+	post_blackboard_key_set(key)
+
+/**
+ * Called after we set a blackboard key, forwards signal information.
+ */
+/datum/ai_controller/proc/post_blackboard_key_set(key)
+	if (isnull(pawn))
+		return
+	SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_SET(key), key)
 
 /**
  * Adds the passed "thing" to the associated key
@@ -726,6 +741,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 /datum/ai_controller/proc/clear_blackboard_key(key)
 	CLEAR_AI_DATUM_TARGET(blackboard[key], key)
 	blackboard[key] = null
+	SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(key))
 
 /**
  * Remove the passed thing from the associated blackboard key
@@ -788,6 +804,7 @@ have ways of interacting with a specific atom and control it. They posses a blac
 			// We found the value that's been deleted, it was an assoc value. Clear it out entirely
 			else if(associated_value == source)
 				next_to_clear -= inner_value
+				SEND_SIGNAL(pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(inner_value))
 
 		index += 1
 

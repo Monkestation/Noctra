@@ -144,12 +144,19 @@ DEFINE_BITFIELD(antimagic_flags, list(
 #define SPELL_STAMINA 2
 /// Miracle, uses devotion and thus requires a devotion holder
 #define SPELL_MIRACLE 3
+
 /// Casted with the essence gauntlet, using essence vials
 #define SPELL_ESSENCE 4
+/// Casted using your bloodpool
+#define SPELL_BLOOD 5
 
 // Generic Bitflags for spells
 /// Ignore the trait [TRAIT_SPELLBLOCK]
 #define SPELL_IGNORE_SPELLBLOCK (1 << 0)
+
+/// Is learnable via Rituos
+#define SPELL_RITUOS (1 << 1)
+
 
 // Bitflags for spell requirements
 /// Whether the spell requires wizard clothes to cast.

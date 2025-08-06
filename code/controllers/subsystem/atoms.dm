@@ -11,37 +11,62 @@ SUBSYSTEM_DEF(atoms)
 
 	var/list/BadInitializeCalls = list()
 
+	var/list/queued_deletions = list()
+
+	initialized = INITIALIZATION_INSSATOMS
+
 /datum/controller/subsystem/atoms/Initialize(timeofday)
 	GLOB.fire_overlay.appearance_flags = RESET_COLOR
 	initialized = INITIALIZATION_INNEW_MAPLOAD
 	InitializeAtoms()
+	initialized = INITIALIZATION_INNEW_REGULAR
 	return ..()
 
 /datum/controller/subsystem/atoms/proc/InitializeAtoms(list/atoms)
 	if(initialized == INITIALIZATION_INSSATOMS)
 		return
 
+	old_initialized = initialized
 	initialized = INITIALIZATION_INNEW_MAPLOAD
+
+	var/count
 	var/list/mapload_arg = list(TRUE)
+
 	if(atoms)
-
-		for(var/atom/A as anything in atoms)
+		count = length(atoms)
+		for(var/I in 1 to count)
+			var/atom/A = atoms[I]
 			if(!(A.flags_1 & INITIALIZED_1))
-				InitAtom(A, mapload_arg)
 				CHECK_TICK
-
+				InitAtom(A, mapload_arg)
 	else
-
+		count = 0
 		for(var/atom/A as anything in world)
 			if(!(A.flags_1 & INITIALIZED_1))
 				InitAtom(A, mapload_arg)
+				++count
 				CHECK_TICK
-	initialized = INITIALIZATION_INNEW_REGULAR
 
-	if(late_loaders.len)
-		for(var/atom/A as anything in late_loaders)
+	testing("Initialized [count] atoms")
+	pass(count)
+
+	initialized = old_initialized
+
+	if(length(late_loaders))
+		for(var/I in 1 to length(late_loaders))
+			var/atom/A = late_loaders[I]
+			//I hate that we need this
+			if(QDELETED(A))
+				continue
 			A.LateInitialize()
+		testing("Late initialized [length(late_loaders)] atoms")
 		late_loaders.Cut()
+
+	for(var/queued_deletion in queued_deletions)
+		qdel(queued_deletion)
+
+	testing("[length(queued_deletions)] atoms were queued for deletion.")
+	queued_deletions.Cut()
 
 /datum/controller/subsystem/atoms/proc/InitAtom(atom/A, list/arguments)
 	var/the_type = A.type
@@ -118,6 +143,14 @@ SUBSYSTEM_DEF(atoms)
 			. += "- Qdel'd in New()\n"
 		if(fails & BAD_INIT_SLEPT)
 			. += "- Slept during Initialize()\n"
+
+/// Prepares an atom to be deleted once the atoms SS is initialized.
+/datum/controller/subsystem/atoms/proc/prepare_deletion(atom/target)
+	if (initialized == INITIALIZATION_INNEW_REGULAR)
+		// Atoms SS has already completed, just kill it now.
+		qdel(target)
+	else
+		queued_deletions += WEAKREF(target)
 
 /datum/controller/subsystem/atoms/Shutdown()
 	var/initlog = InitLog()

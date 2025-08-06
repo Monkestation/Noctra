@@ -73,38 +73,98 @@
 	if(!githuburl)
 		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
 		return
-
+	var/issue_key = CONFIG_GET(string/issue_key)
+	if(!issue_key)
+		to_chat(src, span_danger("Issue Reporting is not properly configured."))
+		return
 	var/testmerge_data = GLOB.revdata.testmerge
 	var/has_testmerge_data = (length(testmerge_data) != 0)
 
-	var/message = "This will open the Github issue reporter in your browser. Are you sure?"
+	var/message = "This will start reporting an issue, gathering some information from the server and your client, before submitting it to github."
 	if(has_testmerge_data)
-		message += "<br>The following experimental changes are active and are probably the cause of any new or sudden issues you may experience. If possible, please try to find a specific thread for your issue instead of posting to the general issue tracker:<br>"
+		message += "<br>The following experimental changes are active and may be the cause of any new or sudden issues:<br>"
 		message += GLOB.revdata.GetTestMergeInfo(FALSE)
 
 	if(browser_alert(src, message, "Report Issue", DEFAULT_INPUT_CHOICES) != CHOICE_YES)
 		return
-	var/base_link = githuburl + "/issues/new?template=bug_report.yml"
-	var/list/concatable = list(base_link)
 
-	var/client_version = "[byond_version].[byond_build]"
-	concatable += ("&reporting-version=" + client_version)
+	// Keep a static version of the template to avoid reading file
+	var/static/issue_template = file2text(".github/ISSUE_TEMPLATE/bug_report.md")
 
-	// the way it works is that we use the ID's that are baked into the template YML and replace them with values that we can collect in game.
+	// Get a local copy of the template for modification
+	var/local_template = issue_template
+
+	local_template = replacetext(local_template, "## Map:\n", "## Map:\n[SSmapping.config.map_name]")
+
+	// Insert round
 	if(GLOB.round_id)
-		concatable += ("&round-id=" + GLOB.round_id)
+		local_template = replacetext(local_template, "## Round ID:\n", "## Round ID:\n[GLOB.round_id]")
 
 	// Insert testmerges
-	if(has_testmerge_data)
+	if(length(GLOB.revdata.testmerge))
 		var/list/all_tms = list()
-		for(var/entry in testmerge_data)
-			var/datum/tgs_revision_information/test_merge/tm = entry
+		for(var/datum/tgs_revision_information/test_merge/tm as anything in GLOB.revdata.testmerge)
 			all_tms += "- \[[tm.title]\]([githuburl]/pull/[tm.number])"
-		var/all_tms_joined = jointext(all_tms, "%0A") // %0A is a newline for URL encoding because i don't trust \n to not break
+		var/all_tms_joined = all_tms.Join("\n") // for some reason this can't go in the []
+		local_template = replacetext(local_template, "## Testmerges:\n", "## Testmerges:\n[all_tms_joined]")
 
-		concatable += ("&test-merges=" + all_tms_joined)
+	var/issue_title = browser_input_text(src, "Please give the issue a title", "Issue Title")
+	if(!issue_title)
+		return
+	var/user_description = browser_input_text(src, "Please describe the issue you are reporting", "Issue Body", multiline = TRUE)
+	if(!user_description)
+		return
 
-	DIRECT_OUTPUT(src, link(jointext(concatable, "")))
+	local_template = replacetext(local_template, "## Reproduction:\n", "## Reproduction:\n[user_description]")
+
+	var/list/client_info = list()
+	client_info += "BYOND: [byond_version].[byond_build]"
+	client_info += "Ckey: [ckey]"
+
+	local_template = replacetext(local_template, "## Client Information:\n", "## Client Information:\n[client_info.Join("\n")]")
+
+	var/list/body_structure = list(
+		"title" = issue_title,
+		"body" = local_template,
+	)
+	var/datum/http_request/issue_report = new
+	rustg_file_write(local_template, "[GLOB.log_directory]/issue_reports/[ckey]-[world.time]-[sanitize_filename(issue_title)].txt")
+	message_admins("BUGREPORT: Bug report filed by [ADMIN_LOOKUPFLW(src)], Title: [strip_html(issue_title)]")
+	issue_report.prepare(
+		RUSTG_HTTP_METHOD_POST,
+		"https://api.github.com/repos/[CONFIG_GET(string/issue_slug)]/issues",
+		json_encode(body_structure), //this is slow slow slow but no other options buckaroo
+		list(
+			"Accept"="application/vnd.github+json",
+			"Authorization"="Bearer [issue_key]",
+			"X-GitHub-Api-Version"="2022-11-28"
+		)
+	)
+	to_chat(src, span_notice("Sending issue report..."))
+	//SEND_SOUND(src, 'sound/misc/compiler-stage1.ogg')
+	issue_report.begin_async()
+	UNTIL(issue_report.is_complete() || !src) //Client fuckery.
+	var/datum/http_response/issue_response = issue_report.into_response()
+	if(issue_response.errored || issue_response.status_code != 201)
+		//SEND_SOUND(src, 'sound/misc/compiler-failure.ogg')
+		to_chat(src, "[span_alertwarning("Bug report FAILED!")]\n\
+		[span_warning("Please adminhelp immediately!")]\n\
+		[span_notice("Code:[issue_response.status_code || "9001 CATASTROPHIC ERROR"]")]")
+
+		log_runtime(
+			"Failed to send issue report. errored=[issue_response.errored], status_code=[isnull(issue_response.status_code) ? "(null)" : issue_response.status_code]",
+			list(
+				"status_code" = issue_response.status_code,
+				"errored" = issue_response.errored,
+				"headers" = issue_response.headers?.Copy(),
+				"error" = issue_response.error,
+				"body" = issue_report.body,
+			)
+		)
+
+		return
+	//SEND_SOUND(src, 'sound/misc/compiler-stage2.ogg')
+	to_chat(src, span_notice("Bug submitted successfully."))
 
 /client/verb/list_test_merges()
 	set name = "List Test Merges"
@@ -136,16 +196,6 @@
 	var/datum/browser/popup = new(usr, "check_role_bans", "Role Bans", 550, 500)
 	popup.set_content(dat.Join())
 	popup.open()
-
-/client/verb/changelog()
-	set name = "Changelog"
-	set category = "OOC"
-	set hidden = 1
-	src << browse('html/changelog.html', "window=changes;size=675x650")
-	if(prefs.lastchangelog != GLOB.changelog_hash)
-		prefs.lastchangelog = GLOB.changelog_hash
-		prefs.save_preferences()
-		winset(src, "infowindow.changelog", "font-style=;")
 
 /client/verb/set_fixed()
 	set name = "IconSize"
@@ -211,15 +261,17 @@
 		fps = prefs.clientfps
 		prefs.save_preferences()
 
-/*
-/client/verb/set_blur()
-	set name = "AAOn"
-	set category = "Options"
+/client/verb/changelog()
+	set name = "Changelog"
+	set category = "OOC"
 
-	winset(src, "mapwindow.map", "zoom-mode=blur")
+	if(!GLOB.changelog_browser)
+		GLOB.changelog_browser = new /datum/changelog()
 
-/client/verb/set_normal()
-	set name = "AAOff"
-	set category = "Options"
+	var/datum/browser/log = new(usr, "changelog", "CHANGES OF THE WORLD", 680, 650)
+	log.set_content(GLOB.changelog_browser.built_html)
+	log.open()
 
-	winset(src, "mapwindow.map", "zoom-mode=normal")*/
+	if(prefs.lastchangelog != GLOB.changelog_hash)
+		prefs.lastchangelog = GLOB.changelog_hash
+		prefs.save_preferences()

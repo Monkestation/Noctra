@@ -127,7 +127,7 @@
 /area/rogue/indoors)
 "at" = (
 /obj/machinery/light/fueled/torchholder/c,
-/obj/structure/chair/bench/couch/redleft,
+/obj/structure/chair/bench/coucha/redleft,
 /turf/open/floor/hexstone,
 /area/rogue/indoors)
 "au" = (
@@ -3904,7 +3904,7 @@
 /turf/open/floor/dirt,
 /area/rogue/outdoors/bog/inhumen_camp)
 "wX" = (
-/obj/structure/chair/bench/couch/redright,
+/obj/structure/chair/bench/coucha/redright,
 /obj/structure/fluff/railing/border{
 	pixel_y = 25
 	},

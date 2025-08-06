@@ -860,7 +860,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	set hidden = 1
 	set name = "Pick up"
 
-	if(usr.incapacitated(ignore_grab = TRUE) || !Adjacent(usr))
+	if(usr.incapacitated(IGNORE_GRAB) || !Adjacent(usr))
 		return
 
 	if(isliving(usr))
@@ -1112,10 +1112,10 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item/burn()
 	if(!QDELETED(src))
 		var/turf/T = get_turf(src)
-		var/ash_type = /obj/item/ash
+		var/ash_type = /obj/item/fertilizer/ash
 		if(w_class == WEIGHT_CLASS_HUGE || w_class == WEIGHT_CLASS_GIGANTIC)
-			ash_type = /obj/item/ash
-		var/obj/item/ash/A = new ash_type(T)
+			ash_type = /obj/item/fertilizer/ash
+		var/obj/item/fertilizer/ash/A = new ash_type(T)
 		A.desc += "\nLooks like this used to be \an [name] some time ago."
 		..()
 

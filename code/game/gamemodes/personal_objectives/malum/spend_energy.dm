@@ -27,7 +27,7 @@
 	to_chat(owner.current, span_greentext("You've spent enough energy working to satisfy Malum!"))
 	owner.current.adjust_triumphs(triumph_count)
 	completed = TRUE
-	adjust_storyteller_influence("Malum", 15)
+	adjust_storyteller_influence(MALUM, 15)
 	escalate_objective()
 	UnregisterSignal(owner.current, COMSIG_MOB_ENERGY_SPENT)
 

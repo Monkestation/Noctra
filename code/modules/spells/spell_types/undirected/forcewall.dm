@@ -14,7 +14,7 @@
 	charge_slowdown = 1.3
 	cooldown_time = 35 SECONDS
 	spell_cost = 30
-
+	spell_flags = SPELL_RITUOS
 	var/wall_type = /obj/effect/forcefield/wizard
 
 /datum/action/cooldown/spell/undirected/forcewall/cast(atom/cast_on)

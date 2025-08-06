@@ -34,6 +34,8 @@
 
 /datum/element/relay_attackers/proc/on_attack_generic(atom/target, mob/living/attacker, list/modifiers)
 	SIGNAL_HANDLER
+	if(!attacker.cmode)
+		return
 	relay_attacker(target, attacker, 10)
 
 /datum/element/relay_attackers/proc/on_attack_npc(atom/target, mob/living/attacker)

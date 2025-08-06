@@ -11,6 +11,7 @@
 #define MID_TURF_LAYER 2.02
 #define HIGH_TURF_LAYER 2.03
 #define TURF_PLATING_DECAL_LAYER 2.031
+#define CULT_OVERLAY_LAYER 2.01
 #define TURF_DECAL_LAYER 2.039 //! Makes turf decals appear in DM how they will look inworld.
 #define ABOVE_OPEN_TURF_LAYER 2.04
 #define CLOSED_TURF_LAYER 2.05
@@ -180,7 +181,8 @@
 #define BLIND_LAYER 4
 #define CRIT_LAYER 5
 #define CURSE_LAYER 6
-#define BACKHUD_LAYER 7
+#define ECHO_LAYER 7
+#define BACKHUD_LAYER 8
 
 //-------------------- HUD ---------------------
 //HUD layer defines

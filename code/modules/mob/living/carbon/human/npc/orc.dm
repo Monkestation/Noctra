@@ -1,7 +1,6 @@
 /mob/living/carbon/human/species/orc
 	name = "orc"
-
-	icon = 'icons/roguetown/mob/monster/Orc.dmi'
+	icon = 'icons/roguetown/mob/monster/orc.dmi'
 	icon_state = "orc"
 	race = /datum/species/orc
 	gender = MALE
@@ -12,7 +11,7 @@
 	ambushable = FALSE
 	base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, /datum/intent/unarmed/claw, /datum/intent/simple/bite, /datum/intent/kick)
 	possible_rmb_intents = list()
-	vitae_pool = 1000 // Not as much vitae from them as humans to avoid vampires cheesing mobs
+	bloodpool = 1000 // Not as much vitae from them as humans to avoid vampires cheesing mobs
 
 /mob/living/carbon/human/species/orc/npc
 	ai_controller = /datum/ai_controller/human_npc
@@ -126,7 +125,7 @@
 		src.dna.species.soundpack_m = new /datum/voicepack/orc()
 		var/obj/item/bodypart/head/headdy = get_bodypart("head")
 		if(headdy)
-			headdy.icon = 'icons/roguetown/mob/monster/Orc.dmi'
+			headdy.icon = 'icons/roguetown/mob/monster/orc.dmi'
 			headdy.icon_state = "[src.dna.species.id]_head"
 			headdy.headprice = rand(15,40)
 	src.grant_language(/datum/language/common)
@@ -192,7 +191,7 @@
 	last_process = world.time
 	amount += amt2add
 	if(has_world_trait(/datum/world_trait/pestra_mercy))
-		amount -= 5 * time_elapsed
+		amount -= (is_ascendant(PESTRA) ? 2.5 : 5) * time_elapsed
 
 	var/mob/living/carbon/C = parent
 	if(!C)

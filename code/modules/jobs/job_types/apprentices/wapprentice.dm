@@ -1,10 +1,8 @@
-/datum/job/wapprentice
+/datum/job/mageapprentice
 	title = "Magician Apprentice"
-	tutorial = "Your master once saw potential in you, \
-	something you are uncertain if they still do with your recent studies. \
-	The path to using magic is something treacherous and untamed, \
-	and you are still decades away from calling yourself even a journeyman in the field. \
-	Listen and serve, and someday you will earn your hat."
+	tutorial = "Your family managed to send you to college to learn the Arcyne Arts.\
+	 It's been stressful, but you'll earn your degree and become a fully fleged Magician one dae.\
+	  As long as you can keep your grades up, that is..."
 	flag = APPRENTICE
 	department_flag = APPRENTICES
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
@@ -14,30 +12,22 @@
 
 	allowed_races = RACES_PLAYER_ALL
 	allowed_ages = list(AGE_CHILD, AGE_ADULT)
-	allowed_patrons = list(/datum/patron/divine/noc, /datum/patron/inhumen/zizo)
+	allowed_sexes = list(MALE, FEMALE)
 
-
-	outfit = /datum/outfit/job/wapprentice
+	outfit = /datum/outfit/job/mageapprentice
 	display_order = JDO_WAPP
-	min_pq = 0
+	min_pq = 3 //they actually have good magick now
 	give_bank_account = TRUE
 	bypass_lastclass = TRUE
 	banned_leprosy = FALSE
 	can_have_apprentices = FALSE
 
+	spells = list(
+		/datum/action/cooldown/spell/undirected/touch/prestidigitation,
+	)
 
-/datum/outfit/job/wapprentice/pre_equip(mob/living/carbon/human/H)
-	..()
-	H.adjust_skillrank(/datum/skill/magic/arcane, pick(1,2), TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
-	H.add_spell(/datum/action/cooldown/spell/projectile/fetch)
-	H.add_spell(/datum/action/cooldown/spell/undirected/touch/prestidigitation)
+/datum/outfit/job/mageapprentice/pre_equip(mob/living/carbon/human/H)
+	allowed_patrons = list(/datum/patron/divine/noc, /datum/patron/inhumen/zizo)//see court mage for explaination
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/tights/random
 		shoes = /obj/item/clothing/shoes/simpleshoes
@@ -49,8 +39,9 @@
 		backr = /obj/item/storage/backpack/satchel
 		head = /obj/item/clothing/head/wizhat/gen
 	else
-		shoes = /obj/item/clothing/shoes/sandals
-		shirt = /obj/item/clothing/shirt/dress/silkdress/random
+		shoes = /obj/item/clothing/shoes/simpleshoes
+		shirt = /obj/item/clothing/shirt/dress/silkdress/black
+		pants = /obj/item/clothing/pants/tights/random
 		belt = /obj/item/storage/belt/leather/rope
 		beltl = /obj/item/storage/keyring/mageapprentice
 		beltr = /obj/item/storage/magebag/apprentice
@@ -58,6 +49,16 @@
 		backr = /obj/item/storage/backpack/satchel
 		head = /obj/item/clothing/head/wizhat/witch
 	backpack_contents = list(/obj/item/book/granter/spellbook/apprentice = 1, /obj/item/chalk = 1)
+	H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE) //children can have one spellpoint, as a treat.
+	if (H.age == AGE_ADULT)
+		H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
+		H.adjust_spell_points(4)
+	H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
 	H.change_stat(STATKEY_INT, 1)
 	H.change_stat(STATKEY_SPD, -1)
-	ADD_TRAIT(H, TRAIT_MALUMFIRE, TRAIT_GENERIC)
+	H.mana_pool?.set_intrinsic_recharge(MANA_ALL_LEYLINES)

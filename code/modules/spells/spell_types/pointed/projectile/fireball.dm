@@ -15,7 +15,7 @@
 	charge_slowdown = 0.7
 	cooldown_time = 25 SECONDS
 	spell_cost = 30
-
+	spell_flags = SPELL_RITUOS
 	projectile_type = /obj/projectile/magic/aoe/fireball/rogue
 
 /datum/action/cooldown/spell/projectile/fireball/ready_projectile(obj/projectile/magic/aoe/fireball/to_fire, atom/target, mob/user, iteration)
@@ -53,6 +53,7 @@
 	charge_slowdown = 1.3
 	cooldown_time = 35 SECONDS
 	spell_cost = 50
+	spell_flags = NONE
 
 	projectile_type = /obj/projectile/magic/aoe/fireball/rogue/great
 

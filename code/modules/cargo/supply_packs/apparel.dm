@@ -243,6 +243,16 @@
 	cost = 10
 	contains = /obj/item/storage/backpack/satchel
 
+/datum/supply_pack/apparel/sheath
+	name = "Sheath"
+	cost = 12
+	contains = /obj/item/weapon/scabbard/knife
+
+/datum/supply_pack/apparel/scabbard
+	name = "Scabbard"
+	cost = 15
+	contains = /obj/item/weapon/scabbard/sword
+
 /datum/supply_pack/apparel/backpack
 	name = "Backpack"
 	cost = 20

@@ -1,3 +1,7 @@
+#define SUCCESSFUL_CRAFT 1
+#define FAIL_CONTINUE_CRAFT 2
+#define FAIL_END_CRAFT 3
+
 /datum/repeatable_crafting_recipe
 	abstract_type = /datum/repeatable_crafting_recipe
 
@@ -143,21 +147,15 @@
 			var/required_amount = reagent_requirements[required_path]
 			var/available_amount = 0
 
-			var/list/reagent_paths
-			if(reagent_subtypes_allowed)
-				reagent_paths = typesof(required_path)
-			else
-				reagent_paths = list(required_path)
-
 			for(var/path in reagent_values)
-				if(!(path in reagent_paths))
+				if(reagent_subtypes_allowed ? !ispath(path, required_path) : path != required_path)
 					continue
 				available_amount += reagent_values[path]
 				if(available_amount >= required_amount)
 					copied_reagent_requirements -= required_path
 					break
 
-	return !(length(copied_requirements) && !length(copied_reagent_requirements) && !length(copied_tool_usage))
+	return !length(copied_requirements) && !length(copied_reagent_requirements) && !length(copied_tool_usage)
 
 /**
  * Checks the maximum number of repeats possible with available resources
@@ -201,15 +199,9 @@
 			var/required_amount = reagent_requirements[required_path]
 			var/available_amount = 0
 
-			var/list/reagent_paths
-			if(reagent_subtypes_allowed)
-				reagent_paths = typesof(required_path)
-			else
-				reagent_paths = list(required_path)
-
 			// Count available reagents that match this requirement
 			for(var/path in reagent_values)
-				if(!(path in reagent_paths))
+				if(reagent_subtypes_allowed ? !ispath(path, required_path) : path != required_path)
 					continue
 				available_amount += reagent_values[path]
 
@@ -380,29 +372,34 @@
  * @param {list} copied_reagent_requirements - Current reagent requirements
  * @param {mob} user - The user performing the crafting
  * @param {list} copied_containers - Key/Value list of original containers and associated holders
+ * @param {list} usable_contents - List of items in surrounding area.
+ * @param {list} storage_contents - List of items in storage.
  * @return {boolean} - TRUE if successful, FALSE otherwise
  */
-/datum/repeatable_crafting_recipe/proc/handle_reagent_requirements(list/copied_reagent_requirements, mob/user, list/copied_containers)
+/datum/repeatable_crafting_recipe/proc/handle_reagent_requirements(list/copied_reagent_requirements, mob/user, list/copied_containers, list/usable_contents, list/storage_contents)
 	var/obj/item/inactive_held = user.get_inactive_held_item()
 
 	// First check storage
-	for(var/obj/item/reagent_containers/container in get_storage_contents(user))
+	for(var/obj/item/reagent_containers/container in storage_contents)
 		if(!process_reagent_container(container, copied_reagent_requirements, user, inactive_held, TRUE, 0, 0, copied_containers))
-			for(var/obj/item/reagent_containers/key in copied_containers)
-				var/obj/item/reagent_containers/doomed = copied_containers[key]
-				qdel(doomed)
+			var/obj/item/reagent_containers/doomed = copied_containers[container]
+			qdel(doomed)
+			copied_containers -= container
 			return FALSE
 
 	// Then check general area
-	for(var/obj/item/reagent_containers/container in get_usable_contents(user))
+	for(var/obj/item/reagent_containers/container in usable_contents)
 		var/turf/container_loc = get_turf(container)
 		var/stored_pixel_x = container.pixel_x
 		var/stored_pixel_y = container.pixel_y
 
 		if(!process_reagent_container(container, copied_reagent_requirements, user, container_loc, FALSE, stored_pixel_x, stored_pixel_y, copied_containers))
-			for(var/obj/item/reagent_containers/key in copied_containers)
-				var/obj/item/reagent_containers/doomed = copied_containers[key]
-				qdel(doomed)
+			// for(var/obj/item/reagent_containers/key in copied_containers)
+			// 	var/obj/item/reagent_containers/doomed = copied_containers[key]
+			// 	qdel(doomed)
+			var/obj/item/reagent_containers/doomed = copied_containers[container]
+			qdel(doomed)
+			copied_containers -= container
 			return FALSE
 
 	return TRUE
@@ -418,7 +415,7 @@
  * @param {number} stored_pixel_x - Original pixel_x of container
  * @param {number} stored_pixel_y - Original pixel_y of container
  * @param {list} copied_containers - Key/Value list of original containers and associated holders
- * @return {boolean} - TRUE if successful, FALSE otherwise
+ * @return {boolean} - TRUE if reagent transfer is successful, FALSE otherwise.
  */
 /datum/repeatable_crafting_recipe/proc/process_reagent_container(obj/item/reagent_containers/container, list/copied_reagent_requirements, mob/user, atom/return_loc, is_storage, stored_pixel_x = 0, stored_pixel_y = 0, list/copied_containers)
 	// We make a new container to pair with the original, and banish it to nullspace before adding it to the copy list
@@ -440,13 +437,13 @@
 			if(!reagent_value)
 				continue
 
-			user.visible_message(span_info("[user] starts to incorporate some liquid into [name]."),
-								span_info("You start to pour some liquid into [name]."))
+			user.visible_message(span_info("[user] starts to incorporate some liquid into \the [name]."),
+								span_info("You start to pour some liquid into \the [name]."))
 
 			if(put_items_in_hand)
 				var/pickup_time = is_storage ? storage_use_time : ground_use_time
 				if(!do_after(user, pickup_time, container, extra_checks = CALLBACK(user, TYPE_PROC_REF(/atom/movable, CanReach), container)))
-					continue
+					return FALSE
 				user.put_in_active_hand(container)
 
 			if(istype(container, /obj/item/reagent_containers/glass/bottle))
@@ -456,7 +453,7 @@
 
 			var/reagent_use_time_real = max(reagent_use_time * 0.1, reagent_use_time / max(1, user.get_skill_level(skillcraft)))
 			if(!do_after(user, reagent_use_time_real, container, extra_checks = CALLBACK(user, TYPE_PROC_REF(/atom/movable, CanReach), container)))
-				continue
+				return FALSE
 
 			playsound(get_turf(user), pick(container.poursounds), 100, TRUE)
 
@@ -464,7 +461,6 @@
 			if(reagent_value < copied_reagent_requirements[required_path])
 				container.reagents.trans_to(copied_containers[container], reagent_value)
 				copied_reagent_requirements[required_path] -= reagent_value
-				break
 			else
 				container.reagents.trans_to(copied_containers[container], copied_reagent_requirements[required_path])
 				copied_reagent_requirements -= required_path
@@ -583,7 +579,16 @@
 		usable_contents |= I
 
 	if(check_around_owner)
-		for(var/turf/listed_turf in range(1, user))
+		var/turf/owner_turf = get_turf(user)
+		var/turf/turf_in_front = get_step(user, user.dir)
+
+		for(var/obj/item/item in owner_turf.contents)
+			usable_contents |= item
+		for(var/obj/item/item in turf_in_front.contents)
+			usable_contents |= item
+
+		var/list/turfs_to_search = orange(1, owner_turf) - turf_in_front
+		for(var/turf/listed_turf in turfs_to_search)
 			for(var/obj/item/item in listed_turf.contents)
 				usable_contents |= item
 
@@ -632,35 +637,41 @@
 
 		// Process items from usable contents
 		var/crafting_success = TRUE
-		for(var/obj/item/item in usable_contents)
-			if(!length(copied_requirements))
-				break
 
-			if(!item_in_requirements(item, copied_requirements) && !istype(item, /obj/item/natural/bundle))
-				continue
+		// Process reagents
+		if(length(copied_reagent_requirements))
+			crafting_success = handle_reagent_requirements(copied_reagent_requirements, user, copied_containers, usable_contents, storage_contents)
 
-			if(istype(item, /obj/item/natural/bundle))
-				process_bundle(item, user, copied_requirements, to_delete, blacklisted_paths)
-				continue
+		if(crafting_success)
+			for(var/obj/item/item in usable_contents)
+				if(!length(copied_requirements))
+					break
 
-			user.visible_message(span_info("[user] starts picking up [item]."), span_info("I start picking up [item]."))
+				if(!item_in_requirements(item, copied_requirements) && !istype(item, /obj/item/natural/bundle))
+					continue
 
-			if(do_after(user, ground_use_time, item, extra_checks = CALLBACK(user, TYPE_PROC_REF(/atom/movable, CanReach), item)))
-				if(put_items_in_hand)
-					user.put_in_active_hand(item)
+				if(istype(item, /obj/item/natural/bundle))
+					process_bundle(item, user, copied_requirements, to_delete, blacklisted_paths)
+					continue
 
-				for(var/requirement in copied_requirements)
-					if(!check_matches_requirement(item, requirement))
-						continue
-					copied_requirements[requirement]--
-					if(copied_requirements[requirement] <= 0)
-						copied_requirements -= requirement
-					usable_contents -= item
-					to_delete += item
-					item.forceMove(locate(1,1,1))
-			else
-				crafting_success = FALSE
-				break
+				user.visible_message(span_info("[user] starts picking up [item]."), span_info("I start picking up [item]."))
+
+				if(do_after(user, ground_use_time, item, extra_checks = CALLBACK(user, TYPE_PROC_REF(/atom/movable, CanReach), item)))
+					if(put_items_in_hand)
+						user.put_in_active_hand(item)
+
+					for(var/requirement in copied_requirements)
+						if(!check_matches_requirement(item, requirement))
+							continue
+						copied_requirements[requirement]--
+						if(copied_requirements[requirement] <= 0)
+							copied_requirements -= requirement
+						usable_contents -= item
+						to_delete += item
+						item.forceMove(locate(1,1,1))
+				else
+					crafting_success = FALSE
+					break
 
 		// Process items from storage
 		if(crafting_success && length(copied_requirements))
@@ -692,53 +703,49 @@
 					crafting_success = FALSE
 					break
 
-		// Process reagents
-		if(crafting_success && length(copied_reagent_requirements))
-			crafting_success = handle_reagent_requirements(copied_reagent_requirements, user, copied_containers)
-
 		// Process tools
 		if(crafting_success && length(copied_tool_usage))
 			crafting_success = handle_tool_usage(copied_tool_usage, user)
 
 		// Complete crafting if all requirements met
 		if(crafting_success && !length(copied_requirements) && !length(copied_reagent_requirements) && !length(copied_tool_usage))
-			if(complete_crafting(to_delete, user))
-				successful_crafts++
-				// Crafting successful, delete unused copied reagent containers used for control
-				for(var/obj/item/reagent_containers/key in copied_containers)
-					var/obj/item/reagent_containers/doomed = copied_containers[key]
-					qdel(doomed)
-				// Let the user know about progress
-				to_chat(user, span_notice("Successfully crafted \a [name]. ([successful_crafts]/[requested_crafts])"))
-			else
-				move_items_back(to_delete, user)
-				// Crafting unsuccessful, transfer all reagents to the original containers then delete the container copies
-				for(var/obj/item/reagent_containers/key in copied_containers)
-					var/obj/item/reagent_containers/doomed = copied_containers[key]
-					doomed.reagents.trans_to(key, doomed.reagents.total_volume)
-					qdel(doomed)
+			switch(complete_crafting(to_delete, user))
+				if(SUCCESSFUL_CRAFT)
+					successful_crafts++
+					// Crafting successful, delete unused copied reagent containers used for control
+					for(var/obj/item/reagent_containers/key in copied_containers)
+						var/obj/item/reagent_containers/doomed = copied_containers[key]
+						qdel(doomed)
+					to_chat(user, span_notice("Successfully crafted \a [name]. ([successful_crafts]/[requested_crafts])"))
 
-				// Continue the crafting while loop
-				continue
+					if(successful_crafts < requested_crafts)
+						// After each successful or failed craft, give the user a moment to react
+						sleep(0.5 SECONDS)
+					// Continue the crafting while loop
+					continue
+				if(FAIL_END_CRAFT)
+					crafting_success = FALSE
+
+		// Crafting has failed for some reason
+
+		move_items_back(to_delete, user)
+		// Crafting unsuccessful, transfer all reagents to the original containers then delete the container copies
+		for(var/obj/item/reagent_containers/key in copied_containers)
+			var/obj/item/reagent_containers/doomed = copied_containers[key]
+			doomed.reagents.trans_to(key, doomed.reagents.total_volume)
+			qdel(doomed)
 
 		if(!crafting_success)
 			var/list/failure_reasons = list()
-			if(length(copied_requirements))
-				failure_reasons += "not enough material"
 			if(length(copied_reagent_requirements))
 				failure_reasons += "insufficient reagents"
+			if(length(copied_requirements))
+				failure_reasons += "not enough material"
 			if(length(copied_tool_usage))
 				failure_reasons += "missing tools"
-
-			to_chat(user, span_warning("Crafting failed due to [failure_reasons.Join(" and ")]."))
-
-			move_items_back(to_delete, user)
+			if(length(failure_reasons))
+				to_chat(user, span_warning("Crafting failed due to [failure_reasons.Join(" and ")]."))
 			move_products(list(), user)
-			// Crafting unsuccessful, transfer all reagents to the original containers then delete the container copies
-			for(var/obj/item/reagent_containers/key in copied_containers)
-				var/obj/item/reagent_containers/doomed = copied_containers[key]
-				doomed.reagents.trans_to(key, doomed.reagents.total_volume)
-				qdel(doomed)
 
 			// End the crafting while loop
 			break
@@ -772,7 +779,7 @@
 
 	// Final completion message
 	if(successful_crafts > 0)
-		to_chat(user, span_green("Finished crafting [successful_crafts] [name][successful_crafts > 1 ? "s" : ""]."))
+		to_chat(user, span_green("Finished crafting [successful_crafts * output_amount] [name][successful_crafts > 1 ? "s" : ""]."))
 	else
 		to_chat(user, span_warning("Failed to craft any [name]."))
 
@@ -817,7 +824,7 @@
  *
  * @param {list} to_delete - List of items to consume
  * @param {mob} user - The user performing the crafting
- * @return {boolean} - TRUE if successful, FALSE otherwise
+ * @return {number} SUCCESSFUL_CRAFT if successful, FAIL_CONTINUE_CRAFT if failure but continue crafting, FAIL_END_CRAFT to end crafting.
  */
 /datum/repeatable_crafting_recipe/proc/complete_crafting(list/to_delete, mob/user)
 	if(crafting_message)
@@ -828,25 +835,25 @@
 
 	var/crafting_time = max(craft_time * 0.1, craft_time / max(1, user.get_skill_level(skillcraft)))
 	if(!do_after(user, crafting_time))
-		return FALSE
+		return FAIL_END_CRAFT
 
 	var/prob2craft = calculate_craft_chance(user)
 	var/prob2fail = calculate_fail_chance(user)
 
 	if(prob2craft < 1)
 		to_chat(user, "<span class='danger'>I lack the skills for this...</span>")
-		return FALSE
+		return FAIL_END_CRAFT
 
 	if(prob(prob2fail))
 		to_chat(user, "<span class='danger'>MISTAKE! I've completely fumbled the crafting of \the [name]!</span>")
-		return FALSE
+		return FAIL_END_CRAFT
 
 	if(!prob(prob2craft))
 		if(user.client?.prefs.showrolls)
 			to_chat(user, "<span class='danger'>I've failed to craft \the [name]. (Success chance: [prob2craft]%)</span>")
 		else
 			to_chat(user, "<span class='danger'>I've failed to craft \the [name].</span>")
-		return FALSE
+		return FAIL_CONTINUE_CRAFT
 
 	var/list/outputs = create_outputs(to_delete, user)
 
@@ -856,7 +863,7 @@
 
 	move_products(outputs, user)
 
-	return TRUE
+	return SUCCESSFUL_CRAFT
 
 /**
  * Calculates chance of successful crafting
@@ -969,7 +976,7 @@
 			item.forceMove(user.drop_location())
 	user.update_inv_hands()
 
-// Attempts to put the tool back in the user's hand as well as a product
+/// Attempts to put the tool back in the user's hand as well as a product
 /datum/repeatable_crafting_recipe/proc/move_products(list/products, mob/user)
 	var/list/copied_tool_usage = tool_usage.Copy()
 
@@ -1110,3 +1117,7 @@
 
 /datum/repeatable_crafting_recipe/proc/show_menu(mob/user)
 	user << browse(generate_html(user),"window=recipe;size=500x810")
+
+#undef SUCCESSFUL_CRAFT
+#undef FAIL_CONTINUE_CRAFT
+#undef FAIL_END_CRAFT

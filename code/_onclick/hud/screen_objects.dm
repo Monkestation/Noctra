@@ -129,13 +129,9 @@
 	if(world.time < lastclick + 3 SECONDS)
 		return
 	lastclick = world.time
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.playsound_local(H, 'sound/misc/click.ogg', 100)
-		if(H.craftingthing)
-			last_craft = world.time
-			var/datum/component/personal_crafting/C = H.craftingthing
-			C.roguecraft(location, control, params, H)
+	if(!HAS_TRAIT(usr, TRAIT_BLUEPRINT_VISION))
+		var/mob/vision = usr
+		vision.enter_blueprint()
 
 /atom/movable/screen/craft/Destroy()
 	QDEL_NULL(book)
@@ -147,7 +143,7 @@
 	screen_loc = ui_building
 
 /atom/movable/screen/area_creator/Click()
-	if(usr.incapacitated(ignore_grab = TRUE) || (isobserver(usr) && !IsAdminGhost(usr)))
+	if(usr.incapacitated(IGNORE_GRAB) || (isobserver(usr) && !IsAdminGhost(usr)))
 		return TRUE
 	var/area/A = get_area(usr)
 	if(!A.outdoors)
@@ -183,7 +179,7 @@
 	if(world.time <= usr.next_move)
 		return TRUE
 
-	if(usr.incapacitated(ignore_grab = TRUE))
+	if(usr.incapacitated(IGNORE_GRAB))
 		return TRUE
 
 	if(hud?.mymob && slot_id)
@@ -878,7 +874,7 @@
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		if(master)
 			var/obj/item/flipper = usr.get_active_held_item()
-			if(!flipper || (!usr.Adjacent(flipper) && !usr.DirectAccess(flipper)) || !isliving(usr) || usr.incapacitated(ignore_grab = TRUE))
+			if(!flipper || (!usr.Adjacent(flipper) && !usr.DirectAccess(flipper)) || !isliving(usr) || usr.incapacitated(IGNORE_GRAB))
 				return
 			var/old_width = flipper.grid_width
 			var/old_height = flipper.grid_height
@@ -889,7 +885,7 @@
 
 	if(world.time <= usr.next_move)
 		return TRUE
-	if(usr.incapacitated(ignore_grab = TRUE))
+	if(usr.incapacitated(IGNORE_GRAB))
 		return TRUE
 	if(master)
 		var/obj/item/I = usr.get_active_held_item()

@@ -4,7 +4,7 @@
 	point_cost = 1
 	sound = 'sound/magic/whiteflame.ogg'
 	self_cast_possible = FALSE
-
+	spell_flags = SPELL_RITUOS
 	attunements = list(
 		/datum/attunement/life = 1.2
 	)

@@ -257,7 +257,7 @@
 			used_sound = pick(PUNCHWOOSH)
 		playsound(get_turf(src), used_sound, 60, FALSE)
 
-// /mob/living/carbon/restrained(ignore_grab = TRUE)
+// /mob/living/carbon/restrained(IGNORE_GRAB)
 // //	. = (handcuffed || (!ignore_grab && pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE))
 // 	if(handcuffed)
 // 		return TRUE

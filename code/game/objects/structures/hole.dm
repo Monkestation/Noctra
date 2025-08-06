@@ -31,6 +31,9 @@
 					new /obj/item/natural/worms/leech(T)
 			else
 				new /obj/item/natural/worms(T)
+		if(!(locate(/obj/item/natural/clay) in T))
+			if(prob(25))
+				new /obj/item/natural/clay(T)
 	else
 		if(!(locate(/obj/item/natural/stone) in T))
 			if(prob(23))
@@ -104,6 +107,20 @@
 					QDEL_NULL(src)
 
 /obj/structure/closet/dirthole/attackby(obj/item/attacking_item, mob/user, params)
+	if(istype(attacking_item, /obj/item/grown/log/tree/stick))
+		if(locate(/obj/structure/gravemarker) in get_turf(src))
+			to_chat(user, "<span class='warning'>This grave is already hallowed.</span>")
+		if(stage != 4)
+			to_chat(user, "<span class='warning'>I can't tie a grave marker on an open grave.</span>")
+
+		if(!do_after(user, 10 SECONDS, src))
+			return
+
+		var/obj/structure/gravemarker/marker = new /obj/structure/gravemarker(get_turf(src))
+		marker.OnCrafted(dir, user)
+		qdel(attacking_item)
+		return
+
 	if(!istype(attacking_item, /obj/item/weapon/shovel))
 		if(istype(attacking_item, /obj/item/reagent_containers/glass/bucket/wooden))
 			var/obj/item/reagent_containers/glass/bucket/wooden/bucket = attacking_item
@@ -152,7 +169,8 @@
 				attacking_shovel.heldclod = new(attacking_shovel)
 				attacking_shovel.update_appearance(UPDATE_ICON_STATE)
 				playsound(our_turf,'sound/items/dig_shovel.ogg', 100, TRUE)
-				our_turf.ChangeTurf(/turf/open/transparent/openspace)
+				our_turf.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+				qdel(src)
 				return
 			to_chat(user, "<span class='warning'>I think that's deep enough.</span>")
 			return

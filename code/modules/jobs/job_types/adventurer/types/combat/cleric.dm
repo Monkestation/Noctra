@@ -2,7 +2,7 @@
 /datum/advclass/combat/cleric
 	name = "Cleric"
 	tutorial = "Clerics are wandering warriors of the Gods, drawn from the ranks of temple acolytes who demonstrated martial talent. Protected by armor and zeal, they are a force to be reckoned with."
-	allowed_races = RACES_PLAYER_NONHERETICAL
+	allowed_races = RACES_PLAYER_ALL
 	vampcompat = FALSE
 	outfit = /datum/outfit/job/adventurer/cleric
 	category_tags = list(CTAG_ADVENTURER)
@@ -14,8 +14,17 @@
 
 /datum/outfit/job/adventurer/cleric/pre_equip(mob/living/carbon/human/H)
 	..()
+	if(H.dna && (H.dna.species.id in RACES_PLAYER_HERETICAL_RACE) && !istype(H.patron, /datum/patron/inhumen))
+		var/list/inhumen = list(
+			/datum/patron/inhumen/graggar,
+			/datum/patron/inhumen/zizo,
+			/datum/patron/inhumen/matthios,
+			/datum/patron/inhumen/baotha
+		)
+		var/picked = pick(inhumen)
+		H.set_patron(picked)
+		to_chat(H, span_warning("My patron had not endorsed my practices in my younger years. I've since grown acustomed to [H.patron]."))
 	H.virginity = TRUE
-
 	head = /obj/item/clothing/head/helmet/ironpot
 	armor = /obj/item/clothing/armor/cuirass/iron // Adventurers are not supposed to have fricking steel, at all
 	shirt = /obj/item/clothing/armor/gambeson/light
@@ -80,7 +89,6 @@
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
 		if(/datum/patron/inhumen/graggar) // Heretical Patrons
 			cloak = /obj/item/clothing/cloak/raincloak/mortus
-			H.change_stat(STATKEY_LCK, -1)
 			H.cmode_music = 'sound/music/cmode/antag/combat_werewolf.ogg'
 			GLOB.heretical_players += H.real_name
 		if(/datum/patron/inhumen/graggar_zizo)
@@ -88,19 +96,16 @@
 			H.cmode_music = 'sound/music/cmode/antag/combat_werewolf.ogg'
 		if(/datum/patron/inhumen/zizo)
 			cloak = /obj/item/clothing/cloak/raincloak/mortus
-			H.change_stat(STATKEY_LCK, -1)
 			H.cmode_music = 'sound/music/cmode/antag/combat_cult.ogg'
 			GLOB.heretical_players += H.real_name
 		if(/datum/patron/inhumen/matthios)
 			cloak = /obj/item/clothing/cloak/raincloak/mortus
-			H.change_stat(STATKEY_LCK, -1)
 			H.cmode_music = 'sound/music/cmode/antag/CombatBandit1.ogg'
 			GLOB.heretical_players += H.real_name
 		if(/datum/patron/inhumen/baotha)
 			head = /obj/item/clothing/head/crown/circlet
 			mask = /obj/item/clothing/face/spectacles/sglasses
 			cloak = /obj/item/clothing/cloak/raincloak/purple
-			H.change_stat(STATKEY_LCK, -1)
 			H.cmode_music = 'sound/music/cmode/antag/CombatBaotha.ogg'
 			GLOB.heretical_players += H.real_name
 		else // Failsafe

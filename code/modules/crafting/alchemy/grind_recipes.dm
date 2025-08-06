@@ -17,19 +17,19 @@
 
 /datum/alch_grind_recipe/bone
 	valid_input = /obj/item/alch/bone
-	valid_outputs = list( /obj/item/alch/bonemeal = 2)
-	bonus_chance_outputs = list(/obj/item/alch/bonemeal = 50)
+	valid_outputs = list( /obj/item/fertilizer/bone_meal = 2)
+	bonus_chance_outputs = list(/obj/item/fertilizer/bone_meal = 50)
 
 /datum/alch_grind_recipe/horn
 	valid_input = /obj/item/alch/horn
-	valid_outputs = list(/obj/item/alch/earthdust = 1,/obj/item/alch/bonemeal = 2)
+	valid_outputs = list(/obj/item/alch/earthdust = 1,/obj/item/fertilizer/bone_meal = 2)
 	bonus_chance_outputs = list(/obj/item/alch/earthdust = 66)
 
 /datum/alch_grind_recipe/fish
 	picky = FALSE
 	valid_input = /obj/item/reagent_containers/food/snacks/fish
 	valid_outputs = list(/obj/item/alch/waterdust = 2) // makes fish worth buying , fisher/apothecary combo
-	bonus_chance_outputs = list(/obj/item/alch/waterdust = 25 ,/obj/item/alch/bonemeal = 33)
+	bonus_chance_outputs = list(/obj/item/alch/waterdust = 25 ,/obj/item/fertilizer/bone_meal = 33)
 
 /datum/alch_grind_recipe/swampweed
 	valid_input = /obj/item/reagent_containers/food/snacks/produce/swampweed
