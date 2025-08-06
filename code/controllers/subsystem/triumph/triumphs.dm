@@ -129,6 +129,8 @@ SUBSYSTEM_DEF(triumphs)
 		C.triumph_buys += triumph_buy
 		active_triumph_buy_queue += triumph_buy
 
+		to_chat(C, span_notice("You have bought a new triumph buy for [ref_datum.triumph_cost] triumph\s."))
+
 		// The thing someone is buying conflicts with things
 		if(triumph_buy.conflicts_with.len)
 			for(var/cur_check_path in triumph_buy.conflicts_with) // Time to refund anything already bought it personally hates
