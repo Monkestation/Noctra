@@ -173,7 +173,13 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 	for(var/obj/item/thing as anything in products)
 		var/path_name = initial(thing.name)
 		if(ispath(thing, /obj/item/neuFarm/seed))
-			path_name = initial(thing:seed_identity)
+			var/datum/plant_def/plant_def_instance = GLOB.plant_defs[initial(thing:plant_def_type)]
+			if(plant_def_instance)
+				var/examine_name = "[plant_def_instance.seed_identity]"
+				var/datum/plant_genetics/seed_genetics_instance = initial(thing:seed_genetics)
+				if(initial(seed_genetics_instance.seed_identity_modifier))
+					examine_name = "[initial(seed_genetics_instance.seed_identity_modifier)] " + examine_name
+				path_name = examine_name
 		if(ispath(thing, /obj/item/reagent_containers))
 			var/obj/item/reagent_containers/created_container = new(null)
 			if(length(created_container.list_reagents))
@@ -415,10 +421,27 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 	for(var/obj/item/thing as anything in products)
 		product_info = products[thing]
 		var/tern_op_result = (product_info[TRADER_PRODUCT_INFO_QUANTITY] == INFINITY ? "an infinite amount" : "[product_info[TRADER_PRODUCT_INFO_QUANTITY]]") //Coder friendly string concat
+
+		var/path_name = initial(thing.name)
+		if(ispath(thing, /obj/item/neuFarm/seed))
+			var/datum/plant_def/plant_def_instance = GLOB.plant_defs[initial(thing:plant_def_type)]
+			if(plant_def_instance)
+				var/examine_name = "[plant_def_instance.seed_identity]"
+				var/datum/plant_genetics/seed_genetics_instance = initial(thing:seed_genetics)
+				if(initial(seed_genetics_instance.seed_identity_modifier))
+					examine_name = "[initial(seed_genetics_instance.seed_identity_modifier)] " + examine_name
+				path_name = examine_name
+		if(ispath(thing, /obj/item/reagent_containers))
+			var/obj/item/reagent_containers/created_container = new(null)
+			if(length(created_container.list_reagents))
+				var/datum/reagent/reagent = created_container.list_reagents[1]
+				path_name = "[initial(thing.name)] of [initial(reagent.name)]"
+			qdel(created_container)
+
 		if(product_info[TRADER_PRODUCT_INFO_QUANTITY] <= 0) //Out of stock
-			sell_info += span_notice("&bull; [span_red("(OUT OF STOCK)")] [initial(thing.name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name]; [span_red("[tern_op_result]")] left in stock")
+			sell_info += span_notice("&bull; [span_red("(OUT OF STOCK)")] [path_name] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name]; [span_red("[tern_op_result]")] left in stock")
 		else
-			sell_info += span_notice("&bull; [initial(thing.name)] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name]; [span_green("[tern_op_result]")] left in stock")
+			sell_info += span_notice("&bull; [path_name] for [product_info[TRADER_PRODUCT_INFO_PRICE]] [trader_data.currency_name]; [span_green("[tern_op_result]")] left in stock")
 	to_chat(customer, sell_info.Join("\n"))
 
 ///Sets quantity of all products to initial(quanity); this proc is currently called during initialize

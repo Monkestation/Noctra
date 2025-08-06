@@ -80,7 +80,7 @@
 
 	if(has_world_trait(/datum/world_trait/dendor_fertility))
 		feedback = "Praise Dendor for our harvest is bountiful."
-		modifier += 3
+		modifier += is_ascendant(DENDOR) ? 4 : 3
 
 	record_featured_stat(FEATURED_STATS_FARMERS, user)
 	record_featured_object_stat(FEATURED_STATS_CROPS, plant_type.name)

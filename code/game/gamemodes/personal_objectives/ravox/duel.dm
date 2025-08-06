@@ -16,7 +16,7 @@
 		to_chat(owner.current, span_greentext("You have proven your worth in combat! Ravox is pleased!"))
 		owner.current.adjust_triumphs(triumph_count * duels_required)
 		completed = TRUE
-		adjust_storyteller_influence("Ravox", duels_required * 10)
+		adjust_storyteller_influence(RAVOX, duels_required * 10)
 		escalate_objective()
 
 /datum/objective/ravox_duel/update_explanation_text()

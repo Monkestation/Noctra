@@ -20,7 +20,7 @@
 	to_chat(owner.current, span_greentext("A marriage has occurred in the world, completing Eora's objective!"))
 	owner.current.adjust_triumphs(triumph_count)
 	completed = TRUE
-	adjust_storyteller_influence("Eora", 15)
+	adjust_storyteller_influence(EORA, 15)
 	escalate_objective()
 	UnregisterSignal(SSdcs, COMSIG_GLOBAL_MARRIAGE)
 
