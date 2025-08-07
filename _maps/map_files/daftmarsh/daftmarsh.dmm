@@ -10106,7 +10106,7 @@
 /area/rogue/indoors/town/church/inquisition)
 "jQg" = (
 /obj/structure/rack/shelf/biggest,
-/obj/item/clothing/pants/tights/random{
+/obj/item/clothing/pants/tights/colored/random{
 	pixel_x = 6;
 	pixel_y = 5
 	},
@@ -11390,7 +11390,7 @@
 /obj/structure/closet/crate/crafted_closet/dark,
 /obj/item/clothing/shirt/tunic/colored/green,
 /obj/item/clothing/shirt/undershirt/colored/random,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
 /obj/machinery/light/fueled/wallfire/candle,
 /turf/open/floor/blocks/newstone/alt,
 /area/rogue/indoors/town/dwarfin)
@@ -14728,10 +14728,10 @@
 "ozI" = (
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/shirt/undershirt/colored/random,
-/obj/item/clothing/pants/tights/random,
-/obj/item/clothing/pants/tights/random,
-/obj/item/clothing/pants/tights/random,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
+/obj/item/clothing/pants/tights/colored/random,
+/obj/item/clothing/pants/tights/colored/random,
+/obj/item/clothing/pants/tights/colored/random,
 /obj/item/clothing/pants/trou/leather,
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/indoors/town/theatre)
@@ -19044,7 +19044,7 @@
 /obj/item/clothing/armor/gambeson/heavy/dress,
 /obj/item/clothing/shoes/boots/leather,
 /obj/item/clothing/armor/leather/vest,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
 /obj/item/clothing/shirt/undershirt/colored/random,
 /obj/machinery/light/fueled/wallfire/candle/l,
 /turf/open/floor/woodturned,
@@ -19302,7 +19302,7 @@
 	pixel_x = -3;
 	pixel_y = 11
 	},
-/obj/item/clothing/pants/tights/random{
+/obj/item/clothing/pants/tights/colored/random{
 	pixel_x = 8;
 	pixel_y = 10
 	},

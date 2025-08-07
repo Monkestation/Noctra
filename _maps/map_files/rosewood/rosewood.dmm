@@ -919,8 +919,8 @@
 /obj/item/clothing/pants/skirt/colored/random,
 /obj/item/clothing/pants/skirt/colored/random,
 /obj/item/clothing/shirt/undershirt/lowcut,
-/obj/item/clothing/pants/tights/random,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
+/obj/item/clothing/pants/tights/colored/random,
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/indoors/soilsons)
 "azI" = (
@@ -3460,8 +3460,8 @@
 /obj/item/clothing/pants/skirt/colored/random,
 /obj/item/clothing/pants/skirt/colored/random,
 /obj/item/clothing/shirt/undershirt/lowcut,
-/obj/item/clothing/pants/tights/random,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
+/obj/item/clothing/pants/tights/colored/random,
 /obj/machinery/light/fueled/wallfire/candle,
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/indoors/soilsons)
@@ -7433,7 +7433,7 @@
 /area/rogue/indoors/town)
 "eaK" = (
 /obj/structure/closet/crate/crafted_closet/dark,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
 /obj/item/clothing/shirt/tunic/colored/random,
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/indoors/town)
@@ -7484,8 +7484,8 @@
 /obj/item/clothing/shirt/dress/silkdress/colored/random,
 /obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/tunic/colored/random,
-/obj/item/clothing/pants/tights/random,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
+/obj/item/clothing/pants/tights/colored/random,
 /obj/item/clothing/pants/skirt/colored/random,
 /obj/item/clothing/cloak/half/colored/random,
 /obj/item/clothing/cloak/half/colored/random,
@@ -15125,7 +15125,7 @@
 /obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/tunic/colored/random,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
 /obj/item/clothing/cloak/raincloak/colored/random,
 /obj/item/clothing/cloak/raincloak/colored/random,
 /turf/open/floor/ruinedwood/spiral,
@@ -24042,7 +24042,7 @@
 /area/rogue/under/cavewet)
 "nvp" = (
 /obj/structure/closet/crate/crafted_closet/dark,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
 /obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/tunic/colored/green,
 /turf/open/floor/blocks/paving,
@@ -35589,9 +35589,9 @@
 /obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/undershirt/colored/random,
-/obj/item/clothing/pants/tights/random,
-/obj/item/clothing/pants/tights/random,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
+/obj/item/clothing/pants/tights/colored/random,
+/obj/item/clothing/pants/tights/colored/random,
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/under/town/basement)
 "tzz" = (
@@ -36538,8 +36538,8 @@
 /obj/machinery/light/fueled/wallfire/candle/r,
 /obj/item/clothing/shirt/dress/gen/colored/random,
 /obj/item/clothing/shirt/dress/gen/colored/random,
-/obj/item/clothing/pants/tights/random,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
+/obj/item/clothing/pants/tights/colored/random,
 /turf/open/floor/wood,
 /area/rogue/indoors/town)
 "ueg" = (
@@ -42986,8 +42986,8 @@
 /obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/dress/silkdress/colored/random,
 /obj/item/clothing/shirt/dress/silkdress/colored/random,
-/obj/item/clothing/pants/tights/random,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
+/obj/item/clothing/pants/tights/colored/random,
 /obj/item/clothing/pants/skirt/colored/random,
 /obj/item/clothing/pants/skirt/colored/random,
 /obj/item/clothing/shirt/dress/gen/colored/random,
@@ -43637,8 +43637,8 @@
 /obj/structure/closet/crate/crafted_closet/inn/south,
 /obj/item/clothing/shirt/dress/silkdress/colored/random,
 /obj/item/clothing/shirt/dress/silkdress/colored/random,
-/obj/item/clothing/pants/tights/random,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
+/obj/item/clothing/pants/tights/colored/random,
 /obj/item/clothing/pants/skirt/colored/random,
 /obj/item/clothing/pants/skirt/colored/random,
 /obj/item/clothing/head/roguehood/colored/random,

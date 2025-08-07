@@ -525,9 +525,9 @@
 /obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/undershirt/colored/random,
-/obj/item/clothing/pants/tights/random,
-/obj/item/clothing/pants/tights/random,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
+/obj/item/clothing/pants/tights/colored/random,
+/obj/item/clothing/pants/tights/colored/random,
 /turf/open/floor/ruinedwood/spiralfade,
 /area/rogue/under/mountains/anvil/dungeon)
 "fy" = (
@@ -968,9 +968,9 @@
 /obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/undershirt/colored/random,
-/obj/item/clothing/pants/tights/random,
-/obj/item/clothing/pants/tights/random,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
+/obj/item/clothing/pants/tights/colored/random,
+/obj/item/clothing/pants/tights/colored/random,
 /turf/open/floor/ruinedwood/spiralfade,
 /area/rogue/under/mountains/anvil/dungeon)
 "mQ" = (
@@ -2274,8 +2274,8 @@
 /obj/structure/closet/crate/crafted_closet/inn,
 /obj/item/clothing/shirt/undershirt/colored/random,
 /obj/item/clothing/shirt/undershirt/colored/random,
-/obj/item/clothing/pants/tights/random,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
+/obj/item/clothing/pants/tights/colored/random,
 /turf/open/floor/wood/nosmooth,
 /area/rogue/under/mountains/anvil/dungeon)
 "FT" = (

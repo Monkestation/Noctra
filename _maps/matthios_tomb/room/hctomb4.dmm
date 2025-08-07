@@ -57,7 +57,7 @@
 /obj/structure/table/wood/reinforced_alt,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/wallclock,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
 /turf/open/floor/carpet,
 /area/rogue/under/tomb/indoors/magic)
 "cp" = (

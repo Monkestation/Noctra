@@ -51,7 +51,7 @@
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/shirt/dress,
 /obj/item/clothing/head/crown/serpcrown/surplus,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
 /obj/item/clothing/shirt/dress/gen/colored/purple,
 /obj/item/clothing/shirt/dress/silkdress,
 /obj/item/clothing/armor/leather/jacket/silk_coat,
@@ -864,7 +864,7 @@
 "MK" = (
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/shirt/dress,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
 /obj/item/clothing/shirt/dress/gen/colored/blue,
 /obj/item/clothing/shirt/dress/silkdress,
 /obj/item/clothing/armor/leather/jacket/silk_coat,
