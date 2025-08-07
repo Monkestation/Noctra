@@ -28,5 +28,6 @@
 	abstract_type = /obj/item/clothing/neck
 
 
-/obj/item/clothing/neck/worn_overlays(isinhands = FALSE)
+/obj/item/clothing/neck/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, dummy_block = FALSE)
+	SHOULD_CALL_PARENT(FALSE)
 	. = list()
