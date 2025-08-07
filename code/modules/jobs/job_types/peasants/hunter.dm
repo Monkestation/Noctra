@@ -26,7 +26,7 @@
 
 /datum/outfit/job/hunter/pre_equip(mob/living/carbon/human/H)
 	..()
-	pants = /obj/item/clothing/pants/tights/random
+	pants = /obj/item/clothing/pants/tights/colored/random
 	shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 	shoes = /obj/item/clothing/shoes/boots/leather
 	neck = /obj/item/storage/belt/pouch/coins/poor

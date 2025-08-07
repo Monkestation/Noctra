@@ -166,7 +166,7 @@
 /datum/supply_pack/apparel/tights_random
 	name = "Cloth Tights"
 	cost = 4
-	contains = /obj/item/clothing/pants/tights/random
+	contains = /obj/item/clothing/pants/tights/colored/random
 
 /datum/supply_pack/apparel/tights_sailor
 	name = "Sailor Tights"

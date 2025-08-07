@@ -48,7 +48,7 @@
 	beltl = /obj/item/key/tavern
 	beltr = /obj/item/weapon/knife/villager
 	if(H.gender == MALE)
-		pants = /obj/item/clothing/pants/tights/random
+		pants = /obj/item/clothing/pants/tights/colored/random
 		shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 		shoes = /obj/item/clothing/shoes/simpleshoes
 		cloak = /obj/item/clothing/cloak/apron/cook

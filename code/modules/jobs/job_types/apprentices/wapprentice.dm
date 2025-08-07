@@ -29,7 +29,7 @@
 /datum/outfit/job/mageapprentice/pre_equip(mob/living/carbon/human/H)
 	allowed_patrons = list(/datum/patron/divine/noc, /datum/patron/inhumen/zizo)//see court mage for explaination
 	if(H.gender == MALE)
-		pants = /obj/item/clothing/pants/tights/random
+		pants = /obj/item/clothing/pants/tights/colored/random
 		shoes = /obj/item/clothing/shoes/simpleshoes
 		shirt = /obj/item/clothing/shirt/shortshirt
 		belt = /obj/item/storage/belt/leather/rope

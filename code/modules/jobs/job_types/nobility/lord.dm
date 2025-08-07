@@ -96,7 +96,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 			if(H.dna.species.id == SPEC_ID_HUMEN)
 				H.dna.species.soundpack_m = new /datum/voicepack/male/evil()
 	else
-		pants = /obj/item/clothing/pants/tights/random
+		pants = /obj/item/clothing/pants/tights/colored/random
 		armor = /obj/item/clothing/shirt/dress/royal
 		shoes = /obj/item/clothing/shoes/shortboots
 		cloak = /obj/item/clothing/cloak/lordcloak/ladycloak

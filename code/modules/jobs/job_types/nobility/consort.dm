@@ -63,7 +63,7 @@
 		shirt = /obj/item/clothing/shirt/undershirt/colored/black
 		armor = /obj/item/clothing/armor/leather/vest/winterjacket
 	else
-		pants = /obj/item/clothing/pants/tights/random
+		pants = /obj/item/clothing/pants/tights/colored/random
 		armor = /obj/item/clothing/armor/leather/vest/winterjacket
 		shirt = /obj/item/clothing/armor/gambeson/heavy/winterdress
 
@@ -107,7 +107,7 @@
 		shirt = /obj/item/clothing/shirt/undershirt/colored/black
 		armor = /obj/item/clothing/armor/leather/vest/winterjacket // this is kind of stupid but i love it anyway
 	else
-		pants = /obj/item/clothing/pants/tights/random
+		pants = /obj/item/clothing/pants/tights/colored/random
 		shirt = /obj/item/clothing/armor/gambeson/heavy/winterdress
 		armor = /obj/item/clothing/armor/leather/vest/winterjacket
 		cloak = /obj/item/clothing/cloak/raincloak/furcloak

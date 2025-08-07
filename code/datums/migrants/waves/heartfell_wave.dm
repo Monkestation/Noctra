@@ -77,7 +77,7 @@
 	neck =  /obj/item/storage/belt/pouch/coins/rich
 	ring = /obj/item/clothing/ring/silver
 	shoes = /obj/item/clothing/shoes/shortboots
-	pants = /obj/item/clothing/pants/tights/random
+	pants = /obj/item/clothing/pants/tights/colored/random
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/craft/engineering, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/stealing, 4, TRUE)
@@ -242,7 +242,7 @@
 	neck = /obj/item/clothing/neck/talkstone
 	cloak = /obj/item/clothing/cloak/black_cloak
 	armor = /obj/item/clothing/shirt/robe/colored/black
-	pants = /obj/item/clothing/pants/tights/random
+	pants = /obj/item/clothing/pants/tights/colored/random
 	shoes = /obj/item/clothing/shoes/shortboots
 	belt = /obj/item/storage/belt/leather/plaquesilver
 	beltl = /obj/item/flashlight/flare/torch/lantern

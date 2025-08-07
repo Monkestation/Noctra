@@ -102,7 +102,7 @@
 		head = /obj/item/clothing/head/hennin
 		shirt = /obj/item/clothing/shirt/dress/royal/princess
 		shoes = /obj/item/clothing/shoes/shortboots
-		pants = /obj/item/clothing/pants/tights/random
+		pants = /obj/item/clothing/pants/tights/colored/random
 		H.virginity = TRUE
 	H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/crossbows, pick(0,1), TRUE)
@@ -148,7 +148,7 @@
 		head = /obj/item/clothing/head/hennin
 		shirt = /obj/item/clothing/shirt/dress/royal/princess
 		shoes = /obj/item/clothing/shoes/shortboots
-		pants = /obj/item/clothing/pants/tights/random
+		pants = /obj/item/clothing/pants/tights/colored/random
 		H.virginity = TRUE
 
 	H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)

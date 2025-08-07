@@ -31,7 +31,7 @@
 	H.add_spell(/datum/action/cooldown/spell/undirected/list_target/vicious_mockery)
 	head = /obj/item/clothing/head/bardhat
 	shoes = /obj/item/clothing/shoes/boots
-	pants = /obj/item/clothing/pants/tights/random
+	pants = /obj/item/clothing/pants/tights/colored/random
 	shirt = /obj/item/clothing/shirt/tunic/noblecoat
 	if(prob(30))
 		gloves = /obj/item/clothing/gloves/fingerless

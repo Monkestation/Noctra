@@ -48,7 +48,7 @@
 			H.adjust_skillrank(/datum/skill/misc/music, 1, TRUE) //Have to know to "PLAY" the part... Eh? Eh?
 			head = /obj/item/clothing/head/bardhat
 			shoes = /obj/item/clothing/shoes/boots
-			pants = /obj/item/clothing/pants/tights/random
+			pants = /obj/item/clothing/pants/tights/colored/random
 			shirt = /obj/item/clothing/shirt/shortshirt
 			belt = /obj/item/storage/belt/leather/assassin
 			armor = /obj/item/clothing/armor/leather/vest
@@ -77,7 +77,7 @@
 		if("Fisher")
 			H.adjust_skillrank(/datum/skill/labor/fishing, 1, TRUE) //Have to know to play the part.
 			if(H.gender == MALE)
-				pants = /obj/item/clothing/pants/tights/random
+				pants = /obj/item/clothing/pants/tights/colored/random
 				shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 				shoes = /obj/item/clothing/shoes/boots/leather
 				neck = /obj/item/storage/belt/pouch/coins/poor
@@ -105,7 +105,7 @@
 		if("Hunter")
 			H.adjust_skillrank(/datum/skill/combat/bows, 2, TRUE) //The assassin trades their crossbow abilities to match their disguise.
 			H.adjust_skillrank(/datum/skill/combat/crossbows, -2, TRUE)
-			pants = /obj/item/clothing/pants/tights/random
+			pants = /obj/item/clothing/pants/tights/colored/random
 			shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 			shoes = /obj/item/clothing/shoes/boots/leather
 			neck = /obj/item/storage/belt/pouch/coins/poor

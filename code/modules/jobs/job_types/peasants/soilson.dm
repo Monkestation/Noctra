@@ -145,7 +145,7 @@
 		head = /obj/item/clothing/head/roguehood/colored/random
 		if(prob(50))
 			head = /obj/item/clothing/head/strawhat
-		pants = /obj/item/clothing/pants/tights/random
+		pants = /obj/item/clothing/pants/tights/colored/random
 		armor = /obj/item/clothing/armor/gambeson/light/striped
 		shirt = /obj/item/clothing/shirt/undershirt/colored/random
 		shoes = /obj/item/clothing/shoes/simpleshoes

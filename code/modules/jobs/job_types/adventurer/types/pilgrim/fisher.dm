@@ -27,7 +27,7 @@
 		else
 			H.change_stat(STATKEY_CON, 2)
 	if(H.gender == MALE)
-		pants = /obj/item/clothing/pants/tights/random
+		pants = /obj/item/clothing/pants/tights/colored/random
 		shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 		shoes = /obj/item/clothing/shoes/boots/leather
 		neck = /obj/item/storage/belt/pouch/coins/poor
