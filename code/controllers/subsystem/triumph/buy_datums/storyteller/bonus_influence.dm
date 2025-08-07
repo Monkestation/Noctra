@@ -6,6 +6,7 @@
 	visible_on_active_menu = TRUE
 	limited = TRUE
 	stock = 2
+	/// The name of the storyteller we are giving bonus influence to
 	var/storyteller_name
 
 /datum/triumph_buy/storyteller_influence_bonus/on_activate()

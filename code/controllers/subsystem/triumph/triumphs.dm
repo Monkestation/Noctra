@@ -131,35 +131,38 @@ SUBSYSTEM_DEF(triumphs)
 /datum/controller/subsystem/triumphs/proc/attempt_to_buy_triumph_condition(client/C, datum/triumph_buy/ref_datum)
 	if(ref_datum.limited && triumph_buy_stocks[ref_datum.type] <= 0)
 		to_chat(C, span_warning("The item is out of stock!"))
-		return
-	var/triumph_amount = get_triumphs(C.ckey) - ref_datum.triumph_cost
-	if(triumph_amount >= 0)
-		triumph_adjust(ref_datum.triumph_cost*-1, C.ckey)
+		return FALSE
+	if(get_triumphs(C.ckey) < ref_datum.triumph_cost)
+		to_chat(C, span_warning("You don't have enough triumphs to buy this!"))
+		return FALSE
 
-		if(ref_datum.limited)
-			triumph_buy_stocks[ref_datum.type]--
+	triumph_adjust(ref_datum.triumph_cost * -1, C.ckey)
 
-		var/datum/triumph_buy/triumph_buy = new ref_datum.type
+	if(ref_datum.limited)
+		triumph_buy_stocks[ref_datum.type]--
 
-		triumph_buy.ckey_of_buyer = C.ckey
+	var/datum/triumph_buy/triumph_buy = new ref_datum.type
 
-		if(!triumph_buy_owners[C.ckey])
-			triumph_buy_owners[C.ckey] = list()
-		triumph_buy_owners[C.ckey] += triumph_buy
+	triumph_buy.ckey_of_buyer = C.ckey
 
-		active_triumph_buy_queue += triumph_buy
+	if(!triumph_buy_owners[C.ckey])
+		triumph_buy_owners[C.ckey] = list()
+	triumph_buy_owners[C.ckey] += triumph_buy
 
-		to_chat(C, span_notice("You have bought a new triumph buy for [ref_datum.triumph_cost] triumph\s."))
+	active_triumph_buy_queue += triumph_buy
 
-		// The thing someone is buying conflicts with things
-		if(triumph_buy.conflicts_with.len)
-			for(var/cur_check_path in triumph_buy.conflicts_with) // Time to refund anything already bought it personally hates
-				for(var/datum/triumph_buy/active_datum in active_triumph_buy_queue)
-					if(ispath(cur_check_path, active_datum.type))
-						attempt_to_unbuy_triumph_condition(C, active_datum, reason = "CONFLICTS")
+	to_chat(C, span_notice("You have bought a [triumph_buy.name] for [ref_datum.triumph_cost] triumph\s."))
 
-		triumph_buy.on_buy()
-		call_menu_refresh()
+	if(triumph_buy.conflicts_with.len)
+		for(var/cur_check_path in triumph_buy.conflicts_with)
+			for(var/datum/triumph_buy/active_datum in active_triumph_buy_queue)
+				if(ispath(cur_check_path, active_datum.type))
+					attempt_to_unbuy_triumph_condition(C, active_datum, reason = "CONFLICTS")
+
+	triumph_buy.on_buy()
+	call_menu_refresh()
+	return TRUE
+
 /**
 	This occurs when you try to unbuy a triumph condition and removes it
 	Also used for refunding due to conflicts

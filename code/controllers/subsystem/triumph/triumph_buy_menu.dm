@@ -24,6 +24,7 @@
 /datum/triumph_buy_menu/proc/show_menu()
 	if(!linked_client)
 		return
+
 	var/data = {"
 	<html>
 		<head>
@@ -51,6 +52,16 @@
 					color: #91E0F3;
 					padding-bottom: 2px;
 				}
+				.nothing_bought {
+					font-family: "Aclonica", sans-serif;
+					font-weight: 400;
+					font-style: normal;
+					font-size: 24px;
+					color: #FDF7D2;
+					text-align: center;
+					width: 100%;
+					padding-top: 200px;
+				}
 			</style>
 			<link rel='stylesheet' type='text/css' href='[SSassets.transport.get_asset_url("slop_menustyle3.css")]'>
 		</head>
@@ -73,24 +84,26 @@
 	data += {"
 	<hr class=\"fadeout_line\">
 		</div>
-			<table>
-				<thead>
-					<tr>
-						<th class=\"triumph_text_head\">Description</th>
-						[current_category != TRIUMPH_CAT_ACTIVE_DATUMS ? "<th class=\"triumph_text_head\">Cost</th>" : ""]
-						[current_category != TRIUMPH_CAT_ACTIVE_DATUMS ? "<th class=\"triumph_text_head\">Stock</th>" : ""]
-						<th class=\"triumph_text_head_redeem\">Redeem</th>
-					</tr>
-				</thead>
-				<tbody>
 	"}
 
 	if(current_category == TRIUMPH_CAT_ACTIVE_DATUMS)
 		var/found_one = FALSE
 		if(SStriumphs.active_triumph_buy_queue.len)
+			data += {"
+				<table>
+					<thead>
+						<tr>
+							<th class=\"triumph_text_head\">Description</th>
+							<th class=\"triumph_text_head_redeem\">Redeem</th>
+						</tr>
+					</thead>
+					<tbody>
+			"}
+
 			for(var/datum/triumph_buy/found_triumph_buy in SStriumphs.active_triumph_buy_queue)
 				if(!found_triumph_buy.visible_on_active_menu || usr.ckey != found_triumph_buy.ckey_of_buyer)
 					continue
+
 				data += {"
 					<tr class='triumph_text_row'>
 						<td class='triumph_text_desc'>
@@ -98,6 +111,7 @@
 							[found_triumph_buy.desc]
 						</td>
 				"}
+
 				if(SSticker.HasRoundStarted() && found_triumph_buy.pre_round_only)
 					data += "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[found_triumph_buy];'><span class='strikethru_back'>ROUND STARTED</span></a></td>"
 				else
@@ -106,15 +120,29 @@
 				data += "</tr>"
 				found_one = TRUE
 
-		if(!found_one)
 			data += {"
-				<tr class='triumph_text_row'>
-					<td class='triumph_text_desc'>NOTHING</td>
-					<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];'>HERE</a></td>
-				</tr>
+					</tbody>
+				</table>
 			"}
 
+		if(!found_one)
+			data += {"
+				<div class='nothing_bought'>YOU HAVE NOTHING</div>
+			"}
 	else
+		data += {"
+			<table>
+				<thead>
+					<tr>
+						<th class=\"triumph_text_head\">Description</th>
+						<th class=\"triumph_text_head\">Cost</th>
+						<th class=\"triumph_text_head\">Stock</th>
+						<th class=\"triumph_text_head_redeem\">Redeem</th>
+					</tr>
+				</thead>
+				<tbody>
+		"}
+
 		for(var/datum/triumph_buy/current_check in SStriumphs.central_state_data[current_category]["[current_page]"])
 			data += {"
 				<tr class='triumph_text_row'>
@@ -139,10 +167,11 @@
 			data += string
 			data += "</tr>"
 
-	data += {"
+		data += {"
 				</tbody>
 			</table>
-			"}
+		"}
+
 	data += "<div class='triumph_footer'>"
 
 	for(var/i in 1 to SStriumphs.central_state_data[current_category].len)
