@@ -78,5 +78,12 @@
                 "balance": "Monarch now has Medium Armor"
             }
         ]
+    },
+    "2025-08-07": {
+        "Arkatos": [
+            {
+                "bugfix": "Fixed an issue where the game failed to start properly."
+            }
+        ]
     }
 }
