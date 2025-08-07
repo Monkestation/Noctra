@@ -60,7 +60,7 @@
 	backl = /obj/item/storage/backpack/satchel
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	beltl = /obj/item/weapon/mace/bludgeon
-	backpack_contents = list(/obj/item/storage/keyring/guard, /obj/item/weapon/knife/dagger/steel/special, /obj/item/book/law)
+	backpack_contents = list(/obj/item/storage/keyring/guard, /obj/item/weapon/knife/dagger/steel/special, /obj/item/book/law, /obj/item/weapon/whip/cane)
 
 
 	H.adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE) // Main weapon
@@ -140,7 +140,7 @@
 	backr = /obj/item/weapon/polearm/spear
 	beltl = /obj/item/weapon/mace/bludgeon
 	beltr = /obj/item/flashlight/flare/torch/lantern
-	backpack_contents = list(/obj/item/storage/keyring/guard, /obj/item/weapon/knife/dagger/steel/special, /obj/item/book/law)
+	backpack_contents = list(/obj/item/storage/keyring/guard, /obj/item/weapon/knife/dagger/steel/special, /obj/item/book/law, /obj/item/weapon/whip/cane)
 
 	//Stats for class
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
