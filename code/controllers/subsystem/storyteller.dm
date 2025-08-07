@@ -1705,6 +1705,14 @@ SUBSYSTEM_DEF(gamemode)
 			return SSgamemode.calculate_storyteller_influence(S.type)
 	return 0
 
+/// Checks if the given storyteller is ascendant
+/proc/is_ascendant(god_name)
+	. = FALSE
+	for(var/storyteller_type in SSgamemode.storytellers)
+		var/datum/storyteller/S = SSgamemode.storytellers[storyteller_type]
+		if(S.ascendant && (S.name == god_name))
+			return TRUE
+
 #undef DEFAULT_STORYTELLER_VOTE_OPTIONS
 #undef MAX_POP_FOR_STORYTELLER_VOTE
 #undef ROUNDSTART_VALID_TIMEFRAME

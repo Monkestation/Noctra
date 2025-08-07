@@ -11,12 +11,13 @@
 
 /obj/item/fertilizer/examine(mob/user)
 	. = ..()
-	if(nitrogen_content)
-		. += "Restores [nitrogen_content] Nitrogen"
-	if(phosphorus_content)
-		. += "Restores [phosphorus_content] Phosphorus"
-	if(potassium_content)
-		. += "Restores [potassium_content] Potassium}"
+	if(user.get_skill_level(/datum/skill/labor/farming) >= 3)
+		if(nitrogen_content)
+			. += span_info("Restores [nitrogen_content] Nitrogen")
+		if(phosphorus_content)
+			. += span_info("Restores [phosphorus_content] Phosphorus")
+		if(potassium_content)
+			. += span_info("Restores [potassium_content] Potassium")
 
 /obj/item/fertilizer/bone_meal
 	name = "bone meal"

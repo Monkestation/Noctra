@@ -12,6 +12,7 @@
 	nitrogen_production = 0
 	phosphorus_production = 0
 	potassium_production = 15
+	seed_identity = "swampweed seeds"
 
 /datum/plant_def/swampweed/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	base_genetics.water_efficiency = TRAIT_GRADE_EXCELLENT
@@ -33,3 +34,4 @@
 	nitrogen_production = 20
 	phosphorus_production = 0
 	potassium_production = 0
+	seed_identity = "westleach leaf seeds"

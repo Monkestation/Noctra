@@ -113,7 +113,7 @@
 		if(water_top_overlay)
 			QDEL_NULL(water_top_overlay)
 		make_unshiny()
-		var/mutable_appearance/dirty = mutable_appearance('icons/turf/floors.dmi', "dirt")
+		var/mutable_appearance/dirty = mutable_appearance('icons/turf/floors.dmi', "rock")
 		add_overlay(dirty)
 		for(var/obj/structure/waterwheel/rotator in contents)
 			rotator.set_rotational_direction_and_speed(null, 0)

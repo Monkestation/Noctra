@@ -24,7 +24,7 @@
 	to_chat(owner.current, span_greentext("You have earned nobility and completed Astrata's objective!"))
 	owner.current.adjust_triumphs(triumph_count)
 	completed = TRUE
-	adjust_storyteller_influence("Astrata", 15)
+	adjust_storyteller_influence(ASTRATA, 15)
 	escalate_objective()
 	UnregisterSignal(owner.current, SIGNAL_ADDTRAIT(TRAIT_NOBLE))
 
