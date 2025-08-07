@@ -103,6 +103,10 @@
 	try_wash(weapon, user)
 
 /obj/item/bin/proc/try_wash(atom/to_wash, mob/user)
+	if(istype(to_wash, /obj/item/natural/cloth))
+		var/obj/item/item = to_wash
+		item.attack_obj(src, user)
+		return
 	if(!reagents || !reagents.maximum_volume || kover)
 		return
 	var/removereg = /datum/reagent/water
