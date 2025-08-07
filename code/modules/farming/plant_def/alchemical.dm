@@ -32,6 +32,7 @@
 	nitrogen_requirement = 25  // Deadly nightshade needs more N
 	phosphorus_requirement = 35  // Alkaloid production
 	potassium_requirement = 18
+	seed_identity = "atropa seeds"
 
 /datum/plant_def/alchemical/atropa/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	..()
@@ -41,6 +42,7 @@
 	name = "matricaria"
 	icon_state = "matricaria"
 	produce_type = /obj/item/alch/matricaria
+	seed_identity = "matricaria seeds"
 
 /datum/plant_def/alchemical/symphitum
 	name = "symphitum"
@@ -49,6 +51,7 @@
 	nitrogen_requirement = 30  // Comfrey is a heavy feeder
 	phosphorus_requirement = 20
 	potassium_requirement = 25
+	seed_identity = "symphitum seeds"
 
 /datum/plant_def/alchemical/symphitum/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	..()
@@ -61,6 +64,7 @@
 	nitrogen_requirement = 15  // Dandelions are very efficient
 	phosphorus_requirement = 20
 	potassium_requirement = 15
+	seed_identity = "taraxacum seeds"
 
 /datum/plant_def/alchemical/taraxacum/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	..()
@@ -71,6 +75,7 @@
 	name = "euphrasia"
 	icon_state = "euphrasia"
 	produce_type = /obj/item/alch/euphrasia
+	seed_identity = "euphrasia seeds"
 
 /datum/plant_def/alchemical/urtica
 	name = "urtica"
@@ -79,6 +84,7 @@
 	nitrogen_requirement = 35  // Nettles love nitrogen
 	phosphorus_requirement = 15
 	potassium_requirement = 20
+	seed_identity = "urtica seeds"
 
 /datum/plant_def/alchemical/urtica/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	..()
@@ -89,6 +95,7 @@
 	name = "calendula"
 	icon_state = "calendula"
 	produce_type = /obj/item/alch/calendula
+	seed_identity = "calendula seeds"
 
 /datum/plant_def/alchemical/mentha
 	name = "mentha"
@@ -97,6 +104,7 @@
 	nitrogen_requirement = 25
 	phosphorus_requirement = 15
 	potassium_requirement = 30  // Mint spreads with runners
+	seed_identity = "mentha seeds"
 
 /datum/plant_def/alchemical/mentha/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	..()
@@ -107,21 +115,25 @@
 	name = "salvia"
 	icon_state = "salvia"
 	produce_type = /obj/item/alch/salvia
+	seed_identity = "salvia seeds"
 
 /datum/plant_def/alchemical/hypericum
 	name = "hypericum"
 	icon_state = "hypericum"
 	produce_type = /obj/item/alch/hypericum
+	seed_identity = "hypericum seeds"
 
 /datum/plant_def/alchemical/benedictus
 	name = "benedictus"
 	icon_state = "benedictus"
 	produce_type = /obj/item/alch/benedictus
+	seed_identity = "benedictus seeds"
 
 /datum/plant_def/alchemical/valeriana
 	name = "valeriana"
 	icon_state = "valeriana"
 	produce_type = /obj/item/alch/valeriana
+	seed_identity = "valeriana seeds"
 
 /datum/plant_def/alchemical/paris
 	name = "paris"
@@ -130,6 +142,7 @@
 	nitrogen_requirement = 18
 	phosphorus_requirement = 35  // Toxic compounds need P
 	potassium_requirement = 15
+	seed_identity = "paris seeds"
 
 /datum/plant_def/alchemical/paris/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	..()
@@ -139,6 +152,7 @@
 	name = "artemisia"
 	icon_state = "artemisia"
 	produce_type = /obj/item/alch/artemisia
+	seed_identity = "artemisia seeds"
 
 /datum/plant_def/alchemical/artemisia/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	..()
@@ -152,6 +166,7 @@
 	nitrogen_requirement = 30
 	phosphorus_requirement = 25
 	potassium_requirement = 35
+	seed_identity = "rosa seeds"
 
 /datum/plant_def/alchemical/rosa/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	..()
@@ -164,6 +179,7 @@
 	nitrogen_requirement = 15  // Succulents are efficient
 	phosphorus_requirement = 30  // Latex production
 	potassium_requirement = 20
+	seed_identity = "euphorbia seeds"
 
 /datum/plant_def/alchemical/euphorbia/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	..()

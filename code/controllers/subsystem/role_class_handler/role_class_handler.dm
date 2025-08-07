@@ -80,6 +80,10 @@ SUBSYSTEM_DEF(role_class_handler)
 /datum/controller/subsystem/role_class_handler/proc/setup_class_handler(mob/living/carbon/human/H, advclass_rolls_override = null)
 	if(!H)
 		CRASH("setup_class_handler was called without a passed mob in args!")
+
+	if(H.client.has_triumph_buy(TRIUMPH_BUY_ANY_CLASS))
+		H.client.activate_triumph_buy(TRIUMPH_BUY_ANY_CLASS)
+
 	// insure they somehow aren't closing the datum they got and opening a new one w rolls
 	var/datum/class_select_handler/GOT_IT = class_select_handlers[H.client.ckey]
 	if(GOT_IT)
@@ -99,9 +103,6 @@ SUBSYSTEM_DEF(role_class_handler)
 		var/datum/job/RT_JOB = SSjob.GetJob(H.job)
 		if(RT_JOB.advclass_cat_rolls.len)
 			XTRA_MEATY.class_cat_alloc_attempts = RT_JOB.advclass_cat_rolls
-
-		//if(RT_JOB.PQ_boost_divider)
-			//XTRA_MEATY.PQ_boost_divider = RT_JOB.PQ_boost_divider
 
 	if(H.client.ckey in special_session_queue)
 		XTRA_MEATY.special_session_queue = list()

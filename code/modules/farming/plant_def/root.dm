@@ -14,6 +14,7 @@
 	nitrogen_production = 20
 	phosphorus_production = 0
 	potassium_production = 0
+	seed_identity = "turnip seedlings"
 
 /datum/plant_def/turnip/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	base_genetics.yield_trait = TRAIT_GRADE_EXCELLENT

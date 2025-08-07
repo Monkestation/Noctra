@@ -50,10 +50,10 @@
 			target.clan.disable_covens(target)
 		else
 			target.Stun(20)
-			target.Knockdown(10)
 			target.Paralyze(10)
 		target.adjustFireLoss(25)
-		target.fire_act(1,10)
+		target.adjust_divine_fire_stacks(3)
+		target.IgniteMob()
 		if(wolf_datum)
 			target.apply_status_effect(/datum/status_effect/debuff/silver_curse)
 		if(vamp_datum && affected != AFFECTED_VLORD)

@@ -319,7 +319,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 	if(latejoin && !job.special_check_latejoin(client))
 		return JOB_UNAVAILABLE_GENERIC
 	if(length(job.allowed_races) && !(client.prefs.pref_species.id in job.allowed_races))
-		if(!client.triumph_ids.Find("race_all"))
+		if(!client.has_triumph_buy(TRIUMPH_BUY_RACE_ALL))
 			return JOB_UNAVAILABLE_RACE
 /*	if(length(job.allowed_patrons) && !(client.prefs.selected_patron.type in job.allowed_patrons))
 		return JOB_UNAVAILABLE_DEITY */
@@ -510,6 +510,9 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 	var/mob/living/spawning_mob = mind.assigned_role.get_spawn_mob(client, destination)
 	if(QDELETED(src) || !client)
 		return // Disconnected while checking for the appearance ban.
+
+	if(client.has_triumph_buy(TRIUMPH_BUY_RACE_ALL))
+		client.activate_triumph_buy(TRIUMPH_BUY_RACE_ALL)
 
 	mind.transfer_to(spawning_mob)
 	//client.init_verbs()

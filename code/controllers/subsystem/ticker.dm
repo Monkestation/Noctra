@@ -334,6 +334,8 @@ SUBSYSTEM_DEF(ticker)
 	message_admins(span_boldnotice("Welcome to [SSmapping.config.map_name]!"))
 
 	for(var/client/C in GLOB.clients)
+		if(!C?.mob)
+			continue
 		if(C.mob == SSticker.rulermob)
 			C.mob.playsound_local(C.mob, 'sound/misc/royal_roundstart.ogg', 100, FALSE)
 		else
