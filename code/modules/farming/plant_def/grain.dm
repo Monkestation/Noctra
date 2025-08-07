@@ -13,6 +13,7 @@
 	nitrogen_production = 0
 	phosphorus_production = 0
 	potassium_production = 40
+	seed_identity = "sugarcane seeds"
 
 /datum/plant_def/sugarcane/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	base_genetics.yield_trait = TRAIT_GRADE_EXCELLENT
@@ -35,6 +36,7 @@
 	nitrogen_production = 0
 	phosphorus_production = 0
 	potassium_production = 20
+	seed_identity = "wheat seeds"
 
 /datum/plant_def/wheat/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	base_genetics.yield_trait = TRAIT_GRADE_EXCELLENT
@@ -57,6 +59,7 @@
 	nitrogen_production = 0
 	phosphorus_production = 0
 	potassium_production = 15
+	seed_identity = "oat seeds"
 
 /datum/plant_def/oat/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	base_genetics.cold_resistance = TRAIT_GRADE_EXCELLENT

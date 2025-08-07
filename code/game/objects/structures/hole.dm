@@ -122,9 +122,8 @@
 		return
 
 	if(!istype(attacking_item, /obj/item/weapon/shovel))
-		if(istype(attacking_item, /obj/item/reagent_containers/glass/bucket/wooden))
-			var/obj/item/reagent_containers/glass/bucket/wooden/bucket = attacking_item
-			attemptwatermake(user, bucket)
+		if(istype(attacking_item, /obj/item/reagent_containers/glass/bucket))
+			attemptwatermake(user, attacking_item)
 			return
 		return ..()
 	var/obj/item/weapon/shovel/attacking_shovel = attacking_item
