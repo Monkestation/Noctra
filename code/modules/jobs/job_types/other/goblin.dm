@@ -1,5 +1,5 @@
 /datum/job/goblin
-	title = "Goblin"
+	title = "goblin"
 	tutorial = ""
 	flag = GRAVETENDER
 	//department_flag = PEASANTS
@@ -12,14 +12,11 @@
 	outfit = /datum/outfit/job/npc/goblin
 	give_bank_account = FALSE
 
-/datum/outfit/job/goblin/equip(mob/living/carbon/human/H, visualsOnly, announce, latejoin, datum/outfit/outfit_override, client/preference_source)
-	. = ..()
-	return  H.change_mob_type(/mob/living/carbon/human/species/goblin/cave, delete_old_mob = TRUE)
-
 /datum/job/goblin/after_spawn(mob/living/spawned, client/player_client)
 	..()
 
 	var/mob/living/carbon/human/H = spawned
+	H.change_mob_type(/mob/living/carbon/human/species/goblin/cave, delete_old_mob = TRUE)
 	H.set_species(/datum/species/goblin/cave)
 	if(spawned.mind)
 		spawned.mind.special_role = "goblin"

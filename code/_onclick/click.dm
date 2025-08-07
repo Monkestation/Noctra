@@ -363,8 +363,6 @@
 				continue
 			closed[target] = TRUE
 			var/usedreach = 1
-			if(tool)
-				usedreach = tool.reach
 			if(ismob(src))
 				var/mob/user = src
 				if(user.used_intent)
