@@ -7,7 +7,6 @@
 	var/list/shown_station_trait_buttons
 
 /datum/hud/new_player/New(mob/owner)
-	. = ..()
 
 	scannies = new /atom/movable/screen/scannies
 	scannies.hud = src
@@ -29,6 +28,8 @@
 			lobbyscreen.RegisterSignal(src, COMSIG_HUD_LOBBY_COLLAPSED, TYPE_PROC_REF(/atom/movable/screen/lobby, collapse_button))
 			lobbyscreen.RegisterSignal(src, COMSIG_HUD_LOBBY_EXPANDED, TYPE_PROC_REF(/atom/movable/screen/lobby, expand_button))
 
+	. = ..()
+
 //copypaste begin
 
 /atom/movable/screen/lobby
@@ -40,6 +41,10 @@
 	/// If true we will create this button every time the HUD is generated
 	var/always_available = TRUE
 	alpha = 210
+
+/atom/movable/screen/lobby/New(loc, datum/hud/our_hud, ...)
+	set_new_hud(our_hud)
+	return ..()
 
 ///Run sleeping actions after initialize
 /atom/movable/screen/lobby/proc/SlowInit()
@@ -83,7 +88,8 @@
 		return
 
 	flick("[base_icon_state]_pressed", src)
-	hud.mymob.playsound_local(soundin = 'sound/menu/button_press.ogg', vol = 50, vary = TRUE)
+	if(select_sound_play)
+		hud.mymob.playsound_local(soundin = 'sound/menu/button_press.ogg', vol = 50, vary = TRUE)
 	return TRUE
 
 /atom/movable/screen/lobby/button/MouseEntered(location, control, params)
@@ -357,7 +363,7 @@
 
 	//re-enable clicking the button when the shutter animation finishes
 	//we use sleep here so it can work during game setup, as addtimer would not work until the game would finish setting up
-	sleep(1.25 * LOBBY_SCREEN_SLIDE_DURATION)
+	sleep(1.1 * LOBBY_SCREEN_SLIDE_DURATION)
 	set_button_status(TRUE)
 
 #undef LOBBY_SCREEN_SLIDE_DURATION
