@@ -62,7 +62,7 @@ SUBSYSTEM_DEF(triumphs)
 	var/list/active_triumph_menus = list()
 
 	// display limit per page in a category on the user menu
-	var/page_display_limit = 14
+	var/page_display_limit = 11
 
 	// This represents the triumph buy organization on the main SS for triumphs
 	// Each key is a category name
@@ -96,9 +96,11 @@ SUBSYSTEM_DEF(triumphs)
 	prep_the_triumphs_leaderboard()
 
 	for(var/cur_path in subtypesof(/datum/triumph_buy))
-		var/datum/triumph_buy/cur_datum = new cur_path // We will do this
+		var/datum/triumph_buy/cur_datum = new cur_path
+		if(isnull(cur_datum.triumph_buy_id))
+			continue
 		triumph_buy_datums += cur_datum
-		central_state_data[cur_datum.category] += 1 // Tally up the totals here to save on a total of one loop
+		central_state_data[cur_datum.category] += 1
 
 	for(var/datum/triumph_buy/cur_datum in triumph_buy_datums)
 		if(cur_datum.limited)
@@ -139,7 +141,6 @@ SUBSYSTEM_DEF(triumphs)
 
 		var/datum/triumph_buy/triumph_buy = new ref_datum.type
 
-		triumph_buy.key_of_buyer = C.key
 		triumph_buy.ckey_of_buyer = C.ckey
 
 		if(!triumph_buy_owners[C.ckey])

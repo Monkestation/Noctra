@@ -103,7 +103,21 @@ a#triumph_close_button:hover{
 	padding: 0.1em 0.25em;
 	border-bottom: 1px solid rgb(128, 103, 81);
 	border-right: 1px solid rgb(106, 83, 65);
-	vertical-align: top;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+.triumph_stock_wrapper {
+	font-family: "Pirata One", system-ui;
+	font-weight: 400;
+	font-style: normal;
+	font-size:24px;
+	color:#d4af37;
+	text-align: center;
+	padding: 0.1em 0.25em;
+	border-bottom: 1px solid rgb(128, 103, 81);
+	border-right: 1px solid rgb(106, 83, 65);
+	vertical-align: middle;
 	white-space: nowrap;
 }
 
@@ -111,7 +125,7 @@ a#triumph_close_button:hover{
 	text-align: center;
 	padding: 0.1em 0.25em;
 	border-bottom: 1px solid rgb(128, 103, 81);
-	vertical-align: top;
+	vertical-align: middle;
 	white-space: nowrap;
 }
 

@@ -1,5 +1,3 @@
-
-
 /datum/triumph_buy_menu
 	/// These are the menu datum vars
 	var/client/linked_client
@@ -17,15 +15,12 @@
 	linked_client = null
 	. = ..()
 
-
 /datum/triumph_buy_menu/proc/triumph_menu_startup_slop()
 	var/datum/asset/thicc_assets = get_asset_datum(/datum/asset/simple/stonekeep_triumph_buy_menu_slop_layout)
 	thicc_assets.send(linked_client)
 
 	show_menu()
 
-
-// TRIUMPH BUY MENU SIDED PROC
 /datum/triumph_buy_menu/proc/show_menu()
 	if(!linked_client)
 		return
@@ -48,18 +43,13 @@
 					background-attachment: fixed;
 					background-size: 100% 100%;
 				}
-				.triumph_stock_wrapper {
-					font-family: "Pirata One", system-ui;
+				.triumph_name {
+					font-family: "Aclonica", sans-serif;
 					font-weight: 400;
 					font-style: normal;
-					font-size:24px;
-					color:#d4af37;
-					text-align: center;
-					padding: 0.1em 0.25em;
-					border-bottom: 1px solid rgb(128, 103, 81);
-					border-right: 1px solid rgb(106, 83, 65);
-					vertical-align: top;
-					white-space: nowrap;
+					font-size: 20px;
+					color: #91E0F3;
+					padding-bottom: 2px;
 				}
 			</style>
 			<link rel='stylesheet' type='text/css' href='[SSassets.transport.get_asset_url("slop_menustyle3.css")]'>
@@ -72,11 +62,6 @@
 			</div>
 			<div style=\"width:100%;float:left\">
 	"}
-/*
-				<div id='triumph_close_div'>
-					<a id='triumph_close_button' href='byond://?src=\ref[src];close_menu=1'>CLOSE MENU</a>
-				</div>
-*/
 
 	data += "<hr class='fadeout_line'>"
 	for(var/cat_key in SStriumphs.central_state_data)
@@ -85,14 +70,14 @@
 		else
 			data += "<a class=\"triumph_categories_normal\" href=\"byond://?src=\ref[src];select_a_category=[cat_key]\">[cat_key]</a>"
 
-	data +={"
+	data += {"
 	<hr class=\"fadeout_line\">
 		</div>
 			<table>
 				<thead>
 					<tr>
 						<th class=\"triumph_text_head\">Description</th>
-						<th class=\"triumph_text_head\">Cost</th>
+						[current_category != TRIUMPH_CAT_ACTIVE_DATUMS ? "<th class=\"triumph_text_head\">Cost</th>" : ""]
 						[current_category != TRIUMPH_CAT_ACTIVE_DATUMS ? "<th class=\"triumph_text_head\">Stock</th>" : ""]
 						<th class=\"triumph_text_head_redeem\">Redeem</th>
 					</tr>
@@ -100,18 +85,18 @@
 				<tbody>
 	"}
 
-
 	if(current_category == TRIUMPH_CAT_ACTIVE_DATUMS)
-		// Mostly so we can stop the filler message from not being displayed if someone has a non-visible triumph buy, and theres nothing else in.
 		var/found_one = FALSE
 		if(SStriumphs.active_triumph_buy_queue.len)
 			for(var/datum/triumph_buy/found_triumph_buy in SStriumphs.active_triumph_buy_queue)
-				if(!found_triumph_buy.visible_on_active_menu || usr.ckey != found_triumph_buy.ckey_of_buyer) // If we aren't set to be able to be visible on the main menu
+				if(!found_triumph_buy.visible_on_active_menu || usr.ckey != found_triumph_buy.ckey_of_buyer)
 					continue
 				data += {"
 					<tr class='triumph_text_row'>
-						<td class='triumph_text_desc'>[found_triumph_buy.desc]</td>
-						<td class='triumph_cost_wrapper'>[found_triumph_buy.triumph_cost]</td>
+						<td class='triumph_text_desc'>
+							<div class='triumph_name'>[found_triumph_buy.name]</div>
+							[found_triumph_buy.desc]
+						</td>
 				"}
 				if(SSticker.HasRoundStarted() && found_triumph_buy.pre_round_only)
 					data += "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[found_triumph_buy];'><span class='strikethru_back'>ROUND STARTED</span></a></td>"
@@ -119,15 +104,12 @@
 					data += "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[found_triumph_buy];'>REFUND</a></td>"
 
 				data += "</tr>"
+				found_one = TRUE
 
-				found_one = TRUE // WE GOT ONE WOOHOO
-
-
-		if(!found_one) // We didn't find anything that could be visible, so cram in the mssage
+		if(!found_one)
 			data += {"
 				<tr class='triumph_text_row'>
 					<td class='triumph_text_desc'>NOTHING</td>
-					<td class='triumph_cost_wrapper'>ACTIVE</td>
 					<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];'>HERE</a></td>
 				</tr>
 			"}
@@ -136,10 +118,13 @@
 		for(var/datum/triumph_buy/current_check in SStriumphs.central_state_data[current_category]["[current_page]"])
 			data += {"
 				<tr class='triumph_text_row'>
-					<td class='triumph_text_desc'>[current_check.desc]</td>
+					<td class='triumph_text_desc'>
+						<div class='triumph_name'>[current_check.name]</div>
+						[current_check.desc]
+					</td>
 					<td class='triumph_cost_wrapper'>[current_check.triumph_cost]</td>
 					<td class='triumph_stock_wrapper'>[current_check.limited ? SStriumphs.triumph_buy_stocks[current_check.type] : "∞"]</td>
-				"}
+			"}
 
 			var/string = "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[current_check];'>BUY</a></td>"
 			if(current_check.limited && SStriumphs.triumph_buy_stocks[current_check.type] <= 0)
@@ -148,13 +133,11 @@
 				string = "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[current_check];'><span class='strikethru_back'>CONFLICT</span></a></td>"
 			else
 				for(var/datum/triumph_buy/conflict_check in SStriumphs.active_triumph_buy_queue)
-					if(current_check.type in conflict_check.conflicts_with) // We are in an active datum's conflicts with
+					if(current_check.type in conflict_check.conflicts_with)
 						string = "<td class='triumph_filler_cells'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[current_check];'><span class='strikethru_back'>CONFLICT</span></a></td>"
 
 			data += string
 			data += "</tr>"
-
-
 
 	data += {"
 				</tbody>
@@ -163,7 +146,6 @@
 	data += "<div class='triumph_footer'>"
 
 	for(var/i in 1 to SStriumphs.central_state_data[current_category].len)
-
 		if("[i]" == current_page)
 			data += "<a class='triumph_numbers_selected' href='byond://?src=\ref[src];select_a_page=[i]'><span class='num_bigunder_back'><span class='num_bigunder'></span>[i]</span></a>"
 		else
@@ -174,13 +156,8 @@
 		</body>
 	</html>
 	"}
-	data += {"
-		</head>
-	</html>
-	"}
-	linked_client << browse(data, "window=triumph_buy_window;size=615x715;can_close=1;can_minimize=0;can_maximize=0;can_resize=0;titlebar=1")
+	linked_client << browse(data, "window=triumph_buy_window;size=674x715;can_close=1;can_minimize=0;can_maximize=0;can_resize=0;titlebar=1")
 
-	// We setup the href_list "close" call if they hit the x on the top right
 	for(var/i in 1 to 10)
 		if(!linked_client)
 			break
@@ -188,7 +165,6 @@
 			winset(linked_client, "triumph_buy_window", "on-close=\".windowclose [REF(src)]\"")
 			break
 
-// TRIUMPH BUY MENU SIDED PROC
 /datum/triumph_buy_menu/Topic(href, list/href_list)
 	. = ..()
 
@@ -197,6 +173,7 @@
 		if(SStriumphs.central_state_data[sent_category])
 			if(sent_category != current_category)
 				current_category = sent_category
+				current_page = "1"
 				show_menu()
 
 	if(href_list["select_a_page"])
