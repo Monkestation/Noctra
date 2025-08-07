@@ -16,13 +16,13 @@
 	Simple enough
 */
 
-//To note any triumph files that try to be loaded in at a lower number than current wipe season get wiped.
+// To note any triumph files that try to be loaded in at a lower number than current wipe season get wiped.
 // Also we have to handle this here cause the triumphs ss might get loaded too late to handle clients joining fast enough
 GLOBAL_VAR_INIT(triumph_wipe_season, get_triumph_wipe_season())
 /proc/get_triumph_wipe_season()
 	var/current_wipe_season
 	var/json_file = file("data/triumph_wipe_season.json")
-	if(!fexists(json_file)) // If theres no file we start from the beginning lol
+	if(!fexists(json_file))
 		var/list/uhh_ohhh = list("current_wipe_season" = 1)
 		current_wipe_season = 1
 		WRITE_FILE(json_file, json_encode(uhh_ohhh))
@@ -33,37 +33,32 @@ GLOBAL_VAR_INIT(triumph_wipe_season, get_triumph_wipe_season())
 
 	return current_wipe_season
 
-// I need some shit early v early, so uhhh enjoy having lists on the define
 SUBSYSTEM_DEF(triumphs)
 	name = "Triumphs"
 	flags = SS_NO_FIRE
 	init_order = INIT_ORDER_TRIUMPHS
 	lazy_load = FALSE
 
-	// List of top ten for display in browser page on button click
+	/// List of top ten for display in browser page on button click
 	var/list/triumph_leaderboard = list()
 	var/triumph_leaderboard_positions_tracked = 21
-
 	// A cache for triumphs
 	// Basically when client first hops in for the session we will cram their ckey in and retrieve from file
 	// When the server session is about to end we will write it all in.
 	var/list/triumph_amount_cache = list()
-
 	/// Similiar to the triumph amount cache, but stores triumph buys the ckey has bought
 	var/list/triumph_buy_owners = list()
 
 /*
 	TRIUMPH BUY MENU THINGS
 */
-	// Whether triumph buys are enabled
+
+	/// Whether triumph buys are enabled
 	var/triumph_buys_enabled = TRUE
-	//init list to hold triumph buy menus for the session (aka menu data)
-	// Assc list "ckey" = datum
+	/// Init list to hold triumph buy menus for the session (aka menu data) (Assc list "ckey" = datum)
 	var/list/active_triumph_menus = list()
-
-	// display limit per page in a category on the user menu
+	/// Display limit per page in a category on the user menu
 	var/page_display_limit = 11
-
 	// This represents the triumph buy organization on the main SS for triumphs
 	// Each key is a category name
 	// And then the list will have a number in a string that leads to a list of datums
@@ -71,6 +66,7 @@ SUBSYSTEM_DEF(triumphs)
 		TRIUMPH_CAT_CHARACTER = 0,
 		TRIUMPH_CAT_STORYTELLER = 0,
 		TRIUMPH_CAT_MISC = 0,
+		TRIUMPH_CAT_COMMUNAL = 0,
 		TRIUMPH_CAT_ACTIVE_DATUMS = 0,
 	)
 
@@ -78,17 +74,18 @@ SUBSYSTEM_DEF(triumphs)
 	TRIUMPH BUY DATUM THINGS
 */
 
-	//this is basically the total list of triumph buy datums on init
+	/// This is basically the total list of triumph buy datums on init
 	var/list/triumph_buy_datums = list()
-
 	// This is a list of all active datums
 	var/list/active_triumph_buy_queue = list()
-
 	// These get on_activate() called in /datum/outfit/job/post_equip() in roguetown.dm
 	var/list/post_equip_calls = list()
-
 	/// This tracks the remaining stock for limited triumph buys
 	var/list/triumph_buy_stocks = list()
+	/// Tracks contributions to communal triumph buys - format: list(type = list(ckey = amount))
+	var/list/communal_contributions = list()
+	/// Tracks pool totals for communal buys - format: list(type = amount)
+	var/list/communal_pools = list()
 
 /datum/controller/subsystem/triumphs/Initialize()
 	. = ..()
@@ -109,7 +106,7 @@ SUBSYSTEM_DEF(triumphs)
 	// Make a local copy I guess?
 	var/list/copy_list = triumph_buy_datums.Copy()
 
-	//Figure out how many lists we are about to make to represent the pages
+	// Figure out how many lists we are about to make to represent the pages
 	for(var/catty_key in central_state_data)
 		var/page_count = ceil(central_state_data[catty_key]/page_display_limit) // Get the page count total
 		central_state_data[catty_key] = list() // Now we swap the numbers out for lists on each cat as it will contain lists representing one page
@@ -125,9 +122,7 @@ SUBSYSTEM_DEF(triumphs)
 				if(central_state_data[catty_key]["[page_numba]"].len == page_display_limit)
 					break
 
-/*
-	This occurs when you try to buy a triumph condition and sets it up
-*/
+/// This occurs when you try to buy a triumph condition and sets it up
 /datum/controller/subsystem/triumphs/proc/attempt_to_buy_triumph_condition(client/C, datum/triumph_buy/ref_datum)
 	if(ref_datum.limited && triumph_buy_stocks[ref_datum.type] <= 0)
 		to_chat(C, span_warning("The item is out of stock!"))
@@ -151,7 +146,7 @@ SUBSYSTEM_DEF(triumphs)
 
 	active_triumph_buy_queue += triumph_buy
 
-	to_chat(C, span_notice("You have bought a [triumph_buy.name] for [ref_datum.triumph_cost] triumph\s."))
+	to_chat(C, span_notice("You have bought [triumph_buy.name] for [ref_datum.triumph_cost] triumph\s."))
 
 	if(triumph_buy.conflicts_with.len)
 		for(var/cur_check_path in triumph_buy.conflicts_with)
@@ -202,9 +197,7 @@ SUBSYSTEM_DEF(triumphs)
 			active_triumph_menus[C.ckey] = BIGBOY
 			BIGBOY.triumph_menu_startup_slop()
 
-/*
-	This tells all alive triumph datums to re_update their visuals, shitty but ya
-*/
+/// This tells all alive triumph datums to re_update their visuals, shitty but ya
 /datum/controller/subsystem/triumphs/proc/call_menu_refresh()
 	for(var/MENS in active_triumph_menus)
 		var/datum/triumph_buy_menu/triumph_buy = active_triumph_menus[MENS]
@@ -219,8 +212,7 @@ SUBSYSTEM_DEF(triumphs)
 
 		triumph_buy.show_menu()
 
-
-// We cleanup the datum thats just holding the stuff for displaying the menu.
+/// We cleanup the datum thats just holding the stuff for displaying the menu.
 /datum/controller/subsystem/triumphs/proc/remove_triumph_buy_menu(client/C)
 	if(C && active_triumph_menus[C.ckey])
 		var/datum/triumph_buy_menu/triumph_buy = active_triumph_menus[C.ckey]
@@ -228,7 +220,7 @@ SUBSYSTEM_DEF(triumphs)
 		active_triumph_menus.Remove(C.ckey)
 		qdel(triumph_buy)
 
-// Called from the place its slopped in in SSticker, this will occur right after the gamemode starts ideally, aka roundstart.
+/// Called from the place its slopped in in SSticker, this will occur right after the gamemode starts ideally, aka roundstart.
 /datum/controller/subsystem/triumphs/proc/fire_on_PostSetup()
 	call_menu_refresh()
 

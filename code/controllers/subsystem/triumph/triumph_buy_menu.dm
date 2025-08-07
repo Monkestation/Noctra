@@ -88,47 +88,73 @@
 
 	if(current_category == TRIUMPH_CAT_ACTIVE_DATUMS)
 		var/found_one = FALSE
-		if(SStriumphs.active_triumph_buy_queue.len)
-			data += {"
-				<table>
-					<thead>
-						<tr>
-							<th class=\"triumph_text_head\">Description</th>
-							<th class=\"triumph_text_head_redeem\">Redeem</th>
-						</tr>
-					</thead>
-					<tbody>
-			"}
+		var/built_header = FALSE
 
-			for(var/datum/triumph_buy/found_triumph_buy in SStriumphs.active_triumph_buy_queue)
-				if(!found_triumph_buy.visible_on_active_menu || usr.ckey != found_triumph_buy.ckey_of_buyer)
-					continue
+		for(var/datum/triumph_buy/found_triumph_buy in SStriumphs.active_triumph_buy_queue)
+			if(!found_triumph_buy.visible_on_active_menu || usr.ckey != found_triumph_buy.ckey_of_buyer)
+				continue
 
+			if(!built_header)
 				data += {"
-					<tr class='triumph_text_row'>
-						<td class='triumph_text_desc'>
-							<div class='triumph_name'>[found_triumph_buy.name]</div>
-							[found_triumph_buy.desc]
-						</td>
+					<table>
+						<thead>
+							<tr>
+								<th class=\"triumph_text_head\">Description</th>
+								<th class=\"triumph_text_head_redeem\">Redeem</th>
+							</tr>
+						</thead>
+						<tbody>
 				"}
-
-				if(SSticker.HasRoundStarted() && found_triumph_buy.pre_round_only)
-					data += "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[found_triumph_buy];'><span class='strikethru_back'>ROUND STARTED</span></a></td>"
-				else
-					data += "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[found_triumph_buy];'>REFUND</a></td>"
-
-				data += "</tr>"
-				found_one = TRUE
+				built_header = TRUE
 
 			data += {"
-					</tbody>
-				</table>
+				<tr class='triumph_text_row'>
+					<td class='triumph_text_desc'>
+						<div class='triumph_name'>[found_triumph_buy.name]</div>
+						[found_triumph_buy.desc]
+					</td>
 			"}
+
+			if(SSticker.HasRoundStarted() && found_triumph_buy.pre_round_only)
+				data += "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[found_triumph_buy];'><span class='strikethru_back'>ROUND STARTED</span></a></td>"
+			else
+				data += "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[found_triumph_buy];'>REFUND</a></td>"
+
+			data += "</tr>"
+			found_one = TRUE
+
+			if(built_header)
+				data += {"
+						</tbody>
+					</table>
+				"}
 
 		if(!found_one)
 			data += {"
 				<div class='nothing_bought'>YOU HAVE NOTHING</div>
 			"}
+	else if(current_category == TRIUMPH_CAT_COMMUNAL)
+		data += "<div class='communal_container'>"
+
+		for(var/datum/triumph_buy/communal/communal_buy in SStriumphs.central_state_data[current_category]["[current_page]"])
+			var/total = SStriumphs.communal_pools[communal_buy.type]
+			var/progress = communal_buy.maximum_pool ? (total / communal_buy.maximum_pool) * 100 : 0
+
+			data += "<div class='communal_item'>"
+			data += "<div class='communal_name'>[communal_buy.name]</div>"
+			data += "<div class='communal_desc'>[communal_buy.desc]</div>"
+
+			data += "<div class='progress_container'>"
+			data += "<div class='progress_bar' style='width:[progress]%'></div>"
+			data += "<div class='progress_text'>[total]/[communal_buy.maximum_pool]</div>"
+			data += "</div>"
+
+			data += "<div style='text-align:center; margin-top:5px;'>"
+			data += "<a class='communal_contribute' href='byond://?src=\ref[src];contribute=\ref[communal_buy]'>CONTRIBUTE</a>"
+			data += "</div>"
+
+		data += "</div>"
+
 	else
 		data += {"
 			<table>
@@ -212,7 +238,28 @@
 				current_page = sent_page
 				show_menu()
 
-	//This sends a reference to a datum,
+	if(href_list["contribute"])
+		var/datum/triumph_buy/communal/communal_buy = locate(href_list["contribute"])
+		if(communal_buy && istype(communal_buy))
+			var/available = SStriumphs.get_triumphs(linked_client.ckey)
+			var/max_possible = communal_buy.maximum_pool ? communal_buy.maximum_pool - SStriumphs.communal_pools[communal_buy.type] : INFINITY
+			var/amount = input(linked_client, "How much to contribute?", "Communal Contribution", 0) as num|null
+
+			if(!amount || amount <= 0)
+				return
+
+			amount = min(amount, available, max_possible)
+			if(amount > 0)
+				SStriumphs.triumph_adjust(-amount, linked_client.ckey)
+				SStriumphs.communal_pools[communal_buy.type] += amount
+				LAZYADD(SStriumphs.communal_contributions[communal_buy.type][linked_client.ckey], amount)
+				to_chat(linked_client, span_notice("You have contributed [amount] triumph\s to \the [communal_buy.name]."))
+
+				if(communal_buy.maximum_pool && SStriumphs.communal_pools[communal_buy.type] >= communal_buy.maximum_pool)
+					communal_buy.on_activate()
+
+			show_menu()
+
 	if(href_list["handle_buy_button"])
 		var/datum/triumph_buy/target_datum = locate(href_list["handle_buy_button"])
 		if(target_datum)

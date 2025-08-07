@@ -180,6 +180,11 @@ GLOBAL_LIST_EMPTY(job_respawn_delays)
 
 #define TRIUMPH_BUY_PSYDON_FAVOURITE "psydon_favourite"
 
+// Misc category and its buys
+#define TRIUMPH_CAT_COMMUNAL "COMMUNAL"
+
+#define TRIUMPH_BUY_PSYDON_RETIREMENT "psydon_retirement"
+
 // Bought triumph buys category
 #define TRIUMPH_CAT_ACTIVE_DATUMS "BOUGHT"
 

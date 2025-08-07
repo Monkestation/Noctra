@@ -1640,7 +1640,7 @@ SUBSYSTEM_DEF(gamemode)
 	if(length(current_valid_humans) >= 2 && valid_psydon_favourite)
 		var/list/potential_passers = current_valid_humans.Copy()
 		potential_passers -= valid_psydon_favourite
-		var/mob/living/carbon/human/random_passerby = pick(current_valid_humans)
+		var/mob/living/carbon/human/random_passerby = pick(potential_passers)
 
 		chosen_chronicle_stats[1] = CHRONICLE_STATS_PSYDON_FAVOURITE
 		set_chronicle_stat(CHRONICLE_STATS_PSYDON_FAVOURITE, valid_psydon_favourite, "PSYDON'S FAVOURITE", "#e6e6e6", "buying his way in")
