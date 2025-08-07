@@ -175,6 +175,11 @@ GLOBAL_LIST_EMPTY(job_respawn_delays)
 #define TRIUMPH_BUY_GRAGGAR_INFLUENCE "graggar_influence"
 #define TRIUMPH_BUY_MATTHIOS_INFLUENCE "matthios_influence"
 
+// Misc category and its buys
+#define TRIUMPH_CAT_MISC "MISC"
+
+#define TRIUMPH_BUY_PSYDON_FAVOURITE "psydon_favourite"
+
 // Bought triumph buys category
 #define TRIUMPH_CAT_ACTIVE_DATUMS "BOUGHT"
 

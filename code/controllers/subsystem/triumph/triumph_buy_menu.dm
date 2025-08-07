@@ -48,6 +48,19 @@
 					background-attachment: fixed;
 					background-size: 100% 100%;
 				}
+				.triumph_stock_wrapper {
+					font-family: "Pirata One", system-ui;
+					font-weight: 400;
+					font-style: normal;
+					font-size:24px;
+					color:#d4af37;
+					text-align: center;
+					padding: 0.1em 0.25em;
+					border-bottom: 1px solid rgb(128, 103, 81);
+					border-right: 1px solid rgb(106, 83, 65);
+					vertical-align: top;
+					white-space: nowrap;
+				}
 			</style>
 			<link rel='stylesheet' type='text/css' href='[SSassets.transport.get_asset_url("slop_menustyle3.css")]'>
 		</head>
@@ -80,6 +93,7 @@
 					<tr>
 						<th class=\"triumph_text_head\">Description</th>
 						<th class=\"triumph_text_head\">Cost</th>
+						[current_category != TRIUMPH_CAT_ACTIVE_DATUMS ? "<th class=\"triumph_text_head\">Stock</th>" : ""]
 						<th class=\"triumph_text_head_redeem\">Redeem</th>
 					</tr>
 				</thead>
@@ -124,10 +138,13 @@
 				<tr class='triumph_text_row'>
 					<td class='triumph_text_desc'>[current_check.desc]</td>
 					<td class='triumph_cost_wrapper'>[current_check.triumph_cost]</td>
+					<td class='triumph_stock_wrapper'>[current_check.limited ? SStriumphs.triumph_buy_stocks[current_check.type] : "∞"]</td>
 				"}
 
 			var/string = "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[current_check];'>BUY</a></td>"
-			if(SSticker.HasRoundStarted() && current_check.pre_round_only)
+			if(current_check.limited && SStriumphs.triumph_buy_stocks[current_check.type] <= 0)
+				string = "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[current_check];'><span class='strikethru_back'>OUT OF STOCK</span></a></td>"
+			else if(SSticker.HasRoundStarted() && current_check.pre_round_only)
 				string = "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[current_check];'><span class='strikethru_back'>CONFLICT</span></a></td>"
 			else
 				for(var/datum/triumph_buy/conflict_check in SStriumphs.active_triumph_buy_queue)

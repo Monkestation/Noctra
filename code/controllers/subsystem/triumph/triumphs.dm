@@ -70,6 +70,7 @@ SUBSYSTEM_DEF(triumphs)
 	var/list/list/list/central_state_data = list( // this is updated to be a list of lists in subsystem Initialize
 		TRIUMPH_CAT_CHARACTER = 0,
 		TRIUMPH_CAT_STORYTELLER = 0,
+		TRIUMPH_CAT_MISC = 0,
 		TRIUMPH_CAT_ACTIVE_DATUMS = 0,
 	)
 
@@ -86,16 +87,22 @@ SUBSYSTEM_DEF(triumphs)
 	// These get on_activate() called in /datum/outfit/job/post_equip() in roguetown.dm
 	var/list/post_equip_calls = list()
 
+	/// This tracks the remaining stock for limited triumph buys
+	var/list/triumph_buy_stocks = list()
+
 /datum/controller/subsystem/triumphs/Initialize()
 	. = ..()
 
 	prep_the_triumphs_leaderboard()
 
-
 	for(var/cur_path in subtypesof(/datum/triumph_buy))
 		var/datum/triumph_buy/cur_datum = new cur_path // We will do this
 		triumph_buy_datums += cur_datum
 		central_state_data[cur_datum.category] += 1 // Tally up the totals here to save on a total of one loop
+
+	for(var/datum/triumph_buy/cur_datum in triumph_buy_datums)
+		if(cur_datum.limited)
+			triumph_buy_stocks[cur_datum.type] = cur_datum.stock
 
 	// Make a local copy I guess?
 	var/list/copy_list = triumph_buy_datums.Copy()
@@ -120,10 +127,15 @@ SUBSYSTEM_DEF(triumphs)
 	This occurs when you try to buy a triumph condition and sets it up
 */
 /datum/controller/subsystem/triumphs/proc/attempt_to_buy_triumph_condition(client/C, datum/triumph_buy/ref_datum)
-	// This segments the payment part
+	if(ref_datum.limited && triumph_buy_stocks[ref_datum.type] <= 0)
+		to_chat(C, span_warning("The item is out of stock!"))
+		return
 	var/triumph_amount = get_triumphs(C.ckey) - ref_datum.triumph_cost
 	if(triumph_amount >= 0)
 		triumph_adjust(ref_datum.triumph_cost*-1, C.ckey)
+
+		if(ref_datum.limited)
+			triumph_buy_stocks[ref_datum.type]--
 
 		var/datum/triumph_buy/triumph_buy = new ref_datum.type
 
@@ -162,6 +174,8 @@ SUBSYSTEM_DEF(triumphs)
 	var/refund_amount = triumph_buy.triumph_cost
 	triumph_adjust(refund_amount, previous_owner_ckey)
 	to_chat(C, span_redtext("You were refunded [refund_amount] triumph\s due to \a [reason]."))
+	if(triumph_buy.limited)
+		triumph_buy_stocks[triumph_buy.type]++
 	if(triumph_buy_owners[triumph_buy.ckey_of_buyer])
 		triumph_buy_owners[triumph_buy.ckey_of_buyer] -= triumph_buy
 	triumph_buy.on_removal()

@@ -19,10 +19,14 @@
 	var/visible_on_active_menu = FALSE
 	/// Whether its pre-round only
 	var/pre_round_only = FALSE
-	/// Whatever the triumph buy effect must be manually activated somewhere else than on its buy
+	/// Whether the triumph buy effect must be manually activated somewhere else than on its buy
 	var/manual_activation = FALSE
-	/// Whatever the triumph buy effect was activated and therefore cannot be refunded
+	/// Whether the triumph buy effect was activated and therefore cannot be refunded
 	var/activated = FALSE
+	/// Whether the triumph buy has limited stock to buy
+	var/limited = FALSE
+	/// Number times the triumph buy can be bought if its limited
+	var/stock = 0
 	/// List of things it can conflict with
 	var/list/conflicts_with = list()
 
