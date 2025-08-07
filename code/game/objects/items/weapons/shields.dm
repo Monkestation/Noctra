@@ -112,24 +112,25 @@
 		return
 
 	if(!('icons/roguetown/weapons/wood_heraldry.dmi' in GLOB.IconStates_cache))
-		var/icon/J = new('icons/roguetown/weapons/wood_heraldry.dmi')
-		var/list/istates = J.IconStates()
-		GLOB.IconStates_cache |= icon
-		GLOB.IconStates_cache['icons/roguetown/weapons/wood_heraldry.dmi'] = istates
-	var/picked_name = input(user, "Choose a Heraldry", "VANDERLIN", name) as null|anything in sortList(GLOB.IconStates_cache['icons/roguetown/weapons/wood_heraldry.dmi'])
+		var/icon/icon_file = new('icons/roguetown/weapons/wood_heraldry.dmi')
+		GLOB.IconStates_cache['icons/roguetown/weapons/wood_heraldry.dmi'] = icon_file.IconStates()
+
+	var/picked_name = browser_input_list(user, "Choose a Heraldry", "Heraldry", GLOB.IconStates_cache['icons/roguetown/weapons/wood_heraldry.dmi'])
 	if(!picked_name)
-		picked_name = "none"
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 	var/mutable_appearance/M = mutable_appearance('icons/roguetown/weapons/wood_heraldry.dmi', picked_name)
 	M.alpha = 178
 	add_overlay(M)
 	var/mutable_appearance/MU = mutable_appearance(icon, "woodsh_detail")
 	MU.alpha = 114
 	add_overlay(MU)
+
 	design_chosen = TRUE
-	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
+	if(browser_alert(user, "Are you pleased with your heraldry?", "Heraldry", DEFAULT_INPUT_CHOICES) != CHOICE_YES)
 		cut_overlays()
-		update_appearance(UPDATE_OVERLAYS)
 		design_chosen = FALSE
+
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/weapon/shield/wood/getonmobprop(tag)
@@ -256,27 +257,28 @@
 		return
 
 	if(!('icons/roguetown/weapons/shield_heraldry.dmi' in GLOB.IconStates_cache))
-		var/icon/J = new('icons/roguetown/weapons/shield_heraldry.dmi')
-		var/list/istates = J.IconStates()
-		GLOB.IconStates_cache |= icon
-		GLOB.IconStates_cache['icons/roguetown/weapons/shield_heraldry.dmi'] = istates
-	var/picked_name = input(user, "Choose a Heraldry", "VANDERLIN", name) as null|anything in sortList(GLOB.IconStates_cache['icons/roguetown/weapons/shield_heraldry.dmi'])
+		var/icon/icon_file = new('icons/roguetown/weapons/shield_heraldry.dmi')
+		GLOB.IconStates_cache['icons/roguetown/weapons/shield_heraldry.dmi'] = icon_file.IconStates()
+
+	var/picked_name = browser_input_list(user, "Choose a Heraldry", "Heraldry", sortList(GLOB.IconStates_cache['icons/roguetown/weapons/shield_heraldry.dmi']))
 	if(!picked_name)
-		picked_name = "none"
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 	var/mutable_appearance/M = mutable_appearance('icons/roguetown/weapons/shield_heraldry.dmi', picked_name)
 	M.alpha = 190
 	add_overlay(M)
 	var/mutable_appearance/MU = mutable_appearance(icon, "ironsh_detail")
 	MU.alpha = 90
 	add_overlay(MU)
+
 	design_chosen = TRUE
-	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
+	if(browser_alert(user, "Are you pleased with your heraldry?", "Heraldry", DEFAULT_INPUT_CHOICES) != CHOICE_YES)
 		cut_overlays()
 		design_chosen = FALSE
+
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 #undef SHIELD_BANG_COOLDOWN
-
 
 /obj/item/weapon/shield/tower/buckleriron
 	name = "iron buckler"
@@ -327,21 +329,23 @@
 	if(design_chosen)
 		return
 
-	var/icon/J = new('icons/roguetown/weapons/heater_heraldry.dmi')
-	var/list/istates = J.IconStates()
-	var/picked_name = input(user, "Choose a Heraldry", "ROGUETOWN", name) as null|anything in sortList(istates)
+	var/icon/icon_file = new('icons/roguetown/weapons/heater_heraldry.dmi')
+	var/picked_name = browser_input_list(user, "Choose a Heraldry", "Heraldry", sortList(icon_file.IconStates()))
 	if(!picked_name)
-		picked_name = "none"
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 	var/mutable_appearance/M = mutable_appearance('icons/roguetown/weapons/heater_heraldry.dmi', picked_name)
 	M.alpha = 178
 	add_overlay(M)
 	var/mutable_appearance/MU = mutable_appearance(icon, "heatershield_detail")
 	MU.alpha = 114
 	add_overlay(MU)
+
 	design_chosen = TRUE
-	if(alert("Are you pleased with your heraldry?", "Heraldry", "Yes", "No") != "Yes")
+	if(browser_alert(user, "Are you pleased with your heraldry?", "Heraldry", DEFAULT_INPUT_CHOICES) != CHOICE_YES)
 		cut_overlays()
 		design_chosen = FALSE
+
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/weapon/shield/heater/getonmobprop(tag)
