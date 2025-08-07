@@ -188,6 +188,7 @@
 #include "code\__DEFINES\dcs\signals\signals_coven_powers.dm"
 #include "code\__DEFINES\dcs\signals\signals_divine.dm"
 #include "code\__DEFINES\dcs\signals\signals_global.dm"
+#include "code\__DEFINES\dcs\signals\signals_hud.dm"
 #include "code\__DEFINES\dcs\signals\signals_leash.dm"
 #include "code\__DEFINES\dcs\signals\signals_movable.dm"
 #include "code\__DEFINES\dcs\signals\signals_moveloop.dm"
