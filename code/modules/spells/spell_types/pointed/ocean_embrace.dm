@@ -26,7 +26,7 @@
 
 /datum/action/cooldown/spell/ocean_embrace/cast(mob/living/cast_on)
 	. = ..()
-	if(owner.cmode || cast_on.mob_biotypes & MOB_UNDEAD)
+	if(cast_on.mob_biotypes & MOB_UNDEAD)
 		cast_on.visible_message(span_danger("[cast_on] is drowned by turbulent tides!"), span_userdanger("I'm being drowned by turbulent tides!"))
 		cast_on.safe_throw_at(get_step(cast_on, get_dir(owner, cast_on)), 1, 1, owner, spin = TRUE, force = cast_on.move_force)
 		var/already_dead = cast_on.stat == DEAD ? TRUE : FALSE

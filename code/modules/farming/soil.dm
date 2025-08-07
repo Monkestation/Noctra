@@ -321,9 +321,9 @@
 	if(stepper.m_intent == MOVE_INTENT_SNEAK)
 		return
 	if(stepper.m_intent == MOVE_INTENT_WALK)
-		adjust_plant_health(-5)
+		adjust_plant_health(-2.5)
 	else if(stepper.m_intent == MOVE_INTENT_RUN)
-		adjust_plant_health(-10)
+		adjust_plant_health(-5)
 	playsound(src, "plantcross", 90, FALSE)
 
 /obj/structure/soil/proc/deweed()
@@ -516,11 +516,17 @@
 		. += span_info("The soil is wet.")
 	// Nutrition feedback
 	if(nitrogen < MAX_PLANT_NITROGEN * 0.15)
-		. += span_info("The plant is lacking Nitrogen")
+		. += span_warning("The plant is lacking Nitrogen.")
+	else if(nitrogen < MAX_PLANT_NITROGEN * 0.3)
+		. += span_info("The plant is running low on Nitrogen.")
 	if(potassium < MAX_PLANT_POTASSIUM * 0.15)
-		. += span_info("The plant is lacking Potassium")
+		. += span_warning("The plant is lacking Potassium.")
+	else if(potassium < MAX_PLANT_POTASSIUM * 0.3)
+		. += span_info("The plant is running low on Potassium.")
 	if(phosphorus < MAX_PLANT_PHOSPHORUS * 0.15)
-		. += span_info("The plant is lacking Phosphorus")
+		. += span_warning("The plant is lacking Phosphorus.")
+	else if(phosphorus < MAX_PLANT_PHOSPHORUS * 0.3)
+		. += span_info("The plant is running low on Phosphorus.")
 	// Weeds feedback
 	if(weeds >= MAX_PLANT_WEEDS * 0.6)
 		. += span_warning("It's overtaken by the weeds!")
@@ -935,6 +941,13 @@
 
 	// Apply growth based on limiting factor
 	var/actual_growth_time = target_growth_time * limiting_factor
+	// Each deficient nutrient lowers growth rate by 5%
+	if(nitrogen_needed && nitrogen_factor < 0.1)
+		actual_growth_time *= 0.95
+	if(phosphorus_needed && phosphorus_factor < 0.1)
+		actual_growth_time *= 0.95
+	if(potassium_needed && potassium_factor < 0.1)
+		actual_growth_time *= 0.95
 
 	// Nutrient deficiency affects plant health only if nutrients are required but unavailable
 	var/any_nutrients_needed = (nitrogen_needed > 0 || phosphorus_needed > 0 || potassium_needed > 0)

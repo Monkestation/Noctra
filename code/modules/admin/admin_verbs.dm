@@ -35,7 +35,7 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/cmd_admin_say,
 	/client/proc/deadmin,				/*destroys our own admin datum so we can play as a regular player*/
 	/client/proc/toggle_context_menu,
-	/client/proc/delete_player_book,
+	/client/proc/manage_books,
 	/client/proc/manage_paintings,
 	/client/proc/ShowAllFamilies,
 	/datum/admins/proc/anoint_priest,
@@ -821,26 +821,90 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		SSticker.end_party=FALSE
 		to_chat(src, "<span class='interface'>Ending DISABLED.</span>")
 
-/client/proc/delete_player_book()
+/client/proc/manage_books()
 	set category = "Admin"
-	set name = "Delete Player Made Book"
+	set name = "Manage Books"
 	if(!holder)
 		return
-	var/book = input(src, "What is the book file you want to delete?") as null|anything in SSlibrarian.books
-	if(!book)
+
+	var/dat = "<table style='border-collapse: separate; border-spacing: 0 10px; width: 100%;'>"
+	dat += "<tr>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Title</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Author</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Category</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Actions</th>"
+	dat += "</tr>"
+
+	var/list/decoded_books = SSlibrarian.pull_player_book_titles()
+	for(var/encoded_title in decoded_books)
+		var/list/book = SSlibrarian.file2playerbook(encoded_title)
+		if(!book || !book["book_title"])
+			continue
+
+		dat += "<tr>"
+		dat += "<td style='padding: 12px 15px;'>[book["book_title"]]</td>"
+		dat += "<td style='padding: 12px 15px;'>[book["author"]]</td>"
+		dat += "<td style='padding: 12px 15px;'>[book["category"]]</td>"
+		dat += "<td style='padding: 12px 15px;'>"
+		dat += "<a href='?src=[REF(src)];show_book=1;id=[url_encode(encoded_title)]' style='margin-right: 10px;'>View</a>"
+		dat += "<a href='?src=[REF(src)];delete_book=1;id=[url_encode(encoded_title)]'>Delete</a>"
+		dat += "</td>"
+		dat += "</tr>"
+
+	if(!length(decoded_books))
+		dat += "<tr><td colspan='4' style='padding: 20px; text-align: center;'>No books found</td></tr>"
+
+	dat += "</table>"
+	var/datum/browser/popup = new(usr, "book_management", "Book Management", 800, 700)
+	popup.set_content(dat)
+	popup.open()
+
+/client/proc/show_book_content(title)
+	var/list/book = SSlibrarian.file2playerbook(title)
+	if(!book || !book["book_title"])
+		to_chat(src, "<span class='warning'>Book not found!</span>")
 		return
-	if(SSlibrarian.del_player_book(book))
-		to_chat(src, "<span class='notice'>Book has been successfully deleted</span>")
-	else
-		to_chat(src, "<span class='notice'> Either the book file doesn't exist or you have failed to type it in properly (remember characters have been url encoded for the file name)</span>")
+
+	src << browse_rsc('html/book.png')
+
+	var/content = book["text"]
+	var/dat = {"
+	<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+	<html>
+		<head>
+			<style type=\"text/css\">
+				body {
+					background-image:url('book.png');
+					background-repeat: repeat;
+					color: #000000;
+					font-size: 17px;
+					line-height: 1.5;
+					padding: 20px;
+					font-family: 'Times New Roman', serif;
+				}
+			</style>
+		</head>
+		<body>
+			[content]
+		</body>
+	</html>
+	"}
+
+	src << browse(dat, "window=reading;size=800x600;can_close=1;can_minimize=1;can_maximize=1;can_resize=1;border=0")
 
 /client/proc/manage_paintings()
 	set category = "Admin"
-	set name = "Manage Player Made Paintings"
+	set name = "Manage Paintings"
 	if(!holder)
 		return
 
-	var/dat = "<table><tr><th>Preview</th><th>Title</th><th>Author</th><th>Delete</th></tr>"
+	var/dat = "<table style='border-collapse: separate; border-spacing: 0 10px; width: 100%;'>"
+	dat += "<tr>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Preview</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Title</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Author</th>"
+	dat += "<th style='padding: 10px 15px; text-align: left; color: #c72222;'>Delete</th>"
+	dat += "</tr>"
 
 	if(SSpaintings?.paintings && length(SSpaintings.paintings))
 		for(var/encoded_title in SSpaintings.paintings)
@@ -858,17 +922,19 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 					var/res_name = "painting_[md5(raw_title)].png"
 					src << browse_rsc(painting_icon, res_name)
 					dat += "<tr>"
-					dat += "<td><img src='[res_name]' height=64 width=64></td>"
-					dat += "<td>[raw_title]</td>"
-					dat += "<td>[author]</td>"
-					dat += "<td><a href='?src=[REF(src)];delete_painting=1;id=[url_encode(raw_title)]'>Delete</a></td>"
+					dat += "<td style='padding: 12px 15px;'><img src='[res_name]' height=64 width=64 style='display: block; margin: 0 auto;'></td>"
+					dat += "<td style='padding: 12px 15px;'>[raw_title]</td>"
+					dat += "<td style='padding: 12px 15px;'>[author]</td>"
+					dat += "<td style='padding: 12px 15px;'>"
+					dat += "<a href='?src=[REF(src)];delete_painting=1;id=[url_encode(raw_title)]'>Delete</a>"
+					dat += "</td>"
 					dat += "</tr>"
 	else
-		dat += "<tr><td colspan='4'>No paintings found</td></tr>"
+		dat += "<tr><td colspan='4' style='padding: 20px; text-align: center;'>No paintings found</td></tr>"
 
 	dat += "</table>"
 
-	var/datum/browser/popup = new(usr, "painting_management", "Painting Management", 600, 600)
+	var/datum/browser/popup = new(usr, "painting_management", "Painting Management", 700, 700)
 	popup.set_content(dat)
 	popup.open()
 

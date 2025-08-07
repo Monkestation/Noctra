@@ -2090,7 +2090,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 			burning_items |= leg_clothes
 
 		for(var/obj/item/I as anything in burning_items)
-			I.fire_act(((H.fire_stacks + H.divine_fire_stacks)* 50)) //damage taken is reduced to 2% of this value by fire_act()
+			I.fire_act(((H.fire_stacks + H.divine_fire_stacks) * 25)) //damage taken is reduced to 2% of this value by fire_act()
 
 		var/thermal_protection = H.get_thermal_protection()
 

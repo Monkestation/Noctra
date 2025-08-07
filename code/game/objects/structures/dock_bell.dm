@@ -43,7 +43,7 @@
 	else if(SSmerchant.cargo_docked)
 		SSmerchant.prepare_cargo_shipment()
 
-	COOLDOWN_START(src, ring_bell, 1.5 MINUTES)
+	COOLDOWN_START(src, ring_bell, 30 SECONDS)
 	COOLDOWN_START(src, outsider_ring_bell, 10 MINUTES)
 
 /obj/structure/dock_bell/proc/recall_faction_traders()
