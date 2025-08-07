@@ -784,7 +784,7 @@
 /obj/item/weapon/shield/tower/buckleriron,
 /obj/item/weapon/sword/rapier/dec,
 /obj/item/clothing/ring/gold,
-/obj/item/clothing/cloak/half/guardsecond,
+/obj/item/clothing/cloak/half/guard/second,
 /obj/item/clothing/gloves/plate,
 /obj/item/clothing/armor/plate,
 /obj/item/clothing/pants/platelegs,
@@ -3174,7 +3174,7 @@
 "Iy" = (
 /obj/effect/mapping_helpers/floor_clothing_equipper,
 /obj/item/clothing/ring/silver/dorpel,
-/obj/item/clothing/cloak/half/guardsecond,
+/obj/item/clothing/cloak/half/guard/second,
 /mob/living/carbon/human/species/skeleton/npc/no_equipment{
 	base_strength = 15;
 	base_speed = 15;
@@ -3385,7 +3385,7 @@
 	},
 /obj/effect/mapping_helpers/floor_clothing_equipper,
 /obj/item/clothing/ring/gold,
-/obj/item/clothing/cloak/half/guardsecond,
+/obj/item/clothing/cloak/half/guard/second,
 /obj/item/clothing/neck/mercmedal/grenzelhoft,
 /obj/item/clothing/armor/plate/full,
 /obj/item/clothing/gloves/plate,
@@ -3664,7 +3664,7 @@
 /obj/effect/mapping_helpers/floor_clothing_equipper,
 /obj/item/weapon/shield/tower/buckleriron,
 /obj/item/clothing/ring/silver/gemerald,
-/obj/item/clothing/cloak/half/guardsecond,
+/obj/item/clothing/cloak/half/guard/second,
 /obj/item/weapon/sword/sabre/cutlass,
 /obj/item/clothing/gloves/plate,
 /obj/item/clothing/armor/plate,

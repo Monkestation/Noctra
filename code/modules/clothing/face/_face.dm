@@ -21,6 +21,32 @@
 	var/modifies_speech = FALSE
 	var/mask_adjusted = 0
 	var/adjusted_flags = null
+	var/obj/item/clothing/connectedmask
+
+/obj/item/clothing/face/Destroy()
+	connectedmask = null
+	return ..()
+
+/obj/item/clothing/face/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(connectedmask)
+		connectedmask.ToggleMask()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/clothing/face/dropped()
+	. = ..()
+	if(connectedmask)
+		connectedmask.RemoveMask()
+
+/obj/item/clothing/face/equipped(mob/user, slot)
+	. = ..()
+	if(!(slot & ITEM_SLOT_MASK))
+		if(connectedmask)
+			connectedmask.RemoveMask()
+		else
+			qdel(src)
 
 /obj/item/clothing/face/attack_self(mob/user, params)
 	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))

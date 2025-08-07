@@ -65,6 +65,9 @@
 	var/obj/item/clothing/head/hooded/hood
 	var/hoodtype
 	var/hoodtoggled = FALSE
+	var/obj/item/clothing/face/mask
+	var/masktype
+	var/masktoggled = FALSE
 	var/adjustable = CANT_CADJUST
 
 /obj/item/clothing/Initialize()
@@ -85,6 +88,8 @@
 
 	if(hoodtype)
 		MakeHood()
+	if(masktype)
+		MakeMask()
 
 /obj/item/clothing/Initialize(mapload, ...)
 	AddElement(/datum/element/update_icon_updates_onmob, slot_flags)
@@ -94,6 +99,8 @@
 	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
 	if(hoodtype)
 		QDEL_NULL(hood)
+	if(masktype)
+		QDEL_NULL(mask)
 	if(uses_lord_coloring)
 		UnregisterSignal(SSdcs, COMSIG_LORD_COLORS_SET)
 	return ..()
@@ -253,6 +260,8 @@
 		REMOVE_CLOTHING_TRAIT(user, trait)
 	if(hoodtype)
 		RemoveHood()
+	if(masktype)
+		RemoveMask()
 	if(adjustable > 0)
 		ResetAdjust()
 
@@ -443,9 +452,20 @@ BLIND     // can't see anything
 		W.connectedc = src
 		hood = W
 
+/obj/item/clothing/proc/MakeMask()
+	if(!mask)
+		var/obj/item/clothing/face/mask/attachedmask = new masktype(src)
+		attachedmask.moveToNullspace()
+		attachedmask.color = color
+		attachedmask.connectedmask = src
+		mask = attachedmask
+
 /obj/item/clothing/attack_hand_secondary(mob/user, params)
 	if(hoodtype && (loc == user))
 		ToggleHood()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(masktype && (loc == user))
+		ToggleMask()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(adjustable > 0 && (loc == user))
 		AdjustClothes(user)
@@ -469,6 +489,8 @@ BLIND     // can't see anything
 /obj/item/clothing/equipped(mob/user, slot)
 	if(hoodtype && !(slot & (ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK)))
 		RemoveHood()
+	if(masktype && !(slot & (ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK)))
+		RemoveMask()
 	if(adjustable > 0)
 		ResetAdjust(user)
 	..()
@@ -519,3 +541,49 @@ BLIND     // can't see anything
 				H.update_fov_angles()
 	else
 		RemoveHood()
+
+/obj/item/clothing/proc/RemoveMask()
+	if(!mask)
+		return
+	src.icon_state = "[initial(icon_state)]"
+	masktoggled = FALSE
+	if(ishuman(mask.loc))
+		var/mob/living/carbon/H = mask.loc
+		H.transferItemToLoc(mask, get_turf(src), TRUE)
+		mask.moveToNullspace()
+		H.update_inv_wear_suit()
+		H.update_inv_cloak()
+		H.update_inv_neck()
+		H.update_inv_pants()
+		H.update_fov_angles()
+	else
+		mask.moveToNullspace()
+
+/obj/item/clothing/proc/ToggleMask()
+	if(!masktoggled)
+		if(ishuman(src.loc))
+			var/mob/living/carbon/human/H = src.loc
+			if(mask.color != color)
+				mask.color = color
+			if(slot_flags == ITEM_SLOT_ARMOR)
+				if(H.wear_armor != src)
+					to_chat(H, "<span class='warning'>I should put that on first.</span>")
+					return
+			if(slot_flags == ITEM_SLOT_CLOAK)
+				if(H.cloak != src)
+					to_chat(H, "<span class='warning'>I should put that on first.</span>")
+					return
+			if(H.wear_mask)
+				to_chat(H, "<span class='warning'>I'm already wearing something on my face.</span>")
+				return
+			else if(H.equip_to_slot_if_possible(mask,ITEM_SLOT_MASK,0,0,1))
+				masktoggled = TRUE
+				if(toggle_icon_state)
+					src.icon_state = "[initial(icon_state)]_t"
+				H.update_inv_wear_suit()
+				H.update_inv_cloak()
+				H.update_inv_neck()
+				H.update_inv_pants()
+				H.update_fov_angles()
+	else
+		RemoveMask()

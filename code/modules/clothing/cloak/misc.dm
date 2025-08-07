@@ -100,17 +100,29 @@
 
 /obj/item/clothing/cloak/half/guard
 	name = "guard's half cloak"
+	desc = "The half cloak of a town watchman. The fabric can be pulled to cover the face if need be."
 	color = CLOTHING_PLUM_PURPLE
 	icon_state = "guardcloak"
 	allowed_race = ALL_RACES_LIST
 	uses_lord_coloring = LORD_PRIMARY
+	masktype = /obj/item/clothing/face/mask/guardscarf
+	toggle_icon_state = FALSE
 
-/obj/item/clothing/cloak/half/guardsecond
-	name = "guard's half cloak"
+/obj/item/clothing/cloak/half/guard/second
 	color = CLOTHING_BLOOD_RED
-	icon_state = "guardcloak"
-	allowed_race = ALL_RACES_LIST
 	uses_lord_coloring = LORD_SECONDARY
+
+/obj/item/clothing/face/mask/guardscarf
+	name = "mask"
+	desc = "A part of the cloak that has been pulled up to conceal the face."
+	icon_state = "guardscarf"
+	item_state = "guardscarf"
+	slot_flags = ITEM_SLOT_MASK
+	color = CLOTHING_PLUM_PURPLE
+	uses_lord_coloring = LORD_PRIMARY
+	edelay_type = 1
+	body_parts_covered = FACE
+	flags_inv = HIDEFACE|HIDEFACIALHAIR
 
 /obj/item/clothing/cloak/half/shadowcloak
 	name = "stalker cloak"

@@ -25,13 +25,13 @@
 /datum/outfit/job/guardsman/pre_equip(mob/living/carbon/human/H)
 	. = ..()
 	cloak = /obj/item/clothing/cloak/half/guard
-	pants = /obj/item/clothing/pants/trou/leather
+	pants = /obj/item/clothing/pants/trou/leather/advanced
 	wrists = /obj/item/rope/chain
 	shoes = /obj/item/clothing/shoes/boots
 	belt = /obj/item/storage/belt/leather
 	gloves = /obj/item/clothing/gloves/leather
 	if(H.dna && !(H.dna.species.id in RACES_PLAYER_NONDISCRIMINATED)) // to prevent examine stress
-		mask = /obj/item/clothing/face/shepherd/guard
+		mask = /obj/item/clothing/face/mask/guardscarf
 
 /datum/outfit/job/guardsman/post_equip(mob/living/carbon/human/H)
 	. = ..()
@@ -48,30 +48,31 @@
 	You are well versed in holding the line with a shield while wielding a trusty sword, axe, or mace in the other hand."
 	outfit = /datum/outfit/job/guardsman/footman
 	category_tags = list(CTAG_GARRISON)
+	maximum_possible_slots = 4
 
 /datum/outfit/job/guardsman/footman/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/helmet/townwatch
-	neck = /obj/item/clothing/neck/gorget
+	head = /obj/item/clothing/head/helmet/sallet
+	neck = /obj/item/clothing/neck/chaincoif/iron
 	armor = /obj/item/clothing/armor/chainmail
 	shirt = /obj/item/clothing/armor/gambeson/guard
 	backr = /obj/item/weapon/shield/heater
 	backl = /obj/item/storage/backpack/satchel
-	beltr = /obj/item/weapon/sword/short
-	beltl = /obj/item/weapon/mace/cudgel
-	scabbards = list(/obj/item/weapon/scabbard/sword)
-	backpack_contents = list(/obj/item/storage/keyring/guard, /obj/item/weapon/knife/dagger/steel/special)
+	beltr = /obj/item/flashlight/flare/torch/lantern
+	beltl = /obj/item/weapon/mace/bludgeon
+	backpack_contents = list(/obj/item/storage/keyring/guard, /obj/item/weapon/knife/dagger/steel/special, /obj/item/book/law)
 
 
 	H.adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE) // Main weapon
 	H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE) // Main off-hand weapon
-	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE) // Backup
+	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE) // Guards should be going for less than lethal in reality. Unarmed would be a primary thing.
-	H.change_stat(STATKEY_STR, 1)
-	H.change_stat(STATKEY_END, 2)
-	H.change_stat(STATKEY_CON, 1)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE) // Guards should be going for less than lethal in reality. Unarmed would be a primary thing.
+	H.change_stat(STATKEY_STR, 2)
+	H.change_stat(STATKEY_END, 1)
+	H.change_stat(STATKEY_CON, 2)
+	H.change_stat(STATKEY_SPD, -1)
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
@@ -88,18 +89,19 @@
 	tutorial = "You are a member of the City Watch. Your training with bows makes you a formidable threat when perched atop the walls or rooftops, raining arrows down upon foes with impunity."
 	outfit = /datum/outfit/job/guardsman/archer
 	category_tags = list(CTAG_GARRISON)
+	maximum_possible_slots = 4
 
 /datum/outfit/job/guardsman/archer/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/helmet/townwatch/alt
-	neck = /obj/item/clothing/neck/chaincoif
+	head = /obj/item/clothing/head/helmet/kettle
+	neck = /obj/item/clothing/neck/chaincoif/iron
 	armor = /obj/item/clothing/armor/gambeson/heavy/guard
 	shirt = pick(/obj/item/clothing/shirt/undershirt/guard, /obj/item/clothing/shirt/undershirt/guardsecond)
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
-	backl = /obj/item/storage/backpack/satchel
-	beltr = /obj/item/ammo_holder/quiver/arrows
-	beltl = /obj/item/weapon/mace/cudgel
-	backpack_contents = list(/obj/item/storage/keyring/guard, /obj/item/weapon/knife/dagger/steel/special)
+	backl = /obj/item/ammo_holder/quiver/arrows
+	beltr = /obj/item/flashlight/flare/torch/lantern
+	beltl = /obj/item/weapon/mace/bludgeon
+	backpack_contents = list(/obj/item/weapon/knife/dagger/steel/special, /obj/item/book/law, /obj/item/storage/keyring/guard)
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/combat/bows, 3, TRUE) // Main Weapon
 		H.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE) // You don't even have access to crossbows
@@ -125,26 +127,25 @@
 	name = "City Watch Pikeman"
 	tutorial = "You are a pikeman in the City Watch. You are less fleet of foot compared to the rest, but you are burly and well practiced with spears, pikes, billhooks - all the various polearms for striking enemies from a distance."
 	outfit = /datum/outfit/job/guardsman/pikeman
-
 	category_tags = list(CTAG_GARRISON)
+	maximum_possible_slots = 4
 
 /datum/outfit/job/guardsman/pikeman/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/helmet/townwatch
+	head = /obj/item/clothing/head/helmet/sallet
 	armor = /obj/item/clothing/armor/chainmail
 	shirt = /obj/item/clothing/armor/gambeson/guard
-	neck = /obj/item/clothing/neck/gorget
+	neck = /obj/item/clothing/neck/chaincoif/iron
 	backl = /obj/item/storage/backpack/satchel
 	backr = /obj/item/weapon/polearm/spear
-	beltl = /obj/item/weapon/sword/short
-	beltr = /obj/item/weapon/mace/cudgel
-	scabbards = list(/obj/item/weapon/scabbard/sword)
-	backpack_contents = list(/obj/item/storage/keyring/guard, /obj/item/weapon/knife/dagger/steel/special)
+	beltl = /obj/item/weapon/mace/bludgeon
+	beltr = /obj/item/flashlight/flare/torch/lantern
+	backpack_contents = list(/obj/item/storage/keyring/guard, /obj/item/weapon/knife/dagger/steel/special, /obj/item/book/law)
 
 	//Stats for class
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
@@ -153,10 +154,9 @@
 	H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE) // Polearms use a lot of stamina. They'd be enduring.
 	H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-	H.change_stat(STATKEY_STR, 2)
-	H.change_stat(STATKEY_END, 1)
-	H.change_stat(STATKEY_CON, 2)
-	H.change_stat(STATKEY_SPD, -1) // Stronk and gets training in hard hitting polearms, but slower
+	H.change_stat(STATKEY_STR, 1)
+	H.change_stat(STATKEY_END, 2)
+	H.change_stat(STATKEY_CON, 1)
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_KNOWBANDITS, TRAIT_GENERIC)
 	H.verbs |= /mob/proc/haltyell
