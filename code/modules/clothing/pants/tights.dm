@@ -9,7 +9,7 @@
 /obj/item/clothing/pants/tights/colored
 	misc_flags = CRAFTING_TEST_EXCLUDE
 
-/obj/item/clothing/pants/tights/random/Initialize()
+/obj/item/clothing/pants/tights/colored/random/Initialize()
 	color = pick_assoc(GLOB.peasant_dyes)
 	return ..()
 

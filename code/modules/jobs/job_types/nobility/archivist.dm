@@ -35,7 +35,7 @@
 	else
 		if(H.gender == FEMALE)
 			armor = /obj/item/clothing/shirt/robe/archivist
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 		else
 			shirt = /obj/item/clothing/shirt/undershirt/puritan
 			armor = /obj/item/clothing/shirt/robe/archivist
