@@ -444,7 +444,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 
 /obj/structure/kybraxor
 	name = "Kybraxor the Devourer"
-	desc = "Two massive slabs of metal flooring, which threaten to swallow you whole. Watch out!"
+	desc = "Two massive slabs of metal flooring which threaten to swallow you whole. Watch out!"
 	density = FALSE
 	nomouseover = TRUE
 	icon = 'icons/roguetown/misc/96x96.dmi'
