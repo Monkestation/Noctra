@@ -49,6 +49,9 @@ SUBSYSTEM_DEF(triumphs)
 	// When the server session is about to end we will write it all in.
 	var/list/triumph_amount_cache = list()
 
+	/// Similiar to the triumph amount cache, but stores triumph buys the ckey has bought
+	var/list/triumph_buy_owners = list()
+
 /*
 	TRIUMPH BUY MENU THINGS
 */
@@ -59,24 +62,21 @@ SUBSYSTEM_DEF(triumphs)
 	var/list/active_triumph_menus = list()
 
 	// display limit per page in a category on the user menu
-	var/page_display_limit = 12
+	var/page_display_limit = 14
 
 	// This represents the triumph buy organization on the main SS for triumphs
 	// Each key is a category name
 	// And then the list will have a number in a string that leads to a list of datums
 	var/list/list/list/central_state_data = list( // this is updated to be a list of lists in subsystem Initialize
-		TRIUMPH_CAT_ROUND_EFX = 0,
 		TRIUMPH_CAT_CHARACTER = 0,
-		TRIUMPH_CAT_MISC = 0,
-		TRIUMPH_CAT_ACTIVE_DATUMS = 0
+		TRIUMPH_CAT_STORYTELLER = 0,
+		TRIUMPH_CAT_ACTIVE_DATUMS = 0,
 	)
-
 
 /*
 	TRIUMPH BUY DATUM THINGS
 */
 
-	var/current_refund_percentage = 0.50 // Current refund percentage is 50%
 	//this is basically the total list of triumph buy datums on init
 	var/list/triumph_buy_datums = list()
 
@@ -129,7 +129,14 @@ SUBSYSTEM_DEF(triumphs)
 
 		triumph_buy.key_of_buyer = C.key
 		triumph_buy.ckey_of_buyer = C.ckey
+
+		if(!triumph_buy_owners[C.ckey])
+			triumph_buy_owners[C.ckey] = list()
+		triumph_buy_owners[C.ckey] += triumph_buy
+
 		active_triumph_buy_queue += triumph_buy
+
+		to_chat(C, span_notice("You have bought a new triumph buy for [ref_datum.triumph_cost] triumph\s."))
 
 		// The thing someone is buying conflicts with things
 		if(triumph_buy.conflicts_with.len)
@@ -144,13 +151,19 @@ SUBSYSTEM_DEF(triumphs)
 	This occurs when you try to unbuy a triumph condition and removes it
 	Also used for refunding due to conflicts
  */
-/datum/controller/subsystem/triumphs/proc/attempt_to_unbuy_triumph_condition(client/C, datum/triumph_buy/triumph_buy, reason = "\improper UNBUY")
-	// Give the person who originally bought it a 50% refund
-	var/ckey_prev_owna = triumph_buy.ckey_of_buyer
-	var/refund_amount = round(triumph_buy.triumph_cost * current_refund_percentage)
-	triumph_adjust(refund_amount, ckey_prev_owna)
-	if(GLOB.directory[ckey_prev_owna]) // If they are still logged into the game, inform them they got refunded
-		to_chat(GLOB.directory[ckey_prev_owna], span_redtext("You were refunded [refund_amount] triumph\s due to \a [reason]."))
+/datum/controller/subsystem/triumphs/proc/attempt_to_unbuy_triumph_condition(client/C, datum/triumph_buy/triumph_buy, reason = "\improper REFUND", force = FALSE)
+	var/previous_owner_ckey = triumph_buy.ckey_of_buyer
+	if(previous_owner_ckey != C?.ckey)
+		to_chat(C, span_warning("You can't refund someone else's triumph buy!"))
+		return FALSE
+	if(!force && triumph_buy.activated)
+		to_chat(C, span_warning("You can't refund a triumph buy that was already activated!"))
+		return FALSE
+	var/refund_amount = triumph_buy.triumph_cost
+	triumph_adjust(refund_amount, previous_owner_ckey)
+	to_chat(C, span_redtext("You were refunded [refund_amount] triumph\s due to \a [reason]."))
+	if(triumph_buy_owners[triumph_buy.ckey_of_buyer])
+		triumph_buy_owners[triumph_buy.ckey_of_buyer] -= triumph_buy
 	triumph_buy.on_removal()
 	active_triumph_buy_queue -= triumph_buy
 	return TRUE

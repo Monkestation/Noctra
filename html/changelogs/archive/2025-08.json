@@ -78,5 +78,44 @@
                 "balance": "Monarch now has Medium Armor"
             }
         ]
+    },
+    "2025-08-07": {
+        "Arkatos": [
+            {
+                "bugfix": "Fixed an issue where the game failed to start properly."
+            }
+        ]
+    },
+    "2025-08-08": {
+        "ApolloVector": [
+            {
+                "balance": "Female Antharax now has expert whips"
+            }
+        ],
+        "Arkatos": [
+            {
+                "rscadd": "Added a new triumph buy option to buy an extra influence for any storyteller."
+            },
+            {
+                "rscadd": "Triumph buys that already took effect cannot be refunded."
+            },
+            {
+                "qol": "You can no longer cancel triumph buys of others."
+            },
+            {
+                "qol": "Triumph buys now refund 100% of their cost."
+            },
+            {
+                "qol": "Failed triumph buys will now automatically refund. Roll with no fear!"
+            },
+            {
+                "bugfix": "Fixed an issue where printing press could not find all books or printed random books."
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "balance": "death to gaffer. long live merchant"
+            }
+        ]
     }
 }
