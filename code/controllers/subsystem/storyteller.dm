@@ -1669,7 +1669,11 @@ SUBSYSTEM_DEF(gamemode)
 	var/modifier = factors["points"]
 	var/capacity = factors["capacity"]
 
-	var/raw_contribution = (stat_value * modifier) * initialized_storyteller.influence_modifier
+	var/scaling_factor = initialized_storyteller.influence_modifier
+	if(modifier < 0)
+		scaling_factor = 1 / scaling_factor
+
+	var/raw_contribution = (stat_value * modifier) * scaling_factor
 	influence = (modifier < 0) ? max(raw_contribution, capacity) : min(raw_contribution, capacity)
 
 	return influence
