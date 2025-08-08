@@ -266,7 +266,7 @@ SUBSYSTEM_DEF(triumphs)
 		saving_data["triumph_count"] = triumph_amount_cache["[target_ckey]"]
 		WRITE_FILE(target_file, json_encode(saving_data))
 	else
-		triumph_amount_cache["[target_ckey]"] = 0
+		// triumph_amount_cache["[target_ckey]"] = 0
 		log_game("TRIUMPHS: Ckey [target_ckey] was not found in the triumph cache, setting him there with 0 triumphs")
 
 /// Wipe the triumphs of one person
