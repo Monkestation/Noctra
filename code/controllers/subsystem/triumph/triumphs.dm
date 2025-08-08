@@ -173,10 +173,10 @@ SUBSYSTEM_DEF(triumphs)
 			to_chat(C, span_warning("You can't refund a triumph buy that was already activated!"))
 		return FALSE
 	var/refund_amount = triumph_buy.triumph_cost
-	if(C)
+	if(C?.ckey)
 		C.adjust_triumphs(refund_amount, counted = FALSE, silent = TRUE)
 		to_chat(C, span_redtext("You were refunded [refund_amount] triumph\s due to \a [reason]."))
-	else
+	else if(previous_owner_ckey)
 		triumph_adjust(refund_amount, previous_owner_ckey)
 	if(triumph_buy.limited)
 		triumph_buy_stocks[triumph_buy.type]++

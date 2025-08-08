@@ -239,7 +239,7 @@
 				show_menu()
 
 	if(href_list["contribute"])
-		if(!linked_client)
+		if(!linked_client?.ckey)
 			return
 		if(SSticker.current_state == GAME_STATE_FINISHED)
 			to_chat(linked_client, span_warning("You cannot contribute after the round has ended!"))
@@ -251,7 +251,7 @@
 			var/max_possible = communal_buy.maximum_pool ? communal_buy.maximum_pool - SStriumphs.communal_pools[communal_buy.type] : INFINITY
 			var/amount = input(linked_client, "How much to contribute?", "Communal Contribution", 0) as num|null
 
-			if(!linked_client)
+			if(!linked_client?.ckey)
 				return
 			if(SSticker.current_state == GAME_STATE_FINISHED)
 				to_chat(linked_client, span_warning("You cannot contribute after the round has ended!"))
@@ -272,7 +272,7 @@
 			show_menu()
 
 	if(href_list["handle_buy_button"])
-		if(!linked_client)
+		if(!linked_client?.ckey)
 			return
 		if(SSticker.current_state == GAME_STATE_FINISHED)
 			to_chat(linked_client, span_warning("You cannot buy anything after the round has ended!"))

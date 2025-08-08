@@ -10,6 +10,7 @@
 	var/key = key_holder:key
 	var/ckey = ckey(key)
 	if(!key || !ckey)
+		log_game("TRIUMPHS: Unknown key/ckey called adjust_triumphs! Values: key:[key], ckey:[ckey]")
 		return
 
 	SStriumphs.triumph_adjust(amount, ckey)
