@@ -53,7 +53,7 @@
 			STATS_ILLITERATES = list("name" = "Number of illiterates:", "points" = -2, "capacity" = -40),
 		),
 		"Set 4" = list(
-			STATS_SKILLS_DREAMED = list("name" = "Skills dreamed:", "points" = 0.335, "capacity" = 100),
+			STATS_SKILLS_DREAMED = list("name" = "Skills dreamed:", "points" = 0.325, "capacity" = 100),
 		),
 		"Set 5" = list(
 			STATS_MANA_SPENT = list("name" = "Mana spent:", "points" = 0.016, "capacity" = 90),
@@ -355,7 +355,7 @@
 			STATS_WEREVOLVES = list("name" = "Number of werevolves:", "points" = 15, "capacity" = 65),
 		),
 		"Set 2" = list(
-			STATS_PLANTS_HARVESTED = list("name" = "Plants harvested:", "points" = 0.82, "capacity" = 100),
+			STATS_PLANTS_HARVESTED = list("name" = "Plants harvested:", "points" = 0.81, "capacity" = 100),
 		),
 		"Set 3" = list(
 			STATS_FOREST_DEATHS = list("name" = "Forest deaths:", "points" = 6.5, "capacity" = 90),
@@ -411,7 +411,7 @@
 			STATS_CLERGY_DEATHS = list("name" = "Clergy killed:", "points" = 12, "capacity" = 70),
 		),
 		"Set 5" = list(
-			STATS_TORTURES = list("name" = "Tortures performed:", "points" = 5.5, "capacity" = 70),
+			STATS_TORTURES = list("name" = "Tortures performed:", "points" = 5.25, "capacity" = 70),
 		)
 	)
 
