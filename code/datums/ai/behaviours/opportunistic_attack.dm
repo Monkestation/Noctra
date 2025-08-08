@@ -23,6 +23,3 @@
 		finish_action(controller, TRUE, target_key) // Don't clear target
 		return FALSE
 	. = ..()
-	for(var/t in RANGE_TURFS(1, controller.pawn))
-		new /obj/effect/hotspot(t)
-		controller.pawn.visible_message(span_danger("[controller.pawn] emits a burst of flames from it's core!"))
