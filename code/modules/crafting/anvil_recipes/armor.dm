@@ -128,7 +128,6 @@
 	recipe_name = "two pairs of Chain Gauntlets"
 	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/clothing/gloves/chain/iron
-	createmultiple = TRUE
 	createditem_extra = 1
 	craftdiff = 0
 
