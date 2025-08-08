@@ -239,21 +239,32 @@
 				show_menu()
 
 	if(href_list["contribute"])
+		if(!linked_client)
+			return
+		if(SSticker.current_state == GAME_STATE_FINISHED)
+			to_chat(linked_client, span_warning("You cannot contribute after the round has ended!"))
+			return
+
 		var/datum/triumph_buy/communal/communal_buy = locate(href_list["contribute"])
 		if(communal_buy && istype(communal_buy))
 			var/available = SStriumphs.get_triumphs(linked_client.ckey)
 			var/max_possible = communal_buy.maximum_pool ? communal_buy.maximum_pool - SStriumphs.communal_pools[communal_buy.type] : INFINITY
 			var/amount = input(linked_client, "How much to contribute?", "Communal Contribution", 0) as num|null
 
+			if(!linked_client)
+				return
+			if(SSticker.current_state == GAME_STATE_FINISHED)
+				to_chat(linked_client, span_warning("You cannot contribute after the round has ended!"))
+				return
 			if(!amount || amount <= 0)
 				return
 
 			amount = min(amount, available, max_possible)
 			if(amount > 0)
-				SStriumphs.triumph_adjust(-amount, linked_client.ckey)
+				linked_client.adjust_triumphs(-amount, counted = FALSE, silent = TRUE)
 				SStriumphs.communal_pools[communal_buy.type] += amount
 				LAZYADD(SStriumphs.communal_contributions[communal_buy.type][linked_client.ckey], amount)
-				to_chat(linked_client, span_notice("You have contributed [amount] triumph\s to \the [communal_buy.name]."))
+				to_chat(linked_client, span_notice("You have contributed [amount] triumph\s to the [communal_buy.name]."))
 
 				if(communal_buy.maximum_pool && SStriumphs.communal_pools[communal_buy.type] >= communal_buy.maximum_pool)
 					communal_buy.on_activate()
@@ -261,6 +272,12 @@
 			show_menu()
 
 	if(href_list["handle_buy_button"])
+		if(!linked_client)
+			return
+		if(SSticker.current_state == GAME_STATE_FINISHED)
+			to_chat(linked_client, span_warning("You cannot buy anything after the round has ended!"))
+			return
+
 		var/datum/triumph_buy/target_datum = locate(href_list["handle_buy_button"])
 		if(target_datum)
 			var/conflicting = FALSE

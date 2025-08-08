@@ -131,7 +131,7 @@ SUBSYSTEM_DEF(triumphs)
 		to_chat(C, span_warning("You don't have enough triumphs to buy this!"))
 		return FALSE
 
-	triumph_adjust(ref_datum.triumph_cost * -1, C.ckey)
+	C.adjust_triumphs(ref_datum.triumph_cost * -1, counted = FALSE, silent = TRUE)
 
 	if(ref_datum.limited)
 		triumph_buy_stocks[ref_datum.type]--
@@ -165,14 +165,19 @@ SUBSYSTEM_DEF(triumphs)
 /datum/controller/subsystem/triumphs/proc/attempt_to_unbuy_triumph_condition(client/C, datum/triumph_buy/triumph_buy, reason = "\improper REFUND", force = FALSE)
 	var/previous_owner_ckey = triumph_buy.ckey_of_buyer
 	if(previous_owner_ckey != C?.ckey)
-		to_chat(C, span_warning("You can't refund someone else's triumph buy!"))
+		if(C)
+			to_chat(C, span_warning("You can't refund someone else's triumph buy!"))
 		return FALSE
 	if(!force && triumph_buy.activated)
-		to_chat(C, span_warning("You can't refund a triumph buy that was already activated!"))
+		if(C)
+			to_chat(C, span_warning("You can't refund a triumph buy that was already activated!"))
 		return FALSE
 	var/refund_amount = triumph_buy.triumph_cost
-	triumph_adjust(refund_amount, previous_owner_ckey)
-	to_chat(C, span_redtext("You were refunded [refund_amount] triumph\s due to \a [reason]."))
+	if(C)
+		C.adjust_triumphs(refund_amount, counted = FALSE, silent = TRUE)
+		to_chat(C, span_redtext("You were refunded [refund_amount] triumph\s due to \a [reason]."))
+	else
+		triumph_adjust(refund_amount, previous_owner_ckey)
 	if(triumph_buy.limited)
 		triumph_buy_stocks[triumph_buy.type]++
 	if(triumph_buy_owners[triumph_buy.ckey_of_buyer])
@@ -247,12 +252,10 @@ SUBSYSTEM_DEF(triumphs)
 		fdel(leaderboard_file)
 	WRITE_FILE(leaderboard_file, json_encode(triumph_leaderboard))
 
-
-
-// Adjust triumphs
 /datum/controller/subsystem/triumphs/proc/triumph_adjust(amt, target_ckey)
 	if(target_ckey in triumph_amount_cache)
 		triumph_amount_cache[target_ckey] += amt
+		log_game("TRIUMPHS: Ckey [target_ckey] received [amt] triumphs. He has total of [triumph_amount_cache[target_ckey]] now")
 		var/list/saving_data = list()
 		var/target_file = file("data/player_saves/[target_ckey[1]]/[target_ckey]/triumphs.json")
 		if(fexists(target_file))
@@ -263,7 +266,7 @@ SUBSYSTEM_DEF(triumphs)
 		WRITE_FILE(target_file, json_encode(saving_data))
 	else
 		triumph_amount_cache[target_ckey] = 0
-
+		log_game("TRIUMPHS: Ckey [target_ckey] was not found in the triumph cache, setting him there with 0 triumphs")
 
 // Wipe the triumphs of one person
 /datum/controller/subsystem/triumphs/proc/wipe_target_triumphs(target_ckey)
@@ -272,6 +275,7 @@ SUBSYSTEM_DEF(triumphs)
 			return
 		else
 			triumph_amount_cache[target_ckey] = 0
+			log_game("TRIUMPHS: Ckey [target_ckey] was wiped of all triumphs")
 
 // Wipe the entire list
 // Adjust the season up by 1 too so anyone behind gets wiped if they rejoin later
@@ -298,11 +302,13 @@ SUBSYSTEM_DEF(triumphs)
 			var/list/new_guy = list("triumph_count" = 0, "triumph_wipe_season" = GLOB.triumph_wipe_season)
 			WRITE_FILE(target_file, json_encode(new_guy))
 			triumph_amount_cache[target_ckey] = 0
+			log_game("TRIUMPHS: Ckey [target_ckey] not found in the triumphs player save file, setting him there with 0 triumphs")
 			return 0
 
 		// This is not a new guy
 		var/list/not_new_guy = json_decode(file2text(target_file))
 		if(GLOB.triumph_wipe_season > not_new_guy["triumph_wipe_season"]) // Their file is behind in wipe seasons, time to be set to 0
+			log_game("TRIUMPHS: Ckey [target_ckey] was is behind in the wipe season, setting him to 0 triumphs")
 			triumph_amount_cache[target_ckey] = 0
 			return 0
 
