@@ -88,48 +88,48 @@
 
 	if(current_category == TRIUMPH_CAT_ACTIVE_DATUMS)
 		var/found_one = FALSE
-		var/built_header = FALSE
+		var/list/active_items = list()
 
 		for(var/datum/triumph_buy/found_triumph_buy in SStriumphs.active_triumph_buy_queue)
 			if(!found_triumph_buy.visible_on_active_menu || usr.ckey != found_triumph_buy.ckey_of_buyer)
 				continue
 
-			if(!built_header)
-				data += {"
-					<table>
-						<thead>
-							<tr>
-								<th class=\"triumph_text_head\">Description</th>
-								<th class=\"triumph_text_head_redeem\">Redeem</th>
-							</tr>
-						</thead>
-						<tbody>
-				"}
-				built_header = TRUE
-
-			data += {"
-				<tr class='triumph_text_row'>
-					<td class='triumph_text_desc'>
-						<div class='triumph_name'>[found_triumph_buy.name]</div>
-						[found_triumph_buy.desc]
-					</td>
-			"}
-
-			if(SSticker.HasRoundStarted() && found_triumph_buy.pre_round_only)
-				data += "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[found_triumph_buy];'><span class='strikethru_back'>ROUND STARTED</span></a></td>"
-			else
-				data += "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[found_triumph_buy];'>REFUND</a></td>"
-
-			data += "</tr>"
+			active_items += found_triumph_buy
 			found_one = TRUE
 
-			if(built_header)
+		if(found_one)
+			data += {"
+				<table>
+					<thead>
+						<tr>
+							<th class=\"triumph_text_head\">Description</th>
+							<th class=\"triumph_text_head_redeem\">Redeem</th>
+						</tr>
+					</thead>
+					<tbody>
+			"}
+
+			for(var/datum/triumph_buy/found_triumph_buy in active_items)
 				data += {"
-						</tbody>
-					</table>
+					<tr class='triumph_text_row'>
+						<td class='triumph_text_desc'>
+							<div class='triumph_name'>[found_triumph_buy.name]</div>
+							[found_triumph_buy.desc]
+						</td>
 				"}
 
-		if(!found_one)
+				if(SSticker.HasRoundStarted() && found_triumph_buy.pre_round_only)
+					data += "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[found_triumph_buy];'><span class='strikethru_back'>ROUND STARTED</span></a></td>"
+				else
+					data += "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[found_triumph_buy];'>REFUND</a></td>"
+
+				data += "</tr>"
+
+			data += {"
+					</tbody>
+				</table>
+			"}
+		else
 			data += {"
 				<div class='nothing_bought'>YOU HAVE NOTHING</div>
 			"}

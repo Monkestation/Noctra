@@ -158,17 +158,15 @@
 
 	to_chat(world, personal_objectives_report())
 
-	sleep(10 SECONDS)
+	sleep(5 SECONDS)
 
 	players_report()
-
-	CHECK_TICK
 
 	var/datum/triumph_buy/communal/psydon_retirement_fund/fund = locate() in SStriumphs.triumph_buy_datums
 	if(fund && SStriumphs.communal_pools[fund.type] > 0)
 		fund.on_activate()
 
-	CHECK_TICK
+	sleep(5 SECONDS)
 
 	SSvote.initiate_vote("map", "Psydon")
 
