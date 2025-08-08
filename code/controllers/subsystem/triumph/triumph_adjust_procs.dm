@@ -7,9 +7,9 @@
 
 	if(!ismob(key_holder) && !ismind(key_holder) && !isclient(key_holder))
 		return
-	var/key = key_holder:key //sorry
+	var/key = key_holder:key
 	var/ckey = ckey(key)
-	if(!key)
+	if(!key || !ckey)
 		return
 
 	SStriumphs.triumph_adjust(amount, ckey)
