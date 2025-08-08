@@ -18,7 +18,7 @@
 	allowed_races = RACES_PLAYER_ALL
 
 	outfit = /datum/outfit/job/merchant
-	give_bank_account = 100
+	give_bank_account = 200
 
 /datum/outfit/job/merchant/pre_equip(mob/living/carbon/human/H)
 	..()

@@ -39,7 +39,7 @@
 			beltr = /obj/item/weapon/whip/spiderwhip
 
 			H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
-			H.adjust_skillrank(/datum/skill/combat/whipsflails, 3, TRUE)
+			H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)
 
 			H.change_stat(STATKEY_STR, 2) //Grenz merc statline but with maluses.

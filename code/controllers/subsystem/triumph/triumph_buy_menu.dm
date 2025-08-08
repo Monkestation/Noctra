@@ -1,13 +1,13 @@
 
 
 /datum/triumph_buy_menu
-	//These are the menu datum vars
+	/// These are the menu datum vars
 	var/client/linked_client
-	var/triumph_quantity = 108 // The amount of triumphs we got
-
-	var/current_page = "1" // Current page of triumphs we are viewing and yes its a number in a string
-	var/current_category = TRIUMPH_CAT_ROUND_EFX //Current category we are viewing
-
+	/// Current page of triumphs we are viewing and yes its a number in a string
+	var/current_page = "1"
+	/// Current category we are viewing
+	var/current_category = TRIUMPH_CAT_CHARACTER
+	/// Number of pages we have
 	var/page_count = 0
 
 /datum/triumph_buy_menu/New()
@@ -102,7 +102,7 @@
 				if(SSticker.HasRoundStarted() && found_triumph_buy.pre_round_only)
 					data += "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[found_triumph_buy];'><span class='strikethru_back'>ROUND STARTED</span></a></td>"
 				else
-					data += "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[found_triumph_buy];'>UNBUY</a></td>"
+					data += "<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];handle_buy_button=\ref[found_triumph_buy];'>REFUND</a></td>"
 
 				data += "</tr>"
 
@@ -112,7 +112,7 @@
 		if(!found_one) // We didn't find anything that could be visible, so cram in the mssage
 			data += {"
 				<tr class='triumph_text_row'>
-					<td class='triumph_text_desc'>CURRENTLY NOTHING</td>
+					<td class='triumph_text_desc'>NOTHING</td>
 					<td class='triumph_cost_wrapper'>ACTIVE</td>
 					<td class='triumph_buy_wrapper'><a class='triumph_text_buy' href='byond://?src=\ref[src];'>HERE</a></td>
 				</tr>
@@ -161,7 +161,7 @@
 		</head>
 	</html>
 	"}
-	linked_client << browse(data, "window=triumph_buy_window;size=500x760;can_close=1;can_minimize=0;can_maximize=0;can_resize=0;titlebar=1")
+	linked_client << browse(data, "window=triumph_buy_window;size=615x715;can_close=1;can_minimize=0;can_maximize=0;can_resize=0;titlebar=1")
 
 	// We setup the href_list "close" call if they hit the x on the top right
 	for(var/i in 1 to 10)
