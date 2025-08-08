@@ -22,9 +22,7 @@
 		to_chat(C, "<br>")
 		adjust_triumphs(C, total_pool, FALSE, "Psydon's Retirement Fund")
 
-		to_chat(world, "<br>")
 		to_chat(world, span_reallybig("A total of [total_pool] triumph[total_pool == 1 ? " has" : "s have"] been redistributed from the Psydon's Retirement Fund!"))
-		to_chat(world, "<br>")
 
 		SStriumphs.communal_pools[type] = 0
 		SStriumphs.communal_contributions[type] = list()
@@ -44,7 +42,7 @@
 		distribution[C] = 0
 
 	var/remaining = total_pool
-	var/safety_counter = 1000
+	var/safety_counter = 1500
 
 	while(remaining > 0 && safety_counter > 0)
 		safety_counter--
@@ -101,9 +99,7 @@
 		if(distribution[C] > 0)
 			adjust_triumphs(C, distribution[C], FALSE, "Psydon's Retirement Fund")
 
-	to_chat(world, "<br>")
 	to_chat(world, span_reallybig("A total of [total_pool] triumph[total_pool == 1 ? " has" : "s have"] been redistributed from the Psydon's Retirement Fund!"))
-	to_chat(world, "<br>")
 
 	SStriumphs.communal_pools[type] = 0
 	SStriumphs.communal_contributions[type] = list()

@@ -156,9 +156,7 @@
 
 	gamemode_report()
 
-	to_chat(world, personal_objectives_report())
-
-	sleep(5 SECONDS)
+	sleep(10 SECONDS)
 
 	players_report()
 
@@ -166,11 +164,9 @@
 	if(fund && SStriumphs.communal_pools[fund.type] > 0)
 		fund.on_activate()
 
-	sleep(5 SECONDS)
-
 	SSvote.initiate_vote("map", "Psydon")
 
-	CHECK_TICK
+	sleep(3 SECONDS)
 
 	SSgamemode.store_roundend_data()
 
@@ -287,8 +283,7 @@
 		if(last.show_in_roundend)
 			last.roundend_report_footer()
 
-
-	return
+	to_chat(world, personal_objectives_report())
 
 /datum/controller/subsystem/ticker/proc/standard_reboot()
 	if(ready_for_reboot)
