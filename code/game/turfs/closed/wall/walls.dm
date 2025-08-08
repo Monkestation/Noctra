@@ -302,7 +302,7 @@
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "decowood"
 	blade_dulling = DULLING_BASHCHOP
-	max_integrity = 1100
+	max_integrity = 900
 	break_sound = 'sound/combat/hits/onwood/destroywalldoor.ogg'
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 //	sheet_type = /obj/item/grown/log/tree/lumber

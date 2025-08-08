@@ -15,7 +15,7 @@
 
 
 /proc/handle_maniac_visions(mob/living/target, atom/movable/screen/fullscreen/maniac/hallucinations)
-	if(prob(4))
+	if(prob(0.5)) //It is funny once, it become a bit less funny after a while.
 		hallucinations.jumpscare(target)
 	//Random laughter
 	else if(prob(2))

@@ -215,6 +215,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	/// If the user clicked "Don't ask again" on the randomize character prompt
 	var/randomize_shutup = FALSE
+	/// Custom UI scale
+	var/ui_scale
 
 /datum/preferences/New(client/C)
 	parent = C

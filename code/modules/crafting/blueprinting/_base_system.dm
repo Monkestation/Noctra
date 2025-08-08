@@ -27,7 +27,6 @@
 	holder.screen += buttons
 	holder.click_intercept = src
 	init_blueprint_recipes()
-	open_recipe_browser()
 	RegisterSignal(holder.mob, COMSIG_MOUSE_ENTERED, PROC_REF(on_mouse_moved))
 	RegisterSignal(holder?.mob, COMSIG_ATOM_MOUSE_ENTERED, PROC_REF(on_mouse_moved_pre))
 
@@ -644,10 +643,10 @@
 		if(right_click)
 			if(istype(object, /obj/structure/blueprint))
 				var/obj/structure/blueprint/print = object
-				if(print.creator != user)
+				if(print.creator != user && world.time < print.time_when_placed + 3 MINUTES)
 					return TRUE
+				to_chat(user, span_red("[object.name] removed."))
 				qdel(object)
-				to_chat(user, "<span class='notice'>Blueprint removed!.</span>")
 	return FALSE
 
 // Modified blueprint system proc to handle wall fixture placement
@@ -693,6 +692,7 @@
 	B.recipe = selected_recipe
 	B.creator = user
 	B.blueprint_dir = build_dir
+	B.time_when_placed = world.time
 
 	// Calculate wall fixture pixel offsets
 	var/final_pixel_x = pixel_x_offset
@@ -713,7 +713,7 @@
 	B.stored_pixel_y = final_pixel_y
 	B.setup_blueprint()
 
-	to_chat(user, "<span class='notice'>Blueprint placed!.</span>")
+	to_chat(user, span_notice("[B.name] placed."))
 
 /datum/blueprint_system/proc/get_wall_direction(turf/wall_turf, mob/user)
 	// Check all cardinal directions for open floor space
