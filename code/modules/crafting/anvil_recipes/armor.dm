@@ -129,7 +129,7 @@
 	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/clothing/gloves/chain/iron
 	createmultiple = TRUE
-	createditem_num = 1
+	createditem_extra = 1
 	craftdiff = 0
 
 /datum/anvil_recipe/armor/iron/igauntlets
