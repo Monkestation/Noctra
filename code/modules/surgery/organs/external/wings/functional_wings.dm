@@ -201,6 +201,9 @@
 /datum/action/item_action/organ_action/use/flight/proc/check_damage(datum/source, damage, damagetype, def_zone)
 	SIGNAL_HANDLER
 
+	if(damagetype != BRUTE || damagetype != BURN)
+		return
+
 	if(prob(damage / 2))
 		to_chat(owner, span_warning("The hit knocks you out of the air!"))
 		fall()
