@@ -229,9 +229,7 @@ SUBSYSTEM_DEF(triumphs)
 /datum/controller/subsystem/triumphs/proc/fire_on_PostSetup()
 	call_menu_refresh()
 
-/*
-	We save everything when its time for reboot
-*/
+/// We save everything when its time for reboot
 /datum/controller/subsystem/triumphs/proc/end_triumph_saving_time()
 	to_chat(world, "<span class='boldannounce'> Recording VICTORIES to the WORLD END MACHINE. </span>")
 	//for(var/target_ckey in triumph_amount_cache)
@@ -253,35 +251,38 @@ SUBSYSTEM_DEF(triumphs)
 	WRITE_FILE(leaderboard_file, json_encode(triumph_leaderboard))
 
 /datum/controller/subsystem/triumphs/proc/triumph_adjust(amt, target_ckey)
+	if(!target_ckey)
+		return
+
 	if(target_ckey in triumph_amount_cache)
-		triumph_amount_cache[target_ckey] += amt
-		log_game("TRIUMPHS: Ckey [target_ckey] received [amt] triumphs. He has total of [triumph_amount_cache[target_ckey]] now")
+		triumph_amount_cache["[target_ckey]"] += amt
+		log_game("TRIUMPHS: Ckey [target_ckey] received [amt] triumphs. He has total of [triumph_amount_cache["[target_ckey]"]] now")
 		var/list/saving_data = list()
 		var/target_file = file("data/player_saves/[target_ckey[1]]/[target_ckey]/triumphs.json")
 		if(fexists(target_file))
 			fdel(target_file)
 
 		saving_data["triumph_wipe_season"] = GLOB.triumph_wipe_season
-		saving_data["triumph_count"] = triumph_amount_cache[target_ckey]
+		saving_data["triumph_count"] = triumph_amount_cache["[target_ckey]"]
 		WRITE_FILE(target_file, json_encode(saving_data))
 	else
-		triumph_amount_cache[target_ckey] = 0
+		triumph_amount_cache["[target_ckey]"] = 0
 		log_game("TRIUMPHS: Ckey [target_ckey] was not found in the triumph cache, setting him there with 0 triumphs")
 
-// Wipe the triumphs of one person
+/// Wipe the triumphs of one person
 /datum/controller/subsystem/triumphs/proc/wipe_target_triumphs(target_ckey)
 	if(target_ckey)
 		if(!(target_ckey in triumph_amount_cache))
 			return
 		else
-			triumph_amount_cache[target_ckey] = 0
+			triumph_amount_cache["[target_ckey]"] = 0
 			log_game("TRIUMPHS: Ckey [target_ckey] was wiped of all triumphs")
 
-// Wipe the entire list
-// Adjust the season up by 1 too so anyone behind gets wiped if they rejoin later
+/// Wipe the entire list and adjust the season up by 1 too so anyone behind gets wiped if they rejoin later
 /datum/controller/subsystem/triumphs/proc/wipe_all_triumphs(target_ckey)
 	if(!target_ckey)
 		return
+
 	triumph_amount_cache = list()
 
 	var/target_file = file("data/triumph_wipe_season.json")
@@ -294,14 +295,16 @@ SUBSYSTEM_DEF(triumphs)
 	// But leave the old leaderboard file in, we mite do somethin w it later
 	triumph_leaderboard = list()
 
-// Return a value of the triumphs they got
+/// Return a value of the triumphs they got
 /datum/controller/subsystem/triumphs/proc/get_triumphs(target_ckey)
+	if(!target_ckey)
+		return 0
 	if(!(target_ckey in triumph_amount_cache))
 		var/target_file = file("data/player_saves/[target_ckey[1]]/[target_ckey]/triumphs.json")
 		if(!fexists(target_file)) // no file or new player, write them in something
 			var/list/new_guy = list("triumph_count" = 0, "triumph_wipe_season" = GLOB.triumph_wipe_season)
 			WRITE_FILE(target_file, json_encode(new_guy))
-			triumph_amount_cache[target_ckey] = 0
+			triumph_amount_cache["[target_ckey]"] = 0
 			log_game("TRIUMPHS: Ckey [target_ckey] not found in the triumphs player save file, setting him there with 0 triumphs")
 			return 0
 
@@ -309,20 +312,20 @@ SUBSYSTEM_DEF(triumphs)
 		var/list/not_new_guy = json_decode(file2text(target_file))
 		if(GLOB.triumph_wipe_season > not_new_guy["triumph_wipe_season"]) // Their file is behind in wipe seasons, time to be set to 0
 			log_game("TRIUMPHS: Ckey [target_ckey] was is behind in the wipe season, setting him to 0 triumphs")
-			triumph_amount_cache[target_ckey] = 0
+			triumph_amount_cache["[target_ckey]"] = 0
 			return 0
 
 		var/cur_client_triumph_count = not_new_guy["triumph_count"]
-		triumph_amount_cache[target_ckey] = cur_client_triumph_count
+		triumph_amount_cache["[target_ckey]"] = cur_client_triumph_count
 		return cur_client_triumph_count
 
-	return triumph_amount_cache[target_ckey]
+	return triumph_amount_cache["[target_ckey]"]
 
 
 /*
 	TRIUMPH LEADERBOARD STUFF
 */
-// Display leaderboard browser popup
+/// Display leaderboard browser popup
 /datum/controller/subsystem/triumphs/proc/show_triumph_leaderboard(client/C)
 
 	var/webpagu = "<B>CHAMPIONS OF PSYDONIA</B><br>"
@@ -341,7 +344,7 @@ SUBSYSTEM_DEF(triumphs)
 
 	C << browse(webpagu, "window=triumph_leaderboard;size=300x500")
 
-// PREP THE BOARD
+/// Prepare the leaderboard
 /datum/controller/subsystem/triumphs/proc/prep_the_triumphs_leaderboard()
 	var/json_file = file("data/triumph_leaderboards/triumphs_leaderboard_season_[GLOB.triumph_wipe_season].json")
 	if(!fexists(json_file)) // If theres no file then fuck you!
@@ -366,7 +369,7 @@ SUBSYSTEM_DEF(triumphs)
 	triumph_leaderboard[ckey] = triumph_total
 	sort_leaderboard()
 
-// Sort what we got
+/// Sort the leaderboard so highest are on top
 /datum/controller/subsystem/triumphs/proc/sort_leaderboard()
 	if(length(triumph_leaderboard) <= 1)
 		return
