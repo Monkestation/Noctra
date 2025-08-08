@@ -1777,7 +1777,7 @@
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
-	if (HAS_TRAIT(src, TRAIT_NOFIRE))
+	if(!ishuman(src) && HAS_TRAIT(src, TRAIT_NOFIRE))
 		return
 	if((fire_stacks > 0 || divine_fire_stacks > 0) && !on_fire)
 		on_fire = TRUE
