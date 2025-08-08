@@ -1,6 +1,7 @@
 /datum/blueprint_recipe/structure
 	abstract_type = /datum/blueprint_recipe/structure
 	category = "Structures"
+	build_time = 4 SECONDS
 
 /datum/blueprint_recipe/structure/tentdoor
 	name = "Tent Door"
@@ -11,9 +12,8 @@
 		/obj/item/natural/cloth = 1
 	)
 	construct_tool = /obj/item/weapon/knife
-	build_time = 4 SECONDS
 	category = "Structures"
-
+	build_time = 3 SECONDS
 
 /datum/blueprint_recipe/structure/anvil
 	name = "Anvil"
@@ -23,7 +23,7 @@
 		/obj/item/ingot/iron = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 8 SECONDS
+	build_time = 5 SECONDS
 	category = "Structures"
 
 
@@ -35,7 +35,6 @@
 		/obj/item/grown/log/tree/stick = 2
 	)
 	construct_tool = /obj/item/grown/log/tree/stick
-	build_time = 4 SECONDS
 	category = "Structures"
 
 
@@ -48,7 +47,6 @@
 		/obj/item/natural/stone = 2
 	)
 	construct_tool = /obj/item/grown/log/tree/stick
-	build_time = 6 SECONDS
 	category = "Structures"
 
 
@@ -61,7 +59,6 @@
 		/obj/item/natural/stone = 3
 	)
 	construct_tool = /obj/item/grown/log/tree/stick
-	build_time = 7 SECONDS
 	category = "Structures"
 
 
@@ -74,7 +71,6 @@
 		/obj/item/ore/coal = 1
 	)
 	construct_tool = /obj/item/grown/log/tree/small
-	build_time = 5 SECONDS
 	category = "Structures"
 
 
@@ -87,7 +83,6 @@
 		/obj/item/ore/coal = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 5 SECONDS
 	category = "Structures"
 
 
@@ -101,7 +96,6 @@
 		/obj/item/fertilizer/ash = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 6 SECONDS
 	category = "Structures"
 
 
@@ -113,7 +107,6 @@
 		/obj/item/grown/log/tree/stick = 3
 	)
 	construct_tool = /obj/item/weapon/knife
-	build_time = 4 SECONDS
 	category = "Structures"
 
 
@@ -125,7 +118,6 @@
 		/obj/item/grown/log/tree/stick = 3
 	)
 	construct_tool = null
-	build_time = 5 SECONDS
 	category = "Structures"
 
 
@@ -138,7 +130,6 @@
 		/obj/item/natural/fibers = 1
 	)
 	construct_tool = /obj/item/weapon/knife
-	build_time = 6 SECONDS
 	category = "Structures"
 
 
@@ -150,7 +141,6 @@
 		/obj/item/natural/stone = 3
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 10 SECONDS
 	category = "Structures"
 
 	skillcraft = /datum/skill/craft/masonry
@@ -164,7 +154,6 @@
 		/obj/item/grown/log/tree/small = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 8 SECONDS
 	category = "Structures"
 
 	skillcraft = /datum/skill/craft/carpentry
@@ -177,7 +166,6 @@
 		/obj/item/natural/stone = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 5 SECONDS
 	category = "Wall Fixtures"
 	floor_object = FALSE
 	skillcraft = /datum/skill/craft/masonry
@@ -194,7 +182,6 @@
 		/obj/item/candle/yellow = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Wall Fixtures"
 	floor_object = FALSE
 	skillcraft = /datum/skill/craft/masonry
@@ -212,7 +199,6 @@
 		/obj/item/fertilizer/ash = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 5 SECONDS
 	category = "Wall Fixtures"
 	floor_object = FALSE
 	skillcraft = /datum/skill/craft/masonry
