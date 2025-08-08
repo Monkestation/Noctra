@@ -9,8 +9,7 @@
 	var/appro_skill = /datum/skill/craft/blacksmithing // The skill that will be taken into account when crafting.
 	var/atom/req_bar // The material of the ingot we need to craft.
 	var/atom/created_item // The item created when the recipe is fulfilled. Takes an object path as argument, NEVER USE A LIST.
-	var/createmultiple = FALSE // Boolean. Do we create more than one result when crafted?
-	var/createditem_num = 0 // How many EXTRA units this recipe will create. At 1, this creates 2 copies.
+	var/createditem_extra = 0 // How many EXTRA units this recipe will create. At 1, this creates 2 copies.
 	var/craftdiff = 0 // Difficulty of craft. Affects final item quality and chance to advance steps.
 	var/needed_item // What item(s) we need to add to proceed to the next step. Draws from the list on var/additional_items.
 	var/needed_item_text // Name of the object we need to slap on the anvil to proceed to the next step.
@@ -75,14 +74,14 @@
 
 	if(!moveup)
 		if(!prob(proab)) // Roll again, this time negatively, for consequences.
-			user.visible_message("<span class='warning'>[user] ruins the bar!</span>")
-			skill_quality -= 1 // The more you fuck up, the less quality the end result will be.
-			bar_health -= craftdiff // Difficulty of the recipe adds to how critical the failure is
+			user.visible_message("<span class='warning'>[user] strikes poorly!</span>")
+			skill_quality -= 0.5
+			bar_health -= craftdiff / 1.2
 			if(parent)
 				var/obj/item/P = parent
 				switch(skill_level)
 					if(0)
-						bar_health -= 25 // 4 strikes and you're out, buddy.
+						bar_health -= 20 // 5 bad hits and ruined.
 					if(1 to 3)
 						bar_health -= floor(20 / skill_level)
 					if(4)
@@ -90,13 +89,13 @@
 					if(5 to 6)
 						var/mob/living/L = user
 						if(L.stat_roll(STATKEY_LCK,4,10,TRUE)) // Unlucky, not unskilled.
-							bar_health -= craftdiff
+							bar_health -= craftdiff / 1.2
 				if(bar_health <= 0)
 					user.visible_message("<span class='danger'>[user] destroys the bar!</span>")
 					qdel(P)
 			return FALSE
 		else
-			user.visible_message("<span class='warning'>[user] fumbles the bar!</span>")
+			user.visible_message("<span class='warning'>[user] almost fumbles but recovers!</span>")
 			return FALSE
 
 	else
@@ -211,7 +210,7 @@
 		<div>
 		"}
 
-	html += "<strong class=class='scroll'>and then you get</strong> <br> [icon2html(new created_item, user)] <br> [initial(created_item.name)]<br>"
+	html += "<strong class=class='scroll'>and then you get</strong> <br> [icon2html(new created_item, user)] <br> [createditem_extra + 1] [initial(created_item.name)]\s<br>"
 
 	html += {"
 		</div>

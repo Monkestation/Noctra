@@ -131,7 +131,7 @@
 	if(user)
 		if(user.stat_roll(STATKEY_LCK,2,10))
 			dam += 10
-		if(istype(user.rmb_intent, /datum/rmb_intent/weak))
+		if(ispath(user.rmb_intent?.type, /datum/rmb_intent/weak))
 			do_crit = FALSE
 	var/added_wound
 	switch(bclass) //do stuff but only when we are a blade that adds wounds

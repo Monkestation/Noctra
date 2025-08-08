@@ -361,9 +361,8 @@
 	desc = "A restraining device for punishment."
 	result_type = /obj/structure/pillory
 	required_materials = list(
-		/obj/item/grown/log/tree/small = 1,
+		/obj/item/grown/log/tree/small = 2,
 		/obj/item/ingot/iron = 1,
-		/obj/item/customlock/finished = 1
 	)
 	supports_directions = TRUE
 	craftdiff = 2

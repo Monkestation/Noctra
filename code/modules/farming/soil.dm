@@ -318,6 +318,8 @@
 /obj/structure/soil/proc/on_stepped(mob/living/stepper)
 	if(!plant)
 		return
+	if(istype(stepper, /mob/living/simple_animal/hostile/gnome_homunculus))//prevents damaging of plants
+		return
 	if(stepper.m_intent == MOVE_INTENT_SNEAK)
 		return
 	if(stepper.m_intent == MOVE_INTENT_WALK)
