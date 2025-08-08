@@ -14,14 +14,17 @@
 		if(C?.ckey)
 			eligible += C
 
+	if(!length(eligible))
+		return
+
 	if(length(eligible) == 1)
 		var/client/C = eligible[1]
 		to_chat(C, "<br>")
 		adjust_triumphs(C, total_pool, FALSE, "Psydon's Retirement Fund")
 
-		to_chat(C, "<br>")
-		to_chat(C, span_reallybig("The total of [SStriumphs.communal_pools[type]] triumph\s have been redistributed from the Psydon's Retirement Fund!"))
-		to_chat(C, "<br>")
+		to_chat(world, "<br>")
+		to_chat(world, span_reallybig("A total of [total_pool] triumph[total_pool == 1 ? " has" : "s have"] been redistributed from the Psydon's Retirement Fund!"))
+		to_chat(world, "<br>")
 
 		SStriumphs.communal_pools[type] = 0
 		SStriumphs.communal_contributions[type] = list()
@@ -37,9 +40,11 @@
 	sortTim(client_data, GLOBAL_PROC_REF(cmp_client_triumphs))
 
 	var/list/distribution = list()
+	for(var/client/C in eligible)
+		distribution[C] = 0
+
 	var/remaining = total_pool
 	var/safety_counter = 1000
-	var/distribution_reason = "Psydon's Retirement Fund"
 
 	while(remaining > 0 && safety_counter > 0)
 		safety_counter--
@@ -56,7 +61,27 @@
 		if(!length(current_group))
 			break
 
-		var/per_player = max(1, FLOOR(remaining / length(current_group), 1))
+		var/next_min = INFINITY
+		for(var/list/data in client_data)
+			if(data["triumphs"] > current_min && data["triumphs"] < next_min)
+				next_min = data["triumphs"]
+
+		if(next_min == INFINITY)
+			var/per_player = max(1, FLOOR(remaining / length(current_group), 1))
+			for(var/client/C in current_group)
+				if(remaining <= 0)
+					break
+				var/give = min(per_player, remaining)
+				distribution[C] += give
+				remaining -= give
+				for(var/list/data in client_data)
+					if(data["client"] == C)
+						data["triumphs"] += give
+						break
+			break
+
+		var/triumphs_needed = next_min - current_min
+		var/per_player = max(1, FLOOR(min(remaining, triumphs_needed * length(current_group)) / length(current_group), 1))
 		for(var/client/C in current_group)
 			if(remaining <= 0)
 				break
@@ -74,11 +99,10 @@
 
 	for(var/client/C in distribution)
 		if(distribution[C] > 0)
-			to_chat(C, "<br>")
-			adjust_triumphs(C, distribution[C], TRUE, distribution_reason)
+			adjust_triumphs(C, distribution[C], FALSE, "Psydon's Retirement Fund")
 
 	to_chat(world, "<br>")
-	to_chat(world, span_reallybig("The total of [SStriumphs.communal_pools[type]] triumph\s have been redistributed from the Psydon's Retirement Fund!"))
+	to_chat(world, span_reallybig("A total of [total_pool] triumph[total_pool == 1 ? " has" : "s have"] been redistributed from the Psydon's Retirement Fund!"))
 	to_chat(world, "<br>")
 
 	SStriumphs.communal_pools[type] = 0
