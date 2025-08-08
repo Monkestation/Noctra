@@ -11,8 +11,14 @@
 
 	var/list/eligible = list()
 	for(var/client/C in GLOB.clients)
-		if(C?.ckey)
-			eligible += C
+		if(!C?.ckey)
+			continue
+
+		if(!SStriumphs.triumph_amount_cache?.Find(C.ckey) || !isnum(SStriumphs.triumph_amount_cache[C.ckey]))
+			log_game("COMMUNAL: Psydon's Retirement Fund: Excluded [C.ckey] due corrupted/missing triumph data.")
+			continue
+
+		eligible += C
 
 	if(!length(eligible))
 		return

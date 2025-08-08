@@ -351,27 +351,20 @@ SUBSYSTEM_DEF(triumphs)
 
 	sort_leaderboard()
 
-// Adjust leaderboard
-// I want a key here so it looks pretty
-/datum/controller/subsystem/triumphs/proc/adjust_leaderboard(CLIENT_KEY_not_CKEY)
-	var/user_key = CLIENT_KEY_not_CKEY
-	var/triumph_total = triumph_amount_cache[ckey(CLIENT_KEY_not_CKEY)]
+/datum/controller/subsystem/triumphs/proc/adjust_leaderboard(ckey)
+	var/triumph_total = triumph_amount_cache[ckey]
 
-	if(5 > triumph_total) // You aren't tracked at all unless you got at least 5, no iterating a bunch of losers repeatedly
+	if(5 > triumph_total)
 		return
 
-	// You automatically get added in if we haven't filled in all the crap
 	if(triumph_leaderboard_positions_tracked > triumph_leaderboard.len)
-		triumph_leaderboard[user_key] = triumph_total
-
-	// Guy in last place is still greater than this guy
-	if(triumph_leaderboard[triumph_leaderboard[triumph_leaderboard.len]] > triumph_total)
+		triumph_leaderboard[ckey] = triumph_total
+	else if(triumph_leaderboard[triumph_leaderboard[triumph_leaderboard.len]] > triumph_total)
 		return
 
-	triumph_leaderboard.Cut(triumph_leaderboard.len) // Cut the end
-	triumph_leaderboard[user_key] = triumph_total // Add our guy to the end
-
-	sort_leaderboard() // Now sort it, sort it NOW!
+	triumph_leaderboard.Cut(triumph_leaderboard.len)
+	triumph_leaderboard[ckey] = triumph_total
+	sort_leaderboard()
 
 // Sort what we got
 /datum/controller/subsystem/triumphs/proc/sort_leaderboard()
