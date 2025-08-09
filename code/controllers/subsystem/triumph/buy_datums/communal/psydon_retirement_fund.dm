@@ -2,7 +2,7 @@
 	name = "Psydon's Retirement Fund"
 	desc = "Contribute to a fund that will be redistributed to the poorest players when its full or when the round ends."
 	triumph_buy_id = TRIUMPH_BUY_PSYDON_RETIREMENT
-	maximum_pool = 1000
+	maximum_pool = 500
 
 /datum/triumph_buy/communal/psydon_retirement_fund/on_activate()
 	var/total_pool = SStriumphs.communal_pools[type]
@@ -22,7 +22,7 @@
 		var/client/C = eligible[1]
 		adjust_triumphs(C, total_pool, FALSE, "Psydon's Retirement Fund")
 
-		to_chat(world, span_reallybig("A total of [total_pool] triumph[total_pool == 1 ? " has" : "s have"] been redistributed from the Psydon's Retirement Fund!"))
+		to_chat(world, span_reallybig("A total of [total_pool] triumph[total_pool == 1 ? " has" : "s have"] been redistributed to 1 beneficiary from the Psydon's Retirement Fund!"))
 		to_chat(world, "<br>")
 
 		SStriumphs.communal_pools[type] = 0
@@ -96,11 +96,13 @@
 
 		sortTim(client_data, GLOBAL_PROC_REF(cmp_client_triumphs))
 
+	var/number_of_beneficiaries = 0
 	for(var/client/C in distribution)
 		if(distribution[C] > 0)
+			number_of_beneficiaries++
 			adjust_triumphs(C, distribution[C], FALSE, "Psydon's Retirement Fund")
 
-	to_chat(world, span_reallybig("A total of [total_pool] triumph[total_pool == 1 ? " has" : "s have"] been redistributed from the Psydon's Retirement Fund!"))
+	to_chat(world, span_reallybig("A total of [total_pool] triumph[total_pool == 1 ? " has" : "s have"] been redistributed between [number_of_beneficiaries] beneficiaries from the Psydon's Retirement Fund!"))
 	to_chat(world, "<br>")
 
 	SStriumphs.communal_pools[type] = 0

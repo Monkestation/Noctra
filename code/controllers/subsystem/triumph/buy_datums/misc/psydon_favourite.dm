@@ -7,6 +7,7 @@
 	visible_on_active_menu = TRUE
 	limited = TRUE
 	stock = 1
+	allow_multiple_buys = FALSE
 
 /datum/triumph_buy/psydon_favourite/on_activate()
 	. = ..()

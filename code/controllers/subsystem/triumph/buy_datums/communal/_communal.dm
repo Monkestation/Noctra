@@ -4,7 +4,7 @@
 	category = TRIUMPH_CAT_COMMUNAL
 	visible_on_active_menu = TRUE
 	manual_activation = TRUE
-	/// Maximum triumphs this pool can hold (0 for unlimited)
+	/// Maximum number of triumphs this pool can hold (0 for unlimited)
 	var/maximum_pool = 0
 	/// Current progress towards goal (0-100)
 	var/progress = 0

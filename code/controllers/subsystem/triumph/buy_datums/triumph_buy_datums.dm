@@ -27,6 +27,8 @@
 	var/limited = FALSE
 	/// Number times the triumph buy can be bought if its limited
 	var/stock = 0
+	/// Whether the user is allowed to buy the triumph buy they already have
+	var/allow_multiple_buys = TRUE
 	/// List of things it can conflict with
 	var/list/conflicts_with = list()
 
