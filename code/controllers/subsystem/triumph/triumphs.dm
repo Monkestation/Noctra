@@ -42,8 +42,7 @@ SUBSYSTEM_DEF(triumphs)
 	/// List of top ten for display in browser page on button click
 	var/list/triumph_leaderboard = list()
 	var/triumph_leaderboard_positions_tracked = 20
-	// A cache for triumphs
-	// Basically when client first hops in for the session we will cram their ckey in and retrieve from file
+	// A cache for triumphs. Basically when client first hops in for the session we will cram their ckey in and retrieve from file
 	// When the server session is about to end we will write it all in.
 	var/list/triumph_amount_cache = list()
 	/// Similiar to the triumph amount cache, but stores triumph buys the ckey has bought
@@ -59,8 +58,7 @@ SUBSYSTEM_DEF(triumphs)
 	var/list/active_triumph_menus = list()
 	/// Display limit per page in a category on the user menu
 	var/page_display_limit = 11
-	// This represents the triumph buy organization on the main SS for triumphs
-	// Each key is a category name
+	// This represents the triumph buy organization on the main SS for triumphs, each key is a category name.
 	// And then the list will have a number in a string that leads to a list of datums
 	var/list/list/list/central_state_data = list( // this is updated to be a list of lists in subsystem Initialize
 		TRIUMPH_CAT_CHARACTER = 0,
@@ -103,7 +101,6 @@ SUBSYSTEM_DEF(triumphs)
 		if(cur_datum.limited)
 			triumph_buy_stocks[cur_datum.type] = cur_datum.stock
 
-	// Make a local copy I guess?
 	var/list/copy_list = triumph_buy_datums.Copy()
 
 	// Figure out how many lists we are about to make to represent the pages
@@ -287,11 +284,12 @@ SUBSYSTEM_DEF(triumphs)
 			triumph_amount_cache[target_ckey] = 0
 			log_game("TRIUMPHS: Ckey [target_ckey] was wiped of all triumphs")
 
-/// Wipe the entire list and adjust the season up by 1 too so anyone behind gets wiped if they rejoin later
-/datum/controller/subsystem/triumphs/proc/wipe_all_triumphs(target_ckey)
-	if(!target_ckey)
-		return
+/// Clears the leaderboard of all entries, keeping the current season and player's triumphs
+/datum/controller/subsystem/triumphs/proc/reset_leaderboard()
+	triumph_leaderboard = list()
 
+/// Wipe the entire list and adjust the season up by 1 too so anyone behind gets wiped if they rejoin later
+/datum/controller/subsystem/triumphs/proc/wipe_all_triumphs()
 	triumph_amount_cache = list()
 
 	var/target_file = file("data/triumph_wipe_season.json")
@@ -302,7 +300,7 @@ SUBSYSTEM_DEF(triumphs)
 
 	// Wipe the leaderboard list, time for a fresh season.
 	// But leave the old leaderboard file in, we mite do somethin w it later
-	triumph_leaderboard = list()
+	reset_leaderboard()
 
 /// Return a value of the triumphs they got
 /datum/controller/subsystem/triumphs/proc/get_triumphs(target_ckey)
@@ -333,6 +331,7 @@ SUBSYSTEM_DEF(triumphs)
 /*
 	TRIUMPH LEADERBOARD STUFF
 */
+
 /// Displays leaderboard browser popup
 /datum/controller/subsystem/triumphs/proc/show_triumph_leaderboard(client/C)
 	var/webpage = "<div style='text-align:center'>Current Season: [GLOB.triumph_wipe_season]</div>"
@@ -340,14 +339,8 @@ SUBSYSTEM_DEF(triumphs)
 
 	if(triumph_leaderboard.len)
 		var/position_number = 0
-		var/list/seen_names = list()
 
 		for(var/key in triumph_leaderboard)
-			var/lower_key = lowertext(key)
-			if(lower_key in seen_names)
-				continue
-			seen_names += lower_key
-
 			position_number++
 			webpage += "[position_number]. [key] - [triumph_leaderboard[key]]<br>"
 			if(position_number >= triumph_leaderboard_positions_tracked)
@@ -357,13 +350,13 @@ SUBSYSTEM_DEF(triumphs)
 
 	var/datum/browser/popup = new(C, "triumph_leaderboard", "CHAMPIONS OF PSYDONIA", 300, 500)
 	popup.set_content(webpage)
-	popup.open()
+	popup.open(FALSE)
 
-/// Prepare the leaderboard
+/// Prepare the leaderboard by getting it and sorting it
 /datum/controller/subsystem/triumphs/proc/prep_the_triumphs_leaderboard()
 	var/json_file = file("data/triumph_leaderboards/triumphs_leaderboard_season_[GLOB.triumph_wipe_season].json")
-	if(!fexists(json_file)) // If theres no file then fuck you!
-		return // we got a empty list up there neways
+	if(!fexists(json_file))
+		return
 
 	triumph_leaderboard = json_decode(file2text(json_file))
 
@@ -386,7 +379,7 @@ SUBSYSTEM_DEF(triumphs)
 	triumph_leaderboard[user_key] = triumph_total
 	sort_leaderboard()
 
-/// Sort the leaderboard so highest are on top
+/// Sort the leaderboard so the highest are on top
 /datum/controller/subsystem/triumphs/proc/sort_leaderboard()
 	if(length(triumph_leaderboard) <= 1)
 		return
