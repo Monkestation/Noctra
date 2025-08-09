@@ -13,7 +13,7 @@
 		return
 
 	SStriumphs.triumph_adjust(amount, ckey)
-	SStriumphs.adjust_leaderboard(ckey)
+	SStriumphs.adjust_leaderboard(key)
 
 	var/adjustment_verb
 	if(amount > 0)

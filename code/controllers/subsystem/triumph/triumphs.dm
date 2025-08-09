@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(triumphs)
 
 	/// List of top ten for display in browser page on button click
 	var/list/triumph_leaderboard = list()
-	var/triumph_leaderboard_positions_tracked = 21
+	var/triumph_leaderboard_positions_tracked = 20
 	// A cache for triumphs
 	// Basically when client first hops in for the session we will cram their ckey in and retrieve from file
 	// When the server session is about to end we will write it all in.
@@ -253,7 +253,7 @@ SUBSYSTEM_DEF(triumphs)
 
 	if(target_ckey in triumph_amount_cache)
 		triumph_amount_cache[target_ckey] += amt
-		log_game("TRIUMPHS: Ckey [target_ckey] received [amt] triumphs. He has total of [triumph_amount_cache[target_ckey]] now")
+		log_game("TRIUMPHS: Ckey [target_ckey] received [amt] triumphs. He has total of [triumph_amount_cache[target_ckey]] now. Checked with cache.")
 		var/list/saving_data = list()
 		var/target_file = file("data/player_saves/[target_ckey[1]]/[target_ckey]/triumphs.json")
 		if(fexists(target_file))
@@ -269,6 +269,7 @@ SUBSYSTEM_DEF(triumphs)
 			var/cur_client_triumph_count = not_new_guy["triumph_count"]
 			triumph_amount_cache[target_ckey] = cur_client_triumph_count + amt
 
+			log_game("TRIUMPHS: Ckey [target_ckey] received [amt] triumphs. He has total of [triumph_amount_cache[target_ckey]] now. Checked with player save.")
 			var/list/saving_data = list()
 			saving_data["triumph_wipe_season"] = GLOB.triumph_wipe_season
 			saving_data["triumph_count"] = triumph_amount_cache[target_ckey]
@@ -332,24 +333,31 @@ SUBSYSTEM_DEF(triumphs)
 /*
 	TRIUMPH LEADERBOARD STUFF
 */
-/// Display leaderboard browser popup
+/// Displays leaderboard browser popup
 /datum/controller/subsystem/triumphs/proc/show_triumph_leaderboard(client/C)
-
-	var/webpagu = "<B>CHAMPIONS OF PSYDONIA</B><br>"
-	webpagu += "Current Season: [GLOB.triumph_wipe_season]"
-	webpagu += "<hr><br>"
+	var/webpage = "<div style='text-align:center'>Current Season: [GLOB.triumph_wipe_season]</div>"
+	webpage += "<hr>"
 
 	if(triumph_leaderboard.len)
 		var/position_number = 0
+		var/list/seen_names = list()
+
 		for(var/key in triumph_leaderboard)
+			var/lower_key = lowertext(key)
+			if(lower_key in seen_names)
+				continue
+			seen_names += lower_key
+
 			position_number++
-			webpagu += "[position_number]. [key] - [triumph_leaderboard[key]]<br>"
+			webpage += "[position_number]. [key] - [triumph_leaderboard[key]]<br>"
 			if(position_number >= triumph_leaderboard_positions_tracked)
 				break
 	else
-		webpagu += "The hall of triumphs is quite empty, Yes?"
+		webpage += "The hall of triumphs is empty"
 
-	C << browse(webpagu, "window=triumph_leaderboard;size=300x500")
+	var/datum/browser/popup = new(C, "triumph_leaderboard", "CHAMPIONS OF PSYDONIA", 300, 500)
+	popup.set_content(webpage)
+	popup.open()
 
 /// Prepare the leaderboard
 /datum/controller/subsystem/triumphs/proc/prep_the_triumphs_leaderboard()
@@ -361,19 +369,21 @@ SUBSYSTEM_DEF(triumphs)
 
 	sort_leaderboard()
 
-/datum/controller/subsystem/triumphs/proc/adjust_leaderboard(ckey)
-	var/triumph_total = triumph_amount_cache[ckey]
+/datum/controller/subsystem/triumphs/proc/adjust_leaderboard(CLIENT_KEY_not_CKEY)
+	var/user_key = CLIENT_KEY_not_CKEY
+	var/triumph_total = triumph_amount_cache[ckey(CLIENT_KEY_not_CKEY)]
 
 	if(5 > triumph_total)
 		return
 
 	if(triumph_leaderboard_positions_tracked > triumph_leaderboard.len)
-		triumph_leaderboard[ckey] = triumph_total
-	else if(triumph_leaderboard[triumph_leaderboard[triumph_leaderboard.len]] > triumph_total)
+		triumph_leaderboard[user_key] = triumph_total
+
+	if(triumph_leaderboard[triumph_leaderboard[triumph_leaderboard.len]] > triumph_total)
 		return
 
 	triumph_leaderboard.Cut(triumph_leaderboard.len)
-	triumph_leaderboard[ckey] = triumph_total
+	triumph_leaderboard[user_key] = triumph_total
 	sort_leaderboard()
 
 /// Sort the leaderboard so highest are on top
