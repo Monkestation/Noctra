@@ -156,17 +156,19 @@
 
 	gamemode_report()
 
-	sleep(10 SECONDS)
-
-	players_report()
+	sleep(8 SECONDS)
 
 	var/datum/triumph_buy/communal/psydon_retirement_fund/fund = locate() in SStriumphs.triumph_buy_datums
 	if(fund && SStriumphs.communal_pools[fund.type] > 0)
 		fund.on_activate()
 
+	sleep(6 SECONDS)
+
+	players_report()
+
 	SSvote.initiate_vote("map", "Psydon")
 
-	sleep(3 SECONDS)
+	CHECK_TICK
 
 	SSgamemode.store_roundend_data()
 

@@ -20,10 +20,10 @@
 
 	if(length(eligible) == 1)
 		var/client/C = eligible[1]
-		to_chat(C, "<br>")
 		adjust_triumphs(C, total_pool, FALSE, "Psydon's Retirement Fund")
 
 		to_chat(world, span_reallybig("A total of [total_pool] triumph[total_pool == 1 ? " has" : "s have"] been redistributed from the Psydon's Retirement Fund!"))
+		to_chat(world, "<br>")
 
 		SStriumphs.communal_pools[type] = 0
 		SStriumphs.communal_contributions[type] = list()
@@ -101,6 +101,7 @@
 			adjust_triumphs(C, distribution[C], FALSE, "Psydon's Retirement Fund")
 
 	to_chat(world, span_reallybig("A total of [total_pool] triumph[total_pool == 1 ? " has" : "s have"] been redistributed from the Psydon's Retirement Fund!"))
+	to_chat(world, "<br>")
 
 	SStriumphs.communal_pools[type] = 0
 	SStriumphs.communal_contributions[type] = list()
