@@ -253,7 +253,7 @@ SUBSYSTEM_DEF(triumphs)
 
 	if(target_ckey in triumph_amount_cache)
 		triumph_amount_cache[target_ckey] += amt
-		log_game("TRIUMPHS: [target_ckey] received [amt] triumph\s. They now have a total of [triumph_amount_cache[target_ckey]] triumph\s. Checked with cache.")
+		log_game("TRIUMPHS: [target_ckey] received [amt] triumph\s. They have a total of [triumph_amount_cache[target_ckey]] triumph\s now. Checked with cache.")
 		var/list/saving_data = list()
 		var/target_file = file("data/player_saves/[target_ckey[1]]/[target_ckey]/triumphs.json")
 		if(fexists(target_file))
@@ -269,7 +269,7 @@ SUBSYSTEM_DEF(triumphs)
 			var/cur_client_triumph_count = not_new_guy["triumph_count"]
 			triumph_amount_cache[target_ckey] = cur_client_triumph_count + amt
 
-			log_game("TRIUMPHS: [target_ckey] received [amt] triumph\s. They now have a total of [triumph_amount_cache[target_ckey]] triumph\s. Checked with player save.")
+			log_game("TRIUMPHS: [target_ckey] received [amt] triumph\s. They have a total of [triumph_amount_cache[target_ckey]] triumph\s now. Checked with player save.")
 			var/list/saving_data = list()
 			saving_data["triumph_wipe_season"] = GLOB.triumph_wipe_season
 			saving_data["triumph_count"] = triumph_amount_cache[target_ckey]
