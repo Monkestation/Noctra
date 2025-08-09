@@ -266,8 +266,7 @@ SUBSYSTEM_DEF(triumphs)
 		saving_data["triumph_count"] = triumph_amount_cache["[target_ckey]"]
 		WRITE_FILE(target_file, json_encode(saving_data))
 	else
-		// triumph_amount_cache["[target_ckey]"] = 0
-		log_game("TRIUMPHS: Ckey [target_ckey] was not found in the triumph cache, setting him there with 0 triumphs")
+		log_game("TRIUMPHS: Ckey [target_ckey] was not found in the triumph cache, he would receive [amt]")
 
 /// Wipe the triumphs of one person
 /datum/controller/subsystem/triumphs/proc/wipe_target_triumphs(target_ckey)
