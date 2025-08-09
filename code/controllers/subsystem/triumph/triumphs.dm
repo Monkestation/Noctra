@@ -158,10 +158,7 @@ SUBSYSTEM_DEF(triumphs)
 	call_menu_refresh()
 	return TRUE
 
-/**
-	This occurs when you try to unbuy a triumph condition and removes it
-	Also used for refunding due to conflicts
- */
+/// This occurs when you try to unbuy a triumph condition and removes it, also used for refunding due to conflicts
 /datum/controller/subsystem/triumphs/proc/attempt_to_unbuy_triumph_condition(client/C, datum/triumph_buy/triumph_buy, reason = "\improper REFUND", force = FALSE)
 	var/previous_owner_ckey = triumph_buy.ckey_of_buyer
 	if(previous_owner_ckey != C?.ckey)
@@ -255,18 +252,30 @@ SUBSYSTEM_DEF(triumphs)
 		return
 
 	if(target_ckey in triumph_amount_cache)
-		triumph_amount_cache["[target_ckey]"] += amt
-		log_game("TRIUMPHS: Ckey [target_ckey] received [amt] triumphs. He has total of [triumph_amount_cache["[target_ckey]"]] now")
+		triumph_amount_cache[target_ckey] += amt
+		log_game("TRIUMPHS: Ckey [target_ckey] received [amt] triumphs. He has total of [triumph_amount_cache[target_ckey]] now")
 		var/list/saving_data = list()
 		var/target_file = file("data/player_saves/[target_ckey[1]]/[target_ckey]/triumphs.json")
 		if(fexists(target_file))
 			fdel(target_file)
 
 		saving_data["triumph_wipe_season"] = GLOB.triumph_wipe_season
-		saving_data["triumph_count"] = triumph_amount_cache["[target_ckey]"]
+		saving_data["triumph_count"] = triumph_amount_cache[target_ckey]
 		WRITE_FILE(target_file, json_encode(saving_data))
 	else
-		log_game("TRIUMPHS: Ckey [target_ckey] was not found in the triumph cache, he would receive [amt]")
+		var/target_file = file("data/player_saves/[target_ckey[1]]/[target_ckey]/triumphs.json")
+		if(fexists(target_file))
+			var/list/not_new_guy = json_decode(file2text(target_file))
+			var/cur_client_triumph_count = not_new_guy["triumph_count"]
+			triumph_amount_cache[target_ckey] = cur_client_triumph_count + amt
+
+			var/list/saving_data = list()
+			saving_data["triumph_wipe_season"] = GLOB.triumph_wipe_season
+			saving_data["triumph_count"] = triumph_amount_cache[target_ckey]
+			fdel(target_file)
+			WRITE_FILE(target_file, json_encode(saving_data))
+		else
+			message_admins("TRIUMPHS: Ckey [target_ckey] was not found in the triumph cache and had no player save, he would receive [amt] triumphs")
 
 /// Wipe the triumphs of one person
 /datum/controller/subsystem/triumphs/proc/wipe_target_triumphs(target_ckey)
@@ -274,7 +283,7 @@ SUBSYSTEM_DEF(triumphs)
 		if(!(target_ckey in triumph_amount_cache))
 			return
 		else
-			triumph_amount_cache["[target_ckey]"] = 0
+			triumph_amount_cache[target_ckey] = 0
 			log_game("TRIUMPHS: Ckey [target_ckey] was wiped of all triumphs")
 
 /// Wipe the entire list and adjust the season up by 1 too so anyone behind gets wiped if they rejoin later
@@ -303,7 +312,7 @@ SUBSYSTEM_DEF(triumphs)
 		if(!fexists(target_file)) // no file or new player, write them in something
 			var/list/new_guy = list("triumph_count" = 0, "triumph_wipe_season" = GLOB.triumph_wipe_season)
 			WRITE_FILE(target_file, json_encode(new_guy))
-			triumph_amount_cache["[target_ckey]"] = 0
+			triumph_amount_cache[target_ckey] = 0
 			log_game("TRIUMPHS: Ckey [target_ckey] not found in the triumphs player save file, setting him there with 0 triumphs")
 			return 0
 
@@ -311,15 +320,14 @@ SUBSYSTEM_DEF(triumphs)
 		var/list/not_new_guy = json_decode(file2text(target_file))
 		if(GLOB.triumph_wipe_season > not_new_guy["triumph_wipe_season"]) // Their file is behind in wipe seasons, time to be set to 0
 			log_game("TRIUMPHS: Ckey [target_ckey] was is behind in the wipe season, setting him to 0 triumphs")
-			triumph_amount_cache["[target_ckey]"] = 0
+			triumph_amount_cache[target_ckey] = 0
 			return 0
 
 		var/cur_client_triumph_count = not_new_guy["triumph_count"]
-		triumph_amount_cache["[target_ckey]"] = cur_client_triumph_count
+		triumph_amount_cache[target_ckey] = cur_client_triumph_count
 		return cur_client_triumph_count
 
-	return triumph_amount_cache["[target_ckey]"]
-
+	return triumph_amount_cache[target_ckey]
 
 /*
 	TRIUMPH LEADERBOARD STUFF
