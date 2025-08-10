@@ -65,6 +65,11 @@
 	recipe_name = "an iron cuirass"
 	created_item = /obj/item/clothing/armor/cuirass/iron
 
+/datum/anvil_recipe/armor/iron/chausses
+	name = "Iron Plate Chausses"
+	recipe_name = "a pair of iron Plate Chausses"
+	created_item = /obj/item/clothing/pants/platelegs/iron
+
 /datum/anvil_recipe/armor/iron/platemask
 	name = "2x Iron Face Masks"
 	recipe_name = "a Face Mask"
@@ -597,6 +602,12 @@
 	name = "Decorated Knight's Helmet (+Bar, +Cloth)"
 	additional_items = list(/obj/item/ingot/steel,/obj/item/natural/cloth)
 	created_item = /obj/item/clothing/head/helmet/heavy/decorated/knight
+	craftdiff = 4
+
+/datum/anvil_recipe/armor/steel/decoratedhelmetknight
+	name = "Great Helm (+Bar)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/helmet/heavy/bucket
 	craftdiff = 4
 
 /datum/anvil_recipe/armor/steel/decoratedhelmetpig
