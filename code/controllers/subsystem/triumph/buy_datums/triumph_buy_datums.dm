@@ -23,12 +23,12 @@
 	var/manual_activation = FALSE
 	/// Whether the triumph buy effect was activated and therefore cannot be refunded
 	var/activated = FALSE
+	/// Whether the user is allowed to buy the triumph buy they already have
+	var/allow_multiple_buys = TRUE
 	/// Whether the triumph buy has limited stock to buy
 	var/limited = FALSE
 	/// Number times the triumph buy can be bought if its limited
 	var/stock = 0
-	/// Whether the user is allowed to buy the triumph buy they already have
-	var/allow_multiple_buys = TRUE
 	/// List of things it can conflict with
 	var/list/conflicts_with = list()
 
