@@ -604,10 +604,10 @@
 	created_item = /obj/item/clothing/head/helmet/heavy/decorated/knight
 	craftdiff = 4
 
-/datum/anvil_recipe/armor/steel/decoratedhelmetknight
-	name = "Great Helm (+Bar)"
-	additional_items = list(/obj/item/ingot/steel)
-	created_item = /obj/item/clothing/head/helmet/heavy/bucket
+/datum/anvil_recipe/armor/steel/buckethelm
+	name = "Decorated Great Helm (+Bar, +Cloth)"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/natural/cloth)
+	created_item = /obj/item/clothing/head/helmet/heavy/decorated/bucket
 	craftdiff = 4
 
 /datum/anvil_recipe/armor/steel/decoratedhelmetpig
