@@ -45,6 +45,6 @@
 /datum/triumph_buy/proc/on_activate(mob/living/carbon/human/H)
 	activated = TRUE
 
-/// Called upon job post equip if the triumph buy is in post_equip_calls
-/datum/triumph_buy/proc/on_post_equip(mob/living/carbon/human/H)
+/// Called on job after spawn
+/datum/triumph_buy/proc/on_after_spawn(mob/living/carbon/human/H)
 	return

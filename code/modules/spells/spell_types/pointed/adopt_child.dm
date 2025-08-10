@@ -5,7 +5,7 @@
 	has_visual_effects = FALSE
 
 	cast_range = 1
-	charge_required = TRUE
+	charge_required = FALSE
 	cooldown_time = 20 SECONDS
 
 /datum/action/cooldown/spell/adopt_child/can_cast_spell(feedback)

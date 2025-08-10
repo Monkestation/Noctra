@@ -76,8 +76,6 @@ SUBSYSTEM_DEF(triumphs)
 	var/list/triumph_buy_datums = list()
 	// This is a list of all active datums
 	var/list/active_triumph_buy_queue = list()
-	// These get on_activate() called in /datum/outfit/job/post_equip() in roguetown.dm
-	var/list/post_equip_calls = list()
 	/// This tracks the remaining stock for limited triumph buys
 	var/list/triumph_buy_stocks = list()
 	/// Tracks contributions to communal triumph buys - format: list(type = list(ckey = amount))
