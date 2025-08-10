@@ -25,6 +25,9 @@
 /datum/action/cooldown/spell/persistence/cast(mob/living/cast_on)
 	. = ..()
 	if(cast_on.mob_biotypes & MOB_UNDEAD)
+		if(cast_on.mind?.has_antag_datum(/datum/antagonist/vampire/lord))
+			cast_on.visible_message(span_warning("[cast_on] overpowers being inflammed!"), span_greentext("I overpower being inflammed!"))
+			return
 		if(ishuman(cast_on)) //BLEED AND PAIN
 			var/mob/living/carbon/human/human_target = cast_on
 			var/datum/physiology/phy = human_target.physiology
