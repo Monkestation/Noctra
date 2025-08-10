@@ -185,6 +185,59 @@
 	desc = ""
 	icon_state = "sleeping"
 
+//STASIS
+/datum/status_effect/grouped/stasis
+	id = "stasis"
+	duration = STATUS_EFFECT_PERMANENT
+	alert_type = /atom/movable/screen/alert/status_effect/stasis
+	var/last_dead_time
+
+/datum/status_effect/grouped/stasis/proc/update_time_of_death()
+	if(last_dead_time)
+		var/delta = world.time - last_dead_time
+		var/new_timeofdeath = owner.timeofdeath + delta
+		owner.timeofdeath = new_timeofdeath
+		owner.tod = station_time_timestamp(wtime=new_timeofdeath)
+		last_dead_time = null
+	if(owner.stat == DEAD)
+		last_dead_time = world.time
+
+/datum/status_effect/grouped/stasis/on_creation(mob/living/new_owner, set_duration)
+	. = ..()
+	if(.)
+		update_time_of_death()
+		owner.reagents?.end_metabolization(owner, FALSE)
+
+/datum/status_effect/grouped/stasis/on_apply()
+	. = ..()
+	if(!.)
+		return
+	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS), TRAIT_STATUS_EFFECT(id))
+	owner.add_filter("stasis_status_ripple", 2, list("type" = "ripple", "flags" = WAVE_BOUNDED, "radius" = 0, "size" = 2))
+	var/filter = owner.get_filter("stasis_status_ripple")
+	animate(filter, radius = 0, time = 0.2 SECONDS, size = 2, easing = JUMP_EASING, loop = -1, flags = ANIMATION_PARALLEL)
+	animate(radius = 32, time = 1.5 SECONDS, size = 0)
+	// if(iscarbon(owner))
+	// 	var/mob/living/carbon/carbon_owner = owner
+	// 	carbon_owner.update_bodypart_bleed_overlays()
+
+/datum/status_effect/grouped/stasis/tick()
+	update_time_of_death()
+
+/datum/status_effect/grouped/stasis/on_remove()
+	owner.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS), TRAIT_STATUS_EFFECT(id))
+	owner.remove_filter("stasis_status_ripple")
+	update_time_of_death()
+	// if(iscarbon(owner))
+	// 	var/mob/living/carbon/carbon_owner = owner
+	// 	carbon_owner.update_bodypart_bleed_overlays()
+	return ..()
+
+/atom/movable/screen/alert/status_effect/stasis
+	name = "Stasis"
+	desc = "Your biological functions have halted. You could live forever this way, but it's pretty boring."
+	icon_state = "stasis"
+
 //GOLEM GANG
 
 //OTHER DEBUFFS

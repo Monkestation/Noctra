@@ -1,3 +1,7 @@
+/datum/repeatable_crafting_recipe/dendor
+	abstract_type = /datum/repeatable_crafting_recipe/dendor
+	category = "Dendor"
+
 /datum/repeatable_crafting_recipe/dendor/sacrifice_growing
 	name = "green sacrifice to Dendor (unique)"
 	attacked_atom = /obj/structure/fluff/psycross/crafted/shrine/dendor_gote
@@ -5,17 +9,17 @@
 	requirements = list(/obj/item/natural/worms/grub_silk = 1,
 				/obj/item/reagent_containers/food/snacks/produce/swampweed = 1,
 				/obj/item/reagent_containers/food/snacks/produce/poppy = 1)
-	output = /obj/item/blessing_of_dendor_growing
+	output = /obj/item/dendor_blessing
 	crafting_sound = 'sound/foley/burning_sacrifice.ogg'
 
 /datum/repeatable_crafting_recipe/dendor/sacrifice_stinging
 	name = "yellow sacrifice to Dendor (unique)"
 	attacked_atom = /obj/structure/fluff/psycross/crafted/shrine/dendor_saiga
-	starting_atom = /obj/item/reagent_containers/food/snacks/fish/eel
-	requirements = list(/obj/item/reagent_containers/food/snacks/fish/eel = 1,
+	starting_atom = /obj/item/reagent_containers/food/snacks/fish
+	requirements = list(/obj/item/reagent_containers/food/snacks/fish = 1,
 				/obj/item/reagent_containers/food/snacks/produce/westleach = 1,
 				/obj/item/reagent_containers/food/snacks/produce/fruit/jacksberry = 1)
-	output = /obj/item/blessing_of_dendor_stinging
+	output = /obj/item/dendor_blessing/stinging
 	crafting_sound = 'sound/foley/burning_sacrifice.ogg'
 
 /datum/repeatable_crafting_recipe/dendor/sacrifice_devouring
@@ -23,7 +27,15 @@
 	attacked_atom = /obj/structure/fluff/psycross/crafted/shrine/dendor_volf
 	starting_atom = /obj/item/bait/bloody
 	requirements = list(/obj/item/bait/bloody = 2)
-	output = /obj/item/blessing_of_dendor_devouring
+	output = /obj/item/dendor_blessing/devouring
+	crafting_sound = 'sound/foley/burning_sacrifice.ogg'
+
+/datum/repeatable_crafting_recipe/dendor/sacrifice_lording
+	name = "purple sacrifice to Dendor (unique)"
+	attacked_atom = /obj/structure/fluff/psycross/crafted/shrine/dendor_troll
+	starting_atom = /obj/item/alch/horn
+	requirements = list(/obj/item/alch/horn = 2)
+	output = /obj/item/dendor_blessing/lording
 	crafting_sound = 'sound/foley/burning_sacrifice.ogg'
 
 /datum/repeatable_crafting_recipe/dendor/shillelagh
@@ -33,8 +45,8 @@
 	starting_atom = /obj/item/reagent_containers/food/snacks/fat
 	requirements = list(/obj/item/grown/log/tree/small = 1,
 				/obj/item/fertilizer/ash = 1,
-				/obj/item/reagent_containers/food/snacks/fat =1 )
-	craftdiff = 1
+				/obj/item/reagent_containers/food/snacks/fat = 1)
+	subtypes_allowed = TRUE
 
 /datum/repeatable_crafting_recipe/dendor/forestdelight
 	name = "forest guardian offering (unique)"
@@ -44,13 +56,15 @@
 				/obj/item/reagent_containers/food/snacks/produce/swampweed_dried = 1,
 				/obj/item/reagent_containers/food/snacks/raisins = 1 )
 	output = /obj/item/bait/forestdelight
+	subtypes_allowed = TRUE
 
 /datum/repeatable_crafting_recipe/dendor/visage
 	name = "druids mask (unique)"
-	starting_atom = /obj/item/grown/log/tree/small
+	attacked_atom = /obj/item/grown/log/tree/small
 	starting_atom = /obj/item/weapon/knife
 	tool_usage = list(
 		/obj/item/weapon/knife = list(span_notice("starts to whittle"), span_notice("start to whittle"), 'sound/items/wood_sharpen.ogg'),
 	)
 	requirements = list(/obj/item/grown/log/tree/small = 1)
 	output = /obj/item/clothing/face/druid
+	subtypes_allowed = TRUE

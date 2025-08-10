@@ -23,10 +23,10 @@
 		new_name = possible_new_name
 	while(FALSE)
 
-	if(mind.special_role == "Vampire Lord")
+	if(mind.has_antag_datum(/datum/antagonist/vampire/lord))
 		new_name = "[(gender == FEMALE ? "Lady" : "Lord")] [new_name]"
 
-	if(mind.special_role == "Bandit")
+	if(mind.has_antag_datum(/datum/antagonist/bandit))
 		GLOB.outlawed_players |= new_name
 
 	fully_replace_character_name(old_name, new_name)

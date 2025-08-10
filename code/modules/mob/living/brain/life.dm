@@ -1,7 +1,7 @@
 
 /mob/living/brain/Life()
 	set invisibility = 0
-	if (notransform)
+	if (HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 	if(!loc)
 		return

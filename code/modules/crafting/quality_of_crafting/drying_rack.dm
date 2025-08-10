@@ -4,6 +4,7 @@
 	starting_atom = /obj/item/reagent_containers/food/snacks/produce/swampweed
 	requirements = list(/obj/item/reagent_containers/food/snacks/produce/swampweed = 1)
 	attacked_atom = /obj/machinery/tanningrack
+	craftdiff = 0
 
 	craft_time = 2 SECONDS
 	crafting_message = "starts drying some swampweed"
@@ -14,6 +15,7 @@
 	starting_atom = /obj/item/reagent_containers/food/snacks/produce/westleach
 	requirements = list(/obj/item/reagent_containers/food/snacks/produce/westleach = 1)
 	attacked_atom = /obj/machinery/tanningrack
+	craftdiff = 0
 
 	craft_time = 2 SECONDS
 	crafting_message = "starts drying some westleach leaves"

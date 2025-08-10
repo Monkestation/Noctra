@@ -61,8 +61,6 @@
 
 	if(istype(W, /obj/item/weapon/hammer))
 		var/obj/item/weapon/hammer/hammer = W
-		if(!hammer.can_smith)
-			return
 		user.changeNext_move(CLICK_CD_MELEE)
 		if(!hingot)
 			return
@@ -112,6 +110,8 @@
 					continue
 				M.playsound_local(M_turf, null, 100, 1, get_rand_frequency(), falloff_exponent = 5, S = far_smith_sound)
 
+		if(istype(hammer, /obj/item/weapon/hammer/wood))
+			hammer.take_damage(hammer.max_integrity * 0.03, BRUTE, "blunt")
 		return
 
 	if(hingot && hingot.currecipe && hingot.currecipe.needed_item && istype(W, hingot.currecipe.needed_item))

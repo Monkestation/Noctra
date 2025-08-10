@@ -99,6 +99,7 @@
 	H.base_constitution = 9
 	H.base_endurance = 15
 	H.base_intelligence = 1
+	H.recalculate_stats(FALSE)
 
 	//light labor skills for skeleton manual labor and some warrior-adventurer skills, equipment is still bad probably
 	H.adjust_skillrank(/datum/skill/craft/carpentry, 1, TRUE)

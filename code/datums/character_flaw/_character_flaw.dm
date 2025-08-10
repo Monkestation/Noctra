@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	"Old War Wound" = /datum/charflaw/old_war_wound,
 	"Chronic Arthritis" = /datum/charflaw/chronic_arthritis,
 	"Luxless" = /datum/charflaw/lux_taken,
-	"Witless Pixie" = /datum/charflaw/witless_pixie,
+	// "Witless Pixie" = /datum/charflaw/witless_pixie,
 	"Random Flaw or No Flaw"=/datum/charflaw/randflaw,
 	"Guaranteed No Flaw (3 TRI)"=/datum/charflaw/noflaw,
 ))
@@ -778,6 +778,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		return
 	H.apply_status_effect(/datum/status_effect/debuff/flaw_lux_taken)
 
+/*
 /datum/charflaw/witless_pixie
 	name = "Witless Pixie"
 	desc = "By some cruel twist of fate, you have been born a dainty-minded, dim-witted klutz. Yours is a life of constant misdirection, confusion and general incompetence. \
@@ -802,3 +803,4 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		ADD_TRAIT(user, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
 	else if(prob(30))
 		ADD_TRAIT(user, TRAIT_UGLY, TRAIT_GENERIC)
+*/

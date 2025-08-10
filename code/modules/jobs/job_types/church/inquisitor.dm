@@ -227,7 +227,7 @@
 
 	if(!prob(resist_chance))
 		var/list/confessions = list()
-		var/antag_type = null
+		var/datum/antag_type = null
 		switch(confession_type)
 			if("antag")
 				if(!false_result)
@@ -235,18 +235,18 @@
 						if(!length(antag.confess_lines))
 							continue
 						confessions += antag.confess_lines
-						antag_type = antag.name
+						antag_type = antag.type
 						break // Only need one antag type
 			if("patron")
 				if(ispath(false_result, /datum/patron))
 					var/datum/patron/fake_patron = new false_result()
 					if(length(fake_patron.confess_lines))
 						confessions += fake_patron.confess_lines
-						antag_type = fake_patron.name
+						antag_type = fake_patron.type
 				else
 					if(length(patron?.confess_lines))
 						confessions += patron.confess_lines
-						antag_type = patron.name
+						antag_type = patron.type
 
 		if(torture && interrogator && confession_type == "patron")
 			var/datum/patron/interrogator_patron = interrogator.patron
@@ -277,56 +277,57 @@
 				// held_confession.bad_type = "AN EVILDOER" // In case new antags are added with confession lines but have yet to be added here.
 				//this is no longer reliable as all patrons have confess lines now
 				switch(antag_type)
-					if("Bandit")
+					if(/datum/antagonist/bandit)
 						held_confession.bad_type = "AN OUTLAW OF THE THIEF-LORD"
-						held_confession.antag = antag_type
-					if("Matthios")
+						held_confession.antag = initial(antag_type:name)
+					if(/datum/patron/inhumen/matthios)
 						held_confession.bad_type = "A FOLLOWER OF THE THIEF-LORD"
-						held_confession.antag = "worshiper of " + antag_type
-					if("Maniac")
+						held_confession.antag = "worshiper of " + initial(antag_type:name)
+					if(/datum/antagonist/maniac)
 						held_confession.bad_type = "A MANIAC DELUDED BY MADNESS"
-						held_confession.antag = antag_type
-					if("Assassin")
+						held_confession.antag = initial(antag_type:name)
+					if(/datum/antagonist/assassin)
 						held_confession.bad_type = "A DEATH CULTIST"
-						held_confession.antag = antag_type
-					if("Zizoid Lackey")
+						held_confession.antag = initial(antag_type:name)
+					if(/datum/antagonist/zizocultist)
 						held_confession.bad_type = "A SERVANT OF THE FORBIDDEN ONE"
-						held_confession.antag = antag_type
-					if("Zizoid Cultist")
+						held_confession.antag = initial(antag_type:name)
+					if(/datum/antagonist/zizocultist/leader)
 						held_confession.bad_type = "A SERVANT OF THE FORBIDDEN ONE"
-						held_confession.antag = antag_type
-					if("Zizo")
+						held_confession.antag = initial(antag_type:name)
+					if(/datum/patron/inhumen/zizo)
 						held_confession.bad_type = "A FOLLOWER OF THE FORBIDDEN ONE"
-						held_confession.antag = "worshiper of " + antag_type
-					if("Werevolf")
+						held_confession.antag = "worshiper of " + initial(antag_type:name)
+					if(/datum/antagonist/werewolf)
+						var/datum/antagonist/werewolf/werewolf_antag = mind.has_antag_datum(/datum/antagonist/werewolf, TRUE)
+						if(werewolf_antag.transformed) // haha real clever of ya
+							return
 						held_confession.bad_type = "A BEARER OF DENDOR'S CURSE"
-						held_confession.antag = antag_type
-					if("Lesser Werevolf")
+						held_confession.antag = initial(antag_type:name)
+					if(/datum/antagonist/werewolf/lesser)
+						var/datum/antagonist/werewolf/werewolf_antag = mind.has_antag_datum(/datum/antagonist/werewolf, TRUE)
+						if(werewolf_antag.transformed)
+							return
 						held_confession.bad_type = "A BEARER OF DENDOR'S CURSE"
-						held_confession.antag = antag_type
-					if("Vampire")
+						held_confession.antag = initial(antag_type:name)
+					if(/datum/antagonist/vampire)
 						held_confession.bad_type = "A SCION OF KAINE"
-						held_confession.antag = antag_type
-					if("Lesser Vampire")
-						held_confession.bad_type = "A SCION OF KAINE"
-						held_confession.antag = antag_type
-					if("Vampire Lord")
+						held_confession.antag = initial(antag_type:name)
+					if(/datum/antagonist/vampire/lord)
 						held_confession.bad_type = "THE BLOOD-LORD OF VANDERLIN"
-						held_confession.antag = antag_type
-					if("Vampire Spawn")
+						held_confession.antag = initial(antag_type:name)
+					if(/datum/antagonist/vampire/lesser)
 						held_confession.bad_type = "AN UNDERLING OF THE BLOOD-LORD"
-						held_confession.antag = antag_type
-					if("Graggar")
+						held_confession.antag = initial(antag_type:name)
+					if(/datum/patron/inhumen/graggar)
 						held_confession.bad_type = "A FOLLOWER OF THE DARK SUN"
-						held_confession.antag = "worshiper of " + antag_type
-					if("Godless")
+						held_confession.antag = "worshiper of " + initial(antag_type:name)
+					if(/datum/patron/godless)
 						held_confession.bad_type = "A DAMNED ANTI-THEIST"
 						held_confession.antag = "worshiper of nothing"
-					if("Baotha")
+					if(/datum/patron/inhumen/baotha)
 						held_confession.bad_type = "A FOLLOWER OF THE REMORSELESS RUINER"
-						held_confession.antag = "worshiper of " + antag_type
-					if("Peasant Rebel")
-						return // Inquisitors don't care about peasant revolts targeting the King
+						held_confession.antag = "worshiper of " + initial(antag_type:name)
 					else
 						return // good job you tortured an innocent person
 				has_confessed = TRUE

@@ -93,7 +93,7 @@
 /datum/charflaw/addiction/pyromaniac // from tf2?
 	name = "Servant of Fire"
 	desc = "The warmth and just seeing something turn to ash is so much fun!"
-	time = 10 MINUTES
+	time = 5 MINUTES
 	needsate_text = "I need to see something turn to ash, or be on fire. Anything!"
 
 /// KLEPTOMANIAC

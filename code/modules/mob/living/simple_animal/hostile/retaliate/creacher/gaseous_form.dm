@@ -9,7 +9,7 @@
 	speak_chance = 0
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
-	base_intents = list()
+	base_intents = list(INTENT_HELP)
 	a_intent = INTENT_HARM
 	healable = 0
 	speed = 0

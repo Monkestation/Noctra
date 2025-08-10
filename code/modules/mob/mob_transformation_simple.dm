@@ -22,13 +22,16 @@
 		to_chat(usr, "<span class='danger'>Cannot convert into a new_player mob type.</span>")
 		return
 
+	if (SEND_SIGNAL(src, COMSIG_PRE_MOB_CHANGED_TYPE) & COMPONENT_BLOCK_MOB_CHANGE)
+		return
+
 	var/mob/M
 	if(isturf(location))
 		M = new new_type( location )
 	else
 		M = new new_type( src.loc )
 
-	if(!M || !ismob(M))
+	if(!ismob(M))
 		to_chat(usr, "Type path is not a mob (new_type = [new_type]) in change_mob_type(). Contact a coder.")
 		qdel(M)
 		return

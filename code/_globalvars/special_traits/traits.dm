@@ -110,10 +110,24 @@
 /datum/special_trait/night_owl/on_apply(mob/living/carbon/human/character, silent)
 	ADD_TRAIT(character, TRAIT_NIGHT_OWL, "[type]")
 
+/datum/special_trait/witless_pixie
+	name = "Witless Pixie"
+	greet_text = span_notice("I was been born a dainty-minded, dim-witted klutz. Luckily I have my dazzling looks!")
+	weight = 100
+
+/datum/special_trait/witless_pixie/on_apply(mob/living/carbon/human/character, silent)
+	. = ..()
+	character.adjust_stat_modifier("[type]", STATKEY_INT, rand(-2, -5)) //this would probably make the average manorc a vegetable
+	REMOVE_TRAIT(character, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
+	REMOVE_TRAIT(character, TRAIT_UGLY, TRAIT_GENERIC)
+
+	ADD_TRAIT(character, TRAIT_BEAUTIFUL, "[type]")
+	character.apply_status_effect(/datum/status_effect/buff/calm, duration_override = -1) // stupid and happy
+
 /datum/special_trait/beautiful
 	name = "Beautiful"
-	greet_text = span_notice("My face is a work of art")
-	weight = 100
+	greet_text = span_notice("My face is a work of art.")
+	weight = 50
 
 /datum/special_trait/beautiful/on_apply(mob/living/carbon/human/character, silent)
 	REMOVE_TRAIT(character, TRAIT_UGLY, TRAIT_GENERIC)
@@ -238,12 +252,12 @@
 	character.grant_language(/datum/language/zalad)
 	character.grant_language(/datum/language/thievescant)
 
+/*
 /datum/special_trait/civilizedbarbarian
 	name = "Tavern Brawler"
 	greet_text = span_notice("My fists feel heavier!")
 	weight = 100
 
-/*
 // kill all rt coders, honestly.
 /datum/special_trait/civilizedbarbarian/on_apply(mob/living/carbon/human/character, silent)
 	ADD_TRAIT(character, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC) //Need to make trait improve hitting people with chairs, mugs, goblets. YOU FUCKER WHY WOULD YOU LEAVE CODE DEBT

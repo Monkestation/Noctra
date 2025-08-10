@@ -9,7 +9,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	target.forceMove(tomb)
 	target.AddComponent(/datum/component/itembound, tomb)
 	var/mob/living/carbon/target_mob = target
-	target_mob.notransform = FALSE
+	ADD_TRAIT(target_mob, TRAIT_NO_TRANSFORM, "pieify")
 
 /atom/movable/proc/transformation_animation(result_appearance, time = 3 SECONDS, transform_appearance)
 	var/list/transformation_objects = GLOB.transformation_animation_objects[src] || list()

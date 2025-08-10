@@ -1,6 +1,6 @@
 /datum/blueprint_recipe/dendor
 	craftdiff = 0
-	category = "Structure"
+	category = "Dendor Shrine"
 	requires_learning = TRUE
 	construct_tool = null
 
@@ -27,3 +27,10 @@
 				/obj/item/natural/thorn = 3,
 				/obj/item/natural/head/volf = 1)
 	result_type = /obj/structure/fluff/psycross/crafted/shrine/dendor_volf
+
+/datum/blueprint_recipe/dendor/shrine/troll
+	name = "lording shrine to Dendor (unique)"
+	required_materials = list(/obj/item/grown/log/tree/small = 1,
+				/obj/item/natural/thorn = 3,
+				/obj/item/natural/head/troll = 1)
+	result_type = /obj/structure/fluff/psycross/crafted/shrine/dendor_troll

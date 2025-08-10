@@ -164,7 +164,7 @@
 
 /datum/species/zizombie/regenerate_icons(mob/living/carbon/human/H)
 	H.icon_state = ""
-	if(H.notransform)
+	if(HAS_TRAIT(H, TRAIT_NO_TRANSFORM))
 		return 1
 	H.update_inv_hands()
 	H.update_inv_handcuffed()
@@ -314,6 +314,8 @@
 	H.base_speed = 7
 	H.base_constitution = 10
 	H.base_endurance = 16//the zizombies shouldn't get tired after all
+	H.recalculate_stats(FALSE)
+
 	var/loadout = rand(1,6)
 	switch(loadout)
 		if(1) //zizombie Warrior
