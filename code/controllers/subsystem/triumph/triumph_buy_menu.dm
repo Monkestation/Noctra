@@ -150,7 +150,10 @@
 			data += "</div>"
 
 			data += "<div style='text-align:center; margin-top:5px;'>"
-			data += "<a class='communal_contribute' href='byond://?src=\ref[src];contribute=\ref[communal_buy]'>CONTRIBUTE</a>"
+			if(communal_buy.activated)
+				data += "<div class='communal_contribute'>ACTIVE</div>"
+			else
+				data += "<a class='communal_contribute' href='byond://?src=\ref[src];contribute=\ref[communal_buy]'>CONTRIBUTE</a>"
 			data += "</div>"
 
 		data += "</div>"
@@ -247,16 +250,23 @@
 
 		var/datum/triumph_buy/communal/communal_buy = locate(href_list["contribute"])
 		if(communal_buy && istype(communal_buy))
+			if(communal_buy.activated)
+				to_chat(linked_client, span_warning("The item is already active!"))
+				return
+
 			var/available = SStriumphs.get_triumphs(linked_client.ckey)
 			var/max_possible = communal_buy.maximum_pool ? communal_buy.maximum_pool - SStriumphs.communal_pools[communal_buy.type] : INFINITY
 			var/amount = input(linked_client, "How much to contribute?", "Communal Contribution", 0) as num|null
 
 			if(!linked_client?.ckey)
 				return
+			if(!amount || amount <= 0)
+				return
 			if(SSticker.current_state == GAME_STATE_FINISHED)
 				to_chat(linked_client, span_warning("You cannot contribute after the round has ended!"))
 				return
-			if(!amount || amount <= 0)
+			if(communal_buy.activated)
+				to_chat(linked_client, span_warning("The item is already active!"))
 				return
 
 			amount = min(amount, available, max_possible)

@@ -187,6 +187,7 @@ GLOBAL_LIST_EMPTY(job_respawn_delays)
 #define TRIUMPH_CAT_COMMUNAL "COMMUNAL"
 
 #define TRIUMPH_BUY_PSYDON_RETIREMENT "psydon_retirement"
+#define TRIUMPH_BUY_ORPHANAGE_RENOVATION "orphanage_renovation"
 
 // Bought triumph buys category
 #define TRIUMPH_CAT_ACTIVE_DATUMS "BOUGHT"
