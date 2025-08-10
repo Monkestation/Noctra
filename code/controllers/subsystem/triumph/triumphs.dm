@@ -365,10 +365,11 @@ SUBSYSTEM_DEF(triumphs)
 
 /datum/controller/subsystem/triumphs/proc/adjust_leaderboard(CLIENT_KEY_not_CKEY)
 	var/user_key = CLIENT_KEY_not_CKEY
-	var/triumph_total = triumph_amount_cache[ckey(CLIENT_KEY_not_CKEY)]
+	var/triumph_total = triumph_amount_cache[ckey(user_key)]
 
-	if(5 > triumph_total)
-		return
+	for(var/existing_key in triumph_leaderboard)
+		if(ckey(existing_key) == ckey(user_key))
+			triumph_leaderboard.Remove(existing_key)
 
 	if(triumph_leaderboard_positions_tracked > triumph_leaderboard.len)
 		triumph_leaderboard[user_key] = triumph_total
