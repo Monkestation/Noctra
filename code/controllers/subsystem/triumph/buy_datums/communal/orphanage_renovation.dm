@@ -1,6 +1,6 @@
 /datum/triumph_buy/communal/preround/orphanage_renovation
 	name = "Orphanage Renovation"
-	desc = "Contribute to renovate the local orphanage. Only available pre-round. If not fully funded when round starts, all contributions will be refunded."
+	desc = "Contribute to renovate the local orphanage and give orphans a better start in life. Automatically refunds if it does not reach its goal before the round starts."
 	triumph_buy_id = TRIUMPH_BUY_ORPHANAGE_RENOVATION
 	maximum_pool = 60
 

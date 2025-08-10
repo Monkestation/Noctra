@@ -3,7 +3,7 @@
 	desc = "A communal fund that can only be contributed to before the round starts."
 	category = TRIUMPH_CAT_COMMUNAL
 
-/// Refund all contributions to their respective donators
+/// Refunds all contributions to their respective donators
 /datum/triumph_buy/communal/preround/proc/check_refund()
 	if(activated || SStriumphs.communal_pools[type] <= 0)
 		return

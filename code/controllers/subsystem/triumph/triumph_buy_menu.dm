@@ -158,6 +158,7 @@
 			else
 				data += "<a class='communal_contribute' href='byond://?src=\ref[src];contribute=\ref[communal_buy]'>CONTRIBUTE</a>"
 			data += "</div>"
+			data += "</div>"
 
 		data += "</div>"
 

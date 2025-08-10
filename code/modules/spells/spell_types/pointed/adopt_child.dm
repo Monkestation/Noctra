@@ -1,12 +1,12 @@
 /datum/action/cooldown/spell/adopt_child
 	name = "Adopt Child"
-	button_icon_state = "curse"
+	button_icon_state = "love"
 	self_cast_possible = FALSE
 	has_visual_effects = FALSE
 
 	cast_range = 1
 	charge_required = FALSE
-	cooldown_time = 20 SECONDS
+	cooldown_time = 10 SECONDS
 
 /datum/action/cooldown/spell/adopt_child/can_cast_spell(feedback)
 	. = ..()
