@@ -139,6 +139,7 @@
 		for(var/datum/triumph_buy/communal/communal_buy in SStriumphs.central_state_data[current_category]["[current_page]"])
 			var/total = SStriumphs.communal_pools[communal_buy.type]
 			var/progress = communal_buy.maximum_pool ? (total / communal_buy.maximum_pool) * 100 : 0
+			var/is_preround = istype(communal_buy, /datum/triumph_buy/communal/preround)
 
 			data += "<div class='communal_item'>"
 			data += "<div class='communal_name'>[communal_buy.name]</div>"
@@ -152,6 +153,8 @@
 			data += "<div style='text-align:center; margin-top:5px;'>"
 			if(communal_buy.activated)
 				data += "<div class='communal_contribute'>ACTIVE</div>"
+			else if(is_preround && SSticker.HasRoundStarted())
+				data += "<div class='communal_contribute'>PREROUND ONLY</div>"
 			else
 				data += "<a class='communal_contribute' href='byond://?src=\ref[src];contribute=\ref[communal_buy]'>CONTRIBUTE</a>"
 			data += "</div>"
@@ -253,6 +256,9 @@
 			if(communal_buy.activated)
 				to_chat(linked_client, span_warning("The item is already active!"))
 				return
+			if(istype(communal_buy, /datum/triumph_buy/communal/preround) && SSticker.HasRoundStarted())
+				to_chat(linked_client, span_warning("This can only be contributed to before the round starts!"))
+				return
 
 			var/available = SStriumphs.get_triumphs(linked_client.ckey)
 			var/max_possible = communal_buy.maximum_pool ? communal_buy.maximum_pool - SStriumphs.communal_pools[communal_buy.type] : INFINITY
@@ -267,6 +273,9 @@
 				return
 			if(communal_buy.activated)
 				to_chat(linked_client, span_warning("The item is already active!"))
+				return
+			if(istype(communal_buy, /datum/triumph_buy/communal/preround) && SSticker.HasRoundStarted())
+				to_chat(linked_client, span_warning("This can only be contributed to before the round starts!"))
 				return
 
 			amount = min(amount, available, max_possible)

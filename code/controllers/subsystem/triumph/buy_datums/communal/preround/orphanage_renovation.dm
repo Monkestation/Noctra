@@ -1,5 +1,5 @@
 /datum/triumph_buy/communal/preround/orphanage_renovation
-	name = "Orphanage Renovation Fund"
+	name = "Orphanage Renovation"
 	desc = "Contribute to renovate the local orphanage. Only available pre-round. If not fully funded when round starts, all contributions will be refunded."
 	triumph_buy_id = TRIUMPH_BUY_ORPHANAGE_RENOVATION
 	maximum_pool = 60
@@ -7,3 +7,12 @@
 /datum/triumph_buy/communal/preround/orphanage_renovation/on_activate()
 	. = ..()
 	SSmapping.add_world_trait(/datum/world_trait/orphanage_renovated)
+
+	to_chat(world, "<br>")
+	to_chat(world, span_reallybig("The Orphanage has been renovated! Eora smiles upon you all!"))
+	to_chat(world, "<br>")
+
+	for(var/client/C in GLOB.clients)
+		if(!C?.mob)
+			continue
+		C.mob.playsound_local(C.mob, 'sound/vo/female/gen/giggle (1).ogg', 100)

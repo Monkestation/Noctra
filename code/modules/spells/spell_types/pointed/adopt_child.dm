@@ -1,6 +1,6 @@
 /datum/action/cooldown/spell/adopt_child
 	name = "Adopt Child"
-	button_icon_state = "bless"
+	button_icon_state = "curse"
 	self_cast_possible = FALSE
 	has_visual_effects = FALSE
 
@@ -17,6 +17,9 @@
 		return FALSE
 
 /datum/action/cooldown/spell/adopt_child/is_valid_target(atom/cast_on)
+	. = ..()
+	if(!.)
+		return FALSE
 	return ishuman(cast_on)
 
 /datum/action/cooldown/spell/adopt_child/before_cast(mob/living/carbon/human/cast_on)
