@@ -122,11 +122,12 @@
 								else
 									D.add_stress(/datum/stressevent/viewdeath)
 
+	dna.species.spec_death(gibbed, src) // parent call deletes dna
+
 	. = ..()
 
 	dizziness = 0
 	jitteriness = 0
-	dna.species.spec_death(gibbed, src)
 
 	if(SSticker.HasRoundStarted())
 		SSblackbox.ReportDeath(src)

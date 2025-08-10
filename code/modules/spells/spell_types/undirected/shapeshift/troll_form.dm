@@ -19,8 +19,8 @@
 	charge_required = TRUE
 	charge_time = 8 SECONDS
 	charge_slowdown = 3
-	cooldown_time = 0 MINUTES //7
-	spell_cost = 0
+	cooldown_time = 7 MINUTES
+	spell_cost = 80
 	keep_name = TRUE
 
 	sound = 'sound/vo/mobs/troll/aggro2.ogg'

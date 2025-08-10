@@ -63,8 +63,6 @@ GLOBAL_LIST_INIT(curse_names, list())
 
 GLOBAL_LIST_EMPTY(confessors)
 
-GLOBAL_LIST_INIT(wolf_prefixes, list("Red", "Moon", "Bloody", "Hairy", "Eager", "Sharp"))
-GLOBAL_LIST_INIT(wolf_suffixes, list("Fang", "Claw", "Stalker", "Prowler", "Roar", "Ripper"))
 //preference stuff
 #define FAMILY_NONE "None"
 #define FAMILY_PARTIAL "Siblings"

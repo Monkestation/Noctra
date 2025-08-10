@@ -10,6 +10,7 @@
 	button_icon_state = "shapeshift"
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 10 SECONDS
+	charge_required = FALSE
 
 	/// Our spell's requrements before we shapeshifted. Stored on shapeshift so we can restore them after unshifting.
 	var/pre_shift_requirements

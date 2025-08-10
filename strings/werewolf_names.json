@@ -1,0 +1,37 @@
+{
+    "wolf_prefixes":[
+        "Red", "Black", "White", "Silver", "Grey", "Brown",
+        "Dark",
+        "Moon",
+        "Bloody",
+        "Hairy",
+        "Eager",
+        "Sharp",
+        "Feral",
+        "Primal",
+        "Savage",
+        "Wicked",
+        "Wild",
+        "Bitey"
+    ],
+    "wolf_suffixes":[
+        "Moon",
+        "Fang",
+        "Claw",
+        "Stalker",
+        "Prowler",
+        "Roar",
+        "Ripper",
+        "Farkas",
+        "Ylva",
+        "Lupin",
+        "Lycaon",
+        "Zeev",
+        "Fenris",
+        "Filtiarn",
+        "Beast",
+        "Devourer",
+        "Amarok",
+        "Ruby"
+    ]
+}

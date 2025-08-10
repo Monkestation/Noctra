@@ -18,7 +18,7 @@
 
 	charge_required = FALSE
 	cooldown_time = 3.5 MINUTES
-	spell_cost = 50
+	spell_cost = 40
 
 	sound = 'sound/vo/mobs/troll/aggro2.ogg'
 
