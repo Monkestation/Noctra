@@ -351,7 +351,7 @@ SUBSYSTEM_DEF(triumphs)
 	else
 		webpage += "The hall of triumphs is empty"
 
-	var/datum/browser/popup = new(C, "triumph_leaderboard", "CHAMPIONS OF PSYDONIA", 300, 500)
+	var/datum/browser/popup = new(C, "triumph_leaderboard", "CHAMPIONS OF PSYDONIA", 300, 570)
 	popup.set_content(webpage)
 	popup.open(FALSE)
 
