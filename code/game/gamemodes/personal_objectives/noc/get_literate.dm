@@ -1,5 +1,6 @@
 /datum/objective/literacy
 	name = "Get Literate"
+	triumph_count = 2
 
 /datum/objective/literacy/on_creation()
 	. = ..()

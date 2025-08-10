@@ -65,3 +65,5 @@
 			owner.adjust_triumphs(objective.triumph_count)
 			adjust_storyteller_influence(RAVOX, 20)
 			objective.escalate_objective()
+
+	qdel(src)

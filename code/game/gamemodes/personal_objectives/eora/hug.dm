@@ -1,5 +1,6 @@
 /datum/objective/hug_beggar
 	name = "Hug a Beggar"
+	triumph_count = 2
 
 /datum/objective/hug_beggar/on_creation()
 	. = ..()
