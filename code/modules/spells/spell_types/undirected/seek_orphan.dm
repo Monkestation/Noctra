@@ -1,10 +1,10 @@
 /datum/action/cooldown/spell/undirected/seek_orphan
 	name = "Brat Detector"
 	desc = "Find the distance between me and one of my brats."
+	sound = null
 
 	spell_type = NONE
 	charge_required = FALSE
-	sound = null
 	has_visual_effects = FALSE
 
 	charge_required = FALSE
@@ -14,10 +14,10 @@
 	. = ..()
 	var/list/orphans = list()
 	for(var/mob/living/carbon/human/H in GLOB.human_list)
-		// if(!H.mind)
-		// 	continue
-		// if(!HAS_TRAIT(H, TRAIT_ORPHAN))
-		// 	continue
+		if(!H.mind)
+			continue
+		if(!HAS_TRAIT(H, TRAIT_ORPHAN))
+			continue
 		orphans += H
 
 	if(!length(orphans))
