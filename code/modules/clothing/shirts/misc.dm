@@ -6,7 +6,8 @@
 	r_sleeve_status = SLEEVE_TORN
 	l_sleeve_status = SLEEVE_TORN
 	body_parts_covered = CHEST|VITALS
-	allowed_race = list(SPEC_ID_ELF, SPEC_ID_DROW)
+	allowed_race = RACES_PLAYER_ELF_ALL
+	allowed_sex = list(FEMALE)
 	salvage_result = /obj/item/natural/silk
 
 /obj/item/clothing/shirt/apothshirt
@@ -115,6 +116,7 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/ornate_tunic.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/ornate_tunic.dmi'
 	boobed = TRUE
+	abstract_type = /obj/item/clothing/shirt/ornate
 
 /obj/item/clothing/shirt/ornate/tunic
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR

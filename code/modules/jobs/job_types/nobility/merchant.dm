@@ -30,7 +30,7 @@
 	belt = /obj/item/storage/belt/leather/plaquesilver
 	beltl = /obj/item/storage/keyring/merchant
 	armor = /obj/item/clothing/shirt/robe/merchant
-	head = /obj/item/clothing/head/chaperon/greyscale/silk/random
+	head = /obj/item/clothing/head/chaperon/colored/greyscale/silk/random
 	ring = /obj/item/clothing/ring/gold/guild_mercator
 	scabbards = list(/obj/item/weapon/scabbard/sword)
 
@@ -39,7 +39,7 @@
 		pants = /obj/item/clothing/pants/tights/sailor
 		shoes = /obj/item/clothing/shoes/boots/leather
 	else
-		shirt = /obj/item/clothing/shirt/tunic/blue
+		shirt = /obj/item/clothing/shirt/tunic/colored/blue
 		shoes = /obj/item/clothing/shoes/gladiator
 
 	ADD_TRAIT(H, TRAIT_SEEPRICES, type)

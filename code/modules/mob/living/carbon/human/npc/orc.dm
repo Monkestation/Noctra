@@ -342,24 +342,24 @@
 			r_hand = /obj/item/weapon/axe/stone
 			l_hand = /obj/item/weapon/axe/stone
 			armor = /obj/item/clothing/armor/leather/hide/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 		if(2) //Long Club Caveman
 			r_hand = /obj/item/weapon/polearm/woodstaff
 			armor = /obj/item/clothing/armor/leather/hide/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 		if(3) //Club Caveman
 			r_hand = /obj/item/weapon/mace/woodclub
 			armor = /obj/item/clothing/armor/leather/hide/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 		if(4) //dagger fighter
 			armor = /obj/item/clothing/armor/leather/hide/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			r_hand = /obj/item/weapon/knife/stone
 			l_hand = /obj/item/weapon/knife/stone
 		if(5) //Spear hunter
 			r_hand = /obj/item/weapon/polearm/spear/stone
 			armor = /obj/item/clothing/armor/leather/hide/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 
 
 //////////////////////////////////////////////////////////
@@ -393,23 +393,23 @@
 			r_hand = /obj/item/weapon/sword/iron
 			l_hand = /obj/item/weapon/shield/wood
 			armor = /obj/item/clothing/armor/chainmail/iron/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			head = /obj/item/clothing/head/helmet/leather
 		if(2) //Marauder with Axe and Shield
 			r_hand = /obj/item/weapon/axe/iron
 			l_hand = /obj/item/weapon/shield/wood
 			armor = /obj/item/clothing/armor/chainmail/iron/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			head = /obj/item/clothing/head/helmet/leather
 		if(3) //Club Caveman
 			r_hand = /obj/item/weapon/flail
 			l_hand = /obj/item/weapon/sword/scimitar/messer
 			armor = /obj/item/clothing/armor/chainmail/iron/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			head = /obj/item/clothing/head/helmet/leather
 		if(4) //dagger fighter
 			armor = /obj/item/clothing/armor/chainmail/iron/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			r_hand = /obj/item/weapon/sword/iron
 			l_hand = /obj/item/weapon/sword/short
 			head = /obj/item/clothing/head/helmet/leather
@@ -424,12 +424,12 @@
 				l_hand = /obj/item/weapon/sword/scimitar/messer
 				armor = /obj/item/clothing/armor/plate/orc
 				head = /obj/item/clothing/head/helmet/orc
-				cloak = /obj/item/clothing/cloak/raincloak/brown
+				cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			if(prob(30))
 				r_hand = /obj/item/weapon/axe/iron
 				armor = /obj/item/clothing/armor/plate/orc
 				head = /obj/item/clothing/head/helmet/orc
-				cloak = /obj/item/clothing/cloak/raincloak/brown
+				cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 
 
 
@@ -465,28 +465,28 @@
 			r_hand = /obj/item/weapon/sword/iron
 			l_hand = /obj/item/weapon/axe/iron
 			armor = /obj/item/clothing/armor/plate/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			head = /obj/item/clothing/head/helmet/orc
 		if(2) //Marauder with Axe and Shield
 			r_hand = /obj/item/weapon/axe/battle
 			armor = /obj/item/clothing/armor/plate/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			head = /obj/item/clothing/head/helmet/orc
 		if(3) //Warhammer Caveman
 			r_hand = /obj/item/weapon/mace/goden/steel/warhammer
 			armor = /obj/item/clothing/armor/plate/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			head = /obj/item/clothing/head/helmet/orc
 		if(4) //dagger fighter
 			armor = /obj/item/clothing/armor/plate/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			r_hand = /obj/item/weapon/mace/steel
 			l_hand = /obj/item/weapon/shield/tower
 			head = /obj/item/clothing/head/helmet/orc
 		if(5) //Marauder Ironblade
 			r_hand = /obj/item/weapon/polearm/halberd/bardiche
 			armor = /obj/item/clothing/armor/plate/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			head = /obj/item/clothing/head/helmet/orc
 
 
