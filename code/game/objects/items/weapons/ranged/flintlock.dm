@@ -54,10 +54,6 @@
 	wound = FALSE
 	update_appearance(UPDATE_ICON_STATE)
 
-/obj/item/gun/ballistic/revolver/grenadelauncher/pistol/attack_self_secondary(mob/user, params)
-	attack_hand_secondary(user, params)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/item/gun/ballistic/revolver/grenadelauncher/pistol/attack_hand_secondary(mob/user, params)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
