@@ -1,5 +1,6 @@
 /datum/objective/coin_flip
 	name = "Flip Coin"
+	triumph_count = 2
 	var/obj/item/coin/required_coin_type = /obj/item/coin/gold
 	var/winning_side
 

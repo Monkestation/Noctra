@@ -1,11 +1,11 @@
 /datum/objective/ravox_duel
 	name = "Honor Duels"
+	triumph_count = 2
 	var/duels_won = 0
-	var/duels_required = 2
+	var/duels_required = 1
 
 /datum/objective/ravox_duel/on_creation()
 	. = ..()
-	duels_required = prob(66) ? 1 : 2
 	var/datum/action/innate/ravox_challenge/challenge = new(src)
 	challenge.Grant(owner.current)
 	update_explanation_text()

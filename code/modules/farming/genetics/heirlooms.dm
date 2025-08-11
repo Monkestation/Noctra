@@ -14,6 +14,7 @@
 	disease_resistance = 100
 	yield_trait = 60  // Lower yield but premium quality
 	cold_resistance = 90
+	seed_identity_modifier = "ancient"
 
 /datum/plant_genetics/heirloom/potato_fingerling
 	variety_name = "Fingerling Purple"

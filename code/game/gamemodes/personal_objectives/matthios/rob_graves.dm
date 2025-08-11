@@ -1,5 +1,6 @@
 /datum/objective/grave_robbery
 	name = "Rob Graves"
+	triumph_count = 2
 	var/graves_robbed = 0
 	var/graves_required = 2
 

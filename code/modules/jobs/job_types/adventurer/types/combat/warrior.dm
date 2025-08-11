@@ -33,7 +33,7 @@
 	shoes = /obj/item/clothing/shoes/boots
 	gloves = /obj/item/clothing/gloves/leather
 	belt = /obj/item/storage/belt/leather
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	backl = /obj/item/storage/backpack/satchel
 	backr = /obj/item/weapon/shield/wood
 	beltr = /obj/item/storage/belt/pouch/coins/poor

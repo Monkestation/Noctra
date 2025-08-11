@@ -243,6 +243,23 @@
 		for(var/atom/movable/screen/scannies/S in screen)
 			S.alpha = 70
 
+/client/verb/ui_scaling()
+	set name = "UI Scaling"
+	set category = "Options"
+	if(prefs)
+		var/current_scaling = window_scaling * 100
+		var/new_scaling = input(usr, "Enter UI Scaling (Your current scaling is [current_scaling]%). Cancel to reset to native scaling.", "New UI Scaling", window_scaling * 100) as null|num
+		if(!isnull(new_scaling))
+			prefs.toggles |= UI_SCALE
+			window_scaling = new_scaling / 100
+			prefs.ui_scale = window_scaling
+			prefs.save_preferences()
+			to_chat(src, span_notice("UI Scaling set to [window_scaling * 100]%. Changes take effect when opening new windows."))
+		else
+			prefs.toggles &= ~UI_SCALE
+			window_scaling = text2num(winget(src, null, "dpi"))
+			to_chat(src, span_notice("UI Scaling reset to native [window_scaling * 100]%. Changes take effect when opening new windows."))
+
 /client/verb/keybind_menu()
 	set category = "Options"
 	set name = "Adjust Keybinds"

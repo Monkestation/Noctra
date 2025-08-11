@@ -23,12 +23,14 @@
 	body_parts_covered = GROIN
 	boobed = FALSE
 
-/obj/item/clothing/cloak/apron/waist/brown
+/obj/item/clothing/cloak/apron/waist/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
+/obj/item/clothing/cloak/apron/waist/colored/brown
 	color = CLOTHING_BARK_BROWN
 
-/obj/item/clothing/cloak/apron/waist/bar
+/obj/item/clothing/cloak/apron/waist/colored/bar
 	color = "#251f1d"
-
 
 /obj/item/clothing/cloak/apron/cook
 	name = "cook apron"

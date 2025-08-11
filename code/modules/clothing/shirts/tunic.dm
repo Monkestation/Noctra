@@ -18,28 +18,31 @@
 	color = CLOTHING_WHITE
 	boobed = TRUE
 
-/obj/item/clothing/shirt/tunic/green
+/obj/item/clothing/shirt/tunic/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
+/obj/item/clothing/shirt/tunic/colored/green
 	color = CLOTHING_FOREST_GREEN
 
-/obj/item/clothing/shirt/tunic/blue
+/obj/item/clothing/shirt/tunic/colored/blue
 	color = CLOTHING_SKY_BLUE
 
-/obj/item/clothing/shirt/tunic/red
+/obj/item/clothing/shirt/tunic/colored/red
 	color = CLOTHING_BLOOD_RED
 
-/obj/item/clothing/shirt/tunic/purple
+/obj/item/clothing/shirt/tunic/colored/purple
 	color = CLOTHING_PLUM_PURPLE
 
-/obj/item/clothing/shirt/tunic/black
+/obj/item/clothing/shirt/tunic/colored/black
 	color = CLOTHING_SOOT_BLACK
 
-/obj/item/clothing/shirt/tunic/ucolored
+/obj/item/clothing/shirt/tunic/colored/ucolored
 	color = CLOTHING_ASH_GREY
 
-/obj/item/clothing/shirt/tunic/random/Initialize()
+/obj/item/clothing/shirt/tunic/colored/random/Initialize()
 	color = pick(CLOTHING_PLUM_PURPLE, CLOTHING_BLOOD_RED, CLOTHING_SKY_BLUE, CLOTHING_FOREST_GREEN)
 	return ..()
 
-/obj/item/clothing/shirt/tunic/tunicprimary
+/obj/item/clothing/shirt/tunic/colored/tunicprimary
 	color = CLOTHING_BLOOD_RED
 	uses_lord_coloring = LORD_PRIMARY

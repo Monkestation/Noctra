@@ -1,5 +1,6 @@
 /datum/objective/marriage_broker
 	name = "Arrange Marriage"
+	triumph_count = 2
 
 /datum/objective/marriage_broker/on_creation()
 	. = ..()

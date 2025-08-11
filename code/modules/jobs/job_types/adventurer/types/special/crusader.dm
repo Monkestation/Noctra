@@ -23,7 +23,7 @@
 	armor = /obj/item/clothing/armor/chainmail/hauberk
 	cloak = /obj/item/clothing/cloak/cape/crusader
 	gloves = /obj/item/clothing/gloves/chain
-	shirt = /obj/item/clothing/shirt/tunic/random
+	shirt = /obj/item/clothing/shirt/tunic/colored/random
 	pants = /obj/item/clothing/pants/chainlegs
 	shoes = /obj/item/clothing/shoes/boots/armor/light
 	backr = /obj/item/weapon/shield/tower/metal

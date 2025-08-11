@@ -333,6 +333,7 @@
 	rockType = /obj/item/natural/rock/copper
 	spreadChance = 4
 	spread = 3
+	//maptext = "copper"
 
 /turf/closed/mineral/copper/cold
 	icon = MAP_SWITCH('icons/turf/smooth/walls/mineral_blue.dmi', 'icons/turf/mining.dmi')
@@ -345,6 +346,7 @@
 	rockType = /obj/item/natural/rock/tin
 	spreadChance = 15
 	spread = 5
+	//maptext = "tin"
 
 /turf/closed/mineral/tin/cold
 	icon = MAP_SWITCH('icons/turf/smooth/walls/mineral_blue.dmi', 'icons/turf/mining.dmi')
@@ -357,6 +359,7 @@
 	rockType = /obj/item/natural/rock/silver
 	spreadChance = 2
 	spread = 2
+	//maptext = "Silver"
 
 /turf/closed/mineral/silver/cold
 	icon = MAP_SWITCH('icons/turf/smooth/walls/mineral_blue.dmi', 'icons/turf/mining.dmi')
@@ -369,6 +372,7 @@
 	rockType = /obj/item/natural/rock/gold
 	spreadChance = 2
 	spread = 2
+	//maptext = "gold"
 
 /turf/closed/mineral/gold/cold
 	icon = MAP_SWITCH('icons/turf/smooth/walls/mineral_blue.dmi', 'icons/turf/mining.dmi')
@@ -381,6 +385,7 @@
 	rockType = /obj/item/natural/rock/salt
 	spreadChance = 12
 	spread = 3
+	//maptext = "salt"
 
 /turf/closed/mineral/salt/cold
 	icon = MAP_SWITCH('icons/turf/smooth/walls/mineral_blue.dmi', 'icons/turf/mining.dmi')
@@ -393,6 +398,7 @@
 	rockType = /obj/item/natural/rock/cinnabar
 	spreadChance = 23
 	spread = 5
+	//maptext = "cinnabar"
 
 /turf/closed/mineral/cinnabar/cold
 	icon = MAP_SWITCH('icons/turf/smooth/walls/mineral_blue.dmi', 'icons/turf/mining.dmi')
@@ -424,6 +430,7 @@
 	rockType = /obj/item/natural/rock/iron
 	spreadChance = 5
 	spread = 3
+	//maptext = "iron"
 
 /turf/closed/mineral/iron/cold
 	icon = MAP_SWITCH('icons/turf/smooth/walls/mineral_blue.dmi', 'icons/turf/mining.dmi')

@@ -1,6 +1,6 @@
 /datum/objective/take_pain
 	name = "Take Pain"
-	triumph_count = 2
+	triumph_count = 3
 	var/total_pain_taken = 0
 	var/target_pain = 1000
 

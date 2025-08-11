@@ -45,6 +45,8 @@
 
 	// Plant family for breeding compatibility
 	var/plant_family = FAMILY_HERB
+	/// Identity of seeds with this type
+	var/seed_identity = "some seeds"
 
 /datum/plant_def/New()
 	. = ..()
@@ -58,62 +60,27 @@
 /datum/plant_def/proc/get_examine_details()
 	var/list/details = list()
 
-	// Nutritional requirements
-	details += "<span class='notice'><b>Nutritional Requirements (Perennials consume the full amount for growth, and again for harvest.):</b></span>"
 	if(nitrogen_requirement > 0)
-		details += "- Nitrogen: [nitrogen_requirement] units [perennial ? "per stage" : ""]"
+		details += span_info("Nitrogen: [nitrogen_requirement] units [perennial ? "per stage" : ""]")
 	if(phosphorus_requirement > 0)
-		details += "- Phosphorus: [phosphorus_requirement] units [perennial ? "per stage" : ""]"
+		details += span_info("Phosphorus: [phosphorus_requirement] units [perennial ? "per stage" : ""]")
 	if(potassium_requirement > 0)
-		details += "- Potassium: [potassium_requirement] units [perennial ? "per stage" : ""]"
+		details += span_info("Potassium: [potassium_requirement] units [perennial ? "per stage" : ""]")
 
 	if(nitrogen_requirement == 0 && phosphorus_requirement == 0 && potassium_requirement == 0)
-		details += "- No special nutrient requirements"
+		details += "No nutrient requirement"
 
-	// Nutrient production (what it gives back to soil)
-	if(nitrogen_production > 0 || phosphorus_production > 0 || potassium_production > 0)
-		details += "<span class='notice'><b>Soil Enrichment:</b></span>"
-		if(nitrogen_production > 0)
-			details += "- Produces [nitrogen_production] nitrogen"
-		if(phosphorus_production > 0)
-			details += "- Produces [phosphorus_production] phosphorus"
-		if(potassium_production > 0)
-			details += "- Produces [potassium_production] potassium"
+	if(nitrogen_production > 0)
+		details += span_info("Enriches [nitrogen_production] Nitrogen")
+	if(phosphorus_production > 0)
+		details += span_info("Enriches [phosphorus_production] Phosphorus")
+	if(potassium_production > 0)
+		details += span_info("Enriches [potassium_production] Potassium")
 
 	// Growth time
 	if(maturation_time)
 		var/minutes = maturation_time / (1 MINUTES)
-		details += "<span class='notice'><b>Growth Time:</b> [minutes] minute\s</span>"
-
-	// Plant family (for crop rotation, companion planting, etc.)
-	if(plant_family)
-		var/family_name
-		switch(plant_family)
-			if(FAMILY_BRASSICA)
-				family_name = "Brassica"
-			if(FAMILY_ALLIUM)
-				family_name = "Allium"
-			if(FAMILY_GRAIN)
-				family_name = "Grain"
-			if(FAMILY_SOLANACEAE)
-				family_name = "Solanaceae"
-			if(FAMILY_ROSACEAE)
-				family_name = "Rosaceae"
-			if(FAMILY_RUTACEAE)
-				family_name = "Rutaceae"
-			if(FAMILY_ASTERACEAE)
-				family_name = "Asteraceae"
-			if(FAMILY_HERB)
-				family_name = "Herb"
-			if(FAMILY_ROOT)
-				family_name = "Root"
-			if(FAMILY_RUBIACEAE)
-				family_name = "Madder"
-			if(FAMILY_THEACEAE)
-				family_name = "Theaceae"
-			else
-				family_name = "Unknown family"
-		details += "<span class='notice'><b>Plant Family:</b> [family_name]</span>"
+		details += span_info("<b>Growth Time:</b> [minutes] minute\s")
 
 	return details
 

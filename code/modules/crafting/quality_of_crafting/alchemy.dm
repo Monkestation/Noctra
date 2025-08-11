@@ -64,3 +64,4 @@
 	starting_atom = /obj/item/weapon/knife
 	subtypes_allowed = TRUE // so you can use any subtype of knife
 	output_amount = 3
+

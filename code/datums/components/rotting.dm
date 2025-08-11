@@ -1,5 +1,6 @@
 /datum/component/rot
 	var/amount = 0
+	var/rot_amount_per_process = 10 //1 second
 	var/last_process = 0
 	var/datum/looping_sound/fliesloop/soundloop
 
@@ -21,7 +22,7 @@
 	return ..()
 
 /datum/component/rot/process()
-	var/amt2add = 10 //1 second
+	var/amt2add = rot_amount_per_process
 	if(last_process)
 		amt2add = ((world.time - last_process)/10) * amt2add
 	last_process = world.time
@@ -101,6 +102,9 @@
 			if(soundloop && soundloop.stopped && !is_zombie)
 				soundloop.start()
 		C.update_body()
+
+/datum/component/rot/simple
+	rot_amount_per_process = 5
 
 /datum/component/rot/simple/process()
 	..()

@@ -282,7 +282,7 @@
 /turf/closed/wall/mineral/decostone,
 /area/rogue/under/tomb/indoors)
 "LP" = (
-/obj/item/clothing/pants/skirt/random{
+/obj/item/clothing/pants/skirt/colored/random{
 	pixel_x = 8;
 	pixel_y = 9
 	},

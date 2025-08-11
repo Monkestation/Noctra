@@ -18,6 +18,8 @@
 	var/datum/plant_genetics/parent_b
 	/// Unique variety name if this is a special cultivar
 	var/variety_name
+	/// What string to add in front of the plant_def seed_identity
+	var/seed_identity_modifier
 
 /datum/plant_genetics/New()
 	. = ..()

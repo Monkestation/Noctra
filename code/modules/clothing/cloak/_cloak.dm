@@ -11,6 +11,7 @@
 	bloody_icon_state = "bodyblood"
 	sewrepair = TRUE
 	anvilrepair = null
+	abstract_type = /obj/item/clothing/cloak
 	smeltresult = /obj/item/fertilizer/ash
 
 	grid_width = 64

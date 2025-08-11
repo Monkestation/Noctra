@@ -931,7 +931,10 @@
 			for(var/stat in current_set)
 				var/list/stat_data = current_set[stat]
 				var/stat_value = GLOB.vanderlin_round_stats[stat] || 0
-				var/influence_value = (stat_value * stat_data["points"]) * initialized_storyteller.influence_modifier
+				var/scaling_factor = initialized_storyteller.influence_modifier
+				if(stat_data["points"] < 0)
+					scaling_factor = 1 / scaling_factor
+				var/influence_value = (stat_value * stat_data["points"]) * scaling_factor
 				var/is_active = (stat in initialized_storyteller.influence_factors)
 
 				dynamic_content += "<span style='color: [is_active ? "#88f088" : "#f79090"];'>"

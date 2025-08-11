@@ -13,19 +13,20 @@
 	resistance_flags = FLAMMABLE
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
+	color = CLOTHING_LINEN
 
 	armor = ARMOR_MINIMAL
 	prevent_crits = list(BCLASS_TWIST)
 	max_integrity = INTEGRITY_POOR
 
-/obj/item/clothing/shirt/robe/plain
+/obj/item/clothing/shirt/robe/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
+/obj/item/clothing/shirt/robe/colored/plain
 	color = CLOTHING_LINEN
 
-/obj/item/clothing/shirt/robe/black
+/obj/item/clothing/shirt/robe/colored/black
 	color = CLOTHING_DARK_INK
-
-/obj/item/clothing/shirt/robe/white
-
 
 //................ Temple Robes ............... //
 
@@ -102,10 +103,10 @@
 
 
 //................ Wizard Robes ............... //
-/obj/item/clothing/shirt/robe/courtmage
+/obj/item/clothing/shirt/robe/colored/courtmage
 	color = CLOTHING_ASH_GREY
 
-/obj/item/clothing/shirt/robe/mage/Initialize()
+/obj/item/clothing/shirt/robe/colored/mage/Initialize()
 	color = pick( CLOTHING_PEASANT_BROWN, CLOTHING_SPRING_GREEN, CLOTHING_CHESTNUT, CLOTHING_YELLOW_OCHRE)
 	. = ..()
 
@@ -128,8 +129,6 @@
 	armor = list("blunt" = 40, "slash" = 40, "stab" = 40,  "piercing" = 15, "fire" = 0, "acid" = 0)
 	prevent_crits = list(BCLASS_CUT, BCLASS_TWIST)
 	max_integrity = 200
-
-
 
 /obj/item/clothing/shirt/robe/merchant
 	name = "guilder jacket"
@@ -194,6 +193,7 @@
 	var/picked
 	var/newicon
 	var/robe_count = 0	/// This var basicly counts the numbers of times this robe has changes its appearence
+	abstract_type = /obj/item/clothing/shirt/robe/newmage
 
 /obj/item/clothing/shirt/robe/newmage/ToggleHood()
 	if(!hoodtoggled)

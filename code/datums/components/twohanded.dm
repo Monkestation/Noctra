@@ -344,7 +344,7 @@
 		return COMPONENT_BLOCK_SWAP
 
 /**
- * modify_force Modifies base unwielded and wielded force of parent. Additive modifier first, then multiplicative.
+ * modify_base_force Modifies base unwielded and wielded force of parent. Additive modifier first, then multiplicative.
  */
 /datum/component/two_handed/proc/modify_base_force(additive_modifier, multiplicative_modifier)
 	var/obj/item/parent_item = parent

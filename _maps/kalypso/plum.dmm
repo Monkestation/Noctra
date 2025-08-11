@@ -1,0 +1,214 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/grass/red,
+/area/template_noop)
+"d" = (
+/obj/structure/flora/tree/burnt,
+/obj/structure/flora/grass,
+/turf/open/floor/grass/red,
+/area/template_noop)
+"e" = (
+/obj/item/ash,
+/turf/open/floor/naturalstone,
+/area/template_noop)
+"f" = (
+/obj/item/alch/firedust,
+/turf/open/floor/grass/red,
+/area/template_noop)
+"i" = (
+/obj/structure/flora/grass,
+/turf/open/floor/grass/red,
+/area/template_noop)
+"j" = (
+/turf/open/floor/naturalstone,
+/area/template_noop)
+"k" = (
+/obj/structure/wild_plant/nospread/manabloom,
+/turf/open/floor/dirt,
+/area/template_noop)
+"m" = (
+/obj/effect/decal/cleanable/roguerune/arcyne/summoning/mid,
+/mob/living/simple_animal/hostile/dragger,
+/turf/open/floor/naturalstone,
+/area/template_noop)
+"n" = (
+/turf/template_noop,
+/area/template_noop)
+"p" = (
+/obj/structure/flora/grass,
+/turf/open/floor/dirt,
+/area/template_noop)
+"s" = (
+/obj/structure/wild_plant/nospread/plum,
+/turf/open/floor/dirt,
+/area/template_noop)
+"t" = (
+/obj/structure/table/wood/treestump/burnt,
+/turf/open/floor/dirt,
+/area/template_noop)
+"v" = (
+/obj/structure/flora/grass/bush,
+/turf/open/floor/grass/red,
+/area/template_noop)
+"y" = (
+/obj/structure/wild_plant/nospread/plum,
+/turf/open/floor/grass/red,
+/area/template_noop)
+"B" = (
+/obj/item/ash,
+/turf/open/floor/dirt,
+/area/template_noop)
+"E" = (
+/obj/structure/wild_plant/nospread/plum,
+/obj/structure/flora/grass,
+/turf/open/floor/grass/red,
+/area/template_noop)
+"L" = (
+/obj/item/alch/firedust,
+/turf/open/floor/dirt,
+/area/template_noop)
+"N" = (
+/obj/item/ash,
+/obj/structure/flora/grass,
+/turf/open/floor/dirt,
+/area/template_noop)
+"O" = (
+/obj/item/ash,
+/turf/open/floor/grass/red,
+/area/template_noop)
+"Q" = (
+/obj/structure/flora/grass/bush_meagre,
+/turf/open/floor/dirt,
+/area/template_noop)
+"S" = (
+/turf/open/floor/dirt,
+/area/template_noop)
+"U" = (
+/obj/structure/wild_plant/nospread/manabloom,
+/turf/open/floor/grass/red,
+/area/template_noop)
+"W" = (
+/obj/structure/flora/tree/burnt,
+/turf/open/floor/grass/red,
+/area/template_noop)
+
+(1,1,1) = {"
+n
+n
+a
+a
+i
+i
+a
+a
+W
+i
+a
+U
+n
+"}
+(2,1,1) = {"
+n
+v
+U
+p
+j
+j
+S
+S
+B
+i
+i
+i
+f
+"}
+(3,1,1) = {"
+a
+i
+i
+s
+j
+j
+e
+t
+p
+S
+y
+i
+i
+"}
+(4,1,1) = {"
+i
+i
+S
+j
+j
+m
+j
+j
+p
+k
+S
+a
+a
+"}
+(5,1,1) = {"
+U
+a
+S
+j
+j
+j
+j
+j
+S
+p
+N
+v
+a
+"}
+(6,1,1) = {"
+a
+d
+i
+L
+j
+j
+j
+Q
+k
+S
+p
+a
+a
+"}
+(7,1,1) = {"
+n
+a
+i
+U
+S
+Q
+S
+E
+i
+a
+a
+W
+n
+"}
+(8,1,1) = {"
+n
+n
+O
+a
+i
+i
+i
+a
+a
+a
+v
+n
+n
+"}

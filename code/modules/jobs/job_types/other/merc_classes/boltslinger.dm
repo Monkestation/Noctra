@@ -19,8 +19,8 @@
 	beltl = /obj/item/ammo_holder/quiver/bolts
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 	backl = /obj/item/storage/backpack/satchel
-	shirt = /obj/item/clothing/shirt/undershirt/black
-	pants = /obj/item/clothing/pants/tights/black
+	shirt = /obj/item/clothing/shirt/undershirt/colored/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	neck = /obj/item/clothing/neck/chaincoif
 	scabbards = list(/obj/item/weapon/scabbard/sword)
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/poor, /obj/item/weapon/knife/hunting)
