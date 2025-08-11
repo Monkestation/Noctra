@@ -2,7 +2,7 @@
 	title = "Forest Guard"
 	tutorial = "You've been keeping the streets clean of neer-do-wells and taffers for most of your time in the garrison.\
 	You've been through the wringer - alongside soldiers in the short-lived Goblin Wars. \
-	The Wars were rough, the few who survived came back changed. Perhaps that was you. \
+	The Wars were rough, the few who survived came back changed. Perhaps you'd agree. \
 	. \
 	\n\n\
 	A fellow soldier had been given the title of Forest Warden for their valorant efforts \
@@ -50,7 +50,7 @@
 // Ravager, whips, flails, axes and swords and shields.
 /datum/advclass/forestguard/infantry
 	name = "Forest Ravager"
-	tutorial = "In the goblin wars- you alone were deployed to the front lines, caving skulls and chopping legs - saving your family-at-arms through your reckless diversions. \ With your bloodied axe and flail, every swing and crack was another hatch on your tally. Now that the War's over, let's see if that still rings true."
+	tutorial = "In the goblin wars- you alone were deployed to the front lines, caving skulls and chopping legs - saving your family-at-arms through your reckless diversions. \ With your bloodied axe and flail, every swing and crack was another hatch on your tally. Now that the War's over, even with your indomitable spirit and tireless zeal - let's see if that still rings true."
 	outfit = /datum/outfit/job/forestguard/infantry
 	category_tags = list(CTAG_FORGARRISON)
 	allowed_ages = list(AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
@@ -86,10 +86,11 @@
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
 	H.change_stat(STATKEY_STR, 2)
-	H.change_stat(STATKEY_END, 4) //Differentiates them from reavers.
-	H.change_stat(STATKEY_CON, 1)
-	H.change_stat(STATKEY_SPD, 1)
+	H.change_stat(STATKEY_END, 3) //Differentiates them from reavers.
+	H.change_stat(STATKEY_CON, 3)
+	H.change_stat(STATKEY_SPD, -1)
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_FORAGER, TRAIT_GENERIC)
 
 // Ranger, bows and knives
@@ -169,7 +170,8 @@
 		H.adjust_skillrank(/datum/skill/combat/axesmaces, 4, TRUE)
 		H.change_stat(STATKEY_STR, 2)
 		H.change_stat(STATKEY_CON, 2)
-		H.change_stat(STATKEY_END, 3)
+		H.change_stat(STATKEY_END, 2)
+		H.change_stat(STATKEY_SPD, 1)
 		ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
@@ -185,11 +187,11 @@
 
 /datum/outfit/job/forestguard/ruffian/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/helmet/medium/decorated/skullmet //placeholder, I have to sprite something new for the Brats
+	head = /obj/item/clothing/head/helmet/medium/decorated/skullmet //placeholder, I have to sprite something new for the Brats, like a gator skull
 	neck = /obj/item/clothing/neck/chaincoif
 	beltl = /obj/item/weapon/knife/cleaver/combat
 	beltr = /obj/item/ammo_holder/quiver/arrows
-	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/short
+	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow //placeholder, going to give them a slingshot in another PR later
 	armor = /obj/item/clothing/armor/leather
 	backpack_contents = list(/obj/item/weapon/knife/hunting = 1, /obj/item/cooking/pan = 1, /obj/item/reagent_containers/food/snacks/meat/fatty = 2, /obj/item/reagent_containers/food/snacks/egg = 1, /obj/item/key/forrestgarrison = 1, /obj/item/storage/belt/pouch/coins/poor)
 	H.verbs |= /mob/proc/haltyell //Let me pitch shift this
@@ -205,18 +207,18 @@
 		H.adjust_skillrank(/datum/skill/labor/butchering, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/crossbows, 1, TRUE) //weak fuck
-		H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/axesmaces, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/cooking, 3, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE) //some things never change
-		H.adjust_skillrank(/datum/skill/misc/stealing, 1, TRUE) //some things do
+		H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/stealing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
 		H.change_stat(STATKEY_STR, rand(-1,3)) //broadly conscripted street urchins, randomization keeps them from being too powerful/consistent
 		H.change_stat(STATKEY_END, rand(-1,1))
 		H.change_stat(STATKEY_CON, rand(1,2))
 		H.change_stat(STATKEY_SPD, 2) //FAST.
-		H.change_stat(STATKEY_INT, round(rand(-2,2)))
+		H.change_stat(STATKEY_INT, round(rand(-4,4)))
 		ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_FORAGER, TRAIT_GENERIC)
-		ADD_TRAIT(H, TRAIT_ORPHAN, TRAIT_GENERIC)
+		ADD_TRAIT(H, TRAIT_ORPHAN, TRAIT_GENERIC) //someone please abuse this
