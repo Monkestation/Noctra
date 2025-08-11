@@ -50,6 +50,8 @@
 				used = list('sound/vo/male/gen/haltyell (1).ogg','sound/vo/male/gen/haltyell (2).ogg')
 				if(prob(3))
 					used = 'sound/vo/male/gen/HEY.ogg'
+			if("haltyellorphan")
+				used = list('sound/vo/male/gen/haltyellorphan (1).ogg','sound/vo/male/gen/haltyellorphan (2).ogg')
 			if("hmm")
 				used = 'sound/vo/male/gen/hmm.ogg'
 			if("huh")

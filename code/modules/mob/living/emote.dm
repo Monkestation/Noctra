@@ -502,6 +502,13 @@
 	emote_type = EMOTE_AUDIBLE
 	only_forced_audio = TRUE
 
+/datum/emote/living/haltyellorphan
+
+	key = "haltyellorphan"
+	message = "tries to shout a convincing halt!"
+	emote_type = EMOTE_AUDIBLE
+	only_forced_audio = TRUE
+
 /datum/emote/living/hmm
 	key = "hmm"
 	key_third_person = "hmms"

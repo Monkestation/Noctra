@@ -3,7 +3,7 @@
 	tutorial = "You've been keeping the streets clean of neer-do-wells and taffers for most of your time in the garrison.\
 	You've been through the wringer - alongside soldiers in the short-lived Goblin Wars. \
 	The Wars were rough, the few who survived came back changed. Perhaps you'd agree. \
-	. \
+	\
 	\n\n\
 	A fellow soldier had been given the title of Forest Warden for their valorant efforts \
 	and they've plucked you from one dangerous position into another. \
@@ -16,7 +16,6 @@
 	total_positions = 3
 	spawn_positions = 3
 	min_pq = 5
-	bypass_lastclass = TRUE
 	selection_color = "#0d6929"
 
 	allowed_ages = list(AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL, AGE_CHILD)
@@ -194,7 +193,7 @@
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow //placeholder, going to give them a slingshot in another PR later
 	armor = /obj/item/clothing/armor/leather
 	backpack_contents = list(/obj/item/weapon/knife/hunting = 1, /obj/item/cooking/pan = 1, /obj/item/reagent_containers/food/snacks/meat/fatty = 2, /obj/item/reagent_containers/food/snacks/egg = 1, /obj/item/key/forrestgarrison = 1, /obj/item/storage/belt/pouch/coins/poor)
-	H.verbs |= /mob/proc/haltyell //Let me pitch shift this
+	H.verbs |= /mob/proc/haltyellorphan //pitch shifted for the lols
 
 	if(H.mind) //if you want your ruffians to have combat skills, take them up as apprentices
 		//otherwise, mix of orphan and ranger skills
@@ -222,3 +221,8 @@
 		ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_FORAGER, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_ORPHAN, TRAIT_GENERIC) //someone please abuse this
+
+/mob/proc/haltyellorphan()
+	set name = "HALT!"
+	set category = "Noises"
+	emote("haltyellorphan")
