@@ -184,5 +184,66 @@
                 "bugfix": "Fix Vampire Lord undisguised unique warning not appearing"
             }
         ]
+    },
+    "2025-08-11": {
+        "SarmentiCampbell": [
+            {
+                "balance": "Added min-pop to roll vampire/werewolf event at roundstart"
+            },
+            {
+                "rscadd": "Added new hallucination for maniac/zizo curse/wonder"
+            },
+            {
+                "balance": "lessened the chance of receiving a mob's jumpscare"
+            }
+        ],
+        "Wrench-1": [
+            {
+                "rscadd": "Psydonian Whip and Psydonian Flail"
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "bugfix": "altgrip onmob sprite"
+            }
+        ],
+        "Eagletanker": [
+            {
+                "balance": "Corsair no longer has it's perception malus."
+            }
+        ],
+        "Arkatos": [
+            {
+                "rscadd": "Added a new triumph buy - Psydon's Favourite."
+            },
+            {
+                "rscadd": "Added a new triumph buy - Psydon's Retirement Fund."
+            },
+            {
+                "rscadd": "Storyteller bonus influence triumph buys are now limited to 2 per round and their price has decreased from 5 to 3."
+            },
+            {
+                "rscadd": "All personal god objectives now award 1 extra triumph upon completion."
+            },
+            {
+                "qol": "Improved Triumph Leaderboard menu."
+            },
+            {
+                "qol": "Improved Triumph Shop menu formatting, layout, pagination and texts."
+            },
+            {
+                "admin": "Triumph changes are now logged."
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "bugfix": "Only silver rapier got the silver enchantment now"
+            }
+        ],
+        "PineappleMan929": [
+            {
+                "balance": "Thieflings can be barbarians"
+            }
+        ]
     }
 }
