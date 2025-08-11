@@ -32,6 +32,15 @@
 		/obj/item/key/bandit,
 	)
 
+
+//Garrison's belt starts with a simple needle, and a key to their hideout.
+
+/obj/item/storage/belt/leather/fgarrison
+	populate_contents = list(
+		/obj/item/needle/thorn,
+		/obj/item/key/forrestgarrison,
+	)
+
 //Bandit's belt starts with a bandage and a key to their guildhall.
 /obj/item/storage/belt/leather/mercenary
 	populate_contents = list(
