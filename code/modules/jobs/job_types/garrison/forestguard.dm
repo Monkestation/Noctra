@@ -13,8 +13,8 @@
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_FORGUARD
 	faction = FACTION_TOWN
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 4
+	spawn_positions = 4
 	min_pq = 5
 	selection_color = "#0d6929"
 
@@ -179,7 +179,7 @@
 // Ruffian, knives, bows and a lot of cooking.
 /datum/advclass/forestguard/ruffian
 	name = "Forest Ruffian"
-	tutorial = "For your terrible pranks and antics in the city, you were rounded up by the city's Watch and put to work in the infamous forest garrison. \n\n A ruffian by circumstance, a proven listener of war stories - you might just become more than a glorified servant."
+	tutorial = "For your terrible orphan pranks and antics in the city, you were rounded up by the city's Watch and put to work in the infamous forest garrison. \n\n A ruffian by circumstance, a proven listener of war stories - you might just become more than a troublemaker."
 	outfit = /datum/outfit/job/forestguard/ruffian
 	category_tags = list(CTAG_FORGARRISON)
 	allowed_ages = list(AGE_CHILD)
