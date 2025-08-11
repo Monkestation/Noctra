@@ -280,19 +280,18 @@
 /datum/proc/_SendSignal(sigtype, list/arguments)
 	var/target = comp_lookup[sigtype]
 	if(!length(target))
-		var/datum/listening_datum = target
-		if(!listening_datum.signal_enabled)
+		var/datum/C = target
+		if(!C.signal_enabled)
 			return NONE
-		var/proctype = listening_datum.signal_procs[src][sigtype]
-		return NONE | CallAsync(listening_datum, proctype, arguments)
+		var/proctype = C.signal_procs[src][sigtype]
+		return NONE | CallAsync(C, proctype, arguments)
 	. = NONE
-	for(var/i in 1 to length(target))
-		var/datum/listening_datum = target[i]
-		if(!listening_datum.signal_enabled)
+	for(var/datum/C as anything in target)
+		if(!C.signal_enabled)
 			continue
-		var/proctype = listening_datum.signal_procs[src][sigtype]
+		var/proctype = C.signal_procs[src][sigtype]
 		arguments |= sigtype
-		. |= CallAsync(listening_datum, proctype, arguments)
+		. |= CallAsync(C, proctype, arguments)
 
 // The type arg is casted so initial works, you shouldn't be passing a real instance into this
 /**
