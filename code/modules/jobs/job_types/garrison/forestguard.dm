@@ -52,7 +52,7 @@
 // Axes Maces and Swords
 /datum/advclass/forestguard/infantry
 	name = "Forest Ravager"
-	tutorial = "In the goblin wars- you alone were deployed to the front lines, caving skulls and chopping legs - saving your family-at-arms through your reckless diversions. \n With your bloodied axe and flail, every swing and crack was another hatch on your tally. Now that the War's over, let's see if that still rings true."
+	tutorial = "In the goblin wars- you alone were deployed to the front lines, caving skulls and chopping legs - saving your family-at-arms through your reckless diversions. \ With your bloodied axe and flail, every swing and crack was another hatch on your tally. Now that the War's over, let's see if that still rings true."
 	outfit = /datum/outfit/job/forestguard/infantry
 	category_tags = list(CTAG_FORGARRISON)
 
@@ -94,7 +94,7 @@
 // Bows and Knives
 /datum/advclass/forestguard/ranger
 	name = "Forest Ranger"
-	tutorial = "In the Wars you were always one of the fastest, aswell as one of the frailest in the platoon. \n Your trusty bow has served you well- of course, none you've set your sights on have found the tongue to disagree."
+	tutorial = "In the Wars you were always one of the fastest, aswell as one of the frailest in the platoon. \ Your trusty bow has served you well- of course, none you've set your sights on have found the tongue to disagree."
 	outfit = /datum/outfit/job/forestguard/ranger
 	category_tags = list(CTAG_FORGARRISON)
 
@@ -171,7 +171,7 @@
 // Ruffian
 /datum/advclass/forestguard/ruffian
 	name = "Forest Ruffian"
-	tutorial = "Abandoned by your family, the city, and perhaps even the orphanage. \n For your terrible pranks and antics in the city, you were rounded up by the city's Watch and put to work in the infamous forest garrison. \n\n A ruffian by circumstance, a proven listener of war stories - you might just become more than a glorified servant."
+	tutorial = "Abandoned by your family, the city, and perhaps even the orphanage. \ For your terrible pranks and antics in the city, you were rounded up by the city's Watch and put to work in the infamous forest garrison. \n\n A ruffian by circumstance, a proven listener of war stories - you might just become more than a glorified servant."
 	outfit = /datum/outfit/job/forestguard/reaver
 	category_tags = list(CTAG_FORGARRISON)
 
@@ -181,28 +181,32 @@
 	beltl = /obj/item/weapon/knife/cleaver/combat
 	beltr = /obj/item/ammo_holder/quiver/arrows
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/long
-	backpack_contents = list(/obj/item/weapon/knife/hunting = 1, /obj/item/rope/chain = 1, /obj/item/key/forrestgarrison = 1, /obj/item/storage/belt/pouch/coins/poor)
-	H.verbs |= /mob/proc/haltyell
+	backpack_contents = list(/obj/item/weapon/knife/hunting = 1, /obj/item/cooking/pan = 1, /obj/item/key/forrestgarrison = 1, /obj/item/storage/belt/pouch/coins/poor)
+	belt_contents = list(/obj/item/needle/thorn = 1, /obj/item/natural/cloth = 2)
+	H.verbs |= /mob/proc/haltyell //Let me pitch shift this
+
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/climbing, 5, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/labor/lumberjacking, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/carpentry, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/tanning, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/combat/bows, 4, TRUE)
-		H.adjust_skillrank(/datum/skill/combat/crossbows, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/bows, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/axesmaces, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
-		H.change_stat(STATKEY_STR, -2)
+		H.adjust_skillrank(/datum/skill/craft/cooking, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
+		H.change_stat(STATKEY_STR, rand(-1,3)) //broadly conscripted urchins, randomization keeps them from being too powerful/consistent
 		H.change_stat(STATKEY_END, 1)
-		H.change_stat(STATKEY_PER, 2)
-		H.change_stat(STATKEY_SPD, 3)
+		H.change_stat(STATKEY_CON, rand(1,2))
+		H.change_stat(STATKEY_SPD, 2) //FAST.
+		H.change_stat(STATKEY_INT, round(rand(-4,4)))
 		ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_FORAGER, TRAIT_GENERIC)
