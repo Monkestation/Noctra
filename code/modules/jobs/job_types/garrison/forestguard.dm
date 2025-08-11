@@ -36,7 +36,7 @@
 		cloak = /obj/item/clothing/cloak/forrestercloak/snow
 	else
 		cloak = /obj/item/clothing/cloak/forrestercloak
-	shirt = /obj/item/clothing/shirt/undershirt/black
+	shirt = /obj/item/clothing/shirt/undershirt/colored/black
 	pants = /obj/item/clothing/pants/trou/leather
 	shoes = /obj/item/clothing/shoes/boots
 	wrists = /obj/item/clothing/wrists/bracers/leather
@@ -86,11 +86,11 @@
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
 	H.change_stat(STATKEY_STR, 2)
-	H.change_stat(STATKEY_END, 3) //Differentiates them from reavers.
+	H.change_stat(STATKEY_END, 3)
 	H.change_stat(STATKEY_CON, 3)
-	H.change_stat(STATKEY_SPD, -1)
+	H.change_stat(STATKEY_SPD, -2)
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC) //Should help Ravagers be more survivable compared to reavers.
 	ADD_TRAIT(H, TRAIT_FORAGER, TRAIT_GENERIC)
 
 // Ranger, bows and knives
@@ -196,7 +196,7 @@
 	backpack_contents = list(/obj/item/weapon/knife/hunting = 1, /obj/item/cooking/pan = 1, /obj/item/reagent_containers/food/snacks/meat/fatty = 2, /obj/item/reagent_containers/food/snacks/egg = 1, /obj/item/key/forrestgarrison = 1, /obj/item/storage/belt/pouch/coins/poor)
 	H.verbs |= /mob/proc/haltyell //Let me pitch shift this
 
-	if(H.mind) //if you want your ruffians to have combat skills, take them up as apprentices,
+	if(H.mind) //if you want your ruffians to have combat skills, take them up as apprentices
 		//otherwise, mix of orphan and ranger skills
 		H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE) //considering master climbing, I can make another youngling subclass for such
