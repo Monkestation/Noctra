@@ -99,6 +99,13 @@
 	smeltresult = /obj/item/ore/coal/charcoal
 	sellprice = 1
 
+/obj/item/natural/sand
+    name = "sand"
+    icon_state = "sand"
+    smeltresult = /obj/item/natural/glass
+    melting_material = /datum/material/glass
+    melt_amount = 100
+
 /obj/item/ingot
 	name = "ingot"
 	desc = "A parent bar of metal. If you see this, report it on github."

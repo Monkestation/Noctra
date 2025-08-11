@@ -92,6 +92,10 @@
 	name = "Bronze Chisel"
 	created_item = /obj/item/weapon/chisel/bronze
 
+/datum/anvil_recipe/tools/bronze/glassblowpipe
+	name = "Bronze Glass Blower's Pipe"
+	created_item = /obj/item/weapon/glassblowpipe/bronze
+
 // --------- IRON -----------
 
 /datum/anvil_recipe/tools/iron
@@ -239,6 +243,10 @@
 	name = "Iron Chisel"
 	created_item = /obj/item/weapon/chisel/iron
 
+/datum/anvil_recipe/tools/iron/glassblowpipe
+	name = "Iron Glass Blower's Pipe"
+	created_item = /obj/item/weapon/glassblowpipe/iron
+
 /datum/anvil_recipe/tools/iron/spoon
 	name = "2x Spoons (iron)"
 	recipe_name = "a Spoon"
@@ -311,6 +319,10 @@
 	created_item = /obj/item/weapon/chisel
 	craftdiff = 1
 
+/datum/anvil_recipe/tools/steel/glassblowpipe
+	name = "Steel Glass Blower's Pipe"
+	created_item = /obj/item/weapon/glassblowpipe
+	craftdiff = 1
 // --------- SILVER -----------
 
 /datum/anvil_recipe/tools/silver

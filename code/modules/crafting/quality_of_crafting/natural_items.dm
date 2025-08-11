@@ -227,6 +227,20 @@
 	starting_atom = /obj/item/natural/dirtclod
 	output = /obj/item/natural/clay
 
+/datum/repeatable_crafting_recipe/survival/sand
+	name = "sand"
+	requirements = list(
+		/obj/item/natural/stone= 1,
+	)
+	tool_usage = list(
+		/obj/item/weapon/hammer = list(span_notice("starts to pulverize"), span_notice("start to pulverize"), 'sound/items/stonestone.ogg'),
+	)
+
+	attacked_atom = /obj/item/natural/stone
+	starting_atom = /obj/item/weapon/hammer
+	output = /obj/item/natural/sand
+
+
 /datum/repeatable_crafting_recipe/survival/wicker_basket
 	name = "wicker basket"
 	requirements = list(
