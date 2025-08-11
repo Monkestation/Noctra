@@ -39,22 +39,22 @@
 	beltr = /obj/item/storage/belt/pouch/coins/poor
 	switch(H.patron?.type)
 		if(/datum/patron/inhumen/graggar)
-			cloak = /obj/item/clothing/cloak/raincloak/mortus
+			cloak = /obj/item/clothing/cloak/raincloak/colored/mortus
 			H.cmode_music = 'sound/music/cmode/antag/combat_werewolf.ogg'
 		if(/datum/patron/inhumen/graggar_zizo)
-			cloak = /obj/item/clothing/cloak/raincloak/mortus
+			cloak = /obj/item/clothing/cloak/raincloak/colored/mortus
 			H.cmode_music = 'sound/music/cmode/antag/combat_werewolf.ogg'
 		if(/datum/patron/inhumen/zizo)
-			cloak = /obj/item/clothing/cloak/raincloak/mortus
+			cloak = /obj/item/clothing/cloak/raincloak/colored/mortus
 			head = /obj/item/clothing/head/helmet/skullcap/cult
 			H.cmode_music = 'sound/music/cmode/antag/combat_cult.ogg'
 		if(/datum/patron/inhumen/matthios)
-			cloak = /obj/item/clothing/cloak/raincloak/mortus
+			cloak = /obj/item/clothing/cloak/raincloak/colored/mortus
 			H.cmode_music = 'sound/music/cmode/antag/CombatBandit1.ogg'
 		if(/datum/patron/inhumen/baotha)
 			head = /obj/item/clothing/head/crown/circlet
 			mask = /obj/item/clothing/face/spectacles/sglasses
-			cloak = /obj/item/clothing/cloak/raincloak/purple
+			cloak = /obj/item/clothing/cloak/raincloak/colored/purple
 			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 			H.cmode_music = 'sound/music/cmode/antag/CombatBaotha.ogg'
 		else // Failsafe

@@ -1,0 +1,257 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/hotspring/border/five,
+/turf/template_noop,
+/area/rogue)
+"b" = (
+/obj/structure/hotspring/border/six,
+/turf/template_noop,
+/area/rogue)
+"e" = (
+/obj/structure/hotspring/border/twelve,
+/turf/template_noop,
+/area/rogue)
+"f" = (
+/obj/structure/hotspring/border/fourteen,
+/turf/template_noop,
+/area/rogue)
+"j" = (
+/obj/structure/hotspring,
+/obj/effect/lily_petal,
+/turf/template_noop,
+/area/rogue)
+"l" = (
+/obj/structure/flora/hotspring_rocks/small/four,
+/turf/template_noop,
+/area/rogue)
+"n" = (
+/obj/structure/hotspring,
+/obj/effect/lily_petal/two,
+/turf/template_noop,
+/area/rogue)
+"o" = (
+/obj/structure/hotspring,
+/turf/template_noop,
+/area/rogue)
+"r" = (
+/obj/structure/hotspring/border,
+/turf/template_noop,
+/area/rogue)
+"s" = (
+/obj/structure/hotspring/border/twelve,
+/obj/effect/lily_petal,
+/turf/template_noop,
+/area/rogue)
+"x" = (
+/obj/structure/hotspring/border/eight,
+/turf/template_noop,
+/area/rogue)
+"z" = (
+/obj/structure/hotspring/border,
+/obj/structure/flora/hotspring_rocks/grassy,
+/turf/template_noop,
+/area/rogue)
+"A" = (
+/obj/structure/hotspring/border/seven,
+/turf/template_noop,
+/area/rogue)
+"D" = (
+/obj/structure/hotspring/border/nine,
+/turf/template_noop,
+/area/rogue)
+"E" = (
+/obj/structure/flora/hotspring_rocks/small/three{
+	pixel_y = -5;
+	pixel_x = 9
+	},
+/turf/template_noop,
+/area/rogue)
+"F" = (
+/obj/structure/hotspring/border/two,
+/turf/template_noop,
+/area/rogue)
+"H" = (
+/obj/structure/flora/hotspring_rocks/grassy,
+/turf/template_noop,
+/area/rogue)
+"L" = (
+/obj/structure/hotspring,
+/obj/effect/lily_petal/three,
+/turf/template_noop,
+/area/rogue)
+"M" = (
+/turf/template_noop,
+/area/rogue)
+"R" = (
+/obj/structure/hotspring/border/eleven,
+/turf/template_noop,
+/area/rogue)
+"S" = (
+/obj/structure/hotspring/border/three,
+/turf/template_noop,
+/area/rogue)
+"X" = (
+/obj/structure/hotspring/border/thirteen,
+/turf/template_noop,
+/area/rogue)
+"Y" = (
+/obj/structure/hotspring/border/ten,
+/turf/template_noop,
+/area/rogue)
+
+(1,1,1) = {"
+M
+M
+M
+X
+A
+A
+z
+M
+M
+M
+M
+"}
+(2,1,1) = {"
+M
+l
+X
+s
+o
+L
+F
+M
+M
+M
+M
+"}
+(3,1,1) = {"
+M
+X
+e
+o
+o
+o
+F
+M
+M
+M
+M
+"}
+(4,1,1) = {"
+M
+a
+o
+n
+j
+D
+S
+M
+M
+M
+M
+"}
+(5,1,1) = {"
+M
+f
+R
+o
+D
+S
+M
+M
+M
+M
+M
+"}
+(6,1,1) = {"
+M
+H
+a
+L
+F
+M
+X
+A
+r
+H
+M
+"}
+(7,1,1) = {"
+M
+M
+f
+x
+S
+E
+a
+j
+Y
+r
+M
+"}
+(8,1,1) = {"
+M
+M
+M
+M
+M
+X
+e
+n
+o
+Y
+r
+"}
+(9,1,1) = {"
+M
+M
+M
+M
+M
+a
+n
+o
+o
+j
+F
+"}
+(10,1,1) = {"
+M
+M
+M
+M
+H
+a
+o
+o
+o
+o
+F
+"}
+(11,1,1) = {"
+l
+H
+M
+M
+M
+b
+R
+L
+n
+D
+S
+"}
+(12,1,1) = {"
+M
+M
+M
+M
+l
+M
+b
+x
+x
+S
+M
+"}

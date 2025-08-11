@@ -60,16 +60,15 @@
 	color = CLOTHING_OLD_LEATHER
 	salvage_result = null
 
-/obj/item/clothing/shoes/simpleshoes/white
-	color = null
-
+/obj/item/clothing/shoes/simpleshoes/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
 
 /obj/item/clothing/shoes/simpleshoes/buckle
 	name = "shoes"
 	icon_state = "buckleshoes"
 	color = null
 
-/obj/item/clothing/shoes/simpleshoes/lord
+/obj/item/clothing/shoes/simpleshoes/colored/lord
 	name = "shoes"
 	desc = "Shoes typically worn by the King himself."
 	gender = PLURAL
@@ -97,7 +96,7 @@
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
 
-/obj/item/clothing/shoes/hoplite
+/obj/item/clothing/shoes/rare/hoplite
 	name = "ancient sandals"
 	desc = "Worn sandals lined with bronze, ready to march ever onwards."
 	icon_state = "aasimarfeet"

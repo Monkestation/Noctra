@@ -26,7 +26,7 @@
 		H.adjust_skillrank(/datum/skill/misc/stealing, 5, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/lockpicking, 4, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/traps, 3, TRUE)
-	shirt = /obj/item/clothing/shirt/undershirt/black
+	shirt = /obj/item/clothing/shirt/undershirt/colored/black
 	gloves = /obj/item/clothing/gloves/fingerless
 	pants = /obj/item/clothing/pants/trou/leather
 	shoes = /obj/item/clothing/shoes/boots

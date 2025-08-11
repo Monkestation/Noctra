@@ -9,6 +9,7 @@
 	max_integrity = INTEGRITY_STANDARD
 	clothing_flags = CANT_SLEEP_IN
 	prevent_crits = ALL_EXCEPT_STAB
+	abstract_type = /obj/item/clothing/armor/medium
 
 /obj/item/clothing/armor/medium/scale // important is how this item covers legs too compared to halfplate
 	name = "scalemail"

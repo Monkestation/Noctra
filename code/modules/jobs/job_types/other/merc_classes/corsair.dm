@@ -39,5 +39,4 @@
 	shirt = pick(/obj/item/clothing/shirt/undershirt/sailor, /obj/item/clothing/shirt/undershirt/sailor/red)
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 	H.change_stat(STATKEY_END, 2)
-	H.change_stat(STATKEY_PER, -2) // We don't want them using ranged weapons, period.
 	H.change_stat(STATKEY_SPD, 3) // Hit-And-Run.

@@ -26,7 +26,7 @@
 
 	shoes = /obj/item/clothing/shoes/boots
 	belt = /obj/item/storage/belt/leather
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	backl = /obj/item/storage/backpack/satchel
 
 	if(ishumanspecies(H)) // This statblock serves to smooth out racial stat-bonuses slightly. Makes room for the RNG to do its shitty work.
@@ -59,7 +59,7 @@
 			armor = /obj/item/clothing/armor/chainmail/iron
 			shirt = /obj/item/clothing/armor/gambeson
 			gloves = /obj/item/clothing/gloves/leather
-			pants = /obj/item/clothing/pants/tights/uncolored
+			pants = /obj/item/clothing/pants/tights/colored/uncolored
 			head = /obj/item/clothing/head/roguehood
 			H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 			ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
@@ -70,7 +70,7 @@
 			armor = /obj/item/clothing/armor/cuirass/iron
 			shirt = /obj/item/clothing/armor/gambeson/heavy
 			neck = /obj/item/clothing/neck/gorget
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 			head = /obj/item/clothing/head/roguehood
 			H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
@@ -81,9 +81,9 @@
 			)
 		if("Splint")
 			armor = /obj/item/clothing/armor/leather/splint
-			shirt = /obj/item/clothing/shirt/tunic/black
+			shirt = /obj/item/clothing/shirt/tunic/colored/black
 			wrists = /obj/item/clothing/wrists/bracers/leather
-			pants = /obj/item/clothing/pants/tights/uncolored
+			pants = /obj/item/clothing/pants/tights/colored/uncolored
 			H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
 			H.change_stat(STATKEY_END, 1)
@@ -93,7 +93,7 @@
 		if("Jacket")
 			armor = /obj/item/clothing/armor/leather/vest/winterjacket
 			neck = /obj/item/clothing/neck/coif
-			shirt = /obj/item/clothing/shirt/tunic/red
+			shirt = /obj/item/clothing/shirt/tunic/colored/red
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			gloves = /obj/item/clothing/gloves/angle
 			head = /obj/item/clothing/head/roguehood
@@ -108,7 +108,7 @@
 			)
 		if("Sailor")
 			armor = /obj/item/clothing/armor/leather/jacket/sea
-			shirt = /obj/item/clothing/shirt/tunic/red
+			shirt = /obj/item/clothing/shirt/tunic/colored/red
 			head = /obj/item/clothing/head/helmet/leather/headscarf
 			mask = /obj/item/clothing/face/shepherd/clothmask
 			pants = /obj/item/clothing/pants/tights/sailor
@@ -132,7 +132,7 @@
 			)
 		if("Peon")
 			head = /obj/item/clothing/head/armingcap
-			shirt = /obj/item/clothing/shirt/undershirt/random
+			shirt = /obj/item/clothing/shirt/undershirt/colored/random
 			armor = /obj/item/clothing/armor/gambeson/light/striped
 			gloves = /obj/item/clothing/gloves/leather/advanced
 			wrists = /obj/item/clothing/wrists/bracers/leather
@@ -147,7 +147,7 @@
 			head = /obj/item/clothing/head/helmet/leather/headscarf
 			gloves = /obj/item/clothing/gloves/leather/advanced
 			wrists = /obj/item/clothing/wrists/bracers/leather
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 			H.change_stat(STATKEY_STR, -1)
 			H.change_stat(STATKEY_END, 1)
 			H.change_stat(STATKEY_SPD, 1)
@@ -163,8 +163,8 @@
 			gloves = /obj/item/clothing/gloves/leather/advanced
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			armor = /obj/item/clothing/armor/leather/vest
-			cloak = /obj/item/clothing/cloak/raincloak/mortus
-			pants = /obj/item/clothing/pants/tights/black
+			cloak = /obj/item/clothing/cloak/raincloak/colored/mortus
+			pants = /obj/item/clothing/pants/tights/colored/black
 			H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 			ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
@@ -176,11 +176,11 @@
 			The Ten are false gods, and I loathe those that worship the true corpse god, Necra. Psydon lives, my life for Psydon.")
 			)
 		if("Hide")
-			shirt = /obj/item/clothing/shirt/undershirt/uncolored
+			shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 			armor = /obj/item/clothing/armor/leather/hide
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			gloves = /obj/item/clothing/gloves/leather/advanced
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 			H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
@@ -193,7 +193,7 @@
 		if("Freak")
 			head = /obj/item/clothing/head/menacing
 			neck = /obj/item/clothing/neck/chaincoif/iron
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 			ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 			ADD_TRAIT(H, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
 			H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
@@ -215,7 +215,7 @@
 			H.adjust_skillrank(/datum/skill/craft/tanning, 1, TRUE)
 			neck = /obj/item/clothing/neck/gorget
 			mask = /obj/item/clothing/face/facemask
-			pants = /obj/item/clothing/pants/loincloth/black
+			pants = /obj/item/clothing/pants/loincloth/colored/black
 			H.change_stat(STATKEY_CON, -2)
 			H.change_stat(STATKEY_STR, 1)
 			H.change_stat(STATKEY_END, -2)
@@ -228,9 +228,9 @@
 			)
 		if("Noble") // Congratulations, you're important! Or were, rather.
 			armor = /obj/item/clothing/armor/cuirass/iron
-			shirt = /obj/item/clothing/shirt/tunic/ucolored
+			shirt = /obj/item/clothing/shirt/tunic/colored
 			cloak = /obj/item/clothing/cloak/raincloak/furcloak
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 			neck = /obj/item/clothing/neck/chaincoif/iron
 			head = /obj/item/clothing/head/fancyhat
 			ring = /obj/item/clothing/ring/silver
@@ -270,7 +270,7 @@
 			wrists = /obj/item/clothing/wrists/bracers
 			neck = /obj/item/clothing/neck/chaincoif
 			shirt = /obj/item/clothing/armor/gambeson
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 			backpack_contents = list(/obj/item/clothing/gloves/rare/grenzelplate = 1, /obj/item/clothing/shoes/boots/rare/grenzelplate,)
 			H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE) // heavy armor user
 			ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC) // Keep this rare. Only a handful of armor users get this.
@@ -321,7 +321,7 @@
 		if("Shovel") // Rare roll, might as well get some stat benefits
 			beltr = /obj/item/flashlight/flare/torch/lantern
 			backr = /obj/item/weapon/shovel
-			cloak = /obj/item/clothing/cloak/raincloak/mortus
+			cloak = /obj/item/clothing/cloak/raincloak/colored/mortus
 			H.adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/lockpicking, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
@@ -470,8 +470,8 @@
 			if(!(H.patron == /datum/patron/divine/noc || /datum/patron/inhumen/zizo))	//Magicians must follow Noc or Zizo to have access to magic.
 				H.set_patron(/datum/patron/divine/noc)
 			r_hand = /obj/item/weapon/polearm/woodstaff
-			head = /obj/item/clothing/head/roguehood/mage
-			armor = /obj/item/clothing/shirt/robe/mage
+			head = /obj/item/clothing/head/roguehood/colored/mage
+			armor = /obj/item/clothing/shirt/robe/colored/mage
 			beltl = /obj/item/reagent_containers/glass/bottle/manapot
 			beltr = /obj/item/book/granter/spellbook/apprentice
 			H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
@@ -501,7 +501,7 @@
 			beltr = /obj/item/weapon/whip
 			wrists = /obj/item/rope/chain
 			armor = /obj/item/clothing/armor/leather/vest
-			shirt = /obj/item/clothing/shirt/undershirt/black
+			shirt = /obj/item/clothing/shirt/undershirt/colored/black
 			head = /obj/item/clothing/head/menacing
 			H.adjust_skillrank(/datum/skill/combat/whipsflails, 3, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)

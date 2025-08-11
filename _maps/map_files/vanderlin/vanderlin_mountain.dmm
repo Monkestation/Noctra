@@ -654,10 +654,6 @@
 	},
 /turf/open/floor/wood/nosmooth/saiga,
 /area/rogue/outdoors/mountains/anvil/snowyforest)
-"jW" = (
-/obj/item/clothing/pants/loincloth/brown,
-/turf/open/floor/cobblerock,
-/area/rogue/under/mountains/anvil/lower/building)
 "ka" = (
 /obj/effect/decal/cleanable/blood/gibs/old,
 /obj/item/reagent_containers/food/snacks/rotten/meat,
@@ -832,6 +828,10 @@
 	},
 /turf/open/floor/cobblerock,
 /area/rogue/under/mountains/anvil/lower/building)
+"mI" = (
+/obj/item/clothing/pants/loincloth/colored/brown,
+/turf/open/floor/cobblerock,
+/area/rogue/under/mountains/anvil/lower)
 "mK" = (
 /obj/structure/bed/shit,
 /turf/open/floor/twig,
@@ -1429,10 +1429,19 @@
 /obj/structure/flora/shroom_tree,
 /turf/open/floor/volcanic,
 /area/rogue/under/mountains/anvil/lower/building)
-"vo" = (
+"vj" = (
+/obj/item/clothing/head/helmet/leather/minershelm,
 /obj/item/fertilizer/ash,
+/obj/item/fertilizer/ash{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/item/fertilizer/ash{
+	pixel_y = 8;
+	pixel_x = -11
+	},
 /turf/open/floor/naturalstone,
-/area/rogue/under/mountains/anvil/lower)
+/area/rogue/under/mountains/anvil/lower/building)
 "vs" = (
 /obj/item/natural/stone,
 /turf/open/floor/ruinedwood/spiralfade,
@@ -1882,6 +1891,10 @@
 /obj/structure/flora/newtree/snow,
 /turf/open/floor/snow/patchy,
 /area/rogue/outdoors/mountains/anvil/snowyforest)
+"Dh" = (
+/obj/item/fertilizer/ash,
+/turf/open/floor/naturalstone,
+/area/rogue/under/mountains/anvil/lower)
 "Ds" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/tracks{
@@ -1948,6 +1961,10 @@
 /obj/effect/spawner/map_spawner/loot/common,
 /turf/open/floor/wood/nosmooth/saiga,
 /area/rogue/indoors/mountains/anvil/surface/building)
+"Ep" = (
+/obj/item/clothing/pants/loincloth/colored/brown,
+/turf/open/floor/cobblerock,
+/area/rogue/under/mountains/anvil/lower/building)
 "Er" = (
 /obj/machinery/light/fueled/firebowl,
 /turf/open/floor/cobblerock,
@@ -2205,19 +2222,6 @@
 /obj/item/restraints/legcuffs/beartrap/armed,
 /turf/open/floor/naturalstone,
 /area/rogue/under/mountains/anvil/lower)
-"Iz" = (
-/obj/item/clothing/head/helmet/leather/minershelm,
-/obj/item/fertilizer/ash,
-/obj/item/fertilizer/ash{
-	pixel_x = 8;
-	pixel_y = 4
-	},
-/obj/item/fertilizer/ash{
-	pixel_y = 8;
-	pixel_x = -11
-	},
-/turf/open/floor/naturalstone,
-/area/rogue/under/mountains/anvil/lower/building)
 "IB" = (
 /obj/item/restraints/legcuffs/beartrap/armed,
 /turf/open/floor/cobblerock,
@@ -2453,10 +2457,6 @@
 /obj/structure/door/iron/bars,
 /turf/open/floor/cobble,
 /area/rogue/under/mountains/anvil/lower/building)
-"LY" = (
-/obj/item/clothing/pants/loincloth/brown,
-/turf/open/floor/cobblerock,
-/area/rogue/under/mountains/anvil/lower)
 "Ma" = (
 /turf/open/floor/grass/cold,
 /area/rogue/under/mountains/anvil/lower)
@@ -2937,10 +2937,6 @@
 /obj/item/chair,
 /turf/open/floor/blocks,
 /area/rogue/under/mountains/anvil/lower/building)
-"ST" = (
-/obj/item/clothing/pants/loincloth/brown,
-/turf/open/floor/dirt/road,
-/area/rogue/under/mountains/anvil/lower)
 "SY" = (
 /turf/open/floor/cobble,
 /area/rogue/under/mountains/anvil/lower/building)
@@ -2964,6 +2960,10 @@
 	},
 /turf/open/floor/cobble,
 /area/rogue/outdoors/mountains/anvil/snowyforest)
+"To" = (
+/obj/item/clothing/pants/loincloth/colored/brown,
+/turf/open/floor/dirt/road,
+/area/rogue/under/mountains/anvil/lower)
 "Tp" = (
 /mob/living/simple_animal/hostile/retaliate/spider/mutated,
 /obj/effect/decal/cleanable/blood,
@@ -3924,7 +3924,7 @@ Oq
 Oq
 Oq
 VB
-Iz
+vj
 Ly
 Ly
 cB
@@ -18529,7 +18529,7 @@ DR
 DR
 dX
 Jv
-vo
+Dh
 Jv
 Jv
 Jv
@@ -18734,7 +18734,7 @@ Jv
 Jv
 Jv
 Jv
-vo
+Dh
 Jv
 Jv
 Jv
@@ -19340,7 +19340,7 @@ DR
 Jv
 Jv
 Jv
-vo
+Dh
 Jv
 eg
 eg
@@ -48183,7 +48183,7 @@ DR
 DR
 Gv
 Gv
-jW
+Ep
 vV
 MI
 vV
@@ -48592,7 +48592,7 @@ vV
 St
 oR
 oR
-jW
+Ep
 oR
 gP
 ko
@@ -50767,12 +50767,12 @@ DW
 DW
 DW
 DR
-LY
+mI
 ko
 ko
 vf
 ko
-ST
+To
 Pd
 pF
 pF

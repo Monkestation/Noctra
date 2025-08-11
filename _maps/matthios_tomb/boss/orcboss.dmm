@@ -248,8 +248,8 @@
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/clothing/cloak/half/random,
-/obj/item/clothing/armor/leather/vest/black,
+/obj/item/clothing/cloak/half/colored/random,
+/obj/item/clothing/armor/leather/vest/colored/black,
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
 "TD" = (

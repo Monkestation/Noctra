@@ -19,6 +19,7 @@
 	sewrepair = TRUE
 	anvilrepair = null
 	resistance_flags = FLAMMABLE // Made of leather
+	color = CLOTHING_LINEN
 	smeltresult = /obj/item/fertilizer/ash
 
 	armor = ARMOR_PADDED
@@ -47,29 +48,32 @@
 					H.update_inv_head()
 		user.regenerate_clothes()
 
-/obj/item/clothing/neck/keffiyeh/uncolored
+/obj/item/clothing/neck/keffiyeh/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
+/obj/item/clothing/neck/keffiyeh/colored/uncolored
 	color = CLOTHING_LINEN
 
-/obj/item/clothing/neck/keffiyeh/red
+/obj/item/clothing/neck/keffiyeh/colored/red
 	color = CLOTHING_BLOOD_RED
 
-/obj/item/clothing/neck/keffiyeh/yellow
+/obj/item/clothing/neck/keffiyeh/colored/yellow
 	color = CLOTHING_PEAR_YELLOW
 
-/obj/item/clothing/neck/keffiyeh/orange
+/obj/item/clothing/neck/keffiyeh/colored/orange
 	color = CLOTHING_FYRITIUS_ORANGE
 
-/obj/item/clothing/neck/keffiyeh/green
+/obj/item/clothing/neck/keffiyeh/colored/green
 	color = CLOTHING_BOG_GREEN
 
-/obj/item/clothing/neck/keffiyeh/blue
+/obj/item/clothing/neck/keffiyeh/colored/blue
 	color = CLOTHING_MAGE_BLUE
 
-/obj/item/clothing/neck/keffiyeh/purple
+/obj/item/clothing/neck/keffiyeh/colored/purple
 	color = CLOTHING_ROYAL_PURPLE
 
-/obj/item/clothing/neck/keffiyeh/black
+/obj/item/clothing/neck/keffiyeh/colored/black
 	color = CLOTHING_ROYAL_BLACK
 
-/obj/item/clothing/neck/keffiyeh/white
+/obj/item/clothing/neck/keffiyeh/colored/white
 	color = CLOTHING_ASH_GREY

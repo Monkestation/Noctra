@@ -29,7 +29,7 @@
 	. = ..()
 	H.virginity = TRUE
 	shoes = /obj/item/clothing/shoes/shortboots
-	shirt = /obj/item/clothing/shirt/tunic/green
+	shirt = /obj/item/clothing/shirt/tunic/colored/green
 	backr = /obj/item/storage/backpack/satchel
 	backl = /obj/item/storage/backpack/satchel/surgbag
 	gloves = /obj/item/clothing/gloves/leather/feld
@@ -41,9 +41,9 @@
 	beltr = /obj/item/weapon/whip/cane/physician
 	cloak = /obj/item/clothing/cloak/apron/brown
 	if(H.gender == FEMALE)
-		pants = /obj/item/clothing/pants/skirt/green
+		pants = /obj/item/clothing/pants/skirt/colored/green
 	else
-		pants = /obj/item/clothing/pants/tights/green
+		pants = /obj/item/clothing/pants/tights/colored/green
 	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)

@@ -41,13 +41,13 @@
 	else
 		pants = /obj/item/clothing/pants/tights
 		if(prob(50))
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/long
 	beltl = /obj/item/ammo_holder/quiver/arrows
 	shoes = /obj/item/clothing/shoes/ridingboots
 	gloves = /obj/item/clothing/gloves/angle
 	belt = /obj/item/storage/belt/leather
-	shirt = /obj/item/clothing/shirt/undershirt/random
+	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	armor = /obj/item/clothing/armor/chainmail/hauberk
 	backl = /obj/item/weapon/polearm/spear
 	head = /obj/item/clothing/head/helmet/leather

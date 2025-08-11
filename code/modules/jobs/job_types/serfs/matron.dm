@@ -62,8 +62,8 @@
 	ADD_TRAIT(H, TRAIT_OLDPARTY, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_EARGRAB, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_KITTEN_MOM, TRAIT_GENERIC)
-	shirt = /obj/item/clothing/shirt/dress/gen/black
-	armor = /obj/item/clothing/armor/leather/vest/black
+	shirt = /obj/item/clothing/shirt/dress/gen/colored/black
+	armor = /obj/item/clothing/armor/leather/vest/colored/black
 	pants = /obj/item/clothing/pants/trou/beltpants
 	belt = /obj/item/storage/belt/leather/cloth/lady
 	shoes = /obj/item/clothing/shoes/boots/leather

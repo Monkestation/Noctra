@@ -32,8 +32,8 @@
 
 	if(orphanage_renovated)
 		neck = /obj/item/storage/belt/pouch/coins/poor
-		shirt = /obj/item/clothing/shirt/undershirt/random
-		pants = /obj/item/clothing/pants/tights/random
+		shirt = /obj/item/clothing/shirt/undershirt/colored/random
+		pants = /obj/item/clothing/pants/tights/colored/random
 		belt = /obj/item/storage/belt/leather/rope
 		shoes = /obj/item/clothing/shoes/simpleshoes
 
@@ -46,18 +46,18 @@
 	else
 		if(prob(50))
 			if(prob(50))
-				shirt = /obj/item/clothing/shirt/undershirt/vagrant/l
+				shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant/l
 			else
-				shirt = /obj/item/clothing/shirt/undershirt/vagrant
+				shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 			if(prob(50))
-				pants = /obj/item/clothing/pants/tights/vagrant/l
+				pants = /obj/item/clothing/pants/tights/colored/vagrant/l
 			else
-				pants = /obj/item/clothing/pants/tights/vagrant
+				pants = /obj/item/clothing/pants/tights/colored/vagrant
 		else
 			armor = /obj/item/clothing/shirt/rags
 
 	if(prob(35) || orphanage_renovated)
-		cloak = pick(/obj/item/clothing/cloak/half, /obj/item/clothing/cloak/half/brown)
+		cloak = pick(/obj/item/clothing/cloak/half, /obj/item/clothing/cloak/half/colored/brown)
 	if(prob(30) || orphanage_renovated)
 		head = pick(/obj/item/clothing/head/knitcap, /obj/item/clothing/head/bardhat, /obj/item/clothing/head/courtierhat, /obj/item/clothing/head/fancyhat)
 	if(prob(15) || orphanage_renovated)
