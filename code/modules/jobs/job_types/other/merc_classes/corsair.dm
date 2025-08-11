@@ -24,7 +24,7 @@
 	..()
 	if(H.mind)
 
-		H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE) // Swords / Nonlethal.
 		H.adjust_skillrank(/datum/skill/labor/fishing, 3, TRUE)
