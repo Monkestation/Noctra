@@ -1,394 +1,362 @@
 /datum/anvil_recipe/tools
 	i_type = "Utilities"
-	craftdiff = 1
 	abstract_type = /datum/anvil_recipe/tools
+	appro_skill = /datum/skill/craft/blacksmithing // already in parent just in here so people know
 	category = "Tools"
 
-/datum/anvil_recipe/tools/blankeys
+// --------- TIN -----------
+
+/datum/anvil_recipe/tools/tin
+	craftdiff = 0 // for starters
+	req_bar = /obj/item/ingot/tin
+	abstract_type = /datum/anvil_recipe/tools/tin
+///////////////////////////////////////////////
+
+/datum/anvil_recipe/tools/tin/platter
+	name = "2x Platters (tin)"
+	created_item = /obj/item/plate/pewter
+	createditem_extra = 1
+
+/datum/anvil_recipe/tools/tin/spoon
+	name = "2x Spoons (tin)"
+	created_item = /obj/item/kitchen/spoon/pewter
+	createditem_extra = 1
+
+/datum/anvil_recipe/tools/tin/fork
+	name = "2x Forks (tin)"
+	created_item = /obj/item/kitchen/fork/pewter
+	createditem_extra = 1
+
+// --------- COPPER -----------
+
+/datum/anvil_recipe/tools/copper
+	craftdiff = 0 // for starters
+	req_bar = /obj/item/ingot/copper
+	abstract_type = /datum/anvil_recipe/tools/copper
+///////////////////////////////////////////////
+
+/datum/anvil_recipe/tools/copper/hoe
+	name = "Copper Hoe (+Stick x2)"
+	recipe_name = "a gardening Hoe"
+	additional_items = list(/obj/item/grown/log/tree/stick,/obj/item/grown/log/tree/stick)
+	created_item = /obj/item/weapon/hoe/copper
+
+/datum/anvil_recipe/tools/copper/sickle
+	name = "Copper Sickle (+Stick)"
+	recipe_name = "a Sickle"
+	additional_items = list(/obj/item/grown/log/tree/stick)
+	created_item = /obj/item/weapon/sickle/copper
+
+/datum/anvil_recipe/tools/copper/pitchfork
+	name = "Copper Pitchfork (+Stick x2)"
+	recipe_name = "a Pitchfork"
+	additional_items = list(/obj/item/grown/log/tree/stick,/obj/item/grown/log/tree/stick)
+	created_item = /obj/item/weapon/pitchfork/copper
+
+/datum/anvil_recipe/tools/copper/pick
+	name = "Copper Pick (+Stick)"
+	recipe_name = "a digging Pick"
+	additional_items = list(/obj/item/grown/log/tree/stick)
+	created_item = /obj/item/weapon/pick/copper
+
+/datum/anvil_recipe/tools/copper/lamptern
+	name = "Copper Lamptern"
+	recipe_name = "a Lamptern"
+	created_item = /obj/item/flashlight/flare/torch/lantern/copper
+
+/datum/anvil_recipe/tools/copper/hammer
+	name = "Copper Hammer (+Stick)"
+	recipe_name = "a blacksmithing Hammer"
+	additional_items = list(/obj/item/grown/log/tree/stick)
+	created_item = /obj/item/weapon/hammer/copper
+
+/datum/anvil_recipe/tools/copper/pote
+	name = "Cooking pot (copper)"
+	created_item = /obj/item/reagent_containers/glass/bucket/pot/copper
+
+/datum/anvil_recipe/tools/copper/platter
+	name = "2x Platters (copper)"
+	recipe_name = "a platter"
+	created_item = /obj/item/plate/copper
+	createditem_extra = 1
+
+// --------- BRONZE -----------
+
+/datum/anvil_recipe/tools/bronze
+	craftdiff = 1
+	req_bar = /obj/item/ingot/bronze
+	abstract_type = /datum/anvil_recipe/tools/bronze
+///////////////////////////////////////////////
+
+/datum/anvil_recipe/tools/bronze/chisel
+	name = "Bronze Chisel"
+	created_item = /obj/item/weapon/chisel/bronze
+
+// --------- IRON -----------
+
+/datum/anvil_recipe/tools/iron
+	craftdiff = 1
+	req_bar = /obj/item/ingot/iron
+	abstract_type = /datum/anvil_recipe/tools/iron
+///////////////////////////////////////////////
+
+/datum/anvil_recipe/tools/iron/keyring
+	name = "3x Keyrings"
+	recipe_name = "three Keyrings"
+	created_item = /obj/item/storage/keyring
+	createditem_extra = 2
+	craftdiff = 0
+
+/datum/anvil_recipe/tools/iron/locks
+	name = "3x Custom Locks"
+	recipe_name = "three Locks"
+	appro_skill = /datum/skill/craft/engineering // To train engineering
+	created_item = /obj/item/customlock
+	createditem_extra = 2
+	craftdiff = 0
+
+/datum/anvil_recipe/tools/iron/lockpicks
+	name = "3x Lockpicks"
+	recipe_name = "three Lockpicks"
+	created_item = /obj/item/lockpick
+	createditem_extra = 2
+	craftdiff = 1
+
+/datum/anvil_recipe/tools/iron/lockpickring
+	name = "3x Lockpickrings"
+	recipe_name = "three Lockpickrings"
+	created_item = /obj/item/lockpickring
+	createditem_extra = 2
+	craftdiff = 0
+
+/datum/anvil_recipe/tools/iron/blankeys
 	name = "3x Blank Custom Keys"
 	recipe_name = "three Blank Keys"
-	req_bar = /obj/item/ingot/iron
 	appro_skill = /datum/skill/craft/engineering // To train engineering
 	created_item = /obj/item/key/custom
-	createmultiple = TRUE
-	createditem_num = 2
+	createditem_extra = 2
 	craftdiff = 0
 
-/datum/anvil_recipe/tools/chains
+/datum/anvil_recipe/tools/iron/chains
 	name = "3x Chains"
 	recipe_name = "three lengths of Chain"
-	req_bar = /obj/item/ingot/iron
-	appro_skill = /datum/skill/craft/traps // To train trapmaking
 	created_item = /obj/item/rope/chain
-	createmultiple = TRUE
-	createditem_num = 2
+	createditem_extra = 2
 	craftdiff = 0
 
-/datum/anvil_recipe/tools/cogiron
+/datum/anvil_recipe/tools/iron/lamptern
+	name = "Iron Lamptern"
+	recipe_name = "a Lamptern"
+	created_item = /obj/item/flashlight/flare/torch/lantern
+
+/datum/anvil_recipe/tools/iron/cogiron
 	name = "Cog"
 	recipe_name = "a Cog"
-	req_bar = /obj/item/ingot/iron
 	appro_skill = /datum/skill/craft/engineering // To train engineering
 	created_item = /obj/item/gear/metal/iron
 	craftdiff = 0
 
-/datum/anvil_recipe/tools/cogstee
-	name = "2x Cogs"
-	recipe_name = "two Cogs"
-	req_bar = /obj/item/ingot/steel
-	appro_skill = /datum/skill/craft/engineering // To train engineering
-	created_item = /obj/item/gear/metal/steel
-	createmultiple = TRUE
-	createditem_num = 1
-
-/datum/anvil_recipe/tools/cups
-	name = "3x Metal Cups"
-	recipe_name = "three drinking Cups"
-	req_bar = /obj/item/ingot/iron
-	created_item = /obj/item/reagent_containers/glass/cup
-	createmultiple = TRUE
-	createditem_num = 2
-	craftdiff = 0
-
-/datum/anvil_recipe/tools/scissors
-	name = "Scissors"
-	req_bar = /obj/item/ingot/iron
-	created_item = /obj/item/weapon/knife/scissors
-	i_type = "Tools"
-
-/datum/anvil_recipe/tools/steelscissors
-	name = "Steel Scissors"
-	req_bar = /obj/item/ingot/steel
-	created_item = /obj/item/weapon/knife/scissors/steel
-	i_type = "Tools"
-
-/datum/anvil_recipe/tools/pick/steel
-	name = "Steel Pick (+Stick)"
-	recipe_name = "a digging Pick"
-	req_bar = /obj/item/ingot/steel
-	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/weapon/pick/steel
-	i_type = "Tools"
-
-/datum/anvil_recipe/tools/frypan
-	name = "Pan"
-	recipe_name = "a Frypan"
-	req_bar = /obj/item/ingot/iron
-	created_item = /obj/item/cooking/pan
-	craftdiff = 0
-
-/datum/anvil_recipe/tools/gobletsteel
-	name = "3x Goblets"
-	recipe_name = "three Goblets"
-	req_bar = /obj/item/ingot/steel
-	created_item = /obj/item/reagent_containers/glass/cup/steel
-	createmultiple = TRUE
-	createditem_num = 2
-	craftdiff = 0
-
-/datum/anvil_recipe/tools/gobletgold
-	name = "3x Golden Goblets"
-	recipe_name = "three Goblets"
-	req_bar = /obj/item/ingot/gold
-	created_item = /obj/item/reagent_containers/glass/cup/golden
-	createmultiple = TRUE
-	createditem_num = 2
-	craftdiff = 2
-
-/datum/anvil_recipe/tools/gobletsilver
-	name = "3x Silver Goblets"
-	recipe_name = "three Goblets"
-	req_bar = /obj/item/ingot/silver
-	created_item = /obj/item/reagent_containers/glass/cup/silver
-	createmultiple = TRUE
-	createditem_num = 2
-	craftdiff = 2
-
-/datum/anvil_recipe/tools/carafegold
-	name = "Golden Carafe"
-	recipe_name = "Golden Carafe"
-	req_bar = /obj/item/ingot/gold
-	created_item = /obj/item/reagent_containers/glass/carafe/gold
-	craftdiff = 0
-
-/datum/anvil_recipe/tools/carafesilver
-	name = "Silver Carafe"
-	recipe_name = "Silver Carafe"
-	req_bar = /obj/item/ingot/silver
-	created_item = /obj/item/reagent_containers/glass/carafe/silver
-	craftdiff = 0
-
-/datum/anvil_recipe/tools/hammer
+/datum/anvil_recipe/tools/iron/hammer
 	name = "Hammer (+Stick)"
 	recipe_name = "a blacksmithing Hammer"
-	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/grown/log/tree/stick)
 	created_item = /obj/item/weapon/hammer/iron
-	i_type = "Tools"
 
-/datum/anvil_recipe/tools/hoe
+/datum/anvil_recipe/tools/iron/hoe
 	name = "Hoe (+Stick x2)"
 	recipe_name = "a gardening Hoe"
-	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/grown/log/tree/stick,/obj/item/grown/log/tree/stick)
 	created_item = /obj/item/weapon/hoe
-	i_type = "Tools"
 
-/datum/anvil_recipe/tools/keyring
-	name = "3x Keyrings"
-	recipe_name = "three Keyrings"
-	req_bar = /obj/item/ingot/iron
-	created_item = /obj/item/storage/keyring
-	createmultiple = TRUE
-	createditem_num = 2
-	craftdiff = 0
-
-/datum/anvil_recipe/tools/lamptern
-	name = "Iron Lamptern"
-	recipe_name = "a Lamptern"
-	req_bar = /obj/item/ingot/iron
-	created_item = /obj/item/flashlight/flare/torch/lantern
-
-/datum/anvil_recipe/tools/locks
-	name = "3x Custom Locks"
-	recipe_name = "three Locks"
-	req_bar = /obj/item/ingot/iron
-	appro_skill = /datum/skill/craft/engineering // To train engineering
-	created_item = /obj/item/customlock
-	createmultiple = TRUE
-	createditem_num = 2
-	craftdiff = 0
-
-/datum/anvil_recipe/tools/lockpicks
-	name = "3x Lockpicks"
-	recipe_name = "three Lockpicks"
-	req_bar = /obj/item/ingot/iron
-	created_item = /obj/item/lockpick
-	createmultiple = TRUE
-	createditem_num = 2
-	craftdiff = 2
-
-/datum/anvil_recipe/tools/lockpickring
-	name = "3x Lockpickrings"
-	recipe_name = "three Lockpickrings"
-	req_bar = /obj/item/ingot/iron
-	created_item = /obj/item/lockpickring
-	createmultiple = TRUE
-	createditem_num = 2
-	craftdiff = 0
-
-/datum/anvil_recipe/tools/mantrap
+/datum/anvil_recipe/tools/iron/mantrap
 	name = "Mantrap"
 	recipe_name = "a mantrap"
-	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/restraints/legcuffs/beartrap/crafted
-	appro_skill = /datum/skill/craft/traps
-	craftdiff = 1
 
-/datum/anvil_recipe/tools/fishinghooks
+/datum/anvil_recipe/tools/iron/fishinghooks
 	name = "3x Fishing hooks"
-	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/fishing/hook/iron
-	createmultiple = TRUE
-	createditem_num = 2
-	i_type = "Tools"
+	createditem_extra = 2
+	craftdiff = 0
 
-/datum/anvil_recipe/tools/pick
+/datum/anvil_recipe/tools/iron/pick
 	name = "Pick (+Stick)"
 	recipe_name = "a digging Pick"
-	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/grown/log/tree/stick)
 	created_item = /obj/item/weapon/pick
-	i_type = "Tools"
 
-/datum/anvil_recipe/tools/pitchfork
+/datum/anvil_recipe/tools/iron/pitchfork
 	name = "Pitchfork (+Stick x2)"
 	recipe_name = "a Pitchfork"
-	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/grown/log/tree/stick,/obj/item/grown/log/tree/stick)
 	created_item = /obj/item/weapon/pitchfork
-	i_type = "Tools"
 
-/datum/anvil_recipe/tools/sewingneedle
+/datum/anvil_recipe/tools/iron/sewingneedle
 	name = "3x Sewing Needles"
 	recipe_name = "three Sewing Needles"
-	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/needle
-	createmultiple = TRUE
-	createditem_num = 2 // They can be refilled with fiber now
-	craftdiff = 0
+	createditem_extra = 2 // They can be refilled with fiber now
 
-/datum/anvil_recipe/tools/shovel
+/datum/anvil_recipe/tools/iron/shovel
 	name = "Shovel (+Stick x2)"
 	recipe_name = "a Shovel"
-	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/grown/log/tree/stick,/obj/item/grown/log/tree/stick)
 	created_item = /obj/item/weapon/shovel
-	i_type = "Tools"
 
-/datum/anvil_recipe/tools/sickle
+/datum/anvil_recipe/tools/iron/sickle
 	name = "Sickle (+Stick)"
 	recipe_name = "a Sickle"
-	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/grown/log/tree/stick)
 	created_item = /obj/item/weapon/sickle
-	i_type = "Tools"
 
-/datum/anvil_recipe/tools/tongs
+/datum/anvil_recipe/tools/iron/tongs
 	name = "Tongs"
 	recipe_name = "a pair of Tongs"
-	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/weapon/tongs
-	i_type = "Tools"
 
-/datum/anvil_recipe/tools/surgery/surgerytools
-	name = "Surgeon's Bag (+1 iron +1 hide)"
-	req_bar = /obj/item/ingot/iron
-	additional_items = list(/obj/item/ingot/iron, /obj/item/natural/hide)
-	created_item = /obj/item/storage/backpack/satchel/surgbag
-	i_type = "Tools"
-
-/datum/anvil_recipe/tools/torch
+/datum/anvil_recipe/tools/iron/torch
 	name = "5x Iron Torches (+Coal)"
 	recipe_name = "five Torches"
-	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/ore/coal)
 	created_item = /obj/item/flashlight/flare/torch/metal
-	createmultiple = TRUE
-	createditem_num = 4
+	createditem_extra = 4
 	craftdiff = 0
 
-/datum/anvil_recipe/tools/pote
+/datum/anvil_recipe/tools/iron/pote
 	name = "Cooking pot (iron)"
 	recipe_name = "a cooking pot"
-	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/reagent_containers/glass/bucket/pot
 	craftdiff = 1
 
-/datum/anvil_recipe/tools/pote/copper
-	name = "Cooking pot (copper)"
-	req_bar = /obj/item/ingot/copper
-	created_item = /obj/item/reagent_containers/glass/bucket/pot/copper
-
-/datum/anvil_recipe/tools/platter
-	name = "2x Platters (copper)"
-	recipe_name = "a platter"
-	req_bar = /obj/item/ingot/copper
-	created_item = /obj/item/plate/copper
-	craftdiff = 1
-	createmultiple = TRUE
-	createditem_num = 1
-
-/datum/anvil_recipe/tools/platter/tin
-	name = "2x Platters (tin)"
-	req_bar = /obj/item/ingot/tin
-	created_item = /obj/item/plate/pewter
-
-/datum/anvil_recipe/tools/platter/silver
-	name = "2x Platters (silver)"
-	req_bar = /obj/item/ingot/silver
-	created_item = /obj/item/plate/silver
-
-/datum/anvil_recipe/tools/platter/gold
-	name = "2x Platters (gold)"
-	req_bar = /obj/item/ingot/gold
-	created_item = /obj/item/plate/gold
-
-/datum/anvil_recipe/tools/hoe/copper
-	name = "Copper Hoe (+Stick x2)"
-	recipe_name = "a gardening Hoe"
-	req_bar = /obj/item/ingot/copper
-	additional_items = list(/obj/item/grown/log/tree/stick,/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/weapon/hoe/copper
-	i_type = "Tools"
-
-/datum/anvil_recipe/tools/sickle/copper
-	name = "Copper Sickle (+Stick)"
-	recipe_name = "a Sickle"
-	req_bar = /obj/item/ingot/copper
-	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/weapon/sickle/copper
-	i_type = "Tools"
-
-/datum/anvil_recipe/tools/pitchfork/copper
-	name = "Copper Pitchfork (+Stick x2)"
-	recipe_name = "a Pitchfork"
-	req_bar = /obj/item/ingot/copper
-	additional_items = list(/obj/item/grown/log/tree/stick,/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/weapon/pitchfork/copper
-	i_type = "Tools"
-
-/datum/anvil_recipe/tools/pick/copper
-	name = "Copper Pick (+Stick)"
-	recipe_name = "a digging Pick"
-	req_bar = /obj/item/ingot/copper
-	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/weapon/pick/copper
-	i_type = "Tools"
-
-/datum/anvil_recipe/tools/lamptern/copper
-	name = "Copper Lamptern"
-	recipe_name = "a Lamptern"
-	req_bar = /obj/item/ingot/copper
-	created_item = /obj/item/flashlight/flare/torch/lantern/copper
-
-/datum/anvil_recipe/tools/hammer/copper
-	name = "Copper Hammer (+Stick)"
-	req_bar = /obj/item/ingot/copper
-	recipe_name = "a blacksmithing Hammer"
-	additional_items = list(/obj/item/grown/log/tree/stick)
-	created_item = /obj/item/weapon/hammer/copper
-	i_type = "Tools"
-
-/datum/anvil_recipe/tools/headhook
+/datum/anvil_recipe/tools/iron/headhook
 	name = "Iron Headhook (+Fibers x2)"
 	recipe_name = "An iron headhook"
-	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/natural/fibers = 2)
 	created_item = /obj/item/storage/hip/headhook
 	craftdiff = 3
 
-/datum/anvil_recipe/tools/chisel
-	name = "Steel Chisel"
-	recipe_name = "a Chisel"
-	req_bar = /obj/item/ingot/steel
-	created_item = /obj/item/weapon/chisel
-	i_type = "Tools"
-
-/datum/anvil_recipe/tools/chisel/iron
+/datum/anvil_recipe/tools/iron/chisel
 	name = "Iron Chisel"
-	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/weapon/chisel/iron
 
-/datum/anvil_recipe/tools/chisel/bronze
-	name = "Bronze Chisel"
-	req_bar = /obj/item/ingot/bronze
-	created_item = /obj/item/weapon/chisel/bronze
-
-/datum/anvil_recipe/tools/spoon
+/datum/anvil_recipe/tools/iron/spoon
 	name = "2x Spoons (iron)"
 	recipe_name = "a Spoon"
-	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/kitchen/spoon/iron
-	craftdiff = 1
-	createmultiple = TRUE
-	createditem_num = 1
+	createditem_extra = 1
 
-/datum/anvil_recipe/tools/spoon/tin
-	name = "2x Spoons (tin)"
-	req_bar = /obj/item/ingot/tin
-	created_item = /obj/item/kitchen/spoon/pewter
-
-/datum/anvil_recipe/tools/fork
+/datum/anvil_recipe/tools/iron/fork
 	name = "2x Forks (iron)"
 	recipe_name = "a Fork"
-	req_bar = /obj/item/ingot/iron
 	created_item = /obj/item/kitchen/fork/iron
-	craftdiff = 1
-	createmultiple = TRUE
-	createditem_num = 1
+	createditem_extra = 1
 
-/datum/anvil_recipe/tools/fork/tin
-	name = "2x Forks (tin)"
-	req_bar = /obj/item/ingot/tin
-	created_item = /obj/item/kitchen/fork/pewter
+/datum/anvil_recipe/tools/iron/cups
+	name = "3x Metal Cups"
+	recipe_name = "three drinking Cups"
+	created_item = /obj/item/reagent_containers/glass/cup
+	createditem_extra = 2
+	craftdiff = 0
+
+/datum/anvil_recipe/tools/iron/scissors
+	name = "Scissors"
+	created_item = /obj/item/weapon/knife/scissors
+
+/datum/anvil_recipe/tools/iron/frypan
+	name = "Pan"
+	recipe_name = "a Frypan"
+	created_item = /obj/item/cooking/pan
+	craftdiff = 0
+
+/datum/anvil_recipe/tools/iron/surgerytools
+	name = "Set of Surgery Tools (+Bar)"
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/surgeontoolspawner
+
+// --------- STEEL -----------
+
+/datum/anvil_recipe/tools/steel
+	craftdiff = 2
+	req_bar = /obj/item/ingot/steel
+	abstract_type = /datum/anvil_recipe/tools/steel
+///////////////////////////////////////////////
+
+/datum/anvil_recipe/tools/steel/cogstee
+	name = "2x Cogs"
+	recipe_name = "two Cogs"
+	appro_skill = /datum/skill/craft/engineering // To train engineering
+	created_item = /obj/item/gear/metal/steel
+	createditem_extra = 1
+
+/datum/anvil_recipe/tools/steel/scissors
+	name = "Steel Scissors"
+	created_item = /obj/item/weapon/knife/scissors/steel
+
+/datum/anvil_recipe/tools/steel/pick
+	name = "Steel Pick (+Stick)"
+	recipe_name = "a digging Pick"
+	additional_items = list(/obj/item/grown/log/tree/stick)
+	created_item = /obj/item/weapon/pick/steel
+
+/datum/anvil_recipe/tools/steel/gobletsteel
+	name = "3x Goblets"
+	recipe_name = "three Goblets"
+	created_item = /obj/item/reagent_containers/glass/cup/steel
+	createditem_extra = 2
+	craftdiff = 1
+
+/datum/anvil_recipe/tools/steel/chisel
+	name = "Steel Chisel"
+	recipe_name = "a Chisel"
+	created_item = /obj/item/weapon/chisel
+	craftdiff = 1
+
+// --------- SILVER -----------
+
+/datum/anvil_recipe/tools/silver
+	craftdiff = 3
+	req_bar = /obj/item/ingot/silver
+	abstract_type = /datum/anvil_recipe/tools/silver
+///////////////////////////////////////////////
+
+/datum/anvil_recipe/tools/silver/gobletsilver
+	name = "3x Silver Goblets"
+	recipe_name = "three Goblets"
+	created_item = /obj/item/reagent_containers/glass/cup/silver
+	createditem_extra = 2
+	craftdiff = 2
+
+/datum/anvil_recipe/tools/silver/carafesilver
+	name = "Silver Carafe"
+	recipe_name = "Silver Carafe"
+	created_item = /obj/item/reagent_containers/glass/carafe/silver
+
+/datum/anvil_recipe/tools/silver/platter
+	name = "2x Platters (silver)"
+	created_item = /obj/item/plate/silver
+	craftdiff = 2
+
+// --------- GOLD -----------
+
+/datum/anvil_recipe/tools/gold
+	craftdiff = 3
+	req_bar = /obj/item/ingot/gold
+	abstract_type = /datum/anvil_recipe/tools/gold
+///////////////////////////////////////////////
+
+/datum/anvil_recipe/tools/gold/gobletgold
+	name = "3x Golden Goblets"
+	recipe_name = "three Goblets"
+	created_item = /obj/item/reagent_containers/glass/cup/golden
+	createditem_extra = 2
+	craftdiff = 2
+
+/datum/anvil_recipe/tools/gold/carafegold
+	name = "Golden Carafe"
+	recipe_name = "Golden Carafe"
+	created_item = /obj/item/reagent_containers/glass/carafe/gold
+
+/datum/anvil_recipe/tools/gold/platter
+	name = "2x Platters (gold)"
+	created_item = /obj/item/plate/gold
+	craftdiff = 2

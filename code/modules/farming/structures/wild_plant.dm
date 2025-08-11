@@ -117,3 +117,91 @@
 /obj/structure/wild_plant/nospread/poppy
 	icon_state = "poppy2"
 	plant_type = /datum/plant_def/poppy
+
+/obj/structure/wild_plant/nospread/cabbage
+	icon_state = "cabbage2"
+	plant_type = /datum/plant_def/cabbage
+
+/obj/structure/wild_plant/nospread/onion
+	icon_state = "onion2"
+	plant_type = /datum/plant_def/onion
+
+/obj/structure/wild_plant/nospread/wheat
+	icon_state = "wheat2"
+	plant_type = /datum/plant_def/wheat
+
+/obj/structure/wild_plant/nospread/oat
+	icon_state = "oat2"
+	plant_type = /datum/plant_def/oat
+
+/obj/structure/wild_plant/nospread/westleach
+	icon_state = "westleach2"
+	plant_type = /datum/plant_def/westleach
+
+/obj/structure/wild_plant/nospread/jacksberry
+	icon_state = "berry2"
+	plant_type = /datum/plant_def/jacksberry
+
+/obj/structure/wild_plant/nospread/jacksberry_poison
+	icon_state = "berry2"
+	plant_type = /datum/plant_def/jacksberry_poison
+
+/obj/structure/wild_plant/nospread/strawberry
+	icon_state = "strawberry2"
+	plant_type = /datum/plant_def/strawberry
+
+/obj/structure/wild_plant/nospread/blackberry
+	icon_state = "blackberry2"
+	plant_type = /datum/plant_def/blackberry
+
+/obj/structure/wild_plant/nospread/raspberry
+	icon_state = "raspberry2"
+	plant_type = /datum/plant_def/raspberry
+
+/obj/structure/wild_plant/nospread/apple
+	icon_state = "apple2"
+	plant_type = /datum/plant_def/apple
+
+/obj/structure/wild_plant/nospread/pear
+	icon_state = "pear2"
+	plant_type = /datum/plant_def/pear
+
+/obj/structure/wild_plant/nospread/plum
+	icon_state = "plumtree2"
+	plant_type = /datum/plant_def/plum
+
+/obj/structure/wild_plant/nospread/tangerine
+	icon_state = "tangerinetree2"
+	plant_type = /datum/plant_def/tangerine
+
+/obj/structure/wild_plant/nospread/lime
+	icon_state = "limetree2"
+	plant_type = /datum/plant_def/lime
+
+/obj/structure/wild_plant/nospread/lemon
+	icon_state = "lemontree2"
+	plant_type = /datum/plant_def/lemon
+
+/obj/structure/wild_plant/nospread/sugarcane
+	icon_state = "sugarcane2"
+	plant_type = /datum/plant_def/sugarcane
+
+/obj/structure/wild_plant/nospread/potato
+	icon_state = "potato2"
+	plant_type = /datum/plant_def/potato
+
+/obj/structure/wild_plant/nospread/turnip
+	icon_state = "turnip2"
+	plant_type = /datum/plant_def/turnip
+
+/obj/structure/wild_plant/nospread/swampweed
+	icon_state = "swampweed2"
+	plant_type = /datum/plant_def/swampweed
+
+/obj/structure/wild_plant/nospread/sunflower
+	icon_state = "sunflower2"
+	plant_type = /datum/plant_def/sunflower
+
+/obj/structure/wild_plant/nospread/fyritiusflower
+	icon_state = "fyritius2"
+	plant_type = /datum/plant_def/fyritiusflower

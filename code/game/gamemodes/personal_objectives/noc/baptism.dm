@@ -1,6 +1,6 @@
 /datum/objective/baptism
 	name = "Receive Baptism"
-	triumph_count = 2
+	triumph_count = 3
 
 /datum/objective/baptism/on_creation()
 	. = ..()

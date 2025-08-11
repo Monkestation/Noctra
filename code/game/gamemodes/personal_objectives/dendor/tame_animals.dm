@@ -1,5 +1,6 @@
 /datum/objective/tame_animal
 	name = "Tame an Animal"
+	triumph_count = 2
 	var/tamed_count = 0
 	var/required_tames = 1
 

@@ -187,7 +187,7 @@
 	item_weight = 9 * IRON_MULTIPLIER
 
 //................ Elf Sallet ............... //
-/obj/item/clothing/head/helmet/sallet/elven	// blackoak merc helmet
+/obj/item/clothing/head/helmet/sallet/rare/elven	// blackoak merc helmet
 	desc = "A steel helmet with a thin gold plating designed for Elven woodland guardians."
 	icon_state = "bascinet_novisor"
 	color = COLOR_ASSEMBLY_GOLD
@@ -245,6 +245,7 @@
 	body_parts_covered = FULL_HEAD
 	max_integrity = INTEGRITY_STRONG
 	prevent_crits = ALL_CRITICAL_HITS
+	abstract_type = /obj/item/clothing/head/helmet/visored
 
 /obj/item/clothing/head/helmet/visored/AdjustClothes(mob/user)
 	if(loc == user)
@@ -413,6 +414,9 @@
 	body_parts_covered = FULL_HEAD
 	prevent_crits = BLUNT_AND_MINOR_CRITS
 	item_weight = 5.5 * STEEL_MULTIPLIER
+
+/obj/item/clothing/head/helmet/blacksteel
+	abstract_type = /obj/item/clothing/head/helmet/blacksteel
 
 /obj/item/clothing/head/helmet/blacksteel/bucket
 	name = "Blacksteel Great Helm"

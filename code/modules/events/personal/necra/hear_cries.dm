@@ -16,7 +16,7 @@
 	if(!.)
 		return FALSE
 
-	if(length(GLOB.last_words) < 8)
+	if(length(GLOB.last_words) < 7)
 		return FALSE
 
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
@@ -29,7 +29,7 @@
 	return FALSE
 
 /datum/round_event/dead_whispers/start()
-	if(length(GLOB.last_words) < 8)
+	if(length(GLOB.last_words) < 7)
 		return FALSE
 
 	var/list/valid_targets = list()

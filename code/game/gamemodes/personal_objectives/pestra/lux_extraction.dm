@@ -1,5 +1,6 @@
 /datum/objective/lux_extraction
 	name = "Extract Lux"
+	triumph_count = 2
 
 /datum/objective/lux_extraction/on_creation()
 	. = ..()

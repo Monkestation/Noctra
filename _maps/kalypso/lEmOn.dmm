@@ -1,0 +1,135 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/naturalstone,
+/area/template_noop)
+"b" = (
+/obj/item/natural/stone,
+/turf/open/floor/dirt,
+/area/template_noop)
+"i" = (
+/obj/structure/wild_plant/nospread/lemon,
+/turf/open/floor/dirt,
+/area/template_noop)
+"k" = (
+/obj/structure/flora/grass,
+/turf/open/floor/dirt,
+/area/template_noop)
+"p" = (
+/obj/structure/wild_plant/nospread/lime,
+/turf/open/floor/dirt,
+/area/template_noop)
+"q" = (
+/obj/item/natural/stone,
+/turf/open/floor/cobblerock,
+/area/template_noop)
+"t" = (
+/turf/open/floor/cobblerock,
+/area/template_noop)
+"G" = (
+/obj/structure/wild_plant/nospread/lemon,
+/obj/structure/flora/grass,
+/turf/open/floor/dirt,
+/area/template_noop)
+"H" = (
+/turf/open/water/cleanshallow,
+/area/template_noop)
+"I" = (
+/obj/structure/flora/hotspring_rocks,
+/turf/open/floor/dirt,
+/area/template_noop)
+"P" = (
+/turf/open/floor/dirt,
+/area/template_noop)
+"T" = (
+/obj/structure/flora/hotspring_rocks/grassy,
+/turf/open/floor/cobblerock,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+t
+a
+P
+P
+a
+a
+a
+t
+"}
+(2,1,1) = {"
+t
+t
+P
+k
+P
+b
+a
+H
+a
+"}
+(3,1,1) = {"
+t
+k
+k
+k
+i
+P
+H
+H
+H
+"}
+(4,1,1) = {"
+k
+k
+I
+P
+P
+H
+H
+H
+t
+"}
+(5,1,1) = {"
+P
+P
+P
+p
+P
+H
+H
+T
+t
+"}
+(6,1,1) = {"
+a
+P
+i
+P
+P
+k
+k
+P
+t
+"}
+(7,1,1) = {"
+t
+q
+a
+a
+P
+P
+G
+k
+a
+"}
+(8,1,1) = {"
+t
+t
+t
+t
+a
+a
+P
+k
+p
+"}

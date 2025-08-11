@@ -1,5 +1,6 @@
 /datum/objective/steal_items
 	name = "Steal Items"
+	triumph_count = 2
 	var/stolen_count = 0
 	var/required_count = 3
 

@@ -38,7 +38,7 @@
 		if("Bow")
 			beltl = /obj/item/ammo_holder/quiver/arrows //womp womp, guess bow users cant have coins
 			backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/long
-			head = /obj/item/clothing/head/roguehood/black
+			head = /obj/item/clothing/head/roguehood/colored/black
 			beltr = /obj/item/weapon/sword/iron
 			H.adjust_skillrank(/datum/skill/combat/bows, 3, TRUE)
 		if("Axe")

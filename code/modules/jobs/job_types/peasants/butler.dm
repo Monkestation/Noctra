@@ -66,16 +66,16 @@
 
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/tights
-		shirt = /obj/item/clothing/shirt/undershirt/guard
+		shirt = /obj/item/clothing/shirt/undershirt/colored/guard
 		shoes = /obj/item/clothing/shoes/nobleboot
 		belt = /obj/item/storage/belt/leather/plaquesilver
 		beltr = /obj/item/storage/keyring/butler
 		beltl = /obj/item/storage/belt/pouch/coins/mid
-		armor = /obj/item/clothing/armor/leather/vest/butler
+		armor = /obj/item/clothing/armor/leather/vest/colored/butler
 		backr = /obj/item/storage/backpack/satchel
 
 	else
-		armor = /obj/item/clothing/shirt/dress/gen/maid
+		armor = /obj/item/clothing/shirt/dress/gen/colored/maid
 		shirt = /obj/item/clothing/shirt/undershirt
 		shoes = /obj/item/clothing/shoes/ridingboots
 		cloak = /obj/item/clothing/cloak/apron

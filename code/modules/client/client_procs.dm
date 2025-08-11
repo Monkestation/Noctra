@@ -642,8 +642,10 @@ GLOBAL_LIST_EMPTY(respawncounts)
 
 /// This grabs the DPI of the user per their skin
 /client/proc/acquire_dpi()
-	window_scaling = text2num(winget(src, null, "dpi"))
-
+	if(prefs && (prefs.toggles & UI_SCALE))
+		window_scaling = prefs.ui_scale
+	else if(isnull(window_scaling))
+		window_scaling = text2num(winget(src, null, "dpi"))
 	debug_admins("scalies: [window_scaling]")
 
 /client/Del()
@@ -1264,6 +1266,32 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		else
 			whitelisted = 0
 		return whitelisted
+
+/client/proc/has_triumph_buy(triumph_id)
+	if(!triumph_id)
+		return FALSE
+
+	var/list/my_triumphs = SStriumphs.triumph_buy_owners[ckey]
+	if(!islist(my_triumphs))
+		return FALSE
+
+	for(var/datum/triumph_buy/T in my_triumphs)
+		if(T.triumph_buy_id == triumph_id)
+			return TRUE
+	return FALSE
+
+/client/proc/activate_triumph_buy(triumph_id)
+	if(!triumph_id)
+		return FALSE
+
+	var/list/my_triumphs = SStriumphs.triumph_buy_owners[ckey]
+	if(!islist(my_triumphs) || !length(my_triumphs))
+		return FALSE
+
+	for(var/datum/triumph_buy/T in my_triumphs)
+		if(T.triumph_buy_id == triumph_id)
+			T.on_activate()
+	return TRUE
 
 /client/proc/commendsomeone(forced = FALSE)
 	set category = "OOC"

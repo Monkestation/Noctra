@@ -1,0 +1,312 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/flora/grass,
+/turf/open/floor/grass/mixyel,
+/area/template_noop)
+"e" = (
+/turf/open/floor/grass/mixyel,
+/area/template_noop)
+"f" = (
+/obj/structure/flora/grass/herb/salvia,
+/turf/open/floor/grass/mixyel,
+/area/template_noop)
+"g" = (
+/obj/structure/fluff/statue/small{
+	pixel_x = -2;
+	pixel_y = 20
+	},
+/turf/open/floor/grass/eora,
+/area/template_noop)
+"h" = (
+/obj/structure/flora/grass,
+/turf/open/floor/dirt/road,
+/area/template_noop)
+"j" = (
+/obj/structure/fluff/walldeco/vinez,
+/obj/structure/flora/grass,
+/turf/open/floor/dirt/road,
+/area/template_noop)
+"k" = (
+/obj/structure/flora/grass/bush_meagre,
+/turf/open/floor/grass/mixyel,
+/area/template_noop)
+"o" = (
+/obj/structure/fluff/walldeco/vinez,
+/obj/structure/fluff/walldeco/vinez,
+/turf/closed/wall/mineral/stone/moss,
+/area/template_noop)
+"p" = (
+/obj/item/candle/eora/lit{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/turf/open/floor/grass/eora,
+/area/template_noop)
+"q" = (
+/obj/structure/fluff/walldeco/vinez,
+/turf/open/floor/dirt/road,
+/area/template_noop)
+"r" = (
+/obj/item/alch/salvia,
+/turf/open/floor/dirt/road,
+/area/template_noop)
+"s" = (
+/obj/structure/fluff/walldeco/vinez,
+/turf/closed/wall/mineral/stone/moss,
+/area/template_noop)
+"t" = (
+/obj/structure/flora/grass/bush,
+/turf/open/floor/grass/mixyel,
+/area/template_noop)
+"u" = (
+/obj/structure/flora/hotspring_rocks/small/five,
+/obj/structure/fluff/walldeco/vinez,
+/turf/open/floor/dirt/road,
+/area/template_noop)
+"w" = (
+/obj/structure/flora/hotspring_rocks/small/two,
+/obj/structure/flora/grass,
+/turf/open/floor/dirt/road,
+/area/template_noop)
+"x" = (
+/obj/structure/flora/grass/herb/salvia,
+/obj/structure/flora/grass,
+/turf/open/floor/dirt/road,
+/area/template_noop)
+"y" = (
+/obj/structure/fluff/walldeco/vinez,
+/turf/open/floor/grass/eora,
+/area/template_noop)
+"A" = (
+/obj/structure/flora/grass/bush,
+/turf/open/floor/dirt/road,
+/area/template_noop)
+"C" = (
+/turf/open/floor/grass/eora,
+/area/template_noop)
+"D" = (
+/turf/template_noop,
+/area/template_noop)
+"F" = (
+/obj/structure/flora/grass/herb/salvia,
+/obj/structure/fluff/walldeco/vinez,
+/turf/open/floor/dirt/road,
+/area/template_noop)
+"H" = (
+/obj/structure/flora/grass/herb/salvia,
+/turf/open/floor/dirt/road,
+/area/template_noop)
+"I" = (
+/obj/structure/fluff/walldeco/vinez,
+/turf/open/floor/grass/mixyel,
+/area/template_noop)
+"L" = (
+/obj/structure/fluff/walldeco/vinez,
+/obj/structure/flora/grass,
+/turf/open/floor/grass/mixyel,
+/area/template_noop)
+"N" = (
+/turf/closed/wall/mineral/stone/moss,
+/area/template_noop)
+"O" = (
+/obj/structure/flora/hotspring_rocks/small/five,
+/turf/open/floor/grass/eora,
+/area/template_noop)
+"P" = (
+/obj/structure/flora/hotspring_rocks{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/turf/open/floor/grass/eora,
+/area/template_noop)
+"R" = (
+/obj/item/candle/eora/lit{
+	pixel_x = 0;
+	pixel_y = -13
+	},
+/turf/open/floor/grass/eora,
+/area/template_noop)
+"S" = (
+/obj/structure/well/fountain{
+	pixel_x = 15;
+	pixel_y = -18
+	},
+/obj/structure/flora/hotspring_rocks/small/three,
+/obj/item/alch/salvia,
+/turf/open/floor/grass/eora,
+/area/template_noop)
+"T" = (
+/obj/structure/flora/grass/herb/salvia,
+/turf/open/floor/grass/eora,
+/area/template_noop)
+"V" = (
+/obj/structure/flora/grass/bush/wall,
+/turf/open/floor/grass/mixyel,
+/area/template_noop)
+"W" = (
+/obj/item/bouquet/salvia,
+/obj/item/candle/eora/lit{
+	pixel_x = -1;
+	pixel_y = 22
+	},
+/turf/open/floor/grass/eora,
+/area/template_noop)
+"Y" = (
+/obj/structure/flora/hotspring_rocks/small/four,
+/turf/open/floor/grass/mixyel,
+/area/template_noop)
+
+(1,1,1) = {"
+D
+D
+e
+t
+H
+h
+q
+I
+L
+s
+D
+D
+"}
+(2,1,1) = {"
+D
+e
+V
+s
+j
+j
+I
+L
+a
+s
+s
+D
+"}
+(3,1,1) = {"
+D
+V
+s
+s
+I
+y
+C
+C
+t
+f
+s
+s
+"}
+(4,1,1) = {"
+k
+s
+s
+O
+C
+C
+C
+C
+C
+C
+I
+I
+"}
+(5,1,1) = {"
+k
+N
+S
+p
+C
+T
+h
+r
+C
+y
+I
+e
+"}
+(6,1,1) = {"
+a
+N
+g
+R
+C
+h
+w
+H
+C
+y
+I
+x
+"}
+(7,1,1) = {"
+a
+N
+P
+W
+C
+r
+A
+C
+C
+C
+h
+q
+"}
+(8,1,1) = {"
+a
+s
+s
+C
+C
+C
+C
+C
+C
+a
+u
+I
+"}
+(9,1,1) = {"
+e
+f
+s
+s
+Y
+C
+C
+C
+L
+I
+I
+a
+"}
+(10,1,1) = {"
+e
+e
+V
+s
+I
+I
+q
+I
+s
+o
+s
+D
+"}
+(11,1,1) = {"
+D
+D
+D
+k
+I
+F
+q
+s
+s
+s
+D
+D
+"}

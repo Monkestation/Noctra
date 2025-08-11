@@ -57,19 +57,6 @@
 	max_integrity = INTEGRITY_STRONG
 	item_weight = 12 * IRON_MULTIPLIER
 
-//................Old Iron Plate ............... //
-/obj/item/clothing/armor/plate/iron/old
-	name = "old iron plate armor"//No way to get this right now because I removed the smithing recipe, and it's map spawner spawns iron halfplate instead now. The sprite looks like it's in the steel palette, so it doesn't fit in right.
-	desc = "A rough set of iron armor, complete with chainmail joints and pauldrons. An older and cheaper design that protects the torso and legs."
-	icon_state = "ironplate"
-	smeltresult = /obj/item/ingot/iron
-	sellprice = VALUE_IRON_ARMOR*2
-
-	body_parts_covered = COVERAGE_ALL_BUT_ARMS//This one looks like it covers legs
-	armor = ARMOR_PLATE_BAD
-	max_integrity = INTEGRITY_STRONG
-	item_weight = 12 * IRON_MULTIPLIER
-
 //................ Rusted Half-plate ............... //
 /obj/item/clothing/armor/plate/rust
 	name = "rusted half-plate"

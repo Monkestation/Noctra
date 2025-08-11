@@ -83,6 +83,7 @@
 	grid_width = 64
 	headpricemin = 3
 	headpricemax = 7
+	sellprice = 5
 
 /obj/item/natural/head/saiga
 	name = "saiga head"
@@ -92,6 +93,7 @@
 	grid_height = 64
 	grid_width = 64
 	headprice = 3
+	sellprice = 3
 
 /obj/item/natural/head/troll
 	name = "troll head"
@@ -101,6 +103,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	headpricemin = 80
 	headpricemax = 230
+	sellprice = 155
 
 /obj/item/natural/head/troll/apply_components()
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
@@ -111,12 +114,14 @@
 	icon_state = "trollhead_axe"
 	headpricemin = 90
 	headpricemax = 250
+	sellprice = 170
 
 /obj/item/natural/head/troll/cave
 	name = "cave troll head"
 	icon_state = "cavetrollhead"
 	headpricemin = 120
 	headpricemax = 280
+	sellprice = 200
 
 /obj/item/natural/head/rous
 	name = "rous head"
@@ -127,6 +132,7 @@
 	grid_width = 64
 	headpricemin = 3
 	headpricemax = 7
+	sellprice = 5
 
 /obj/item/natural/head/spider
 	name = "honeyspider head"
@@ -137,6 +143,7 @@
 	grid_width = 64
 	headpricemin = 4
 	headpricemax = 20
+	sellprice = 12
 
 /obj/item/natural/head/bug
 	name = "bogbug head"
@@ -147,6 +154,7 @@
 	grid_width = 64
 	headpricemin = 4
 	headpricemax = 15
+	sellprice = 10
 
 /obj/item/natural/head/mole
 	name = "mole head"
@@ -156,6 +164,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	headpricemin = 3
 	headpricemax = 7
+	sellprice = 5
 
 /obj/item/natural/head/mole/apply_components()
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
@@ -166,6 +175,7 @@
 	icon_state = "gotehead"
 	layer = 3.1
 	headprice = 2
+	sellprice = 2
 
 //RTD make this a storage item and make clickign on animals with things put it in storage
 /obj/item/natural/saddle

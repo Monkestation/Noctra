@@ -293,6 +293,20 @@
 	)
 	component_type = /datum/component/storage/concrete/grid/surgery_bag
 
+/obj/item/surgeontoolspawner
+	name = "set of surgery tools"
+
+/obj/item/surgeontoolspawner/OnCrafted(dirin, mob/user)
+	. = ..()
+	new /obj/item/weapon/surgery/scalpel(loc)
+	new /obj/item/weapon/surgery/saw(loc)
+	new /obj/item/weapon/surgery/hemostat(loc)
+	new /obj/item/weapon/surgery/retractor(loc)
+	new /obj/item/weapon/surgery/bonesetter(loc)
+	new /obj/item/weapon/surgery/cautery(loc)
+	new /obj/item/weapon/surgery/hammer(loc)
+	qdel(src)
+
 /obj/item/storage/backpack/satchel/surgbag/shit
 	populate_contents = list(
 		/obj/item/needle,

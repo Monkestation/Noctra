@@ -415,7 +415,7 @@
 /area/rogue/under/tomb/indoors)
 "iu" = (
 /obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/armor/leather/vest/random,
+/obj/item/clothing/armor/leather/vest/colored/random,
 /obj/item/clothing/pants/trou/leathertights,
 /obj/item/statue/silver,
 /turf/open/floor/church,
@@ -841,7 +841,7 @@
 /area/rogue/under/tomb/indoors/royal)
 "so" = (
 /obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/armor/leather/vest/innkeep,
+/obj/item/clothing/armor/leather/vest/colored/innkeep,
 /obj/item/storage/belt/leather,
 /turf/open/floor/church,
 /area/rogue/under/tomb/indoors)
@@ -1910,7 +1910,7 @@
 /area/rogue/under/tomb/sewer)
 "Od" = (
 /obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/armor/leather/vest/butcher,
+/obj/item/clothing/armor/leather/vest/colored/butcher,
 /obj/item/clothing/shoes/boots/leather,
 /turf/open/floor/church,
 /area/rogue/under/tomb/indoors)
@@ -2254,7 +2254,7 @@
 /area/rogue/under/tomb/sewer)
 "Yg" = (
 /obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/cloak/cape/rogue,
+/obj/item/clothing/cloak/chasuble,
 /turf/open/floor/hexstone,
 /area/rogue/under/tomb/indoors)
 "Yj" = (

@@ -4,19 +4,22 @@
 	Acting mostly as scouts for groups of 'supply liberation' militia around their home, \
 	stealth is a virtue for a Hollow Ranger."
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list("Hollow-Kin",
-	"Harpy",
-	"Humen")
+	allowed_races = list(\
+		SPEC_ID_HOLLOWKIN,\
+		SPEC_ID_HUMEN,\
+		SPEC_ID_HARPY,\
+	)
 	outfit = /datum/outfit/job/adventurer/hollowranger
 	min_pq = 0
 	category_tags = list(CTAG_ADVENTURER)
+	cmode_music = 'sound/music/cmode/adventurer/CombatIntense.ogg'
 
 /datum/outfit/job/adventurer/hollowranger/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/roguehood/red
+	head = /obj/item/clothing/head/roguehood/colored/red
 	mask = /obj/item/clothing/face/shepherd/rag
-	pants = /obj/item/clothing/pants/tights/black
-	shirt = /obj/item/clothing/shirt/tunic/black
+	pants = /obj/item/clothing/pants/tights/colored/black
+	shirt = /obj/item/clothing/shirt/tunic/colored/black
 	shoes = /obj/item/clothing/shoes/boots
 	belt = /obj/item/storage/belt/leather
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/short
@@ -27,7 +30,7 @@
 	wrists = /obj/item/clothing/neck/psycross/silver/dendor
 	gloves = /obj/item/clothing/gloves/fingerless
 	backpack_contents = list(/obj/item/weapon/knife/hunting)
-	cloak = /obj/item/clothing/cloak/raincloak/furcloak/black
+	cloak = /obj/item/clothing/cloak/raincloak/furcloak/colored/black
 
 	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE) // Knives are gonna be a rough backup, but should be one anyway
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 4, TRUE)

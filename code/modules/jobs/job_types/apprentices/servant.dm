@@ -25,13 +25,13 @@
 /datum/outfit/job/servant/pre_equip(mob/living/carbon/human/H)
 	..()
 	shoes = /obj/item/clothing/shoes/simpleshoes
-	pants = /obj/item/clothing/pants/tights/uncolored
-	shirt = /obj/item/clothing/shirt/undershirt/uncolored
+	pants = /obj/item/clothing/pants/tights/colored/uncolored
+	shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 	belt = /obj/item/storage/belt/leather/rope
 	beltl = /obj/item/storage/belt/pouch/coins/poor
 	neck = /obj/item/key/manor
 	if(H.gender == MALE)
-		armor = /obj/item/clothing/armor/leather/vest/black
+		armor = /obj/item/clothing/armor/leather/vest/colored/black
 	else
 		cloak = /obj/item/clothing/cloak/apron
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
@@ -73,13 +73,13 @@
 /datum/outfit/job/tapster/pre_equip(mob/living/carbon/human/H)
 	..()
 	shoes = /obj/item/clothing/shoes/simpleshoes
-	pants = /obj/item/clothing/pants/tights/uncolored
-	shirt = /obj/item/clothing/shirt/undershirt/uncolored
+	pants = /obj/item/clothing/pants/tights/colored/uncolored
+	shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 	belt = /obj/item/storage/belt/leather/rope
 	beltl = /obj/item/storage/belt/pouch/coins/poor
 	neck = /obj/item/key/tavern
 	if(H.gender == MALE)
-		armor = /obj/item/clothing/armor/leather/vest/black
+		armor = /obj/item/clothing/armor/leather/vest/colored/black
 	else
 		cloak = /obj/item/clothing/cloak/apron
 	if(H.mind)
@@ -122,13 +122,13 @@
 /datum/outfit/job/matron_assistant/pre_equip(mob/living/carbon/human/H)
 	..()
 	shoes = /obj/item/clothing/shoes/simpleshoes
-	pants = /obj/item/clothing/pants/tights/uncolored
-	shirt = /obj/item/clothing/shirt/undershirt/uncolored
+	pants = /obj/item/clothing/pants/tights/colored/uncolored
+	shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 	belt = /obj/item/storage/belt/leather/rope
 	beltl = /obj/item/storage/belt/pouch/coins/poor
 	neck = /obj/item/key/matron
 	if(H.gender == MALE)
-		armor = /obj/item/clothing/armor/leather/vest/black
+		armor = /obj/item/clothing/armor/leather/vest/colored/black
 	else
 		cloak = /obj/item/clothing/cloak/apron
 	if(H.mind)
@@ -168,13 +168,13 @@
 /datum/outfit/job/gaffer_assistant/pre_equip(mob/living/carbon/human/H)
 	..()
 	shoes = /obj/item/clothing/shoes/simpleshoes
-	pants = /obj/item/clothing/pants/tights/uncolored
-	shirt = /obj/item/clothing/shirt/undershirt/uncolored
+	pants = /obj/item/clothing/pants/tights/colored/uncolored
+	shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 	belt = /obj/item/storage/belt/leather/rope
 	beltl = /obj/item/storage/belt/pouch/coins/poor
 	beltr = /obj/item/storage/keyring/gaffer_assistant
 	if(H.gender == MALE)
-		armor = /obj/item/clothing/armor/leather/vest/black
+		armor = /obj/item/clothing/armor/leather/vest/colored/black
 	else
 		cloak = /obj/item/clothing/cloak/apron
 	if(H.mind)

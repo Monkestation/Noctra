@@ -38,6 +38,7 @@
 	var/can_be_bloody = TRUE
 	var/is_barefoot = FALSE
 	var/chained = 0
+	abstract_type = /obj/item/clothing/shoes
 
 /obj/item/clothing/shoes/Initialize(mapload, ...)
 	. = ..()

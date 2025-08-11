@@ -1,5 +1,6 @@
 /datum/objective/listen_whispers
 	name = "Listen to Whispers"
+	triumph_count = 2
 	var/time_required = 5 MINUTES
 	var/time_spent = 0
 	var/last_check = 0
@@ -45,7 +46,7 @@
 		var/message = pick(GLOB.last_words - heard_messages)
 		to_chat(user, span_red("[message]"))
 		heard_messages += message
-		if(prob(25))
+		if(prob(33))
 			user.playsound_local(user, 'sound/effects/ghost.ogg', 40)
 
 	if(time_spent >= time_required && !completed)
