@@ -286,10 +286,6 @@
 	},
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
-"dH" = (
-/obj/structure/chair/bench/coucha/redright,
-/turf/open/floor/carpet/red,
-/area/rogue/under/tomb/indoors)
 "dP" = (
 /obj/structure/fermentation_keg/water,
 /turf/open/floor/cobble,
@@ -375,6 +371,11 @@
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/cobble,
 /area/rogue/under/tomb/wilds)
+"eG" = (
+/obj/item/fertilizer/bone_meal,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/metal/barograte,
+/area/rogue/under/tomb)
 "eP" = (
 /obj/structure/trap/wall_projectile/fireball,
 /turf/open/floor/herringbone,
@@ -990,11 +991,6 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb)
-"lg" = (
-/obj/item/fertilizer/bone_meal,
-/obj/effect/decal/cleanable/blood,
-/turf/open/floor/metal/barograte,
-/area/rogue/under/tomb)
 "lh" = (
 /obj/structure/closet/crate/crafted_closet/inn/south,
 /obj/effect/spawner/map_spawner/loot/weapon,
@@ -1315,6 +1311,10 @@
 /mob/living/simple_animal/hostile/skeleton/bow,
 /turf/open/floor/cobble,
 /area/rogue/under/tomb/wilds)
+"nP" = (
+/obj/structure/chair/bench/coucha/redright,
+/turf/open/floor/carpet/red,
+/area/rogue/under/tomb/indoors)
 "nR" = (
 /obj/structure/bed,
 /obj/effect/spawner/map_spawner/loot/common,
@@ -1568,26 +1568,6 @@
 "rk" = (
 /turf/closed/wall/mineral/decostone,
 /area/rogue/under/tomb/indoors)
-"rl" = (
-/obj/machinery/light/fueled/chand,
-/mob/living/carbon/human/species/skeleton/npc/no_equipment{
-	real_name = "Forgotten King";
-	base_speed = 20;
-	base_perception = 12;
-	base_intelligence = 8;
-	base_fortune = 8;
-	base_strength = 12;
-	base_endurance = 8;
-	base_constitution = 12
-	},
-/obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/item/weapon/knife/dagger/steel,
-/obj/item/clothing/shirt/jester,
-/obj/item/clothing/shoes/jester,
-/obj/item/clothing/head/jester,
-/obj/item/clothing/pants/tights/jester,
-/turf/open/transparent/openspace,
-/area/rogue/under/tomb/indoors/royal)
 "rp" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/tile/masonic/spiral,
@@ -1717,6 +1697,10 @@
 	},
 /turf/open/floor/metal,
 /area/rogue/under/tomb)
+"tp" = (
+/obj/structure/chair/bench/coucha/redleft,
+/turf/open/floor/carpet/red,
+/area/rogue/under/tomb/indoors)
 "tw" = (
 /obj/structure/fluff/walldeco/chains,
 /obj/effect/decal/remains/human,
@@ -1819,10 +1803,6 @@
 /obj/item/natural/rock,
 /turf/open/floor/wood/nosmooth/saiga,
 /area/rogue/under/tomb/indoors)
-"uF" = (
-/obj/item/fertilizer/bone_meal,
-/turf/open/floor/metal/barograte,
-/area/rogue/under/tomb)
 "uT" = (
 /obj/structure/fluff/railing/border{
 	dir = 1
@@ -1934,13 +1914,6 @@
 /obj/effect/dungeon_directional_helper/south,
 /turf/open/floor/cobble,
 /area/rogue/under/tomb)
-"wm" = (
-/obj/item/fertilizer/bone_meal,
-/obj/structure/fluff/railing/border{
-	dir = 8
-	},
-/turf/open/floor/metal,
-/area/rogue/under/tomb)
 "wn" = (
 /turf/closed/wall/mineral/pipe,
 /area/rogue/under/tomb/indoors)
@@ -1951,13 +1924,6 @@
 "ws" = (
 /mob/living/carbon/human/species/skeleton/npc/ambush,
 /turf/open/floor/cobblerock,
-/area/rogue/under/tomb)
-"wt" = (
-/obj/item/fertilizer/bone_meal,
-/obj/structure/fluff/railing/border{
-	dir = 4
-	},
-/turf/open/floor/metal,
 /area/rogue/under/tomb)
 "wB" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
@@ -2203,6 +2169,28 @@
 /obj/item/ammo_holder/quiver/arrows,
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/under/tomb/indoors)
+"yJ" = (
+/mob/living/carbon/human/species/skeleton/npc/no_equipment{
+	base_strength = 15;
+	base_speed = 15;
+	base_constitution = 14;
+	base_endurance = 14;
+	base_fortune = 12;
+	candodge = 0;
+	real_name = "Undead Knight"
+	},
+/obj/effect/mapping_helpers/floor_clothing_equipper,
+/obj/structure/fluff/railing/border,
+/obj/item/weapon/polearm/halberd/bardiche,
+/obj/item/clothing/ring/silver,
+/obj/item/clothing/cloak/half/colored/red,
+/obj/item/clothing/armor/plate/full,
+/obj/item/clothing/gloves/plate,
+/obj/item/clothing/pants/platelegs,
+/obj/item/clothing/shoes/boots/armor,
+/obj/item/clothing/head/helmet/heavy/decorated/bascinet,
+/turf/open/floor/churchbrick,
+/area/rogue/under/tomb/indoors/royal)
 "yK" = (
 /obj/machinery/light/fueled/firebowl/church,
 /turf/open/floor/naturalstone,
@@ -2527,6 +2515,26 @@
 /obj/item/clothing/neck/chaincoif,
 /turf/open/floor/grass/red,
 /area/rogue/under/tomb/wilds)
+"BB" = (
+/obj/machinery/light/fueled/chand,
+/mob/living/carbon/human/species/skeleton/npc/no_equipment{
+	real_name = "Forgotten King";
+	base_speed = 20;
+	base_perception = 12;
+	base_intelligence = 8;
+	base_fortune = 8;
+	base_strength = 12;
+	base_endurance = 8;
+	base_constitution = 12
+	},
+/obj/effect/mapping_helpers/floor_clothing_equipper,
+/obj/item/weapon/knife/dagger/steel,
+/obj/item/clothing/shirt/jester,
+/obj/item/clothing/shoes/jester,
+/obj/item/clothing/head/jester,
+/obj/item/clothing/pants/tights/colored/jester,
+/turf/open/transparent/openspace,
+/area/rogue/under/tomb/indoors/royal)
 "BC" = (
 /obj/effect/decal/cleanable/sigil,
 /obj/structure/table/optable,
@@ -2767,6 +2775,13 @@
 /mob/living/carbon/human/species/skeleton/npc/warrior,
 /turf/open/floor/tile/kitchen,
 /area/rogue/under/tomb/indoors)
+"EC" = (
+/obj/item/fertilizer/bone_meal,
+/obj/structure/fluff/railing/border{
+	dir = 4
+	},
+/turf/open/floor/metal,
+/area/rogue/under/tomb)
 "ED" = (
 /obj/structure/table/vtable,
 /turf/open/floor/churchmarble,
@@ -3284,10 +3299,6 @@
 /obj/machinery/light/fueled/wallfire/candle,
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb/indoors)
-"JW" = (
-/obj/structure/chair/bench/coucha/redleft,
-/turf/open/floor/carpet/red,
-/area/rogue/under/tomb/indoors)
 "Kb" = (
 /obj/item/kitchen/platter,
 /mob/living/carbon/human/species/goblin/npc/ambush/cave,
@@ -3338,6 +3349,10 @@
 	},
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/under/tomb/indoors)
+"KK" = (
+/obj/item/fertilizer/bone_meal,
+/turf/open/floor/metal/barograte,
+/area/rogue/under/tomb)
 "KT" = (
 /obj/structure/rack/shelf/big,
 /obj/machinery/light/fueled/wallfire/candle,
@@ -3925,6 +3940,13 @@
 /obj/structure/trap/poison,
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
+"QU" = (
+/obj/item/fertilizer/bone_meal,
+/obj/structure/fluff/railing/border{
+	dir = 8
+	},
+/turf/open/floor/metal,
+/area/rogue/under/tomb)
 "QY" = (
 /turf/open/floor/cobble,
 /area/rogue/under/tomb/indoors)
@@ -3980,28 +4002,6 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb)
-"RI" = (
-/mob/living/carbon/human/species/skeleton/npc/no_equipment{
-	base_strength = 15;
-	base_speed = 15;
-	base_constitution = 14;
-	base_endurance = 14;
-	base_fortune = 12;
-	candodge = 0;
-	real_name = "Undead Knight"
-	},
-/obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/structure/fluff/railing/border,
-/obj/item/weapon/polearm/halberd/bardiche,
-/obj/item/clothing/ring/silver,
-/obj/item/clothing/cloak/half/red,
-/obj/item/clothing/armor/plate/full,
-/obj/item/clothing/gloves/plate,
-/obj/item/clothing/pants/platelegs,
-/obj/item/clothing/shoes/boots/armor,
-/obj/item/clothing/head/helmet/heavy/decorated/bascinet,
-/turf/open/floor/churchbrick,
-/area/rogue/under/tomb/indoors/royal)
 "RK" = (
 /obj/effect/mapping_helpers/secret_door_creator{
 	redstone_id = "CastleSecret1"
@@ -4040,6 +4040,11 @@
 /obj/item/reagent_containers/glass/cup,
 /turf/open/floor/hexstone,
 /area/rogue/under/tomb/indoors)
+"Sl" = (
+/obj/item/fertilizer/bone_meal,
+/obj/item/ammo_casing/caseless/arrow,
+/turf/open/floor/metal/barograte,
+/area/rogue/under/tomb)
 "Sm" = (
 /mob/living/carbon/human/species/orc/marauder,
 /obj/effect/decal/cleanable/blood,
@@ -4573,11 +4578,6 @@
 "Xw" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/cobblerock,
-/area/rogue/under/tomb)
-"Xx" = (
-/obj/item/fertilizer/bone_meal,
-/obj/item/ammo_casing/caseless/arrow,
-/turf/open/floor/metal/barograte,
 /area/rogue/under/tomb)
 "Xz" = (
 /mob/living/carbon/human/species/skeleton/npc/warrior,
@@ -6515,7 +6515,7 @@ iK
 ap
 HI
 Dq
-RI
+yJ
 WL
 XN
 Iy
@@ -6545,8 +6545,8 @@ mz
 Fo
 wn
 ta
-wm
-wm
+QU
+QU
 ZE
 ZE
 ZE
@@ -6618,7 +6618,7 @@ Zb
 DY
 Gx
 Vs
-lg
+eG
 UG
 Lj
 zn
@@ -6691,7 +6691,7 @@ Zb
 PU
 PU
 Gx
-uF
+KK
 UD
 mT
 zp
@@ -6761,9 +6761,9 @@ Yw
 mz
 TF
 Gx
-Xx
+Sl
 PU
-uF
+KK
 Lj
 sv
 Lj
@@ -6833,7 +6833,7 @@ Xb
 On
 Cb
 Cb
-wt
+EC
 EN
 bO
 kM
@@ -10264,7 +10264,7 @@ PK
 Ri
 vG
 Ri
-rl
+BB
 Ri
 SD
 Ri
@@ -10996,7 +10996,7 @@ kx
 Qq
 rk
 TM
-JW
+tp
 fa
 cR
 pT
@@ -11068,7 +11068,7 @@ kx
 QM
 rk
 pT
-dH
+nP
 TO
 Eg
 pT

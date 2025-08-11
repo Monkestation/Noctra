@@ -528,7 +528,7 @@
 /obj/structure/closet/crate/crafted_closet/inn/south,
 /obj/item/clothing/shirt/tunic/noblecoat,
 /obj/item/clothing/shoes/nobleboot/thighboots,
-/obj/item/clothing/shirt/robe/mage,
+/obj/item/clothing/shirt/robe/colored/mage,
 /obj/item/clothing/shirt/undershirt/fancy,
 /obj/item/clothing/armor/rare/elfplate/welfplate,
 /turf/open/floor/ruinedwood/spiral,
@@ -1556,7 +1556,7 @@
 /area/rogue/indoors/mountains/anvil/surface/building)
 "mo" = (
 /obj/structure/chair/stool,
-/obj/item/clothing/head/roguehood/red{
+/obj/item/clothing/head/roguehood/colored/red{
 	name = "Red Scarf";
 	desc = "Smells like cat?"
 	},
@@ -5528,7 +5528,7 @@
 "Sf" = (
 /mob/living/carbon/human/species/skeleton/npc/no_equipment,
 /obj/item/clothing/head/crown/circlet/vision,
-/obj/item/clothing/shirt/robe/mage,
+/obj/item/clothing/shirt/robe/colored/mage,
 /obj/item/weapon/polearm/woodstaff/quarterstaff/steel,
 /obj/effect/mapping_helpers/floor_clothing_equipper,
 /turf/open/floor/carpet/purple,
@@ -6422,7 +6422,7 @@
 /area/rogue/under/mountains/anvil/dungeon)
 "Za" = (
 /obj/item/chair/stool/bar,
-/obj/item/clothing/head/roguehood/green{
+/obj/item/clothing/head/roguehood/colored/green{
 	desc = "A rather short green scarf";
 	name = "Green Scarf"
 	},

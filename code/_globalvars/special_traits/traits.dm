@@ -499,7 +499,7 @@
 	QDEL_NULL(character.beltr)
 	QDEL_NULL(character.backr)
 	QDEL_NULL(character.head)
-	character.equip_to_slot_or_del(new /obj/item/clothing/pants/tights/random(character), ITEM_SLOT_PANTS)
+	character.equip_to_slot_or_del(new /obj/item/clothing/pants/tights/colored/random(character), ITEM_SLOT_PANTS)
 	character.equip_to_slot_or_del(new /obj/item/clothing/armor/chainmail(character), ITEM_SLOT_ARMOR)
 	character.equip_to_slot_or_del(new /obj/item/storage/belt/leather(character), ITEM_SLOT_BELT)
 	character.equip_to_slot_or_del(new /obj/item/storage/belt/pouch/coins/rich(character), ITEM_SLOT_BELT_R)

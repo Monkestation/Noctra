@@ -36,7 +36,7 @@
 	neck = /obj/item/clothing/neck/psycross/silver/astrata
 	head = /obj/item/clothing/head/priestmask
 	shirt = /obj/item/clothing/shirt/undershirt/priest
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	shoes = /obj/item/clothing/shoes/shortboots
 	beltl = /obj/item/storage/keyring/priest
 	belt = /obj/item/storage/belt/leather/rope

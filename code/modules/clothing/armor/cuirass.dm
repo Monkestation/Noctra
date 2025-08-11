@@ -28,7 +28,7 @@
 	armor = ARMOR_PLATE_GOOD
 
 //................ Black Oak Cuirass ............... //
-/obj/item/clothing/armor/cuirass/elven
+/obj/item/clothing/armor/cuirass/rare/elven
 	name = "elven guardian cuirass"
 	desc = "A cuirass made of steel with a thin decorative gold plating. Lightweight and durable."
 	icon_state = "halfplate"

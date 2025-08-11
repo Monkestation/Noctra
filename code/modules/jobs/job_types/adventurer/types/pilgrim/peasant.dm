@@ -25,7 +25,7 @@
 	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
 
 	belt = /obj/item/storage/belt/leather/rope
-	shirt = /obj/item/clothing/shirt/undershirt/random
+	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	pants = /obj/item/clothing/pants/trou
 	head = /obj/item/clothing/head/strawhat
 	shoes = /obj/item/clothing/shoes/simpleshoes
@@ -40,7 +40,7 @@
 	H.put_in_hands(P, forced = TRUE)
 	if(H.gender == FEMALE)
 		head = /obj/item/clothing/head/armingcap
-		armor = /obj/item/clothing/shirt/dress/gen/random
+		armor = /obj/item/clothing/shirt/dress/gen/colored/random
 		shirt = /obj/item/clothing/shirt/undershirt
 		pants = null
 	backpack_contents = list(/obj/item/neuFarm/seed/wheat=1,/obj/item/neuFarm/seed/apple=1,/obj/item/fertilizer/ash=1,/obj/item/weapon/knife/villager=1)

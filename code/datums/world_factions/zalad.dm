@@ -59,7 +59,11 @@
 		/datum/supply_pack/seeds/potato,
 		/datum/supply_pack/seeds/spelt,
 		/datum/supply_pack/seeds/cabbage,
-		/datum/supply_pack/seeds/turnip
+		/datum/supply_pack/seeds/turnip,
+		/datum/supply_pack/luxury/spectacles_onyxa,
+		/datum/supply_pack/jewelry/mercator,
+		/datum/supply_pack/apparel/engineering_goggles,
+		/datum/supply_pack/apparel/hatblu
 	)
 	uncommon_pool = list(
 		// Better armor

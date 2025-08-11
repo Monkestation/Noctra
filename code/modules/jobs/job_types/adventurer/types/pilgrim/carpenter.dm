@@ -30,7 +30,7 @@
 	neck = /obj/item/clothing/neck/coif
 	armor = /obj/item/clothing/armor/gambeson/light/striped
 	pants = /obj/item/clothing/pants/trou
-	shirt = /obj/item/clothing/shirt/undershirt/random
+	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	wrists = /obj/item/clothing/wrists/bracers/leather
 	shoes = /obj/item/clothing/shoes/boots/leather
 	belt = /obj/item/storage/belt/leather

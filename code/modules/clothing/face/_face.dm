@@ -21,6 +21,7 @@
 	var/modifies_speech = FALSE
 	var/mask_adjusted = 0
 	var/adjusted_flags = null
+	abstract_type = /obj/item/clothing/face
 
 /obj/item/clothing/face/attack_self(mob/user, params)
 	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))

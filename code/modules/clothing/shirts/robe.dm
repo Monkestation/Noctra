@@ -13,19 +13,20 @@
 	resistance_flags = FLAMMABLE
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
+	color = CLOTHING_LINEN
 
 	armor = ARMOR_MINIMAL
 	prevent_crits = list(BCLASS_TWIST)
 	max_integrity = INTEGRITY_POOR
 
-/obj/item/clothing/shirt/robe/plain
+/obj/item/clothing/shirt/robe/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
+/obj/item/clothing/shirt/robe/colored/plain
 	color = CLOTHING_LINEN
 
-/obj/item/clothing/shirt/robe/black
+/obj/item/clothing/shirt/robe/colored/black
 	color = CLOTHING_DARK_INK
-
-/obj/item/clothing/shirt/robe/white
-
 
 //................ Temple Robes ............... //
 
@@ -102,10 +103,10 @@
 
 
 //................ Wizard Robes ............... //
-/obj/item/clothing/shirt/robe/courtmage
+/obj/item/clothing/shirt/robe/colored/courtmage
 	color = CLOTHING_ASH_GREY
 
-/obj/item/clothing/shirt/robe/mage/Initialize()
+/obj/item/clothing/shirt/robe/colored/mage/Initialize()
 	color = pick( CLOTHING_PEASANT_BROWN, CLOTHING_SPRING_GREEN, CLOTHING_CHESTNUT, CLOTHING_YELLOW_OCHRE)
 	. = ..()
 
@@ -114,7 +115,7 @@
 	desc = "What wizard's ensemble would be complete without robes?"
 	icon_state = "wizardrobes"
 	allowed_sex = list(MALE)
-	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_TIEFLING, SPEC_ID_AASIMAR)
+	allowed_race = SPECIES_BASE_BODY
 	sellprice = 100
 
 /obj/item/clothing/shirt/robe/magus
@@ -122,14 +123,12 @@
 	desc = "A dark padded robe worn by only the most mysterious of mages, the magi."
 	icon_state = "warlock"
 	allowed_sex = list(MALE)
-	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_TIEFLING, SPEC_ID_AASIMAR)
+	allowed_race = SPECIES_BASE_BODY
 	sellprice = 150
 
 	armor = list("blunt" = 40, "slash" = 40, "stab" = 40,  "piercing" = 15, "fire" = 0, "acid" = 0)
 	prevent_crits = list(BCLASS_CUT, BCLASS_TWIST)
 	max_integrity = 200
-
-
 
 /obj/item/clothing/shirt/robe/merchant
 	name = "guilder jacket"
@@ -140,7 +139,7 @@
 /obj/item/clothing/shirt/robe/nun
 	icon_state = "nun"
 	item_state = "nun"
-	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_TIEFLING, SPEC_ID_DROW, SPEC_ID_ELF, SPEC_ID_HALF_ELF, SPEC_ID_DWARF, SPEC_ID_AASIMAR)
+	allowed_race = SPECIES_BASE_BODY
 	allowed_sex = list(FEMALE)
 
 /obj/item/clothing/shirt/robe/feld
@@ -167,7 +166,7 @@
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	allowed_sex = list(MALE, FEMALE)
-	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_TIEFLING, SPEC_ID_ELF, SPEC_ID_AASIMAR)
+	allowed_race = SPECIES_BASE_BODY
 	color = null
 	sellprice = 100
 
@@ -194,6 +193,7 @@
 	var/picked
 	var/newicon
 	var/robe_count = 0	/// This var basicly counts the numbers of times this robe has changes its appearence
+	abstract_type = /obj/item/clothing/shirt/robe/newmage
 
 /obj/item/clothing/shirt/robe/newmage/ToggleHood()
 	if(!hoodtoggled)

@@ -13,7 +13,7 @@
 	neck = /obj/item/clothing/neck/gorget
 	head = /obj/item/clothing/head/helmet
 	shoes = /obj/item/clothing/shoes/nobleboot
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	cloak = /obj/item/clothing/cloak/heartfelt
 	armor = /obj/item/clothing/armor/medium/surcoat/heartfelt
 	beltr = /obj/item/storage/belt/pouch/coins/rich
@@ -77,7 +77,7 @@
 	neck =  /obj/item/storage/belt/pouch/coins/rich
 	ring = /obj/item/clothing/ring/silver
 	shoes = /obj/item/clothing/shoes/shortboots
-	pants = /obj/item/clothing/pants/tights/random
+	pants = /obj/item/clothing/pants/tights/colored/random
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/craft/engineering, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/stealing, 4, TRUE)
@@ -112,7 +112,7 @@
 	shirt = /obj/item/clothing/shirt/undershirt
 	belt = /obj/item/storage/belt/leather/black
 	shoes = /obj/item/clothing/shoes/nobleboot
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	neck = /obj/item/clothing/neck/gorget
 	armor = /obj/item/clothing/armor/medium/surcoat/heartfelt
 	beltr = /obj/item/storage/belt/pouch/coins/rich
@@ -241,8 +241,8 @@
 	H.mana_pool?.set_intrinsic_recharge(MANA_ALL_LEYLINES)
 	neck = /obj/item/clothing/neck/talkstone
 	cloak = /obj/item/clothing/cloak/black_cloak
-	armor = /obj/item/clothing/shirt/robe/black
-	pants = /obj/item/clothing/pants/tights/random
+	armor = /obj/item/clothing/shirt/robe/colored/black
+	pants = /obj/item/clothing/pants/tights/colored/random
 	shoes = /obj/item/clothing/shoes/shortboots
 	belt = /obj/item/storage/belt/leather/plaquesilver
 	beltl = /obj/item/flashlight/flare/torch/lantern
@@ -299,7 +299,7 @@
 	H.virginity = TRUE
 	neck = /obj/item/clothing/neck/psycross/silver
 	shirt = /obj/item/clothing/shirt/undershirt/priest
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	shoes = /obj/item/clothing/shoes/shortboots
 	belt = /obj/item/storage/belt/leather/rope
 	beltl = /obj/item/flashlight/flare/torch/lantern

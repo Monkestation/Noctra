@@ -97,7 +97,7 @@
 		H.change_stat(STATKEY_SPD, -1)
 	else
 		pants = /obj/item/clothing/pants/trou
-		shirt = /obj/item/clothing/shirt/dress/gen/random
+		shirt = /obj/item/clothing/shirt/dress/gen/colored/random
 		armor = /obj/item/clothing/armor/leather/splint
 		shoes = /obj/item/clothing/shoes/shortboots
 		belt = /obj/item/storage/belt/leather
@@ -156,7 +156,7 @@
 		H.change_stat(STATKEY_SPD, -1)
 	else
 		pants = /obj/item/clothing/pants/trou
-		shirt = /obj/item/clothing/shirt/dress/gen/random
+		shirt = /obj/item/clothing/shirt/dress/gen/colored/random
 		armor = /obj/item/clothing/armor/chainmail
 		shoes = /obj/item/clothing/shoes/shortboots
 		belt = /obj/item/storage/belt/leather
