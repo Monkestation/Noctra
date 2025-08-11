@@ -115,7 +115,7 @@
 	desc = "What wizard's ensemble would be complete without robes?"
 	icon_state = "wizardrobes"
 	allowed_sex = list(MALE)
-	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_TIEFLING, SPEC_ID_AASIMAR)
+	allowed_race = SPECIES_BASE_BODY
 	sellprice = 100
 
 /obj/item/clothing/shirt/robe/magus
@@ -123,7 +123,7 @@
 	desc = "A dark padded robe worn by only the most mysterious of mages, the magi."
 	icon_state = "warlock"
 	allowed_sex = list(MALE)
-	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_TIEFLING, SPEC_ID_AASIMAR)
+	allowed_race = SPECIES_BASE_BODY
 	sellprice = 150
 
 	armor = list("blunt" = 40, "slash" = 40, "stab" = 40,  "piercing" = 15, "fire" = 0, "acid" = 0)
@@ -139,7 +139,7 @@
 /obj/item/clothing/shirt/robe/nun
 	icon_state = "nun"
 	item_state = "nun"
-	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_TIEFLING, SPEC_ID_DROW, SPEC_ID_ELF, SPEC_ID_HALF_ELF, SPEC_ID_DWARF, SPEC_ID_AASIMAR)
+	allowed_race = SPECIES_BASE_BODY
 	allowed_sex = list(FEMALE)
 
 /obj/item/clothing/shirt/robe/feld
@@ -166,7 +166,7 @@
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	allowed_sex = list(MALE, FEMALE)
-	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_TIEFLING, SPEC_ID_ELF, SPEC_ID_AASIMAR)
+	allowed_race = SPECIES_BASE_BODY
 	color = null
 	sellprice = 100
 

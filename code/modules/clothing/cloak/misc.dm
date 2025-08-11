@@ -8,7 +8,7 @@
 	sleevetype = "shirt"
 	slot_flags = ITEM_SLOT_CLOAK
 	allowed_sex = list(MALE)
-	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_HALF_ELF, SPEC_ID_TIEFLING, SPEC_ID_AASIMAR)
+	allowed_race = SPECIES_BASE_BODY
 	nodismemsleeves = TRUE
 
 
@@ -36,7 +36,7 @@
 	sleevetype = "shirt"
 	slot_flags = ITEM_SLOT_CLOAK
 	allowed_sex = list(MALE)
-	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_HALF_ELF, SPEC_ID_TIEFLING, SPEC_ID_AASIMAR)
+	allowed_race = SPECIES_BASE_BODY
 	sellprice = 50
 	nodismemsleeves = TRUE
 
@@ -63,7 +63,7 @@
 	sleevetype = "shirt"
 	slot_flags = ITEM_SLOT_CLOAK
 	allowed_sex = list(MALE)
-	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_HALF_ELF, SPEC_ID_TIEFLING, SPEC_ID_AASIMAR)
+	allowed_race = SPECIES_BASE_BODY
 	sellprice = 50
 	nodismemsleeves = TRUE
 
@@ -84,7 +84,7 @@
 	toggle_icon_state = FALSE
 	color = CLOTHING_SOOT_BLACK
 	allowed_sex = list(MALE, FEMALE)
-	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_HALF_ELF, SPEC_ID_TIEFLING, SPEC_ID_ELF, SPEC_ID_AASIMAR)
+	allowed_race = SPECIES_BASE_BODY
 
 /obj/item/clothing/cloak/half/Initialize(mapload, ...)
 	. = ..()
@@ -177,10 +177,11 @@
 	alternate_worn_layer = TABARD_LAYER
 	body_parts_covered = CHEST|GROIN
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
+
 //.............inquisitor cloaks......... (For inquisitors..)
 /obj/item/clothing/cloak/cape/puritan
 	icon_state = "puritan_cape"
-	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_HALF_ELF, SPEC_ID_TIEFLING, SPEC_ID_ELF, SPEC_ID_DWARF, SPEC_ID_AASIMAR)
+	allowed_race = SPECIES_BASE_BODY
 
 /obj/item/clothing/cloak/cape/inquisitor
 	name = "Inquisitors Cloak"
@@ -273,7 +274,7 @@
 	sleevetype = "shirt"
 	nodismemsleeves = TRUE
 	inhand_mod = TRUE
-	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_HALF_ELF, SPEC_ID_TIEFLING, SPEC_ID_ELF, SPEC_ID_AASIMAR)
+	allowed_race = SPECIES_BASE_BODY
 
 /obj/item/clothing/cloak/faceless
 	name = "sash"
@@ -290,7 +291,7 @@
 	nodismemsleeves = TRUE
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
-	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_HALF_ELF, SPEC_ID_TIEFLING, SPEC_ID_ELF, SPEC_ID_AASIMAR)
+	allowed_race = SPECIES_BASE_BODY
 	inhand_mod = FALSE
 
 /obj/item/clothing/cloak/graggar
