@@ -1,8 +1,9 @@
 /datum/advclass/combat/paladin
 	name = "Paladin"
 	tutorial = "Paladins are former noblemen and clerics who have dedicated themselves to great combat prowess. Often, they were promised redemption for past sins if they crusaded in the name of the gods."
-	allowed_races = RACES_PLAYER_ALL
+	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 	outfit = /datum/outfit/job/adventurer/paladin
+	allowed_patrons = ALL_PALADIN_PATRONS
 	maximum_possible_slots = 1
 	min_pq = 2
 	pickprob = 15
@@ -10,18 +11,7 @@
 
 /datum/outfit/job/adventurer/paladin/pre_equip(mob/living/carbon/human/H)
 	..()
-	if(H.dna && ((H.dna.species.id in RACES_PLAYER_HERETICAL_RACE) || (H.dna.species.id in list(SPEC_ID_HARPY, SPEC_ID_TRITON, SPEC_ID_MEDICATOR))) && !istype(H.patron, /datum/patron/inhumen))
-		var/list/inhumen = list(
-			/datum/patron/inhumen/graggar,
-			/datum/patron/inhumen/zizo,
-			/datum/patron/inhumen/matthios,
-			/datum/patron/inhumen/baotha
-		)
-		var/picked = pick(inhumen)
-		H.set_patron(picked)
-		to_chat(H, span_warning("My patron had not endorsed my practices in my younger years. I've since grown acustomed to [H.patron]."))
 	H.virginity = TRUE
-
 	switch(H.patron?.type)
 		if(/datum/patron/psydon, /datum/patron/psydon/progressive)
 			head = /obj/item/clothing/head/helmet/heavy/bucket/gold
@@ -69,35 +59,6 @@
 			H.cmode_music = 'sound/music/cmode/church/CombatEora.ogg'
 			H.virginity = FALSE
 			ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
-		if(/datum/patron/inhumen/graggar) // Heretical Patrons
-			head = /obj/item/clothing/head/helmet/heavy/sinistar
-			H.cmode_music = 'sound/music/cmode/antag/combat_werewolf.ogg'
-			H.change_stat(STATKEY_LCK, -2)
-			GLOB.heretical_players += H.real_name
-		if(/datum/patron/inhumen/graggar_zizo)
-			head = /obj/item/clothing/head/helmet/heavy/sinistar
-			H.cmode_music = 'sound/music/cmode/antag/combat_werewolf.ogg'
-		if(/datum/patron/inhumen/zizo)
-			head = /obj/item/clothing/head/helmet/skullcap/cult
-			H.cmode_music = 'sound/music/cmode/antag/combat_cult.ogg'
-			H.change_stat(STATKEY_LCK, -2)
-			GLOB.heretical_players += H.real_name
-		if(/datum/patron/inhumen/matthios)
-			head = /obj/item/clothing/head/helmet/heavy/rust
-			H.cmode_music = 'sound/music/cmode/antag/CombatBandit1.ogg'
-			H.change_stat(STATKEY_LCK, -2)
-			GLOB.heretical_players += H.real_name
-		if(/datum/patron/inhumen/baotha)
-			head = /obj/item/clothing/head/crown/circlet
-			mask = /obj/item/clothing/face/spectacles/sglasses
-			H.cmode_music = 'sound/music/cmode/antag/CombatBaotha.ogg'
-			H.change_stat(STATKEY_LCK, -2)
-			GLOB.heretical_players += H.real_name
-		if(/datum/patron/godless)
-			head = /obj/item/clothing/head/roguehood/green
-			H.cmode_music = 'sound/music/cmode/church/CombatInquisitor.ogg'
-			H.change_stat(STATKEY_LCK, -2)
-			GLOB.heretical_players += H.real_name
 		else // Failsafe
 			head = /obj/item/clothing/head/helmet/heavy/bucket
 			wrists = /obj/item/clothing/neck/psycross/silver

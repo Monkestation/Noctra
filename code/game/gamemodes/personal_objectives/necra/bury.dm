@@ -1,5 +1,6 @@
 /datum/objective/proper_burial
 	name = "Consecrate Graves"
+	triumph_count = 2
 	var/burials_completed = 0
 	var/required_burials = 1
 

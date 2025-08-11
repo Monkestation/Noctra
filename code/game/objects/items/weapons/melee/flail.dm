@@ -117,6 +117,23 @@
 	desc = "The striking head resembles Necra's original skull, striking true with a sculpted emblem of love and sacrifice. Perhaps one of the few Psydonic-designed emblems of The Ten left."
 	icon_state = "necraflail"
 
+//................ Psydon Flail ............... //
+/obj/item/weapon/flail/psydon
+	force = DAMAGE_GOOD_FLAIL
+	name = "psydonian flail"
+	desc = "A flail fashioned with the iconography of Psydon, and crafted entirely out of silver."
+	icon_state = "psyflail"
+	melting_material = /datum/material/silver
+	melt_amount = 75
+	minstr = 4
+	max_integrity = 500
+	sellprice = 50
+	last_used = 0
+
+/obj/item/weapon/flail/psydon/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
+
 //................ Peasant Flail ............... // A little confusing still
 /obj/item/weapon/flail/peasant
 	force = DAMAGE_NORMAL_FLAIL

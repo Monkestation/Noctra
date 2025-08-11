@@ -1433,6 +1433,10 @@ SUBSYSTEM_DEF(gamemode)
 	for(var/stat_name in statistics_to_clear)
 		force_set_round_statistic(stat_name, 0)
 
+	var/list/current_valid_humans = list()
+
+	var/mob/living/carbon/human/valid_psydon_favourite
+
 	var/highest_total_stats = -1
 	var/highest_strength = -1
 	var/highest_intelligence = -1
@@ -1471,6 +1475,7 @@ SUBSYSTEM_DEF(gamemode)
 			record_round_statistic(STATS_DEADITES_ALIVE)
 		if(ishuman(living))
 			var/mob/living/carbon/human/human_mob = client.mob
+			current_valid_humans += human_mob
 			record_round_statistic(STATS_TOTAL_POPULATION)
 			for(var/obj/item/clothing/neck/current_item in human_mob.get_equipped_items(TRUE))
 				if(current_item.type in list(/obj/item/clothing/neck/psycross, /obj/item/clothing/neck/psycross/silver, /obj/item/clothing/neck/psycross/g))
@@ -1561,6 +1566,9 @@ SUBSYSTEM_DEF(gamemode)
 
 			// Chronicle statistics
 
+			if(human_mob.client.has_triumph_buy(TRIUMPH_BUY_PSYDON_FAVOURITE))
+				valid_psydon_favourite = human_mob
+
 			var/total_stats = human_mob.STASTR + human_mob.STAINT + human_mob.STAEND + human_mob.STACON + human_mob.STAPER + human_mob.STASPD + human_mob.STALUC
 			if(total_stats > highest_total_stats)
 				highest_total_stats = total_stats
@@ -1629,6 +1637,22 @@ SUBSYSTEM_DEF(gamemode)
 				lowest_wealth = wealth
 				set_chronicle_stat(CHRONICLE_STATS_POOREST_PERSON, human_mob, "PAUPER", "#909c63", "[wealth] mammons")
 
+	if(length(current_valid_humans) >= 2 && valid_psydon_favourite)
+		var/list/potential_passers = current_valid_humans.Copy()
+		potential_passers -= valid_psydon_favourite
+		var/mob/living/carbon/human/random_passerby = pick(potential_passers)
+
+		chosen_chronicle_stats[1] = CHRONICLE_STATS_PSYDON_FAVOURITE
+		set_chronicle_stat(CHRONICLE_STATS_PSYDON_FAVOURITE, valid_psydon_favourite, "PSYDON'S FAVOURITE", "#e6e6e6", "buying his way in")
+
+		if(random_passerby)
+			chosen_chronicle_stats[2] = CHRONICLE_STATS_RANDOM_PASSERBY
+			set_chronicle_stat(CHRONICLE_STATS_RANDOM_PASSERBY, random_passerby, "RANDOM PASSERBY", "#888888", "just happening to be here")
+
+	else if(!isnull(GLOB.chronicle_stats[CHRONICLE_STATS_PSYDON_FAVOURITE]))
+		chosen_chronicle_stats = list()
+		pick_chronicle_stats()
+
 /// Returns total follower influence for the given storyteller
 /datum/controller/subsystem/gamemode/proc/get_follower_influence(datum/storyteller/chosen_storyteller)
 	var/datum/storyteller/initialized_storyteller = storytellers[chosen_storyteller]
@@ -1669,7 +1693,11 @@ SUBSYSTEM_DEF(gamemode)
 	var/modifier = factors["points"]
 	var/capacity = factors["capacity"]
 
-	var/raw_contribution = (stat_value * modifier) * initialized_storyteller.influence_modifier
+	var/scaling_factor = initialized_storyteller.influence_modifier
+	if(modifier < 0)
+		scaling_factor = 1 / scaling_factor
+
+	var/raw_contribution = (stat_value * modifier) * scaling_factor
 	influence = (modifier < 0) ? max(raw_contribution, capacity) : min(raw_contribution, capacity)
 
 	return influence

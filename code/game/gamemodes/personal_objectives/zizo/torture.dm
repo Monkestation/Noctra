@@ -1,6 +1,6 @@
 /datum/objective/torture
 	name = "Extract Truth Through Pain"
-	triumph_count = 2
+	triumph_count = 3
 	var/torture_count = 0
 	var/required_count = 1
 

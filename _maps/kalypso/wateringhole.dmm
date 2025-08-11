@@ -1,0 +1,570 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/water/cleanshallow,
+/area/template_noop)
+"b" = (
+/mob/living/simple_animal/hostile/retaliate/wolf,
+/turf/open/floor/grass,
+/area/template_noop)
+"c" = (
+/obj/item/grown/log/tree/stick,
+/turf/open/floor/grass,
+/area/template_noop)
+"d" = (
+/obj/structure/flora/grass/bush/wall/tall,
+/turf/open/floor/grass,
+/area/template_noop)
+"e" = (
+/obj/structure/flora/grass,
+/turf/open/floor/dirt,
+/area/template_noop)
+"f" = (
+/obj/projectile/bullet/reusable/arrow/stone,
+/turf/open/floor/dirt,
+/area/template_noop)
+"g" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/naturalstone,
+/area/template_noop)
+"h" = (
+/obj/structure/flora/tree/pine,
+/turf/open/floor/grass,
+/area/template_noop)
+"i" = (
+/obj/effect/decal/remains/wolf,
+/turf/open/floor/dirt,
+/area/template_noop)
+"j" = (
+/obj/structure/flora/grass/bush/wall/tall,
+/obj/structure/flora/grass,
+/turf/open/floor/grass,
+/area/template_noop)
+"k" = (
+/obj/effect/decal/cleanable/blood/puddle{
+	icon_state = "gibbl3"
+	},
+/turf/open/floor/dirt,
+/area/template_noop)
+"l" = (
+/turf/open/floor/grass,
+/area/template_noop)
+"n" = (
+/obj/structure/flora/grass/bush,
+/turf/open/floor/dirt,
+/area/template_noop)
+"o" = (
+/obj/structure/flora/grass,
+/turf/open/floor/grass,
+/area/template_noop)
+"p" = (
+/obj/item/grown/log/tree,
+/turf/open/floor/grass,
+/area/template_noop)
+"q" = (
+/obj/structure/flora/grass/bush_meagre,
+/turf/open/floor/dirt,
+/area/template_noop)
+"r" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/turf/open/floor/dirt,
+/area/template_noop)
+"t" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/dirt,
+/area/template_noop)
+"u" = (
+/obj/item/clothing/shoes/boots/armor/light/rust,
+/turf/open/floor/naturalstone,
+/area/template_noop)
+"w" = (
+/obj/projectile/bullet/reusable/arrow/stone,
+/turf/open/floor/grass,
+/area/template_noop)
+"y" = (
+/obj/structure/wild_plant/nospread/apple,
+/turf/open/floor/dirt,
+/area/template_noop)
+"z" = (
+/mob/living/simple_animal/hostile/retaliate/wolf,
+/turf/open/floor/naturalstone,
+/area/template_noop)
+"B" = (
+/obj/structure/flora/tree/pine,
+/obj/structure/flora/grass,
+/turf/open/floor/grass,
+/area/template_noop)
+"C" = (
+/obj/structure/flora/grass,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/turf/open/floor/dirt,
+/area/template_noop)
+"D" = (
+/turf/open/floor/naturalstone,
+/area/template_noop)
+"E" = (
+/obj/structure/flora/grass/bush/wall/tall,
+/turf/open/floor/dirt,
+/area/template_noop)
+"F" = (
+/obj/item/clothing/head/helmet/heavy/rust,
+/obj/item/flashlight/flare/torch/lantern/copper{
+	pixel_x = 12;
+	pixel_y = 4
+	},
+/turf/open/floor/naturalstone,
+/area/template_noop)
+"G" = (
+/obj/structure/wild_plant/nospread/apple,
+/turf/open/floor/grass,
+/area/template_noop)
+"J" = (
+/turf/template_noop,
+/area/template_noop)
+"K" = (
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/water/cleanshallow,
+/area/template_noop)
+"L" = (
+/turf/open/floor/dirt,
+/area/template_noop)
+"M" = (
+/obj/structure/flora/grass/water/reeds,
+/turf/open/water/cleanshallow,
+/area/template_noop)
+"N" = (
+/obj/structure/flora/tree/pine,
+/turf/open/floor/dirt,
+/area/template_noop)
+"O" = (
+/mob/living/simple_animal/hostile/retaliate/wolf,
+/obj/structure/flora/grass,
+/turf/open/floor/dirt,
+/area/template_noop)
+"P" = (
+/obj/item/clothing/armor/cuirass/iron/rust,
+/obj/effect/decal/cleanable/blood/puddle{
+	icon_state = "floor5"
+	},
+/turf/open/floor/naturalstone,
+/area/template_noop)
+"Q" = (
+/obj/item/grown/log/tree,
+/turf/open/floor/dirt,
+/area/template_noop)
+"S" = (
+/obj/effect/decal/cleanable/blood/gibs/body,
+/turf/open/floor/naturalstone,
+/area/template_noop)
+"T" = (
+/obj/structure/table/wood/treestump,
+/obj/item/reagent_containers/food/snacks/apple_dried,
+/turf/open/floor/grass,
+/area/template_noop)
+"U" = (
+/obj/effect/decal/cleanable/blood/puddle{
+	icon_state = "gibdown1"
+	},
+/turf/open/floor/dirt,
+/area/template_noop)
+"V" = (
+/mob/living/simple_animal/hostile/retaliate/wolf,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/naturalstone,
+/area/template_noop)
+"W" = (
+/obj/structure/flora/grass/bush/wall/tall,
+/obj/structure/flora/grass,
+/turf/open/floor/dirt,
+/area/template_noop)
+"Y" = (
+/obj/structure/flora/tree/pine,
+/obj/structure/flora/grass,
+/turf/open/floor/dirt,
+/area/template_noop)
+"Z" = (
+/obj/item/grown/log/tree/stick,
+/obj/structure/flora/grass,
+/turf/open/floor/grass,
+/area/template_noop)
+
+(1,1,1) = {"
+J
+J
+J
+J
+J
+L
+k
+w
+b
+l
+d
+l
+l
+l
+b
+L
+L
+o
+Z
+l
+"}
+(2,1,1) = {"
+J
+J
+J
+E
+N
+e
+o
+n
+L
+e
+o
+G
+l
+d
+o
+o
+e
+i
+o
+o
+"}
+(3,1,1) = {"
+J
+J
+L
+i
+j
+Z
+l
+a
+a
+U
+e
+l
+l
+a
+a
+L
+e
+Y
+l
+c
+"}
+(4,1,1) = {"
+J
+L
+y
+o
+o
+a
+a
+a
+a
+a
+C
+e
+a
+a
+M
+a
+L
+e
+W
+l
+"}
+(5,1,1) = {"
+L
+L
+o
+l
+a
+a
+M
+K
+a
+a
+L
+e
+a
+a
+M
+M
+a
+L
+L
+e
+"}
+(6,1,1) = {"
+L
+B
+l
+a
+a
+M
+a
+a
+a
+t
+L
+D
+D
+a
+K
+a
+M
+L
+O
+o
+"}
+(7,1,1) = {"
+l
+l
+a
+a
+K
+a
+a
+a
+L
+D
+u
+f
+D
+a
+a
+a
+M
+Q
+o
+l
+"}
+(8,1,1) = {"
+d
+c
+a
+a
+a
+a
+a
+L
+F
+V
+D
+r
+D
+a
+M
+a
+a
+e
+T
+l
+"}
+(9,1,1) = {"
+l
+l
+a
+M
+M
+a
+L
+z
+D
+g
+D
+q
+a
+M
+M
+a
+a
+W
+l
+p
+"}
+(10,1,1) = {"
+o
+b
+a
+a
+M
+M
+q
+S
+P
+D
+q
+a
+M
+M
+a
+a
+L
+L
+o
+l
+"}
+(11,1,1) = {"
+o
+L
+a
+K
+a
+M
+a
+q
+t
+L
+a
+a
+a
+K
+a
+n
+O
+o
+c
+l
+"}
+(12,1,1) = {"
+o
+E
+a
+a
+a
+a
+K
+a
+a
+a
+a
+a
+a
+a
+a
+L
+e
+l
+G
+l
+"}
+(13,1,1) = {"
+e
+e
+L
+a
+a
+a
+a
+a
+a
+M
+M
+a
+a
+a
+L
+e
+l
+l
+e
+e
+"}
+(14,1,1) = {"
+L
+Y
+e
+L
+a
+a
+a
+a
+M
+K
+a
+a
+a
+L
+o
+o
+L
+B
+e
+J
+"}
+(15,1,1) = {"
+L
+L
+o
+o
+l
+n
+a
+a
+a
+a
+a
+a
+L
+l
+l
+d
+l
+e
+L
+J
+"}
+(16,1,1) = {"
+J
+J
+l
+l
+B
+l
+l
+e
+e
+e
+e
+l
+l
+h
+c
+o
+e
+e
+J
+J
+"}
+(17,1,1) = {"
+J
+J
+J
+l
+l
+o
+o
+Z
+E
+L
+o
+o
+l
+l
+e
+e
+L
+J
+J
+J
+"}

@@ -239,7 +239,7 @@ GLOBAL_LIST_INIT(natural_precursor_registry, list())
 	name = "lemon"
 	essence_yields = list(
 		/datum/thaumaturgical_essence/life = 2,
-		/datum/thaumaturgical_essence/poison = 1
+		/datum/thaumaturgical_essence/water = 1//juicy
 	)
 	init_types = list(
 		/obj/item/reagent_containers/food/snacks/produce/fruit/lemon,
@@ -249,7 +249,7 @@ GLOBAL_LIST_INIT(natural_precursor_registry, list())
 	name = "lime"
 	essence_yields = list(
 		/datum/thaumaturgical_essence/life = 2,
-		/datum/thaumaturgical_essence/poison = 1
+		/datum/thaumaturgical_essence/water = 1//juicy
 	)
 	init_types = list(
 		/obj/item/reagent_containers/food/snacks/produce/fruit/lime,

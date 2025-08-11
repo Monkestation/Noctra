@@ -1,6 +1,6 @@
 /datum/objective/get_apprentice
 	name = "Get Apprentice"
-	triumph_count = 2
+	triumph_count = 3
 
 /datum/objective/get_apprentice/on_creation()
 	. = ..()

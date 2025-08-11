@@ -96,6 +96,12 @@
 	result_type = /obj/item/natural/glass
 	required_essences = list(/datum/thaumaturgical_essence/crystal = 5)
 
+/datum/essence_infusion_recipe/heat_iron
+	name = "Heat Iron"
+	target_type  = /obj/item/ore/iron
+	result_type = /obj/item/ingot/iron
+	required_essences = list(/datum/thaumaturgical_essence/fire = 10)
+
 /datum/essence_infusion_recipe/thaumic_iron
 	name = "Thaumic Iron"
 	target_type  = /obj/item/ingot/iron
@@ -108,3 +114,8 @@
 	result_type = /obj/item/mana_battery/mana_crystal/standard
 	required_essences = list(/datum/thaumaturgical_essence/magic = 10)
 
+/datum/essence_infusion_recipe/seed_random
+	name = "Seed Transmutation"
+	target_type  = /obj/item/neuFarm/seed
+	result_type = /obj/item/neuFarm/seed/mixed_seed
+	required_essences = list(/datum/thaumaturgical_essence/life = 5)

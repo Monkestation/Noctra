@@ -6,7 +6,7 @@
 	grid_height = 64
 	var/list/types = list()
 	var/open
-	var/base_icon_state
+	base_icon_state
 	var/can_spawn = TRUE
 	var/list/categories = list("All") // Default categories
 	var/current_category = "All"      // Default selected category

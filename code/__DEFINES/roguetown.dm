@@ -1,6 +1,8 @@
 #define ALL_TEMPLE_PATRONS 		list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/necra, /datum/patron/divine/ravox, /datum/patron/divine/xylix, /datum/patron/divine/pestra, /datum/patron/divine/malum, /datum/patron/divine/eora)
-#define ALL_CLERIC_PATRONS 		list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/necra, /datum/patron/divine/ravox, /datum/patron/divine/xylix, /datum/patron/divine/pestra, /datum/patron/divine/malum, /datum/patron/divine/eora, /datum/patron/inhumen/graggar, /datum/patron/inhumen/zizo, /datum/patron/inhumen/matthios, /datum/patron/inhumen/baotha)
+#define ALL_CLERIC_PATRONS 		list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/necra, /datum/patron/divine/ravox, /datum/patron/divine/xylix, /datum/patron/divine/pestra, /datum/patron/divine/malum, /datum/patron/divine/eora)
+#define ALL_PALADIN_PATRONS 	list(/datum/patron/psydon, /datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/necra, /datum/patron/divine/ravox, /datum/patron/divine/xylix, /datum/patron/divine/pestra, /datum/patron/divine/malum, /datum/patron/divine/eora)
 #define ALL_TEMPLAR_PATRONS 	list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/eora, /datum/patron/divine/necra, /datum/patron/divine/ravox, /datum/patron/divine/pestra, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/malum, /datum/patron/divine/xylix)
+#define ALL_PROFANE_PATRONS 	list(/datum/patron/inhumen/graggar, /datum/patron/inhumen/zizo, /datum/patron/inhumen/matthios, /datum/patron/inhumen/baotha)
 
 GLOBAL_LIST_INIT(curse_names, list())
 
@@ -174,6 +176,16 @@ GLOBAL_LIST_EMPTY(job_respawn_delays)
 #define TRIUMPH_BUY_BAOTHA_INFLUENCE "baotha_influence"
 #define TRIUMPH_BUY_GRAGGAR_INFLUENCE "graggar_influence"
 #define TRIUMPH_BUY_MATTHIOS_INFLUENCE "matthios_influence"
+
+// Misc category and its buys
+#define TRIUMPH_CAT_MISC "MISC"
+
+#define TRIUMPH_BUY_PSYDON_FAVOURITE "psydon_favourite"
+
+// Misc category and its buys
+#define TRIUMPH_CAT_COMMUNAL "COMMUNAL"
+
+#define TRIUMPH_BUY_PSYDON_RETIREMENT "psydon_retirement"
 
 // Bought triumph buys category
 #define TRIUMPH_CAT_ACTIVE_DATUMS "BOUGHT"

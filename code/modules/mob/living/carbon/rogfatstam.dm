@@ -35,6 +35,9 @@
 	///this trait affects both stamina and energy since they are part of the same system.
 	if(HAS_TRAIT(src, TRAIT_NOSTAMINA))
 		return TRUE
+	///This trait specifically affect energy.
+	if(HAS_TRAIT(src, TRAIT_NOENERGY))
+		return TRUE
 	if(m_intent == MOVE_INTENT_RUN)
 		var/boon = get_learning_boon(/datum/skill/misc/athletics)
 		adjust_experience(/datum/skill/misc/athletics, (STAINT*0.02) * boon)

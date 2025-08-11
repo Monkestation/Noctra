@@ -353,6 +353,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MOONWATER_ELIXIR			"Moonwater Elixir"
 #define TRAIT_FLOWERFIELD_IMMUNITY		"Flower Strider"
 #define TRAIT_SECRET_OFFICIANT			"Secret Officiant"
+#define TRAIT_NOENERGY 					"Boundless Energy" //Specifically, You don't lose fatigue, but you do continue losing stamina.
 /// applied to orphans
 #define TRAIT_ORPHAN 					"Orphan"
 #define TRAIT_RECRUITED					"Recruit" //Trait used to give foreigners their new title

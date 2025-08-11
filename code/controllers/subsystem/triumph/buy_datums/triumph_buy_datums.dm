@@ -3,14 +3,14 @@
 */
 
 /datum/triumph_buy
- 	/// This serves no purpose rn other than to stop duplicates in certain places
-	var/triumph_buy_id = "ERROR"
-	/// Key of the person who bought it.
-	var/key_of_buyer = null
-	/// Ckey of the person who bought it. I don't feel like dealing with the fact zeth used key for triumphs
-	var/ckey_of_buyer = null
-    /// Desc shown for it on the menu
-	var/desc = "ERROR"
+	/// Display name shown as a title above the description
+	var/name = "UNNAMED TRIUMPH BUY"
+	/// Desc shown for it on the menu
+	var/desc = "NO DESCRIPTION"
+ 	/// Unique ID of the triumph buy
+	var/triumph_buy_id
+	/// Ckey of the person who bought it
+	var/ckey_of_buyer
 	/// Cost in triumphs for something
 	var/triumph_cost = 500
 	/// Category we sort something into
@@ -19,10 +19,16 @@
 	var/visible_on_active_menu = FALSE
 	/// Whether its pre-round only
 	var/pre_round_only = FALSE
-	/// Whatever the triumph buy effect must be manually activated somewhere else than on its buy
+	/// Whether the triumph buy effect must be manually activated somewhere else than on its buy
 	var/manual_activation = FALSE
-	/// Whatever the triumph buy effect was activated and therefore cannot be refunded
+	/// Whether the triumph buy effect was activated and therefore cannot be refunded
 	var/activated = FALSE
+	/// Whether the triumph buy has limited stock to buy
+	var/limited = FALSE
+	/// Number times the triumph buy can be bought if its limited
+	var/stock = 0
+	/// Whether the user is allowed to buy the triumph buy they already have
+	var/allow_multiple_buys = TRUE
 	/// List of things it can conflict with
 	var/list/conflicts_with = list()
 

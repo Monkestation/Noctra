@@ -156,9 +156,13 @@
 
 	gamemode_report()
 
-	to_chat(world, personal_objectives_report())
+	sleep(8 SECONDS)
 
-	sleep(10 SECONDS)
+	var/datum/triumph_buy/communal/psydon_retirement_fund/fund = locate() in SStriumphs.triumph_buy_datums
+	if(fund && SStriumphs.communal_pools[fund.type] > 0)
+		fund.on_activate()
+
+	sleep(6 SECONDS)
 
 	players_report()
 
@@ -281,8 +285,7 @@
 		if(last.show_in_roundend)
 			last.roundend_report_footer()
 
-
-	return
+	to_chat(world, personal_objectives_report())
 
 /datum/controller/subsystem/ticker/proc/standard_reboot()
 	if(ready_for_reboot)

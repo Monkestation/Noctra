@@ -215,6 +215,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 
 	/// If the user clicked "Don't ask again" on the randomize character prompt
 	var/randomize_shutup = FALSE
+	/// Custom UI scale
+	var/ui_scale
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -440,27 +442,14 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	// well.... one empty slot here for something I suppose lol
 	dat += "<table width='100%'>"
 	dat += "<tr>"
-	dat += "<td width='33%' align='left'><a href='?_src_=prefs;preference=loreprimer'>LORE PRIMER</a></td>"
+	dat += "<td width='33%' align='left'></td>"
 	dat += "<td width='33%' align='center'>"
 	var/mob/dead/new_player/N = user
 	if(istype(N))
 		dat += "<a href='?_src_=prefs;preference=bespecial'><b>[next_special_trait ? "<font color='red'>SPECIAL</font>" : "BE SPECIAL"]</b></a><BR>"
-		if(SSticker.current_state <= GAME_STATE_PREGAME)
-			switch(N.ready)
-				if(PLAYER_NOT_READY)
-					dat += "<b>UNREADY</b> <a href='byond://?src=[REF(N)];ready=[PLAYER_READY_TO_PLAY]'>READY</a>"
-				if(PLAYER_READY_TO_PLAY)
-					dat += "<a href='byond://?src=[REF(N)];ready=[PLAYER_NOT_READY]'>UNREADY</a> <b>READY</b>"
-		else
-			if(!is_active_migrant())
-				dat += "<a href='byond://?src=[REF(N)];late_join=1'>JOINLATE</a>"
-			else
-				dat += "<a class='linkOff' href='byond://?src=[REF(N)];late_join=1'>JOINLATE</a>"
-			dat += " - <a href='?_src_=prefs;preference=migrants'>MIGRATION</a>"
-			dat += "<br><a href='?_src_=prefs;preference=manifest'>ACTORS</a>"
-	else
-		dat += "<a href='?_src_=prefs;preference=finished'>DONE</a>"
-		dat += "</center>"
+
+	dat += "<a href='?_src_=prefs;preference=finished'>DONE</a>"
+	dat += "</center>"
 
 	dat += "</td>"
 	dat += "<td width='33%' align='right'>"
@@ -475,12 +464,12 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	user?.client.acquire_dpi()
 	winshow(user, "stonekeep_prefwin", TRUE)
 	winshow(user, "stonekeep_prefwin.character_preview_map", TRUE)
-	var/datum/browser/noclose/popup = new(user, "preferences_browser", "<div align='center'>Character Sheet</div>", 700, 600)
-	popup.set_window_options(can_close = FALSE)
+	var/datum/browser/popup = new(user, "preferences_browser", "<div align='center'>Character Sheet</div>", 700, 600)
+	popup.set_window_options(can_close = TRUE)
 	popup.set_content(dat.Join())
 	popup.open(FALSE)
 	update_preview_icon()
-	//onclose(user, "stonekeep_prefwin", src)
+	onclose(user, "stonekeep_prefwin", src)
 
 #undef APPEARANCE_CATEGORY_COLUMN
 #undef MAX_MUTANT_ROWS

@@ -2,6 +2,7 @@
 	abstract_type = /datum/blueprint_recipe/wall
 	category = "Walls"
 	pixel_offsets = FALSE
+	build_time = 5 SECONDS
 
 /datum/blueprint_recipe/wall/woodwall
 	name = "Wood Wall"
@@ -11,7 +12,6 @@
 		/obj/item/grown/log/tree/small = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 5 SECONDS
 	category = "Walls"
 	floor_object = TRUE
 
@@ -25,7 +25,6 @@
 		/obj/item/grown/log/tree/small = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 6 SECONDS
 	category = "Walls"
 	floor_object = TRUE
 
@@ -40,7 +39,6 @@
 		/obj/item/natural/wood/plank = 3
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 7 SECONDS
 	category = "Walls"
 	floor_object = TRUE
 
@@ -75,7 +73,6 @@
 		/obj/item/natural/wood/plank = 3
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 7 SECONDS
 	category = "Walls"
 	floor_object = TRUE
 
@@ -91,7 +88,6 @@
 		/obj/item/natural/stone = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 6 SECONDS
 	category = "Walls"
 	floor_object = TRUE
 
@@ -105,7 +101,6 @@
 		/obj/item/natural/stone = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 7 SECONDS
 	category = "Walls"
 	floor_object = TRUE
 
@@ -119,7 +114,6 @@
 		/obj/item/natural/stoneblock = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 8 SECONDS
 	category = "Walls"
 	floor_object = TRUE
 
@@ -134,7 +128,6 @@
 		/obj/item/natural/stoneblock = 3
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 10 SECONDS
 	category = "Walls"
 	floor_object = TRUE
 
@@ -149,7 +142,6 @@
 		/obj/item/natural/stoneblock = 3
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 12 SECONDS
 	category = "Walls"
 	floor_object = TRUE
 
@@ -179,7 +171,6 @@
 		/obj/item/natural/dirtclod = 2
 	)
 	construct_tool = /obj/item/weapon/knife
-	build_time = 6 SECONDS
 	category = "Walls"
 	floor_object = TRUE
 
@@ -192,7 +183,6 @@
 		/obj/item/natural/dirtclod = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 6 SECONDS
 	category = "Walls"
 	floor_object = TRUE
 

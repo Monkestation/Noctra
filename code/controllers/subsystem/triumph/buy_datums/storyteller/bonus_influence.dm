@@ -1,153 +1,99 @@
-/datum/triumph_buy/storyteller_influence_matthios
+/datum/triumph_buy/storyteller_influence_bonus
+	name = "Storyteller Influence Bonus"
+	desc = "Grants bonus influence to a storyteller."
+	triumph_cost = 3
+	category = TRIUMPH_CAT_STORYTELLER
+	visible_on_active_menu = TRUE
+	limited = TRUE
+	stock = 2
+	/// The name of the storyteller we are giving bonus influence to
+	var/storyteller_name
+
+/datum/triumph_buy/storyteller_influence_bonus/on_activate()
+	. = ..()
+	if(storyteller_name)
+		adjust_storyteller_influence(storyteller_name, 25)
+
+/datum/triumph_buy/storyteller_influence_bonus/matthios
+	name = "Matthios' Influence"
+	desc = "Buy an extra 25 influence for this god!"
 	triumph_buy_id = TRIUMPH_BUY_MATTHIOS_INFLUENCE
-	desc = "FOR MATTHIOS! Buy an extra 25 influence for this god!"
-	triumph_cost = 5
-	category = TRIUMPH_CAT_STORYTELLER
-	visible_on_active_menu = TRUE
+	storyteller_name = MATTHIOS
 
-/datum/triumph_buy/storyteller_influence_matthios/on_activate()
-	. = ..()
-	adjust_storyteller_influence(MATTHIOS, 25)
-
-/datum/triumph_buy/storyteller_influence_graggar
+/datum/triumph_buy/storyteller_influence_bonus/graggar
+	name = "Graggar's Influence"
+	desc = "Buy an extra 25 influence for this god!"
 	triumph_buy_id = TRIUMPH_BUY_GRAGGAR_INFLUENCE
-	desc = "FOR GRAGGAR! Buy an extra 25 influence for this god!"
-	triumph_cost = 5
-	category = TRIUMPH_CAT_STORYTELLER
-	visible_on_active_menu = TRUE
+	storyteller_name = GRAGGAR
 
-/datum/triumph_buy/storyteller_influence_graggar/on_activate()
-	. = ..()
-	adjust_storyteller_influence(GRAGGAR, 25)
-
-/datum/triumph_buy/storyteller_influence_baotha
+/datum/triumph_buy/storyteller_influence_bonus/baotha
+	name = "Baotha's Influence"
+	desc = "Buy an extra 25 influence for this god!"
 	triumph_buy_id = TRIUMPH_BUY_BAOTHA_INFLUENCE
-	desc = "FOR BAOTHA! Buy an extra 25 influence for this god!"
-	triumph_cost = 5
-	category = TRIUMPH_CAT_STORYTELLER
-	visible_on_active_menu = TRUE
+	storyteller_name = BAOTHA
 
-/datum/triumph_buy/storyteller_influence_baotha/on_activate()
-	. = ..()
-	adjust_storyteller_influence(BAOTHA, 25)
-
-/datum/triumph_buy/storyteller_influence_zizo
+/datum/triumph_buy/storyteller_influence_bonus/zizo
+	name = "Zizo's Influence"
+	desc = "Buy an extra 25 influence for this god!"
 	triumph_buy_id = TRIUMPH_BUY_ZIZO_INFLUENCE
-	desc = "FOR ZIZO! Buy an extra 25 influence for this god!"
-	triumph_cost = 5
-	category = TRIUMPH_CAT_STORYTELLER
-	visible_on_active_menu = TRUE
+	storyteller_name = ZIZO
 
-/datum/triumph_buy/storyteller_influence_zizo/on_activate()
-	. = ..()
-	adjust_storyteller_influence(ZIZO, 25)
-
-/datum/triumph_buy/storyteller_influence_dendor
+/datum/triumph_buy/storyteller_influence_bonus/dendor
+	name = "Dendor's Influence"
+	desc = "Buy an extra 25 influence for this god!"
 	triumph_buy_id = TRIUMPH_BUY_DENDOR_INFLUENCE
-	desc = "FOR DENDOR! Buy an extra 25 influence for this god!"
-	triumph_cost = 5
-	category = TRIUMPH_CAT_STORYTELLER
-	visible_on_active_menu = TRUE
+	storyteller_name = DENDOR
 
-/datum/triumph_buy/storyteller_influence_dendor/on_activate()
-	. = ..()
-	adjust_storyteller_influence(DENDOR, 25)
-
-/datum/triumph_buy/storyteller_influence_eora
+/datum/triumph_buy/storyteller_influence_bonus/eora
+	name = "Eora's Influence"
+	desc = "Buy an extra 25 influence for this god!"
 	triumph_buy_id = TRIUMPH_BUY_EORA_INFLUENCE
-	desc = "FOR EORA! Buy an extra 25 influence for this god!"
-	triumph_cost = 5
-	category = TRIUMPH_CAT_STORYTELLER
-	visible_on_active_menu = TRUE
+	storyteller_name = EORA
 
-/datum/triumph_buy/storyteller_influence_eora/on_activate()
-	. = ..()
-	adjust_storyteller_influence(EORA, 25)
-
-/datum/triumph_buy/storyteller_influence_malum
+/datum/triumph_buy/storyteller_influence_bonus/malum
+	name = "Malum's Influence"
+	desc = "Buy an extra 25 influence for this god!"
 	triumph_buy_id = TRIUMPH_BUY_MALUM_INFLUENCE
-	desc = "FOR MALUM! Buy an extra 25 influence for this god!"
-	triumph_cost = 5
-	category = TRIUMPH_CAT_STORYTELLER
-	visible_on_active_menu = TRUE
+	storyteller_name = MALUM
 
-/datum/triumph_buy/storyteller_influence_malum/on_activate()
-	. = ..()
-	adjust_storyteller_influence(MALUM, 25)
-
-/datum/triumph_buy/storyteller_influence_pestra
+/datum/triumph_buy/storyteller_influence_bonus/pestra
+	name = "Pestra's Influence"
+	desc = "Buy an extra 25 influence for this god!"
 	triumph_buy_id = TRIUMPH_BUY_PESTRA_INFLUENCE
-	desc = "FOR PESTRA! Buy an extra 25 influence for this god!"
-	triumph_cost = 5
-	category = TRIUMPH_CAT_STORYTELLER
-	visible_on_active_menu = TRUE
+	storyteller_name = PESTRA
 
-/datum/triumph_buy/storyteller_influence_pestra/on_activate()
-	. = ..()
-	adjust_storyteller_influence(PESTRA, 25)
-
-/datum/triumph_buy/storyteller_influence_necra
+/datum/triumph_buy/storyteller_influence_bonus/necra
+	name = "Necra's Influence"
+	desc = "Buy an extra 25 influence for this god!"
 	triumph_buy_id = TRIUMPH_BUY_NECRA_INFLUENCE
-	desc = "FOR NECRA! Buy an extra 25 influence for this god!"
-	triumph_cost = 5
-	category = TRIUMPH_CAT_STORYTELLER
-	visible_on_active_menu = TRUE
+	storyteller_name = NECRA
 
-/datum/triumph_buy/storyteller_influence_necra/on_activate()
-	. = ..()
-	adjust_storyteller_influence(NECRA, 25)
-
-/datum/triumph_buy/storyteller_influence_xylix
+/datum/triumph_buy/storyteller_influence_bonus/xylix
+	name = "Xylix's Influence"
+	desc = "Buy an extra 25 influence for this god!"
 	triumph_buy_id = TRIUMPH_BUY_XYLIX_INFLUENCE
-	desc = "FOR XYLIX! Buy an extra 25 influence for this god!"
-	triumph_cost = 5
-	category = TRIUMPH_CAT_STORYTELLER
-	visible_on_active_menu = TRUE
+	storyteller_name = XYLIX
 
-/datum/triumph_buy/storyteller_influence_xylix/on_activate()
-	. = ..()
-	adjust_storyteller_influence(XYLIX, 25)
-
-/datum/triumph_buy/storyteller_influence_abyssor
+/datum/triumph_buy/storyteller_influence_bonus/abyssor
+	name = "Abyssor's Influence"
+	desc = "Buy an extra 25 influence for this god!"
 	triumph_buy_id = TRIUMPH_BUY_ABYSSOR_INFLUENCE
-	desc = "FOR ABYSSOR! Buy an extra 25 influence for this god!"
-	triumph_cost = 5
-	category = TRIUMPH_CAT_STORYTELLER
-	visible_on_active_menu = TRUE
+	storyteller_name = ABYSSOR
 
-/datum/triumph_buy/storyteller_influence_abyssor/on_activate()
-	. = ..()
-	adjust_storyteller_influence(ABYSSOR, 25)
-
-/datum/triumph_buy/storyteller_influence_ravox
+/datum/triumph_buy/storyteller_influence_bonus/ravox
+	name = "Ravox's Influence"
+	desc = "Buy an extra 25 influence for this god!"
 	triumph_buy_id = TRIUMPH_BUY_RAVOX_INFLUENCE
-	desc = "FOR RAVOX! Buy an extra 25 influence for this god!"
-	triumph_cost = 5
-	category = TRIUMPH_CAT_STORYTELLER
-	visible_on_active_menu = TRUE
+	storyteller_name = RAVOX
 
-/datum/triumph_buy/storyteller_influence_ravox/on_activate()
-	. = ..()
-	adjust_storyteller_influence(RAVOX, 25)
-
-/datum/triumph_buy/storyteller_influence_noc
+/datum/triumph_buy/storyteller_influence_bonus/noc
+	name = "Noc's Influence"
+	desc = "Buy an extra 25 influence for this god!"
 	triumph_buy_id = TRIUMPH_BUY_NOC_INFLUENCE
-	desc = "FOR NOC! Buy an extra 25 influence for this god!"
-	triumph_cost = 5
-	category = TRIUMPH_CAT_STORYTELLER
-	visible_on_active_menu = TRUE
+	storyteller_name = NOC
 
-/datum/triumph_buy/storyteller_influence_noc/on_activate()
-	. = ..()
-	adjust_storyteller_influence(NOC, 25)
-
-/datum/triumph_buy/storyteller_influence_astrata
+/datum/triumph_buy/storyteller_influence_bonus/astrata
+	name = "Astrata's Influence"
+	desc = "Buy an extra 25 influence for this god!"
 	triumph_buy_id = TRIUMPH_BUY_ASTRATA_INFLUENCE
-	desc = "FOR ASTRATA! Buy an extra 25 influence for this god!"
-	triumph_cost = 5
-	category = TRIUMPH_CAT_STORYTELLER
-	visible_on_active_menu = TRUE
-
-/datum/triumph_buy/storyteller_influence_astrata/on_activate()
-	. = ..()
-	adjust_storyteller_influence(ASTRATA, 25)
+	storyteller_name = ASTRATA

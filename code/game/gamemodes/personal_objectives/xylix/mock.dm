@@ -1,5 +1,6 @@
 /datum/objective/mock
 	name = "Mock"
+	triumph_count = 2
 
 /datum/objective/mock/on_creation()
 	. = ..()

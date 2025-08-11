@@ -1,6 +1,6 @@
 /datum/objective/adopt_orphan
 	name = "Adopt Orphan"
-	triumph_count = 2
+	triumph_count = 3
 
 /datum/objective/adopt_orphan/on_creation()
 	. = ..()

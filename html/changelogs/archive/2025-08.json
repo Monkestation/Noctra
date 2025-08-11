@@ -111,6 +111,78 @@
             {
                 "bugfix": "Fixed an issue where printing press could not find all books or printed random books."
             }
+        ],
+        "PotatoTomahto": [
+            {
+                "balance": "death to gaffer. long live merchant"
+            }
+        ]
+    },
+    "2025-08-09": {
+        "Viviridia": [
+            {
+                "rscadd": "Fertilizing to gnome tend crops command"
+            },
+            {
+                "rscadd": "Alchemical vial & bottle crafting recipes"
+            },
+            {
+                "rscadd": "Added infusions seed randomizer and ore --> iron infusion"
+            },
+            {
+                "qol": "made the essence connector equipable in the hip"
+            },
+            {
+                "qol": "gnome no longer damages plants by walking on them"
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "Shield heraldry works again."
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "balance": "ruin ingots less and smithing craft diff"
+            }
+        ],
+        "SarmentiCampbell": [
+            {
+                "rscadd": "Added Inhumen Paladin/Cleric"
+            },
+            {
+                "bugfix": "Added allowed patron requirement for subclasses so allowed patron actually does something."
+            },
+            {
+                "balance": "Buffed Maniac, specifically, halved their blood loss, gave them critical resistance and they are now unable to lose energy"
+            },
+            {
+                "balance": "Deceiving meekness now falsifie the pitchness of your choice.(originally, High STR lowered your pitch.)"
+            },
+            {
+                "balance": "lessened the chance of a jumpscare popping up."
+            },
+            {
+                "rscadd": "added midround antag, maniac."
+            },
+            {
+                "bugfix": "Fixed VagrantBum, problably"
+            }
+        ],
+        "Arkatos": [
+            {
+                "rscadd": "Influences balancing, added number of medicators as a possible influence for Pestra."
+            },
+            {
+                "bugfix": "Influence modifier is now correctly applied to negative influences."
+            }
+        ]
+    },
+    "2025-08-10": {
+        "wgtjunior743": [
+            {
+                "bugfix": "Fix Vampire Lord undisguised unique warning not appearing"
+            }
         ]
     }
 }
