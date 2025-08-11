@@ -227,7 +227,7 @@
 
 		if (should_self_destruct)  // check if self-destruct
 			times_used += 1
-			if (times_used >= 8) //amount used before burning out
+			if (times_used >= 12) //amount used before burning out
 				user.visible_message("<span class='warning'>[src] has burnt out and falls apart!</span>")
 				qdel(src)
 
@@ -253,9 +253,9 @@
 	metalizer_result = null
 
 /obj/item/flashlight/flare/torch/metal/afterattack(atom/movable/A, mob/user, proximity)
-	. = ..()
 	if(!proximity)
 		return
+
 	if(on && (prob(50) || (user.used_intent.type == /datum/intent/use)))
 		if(ismob(A))
 			A.spark_act()
@@ -264,7 +264,7 @@
 
 		if (should_self_destruct)  // check if self-destruct
 			times_used += 1
-			if (times_used >= 13) //amount used before burning out
+			if (times_used >= 60) //amount used before burning out
 				user.visible_message("<span class='warning'>[src] has burnt out and falls apart!</span>")
 				qdel(src)
 
