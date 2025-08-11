@@ -205,7 +205,7 @@
 
 /datum/special_trait/tolerant
 	name = "Tolerant"
-	greet_text = span_notice("I dream of an ideal future, one with peace between all races")
+	greet_text = span_notice("I dream of an ideal future, one with peace between all species")
 	weight = 100
 
 /datum/special_trait/tolerant/on_apply(mob/living/carbon/human/character, silent)

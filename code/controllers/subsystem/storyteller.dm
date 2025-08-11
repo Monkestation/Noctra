@@ -1532,7 +1532,7 @@ SUBSYSTEM_DEF(gamemode)
 				if(human_mob.IsWedded() || member.children.len > 0)
 					record_round_statistic(STATS_MARRIED)
 
-			// Races
+			// species
 			if(istiefling(human_mob))
 				record_round_statistic(STATS_ALIVE_TIEFLINGS)
 			if(ishumannorthern(human_mob))

@@ -13,7 +13,7 @@
 	spawn_positions = 2
 	min_pq = 2
 
-	//Reason all races allowed is you are basically a very talented court physician; even 'lower races' would find this to be one of the only ways to obtain a sort of nobility.
+	//Reason all species allowed is you are basically a very talented court physician; even 'lower species' would find this to be one of the only ways to obtain a sort of nobility.
 	allowed_races = RACES_PLAYER_NONEXOTIC
 
 	outfit = /datum/outfit/job/feldsher

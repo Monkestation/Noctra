@@ -188,7 +188,7 @@
 
 /datum/thaumaturgical_essence/magic
 	name = "Magic Essence"
-	desc = "The essence of pure arcane power."
+	desc = "The essence of pure arcynic power."
 	tier = 2
 	color = "#9370DB"
 	icon_state = "essence_magic"

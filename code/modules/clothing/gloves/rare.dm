@@ -48,7 +48,7 @@
 	allowed_sex = list(MALE)
 	item_weight = 7 * STEEL_MULTIPLIER
 
-/obj/item/clothing/gloves/rare/zybanplate
+/obj/item/clothing/gloves/rare/zaladplate
 	name = "kataphractoe claw gauntlets"
 	desc = "Interwoven beautifully with layers of silk, chain and plate, these gauntlets grant unmatched coverage while allowing maximum mobility. Both useful to the Zaladin's ever-growing slave-empire."
 	icon_state = "human_spearhand"

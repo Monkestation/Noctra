@@ -281,7 +281,7 @@
 				if("Elvish")
 					H.grant_language(/datum/language/elvish)
 					to_chat(H,span_info("\
-					I learned the tongue of the primordial race.")
+					I learned the tongue of the primordial species.")
 					)
 				if("Hellspeak")
 					H.grant_language(/datum/language/hellspeak)

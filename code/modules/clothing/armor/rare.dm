@@ -56,7 +56,7 @@
 	allowed_sex = list(MALE)
 	item_weight = 12 * STEEL_MULTIPLIER
 
-/obj/item/clothing/armor/rare/zybanplate
+/obj/item/clothing/armor/rare/zaladplate
 	name = "kataphractoe scaleskin"
 	desc = "Steel scales woven into armor with miniscule threads of adamantine, \
 			ensuring the wearer optimal defence with forgiving breathability. \

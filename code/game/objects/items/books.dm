@@ -1632,7 +1632,7 @@
 ____________End of Example*/
 
 /obj/item/book/magicaltheory
-	name = "Arcane Foundations - A historie of Magicks"
+	name = "Arcyne Foundations - A historie of the Arcyne"
 	desc = "Written by the rector of the Valerian College of Magick"
 	icon_state ="knowledge_0"
 	base_icon_state = "knowledge"

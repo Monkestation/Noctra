@@ -1,6 +1,6 @@
 /obj/machinery/artificer_table
 	name = "artificer table"
-	desc = "An artificers wood work station, blessed by some odd machination, or perhaps... magic..."
+	desc = "An artificers wood work station, nice and sturdy for working."
 	icon_state = "art_table"
 	icon = 'icons/roguetown/misc/tables.dmi'
 	var/obj/item/material

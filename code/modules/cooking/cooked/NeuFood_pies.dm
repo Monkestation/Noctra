@@ -159,7 +159,7 @@
 // -------------- MEAT PIE -----------------
 /obj/item/reagent_containers/food/snacks/pie/cooked/meat // bae item
 	name = "meat pie"
-	desc = ""
+	desc = "A pie that is fit for meat lovers. It contains meat, meat, and nothing but meat."
 	foodtype = GRAIN | DAIRY | MEAT
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEATPIE_NUTRITION)
 
@@ -193,7 +193,7 @@
 // -------------- POT PIE -----------------
 /obj/item/reagent_containers/food/snacks/pie/cooked/pot
 	name = "pot pie"
-	desc = ""
+	desc = "A pie made with a host of different ingredients. May or may not contain meat."
 	slices_num = 6
 	list_reagents = list(/datum/reagent/consumable/nutriment = MEATPIE_NUTRITION)
 	tastes = list("mysterious filling and butterdough" = 1)
@@ -211,7 +211,7 @@
 // -------------- BERRY PIE -----------------
 /obj/item/reagent_containers/food/snacks/pie/cooked/berry
 	name = "berry pie"
-	desc = ""
+	desc = "A sweet pie made from jackberries. A popular choice for banquets among peasants, and enjoyed by all."
 	list_reagents = list(/datum/reagent/consumable/nutriment = FRUITPIE_NUTRITION)
 	slices_num = 4
 	tastes = list("butterdough" = 1, "berries" = 1)
@@ -236,7 +236,7 @@
 // -------------- APPLE PIE -----------------
 /obj/item/reagent_containers/food/snacks/pie/cooked/apple
 	name = "apple pie"
-	desc = ""
+	desc = "A sweet pie made from apples. Some claim it to taste even better with cheese."
 	slices_num = 4
 	list_reagents = list(/datum/reagent/consumable/nutriment = FRUITPIE_NUTRITION)
 	tastes = list("apples and butterdough" = 1)
@@ -251,7 +251,7 @@
 // -------------- PEAR PIE -----------------
 /obj/item/reagent_containers/food/snacks/pie/cooked/pear
 	name = "pear pie"
-	desc = ""
+	desc = "A sweet pie made from pears. Not as famous as it's other fruit cousins."
 	slices_num = 4
 	list_reagents = list(/datum/reagent/consumable/nutriment = FRUITPIE_NUTRITION)
 	tastes = list("pears and butterdough" = 1)

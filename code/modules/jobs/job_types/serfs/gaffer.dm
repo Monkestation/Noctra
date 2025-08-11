@@ -8,7 +8,7 @@
 	spawn_positions = 1
 
 	allowed_races = RACES_PLAYER_ALL
-	//I say we let all races be the gaffer, this is job concerns the adventurers and mercs, and those come in all types and sizes,
+	//I say we let all species be the gaffer, this is job concerns the adventurers and mercs, and those come in all types and sizes,
 	//so it fits better with the wild cards that is this demographic of people
 	//having said that I am gate keeping the moment felinids are in the damn game
 	allowed_ages = list(AGE_MIDDLEAGED,AGE_OLD, AGE_IMMORTAL) //AGE_OLD with the ring on? I say unlikely - clown

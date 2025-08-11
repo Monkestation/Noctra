@@ -2,7 +2,7 @@
 /mob/living/simple_animal/hostile/retaliate/wolf/familiar
 	icon = 'icons/roguetown/mob/monster/vol.dmi'
 	name = "familiar"
-	desc = "A spectral volf familiar created by arcane magicks."
+	desc = "A spectral volf familiar created by arcyne magicks."
 	icon_state = "spiritw"
 	icon_living = "spiritw"
 	icon_dead = null

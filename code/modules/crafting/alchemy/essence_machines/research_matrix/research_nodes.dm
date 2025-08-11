@@ -17,7 +17,7 @@
 
 /datum/thaumic_research_node/basic_understanding
 	name = "Fundamental Thaumaturgy"
-	desc = "The foundational principles of essence manipulation and magical theory. Understanding the basic flow of arcane energies is essential before attempting more complex workings."
+	desc = "The foundational principles of essence manipulation and magical theory. Understanding the interactions of alchemy and the enviroment is essential before attempting more complex workings."
 	icon_state = "node"
 	node_x = 140
 	node_y = 340

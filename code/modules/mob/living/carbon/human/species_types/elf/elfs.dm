@@ -16,7 +16,7 @@
 	desc = "Necra's guides.\
 	\n\n\
 	Elves, created by Necra to guide humenity, are characterized by lengthened age, \
-	low fertility, and a magical aptitude originating from a vast array of tribal cultures and sub-races. \
+	low fertility, and a magical aptitude originating from a vast array of tribal cultures. \
 	With the ascension of Zizo, the entire culture of snow-elves was all but destroyed, \
 	leading the remaining tribes to live in fear and paranoia of suffering the same fate. \
 	Many elves sought safety through mixing culture, \

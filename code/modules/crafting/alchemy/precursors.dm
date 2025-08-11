@@ -498,7 +498,7 @@ GLOBAL_LIST_INIT(natural_precursor_registry, list())
 	)
 
 /datum/natural_precursor/artifact
-	name = "arcane artifact"
+	name = "arcyne artifact"
 	essence_yields = list(
 		/datum/thaumaturgical_essence/magic = 2,
 		/datum/thaumaturgical_essence/order = 1

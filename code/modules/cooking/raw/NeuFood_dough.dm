@@ -128,7 +128,7 @@
 
 /obj/item/reagent_containers/food/snacks/hardtack
 	name = "hardtack"
-	desc = "Very, very hard and dry."
+	desc = "Very, very hard and dry. Keeps well."
 	icon_state = "tack"
 	base_icon_state = "tack"
 	biting = TRUE

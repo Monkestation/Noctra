@@ -149,7 +149,7 @@
 // ................... Ring of Protection ....................... (rare treasure, not for purchase)
 /obj/item/clothing/ring/gold/protection
 	name = "ring of protection"
-	desc = "Old ring, inscribed with arcane words. Once held magical powers, perhaps it does still?"
+	desc = "Old ring, inscribed with arcyne words. Once held magical powers, perhaps it does still?"
 	icon_state = "ring_protection"
 	var/antileechy
 	var/antimagika	// will cause bugs if equipped roundstart to wizards
@@ -193,7 +193,7 @@
 
 /obj/item/clothing/ring/gold/ravox
 	name = "ring of ravox"
-	desc = "Old ring, inscribed with arcane words. Just being near it imbues you with otherworldly strength."
+	desc = "Old ring, inscribed with arcyne words. Just being near it imbues you with otherworldly strength."
 	icon_state = "ring_ravox"
 
 /obj/item/clothing/ring/gold/ravox/equipped(mob/living/user, slot)
@@ -231,7 +231,7 @@
 
 /obj/item/clothing/ring/silver/noc
 	name = "ring of noc"
-	desc = "Old ring, inscribed with arcane words. Just being near it imbues you with otherworldly knowledge."
+	desc = "Old ring, inscribed with arcyne words. Just being near it imbues you with otherworldly knowledge."
 	icon_state = "ring_sapphire"
 
 /obj/item/clothing/ring/silver/noc/equipped(mob/living/user, slot)

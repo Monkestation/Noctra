@@ -93,7 +93,7 @@
 
 /obj/item/clothing/head/wizhat/witch
 	name = "witch hat"
-	desc = ""
+	desc = "While offically, Witches heretical to Astrata and thus risk harrassment by faithkeepers, quite a few mages and pestrans wear such hats anyways as a fashion statement."
 	icon_state = "witchhat"
 	detail_tag = "_detail"
 	detail_color = CLOTHING_SOOT_BLACK

@@ -38,7 +38,7 @@
 
 /obj/item/weapon/magicbrick
 	name = "magician's brick"
-	desc = "A brick formed out of arcane energy. Makes for a deadly melee and throwing weapon."
+	desc = "A brick formed out of arcyne energy. Makes for a deadly melee and throwing weapon."
 	icon = 'icons/roguetown/items/cooking.dmi'
 	icon_state = "claybrickcook"
 	dropshrink = 0.75
