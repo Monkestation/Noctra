@@ -6,7 +6,7 @@
 
 /datum/triumph_buy/communal/preround/orphanage_renovation/on_activate()
 	. = ..()
-	SSmapping.add_world_trait(/datum/world_trait/orphanage_renovated)
+	SSmapping.add_world_trait(/datum/world_trait/orphanage_renovated, 0)
 
 	to_chat(world, "<br>")
 	to_chat(world, span_reallybig("The Orphanage has been renovated! Eora smiles upon you all!"))
