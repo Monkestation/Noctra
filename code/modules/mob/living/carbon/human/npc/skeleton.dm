@@ -81,6 +81,7 @@
 	H.base_constitution = 8
 	H.base_endurance = 8
 	H.base_intelligence = 1
+	H.recalculate_stats(FALSE)
 
 /datum/outfit/job/greater_skeleton/pre_equip(mob/living/carbon/human/H) //equipped onto Summon Greater Undead player skeletons only after the mind is added
 	..()
@@ -153,6 +154,7 @@
 	H.base_speed = 8
 	H.base_constitution = 8
 	H.base_endurance = 8
+	H.recalculate_stats(FALSE)
 	var/loadout = rand(1,7)
 	head = /obj/item/clothing/head/roguehood/colored/random
 	pants = /obj/item/clothing/pants/tights/colored/vagrant
@@ -239,6 +241,7 @@
 	H.base_speed = 7
 	H.base_constitution = 10
 	H.base_endurance = 10
+	H.recalculate_stats(FALSE)
 	var/loadout = rand(1,6)
 	switch(loadout)
 		if(1) //Skeleton Warrior

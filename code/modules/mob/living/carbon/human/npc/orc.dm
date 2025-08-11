@@ -238,6 +238,7 @@
 	H.base_speed = 12
 	H.base_constitution = 13
 	H.base_endurance = 13
+	H.recalculate_stats(FALSE)
 	var/loadout = rand(1,5)
 	switch(loadout)
 		if(1) //Stolen Tool armed raider
@@ -388,6 +389,7 @@
 	H.base_speed = 13
 	H.base_constitution = 14
 	H.base_endurance = 14
+	H.recalculate_stats(FALSE)
 	var/loadout = rand(1,5)
 	switch(loadout)
 		if(1) //Marauder with Sword and Shield
@@ -460,6 +462,7 @@
 	H.base_speed = 12
 	H.base_constitution = 13
 	H.base_endurance = 13
+	H.recalculate_stats(FALSE)
 	var/loadout = rand(1,5)
 	switch(loadout)
 		if(1) //Marauder with Sword and Shield
@@ -515,6 +518,7 @@
 	H.base_speed = 14
 	H.base_constitution = 14
 	H.base_endurance = 14
+	H.recalculate_stats(FALSE)
 	var/loadout = rand(1,5)
 	switch(loadout)
 		if(1) //Halberd Warlord

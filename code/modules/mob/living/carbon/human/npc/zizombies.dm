@@ -235,6 +235,8 @@
 	H.base_speed = 7
 	H.base_constitution = 10
 	H.base_endurance = 16//the zombies shouldn't get tired after all
+	H.recalculate_stats(FALSE)
+
 	shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 	pants = /obj/item/clothing/pants/tights/colored/vagrant
 	shoes = /obj/item/clothing/shoes/simpleshoes
@@ -400,6 +402,7 @@
 	H.base_speed = 7
 	H.base_constitution = 10
 	H.base_endurance = 16//the zizombies shouldn't get tired after all
+	H.recalculate_stats(FALSE)
 	var/loadout = rand(1,5)
 	switch(loadout)
 		if(1) //zizombie Warrior
@@ -480,6 +483,7 @@
 	H.base_speed = 7
 	H.base_constitution = 10
 	H.base_endurance = 20//the zizombies shouldn't get tired after all
+	H.recalculate_stats(FALSE)
 	var/loadout = rand(1,5)
 	switch(loadout)
 		if(1) //zizombie Warrior
