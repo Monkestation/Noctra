@@ -83,26 +83,29 @@
 	salvage_result = /obj/item/natural/hide/cured
 	item_weight = 2.2
 
-/obj/item/clothing/armor/leather/vest/random/Initialize()
+/obj/item/clothing/armor/leather/vest/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
+/obj/item/clothing/armor/leather/vest/colored/random/Initialize()
 	color = pick(CLOTHING_SOOT_BLACK, CLOTHING_BARK_BROWN, CLOTHING_FOREST_GREEN)
 	return ..()
 
 //................ Butchers Vest ............... //
-/obj/item/clothing/armor/leather/vest/butcher
+/obj/item/clothing/armor/leather/vest/colored/butcher
 	name = "butchers vest"
 	icon_state = "leathervest"
 	color = "#d69c87" // custom coloring
 	item_weight = 1.8
 
 //................ Other Vests ............... //
-/obj/item/clothing/armor/leather/vest/butler
+/obj/item/clothing/armor/leather/vest/colored/butler
 	color = CLOTHING_BLOOD_RED
 	uses_lord_coloring = LORD_PRIMARY
 
-/obj/item/clothing/armor/leather/vest/black
+/obj/item/clothing/armor/leather/vest/colored/black
 	color = CLOTHING_DARK_INK
 
-/obj/item/clothing/armor/leather/vest/innkeep // repath to correct padded vest some day
+/obj/item/clothing/armor/leather/vest/colored/innkeep // repath to correct padded vest some day
 	name = "padded vest"
 	desc = "Dyed green, belongs to the owner of the Drunken Saiga inn."
 	icon_state = "striped"

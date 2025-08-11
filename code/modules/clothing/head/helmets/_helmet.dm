@@ -18,3 +18,4 @@
 
 	grid_height = 64
 	grid_width = 64
+	abstract_type = /obj/item/clothing/head/helmet

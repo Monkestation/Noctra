@@ -42,7 +42,7 @@
 	else
 		pants = /obj/item/clothing/pants/tights
 		if(prob(50))
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 		shirt = /obj/item/clothing/shirt/undershirt
 	if(prob(23))
 		gloves = /obj/item/clothing/gloves/leather
@@ -51,9 +51,9 @@
 	wrists = /obj/item/clothing/wrists/bracers/leather
 	belt = /obj/item/storage/belt/leather
 	armor = /obj/item/clothing/armor/leather/hide
-	cloak = /obj/item/clothing/cloak/raincloak/brown
+	cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 	if(prob(33))
-		cloak = /obj/item/clothing/cloak/raincloak/green
+		cloak = /obj/item/clothing/cloak/raincloak/colored/green
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 	backl = /obj/item/storage/backpack/satchel
 	beltr = /obj/item/flashlight/flare/torch/lantern

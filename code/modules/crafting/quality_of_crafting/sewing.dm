@@ -122,7 +122,7 @@
 		/obj/item/natural/cloth = 1,
 		/obj/item/natural/fibers = 1,
 	)
-	output = /obj/item/clothing/shirt/shortshirt/uncolored
+	output = /obj/item/clothing/shirt/shortshirt
 
 /datum/repeatable_crafting_recipe/sewing/clothshirt
 	name = "cloth shirt"
@@ -130,7 +130,7 @@
 		/obj/item/natural/cloth = 2,
 		/obj/item/natural/fibers = 1,
 	)
-	output = /obj/item/clothing/shirt/undershirt/uncolored
+	output = /obj/item/clothing/shirt/undershirt
 
 /datum/repeatable_crafting_recipe/sewing/tunic
 	name = "tunic"
@@ -155,7 +155,7 @@
 
 /datum/repeatable_crafting_recipe/sewing/clothtights
 	name = "cloth tights"
-	output = /obj/item/clothing/pants/tights/uncolored
+	output = /obj/item/clothing/pants/tights
 	requirements = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
 	category = "Pants"
@@ -183,6 +183,12 @@
 /datum/repeatable_crafting_recipe/sewing/cmask
 	name = "cloth mask"
 	output = /obj/item/clothing/face/shepherd/clothmask
+	requirements = list(/obj/item/natural/fibers = 1, /obj/item/natural/cloth = 1)
+	category = "Mask"
+
+/datum/repeatable_crafting_recipe/sewing/cmask_rag
+	name = "rag mask"
+	output = /obj/item/clothing/face/shepherd/rag
 	requirements = list(/obj/item/natural/fibers = 1, /obj/item/natural/cloth = 1)
 	category = "Mask"
 
@@ -241,6 +247,13 @@
 	craftdiff = 1
 	category = "Hat"
 
+/datum/repeatable_crafting_recipe/sewing/fisherhat
+	name = "shawl"
+	output = /obj/item/clothing/head/shawl
+	requirements = list(/obj/item/natural/fibers = 3)
+	craftdiff = 1
+	category = "Hat"
+
 /datum/repeatable_crafting_recipe/sewing/sack
 	name = "sack hood"
 	output = /obj/item/clothing/head/menacing
@@ -263,10 +276,52 @@
 	craftdiff = 1
 	category = "Neck"
 
+/datum/repeatable_crafting_recipe/sewing/keffiyeh
+	name = "keffiyeh"
+	requirements = list(/obj/item/natural/cloth = 2, /obj/item/natural/fibers = 1,)
+	output = /obj/item/clothing/neck/keffiyeh
+	craftdiff = 1
+	category = "Neck"
+
+/datum/repeatable_crafting_recipe/sewing/feld_collar
+	name = "feldsher's collar"
+	requirements = list(/obj/item/natural/cloth = 2, /obj/item/natural/fibers = 2,)
+	output = /obj/item/clothing/neck/feld
+	craftdiff = 1
+	category = "Neck"
+
+/datum/repeatable_crafting_recipe/sewing/phys_collar
+	name = "physicker's collar"
+	requirements = list(/obj/item/natural/cloth = 1, /obj/item/natural/fibers = 2,)
+	output = /obj/item/clothing/neck/phys
+	craftdiff = 1
+	category = "Neck"
+
 /datum/repeatable_crafting_recipe/sewing/roguehood
 	name = "cloth hood"
 	requirements = list(/obj/item/natural/cloth = 1, /obj/item/natural/fibers = 1,)
-	output = /obj/item/clothing/head/roguehood/uncolored
+	output = /obj/item/clothing/head/roguehood
+	craftdiff = 1
+	category = "Hat"
+
+/datum/repeatable_crafting_recipe/sewing/articap
+	name = "artificer cap"
+	requirements = list(/obj/item/natural/cloth = 1, /obj/item/natural/fibers = 1,)
+	output = /obj/item/clothing/head/articap
+	craftdiff = 1
+	category = "Hat"
+
+/datum/repeatable_crafting_recipe/sewing/cookhat
+	name = "cook hat"
+	requirements = list(/obj/item/natural/cloth = 1, /obj/item/natural/fibers = 1,)
+	output = /obj/item/clothing/head/cookhat
+	craftdiff = 1
+	category = "Hat"
+
+/datum/repeatable_crafting_recipe/sewing/chefhat
+	name = "chef hat"
+	requirements = list(/obj/item/natural/cloth = 1, /obj/item/natural/fibers = 1,)
+	output = /obj/item/clothing/head/cookhat/chef
 	craftdiff = 1
 	category = "Hat"
 
@@ -403,17 +458,10 @@
 	craftdiff = 2
 	category = "Wrists"
 
-/datum/repeatable_crafting_recipe/sewing/Bluskirt
-	name = "blue skirt"
-	output = /obj/item/clothing/pants/skirt/blue
-	requirements = list(/obj/item/natural/cloth = 2,
-			/obj/item/natural/fibers = 1)
-	craftdiff = 2
-	category = "Pants"
 
-/datum/repeatable_crafting_recipe/sewing/Greskirt
-	name = "green skirt"
-	output = /obj/item/clothing/pants/skirt/green
+/datum/repeatable_crafting_recipe/sewing/skirt
+	name = "skirt"
+	output = /obj/item/clothing/pants/skirt
 	requirements = list(/obj/item/natural/cloth = 2,
 			/obj/item/natural/fibers = 1)
 	craftdiff = 2
@@ -451,12 +499,54 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
 
-/datum/repeatable_crafting_recipe/sewing/robe
+/datum/repeatable_crafting_recipe/sewing/normal_robes
 	name = "robes"
-	output = /obj/item/clothing/shirt/robe/plain
+	output = /obj/item/clothing/shirt/robe
+	requirements = list(/obj/item/natural/cloth = 1,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 1
+
+/datum/repeatable_crafting_recipe/sewing/feld_robe
+	name = "feldsher robes"
+	output = /obj/item/clothing/shirt/robe/feld
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 2)
+	craftdiff = 3
+
+/datum/repeatable_crafting_recipe/sewing/phys_robes
+	name = "physicker robes"
+	output = /obj/item/clothing/shirt/robe/phys
 	requirements = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
+
+/datum/repeatable_crafting_recipe/sewing/robe
+	name = "robes"
+	output = /obj/item/clothing/shirt/robe/colored/plain
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+
+/datum/repeatable_crafting_recipe/sewing/apron_waist
+	name = "apron"
+	output = /obj/item/clothing/cloak/apron/waist
+	requirements = list(/obj/item/natural/cloth = 1,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 2
+
+/datum/repeatable_crafting_recipe/sewing/apron_cook
+	name = "cook apron"
+	output = /obj/item/clothing/cloak/apron/cook
+	requirements = list(/obj/item/natural/cloth = 1,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 2
+
+/datum/repeatable_crafting_recipe/sewing/fisher_hat
+	name = "fisher hat"
+	output = /obj/item/clothing/head/fisherhat
+	requirements = list(/obj/item/natural/cloth = 1,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 2
 
 /datum/repeatable_crafting_recipe/sewing/cape
 	name = "cape"
@@ -556,6 +646,14 @@
 	craftdiff = 3
 	category = "Cloak"
 
+/datum/repeatable_crafting_recipe/sewing/xylixtemplar
+	name = "xylixian surcoat"
+	output = /obj/item/clothing/cloak/stabard/templar/xylix
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
 /datum/repeatable_crafting_recipe/sewing/dress
 	name = "bar dress"
 	output = /obj/item/clothing/shirt/dress
@@ -574,7 +672,7 @@
 
 /datum/repeatable_crafting_recipe/sewing/Bladress
 	name = "black dress"
-	output = /obj/item/clothing/shirt/dress/gen/black
+	output = /obj/item/clothing/shirt/dress/gen/colored/black
 	requirements = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
@@ -582,7 +680,7 @@
 
 /datum/repeatable_crafting_recipe/sewing/Bludress
 	name = "blue dress"
-	output = /obj/item/clothing/shirt/dress/gen/blue
+	output = /obj/item/clothing/shirt/dress/gen/colored/blue
 	requirements = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
@@ -590,7 +688,7 @@
 
 /datum/repeatable_crafting_recipe/sewing/Purdress
 	name = "purple dress"
-	output = /obj/item/clothing/shirt/dress/gen/purple
+	output = /obj/item/clothing/shirt/dress/gen/colored/purple
 	requirements = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
@@ -627,7 +725,7 @@
 
 /datum/repeatable_crafting_recipe/sewing/chaperonhat
 	name = "chaperon hat"
-	output = /obj/item/clothing/head/chaperon/greyscale
+	output = /obj/item/clothing/head/chaperon/colored/greyscale
 	requirements = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 4

@@ -3,7 +3,7 @@
 	. = ..()
 	shoes = /obj/item/clothing/shoes/boots/leather
 	neck = /obj/item/clothing/neck/gorget
-	mask = /obj/item/clothing/face/mask/facemask/steel/harlequin
+	mask = /obj/item/clothing/face/facemask/steel/harlequin
 	gloves = /obj/item/clothing/gloves/fingerless
 	belt = /obj/item/storage/belt/leather/black
 	pants = /obj/item/clothing/pants/trou/leather
@@ -12,7 +12,7 @@
 	backr = /obj/item/storage/backpack/satchel
 	backl = /obj/item/storage/belt/pouch/coins/poor
 	cloak = /obj/item/clothing/cloak/half/shadowcloak
-	head = /obj/item/clothing/head/roguehood/black
+	head = /obj/item/clothing/head/roguehood/colored/black
 
 	H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)

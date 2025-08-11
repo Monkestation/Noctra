@@ -195,6 +195,11 @@
 	icon_state = "tabard_ravox"
 	item_state = "tabard_ravox"
 
+/obj/item/clothing/cloak/stabard/templar/xylix
+	name = "surcoat of the xylixian order"
+	icon_state = "tabard_xylix"
+	item_state = "tabard_xylix"
+
 //////////////////////////
 /// SURCOATS
 ////////////////////////

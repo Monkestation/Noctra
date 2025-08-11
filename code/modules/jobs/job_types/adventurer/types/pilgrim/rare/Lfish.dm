@@ -18,7 +18,7 @@
 	..()
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/trou
-		shirt = /obj/item/clothing/shirt/shortshirt/random
+		shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 		shoes = /obj/item/clothing/shoes/boots/leather
 		neck = /obj/item/storage/belt/pouch/coins/mid
 		head = /obj/item/clothing/head/fisherhat
@@ -48,7 +48,7 @@
 	else
 		pants = /obj/item/clothing/pants/trou
 		shoes = /obj/item/clothing/shoes/boots/leather
-		shirt = /obj/item/clothing/shirt/shortshirt/random
+		shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 		neck = /obj/item/storage/belt/pouch/coins/mid
 		head = /obj/item/clothing/head/fisherhat
 		backr = /obj/item/storage/backpack/satchel
