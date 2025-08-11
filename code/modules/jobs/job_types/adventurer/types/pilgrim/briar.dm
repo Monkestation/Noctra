@@ -171,6 +171,7 @@
 	user.emote("rage", forced = TRUE)
 	ADD_TRAIT(user, TRAIT_STRONGBITE, TRAIT_GENERIC)
 	ADD_TRAIT(user, TRAIT_BESTIALSENSE, TRAIT_GENERIC)
+	user.update_sight()
 
 	user.remove_spell(/datum/action/cooldown/spell/undirected/bless_crops)
 	user.apply_status_effect(/datum/status_effect/buff/barbrage/briarrage)

@@ -20,7 +20,7 @@
 	charge_time = 8 SECONDS
 	charge_slowdown = 3
 	cooldown_time = 7 MINUTES
-	spell_cost = 80
+	spell_cost = 100
 	keep_name = TRUE
 
 	sound = 'sound/vo/mobs/troll/aggro2.ogg'
@@ -31,12 +31,16 @@
 	. = ..()
 	if(!.)
 		return
-	required_items = list() // so the troll can transform back
 	var/mob/living/new_shape = .
 	new_shape.set_patron(caster.patron)
+	required_items = list() // so the troll can transform back
+	spell_cost = 0
+	spell_type = NONE
 
 /datum/action/cooldown/spell/undirected/shapeshift/troll_form/do_unshapeshift(mob/living/caster)
 	. = ..()
 	if(!.)
 		return
 	required_items = list(/obj/item/clothing/neck/psycross/silver/dendor)
+	spell_cost = 100
+	spell_type = SPELL_MIRACLE
