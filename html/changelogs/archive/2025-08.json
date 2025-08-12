@@ -245,5 +245,22 @@
                 "balance": "Thieflings can be barbarians"
             }
         ]
+    },
+    "2025-08-12": {
+        "wgtjunior743": [
+            {
+                "rscadd": "Foreigner Trait Title first letter now is in uppercase."
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "Fix species clothing restrictions for species that use the base body proportions (Not dwarves)"
+            }
+        ],
+        "Wrench-1": [
+            {
+                "image": "xylixian surcoat for Templars and Clerics"
+            }
+        ]
     }
 }
