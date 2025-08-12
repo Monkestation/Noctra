@@ -192,11 +192,11 @@
 	beltr = /obj/item/ammo_holder/quiver/arrows
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow //placeholder, going to give them a slingshot in another PR later
 	armor = /obj/item/clothing/armor/leather
-	backpack_contents = list(/obj/item/weapon/knife/hunting = 1, /obj/item/cooking/pan = 1, /obj/item/reagent_containers/food/snacks/meat/fatty = 2, /obj/item/reagent_containers/food/snacks/egg = 1, /obj/item/key/forrestgarrison = 1, /obj/item/storage/belt/pouch/coins/poor)
+	backpack_contents = list(/obj/item/weapon/knife/hunting = 1, /obj/item/cooking/pan = 1, /obj/item/reagent_containers/food/snacks/meat/fatty = 2, /obj/item/reagent_containers/food/snacks/egg = 1, /obj/item/storage/belt/pouch/coins/poor)
 	H.verbs |= /mob/proc/haltyellorphan //pitch shifted for the lols
 
 	if(H.mind) //if you want your ruffians to have combat skills, take them up as apprentices
-		//otherwise, mix of orphan and ranger skills
+		//otherwise, mix of orphan and ranger skills, with some labour skills to imply housework
 		H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE) //considering master climbing, I can make another youngling subclass for such
 		H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
