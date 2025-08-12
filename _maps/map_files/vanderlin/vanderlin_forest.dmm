@@ -499,6 +499,12 @@
 /obj/structure/spider/stickyweb,
 /turf/open/floor/cobblerock,
 /area/rogue/indoors)
+"ih" = (
+/obj/structure/fluff/signage{
+	name = "Vanderlin - South"
+	},
+/turf/open/floor/grass,
+/area/rogue/outdoors/woods)
 "iA" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/spider/stickyweb,
@@ -1192,6 +1198,12 @@
 "vK" = (
 /turf/open/floor/dirt,
 /area/rogue/indoors)
+"vV" = (
+/obj/structure/fluff/signage{
+	name = "Vanderlin - Southeast"
+	},
+/turf/open/floor/grass,
+/area/rogue/outdoors/woods)
 "vY" = (
 /obj/structure/window/solid,
 /turf/open/floor/ruinedwood/turned/alt,
@@ -1414,6 +1426,12 @@
 /obj/effect/mapping_helpers/access/keyset/thatchwood/farm,
 /turf/open/floor/woodturned,
 /area/rogue/indoors)
+"CP" = (
+/obj/structure/fluff/signage{
+	name = "Vanderlin - East"
+	},
+/turf/open/floor/dirt/road,
+/area/rogue/outdoors/woods)
 "CQ" = (
 /obj/structure/flora/ausbushes/brflowers,
 /turf/open/floor/grass,
@@ -2377,12 +2395,6 @@
 /obj/item/reagent_containers/glass/bucket/wooden,
 /turf/open/floor/wood,
 /area/rogue/indoors)
-"Zj" = (
-/obj/structure/fluff/signage{
-	name = "Thatchwood- East"
-	},
-/turf/open/floor/grass,
-/area/rogue/outdoors/woods)
 "Zk" = (
 /obj/structure/fluff/railing/fence{
 	dir = 8
@@ -8691,7 +8703,7 @@ Xk
 tR
 Xk
 wV
-UR
+vV
 wV
 Qd
 cA
@@ -20814,7 +20826,7 @@ UR
 UR
 UR
 UR
-UR
+ih
 wV
 wV
 wV
@@ -27663,7 +27675,7 @@ UR
 UR
 wV
 wV
-Zj
+UR
 cA
 Qd
 UR
@@ -32077,7 +32089,7 @@ tR
 wV
 UR
 UR
-Qd
+CP
 Qd
 cA
 Qd
