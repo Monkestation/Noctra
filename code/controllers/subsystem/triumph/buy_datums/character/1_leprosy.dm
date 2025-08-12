@@ -8,7 +8,7 @@
 	manual_activation = TRUE
 	allow_multiple_buys = FALSE
 	limited = TRUE
-	stock = 1
+	stock = 2
 
 /datum/triumph_buy/leprosy/on_after_spawn(mob/living/carbon/human/H)
 	. = ..()
