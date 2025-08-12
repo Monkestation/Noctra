@@ -40,7 +40,7 @@
 		var/essence_sound_played = FALSE //This is here so the sound wont play multiple times if the essence itself spawns multiple times
 		for(var/i = 0; i < lumber_amount; i++)
 			if(prob(skill_level + prob(CLAMP((user.STALUC - 10)*2,0,100))))
-				new /obj/item/grown/log/tree/small/essence(get_turf(src))
+				new /obj/item/grown/log/tree/essence(get_turf(src))
 				if(!essence_sound_played)
 					essence_sound_played = TRUE
 					to_chat(user, span_warning("Dendor watches over us..."))
@@ -76,7 +76,7 @@
 		var/essence_sound_played = FALSE //This is here so the sound wont play multiple times if the essence itself spawns multiple times
 		for(var/i = 0; i < lumber_amount; i++)
 			if(prob(skill_level + prob(CLAMP((user.STALUC - 10)*2,0,100))))
-				new /obj/item/grown/log/tree/small/essence(get_turf(src))
+				new /obj/item/grown/log/tree/essence(get_turf(src))
 				if(!essence_sound_played)
 					essence_sound_played = TRUE
 					to_chat(user, span_warning("Dendor watches over us..."))
@@ -244,7 +244,7 @@
 	experimental_inhand = FALSE
 	firefuel = 5 MINUTES
 	w_class = WEIGHT_CLASS_NORMAL
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 	bundletype = /obj/item/natural/bundle/plank
 
 /obj/item/natural/bundle/plank
@@ -269,16 +269,20 @@
 	icon1step = 5
 	icon2 = "planks2"
 	icon2step = 10
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 
-/obj/item/grown/log/tree/small/essence
+/obj/item/grown/log/tree/essence
 	name = "essence of lumber"
 	desc = "A mystical essence embued with the power of Dendor. Very good source of fuel."
 	icon_state = "lessence"
+	attacked_sound = 'sound/misc/woodhit.ogg'
 	static_debris = null
+	gripped_intents = null
 	firefuel = 60 MINUTES // Extremely poweful fuel.
 	w_class = WEIGHT_CLASS_SMALL
 	smeltresult = null
 	lumber = null
 	lumber_alt = null
 	lumber_amount = 0
+	grid_height = 64
+	grid_width = 64

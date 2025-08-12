@@ -1,0 +1,67 @@
+{
+	"couch_single": [
+		{
+			"type": "icon_state",
+			"icon_state": "couch_single_cushion",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "couch_single_under",
+			"blend_mode": "overlay"
+		}
+	],
+	"couch_left": [
+		{
+			"type": "icon_state",
+			"icon_state": "couch_left_cushion",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "couch_left_under",
+			"blend_mode": "overlay"
+		}
+	],
+	"couch_middle": [
+		{
+			"type": "icon_state",
+			"icon_state": "couch_middle_cushion",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "couch_middle_under",
+			"blend_mode": "overlay"
+		}
+	],
+	"couch_right": [
+		{
+			"type": "icon_state",
+			"icon_state": "couch_right_cushion",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "couch_right_under",
+			"blend_mode": "overlay"
+		}
+	],
+	"couch_corner": [
+		{
+			"type": "icon_state",
+			"icon_state": "couch_corner_cushion",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "couch_corner_under",
+			"blend_mode": "overlay"
+		}
+	]
+}

@@ -15,7 +15,7 @@
 	pants = /obj/item/clothing/pants/trou/leather
 	backr = /obj/item/storage/backpack/satchel
 	head = /obj/item/clothing/head/leather/inqhat
-	gloves = /obj/item/clothing/gloves/otavan/inqgloves
+	gloves = /obj/item/clothing/gloves/leather/otavan/inqgloves
 	beltr = /obj/item/storage/belt/pouch/coins/rich
 	beltl = /obj/item/weapon/sword/rapier
 	mask = /obj/item/clothing/face/spectacles/inqglasses

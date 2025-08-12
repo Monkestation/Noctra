@@ -18,7 +18,7 @@
 	belt = /obj/item/storage/belt/leather/rope
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	shirt = /obj/item/clothing/shirt/undershirt/priest
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	neck = /obj/item/clothing/neck/psycross
 	head = /obj/item/clothing/head/brimmed
 	r_hand = /obj/item/book/bibble/psy

@@ -245,7 +245,7 @@
 	user.offered_item = WEAKREF(offer_attempt)
 	user.visible_message(
 		span_notice("[user] offers [offer_attempt] to [src] with an outstreched hand."),
-		span_notice("I offer [offer_attempt] to [src] with an outstreched hand."),
+		span_notice("I offer [offer_attempt] to [src] with an outstreched hand."), ignored_mobs = list(src), vision_distance = COMBAT_MESSAGE_RANGE
 	)
 	to_chat(user, span_smallnotice("I will hold [offer_attempt] out for 10 seconds. \
 	If I switch hands or take it out my hand it will not be able to be taken.\n \
@@ -298,7 +298,7 @@
 		return
 	if(user.get_active_held_item() != src)
 		return
-	if(user.incapacitated(ignore_grab = TRUE))
+	if(user.incapacitated(IGNORE_GRAB))
 		return
 	if((M.body_position != LYING_DOWN))
 		if(M.checkmiss(user))

@@ -40,8 +40,9 @@
 	can_add_lock = TRUE
 	lock = /datum/lock/key
 
-	var/base_icon_state
+	base_icon_state
 	var/alternative_icon_handling = FALSE
+	var/list/spawn_contents
 
 /obj/structure/closet/crate/Initialize()
 	. = ..()
@@ -49,7 +50,16 @@
 		base_icon_state = initial(icon_state)
 	update_appearance(UPDATE_ICON_STATE)
 
+/obj/structure/closet/get_save_vars()
+	. = ..()
+	for(var/obj/item/item in contents)
+		LAZYADD(spawn_contents, item.type)
+	. += NAMEOF(src, spawn_contents)
+
 /obj/structure/closet/Initialize(mapload)
+	if(length(spawn_contents))
+		for(var/atom/movable/spawning_atom as anything in spawn_contents)
+			new spawning_atom(get_turf(src))
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
 		addtimer(CALLBACK(src, PROC_REF(take_contents)), 0)
 	. = ..()

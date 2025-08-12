@@ -29,7 +29,7 @@
 
 /datum/outfit/job/prisoner/pre_equip(mob/living/carbon/human/H)
 	..()
-	pants = /obj/item/clothing/pants/loincloth/brown
+	pants = /obj/item/clothing/pants/loincloth/colored/brown
 	mask = /obj/item/clothing/face/facemask/prisoner
 	if(H.wear_mask)
 		var/obj/I = H.wear_mask

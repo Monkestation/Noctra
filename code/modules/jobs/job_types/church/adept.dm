@@ -30,9 +30,9 @@
 /datum/outfit/job/adept // Base outfit for Adepts, before loadouts
 	shoes = /obj/item/clothing/shoes/boots
 	beltr = /obj/item/storage/belt/pouch/coins/poor
-	mask = /obj/item/clothing/face/facemask
+	mask = /obj/item/clothing/face/facemask/silver
 	pants = /obj/item/clothing/pants/trou/leather
-	shirt = /obj/item/clothing/armor/gambeson/light/black
+	shirt = /obj/item/clothing/armor/gambeson/light/colored/black
 	wrists = /obj/item/clothing/neck/psycross/silver
 
 // Brutal Zealot, a class balanced to town guard, with 1 more strength but less intelligence and perception. Axe/Mace and shield focus.
@@ -49,7 +49,8 @@
 	..()
 	//Armor for class
 	belt = /obj/item/storage/belt/leather
-	head = /obj/item/clothing/neck/chaincoif
+	head = /obj/item/clothing/head/adeptcowl
+	neck = /obj/item/clothing/neck/chaincoif
 	armor = /obj/item/clothing/armor/chainmail
 	cloak = /obj/item/clothing/cloak/tabard/adept
 	beltl = /obj/item/weapon/mace/spiked
@@ -95,12 +96,13 @@
 	//Armor for class
 	belt = /obj/item/storage/belt/leather
 	armor = /obj/item/clothing/armor/leather/splint
+	head = /obj/item/clothing/head/adeptcowl
 	neck = /obj/item/clothing/neck/gorget
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 	backl = /obj/item/ammo_holder/quiver/arrows
 	beltl = /obj/item/weapon/mace/cudgel
 	pants = /obj/item/clothing/pants/trou/leather
-	cloak = /obj/item/clothing/cloak/raincloak/brown
+	cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 	backpack_contents = list(/obj/item/lockpick = 1, /obj/item/storage/keyring/inquisitor = 1, /obj/item/weapon/knife/dagger/psydon = 1)
 
 	//Stats for class
@@ -195,8 +197,7 @@
 		if(!H.has_language(/datum/language/oldpsydonic))
 			H.grant_language(/datum/language/oldpsydonic)
 			to_chat(H, "<span class='info'>I can speak Old Psydonic with ,m before my speech.</span>")
-		H.mind?.teach_crafting_recipe(/datum/repeatable_crafting_recipe/reading/confessional)
-		GLOB.outlawed_players += H.real_name // Lore
+		H.mind.teach_crafting_recipe(/datum/repeatable_crafting_recipe/reading/confessional)
 
 /datum/job/adept/after_spawn(mob/living/carbon/spawned, client/player_client)
 	..()

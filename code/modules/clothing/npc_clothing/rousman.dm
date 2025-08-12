@@ -32,4 +32,4 @@
 	armor = list("blunt" = 30, "slash" = 30, "stab" = 30,  "piercing" = 0, "fire" = 0, "acid" = 0)
 	body_parts_covered = CHEST|GROIN
 	sellprice = 0
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash

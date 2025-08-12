@@ -37,13 +37,13 @@
 
 /datum/outfit/job/inquisitor/pre_equip(mob/living/carbon/human/H)
 	..()
-	shirt = /obj/item/clothing/armor/gambeson/heavy/dark
+	shirt = /obj/item/clothing/armor/gambeson/heavy/colored/dark
 	belt = /obj/item/storage/belt/leather/black
 	shoes = /obj/item/clothing/shoes/otavan/inqboots
 	pants = /obj/item/clothing/pants/trou/leather
 	cloak = /obj/item/clothing/cloak/cape/inquisitor
 	head = /obj/item/clothing/head/leather/inqhat
-	gloves = /obj/item/clothing/gloves/otavan/inqgloves
+	gloves = /obj/item/clothing/gloves/leather/otavan/inqgloves
 	wrists = /obj/item/clothing/neck/psycross/silver
 	backr = /obj/item/storage/backpack/satchel
 	backl = /obj/item/weapon/sword/long/forgotten

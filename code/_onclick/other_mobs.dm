@@ -282,7 +282,7 @@
 							return
 						if(!M.Adjacent(src))
 							return
-						if(src.incapacitated(ignore_grab = TRUE))
+						if(src.incapacitated(IGNORE_GRAB))
 							return
 						if(M.checkmiss(src))
 							return
@@ -308,7 +308,7 @@
 					return
 				if(A == src)
 					return
-				if(src.incapacitated(ignore_grab = TRUE))
+				if(src.incapacitated(IGNORE_GRAB))
 					return
 				if(is_mouth_covered())
 					to_chat(src, span_warning("My mouth is blocked."))
@@ -328,7 +328,7 @@
 				if(ishuman(A))
 					var/mob/living/carbon/human/U = src
 					var/mob/living/carbon/human/V = A
-					var/thiefskill = src.get_skill_level(/datum/skill/misc/stealing) + (has_world_trait(/datum/world_trait/matthios_fingers) ? 1 : 0)
+					var/thiefskill = src.get_skill_level(/datum/skill/misc/stealing) + (has_world_trait(/datum/world_trait/matthios_fingers) ? (is_ascendant(MATTHIOS) ? 2 : 1) : 0)
 					var/stealroll = roll("[thiefskill]d6")
 					var/targetperception = (V.STAPER)
 					var/exp_to_gain = STAINT
@@ -416,8 +416,15 @@
 	if((interaction_flags_atom & INTERACT_ATOM_REQUIRES_DEXTERITY) && !user.IsAdvancedToolUser())
 		to_chat(user, span_warning("I don't have the dexterity to do this!"))
 		return FALSE
-	if(!(interaction_flags_atom & INTERACT_ATOM_IGNORE_INCAPACITATED) && user.incapacitated(ignore_restraints = (interaction_flags_atom & INTERACT_ATOM_IGNORE_RESTRAINED), ignore_grab = !(interaction_flags_atom & INTERACT_ATOM_CHECK_GRAB)))
-		return FALSE
+	if(!(interaction_flags_atom & INTERACT_ATOM_IGNORE_INCAPACITATED))
+		var/ignore_flags = NONE
+		if(interaction_flags_atom & INTERACT_ATOM_IGNORE_RESTRAINED)
+			ignore_flags |= IGNORE_RESTRAINTS
+		if(!(interaction_flags_atom & INTERACT_ATOM_CHECK_GRAB))
+			ignore_flags |= IGNORE_GRAB
+
+		if(user.incapacitated(ignore_flags))
+			return FALSE
 	return TRUE
 
 /atom/ui_status(mob/user)

@@ -24,9 +24,9 @@
 	var/list/burnt_states
 
 	///the chance this turf has to spread, basically 1.75% by default
-	spread_chance = 1.35
+	spread_chance = 0.85
 	///means fires last at base 90 seconds
-	burn_power = 90
+	burn_power = 22.5
 
 	var/prettifyturf = FALSE
 

@@ -50,10 +50,11 @@
 	belt = /obj/item/storage/belt/leather/rope
 	beltr = /obj/item/weapon/mace/cudgel
 	beltl = /obj/item/weapon/sword/sabre/cutlass
+	scabbards = list(/obj/item/weapon/scabbard/sword)
 	backpack_contents = list(/obj/item/storage/keyring/stevedore)
 	if(H.gender == MALE)
 		shoes = /obj/item/clothing/shoes/boots/leather
-		head = /obj/item/clothing/head/headband/red
+		head = /obj/item/clothing/head/headband/colored/red
 		H.change_stat(STATKEY_CON, 1)
 		H.change_stat(STATKEY_STR, 1)//thug bodytype
 	else

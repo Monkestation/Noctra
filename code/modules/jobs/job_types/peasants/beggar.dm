@@ -37,18 +37,18 @@
 	if(prob(10))
 		beltl = /obj/item/clothing/face/cigarette/rollie/cannabis
 	if(prob(10))
-		cloak = /obj/item/clothing/cloak/raincloak/brown
+		cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 	if(prob(10))
 		gloves = /obj/item/clothing/gloves/fingerless
 	if(H.gender == FEMALE)
 		armor = /obj/item/clothing/shirt/rags
 	else
-		pants = /obj/item/clothing/pants/tights/vagrant
+		pants = /obj/item/clothing/pants/tights/colored/vagrant
 		if(prob(50))
-			pants = /obj/item/clothing/pants/tights/vagrant/l
-		shirt = /obj/item/clothing/shirt/undershirt/vagrant
+			pants = /obj/item/clothing/pants/tights/colored/vagrant/l
+		shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 		if(prob(50))
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant/l
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant/l
 	H.adjust_skillrank(/datum/skill/misc/sneaking, pick(1,2,3,4,5), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/stealing, pick(1,2,3,4,5), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/lockpicking, pick (1,2,3,4,5), TRUE) // thug lyfe

@@ -1,9 +1,11 @@
 /datum/objective/marriage_broker
 	name = "Arrange Marriage"
+	triumph_count = 2
 
 /datum/objective/marriage_broker/on_creation()
 	. = ..()
 	if(owner?.current)
+		ADD_TRAIT(owner.current, TRAIT_SECRET_OFFICIANT, TRAIT_GENERIC)
 		RegisterSignal(SSdcs, COMSIG_GLOBAL_MARRIAGE, PROC_REF(on_global_marriage))
 	update_explanation_text()
 
@@ -19,7 +21,7 @@
 	to_chat(owner.current, span_greentext("A marriage has occurred in the world, completing Eora's objective!"))
 	owner.current.adjust_triumphs(triumph_count)
 	completed = TRUE
-	adjust_storyteller_influence("Eora", 15)
+	adjust_storyteller_influence(EORA, 15)
 	escalate_objective()
 	UnregisterSignal(SSdcs, COMSIG_GLOBAL_MARRIAGE)
 

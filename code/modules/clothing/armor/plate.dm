@@ -7,6 +7,7 @@
 	equip_delay_self = 4 SECONDS
 	unequip_delay_self = 4 SECONDS
 	equip_sound = 'sound/foley/equip/equip_armor_plate.ogg'
+	pickup_sound = "rustle"
 	sellprice = VALUE_STEEL_ARMOR
 	clothing_flags = CANT_SLEEP_IN
 	//Plate doesn't protect a lot against blunt
@@ -52,19 +53,6 @@
 	sellprice = VALUE_IRON_ARMOR*2
 	smeltresult = /obj/item/ingot/iron
 
-	armor = ARMOR_PLATE_BAD
-	max_integrity = INTEGRITY_STRONG
-	item_weight = 12 * IRON_MULTIPLIER
-
-//................Old Iron Plate ............... //
-/obj/item/clothing/armor/plate/iron/old
-	name = "old iron plate armor"//No way to get this right now because I removed the smithing recipe, and it's map spawner spawns iron halfplate instead now. The sprite looks like it's in the steel palette, so it doesn't fit in right.
-	desc = "A rough set of iron armor, complete with chainmail joints and pauldrons. An older and cheaper design that protects the torso and legs."
-	icon_state = "ironplate"
-	smeltresult = /obj/item/ingot/iron
-	sellprice = VALUE_IRON_ARMOR*2
-
-	body_parts_covered = COVERAGE_ALL_BUT_ARMS//This one looks like it covers legs
 	armor = ARMOR_PLATE_BAD
 	max_integrity = INTEGRITY_STRONG
 	item_weight = 12 * IRON_MULTIPLIER
@@ -133,3 +121,26 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
 	sleeved = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
 	sellprice = 0 // See above comment
+
+//.............. Graggar Armor .................//
+
+/obj/item/clothing/armor/plate/full/graggar
+	name = "vicious full-plate"
+	desc = "A sinister set full plate. Untold violence stirs from within."
+	icon_state = "graggarplate"
+	icon = 'icons/roguetown/clothing/special/evilarmor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sleeved = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sellprice = 0 // See above comment
+
+//.............. Silver Armor .................//
+
+/obj/item/clothing/armor/plate/full/silver
+	name = "silver fullplate"
+	desc = "A finely forged set of full silver plate, with long tassets protecting the legs."
+	icon_state = "silverarmor"
+	allowed_ages = ALL_AGES_LIST //placeholder until younglings have onmob sprites for this item
+	armor = ARMOR_PLATE_SILVER
+	smeltresult = /obj/item/ingot/silver
+	item_weight = 12 * SILVER_MULTIPLIER
+	sellprice = VALUE_SILVER_ITEM * 3

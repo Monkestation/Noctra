@@ -1,6 +1,6 @@
 /datum/objective/torture
 	name = "Extract Truth Through Pain"
-	triumph_count = 2
+	triumph_count = 3
 	var/torture_count = 0
 	var/required_count = 1
 
@@ -28,7 +28,7 @@
 	to_chat(owner.current, span_greentext("You have extracted the truth through pain, satisfying Zizo!"))
 	owner.current.adjust_triumphs(triumph_count)
 	completed = TRUE
-	adjust_storyteller_influence("Zizo", 20)
+	adjust_storyteller_influence(ZIZO, 20)
 	escalate_objective()
 	UnregisterSignal(owner.current, COMSIG_TORTURE_PERFORMED)
 

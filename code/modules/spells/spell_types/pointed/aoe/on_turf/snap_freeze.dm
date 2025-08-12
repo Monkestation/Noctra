@@ -11,7 +11,7 @@
 
 	invocation = "Air be still!"
 	invocation_type = INVOCATION_SHOUT
-
+	spell_flags = SPELL_RITUOS
 	charge_time = 3 SECONDS
 	charge_drain = 2
 	charge_slowdown = 1.3
@@ -34,7 +34,7 @@
 			playsound(get_turf(L), 'sound/magic/magic_nulled.ogg', 100)
 			continue
 		L.adjustFireLoss(35)
-		L.apply_status_effect(/datum/status_effect/debuff/frostbite, null, clamp(attuned_strength, 0.5, 2))
+		L.apply_status_effect(/datum/status_effect/debuff/frostbite, null, attuned_strength)
 		to_chat(L, span_userdanger("The air chills your bones!"))
 
 /obj/effect/temp_visual/trapice

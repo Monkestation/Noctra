@@ -46,10 +46,6 @@
 /mob/living/carbon/human/species/human/northern/bum/ambush,
 /turf/open/floor/concrete,
 /area/rogue/indoors/shelter/bog)
-"aS" = (
-/obj/structure/fluff/walldeco/wantedposter/r,
-/turf/open/floor/cobblerock,
-/area/rogue/indoors/shelter/bog)
 "aU" = (
 /obj/structure/rack,
 /turf/open/floor/churchmarble,
@@ -178,6 +174,13 @@
 /obj/structure/bars/cemetery,
 /turf/open/floor/naturalstone,
 /area/rogue/outdoors/bog)
+"cE" = (
+/obj/structure/closet/crate/crafted_closet/inn,
+/obj/item/clothing/shirt/undershirt,
+/obj/item/clothing/pants/tights/colored/black,
+/obj/item/clothing/head/cookhat,
+/turf/open/floor/wood/nosmooth,
+/area/rogue/indoors/shelter/bog)
 "cG" = (
 /obj/structure/closet/crate/chest,
 /obj/item/rope/chain,
@@ -295,18 +298,6 @@
 	},
 /turf/open/floor/dirt,
 /area/rogue/outdoors/bog)
-"dP" = (
-/obj/structure/table/wood/plain,
-/obj/item/reagent_containers/glass/cup/wooden{
-	pixel_y = -2;
-	pixel_x = -6
-	},
-/obj/item/reagent_containers/glass/cup/wooden{
-	pixel_y = 6;
-	pixel_x = 8
-	},
-/turf/open/floor/ruinedwood/spiral,
-/area/rogue/indoors/shelter/bog)
 "dT" = (
 /obj/structure/stairs/fancy/r,
 /obj/machinery/light/fueled/wallfire/candle/blue/r,
@@ -428,6 +419,18 @@
 /obj/structure/flora/grass,
 /turf/open/floor/grass,
 /area/rogue/indoors/shelter/bog)
+"fr" = (
+/obj/structure/table/wood/plain,
+/obj/item/reagent_containers/glass/cup/wooden{
+	pixel_y = -2;
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/glass/cup/wooden{
+	pixel_y = 6;
+	pixel_x = 8
+	},
+/turf/open/floor/ruinedwood/spiral,
+/area/rogue/indoors/shelter/bog)
 "fs" = (
 /obj/structure/rack,
 /turf/open/floor/ruinedwood/spiral,
@@ -492,6 +495,10 @@
 	dir = 8
 	},
 /area/rogue/outdoors/bog)
+"ga" = (
+/obj/structure/fermentation_keg,
+/turf/open/floor/ruinedwood/spiral,
+/area/rogue/indoors/shelter/bog)
 "gd" = (
 /obj/structure/bed/inn,
 /obj/item/bedsheet/cloth,
@@ -528,6 +535,14 @@
 /obj/effect/decal/cobbleedge/alt,
 /turf/open/floor/cobble,
 /area/rogue/indoors/shelter/bog)
+"gv" = (
+/obj/structure/rack,
+/obj/item/weapon/sword/scimitar/messer,
+/obj/item/clothing/gloves/leather,
+/obj/item/clothing/armor/leather,
+/obj/item/clothing/cloak/raincloak/furcloak/colored/brown,
+/turf/open/floor/ruinedwood/turned,
+/area/rogue/indoors/shelter/bog)
 "gF" = (
 /obj/structure/fluff/railing/fence{
 	dir = 8
@@ -557,14 +572,6 @@
 "gT" = (
 /turf/open/floor/cobble/alt,
 /area/rogue/outdoors/bog)
-"ha" = (
-/obj/structure/rack,
-/obj/item/clothing/armor/leather/hide/orc,
-/obj/item/clothing/cloak/raincloak/brown,
-/obj/item/clothing/head/helmet/leather/orc,
-/obj/item/weapon/whip,
-/turf/open/floor/twig,
-/area/rogue/indoors/shelter/bog)
 "hb" = (
 /obj/structure/fermentation_keg/random/water,
 /turf/open/floor/twig,
@@ -773,13 +780,6 @@
 /obj/machinery/light/fueled/torchholder/r,
 /turf/open/floor/ruinedwood/turned,
 /area/rogue/indoors/shelter/bog)
-"kG" = (
-/obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/shirt/undershirt,
-/obj/item/clothing/pants/tights/black,
-/obj/item/clothing/head/cookhat,
-/turf/open/floor/wood/nosmooth,
-/area/rogue/indoors/shelter/bog)
 "kH" = (
 /obj/structure/rack,
 /obj/item/weapon/mace/woodclub,
@@ -978,6 +978,10 @@
 /mob/living/carbon/human/species/goblin/npc/ambush/sea,
 /turf/open/floor/dirt/road,
 /area/rogue/outdoors/bog)
+"nd" = (
+/obj/structure/fluff/walldeco/wantedposter/r,
+/turf/open/floor/cobblerock,
+/area/rogue/indoors/shelter/bog)
 "nk" = (
 /obj/structure/flora/tree/burnt,
 /turf/open/floor/dirt/road,
@@ -1081,6 +1085,14 @@
 /obj/structure/statue/bone/skull,
 /turf/open/water/swamp/deep,
 /area/rogue/outdoors/bog)
+"oF" = (
+/obj/structure/closet/crate/chest/old_crate,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/cabbage,
+/obj/structure/fluff/railing/border{
+	dir = 4
+	},
+/turf/open/floor/ruinedwood/spiral,
+/area/rogue/indoors/shelter/bog)
 "oG" = (
 /turf/open/floor/cobblerock,
 /area/rogue/indoors/shelter/bog)
@@ -1704,11 +1716,6 @@
 	},
 /turf/open/floor/woodturned/nosmooth,
 /area/rogue/indoors/shelter/bog)
-"xh" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fermentation_keg,
-/turf/open/floor/ruinedwood/spiral,
-/area/rogue/indoors/shelter/bog)
 "xj" = (
 /obj/machinery/light/fueled/torchholder/c,
 /turf/open/floor/ruinedwood/spiral,
@@ -1716,6 +1723,10 @@
 "xk" = (
 /turf/open/floor/twig,
 /area/rogue/outdoors/mountains)
+"xn" = (
+/obj/structure/table/wood/plain_alt,
+/turf/open/floor/blocks,
+/area/rogue/indoors/shelter/bog)
 "xq" = (
 /obj/structure/closet/crate/chest/gold,
 /obj/item/weapon/polearm/woodstaff/quarterstaff/steel,
@@ -1955,6 +1966,11 @@
 /obj/item/clothing/face/cigarette/rollie,
 /turf/open/floor/woodturned/nosmooth,
 /area/rogue/indoors/shelter/bog)
+"AR" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fermentation_keg,
+/turf/open/floor/ruinedwood/spiral,
+/area/rogue/indoors/shelter/bog)
 "AU" = (
 /obj/structure/stairs/stone/church{
 	dir = 1
@@ -1974,10 +1990,6 @@
 	dir = 8
 	},
 /turf/open/floor/ruinedwood/turned,
-/area/rogue/indoors/shelter/bog)
-"Bo" = (
-/obj/structure/table/wood/reinforced_alter,
-/turf/open/floor/ruinedwood/spiral,
 /area/rogue/indoors/shelter/bog)
 "Bx" = (
 /obj/structure/fluff/railing/border{
@@ -2017,16 +2029,6 @@
 /obj/structure/table/vtable,
 /obj/item/reagent_containers/powder/ozium,
 /turf/open/floor/churchmarble,
-/area/rogue/indoors/shelter/bog)
-"BS" = (
-/obj/structure/closet/crate/chest/old_crate,
-/obj/item/reagent_containers/powder/salt,
-/obj/item/reagent_containers/powder/salt,
-/obj/item/reagent_containers/food/snacks/fat,
-/obj/item/reagent_containers/food/snacks/fat,
-/obj/item/reagent_containers/food/snacks/produce/vegetable/onion,
-/obj/item/reagent_containers/food/snacks/produce/vegetable/onion,
-/turf/open/floor/ruinedwood/spiral,
 /area/rogue/indoors/shelter/bog)
 "BT" = (
 /obj/structure/fluff/walldeco/vinez,
@@ -2155,13 +2157,6 @@
 /mob/living/carbon/human/species/goblin/npc/ambush/moon,
 /turf/open/floor/naturalstone,
 /area/rogue/indoors/cave)
-"DI" = (
-/obj/structure/closet/crate/chest/wicker,
-/obj/item/reagent_containers/food/snacks/produce/grain/wheat,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/item/reagent_containers/powder/salt,
-/turf/open/floor/ruinedwood/spiral,
-/area/rogue/indoors/shelter/bog)
 "DO" = (
 /obj/structure/fluff/walldeco/painting/seraphina,
 /turf/closed/wall/mineral/decostone,
@@ -2169,6 +2164,14 @@
 "DP" = (
 /obj/item/chair/stool/bar/crafted,
 /turf/open/floor/wood/nosmooth,
+/area/rogue/indoors/shelter/bog)
+"DT" = (
+/obj/structure/rack,
+/obj/item/clothing/armor/leather/hide/orc,
+/obj/item/clothing/cloak/raincloak/colored/brown,
+/obj/item/clothing/head/helmet/leather/orc,
+/obj/item/weapon/whip,
+/turf/open/floor/twig,
 /area/rogue/indoors/shelter/bog)
 "DY" = (
 /obj/structure/chair/wood/alt/chair_noble/red{
@@ -2264,14 +2267,6 @@
 /mob/living/carbon/human/species/skeleton/npc/warrior,
 /turf/open/floor/woodturned/nosmooth,
 /area/rogue/indoors/shelter/bog)
-"Fi" = (
-/obj/structure/closet/crate/chest/old_crate,
-/obj/item/reagent_containers/food/snacks/produce/vegetable/cabbage,
-/obj/structure/fluff/railing/border{
-	dir = 4
-	},
-/turf/open/floor/ruinedwood/spiral,
-/area/rogue/indoors/shelter/bog)
 "Ft" = (
 /obj/effect/spawner/map_spawner/treeorbush,
 /turf/open/water/swamp,
@@ -2356,10 +2351,6 @@
 	},
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/indoors/shelter/bog)
-"Gt" = (
-/obj/structure/fermentation_keg,
-/turf/open/floor/ruinedwood/spiral,
-/area/rogue/indoors/shelter/bog)
 "Gv" = (
 /obj/structure/fluff/railing/border{
 	dir = 4
@@ -2431,14 +2422,6 @@
 /obj/structure/fluff/statue/tdummy,
 /turf/open/floor/grass,
 /area/rogue/outdoors/bog)
-"HG" = (
-/obj/structure/rack,
-/obj/item/weapon/sword/scimitar/messer,
-/obj/item/clothing/gloves/leather,
-/obj/item/clothing/armor/leather,
-/obj/item/clothing/cloak/raincloak/furcloak/brown,
-/turf/open/floor/ruinedwood/turned,
-/area/rogue/indoors/shelter/bog)
 "HP" = (
 /obj/structure/bookcase/random,
 /obj/effect/decal/cleanable/dirt/cobweb{
@@ -2545,10 +2528,6 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow,
 /obj/item/ammo_holder/quiver/arrows,
 /turf/open/floor/ruinedwood/turned,
-/area/rogue/indoors/shelter/bog)
-"JJ" = (
-/obj/structure/table/wood/plain_alt,
-/turf/open/floor/blocks,
 /area/rogue/indoors/shelter/bog)
 "JL" = (
 /obj/structure/fluff/statue/knightalt/r,
@@ -2704,6 +2683,20 @@
 /obj/effect/decal/cobbleedge/alt,
 /turf/closed/wall/mineral/decowood,
 /area/rogue/indoors/shelter/bog)
+"Mn" = (
+/obj/structure/table/wood/reinforced_alter,
+/turf/open/floor/ruinedwood/spiral,
+/area/rogue/indoors/shelter/bog)
+"Mp" = (
+/obj/structure/closet/crate/chest/old_crate,
+/obj/item/reagent_containers/powder/salt,
+/obj/item/reagent_containers/powder/salt,
+/obj/item/reagent_containers/food/snacks/fat,
+/obj/item/reagent_containers/food/snacks/fat,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/onion,
+/obj/item/reagent_containers/food/snacks/produce/vegetable/onion,
+/turf/open/floor/ruinedwood/spiral,
+/area/rogue/indoors/shelter/bog)
 "Ms" = (
 /obj/item/reagent_containers/glass/cup/silver,
 /obj/effect/decal/cleanable/blood,
@@ -2807,6 +2800,13 @@
 	pixel_y = 31
 	},
 /turf/open/floor/cobblerock,
+/area/rogue/indoors/shelter/bog)
+"NW" = (
+/obj/structure/closet/crate/chest/wicker,
+/obj/item/reagent_containers/food/snacks/produce/grain/wheat,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/reagent_containers/powder/salt,
+/turf/open/floor/ruinedwood/spiral,
 /area/rogue/indoors/shelter/bog)
 "NY" = (
 /turf/closed/wall/mineral/stone/window,
@@ -2930,7 +2930,7 @@
 "PK" = (
 /obj/structure/closet/crate/crafted_closet/inn,
 /obj/item/clothing/shirt/dress,
-/obj/item/clothing/head/softcap,
+/obj/item/clothing/head/armingcap,
 /turf/open/floor/wood/nosmooth,
 /area/rogue/indoors/shelter/bog)
 "PO" = (
@@ -4408,8 +4408,8 @@ La
 kZ
 kZ
 ml
-HG
-HG
+gv
+gv
 Sf
 cG
 qZ
@@ -26552,8 +26552,8 @@ hf
 uo
 uo
 hf
-Gt
-Gt
+ga
+ga
 ii
 uo
 uo
@@ -27158,8 +27158,8 @@ hf
 fs
 mW
 Dh
-xh
-xh
+AR
+AR
 oG
 uo
 uo
@@ -28775,7 +28775,7 @@ Xx
 oG
 oG
 oG
-aS
+nd
 oG
 oG
 oG
@@ -28978,9 +28978,9 @@ Xx
 hf
 hf
 hf
-JJ
+xn
 Dh
-Bo
+Mn
 BT
 Gn
 La
@@ -30187,7 +30187,7 @@ zJ
 Xx
 YW
 hf
-BS
+Mp
 uo
 uo
 mC
@@ -30389,7 +30389,7 @@ qT
 Xx
 nC
 hf
-Fi
+oF
 Cv
 uo
 uo
@@ -30596,7 +30596,7 @@ rv
 Ts
 uo
 uo
-DI
+NW
 Pk
 La
 Ej
@@ -31199,7 +31199,7 @@ YW
 hf
 CM
 uo
-dP
+fr
 QZ
 uo
 uo
@@ -34705,7 +34705,7 @@ CL
 Du
 Nd
 AZ
-ha
+DT
 sA
 sA
 kz
@@ -83902,7 +83902,7 @@ op
 op
 jC
 ac
-kG
+cE
 PK
 ml
 hh

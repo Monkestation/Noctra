@@ -8,11 +8,11 @@
 
 /datum/outfit/job/sweetshare/pre_equip(mob/living/carbon/human/H)
 	..()
-	shirt = /obj/item/clothing/shirt/undershirt/black
+	shirt = /obj/item/clothing/shirt/undershirt/colored/black
 	mask = /obj/item/clothing/face/spectacles/sglasses
 	gloves = /obj/item/clothing/gloves/fingerless
 	pants = /obj/item/clothing/pants/trou/leather
-	cloak = /obj/item/clothing/cloak/raincloak/mortus
+	cloak = /obj/item/clothing/cloak/raincloak/colored/mortus
 	shoes = /obj/item/clothing/shoes/boots
 	backl = /obj/item/storage/backpack/backpack
 	belt = /obj/item/storage/belt/leather

@@ -1,11 +1,11 @@
 /datum/objective/ravox_duel
 	name = "Honor Duels"
+	triumph_count = 2
 	var/duels_won = 0
-	var/duels_required = 2
+	var/duels_required = 1
 
 /datum/objective/ravox_duel/on_creation()
 	. = ..()
-	duels_required = prob(66) ? 1 : 2
 	var/datum/action/innate/ravox_challenge/challenge = new(src)
 	challenge.Grant(owner.current)
 	update_explanation_text()
@@ -16,7 +16,7 @@
 		to_chat(owner.current, span_greentext("You have proven your worth in combat! Ravox is pleased!"))
 		owner.current.adjust_triumphs(triumph_count * duels_required)
 		completed = TRUE
-		adjust_storyteller_influence("Ravox", duels_required * 10)
+		adjust_storyteller_influence(RAVOX, duels_required * 10)
 		escalate_objective()
 
 /datum/objective/ravox_duel/update_explanation_text()
@@ -88,11 +88,11 @@
 	if(QDELETED(challenger_mob) || QDELETED(challenged_mob))
 		qdel(src)
 
-	if(challenger_mob.surrendering || challenger_mob.incapacitated(ignore_grab = TRUE))
+	if(challenger_mob.surrendering || challenger_mob.incapacitated(IGNORE_GRAB))
 		challenged_mob.visible_message(span_notice("[challenged_mob] defeats [challenged_mob] in the honor duel!"))
 		finish_duel(challenger_mob, challenged_mob)
 		return
-	if(challenged_mob.surrendering || challenged_mob.incapacitated(ignore_grab = TRUE))
+	if(challenged_mob.surrendering || challenged_mob.incapacitated(IGNORE_GRAB))
 		challenger_mob.visible_message(span_notice("[challenger_mob] defeats [challenged_mob] in the honor duel!"))
 		finish_duel(challenged_mob, challenger_mob)
 

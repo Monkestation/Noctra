@@ -215,7 +215,7 @@
 		spawned.set_apprentice_name(apprentice_name)
 
 	add_spells(spawned)
-	spawned.adjust_spellpoints(spell_points)
+	spawned.adjust_spell_points(spell_points)
 	spawned.generate_random_attunements(rand(attunements_min, attunements_max))
 
 	var/list/used_stats = ((spawned.gender == FEMALE) && jobstats_f) ? jobstats_f : jobstats
@@ -264,6 +264,11 @@
 		humanguy.advsetup = TRUE
 		humanguy.invisibility = INVISIBILITY_MAXIMUM
 		humanguy.become_blind("advsetup")
+
+	var/list/owned_triumph_buys = SStriumphs.triumph_buy_owners[player_client.ckey]
+	if(length(owned_triumph_buys))
+		for(var/datum/triumph_buy/T in owned_triumph_buys)
+			T.on_after_spawn(humanguy)
 
 /// When our guy is OLD do we do anything extra
 /datum/job/proc/old_age_effects()
@@ -381,10 +386,6 @@
 			if(check_crownlist(H.ckey))
 				H.mind.special_items["Champion Circlet"] = /obj/item/clothing/head/crown/sparrowcrown
 			give_special_items(H)
-	for(var/list_key in SStriumphs.post_equip_calls)
-		var/datum/triumph_buy/thing = SStriumphs.post_equip_calls[list_key]
-		thing.on_activate(H)
-	return
 
 /// Returns an atom where the mob should spawn in.
 /datum/job/proc/get_roundstart_spawn_point()

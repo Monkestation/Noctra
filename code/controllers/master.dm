@@ -189,28 +189,18 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 	var/start_timeofday = REALTIMEOFDAY
 	// Initialize subsystems.
-//#ifndef TESTSERVER
-//	var/thing_done = FALSE
-//#endif
-	#ifndef LOWMEMORYMODE
 	current_ticklimit = CONFIG_GET(number/tick_limit_mc_init)
-	for (var/datum/controller/subsystem/SS in subsystems)
+	for (var/datum/controller/subsystem/SS as anything in subsystems)
 		if (SS.flags & SS_NO_INIT)
 			continue
-		SS.Initialize(REALTIMEOFDAY)
-		CHECK_TICK
-	current_ticklimit = TICK_LIMIT_RUNNING
-	#else
-	current_ticklimit = CONFIG_GET(number/tick_limit_mc_init)
-	for (var/datum/controller/subsystem/SS in subsystems)
-		if (SS.flags & SS_NO_INIT)
-			continue
+#ifdef LOWMEMORYMODE
 		if(SS.lazy_load)
 			continue
+#endif
 		SS.Initialize(REALTIMEOFDAY)
 		CHECK_TICK
 	current_ticklimit = TICK_LIMIT_RUNNING
-	#endif
+
 	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 
 	var/msg = "Initializations complete within [time] second[time == 1 ? "" : "s"]!"

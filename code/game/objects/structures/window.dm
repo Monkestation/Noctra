@@ -12,7 +12,6 @@
 	max_integrity = 100
 	integrity_failure = 0.1
 	blade_dulling = DULLING_BASHCHOP
-	pass_flags_self = LETPASSTHROW
 	climb_time = 20
 	climb_offset = 10
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
@@ -207,37 +206,33 @@
 
 /obj/structure/window/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	if(istype(mover) && climbable && ((mover.pass_flags & PASSTABLE) || (mover.pass_flags & PASSGRILLE)))
-		return 1
-	if(isliving(mover))
-		if(mover.throwing)
-			if(!climbable)
-				if(!iscarbon(mover))
-					take_damage(10)
-				else
-					var/mob/living/carbon/dude = mover
-					var/base_damage = 20
-					take_damage(base_damage * (dude.STASTR / 10))
-			if(brokenstate || climbable)
-				if(ishuman(mover))
-					var/mob/living/carbon/human/dude = mover
-					var/is_jumping = dude.has_status_effect(/datum/status_effect/is_jumping)
-					if(prob(100 - clamp((dude.get_skill_level(/datum/skill/misc/athletics) + dude.get_skill_level(/datum/skill/misc/climbing)) * 10 - (!is_jumping * 30), 10, 100)))
-						var/obj/item/bodypart/head/head = dude.get_bodypart(BODY_ZONE_HEAD)
-						head.receive_damage(20)
-						dude.Stun(5 SECONDS)
-						dude.Knockdown(5 SECONDS)
-						dude.add_stress(/datum/stressevent/hithead)
-						dude.visible_message(
-							span_warning("[dude] hits their head as they fly through the window!"),
-							span_danger("I hit my head on the window frame!"))
-				return TRUE
-	else if(isitem(mover))
-		var/obj/item/I = mover
-		if(brokenstate)
-			return TRUE
-		if(I.throwforce >= 10)
-			take_damage(I.throwforce)
+	if(mover.throwing && !climbable)
+		if(isliving(mover))
+			if(iscarbon(mover))
+				var/mob/living/carbon/dude = mover
+				take_damage(20 * (dude.STASTR / 10))
+			else
+				take_damage(10)
+		else if(isitem(mover) && mover.throwforce > 10)
+			take_damage(mover.throwforce)
+
+	if(climbable && (mover.throwing || mover.movement_type & (FLYING|FLOATING)))
+		if(ishuman(mover))
+			var/mob/living/carbon/human/dude = mover
+			var/is_jumping = dude.has_status_effect(/datum/status_effect/is_jumping)
+			if(prob(100 - clamp((dude.get_skill_level(/datum/skill/misc/athletics) + dude.get_skill_level(/datum/skill/misc/climbing)) * 10 - (!is_jumping * 30), 10, 100)))
+				var/obj/item/bodypart/head/head = dude.get_bodypart(BODY_ZONE_HEAD)
+				if(head)
+					head.receive_damage(20)
+				dude.Stun(5 SECONDS)
+				dude.Knockdown(5 SECONDS)
+				dude.add_stress(/datum/stressevent/hithead)
+				dude.visible_message(
+					span_warning("[dude] hits their head as they fly through the window!"),
+					span_danger("I hit my head on the window frame!"),
+				)
+
+		return TRUE
 
 /obj/structure/window/proc/force_open()
 	playsound(src, 'sound/foley/doors/windowup.ogg', 100, FALSE)

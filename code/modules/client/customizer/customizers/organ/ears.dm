@@ -1,20 +1,3 @@
-
-/obj/item/organ/ears/elf
-	name = "elf ears"
-	accessory_type = /datum/sprite_accessory/ears/elf
-
-/obj/item/organ/ears/elfw
-	name = "wood elf ears"
-	accessory_type = /datum/sprite_accessory/ears/elfw
-
-/obj/item/organ/ears/tiefling
-	name = "tiefling ears"
-	accessory_type = /datum/sprite_accessory/ears
-
-/obj/item/organ/ears/halforc
-	name = "halforc ears"
-	accessory_type = /datum/sprite_accessory/ears/elf
-
 /datum/customizer/organ/ears
 	name = "Ears"
 	abstract_type = /datum/customizer/organ/ears
@@ -60,9 +43,6 @@
 		/datum/sprite_accessory/ears/elf,
 		/datum/sprite_accessory/ears/elfw,
 		)
-
-/obj/item/organ/ears/anthro
-	name = "wild-kin ears"
 
 /datum/customizer/organ/ears/anthro
 	customizer_choices = list(/datum/customizer_choice/organ/ears/anthro)

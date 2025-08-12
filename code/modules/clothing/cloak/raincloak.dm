@@ -16,6 +16,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/rainhood
 	toggle_icon_state = FALSE
 	salvage_result = /obj/item/natural/hide/cured
+	color = CLOTHING_BARK_BROWN
 
 /obj/item/clothing/cloak/raincloak/Initialize(mapload, ...)
 	. = ..()
@@ -29,29 +30,30 @@
 		for(var/obj/item/I in things)
 			STR.remove_from_storage(I, get_turf(src))
 
+/obj/item/clothing/cloak/raincloak/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
 
-
-/obj/item/clothing/cloak/raincloak/red
+/obj/item/clothing/cloak/raincloak/colored/red
 	color = CLOTHING_BLOOD_RED
 
-/obj/item/clothing/cloak/raincloak/purple
+/obj/item/clothing/cloak/raincloak/colored/purple
 	color = CLOTHING_PLUM_PURPLE
 
-/obj/item/clothing/cloak/raincloak/mortus
+/obj/item/clothing/cloak/raincloak/colored/mortus
 	name = "funeral cloak"
 	desc = "You're always shrouded by death."
 	color = CLOTHING_SOOT_BLACK
 
-/obj/item/clothing/cloak/raincloak/brown
+/obj/item/clothing/cloak/raincloak/colored/brown
 	color = CLOTHING_BARK_BROWN
 
-/obj/item/clothing/cloak/raincloak/green
+/obj/item/clothing/cloak/raincloak/colored/green
 	color = CLOTHING_FOREST_GREEN
 
-/obj/item/clothing/cloak/raincloak/blue
+/obj/item/clothing/cloak/raincloak/colored/blue
 	color = CLOTHING_SKY_BLUE
 
-/obj/item/clothing/cloak/raincloak/random/Initialize()
+/obj/item/clothing/cloak/raincloak/colored/random/Initialize()
 	color = pick(CLOTHING_BLOOD_RED, CLOTHING_PLUM_PURPLE, CLOTHING_SOOT_BLACK, CLOTHING_BARK_BROWN, CLOTHING_FOREST_GREEN, CLOTHING_SKY_BLUE)
 	return ..()
 
@@ -83,15 +85,18 @@
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/fur
 
-/obj/item/clothing/cloak/raincloak/furcloak/crafted/Initialize()
+/obj/item/clothing/cloak/raincloak/furcloak/Initialize()
 	. = ..()
 	if(prob(50))
 		color = pick("#685542","#66564d")
 
-/obj/item/clothing/cloak/raincloak/furcloak/brown
+/obj/item/clothing/cloak/raincloak/furcloak/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
+/obj/item/clothing/cloak/raincloak/furcloak/colored/brown
 	color = CLOTHING_MUD_BROWN
 
-/obj/item/clothing/cloak/raincloak/furcloak/black
+/obj/item/clothing/cloak/raincloak/furcloak/colored/black
 	color = CLOTHING_ASH_GREY
 
 /obj/item/clothing/head/hooded/rainhood/furhood

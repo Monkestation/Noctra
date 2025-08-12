@@ -23,6 +23,8 @@
 	var/click_cd_override = CLICK_CD_CLICK_ABILITY
 	/// If TRUE, we will unset after using our click intercept.
 	var/unset_after_click = TRUE
+	/// If TRUE, after the cooldown finishes naturally we re trigger the spell if possible.
+	var/retrigger_after_cooldown = TRUE
 	/// What icon to replace our mouse cursor with when active. Optional
 	var/ranged_mousepointer
 	/// The base icon_state of this action's background
@@ -37,8 +39,12 @@
 	var/base_icon_state
 	/// The active icon state of the spell's button icon, used for editing the icon "on"
 	var/active_icon_state
+	/// Timer for retriggering the spell
+	var/retrigger_timer
 
 /datum/action/cooldown/New(Target)
+	. = ..()
+
 	if(active_background_icon_state)
 		base_background_icon_state ||= background_icon_state
 	if(active_overlay_icon_state)
@@ -121,12 +127,52 @@
 /// Starts a cooldown time for this ability only
 /// Will use default cooldown time if an override is not specified
 /datum/action/cooldown/proc/StartCooldownSelf(override_cooldown_time)
+	var/real_time = cooldown_time
 	if(isnum(override_cooldown_time))
-		next_use_time = world.time + override_cooldown_time
-	else
-		next_use_time = world.time + cooldown_time
+		real_time = override_cooldown_time
+	next_use_time = world.time + real_time
+	addtimer(CALLBACK(src, PROC_REF(CooldownEnded)), real_time)
+	if(retrigger_after_cooldown && click_to_activate)
+		if(real_time > 0)
+			RegisterSignal(owner, COMSIG_MOB_SPELL_ACTIVATED, PROC_REF(cancel_retrigger))
+			retrigger_timer = addtimer(CALLBACK(src, PROC_REF(retrigger)), real_time, TIMER_STOPPABLE)
+			return
+		retrigger()
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	START_PROCESSING(SSfastprocess, src)
+
+/// Callback proc for when the cooldown of the spell would naturally end,
+/// may not actually end at this time or may have already ended.
+/datum/action/cooldown/proc/CooldownEnded()
+	if(QDELETED(src) || QDELETED(owner))
+		return
+
+	SEND_SIGNAL(src, COMSIG_ACTION_COOLDOWN_ENDED)
+
+/// Retrigger the spell after starting the cooldown if possible
+/datum/action/cooldown/proc/retrigger()
+	if(QDELETED(src) || QDELETED(owner))
+		return
+
+	UnregisterSignal(owner, COMSIG_MOB_SPELL_ACTIVATED)
+
+	// Lets just have a cut off for reset
+	if(cooldown_time > 1 MINUTES)
+		return
+
+	// Another spell is been selected or another click intercept is active
+	if(owner.click_intercept)
+		return
+
+	Trigger()
+
+/// Cancel retriggering by removing the timer
+/datum/action/cooldown/proc/cancel_retrigger()
+	SIGNAL_HANDLER
+
+	UnregisterSignal(owner, COMSIG_MOB_SPELL_ACTIVATED)
+
+	deltimer(retrigger_timer)
 
 /datum/action/cooldown/Trigger(trigger_flags, atom/target)
 	. = ..()
@@ -176,7 +222,6 @@
 
 	// And if we reach here, the action was completed successfully
 	if(unset_after_click)
-		StartCooldown()
 		unset_click_ability(clicker, refund_cooldown = FALSE)
 	clicker.next_click = world.time + click_cd_override
 
@@ -193,7 +238,7 @@
 
 /// To be implemented by subtypes
 /datum/action/cooldown/proc/Activate(atom/target)
-	return
+	StartCooldown()
 
 /**
  * Set our action as the click override on the passed mob.

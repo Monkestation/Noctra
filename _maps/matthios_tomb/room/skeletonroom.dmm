@@ -280,8 +280,8 @@
 /area/rogue/under/tomb/indoors/church)
 "TH" = (
 /obj/structure/closet/crate/crafted_closet/inn/chest,
-/obj/item/clothing/shirt/robe/black,
-/obj/item/clothing/shirt/robe/mage,
+/obj/item/clothing/shirt/robe/colored/black,
+/obj/item/clothing/shirt/robe/colored/mage,
 /turf/open/floor/wood,
 /area/rogue/under/tomb/indoors/church)
 "TP" = (

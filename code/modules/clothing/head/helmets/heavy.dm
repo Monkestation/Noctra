@@ -15,6 +15,7 @@
 	body_parts_covered = FULL_HEAD
 	prevent_crits = ALL_EXCEPT_STAB
 	max_integrity = INTEGRITY_STRONGEST // no moving parts, steel
+	abstract_type = /obj/item/clothing/head/helmet/heavy
 
 /obj/item/clothing/head/helmet/heavy/necked		// includes a coif or gorget part to cover neck. Why? So templars can wear their cross on their neck basically, also special thing for Temple
 	name = "bastion helm"
@@ -25,7 +26,6 @@
 	body_parts_covered = HEAD_NECK
 	prevent_crits = ALL_EXCEPT_BLUNT
 	block2add = FOV_BEHIND
-
 
 //................ Iron Plate Helmet ............... //
 /obj/item/clothing/head/helmet/heavy/ironplate
@@ -131,6 +131,20 @@
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 
+//............... Graggar Helmet ............... //
+
+/obj/item/clothing/head/helmet/graggar
+	name = "vicious helmet"
+	desc = "A rugged and horrifying helmet. A violent aura emanates from it."
+	icon_state = "graggarplatehelm"
+	icon = 'icons/roguetown/clothing/special/evilarmor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	armor = ARMOR_PLATE
+	prevent_crits = ALL_CRITICAL_HITS
+	item_weight = 5 * STEEL_MULTIPLIER
+	block2add = FOV_BEHIND
+	sellprice = 0 // See above comment
+
 //............... Spangenhelm ............... //
 /obj/item/clothing/head/helmet/heavy/viking
 	name = "spangenhelm"
@@ -214,6 +228,18 @@
 	item_state = "ravoxhelm"
 	item_weight = 6 * IRON_MULTIPLIER
 
+//................ Xylix Helmet ............. //
+/obj/item/clothing/head/helmet/heavy/necked/xylix
+	name = "xylix helmet"
+	desc = "A great helmet forged from steel, and fashioned in the visage of a jester, jingling bells and all. Commonly worn by Templars in service to Xylix"
+	icon_state = "xylixhelm"
+	item_state = "xylixhelm"
+	item_weight = 6 * IRON_MULTIPLIER
+
+/obj/item/clothing/head/helmet/heavy/necked/xylix/Initialize()
+	. = ..()
+	AddComponent(/datum/component/item_equipped_movement_rustle, custom_sounds = list(SFX_JINGLE_BELLS))
+
 //............... Sinistar (Graggar) Helmet ............... //
 /obj/item/clothing/head/helmet/heavy/sinistar
 	name = "sinistar helmet"
@@ -241,6 +267,7 @@
 	var/picked = FALSE
 
 	prevent_crits = ALL_CRITICAL_HITS
+	abstract_type = /obj/item/clothing/head/helmet/heavy/decorated
 
 /obj/item/clothing/head/helmet/heavy/decorated/update_overlays()
 	. = ..()

@@ -16,14 +16,14 @@
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	pants = /obj/item/clothing/pants/trou/leather
 	shirt = /obj/item/clothing/shirt/shortshirt
-	armor = /obj/item/clothing/shirt/robe/black
+	armor = /obj/item/clothing/shirt/robe/colored/black
 	belt = /obj/item/storage/belt/leather
 	beltr = /obj/item/reagent_containers/glass/bottle/manapot
 	backr = /obj/item/storage/backpack/satchel
 	backpack_contents = list(/obj/item/needle/thorn = 1, /obj/item/natural/cloth = 1, /obj/item/clothing/face/spectacles/sglasses, /obj/item/chalk = 1, /obj/item/book/granter/spellbook/apprentice = 1)
 	mask = /obj/item/clothing/face/facemask/steel //idk if this makes it so they cant cast but i want all of the bandits to have the same mask
 	neck = /obj/item/clothing/neck/coif
-	head = /obj/item/clothing/head/roguehood/black
+	head = /obj/item/clothing/head/roguehood/colored/black
 
 	r_hand = /obj/item/weapon/polearm/woodstaff/quarterstaff/iron
 	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
@@ -46,10 +46,10 @@
 		H.change_stat(STATKEY_SPD, -1)
 		H.change_stat(STATKEY_INT, 1)
 		H.change_stat(STATKEY_PER, 1)
-		H.adjust_spellpoints(1)
+		H.adjust_spell_points(1)
 	H.change_stat(STATKEY_STR, -1)
 	H.change_stat(STATKEY_INT, 3)
 	H.change_stat(STATKEY_CON, 1)
 	H.change_stat(STATKEY_END, -1)
-	H.adjust_spellpoints(1)
+	H.adjust_spell_points(1)
 	H.add_spell(/datum/action/cooldown/spell/undirected/touch/prestidigitation)

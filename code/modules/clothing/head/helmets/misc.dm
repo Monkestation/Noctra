@@ -187,7 +187,7 @@
 	item_weight = 9 * IRON_MULTIPLIER
 
 //................ Elf Sallet ............... //
-/obj/item/clothing/head/helmet/sallet/elven	// blackoak merc helmet
+/obj/item/clothing/head/helmet/sallet/rare/elven	// blackoak merc helmet
 	desc = "A steel helmet with a thin gold plating designed for Elven woodland guardians."
 	icon_state = "bascinet_novisor"
 	color = COLOR_ASSEMBLY_GOLD
@@ -245,6 +245,7 @@
 	body_parts_covered = FULL_HEAD
 	max_integrity = INTEGRITY_STRONG
 	prevent_crits = ALL_CRITICAL_HITS
+	abstract_type = /obj/item/clothing/head/helmet/visored
 
 /obj/item/clothing/head/helmet/visored/AdjustClothes(mob/user)
 	if(loc == user)
@@ -384,6 +385,21 @@
 	sellprice = 0 // Incredibly evil Zizoid armor, this should be burnt, nobody wants this
 	item_weight = 5 * STEEL_MULTIPLIER
 
+//................. Silver Bascinet .............. //
+
+/obj/item/clothing/head/helmet/visored/silver
+	name = "silver bascinet"
+	desc = "A finely forged silver bascinet, with adjustable visor to protect the face."
+	icon_state = "silverbascinet"
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	smeltresult = /obj/item/ingot/silver
+	allowed_ages = ALL_AGES_LIST //placeholder until younglings have onmob sprites for this item
+	armor = ARMOR_PLATE_SILVER
+	sellprice = VALUE_SILVER_ARMOR
+	item_weight = 6 * SILVER_MULTIPLIER
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+
 //............... Feldshers Cage ............... //
 /obj/item/clothing/head/helmet/feld
 	name = "feldsher's cage"
@@ -398,6 +414,9 @@
 	body_parts_covered = FULL_HEAD
 	prevent_crits = BLUNT_AND_MINOR_CRITS
 	item_weight = 5.5 * STEEL_MULTIPLIER
+
+/obj/item/clothing/head/helmet/blacksteel
+	abstract_type = /obj/item/clothing/head/helmet/blacksteel
 
 /obj/item/clothing/head/helmet/blacksteel/bucket
 	name = "Blacksteel Great Helm"

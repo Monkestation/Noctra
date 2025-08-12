@@ -12,7 +12,7 @@
 
 	cooldown_time = 25 SECONDS
 	cooldown_reduction_per_rank = 6.25 SECONDS
-
+	spell_flags = SPELL_RITUOS
 	spell_cost = 50
 	charge_time = 3 SECONDS
 	charge_drain = 1
@@ -75,7 +75,7 @@
 	point_cost = 0
 
 	sound = 'sound/misc/tail_swing.ogg'
-
+	spell_flags = NONE
 	invocation = null
 	invocation_type = INVOCATION_NONE
 

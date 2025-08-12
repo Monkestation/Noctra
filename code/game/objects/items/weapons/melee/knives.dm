@@ -486,7 +486,7 @@
 	max_integrity = 30
 	max_blade_int = 30
 	wdefense = TERRIBLE_PARRY
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 	melting_material = null
 	sellprice = 5
 
@@ -528,6 +528,7 @@
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 25, "embedded_fall_chance" = 20)
 	melting_material = /datum/material/iron
 	melt_amount = 50
+	sellprice = 3
 
 /obj/item/weapon/knife/throwingknife/steel
 	name = "steel tossblade"
@@ -541,6 +542,7 @@
 	icon_state = "throw_knifes"
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 30, "embedded_fall_chance" = 15)
 	melt_amount = 50
+	sellprice = 4
 
 /obj/item/weapon/knife/throwingknife/psydon
 	name = "psydonian tossblade"

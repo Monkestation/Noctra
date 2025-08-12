@@ -17,7 +17,7 @@
 	charge_slowdown = 0.7
 	cooldown_time = 30 SECONDS
 	spell_cost = 40
-
+	spell_flags = SPELL_RITUOS
 	projectile_type = /obj/projectile/magic/bloodlightning
 
 /obj/projectile/magic/bloodlightning

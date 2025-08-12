@@ -10,7 +10,7 @@
 	charge_required = FALSE
 	cooldown_time = 20 SECONDS
 	spell_cost = 30
-
+	spell_flags = SPELL_RITUOS
 	invocation = "Create cloud!"
 	invocation_type = INVOCATION_SHOUT
 

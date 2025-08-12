@@ -1,6 +1,6 @@
 /datum/objective/taste_lux
 	name = "Taste Divine Essence"
-	triumph_count = 2
+	triumph_count = 3
 
 /datum/objective/taste_lux/on_creation()
 	. = ..()
@@ -18,7 +18,7 @@
 	to_chat(owner.current, span_greentext("You have tasted the divine essence, completing Baotha's objective!"))
 	owner.current.adjust_triumphs(triumph_count)
 	completed = TRUE
-	adjust_storyteller_influence("Baotha", 20)
+	adjust_storyteller_influence(BAOTHA, 20)
 	escalate_objective()
 	UnregisterSignal(owner.current, COMSIG_LUX_TASTED)
 

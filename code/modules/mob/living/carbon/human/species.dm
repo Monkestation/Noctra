@@ -114,9 +114,9 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	/// Food we (SHOULD) get a mood buff from
 	var/liked_food = NONE
 	/// Food we (SHOULD) get a mood debuff from
-	var/disliked_food = GROSS
+	var/disliked_food = NONE
 	/// Food that (SHOULD) be toxic to us
-	var/toxic_food = TOXIC
+	var/toxic_food = NONE
 
 	/// List of slots this species cannot equip things to
 	var/list/no_equip = list()
@@ -264,6 +264,8 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	/// Amount of times we got autocorrected?? why is this a thing?
 	var/amtfail = 0
 
+	var/punch_damage = 0
+
 ///////////
 // PROCS //
 ///////////
@@ -330,7 +332,8 @@ GLOBAL_LIST_EMPTY(patreon_races)
 				/datum/language/hellspeak = "Infernal",
 				/datum/language/orcish = "Orcish",
 				/datum/language/celestial = "Celestial",
-				/datum/language/zalad = "Zalad"
+				/datum/language/zalad = "Zalad",
+				/datum/language/deepspeak = "Deepspeak"
 			)
 
 			if (language in language_map)
@@ -746,6 +749,9 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
 
+	for(var/skill as anything in inherent_skills)
+		C.adjust_skillrank(skill, -inherent_skills[skill], TRUE)
+
 	if(inherent_factions)
 		for(var/i in inherent_factions)
 			C.faction -= i
@@ -831,6 +837,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 
 			if(underwear)
 				var/mutable_appearance/underwear_overlay
+				var/mutable_appearance/underwear_emissive
 				if(!hide_bottom)
 					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 					if(LAZYACCESS(offsets, OFFSET_UNDIES))
@@ -843,6 +850,11 @@ GLOBAL_LIST_EMPTY(patreon_races)
 							H.underwear_color = "#755f46"
 							underwear_overlay.color = "#755f46"
 					standing += underwear_overlay
+					if(!istype(H, /mob/living/carbon/human/dummy))
+						underwear_emissive = emissive_blocker(underwear.icon, underwear.icon_state, -BODY_LAYER)
+						underwear_emissive.pixel_y = underwear_overlay.pixel_y
+						underwear_emissive.pixel_x = underwear_overlay.pixel_x
+						standing += underwear_emissive
 
 				if(!hide_top && H.gender == FEMALE)
 					underwear_overlay = mutable_appearance(underwear.icon, "[underwear.icon_state]_boob", -BODY_LAYER)
@@ -856,6 +868,11 @@ GLOBAL_LIST_EMPTY(patreon_races)
 							H.underwear_color = "#755f46"
 							underwear_overlay.color = "#755f46"
 					standing += underwear_overlay
+					if(!istype(H, /mob/living/carbon/human/dummy))
+						underwear_emissive = emissive_blocker(underwear.icon, "[underwear.icon_state]_boob", -BODY_LAYER)
+						underwear_emissive.pixel_y = underwear_overlay.pixel_y
+						underwear_emissive.pixel_x = underwear_overlay.pixel_x
+						standing += underwear_emissive
 
 	if(length(standing))
 		H.overlays_standing[BODY_LAYER] = standing
@@ -864,13 +881,14 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	H.apply_overlay(ABOVE_BODY_FRONT_LAYER)
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
 		H.setOxyLoss(0)
 		H.losebreath = 0
 
-		var/takes_crit_damage = (!HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
-		if((H.health < H.crit_threshold) && takes_crit_damage)
-			H.adjustBruteLoss(1)
+	if((H.health < H.crit_threshold) && !HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
+		H.adjustBruteLoss(1)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
@@ -1320,7 +1338,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 			return FALSE
 		if(!target.Adjacent(user))
 			return
-		if(user.incapacitated(ignore_grab = TRUE))
+		if(user.incapacitated(IGNORE_GRAB))
 			return
 
 		var/damage = user.get_punch_dmg()
@@ -2072,7 +2090,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 			burning_items |= leg_clothes
 
 		for(var/obj/item/I as anything in burning_items)
-			I.fire_act(((H.fire_stacks + H.divine_fire_stacks)* 50)) //damage taken is reduced to 2% of this value by fire_act()
+			I.fire_act(((H.fire_stacks + H.divine_fire_stacks) * 25)) //damage taken is reduced to 2% of this value by fire_act()
 
 		var/thermal_protection = H.get_thermal_protection()
 
