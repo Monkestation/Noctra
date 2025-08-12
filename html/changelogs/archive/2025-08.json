@@ -245,5 +245,58 @@
                 "balance": "Thieflings can be barbarians"
             }
         ]
+    },
+    "2025-08-12": {
+        "wgtjunior743": [
+            {
+                "rscadd": "Foreigner Trait Title first letter now is in uppercase."
+            },
+            {
+                "bugfix": "Fix armor datums appearing on the armor recipe."
+            },
+            {
+                "bugfix": "Steel Templar helmets lacking info about additional bar/items."
+            }
+        ],
+        "Sulaboy": [
+            {
+                "spellcheck": "Simplified Triton accent, now it is just some fish/fishing terms."
+            },
+            {
+                "balance": "Torches can be used slightly more"
+            },
+            {
+                "bugfix": "Metal torches last longer"
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "Fixed seek orphan"
+            },
+            {
+                "bugfix": "Fix species clothing restrictions for species that use the base body proportions (Not dwarves)"
+            }
+        ],
+        "Wrench-1": [
+            {
+                "image": "xylixian surcoat for Templars and Clerics"
+            }
+        ],
+        "Arkatos": [
+            {
+                "rscadd": "Added a new triumph buy - Adoption Ability."
+            },
+            {
+                "rscadd": "Added a new triumph buy - Orphanage Renovation."
+            }
+        ],
+        "SarmentiCampbell": [
+            {
+                "bugfix": "fixed maniac not stopping their music as soon as they die."
+            },
+            {
+                "bugfix": "stamina regen is no longer affected by the energy bar if you have the boundless energy trait."
+            }
+        ]
     }
 }
