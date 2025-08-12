@@ -65,9 +65,5 @@ abstract types are automatically excluded.
 		var/name_string = ""
 		for(var/list/name_pair as anything in failed_names)
 			name_string += name_pair
-			name_string +=
 
 		TEST_FAIL("failed names: [failed_names.Join("\n")] \n \n failed outputs: [failed_outputs.Join("\n")]")
-
-
-
