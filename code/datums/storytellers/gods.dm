@@ -268,7 +268,7 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_MASTERWORKS_FORGED = list("name" = "Masterworks forged:", "points" = 2.2, "capacity" = 85),
+			STATS_MASTERWORKS_FORGED = list("name" = "Masterworks forged:", "points" = 7.5, "capacity" = 85),
 		),
 		"Set 2" = list(
 			STATS_ROCKS_MINED = list("name" = "Rocks mined:", "points" = 0.26, "capacity" = 100),

@@ -1,24 +1,17 @@
 /datum/action/cooldown/spell/undirected/seek_orphan
 	name = "Brat Detector"
 	desc = "Find the distance between me and one of my brats."
+	sound = null
 
 	spell_type = NONE
 	charge_required = FALSE
-	sound = null
 	has_visual_effects = FALSE
 
 	charge_required = FALSE
 	cooldown_time = 20 SECONDS
-	var/datum/weakref/targeted_orphan
 
-/datum/action/cooldown/spell/undirected/seek_orphan/Destroy()
-	targeted_orphan = null
-	return ..()
-
-/datum/action/cooldown/spell/undirected/seek_orphan/before_cast(atom/cast_on)
+/datum/action/cooldown/spell/undirected/seek_orphan/cast(atom/cast_on)
 	. = ..()
-	if(. & SPELL_CANCEL_CAST)
-		return
 	var/list/orphans = list()
 	for(var/mob/living/carbon/human/H in GLOB.human_list)
 		if(!H.mind)
@@ -28,33 +21,23 @@
 		orphans += H
 
 	if(!length(orphans))
-		to_chat(owner, span_red("There aren't any..."))
-		return . | SPELL_CANCEL_CAST
+		to_chat(owner, span_red("There aren't any orphans."))
+		return
 
 	var/mob/orphan = browser_input_list(owner, "Which One?", "Seek Orphan", orphans)
-	if(QDELETED(src) || QDELETED(cast_on) || QDELETED(targeted_orphan) || !can_cast_spell())
-		return . | SPELL_CANCEL_CAST
-	if(!orphan)
-		reset_cooldown()
-		return . | SPELL_CANCEL_CAST
-
-	targeted_orphan = WEAKREF(orphan)
-	return TRUE
-
-/datum/action/cooldown/spell/undirected/seek_orphan/cast(atom/cast_on)
-	. = ..()
-	var/mob/orphan = targeted_orphan.resolve()
-	if(QDELETED(orphan))
+	if(QDELETED(src) || QDELETED(cast_on) || QDELETED(orphan) || !can_cast_spell())
 		return
-	to_chat(owner, span_notice("That brat is [where_orphan(owner, orphan)]."))
+
+	to_chat(owner, span_notice("That brat is [where_orphan(orphan)]."))
 
 /datum/action/cooldown/spell/undirected/seek_orphan/proc/where_orphan(mob/living/carbon/human/tracked_orphan)
-	var/turf/our_turf = get_turf(owner)
-	var/turf/their_turf = get_turf(tracked_orphan)
-	var/our_z = our_turf?.z
-	var/their_z = their_turf?.z
-	var/dist = get_dist(our_turf, their_turf)
-	var/dir = get_dir(our_turf, their_turf)
+	if(!owner || !tracked_orphan)
+		return
+
+	var/our_z = owner.z
+	var/their_z = tracked_orphan.z
+	var/dist = get_dist(owner, tracked_orphan)
+	var/dir = get_dir(owner, tracked_orphan)
 	var/dir_text = dir2text(dir)
 	var/distance_text
 

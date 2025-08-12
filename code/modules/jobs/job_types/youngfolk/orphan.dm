@@ -26,33 +26,51 @@
 
 /datum/outfit/job/orphan/pre_equip(mob/living/carbon/human/H)
 	..()
-	// The guaranteed clothing they wear.
-	if(prob(50))
-		if(prob(50))
-			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant/l
-		else
-			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
-		if(prob(50))
-			pants = /obj/item/clothing/pants/tights/colored/vagrant/l
-		else
-			pants = /obj/item/clothing/pants/tights/colored/vagrant
+	var/orphanage_renovated = FALSE
+	if(has_world_trait(/datum/world_trait/orphanage_renovated))
+		orphanage_renovated = TRUE
+
+	if(orphanage_renovated)
+		neck = /obj/item/storage/belt/pouch/coins/poor
+		shirt = /obj/item/clothing/shirt/undershirt/colored/random
+		pants = /obj/item/clothing/pants/tights/colored/random
+		belt = /obj/item/storage/belt/leather/rope
+		shoes = /obj/item/clothing/shoes/simpleshoes
+
+		H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/labor/farming, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/labor/fishing, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/labor/mathematics, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 	else
-		armor = /obj/item/clothing/shirt/rags
-	// Flair
-	if(prob(35))
+		if(prob(50))
+			if(prob(50))
+				shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant/l
+			else
+				shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
+			if(prob(50))
+				pants = /obj/item/clothing/pants/tights/colored/vagrant/l
+			else
+				pants = /obj/item/clothing/pants/tights/colored/vagrant
+		else
+			armor = /obj/item/clothing/shirt/rags
+
+	if(prob(35) || orphanage_renovated)
 		cloak = pick(/obj/item/clothing/cloak/half, /obj/item/clothing/cloak/half/colored/brown)
-	if(prob(30))
+	if(prob(30) || orphanage_renovated)
 		head = pick(/obj/item/clothing/head/knitcap, /obj/item/clothing/head/bardhat, /obj/item/clothing/head/courtierhat, /obj/item/clothing/head/fancyhat)
-	if(prob(15))
+	if(prob(15) || orphanage_renovated)
 		r_hand = pick(/obj/item/instrument/lute, /obj/item/instrument/accord, /obj/item/instrument/guitar, /obj/item/instrument/flute, /obj/item/instrument/hurdygurdy, /obj/item/instrument/viola)
 		if(H.mind)
 			H.adjust_skillrank(/datum/skill/misc/music, pick(2,3,4), TRUE)
+
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/stealing, 4, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
-		H.STALUC = rand(1, 20)
-	H.change_stat(STATKEY_INT, round(rand(-4,4)))
-	H.change_stat(STATKEY_CON, -1)
-	H.change_stat(STATKEY_END, -1)
-	ADD_TRAIT(H, TRAIT_ORPHAN, TRAIT_GENERIC) //Affected by Matron's Eargrab.
+		H.STALUC = orphanage_renovated ? rand(7, 20) : rand(1, 20)
+	H.change_stat(STATKEY_INT, orphanage_renovated ? 4 : round(rand(-4,4)))
+	H.change_stat(STATKEY_CON, orphanage_renovated ? 1 : -1)
+	H.change_stat(STATKEY_END, orphanage_renovated ? 1 : -1)
+	ADD_TRAIT(H, TRAIT_ORPHAN, TRAIT_GENERIC)
