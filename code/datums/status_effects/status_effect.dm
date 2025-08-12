@@ -77,11 +77,6 @@
 /datum/status_effect/proc/on_apply()
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(has_world_trait(/datum/world_trait/fear_and_hunger))
-		for(var/stat in effectedstats)
-			if(effectedstats[stat] < 0)
-				effectedstats[stat] = round(effectedstats[stat] * 1.5, 1)
-
 	for(var/stat in effectedstats)
 		owner.set_stat_modifier("[id]", stat, effectedstats[stat])
 	return TRUE

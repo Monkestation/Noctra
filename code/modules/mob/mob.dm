@@ -1292,10 +1292,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 /mob/proc/adjust_nutrition(change) //Honestly FUCK the oldcoders for putting nutrition on /mob someone else can move it up because holy hell I'd have to fix SO many typechecks
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
 		nutrition = NUTRITION_LEVEL_FULL
-	var/effective_change = change
-	if(has_world_trait(/datum/world_trait/fear_and_hunger) && change < 0)
-		effective_change = change * 1.5
-	nutrition = max(0, nutrition + effective_change)
+	nutrition = max(0, nutrition + change)
 	if(nutrition > NUTRITION_LEVEL_FULL)
 		nutrition = NUTRITION_LEVEL_FULL
 
@@ -1310,10 +1307,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 /mob/proc/adjust_hydration(change)
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
 		hydration = HYDRATION_LEVEL_FULL
-	var/effective_change = change
-	if(has_world_trait(/datum/world_trait/fear_and_hunger) && change < 0)
-		effective_change = change * 1.5
-	hydration = max(0, hydration + effective_change)
+	hydration = max(0, hydration + change)
 	if(hydration > HYDRATION_LEVEL_FULL)
 		hydration = HYDRATION_LEVEL_FULL
 

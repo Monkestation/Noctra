@@ -33,11 +33,7 @@
 	COOLDOWN_DECLARE(stress_indicator)
 
 /mob/living/carbon/adjust_stress(amt)
-	var/effective_change = amt
-	if(has_world_trait(/datum/world_trait/fear_and_hunger) && amt > 0)
-		effective_change = round(amt * 1.5, 1)
-
-	stressbuffer = stressbuffer + effective_change
+	stressbuffer = stressbuffer + amt
 	stress = stress + stressbuffer
 	stressbuffer = 0
 
