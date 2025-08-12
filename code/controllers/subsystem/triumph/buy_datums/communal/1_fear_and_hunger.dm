@@ -2,7 +2,7 @@
 	name = "Fear & Hunger"
 	desc = "Nutrition and hydration depletes faster, negative mood hits harder and stat debuffs are more powerful. Automatically refunds if it does not reach its goal before the round starts."
 	triumph_buy_id = TRIUMPH_BUY_FEAR_AND_HUNGER
-	maximum_pool = 75
+	maximum_pool = 100
 
 /datum/triumph_buy/communal/preround/fear_and_hunger/on_activate()
 	. = ..()
