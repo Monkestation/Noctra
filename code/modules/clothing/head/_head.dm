@@ -30,6 +30,7 @@
 
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
+	abstract_type = /obj/item/clothing/head
 
 /obj/item/clothing/head/Initialize()
 	. = ..()

@@ -37,7 +37,7 @@
 	shirt = /obj/item/clothing/armor/gambeson
 	shoes = /obj/item/clothing/shoes/boots/leather
 	wrists = /obj/item/clothing/wrists/bracers/leather
-	cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
+	cloak = /obj/item/clothing/cloak/raincloak/furcloak/colored/brown
 	backl = /obj/item/storage/backpack/satchel
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/poor)
 

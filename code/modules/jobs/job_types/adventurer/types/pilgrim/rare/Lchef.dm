@@ -28,8 +28,8 @@
 	H.adjust_skillrank(/datum/skill/labor/taming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/cooking, 6, TRUE)
 	belt = /obj/item/storage/belt/leather
-	pants = /obj/item/clothing/pants/tights/random
-	shirt = /obj/item/clothing/shirt/shortshirt/random
+	pants = /obj/item/clothing/pants/tights/colored/random
+	shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 	cloak = /obj/item/clothing/cloak/apron
 	head = /obj/item/clothing/head/cookhat/chef
 	shoes = /obj/item/clothing/shoes/shortboots

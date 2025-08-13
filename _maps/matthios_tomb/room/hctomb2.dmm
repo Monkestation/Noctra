@@ -84,6 +84,17 @@
 /obj/item/natural/rock/gold,
 /turf/open/floor/cobblerock,
 /area/rogue/under/tomb/cave)
+"gZ" = (
+/obj/item/clothing/head/jester,
+/obj/item/clothing/shoes/jester,
+/obj/item/clothing/shirt/jester,
+/obj/item/clothing/pants/tights/colored/jester,
+/obj/effect/mapping_helpers/floor_clothing_equipper,
+/obj/item/handheld_bell,
+/mob/living/carbon/human/species/skeleton/npc/no_equipment,
+/obj/item/kitchen/fork/iron,
+/turf/open/floor/naturalstone,
+/area/rogue/under/tomb/cave)
 "hQ" = (
 /obj/structure/flora/grass/bush_meagre,
 /turf/open/floor/grass/yel,
@@ -199,14 +210,6 @@
 /obj/item/clothing/armor/cuirass/copperchest,
 /turf/open/floor/dirt,
 /area/rogue/under/tomb)
-"rU" = (
-/obj/structure/closet/dirthole/closed,
-/obj/item/weapon/shield/tower,
-/obj/item/weapon/mace/bludgeon/copper,
-/obj/effect/mapping_helpers/floor_clothing_equipper,
-/mob/living/carbon/human/species/skeleton/npc/no_equipment,
-/turf/open/floor/dirt,
-/area/rogue/under/tomb)
 "si" = (
 /obj/structure/flora/ausbushes/reedbush,
 /turf/open/water/swamp,
@@ -289,6 +292,10 @@
 	},
 /turf/open/floor/naturalstone,
 /area/rogue/under/tomb/cave)
+"At" = (
+/obj/item/clothing/cloak/raincloak/colored/mortus,
+/turf/open/floor/dirt/road,
+/area/rogue/under/tomb)
 "AF" = (
 /obj/item/grown/log/tree/small,
 /turf/closed/mineral/bedrock,
@@ -488,27 +495,12 @@
 /obj/effect/spawner/map_spawner/beartrap,
 /turf/open/floor/cobblerock,
 /area/rogue/under/tomb/cave)
-"PD" = (
-/obj/item/clothing/cloak/raincloak/mortus,
-/turf/open/floor/dirt/road,
-/area/rogue/under/tomb)
 "Qk" = (
 /obj/structure/closet/dirthole/closed,
 /obj/effect/landmark/chest_or_mimic,
 /obj/item/gem,
 /turf/open/floor/dirt,
 /area/rogue/under/tomb)
-"QX" = (
-/obj/item/clothing/head/jester,
-/obj/item/clothing/shoes/jester,
-/obj/item/clothing/shirt/jester,
-/obj/item/clothing/pants/tights/jester,
-/obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/item/handheld_bell,
-/mob/living/carbon/human/species/skeleton/npc/no_equipment,
-/obj/item/kitchen/fork/iron,
-/turf/open/floor/naturalstone,
-/area/rogue/under/tomb/cave)
 "Rk" = (
 /obj/structure/closet/dirthole/closed,
 /obj/item/weapon/shield/wood,
@@ -531,6 +523,14 @@
 "To" = (
 /turf/open/floor/dirt,
 /area/rogue/under/tomb/cave)
+"Ts" = (
+/obj/structure/closet/dirthole/closed,
+/obj/item/weapon/shield/tower,
+/obj/item/weapon/mace/bludgeon/copper,
+/obj/effect/mapping_helpers/floor_clothing_equipper,
+/mob/living/carbon/human/species/skeleton/npc/no_equipment,
+/turf/open/floor/dirt,
+/area/rogue/under/tomb)
 "Vc" = (
 /obj/structure/flora/grass/bush,
 /turf/open/floor/grass/yel,
@@ -970,7 +970,7 @@ XK
 XK
 XK
 XK
-PD
+At
 XK
 XK
 XK
@@ -1230,7 +1230,7 @@ iR
 iR
 iR
 iR
-rU
+Ts
 iR
 iR
 iR
@@ -1763,7 +1763,7 @@ iR
 iR
 iR
 aH
-QX
+gZ
 iR
 aH
 aH
