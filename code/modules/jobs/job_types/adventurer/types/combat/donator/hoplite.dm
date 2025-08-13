@@ -1,8 +1,7 @@
 /datum/advclass/combat/hoplite
 	name = "Immortal Bulwark"
 	tutorial = "You have marched and fought in formations since the ancient war that nearly destroyed Psydonia. There are few in the world who can match your expertise in a shield wall, but all you have ever known is battle and obedience..."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list("Aasimar")
+	allowed_races = list(SPEC_ID_AASIMAR)
 	outfit = /datum/outfit/job/adventurer/hoplite
 	maximum_possible_slots = 1
 	pickprob = 15 // Same as the other very rare classes
@@ -27,14 +26,14 @@
 
 	// Despite extensive combat experience, this class is exceptionally destitute. The only luxury besides combat gear that it possesses is a lantern for a source of light
 	// Beneath the arms and armor is a simple loincloth, and it doesn't start with any money. This should encourage them to find someone to serve or work alongside with very quickly
-	pants = /obj/item/clothing/pants/loincloth/brown
+	pants = /obj/item/clothing/pants/loincloth/colored/brown
 	beltr = /obj/item/flashlight/flare/torch/lantern
-	shoes = /obj/item/clothing/shoes/hoplite
-	cloak = /obj/item/clothing/cloak/half/red
+	shoes = /obj/item/clothing/shoes/rare/hoplite
+	cloak = /obj/item/clothing/cloak/half/colored/red
 	belt = /obj/item/storage/belt/leather/rope
 	armor = /obj/item/clothing/armor/rare/hoplite
 	head = /obj/item/clothing/head/rare/hoplite
-	wrists = /obj/item/clothing/wrists/bracers/hoplite
+	wrists = /obj/item/clothing/wrists/bracers/rare/hoplite
 	neck = /obj/item/clothing/neck/gorget/hoplite
 	backl = /obj/item/weapon/shield/tower/hoplite
 	var/weapontype = pickweight(list("Khopesh" = 5, "Spear" = 3, "WingedSpear" = 2)) // Rolls for various weapon options based on weighted list

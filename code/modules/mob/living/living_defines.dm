@@ -128,8 +128,6 @@
 
 	var/last_words	//used for database logging
 
-	var/list/obj/effect/proc_holder/abilities = list()
-
 	var/can_be_held = FALSE	//whether this can be picked up and held.
 
 	var/ventcrawl_layer = 2
@@ -168,9 +166,6 @@
 	var/bleedsuppress = 0 //for stopping bloodloss, eventually this will be limb-based like bleeding
 
 	var/list/next_attack_msg = list()
-
-	var/datum/component/personal_crafting/craftingthing
-	var/last_crafted
 
 	var/obj/item/grabbing/r_grab = null
 	var/obj/item/grabbing/l_grab = null
@@ -213,5 +208,4 @@
 	var/tempatarget = null
 	var/pegleg = 0			//Handles check & slowdown for peglegs. Fuckin' bootleg, literally, but hey it at least works.
 	var/pet_passive = FALSE
-
 	var/dontmakesentient = FALSE // to check if you should make the thing sentient if they get enough kills to earn it. used for bosses or shit that would suck to be a player on

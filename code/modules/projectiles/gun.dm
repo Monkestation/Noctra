@@ -105,9 +105,6 @@
 		shoot_with_empty_chamber(user)
 		return
 
-	if(user?.used_intent.arc_check())
-		target = get_turf(target)
-
 	return process_fire(target, user, TRUE, click_parameters, null, 0)
 
 
@@ -116,6 +113,11 @@
 
 
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(user)
+		SEND_SIGNAL(user, COMSIG_MOB_FIRED_GUN, src, target, params, zone_override)
+
+	SEND_SIGNAL(src, COMSIG_GUN_FIRED, user, target, params, zone_override)
+
 	add_fingerprint(user)
 
 	var/sprd = 0
@@ -186,3 +188,5 @@
 
 /obj/item/gun/get_examine_string(mob/user, thats = FALSE)
 	return "[thats? "That's ":""]<b>[get_examine_name(user)]</b>"
+
+#undef DUALWIELD_PENALTY_EXTRA_MULTIPLIER

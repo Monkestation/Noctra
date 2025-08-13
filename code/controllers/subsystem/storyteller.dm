@@ -1,4 +1,3 @@
-#define INIT_ORDER_GAMEMODE 70
 ///how many storytellers can be voted for along with always_votable ones
 #define DEFAULT_STORYTELLER_VOTE_OPTIONS 4
 ///amount of players we can have before no longer running votes for storyteller
@@ -190,6 +189,36 @@ SUBSYSTEM_DEF(gamemode)
 	var/round_ends_at = 0
 	var/roundvoteend = FALSE
 	var/reb_end_time = 0
+
+	var/list/chronicle_sets = list(
+		"Total Skills" = list(
+			CHRONICLE_STATS_MOST_SKILLS_PERSON,
+			CHRONICLE_STATS_LEAST_SKILLS_PERSON,
+		),
+		"Strength" = list(
+			CHRONICLE_STATS_STRONGEST_PERSON,
+			CHRONICLE_STATS_WEAKEST_PERSON,
+		),
+		"Intelligence" = list(
+			CHRONICLE_STATS_SMARTEST_PERSON,
+			CHRONICLE_STATS_DUMBEST_PERSON,
+		),
+		"Speed" = list(
+			CHRONICLE_STATS_FASTEST_PERSON,
+			CHRONICLE_STATS_SLOWEST_PERSON,
+		),
+		"Wealth" = list(
+			CHRONICLE_STATS_RICHEST_PERSON,
+			CHRONICLE_STATS_POOREST_PERSON,
+		),
+		"Luck" = list(
+			CHRONICLE_STATS_LUCKIEST_PERSON,
+			CHRONICLE_STATS_UNLUCKIEST_PERSON,
+		),
+	)
+
+	/// Chosen chronicle stats of the notable people, which show at the end round panel
+	var/list/chosen_chronicle_stats = list()
 
 /datum/controller/subsystem/gamemode/Initialize(time, zlevel)
 #if defined(UNIT_TESTS) || defined(AUTOWIKI) // lazy way of doing this but idc
@@ -408,6 +437,11 @@ SUBSYSTEM_DEF(gamemode)
 		event_pools[event.track] += event //Add it to the categorized event pools
 
 	load_roundstart_data()
+
+	check_roundstart_gods_rankings()
+
+	pick_chronicle_stats()
+
 	. = ..()
 
 /datum/controller/subsystem/gamemode/fire(resumed = FALSE)
@@ -718,7 +752,15 @@ SUBSYSTEM_DEF(gamemode)
 	if(!length(storytellers))
 		for(var/type in subtypesof(/datum/storyteller))
 			storytellers[type] = new type()
-	set_storyteller(/datum/storyteller/astrata)
+
+	for(var/storyteller_name in storytellers)
+		var/datum/storyteller/initialized_storyteller = storytellers[storyteller_name]
+		if(initialized_storyteller?.ascendant)
+			to_chat(world, "<br>")
+			to_chat(world, span_reallybig("[initialized_storyteller.name] is ascendant!"))
+			to_chat(world, "<br>")
+
+	pick_most_influential(TRUE)
 	calculate_ready_players()
 	roll_pre_setup_points()
 	//handle_pre_setup_roundstart_events()
@@ -826,7 +868,7 @@ SUBSYSTEM_DEF(gamemode)
 /// Loads config values from game_options.txt
 /datum/controller/subsystem/gamemode/proc/load_config_vars()
 	point_gain_multipliers[EVENT_TRACK_MUNDANE] = CONFIG_GET(number/mundane_point_gain_multiplier)
-	point_gain_multipliers[EVENT_TRACK_PERSONAL] = CONFIG_GET(number/moderate_point_gain_multiplier)
+	point_gain_multipliers[EVENT_TRACK_PERSONAL] = CONFIG_GET(number/moderate_point_gain_multiplier) * 1.25
 	point_gain_multipliers[EVENT_TRACK_MODERATE] = CONFIG_GET(number/moderate_point_gain_multiplier)
 	point_gain_multipliers[EVENT_TRACK_INTERVENTION] = CONFIG_GET(number/major_point_gain_multiplier)
 	point_gain_multipliers[EVENT_TRACK_CHARACTER_INJECTION] = CONFIG_GET(number/roleset_point_gain_multiplier)
@@ -1246,7 +1288,37 @@ SUBSYSTEM_DEF(gamemode)
 			if(listed.name != event_name)
 				continue
 			listed.occurrences++
-			listed.occurrences++
+
+/// Chooses a number of chronicle stats from the chronicle sets which will be shown at the round end panel
+/datum/controller/subsystem/gamemode/proc/pick_chronicle_stats()
+	var/list/available_sets = chronicle_sets.Copy()
+
+	while(length(chosen_chronicle_stats) < 8 && length(available_sets))
+		var/picked_set_name = pick(available_sets)
+		var/list/picked_set = available_sets[picked_set_name]
+
+		var/stats_needed = 8 - length(chosen_chronicle_stats)
+		var/stats_to_take = min(length(picked_set), stats_needed)
+
+		for(var/i in 1 to stats_to_take)
+			chosen_chronicle_stats += picked_set[i]
+
+		available_sets -= picked_set_name
+
+	if(length(chosen_chronicle_stats) < 8)
+		for(var/set_name in chronicle_sets)
+			if(length(chosen_chronicle_stats) >= 8)
+				break
+
+			if(!(set_name in available_sets))
+				continue
+
+			var/list/remaining_set = chronicle_sets[set_name]
+			var/stats_needed = 8 - length(chosen_chronicle_stats)
+			var/stats_to_take = min(length(remaining_set), stats_needed)
+
+			for(var/i in 1 to stats_to_take)
+				chosen_chronicle_stats += remaining_set[i]
 
 /// Compares influence of all storytellers and sets a new storyteller with a highest influence
 /datum/controller/subsystem/gamemode/proc/pick_most_influential(roundstart = FALSE)
@@ -1280,7 +1352,7 @@ SUBSYSTEM_DEF(gamemode)
 	if(!highest)
 		return
 
-	var/adjustment = min(2.5, 1 + (0.3 * FLOOR(max(0, highest.times_chosen - 5) / 5, 1)))
+	var/adjustment = min(3, 1 + (0.4 * FLOOR(max(0, highest.times_chosen - 5) / 5, 1)))
 
 	if(storytellers_with_influence[highest] > adjustment)
 		highest.bonus_points -= adjustment
@@ -1314,50 +1386,70 @@ SUBSYSTEM_DEF(gamemode)
 
 	GLOB.featured_stats[FEATURED_STATS_FLAWS]["entries"] = list()
 
-	GLOB.vanderlin_round_stats[STATS_TOTAL_POPULATION] = 0
-	GLOB.vanderlin_round_stats[STATS_PSYCROSS_USERS] = 0
-	GLOB.vanderlin_round_stats[STATS_ALIVE_NOBLES] = 0
-	GLOB.vanderlin_round_stats[STATS_ALIVE_GARRISON] = 0
-	GLOB.vanderlin_round_stats[STATS_ALIVE_CLERGY] = 0
-	GLOB.vanderlin_round_stats[STATS_ALIVE_TRADESMEN] = 0
-	GLOB.vanderlin_round_stats[STATS_ILLITERATES] = 0
-	GLOB.vanderlin_round_stats[STATS_WEREVOLVES] = 0
-	GLOB.vanderlin_round_stats[STATS_VAMPIRES] = 0
-	GLOB.vanderlin_round_stats[STATS_DEADITES_ALIVE] = 0
+	var/list/statistics_to_clear = list(
+		STATS_TOTAL_POPULATION,
+		STATS_PSYCROSS_USERS,
+		STATS_ALIVE_NOBLES,
+		STATS_ALIVE_GARRISON,
+		STATS_ALIVE_CLERGY,
+		STATS_ALIVE_TRADESMEN,
+		STATS_ILLITERATES,
+		STATS_WEREVOLVES,
+		STATS_VAMPIRES,
+		STATS_DEADITES_ALIVE,
+		STATS_CLINGY_PEOPLE,
+		STATS_ALCOHOLICS,
+		STATS_JUNKIES,
+		STATS_KLEPTOMANIACS,
+		STATS_GREEDY_PEOPLE,
+		STATS_PARENTS,
+		STATS_PACIFISTS,
+		STATS_MARRIED,
+		STATS_MALE_POPULATION,
+		STATS_FEMALE_POPULATION,
+		STATS_OTHER_GENDER,
+		STATS_CHILD_POPULATION,
+		STATS_ADULT_POPULATION,
+		STATS_MIDDLEAGED_POPULATION,
+		STATS_ELDERLY_POPULATION,
+		STATS_IMMORTAL_POPULATION,
+		STATS_ALIVE_TIEFLINGS,
+		STATS_ALIVE_NORTHERN_HUMANS,
+		STATS_ALIVE_DWARVES,
+		STATS_ALIVE_DARK_ELVES,
+		STATS_ALIVE_SNOW_ELVES,
+		STATS_ALIVE_HALF_ELVES,
+		STATS_ALIVE_HALF_DROWS,
+		STATS_ALIVE_HALF_ORCS,
+		STATS_ALIVE_KOBOLDS,
+		STATS_ALIVE_RAKSHARI,
+		STATS_ALIVE_AASIMAR,
+		STATS_ALIVE_HOLLOWKINS,
+		STATS_ALIVE_HARPIES,
+		STATS_ALIVE_TRITONS,
+		STATS_ALIVE_MEDICATORS,
+	)
 
-	GLOB.vanderlin_round_stats[STATS_ALCOHOLICS] = 0
-	GLOB.vanderlin_round_stats[STATS_JUNKIES] = 0
-	GLOB.vanderlin_round_stats[STATS_KLEPTOMANIACS] = 0
-	GLOB.vanderlin_round_stats[STATS_GREEDY_PEOPLE] = 0
-	GLOB.vanderlin_round_stats[STATS_PARENTS] = 0
-	GLOB.vanderlin_round_stats[STATS_PACIFISTS] = 0
-	GLOB.vanderlin_round_stats[STATS_MARRIED] = 0
+	for(var/stat_name in statistics_to_clear)
+		force_set_round_statistic(stat_name, 0)
 
-	GLOB.vanderlin_round_stats[STATS_MALE_POPULATION] = 0
-	GLOB.vanderlin_round_stats[STATS_FEMALE_POPULATION] = 0
-	GLOB.vanderlin_round_stats[STATS_OTHER_GENDER] = 0
+	var/list/current_valid_humans = list()
 
-	GLOB.vanderlin_round_stats[STATS_CHILD_POPULATION] = 0
-	GLOB.vanderlin_round_stats[STATS_ADULT_POPULATION] = 0
-	GLOB.vanderlin_round_stats[STATS_MIDDLEAGED_POPULATION] = 0
-	GLOB.vanderlin_round_stats[STATS_ELDERLY_POPULATION] = 0
-	GLOB.vanderlin_round_stats[STATS_IMMORTAL_POPULATION] = 0
+	var/mob/living/carbon/human/valid_psydon_favourite
 
-	// Races count
-	GLOB.vanderlin_round_stats[STATS_ALIVE_TIEFLINGS] = 0
-	GLOB.vanderlin_round_stats[STATS_ALIVE_NORTHERN_HUMANS] = 0
-	GLOB.vanderlin_round_stats[STATS_ALIVE_DWARVES] = 0
-	GLOB.vanderlin_round_stats[STATS_ALIVE_DARK_ELVES] = 0
-	GLOB.vanderlin_round_stats[STATS_ALIVE_SNOW_ELVES] = 0
-	GLOB.vanderlin_round_stats[STATS_ALIVE_HALF_ELVES] = 0
-	GLOB.vanderlin_round_stats[STATS_ALIVE_HALF_DROWS] = 0
-	GLOB.vanderlin_round_stats[STATS_ALIVE_HALF_ORCS] = 0
-	GLOB.vanderlin_round_stats[STATS_ALIVE_KOBOLDS] = 0
-	GLOB.vanderlin_round_stats[STATS_ALIVE_RAKSHARI] = 0
-	GLOB.vanderlin_round_stats[STATS_ALIVE_AASIMAR] = 0
-	GLOB.vanderlin_round_stats[STATS_ALIVE_HOLLOWKINS] = 0
-	GLOB.vanderlin_round_stats[STATS_ALIVE_HARPIES] = 0
-	GLOB.vanderlin_round_stats[STATS_ALIVE_TRITONS] = 0
+	var/highest_total_stats = -1
+	var/highest_strength = -1
+	var/highest_intelligence = -1
+	var/highest_wealth = -1
+	var/highest_luck = -1
+	var/highest_speed = -1
+
+	var/lowest_total_stats
+	var/lowest_strength
+	var/lowest_intelligence
+	var/lowest_wealth
+	var/lowest_luck
+	var/lowest_speed
 
 	for(var/client/client in GLOB.clients)
 		if(roundstart)
@@ -1369,104 +1461,197 @@ SUBSYSTEM_DEF(gamemode)
 			continue
 		if(living.stat == DEAD)
 			continue
+
 		if(!roundstart)
 			if(living.patron)
 				GLOB.patron_follower_counts[living.patron.name]++
 				if(living.job == "Monarch")
-					GLOB.vanderlin_round_stats[STATS_MONARCH_PATRON] = "[living.patron.name]"
+					force_set_round_statistic(STATS_MONARCH_PATRON, living.patron.name)
 		if(living.mind.has_antag_datum(/datum/antagonist/werewolf))
-			GLOB.vanderlin_round_stats[STATS_WEREVOLVES]++
+			record_round_statistic(STATS_WEREVOLVES)
 		if(living.mind.has_antag_datum(/datum/antagonist/vampire))
-			GLOB.vanderlin_round_stats[STATS_VAMPIRES]++
+			record_round_statistic(STATS_VAMPIRES)
 		if(living.mind.has_antag_datum(/datum/antagonist/zombie) || living.mind.has_antag_datum(/datum/antagonist/skeleton) || living.mind.has_antag_datum(/datum/antagonist/lich))
-			GLOB.vanderlin_round_stats[STATS_DEADITES_ALIVE]++
+			record_round_statistic(STATS_DEADITES_ALIVE)
 		if(ishuman(living))
 			var/mob/living/carbon/human/human_mob = client.mob
-			GLOB.vanderlin_round_stats[STATS_TOTAL_POPULATION]++
+			current_valid_humans += human_mob
+			record_round_statistic(STATS_TOTAL_POPULATION)
 			for(var/obj/item/clothing/neck/current_item in human_mob.get_equipped_items(TRUE))
 				if(current_item.type in list(/obj/item/clothing/neck/psycross, /obj/item/clothing/neck/psycross/silver, /obj/item/clothing/neck/psycross/g))
-					GLOB.vanderlin_round_stats[STATS_PSYCROSS_USERS]++
+					record_round_statistic(STATS_PSYCROSS_USERS)
 					break
 			switch(human_mob.gender)
 				if(MALE)
-					GLOB.vanderlin_round_stats[STATS_MALE_POPULATION]++
+					record_round_statistic(STATS_MALE_POPULATION)
 				if(FEMALE)
-					GLOB.vanderlin_round_stats[STATS_FEMALE_POPULATION]++
+					record_round_statistic(STATS_FEMALE_POPULATION)
 				else
-					GLOB.vanderlin_round_stats[STATS_OTHER_GENDER]++
+					record_round_statistic(STATS_OTHER_GENDER)
 			switch(human_mob.age)
 				if(AGE_CHILD)
-					GLOB.vanderlin_round_stats[STATS_CHILD_POPULATION]++
+					record_round_statistic(STATS_CHILD_POPULATION)
 				if(AGE_ADULT)
-					GLOB.vanderlin_round_stats[STATS_ADULT_POPULATION]++
+					record_round_statistic(STATS_ADULT_POPULATION)
 				if(AGE_MIDDLEAGED)
-					GLOB.vanderlin_round_stats[STATS_MIDDLEAGED_POPULATION]++
+					record_round_statistic(STATS_MIDDLEAGED_POPULATION)
 				if(AGE_OLD)
-					GLOB.vanderlin_round_stats[STATS_ELDERLY_POPULATION]++
+					record_round_statistic(STATS_ELDERLY_POPULATION)
 				if(AGE_IMMORTAL)
-					GLOB.vanderlin_round_stats[STATS_IMMORTAL_POPULATION]++
+					record_round_statistic(STATS_IMMORTAL_POPULATION)
 			if(human_mob.charflaw)
 				record_featured_object_stat(FEATURED_STATS_FLAWS, human_mob.charflaw.name)
 			if(human_mob.is_noble())
-				GLOB.vanderlin_round_stats[STATS_ALIVE_NOBLES]++
+				record_round_statistic(STATS_ALIVE_NOBLES)
 			if(human_mob.mind.assigned_role.title in GLOB.garrison_positions)
-				GLOB.vanderlin_round_stats[STATS_ALIVE_GARRISON]++
+				record_round_statistic(STATS_ALIVE_GARRISON)
 			if(human_mob.mind.assigned_role.title in GLOB.church_positions)
-				GLOB.vanderlin_round_stats[STATS_ALIVE_CLERGY]++
+				record_round_statistic(STATS_ALIVE_CLERGY)
 			if((human_mob.mind.assigned_role.title in GLOB.serf_positions) || (human_mob.mind.assigned_role.title in GLOB.peasant_positions) || (human_mob.mind.assigned_role.title in GLOB.company_positions))
-				GLOB.vanderlin_round_stats[STATS_ALIVE_TRADESMEN]++
+				record_round_statistic(STATS_ALIVE_TRADESMEN)
 			if(!human_mob.is_literate())
-				GLOB.vanderlin_round_stats[STATS_ILLITERATES]++
+				record_round_statistic(STATS_ILLITERATES)
+			if(human_mob.has_flaw(/datum/charflaw/clingy))
+				record_round_statistic(STATS_CLINGY_PEOPLE)
 			if(human_mob.has_flaw(/datum/charflaw/addiction/alcoholic))
-				GLOB.vanderlin_round_stats[STATS_ALCOHOLICS]++
+				record_round_statistic(STATS_ALCOHOLICS)
 			if(human_mob.has_flaw(/datum/charflaw/addiction/junkie))
-				GLOB.vanderlin_round_stats[STATS_JUNKIES]++
+				record_round_statistic(STATS_JUNKIES)
 			if(human_mob.has_flaw(/datum/charflaw/addiction/kleptomaniac))
-				GLOB.vanderlin_round_stats[STATS_KLEPTOMANIACS]++
+				record_round_statistic(STATS_KLEPTOMANIACS)
 			if(human_mob.has_flaw(/datum/charflaw/greedy))
-				GLOB.vanderlin_round_stats[STATS_GREEDY_PEOPLE]++
+				record_round_statistic(STATS_GREEDY_PEOPLE)
 			if(HAS_TRAIT_NOT_FROM(human_mob, TRAIT_PACIFISM, "hugbox"))
-				GLOB.vanderlin_round_stats[STATS_PACIFISTS]++
+				record_round_statistic(STATS_PACIFISTS)
 			if(human_mob.family_datum && human_mob.family_member_datum)
 				var/datum/family_member/member = human_mob.family_member_datum
-
 				// Check if they have children (making them a parent)
 				if(member.children.len > 0)
-					GLOB.vanderlin_round_stats[STATS_PARENTS]++
-
+					record_round_statistic(STATS_PARENTS)
 				// Check if married or has children
 				if(human_mob.IsWedded() || member.children.len > 0)
-					GLOB.vanderlin_round_stats[STATS_MARRIED]++
+					record_round_statistic(STATS_MARRIED)
 
 			// Races
 			if(istiefling(human_mob))
-				GLOB.vanderlin_round_stats[STATS_ALIVE_TIEFLINGS]++
+				record_round_statistic(STATS_ALIVE_TIEFLINGS)
 			if(ishumannorthern(human_mob))
-				GLOB.vanderlin_round_stats[STATS_ALIVE_NORTHERN_HUMANS]++
+				record_round_statistic(STATS_ALIVE_NORTHERN_HUMANS)
 			if(isdwarf(human_mob))
-				GLOB.vanderlin_round_stats[STATS_ALIVE_DWARVES]++
+				record_round_statistic(STATS_ALIVE_DWARVES)
 			if(isdarkelf(human_mob))
-				GLOB.vanderlin_round_stats[STATS_ALIVE_DARK_ELVES]++
+				record_round_statistic(STATS_ALIVE_DARK_ELVES)
 			if(issnowelf(human_mob))
-				GLOB.vanderlin_round_stats[STATS_ALIVE_SNOW_ELVES]++
+				record_round_statistic(STATS_ALIVE_SNOW_ELVES)
 			if(ishalfelf(human_mob))
-				GLOB.vanderlin_round_stats[STATS_ALIVE_HALF_ELVES]++
+				record_round_statistic(STATS_ALIVE_HALF_ELVES)
 			if(ishalfdrow(human_mob))
-				GLOB.vanderlin_round_stats[STATS_ALIVE_HALF_DROWS]++
+				record_round_statistic(STATS_ALIVE_HALF_DROWS)
 			if(ishalforc(human_mob))
-				GLOB.vanderlin_round_stats[STATS_ALIVE_HALF_ORCS]++
+				record_round_statistic(STATS_ALIVE_HALF_ORCS)
 			if(iskobold(human_mob))
-				GLOB.vanderlin_round_stats[STATS_ALIVE_KOBOLDS]++
+				record_round_statistic(STATS_ALIVE_KOBOLDS)
 			if(israkshari(human_mob))
-				GLOB.vanderlin_round_stats[STATS_ALIVE_RAKSHARI]++
+				record_round_statistic(STATS_ALIVE_RAKSHARI)
 			if(isaasimar(human_mob))
-				GLOB.vanderlin_round_stats[STATS_ALIVE_AASIMAR]++
+				record_round_statistic(STATS_ALIVE_AASIMAR)
 			if(ishollowkin(human_mob))
-				GLOB.vanderlin_round_stats[STATS_ALIVE_HOLLOWKINS]++
+				record_round_statistic(STATS_ALIVE_HOLLOWKINS)
 			if(isharpy(human_mob))
-				GLOB.vanderlin_round_stats[STATS_ALIVE_HARPIES]++
+				record_round_statistic(STATS_ALIVE_HARPIES)
 			if(istriton(human_mob))
-				GLOB.vanderlin_round_stats[STATS_ALIVE_TRITONS]++
+				record_round_statistic(STATS_ALIVE_TRITONS)
+			if(ismedicator(human_mob))
+				record_round_statistic(STATS_ALIVE_MEDICATORS)
+
+			// Chronicle statistics
+
+			if(human_mob.client.has_triumph_buy(TRIUMPH_BUY_PSYDON_FAVOURITE))
+				valid_psydon_favourite = human_mob
+
+			var/total_stats = human_mob.STASTR + human_mob.STAINT + human_mob.STAEND + human_mob.STACON + human_mob.STAPER + human_mob.STASPD + human_mob.STALUC
+			if(total_stats > highest_total_stats)
+				highest_total_stats = total_stats
+				set_chronicle_stat(CHRONICLE_STATS_MOST_SKILLS_PERSON, human_mob, "PRODIGY", "#e9de43", "[total_stats] total stats")
+
+			if(human_mob.STASTR > highest_strength)
+				highest_strength = human_mob.STASTR
+				set_chronicle_stat(CHRONICLE_STATS_STRONGEST_PERSON, human_mob, "STRONGMAN", "#bd1717", "[human_mob.STASTR] strength")
+
+			if(human_mob.STAINT > highest_intelligence)
+				highest_intelligence = human_mob.STAINT
+				set_chronicle_stat(CHRONICLE_STATS_SMARTEST_PERSON, human_mob, "GENIUS", "#5eb6e6", "[human_mob.STAINT] intelligence")
+
+			if(human_mob.STALUC > highest_luck)
+				highest_luck = human_mob.STALUC
+				set_chronicle_stat(CHRONICLE_STATS_LUCKIEST_PERSON, human_mob, "LUCKY DEVIL", "#54d666", "[human_mob.STALUC] luck")
+
+			if(human_mob.STASPD > highest_speed)
+				highest_speed = human_mob.STASPD
+				set_chronicle_stat(CHRONICLE_STATS_FASTEST_PERSON, human_mob, "SPEEDSTER", "#54d6c2", "[human_mob.STASPD] speed")
+
+			var/wealth = get_mammons_in_atom(human_mob)
+			if(wealth > highest_wealth)
+				highest_wealth = wealth
+				set_chronicle_stat(CHRONICLE_STATS_RICHEST_PERSON, human_mob, "MAGNATE", "#d8dd90", "[wealth] mammons")
+
+			if(!lowest_total_stats)
+				lowest_total_stats = total_stats
+				set_chronicle_stat(CHRONICLE_STATS_LEAST_SKILLS_PERSON, human_mob, "HOPELESS", "#8a8887", "[total_stats] total stats")
+			else if(total_stats < lowest_total_stats)
+				lowest_total_stats = total_stats
+				set_chronicle_stat(CHRONICLE_STATS_LEAST_SKILLS_PERSON, human_mob, "HOPELESS", "#8a8887", "[total_stats] total stats")
+
+			if(!lowest_strength)
+				lowest_strength = human_mob.STASTR
+				set_chronicle_stat(CHRONICLE_STATS_WEAKEST_PERSON, human_mob, "WIMP", "#a0836a", "[human_mob.STASTR] strength")
+			else if(human_mob.STASTR < lowest_strength)
+				lowest_strength = human_mob.STASTR
+				set_chronicle_stat(CHRONICLE_STATS_WEAKEST_PERSON, human_mob, "WIMP", "#a0836a", "[human_mob.STASTR] strength")
+
+			if(!lowest_intelligence)
+				lowest_intelligence = human_mob.STAINT
+				set_chronicle_stat(CHRONICLE_STATS_DUMBEST_PERSON, human_mob, "IDIOT", "#e67e22", "[human_mob.STAINT] intelligence")
+			else if(human_mob.STAINT < lowest_intelligence)
+				lowest_intelligence = human_mob.STAINT
+				set_chronicle_stat(CHRONICLE_STATS_DUMBEST_PERSON, human_mob, "IDIOT", "#e67e22", "[human_mob.STAINT] intelligence")
+
+			if(!lowest_speed)
+				lowest_speed = human_mob.STASPD
+				set_chronicle_stat(CHRONICLE_STATS_SLOWEST_PERSON, human_mob, "TURTLE", "#a569bd", "[human_mob.STASPD] speed")
+			else if(human_mob.STASPD < lowest_speed)
+				lowest_speed = human_mob.STASPD
+				set_chronicle_stat(CHRONICLE_STATS_SLOWEST_PERSON, human_mob, "TURTLE", "#a569bd", "[human_mob.STASPD] speed")
+
+			if(!lowest_luck)
+				lowest_luck = human_mob.STALUC
+				set_chronicle_stat(CHRONICLE_STATS_UNLUCKIEST_PERSON, human_mob, "WALKING DISASTER", "#e74c3c", "[human_mob.STALUC] luck")
+			else if(human_mob.STALUC < lowest_luck)
+				lowest_luck = human_mob.STALUC
+				set_chronicle_stat(CHRONICLE_STATS_UNLUCKIEST_PERSON, human_mob, "WALKING DISASTER", "#e74c3c", "[human_mob.STALUC] luck")
+
+			if(!lowest_wealth)
+				lowest_wealth = wealth
+				set_chronicle_stat(CHRONICLE_STATS_POOREST_PERSON, human_mob, "PAUPER", "#909c63", "[wealth] mammons")
+			else if(wealth < lowest_wealth)
+				lowest_wealth = wealth
+				set_chronicle_stat(CHRONICLE_STATS_POOREST_PERSON, human_mob, "PAUPER", "#909c63", "[wealth] mammons")
+
+	if(length(current_valid_humans) >= 2 && valid_psydon_favourite)
+		var/list/potential_passers = current_valid_humans.Copy()
+		potential_passers -= valid_psydon_favourite
+		var/mob/living/carbon/human/random_passerby = pick(potential_passers)
+
+		chosen_chronicle_stats[1] = CHRONICLE_STATS_PSYDON_FAVOURITE
+		set_chronicle_stat(CHRONICLE_STATS_PSYDON_FAVOURITE, valid_psydon_favourite, "PSYDON'S FAVOURITE", "#e6e6e6", "buying his way in")
+
+		if(random_passerby)
+			chosen_chronicle_stats[2] = CHRONICLE_STATS_RANDOM_PASSERBY
+			set_chronicle_stat(CHRONICLE_STATS_RANDOM_PASSERBY, random_passerby, "RANDOM PASSERBY", "#888888", "just happening to be here")
+
+	else if(!isnull(GLOB.chronicle_stats[CHRONICLE_STATS_PSYDON_FAVOURITE]))
+		chosen_chronicle_stats = list()
+		pick_chronicle_stats()
 
 /// Returns total follower influence for the given storyteller
 /datum/controller/subsystem/gamemode/proc/get_follower_influence(datum/storyteller/chosen_storyteller)
@@ -1495,20 +1680,24 @@ SUBSYSTEM_DEF(gamemode)
 
 /// Returns influence value for a given storyteller for his given statistic
 /datum/controller/subsystem/gamemode/proc/calculate_specific_influence(datum/storyteller/chosen_storyteller, statistic)
-	var/datum/storyteller/initalized_storyteller = storytellers[chosen_storyteller]
-	if(!initalized_storyteller)
+	var/datum/storyteller/initialized_storyteller = storytellers[chosen_storyteller]
+	if(!initialized_storyteller)
 		return
 
-	if(!(statistic in initalized_storyteller.influence_factors))
+	if(!(statistic in initialized_storyteller.influence_factors))
 		return
 
 	var/influence = 0
 	var/stat_value = GLOB.vanderlin_round_stats[statistic]
-	var/list/factors = initalized_storyteller.influence_factors[statistic]
+	var/list/factors = initialized_storyteller.influence_factors[statistic]
 	var/modifier = factors["points"]
 	var/capacity = factors["capacity"]
 
-	var/raw_contribution = stat_value * modifier
+	var/scaling_factor = initialized_storyteller.influence_modifier
+	if(modifier < 0)
+		scaling_factor = 1 / scaling_factor
+
+	var/raw_contribution = (stat_value * modifier) * scaling_factor
 	influence = (modifier < 0) ? max(raw_contribution, capacity) : min(raw_contribution, capacity)
 
 	return influence
@@ -1543,6 +1732,14 @@ SUBSYSTEM_DEF(gamemode)
 		if(S.name == god_name)
 			return SSgamemode.calculate_storyteller_influence(S.type)
 	return 0
+
+/// Checks if the given storyteller is ascendant
+/proc/is_ascendant(god_name)
+	. = FALSE
+	for(var/storyteller_type in SSgamemode.storytellers)
+		var/datum/storyteller/S = SSgamemode.storytellers[storyteller_type]
+		if(S.ascendant && (S.name == god_name))
+			return TRUE
 
 #undef DEFAULT_STORYTELLER_VOTE_OPTIONS
 #undef MAX_POP_FOR_STORYTELLER_VOTE

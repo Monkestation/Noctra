@@ -127,7 +127,7 @@
 /obj/structure/mannequin/MouseDrop(atom/over_object)
 	. = ..()
 	var/mob/living/M = usr
-	if(!istype(M) || M.incapacitated(ignore_grab = TRUE) || !Adjacent(M) || unchangeable)
+	if(!istype(M) || M.incapacitated(IGNORE_GRAB) || !Adjacent(M) || unchangeable)
 		return
 	ShowInventory(M)
 
@@ -138,7 +138,7 @@
 */
 /obj/structure/mannequin/Topic(href, href_list)
 	..()
-	if(tipped_over || !(iscarbon(usr)) || usr.incapacitated(ignore_grab = TRUE) || !Adjacent(usr))
+	if(tipped_over || !(iscarbon(usr)) || usr.incapacitated(IGNORE_GRAB) || !Adjacent(usr))
 		return
 	var/mob/living/carbon/user = usr
 	switch(href_list["command"])
@@ -304,7 +304,7 @@
 	if(isclothing(item_to_check))
 		var/obj/item/clothing/C = item_to_check
 		//Thank you DM Refrence website for telling me how to find out negative if in arguments.
-		if(!(gender in C.allowed_sex) || !("human" in C.allowed_race))
+		if(!(gender in C.allowed_sex) || !(SPEC_ID_HUMEN in C.allowed_race))
 			to_chat(user, "<span class='warning'>This clothing wont fit this mannequins frame.</span>")
 			return FALSE
 

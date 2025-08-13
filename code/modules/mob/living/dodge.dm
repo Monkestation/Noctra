@@ -7,7 +7,7 @@
  */
 /mob/living/proc/attempt_dodge(datum/intent/intenty, mob/living/user)
 	// Early return conditions specifically for dodging
-	if((pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE) || pulling == user || (world.time < last_dodge + dodgetime && !istype(rmb_intent, /datum/rmb_intent/riposte)) ||  has_status_effect(/datum/status_effect/debuff/riposted) || src.loc == user.loc || (intenty && !intenty.candodge) || !candodge)
+	if((pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE) || pulling || (world.time < last_dodge + dodgetime && !istype(rmb_intent, /datum/rmb_intent/riposte)) ||  has_status_effect(/datum/status_effect/debuff/riposted) || src.loc == user.loc || (intenty && !intenty.candodge) || !candodge)
 		return FALSE
 	last_dodge = world.time
 
@@ -16,11 +16,6 @@
 
 	// Find a valid dodge turf
 	var/turf/turfy = find_dodge_turf(dirry)
-
-	// Check if we can dodge
-	if(pulledby || !turfy)
-		to_chat(src, "<span class='boldwarning'>There's nowhere to dodge to!</span>")
-		return FALSE
 
 	if(do_dodge(user, turfy))
 		flash_fullscreen("blackflash2")
@@ -31,7 +26,7 @@
 					   addition = "(INTENT:[uppertext(user.used_intent.name)])")
 
 		if(src.client)
-			GLOB.vanderlin_round_stats[STATS_DODGES]++
+			record_round_statistic(STATS_DODGES)
 		return TRUE
 	return FALSE
 
@@ -46,44 +41,58 @@
 		return FALSE
 
 	if(!is_valid_dodge_turf(target_turf))
-		to_chat(src, "<span class='boldwarning'>There's nowhere to dodge to!</span>")
+		to_chat(src, span_boldwarning("There's nowhere to dodge to!"))
 		return FALSE
 
-	var/drained = 10
+	var/drained = 7
 	var/dodge_speed = floor(STASPD / 2)
 	var/dodge_score = calculate_dodge_score(user)
+
+	//------------Duel Wielding------------
+	var/attacker_dualwielding = user.dual_wielding_check()
 
 	if(istype(src, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = src
 		switch(H.worn_armor_class)
 			if(AC_LIGHT)
 				dodge_speed -= 10
-				drained += 5
+				drained += 3
 			if(AC_MEDIUM)
 				dodge_score *= 0.5
 				dodge_speed = floor(dodge_speed * 0.5)
-				drained += 10
+				drained += 7
 			if(AC_HEAVY)
 				dodge_score *= 0.2
 				dodge_speed = floor(dodge_speed * 0.25)
-				drained += 20
+				drained += 12
+
+
 
 		if((H.get_encumbrance() > 0.7) || H.legcuffed)
 			H.Knockdown(1)
 			return FALSE
 
-		if(!H.adjust_stamina(max(drained, 5)))
-			to_chat(src, "<span class='warning'>I'm too tired to dodge!</span>")
+		drained = max(drained, 5)
+
+		if(stamina + drained >= maximum_stamina)
+			to_chat(src, span_warning("I'm too tired to dodge!"))
+			return FALSE
+		if(!H.adjust_stamina(drained))
+			to_chat(src, span_warning("I'm too tired to dodge!"))
 			return FALSE
 
 	dodge_score = clamp(dodge_score, 0, 95)
 	var/dodgeroll = rand(1, 100)
+	var/second_dodgeroll = rand(1, 100)
 
 	if(client?.prefs.showrolls)
-		to_chat(src, "<span class='info'>Roll under [dodge_score] to dodge... [dodgeroll]</span>")
-
-	if(dodgeroll > dodge_score)
-		return FALSE
+		to_chat(src, span_info("Roll under [dodge_score] to dodge... [dodgeroll]"))
+		if(dodgeroll > dodge_score)
+			return FALSE
+		if(attacker_dualwielding)
+			to_chat(src, span_info("Twice! Roll under [dodge_score] to dodge... [second_dodgeroll]"))
+			if(second_dodgeroll > dodge_score)
+				return FALSE
 
 	try_dodge_to(user, target_turf, dodge_speed)
 
@@ -95,7 +104,7 @@
 		log_defense(src, user, "dodged", defending_item, attacking_item, "INTENT:[uppertext(user.used_intent.name)]")
 
 	if(client)
-		GLOB.vanderlin_round_stats[STATS_DODGES]++
+		record_round_statistic(STATS_DODGES)
 
 	return TRUE
 
@@ -106,6 +115,9 @@
  */
 /mob/living/proc/is_valid_dodge_turf(turf/target_turf)
 	if(!target_turf || target_turf.density)
+		return FALSE
+
+	if(isopenspace(target_turf))
 		return FALSE
 
 	for(var/atom/movable/AM in target_turf)
@@ -138,7 +150,7 @@
 	dodge_score *= encumbrance_to_dodge()
 
 	if(user)
-		dodge_score -= user.STASPD * 7.5
+		dodge_score -= user.STASPD * 9
 
 	if(attacking_item)
 		if(attacking_human?.mind)

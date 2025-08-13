@@ -3,17 +3,16 @@
 	tutorial = "Dwarfish rangers, much like their humen counterparts, \
 	live outside of society and explore the far corners of the creation. They \
 	protect dwarfish settlements from wild beasts and sell their notes to the cartographers."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list("Dwarf")
+	allowed_races = list(SPEC_ID_DWARF)
 	outfit = /datum/outfit/job/adventurer/dranger
 	min_pq = 0
 	category_tags = list(CTAG_ADVENTURER)
 
 /datum/outfit/job/adventurer/dranger/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/roguehood/uncolored
+	head = /obj/item/clothing/head/roguehood/colored/uncolored
 	pants = /obj/item/clothing/pants/trou/leather
-	shirt = /obj/item/clothing/shirt/undershirt/random
+	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	belt = /obj/item/storage/belt/leather
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
@@ -28,7 +27,7 @@
 		shoes = /obj/item/clothing/shoes/boots
 	if(prob(23))
 		shoes = /obj/item/clothing/shoes/boots/leather
-	cloak = /obj/item/clothing/cloak/raincloak/brown
+	cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE) // In line with basic combat classes
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)

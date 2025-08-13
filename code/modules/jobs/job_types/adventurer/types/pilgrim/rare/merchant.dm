@@ -2,17 +2,7 @@
 	name = "Travelling Merchant"
 	tutorial = "You are a travelling merchant from far away lands. \
 	You've picked up many wears on your various adventures, now it's time to peddle them to these locals."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Elf",
-		"Half-Elf",
-		"Dwarf",
-		"Tiefling",
-		"Dark Elf",
-		"Aasimar",
-		"Rakshari",
-	)
+	allowed_races = RACES_PLAYER_ALL
 	outfit = /datum/outfit/job/adventurer/merchant
 	category_tags = list(CTAG_PILGRIM)
 	maximum_possible_slots = 2
@@ -41,12 +31,12 @@
 	neck = /obj/item/storage/belt/pouch/coins/rich
 	ring = /obj/item/clothing/ring/silver
 	if(H.gender == FEMALE)
-		armor = /obj/item/clothing/shirt/dress/gen/green
+		armor = /obj/item/clothing/shirt/dress/gen/colored/green
 		head = /obj/item/clothing/head/hatblu
-		cloak = /obj/item/clothing/cloak/raincloak/purple
+		cloak = /obj/item/clothing/cloak/raincloak/colored/purple
 	if(H.gender == MALE)
-		pants = /obj/item/clothing/pants/tights/green
-		shirt = /obj/item/clothing/shirt/undershirt/green
+		pants = /obj/item/clothing/pants/tights/colored/green
+		shirt = /obj/item/clothing/shirt/undershirt/colored/green
 		cloak = /obj/item/clothing/cloak/half
 		head = /obj/item/clothing/head/fancyhat
 

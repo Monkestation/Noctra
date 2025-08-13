@@ -113,7 +113,7 @@
 		if(water_top_overlay)
 			QDEL_NULL(water_top_overlay)
 		make_unshiny()
-		var/mutable_appearance/dirty = mutable_appearance('icons/turf/floors.dmi', "dirt")
+		var/mutable_appearance/dirty = mutable_appearance('icons/turf/floors.dmi', "rock")
 		add_overlay(dirty)
 		for(var/obj/structure/waterwheel/rotator in contents)
 			rotator.set_rotational_direction_and_speed(null, 0)
@@ -125,7 +125,7 @@
 	icon_state = "together"
 	baseturfs = /turf/open/transparent/openspace
 
-/turf/open/water/river/creatable/handle_water()
+/turf/open/water/river/handle_water()
 	if(water_volume < 10)
 		dryup()
 	else if(water_volume)
@@ -193,7 +193,7 @@
 
 /turf/open/water/river/creatable/proc/try_modify_water(mob/user, obj/item/reagent_containers/glass/bucket/wooden/bucket)
 	if(user.used_intent.type == /datum/intent/splash)
-		if(bucket.reagents)
+		if(bucket.reagents?.total_volume)
 			var/datum/reagent/container_reagent = bucket.reagents.get_master_reagent()
 			var/water_count = bucket.reagents.get_reagent_amount(container_reagent.type)
 			user.visible_message("[user] starts to fill [src].", "You start to fill [src].")
@@ -390,35 +390,41 @@
 			return
 	. = ..()
 
-/turf/open/water/attack_right(mob/user)
-	if(water_volume < 10)
+/turf/open/water/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
+	if(water_volume < 10)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	var/list/wash = list('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg')
 	if(isliving(user))
 		var/mob/living/L = user
-		if(L.stat != CONSCIOUS)
-			return
-		var/list/wash = list('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg')
-		playsound(user, pick_n_take(wash), 100, FALSE)
-		var/obj/item/item2wash = user.get_active_held_item()
-		if(!item2wash)
-			user.visible_message("<span class='info'>[user] starts to wash in [src].</span>")
-			if(do_after(L, 3 SECONDS, src))
-				if(wash_in)
-					user.wash(CLEAN_WASH)
-				var/datum/reagents/reagents = new()
-				reagents.add_reagent(water_reagent, 4)
-				reagents.trans_to(L, reagents.total_volume, transfered_by = user, method = TOUCH)
-				if(!mapped)
-					adjust_originate_watervolume(-2)
-				playsound(user, pick(wash), 100, FALSE)
-		else
-			user.visible_message("<span class='info'>[user] starts to wash [item2wash] in [src].</span>")
-			if(do_after(L, 3 SECONDS, src))
-				if(wash_in)
-					item2wash.wash(CLEAN_WASH)
-				playsound(user, pick(wash), 100, FALSE)
+		user.visible_message("<span class='info'>[user] starts to wash in [src].</span>")
+		if(do_after(L, 3 SECONDS, src))
+			if(wash_in)
+				user.wash(CLEAN_WASH)
+			var/datum/reagents/reagents = new()
+			reagents.add_reagent(water_reagent, 4)
+			reagents.trans_to(L, reagents.total_volume, transfered_by = user, method = TOUCH)
+			if(!mapped)
+				adjust_originate_watervolume(-2)
+			playsound(user, pick(wash), 100, FALSE)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/turf/open/water/attackby_secondary(obj/item/item2wash, mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	..()
+	if(user.cmode)
+		return
+	var/list/wash = list('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg')
+	playsound(user, pick_n_take(wash), 100, FALSE)
+	user.visible_message("<span class='info'>[user] starts to wash [item2wash] in [src].</span>")
+	if(do_after(user, 3 SECONDS, src))
+		if(wash_in)
+			item2wash.wash(CLEAN_WASH)
+		playsound(user, pick(wash), 100, FALSE)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /turf/open/water/onbite(mob/user)
 	if(water_volume < 10)
@@ -684,6 +690,8 @@
 /turf/open/water/river/Entered(atom/movable/AM, atom/oldLoc)
 	. = ..()
 	if(!river_processes)
+		return
+	if(locate(/obj/structure/stairs) in src)
 		return
 	if(isliving(AM) || isitem(AM))
 		if(!river_processing)

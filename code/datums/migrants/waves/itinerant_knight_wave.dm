@@ -53,20 +53,20 @@
 	name = "Itinerant Squire"
 	greet_text = "You are the squire of an itinerant knight, they have taken you under their custody as you have shown great talents, if you keep it on, you might become a knight yourself."
 	outfit = /datum/outfit/job/itinerant_squire
-	allowed_races = list("Humen", "Dwarf","Elf", "Half-Elf", "Aasimar")
+	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 	allowed_ages = list(AGE_CHILD, AGE_ADULT)
 	grant_lit_torch = TRUE
 	advjob_examine = FALSE
 
 /datum/outfit/job/itinerant_squire/pre_equip(mob/living/carbon/human/H)
 	..()
-	shirt = /obj/item/clothing/shirt/dress/gen/black
+	shirt = /obj/item/clothing/shirt/dress/gen/colored/black
 	pants = /obj/item/clothing/pants/chainlegs/iron
 	shoes = /obj/item/clothing/shoes/boots
 	belt = /obj/item/storage/belt/leather
 	beltr = /obj/item/ammo_holder/quiver/arrows
 	armor = /obj/item/clothing/armor/plate/full
-	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/short
 	gloves = /obj/item/clothing/gloves/leather
 	wrists = /obj/item/clothing/wrists/bracers/leather
 	backr = /obj/item/storage/backpack/satchel

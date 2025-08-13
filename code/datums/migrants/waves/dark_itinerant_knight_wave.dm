@@ -4,7 +4,7 @@
 	outfit = /datum/outfit/job/dark_itinerant_knight
 	antag_datum = /datum/antagonist/zizocultist/zizo_knight
 	allowed_sexes = list(FEMALE)
-	allowed_races = list("Dark Elf")
+	allowed_races = list(SPEC_ID_DROW)
 	grant_lit_torch = TRUE
 
 /datum/outfit/job/dark_itinerant_knight/pre_equip(mob/living/carbon/human/H)
@@ -53,12 +53,12 @@
 	outfit = /datum/outfit/job/dark_itinerant_squire
 	antag_datum = /datum/antagonist/zizocultist/zizo_knight
 	allowed_sexes = list(FEMALE)
-	allowed_races = list("Dark Elf")
+	allowed_races = list(SPEC_ID_DROW, SPEC_ID_HALF_DROW)
 	grant_lit_torch = TRUE
 
 /datum/outfit/job/dark_itinerant_squire/pre_equip(mob/living/carbon/human/H)
 	..()
-	shirt = /obj/item/clothing/shirt/dress/gen/black
+	shirt = /obj/item/clothing/shirt/dress/gen/colored/black
 	pants = /obj/item/clothing/pants/chainlegs/iron
 	shoes = /obj/item/clothing/shoes/boots
 	belt = /obj/item/storage/belt/leather

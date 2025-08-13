@@ -6,20 +6,11 @@
 //	pixel_y = 10
 	base_state = "stonefire"
 	climbable = TRUE
-	pass_flags = LETPASSTHROW
+	pass_flags_self = LETPASSTHROW
 	cookonme = TRUE
 	dir = SOUTH
 	crossfire = TRUE
 	fueluse = 0
-
-/obj/machinery/light/fueled/firebowl/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSTABLE))
-		return 1
-	if(mover.throwing)
-		return 1
-	if(locate(/obj/structure/table) in get_turf(mover))
-		return 1
-	return !density
 
 /obj/machinery/light/fueled/firebowl/attack_hand(mob/user)
 	. = ..()
@@ -71,6 +62,12 @@
 /obj/machinery/light/fueled/firebowl/church
 	icon_state = "churchfire1"
 	base_state = "churchfire"
+
+/obj/machinery/light/fueled/firebowl/church/magic
+	name = "magical bonfire"
+	color = "#6ab2ee"
+	bulb_colour = "#6ab2ee"
+	max_integrity = 30
 
 /obj/machinery/light/fueled/firebowl/church/unholyfire
 	desc = "This fire burns yet it is cold..."
@@ -287,7 +284,6 @@
 	return ..()
 
 /obj/machinery/light/fueled/torchholder/OnCrafted(dirin, user)
-	dir = turn(dirin, 180)
 	if(dir == SOUTH)
 		pixel_y = 32
 	QDEL_NULL(torchy)
@@ -412,15 +408,12 @@
 	var/heat_time = 100
 	var/obj/item/attachment = null
 	var/obj/item/reagent_containers/food/snacks/food = null
-	var/datum/looping_sound/boilloop/boilloop
 	var/rawegg = FALSE
 
 /obj/machinery/light/fueled/hearth/Initialize()
 	. = ..()
-	boilloop = new(src, FALSE)
 
 /obj/machinery/light/fueled/hearth/Destroy()
-	QDEL_NULL(boilloop)
 	. = ..()
 
 /obj/machinery/light/fueled/hearth/attackby(obj/item/W, mob/living/user, params)
@@ -503,24 +496,8 @@
 				fueluse = max(fueluse - 10, 0)
 			if(fueluse == 0)
 				burn_out()
-		if(attachment)
-			if(istype(attachment, /obj/item/cooking/pan))
-				if(food)
-					var/obj/item/C = food.cooking(20, src)
-					if(C)
-						if(rawegg)
-							rawegg = FALSE
-						qdel(food)
-						food = C
-			else if(istype(attachment, /obj/item/reagent_containers/glass/bucket/pot))
-				if(attachment.reagents)
-					attachment.reagents.expose_temperature(400, 0.033)
-					if(attachment.reagents.chem_temp > 374)
-						boilloop.start()
-					else
-						boilloop.stop()
-			else
-				boilloop.stop()
+		if(attachment?.reagents)
+			attachment.reagents.expose_temperature(400, 0.04)
 		update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/light/fueled/hearth/onkick(mob/user)
@@ -585,21 +562,9 @@
 	climbable = TRUE
 	on = FALSE
 	fueluse = 30 MINUTES
-	pass_flags = LETPASSTHROW
+	pass_flags_self = LETPASSTHROW
 	bulb_colour = "#eea96a"
 	max_integrity = 60
-
-/obj/machinery/light/fueled/campfire/densefire/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSTABLE))
-		return 1
-	if(mover.throwing)
-		return 1
-	if(locate(/obj/structure/table) in get_turf(mover))
-		return 1
-	if(locate(/obj/machinery/light/fueled/firebowl) in get_turf(mover))
-		return 1
-	return !density
-
 
 /obj/machinery/light/fueled/campfire/pyre
 	name = "pyre"

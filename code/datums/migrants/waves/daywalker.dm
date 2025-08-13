@@ -2,7 +2,7 @@
 	name = "Daywalker"
 	greet_text = "Some knaves are always trying to wade upstream. You witnessed your entire village be consumed by a subservient vampiric horde - the local Priest grabbed you, and brought you to a remote Monastery; ever since then you've sworn revenge against the restless dead. The Templars showed you everything you needed to know. You walk in the day, so that the undead may only walk in the night."
 	outfit = /datum/outfit/job/daywalker
-	allowed_races = list("Humen")
+	allowed_races = list(SPEC_ID_HUMEN)
 	grant_lit_torch = TRUE
 
 /datum/outfit/job/daywalker/pre_equip(mob/living/carbon/human/H)
@@ -11,7 +11,7 @@
 	neck = /obj/item/clothing/neck/psycross/silver/astrata
 	gloves = /obj/item/clothing/gloves/fingerless/shadowgloves // Would give em Fingerless, but parrying with fists sounds funny as fuck
 	pants = /obj/item/clothing/pants/trou/shadowpants
-	shirt = /obj/item/clothing/shirt/tunic/black
+	shirt = /obj/item/clothing/shirt/tunic/colored/black
 	armor = /obj/item/clothing/armor/leather/vest/winterjacket
 	shoes = /obj/item/clothing/shoes/nobleboot
 	beltl = /obj/item/flashlight/flare/torch/lantern

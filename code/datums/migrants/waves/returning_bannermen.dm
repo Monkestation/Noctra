@@ -1,7 +1,6 @@
 /datum/migrant_role/sergeant_at_arms
 	name = "Serjeant-At-Arms"
 	greet_text = "You were apart of an expedition sent by the King of Vanderlin to Kingsfield, you and the mens under your command have returned upon fullfiling your task."
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 	grant_lit_torch = TRUE
 	is_foreigner = FALSE
@@ -12,7 +11,7 @@
 	head = /obj/item/clothing/head/helmet/leather
 	pants = /obj/item/clothing/pants/trou/leather
 	cloak = /obj/item/clothing/cloak/half/vet
-	shirt = /obj/item/clothing/shirt/undershirt/guardsecond
+	shirt = /obj/item/clothing/shirt/undershirt/colored/guardsecond
 	armor = /obj/item/clothing/armor/medium/scale
 	neck = /obj/item/clothing/neck/gorget
 	shoes = /obj/item/clothing/shoes/boots
@@ -65,7 +64,7 @@
 	pants = /obj/item/clothing/pants/trou/leather
 	armor = /obj/item/clothing/armor/leather/hide
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
-	shirt = /obj/item/clothing/shirt/shortshirt/merc
+	shirt = /obj/item/clothing/shirt/shortshirt/colored/merc
 	cloak = /obj/item/clothing/cloak/stabard/guard
 	shoes = /obj/item/clothing/shoes/boots
 	belt = /obj/item/storage/belt/leather
@@ -76,7 +75,7 @@
 	if(prob(30))
 		head = /obj/item/clothing/head/helmet/kettle
 	else
-		head = pick(/obj/item/clothing/head/roguehood/guard, /obj/item/clothing/head/roguehood/guardsecond)
+		head = pick(/obj/item/clothing/head/roguehood/colored/guard, /obj/item/clothing/head/roguehood/colored/guardsecond)
 
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
@@ -104,7 +103,7 @@
 	name = "Bannermen Crossbowman"
 	greet_text = "You were apart of an expedition sent by the King of Vanderlin to Kingsfield, you and your serjeant-at-arms have returned upon fullfiling your task."
 	outfit = /datum/outfit/job/crossbow_bannerman
-	allowed_races = list("Humen","Dwarf","Aasimar", "Half-Elf", "Elf")
+	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 	grant_lit_torch = TRUE
 	is_foreigner = FALSE
 
@@ -113,7 +112,7 @@
 	pants = /obj/item/clothing/pants/trou/leather
 	armor = /obj/item/clothing/armor/leather/hide
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
-	shirt = /obj/item/clothing/shirt/shortshirt/merc
+	shirt = /obj/item/clothing/shirt/shortshirt/colored/merc
 	cloak = /obj/item/clothing/cloak/stabard/guard
 	shoes = /obj/item/clothing/shoes/boots
 	belt = /obj/item/storage/belt/leather
@@ -125,7 +124,7 @@
 	if(prob(30))
 		head = /obj/item/clothing/head/helmet/kettle
 	else
-		head = pick(/obj/item/clothing/head/roguehood/guard, /obj/item/clothing/head/roguehood/guardsecond)
+		head = pick(/obj/item/clothing/head/roguehood/colored/guard, /obj/item/clothing/head/roguehood/colored/guardsecond)
 
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)

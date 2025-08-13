@@ -104,6 +104,13 @@
 	 */
 	var/list/chameleon_extras
 
+	/**
+	  * The sheaths this job should start with
+	  *
+	  * Format of this list is (typepath, typepath, typepath)
+	  */
+	var/list/scabbards = null
+
 /**
  * Called at the start of the equip proc
  *
@@ -195,6 +202,19 @@
 		if(r_hand)
 		//	H.put_in_hands(new r_hand(get_turf(H)),TRUE)
 			H.equip_to_slot_or_del(new r_hand(H),ITEM_SLOT_HANDS, TRUE)
+		if(scabbards)
+			var/list/copied_scabbards = scabbards.Copy()
+			for(var/obj/item/item as anything in H.get_equipped_items())
+				if(!length(copied_scabbards))
+					break
+				var/slot = H.get_slot_by_item(item)
+				for(var/obj/item/weapon/scabbard/scabbard_path as anything in copied_scabbards)
+					var/obj/item/weapon/scabbard/scabbard = new scabbard_path()
+					if(SEND_SIGNAL(scabbard, COMSIG_TRY_STORAGE_INSERT, item, null, TRUE, FALSE))
+						H.temporarilyRemoveItemFromInventory(item, TRUE)
+						H.equip_to_slot_or_del(scabbard, slot, TRUE)
+						copied_scabbards -= scabbard_path
+						break
 
 	if(!visualsOnly) // Items in pockets or backpack don't show up on mob's icon.
 		if(backpack_contents)
@@ -207,13 +227,15 @@
 					var/obj/item/item = H.get_item_by_slot(ITEM_SLOT_BACK_L)
 					if(!item)
 						item = H.get_item_by_slot(ITEM_SLOT_BACK_R)
-					if(!item || !SEND_SIGNAL(item, COMSIG_TRY_STORAGE_INSERT, new_item, null, TRUE, TRUE))
+					if(!item || !attempt_insert_with_flipping(item, new_item, null, TRUE, TRUE))
 						item = H.get_item_by_slot(ITEM_SLOT_BACK_R)
-						if(!item || !SEND_SIGNAL(item, COMSIG_TRY_STORAGE_INSERT, new_item, null, TRUE, TRUE))
+						if(!item || !attempt_insert_with_flipping(item, new_item, null, TRUE, TRUE))
 							item = H.get_item_by_slot(ITEM_SLOT_BELT)
-							if(!item || !SEND_SIGNAL(item, COMSIG_TRY_STORAGE_INSERT, new_item, null, TRUE, TRUE))
-								new_item.forceMove(get_turf(H))
-								message_admins("[type] had backpack_contents set but no room to store:[new_item]")
+							if(!item || !attempt_insert_with_flipping(item, new_item, null, TRUE, TRUE))
+								item = H.get_item_by_slot(ITEM_SLOT_NECK)
+								if(!item || !attempt_insert_with_flipping(item, new_item, null, TRUE, TRUE))
+									new_item.forceMove(get_turf(H))
+									message_admins("[type] had backpack_contents set but no room to store:[new_item]")
 
 
 	post_equip(H, visualsOnly)
@@ -223,6 +245,14 @@
 
 	H.update_body()
 	return TRUE
+
+/datum/outfit/proc/attempt_insert_with_flipping(obj/item/storage_item, obj/item/object_to_insert, mob/living/carbon/human/H, silent, force)
+	var/success = FALSE
+	success = SEND_SIGNAL(storage_item, COMSIG_TRY_STORAGE_INSERT, object_to_insert, H, silent, force)
+	if(!success)
+		object_to_insert.inventory_flip()
+		success = SEND_SIGNAL(storage_item, COMSIG_TRY_STORAGE_INSERT, object_to_insert, H, silent, force)
+	return success
 
 /client/proc/test_spawn_outfits()
 	for(var/path in subtypesof(/datum/outfit/job))

@@ -13,7 +13,6 @@
 	min_pq = -5
 	bypass_lastclass = TRUE
 
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_ages = list(AGE_CHILD)
 	allowed_races = RACES_PLAYER_ALL
 
@@ -38,8 +37,8 @@
 		H.change_stat(STATKEY_END, 1)
 		H.change_stat(STATKEY_STR, -1)
 		H.change_stat(STATKEY_CON, -1)
-	pants = /obj/item/clothing/pants/tights/random
-	shirt = /obj/item/clothing/shirt/shortshirt/random
+	pants = /obj/item/clothing/pants/tights/colored/random
+	shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 	shoes = /obj/item/clothing/shoes/shortboots
 	belt = /obj/item/storage/belt/leather
 	beltl = /obj/item/storage/belt/pouch/coins/poor

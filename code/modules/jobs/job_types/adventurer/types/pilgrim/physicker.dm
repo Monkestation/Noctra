@@ -4,7 +4,6 @@
 				residence as feldshers in, often end up becoming wandering physickers. \
 				Capable doctors nonetheless, they journey from place to place offering \
 				their services."
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_PLAYER_NONEXOTIC
 	outfit = /datum/outfit/job/adventurer/physicker
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
@@ -18,9 +17,9 @@
 	mask = /obj/item/clothing/face/phys
 	head = /obj/item/clothing/head/roguehood/phys
 	shoes = /obj/item/clothing/shoes/boots/leather
-	shirt = /obj/item/clothing/shirt/undershirt/black
+	shirt = /obj/item/clothing/shirt/undershirt/colored/black
 	backl = /obj/item/storage/backpack/satchel/surgbag/shit
-	pants = /obj/item/clothing/pants/tights/random
+	pants = /obj/item/clothing/pants/tights/colored/random
 	gloves = /obj/item/clothing/gloves/leather/phys
 	armor = /obj/item/clothing/shirt/robe/phys
 	neck = /obj/item/clothing/neck/phys

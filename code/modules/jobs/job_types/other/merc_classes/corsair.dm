@@ -1,8 +1,7 @@
 /datum/advclass/mercenary/corsair
 	name = "Corsair"
 	tutorial = "Banished from polite society, you once found kin with privateers, working adjacent to a royal navy. After the Red Flag battered itself in the wind one last time, your purse was still not satisfied... And yet he complained that his belly was not full."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list("Tiefling")
+	allowed_races = list(SPEC_ID_TIEFLING)
 	outfit = /datum/outfit/job/adventurer/corsair
 	category_tags = list(CTAG_MERCENARY)
 	cmode_music = 'sound/music/cmode/adventurer/CombatOutlander.ogg'
@@ -18,6 +17,7 @@
 	backr = /obj/item/fishingrod/fisher
 	beltl = /obj/item/weapon/sword/sabre/cutlass
 	beltr = /obj/item/weapon/knife/dagger
+	scabbards = list(/obj/item/weapon/scabbard/sword, /obj/item/weapon/scabbard/knife)
 	shoes = /obj/item/clothing/shoes/boots
 
 /datum/outfit/job/adventurer/corsair/pre_equip(mob/living/carbon/human/H)
@@ -39,5 +39,4 @@
 	shirt = pick(/obj/item/clothing/shirt/undershirt/sailor, /obj/item/clothing/shirt/undershirt/sailor/red)
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 	H.change_stat(STATKEY_END, 2)
-	H.change_stat(STATKEY_PER, -2) // We don't want them using ranged weapons, period.
 	H.change_stat(STATKEY_SPD, 3) // Hit-And-Run.

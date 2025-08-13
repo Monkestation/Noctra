@@ -28,8 +28,8 @@
 	H.adjust_skillrank(/datum/skill/labor/taming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/cooking, 6, TRUE)
 	belt = /obj/item/storage/belt/leather
-	pants = /obj/item/clothing/pants/tights/random
-	shirt = /obj/item/clothing/shirt/shortshirt/random
+	pants = /obj/item/clothing/pants/tights/colored/random
+	shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 	cloak = /obj/item/clothing/cloak/apron
 	head = /obj/item/clothing/head/cookhat/chef
 	shoes = /obj/item/clothing/shoes/shortboots
@@ -45,8 +45,8 @@
 	var/packcontents = pickweight(list("Honey" = 1, "Truffles" = 1, "Bacon" = 1)) // What is our special ingredient? Honey, truffles, or BACON?
 	switch(packcontents)
 		if("Honey")
-			backpack_contents = list(/obj/item/kitchen/rollingpin = 1, /obj/item/flint = 1, /obj/item/kitchen/spoon = 1, /obj/item/natural/cloth = 1, /obj/item/reagent_containers/peppermill = 1, /obj/item/reagent_containers/powder/flour = 2, /obj/item/reagent_containers/food/snacks/spiderhoney = 2, /obj/item/reagent_containers/powder/salt = 1, /obj/item/reagent_containers/food/snacks/butter = 1, /obj/item/reagent_containers/food/snacks/meat/salami = 1, /obj/item/reagent_containers/food/snacks/handpie = 1, /obj/item/book/yeoldecookingmanual = 1)
+			backpack_contents = list(/obj/item/kitchen/rollingpin = 1, /obj/item/flint = 1, /obj/item/kitchen/spoon = 1, /obj/item/natural/cloth = 1, /obj/item/reagent_containers/peppermill = 1, /obj/item/reagent_containers/powder/flour = 2, /obj/item/reagent_containers/food/snacks/spiderhoney = 2, /obj/item/reagent_containers/powder/salt = 1, /obj/item/reagent_containers/food/snacks/butter = 1, /obj/item/reagent_containers/food/snacks/meat/salami = 1, /obj/item/reagent_containers/food/snacks/handpie = 1, /obj/item/recipe_book/cooking = 1)
 		if("Truffles")
-			backpack_contents = list(/obj/item/kitchen/rollingpin = 1, /obj/item/flint = 1, /obj/item/kitchen/spoon = 1, /obj/item/natural/cloth = 1, /obj/item/reagent_containers/peppermill = 1, /obj/item/reagent_containers/powder/flour = 2, /obj/item/reagent_containers/food/snacks/truffles = 2, /obj/item/reagent_containers/powder/salt = 1, /obj/item/reagent_containers/food/snacks/butter = 1, /obj/item/reagent_containers/food/snacks/meat/salami = 1, /obj/item/reagent_containers/food/snacks/handpie = 1, /obj/item/book/yeoldecookingmanual = 1)
+			backpack_contents = list(/obj/item/kitchen/rollingpin = 1, /obj/item/flint = 1, /obj/item/kitchen/spoon = 1, /obj/item/natural/cloth = 1, /obj/item/reagent_containers/peppermill = 1, /obj/item/reagent_containers/powder/flour = 2, /obj/item/reagent_containers/food/snacks/truffles = 2, /obj/item/reagent_containers/powder/salt = 1, /obj/item/reagent_containers/food/snacks/butter = 1, /obj/item/reagent_containers/food/snacks/meat/salami = 1, /obj/item/reagent_containers/food/snacks/handpie = 1, /obj/item/recipe_book/cooking = 1)
 		if("Bacon")
-			backpack_contents = list(/obj/item/kitchen/rollingpin = 1, /obj/item/flint = 1, /obj/item/kitchen/spoon = 1, /obj/item/natural/cloth = 1, /obj/item/reagent_containers/peppermill = 1, /obj/item/reagent_containers/powder/flour = 2, /obj/item/reagent_containers/food/snacks/meat/fatty = 1, /obj/item/reagent_containers/powder/salt = 1, /obj/item/reagent_containers/food/snacks/butter = 1, /obj/item/reagent_containers/food/snacks/meat/salami = 1, /obj/item/reagent_containers/food/snacks/handpie = 1, /obj/item/book/yeoldecookingmanual = 1)
+			backpack_contents = list(/obj/item/kitchen/rollingpin = 1, /obj/item/flint = 1, /obj/item/kitchen/spoon = 1, /obj/item/natural/cloth = 1, /obj/item/reagent_containers/peppermill = 1, /obj/item/reagent_containers/powder/flour = 2, /obj/item/reagent_containers/food/snacks/meat/fatty = 1, /obj/item/reagent_containers/powder/salt = 1, /obj/item/reagent_containers/food/snacks/butter = 1, /obj/item/reagent_containers/food/snacks/meat/salami = 1, /obj/item/reagent_containers/food/snacks/handpie = 1, /obj/item/recipe_book/cooking = 1)

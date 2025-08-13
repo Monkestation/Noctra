@@ -10,12 +10,10 @@ SUBSYSTEM_DEF(treesetup)
 	return ..()
 
 /datum/controller/subsystem/treesetup/proc/InitializeTrees()
-	for(var/A in initialize_me)
-		var/obj/structure/flora/newtree/T = A
+	for(var/obj/structure/flora/newtree/T as anything in initialize_me)
 		T.build_branches()
 
-	for(var/A in initialize_me)
-		var/obj/structure/flora/newtree/T = A
+	for(var/obj/structure/flora/newtree/T as anything in initialize_me)
 		T.build_leafs()
 
 	initialize_me = list()

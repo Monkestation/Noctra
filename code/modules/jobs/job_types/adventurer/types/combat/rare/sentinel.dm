@@ -3,7 +3,6 @@
 /datum/advclass/combat/rare/sentinel
 	name = "Sentinel"
 	tutorial = "Your overseers have sent you to this distant land as a scout. Your trusted steed, longbow, and spear will allow you to overcome any challenges on the road ahead."
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_PLAYER_ELF_ALL
 	outfit = /datum/outfit/job/adventurer/sentinel
 	horse = /mob/living/simple_animal/hostile/retaliate/saigabuck/tame/saddled
@@ -42,13 +41,13 @@
 	else
 		pants = /obj/item/clothing/pants/tights
 		if(prob(50))
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/long
 	beltl = /obj/item/ammo_holder/quiver/arrows
 	shoes = /obj/item/clothing/shoes/ridingboots
 	gloves = /obj/item/clothing/gloves/angle
 	belt = /obj/item/storage/belt/leather
-	shirt = /obj/item/clothing/shirt/undershirt/random
+	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	armor = /obj/item/clothing/armor/chainmail/hauberk
 	backl = /obj/item/weapon/polearm/spear
 	head = /obj/item/clothing/head/helmet/leather

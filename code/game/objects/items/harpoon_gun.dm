@@ -25,7 +25,6 @@
 
 	icon = 'icons/obj/guns/harpoon.dmi'
 	icon_state = "harpoon"
-	twohands_required = TRUE
 
 	gripped_intents = list(/datum/intent/mace/smash/heavy, /datum/intent/mace/thrust) //its practically a mace at this size
 	possible_item_intents = list(/datum/intent/mace/strike)
@@ -59,7 +58,9 @@
 	harpoon_sound = new(src)
 	update_appearance(UPDATE_ICON_STATE)
 
+/obj/item/harpoon_gun/apply_components()
 	AddComponent(/datum/component/steam_storage, 300, 0)
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 
 /obj/item/harpoon_gun/Destroy()
 	leash_target = null
@@ -68,8 +69,7 @@
 	if(harpoon_sound)
 		QDEL_NULL(harpoon_sound)
 	if(zipline)
-		zipline.End(TRUE)
-		zipline = null
+		QDEL_NULL(zipline)
 	return ..()
 
 /obj/item/harpoon_gun/afterattack(atom/target, mob/living/user, proximity)
@@ -103,7 +103,7 @@
 	. |= TRUE
 
 	var/atom/bullet = fire_projectile(/obj/projectile/grapple_hook, attacked_atom, 'sound/zipline_fire.ogg')
-	zipline = user.Beam(bullet, icon_state = "chain", maxdistance = 9, time = INFINITY)
+	zipline = user.Beam(bullet, icon_state = "chain", max_distance = 9, time = INFINITY)
 	retracted_hook = FALSE
 	RegisterSignal(bullet, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_grapple_hit))
 	RegisterSignal(bullet, COMSIG_PARENT_PREQDELETED, PROC_REF(on_grapple_fail))
@@ -168,24 +168,26 @@
 		setup_leash(target, firer)
 		return
 
-	zipline = user.Beam(target, icon_state = "chain", maxdistance = 9, time = INFINITY)
+	zipline = user.Beam(target, icon_state = "chain", max_distance = 9, time = INFINITY)
 	RegisterSignal(zipline, COMSIG_PARENT_PREQDELETED, PROC_REF(on_zipline_break))
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(determine_distance))
 	RegisterSignal(user, COMSIG_MOVABLE_PRE_THROW, PROC_REF(apply_throw_traits))
 	stored_launch = target
 
-/obj/item/harpoon_gun/attack_right(mob/user)
+/obj/item/harpoon_gun/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(leashed)
 		user.visible_message(span_danger("[user] starts to retract [src]."), span_danger("You start to retract [src]."))
 		if(!do_after(user, 2.5 SECONDS, src))
-			return
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		QDEL_NULL(leash)
 		leashed = FALSE
 		leash_target = null
-	. = ..()
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-
-/obj/item/harpoon_gun/attack_self(mob/user)
+/obj/item/harpoon_gun/attack_self(mob/user, params)
 	. = ..()
 	if(leashed)
 		user.visible_message(span_danger("[user] starts to reel in [src]."), span_danger("You start to reel in [src]."))
@@ -223,7 +225,7 @@
 	var/atom/target_atom = arguements[1]
 	if(isnull(target_atom))
 		return
-	var/dir_to_turn = Get_Angle(source, target_atom)
+	var/dir_to_turn = get_angle(source, target_atom)
 	if(dir_to_turn > 175 && dir_to_turn < 190)
 		dir_to_turn = 0
 

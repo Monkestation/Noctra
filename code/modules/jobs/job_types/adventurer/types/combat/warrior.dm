@@ -2,7 +2,6 @@
 /datum/advclass/combat/sfighter
 	name = "Warrior"
 	tutorial = "Wandering sellswords, foolhardy gloryhounds, deserters... many and varied folk turn to the path of the warrior. Very few meet anything greater than the bottom of a tankard or the wrong end of a noose."
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_PLAYER_NONEXOTIC
 	outfit = /datum/outfit/job/adventurer/sfighter
 	category_tags = list(CTAG_ADVENTURER)
@@ -34,7 +33,7 @@
 	shoes = /obj/item/clothing/shoes/boots
 	gloves = /obj/item/clothing/gloves/leather
 	belt = /obj/item/storage/belt/leather
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	backl = /obj/item/storage/backpack/satchel
 	backr = /obj/item/weapon/shield/wood
 	beltr = /obj/item/storage/belt/pouch/coins/poor

@@ -126,26 +126,25 @@
 	var/list/key_list = list()
 	for(var/client/C in GLOB.clients)
 		if(C.mob)
-			SSdroning.kill_droning(C)
+			C.mob.cancel_looping_ambience()
 			C.mob.playsound_local(C.mob, 'sound/misc/roundend.ogg', 100, FALSE)
 		if(isliving(C.mob) && C.ckey)
 			key_list += C.ckey
-//	if(key_list.len)
-//		add_roundplayed(key_list)
+
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H.stat != DEAD)
 			if(H.get_triumphs() < 0)
 				H.adjust_triumphs(1)
+
 	add_roundplayed(key_list)
-//	SEND_SOUND(world, sound(pick('sound/misc/roundend1.ogg','sound/misc/roundend2.ogg')))
-//	SEND_SOUND(world, sound('sound/misc/roundend.ogg'))
+
+	update_god_rankings()
 
 	for(var/mob/M in GLOB.mob_list)
 		M.do_game_over()
 		M.playsound_local(M, 'sound/music/credits.ogg', 100, FALSE)
 
-	for(var/I in round_end_events)
-		var/datum/callback/cb = I
+	for(var/datum/callback/cb as anything in round_end_events)
 		cb.InvokeAsync()
 	LAZYCLEARLIST(round_end_events)
 
@@ -157,9 +156,13 @@
 
 	gamemode_report()
 
-	to_chat(world, personal_objectives_report())
+	sleep(8 SECONDS)
 
-	sleep(10 SECONDS)
+	var/datum/triumph_buy/communal/psydon_retirement_fund/fund = locate() in SStriumphs.triumph_buy_datums
+	if(fund && SStriumphs.communal_pools[fund.type] > 0)
+		fund.on_activate()
+
+	sleep(6 SECONDS)
 
 	players_report()
 
@@ -282,8 +285,7 @@
 		if(last.show_in_roundend)
 			last.roundend_report_footer()
 
-
-	return
+	to_chat(world, personal_objectives_report())
 
 /datum/controller/subsystem/ticker/proc/standard_reboot()
 	if(ready_for_reboot)
@@ -455,7 +457,7 @@
 	else if(failed_chosen > 0)
 		if(showed_any_champions)
 			parts += "<br>"
-		parts += "<div style='text-align: center;'>[failed_chosen] god's chosen [failed_chosen == 1 ? "has" : "have"] failed to become [failed_chosen == 1 ? "a champion" : "champions"].</div>"
+		parts += "<div style='text-align: center;'>[failed_chosen] of gods' chosen [failed_chosen == 1 ? "has" : "have"] failed to become [failed_chosen == 1 ? "a champion" : "champions"].</div>"
 
 	parts += "</div>"
 	return parts.Join("<br>")
@@ -534,7 +536,7 @@
 	name = "Show roundend report"
 	button_icon_state = "round_end"
 
-/datum/action/report/Trigger()
+/datum/action/report/Trigger(trigger_flags)
 	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
 		SSticker.show_roundend_report(owner.client, FALSE)
 
@@ -557,13 +559,12 @@
 	var/usede = get_display_ckey(ply.key)
 	var/text = "<b>[usede]</b> was <b>[ply.name]</b>[jobtext] and"
 	if(ply.current)
-		if(ply.current.real_name != ply.name)
+		if(ply.current.stat == DEAD)
 			text += span_redtext(" died.")
 		else
-			if(ply.current.stat == DEAD)
-				text += span_redtext(" died.")
-			else
-				text += span_greentext(" survived.")
+			text += span_greentext(" survived.")
+	else
+		text += span_redtext(" died.")
 	return text
 
 /proc/printplayerlist(list/datum/mind/players,fleecheck)

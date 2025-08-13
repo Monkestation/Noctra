@@ -1,10 +1,7 @@
 /datum/advclass/combat/bladesinger
 	name = "Bladesinger"
 	tutorial = "Your vigil over the elven cities has long since ended. Though dutiful, the inevitable happened and now you hope these lands have use for your talents."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Elf"
-	)
+	allowed_races = list(SPEC_ID_ELF)
 	maximum_possible_slots = 1
 	pickprob = 15
 	outfit = /datum/outfit/job/adventurer/bladesinger
@@ -32,15 +29,16 @@
 		H.underwear = "Femleotard"
 		H.underwear_color = CLOTHING_SOOT_BLACK
 		H.update_body()
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	backr = /obj/item/weapon/sword/long/greatsword/elfgsword
 	beltl = /obj/item/storage/belt/pouch/coins/mid
 	shoes = /obj/item/clothing/shoes/boots/rare/elfplate/welfplate
 	gloves = /obj/item/clothing/gloves/rare/elfplate/welfplate
 	belt = /obj/item/storage/belt/leather
-	shirt = /obj/item/clothing/shirt/undershirt/black
+	shirt = /obj/item/clothing/shirt/undershirt/colored/black
 	armor = /obj/item/clothing/armor/rare/elfplate/welfplate
 	backl = /obj/item/storage/backpack/satchel
 	head = /obj/item/clothing/head/rare/elfplate/welfplate
 	neck = /obj/item/clothing/neck/chaincoif
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)

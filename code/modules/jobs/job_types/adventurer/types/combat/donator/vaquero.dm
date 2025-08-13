@@ -2,8 +2,7 @@
 /datum/advclass/combat/vaquero
 	name = "Vaquero"
 	tutorial = "You have been taming beasts of burden all your life, and riding since you were old enough to walk. Perhaps these lands will have use for your skills?"
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list("Tiefling")
+	allowed_races = list(SPEC_ID_TIEFLING)
 	outfit = /datum/outfit/job/adventurer/vaquero
 	horse = /mob/living/simple_animal/hostile/retaliate/saigabuck/tame/saddled
 	cmode_music = 'sound/music/cmode/adventurer/combat_vaquero.ogg'
@@ -36,11 +35,11 @@
 	H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
 	head = /obj/item/clothing/head/bardhat
 	shoes = /obj/item/clothing/shoes/boots
-	pants = /obj/item/clothing/pants/tights/random
+	pants = /obj/item/clothing/pants/tights/colored/random
 	shirt = /obj/item/clothing/shirt/undershirt
 	belt = /obj/item/storage/belt/leather
 	armor = /obj/item/clothing/armor/leather/vest
-	cloak = /obj/item/clothing/cloak/half/red
+	cloak = /obj/item/clothing/cloak/half/colored/red
 	backl = /obj/item/storage/backpack/satchel
 	beltl = /obj/item/weapon/sword/rapier
 	beltr = /obj/item/weapon/whip

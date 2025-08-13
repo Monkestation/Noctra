@@ -18,7 +18,7 @@
 /datum/status_effect/misfortune
 	id = "family_misfortune"
 	duration = -1
-	alert_type = /atom/movable/screen/alert/status_effect/misfortune
+	alert_type = /atom/movable/screen/alert/status_effect/family_curse/mmisfortune
 
 /datum/status_effect/misfortune/on_apply()
 	. = ..()
@@ -28,7 +28,7 @@
 	. = ..()
 	owner.remove_stat_modifier("[type]")
 
-/atom/movable/screen/alert/status_effect/misfortune
+/atom/movable/screen/alert/status_effect/family_curse/mmisfortune
 	name = "Family Misfortune"
 	desc = "Your family's curse brings ill fortune to your steps."
 	icon_state = "debuff"
@@ -41,12 +41,12 @@
 		"Your ancestors' misdeeds continue to haunt you."
 	)
 
-/atom/movable/screen/alert/status_effect/misfortune/New()
+/atom/movable/screen/alert/status_effect/family_curse/mmisfortune/New()
 	..()
 	if(desc == initial(desc))
 		desc = "[initial(desc)] [pick(misfortune_tips)]"
 
-/atom/movable/screen/alert/status_effect/misfortune/Click(location, control, params)
+/atom/movable/screen/alert/status_effect/family_curse/Click(location, control, params)
 	. = ..()
 	if(!ishuman(usr))
 		return
@@ -54,15 +54,14 @@
 	if(user.family_datum)
 		var/curse_info = ""
 		for(var/datum/family_curse/curse in user.family_datum.family_curses)
-			if(curse.curse_type == /datum/family_curse/misfortune)
-				curse_info += "<b>[curse.name]</b><br>"
-				curse_info += "[curse.description]<br>"
-				if(curse.cursed_by)
-					var/mob/curser = curse.cursed_by.resolve()
-					if(curser)
-						curse_info += "[curse.blessing ? "Blessed" : "Cursed"] by: [curser.real_name]<br>"
-				curse_info += "Severity: [curse.severity]/3<br>"
-				curse_info += "Time cursed: [DisplayTimeText(world.time - curse.when_cursed)] ago<br>"
+			curse_info += "<b>[curse.name]</b><br>"
+			curse_info += "[curse.description]<br>"
+			if(curse.cursed_by)
+				var/mob/curser = curse.cursed_by.resolve()
+				if(curser)
+					curse_info += "[curse.blessing ? "Blessed" : "Cursed"] by: [curser.real_name]<br>"
+			curse_info += "Severity: [curse.severity]/3<br>"
+			curse_info += "Time cursed: [DisplayTimeText(world.time - curse.when_cursed)] ago<br>"
 
 		if(curse_info)
 			var/datum/browser/popup = new(usr, "curse_info", "Family Modifier Details", 300, 200)
@@ -240,6 +239,7 @@
 		return FALSE
 
 	spouses += spouse
+	person.spouse_mob = spouse.person
 
 	// Only add reciprocal relationship if not already doing so
 	if(!skip_reciprocal && !(src in spouse.spouses))
@@ -593,7 +593,7 @@
 	if(!relationship)
 		return null
 
-	var/p_He = p_they(TRUE)
+	var/p_He = lookee.p_they(TRUE)
 	var/relationship_text = "[p_He] is my [relationship]"
 
 	if(lookee_member.adoption_status && (relationship in list("son", "daughter", "child")))
@@ -687,7 +687,7 @@
 	// Build mix string
 	if(istype(dad_species, /datum/species/human/northern) || istype(mom_species, /datum/species/human/northern))
 		mix_text += "human+"
-	if(istype(dad_species, /datum/species/elf) || istype(mom_species, /datum/species/elf))
+	if(istype(dad_species, /datum/species/elf/snow) || istype(mom_species, /datum/species/elf/snow))
 		mix_text += "elf+"
 	if(istype(dad_species, /datum/species/elf/dark) || istype(mom_species, /datum/species/elf/dark))
 		mix_text += "darkelf+"
@@ -750,7 +750,7 @@
 
 /mob/living/carbon/human/verb/ReturnFamilyList()
 	set name = "List Family"
-	set category = "Memory"
+	set category = "IC"
 	if(spouse_mob)
 		to_chat(src, span_info("[spouse_mob.real_name] the [spouse_mob.dna.species.name] [spouse_mob.mind?.assigned_role.get_informed_title(spouse_mob)] is your lover."))
 	if(family_datum)
@@ -759,8 +759,8 @@
 		to_chat(src, "You're not part of any notable family.")
 
 /mob/living/carbon/human/verb/ToggleFamilyUI()
-	set name = "Toggle Family UI"
-	set category = "Memory"
+	set name = "Family UI"
+	set category = "IC"
 	ShowFamilyUI(FALSE)
 
 /mob/living/carbon/human/proc/ShowFamilyUI(silent)
@@ -777,7 +777,7 @@
 		to_chat(src, "FamilyUI Toggled [family_UI ? "On" : "Off"]")
 
 /mob/living/carbon/human/proc/ApplySpouseUI(toggle_true = FALSE)
-	if(!spouse_mob)
+	if(!spouse_mob || !client)
 		return
 	if(!spouse_indicator)
 		spouse_indicator = new('icons/relations.dmi', loc = spouse_mob, icon_state = "related")

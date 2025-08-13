@@ -2,8 +2,8 @@
 	race = /datum/species/halforc
 
 /datum/species/halforc
-	id = "halforc"
 	name = "Half-Orc"
+	id = SPEC_ID_HALF_ORC
 	desc = "The bastards of Graggar. \
 	\n\n\
 	Half-Orcs are the offspring of orcs and another species, half-orcs, \
@@ -25,6 +25,10 @@
 
 	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, STUBBLE, OLDGREY)
 	inherent_traits = list(TRAIT_NOMOBSWAP, TRAIT_NOSTINK)
+
+	allowed_voicetypes_m = VOICE_TYPES_MASCANDRO
+
+	allowed_voicetypes_f = VOICE_TYPES_MASCANDRO
 
 	// horcs are STINKY
 	components_to_add = list(/datum/component/rot/stinky_person)

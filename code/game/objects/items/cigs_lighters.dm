@@ -291,11 +291,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		handle_reagents()
 */
 
-/obj/item/clothing/face/cigarette/attack_self(mob/user)
+/obj/item/clothing/face/cigarette/attack_self(mob/user, params)
 	if(lit)
 		user.visible_message("<span class='notice'>[user] calmly drops and treads on \the [src], putting it out instantly.</span>")
 		new type_butt(user.loc)
-		new /obj/item/ash(user.loc)
+		new /obj/item/fertilizer/ash(user.loc)
 		qdel(src)
 	. = ..()
 
@@ -354,7 +354,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	starts_lit = TRUE
 
 /obj/item/clothing/face/cigarette/rollie/cannabis
-	list_reagents = list(/datum/reagent/drug/space_drugs = 60)
+	list_reagents = list(/datum/reagent/drug/space_drugs = 30)
 
 /obj/item/cigbutt
 	name = "roach"
@@ -486,7 +486,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		else
 			return ..()
 
-/obj/item/clothing/face/cigarette/pipe/attack_self(mob/user)
+/obj/item/clothing/face/cigarette/pipe/attack_self(mob/user, params)
 	var/turf/location = get_turf(user)
 	if(lit)
 		user.visible_message("<span class='notice'>[user] puts out [src].</span>", "<span class='notice'>I put out [src].</span>")
@@ -498,7 +498,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!lit && smoketime > 0)
 		smoketime = 0
 		to_chat(user, "<span class='notice'>I empty [src] onto [location].</span>")
-		new /obj/item/ash(location)
+		new /obj/item/fertilizer/ash(location)
 		packeditem = 0
 		reagents.clear_reagents()
 //		name = "empty [initial(name)]"
@@ -575,7 +575,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/lighter/extinguish()
 	set_lit(FALSE)
 
-/obj/item/lighter/attack_self(mob/living/user)
+/obj/item/lighter/attack_self(mob/living/user, params)
 	if(user.is_holding(src))
 		if(!lit)
 			set_lit(TRUE)

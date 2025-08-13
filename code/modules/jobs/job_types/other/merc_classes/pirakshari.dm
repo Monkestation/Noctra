@@ -1,10 +1,7 @@
 /datum/advclass/mercenary/desert_pirate
 	name = "Desert Rider"
 	tutorial = "A pirate of rakshari origin, hailing from the wast dune-sea of Zaladin. Well trained riders and expirienced archers, these nomads live the life of marauders and raiders, taking what belongs to weaker settlements and caravans."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Rakshari"
-	)
+	allowed_races = list(SPEC_ID_RAKSHARI)
 	outfit = /datum/outfit/job/mercenary/desert_pirate
 	maximum_possible_slots = 3
 	min_pq = 0
@@ -34,16 +31,17 @@
 
 	pants = /obj/item/clothing/pants/trou/leather
 	beltr = /obj/item/weapon/sword/sabre
-	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
+	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/short
 	beltl= /obj/item/ammo_holder/quiver/arrows
 	shoes = /obj/item/clothing/shoes/ridingboots
 	gloves = /obj/item/clothing/gloves/angle
 	wrists = /obj/item/rope/chain //Seems fitting for slavers
 	belt = /obj/item/storage/belt/leather/mercenary/shalal
-	shirt = /obj/item/clothing/shirt/undershirt/uncolored
+	shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 	armor = /obj/item/clothing/armor/leather/splint
 	backr = /obj/item/storage/backpack/satchel
-	head = /obj/item/clothing/neck/keffiyeh/uncolored
+	head = /obj/item/clothing/neck/keffiyeh/colored/uncolored
+	scabbards = list(/obj/item/weapon/scabbard/sword)
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/poor, /obj/item/weapon/knife/dagger)
 
 	H.merctype = 1 //Desert Rider chain, 0 for Desert Rider Medal

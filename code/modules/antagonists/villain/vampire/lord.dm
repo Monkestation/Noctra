@@ -2,7 +2,6 @@
 	name = "Vampire Lord"
 	antag_hud_type = ANTAG_HUD_VAMPIRE
 	antag_hud_name = "vamplord"
-	autojoin_team = TRUE
 	confess_lines = list(
 		"I AM ANCIENT!",
 		"I AM THE LAND!",
@@ -10,52 +9,15 @@
 	)
 
 	var/ascended = FALSE
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/bat/batform //attached to the datum itself to avoid cloning memes, and other duplicates
-	var/obj/effect/proc_holder/spell/targeted/shapeshift/gaseousform/gas
-	var/obj/effect/proc_holder/spell/targeted/mansion_portal/portal
-
-/datum/antagonist/vampire/lord/apply_innate_effects(mob/living/mob_override)
-	. = ..()
-	var/mob/living/M = mob_override || owner.current
-	ADD_TRAIT(M, TRAIT_HEAVYARMOR, "[type]")
-
-/datum/antagonist/vampire/lord/remove_innate_effects(mob/living/mob_override)
-	. = ..()
-	var/mob/living/M = mob_override || owner.current
-	REMOVE_TRAIT(M, TRAIT_HEAVYARMOR, "[type]")
 
 /datum/antagonist/vampire/lord/on_gain()
 	var/mob/living/carbon/vampire = owner.current
 	remove_job()
 	owner.current?.roll_mob_stats()
-	owner.purge_combat_knowledge()
+	owner.current?.purge_combat_knowledge()
 	. = ..()
-	portal = new()
-	owner.current.AddSpell(portal)
 	addtimer(CALLBACK(owner.current, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup), "[name]"), 5 SECONDS)
 	vampire.grant_undead_eyes()
-
-/datum/antagonist/vampire/lord/after_gain()
-	owner.current.verbs |= /mob/living/carbon/human/proc/demand_submission
-	owner.current.verbs |= /mob/living/carbon/human/proc/vamp_regenerate
-	owner.current.verbs |= /mob/living/carbon/human/proc/punish_spawn
-
-
-/datum/antagonist/vampire/lord/on_removal()
-	if(!isnull(batform))
-		owner.current.RemoveSpell(batform)
-		QDEL_NULL(batform)
-
-	if(!isnull(portal))
-		owner.current.RemoveSpell(portal)
-		QDEL_NULL(portal)
-
-	owner.current.verbs -= /mob/living/carbon/human/proc/demand_submission
-	owner.current.verbs |= /mob/living/carbon/human/proc/vamp_regenerate
-	owner.current.verbs -= /mob/living/carbon/human/proc/punish_spawn
-
-
-	. = ..()
 
 /datum/antagonist/vampire/lord/greet()
 	to_chat(owner.current, span_userdanger("I am ancient. I am the Land. And I am now awoken to trespassers upon my domain."))
@@ -74,34 +36,11 @@
 		owner.i_know_person(MF)
 		owner.person_knows_me(MF)
 
-
 	var/mob/living/carbon/human/H = owner.current
 	H.equipOutfit(/datum/outfit/job/vamplord)
 	H.set_patron(/datum/patron/godless)
 
 	return TRUE
-
-/datum/antagonist/vampire/lord/on_life(mob/user)
-	if(ascended)
-		return
-	vitae = team.vitae_pool.current
-	. = ..()
-
-/datum/antagonist/vampire/lord/exposed_to_sunlight()
-	var/mob/living/carbon/human/H = owner.current
-	to_chat(H, span_warning("ASTRATA spurns me! I must get out of Her rays!")) // VLord is more punished for daylight excursions.
-	var/turf/N = H.loc
-	if(N.can_see_sky())
-		if(N.get_lumcount() > 0.15)
-			H.fire_act(3)
-			adjust_vitae(-500)
-
-/datum/antagonist/vampire/lord/adjust_vitae(change, tribute)
-	team.vitae_pool.update_pool(change)
-
-/datum/antagonist/vampire/lord/handle_vitae()
-	. = ..()
-	vitae = team.vitae_pool.current
 
 /datum/antagonist/vampire/lord/move_to_spawnpoint()
 	owner.current.forceMove(pick(GLOB.vlord_starts))
@@ -117,7 +56,7 @@
 	H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 5, TRUE)
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	shirt = /obj/item/clothing/shirt/vampire
 	belt = /obj/item/storage/belt/leather/plaquegold
 	head  = /obj/item/clothing/head/vampire

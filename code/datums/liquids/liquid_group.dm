@@ -980,7 +980,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 	if(!source_turf.atmos_adjacent_turfs[new_turf])
 		return
 
-	if(istransparentturf(new_turf))
+	if(isopenspace(new_turf))
 		var/turf/Z_turf_below = GET_TURF_BELOW(new_turf)
 		if(!Z_turf_below)
 			return
@@ -1055,8 +1055,7 @@ GLOBAL_VAR_INIT(liquid_debug_colors, FALSE)
 		return list()
 
 	var/list/returned =  list()
-	for(var/tur in members)
-		var/turf/open/member = tur
+	for(var/turf/open/member as anything in members)
 		returned |= member
 
 	current_temperature_queue = returned

@@ -26,9 +26,9 @@
 				if(do_after(user, 5 SECONDS, src))
 					set_facial_hair_style(/datum/sprite_accessory/hair/facial/none)
 					update_body()
-					GLOB.vanderlin_round_stats[STATS_BEARDS_SHAVED]++
+					record_round_statistic(STATS_BEARDS_SHAVED)
 					if(dna?.species)
-						if(dna.species.id == "dwarf")
+						if(dna.species.id == SPEC_ID_DWARF)
 							var/mob/living/carbon/V = src
 							V.add_stress(/datum/stressevent/dwarfshaved)
 				else
@@ -54,7 +54,6 @@
 
 	if(!CONFIG_GET(flag/disable_human_mood))
 		AddComponent(/datum/component/mood)
-	AddComponent(/datum/component/personal_crafting)
 	AddElement(/datum/element/footstep, footstep_type, 1, -6)
 	GLOB.human_list += src
 	if(ai_controller && flee_in_pain)
@@ -70,8 +69,8 @@
 	var/obj/item/bodypart/affecting
 	var/dam = levels * rand(10,50)
 	V.add_stress(/datum/stressevent/felldown)
-	GLOB.vanderlin_round_stats[STATS_MOAT_FALLERS]-- // If you get your ankles broken you fall. This makes sure only those that DIDN'T get damage get counted.
-	GLOB.vanderlin_round_stats[STATS_ANKLES_BROKEN]++
+	record_round_statistic(STATS_MOAT_FALLERS, -1) // If you get your ankles broken you fall. This makes sure only those that DIDN'T get damage get counted.
+	record_round_statistic(STATS_ANKLES_BROKEN)
 	var/chat_message
 	switch(rand(1,4))
 		if(1)
@@ -115,10 +114,9 @@
 	if(!client)
 		return
 	if(mind)
-		var/datum/antagonist/vampire/VD = mind.has_antag_datum(/datum/antagonist/vampire)
-		if(VD)
+		if(clan)
 			if(statpanel("Stats"))
-				stat("Vitae:",VD.vitae)
+				stat("Vitae:",bloodpool)
 	return
 
 /mob/living/carbon/human/show_inv(mob/user)
@@ -565,14 +563,14 @@
 			if(l_grab.grabbed == target)
 				backnotshoulder = TRUE
 
-	if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
+	if(can_be_firemanned(target) && !incapacitated(IGNORE_GRAB))
 		if(backnotshoulder)
-			visible_message("<span class='notice'>[src] starts lifting [target] onto their back..</span>")
+			visible_message("<span class='notice'>[src] starts lifting [target] onto their back...</span>")
 		else
-			visible_message("<span class='notice'>[src] starts lifting [target] onto their shoulder..</span>")
+			visible_message("<span class='notice'>[src] starts lifting [target] onto their shoulder...</span>")
 		if(do_after(src, carrydelay, target))
 			//Second check to make sure they're still valid to be carried
-			if(can_be_firemanned(target) && !incapacitated(FALSE, TRUE))
+			if(can_be_firemanned(target) && !incapacitated(IGNORE_GRAB))
 				buckle_mob(target, TRUE, TRUE, 90, 0, 0)
 				return
 	to_chat(src, "<span class='warning'>I fail to carry [target].</span>")
@@ -582,7 +580,7 @@
 		visible_message("<span class='notice'>[target] starts to climb onto [src]...</span>")
 		if(do_after(target, 1.5 SECONDS, src))
 			if(can_piggyback(target))
-				if(target.incapacitated(FALSE, TRUE) || incapacitated(FALSE, TRUE))
+				if(target.incapacitated(IGNORE_GRAB) || incapacitated(IGNORE_GRAB))
 					to_chat(target, "<span class='warning'>I can't piggyback ride [src].</span>")
 					return
 				buckle_mob(target, TRUE, TRUE, FALSE, 0, 0)
@@ -718,7 +716,7 @@
 	has_stubble = target.has_stubble
 	headshot_link = target.headshot_link
 	flavortext = target.flavortext
-	vitae_pool = target.vitae_pool
+	bloodpool = target.bloodpool
 
 	var/obj/item/bodypart/head/target_head = target.get_bodypart(BODY_ZONE_HEAD)
 	if(!isnull(target_head))
@@ -795,3 +793,15 @@
 		bloody_hands = 0
 		update_inv_gloves()
 		. = TRUE
+
+/mob/living/carbon/human/dual_wielding_check()
+	if(!HAS_TRAIT(src, TRAIT_DUALWIELDER))
+		return FALSE
+
+	var/main_hand = get_active_held_item()
+	var/off_hand = get_inactive_held_item()
+
+	if(istype(main_hand, off_hand) || (isweapon(main_hand) && isweapon(off_hand)))
+		return TRUE
+
+	return FALSE

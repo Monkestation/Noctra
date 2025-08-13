@@ -88,7 +88,7 @@
 
 	wbalance = EASY_TO_DODGE
 	wlength = WLENGTH_SHORT
-	smeltresult = /obj/item/ash //is a wooden log and a stone hammered in the top
+	smeltresult = /obj/item/fertilizer/ash //is a wooden log and a stone hammered in the top
 	melting_material = null
 	sellprice = 10
 
@@ -195,7 +195,10 @@
 	wdefense = MEDIOCHRE_PARRY
 	minstr = 6
 	sellprice = 60
-	is_silver = TRUE
+
+/obj/item/weapon/axe/psydon/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 /obj/item/weapon/axe/psydon/getonmobprop(tag)
 	. = ..()

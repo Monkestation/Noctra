@@ -72,6 +72,9 @@ SUBSYSTEM_DEF(outdoor_effects)
 			GLOB.SUNLIGHT_QUEUE_WORK += T
 
 /datum/controller/subsystem/outdoor_effects/Initialize(timeofday)
+	#ifdef FORCE_RANDOM_WORLD_GEN
+	return ..()
+	#endif
 	if(!initialized)
 		turf_weather_affectable_z_levels = SSmapping.levels_by_trait(ZTRAIT_WEATHER_STUFF)
 		turf_weather_affectable_z_levels -= SSmapping.levels_by_trait(ZTRAIT_IGNORE_WEATHER_TRAIT)

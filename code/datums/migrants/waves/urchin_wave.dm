@@ -3,7 +3,6 @@
 	greet_text = "Without you, your friends would be dead in a ditch. You're the boss, that's why you've got a nice hat. \
 	Preform stick-ups, lurk in the alleys, and make sure your siblings don't invoke the ire of the Matron. She doesn't \
 	deserve the headache you give her."
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_ages = list(AGE_CHILD)
 	grant_lit_torch = TRUE
 	is_foreigner = FALSE
@@ -13,10 +12,10 @@
 /datum/outfit/job/urchinbrain/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/fancyhat
-	shirt = /obj/item/clothing/shirt/undershirt/vagrant
+	shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 	neck = /obj/item/storage/belt/pouch/coins/poor
 	armor = /obj/item/clothing/shirt/rags
-	pants = /obj/item/clothing/pants/tights/vagrant
+	pants = /obj/item/clothing/pants/tights/colored/vagrant
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	belt = /obj/item/storage/belt/leather
 	beltr = /obj/item/weapon/knife/dagger
@@ -49,9 +48,9 @@
 /datum/outfit/job/urchinbrawn/pre_equip(mob/living/carbon/human/H)
 	..()
 	neck = /obj/item/storage/belt/pouch/coins/poor
-	shirt = /obj/item/clothing/shirt/undershirt/vagrant
+	shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 	armor = /obj/item/clothing/shirt/rags
-	pants = /obj/item/clothing/pants/tights/vagrant
+	pants = /obj/item/clothing/pants/tights/colored/vagrant
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	belt = /obj/item/storage/belt/leather
 	beltr = /obj/item/weapon/mace/cudgel

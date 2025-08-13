@@ -1,6 +1,5 @@
 /datum/advclass/combat/monk
 	name = "Monk"
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_PLAYER_NONHERETICAL
 	allowed_patrons = ALL_TEMPLE_PATRONS
 	tutorial = "A traveling monk of the Ten, unmatched in the unarmed arts, with an unwavering devotion to their patron God's Justice."
@@ -17,10 +16,10 @@
 
 /datum/outfit/job/adventurer/monk/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/roguehood/brown
+	head = /obj/item/clothing/head/roguehood/colored/brown
 	shoes = /obj/item/clothing/shoes/shortboots
-	cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
-	armor = /obj/item/clothing/shirt/robe/plain
+	cloak = /obj/item/clothing/cloak/raincloak/furcloak/colored/brown
+	armor = /obj/item/clothing/shirt/robe/colored/plain
 	wrists = /obj/item/clothing/wrists/bracers/leather
 	belt = /obj/item/storage/belt/leather/rope
 	beltr = /obj/item/storage/belt/pouch/coins/poor

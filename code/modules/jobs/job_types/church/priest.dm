@@ -17,14 +17,13 @@
 	selection_color = "#c2a45d"
 	cmode_music = 'sound/music/cmode/church/CombatAstrata.ogg'
 
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 
 	outfit = /datum/outfit/job/priest
 	spells = list(
-		/obj/effect/proc_holder/spell/self/convertrole/templar,
-		/obj/effect/proc_holder/spell/self/convertrole/monk,
-		/obj/effect/proc_holder/spell/self/convertrole/churchling,
+		/datum/action/cooldown/spell/undirected/list_target/convert_role/templar,
+		/datum/action/cooldown/spell/undirected/list_target/convert_role/acolyte,
+		/datum/action/cooldown/spell/undirected/list_target/convert_role/churchling,
 	)
 
 /datum/outfit/job/priest/pre_equip(mob/living/carbon/human/H)
@@ -37,7 +36,7 @@
 	neck = /obj/item/clothing/neck/psycross/silver/astrata
 	head = /obj/item/clothing/head/priestmask
 	shirt = /obj/item/clothing/shirt/undershirt/priest
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	shoes = /obj/item/clothing/shoes/shortboots
 	beltl = /obj/item/storage/keyring/priest
 	belt = /obj/item/storage/belt/leather/rope
@@ -162,7 +161,7 @@
 		if(inputty in GLOB.excommunicated_players)
 			GLOB.excommunicated_players -= inputty
 			priority_announce("[real_name] has forgiven [inputty]. The Ten hear their prayers once more!", title = "Hail the Ten!", sound = 'sound/misc/bell.ogg')
-			for(var/mob/living/carbon/human/H in GLOB.player_list)
+			for(var/mob/living/carbon/human/H in GLOB.human_list)
 				if(H.real_name == inputty)
 					H.cleric?.recommunicate()
 			return
@@ -170,19 +169,15 @@
 			to_chat(src, span_warning("I cannot excommunicate anyone during the schism!"))
 			return FALSE
 
-		var/found = FALSE
-		for(var/mob/living/carbon/human/H in GLOB.player_list)
-			if(H.advjob == "Faceless One")
-				to_chat(src, span_danger("I wasn't able to do that!"))
-				return FALSE
+		for(var/mob/living/carbon/human/H in GLOB.human_list)
 			if(H.real_name == inputty)
-				found = TRUE
+				if(H.advjob == "Faceless One")
+					to_chat(src, span_danger("I wasn't able to do that!"))
+					return FALSE
 				H.cleric?.excommunicate()
-		if(!found)
-			return FALSE
-
-		GLOB.excommunicated_players += inputty
-		priority_announce("[real_name] has excommunicated [inputty]! The Ten have turned away from them!", title = "SHAME", sound = 'sound/misc/excomm.ogg')
+				GLOB.excommunicated_players += inputty
+				priority_announce("[real_name] has excommunicated [inputty]! The Ten have turned away from them!", title = "SHAME", sound = 'sound/misc/excomm.ogg')
+				break
 
 /mob/living/carbon/human/proc/churchcurse()
 	set name = "Curse"
@@ -204,18 +199,16 @@
 		if(length(GLOB.tennite_schisms))
 			to_chat(src, span_warning("I cannot curse anyone during the schism!"))
 			return FALSE
-		var/found = FALSE
 		for(var/mob/living/carbon/human/H in GLOB.player_list)
-			if(H.advjob == "Faceless One")
-				to_chat(src, span_danger("I wasn't able to do that!"))
-				return FALSE
 			if(H.real_name == inputty)
-				found = TRUE
+				if(H.advjob == "Faceless One")
+					to_chat(src, span_danger("I wasn't able to do that!"))
+					return FALSE
 				H.add_stress(/datum/stressevent/psycurse)
-		if(!found)
-			return FALSE
-		GLOB.heretical_players += inputty
-		priority_announce("[real_name] has put Xylix's curse of woe on [inputty] for offending the church!", title = "SHAME", sound = 'sound/misc/excomm.ogg')
+				GLOB.heretical_players += inputty
+				priority_announce("[real_name] has put Xylix's curse of woe on [inputty] for offending the church!", title = "SHAME", sound = 'sound/misc/excomm.ogg')
+				break
+
 
 /mob/living/carbon/human/proc/churchannouncement()
 	set name = "Announcement"
@@ -229,69 +222,3 @@
 			return FALSE
 		priority_announce("[inputty]", title = "The [get_role_title()] Speaks", sound = 'sound/misc/bell.ogg')
 		src.log_talk("[TIMETOTEXT4LOGS] [inputty]", LOG_SAY, tag="Priest announcement")
-
-/obj/effect/proc_holder/spell/self/convertrole/templar
-	name = "Recruit Templar"
-	new_role = "Templar"
-	overlay_state = "recruit_templar"
-	recruitment_faction = "Church"
-	recruitment_message = "Serve the Ten, %RECRUIT!"
-	accept_message = "FOR THE TEN!"
-	refuse_message = "I refuse."
-
-/obj/effect/proc_holder/spell/self/convertrole/templar/convert(mob/living/carbon/human/recruit, mob/living/carbon/human/recruiter)
-	. = ..()
-	if(!.)
-		return
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(recruit, recruit.patron)
-	C.grant_spells_templar(recruit)
-	recruit.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
-
-/obj/effect/proc_holder/spell/self/convertrole/monk
-	name = "Recruit Acolyte"
-	new_role = "Acolyte"
-	overlay_state = "recruit_acolyte"
-	recruitment_faction = "Church"
-	recruitment_message = "Serve the Ten, %RECRUIT!"
-	accept_message = "FOR THE TEN!"
-	refuse_message = "I refuse."
-
-/obj/effect/proc_holder/spell/self/convertrole/monk/convert(mob/living/carbon/human/recruit, mob/living/carbon/human/recruiter)
-	. = ..()
-	if(!.)
-		return
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(recruit, recruit.patron)
-	C.grant_spells(recruit)
-	recruit.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
-
-/obj/effect/proc_holder/spell/self/convertrole/churchling
-	name = "Recruit Churchling"
-	new_role = "Churchling"
-	overlay_state = "recruit_acolyte"
-	recruitment_faction = "Church"
-	recruitment_message = "Serve the Ten, %RECRUIT!"
-	accept_message = "FOR THE TEN!"
-	refuse_message = "I refuse."
-
-/obj/effect/proc_holder/spell/self/convertrole/churchling/can_convert(mob/living/carbon/human/recruit)
-	//wtf
-	if(QDELETED(recruit))
-		return FALSE
-	//need a mind
-	if(!recruit.mind)
-		return FALSE
-	//only orphans who aren't apprentices
-	if(istype(recruit.mind.assigned_role, /datum/job/orphan) && !recruit.is_apprentice())
-		return FALSE
-	//need to see their damn face
-	if(!recruit.get_face_name(null))
-		return FALSE
-	return TRUE
-
-/obj/effect/proc_holder/spell/self/convertrole/churchling/convert(mob/living/carbon/human/recruit, mob/living/carbon/human/recruiter)
-	. = ..()
-	if(!.)
-		return
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(recruit, recruit.patron)
-	C.grant_spells_churchling(recruit)
-	recruit.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)

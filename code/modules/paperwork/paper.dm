@@ -202,7 +202,7 @@
 	set hidden = 1
 	set src in usr
 
-	if(usr.incapacitated(ignore_grab = TRUE) || !usr.is_literate())
+	if(usr.incapacitated(IGNORE_GRAB) || !usr.is_literate())
 		return
 	var/n_name = stripped_input(usr, "What would you like to label the paper?", "Paper Labelling", null, MAX_NAME_LEN)
 	if((loc == usr && usr.stat == CONSCIOUS))
@@ -217,7 +217,7 @@
 /obj/item/paper/proc/reset_spamflag()
 	spam_flag = FALSE
 
-/obj/item/paper/attack_self(mob/user)
+/obj/item/paper/attack_self(mob/user, params)
 	if(mailer)
 		user.visible_message("<span class='notice'>[user] opens the letter from [mailer].</span>")
 		cached_mailer = mailer

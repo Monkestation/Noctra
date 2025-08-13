@@ -24,28 +24,31 @@
 /datum/surgery_step/infuse_lux/validate_target(mob/user, mob/living/target, target_zone, datum/intent/intent)
 	. = ..()
 	if(target.stat < DEAD)
-		to_chat(user, "They're not dead!")
+		to_chat(user, span_notice("They're not dead!"))
+		return FALSE
+	if(target.mob_biotypes & MOB_UNDEAD)
+		to_chat(user, span_notice("You cannot infuse life into the undead! The rot must be cured first."))
 		return FALSE
 
 /datum/surgery_step/infuse_lux/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
-	display_results(user, target, span_notice("I begin to revive [target]..."),
+	display_results(user, target,
+		span_notice("I begin to infuse [target]'s heart with lux."),
 		span_notice("[user] begins to work lux into [target]'s heart."),
-		span_notice("[user] begins to work lux into [target]'s heart."))
+		span_notice("[user] begins to something into [target]'s innards..."),
+	)
 	return TRUE
 
 /datum/surgery_step/infuse_lux/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
-	var/revive_pq = 0.1
-	if(target.mob_biotypes & MOB_UNDEAD)
-		display_results(user, target, span_notice("You cannot infuse life into the undead! The rot must be cured first."),
-		"[user] works the lux into [target]'s innards.",
-		"[user] works the lux into [target]'s innards.")
-		return FALSE
-	display_results(user, target, span_notice("You succeed in restarting [target]'s hearth with the infusion of lux."),
-		"[user] works the lux into [target]'s innards.",
-		"[user] works the lux into [target]'s innards.")
 	if(!target.revive(full_heal = FALSE))
 		to_chat(user, span_warning("Nothing happens."))
 		return FALSE
+	display_results(user, target,
+		span_notice("You succeed in restarting [target]'s heart with the infusion of lux."),
+		span_notice("[user] works lux into [target]'s heart."),
+		span_notice("[user] works something into [target]'s innards..."),
+	)
+	target.blood_volume += BLOOD_VOLUME_SURVIVE
+	target.reagents.add_reagent(/datum/reagent/medicine/atropine, 3)
 	var/mob/living/carbon/spirit/underworld_spirit = target.get_spirit()
 	if(underworld_spirit)
 		var/mob/dead/observer/ghost = underworld_spirit.ghostize()
@@ -53,16 +56,12 @@
 		ghost.mind.transfer_to(target, TRUE)
 	target.grab_ghost(force = TRUE) // even suicides
 	target.emote("breathgasp")
-	target.reagents.add_reagent(/datum/reagent/medicine/atropine, 2)
 	target.update_body()
 	target.visible_message(span_notice("[target] is dragged back from Necra's hold!"), span_green("I awake from the void."))
 	qdel(tool)
-	if(target.mind)
-		if(revive_pq && !HAS_TRAIT(target, TRAIT_IWASREVIVED) && user?.ckey)
-			adjust_playerquality(revive_pq, user.ckey)
-			ADD_TRAIT(target, TRAIT_IWASREVIVED, "[type]")
-	target.remove_status_effect(/datum/status_effect/buff/lux_drained)
-	GLOB.vanderlin_round_stats[STATS_LUX_REVIVALS]++
+	target.remove_status_effect(/datum/status_effect/debuff/lux_drained)
+	target.remove_status_effect(/datum/status_effect/debuff/flaw_lux_taken)
+	record_round_statistic(STATS_LUX_REVIVALS)
 	return TRUE
 
 /datum/surgery_step/infuse_lux/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent, success_prob)

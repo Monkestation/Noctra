@@ -13,7 +13,17 @@
 	min_pq = -10
 	bypass_lastclass = TRUE
 
-	allowed_races = RACES_PLAYER_GUARD
+	allowed_races = list(\
+		SPEC_ID_HUMEN,\
+		SPEC_ID_ELF,\
+		SPEC_ID_HALF_ELF,\
+		SPEC_ID_DWARF,\
+		SPEC_ID_DROW,\
+		SPEC_ID_HALF_DROW,\
+		SPEC_ID_TIEFLING,\
+		SPEC_ID_AASIMAR,\
+		SPEC_ID_HARPY,\
+	)
 
 	outfit = /datum/outfit/job/innkeep
 	give_bank_account = 60
@@ -32,8 +42,8 @@
 	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/mathematics, 2, TRUE)
 	if(H.gender == MALE)
-		pants = /obj/item/clothing/pants/tights/random
-		shirt = /obj/item/clothing/shirt/shortshirt/random
+		pants = /obj/item/clothing/pants/tights/colored/random
+		shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 		shoes = /obj/item/clothing/shoes/shortboots
 		belt = /obj/item/storage/belt/leather
 		beltl = /obj/item/storage/belt/pouch/coins/mid
@@ -51,4 +61,5 @@
 		beltr = /obj/item/reagent_containers/glass/bottle/beer/blackgoat
 		H.change_stat(STATKEY_END, 1)
 		H.change_stat(STATKEY_CON, 1)
-	backpack_contents = list(/obj/item/recipe_book/cooking)
+	backpack_contents = list(/obj/item/recipe_book/cooking, /obj/item/bottle_kit)
+	ADD_TRAIT(H, TRAIT_BOOZE_SLIDER, TRAIT_GENERIC)

@@ -2,7 +2,7 @@
 	abstract_type = /datum/repeatable_crafting_recipe/alchemy
 	skillcraft = /datum/skill/craft/alchemy
 	craftdiff = 0
-	category = "Misc"
+	category = "Alchemy"
 
 /datum/repeatable_crafting_recipe/alchemy/essence_connector
 	name = "Essence Connector"
@@ -64,3 +64,4 @@
 	starting_atom = /obj/item/weapon/knife
 	subtypes_allowed = TRUE // so you can use any subtype of knife
 	output_amount = 3
+

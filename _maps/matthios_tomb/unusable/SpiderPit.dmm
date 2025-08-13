@@ -59,7 +59,7 @@
 /obj/effect/decal/remains/human,
 /obj/effect/decal/cleanable/dirt/cobweb,
 /obj/item/restraints/legcuffs/beartrap/armed/camouflage,
-/obj/item/clothing/cloak/raincloak/furcloak/black{
+/obj/item/clothing/cloak/raincloak/furcloak/colored/black{
 	pixel_x = 14
 	},
 /turf/open/floor/naturalstone,
@@ -131,7 +131,7 @@
 /turf/open/floor/naturalstone,
 /area/rogue/under/tomb/cave)
 "R" = (
-/obj/item/clothing/shirt/dress/gen/black,
+/obj/item/clothing/shirt/dress/gen/colored/black,
 /obj/item/clothing/cloak/apron/waist{
 	pixel_x = 14;
 	pixel_y = -8

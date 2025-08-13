@@ -35,15 +35,18 @@
 	if(lock)
 		. += span_info("It is [locked() ? "locked" : "unlocked"].")
 
-/obj/structure/pillory/attack_right(mob/living/user)
+/obj/structure/pillory/attack_hand_secondary(mob/living/user, params)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(!length(buckled_mobs))
 		to_chat(user, span_warning("What's the point of latching it with nobody inside?"))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(user in buckled_mobs)
 		to_chat(user, span_warning("I can't reach the latch!"))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	togglelatch(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/pillory/pre_lock_interact(mob/user)
 	if(user in buckled_mobs)
@@ -62,7 +65,7 @@
 	latched = !latched
 	user.visible_message( \
 		span_warning("[user] [latched ? "latches" : "unlatches"] \the [src]."), \
-		span_notice("I [latched ? "latch" : "unlatch"] \the [src]"))
+		span_notice("I [latched ? "latch" : "unlatch"] \the [src]."))
 	playsound(get_turf(src), 'sound/foley/lock.ogg', 100)
 
 /obj/structure/pillory/buckle_mob(mob/living/M, force = FALSE, check_loc = TRUE)
@@ -102,8 +105,8 @@
 			if (istype(S))
 				H.update_body_parts_head_only()
 				density = FALSE
-				switch(H.dna.species.name)
-					if ("Dwarf","Goblin")
+				switch(H.dna.species.id)
+					if (SPEC_ID_DWARF, SPEC_ID_GOBLIN)
 						H.set_mob_offsets("bed_buckle", _x = 0, _y = PILLORY_HEAD_OFFSET)
 				icon_state = "[base_icon]-over"
 			else

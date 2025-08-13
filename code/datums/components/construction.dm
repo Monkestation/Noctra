@@ -4,7 +4,6 @@
 #define ITEM_DELETE "delete"
 #define ITEM_MOVE_INSIDE "move_inside"
 
-
 /datum/component/construction
 	var/list/steps
 	var/result
@@ -16,7 +15,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(examine))
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY,PROC_REF(action))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY,PROC_REF(action))
 	update_parent(index)
 
 /datum/component/construction/proc/examine(datum/source, mob/user, list/examine_list)
@@ -147,3 +146,8 @@
 
 /datum/component/construction/unordered/custom_action(obj/item/I, mob/living/user, typepath)
 	return TRUE
+
+#undef FORWARD
+#undef BACKWARD
+#undef ITEM_DELETE
+#undef ITEM_MOVE_INSIDE

@@ -1,8 +1,13 @@
 /mob/living/carbon/Life()
 	set invisibility = 0
 
-	if(grab_fatigue > 0 && !pulling)
-		grab_fatigue = max(0, grab_fatigue - 0.5)
+	if(grab_fatigue > 0)
+		if(!pulling)
+			// Exponential decay mostly
+			grab_fatigue -= max(grab_fatigue * 0.15, 0.5)
+		else
+			grab_fatigue -= 0.5
+		grab_fatigue = max(0, grab_fatigue)
 
 	if(notransform)
 		return
@@ -173,8 +178,10 @@
 			adjustOxyLoss(5)
 	if(isopenturf(loc))
 		var/turf/open/T = loc
-		if(reagents&& T.pollution)
+		if(reagents && T.pollution)
 			T.pollution.breathe_act(src)
+			if(HAS_TRAIT(src, TRAIT_NOSTINK))
+				return
 			if(next_smell <= world.time)
 				next_smell = world.time + 30 SECONDS
 				T.pollution.smell_act(src)
@@ -197,10 +204,10 @@
 	if(!is_laying && W.water_level < 2)
 		return
 	if(is_laying && !(HAS_TRAIT(src, TRAIT_WATER_BREATHING) || HAS_TRAIT(src, TRAIT_NOBREATH)))
-		var/drown_damage = has_world_trait(/datum/world_trait/abyssor_rage) ? 10 : 5
+		var/drown_damage = has_world_trait(/datum/world_trait/abyssor_rage) ? (is_ascendant(ABYSSOR) ? 15 : 10) : 5
 		adjustOxyLoss(drown_damage)
 		if(stat == DEAD && client)
-			GLOB.vanderlin_round_stats[STATS_PEOPLE_DROWNED]++
+			record_round_statistic(STATS_PEOPLE_DROWNED)
 			return
 		emote("drown")
 		react_volume = 5
@@ -220,8 +227,7 @@
 /mob/living/carbon/proc/get_complex_pain()
 	var/total_pain = 0
 
-	for(var/I in bodyparts)
-		var/obj/item/bodypart/BP = I
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		if(BP.status == BODYPART_ROBOTIC)
 			continue
 
@@ -395,8 +401,7 @@
 	return "[intensity]"
 
 /mob/living/carbon/proc/handle_lingering_pain()
-	for(var/I in bodyparts)
-		var/obj/item/bodypart/BP = I
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		if(BP.status == BODYPART_ROBOTIC)
 			continue
 
@@ -563,12 +568,10 @@
 
 /mob/living/carbon/proc/handle_organs()
 	if(stat != DEAD)
-		for(var/V in internal_organs)
-			var/obj/item/organ/O = V
+		for(var/obj/item/organ/O as anything in internal_organs)
 			O.on_life()
 	else
-		for(var/V in internal_organs)
-			var/obj/item/organ/O = V
+		for(var/obj/item/organ/O as anything in internal_organs)
 			O.on_death() //Needed so organs decay while inside the body.
 
 /mob/living/carbon/handle_embedded_objects()
@@ -604,20 +607,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 81-90: Extremely high alcohol content - light brain damage, passing out
 91-100: Dangerously toxic - swift death
 */
-#define BALLMER_POINTS 5
-GLOBAL_LIST_INIT(ballmer_good_msg, list("Hey guys, what if we rolled out a bluespace wiring system so mice can't destroy the powergrid anymore?",
-										"Hear me out here. What if, and this is just a theory, we made R&D controllable from our PDAs?",
-										"I'm thinking we should roll out a git repository for our research under the AGPLv3 license so that we can share it among the other stations freely.",
-										"I dunno about you guys, but IDs and PDAs being separate is clunky as fuck. Maybe we should merge them into a chip in our arms? That way they can't be stolen easily.",
-										"Why the fuck aren't we just making every pair of shoes into galoshes? We have the technology."))
-GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put a webserver that's automatically turned on with default admin passwords into every PDA?",
-												"So like, you know how we separate our codebase from the master copy that runs on our consumer boxes? What if we merged the two and undid the separation between codebase and server?",
-												"Dude, radical idea: H.O.N.K mechs but with no bananium required.",
-												"Best idea ever: Disposal pipes instead of hallways.",
-												"We should store bank records in a webscale datastore, like /dev/null.",
-												"You ever wonder if /dev/null supports sharding?",
-												"Do you know who ate all the donuts?",
-												"What if we use a language that was written on a napkin and created over 1 weekend for all of our servers?"))
 
 //this updates all special effects: stun, sleeping, knockdown, druggy, stuttering, etc..
 /mob/living/carbon/handle_status_effects()
@@ -625,39 +614,13 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 	var/restingpwr = 1 + 4 * resting
 
+	// These should all be real status effects :)))))))))
+
 	//Dizziness
 	if(dizziness)
-		var/client/C = client
-		var/pixel_x_diff = 0
-		var/pixel_y_diff = 0
-		var/temp
-		var/saved_dizz = dizziness
-		if(C)
-			var/oldsrc = src
-			var/amplitude = dizziness*(sin(dizziness * world.time) + 1) // This shit is annoying at high strength
-			src = null
-			spawn(0)
-				if(C)
-					temp = amplitude * sin(saved_dizz * world.time)
-					pixel_x_diff += temp
-					C.pixel_x += temp
-					temp = amplitude * cos(saved_dizz * world.time)
-					pixel_y_diff += temp
-					C.pixel_y += temp
-					sleep(3)
-					if(C)
-						temp = amplitude * sin(saved_dizz * world.time)
-						pixel_x_diff += temp
-						C.pixel_x += temp
-						temp = amplitude * cos(saved_dizz * world.time)
-						pixel_y_diff += temp
-						C.pixel_y += temp
-					sleep(3)
-					if(C)
-						C.pixel_x -= pixel_x_diff
-						C.pixel_y -= pixel_y_diff
-			src = oldsrc
 		dizziness = max(dizziness - restingpwr, 0)
+		if(client)
+			handle_dizziness()
 
 	if(drowsyness)
 		drowsyness = max(drowsyness - restingpwr, 0)
@@ -737,6 +700,51 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 
 		if(drunkenness >= 101)
 			adjustToxLoss(5) //Let's be honest you shouldn't be alive by now
+
+/mob/living/carbon/proc/handle_dizziness()
+	// How strong the dizziness effect is on us.
+	// If we're resting, the effect is 5x as strong, but also decays 5x fast.
+	// Meaning effectively, 1 tick is actually dizziness_strength ticks of duration
+	var/dizziness_strength = resting ? 5 : 1
+
+	// How much time will be left, in seconds, next tick
+	var/next_amount = max((dizziness - (dizziness_strength * 0.1)), 0)
+
+	// Now we can do the actual dizzy effects.
+	// Don't bother animating if they're clientless.
+	if(!client)
+		return
+
+	// Want to be able to offset things by the time the animation should be "playing" at
+	var/time = world.time
+	var/delay = 0
+	var/pixel_x_diff = 0
+	var/pixel_y_diff = 0
+
+	// This shit is annoying at high strengthvar/pixel_x_diff = 0
+	var/list/view_range_list = getviewsize(client.view)
+	var/view_range = view_range_list[1]
+	var/amplitude = dizziness * (sin(dizziness * (time)) + 1)
+	var/x_diff = clamp(amplitude * sin(dizziness * time), -view_range, view_range)
+	var/y_diff = clamp(amplitude * cos(dizziness * time), -view_range, view_range)
+	pixel_x_diff += x_diff
+	pixel_y_diff += y_diff
+	// Brief explanation. We're basically snapping between different pixel_x/ys instantly, with delays between
+	// Doing this with relative changes. This way we don't override any existing pixel_x/y values
+	// We use EASE_OUT here for similar reasons, we want to act at the end of the delay, not at its start
+	// Relative animations are weird, so we do actually need this
+	animate(client, pixel_x = x_diff, pixel_y = y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
+	delay += 0.3 SECONDS // This counts as a 0.3 second wait, so we need to shift the sine wave by that much
+
+	x_diff = amplitude * sin(next_amount * (time + delay))
+	y_diff = amplitude * cos(next_amount * (time + delay))
+	pixel_x_diff += x_diff
+	pixel_y_diff += y_diff
+	animate(pixel_x = x_diff, pixel_y = y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
+
+	// Now we reset back to our old pixel_x/y, since these animates are relative
+	animate(pixel_x = -pixel_x_diff, pixel_y = -pixel_y_diff, 3, easing = JUMP_EASING | EASE_OUT, flags = ANIMATION_RELATIVE)
+
 
 //used in human and monkey handle_environment()
 /mob/living/carbon/proc/natural_bodytemperature_stabilization()

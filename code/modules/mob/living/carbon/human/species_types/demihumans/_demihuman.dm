@@ -11,7 +11,7 @@
 
 /datum/species/demihuman
 	name = "Hollow-Kin"
-	id = "demihuman"
+	id = SPEC_ID_HOLLOWKIN
 	desc = "Hollowkin are short lived, widely diverse, and have an insatiable hatred for dark elves. \
 	This hate stems from their long standing political neighbor and rival, \
 	the Zizonic dark-elven kingdoms of Subterra. \
@@ -35,6 +35,7 @@
 	\n\n\
 	THIS IS A DISCRIMINATED SPECIES. EXPECT A MORE DIFFICULT EXPERIENCE. PLAY AT YOUR OWN RISK."
 
+	allowed_pronouns = PRONOUNS_LIST
 	skin_tone_wording = "Ancestry"
 	default_color = "FFFFFF"
 	species_traits = list(EYECOLOR, HAIR ,FACEHAIR, LIPS, STUBBLE, OLDGREY)
@@ -173,10 +174,15 @@
 	RegisterSignal(C, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	C.grant_language(/datum/language/common)
 
+/datum/species/demihuman/after_creation(mob/living/carbon/C)
+	. = ..()
+	C.grant_language(/datum/language/beast)
+	to_chat(C, "<span class='info'>I can speak Beastish with ,b before my speech.</span>")
+
 /datum/species/demihuman/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_SAY)
-	C.remove_language(/datum/language/common)
+	C.remove_language(/datum/language/beast)
 
 /datum/species/demihuman/get_skin_list()
 	return sortList(list(

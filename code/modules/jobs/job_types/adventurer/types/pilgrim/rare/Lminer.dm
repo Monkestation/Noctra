@@ -4,8 +4,7 @@
 	name = "Master Miner"
 	tutorial = "Hardy dwarves who dedicated their entire life to a singular purpose: \
 	the acquisition of ore, precious stones, and anything deep below the mines."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list("Dwarf")
+	allowed_races = list(SPEC_ID_DWARF)
 	outfit = /datum/outfit/job/adventurer/minermaster
 	maximum_possible_slots = 1
 	pickprob = 15
@@ -18,7 +17,7 @@
 	head = /obj/item/clothing/head/helmet/leather/minershelm
 	pants = /obj/item/clothing/pants/trou
 	armor = /obj/item/clothing/armor/gambeson/light/striped
-	shirt = /obj/item/clothing/shirt/undershirt/random
+	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	shoes = /obj/item/clothing/shoes/boots/leather
 	belt = /obj/item/storage/belt/leather
 	neck = /obj/item/storage/belt/pouch/coins/mid

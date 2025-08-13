@@ -121,7 +121,7 @@
 	name = "generic weapons"
 	loot_table = list(
 		list(
-			/obj/item/weapon/mace/copperbludgeon = 15,
+			/obj/item/weapon/mace/bludgeon/copper = 15,
 			/obj/item/weapon/axe/copper = 15,
 			/obj/item/weapon/knife/copper = 15,
 			/obj/item/weapon/sword/long/rider/copper = 15,
@@ -136,7 +136,7 @@
 			/obj/item/weapon/flail/militia = 10,
 			/obj/item/weapon/sword/short = 10,
 			/obj/item/weapon/sword/long/greatsword/zwei = 10,
-			/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve = 10,
+			/obj/item/gun/ballistic/revolver/grenadelauncher/bow/short = 10,
 			/obj/item/gun/ballistic/revolver/grenadelauncher/bow = 10,
 			/obj/item/gun/ballistic/revolver/grenadelauncher/bow/long = 5,
 			/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow = 5,

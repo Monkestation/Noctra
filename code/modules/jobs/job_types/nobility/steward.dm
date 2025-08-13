@@ -14,7 +14,6 @@
 	min_pq = 2
 	bypass_lastclass = TRUE
 
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 
 	outfit = /datum/outfit/job/steward
@@ -43,6 +42,7 @@
 	beltr = /obj/item/storage/keyring/steward
 	beltl = /obj/item/weapon/knife/dagger/steel
 	backr = /obj/item/storage/backpack/satchel
+	scabbards = list(/obj/item/weapon/scabbard/knife)
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/rich = 1, /obj/item/lockpickring/mundane = 1)
 
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)

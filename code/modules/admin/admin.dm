@@ -533,7 +533,7 @@
 
 
 /datum/admins/proc/announce()
-	set category = "Special Verbs"
+	set category = "Special"
 	set name = "Announce"
 	set desc="Announce your desires to the world"
 	if(!check_rights(0))
@@ -548,7 +548,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Announce") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/set_admin_notice()
-	set category = "Special Verbs"
+	set category = "Special"
 	set name = "Set Admin Notice"
 	set desc ="Set an announcement that appears to everyone who joins the server. Only lasts this round"
 	if(!check_rights(0))
@@ -1056,3 +1056,25 @@
 		user.client.holder.path_debug = new(user.client.holder)
 	else
 		QDEL_NULL(user.client.holder.path_debug)
+
+/datum/admins/proc/give_all_triumphs()
+	set category = "GameMaster"
+	set desc = "Triumph Giver"
+	set name = "Give All Triumphs"
+
+	var/mob/user = usr
+	if(!user.client.holder)
+		return
+	var/answer = input(user, "ARE YOU ABSOLUTELY SURE? THIS WILL GIVE TRIUMPHS TO EVERYONE CONNECTED.", "TRIUMPHS") as anything in list("Yes", "No")
+	if(answer != "Yes")
+		return
+	var/amount = input(user, "Choose the amount of triumphs", "Triumph Giver") as num|null
+	if(!amount)
+		return
+	if(amount < 0)
+		return
+
+	var/reason = input(user, "Choose a reason", "Triumph Giver") as text|null
+
+	for(var/client/client as anything in GLOB.clients)
+		client.mob.adjust_triumphs(amount, reason = reason)

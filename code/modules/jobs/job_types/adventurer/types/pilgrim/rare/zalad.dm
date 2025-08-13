@@ -1,14 +1,7 @@
-/datum/advclass/pilgrim/rare/zalad
-	name = "Zalad Emir"
+/datum/advclass/pilgrim/rare/zybantine
+	name = "Zybantine Emir"
 	tutorial = "An Emir hailing from Deshret, here on business for the Mercator's Guild."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Rakshari",
-		"Elf",
-		"Half-Elf",
-		"Dwarf"
-	)
+	allowed_races = RACES_PLAYER_ZYBANTINE
 	outfit = /datum/outfit/job/adventurer/zalad
 	category_tags = list(CTAG_PILGRIM)
 	maximum_possible_slots = 1
@@ -22,20 +15,20 @@
 	shoes = /obj/item/clothing/shoes/shalal
 	gloves = /obj/item/clothing/gloves/leather
 	head = /obj/item/clothing/head/crown/circlet
-	cloak = /obj/item/clothing/cloak/raincloak/purple
+	cloak = /obj/item/clothing/cloak/raincloak/colored/purple
 	armor = /obj/item/clothing/armor/gambeson/arming
 	belt = /obj/item/storage/belt/leather/shalal
 	beltl = /obj/item/weapon/sword/sabre/shalal
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	backr = /obj/item/storage/backpack/satchel
 	ring = /obj/item/clothing/ring/gold/guild_mercator
-	shirt = /obj/item/clothing/shirt/tunic/purple
+	shirt = /obj/item/clothing/shirt/tunic/colored/purple
 	pants = /obj/item/clothing/pants/trou/leather
 	neck = /obj/item/clothing/neck/shalal/emir
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/veryrich)
 	if(H.gender == FEMALE)
 //		armor = /obj/item/clothing/armor/leather/jacket/silk_coat
-		shirt = /obj/item/clothing/shirt/dress/silkdress/black
+		shirt = /obj/item/clothing/shirt/dress/silkdress/colored/black
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)

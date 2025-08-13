@@ -25,11 +25,12 @@
 	name = "railing"
 	icon = 'icons/roguetown/misc/railing.dmi'
 	icon_state = "railing"
-	density = FALSE
+	density = TRUE
 	anchored = TRUE
 	deconstructible = FALSE
 	flags_1 = ON_BORDER_1
 	climbable = TRUE
+	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
 	var/passcrawl = TRUE
 	layer = ABOVE_MOB_LAYER
 
@@ -57,57 +58,21 @@
 			plane = GAME_PLANE_UPPER
 
 /obj/structure/fluff/railing/CanPass(atom/movable/mover, turf/target)
-//	if(istype(mover) && (mover.pass_flags & PASSTABLE))
-//		return 1
-	if(istype(mover, /mob/camera))
-		return TRUE
-	if(istype(mover, /obj/projectile))
-		return 1
-	if(mover.throwing)
-		return 1
-	if(isobserver(mover))
-		return 1
-	if(mover.movement_type & FLYING)
-		return 1
-	if(isliving(mover))
-		var/mob/living/M = mover
-		if(M.body_position == LYING_DOWN)
-			if(passcrawl)
+	. = ..()
+	if(get_dir(loc, target) == dir)
+		if(passcrawl && isliving(mover))
+			var/mob/living/M = mover
+			if(M.body_position == LYING_DOWN)
 				return TRUE
-	if(icon_state == "woodrailing" && (dir in CORNERDIRS))
-		var/list/baddirs = list()
-		switch(dir)
-			if(SOUTHEAST)
-				baddirs = list(SOUTHEAST, SOUTH, EAST)
-			if(SOUTHWEST)
-				baddirs = list(SOUTHWEST, SOUTH, WEST)
-			if(NORTHEAST)
-				baddirs = list(NORTHEAST, NORTH, EAST)
-			if(NORTHWEST)
-				baddirs = list(NORTHWEST, NORTH, WEST)
-		if(get_dir(loc, target) in baddirs)
-			return 0
-	else if(get_dir(loc, target) == dir)
-		return 0
-	return 1
+		return . || mover.throwing || (mover.movement_type & (FLOATING|FLYING))
+	return TRUE
 
 /obj/structure/fluff/railing/CanAStarPass(ID, to_dir, requester)
-	if(icon_state == "woodrailing" && (dir in CORNERDIRS))
-		var/list/baddirs = list()
-		switch(dir)
-			if(SOUTHEAST)
-				baddirs = list(SOUTHEAST, SOUTH, EAST)
-			if(SOUTHWEST)
-				baddirs = list(SOUTHWEST, SOUTH, WEST)
-			if(NORTHEAST)
-				baddirs = list(NORTHEAST, NORTH, EAST)
-			if(NORTHWEST)
-				baddirs = list(NORTHWEST, NORTH, WEST)
-		if(to_dir in baddirs)
-			return 0
-	else if(to_dir == dir)
-		return 0
-	return 1
+	if(dir in CORNERDIRS)
+		return TRUE
+	if(to_dir == dir)
+		return FALSE
+	return TRUE
 
 /obj/structure/fluff/railing/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
 	SIGNAL_HANDLER
@@ -168,15 +133,35 @@
 	layer = 2.91
 	climbable = FALSE
 	max_integrity = 400
+	pass_flags_self = PASSSTRUCTURE
 	passcrawl = FALSE
 	climb_offset = 6
 
-/obj/structure/fluff/railing/fence/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /mob/camera))
-		return TRUE
+/obj/structure/fluff/railing/fence/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(get_dir(loc, target) == dir)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
+
+/obj/structure/fluff/railing/woodfence
+	name = "wooden fence"
+	desc = "A sturdy fence of wooden planks."
+	icon = 'icons/roguetown/misc/tallwoodenrailing.dmi'
+	icon_state = "tallwoodenrailing"
+	density = TRUE
+	opacity = FALSE
+	anchored = TRUE
+	layer = 2.91
+	climbable = FALSE
+	max_integrity = 500
+	passcrawl = FALSE
+	climb_offset = 6
+
+/obj/structure/fluff/railing/woodfence/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(get_dir(loc, target) == dir)
+		return FALSE
+	return TRUE
 
 /obj/structure/bars
 	name = "bars"
@@ -195,16 +180,14 @@
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	attacked_sound = list("sound/combat/hits/onmetal/metalimpact (1).ogg", "sound/combat/hits/onmetal/metalimpact (2).ogg")
 
-/obj/structure/bars/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /mob/camera))
-		return TRUE
+/obj/structure/bars/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(.)
+		return
 	if(isobserver(mover))
-		return 1
-	if(istype(mover) && (mover.pass_flags & PASSGRILLE))
-		return 1
+		return TRUE
 	if(mover.throwing && isitem(mover))
 		return prob(66)
-	return ..()
 
 /obj/structure/bars/bent
 	icon_state = "barsbent"
@@ -332,7 +315,7 @@
 	desc = "An intricately-carved grandfather clock. On its pendulum is engraved the sigil of clan Kharzarad, a sickle behind an hourglass."
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "clock"
-	density = FALSE
+	density = TRUE
 	anchored = FALSE
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
@@ -369,7 +352,10 @@
 		attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 	..()
 
-/obj/structure/fluff/clock/attack_right(mob/user)
+/obj/structure/fluff/clock/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(user.mind && isliving(user))
 		if(user.mind.special_items && user.mind.special_items.len)
 			var/item = input(user, "What will I take?", "STASH") as null|anything in user.mind.special_items
@@ -380,7 +366,7 @@
 						user.mind.special_items -= item
 						var/obj/item/I = new path2item(user.loc)
 						user.put_in_hands(I)
-			return
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/fluff/clock/examine(mob/user)
 	. = ..()
@@ -405,11 +391,10 @@
 		// . += span_info("(Round Time: [gameTimestamp("hh:mm:ss", REALTIMEOFDAY - SSticker.round_start_irl)].)")
 
 /obj/structure/fluff/clock/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /mob/camera))
-		return TRUE
-	if(get_dir(loc, mover) == dir)
-		return 0
-	return 1
+	. = ..()
+	if(get_dir(loc, target) == dir)
+		return
+	return TRUE
 
 /obj/structure/fluff/clock/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
 	SIGNAL_HANDLER
@@ -600,7 +585,7 @@
 	desc = ""
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "bstatue"
-	density = FALSE
+	density = TRUE
 	anchored = TRUE
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
@@ -613,7 +598,16 @@
 	var/static/list/loc_connections = list(COMSIG_ATOM_EXIT = PROC_REF(on_exit))
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/structure/fluff/statue/attack_right(mob/user)
+/obj/structure/fluff/statue/bullet_act(obj/projectile/P)
+	. = ..()
+	if(. != BULLET_ACT_FORCE_PIERCE)
+		P.handle_drop()
+		return BULLET_ACT_HIT
+
+/obj/structure/fluff/statue/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(user.mind && isliving(user))
 		if(user.mind.special_items && user.mind.special_items.len)
 			var/item = input(user, "What will I take?", "STASH") as null|anything in user.mind.special_items
@@ -624,15 +618,13 @@
 						user.mind.special_items -= item
 						var/obj/item/I = new path2item(user.loc)
 						user.put_in_hands(I)
-			return
-
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/fluff/statue/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /mob/camera))
-		return TRUE
-	if(get_dir(loc, mover) == dir)
-		return 0
-	return !density
+	. = ..()
+	if(get_dir(loc, target) == dir)
+		return
+	return TRUE
 
 /obj/structure/fluff/statue/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
 	SIGNAL_HANDLER
@@ -792,6 +784,37 @@
 	density = TRUE
 	anchored = FALSE
 
+/obj/structure/fluff/telescope/attack_hand(mob/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	to_chat(H,  span_notice("I look through the telescope, hoping to glimpse something beyond."))
+	if(!do_after(H, 3 SECONDS, target = src))
+		return
+
+	var/random_message = rand(1,5)
+	switch(random_message)
+		if(1)
+			to_chat(H,  span_notice("You can see Noc rotating."))
+			if(do_after(H, 1 SECONDS, target = src))
+				to_chat(H, span_good("Noc's glow seems to help clear your thoughts."))
+				H.apply_status_effect(/datum/status_effect/buff/nocblessing)
+				H.playsound_local(H, 'sound/misc/notice (2).ogg', 100, FALSE)
+		if(2)
+			to_chat(H, span_warning("Looking at Astrata blinds you"))
+			if(do_after(H, 1 SECONDS, src)) // QUICK LOOK AWAY !!
+				var/obj/item/bodypart/affecting = H.get_bodypart("head")
+				to_chat(H, span_userdanger("The blinding light causes you intense pain!"))
+				H.emote("scream", forced=TRUE)
+				if(affecting && affecting.receive_damage(0, 10))
+					H.update_damage_overlays()
+		if(3)
+			to_chat(H, span_notice("The stars smile at you."))
+		if(4)
+			to_chat(H, span_notice("Blessed yellow strife."))
+		if(5)
+			to_chat(H, span_notice("You see a star!"))
+
 /obj/structure/fluff/stonecoffin
 	name = "stone coffin"
 	desc = "A damaged stone coffin..."
@@ -799,38 +822,6 @@
 	icon_state = "stonecoffin"
 	density = TRUE
 	anchored = TRUE
-
-/obj/structure/fluff/telescope/attack_hand(mob/user)
-	if(!ishuman(user))
-		return
-
-	var/mob/living/carbon/human/H = user
-	var/random_message = rand(1,5)
-	var/message2send = ""
-	switch(random_message)
-		if(1)
-			message2send = "You can see Noc rotating."
-		if(2)
-			message2send = "Looking at Astrata blinds you!"
-		if(3)
-			message2send = "The stars smile at you."
-		if(4)
-			message2send = "Blessed yellow strife."
-		if(5)
-			message2send = "You see a star!"
-	to_chat(H, "<span class='notice'>[message2send]</span>")
-
-	if(random_message == 2)
-		if(do_after(H, 2.5 SECONDS, src))
-			var/obj/item/bodypart/affecting = H.get_bodypart("head")
-			to_chat(H, "<span class='warning'>The blinding light causes you intense pain!</span>")
-			if(affecting && affecting.receive_damage(0, 5))
-				H.update_damage_overlays()
-
-	if(message2send == "You can see noc rotating!")
-		if(do_after(H, 25, target = src))
-			to_chat(H, span_warning("Noc's glow seems to help clear your thoughts."))
-			H.apply_status_effect(/datum/status_effect/buff/nocblessing)
 
 /obj/structure/fluff/globe
 	name = "globe"
@@ -844,8 +835,23 @@
 	if(!ishuman(user))
 		return
 
+	flick("globe1", src)
 	var/mob/living/carbon/human/H = user
-	var/random_message = pick("You spin the globe!", "You land on Rockhill!", "You land on Vanderlin!", "You land on Heartfelt!", "You land on Zaladin!", "You land on Port Thornvale!", "You land on Grenzelhoft!", "You land on Valoria!", "You land on the Fog Islands!")
+	var/random_message = pick(
+	"You spin the globe!",
+	"You land on Rockhill!",
+	"You land on Vanderlin!",
+	"You land on Heartfelt!",
+	"You land on Zaladin!",
+	"You land on Grenzelhoft!",
+	"You land on Valoria!",
+	"You land on Rosewood!",
+	"You land on Wintermare!",
+	"You land on Deshret!",
+	"You land on Kingsfield",
+	"You land on Amber Hollow!",
+	"You land on the lands of Z!",
+	"You land on the Fog Islands!")
 	to_chat(H, "<span class='notice'>[random_message]</span>")
 
 /obj/structure/fluff/statue/femalestatue/Initialize()
@@ -930,17 +936,30 @@
 	name = "arachnid idol"
 	desc = "A stone idol of a spider with the head of a smirking elven woman. Her eyes seem to follow you."
 	icon_state = "spidercore"
+	var/goal = 5
+	var/current = 0
+	var/objective = /obj/item/organ/ears
+
+/obj/structure/fluff/statue/spider/examine(mob/user)
+	. = ..()
+	if(isdarkelf(user))
+		say("BRING ME [goal - current] EARS. I HUNGER.",language = /datum/language/elvish)
 
 /obj/structure/fluff/statue/spider/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/reagent_containers/food/snacks/spiderhoney))
+	if(istype(W, objective))
 		if(user.mind)
-			if(user.mind.special_role == "Dark Elf")
+			if(isdarkelf(user))
 				playsound(loc,'sound/misc/eat.ogg', rand(30,60), TRUE)
-				SSmapping.retainer.delf_contribute += 1
-				if(SSmapping.retainer.delf_contribute >= SSmapping.retainer.delf_goal)
+				current += 1
+				SSmapping.retainer.delf_ears += 1
+				if(current >= goal)
 					say("YOU HAVE DONE WELL, MY CHILD.",language = /datum/language/elvish)
+					user.adjust_triumphs(1, reason = "Pleased the dark lady")
+
+					qdel(src)
+					// TODO : add crumbling message and sound
 				else
-					say("BRING ME [SSmapping.retainer.delf_goal - SSmapping.retainer.delf_contribute] MORE. I HUNGER.",language = /datum/language/elvish)
+					say("BRING ME [current - goal] MORE EARS. I HUNGER.",language = /datum/language/elvish)
 				qdel(W)
 				return TRUE
 	..()
@@ -965,10 +984,10 @@
 					return
 				if(!istype(W, /obj/item/coin))
 					B.contrib += (W.get_real_price() / 2) //sell jewerly and other fineries, though at a lesser price compared to fencing them first
-					GLOB.vanderlin_round_stats[STATS_SHRINE_VALUE] += (W.get_real_price() / 2)
+					record_round_statistic(STATS_SHRINE_VALUE, (W.get_real_price() / 2))
 				else
 					B.contrib += W.get_real_price()
-					GLOB.vanderlin_round_stats[STATS_SHRINE_VALUE] += W.get_real_price()
+					record_round_statistic(STATS_SHRINE_VALUE, W.get_real_price())
 				if(B.contrib >= 100)
 					B.tri_amt++
 					user.mind.adjust_triumphs(1)
@@ -1012,7 +1031,7 @@
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	break_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
-	density = FALSE
+	density = TRUE
 	anchored = TRUE
 	blade_dulling = DULLING_BASHCHOP
 	layer = BELOW_MOB_LAYER
@@ -1048,11 +1067,10 @@
 	M.reset_offsets("bed_buckle")
 
 /obj/structure/fluff/psycross/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /mob/camera))
-		return TRUE
+	. = ..()
 	if(get_dir(loc, mover) == dir)
-		return FALSE
-	return !density
+		return
+	return TRUE
 
 /obj/structure/fluff/psycross/proc/on_exit(datum/source, atom/movable/leaving, atom/new_location)
 	SIGNAL_HANDLER
@@ -1102,110 +1120,123 @@
 	icon_state = "shrine_dendor_gote"
 
 /obj/structure/fluff/psycross/attackby(obj/item/W, mob/living/carbon/human/user, params)
-	if(user.mind)
-		if((is_priest_job(user.mind.assigned_role)) \
-			|| (is_monk_job(user.mind.assigned_role) && (user.patron.type == /datum/patron/divine/eora)))
+	if(!user.mind)
+		return ..()
 
-			if(istype(W, /obj/item/reagent_containers/food/snacks/produce/fruit/apple))
-				if(!istype(get_area(user), /area/rogue/indoors/town/church/chapel))
-					to_chat(user, "<span class='warning'>I need to do this in the chapel.</span>")
-					return FALSE
-				var/marriage
-				var/obj/item/reagent_containers/food/snacks/produce/fruit/apple/A = W
+	var/is_priest = is_priest_job(user.mind.assigned_role)
+	var/is_eoran_acolyte = is_monk_job(user.mind.assigned_role) && (user.patron.type == /datum/patron/divine/eora)
+	if(!is_priest && !is_eoran_acolyte)
+		return ..()
 
-				//The MARRIAGE TEST BEGINS
-				if(A.bitten_names.len)
-					if(A.bitten_names.len == 2)
-						//Groom provides the surname that the bride will take
-						var/mob/living/carbon/human/thegroom
-						var/mob/living/carbon/human/thebride
-						//Did anyone get cold feet on the wedding?
-						for(var/mob/M in viewers(src, 2))
-							if(thegroom && thebride)
-								break
-							if(!ishuman(M))
-								continue
-							var/mob/living/carbon/human/C = M
-							/*
-							* This is for making the first biters name
-							* always be applied to the groom.
-							* second. This seems to be the best way
-							* to use the least amount of variables.
-							*/
-							var/name_placement = 1
-							for(var/X in A.bitten_names)
-								//I think that guy is dead.
-								if(C.stat == DEAD)
-									continue
-								//That person is not a player or afk.
-								if(!C.client)
-									continue
-								//Gotta get a divorce first
-								if(C.IsWedded())
-									continue
-								if(C.real_name == X)
-									//I know this is very sloppy but its alot less code.
-									switch(name_placement)
-										if(1)
-											if(thegroom)
-												continue
-											thegroom = C
-										if(2)
-											if(thebride)
-												continue
-											thebride = C
-								name_placement++
+	if(!istype(W, /obj/item/reagent_containers/food/snacks/produce/fruit/apple))
+		return ..()
 
-						//WE FOUND THEM LETS GET THIS SHOW ON THE ROAD!
-						if(!thegroom || !thebride)
-							return
-						//Alright now for the boring surname formatting.
-						var/surname2use
-						var/index = findtext(thegroom.real_name, " ")
-						var/bridefirst
-						thegroom.original_name = thegroom.real_name
-						thebride.original_name = thebride.real_name
-						if(!index)
-							surname2use = thegroom.dna.species.random_surname()
-						else
-							/*
-							* This code prevents inheriting the last name of
-							* " of wolves" or " the wolf"
-							* remove this if you want "Skibbins of wolves" to
-							* have his bride become "Sarah of wolves".
-							*/
-							if(findtext(thegroom.real_name, " of ") || findtext(thegroom.real_name, " the "))
-								surname2use = thegroom.dna.species.random_surname()
-								thegroom.change_name(copytext(thegroom.real_name, 1,index))
-							else
-								surname2use = copytext(thegroom.real_name, index)
-								thegroom.change_name(copytext(thegroom.real_name, 1,index))
-						index = findtext(thebride.real_name, " ")
-						if(index)
-							thebride.change_name(copytext(thebride.real_name, 1,index))
-						bridefirst = thebride.real_name
-						thegroom.change_name(thegroom.real_name + surname2use)
-						thebride.change_name(thebride.real_name + surname2use)
-						thegroom.MarryTo(thebride)
-						thegroom.adjust_triumphs(1)
-						thebride.adjust_triumphs(1)
-						//Bite the apple first if you want to be the groom.
-						if(thegroom.gender == thebride.gender)	//Homophobic dog stare. Pack it up, skittles squad.
-							priority_announce("Eora begrudgingly accepts the marriage between [thegroom.real_name] and [bridefirst].", title = "Holy Union!", sound = 'sound/misc/bell.ogg')
-						else
-							priority_announce("Eora proudly embraces the marriage between [thegroom.real_name] and [bridefirst]!", title = "Holy Union!", sound = 'sound/misc/bell.ogg')
-						thegroom.remove_stress(/datum/stressevent/eora_matchmaking)
-						thebride.remove_stress(/datum/stressevent/eora_matchmaking)
-						SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_MARRIAGE, thegroom, thebride)
-						GLOB.vanderlin_round_stats[STATS_MARRIAGES]++
-						marriage = TRUE
-						qdel(A)
+	var/obj/item/reagent_containers/food/snacks/produce/fruit/apple/apple = W
+	if(length(apple.bitten_names) != 2)
+		to_chat(user, span_warning("Apple must be bitten once by two different people to conduct a wedding ceremony!"))
+		return FALSE
 
-				if(!marriage)
-					playsound(src.loc, 'sound/misc/frying.ogg', 60, FALSE)
-					A.burn()
-					return
-	return ..()
+	var/in_church = istype(get_area(user), /area/rogue/indoors/town/church/chapel)
+	var/secret_marriage = !in_church && HAS_TRAIT(user, TRAIT_SECRET_OFFICIANT)
+
+	if(!in_church && !secret_marriage)
+		to_chat(user, span_warning("I can conduct wedding ceremony only inside the chapel!"))
+		return FALSE
+
+	var/mob/living/carbon/human/groom
+	var/mob/living/carbon/human/bride
+
+	for(var/mob/living/carbon/human/candidate in range(5, src))
+		if(groom && bride)
+			break
+
+		var/name_position = 1
+		for(var/name in apple.bitten_names)
+			if(candidate.real_name == name)
+				switch(name_position)
+					if(1)
+						if(!groom)
+							groom = candidate
+					if(2)
+						if(!bride)
+							bride = candidate
+			name_position++
+
+	if(!groom || !bride)
+		to_chat(user, span_warning("Either one or both soon to be wed are outside of the holy shrine's gaze!"))
+		return FALSE
+	if(user == groom || user == bride)
+		to_chat(user, span_warning("You cannot conduct your own marriage ceremony!"))
+		return FALSE
+
+	// Groom checks
+	if(groom.age == AGE_CHILD)
+		to_chat(user, span_warning("[groom.real_name] is a child!"))
+		return FALSE
+	if(groom.stat == DEAD)
+		to_chat(user, span_warning("[groom.real_name] is dead!"))
+		return FALSE
+	if(!groom.client)
+		to_chat(user, span_warning("[groom.real_name] absent in spirit!"))
+		return FALSE
+	if(groom.IsWedded())
+		to_chat(user, span_warning("[groom.real_name] is already married!"))
+		return FALSE
+
+	// Bride checks
+	if(bride.age == AGE_CHILD)
+		to_chat(user, span_warning("[bride.real_name] is a child!"))
+		return FALSE
+	if(bride.stat == DEAD)
+		to_chat(user, span_warning("[bride.real_name] is dead!"))
+		return FALSE
+	if(!bride.client)
+		to_chat(user, span_warning("[bride.real_name] absent in spirit!"))
+		return FALSE
+	if(bride.IsWedded())
+		to_chat(user, span_warning("[bride.real_name] is already married!"))
+		return FALSE
+
+	var/surname
+	var/name_index = findtext(groom.real_name, " ")
+	var/bride_first_name = bride.real_name
+
+	groom.original_name = groom.real_name
+	bride.original_name = bride.real_name
+
+	if(!name_index)
+		surname = groom.dna.species.random_surname()
+	else
+		if(findtext(groom.real_name, " of ") || findtext(groom.real_name, " the "))
+			surname = groom.dna.species.random_surname()
+			groom.change_name(copytext(groom.real_name, 1, name_index))
+		else
+			surname = copytext(groom.real_name, name_index)
+			groom.change_name(copytext(groom.real_name, 1, name_index))
+
+	name_index = findtext(bride.real_name, " ")
+	if(name_index)
+		bride.change_name(copytext(bride.real_name, 1, name_index))
+
+	bride_first_name = bride.real_name
+
+	groom.change_name(groom.real_name + surname)
+	bride.change_name(bride.real_name + surname)
+
+	groom.MarryTo(bride)
+	groom.adjust_triumphs(1)
+	bride.adjust_triumphs(1)
+
+	if(!secret_marriage)
+		var/announcement_message = "Eora [groom.gender == bride.gender ? "begrudgingly accepts" : "proudly embraces"] the marriage between [groom.real_name] and [bride_first_name]!"
+		priority_announce(announcement_message, title = "Holy Union!", sound = 'sound/misc/bell.ogg')
+
+	groom.remove_stress(/datum/stressevent/eora_matchmaking)
+	bride.remove_stress(/datum/stressevent/eora_matchmaking)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_MARRIAGE, groom, bride)
+	record_round_statistic(STATS_MARRIAGES)
+	qdel(apple)
+	return TRUE
 
 /obj/structure/fluff/psycross/copper/Destroy()
 	addomen("psycross")
@@ -1351,3 +1382,16 @@
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 
+/obj/structure/fluff/steamvent
+	name = "steam vent"
+	desc = "An underground heating pipe outlet."
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "steam_vent"
+	density = FALSE
+	anchored = TRUE
+	max_integrity = 300
+	layer = 2.1
+
+/obj/structure/fluff/steamvent/Initialize()
+	. = ..()
+	MakeParticleEmitter(/particles/smoke/cig/big)

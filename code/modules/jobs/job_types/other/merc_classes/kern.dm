@@ -1,11 +1,11 @@
 /datum/advclass/mercenary/kern
 	name = "Kern"
 	tutorial = "A mercanary hailing from Kaledon, you fight under your Gallowglass or for your own coin, you fled with your fellow countrymen to escape the Grenzelhoftian Occupation of your homeland."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Half-Elf",
-		"Dwarf"
+	allowed_races = list(\
+		SPEC_ID_HUMEN,\
+		SPEC_ID_ELF,\
+		SPEC_ID_HALF_ELF,\
+		SPEC_ID_DWARF,\
 	)
 	outfit = /datum/outfit/job/mercenary/kern
 	category_tags = list(CTAG_MERCENARY)
@@ -16,7 +16,7 @@
 /datum/outfit/job/mercenary/kern/pre_equip(mob/living/carbon/human/H)
 	..()
 	shoes = /obj/item/clothing/shoes/boots/leather
-	head = /obj/item/clothing/head/roguehood/black
+	head = /obj/item/clothing/head/roguehood/colored/black
 	belt = /obj/item/storage/belt/leather/mercenary/black
 	armor = /obj/item/clothing/armor/chainmail/iron
 	cloak = /obj/item/clothing/cloak/stabard/kaledon

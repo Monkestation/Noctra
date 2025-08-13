@@ -31,20 +31,19 @@
 	for(var/i in avail)
 		CHECK_TICK
 		BL = i
-		if(!(BL.flags_1 & UNUSED_RESERVATION_TURF_1))
+		if(!(BL.turf_flags & UNUSED_RESERVATION_TURF))
 			continue
 		if(BL.x + width > world.maxx || BL.y + height > world.maxy)
 			continue
 		TR = locate(BL.x + width - 1, BL.y + height - 1, BL.z)
-		if(!(TR.flags_1 & UNUSED_RESERVATION_TURF_1))
+		if(!(TR.turf_flags & UNUSED_RESERVATION_TURF))
 			continue
 		final = block(BL, TR)
 		if(!final)
 			continue
 		passing = TRUE
-		for(var/I in final)
-			var/turf/checking = I
-			if(!(checking.flags_1 & UNUSED_RESERVATION_TURF_1))
+		for(var/turf/checking as anything in final)
+			if(!(checking.turf_flags & UNUSED_RESERVATION_TURF))
 				passing = FALSE
 				break
 		if(!passing)
@@ -54,10 +53,9 @@
 		return FALSE
 	bottom_left_coords = list(BL.x, BL.y, BL.z)
 	top_right_coords = list(TR.x, TR.y, TR.z)
-	for(var/i in final)
-		var/turf/T = i
+	for(var/turf/T as anything in final)
 		reserved_turfs |= T
-		T.flags_1 &= ~UNUSED_RESERVATION_TURF_1
+		T.turf_flags &= ~UNUSED_RESERVATION_TURF
 		SSmapping.unused_turfs["[T.z]"] -= T
 		SSmapping.used_turfs[T] = src
 		T.ChangeTurf(turf_type, turf_type)

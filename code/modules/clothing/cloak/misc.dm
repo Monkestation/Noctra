@@ -8,7 +8,7 @@
 	sleevetype = "shirt"
 	slot_flags = ITEM_SLOT_CLOAK
 	allowed_sex = list(MALE)
-	allowed_race = list("human", "tiefling", "aasimar")
+	allowed_race = SPECIES_BASE_BODY
 	nodismemsleeves = TRUE
 
 
@@ -36,7 +36,7 @@
 	sleevetype = "shirt"
 	slot_flags = ITEM_SLOT_CLOAK
 	allowed_sex = list(MALE)
-	allowed_race = list("human", "tiefling", "aasimar")
+	allowed_race = SPECIES_BASE_BODY
 	sellprice = 50
 	nodismemsleeves = TRUE
 
@@ -63,7 +63,7 @@
 	sleevetype = "shirt"
 	slot_flags = ITEM_SLOT_CLOAK
 	allowed_sex = list(MALE)
-	allowed_race = list("human", "tiefling", "aasimar")
+	allowed_race = SPECIES_BASE_BODY
 	sellprice = 50
 	nodismemsleeves = TRUE
 
@@ -84,7 +84,7 @@
 	toggle_icon_state = FALSE
 	color = CLOTHING_SOOT_BLACK
 	allowed_sex = list(MALE, FEMALE)
-	allowed_race = list("human", "tiefling", "elf", "aasimar")
+	allowed_race = SPECIES_BASE_BODY
 
 /obj/item/clothing/cloak/half/Initialize(mapload, ...)
 	. = ..()
@@ -133,10 +133,13 @@
 	body_parts_covered = ARMS|CHEST
 	armor = ARMOR_MAILLE_GOOD
 
-/obj/item/clothing/cloak/half/brown
+/obj/item/clothing/cloak/half/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
+/obj/item/clothing/cloak/half/colored/brown
 	color = CLOTHING_BARK_BROWN
 
-/obj/item/clothing/cloak/half/red
+/obj/item/clothing/cloak/half/colored/red
 	color = CLOTHING_BLOOD_RED
 
 /obj/item/clothing/cloak/half/vet
@@ -146,7 +149,7 @@
 	inhand_mod = FALSE
 	uses_lord_coloring = LORD_PRIMARY
 
-/obj/item/clothing/cloak/half/random/Initialize()
+/obj/item/clothing/cloak/half/colored/random/Initialize()
 	color = pick(CLOTHING_WINESTAIN_RED, CLOTHING_MUSTARD_YELLOW, CLOTHING_SOOT_BLACK, CLOTHING_BARK_BROWN, CLOTHING_FOREST_GREEN, CLOTHING_BERRY_BLUE)
 	return ..()
 
@@ -174,10 +177,11 @@
 	alternate_worn_layer = TABARD_LAYER
 	body_parts_covered = CHEST|GROIN
 	slot_flags = ITEM_SLOT_ARMOR|ITEM_SLOT_CLOAK
+
 //.............inquisitor cloaks......... (For inquisitors..)
 /obj/item/clothing/cloak/cape/puritan
 	icon_state = "puritan_cape"
-	allowed_race = list("human", "tiefling", "elf", "dwarf", "aasimar")
+	allowed_race = SPECIES_BASE_BODY
 
 /obj/item/clothing/cloak/cape/inquisitor
 	name = "Inquisitors Cloak"
@@ -270,7 +274,7 @@
 	sleevetype = "shirt"
 	nodismemsleeves = TRUE
 	inhand_mod = TRUE
-	allowed_race = list("human", "tiefling", "elf", "aasimar")
+	allowed_race = SPECIES_BASE_BODY
 
 /obj/item/clothing/cloak/faceless
 	name = "sash"
@@ -280,12 +284,30 @@
 
 /obj/item/clothing/cloak/half/duelcape
 	name = "duelist cape"
-	desc = "A cape that is designed for specific mercenaries from valoria."
+	desc = "A cape designed for mercenary bands hailing from Valoria."
 	icon_state = "duelistcape"
 	item_state = "duelistcape"
 	color = null
 	nodismemsleeves = TRUE
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	slot_flags = ITEM_SLOT_BACK_R|ITEM_SLOT_CLOAK
-	allowed_race = list("human", "tiefling", "elf", "aasimar")
+	allowed_race = SPECIES_BASE_BODY
 	inhand_mod = FALSE
+
+/obj/item/clothing/cloak/graggar
+	name = "vicious cloak"
+	desc = "A cloak with a sinister aura set to bring about violence on the world."
+	icon_state = "graggarcloak"
+	icon_state = "graggarcloak"
+	icon = 'icons/roguetown/clothing/special/evilarmor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sleeved = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sellprice = 0 // See above comment
+
+/obj/item/clothing/cloak/silktabard
+	name = "fine silk tabard"
+	desc = "A finely crafted long tabard weaved from silk. Fashionable, and a symbol of status and wealth."
+	icon_state = "silktabard"
+	item_state = "silktabard"
+	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
+	allowed_ages = ALL_AGES_LIST //placeholder until younglings have onmob sprites for this item

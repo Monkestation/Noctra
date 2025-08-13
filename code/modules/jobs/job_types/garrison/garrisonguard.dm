@@ -13,7 +13,6 @@
 	min_pq = 4
 	bypass_lastclass = TRUE
 
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_IMMORTAL)
 	allowed_races = RACES_PLAYER_GUARD
 
@@ -31,6 +30,8 @@
 	shoes = /obj/item/clothing/shoes/boots
 	belt = /obj/item/storage/belt/leather
 	gloves = /obj/item/clothing/gloves/leather
+	if(H.dna && !(H.dna.species.id in RACES_PLAYER_NONDISCRIMINATED)) // to prevent examine stress
+		mask = /obj/item/clothing/face/shepherd
 
 /datum/outfit/job/guardsman/post_equip(mob/living/carbon/human/H)
 	. = ..()
@@ -58,6 +59,7 @@
 	backl = /obj/item/storage/backpack/satchel
 	beltr = /obj/item/weapon/sword/short
 	beltl = /obj/item/weapon/mace/cudgel
+	scabbards = list(/obj/item/weapon/scabbard/sword)
 	backpack_contents = list(/obj/item/storage/keyring/guard, /obj/item/weapon/knife/dagger/steel/special)
 
 
@@ -92,7 +94,7 @@
 	head = /obj/item/clothing/head/helmet/townwatch/alt
 	neck = /obj/item/clothing/neck/chaincoif
 	armor = /obj/item/clothing/armor/gambeson/heavy
-	shirt = pick(/obj/item/clothing/shirt/undershirt/guard, /obj/item/clothing/shirt/undershirt/guardsecond)
+	shirt = pick(/obj/item/clothing/shirt/undershirt/colored/guard, /obj/item/clothing/shirt/undershirt/colored/guardsecond)
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 	backl = /obj/item/storage/backpack/satchel
 	beltr = /obj/item/ammo_holder/quiver/arrows
@@ -136,6 +138,7 @@
 	backr = /obj/item/weapon/polearm/spear
 	beltl = /obj/item/weapon/sword/short
 	beltr = /obj/item/weapon/mace/cudgel
+	scabbards = list(/obj/item/weapon/scabbard/sword)
 	backpack_contents = list(/obj/item/storage/keyring/guard, /obj/item/weapon/knife/dagger/steel/special)
 
 	//Stats for class

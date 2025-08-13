@@ -1,16 +1,9 @@
 //................ Orc Armor ............... //
-/obj/item/clothing/armor/plate/orc/warlord
-	name = "warlord armor"
-	desc = "Fearsome armor which covers nearly the entire body."
-	icon_state = "warlord_armor"
-	item_state = "warlord_armor"
-	armor = ARMOR_PLATE_BAD
-
 /obj/item/clothing/armor/plate/orc
 	name = "crude breastplate"
 	icon_state = "marauder_armor"
 	item_state = "marauder_armor"
-	allowed_race = list("orc")
+	allowed_race = list(SPEC_ID_ORC)
 	smeltresult = /obj/item/ingot/iron
 	sellprice = NO_MARKET_VALUE
 
@@ -19,11 +12,18 @@
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|VITALS
 	max_integrity = INTEGRITY_POOR
 
+/obj/item/clothing/armor/plate/orc/warlord
+	name = "warlord armor"
+	desc = "Fearsome armor which covers nearly the entire body."
+	icon_state = "warlord_armor"
+	item_state = "warlord_armor"
+	armor = ARMOR_PLATE_BAD
+
 /obj/item/clothing/armor/chainmail/iron/orc
 	name = "crude maille"
 	icon_state = "orc_chainvest"
 	item_state = "orc_chainvest"
-	allowed_race = list("orc")
+	allowed_race = list(SPEC_ID_ORC)
 	sellprice = NO_MARKET_VALUE
 
 	armor_class = AC_MEDIUM
@@ -34,10 +34,9 @@
 
 /obj/item/clothing/head/helmet/orc
 	name = "Orc Marauder Helmet"
-	icon_state = "marauder_helm_item"
+	icon_state = "marauder_helm"
 	item_state = "marauder_helm"
-	icon = 'icons/roguetown/mob/monster/orc.dmi'
-	allowed_race = list("orc")
+	allowed_race = list(SPEC_ID_ORC)
 	smeltresult = /obj/item/ingot/iron
 	armor = list("blunt" = 60, "slash" = 60, "stab" = 60,  "piercing" = 0, "fire" = 0, "acid" = 0)
 	body_parts_covered = HEAD|EARS|HAIR|EYES|NECK
@@ -50,7 +49,6 @@
 	name = "Orc Warlord Helmet"
 	icon_state = "warlord_helm"
 	item_state = "warlord_helm"
-	icon = 'icons/roguetown/clothing/head.dmi'
 	armor = list("blunt" = 70, "slash" = 70, "stab" = 70,  "piercing" = 0, "fire" = 0, "acid" = 0)
 	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_BLUNT, BCLASS_STAB)
 	max_integrity = 150
@@ -73,7 +71,7 @@
 	icon_state = "orc_leather"
 	item_state = "orc_leather"
 	icon = 'icons/roguetown/clothing/armor.dmi'
-	allowed_race = list("orc")
+	allowed_race = list(SPEC_ID_ORC)
 	armor = list("blunt" = 30, "slash" = 30, "stab" = 30,  "piercing" = 0, "fire" = 0, "acid" = 0)
 	body_parts_covered = CHEST|GROIN
 	sellprice = 0

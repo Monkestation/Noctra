@@ -41,7 +41,7 @@
 	prevent_crits = list(BCLASS_LASHING, BCLASS_BITE, BCLASS_CUT)
 	resistance_flags = null
 	blocksound = SOFTHIT
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'

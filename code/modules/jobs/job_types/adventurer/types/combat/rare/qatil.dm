@@ -1,14 +1,13 @@
 /datum/advclass/adventurer/qatil
 	name = "Qatil"
 	tutorial = "Hailing from Zalad lands, you are a killer for hire that is trained both in murdering unseen and seen with your trusty knife."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Elf",
-		"Half-Elf",
-		"Tiefling",
-		"Dark Elf",
-		"Rakshari"
+	allowed_races = list(\
+		SPEC_ID_HUMEN,\
+		SPEC_ID_ELF,\
+		SPEC_ID_RAKSHARI,\
+		SPEC_ID_HALF_ELF,\
+		SPEC_ID_TIEFLING,\
+		SPEC_ID_DROW,\
 	)
 	outfit = /datum/outfit/job/adventurer/qatil
 	maximum_possible_slots = 1
@@ -44,10 +43,10 @@
 	shoes = /obj/item/clothing/shoes/shalal
 	gloves = /obj/item/clothing/gloves/angle
 	belt = /obj/item/storage/belt/leather/shalal
-	shirt = /obj/item/clothing/shirt/undershirt/red
+	shirt = /obj/item/clothing/shirt/undershirt/colored/red
 	armor = /obj/item/clothing/armor/leather/splint
 	backl = /obj/item/storage/backpack/satchel
-	head = /obj/item/clothing/neck/keffiyeh/red
+	head = /obj/item/clothing/neck/keffiyeh/colored/red
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/poor, /obj/item/lockpick)
 	if(!H.has_language(/datum/language/zalad))
 		H.grant_language(/datum/language/zalad)

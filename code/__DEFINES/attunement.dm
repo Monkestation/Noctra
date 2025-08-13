@@ -37,7 +37,8 @@
 	. = 0
 
 	for (var/datum/attunement/iterated_attunement as anything in attunements)
-		. += GET_RAW_ATTUNEMENT_CORRESPONDANCE(attunements, other_attunements[iterated_attunement], iterated_attunement)
+		var/intensity = (other_attunements?[iterated_attunement]) || 1
+		. += GET_RAW_ATTUNEMENT_CORRESPONDANCE(attunements, intensity, iterated_attunement)
 
 /// Returns the "mult" value using the correspondance between attunements and intensity. This value should be multiplied against
 /// the mana cost of an action to determine how much "effective" mana a certain mana source can provide to it.

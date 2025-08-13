@@ -11,7 +11,7 @@
 
 /datum/species/kobold
 	name = "Kobold"
-	id = "kobold"
+	id = SPEC_ID_KOBOLD
 	desc = "Speculated to have originated from the dank depths of Subterra, \
 	Kobolds are a species of stout sea-faring and mountain-dwelling lizardfolk infamous for their skills in trap-making, \
 	their habit of hoarding grandiose amounts of trinkets and artifacts, and their opportunism.\
@@ -29,6 +29,8 @@
 
 	specstats_m = list(STATKEY_STR = -4, STATKEY_PER = -2, STATKEY_INT = -2, STATKEY_CON = -4, STATKEY_END = 2, STATKEY_SPD = 2, STATKEY_LCK = 0)
 	specstats_f = list(STATKEY_STR = -4, STATKEY_PER = -2, STATKEY_INT = -2, STATKEY_CON = -4, STATKEY_END = 2, STATKEY_SPD = 2, STATKEY_LCK = 0)
+
+	allowed_pronouns = PRONOUNS_LIST_IT_ONLY
 
 	possible_ages = NORMAL_AGES_LIST
 	use_skintones = TRUE

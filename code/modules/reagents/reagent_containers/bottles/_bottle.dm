@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	amount_per_transfer_from_this = 6
 	possible_transfer_amounts = list(6)
 	volume = 70
-	fill_icon_thresholds = list(0, 25, 50, 75, 100)
+	fill_icon_thresholds = list(0, 10, 25, 50, 75, 100)
 	dropshrink = 0.8
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_MOUTH
 	obj_flags = CAN_BE_HIT
@@ -22,8 +22,10 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	fillsounds = list('sound/items/fillcup.ogg')
 	poursounds = list('sound/items/fillbottle.ogg')
 	experimental_onhip = TRUE
-	var/can_label_bottle = TRUE	// Determines if the bottle can be labeled with paper
-	var/fancy		// for bottles with custom descriptors that you don't want to change when bottle manipulated
+	/// Determines if the bottle can be labeled with paper
+	var/can_label_bottle = TRUE
+	/// for bottles with custom descriptors that you don't want to change when bottle manipulated
+	var/fancy
 
 /obj/item/reagent_containers/glass/bottle/Initialize()
 	icon_state = "clear_bottle[rand(1,4)]"
@@ -56,8 +58,14 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	if(closed)
 		. += "[icon_state]cork"
 
-/obj/item/reagent_containers/glass/bottle/rmb_self(mob/user)
+/obj/item/reagent_containers/glass/bottle/attack_self_secondary(mob/user, params)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	toggle_cork(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/reagent_containers/glass/bottle/proc/toggle_cork(mob/user)
 	closed = !closed
 	user.changeNext_move(CLICK_CD_RAPID)
 	if(closed)
@@ -145,21 +153,21 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	contained = pp
 	pp.info = pick(GLOB.wisdoms)
 
-/obj/item/bottlemessage/rmb_self(mob/user)
+/obj/item/bottlemessage/attack_self_secondary(mob/user, params)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	playsound(user.loc,'sound/items/uncork.ogg', 100, TRUE)
 	if(!contained)
-		return
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		var/obj/item/reagent_containers/glass/bottle/btle = new
-		btle.icon_state = replacetext("[icon_state]","_message","")
-		btle.closed = FALSE
-		H.dropItemToGround(src, silent=TRUE)
-		H.put_in_active_hand(btle)
-		H.put_in_hands(contained)
-		contained = null
-		qdel(src)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	var/obj/item/reagent_containers/glass/bottle/btle = new
+	btle.icon_state = replacetext("[icon_state]","_message","")
+	btle.closed = FALSE
+	user.dropItemToGround(src, silent=TRUE)
+	user.put_in_active_hand(btle)
+	contained = null
+	qdel(src)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 // vials
 /obj/item/reagent_containers/glass/bottle/vial
@@ -170,7 +178,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	amount_per_transfer_from_this = 6
 	possible_transfer_amounts = list(6)
 	volume = 30
-	fill_icon_thresholds = list(0, 25, 50, 75, 100)
+	fill_icon_thresholds = list(0, 10, 25, 50, 75, 100)
 	dropshrink = 0.8
 	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_MOUTH
 	obj_flags = CAN_BE_HIT
@@ -188,7 +196,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	icon_state = "clear_vial1"
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/item/reagent_containers/glass/bottle/vial/rmb_self(mob/user)
+/obj/item/reagent_containers/glass/bottle/vial/attack_self_secondary(mob/user, params)
 	closed = !closed
 	user.changeNext_move(CLICK_CD_RAPID)
 	if(closed)
@@ -260,3 +268,17 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	. = ..()
 	name = "[lowertext(initial(main_material.name))] clay teapot"
 
+
+/obj/item/reagent_containers/glass/bottle/glazed_teacup
+	name = "fancy teacup"
+	desc = "A fancy tea cup made out of ceramic. Used to serve tea."
+	icon_state = "cup_fancy"
+	volume = 30
+	dropshrink = 0.7
+
+/obj/item/reagent_containers/glass/bottle/glazed_teapot
+	name = "fancy teapot"
+	desc = "A fancy tea pot made out of ceramic. Used to hold tea."
+	icon_state = "teapot_fancy"
+	volume = 99
+	dropshrink = 0.7

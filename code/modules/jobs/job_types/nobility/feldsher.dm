@@ -14,13 +14,15 @@
 	min_pq = 2
 
 	//Reason all races allowed is you are basically a very talented court physician; even 'lower races' would find this to be one of the only ways to obtain a sort of nobility.
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_PLAYER_NONEXOTIC
-
 
 	outfit = /datum/outfit/job/feldsher
 	give_bank_account = 100
 	cmode_music = 'sound/music/cmode/nobility/combat_physician.ogg'
+
+	spells = list(
+		/datum/action/cooldown/spell/diagnose,
+	)
 
 /datum/outfit/job/feldsher
 	job_bitflag = BITFLAG_ROYALTY
@@ -28,10 +30,10 @@
 /datum/outfit/job/feldsher/pre_equip(mob/living/carbon/human/H)
 	..()
 	shoes = /obj/item/clothing/shoes/shortboots
-	shirt = /obj/item/clothing/shirt/undershirt/red
+	shirt = /obj/item/clothing/shirt/undershirt/colored/red
 	backr = /obj/item/storage/backpack/satchel
 	backl = /obj/item/storage/backpack/satchel/surgbag
-	pants = /obj/item/clothing/pants/tights/random
+	pants = /obj/item/clothing/pants/tights/colored/random
 	gloves = /obj/item/clothing/gloves/leather/feld
 	armor = /obj/item/clothing/shirt/robe/feld
 	head = /obj/item/clothing/head/roguehood/feld
@@ -56,4 +58,3 @@
 	ADD_TRAIT(H, TRAIT_EMPATH, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
-	H?.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)

@@ -12,16 +12,16 @@
 	min_pq = -20
 	bypass_lastclass = TRUE
 
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Elf",
-		"Half-Elf",
-		"Dwarf",
-		"Tiefling",
-		"Dark Elf",
-		"Aasimar",
-		"Harpy"
+	allowed_races = list(\
+		SPEC_ID_HUMEN,\
+		SPEC_ID_ELF,\
+		SPEC_ID_HALF_ELF,\
+		SPEC_ID_DWARF,\
+		SPEC_ID_DROW,\
+		SPEC_ID_HALF_DROW,\
+		SPEC_ID_TIEFLING,\
+		SPEC_ID_AASIMAR,\
+		SPEC_ID_HARPY,\
 	)
 
 	outfit = /datum/outfit/job/cook
@@ -48,8 +48,8 @@
 	beltl = /obj/item/key/tavern
 	beltr = /obj/item/weapon/knife/villager
 	if(H.gender == MALE)
-		pants = /obj/item/clothing/pants/tights/random
-		shirt = /obj/item/clothing/shirt/shortshirt/random
+		pants = /obj/item/clothing/pants/tights/colored/random
+		shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 		shoes = /obj/item/clothing/shoes/simpleshoes
 		cloak = /obj/item/clothing/cloak/apron/cook
 		head = /obj/item/clothing/head/cookhat
@@ -58,7 +58,7 @@
 	else
 		shirt = /obj/item/clothing/shirt/undershirt/lowcut
 		armor = /obj/item/clothing/armor/corset
-		pants = /obj/item/clothing/pants/skirt/red
+		pants = /obj/item/clothing/pants/skirt/colored/red
 		cloak = /obj/item/clothing/cloak/apron/cook
 		head = /obj/item/clothing/head/cookhat
 		shoes = /obj/item/clothing/shoes/simpleshoes

@@ -31,7 +31,7 @@
 	madeof = BLACKSTEEL
 
 //................ Black Oak Cuirass ............... //
-/obj/item/clothing/armor/cuirass/elven
+/obj/item/clothing/armor/cuirass/rare/elven
 	name = "elven guardian cuirass"
 	desc = "A cuirass made of steel with a thin decorative gold plating. Lightweight and durable."
 	icon_state = "halfplate"
@@ -77,7 +77,7 @@
 	desc = "More form over function, this armor is fit for demonstration of might rather than open combat. The aged gilding slowly tarnishes away."
 	icon_state = "shadowplate"
 	item_state = "shadowplate"
-	allowed_race = list("elf", "dark elf")
+	allowed_race = list(SPEC_ID_ELF, SPEC_ID_DROW)
 	madeof = null
 
 /obj/item/clothing/armor/cuirass/copperchest

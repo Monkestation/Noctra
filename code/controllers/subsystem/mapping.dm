@@ -58,7 +58,14 @@ SUBSYSTEM_DEF(mapping)
 #else
 	config = load_map_config(error_if_missing = FALSE)
 #endif
-	// After assigning a config datum to var/config, we check which map ajudstment fits the current config
+
+#ifdef FORCE_RANDOM_WORLD_GEN
+	config = load_map_config("_maps/kalypso.json")
+	log_world("FORCE_RANDOM_WORLD_GEN enabled - loading Kalypso only for random world generation")
+#endif
+
+#ifndef FORCE_RANDOM_WORLD_GEN
+	// After assigning a config datum to var/config, we check which map adjustment fits the current config
 	for(var/datum/map_adjustment/adjust as anything in subtypesof(/datum/map_adjustment))
 		if(!adjust.map_file_name)
 			continue
@@ -70,15 +77,23 @@ SUBSYSTEM_DEF(mapping)
 			break
 		if(adjust.map_file_name != map)
 			continue
-		map_adjustment = new adjust() // map_adjustment has multiple procs that'll be called from needed places (i.e. job_change)
+		map_adjustment = new adjust()
 		log_world("Loaded '[map]' map adjustment.")
 		break
+#endif
 	return ..()
 
 /datum/controller/subsystem/mapping/Initialize(timeofday)
 	retainer = new
 	if(initialized)
 		return
+#ifdef FORCE_RANDOM_WORLD_GEN
+	// Skip normal initialization and go straight to random world gen
+	log_world("Initializing random world generation...")
+	initialize_random_world_generation()
+	return ..()
+#endif
+
 	if(config.defaulted)
 		var/old_config = config
 		config = global.config.defaultmap
@@ -372,24 +387,22 @@ SUBSYSTEM_DEF(mapping)
 		// No need to empty() these, because it's world init and they're
 		// already /turf/open/space/basic.
 		var/turf/T = t
-		T.flags_1 |= UNUSED_RESERVATION_TURF_1
+		T.turf_flags |= UNUSED_RESERVATION_TURF
 	unused_turfs["[z]"] = block
 	reservation_ready["[z]"] = TRUE
 	clearing_reserved_turfs = FALSE
 
 /datum/controller/subsystem/mapping/proc/reserve_turfs(list/turfs)
-	for(var/i in turfs)
-		var/turf/T = i
+	for(var/turf/T as anything in turfs)
 		T.empty(RESERVED_TURF_TYPE, RESERVED_TURF_TYPE, null, TRUE)
 		LAZYINITLIST(unused_turfs["[T.z]"])
 		unused_turfs["[T.z]"] |= T
-		T.flags_1 |= UNUSED_RESERVATION_TURF_1
+		T.turf_flags |= UNUSED_RESERVATION_TURF
 		GLOB.areas_by_type[world.area].contents += T
 		CHECK_TICK
 
 /datum/controller/subsystem/mapping/proc/reg_in_areas_in_z(list/areas)
-	for(var/B in areas)
-		var/area/A = B
+	for(var/area/A as anything in areas)
 		A.reg_in_areas_in_z()
 
 /datum/controller/subsystem/mapping/proc/get_isolated_ruin_z()
@@ -480,3 +493,44 @@ SUBSYSTEM_DEF(mapping)
 		if(!istype(trait, trait_type))
 			continue
 		trait.remove_tracked(removing)
+
+/datum/controller/subsystem/mapping/proc/initialize_random_world_generation()
+	// Ensure we have space_level datums for compiled-in maps
+	InitializeDefaultZLevels()
+
+	// Load only Kalypso as the base
+	station_start = world.maxz + 1
+
+	#ifdef TESTING
+	message_admins("Loading Kalypso for random world generation...")
+	#endif
+
+	var/list/FailedZs = list()
+	LoadGroup(FailedZs, "Kalypso", config.map_path, config.map_file, config.traits, ZTRAITS_TOWN)
+
+	if(LAZYLEN(FailedZs))
+		var/msg = "RED ALERT! Failed to load Kalypso for random world generation: [FailedZs[1]]"
+		message_admins(msg)
+		return
+
+	// Skip loading other z-levels - we only want Kalypso
+	log_world("Kalypso loaded successfully for random world generation")
+
+	// Generate the random world content
+	generate_random_world()
+
+	// Basic post-load setup
+	require_area_resort()
+	process_teleport_locs()
+	preloadTemplates()
+
+	// Add minimal transit level
+	transit = add_new_zlevel("Transit/Reserved", list(ZTRAIT_RESERVED = TRUE))
+	require_area_resort()
+	initialize_reserved_level(transit.z_value)
+	generate_z_level_linkages()
+	calculate_default_z_level_gravities()
+
+
+/datum/controller/subsystem/mapping/proc/generate_random_world()
+	generate_complete_world()

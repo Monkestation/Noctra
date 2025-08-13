@@ -4,10 +4,9 @@
 	name = "Master Blacksmith"
 	tutorial = "Dwarves, and humen who trained extensively under them in the art of smithing, \
 	become the most legendary smiths at their craft, gaining reputation beyond compare."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Dwarf",
+	allowed_races = list(\
+		SPEC_ID_HUMEN,\
+		SPEC_ID_DWARF,\
 	)
 	outfit = /datum/outfit/job/adventurer/masterblacksmith
 	maximum_possible_slots = 1
@@ -71,5 +70,5 @@
 		shirt = /obj/item/clothing/shirt/shortshirt
 	else
 		shoes = /obj/item/clothing/shoes/shortboots
-		armor = /obj/item/clothing/shirt/dress/gen/random
+		armor = /obj/item/clothing/shirt/dress/gen/colored/random
 		shirt = /obj/item/clothing/shirt/undershirt

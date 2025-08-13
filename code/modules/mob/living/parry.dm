@@ -1,4 +1,3 @@
-
 /**
  * Attempt to parry an attack
  * @param datum/intent/intenty The intent used for the attack
@@ -7,7 +6,7 @@
  * @return TRUE if parry successful, FALSE otherwise
  */
 /mob/living/proc/attempt_parry(datum/intent/intenty, mob/living/user, prob2defend)
-	if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS) || (pulledby == user && pulledby.grab_state >= GRAB_AGGRESSIVE) || (pulling == user && grab_state >= GRAB_AGGRESSIVE) ||  (world.time < last_parry + setparrytime && !istype(rmb_intent, /datum/rmb_intent/riposte)) || has_status_effect(/datum/status_effect/debuff/feinted) || has_status_effect(/datum/status_effect/debuff/riposted) || (intenty && !intenty.canparry))
+	if(HAS_TRAIT(src, TRAIT_CHUNKYFINGERS) || (pulledby && pulledby.grab_state >= GRAB_AGGRESSIVE) || (pulling && grab_state >= GRAB_AGGRESSIVE) ||  (world.time < last_parry + setparrytime && !istype(rmb_intent, /datum/rmb_intent/riposte)) || has_status_effect(/datum/status_effect/debuff/feinted) || has_status_effect(/datum/status_effect/debuff/riposted) || (intenty && !intenty.canparry))
 		return FALSE
 
 	last_parry = world.time
@@ -40,14 +39,40 @@
 
 	// Clamp and roll
 	prob2defend = clamp(prob2defend, 5, 95)
-	if(src.client?.prefs.showrolls)
-		to_chat(src, "<span class='info'>Roll to parry... [prob2defend]%</span>")
+
+	var/attacker_dualwielding = user.dual_wielding_check()
+	var/defender_dualwielding = dual_wielding_check()
+
+	// rolls for defender
+	if(client?.prefs.showrolls)
+		var/text = "Roll to parry... [prob2defend]%"
+		if(attacker_dualwielding)
+			if(defender_dualwielding)
+				text += " Our dual wielding cancels out!"
+			else	//If we're defending against or as a dual wielder, we roll disadv. But if we're both dual wielding it cancels out.
+				text += " Twice! Disadvantage!"
+		to_chat(src, span_info("[text]"))
 
 	// Check if parry is successful
+	var/parry_status = TRUE
 	if(!prob(prob2defend))
-		to_chat(src, "<span class='warning'>The enemy defeated my parry!</span>")
+		parry_status = FALSE
+	if(attacker_dualwielding && !defender_dualwielding) // 2 times if dualwielding
+		if(!prob(prob2defend))
+			parry_status = FALSE
+
+	if(!parry_status)
+		to_chat(src, span_warning("The enemy defeated my parry!"))
 		return FALSE
 
+	var/attacker_feedback
+	if(user.client?.prefs.showrolls && attacker_dualwielding)
+		attacker_feedback = "Attacking with advantage."
+	if((defender_dualwielding && attacker_dualwielding) || (!defender_dualwielding && !attacker_dualwielding)) //They cancel each other out
+		if(attacker_feedback)
+			attacker_feedback += " Cancelled out!"
+	if(attacker_feedback)
+		to_chat(user, span_info("[attacker_feedback]"))
 
 	// Calculate additional drain for heavy weapons
 	var/obj/item/master = intenty.get_master_item()
@@ -226,8 +251,11 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 
+		if(H.stamina + parrydrain >= H.maximum_stamina)
+			to_chat(src, span_warning("I'm too tired to parry!"))
+			return FALSE
 		if(!H.adjust_stamina(parrydrain))
-			to_chat(src, "<span class='warning'>I'm too tired to parry!</span>")
+			to_chat(src, span_warning("I'm too tired to parry!"))
 			return FALSE
 		if(W)
 			playsound(get_turf(src), pick(W.parrysound), 100, FALSE)
@@ -252,7 +280,7 @@
 		log_defense(src, user, "parried", defending_item, attacking_item, "INTENT:[uppertext(user.used_intent.name)]")
 
 	if(src.client)
-		GLOB.vanderlin_round_stats[STATS_PARRIES]++
+		record_round_statistic(STATS_PARRIES)
 
 	return TRUE
 
@@ -281,6 +309,6 @@
 				   "hands", attacking_item, "INTENT:[uppertext(user.used_intent.name)]")
 
 	if(src.client)
-		GLOB.vanderlin_round_stats[STATS_PARRIES]++
+		record_round_statistic(STATS_PARRIES)
 
 	return TRUE

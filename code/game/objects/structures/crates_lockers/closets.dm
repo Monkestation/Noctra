@@ -40,8 +40,9 @@
 	can_add_lock = TRUE
 	lock = /datum/lock/key
 
-	var/base_icon_state
+	base_icon_state
 	var/alternative_icon_handling = FALSE
+	var/list/spawn_contents
 
 /obj/structure/closet/crate/Initialize()
 	. = ..()
@@ -49,12 +50,25 @@
 		base_icon_state = initial(icon_state)
 	update_appearance(UPDATE_ICON_STATE)
 
+/obj/structure/closet/get_save_vars()
+	. = ..()
+	for(var/obj/item/item in contents)
+		LAZYADD(spawn_contents, item.type)
+	. += NAMEOF(src, spawn_contents)
+
 /obj/structure/closet/Initialize(mapload)
+	if(length(spawn_contents))
+		for(var/atom/movable/spawning_atom as anything in spawn_contents)
+			new spawning_atom(get_turf(src))
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
 		addtimer(CALLBACK(src, PROC_REF(take_contents)), 0)
 	. = ..()
 	update_appearance(UPDATE_ICON_STATE)
 	PopulateContents()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/structure/closet/Destroy()
 	dump_contents()
@@ -74,10 +88,10 @@
 	open()
 	..()
 
-/obj/structure/closet/CanPass(atom/movable/mover, turf/target)
+/obj/structure/closet/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(wall_mounted)
 		return TRUE
-	return !density
 
 /obj/structure/closet/proc/can_open(mob/living/user)
 	if(welded || locked())
@@ -316,3 +330,10 @@
 
 /obj/structure/closet/AllowDrop()
 	return TRUE
+
+/// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Unlock and open up when we get knock casted.
+/obj/structure/closet/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/knock, mob/living/caster)
+	SIGNAL_HANDLER
+
+	INVOKE_ASYNC(src, PROC_REF(unlock))
+	INVOKE_ASYNC(src, PROC_REF(open))

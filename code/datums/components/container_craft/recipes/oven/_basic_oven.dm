@@ -292,3 +292,15 @@
 	requirements = list(/obj/item/reagent_containers/food/snacks/breadslice= 1)
 	output = /obj/item/reagent_containers/food/snacks/breadslice/toast
 	cooked_smell = /datum/pollutant/food/toast
+
+/datum/container_craft/oven/clay_brick
+	name = "Brick"
+	requirements = list(/obj/item/natural/raw_brick= 1)
+	output = /obj/item/natural/brick
+	cooked_smell = null
+
+/datum/container_craft/oven/coffeebean
+	name = "Roasted Coffee-Beans"
+	requirements = list(/obj/item/reagent_containers/food/snacks/produce/coffeebeans= 1)
+	output = /obj/item/reagent_containers/food/snacks/produce/coffeebeansroasted
+	cooked_smell = null

@@ -103,11 +103,11 @@
 	name = "Fertillizing Ash (6)"
 	cost = 15
 	contains = list(
-		/obj/item/ash,
-		/obj/item/ash,
-		/obj/item/ash,
-		/obj/item/ash,
-		/obj/item/ash
+		/obj/item/fertilizer/ash,
+		/obj/item/fertilizer/ash,
+		/obj/item/fertilizer/ash,
+		/obj/item/fertilizer/ash,
+		/obj/item/fertilizer/ash
 	)
 
 /datum/supply_pack/rawmats/sinew
@@ -123,7 +123,7 @@
 	)
 /datum/supply_pack/rawmats/riddle_of_steel
 	name = "Riddle of Steel"
-	cost = 1100
+	cost = 600
 	contains = list(
 		/obj/item/riddleofsteel
 	)

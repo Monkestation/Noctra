@@ -12,12 +12,15 @@
 	spawn_positions = 1
 	min_pq = 6
 
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = RACES_PLAYER_NONDISCRIMINATED
+	allowed_races = RACES_PLAYER_COURT_PHYSICIAN
 
 	outfit = /datum/outfit/job/courtphys
 	give_bank_account = 100
 	cmode_music = 'sound/music/cmode/nobility/combat_physician.ogg'
+
+	spells = list(
+		/datum/action/cooldown/spell/diagnose,
+	)
 
 /datum/outfit/job/courtphys
 	job_bitflag = BITFLAG_ROYALTY
@@ -26,7 +29,7 @@
 	. = ..()
 	H.virginity = TRUE
 	shoes = /obj/item/clothing/shoes/shortboots
-	shirt = /obj/item/clothing/shirt/tunic/green
+	shirt = /obj/item/clothing/shirt/tunic/colored/green
 	backr = /obj/item/storage/backpack/satchel
 	backl = /obj/item/storage/backpack/satchel/surgbag
 	gloves = /obj/item/clothing/gloves/leather/feld
@@ -35,11 +38,12 @@
 	neck = /obj/item/clothing/neck/coif/cloth
 	belt = /obj/item/storage/belt/leather
 	beltl = /obj/item/storage/keyring/physician
+	beltr = /obj/item/weapon/whip/cane/physician
 	cloak = /obj/item/clothing/cloak/apron/brown
 	if(H.gender == FEMALE)
-		pants = /obj/item/clothing/pants/skirt/green
+		pants = /obj/item/clothing/pants/skirt/colored/green
 	else
-		pants = /obj/item/clothing/pants/tights/green
+		pants = /obj/item/clothing/pants/tights/colored/green
 	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
@@ -58,4 +62,3 @@
 	ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_LEGENDARY_ALCHEMIST, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
-	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/invoked/diagnose/secular)

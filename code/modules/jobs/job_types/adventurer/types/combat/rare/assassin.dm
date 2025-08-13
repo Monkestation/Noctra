@@ -6,10 +6,9 @@
 	outfit = /datum/outfit/job/adventurer/assassin
 	category_tags = list(CTAG_PILGRIM)
 	maximum_possible_slots = 2
-	min_pq = 0
 	pickprob = 100
 	displays_adv_job = FALSE //this prevents advjob from being set back to "Assassin" in equipme
-	min_pq = 10
+	min_pq = 6
 
 /datum/outfit/job/adventurer/assassin/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -49,23 +48,23 @@
 			H.adjust_skillrank(/datum/skill/misc/music, 1, TRUE) //Have to know to "PLAY" the part... Eh? Eh?
 			head = /obj/item/clothing/head/bardhat
 			shoes = /obj/item/clothing/shoes/boots
-			pants = /obj/item/clothing/pants/tights/random
+			pants = /obj/item/clothing/pants/tights/colored/random
 			shirt = /obj/item/clothing/shirt/shortshirt
 			belt = /obj/item/storage/belt/leather/assassin
 			armor = /obj/item/clothing/armor/leather/vest
-			cloak = /obj/item/clothing/cloak/raincloak/red
+			cloak = /obj/item/clothing/cloak/raincloak/colored/red
 			backl = /obj/item/storage/backpack/satchel
 			beltr = /obj/item/weapon/knife/dagger/steel/special
 			beltl = /obj/item/storage/belt/pouch/coins/poor
 			backpack_contents = list(/obj/item/flint)
 			if(H.dna?.species)
-				if(H.dna.species.id == "human")
+				if(ishuman(H))
 					backr = /obj/item/instrument/lute
-				if(H.dna.species.id == "dwarf")
+				else if(isdwarf(H))
 					backr = /obj/item/instrument/accord
-				if(H.dna.species.id == "elf")
+				else if(iself(H))
 					backr = /obj/item/instrument/harp
-				if(H.dna.species.id == "tiefling")
+				else if(istiefling(H))
 					backr = /obj/item/instrument/guitar
 		if("Beggar") //The sole "town" disguise available.
 			H.job = "Beggar"
@@ -73,13 +72,13 @@
 			if(H.gender == FEMALE)
 				armor = /obj/item/clothing/shirt/rags
 			else
-				pants = /obj/item/clothing/pants/tights/vagrant
-				shirt = /obj/item/clothing/shirt/undershirt/vagrant
+				pants = /obj/item/clothing/pants/tights/colored/vagrant
+				shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 		if("Fisher")
 			H.adjust_skillrank(/datum/skill/labor/fishing, 1, TRUE) //Have to know to play the part.
 			if(H.gender == MALE)
-				pants = /obj/item/clothing/pants/tights/random
-				shirt = /obj/item/clothing/shirt/shortshirt/random
+				pants = /obj/item/clothing/pants/tights/colored/random
+				shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 				shoes = /obj/item/clothing/shoes/boots/leather
 				neck = /obj/item/storage/belt/pouch/coins/poor
 				head = /obj/item/clothing/head/fisherhat
@@ -92,7 +91,7 @@
 				beltl = /obj/item/flint
 				backpack_contents = list(/obj/item/weapon/knife/hunting = 1, /obj/item/natural/worms = 1, /obj/item/weapon/shovel/small = 1)
 			else
-				shirt = /obj/item/clothing/shirt/dress/gen/random
+				shirt = /obj/item/clothing/shirt/dress/gen/colored/random
 				armor = /obj/item/clothing/armor/gambeson/light/striped
 				shoes = /obj/item/clothing/shoes/boots/leather
 				neck = /obj/item/storage/belt/pouch/coins/poor
@@ -106,11 +105,11 @@
 		if("Hunter")
 			H.adjust_skillrank(/datum/skill/combat/bows, 2, TRUE) //The assassin trades their crossbow abilities to match their disguise.
 			H.adjust_skillrank(/datum/skill/combat/crossbows, -2, TRUE)
-			pants = /obj/item/clothing/pants/tights/random
-			shirt = /obj/item/clothing/shirt/shortshirt/random
+			pants = /obj/item/clothing/pants/tights/colored/random
+			shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 			shoes = /obj/item/clothing/shoes/boots/leather
 			neck = /obj/item/storage/belt/pouch/coins/poor
-			cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/furcloak/colored/brown
 			backr = /obj/item/storage/backpack/satchel
 			backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 			belt = /obj/item/storage/belt/leather/assassin
@@ -125,7 +124,7 @@
 			head = /obj/item/clothing/head/armingcap
 			pants = /obj/item/clothing/pants/trou
 			armor = /obj/item/clothing/armor/gambeson/light/striped
-			shirt = /obj/item/clothing/shirt/undershirt/random
+			shirt = /obj/item/clothing/shirt/undershirt/colored/random
 			shoes = /obj/item/clothing/shoes/boots/leather
 			belt = /obj/item/storage/belt/leather/assassin
 			neck = /obj/item/storage/belt/pouch/coins/poor
@@ -149,8 +148,8 @@
 			ring = /obj/item/clothing/ring/silver
 			if(H.gender == MALE)
 				H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE) //The male noble's sword is less useful than the female noble's bow, so no downside.
-				pants = /obj/item/clothing/pants/tights/black
-				shirt = /obj/item/clothing/shirt/tunic/random
+				pants = /obj/item/clothing/pants/tights/colored/black
+				shirt = /obj/item/clothing/shirt/tunic/colored/random
 				cloak = /obj/item/clothing/cloak/raincloak/furcloak
 				head = /obj/item/clothing/head/fancyhat
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
@@ -160,7 +159,7 @@
 			else
 				H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE) //Female nobles get the male noble's bow, but are less trained than an Assassin disguising as a Hunter. Balance.
 				H.adjust_skillrank(/datum/skill/combat/crossbows, -1, TRUE)
-				shirt = /obj/item/clothing/shirt/dress/silkdress/random
+				shirt = /obj/item/clothing/shirt/dress/silkdress/colored/random
 				head = /obj/item/clothing/head/hatfur
 				cloak = /obj/item/clothing/cloak/raincloak/furcloak
 				backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
@@ -170,7 +169,7 @@
 		if("Peasant")
 			H.adjust_skillrank(/datum/skill/labor/farming, 1, TRUE)
 			belt = /obj/item/storage/belt/leather/assassin
-			shirt = /obj/item/clothing/shirt/undershirt/random
+			shirt = /obj/item/clothing/shirt/undershirt/colored/random
 			pants = /obj/item/clothing/pants/trou
 			head = /obj/item/clothing/head/strawhat
 			shoes = /obj/item/clothing/shoes/simpleshoes
@@ -185,15 +184,15 @@
 			H.put_in_hands(P, forced = TRUE)
 			if(H.gender == FEMALE)
 				head = /obj/item/clothing/head/armingcap
-				armor = /obj/item/clothing/shirt/dress/gen/random
+				armor = /obj/item/clothing/shirt/dress/gen/colored/random
 				shirt = /obj/item/clothing/shirt/undershirt
 				pants = null
-			backpack_contents = list(/obj/item/neuFarm/seed/wheat=1,/obj/item/neuFarm/seed/apple=1,/obj/item/ash=1,/obj/item/weapon/knife/villager=1)
+			backpack_contents = list(/obj/item/neuFarm/seed/wheat=1,/obj/item/neuFarm/seed/apple=1,/obj/item/fertilizer/ash=1,/obj/item/weapon/knife/villager=1)
 		if("Carpenter")
 			H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE) //Use the axe...
 			H.adjust_skillrank(/datum/skill/combat/swords, -2, TRUE)
 			belt = /obj/item/storage/belt/leather/assassin
-			shirt = /obj/item/clothing/shirt/undershirt/random
+			shirt = /obj/item/clothing/shirt/undershirt/colored/random
 			pants = /obj/item/clothing/pants/trou
 			head = pick(/obj/item/clothing/head/hatfur, /obj/item/clothing/head/hatblu, /obj/item/clothing/head/brimmed)
 			shoes = /obj/item/clothing/shoes/boots/leather
@@ -207,7 +206,7 @@
 			backl = /obj/item/storage/backpack/backpack
 			backpack_contents = list(/obj/item/flint = 1, /obj/item/weapon/knife/villager = 1)
 		if("Thief")
-			shirt = /obj/item/clothing/shirt/undershirt/black
+			shirt = /obj/item/clothing/shirt/undershirt/colored/black
 			gloves = /obj/item/clothing/gloves/fingerless
 			pants = /obj/item/clothing/pants/trou/leather
 			shoes = /obj/item/clothing/shoes/boots
@@ -215,7 +214,7 @@
 			belt = /obj/item/storage/belt/leather/assassin
 			beltr = /obj/item/weapon/mace/cudgel
 			beltl = /obj/item/storage/belt/pouch/coins/poor
-			cloak = /obj/item/clothing/cloak/raincloak/mortus
+			cloak = /obj/item/clothing/cloak/raincloak/colored/mortus
 		if("Ranger")
 			if(H.gender == MALE)
 				pants = /obj/item/clothing/pants/trou/leather
@@ -223,7 +222,7 @@
 			else
 				pants = /obj/item/clothing/pants/tights
 				if(prob(50))
-					pants = /obj/item/clothing/pants/tights/black
+					pants = /obj/item/clothing/pants/tights/colored/black
 				shirt = /obj/item/clothing/shirt/undershirt
 			if(prob(23))
 				gloves = /obj/item/clothing/gloves/leather
@@ -232,9 +231,9 @@
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			belt = /obj/item/storage/belt/leather/assassin
 			armor = /obj/item/clothing/armor/leather/hide
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			if(prob(33))
-				cloak = /obj/item/clothing/cloak/raincloak/green
+				cloak = /obj/item/clothing/cloak/raincloak/colored/green
 			backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 			backl = /obj/item/storage/backpack/satchel
 			beltr = /obj/item/flashlight/flare/torch/lantern
@@ -248,12 +247,12 @@
 			H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/cooking, 3, TRUE) // Trustworthy poisoner.
 			shoes = /obj/item/clothing/shoes/simpleshoes
-			pants = /obj/item/clothing/pants/tights/uncolored
-			shirt = /obj/item/clothing/shirt/undershirt/uncolored
+			pants = /obj/item/clothing/pants/tights/colored/uncolored
+			shirt = /obj/item/clothing/shirt/undershirt/colored/uncolored
 			belt = /obj/item/storage/belt/leather/assassin
 			beltl = /obj/item/storage/belt/pouch/coins/poor
 			if(H.gender == MALE)
-				armor = /obj/item/clothing/armor/leather/vest/black
+				armor = /obj/item/clothing/armor/leather/vest/colored/black
 			else
 				cloak = /obj/item/clothing/cloak/apron
 			backpack_contents = list(/obj/item/recipe_book/cooking = 1)
@@ -268,7 +267,7 @@
 			beltl = /obj/item/storage/belt/pouch/coins/poor
 			beltr = /obj/item/weapon/knife/dagger/steel
 			cloak = /obj/item/clothing/cloak/faceless
-			shirt = /obj/item/clothing/shirt/undershirt/black
+			shirt = /obj/item/clothing/shirt/undershirt/colored/black
 			mask = /obj/item/clothing/face/lordmask/faceless
 			backpack_contents = list(/obj/item/reagent_containers/glass/bottle/poison, /obj/item/weapon/knife/dagger/steel/profane, /obj/item/lockpick, /obj/item/storage/fancy/cigarettes/zig, /obj/item/flint)
 			ADD_TRAIT(H, TRAIT_FACELESS, TRAIT_GENERIC)
@@ -285,7 +284,7 @@
 
 	H.change_stat(STATKEY_PER, 2)
 	H.change_stat(STATKEY_SPD, 2)
-	if(H.dna.species.id == "human")
+	if(H.dna.species.id == SPEC_ID_HUMEN)
 		if(H.gender == "male")
 			H.dna.species.soundpack_m = new /datum/voicepack/male/assassin()
 		else

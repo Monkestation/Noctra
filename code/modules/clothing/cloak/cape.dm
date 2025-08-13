@@ -36,8 +36,4 @@
 /obj/item/clothing/cloak/cape/archivist
 	icon_state = "puritan_cape"
 	color = CLOTHING_SOOT_BLACK
-	allowed_race = list("human", "tiefling", "elf", "dwarf", "aasimar")
-
-/obj/item/clothing/cloak/cape/rogue
-	name = "cape"
-	icon_state = "chasuble"
+	allowed_race = SPECIES_BASE_BODY

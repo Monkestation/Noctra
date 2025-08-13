@@ -1,16 +1,16 @@
-/obj/item/ash
+/obj/item/fertilizer/ash
 	name = "ash"
 	desc = "A handful of soot."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/ash/burn()
+/obj/item/fertilizer/ash/burn()
 	if(resistance_flags & ON_FIRE)
 		SSfire_burning.processing -= src
 	deconstruct(FALSE)
 
-/obj/item/ash/Crossed(mob/living/L)
+/obj/item/fertilizer/ash/Crossed(mob/living/L)
 	. = ..()
 	if(istype(L))
 		var/prob2break = 33

@@ -151,7 +151,7 @@
 				[item]
 			</label>"}
 
-	..(user, ckey("[user]-[message]-[title]-[world.time]-[rand(1,10000)]"), title, 350, 300, src, TRUE, timeout)
+	..(user, ckey("[user]-[message]-[title]-[world.time]-[rand(1,10000)]"), title, 350, 350, src, TRUE, timeout)
 	set_content({"
 	<form style="width: 100%; height: 100%;" action="byond://">
 		<input type="hidden" name="src" value="[REF(src)]">
@@ -161,7 +161,7 @@
 		</div>
 
 		[NULLABLE(length(choices) > 9) && \
-		"<input style='margin: 0.25em 0; z-index: 5' id='searchbar' type='text' placeholder='CULL...' autofocus/>"]
+		"<input style='margin: 0.25em 0; z-index: 5' id='searchbar' type='text' placeholder='Find...' autofocus/>"]
 		<div style="display: flex; margin-top: auto; justify-content: space-between; text-align: center;">
 			<button type="submit" name="submit" value="[TRUE]">[CHOICE_CONFIRM]</button>
 			<button type="submit" name="cancel" value="[TRUE]" formnovalidate>[CHOICE_CANCEL]</button>

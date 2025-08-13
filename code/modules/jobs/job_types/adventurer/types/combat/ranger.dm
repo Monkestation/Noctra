@@ -2,16 +2,15 @@
 	name = "Ranger"
 	tutorial = "Humen and elf rangers often live among each other, as these bow-wielding \
 	adventurers are often scouting the lands for the same purpose."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Elf",
-		"Half-Elf",
-		"Tiefling",
-		"Dark Elf",
-		"Aasimar",
-		"Half-Orc",
-		"Rakshari"
+	allowed_races = list(\
+		SPEC_ID_HUMEN,\
+		SPEC_ID_ELF,\
+		SPEC_ID_HALF_ELF,\
+		SPEC_ID_TIEFLING,\
+		SPEC_ID_DROW,\
+		SPEC_ID_AASIMAR,\
+		SPEC_ID_HALF_ORC,\
+		SPEC_ID_RAKSHARI,\
 	)
 	outfit = /datum/outfit/job/adventurer/ranger
 	min_pq = 0
@@ -43,7 +42,7 @@
 	else
 		pants = /obj/item/clothing/pants/tights
 		if(prob(50))
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 		shirt = /obj/item/clothing/shirt/undershirt
 	if(prob(23))
 		gloves = /obj/item/clothing/gloves/leather
@@ -52,9 +51,9 @@
 	wrists = /obj/item/clothing/wrists/bracers/leather
 	belt = /obj/item/storage/belt/leather
 	armor = /obj/item/clothing/armor/leather/hide
-	cloak = /obj/item/clothing/cloak/raincloak/brown
+	cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 	if(prob(33))
-		cloak = /obj/item/clothing/cloak/raincloak/green
+		cloak = /obj/item/clothing/cloak/raincloak/colored/green
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 	backl = /obj/item/storage/backpack/satchel
 	beltr = /obj/item/flashlight/flare/torch/lantern

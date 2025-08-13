@@ -85,7 +85,7 @@
 	salvage_result = /obj/item/rope
 	component_type = /datum/component/storage/concrete/grid/belt/cloth
 
-/obj/item/storage/belt/leather/rope/attack_self(mob/user)
+/obj/item/storage/belt/leather/rope/attack_self(mob/user, params)
 	. = ..()
 	to_chat(user, span_notice("You begin untying [src]."))
 	if(do_after(user, 1.5 SECONDS, src))
@@ -99,7 +99,7 @@
 	salvage_result = /obj/item/natural/cloth
 	component_type = /datum/component/storage/concrete/grid/belt/cloth
 
-/obj/item/storage/belt/leather/cloth/attack_self(mob/user)
+/obj/item/storage/belt/leather/cloth/attack_self(mob/user, params)
 	. = ..()
 	to_chat(user, span_notice("You begin untying [src]."))
 	if(do_after(user, 1.5 SECONDS, src))
@@ -251,13 +251,6 @@
 /obj/item/storage/backpack/satchel/black
 	color = CLOTHING_SOOT_BLACK
 
-/obj/item/storage/backpack/attack_right(mob/user)
-	var/datum/component/storage/CP = GetComponent(/datum/component/storage)
-	if(CP)
-		CP.rmb_show(user)
-		return TRUE
-
-
 /obj/item/storage/backpack/backpack
 	name = "backpack"
 	desc = "A bulky backpack worn on the back which can store many items."
@@ -299,6 +292,20 @@
 		/obj/item/weapon/surgery/hammer,
 	)
 	component_type = /datum/component/storage/concrete/grid/surgery_bag
+
+/obj/item/surgeontoolspawner
+	name = "set of surgery tools"
+
+/obj/item/surgeontoolspawner/OnCrafted(dirin, mob/user)
+	. = ..()
+	new /obj/item/weapon/surgery/scalpel(loc)
+	new /obj/item/weapon/surgery/saw(loc)
+	new /obj/item/weapon/surgery/hemostat(loc)
+	new /obj/item/weapon/surgery/retractor(loc)
+	new /obj/item/weapon/surgery/bonesetter(loc)
+	new /obj/item/weapon/surgery/cautery(loc)
+	new /obj/item/weapon/surgery/hammer(loc)
+	qdel(src)
 
 /obj/item/storage/backpack/satchel/surgbag/shit
 	populate_contents = list(
@@ -352,14 +359,17 @@
 		return TRUE
 	. = ..()
 
-/obj/item/storage/belt/leather/knifebelt/attack_right(mob/user)
+/obj/item/storage/belt/leather/knifebelt/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(length(contents))
 		var/list/knives = list()
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/weapon/knife/throwingknife, drop_location(), amount = 1, check_adjacent = TRUE, user = user, inserted = knives)
 		for(var/knife in knives)
-			user.put_in_active_hand(knife)
-			break
-		return TRUE
+			if(!user.put_in_active_hand(knife))
+				break
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/storage/belt/leather/knifebelt/examine(mob/user)
 	. = ..()
@@ -434,7 +444,7 @@
 	name = "bronze head hook"
 	desc = "a bronze hook for storing 12 heads"
 	icon = 'icons/roguetown/clothing/belts.dmi'
-	//mob_overlay_icon = 'icons/roguetown/clothing/onmob/belts.dmi'
+	//mob_overlay_icon = 'icons/roguetown/clothing/onmob/belts.dmi' // TODO
 	icon_state = "bronzeheadhook"
 	item_state = "bronzeheadhook"
 	slot_flags = ITEM_SLOT_HIP
@@ -456,19 +466,19 @@
 	if(length(contents))
 		. += span_notice("[length(contents)] thing[length(contents) > 1 ? "s" : ""] in [src].")
 
-///obj/item/storage/hip/headhook/royal //N/A uncomment this whole thing when this actually has sprites to use, everything else about it works fine
-	//name = "royal head hook"
-	//desc = "a golden hook for storing 16 heads, befitting of any king's hunt"
-	//icon = 'icons/roguetown/clothing/belts.dmi' //N/A uncomment when a mob_overlay icon is made and added
-	//mob_overlay_icon = 'icons/roguetown/clothing/onmob/belts.dmi'
-	//icon_state = "knife"
-	//item_state = "knife"
-	//slot_flags = ITEM_SLOT_HIP
-	//w_class = WEIGHT_CLASS_NORMAL
-	//max_integrity = 400
-	//equip_sound = 'sound/blank.ogg'
-	//sellprice = 250
-	//bloody_icon_state = "bodyblood"
-	//anvilrepair = /datum/skill/craft/blacksmithing
-	//smeltresult = /obj/item/ingot/gold
-	//component_type = /datum/component/storage/concrete/grid/headhook/bronze
+/obj/item/storage/hip/headhook/royal
+	name = "royal head hook"
+	desc = "a golden hook for storing 16 heads, befitting of any king's hunt"
+	icon = 'icons/roguetown/clothing/belts.dmi'
+	//mob_overlay_icon = 'icons/roguetown/clothing/onmob/belts.dmi' // TODO
+	icon_state = "goldheadhook" // coder sprite  , if you can improve it would be nice
+	item_state = "goldheadhook"
+	slot_flags = ITEM_SLOT_HIP
+	w_class = WEIGHT_CLASS_NORMAL
+	max_integrity = 400
+	equip_sound = 'sound/blank.ogg'
+	sellprice = 160
+	bloody_icon_state = "bodyblood"
+	anvilrepair = /datum/skill/craft/blacksmithing
+	smeltresult = /obj/item/ingot/gold
+	component_type = /datum/component/storage/concrete/grid/headhook/bronze

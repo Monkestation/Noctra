@@ -3,7 +3,7 @@
 
 /// Verb to change the global command name.
 /client/proc/cmd_change_command_name()
-	set category = "Special Verbs"
+	set category = "Special"
 	set name = "Change Command Name"
 
 	if(!check_rights(R_ADMIN))
@@ -18,7 +18,7 @@
 
 /// Verb to open the create command report window and send command reports.
 /client/proc/cmd_admin_create_centcom_report()
-	set category = "Special Verbs"
+	set category = "Special"
 	set name = "Create Command Report"
 
 	if(!check_rights(R_ADMIN))

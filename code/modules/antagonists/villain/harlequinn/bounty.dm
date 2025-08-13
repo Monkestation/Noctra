@@ -19,12 +19,15 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 	var/last_harlequin_spawn = 0
 	COOLDOWN_DECLARE(bounty_marker)
 
-/obj/structure/bounty_board/attack_right(mob/user)
+/obj/structure/bounty_board/attack_hand_secondary(mob/user, params)
 	. = ..()
-	if(!COOLDOWN_FINISHED(src, bounty_marker))
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
+	if(!COOLDOWN_FINISHED(src, bounty_marker))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	COOLDOWN_START(src, bounty_marker, 30 SECONDS)
 	new /obj/item/bounty_marker(get_turf(src))
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/bounty_board/Initialize()
 	. = ..()
@@ -1797,7 +1800,7 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 	var/list/marked_targets = list()
 	var/max_targets = 5 // Maximum number of targets that can be marked
 
-/obj/item/bounty_marker/attack_self(mob/user)
+/obj/item/bounty_marker/attack_self(mob/user, params)
 	if(!marked_targets.len)
 		to_chat(user, span_warning("No targets have been marked with this device."))
 		return
@@ -1890,7 +1893,7 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 /datum/marked_target/proc/mark_as_used()
 	used_in_contract = TRUE
 
-/proc/add_mammons_to_atom(atom/movable/target, mammons_to_add)
+/proc/add_mammons_to_atom(mob/target, mammons_to_add)
 	if(!target || mammons_to_add <= 0)
 		return FALSE
 
@@ -1921,7 +1924,11 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 		if(!best_coin_type)
 			break // Can't create any more coins
 
-		var/obj/item/coin/new_coin = new best_coin_type(target)
+		var/obj/item/coin/new_coin = new best_coin_type(get_turf(target))
+		if(ismob(target))
+			target.put_in_hand(new_coin)
+		else
+			new_coin.forceMove(target)
 		var/quantity_to_add = min(remaining_mammons / best_value, 20) // Max stack
 		new_coin.quantity = quantity_to_add
 		remaining_mammons -= quantity_to_add * best_value

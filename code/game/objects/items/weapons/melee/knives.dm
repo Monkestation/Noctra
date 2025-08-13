@@ -293,7 +293,10 @@
 	max_integrity = 240 // .8 of steel
 	sellprice = 45
 	last_used = 0
-	is_silver = TRUE
+
+/obj/item/weapon/knife/dagger/silver/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 //................ Psydonian Dagger ............... //
 /obj/item/weapon/knife/dagger/psydon
@@ -302,7 +305,10 @@
 	icon_state = "psydagger"
 	melting_material = null
 	sellprice = 60
-	is_silver = TRUE
+
+/obj/item/weapon/knife/dagger/psydon/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 //................ Profane Dagger ............... //
 /obj/item/weapon/knife/dagger/steel/profane
@@ -416,7 +422,7 @@
 
 /obj/item/weapon/knife/dagger/steel/profane/proc/init_profane_soul(mob/living/carbon/human/target, mob/user)
 	record_featured_stat(FEATURED_STATS_CRIMINALS, user)
-	GLOB.vanderlin_round_stats[STATS_ASSASSINATIONS]++
+	record_round_statistic(STATS_ASSASSINATIONS)
 	var/mob/dead/observer/profane/S = new /mob/dead/observer/profane(src)
 	S.AddComponent(/datum/component/profaned, src)
 	S.name = "soul of [target.real_name]"
@@ -480,7 +486,7 @@
 	max_integrity = 30
 	max_blade_int = 30
 	wdefense = TERRIBLE_PARRY
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 	melting_material = null
 	sellprice = 5
 
@@ -522,6 +528,7 @@
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 25, "embedded_fall_chance" = 20)
 	melting_material = /datum/material/iron
 	melt_amount = 50
+	sellprice = 3
 
 /obj/item/weapon/knife/throwingknife/steel
 	name = "steel tossblade"
@@ -535,6 +542,7 @@
 	icon_state = "throw_knifes"
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 30, "embedded_fall_chance" = 15)
 	melt_amount = 50
+	sellprice = 4
 
 /obj/item/weapon/knife/throwingknife/psydon
 	name = "psydonian tossblade"
@@ -547,7 +555,10 @@
 	wdefense = 3
 	icon_state = "throw_knifes"
 	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 50, "embedded_fall_chance" = 0)
-	is_silver = TRUE
 	sellprice = 65
 	melting_material = /datum/material/silver
 	melt_amount = 50
+
+/obj/item/weapon/knife/throwingknife/psydon/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)

@@ -91,6 +91,7 @@
 	var/mob/living/carbon/spouse_mob
 	var/image/spouse_indicator
 	var/setspouse
+	var/gender_choice_pref = ANY_GENDER
 	var/familytree_pref = FAMILY_NONE
 	var/datum/heritage/family_datum
 	var/list/temp_ui_list = list()
@@ -126,7 +127,10 @@
 
 	rot_type = /datum/component/rot/corpse
 
-	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	/// voice type of the mob
+	var/voice_type = null //  defines what sound pack we use. keep this null so mobs resort to their typical gender typing - preferences set this
+
+	blocks_emissive = NONE
 	var/datum/charflaw/charflaw
 
 	/// List of curses on this mob
@@ -138,9 +142,6 @@
 	var/mob/stored_mob = null // werewolf bullshit
 
 	fovangle = FOV_DEFAULT // our fov
-
-	var/mob/living/carbon/human/hostagetaker //Stores the person that took us hostage in a var, allows us to force them to attack the mob and such
-	var/mob/living/carbon/human/hostage //What hostage we have
 
 //Checking the highest armor class worn
 //Limb armors use the second highest armor class

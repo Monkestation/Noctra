@@ -31,6 +31,12 @@
 	armor = ARMOR_PADDED_BAD
 	prevent_crits = MINOR_CRITICALS
 
+/obj/item/clothing/armor/gambeson/light/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
+/obj/item/clothing/armor/gambeson/light/colored/black
+	color = CLOTHING_SOOT_BLACK
+
 /obj/item/clothing/armor/gambeson/heavy
 	name = "padded gambeson"
 	desc = "Thick, padded, this will help a little even against arrows. A wise man carried steel as well, but it will do in a pinch."
@@ -39,6 +45,11 @@
 
 	armor = ARMOR_PADDED_GOOD
 
+/obj/item/clothing/armor/gambeson/heavy/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
+/obj/item/clothing/armor/gambeson/heavy/colored/dark
+	color = CLOTHING_DARK_INK
 
 /obj/item/clothing/armor/gambeson/apothecary
 	name = "apothecary overcoat"
@@ -58,16 +69,12 @@
 	icon = 'icons/roguetown/clothing/special/steward.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/steward.dmi'
 
-/obj/item/clothing/armor/gambeson/heavy/dark
-	color = CLOTHING_DARK_INK
-
-
 //................ Padded Dress ............... //
 /obj/item/clothing/armor/gambeson/heavy/dress
 	name = "padded dress"
 	desc = "Favored by the female nobility, to maintain both vitality and good taste while out hunting."
 	icon_state = "armordress"
-	allowed_race = list("human", "tiefling", "elf", "aasimar")
+	allowed_race = SPECIES_BASE_BODY
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	sellprice = VALUE_PADDED_DRESS

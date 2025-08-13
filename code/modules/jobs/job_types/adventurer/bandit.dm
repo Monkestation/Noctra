@@ -33,7 +33,3 @@
 	if(!H.mind)
 		return
 	H.ambushable = FALSE
-
-/datum/outfit/job/bandit/post_equip(mob/living/carbon/human/H)
-	..()
-	addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup), "BANDIT"), 5 SECONDS)

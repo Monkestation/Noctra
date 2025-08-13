@@ -14,7 +14,7 @@
 	head = /obj/item/clothing/head/armingcap
 	pants = /obj/item/clothing/pants/trou
 	armor = /obj/item/clothing/armor/gambeson/light/striped
-	shirt = /obj/item/clothing/shirt/undershirt/random
+	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	shoes = /obj/item/clothing/shoes/boots/leather
 	belt = /obj/item/storage/belt/leather
 	neck = /obj/item/storage/belt/pouch/coins/poor
@@ -41,7 +41,7 @@
 		H.change_stat(STATKEY_END, 1)
 		H.change_stat(STATKEY_CON, 1)
 
-	if(H.dna.species.id == "dwarf")
+	if(H.dna.species.id == SPEC_ID_DWARF)
 		head = /obj/item/clothing/head/helmet/leather/minershelm
 		H.cmode_music = 'sound/music/cmode/combat_dwarf.ogg'
 	else

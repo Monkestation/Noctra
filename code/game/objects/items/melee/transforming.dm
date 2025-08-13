@@ -25,7 +25,7 @@
 	if(sharpness)
 		AddComponent(/datum/component/butchering, 50, 100, 0, hitsound)
 
-/obj/item/melee/transforming/attack_self(mob/living/carbon/user)
+/obj/item/melee/transforming/attack_self(mob/living/carbon/user, params)
 	transform_weapon(user)
 
 /obj/item/melee/transforming/attack(mob/living/target, mob/living/carbon/human/user)

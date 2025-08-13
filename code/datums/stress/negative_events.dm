@@ -73,7 +73,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.dna?.species)
-			return "<span class='red'>Another [H.dna.species.id] perished.</span>"
+			return "<span class='red'>Another [lowertext(H.dna.species.name)] perished.</span>"
 	return desc
 
 /datum/stressevent/viewdismember
@@ -361,7 +361,7 @@
 /datum/stressevent/tortured/on_apply(mob/living/user)
 	. = ..()
 	if(user.client)
-		GLOB.vanderlin_round_stats[STATS_TORTURES]++
+		record_round_statistic(STATS_TORTURES)
 
 /datum/stressevent/noble_bad_manners
 	stressadd = 1
@@ -405,7 +405,7 @@
 
 /datum/stressevent/night_owl_dawn
 	desc = span_warning("I don't like the dae..")
-	stressadd = 3
+	stressadd = 1
 	timer = 10 MINUTES
 
 /datum/stressevent/hithead
@@ -417,6 +417,11 @@
 	timer = 5 MINUTES
 	stressadd = 4
 	desc = span_warning("The gods have not taken kindly to my deeds.")
+
+/datum/stressevent/taken_hostage
+	timer = INFINITY
+	stressadd = 3
+	desc = span_red("I've been taken hostage!")
 
 /datum/stressevent/merc_fired
 	timer = 5 MINUTES

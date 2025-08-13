@@ -3,7 +3,6 @@
 	tutorial = "The blood of a noble family runs through your veins. Perhaps you are visiting from some place far away, \
 	looking to enjoy the hospitality of the ruler. You have many mammons to your name, but with wealth comes \
 	danger, so keep your wits and tread lightly..."
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_PLAYER_FOREIGNNOBLE
 	outfit = /datum/outfit/job/adventurer/noble
 	category_tags = list(CTAG_PILGRIM)
@@ -39,7 +38,7 @@
 		H.change_stat(STATKEY_SPD, 1)
 		H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/bows, 2, TRUE)
-		shirt = /obj/item/clothing/shirt/dress/silkdress/random
+		shirt = /obj/item/clothing/shirt/dress/silkdress/colored/random
 		head = /obj/item/clothing/head/hatfur
 		cloak = /obj/item/clothing/cloak/raincloak/furcloak
 		backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
@@ -50,8 +49,8 @@
 		H.change_stat(STATKEY_CON, 1)
 		H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/bows, 2, TRUE)
-		pants = /obj/item/clothing/pants/tights/black
-		shirt = /obj/item/clothing/shirt/tunic/random
+		pants = /obj/item/clothing/pants/tights/colored/black
+		shirt = /obj/item/clothing/shirt/tunic/colored/random
 		cloak = /obj/item/clothing/cloak/raincloak/furcloak
 		head = /obj/item/clothing/head/fancyhat
 		backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow

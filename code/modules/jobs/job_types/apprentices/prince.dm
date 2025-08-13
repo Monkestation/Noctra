@@ -12,18 +12,11 @@
 	faction = FACTION_TOWN
 	total_positions = 2
 	spawn_positions = 2
-	allowed_races = list(
-		"Humen",
-		"Half-Elf",
-		"Elf",
-		"Dwarf"
-	)
-
+	allowed_races = RACES_PLAYER_ROYALTY
 	spells = list(
-		/obj/effect/proc_holder/spell/self/grant_title,
+		/datum/action/cooldown/spell/undirected/list_target/grant_title,
 	)
 
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_ages = list(AGE_ADULT, AGE_CHILD)
 	cmode_music = 'sound/music/cmode/nobility/combat_noble.ogg'
 	advclass_cat_rolls = list(CTAG_HEIR = 20)
@@ -56,7 +49,7 @@
 /datum/outfit/job/heir/daring/pre_equip(mob/living/carbon/human/H)
 	..()
 	pants = /obj/item/clothing/pants/tights
-	shirt = /obj/item/clothing/shirt/undershirt/guard
+	shirt = /obj/item/clothing/shirt/undershirt/colored/guard
 	armor = /obj/item/clothing/armor/chainmail
 	shoes = /obj/item/clothing/shoes/nobleboot
 	belt = /obj/item/storage/belt/leather
@@ -109,7 +102,7 @@
 		head = /obj/item/clothing/head/hennin
 		shirt = /obj/item/clothing/shirt/dress/royal/princess
 		shoes = /obj/item/clothing/shoes/shortboots
-		pants = /obj/item/clothing/pants/tights/random
+		pants = /obj/item/clothing/pants/tights/colored/random
 		H.virginity = TRUE
 	H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/crossbows, pick(0,1), TRUE)
@@ -155,7 +148,7 @@
 		head = /obj/item/clothing/head/hennin
 		shirt = /obj/item/clothing/shirt/dress/royal/princess
 		shoes = /obj/item/clothing/shoes/shortboots
-		pants = /obj/item/clothing/pants/tights/random
+		pants = /obj/item/clothing/pants/tights/colored/random
 		H.virginity = TRUE
 
 	H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)

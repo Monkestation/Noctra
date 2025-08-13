@@ -1,5 +1,3 @@
-/atom/movable
-	var/list/extra_directions
 /*
 	Adjacency proc for determining touch range
 
@@ -39,7 +37,7 @@
 	// Non diagonal case
 	if(T0.x == x || T0.y == y)
 		// Check for border blockages
-		return T0.ClickCross(get_dir(T0,src), border_only = 1, target_atom = target, mover = mover) && src.ClickCross(get_dir(src,T0), border_only = 1, target_atom = target, mover = mover)
+		return T0.ClickCross(get_dir(T0,src), border_only = 1, target = target, mover = mover) && src.ClickCross(get_dir(src,T0), border_only = 1, target = target, mover = mover)
 
 	// Diagonal case
 	var/in_dir = get_dir(T0,src) // eg. northwest (1+8) = 9 (00001001)
@@ -47,16 +45,16 @@
 	var/d2 = in_dir&12			 // eg. west	  (1+8)&12 (0000 1100) = 8 (0000 1000)
 
 	for(var/d in list(d1,d2))
-		if(!T0.ClickCross(d, border_only = 1, target_atom = target, mover = mover))
+		if(!T0.ClickCross(d, border_only = 1, target = target, mover = mover))
 			continue // could not leave T0 in that direction
 
 		var/turf/T1 = get_step(T0,d)
 		if(!T1 || T1.density)
 			continue
-		if(!T1.ClickCross(get_dir(T1,src), border_only = 0, target_atom = target, mover = mover) || !T1.ClickCross(get_dir(T1,T0), border_only = 0, target_atom = target, mover = mover))
+		if(!T1.ClickCross(get_dir(T1,src), border_only = 0, target = target, mover = mover) || !T1.ClickCross(get_dir(T1,T0), border_only = 0, target = target, mover = mover))
 			continue // couldn't enter or couldn't leave T1
 
-		if(!src.ClickCross(get_dir(src,T1), border_only = 1, target_atom = target, mover = mover))
+		if(!src.ClickCross(get_dir(src,T1), border_only = 1, target = target, mover = mover))
 			continue // could not enter src
 
 		return 1 // we don't care about our own density
@@ -73,11 +71,6 @@
 	var/turf/T = loc
 	if(!istype(T))
 		return
-	if(length(extra_directions))
-		for(var/direction in extra_directions)
-			var/turf/dir_step = get_step(src, direction)
-			if(dir_step.Adjacent(neighbor,target = neighbor, mover = src))
-				return TRUE
 	if(T.Adjacent(neighbor,target = neighbor, mover = src))
 		return TRUE
 	return FALSE
@@ -92,23 +85,25 @@
 		return 0
 	return ..()
 
-/*
-	This checks if you there is uninterrupted airspace between that turf and this one.
-	This is defined as any dense ON_BORDER_1 object, or any dense object without LETPASSTHROW.
-	The border_only flag allows you to not objects (for source and destination squares)
-*/
-/turf/proc/ClickCross(target_dir, border_only, target_atom = null, atom/movable/mover = null)
+/**
+ *	This checks if you there is uninterrupted airspace between that turf and this one.
+ *	This is defined as any dense ON_BORDER_1 object, or any dense object without LETPASSTHROW.
+ *	The border_only flag allows you to not objects (for source and destination squares)
+ */
+/turf/proc/ClickCross(target_dir, border_only, atom/target, atom/movable/mover)
 	for(var/obj/O in src)
-		if(!O.density)
+		if((mover && O.CanPass(mover, target_dir)) || (!mover && !O.density))
 			continue
-		if((mover && O.CanPass(mover,get_step(src,target_dir))) || (!mover && !O.density))
-			continue
-		if(O == target_atom || O == mover || (O.pass_flags & LETPASSTHROW)) //check if there's a dense object present on the turf
-			continue // LETPASSTHROW is used for anything you can click through (or the firedoor special case, see above)
 
-		if( O.flags_1&ON_BORDER_1) // windows are on border, check them first
-			if( O.dir & target_dir || O.dir & (O.dir-1) ) // full tile windows are just diagonals mechanically
-				return 0								  //O.dir&(O.dir-1) is false for any cardinal direction, but true for diagonal ones
-		else if( !border_only ) // dense, not on border, cannot pass over
-			return 0
-	return 1
+		//If there's a dense object on the turf, only allow the click to pass if you can throw items over it or it has a special flag.
+		if(O == target || O == mover || (O.pass_flags_self & (LETPASSTHROW|LETPASSCLICKS)))
+			continue
+
+		if(O.flags_1 & ON_BORDER_1) // windows are on border, check them first
+			if(O.dir & target_dir || O.dir & (O.dir - 1) ) // full tile windows are just diagonals mechanically
+				return FALSE //O.dir&(O.dir-1) is false for any cardinal direction, but true for diagonal ones
+
+		else if(!border_only) // dense, not on border, cannot pass over
+			return FALSE
+
+	return TRUE

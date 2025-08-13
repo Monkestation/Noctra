@@ -1,9 +1,10 @@
+GLOBAL_LIST_EMPTY(last_words)
+
 /mob/living/gib(no_brain, no_organs, no_bodyparts)
 	var/prev_lying = lying_angle
 	if(stat != DEAD)
 		death(TRUE)
-	if(client)
-		SSdroning.kill_droning(client)
+
 	playsound(src.loc, pick('sound/combat/gib (1).ogg','sound/combat/gib (2).ogg'), 200, FALSE, 3)
 
 	if(!prev_lying)
@@ -55,7 +56,7 @@
 
 /mob/living/proc/spawn_dust(just_ash = FALSE)
 	for(var/i in 1 to 3)
-		new /obj/item/ash(loc)
+		new /obj/item/fertilizer/ash(loc)
 
 
 /mob/living/death(gibbed)
@@ -85,10 +86,6 @@
 	if(!gibbed && !was_dead_before)
 		GLOB.dead_mob_list += src
 
-//	stop_all_loops()
-	SSdroning.kill_rain(src.client)
-	SSdroning.kill_loop(src.client)
-	SSdroning.kill_droning(src.client)
 	if(prob(0.1))
 		src.playsound_local(src, 'sound/misc/dark_die.ogg', 250)
 	else
@@ -99,7 +96,7 @@
 	SetSleeping(0)
 	reset_perspective(null)
 	reload_fullscreen()
-	update_action_buttons_icon()
+	update_mob_action_buttons()
 	update_damage_hud()
 	update_health_hud()
 	// update_mobility()
@@ -120,12 +117,12 @@
 		addtimer(CALLBACK(H, TYPE_PROC_REF(/atom/movable/screen/gameover, Fade), TRUE), 100)
 		add_client_colour(/datum/client_colour/monochrome/death)
 		client?.verbs |= /client/proc/descend
+		if(last_words)
+			GLOB.last_words |= last_words
 
-	for(var/s in ownedSoullinks)
-		var/datum/soullink/S = s
+	for(var/datum/soullink/S as anything in ownedSoullinks)
 		S.ownerDies(gibbed)
-	for(var/s in sharedSoullinks)
-		var/datum/soullink/S = s
+	for(var/datum/soullink/S as anything in sharedSoullinks)
 		S.sharerDies(gibbed)
 
 //	for(var/datum/death_tracker/D in target.death_trackers)

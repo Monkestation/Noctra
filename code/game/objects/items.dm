@@ -6,6 +6,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
+	pass_flags_self = PASSITEM
+	pass_flags = PASSTABLE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	///icon state name for inhand overlays
 	var/item_state = null
@@ -56,7 +58,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/list/parrysound = "parrywood"
 	var/w_class = WEIGHT_CLASS_NORMAL
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
-	pass_flags = PASSTABLE
 	var/obj/item/master = null
 
 	var/heat_protection = 0 //flags which determine which body parts are protected from heat. Use the HEAD, CHEST, GROIN, etc. flags. See setup.dm
@@ -65,9 +66,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/min_cold_protection_temperature //Set this variable to determine down to which temperature (IN KELVIN) the item protects against cold damage. 0 is NOT an acceptable number due to if(varname) tests!! Keep at null to disable protection. Only protects areas set by cold_protection flags
 
 	// List of /datum/action's that this item has.
-	var/list/actions
+	var/list/datum/action/actions
 	// List of paths of action datums to give to the item on New().
 	var/list/actions_types
+	///Slot flags in which this item grants actions. If null, defaults to the item's slot flags (so actions are granted when worn)
+	var/action_slots = null
 
 	//Since any item can now be a piece of clothing, this has to be put here so all items share it.
 	//These flags are used to determine when items in someone's inventory cover others. IE helmets making it so you can't see glasses, etc.
@@ -159,11 +162,12 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	// Used to center screen_loc when in hand
 	var/bigboy = FALSE
-	var/wielded = FALSE
+	/// Value of force_wielded of two_handed component. Only used when initializing.
+	var/force_wielded = 0
+	var/list/gripped_intents //intents while gripped, replacing main intents
+
 	var/altgripped = FALSE
 	var/list/alt_intents //these replace main intents
-	var/list/gripped_intents //intents while gripped, replacing main intents
-	var/force_wielded = 0
 	var/gripsprite = FALSE //use alternate grip sprite for inhand
 	var/gripspriteonmob = FALSE //use alternate sprite for onmob
 
@@ -186,8 +190,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/l_sleeve_status = SLEEVE_NOMOD
 	var/r_sleeve_zone = BODY_ZONE_R_ARM
 	var/l_sleeve_zone = BODY_ZONE_L_ARM
-
-	var/twohands_required = FALSE
 
 	var/bloody_icon = 'icons/effects/blood.dmi'
 	var/bloody_icon_state = "itemblood"
@@ -219,8 +221,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/mailer = null
 	var/mailedto = null
 
-	var/picklvl = 0
-
 	var/list/examine_effects = list()
 
 	var/list/blocksound //played when an item that is equipped blocks a hit
@@ -230,7 +230,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/damage_type = "blunt"
 	var/force_reupdate_inhand = TRUE
 
-	var/is_silver = FALSE
 	var/last_used = 0
 
 	// Boolean sanity var for smelteries to avoid runtimes. Is this is a bar smelted through ore for exp gain?
@@ -280,28 +279,15 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	/// angle of the icon, these are used for attack animations
 	var/icon_angle = 50 // most of our icons are angled
 
-/obj/item/Initialize()
-	. = ..()
-
-	if(!pixel_x && !pixel_y && !bigboy)
-		pixel_x = rand(-5,5)
-		pixel_y = rand(-5,5)
-
-	if(twohands_required)
-		has_inspect_verb = TRUE
-	// Initalize addon for the var for custom inhands 32x32.
-	if(!experimental_inhand)
-		inhand_x_dimension = 32
-		inhand_y_dimension = 32
-
-	if(grid_width <= 0)
-		grid_width = (w_class * world.icon_size)
-	if(grid_height <= 0)
-		grid_height = (w_class * world.icon_size)
-
-	if(is_silver)
-		enchant(/datum/enchantment/silver)
-	update_transform()
+/**
+ * Handles adding components to the item. Added in Initialize()
+ *
+ * Added as a seperate proc to allow for specific behavior
+ */
+/obj/item/proc/apply_components()
+	if(force_wielded || gripped_intents)
+		var/wielded_force = force_wielded ? force_wielded : force
+		AddComponent(/datum/component/two_handed, force_unwielded = force, force_wielded = wielded_force, wield_callback = CALLBACK(src, PROC_REF(on_wield)), unwield_callback = CALLBACK(src, PROC_REF(on_unwield)))
 
 /obj/item/proc/get_detail_tag() //this is for extra layers on clothes
 	return detail_tag
@@ -309,6 +295,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item/proc/get_detail_color() //this is for extra layers on clothes
 	return detail_color
 
+/// Handles sprite changes and decals
 /obj/item/proc/update_transform()
 	transform = null
 	if(dropshrink)
@@ -326,7 +313,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 					B.generate_appearance()
 					B.apply()
 			return
-		if(wielded)
+		if(HAS_TRAIT(src, TRAIT_WIELDED))
 			if(gripsprite)
 				icon_state = "[initial(icon_state)]1"
 				var/datum/component/decal/blood/B = GetComponent(/datum/component/decal/blood)
@@ -364,7 +351,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(experimental_inhand)
 		var/props2gen = list("gen")
 		var/list/prop
-		if(gripped_intents)
+		if(force_wielded || gripped_intents)
 			props2gen += "wielded"
 		for(var/i in props2gen)
 			prop = getonmobprop(i)
@@ -395,8 +382,10 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 				getmoboverlay(i,prop,behind=TRUE,mirrored=TRUE)
 
 	. = ..()
+	// Handle adding item associated actions
 	for(var/path in actions_types)
-		new path(src)
+		add_item_action(path)
+
 	actions_types = null
 
 	if(force_string)
@@ -426,13 +415,33 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 		obj_integrity = max_integrity + rand(-(max_integrity * 0.2), 0)
 
+	if(!pixel_x && !pixel_y && !bigboy)
+		pixel_x = rand(-5,5)
+		pixel_y = rand(-5,5)
+
+	// Initalize addon for the var for custom inhands 32x32.
+	if(!experimental_inhand)
+		inhand_x_dimension = 32
+		inhand_y_dimension = 32
+
+	if(grid_width <= 0)
+		grid_width = (w_class * world.icon_size)
+	if(grid_height <= 0)
+		grid_height = (w_class * world.icon_size)
+
+	update_transform()
+	apply_components()
+
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
 		var/mob/m = loc
 		m.temporarilyRemoveItemFromInventory(src, TRUE)
-	for(var/X in actions)
-		qdel(X)
+
+	// Handle cleaning up our actions list
+	for(var/datum/action/action as anything in actions)
+		remove_item_action(action)
+
 	if(is_embedded)
 		if(isbodypart(loc))
 			var/obj/item/bodypart/embedded_part = loc
@@ -447,6 +456,47 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		A.material = null
 		A.update_appearance(UPDATE_OVERLAYS)
 	return ..()
+
+/// Called when an action associated with our item is deleted
+/obj/item/proc/on_action_deleted(datum/source)
+	SIGNAL_HANDLER
+
+	if(!(source in actions))
+		CRASH("An action ([source.type]) was deleted that was associated with an item ([src]), but was not found in the item's actions list.")
+
+	LAZYREMOVE(actions, source)
+
+/// Adds an item action to our list of item actions.
+/// Item actions are actions linked to our item, that are granted to mobs who equip us.
+/// This also ensures that the actions are properly tracked in the actions list and removed if they're deleted.
+/// Can be be passed a typepath of an action or an instance of an action.
+/obj/item/proc/add_item_action(action_or_action_type)
+	var/datum/action/action
+	if(ispath(action_or_action_type, /datum/action))
+		action = new action_or_action_type(src)
+	else if(istype(action_or_action_type, /datum/action))
+		action = action_or_action_type
+	else
+		CRASH("item add_item_action got a type or instance of something that wasn't an action.")
+
+	LAZYADD(actions, action)
+	RegisterSignal(action, COMSIG_PARENT_QDELETING, PROC_REF(on_action_deleted))
+	if(ismob(loc))
+		// We're being held or are equipped by someone while adding an action?
+		// Then they should also probably be granted the action, given it's in a correct slot
+		var/mob/holder = loc
+		give_item_action(action, holder, holder.get_slot_by_item(src))
+
+	return action
+
+/// Removes an instance of an action from our list of item actions.
+/obj/item/proc/remove_item_action(datum/action/action)
+	if(!action)
+		return
+
+	UnregisterSignal(action, COMSIG_PARENT_QDELETING)
+	LAZYREMOVE(actions, action)
+	qdel(action)
 
 /obj/item/proc/check_allowed_items(atom/target, not_inside, target_self)
 	if(((src in target) && !target_self) || (!isturf(target.loc) && !isturf(target) && not_inside))
@@ -487,67 +537,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(href_list["inspect"])
 		if(!usr.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
 			return
-		var/list/inspec = list("<span class='notice'>Properties of [src.name]</span>")
-		if(minstr)
-			inspec += "\n<b>MIN.STR:</b> [minstr]"
-
-		if(wbalance)
-			inspec += "\n<b>BALANCE: </b>"
-			if(wbalance < 0)
-				inspec += "Heavy"
-			if(wbalance > 0)
-				inspec += "Swift"
-
-		if(wlength != WLENGTH_NORMAL)
-			inspec += "\n<b>LENGTH:</b> "
-			switch(wlength)
-				if(WLENGTH_SHORT)
-					inspec += "Short"
-				if(WLENGTH_LONG)
-					inspec += "Long"
-				if(WLENGTH_GREAT)
-					inspec += "Great"
-
-//		if(eweight)
-//			inspec += "\n<b>ENCUMBRANCE:</b> [eweight]"
-
-		if(alt_intents)
-			inspec += "\n<b>ALT-GRIP</b>"
-
-		if(gripped_intents)
-			inspec += "\n<b>TWO-HANDED</b>"
-
-		if(twohands_required)
-			inspec += "\n<b>BULKY</b>"
-
-		if(can_parry)
-			inspec += "\n<b>DEFENSE:</b> [wdefense]"
-
-		if(max_blade_int)
-			inspec += "\n<b>SHARPNESS:</b> "
-			var/meme = round(((blade_int / max_blade_int) * 100), 1)
-			inspec += "[meme]%"
-
-//**** CLOTHING STUFF
-
-		if(istype(src,/obj/item/clothing))
-			var/obj/item/clothing/C = src
-			if(C.prevent_crits)
-				if(length(C.prevent_crits))
-					inspec += "\n<b>DEFENSE:</b>"
-					for(var/X in C.prevent_crits)
-						inspec += "\n<b>[X] damage</b>"
-			if(C.body_parts_covered)
-				inspec += "\n<b>COVERAGE:</b>"
-				for(var/zone in body_parts_covered2organ_names(C.body_parts_covered))
-					inspec += "\n<b>[parse_zone(zone)]</b>"
-
-//**** General durability
-
-		if(max_integrity)
-			inspec += "\n<b>DURABILITY:</b> "
-			var/meme = round(((obj_integrity / max_integrity) * 100), 1)
-			inspec += "[meme]%"
+		var/list/inspec = list(span_notice("PROPERTIES OF [uppertext(src.name)]"))
+		get_inspect_entries(inspec)
+		SEND_SIGNAL(src, COMSIG_TOPIC_INSPECT, inspec)
 
 		to_chat(usr, "[inspec.Join()]")
 
@@ -559,6 +551,51 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		return " <span class='info'><a href='byond://?src=[REF(src)];inspect=1'>{?}</a></span>"
 	return ..()
 
+/obj/item/get_inspect_entries(list/inspect_list)
+	if(!islist(inspect_list))
+		inspect_list = list()
+
+	if(minstr)
+		inspect_list += "\n<b>MIN.STR:</b> [minstr]"
+
+	if(wbalance)
+		inspect_list += "\n<b>BALANCE: </b>"
+		if(wbalance < 0)
+			inspect_list += "Heavy"
+		if(wbalance > 0)
+			inspect_list += "Swift"
+
+	if(wlength != WLENGTH_NORMAL)
+		inspect_list += "\n<b>LENGTH:</b> "
+		switch(wlength)
+			if(WLENGTH_SHORT)
+				inspect_list += "Short"
+			if(WLENGTH_LONG)
+				inspect_list += "Long"
+			if(WLENGTH_GREAT)
+				inspect_list += "Great"
+
+//		if(eweight)
+//			inspec += "\n<b>ENCUMBRANCE:</b> [eweight]"
+
+	if(alt_intents)
+		inspect_list += "\n<b>ALT-GRIP</b>"
+
+	if(can_parry)
+		inspect_list += "\n<b>DEFENSE:</b> [wdefense]"
+
+	if(max_blade_int)
+		inspect_list += "\n<b>SHARPNESS:</b> "
+		var/meme = round(((blade_int / max_blade_int) * 100), 1)
+		inspect_list += "[meme]%"
+
+//**** General durability
+	if(max_integrity)
+		inspect_list += "\n<b>DURABILITY:</b> "
+		var/meme = round(((obj_integrity / max_integrity) * 100), 1)
+		inspect_list += "[meme]%"
+
+	return inspect_list
 
 /obj/item/interact(mob/user)
 	add_fingerprint(user)
@@ -570,22 +607,14 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /obj/item/attack_hand(mob/living/user)
 	. = ..()
-	if(.)
+	if(. || !user || anchored)
 		return
-	if(!user)
-		return
-	if(anchored)
-		return
-
-	if(twohands_required)
-		if(user.usable_hands < 2)
-			to_chat(user, "<span class='warning'>[src] is too bulky to carry in one hand!</span>")
-			return
-		if(get_dist(src,user) > 1)
-			return
-
 	if(w_class == WEIGHT_CLASS_GIGANTIC)
 		return
+	return attempt_pickup(user)
+
+/obj/item/proc/attempt_pickup(mob/user)
+	. = TRUE
 
 	if(resistance_flags & ON_FIRE)
 		var/mob/living/carbon/C = user
@@ -636,23 +665,33 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			return
 
 	//If the item is in a storage item, take it out
-	SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user.loc, TRUE)
-	if(QDELETED(src)) //moving it out of the storage to the floor destroyed it.
+	var/outside_storage = !(item_flags & IN_STORAGE)
+	var/turf/storage_turf
+	if(!outside_storage)
+		//We want the pickup animation to play even if we're moving the item between movables. Unless the mob is not located on a turf.
+		if(isturf(user.loc))
+			storage_turf = get_turf(loc)
+		if(!SEND_SIGNAL(loc, COMSIG_TRY_STORAGE_TAKE, src, user, TRUE))
+			return
+	if(QDELETED(src)) //moving it out of the storage destroyed it.
 		return
+
+	if(storage_turf)
+		do_pickup_animation(user, storage_turf)
 
 	if(throwing)
 		throwing.finalize(FALSE)
-	if(loc == user)
+	if(loc == user && outside_storage)
 		if(!allow_attack_hand_drop(user) || !user.temporarilyRemoveItemFromInventory(src))
 			return
 
+	. = FALSE
+
 	pickup(user)
 	add_fingerprint(user)
-	if(!user.put_in_active_hand(src, FALSE, FALSE))
+	if(!user.put_in_active_hand(src, ignore_animation = !outside_storage))
 		user.dropItemToGround(src)
-	else
-		if(twohands_required)
-			wield(user)
+		return TRUE
 	afterpickup(user)
 
 /atom/proc/ontable()
@@ -713,9 +752,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 /obj/item/proc/dropped(mob/user, silent = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.Remove(user)
+
+	// Remove any item actions we temporary gave out.
+	for(var/datum/action/action_item_has as anything in actions)
+		action_item_has.Remove(user)
+
 	if(item_flags & DROPDEL)
 		qdel(src)
 		return
@@ -726,12 +767,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			var/oldy = pixel_y
 			pixel_y = pixel_y+5
 			animate(src, pixel_y = oldy, time = 0.5)
-	if(altgripped || wielded)
-		ungrip(user, FALSE)
 	item_flags &= ~IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
 	if(!silent)
 		playsound(src, drop_sound, DROP_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
+	toggle_altgrip(user, FALSE)
 	user.update_equipment_speed_mods()
 	if(isliving(user))
 		user:encumbrance_to_speed()
@@ -743,7 +783,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	SEND_SIGNAL(src, COMSIG_ITEM_PICKUP, user)
 	item_flags |= IN_INVENTORY
 
-// called just as an item is picked up (loc is not yet changed)
+// called just after an item is sucessfully picked up (loc has changed)
 /obj/item/proc/afterpickup(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 	if(isliving(user))
@@ -764,10 +804,11 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	SEND_SIGNAL(user, COMSIG_MOB_EQUIPPED_ITEM, src, slot)
-	for(var/X in actions)
-		var/datum/action/A = X
-		if(item_action_slot_check(slot, user)) //some items only give their actions buttons when in a specific slot.
-			A.Grant(user)
+
+	// Give out actions our item has to people who equip it.
+	for(var/datum/action/action as anything in actions)
+		give_item_action(action, user, slot)
+
 	item_flags |= IN_INVENTORY
 	if(!initial)
 		if(equip_sound && (slot_flags & slot))
@@ -778,22 +819,28 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 				if(user.m_intent != MOVE_INTENT_SNEAK) // Don't play a sound if we're sneaking, for assassination purposes.
 					playsound(src, pickup_sound, PICKUP_SOUND_VOLUME, ignore_walls = FALSE)
 	user.update_equipment_speed_mods()
-
-	if(!user.is_holding(src))
-		if(altgripped || wielded)
-			ungrip(user, FALSE)
-	if(twohands_required)
-		if(slot & ITEM_SLOT_HANDS)
-			wield(user)
-		else
-			ungrip(user)
-
 	update_transform()
 
-//sometimes we only want to grant the item's action if it's equipped in a specific slot.
+/// Gives one of our item actions to a mob, when equipped to a certain slot
+/obj/item/proc/give_item_action(datum/action/action, mob/to_who, slot)
+	// Some items only give their actions buttons when in a specific slot.
+	if(!item_action_slot_check(slot, to_who))
+		// There is a chance we still have our item action currently,
+		// and are moving it from a "valid slot" to an "invalid slot".
+		// So call Remove() here regardless, even if excessive.
+		action.Remove(to_who)
+		return
+
+	action.Grant(to_who)
+
+/// Sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user)
-	if(slot & (ITEM_SLOT_BACKPACK|ITEM_SLOT_LEGCUFFED)) //these aren't true slots, so avoid granting actions there
+	if(slot & (ITEM_SLOT_BACKPACK | ITEM_SLOT_LEGCUFFED)) //these aren't true slots, so avoid granting actions there
 		return FALSE
+	if(!isnull(action_slots))
+		return (slot & action_slots)
+	else if (slot_flags)
+		return (slot & slot_flags)
 	return TRUE
 
 //the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
@@ -801,15 +848,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to TRUE if you wish it to not give you outputs.
 /obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
-	// pretty sure this isn't needed, the reason this is disabled is so harpoon guns can be equipped to hips.
-	// if it causes issues - reenable it and seek a different fix.
-	/*
-	if(twohands_required)
-		if(!disable_warning)
-			to_chat(M, "<span class='warning'>[src] is too bulky to carry with anything but my hands!</span>")
-		return 0
-	*/
-
 	if(!M)
 		return FALSE
 
@@ -820,7 +858,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	set hidden = 1
 	set name = "Pick up"
 
-	if(usr.incapacitated(ignore_grab = TRUE) || !Adjacent(usr))
+	if(usr.incapacitated(IGNORE_GRAB) || !Adjacent(usr))
 		return
 
 	if(isliving(usr))
@@ -931,7 +969,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			playsound(src, drop_sound, YEET_SOUND_VOLUME, TRUE, ignore_walls = FALSE)
 		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum, damage_type = src.damage_type)
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE)
 	thrownby = thrower
 	callback = CALLBACK(src, PROC_REF(after_throw), callback) //replace their callback with our own
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force)
@@ -1072,10 +1110,10 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/item/burn()
 	if(!QDELETED(src))
 		var/turf/T = get_turf(src)
-		var/ash_type = /obj/item/ash
+		var/ash_type = /obj/item/fertilizer/ash
 		if(w_class == WEIGHT_CLASS_HUGE || w_class == WEIGHT_CLASS_GIGANTIC)
-			ash_type = /obj/item/ash
-		var/obj/item/ash/A = new ash_type(T)
+			ash_type = /obj/item/fertilizer/ash
+		var/obj/item/fertilizer/ash/A = new ash_type(T)
 		A.desc += "\nLooks like this used to be \an [name] some time ago."
 		..()
 
@@ -1221,7 +1259,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 			dropped(M, TRUE)
 	return ..()
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback)
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback, gentle = FALSE)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	return ..()
@@ -1244,63 +1282,29 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	. = ..()
 	update_transform()
 
-/obj/item/proc/ungrip(mob/living/carbon/user, show_message = TRUE)
-	if(!user)
+/obj/item/proc/on_wield(obj/item/source, mob/living/carbon/user)
+	wdefense += 1
+	playsound(loc, pick('sound/combat/weaponr1.ogg','sound/combat/weaponr2.ogg'), 50, TRUE)
+	user.update_a_intents()
+
+/obj/item/proc/on_unwield(obj/item/source, mob/living/carbon/user)
+	wdefense -= 1
+	user.update_a_intents()
+
+/obj/item/proc/toggle_altgrip(mob/user, override_state)
+	if(!alt_intents)
 		return
-	if(twohands_required)
-		if(!wielded)
-			return
-		if(show_message)
-			to_chat(user, "<span class='notice'>I drop [src].</span>")
-		show_message = FALSE
-	if(wielded)
-		wielded = FALSE
-		if(force_wielded)
-			force = initial(force)
-		wdefense = wdefense - 1
-	if(altgripped)
-		altgripped = FALSE
+	var/new_state = !isnull(override_state) ? override_state : !altgripped
+	if(altgripped == new_state)
+		return
+	altgripped = new_state
 	update_transform()
-	user.update_inv_hands()
-	if(show_message)
-		to_chat(user, "<span class='notice'>I wield [src] normally.</span>")
 	if(user.get_active_held_item() == src)
 		user.update_a_intents()
-	return
-
-/obj/item/proc/altgrip(mob/living/carbon/user)
-	if(altgripped)
-		return
-	altgripped = TRUE
-	update_transform()
-	to_chat(user, "<span class='notice'>I wield [src] with an alternate grip</span>")
-	if(user.get_active_held_item() == src)
-		if(alt_intents)
-			user.update_a_intents()
-
-/obj/item/proc/wield(mob/living/carbon/user)
-	if(wielded)
-		return
-	if(user.get_inactive_held_item())
-		to_chat(user, "<span class='warning'>I need a free hand first.</span>")
-		return
-	if(user.usable_hands < 2)
-		to_chat(user, "<span class='warning'>I don't have enough hands.</span>")
-		return
-	wielded = TRUE
-	if(force_wielded)
-		force = force_wielded
-	wdefense = wdefense + 1
-	update_transform()
-	to_chat(user, "<span class='notice'>I wield [src] with both hands.</span>")
-	playsound(loc, pick('sound/combat/weaponr1.ogg','sound/combat/weaponr2.ogg'), 100, TRUE)
-	if(twohands_required)
-		if(!wielded)
-			user.dropItemToGround(src)
-			return
-	user.update_a_intents()
-	user.update_inv_hands()
-
+		if(altgripped)
+			to_chat(user, span_notice("I wield [src] with an alternate grip."))
+		else
+			to_chat(user, span_notice("I wield [src] normally."))
 
 /obj/item/on_fall_impact(mob/living/impactee, fall_speed)
 	. = ..()
@@ -1316,23 +1320,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	add_blood_DNA(GET_ATOM_BLOOD_DNA(impactee))
 	impactee.visible_message(span_danger("[src] crashes into [impactee]'s [target_zone]!"), span_danger("A [src] hits you in your [target_zone]!"))
 	impactee.apply_damage(item_weight * fall_speed, BRUTE, target_zone, impactee.run_armor_check(target_zone, "blunt", damage = item_weight * fall_speed))
-
-/obj/item/attack_self(mob/user)
-	. = ..()
-	if(twohands_required)
-		return
-	if(altgripped || wielded) //Trying to unwield it
-		ungrip(user)
-		return
-	if(alt_intents)
-		altgrip(user)
-	if(gripped_intents)
-		wield(user)
-
-/obj/item/equip_to_best_slot(mob/M)
-	if(..())
-		if(altgripped || wielded)
-			ungrip(M, FALSE)
 
 /obj/item/proc/on_consume(mob/living/eater)
 	return
@@ -1351,8 +1338,58 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	return has_trait ? held_weight * 0.5 : held_weight
 
+/**
+ * Updates all action buttons associated with this item
+ *
+* Arguments:
+ * * update_flags - Which flags of the action should we update
+ * * force - Force buttons update even if the given button icon state has not changed
+ */
+/obj/item/proc/update_item_action_buttons(update_flags = ALL, force = FALSE)
+	for(var/datum/action/current_action as anything in actions)
+		current_action.build_all_button_icons(update_flags, force)
+
 // Update icons if this is being carried by a mob
 /obj/item/wash(clean_types)
 	. = ..()
 	if(ismob(loc))
 		update_slot_icon()
+
+/obj/item/proc/do_pickup_animation(atom/target, turf/source)
+	set waitfor = FALSE
+
+	if(!source)
+		if(!istype(loc, /turf))
+			return
+		source = loc
+	var/image/pickup_animation = image(icon = src, layer = layer + 0.1)
+	pickup_animation.plane = GAME_PLANE
+	pickup_animation.transform.Scale(0.75)
+	pickup_animation.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+
+	var/direction
+	if(!QDELETED(source) && !QDELETED(target))
+		direction = get_dir(source, target)
+
+	var/to_x = 0
+	var/to_y = 0
+
+	if(direction & NORTH)
+		to_y += 32
+	else if(direction & SOUTH)
+		to_y -= 32
+	if(direction & EAST)
+		to_x += 32
+	else if(direction & WEST)
+		to_x -= 32
+	if(!direction)
+		to_y += 10
+		pickup_animation.pixel_x += 6 * (prob(50) ? 1 : -1) //6 to the right or left, helps break up the straight upward move
+
+	var/atom/movable/flick_visual/pickup = source.flick_overlay_view(pickup_animation, 0.6 SECONDS)
+	var/matrix/animation_matrix = new(pickup.transform)
+	animation_matrix.Turn(pick(-30, 30))
+	animation_matrix.Scale(0.65)
+
+	animate(pickup, alpha = 175, pixel_x = to_x, pixel_y = to_y, time = 0.3 SECONDS, transform = animation_matrix, easing = CUBIC_EASING)
+	animate(alpha = 0, transform = matrix().Scale(0.7), time = 0.1 SECONDS)

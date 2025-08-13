@@ -18,8 +18,11 @@
 /datum/ai_behavior/targeted_mob_ability/finish_action(datum/ai_controller/controller, succeeded, ability_key, target_key)
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
-	if (QDELETED(target))
+	if(QDELETED(target))
 		controller.clear_blackboard_key(target_key)
+	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
+	if(QDELETED(ability))
+		controller.clear_blackboard_key(ability_key)
 
 /**
  * # Try Mob Ability and clear target

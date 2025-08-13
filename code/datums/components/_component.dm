@@ -186,6 +186,12 @@
 
 	signal_enabled = TRUE
 
+
+/// Registers multiple signals to the same proc.
+/datum/proc/RegisterSignals(datum/target, list/signal_types, proctype, override = FALSE)
+	for(var/signal_type in signal_types)
+		RegisterSignal(target, signal_type, proctype, override)
+
 /**
  * Stop listening to a given signal from target
  *
@@ -280,8 +286,7 @@
 		var/proctype = C.signal_procs[src][sigtype]
 		return NONE | CallAsync(C, proctype, arguments)
 	. = NONE
-	for(var/I in target)
-		var/datum/C = I
+	for(var/datum/C as anything in target)
 		if(!C.signal_enabled)
 			continue
 		var/proctype = C.signal_procs[src][sigtype]

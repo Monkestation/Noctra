@@ -5,7 +5,7 @@
 	sellprice = 33
 
 /obj/item/clothing/ring/silver/makers_guild
-	name = "Makers ring"
+	name = "makers' ring"
 	desc = "The wearer is a proud member of the Makers' guild."
 	icon_state = "guild_mason"
 	sellprice = 0
@@ -89,13 +89,16 @@
 	var/activetime
 	var/activate_sound
 
-/obj/item/clothing/ring/active/attack_right(mob/user)
-	if(loc != user)
+/obj/item/clothing/ring/active/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
+	if(loc != user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(cooldowny)
 		if(world.time < cooldowny + cdtime)
 			to_chat(user, "<span class='warning'>Nothing happens.</span>")
-			return
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.visible_message("<span class='warning'>[user] twists the [src]!</span>")
 	if(activate_sound)
 		playsound(user, activate_sound, 100, FALSE, -1)
@@ -104,6 +107,7 @@
 	active = TRUE
 	update_appearance(UPDATE_ICON_STATE)
 	activate(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/clothing/ring/active/proc/activate(mob/user)
 	user.update_inv_ring()
@@ -316,7 +320,7 @@
 	if(ismob(loc))
 		return
 	visible_message(span_warning("[src] begins to twitch and shake violently, before crumbling into ash"))
-	new /obj/item/ash(loc)
+	new /obj/item/fertilizer/ash(loc)
 	qdel(src)
 
 /obj/item/clothing/ring/gold/burden/equipped(mob/user, slot)

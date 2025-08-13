@@ -12,12 +12,12 @@
 
 /datum/outfit/job/adventurer/hunter/pre_equip(mob/living/carbon/human/H)
 	..()
-	pants = /obj/item/clothing/pants/tights/random
-	shirt = /obj/item/clothing/shirt/shortshirt/random
+	pants = /obj/item/clothing/pants/tights/colored/random
+	shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 	shoes = /obj/item/clothing/shoes/boots/leather
 	neck = /obj/item/storage/belt/pouch/coins/poor
 	head = /obj/item/clothing/head/brimmed
-	cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
+	cloak = /obj/item/clothing/cloak/raincloak/furcloak/colored/brown
 	backr = /obj/item/storage/backpack/satchel
 	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 	belt = /obj/item/storage/belt/leather
@@ -57,18 +57,7 @@
 	tutorial = "Women that thrive on the woods, hunting creechers for pelt and hide, \
 				or the boons of Dendor for their meat to sell, or consume."
 	allowed_sexes = list(FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Rakshari",
-		"Elf",
-		"Half-Elf",
-		"Dwarf",
-		"Tiefling",
-		"Dark Elf",
-		"Aasimar",
-		"Half-Orc",
-		"Kobold",
-	)
+	allowed_races = RACES_PLAYER_ALL
 	outfit = /datum/outfit/job/adventurer/hunter // Everything is the same
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
 	apprentice_name = "Hunteress Apprentice"

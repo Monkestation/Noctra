@@ -57,27 +57,39 @@
 	user.visible_message(span_suicide("[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return (OXYLOSS)
 
-/obj/item/dice/attack_right(mob/user)
-	if(HAS_TRAIT(user, TRAIT_BLACKLEG))
-		var/list/possible_outcomes = list()
-		var/special = FALSE
-		if(special_faces.len == sides)
-			possible_outcomes.Add(special_faces)
-			special = TRUE
-		else
-			for(var/i in 1 to sides)
-				possible_outcomes += i
-		var/outcome = input(user, "What will you rig the next roll to?", "XYLIX") as null|anything in possible_outcomes
-		if(special)
-			outcome = special_faces.Find(outcome)
-		if(!outcome)
-			return
-		record_featured_stat(FEATURED_STATS_CRIMINALS, user)
-		GLOB.vanderlin_round_stats[STATS_GAMES_RIGGED]++
-		rigged = DICE_BASICALLY_RIGGED
-		rigged_value = outcome
+/obj/item/dice/proc/rig_dice(user)
+	var/list/possible_outcomes = list()
+	var/special = FALSE
+	if(special_faces.len == sides)
+		possible_outcomes.Add(special_faces)
+		special = TRUE
+	else
+		for(var/i in 1 to sides)
+			possible_outcomes += i
+	var/outcome = input(user, "What will you rig the next roll to?", "XYLIX") as null|anything in possible_outcomes
+	if(special)
+		outcome = special_faces.Find(outcome)
+	if(!outcome)
 		return
+	record_round_statistic(STATS_GAMES_RIGGED)
+	rigged = DICE_BASICALLY_RIGGED
+	rigged_value = outcome
+
+/obj/item/dice/attack_self_secondary(mob/user, params)
 	. = ..()
+	if(.)
+		return
+	if(HAS_TRAIT(user, TRAIT_BLACKLEG))
+		INVOKE_ASYNC(src, PROC_REF(rig_dice), user)
+		return TRUE
+
+/obj/item/dice/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(HAS_TRAIT(user, TRAIT_BLACKLEG))
+		INVOKE_ASYNC(src, PROC_REF(rig_dice), user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/dice/d1
 	name = "d1"
@@ -190,7 +202,7 @@
 	AddElement(/datum/element/update_icon_blocker)
 	return ..()
 
-/obj/item/dice/attack_self(mob/user)
+/obj/item/dice/attack_self(mob/user, params)
 	diceroll(user)
 
 /obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

@@ -1,8 +1,3 @@
-#define ARMOR_CLASS_NONE 0
-#define AC_LIGHT 1
-#define AC_MEDIUM 2
-#define AC_HEAVY 3
-
 /obj/item/clothing
 	name = "clothing"
 	resistance_flags = FLAMMABLE
@@ -45,6 +40,8 @@
 
 	var/clothing_flags = NONE
 
+	var/misc_flags = NONE
+
 	var/toggle_icon_state = TRUE //appends _t to our icon state when toggled
 
 	//Var modification - PLEASE be careful with this I know who you are and where you live
@@ -63,6 +60,7 @@
 	var/dynamic_hair_suffix = ""//head > mask for head hair
 	var/dynamic_fhair_suffix = ""//mask > head for facial hair
 	var/list/allowed_sex = list(MALE, FEMALE)
+	var/list/allowed_ages = ALL_AGES_LIST_CHILD
 	var/list/allowed_race = ALL_RACES_LIST
 	var/armor_class = ARMOR_CLASS_NONE
 
@@ -72,8 +70,6 @@
 	var/adjustable = CANT_CADJUST
 
 /obj/item/clothing/Initialize()
-	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
-		actions_types += /datum/action/item_action/toggle_voice_box
 	. = ..()
 	if(ispath(pocket_storage_component_path))
 		LoadComponent(pocket_storage_component_path)
@@ -104,17 +100,26 @@
 		UnregisterSignal(SSdcs, COMSIG_LORD_COLORS_SET)
 	return ..()
 
-/obj/item/clothing/Topic(href, href_list)
+/obj/item/clothing/get_inspect_entries(list/inspect_list)
 	. = ..()
-	if(href_list["inspect"])
-		if(!usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-			return
-		if(armor_class == AC_HEAVY)
-			to_chat(usr, "AC: <b>HEAVY</b>")
-		if(armor_class == AC_MEDIUM)
-			to_chat(usr, "AC: <b>MEDIUM</b>")
-		if(armor_class == AC_LIGHT)
-			to_chat(usr, "AC: <b>LIGHT</b>")
+
+	if(prevent_crits)
+		if(length(prevent_crits))
+			. += "\n<b>DEFENSE:</b>"
+			for(var/X in prevent_crits)
+				. += "\n<b>[X] damage</b>"
+	if(body_parts_covered)
+		. += "\n<b>COVERAGE:</b>"
+		for(var/zone in body_parts_covered2organ_names(body_parts_covered))
+			. += "\n<b>[parse_zone(zone)]</b>"
+
+	switch(armor_class)
+		if(AC_HEAVY)
+			. += "\nAC: <b>Heavy</b>"
+		if(AC_MEDIUM)
+			. += "\nAC: <b>Medium</b>"
+		if(AC_LIGHT)
+			. += "\nAC: <b>Light</b>"
 
 /obj/item/clothing/examine(mob/user)
 	. = ..()
@@ -129,7 +134,7 @@
 	var/mob/living/L = user
 	var/altheld //Is the user pressing alt?
 	var/list/modifiers = params2list(params)
-	if(modifiers["alt"])
+	if(LAZYACCESS(modifiers, ALT_CLICKED))
 		altheld = TRUE
 	if(!isliving(user))
 		return
@@ -231,6 +236,8 @@
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.dna)
+					if(!(H.age in allowed_ages))
+						return FALSE
 					if(H.dna.species.id in allowed_race)
 						return TRUE
 					else
@@ -255,7 +262,7 @@
 	. = ..()
 	var/mob/M = usr
 
-	if(!M.incapacitated(ignore_grab = TRUE) && loc == M && istype(over_object, /atom/movable/screen/inventory/hand))
+	if(!M.incapacitated(IGNORE_GRAB) && loc == M && istype(over_object, /atom/movable/screen/inventory/hand))
 		if(!allow_attack_hand_drop(M))
 			return
 		var/atom/movable/screen/inventory/hand/H = over_object
@@ -264,7 +271,7 @@
 
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))
-		if(!user.incapacitated(ignore_grab = TRUE))
+		if(!user.incapacitated(IGNORE_GRAB))
 			return TRUE
 	return FALSE
 
@@ -438,12 +445,14 @@ BLIND     // can't see anything
 		W.connectedc = src
 		hood = W
 
-/obj/item/clothing/attack_right(mob/user)
-	if(hoodtype)
+/obj/item/clothing/attack_hand_secondary(mob/user, params)
+	if(hoodtype && (loc == user))
 		ToggleHood()
-	if(adjustable > 0)
-		if(loc == user)
-			AdjustClothes(user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(adjustable > 0 && (loc == user))
+		AdjustClothes(user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	. = ..()
 
 /obj/item/clothing/proc/AdjustClothes(mob/usFer)
 	return //override this in the clothing item itself so we can update the right inv
@@ -481,12 +490,7 @@ BLIND     // can't see anything
 		H.update_inv_pants()
 		H.update_fov_angles()
 	else
-//		hood.forceMove(src)
 		hood.moveToNullspace()
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
-
 
 /obj/item/clothing/proc/ToggleHood()
 	if(!hoodtoggled)

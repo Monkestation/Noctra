@@ -3,7 +3,7 @@
 	greet_text = "You are the captain of a dwarven's expedition, following the tracks of Matthios's influence you shall lead your party in Malum's name."
 	outfit = /datum/outfit/job/dwarven_company/captain
 
-	allowed_races = list("Dwarf")
+	allowed_races = list(SPEC_ID_DWARF)
 	grant_lit_torch = TRUE
 
 /datum/outfit/job/dwarven_company/captain/pre_equip(mob/living/carbon/human/H)
@@ -55,7 +55,7 @@
 	greet_text = " You are the weaponsmith of a dwarven expedition, obey your foremand as they lead you in Malum's name into the tomb of Matthios."
 	outfit = /datum/outfit/job/dwarven_company/weaponsmith
 
-	allowed_races = list("Dwarf")
+	allowed_races = list(SPEC_ID_DWARF)
 	grant_lit_torch = TRUE
 
 /datum/outfit/job/dwarven_company/weaponsmith/pre_equip(mob/living/carbon/human/H)
@@ -97,7 +97,7 @@
 		H.change_stat(STATKEY_SPD, -1)
 	else
 		pants = /obj/item/clothing/pants/trou
-		shirt = /obj/item/clothing/shirt/dress/gen/random
+		shirt = /obj/item/clothing/shirt/dress/gen/colored/random
 		armor = /obj/item/clothing/armor/leather/splint
 		shoes = /obj/item/clothing/shoes/shortboots
 		belt = /obj/item/storage/belt/leather
@@ -114,7 +114,7 @@
 	greet_text = " You are the armorsmith of a dwarven expedition, obey your foremand as they lead you in Malum's name into the tomb of Matthios."
 	outfit = /datum/outfit/job/dwarven_company/armorsmith
 
-	allowed_races = list("Dwarf")
+	allowed_races = list(SPEC_ID_DWARF)
 	grant_lit_torch = TRUE
 
 /datum/outfit/job/dwarven_company/armorsmith/pre_equip(mob/living/carbon/human/H)
@@ -156,7 +156,7 @@
 		H.change_stat(STATKEY_SPD, -1)
 	else
 		pants = /obj/item/clothing/pants/trou
-		shirt = /obj/item/clothing/shirt/dress/gen/random
+		shirt = /obj/item/clothing/shirt/dress/gen/colored/random
 		armor = /obj/item/clothing/armor/chainmail
 		shoes = /obj/item/clothing/shoes/shortboots
 		belt = /obj/item/storage/belt/leather

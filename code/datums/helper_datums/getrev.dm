@@ -22,7 +22,7 @@
 
 /datum/getrev/proc/get_log_message()
 	var/list/msg = list()
-	msg += "Running /tg/ revision: [date]"
+	msg += "Running Vanderlin revision: [date]"
 	if(originmastercommit)
 		msg += "origin/master: [originmastercommit]"
 

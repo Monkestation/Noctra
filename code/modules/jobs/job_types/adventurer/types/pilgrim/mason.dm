@@ -4,17 +4,7 @@
 	name = "Mason"
 	tutorial = "Despite the lack of a formal guild in Vanderlin, you've traveled there to hone your stonemasonry. \
 	You've known your entire life there are ancient secrets within stone, and now you must prove their value to others."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Elf",
-		"Half-Elf",
-		"Dwarf",
-		"Tiefling",
-		"Dark Elf",
-		"Aasimar",
-		"Half-Orc"
-	)
+	allowed_races = RACES_PLAYER_ALL
 	outfit = /datum/outfit/job/adventurer/mason
 	category_tags = list(CTAG_PILGRIM)
 	apprentice_name = "Mason Apprentice"
@@ -38,10 +28,10 @@
 
 	head = pick(/obj/item/clothing/head/hatfur, /obj/item/clothing/head/hatblu)
 	armor = /obj/item/clothing/armor/leather/vest
-	cloak = /obj/item/clothing/cloak/apron/waist/brown
+	cloak = /obj/item/clothing/cloak/apron/waist/colored/brown
 	neck = /obj/item/storage/belt/pouch/coins/mid
 	pants = /obj/item/clothing/pants/trou
-	shirt = /obj/item/clothing/shirt/undershirt/random
+	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	shoes = /obj/item/clothing/shoes/boots/leather
 	belt = /obj/item/storage/belt/leather
 	beltl = /obj/item/weapon/hammer

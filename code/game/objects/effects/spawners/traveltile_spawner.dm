@@ -29,6 +29,7 @@
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 
 	GLOB.traveltile_spawners += src
+	return INITIALIZE_HINT_NORMAL
 	/*
 	we don't call parent here because the removal of this spawner effect from the map
 	is handled by /datum/controller/subsystem/random_travel_tiles/Initialize() .
@@ -101,7 +102,6 @@
 	can_gain_with_sight = TRUE
 	can_gain_by_walking = TRUE
 	check_other_side = TRUE
-	invis_without_trait = TRUE
 
 /obj/structure/fluff/traveltile/exit_vampire	// must NOT be a traveltile/vampire child, because that one has a check for banditcamp trait. People should always be able to leave the camp.
 	aportalid = "vampin"
@@ -114,7 +114,6 @@
 	can_gain_with_sight = TRUE
 	can_gain_by_walking = TRUE
 	check_other_side = TRUE
-	invis_without_trait = TRUE
 
 /obj/structure/fluff/traveltile/exit_inhumen
 	aportalid = "inhumenin"
@@ -129,4 +128,3 @@
 	can_gain_with_sight = FALSE
 	can_gain_by_walking = FALSE
 	check_other_side = TRUE
-	invis_without_trait = TRUE

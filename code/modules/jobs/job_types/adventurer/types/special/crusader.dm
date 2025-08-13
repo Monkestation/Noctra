@@ -4,11 +4,7 @@
 	taking up the banner of the Totod Order dedicated to retaking Valoria. \
 	Three cults provide knights for the Order: Astrata, Necra and Psydon. \
 	You were sent to Vanderlin by the Order to get any and all assistance from the faithful for the Crusade."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Dwarf"
-	)
+	allowed_races = RACES_PLAYER_NONHERETICAL
 	allowed_patrons = list(/datum/patron/divine/astrata, /datum/patron/divine/necra, /datum/patron/psydon)
 	outfit = /datum/outfit/job/adventurer/crusader
 	category_tags = list(CTAG_ADVENTURER)
@@ -27,7 +23,7 @@
 	armor = /obj/item/clothing/armor/chainmail/hauberk
 	cloak = /obj/item/clothing/cloak/cape/crusader
 	gloves = /obj/item/clothing/gloves/chain
-	shirt = /obj/item/clothing/shirt/tunic/random
+	shirt = /obj/item/clothing/shirt/tunic/colored/random
 	pants = /obj/item/clothing/pants/chainlegs
 	shoes = /obj/item/clothing/shoes/boots/armor/light
 	backr = /obj/item/weapon/shield/tower/metal
@@ -74,7 +70,7 @@
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	if(H.dna?.species)
-		if(H.dna.species.id == "human")
+		if(H.dna.species.id == SPEC_ID_HUMEN)
 			H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 
 	// Females are crossbow and dagger based
@@ -150,13 +146,6 @@
 /obj/item/clothing/cloak/cape/crusader/Initialize(mapload, ...)
 	. = ..()
 	AddComponent(/datum/component/storage/concrete/grid/cloak/lord)
-
-/obj/item/clothing/cloak/cape/crusader/attack_right(mob/user)
-	var/datum/component/storage/CP = GetComponent(/datum/component/storage)
-	if(CP)
-		CP.rmb_show(user)
-		return TRUE
-	..()
 
 /obj/item/clothing/cloak/cape/crusader/dropped(mob/living/carbon/human/user)
 	..()

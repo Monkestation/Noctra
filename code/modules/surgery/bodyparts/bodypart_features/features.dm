@@ -82,3 +82,10 @@
 	name = "Accessory"
 	feature_slot = BODYPART_FEATURE_ACCESSORY
 	body_zone = BODY_ZONE_HEAD
+
+/datum/bodypart_feature/vamprire_seal
+	name = "Vampiric Seal"
+	feature_slot = BODYPART_FEATURE_BRAND
+	body_zone = BODY_ZONE_CHEST
+	accessory_colors = COLOR_RED
+	accessory_type = /datum/sprite_accessory/brand/vampire_seal

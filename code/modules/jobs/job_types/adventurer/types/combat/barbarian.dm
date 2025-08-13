@@ -1,12 +1,12 @@
 /datum/advclass/combat/barbarian
 	name = "Barbarian"
 	tutorial = "Wildmen and warriors all, Barbarians forego the intricacies of modern warfare in favour of raw strength and brutal cunning. Few of them can truly adjust to the civilized, docile lands of lords and ladies."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Half-Elf",
-		"Dwarf",
-		"Half-Orc"
+	allowed_races = list(\
+		SPEC_ID_HUMEN,\
+		SPEC_ID_HALF_ELF,\
+		SPEC_ID_DWARF,\
+		SPEC_ID_HALF_ORC,\
+		SPEC_ID_TIEFLING,\
 	)
 	outfit = /datum/outfit/job/adventurer/barbarian
 	min_pq = 0
@@ -31,7 +31,7 @@
 	H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
-	H.mind?.AddSpell(new /obj/effect/proc_holder/spell/self/barbrage)
+	H.add_spell(/datum/action/cooldown/spell/undirected/barbrage)
 	belt = /obj/item/storage/belt/leather
 	shoes = /obj/item/clothing/shoes/boots/leather
 	wrists = /obj/item/clothing/wrists/bracers/leather
@@ -45,7 +45,7 @@
 	var/weapontype = pickweight(list("Sword" = 4, "Club" = 3, "Axe" = 2)) //clubs and axes share a weapon type
 	switch(armortype)
 		if("Cloak")
-			cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/furcloak/colored/brown
 		if("Hide")
 			armor = /obj/item/clothing/armor/leather/hide
 		if("Helmet")
@@ -64,6 +64,7 @@
 	ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_CRITICAL_RESISTANCE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NOPAINSTUN, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 	if(H.dna?.species)
 		H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
 

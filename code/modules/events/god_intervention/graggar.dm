@@ -48,15 +48,15 @@ GLOBAL_LIST_EMPTY(graggar_cullings)
 /datum/culling_duel/proc/process_win(mob/living/winner, mob/living/loser)
 	winner.remove_stress(/datum/stressevent/graggar_culling_unfinished)
 	winner.verbs -= /mob/living/carbon/human/proc/remember_culling
-	winner.set_stat_modifier("graggar_culling", STATKEY_STR, 1)
-	winner.set_stat_modifier("graggar_culling", STATKEY_END, 1)
-	winner.set_stat_modifier("graggar_culling", STATKEY_CON, 1)
-	winner.set_stat_modifier("graggar_culling", STATKEY_PER, 1)
-	winner.set_stat_modifier("graggar_culling", STATKEY_INT, 1)
-	winner.set_stat_modifier("graggar_culling", STATKEY_SPD, 1)
-	winner.set_stat_modifier("graggar_culling", STATKEY_LCK, 1)
+	winner.set_stat_modifier("graggar_culling", STATKEY_STR, 2)
+	winner.set_stat_modifier("graggar_culling", STATKEY_END, 2)
+	winner.set_stat_modifier("graggar_culling", STATKEY_CON, 2)
+	winner.set_stat_modifier("graggar_culling", STATKEY_PER, 2)
+	winner.set_stat_modifier("graggar_culling", STATKEY_INT, 2)
+	winner.set_stat_modifier("graggar_culling", STATKEY_SPD, 2)
+	winner.set_stat_modifier("graggar_culling", STATKEY_LCK, 2)
 	to_chat(winner, span_notice("You have proven your strength to Graggar by consuming your rival's heart! Your rival's power is now YOURS!"))
-	winner.adjust_triumphs(2)
+	winner.adjust_triumphs(3)
 	winner.add_stress(/datum/stressevent/graggar_culling_finished)
 	winner.playsound_local(winner, 'sound/misc/gods/graggar_omen.ogg', 100)
 
@@ -81,9 +81,9 @@ GLOBAL_LIST_EMPTY(graggar_cullings)
 	track = EVENT_TRACK_INTERVENTION
 	typepath = /datum/round_event/graggar_culling
 	weight = 8
-	earliest_start = 25 MINUTES
+	earliest_start = 20 MINUTES
 	max_occurrences = 1
-	min_players = 40
+	min_players = 35
 	allowed_storytellers = list(/datum/storyteller/graggar)
 
 /datum/round_event_control/graggar_culling/canSpawnEvent(players_amt, gamemode, fake_check)
@@ -111,8 +111,8 @@ GLOBAL_LIST_EMPTY(graggar_cullings)
 	if(length(contenders) < 2)
 		return
 
-	// 25% chance for grand culling (multiple pairs)
-	var/grand_culling = prob(25)
+	// 33% chance for grand culling (multiple pairs) unless ascendant, then it's guaranteed
+	var/grand_culling = is_ascendant(EORA) || prob(33)
 	var/max_pairs = grand_culling ? floor(length(contenders) / 2) : 1
 
 	for(var/i in 1 to max_pairs)
@@ -130,9 +130,9 @@ GLOBAL_LIST_EMPTY(graggar_cullings)
 
 		// Notify first chosen
 		first_chosen.add_stress(/datum/stressevent/graggar_culling_unfinished)
-		first_chosen.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/extract_heart)
+		first_chosen.add_spell(/datum/action/cooldown/spell/extract_heart)
 		first_chosen.verbs |= /mob/living/carbon/human/proc/remember_culling
-		to_chat(first_chosen, span_userdanger("YOU ARE GRAGGAR'S CHOSEN!"))
+		to_chat(first_chosen, span_userdanger("YOU ARE GRAGGAR'S CONTESTANT!"))
 		to_chat(first_chosen, span_red("Weak should feed the strong, that is Graggar's will. Prove that you are not weak by eating the heart of [span_notice(second_chosen.real_name)], the [second_chosen.job] and gain unimaginable power in turn. Fail, and you will be the one eaten."))
 		to_chat(first_chosen, span_red("[span_notice("[second_chosen.real_name]")], the [second_chosen.job] is somewhere in [span_notice("[second_chosen_location]")]. Eat their heart before they eat yours!"))
 		if(grand_culling)
@@ -141,9 +141,9 @@ GLOBAL_LIST_EMPTY(graggar_cullings)
 
 		// Notify second chosen
 		second_chosen.add_stress(/datum/stressevent/graggar_culling_unfinished)
-		second_chosen.mind.AddSpell(new /obj/effect/proc_holder/spell/invoked/extract_heart)
+		second_chosen.add_spell(/datum/action/cooldown/spell/extract_heart)
 		second_chosen.verbs |= /mob/living/carbon/human/proc/remember_culling
-		to_chat(second_chosen, span_userdanger("YOU ARE GRAGGAR'S CHOSEN!"))
+		to_chat(second_chosen, span_userdanger("YOU ARE GRAGGAR'S CONTESTANT!"))
 		to_chat(second_chosen, span_red("Weak should feed the strong, that is Graggar's will. Prove that you are not weak by eating the heart of [span_notice(first_chosen.real_name)], the [first_chosen.job] and gain unimaginable power in turn. Fail, and you will be the one eaten."))
 		to_chat(second_chosen, span_red("[span_notice("[first_chosen.real_name]")], the [first_chosen.job] is somewhere in [span_notice("[first_chosen_location]")]. Eat their heart before they eat yours!"))
 		if(grand_culling)

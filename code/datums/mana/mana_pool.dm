@@ -87,10 +87,10 @@
 	attunements_to_generate = null
 	negative_attunements = null
 
-	QDEL_NULL(transfer_rates)
-	QDEL_NULL(transfer_caps)
-	QDEL_NULL(transferring_to)
-	QDEL_NULL(transferring_from) // we already have a signal registered, so if we qdel we stop transfers
+	transfer_rates = null
+	transfer_caps = null
+	transferring_to = null
+	transferring_from = null
 
 	STOP_PROCESSING(SSmagic, src)
 
@@ -104,14 +104,13 @@
 
 /datum/mana_pool/proc/set_parent(atom/parent)
 	src.parent = parent
-	if(parent)
-		if(ismob(parent))
-			if(parent:hud_used)
-				var/datum/hud/human/hud_used = parent:hud_used
-				if(istype(hud_used))
-					var/filled = round((src.amount / get_softcap()) * 100, 10)
-					filled = min(filled, 120)
-					hud_used.mana.icon_state = "mana[filled]"
+	if(parent && ismob(parent))
+		var/mob/holder = parent
+		var/datum/hud/human/hud_used = holder.hud_used
+		if(hud_used?.mana)
+			var/filled = round((src.amount / get_softcap()) * 100, 10)
+			filled = min(filled, 120)
+			hud_used.mana.icon_state = "mana[filled]"
 
 /datum/mana_pool/proc/mana_status_report(datum/source, list/status_tab)
 	SIGNAL_HANDLER
@@ -381,14 +380,16 @@
 	var/result = clamp(src.amount + amount, 0, maximum_mana_capacity)
 	. = result - src.amount // Return the amount that was used
 	src.amount = result
-	if(parent)
-		if(ismob(parent))
-			if(parent:hud_used)
-				var/datum/hud/human/hud_used = parent:hud_used
-				if(istype(hud_used))
-					var/filled = round((src.amount / get_softcap()) * 100, 20)
-					filled = min(filled, 120)
-					hud_used.mana.icon_state = "mana[filled]"
+	if(parent && ismob(parent))
+		var/mob/holder = parent
+		SEND_SIGNAL(holder, COMSIG_LIVING_MANA_CHANGED, amount)
+		var/datum/hud/human/hud_used = holder.hud_used
+		if(hud_used?.mana)
+			var/filled = round((src.amount / get_softcap()) * 100, 10)
+			if(filled < 10)
+				return
+			filled = clamp(filled, 0, 120)
+			hud_used.mana.icon_state = "mana[filled]"
 
 ///this takes a string and adds it to our halters creates the list if it doesn't exist
 /datum/mana_pool/proc/halt_mana_disperse(string)

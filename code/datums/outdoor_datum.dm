@@ -123,6 +123,10 @@ Sunlight System
 
 	GLOB.SUNLIGHT_QUEUE_CORNER += tempMasterList /* update the boys */
 
+#undef GLOBAL_LIGHT_RANGE
+#undef HARD_SUN
+#undef SUN_FALLOFF
+
 /* Related object changes */
 /* I moved this here to consolidate sunlight changes as much as possible, so its easily disabled */
 
@@ -195,7 +199,7 @@ Sunlight System
 		if(outdoor_effect.weatherproof)
 			SSParticleWeather.weathered_turfs -= src
 		else
-			if(((turf_flags & TURF_EFFECT_AFFECTABLE) && (z in SSoutdoor_effects.turf_weather_affectable_z_levels)))
+			if((!(turf_flags & TURF_WEATHER_PROOF) && (z in SSoutdoor_effects.turf_weather_affectable_z_levels)))
 				SSParticleWeather.weathered_turfs |= src
 
 /* runs up the Z stack for this turf, returns a assoc (SKYVISIBLE, WEATHERPROOF)*/

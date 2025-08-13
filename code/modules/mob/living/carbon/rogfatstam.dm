@@ -10,6 +10,9 @@
 		added = round(-10+ (added*-40))
 		if(HAS_TRAIT(src, TRAIT_MISSING_NOSE))
 			added = round(added * 0.5, 1)
+		//Assuming full energy bar give you 50 regen, this make it with the trait that even if you have higher endurance/athletics skill, which mean a higher fatigue bar, you won't have your regen halved
+		if(HAS_TRAIT(src, TRAIT_NOENERGY))
+			added = -50
 		if(stamina >= 1)
 			adjust_stamina(added)
 		else
@@ -35,11 +38,14 @@
 	///this trait affects both stamina and energy since they are part of the same system.
 	if(HAS_TRAIT(src, TRAIT_NOSTAMINA))
 		return TRUE
+	///This trait specifically affect energy.
+	if(HAS_TRAIT(src, TRAIT_NOENERGY))
+		return TRUE
 	if(m_intent == MOVE_INTENT_RUN)
 		var/boon = get_learning_boon(/datum/skill/misc/athletics)
 		adjust_experience(/datum/skill/misc/athletics, (STAINT*0.02) * boon)
 	energy += added
-	if(energy > max_energy)
+	if(energy >= max_energy)
 		energy = max_energy
 		update_health_hud(TRUE)
 		return FALSE
@@ -48,8 +54,20 @@
 			energy = 0
 			if(m_intent == MOVE_INTENT_RUN) //can't sprint at zero stamina
 				toggle_rogmove_intent(MOVE_INTENT_WALK)
+		if(added < 0)
+			SEND_SIGNAL(src, COMSIG_MOB_ENERGY_SPENT, abs(added))
 		update_health_hud(TRUE)
 		return TRUE
+
+/mob/proc/check_energy(has_amount)
+	return TRUE
+
+/mob/living/check_energy(has_amount)
+	if(!has_amount || has_amount > max_energy)
+		return FALSE
+	if((max_energy - energy) < has_amount)
+		return FALSE
+	return TRUE
 
 /mob/proc/adjust_stamina(added as num)
 	return TRUE
@@ -100,6 +118,16 @@
 			last_fatigued = world.time
 		update_health_hud(TRUE)
 		return TRUE
+
+/mob/proc/check_stamina(has_amount)
+	return TRUE
+
+/mob/living/check_stamina(has_amount)
+	if(!has_amount || has_amount > maximum_stamina)
+		return FALSE
+	if((maximum_stamina - stamina) < has_amount)
+		return FALSE
+	return TRUE
 
 /mob/living/carbon
 	var/heart_attacking = FALSE

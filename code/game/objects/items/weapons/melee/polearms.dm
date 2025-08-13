@@ -16,7 +16,7 @@
 	max_blade_int = 100
 	max_integrity = INTEGRITY_STANDARD
 	minstr = 8
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 	melting_material = null
 	associated_skill = /datum/skill/combat/polearms
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'
@@ -239,7 +239,10 @@
 	wdefense = AVERAGE_PARRY
 	wbalance = EASY_TO_DODGE
 	sellprice = 60
-	is_silver = TRUE
+
+/obj/item/weapon/polearm/spear/psydon/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 /obj/item/weapon/polearm/spear/psydon/getonmobprop(tag)
 	. = ..()
@@ -279,7 +282,7 @@
 	icon_state = "stonespear"
 	minstr = 6
 	max_blade_int = 50
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 	melting_material = null
 	dropshrink = 0.7
 	wlength = WLENGTH_LONG
@@ -360,7 +363,10 @@
 	minstr = 11
 	axe_cut = 10
 	sellprice = 100
-	is_silver = TRUE
+
+/obj/item/weapon/polearm/halberd/psydon/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 /obj/item/weapon/polearm/halberd/psydon/getonmobprop(tag)
 	. = ..()

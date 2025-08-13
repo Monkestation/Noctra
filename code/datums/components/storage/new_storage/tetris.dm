@@ -1,11 +1,4 @@
 ///VANDERLIN NOTE: This completely overrides generic storage.
-/// Must be in the user's hands to be accessed
-#define STORAGE_NO_WORN_ACCESS (1<<0)
-/// Must be out of the user to be accessed
-#define STORAGE_NO_EQUIPPED_ACCESS (1<<1)
-// ~storage component
-///from base of datum/component/storage/can_user_take(): (mob/user)
-#define COMSIG_STORAGE_BLOCK_USER_TAKE "storage_block_user_take"
 
 /atom/proc/reset_grid_inventory()
 	var/drop_location = drop_location()
@@ -679,7 +672,7 @@
 	//This is where the pain begins
 	if(grid)
 		var/list/modifiers = params2list(params)
-		var/coordinates = LAZYACCESS(modifiers, "screen-loc")
+		var/coordinates = LAZYACCESS(modifiers, SCREEN_LOC)
 		var/grid_box_ratio = (world.icon_size/grid_box_size)
 
 		var/enchanted = FALSE
@@ -747,12 +740,6 @@
 			else
 				storing.forceMove(parent.drop_location())
 		return FALSE
-	storing.on_enter_storage(master)
-	storing.item_flags |= IN_STORAGE
-	storing.mouse_opacity = MOUSE_OPACITY_OPAQUE //So you can click on the area around the item to equip it, instead of having to pixel hunt
-	if(ismovable(parent))
-		if(ismob(parent:loc))
-			parent:loc:encumbrance_to_speed()
 	if(user)
 		if(user.client && (user.active_storage != src))
 			user.client.screen -= storing
@@ -766,7 +753,7 @@
 				mob_item_insertion_feedback(usr, user, storing)
 	if(grid)
 		var/list/modifiers = params2list(params)
-		var/coordinates = LAZYACCESS(modifiers, "screen-loc")
+		var/coordinates = LAZYACCESS(modifiers, SCREEN_LOC)
 		var/grid_box_ratio = (world.icon_size/grid_box_size)
 
 		//if it's not a storage click, find the first cell that happens to be valid
@@ -802,6 +789,13 @@
 		else
 			coordinates = screen_loc_to_grid_coordinates(coordinates)
 		grid_add_item(storing, coordinates)
+
+	storing.on_enter_storage(master)
+	storing.item_flags |= IN_STORAGE
+	storing.mouse_opacity = MOUSE_OPACITY_OPAQUE //So you can click on the area around the item to equip it, instead of having to pixel hunt
+	if(ismovable(parent))
+		if(ismob(parent:loc))
+			parent:loc:encumbrance_to_speed()
 	update_icon()
 	refresh_mob_views()
 	return TRUE
@@ -849,7 +843,7 @@
 	. = ..()
 	var/datum/component/storage/storage_master = master
 	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, "shift"))
+	if(LAZYACCESS(modifiers, SHIFT_CLICKED))
 		if(!istype(storage_master))
 			return
 		storage_master.screen_start_x = initial(storage_master.screen_start_x)
@@ -860,7 +854,7 @@
 		storage_master.show_to(usr)
 		testing("storage screen variables reset.")
 		to_chat(usr, span_notice("Storage window position has been reset."))
-	else if(LAZYACCESS(modifiers, "ctrl"))
+	else if(LAZYACCESS(modifiers, CTRL_CLICKED))
 		locked = !locked
 		to_chat(usr, span_notice("Storage window [locked ? "" : "un"]locked."))
 	else
@@ -883,7 +877,7 @@
 	var/maximum_y_pixels = 16 * world.icon_size
 	var/minimum_y_pixels = (16 - storage_master.screen_max_rows) * world.icon_size
 
-	var/screen_loc = LAZYACCESS(modifiers, "screen-loc")
+	var/screen_loc = LAZYACCESS(modifiers, SCREEN_LOC)
 	testing("storage close button MouseDrop() screen_loc: ([screen_loc])")
 
 	var/screen_x = copytext(screen_loc, 1, findtext(screen_loc, ","))
@@ -942,7 +936,7 @@
 		return
 	usr.client.screen -= hovering
 	var/datum/component/storage/storage_master = master
-	if(!istype(storage_master) || !(usr in storage_master.is_using) || !isliving(usr) || usr.incapacitated(ignore_grab = TRUE))
+	if(!istype(storage_master) || !(usr in storage_master.is_using) || !isliving(usr) || usr.incapacitated(IGNORE_GRAB))
 		return
 	var/obj/item/held_item = usr.get_active_held_item()
 	if(!held_item)
@@ -951,7 +945,7 @@
 	if(!storage_master.grid)
 		return
 	var/list/modifiers = params2list(params)
-	var/screen_loc = LAZYACCESS(modifiers, "screen-loc")
+	var/screen_loc = LAZYACCESS(modifiers, SCREEN_LOC)
 	var/coordinates = storage_master.screen_loc_to_grid_coordinates(screen_loc)
 	if(!coordinates)
 		return
@@ -984,7 +978,7 @@
 		return
 	usr.client.screen -= hovering
 	var/datum/component/storage/storage_master = master
-	if(!istype(storage_master) || !(usr in storage_master.is_using) || !isliving(usr) || usr.incapacitated(ignore_grab = TRUE))
+	if(!istype(storage_master) || !(usr in storage_master.is_using) || !isliving(usr) || usr.incapacitated(IGNORE_GRAB))
 		return
 	var/obj/item/held_item = usr.get_active_held_item()
 	if(!held_item)
@@ -993,7 +987,7 @@
 	if(!storage_master.grid)
 		return
 	var/list/modifiers = params2list(params)
-	var/screen_loc = LAZYACCESS(modifiers, "screen-loc")
+	var/screen_loc = LAZYACCESS(modifiers, SCREEN_LOC)
 	var/coordinates = storage_master.screen_loc_to_grid_coordinates(screen_loc)
 	if(!coordinates)
 		return

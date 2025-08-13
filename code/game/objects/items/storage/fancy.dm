@@ -17,7 +17,7 @@
 /obj/item/storage/fancy
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "donutbox6"
-	var/base_icon_state = "donutbox"
+	base_icon_state = "donutbox"
 	resistance_flags = FLAMMABLE
 	/// Used by examine to report what this thing is holding.
 	var/contents_tag = "errors"
@@ -44,7 +44,7 @@
 	else
 		. += "There are [contents.len <= 0 ? "no" : "[contents.len]"] [contents_tag]s left."
 
-/obj/item/storage/fancy/attack_self(mob/user)
+/obj/item/storage/fancy/attack_self(mob/user, params)
 	. = ..()
 	is_open = !is_open
 	update_appearance(UPDATE_ICON)

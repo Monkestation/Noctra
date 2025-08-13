@@ -1,7 +1,6 @@
 /mob/living/carbon/human/species/orc
 	name = "orc"
-
-	icon = 'icons/roguetown/mob/monster/Orc.dmi'
+	icon = 'icons/roguetown/mob/monster/orc.dmi'
 	icon_state = "orc"
 	race = /datum/species/orc
 	gender = MALE
@@ -12,7 +11,7 @@
 	ambushable = FALSE
 	base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, /datum/intent/unarmed/claw, /datum/intent/simple/bite, /datum/intent/kick)
 	possible_rmb_intents = list()
-	vitae_pool = 1000 // Not as much vitae from them as humans to avoid vampires cheesing mobs
+	bloodpool = 1000 // Not as much vitae from them as humans to avoid vampires cheesing mobs
 
 /mob/living/carbon/human/species/orc/npc
 	ai_controller = /datum/ai_controller/human_npc
@@ -66,6 +65,7 @@
 	. = ..()
 	icon_state = "orc_skel_head"
 	headprice = 2
+	sellprice = 2
 
 /mob/living/carbon/human/species/orc/update_body()
 	remove_overlay(BODY_LAYER)
@@ -98,7 +98,7 @@
 	apply_overlay(BODY_LAYER)
 	dna.species.update_damage_overlays()
 
-/mob/living/carbon/human/species/orc/update_inv_head()
+/mob/living/carbon/human/species/orc/update_inv_head(hide_nonstandard = FALSE)
 	update_wearable()
 /mob/living/carbon/human/species/orc/update_inv_armor()
 	update_wearable()
@@ -126,9 +126,10 @@
 		src.dna.species.soundpack_m = new /datum/voicepack/orc()
 		var/obj/item/bodypart/head/headdy = get_bodypart("head")
 		if(headdy)
-			headdy.icon = 'icons/roguetown/mob/monster/Orc.dmi'
+			headdy.icon = 'icons/roguetown/mob/monster/orc.dmi'
 			headdy.icon_state = "[src.dna.species.id]_head"
 			headdy.headprice = rand(15,40)
+			headdy.sellprice = rand(15,40)
 	src.grant_language(/datum/language/common)
 	var/obj/item/organ/eyes/eyes = src.getorganslot(ORGAN_SLOT_EYES)
 	if(eyes)
@@ -157,7 +158,7 @@
 
 /datum/species/orc
 	name = "orc"
-	id = "orc"
+	id = SPEC_ID_ORC
 	species_traits = list(NO_UNDERWEAR)
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE,TRAIT_CRITICAL_WEAKNESS, TRAIT_NASTY_EATER, TRAIT_LEECHIMMUNE, TRAIT_INHUMENCAMP)
 	no_equip = list(ITEM_SLOT_SHIRT, ITEM_SLOT_MASK, ITEM_SLOT_GLOVES, ITEM_SLOT_SHOES, ITEM_SLOT_PANTS)
@@ -192,7 +193,7 @@
 	last_process = world.time
 	amount += amt2add
 	if(has_world_trait(/datum/world_trait/pestra_mercy))
-		amount -= 5 * time_elapsed
+		amount -= (is_ascendant(PESTRA) ? 2.5 : 5) * time_elapsed
 
 	var/mob/living/carbon/C = parent
 	if(!C)
@@ -341,24 +342,24 @@
 			r_hand = /obj/item/weapon/axe/stone
 			l_hand = /obj/item/weapon/axe/stone
 			armor = /obj/item/clothing/armor/leather/hide/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 		if(2) //Long Club Caveman
 			r_hand = /obj/item/weapon/polearm/woodstaff
 			armor = /obj/item/clothing/armor/leather/hide/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 		if(3) //Club Caveman
 			r_hand = /obj/item/weapon/mace/woodclub
 			armor = /obj/item/clothing/armor/leather/hide/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 		if(4) //dagger fighter
 			armor = /obj/item/clothing/armor/leather/hide/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			r_hand = /obj/item/weapon/knife/stone
 			l_hand = /obj/item/weapon/knife/stone
 		if(5) //Spear hunter
 			r_hand = /obj/item/weapon/polearm/spear/stone
 			armor = /obj/item/clothing/armor/leather/hide/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 
 
 //////////////////////////////////////////////////////////
@@ -392,23 +393,23 @@
 			r_hand = /obj/item/weapon/sword/iron
 			l_hand = /obj/item/weapon/shield/wood
 			armor = /obj/item/clothing/armor/chainmail/iron/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			head = /obj/item/clothing/head/helmet/leather
 		if(2) //Marauder with Axe and Shield
 			r_hand = /obj/item/weapon/axe/iron
 			l_hand = /obj/item/weapon/shield/wood
 			armor = /obj/item/clothing/armor/chainmail/iron/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			head = /obj/item/clothing/head/helmet/leather
 		if(3) //Club Caveman
 			r_hand = /obj/item/weapon/flail
 			l_hand = /obj/item/weapon/sword/scimitar/messer
 			armor = /obj/item/clothing/armor/chainmail/iron/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			head = /obj/item/clothing/head/helmet/leather
 		if(4) //dagger fighter
 			armor = /obj/item/clothing/armor/chainmail/iron/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			r_hand = /obj/item/weapon/sword/iron
 			l_hand = /obj/item/weapon/sword/short
 			head = /obj/item/clothing/head/helmet/leather
@@ -423,12 +424,12 @@
 				l_hand = /obj/item/weapon/sword/scimitar/messer
 				armor = /obj/item/clothing/armor/plate/orc
 				head = /obj/item/clothing/head/helmet/orc
-				cloak = /obj/item/clothing/cloak/raincloak/brown
+				cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			if(prob(30))
 				r_hand = /obj/item/weapon/axe/iron
 				armor = /obj/item/clothing/armor/plate/orc
 				head = /obj/item/clothing/head/helmet/orc
-				cloak = /obj/item/clothing/cloak/raincloak/brown
+				cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 
 
 
@@ -464,28 +465,28 @@
 			r_hand = /obj/item/weapon/sword/iron
 			l_hand = /obj/item/weapon/axe/iron
 			armor = /obj/item/clothing/armor/plate/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			head = /obj/item/clothing/head/helmet/orc
 		if(2) //Marauder with Axe and Shield
 			r_hand = /obj/item/weapon/axe/battle
 			armor = /obj/item/clothing/armor/plate/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			head = /obj/item/clothing/head/helmet/orc
 		if(3) //Warhammer Caveman
 			r_hand = /obj/item/weapon/mace/goden/steel/warhammer
 			armor = /obj/item/clothing/armor/plate/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			head = /obj/item/clothing/head/helmet/orc
 		if(4) //dagger fighter
 			armor = /obj/item/clothing/armor/plate/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			r_hand = /obj/item/weapon/mace/steel
 			l_hand = /obj/item/weapon/shield/tower
 			head = /obj/item/clothing/head/helmet/orc
 		if(5) //Marauder Ironblade
 			r_hand = /obj/item/weapon/polearm/halberd/bardiche
 			armor = /obj/item/clothing/armor/plate/orc
-			cloak = /obj/item/clothing/cloak/raincloak/brown
+			cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 			head = /obj/item/clothing/head/helmet/orc
 
 

@@ -23,6 +23,18 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	/// Whether this species a requires patreon subscription to access
 	var/patreon_req = FALSE
 
+	/**
+	 * The list of pronouns this species allows in the character sheet.
+	 * If none are specified, it will default to the PRONOUNS_LIST.
+	 */
+	var/list/allowed_pronouns = PRONOUNS_LIST_NO_IT
+
+	/// The list of voice types this species allows in the character sheet for feminine bodies
+	var/list/allowed_voicetypes_f = VOICE_TYPES_LIST
+
+	/// The list of voice types this species allows in the character sheet for masculine bodies
+	var/list/allowed_voicetypes_m = VOICE_TYPES_LIST
+
 	/// Associative list of FEATURE SLOT to PIXEL ADJUSTMENTS X/Y seperated by gender
 	var/list/offset_features_m = list(
 		OFFSET_RING = list(0,0),\
@@ -102,9 +114,9 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	/// Food we (SHOULD) get a mood buff from
 	var/liked_food = NONE
 	/// Food we (SHOULD) get a mood debuff from
-	var/disliked_food = GROSS
+	var/disliked_food = NONE
 	/// Food that (SHOULD) be toxic to us
-	var/toxic_food = TOXIC
+	var/toxic_food = NONE
 
 	/// List of slots this species cannot equip things to
 	var/list/no_equip = list()
@@ -252,6 +264,8 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	/// Amount of times we got autocorrected?? why is this a thing?
 	var/amtfail = 0
 
+	var/punch_damage = 0
+
 ///////////
 // PROCS //
 ///////////
@@ -318,7 +332,8 @@ GLOBAL_LIST_EMPTY(patreon_races)
 				/datum/language/hellspeak = "Infernal",
 				/datum/language/orcish = "Orcish",
 				/datum/language/celestial = "Celestial",
-				/datum/language/zalad = "Zalad"
+				/datum/language/zalad = "Zalad",
+				/datum/language/deepspeak = "Deepspeak"
 			)
 
 			if (language in language_map)
@@ -362,7 +377,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 			GLOB.patreon_races += S.name
 		qdel(S)
 	if(!LAZYLEN(GLOB.roundstart_races))
-		GLOB.roundstart_races += RACE_HUMEN
+		GLOB.roundstart_races += "Humen" // GLOB.species_list uses name and should probably be refactored
 	sortTim(GLOB.roundstart_races, GLOBAL_PROC_REF(cmp_text_dsc))
 
 /proc/get_selectable_species(patreon = TRUE)
@@ -734,6 +749,9 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	for(var/X in inherent_traits)
 		REMOVE_TRAIT(C, X, SPECIES_TRAIT)
 
+	for(var/skill as anything in inherent_skills)
+		C.adjust_skillrank(skill, -inherent_skills[skill], TRUE)
+
 	if(inherent_factions)
 		for(var/i in inherent_factions)
 			C.faction -= i
@@ -819,6 +837,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 
 			if(underwear)
 				var/mutable_appearance/underwear_overlay
+				var/mutable_appearance/underwear_emissive
 				if(!hide_bottom)
 					underwear_overlay = mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
 					if(LAZYACCESS(offsets, OFFSET_UNDIES))
@@ -831,6 +850,11 @@ GLOBAL_LIST_EMPTY(patreon_races)
 							H.underwear_color = "#755f46"
 							underwear_overlay.color = "#755f46"
 					standing += underwear_overlay
+					if(!istype(H, /mob/living/carbon/human/dummy))
+						underwear_emissive = emissive_blocker(underwear.icon, underwear.icon_state, -BODY_LAYER)
+						underwear_emissive.pixel_y = underwear_overlay.pixel_y
+						underwear_emissive.pixel_x = underwear_overlay.pixel_x
+						standing += underwear_emissive
 
 				if(!hide_top && H.gender == FEMALE)
 					underwear_overlay = mutable_appearance(underwear.icon, "[underwear.icon_state]_boob", -BODY_LAYER)
@@ -844,6 +868,11 @@ GLOBAL_LIST_EMPTY(patreon_races)
 							H.underwear_color = "#755f46"
 							underwear_overlay.color = "#755f46"
 					standing += underwear_overlay
+					if(!istype(H, /mob/living/carbon/human/dummy))
+						underwear_emissive = emissive_blocker(underwear.icon, "[underwear.icon_state]_boob", -BODY_LAYER)
+						underwear_emissive.pixel_y = underwear_overlay.pixel_y
+						underwear_emissive.pixel_x = underwear_overlay.pixel_x
+						standing += underwear_emissive
 
 	if(length(standing))
 		H.overlays_standing[BODY_LAYER] = standing
@@ -852,13 +881,14 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	H.apply_overlay(ABOVE_BODY_FRONT_LAYER)
 
 /datum/species/proc/spec_life(mob/living/carbon/human/H)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
 		H.setOxyLoss(0)
 		H.losebreath = 0
 
-		var/takes_crit_damage = (!HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
-		if((H.health < H.crit_threshold) && takes_crit_damage)
-			H.adjustBruteLoss(1)
+	if((H.health < H.crit_threshold) && !HAS_TRAIT(H, TRAIT_NOCRITDAMAGE))
+		H.adjustBruteLoss(1)
 
 /datum/species/proc/spec_death(gibbed, mob/living/carbon/human/H)
 	return
@@ -1308,7 +1338,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 			return FALSE
 		if(!target.Adjacent(user))
 			return
-		if(user.incapacitated(ignore_grab = TRUE))
+		if(user.incapacitated(IGNORE_GRAB))
 			return
 
 		var/damage = user.get_punch_dmg()
@@ -1333,7 +1363,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 		target.last_attacker_ckey = user.ckey
 		user.dna.species.spec_unarmedattacked(user, target)
 
-		user.do_attack_animation(target, visual_effect_icon = user.used_intent.animname)
+		user.do_attack_animation(target, visual_effect_icon = user.used_intent.animname, atom_bounce = TRUE)
 		target.next_attack_msg.Cut()
 
 		var/nodmg = FALSE
@@ -1408,7 +1438,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	if(user.loc == target.loc)
 		return FALSE
 	else
-		user.do_attack_animation(target, ATTACK_EFFECT_DISARM)
+		user.do_attack_animation(target, ATTACK_EFFECT_DISARM, atom_bounce = TRUE)
 		playsound(target, 'sound/combat/shove.ogg', 100, TRUE, -1)
 
 		if(target.wear_pants)
@@ -1423,7 +1453,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 //		var/obj/machinery/disposal/bin/target_disposal_bin
 		var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
 
-		if(prob(clamp(30 + (user.stat_fight(target,STATKEY_CON,STATKEY_STR)*10),0,100)))//check if we actually shove them
+		if(prob(clamp(30 + (user.stat_compare(target, STATKEY_STR, STATKEY_CON)*10),0,100)))//check if we actually shove them
 			//Thank you based whoneedsspace
 			target_collateral_mob = locate(/mob/living) in target_shove_turf.contents
 			if(target_collateral_mob)
@@ -1435,6 +1465,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	//				target_disposal_bin = locate(/obj/machinery/disposal/bin) in target_shove_turf.contents
 					if(target_table)
 						shove_blocked = TRUE
+			qdel(user.check_arm_grabbed(user.active_hand_index))
 
 /*		if(target.IsKnockdown() && !target.IsParalyzed())
 			target.Paralyze(SHOVE_CHAIN_PARALYZE)
@@ -1519,22 +1550,12 @@ GLOBAL_LIST_EMPTY(patreon_races)
 		return FALSE
 	if(user.check_leg_grabbed(1) || user.check_leg_grabbed(2))
 		if(user.check_leg_grabbed(1) && user.check_leg_grabbed(2))		//If both legs are grabbed
-			to_chat(user, span_notice("I can't move my leg!"))
+			to_chat(user, span_notice("I can't move my legs!"))
 			return
 		else															//If only one leg is grabbed
-			var/mob/living/G = user.pulledby
-			var/userskill = 1
-			if(user.mind)
-				userskill = ((user.get_skill_level(/datum/skill/combat/wrestling) * 0.1) + 1)
-			var/grabberskill = 1
-			if(G?.mind)
-				grabberskill = ((G.get_skill_level(/datum/skill/combat/wrestling) * 0.1) + 1)
-			if(((user.STASTR + rand(1, 6)) * userskill) < ((G.STASTR + rand(1, 6)) * grabberskill))
-				to_chat(user, span_notice("I can't move my leg!"))
-				user.changeNext_move(CLICK_CD_GRABBING)
-				return
-			else
-				user.resist_grab()
+			to_chat(user, span_notice("I can't move my leg!"))
+			user.resist_grab()
+		return
 
 	if(user.stamina >= user.maximum_stamina)
 		return FALSE
@@ -1658,10 +1679,15 @@ GLOBAL_LIST_EMPTY(patreon_races)
 			affecting = target.get_bodypart(BODY_ZONE_CHEST)
 		var/armor_block = target.run_armor_check(selzone, "blunt", blade_dulling = BCLASS_BLUNT)
 		var/damage = user.get_kick_damage(1.4)
+		var/damage_blocked = FALSE
+
 		if(!target.apply_damage(damage, user.dna.species.attack_type, affecting, armor_block))
+			damage_blocked = TRUE
 			target.next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
 		else
 			affecting.bodypart_attacked_by(BCLASS_BLUNT, damage, user, selzone)
+
+		SEND_SIGNAL(user, COMSIG_MOB_KICK, target, selzone, damage_blocked)
 		playsound(target, 'sound/combat/hits/kick/kick.ogg', 100, TRUE, -1)
 		target.last_attacker_name = user.real_name
 		target.fragger = user
@@ -1710,7 +1736,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	if(istype(M.used_intent, /datum/intent/unarmed))
 		harm(M, H, attacker_style)
 
-/datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H, selzone)
+/datum/species/proc/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H, selzone, accurate = FALSE)
 	// Allows you to put in item-specific reactions based on species
 	if(user != H)
 		if(H.can_see_cone(user))
@@ -1723,7 +1749,10 @@ GLOBAL_LIST_EMPTY(patreon_races)
 
 	var/hit_area
 
-	selzone = accuracy_check(user.zone_selected, user, H, I.associated_skill, user.used_intent, I)
+	if(!selzone)
+		selzone = user.zone_selected
+	if(!accurate)
+		selzone = accuracy_check(selzone, user, H, I.associated_skill, user.used_intent, I)
 	affecting = H.get_bodypart(check_zone(selzone))
 
 	if(!affecting)
@@ -1769,6 +1798,13 @@ GLOBAL_LIST_EMPTY(patreon_races)
 					user.put_in_hands(I)
 					H.emote("pain", TRUE)
 					playsound(H.loc, 'sound/foley/flesh_rem.ogg', 100, TRUE, -2)
+			if(istype(user.used_intent, /datum/intent/effect) && selzone)
+				var/datum/intent/effect/effect_intent = user.used_intent
+				if(LAZYLEN(effect_intent.target_parts))
+					if(selzone in effect_intent.target_parts)
+						H.apply_status_effect(effect_intent.intent_effect)
+				else
+					H.apply_status_effect(effect_intent.intent_effect)
 //		if(H.used_intent.blade_class == BCLASS_BLUNT && I.force >= 15 && affecting.body_zone == "chest")
 //			var/turf/target_shove_turf = get_step(H.loc, get_dir(user.loc,H.loc))
 //			H.throw_at(target_shove_turf, 1, 1, H, spin = FALSE)
@@ -2056,9 +2092,8 @@ GLOBAL_LIST_EMPTY(patreon_races)
 		if(leg_clothes)
 			burning_items |= leg_clothes
 
-		for(var/X in burning_items)
-			var/obj/item/I = X
-			I.fire_act(((H.fire_stacks + H.divine_fire_stacks)* 50)) //damage taken is reduced to 2% of this value by fire_act()
+		for(var/obj/item/I as anything in burning_items)
+			I.fire_act(((H.fire_stacks + H.divine_fire_stacks) * 25)) //damage taken is reduced to 2% of this value by fire_act()
 
 		var/thermal_protection = H.get_thermal_protection()
 

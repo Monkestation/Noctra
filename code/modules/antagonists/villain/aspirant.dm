@@ -1,10 +1,10 @@
-#define CHOICE_POISON "poison"
 #define CHOICE_SKILL_SWORD "sword_skill"
 #define CHOICE_SKILL_KNIFE "knife_skill"
 #define CHOICE_SKILL_BOW "bow_skill"
 #define CHOICE_SKILL_MACES "maces_skill"
 #define CHOICE_SKILL_LOCKPICKING "lockpicking_skill"
 #define CHOICE_SKILL_WRESTLING "wrestling_skill"
+#define CHOICE_POISON "poison"
 #define CHOICE_GUN "gun"
 #define CHOICE_BOMB "bomb"
 
@@ -60,7 +60,7 @@
 			to_chat(owner, span_notice("I can retrieve my item from a statue, tree or clock by right clicking it."))
 
 		if(CHOICE_BOMB)
-			owner.special_items["Bomb"] = /obj/item/bomb
+			owner.special_items["Bomb"] = /obj/item/explosive/bottle
 			to_chat(owner, span_notice("I can retrieve my item from a statue, tree or clock by right clicking it."))
 
 
@@ -163,7 +163,7 @@
 	triumph_count = 5
 
 /datum/objective/aspirant/coup/one/check_completion()
-	if(owner.current == SSticker.rulermob)
+	if(owner?.current == SSticker.rulermob)
 		return TRUE
 	else
 		return FALSE
@@ -171,7 +171,7 @@
 /datum/objective/aspirant/coup/two
 	name = "Moral"
 	explanation_text = "I am no kinslayer, I must make sure that the Monarch doesn't die."
-	triumph_count = 10
+	triumph_count = 5
 	var/initialruler
 
 /datum/objective/aspirant/coup/three
@@ -193,7 +193,7 @@
 	triumph_count = 3
 
 /datum/objective/aspirant/loyal/one/check_completion()
-	if(owner.current == SSticker.rulermob)
+	if(owner?.current == SSticker.rulermob)
 		return TRUE
 	else
 		return FALSE
@@ -277,3 +277,13 @@
 
 /datum/antagonist/aspirant/ruler/examine_friendorfoe(datum/antagonist/examined_datum, mob/examiner, mob/examined)
 	return
+
+#undef CHOICE_SKILL_SWORD
+#undef CHOICE_SKILL_KNIFE
+#undef CHOICE_SKILL_BOW
+#undef CHOICE_SKILL_MACES
+#undef CHOICE_SKILL_LOCKPICKING
+#undef CHOICE_SKILL_WRESTLING
+#undef CHOICE_POISON
+#undef CHOICE_GUN
+#undef CHOICE_BOMB

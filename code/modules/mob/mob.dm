@@ -34,13 +34,13 @@ GLOBAL_VAR_INIT(mobids, 1)
 	for (var/alert in alerts)
 		clear_alert(alert, TRUE)
 	if(observers && observers.len)
-		for(var/M in observers)
-			var/mob/dead/observe = M
+		for(var/mob/dead/observe as anything in observers)
 			observe.reset_perspective(null)
 	qdel(hud_used)
 	for(var/cc in client_colours)
 		qdel(cc)
 	client_colours = null
+	offered_item = null
 	ghostize(drawskip=TRUE)
 	..()
 	return QDEL_HINT_HARDDEL
@@ -243,7 +243,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	return null
 
 ///Is the mob incapacitated
-/mob/proc/incapacitated(ignore_restraints = FALSE, ignore_grab = TRUE)
+/mob/proc/incapacitated(flags)
 	return
 
 /**
@@ -428,7 +428,7 @@ GLOBAL_VAR_INIT(mobids, 1)
  */
 /mob/verb/pointed(atom/A as mob|obj|turf in view())
 	set name = "Point To"
-	set category = "Object"
+	set category = "IC"
 
 	if(istype(A, /obj/effect/temp_visual/point))
 		return FALSE
@@ -529,7 +529,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	set hidden = 1
 	set src = usr
 
-	if(incapacitated(ignore_grab = TRUE))
+	if(incapacitated(IGNORE_GRAB))
 		return
 
 	var/obj/item/I = get_active_held_item()
@@ -543,8 +543,8 @@ GLOBAL_VAR_INIT(mobids, 1)
  * This actually gets the mind datums notes
  */
 /mob/verb/memory()
-	set name = "Notes"
-	set category = "Memory"
+	set name = "Memories"
+	set category = "IC"
 	set desc = ""
 	if(mind)
 		mind.show_memory(src)
@@ -555,8 +555,8 @@ GLOBAL_VAR_INIT(mobids, 1)
  * Add a note to the mind datum
  */
 /mob/verb/add_memory(msg as message)
-	set name = "AddNote"
-	set category = "Memory"
+	set name = "Add Memory"
+	set category = "IC"
 	if(mind)
 		if (world.time < memory_throttle_time)
 			return
@@ -900,6 +900,8 @@ GLOBAL_VAR_INIT(mobids, 1)
 	client.last_turn = world.time + MOB_FACE_DIRECTION_DELAY
 	return TRUE
 
+#undef MOB_FACE_DIRECTION_DELAY
+
 ///This might need a rename but it should replace the can this mob use things check
 /mob/proc/IsAdvancedToolUser()
 	return FALSE
@@ -927,32 +929,40 @@ GLOBAL_VAR_INIT(mobids, 1)
 		ghost.notify_cloning(message, sound, source, flashwindow)
 		return ghost
 
-///Add a spell to the mobs spell list
-/mob/proc/AddSpell(obj/effect/proc_holder/spell/S)
-	mob_spell_list += S
-	S.action.Grant(src)
+/**
+ * Checks to see if the mob can cast normal magic spells.
+ *
+ * args:
+ * * magic_flags (optional) A bitfield with the type of magic being cast (see flags at: /datum/component/anti_magic)
+**/
+/mob/proc/can_cast_magic(magic_flags = MAGIC_RESISTANCE)
+	if(magic_flags == NONE) // magic with the NONE flag can always be cast
+		return TRUE
 
-///Remove a spell from the mobs spell list
-/mob/proc/RemoveSpell(obj/effect/proc_holder/spell/spell)
-	if(!spell)
-		return
-	for(var/obj/effect/proc_holder/spell/S in mob_spell_list)
-		if(istype(S, spell))
-			mob_spell_list -= S
-			qdel(S)
+	var/restrict_magic_flags = SEND_SIGNAL(src, COMSIG_MOB_RESTRICT_MAGIC, magic_flags)
+	return restrict_magic_flags == NONE
 
-///Return any anti magic atom on this mob that matches the magic type
-/mob/proc/anti_magic_check(magic = TRUE, holy = FALSE, tinfoil = FALSE, chargecost = 1, self = FALSE)
-	if(!magic && !holy && !tinfoil)
-		return
-	var/list/protection_sources = list()
-	if(SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, src, magic, holy, tinfoil, chargecost, self, protection_sources) & COMPONENT_BLOCK_MAGIC)
-		if(protection_sources.len)
-			return pick(protection_sources)
-		else
-			return src
-	if((magic && HAS_TRAIT(src, TRAIT_ANTIMAGIC)) || (holy && HAS_TRAIT(src, TRAIT_HOLY)))
-		return src
+/**
+ * Checks to see if the mob can block magic
+ *
+ * args:
+ * * casted_magic_flags (optional) A bitfield with the types of magic resistance being checked (see flags at: /datum/component/anti_magic)
+ * * charge_cost (optional) The cost of charge to block a spell that will be subtracted from the protection used
+**/
+/mob/proc/can_block_magic(casted_magic_flags = MAGIC_RESISTANCE, charge_cost = 1)
+	if(casted_magic_flags == NONE) // magic with the NONE flag is immune to blocking
+		return FALSE
+
+	var/list/protection_was_used = list() // this is a janky way of interrupting signals using lists
+	var/is_magic_blocked = SEND_SIGNAL(src, COMSIG_MOB_RECEIVE_MAGIC, casted_magic_flags, charge_cost, protection_was_used) & COMPONENT_MAGIC_BLOCKED
+
+	if(casted_magic_flags && HAS_TRAIT(src, TRAIT_ANTIMAGIC))
+		is_magic_blocked = TRUE
+	if((casted_magic_flags & MAGIC_RESISTANCE_HOLY) && HAS_TRAIT(src, TRAIT_HOLY))
+		is_magic_blocked = TRUE
+
+	return is_magic_blocked
+
 
 /**
  * Buckle to another mob
@@ -1132,11 +1142,15 @@ GLOBAL_VAR_INIT(mobids, 1)
 
 ///Update the mouse pointer of the attached client in this mob
 /mob/proc/update_mouse_pointer()
-	if (!client)
+	if(!client)
 		return
+	if(client.mouse_pointer_icon != initial(client.mouse_pointer_icon))//only send changes to the client if theyre needed
+		client.mouse_pointer_icon = 'icons/effects/mousemice/human.dmi'
 	if(!client.charging && !atkswinging)
 		if(examine_cursor_icon && client.keys_held["Shift"]) //mouse shit is hardcoded, make this non hard-coded once we make mouse modifiers bindable
 			client.mouse_pointer_icon = examine_cursor_icon
+	if(client.mouse_override_icon)
+		client.mouse_pointer_icon = client.mouse_override_icon
 
 /**
  * Can this mob see in the dark
@@ -1161,9 +1175,9 @@ GLOBAL_VAR_INIT(mobids, 1)
 	var/turf/mob_location = get_turf(src)
 	var/area/mob_area = get_area(src)
 
-	if(mob_location.get_lumcount() > light_amount)
+	if(mob_location?.get_lumcount() > light_amount)
 		return TRUE
-	else if(mob_area.dynamic_lighting == DYNAMIC_LIGHTING_DISABLED)
+	else if(mob_area?.dynamic_lighting == DYNAMIC_LIGHTING_DISABLED)
 		return TRUE
 
 	return FALSE
@@ -1333,7 +1347,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	stat = new_stat
 	SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, new_stat, .)
 
-/mob/say_mod(input, message_mode)
+/mob/say_mod(input, list/message_mods = list())
 	var/customsayverb = findtext(input, "*")
 	if(customsayverb)
 		return lowertext(copytext(input, 1, customsayverb))
@@ -1344,6 +1358,11 @@ GLOBAL_VAR_INIT(mobids, 1)
 	if(customsayverb)
 		input = capitalize(copytext(input, customsayverb+1))
 	return "[message_spans_start(spans)][input]</span>"
+
+/mob/living/proc/can_smell()
+	if(HAS_TRAIT(src, TRAIT_MISSING_NOSE))
+		return FALSE
+	return TRUE
 
 /// Send a menu that allows for the selection of an item. Randomly selects one after time_limit. selection_list should be an associative list of string and typepath
 /mob/proc/select_equippable(user_client, list/selection_list, time_limit = 20 SECONDS, message = "", title = "")

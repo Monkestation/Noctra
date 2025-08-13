@@ -56,7 +56,7 @@
 /obj/structure/fake_machine/vendor/update_icon_state()
 	. = ..()
 	var/state = locked() && !obj_broken
-	icon_state = "streedvendor[state]"
+	icon_state = "streetvendor[state]"
 
 /obj/structure/fake_machine/vendor/update_overlays()
 	. = ..()
@@ -80,13 +80,17 @@
 		return
 	return ..()
 
-/obj/structure/fake_machine/vendor/attack_right(mob/user)
+/obj/structure/fake_machine/vendor/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(user.cmode)
+		return
 	if(!lock_check())
 		to_chat(user, span_notice("There is no lock on \the [src]! I won't be able to sell this!"))
-		return
-	var/held = user.get_active_held_item()
-	add_merchandise(held, user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	add_merchandise(weapon, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/fake_machine/vendor/proc/add_merchandise(obj/item/I, mob/user)
 	if(QDELETED(I) || !isitem(I))
@@ -123,6 +127,7 @@
 				else
 					say("NO MONEY NO HONEY!")
 					return
+			record_round_statistic(STATS_PEDDLER_REVENUE, held_items[O]["PRICE"])
 			held_items -= O
 			if(!usr.put_in_hands(O))
 				O.forceMove(get_turf(src))
@@ -326,3 +331,6 @@
 				user.adjust_triumphs(1)
 				say("[user] HAS BEEN UPGRADED TO A NOBLE BEDCHAMBER!")
 				playsound(src, 'sound/misc/machinelong.ogg', 100, FALSE, -1)
+
+/obj/structure/fake_machine/vendor/merchant
+	lockids = list(ACCESS_MERCHANT)

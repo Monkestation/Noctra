@@ -83,7 +83,7 @@
 		finish_action(controller, FALSE)
 		return
 
-	lycan.Beam(target, "lightning", 'icons/effects/beam.dmi', 3 SECONDS)
+	lycan.Beam(target, "lightning7", 'icons/effects/beam.dmi', 3 SECONDS)
 
 	playsound(lycan, 'sound/magic/lightning.ogg', 75, TRUE)
 
@@ -144,6 +144,10 @@
 		var/damage = 60 * (1 - (dist/6)) // Damage falls off with distance
 
 		L.apply_damage(damage, BURN)
+
+		// Del on death
+		if(QDELETED(L))
+			continue
 
 		var/knockback_distance = max(1, 4 - dist)
 

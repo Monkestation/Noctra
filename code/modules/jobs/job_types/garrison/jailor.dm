@@ -16,7 +16,6 @@
 	min_pq = 4
 
 	allowed_ages = list(AGE_OLD, AGE_IMMORTAL) // He's a wierd elderly man that is fucking jacked- this will make for a memorable character I think.
-	allowed_sexes = list(MALE, FEMALE)
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 
 	outfit = /datum/outfit/job/jailor
@@ -28,11 +27,11 @@
 
 /datum/outfit/job/jailor/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/roguehood/black
+	head = /obj/item/clothing/head/roguehood/colored/black
 	neck = /obj/item/clothing/neck/coif
 	armor = /obj/item/clothing/armor/leather/splint
-	shirt = /obj/item/clothing/shirt/tunic/black
-	pants = /obj/item/clothing/pants/loincloth/black
+	shirt = /obj/item/clothing/shirt/tunic/colored/black
+	pants = /obj/item/clothing/pants/loincloth/colored/black
 	shoes = /obj/item/clothing/shoes/shortboots
 	wrists = /obj/item/rope/chain
 	belt = /obj/item/storage/belt/leather

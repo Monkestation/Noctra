@@ -3,7 +3,7 @@
 	tutorial = "You serve your lord as hand, taking care of diplomatic actions within your realm, \
 	but why have you come to Vanderlin?"
 	allowed_sexes = list(MALE)
-	allowed_races = list("Humen")
+	allowed_races = list(SPEC_ID_HUMEN)
 	outfit = /datum/outfit/job/adventurer/heartfelthand
 	maximum_possible_slots = 1
 	min_pq = 1
@@ -15,7 +15,7 @@
 	shirt = /obj/item/clothing/shirt/undershirt
 	belt = /obj/item/storage/belt/leather/black
 	shoes = /obj/item/clothing/shoes/nobleboot
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	neck = /obj/item/clothing/neck/gorget
 	armor = /obj/item/clothing/armor/medium/surcoat/heartfelt
 	beltr = /obj/item/storage/belt/pouch/coins/rich

@@ -4,7 +4,8 @@
 	requirements = list(/obj/item/reagent_containers/food/snacks/sugar = 1)
 	max_optionals = 0
 	finished_smell = /datum/pollutant/food/sugar
-	crafting_time = 90 SECONDS
+	crafting_time = 10 SECONDS
+	required_chem_temp = 300 // it's sugar water
 
 /datum/container_craft/cooking/drugs/drukqs
 	name = "Drukqs"

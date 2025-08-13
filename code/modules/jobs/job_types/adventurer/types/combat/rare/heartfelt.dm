@@ -3,7 +3,7 @@
 	tutorial = "You are the proud lord of Heartfelt, \
 	but why have you come to Vanderlin?"
 	allowed_sexes = list(MALE)
-	allowed_races = list("Humen")
+	allowed_races = list(SPEC_ID_HUMEN)
 	outfit = /datum/outfit/job/adventurer/heartfeltlord
 	min_pq = 2
 	maximum_possible_slots = 1
@@ -17,7 +17,7 @@
 	neck = /obj/item/clothing/neck/gorget
 	head = /obj/item/clothing/head/helmet
 	shoes = /obj/item/clothing/shoes/nobleboot
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	cloak = /obj/item/clothing/cloak/heartfelt
 	armor = /obj/item/clothing/armor/medium/surcoat/heartfelt
 	beltr = /obj/item/storage/belt/pouch/coins/rich

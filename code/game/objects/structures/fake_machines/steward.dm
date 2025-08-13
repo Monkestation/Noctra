@@ -48,6 +48,7 @@
 		var/amt = D.get_import_price()
 		SStreasury.treasury_value -= amt
 		SStreasury.log_to_steward("-[amt] imported [D.name]")
+		record_round_statistic(STATS_STOCKPILE_IMPORTS_VALUE, amt)
 		if(amt >= 100)
 			scom_announce("[SSmapping.config.map_name] imports [D.name] for [amt] mammon.")
 		else
@@ -65,6 +66,7 @@
 		D.held_items -= D.importexport_amt
 		SStreasury.treasury_value += amt
 		SStreasury.log_to_steward("+[amt] exported [D.name]")
+		record_round_statistic(STATS_STOCKPILE_EXPORTS_VALUE, amt)
 		if(amt >= 100)
 			scom_announce("[SSmapping.config.map_name] exports [D.name] for [amt] mammon.")
 		else
@@ -157,6 +159,7 @@
 					return
 				if(newtax < 1)
 					return
+				record_round_statistic(STATS_DIRECT_TREASURY_TRANSFERS, newtax)
 				SStreasury.give_money_account(newtax, A)
 				break
 	if(href_list["fineaccount"])
@@ -174,6 +177,7 @@
 					return
 				if(newtax < 1)
 					return
+				record_round_statistic(STATS_FINES_INCOME, newtax)
 				SStreasury.give_money_account(-newtax, A)
 				break
 	if(href_list["payroll"])
@@ -198,6 +202,7 @@
 			return
 		for(var/mob/living/carbon/human/H in GLOB.human_list)
 			if(H.job == job_to_pay)
+				record_round_statistic(STATS_WAGES_PAID, amount_to_pay)
 				SStreasury.give_money_account(amount_to_pay, H)
 	if(href_list["compact"])
 		compact = !compact

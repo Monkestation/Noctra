@@ -16,7 +16,7 @@
 	possible_rmb_intents = list(/datum/rmb_intent/feint, /datum/rmb_intent/swift, /datum/rmb_intent/riposte, /datum/rmb_intent/weak)
 	flee_in_pain = TRUE
 	stand_attempts = 6
-	vitae_pool = 250 // Small, frail creechers with not so much vitality to gain from.
+	bloodpool = 250 // Small, frail creechers with not so much vitality to gain from.
 
 /mob/living/carbon/human/species/goblin/npc
 	ai_controller = /datum/ai_controller/human_npc
@@ -112,6 +112,7 @@
 /obj/item/bodypart/head/goblin/skeletonize()
 	. = ..()
 	icon_state = "goblin_skel_head"
+	sellprice = 2
 	if(headprice)
 		headprice = 2
 
@@ -121,7 +122,7 @@
 
 /datum/species/goblin
 	name = "goblin"
-	id = "goblin"
+	id = SPEC_ID_GOBLIN
 	species_traits = list(NO_UNDERWEAR)
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE, TRAIT_EASYDISMEMBER, TRAIT_CRITICAL_WEAKNESS, TRAIT_NASTY_EATER, TRAIT_LEECHIMMUNE, TRAIT_INHUMENCAMP)
 
@@ -199,7 +200,7 @@
 	apply_overlay(ARMOR_LAYER)
 
 
-/mob/living/carbon/human/species/goblin/update_inv_head()
+/mob/living/carbon/human/species/goblin/update_inv_head(hide_nonstandard = FALSE)
 	update_wearable()
 /mob/living/carbon/human/species/goblin/update_inv_armor()
 	update_wearable()
@@ -222,6 +223,7 @@
 			headdy.icon = 'icons/roguetown/mob/monster/goblins.dmi'
 			headdy.icon_state = "[src.dna.species.id]_head"
 			headdy.headprice = rand(7,20)
+			headdy.sellprice = rand(7,20)
 	var/obj/item/organ/eyes/eyes = src.getorganslot(ORGAN_SLOT_EYES)
 	if(eyes)
 		eyes.Remove(src,1)
@@ -257,7 +259,7 @@
 	last_process = world.time
 	amount += amt2add
 	if(has_world_trait(/datum/world_trait/pestra_mercy))
-		amount -= 5 * time_elapsed
+		amount -= (is_ascendant(PESTRA) ? 2.5 : 5) * time_elapsed
 
 	var/mob/living/carbon/C = parent
 	if(!C)

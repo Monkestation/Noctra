@@ -68,6 +68,8 @@ GLOBAL_PROTECT(tracy_init_reason)
 	// THAT'S IT, WE'RE DONE, THE. FUCKING. END.
 	Master = new
 
+#undef USE_TRACY_PARAMETER
+
 /world/New()
 
 	log_world("World loaded at [time_stamp()]!")
@@ -219,13 +221,15 @@ GLOBAL_PROTECT(tracy_init_reason)
 	start_log(GLOB.character_list_log)
 	start_log(GLOB.hunted_log)
 
-	GLOB.changelog_hash = md5('html/changelog.html') //for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)
 
 	if(GLOB.round_id)
 		log_game("Round ID: [GLOB.round_id]")
+
+	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
+	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently
 
 	// This was printed early in startup to the world log and config_error.log,
 	// but those are both private, so let's put the commit info in the runtime
@@ -576,3 +580,5 @@ GLOBAL_PROTECT(tracy_init_reason)
 			SEND_TEXT(world.log, "Error flushing byond-tracy log: [flush_result]")
 			CRASH("Error flushing byond-tracy log: [flush_result]")
 		SEND_TEXT(world.log, "Flushed byond-tracy log")
+
+#undef RESTART_COUNTER_PATH

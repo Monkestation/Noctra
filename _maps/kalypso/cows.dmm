@@ -1,0 +1,430 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/fluff/railing/woodfence,
+/turf/open/water/cleanshallow,
+/area/template_noop)
+"b" = (
+/obj/item/reagent_containers/food/snacks/produce/grain/wheat,
+/obj/structure/wild_plant/nospread/wheat,
+/obj/structure/flora/grass,
+/turf/open/floor/grass,
+/area/template_noop)
+"c" = (
+/turf/open/floor/grass,
+/area/template_noop)
+"d" = (
+/obj/item/reagent_containers/glass/bucket/wooden,
+/turf/open/floor/grass,
+/area/template_noop)
+"f" = (
+/obj/structure/flora/grass,
+/turf/open/floor/grass,
+/area/template_noop)
+"g" = (
+/obj/structure/flora/grass,
+/obj/item/grown/log/tree/stick,
+/turf/open/floor/grass,
+/area/template_noop)
+"i" = (
+/obj/structure/fluff/railing/woodfence{
+	dir = 4
+	},
+/obj/item/grown/log/tree/stick,
+/turf/open/floor/grass,
+/area/template_noop)
+"j" = (
+/obj/structure/fluff/railing/woodfence{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/template_noop)
+"k" = (
+/turf/open/floor/dirt,
+/area/template_noop)
+"l" = (
+/obj/structure/flora/tree/pine,
+/turf/open/floor/grass,
+/area/template_noop)
+"n" = (
+/turf/template_noop,
+/area/template_noop)
+"o" = (
+/obj/structure/fluff/railing/woodfence{
+	dir = 6
+	},
+/turf/open/water/cleanshallow,
+/area/template_noop)
+"p" = (
+/turf/closed/mineral/bedrock,
+/area/template_noop)
+"r" = (
+/obj/item/reagent_containers/food/snacks/produce/grain/wheat,
+/obj/structure/wild_plant/nospread/wheat,
+/turf/open/floor/grass,
+/area/template_noop)
+"s" = (
+/obj/structure/fluff/railing/woodfence{
+	dir = 8
+	},
+/turf/open/water/river{
+	dir = 4
+	},
+/area/template_noop)
+"t" = (
+/obj/structure/wild_plant/nospread/potato,
+/turf/open/floor/dirt,
+/area/template_noop)
+"w" = (
+/obj/structure/flora/grass/bush,
+/turf/open/floor/grass,
+/area/template_noop)
+"y" = (
+/obj/structure/flora/grass,
+/obj/structure/flora/tree/pine/dead,
+/turf/open/floor/dirt,
+/area/template_noop)
+"A" = (
+/obj/structure/flora/grass,
+/turf/open/floor/dirt,
+/area/template_noop)
+"C" = (
+/turf/open/water/river{
+	dir = 4
+	},
+/area/template_noop)
+"D" = (
+/turf/open/water/river{
+	dir = 8
+	},
+/area/template_noop)
+"E" = (
+/mob/living/simple_animal/hostile/retaliate/cow/cowlet,
+/obj/structure/flora/grass,
+/turf/open/floor/grass,
+/area/template_noop)
+"G" = (
+/obj/structure/flora/grass/bush_meagre,
+/turf/open/floor/grass,
+/area/template_noop)
+"H" = (
+/mob/living/simple_animal/hostile/retaliate/cow/cowlet/bullet,
+/obj/structure/flora/grass,
+/turf/open/floor/grass,
+/area/template_noop)
+"I" = (
+/mob/living/simple_animal/hostile/retaliate/cow,
+/turf/open/floor/grass,
+/area/template_noop)
+"J" = (
+/obj/structure/fluff/railing/woodfence{
+	dir = 4
+	},
+/turf/open/water/cleanshallow,
+/area/template_noop)
+"K" = (
+/obj/structure/wild_plant/nospread/turnip,
+/turf/open/floor/grass,
+/area/template_noop)
+"L" = (
+/obj/item/grown/log/tree/stick,
+/turf/open/floor/grass,
+/area/template_noop)
+"M" = (
+/obj/structure/fluff/railing/woodfence{
+	dir = 10
+	},
+/turf/open/floor/grass,
+/area/template_noop)
+"N" = (
+/obj/structure/flora/grass,
+/obj/structure/flora/grass,
+/turf/open/floor/dirt,
+/area/template_noop)
+"P" = (
+/obj/structure/fluff/railing/woodfence{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/template_noop)
+"Q" = (
+/turf/open/water/river,
+/area/template_noop)
+"S" = (
+/obj/structure/flora/grass/bush_meagre,
+/turf/template_noop,
+/area/template_noop)
+"U" = (
+/obj/effect/waterfall,
+/turf/open/water/river,
+/area/template_noop)
+"V" = (
+/turf/open/water/river{
+	dir = 1
+	},
+/area/template_noop)
+"X" = (
+/turf/open/water/cleanshallow,
+/area/template_noop)
+"Z" = (
+/obj/structure/fluff/railing/woodfence{
+	dir = 4
+	},
+/obj/structure/wild_plant/nospread/turnip,
+/turf/open/floor/grass,
+/area/template_noop)
+
+(1,1,1) = {"
+n
+p
+p
+p
+G
+c
+c
+A
+A
+A
+A
+t
+c
+n
+n
+"}
+(2,1,1) = {"
+p
+p
+p
+p
+U
+C
+d
+c
+w
+c
+y
+A
+A
+f
+n
+"}
+(3,1,1) = {"
+p
+p
+p
+U
+Q
+Q
+Q
+Q
+C
+C
+c
+c
+g
+N
+f
+"}
+(4,1,1) = {"
+p
+p
+p
+U
+Q
+Q
+Q
+Q
+Q
+Q
+Q
+C
+t
+A
+A
+"}
+(5,1,1) = {"
+n
+p
+p
+p
+U
+D
+w
+t
+Q
+Q
+C
+C
+V
+A
+A
+"}
+(6,1,1) = {"
+n
+n
+p
+p
+l
+A
+A
+f
+c
+Q
+C
+C
+V
+A
+k
+"}
+(7,1,1) = {"
+n
+n
+n
+k
+k
+t
+A
+A
+k
+c
+C
+C
+V
+f
+w
+"}
+(8,1,1) = {"
+n
+n
+k
+k
+G
+p
+p
+j
+L
+K
+C
+s
+M
+l
+c
+"}
+(9,1,1) = {"
+n
+n
+n
+S
+p
+p
+p
+E
+c
+X
+X
+X
+a
+X
+c
+"}
+(10,1,1) = {"
+n
+n
+n
+p
+p
+p
+b
+f
+X
+X
+X
+X
+a
+X
+X
+"}
+(11,1,1) = {"
+n
+n
+p
+p
+p
+r
+f
+c
+X
+X
+X
+X
+a
+X
+X
+"}
+(12,1,1) = {"
+n
+n
+p
+p
+K
+I
+c
+k
+X
+X
+X
+X
+a
+X
+X
+"}
+(13,1,1) = {"
+n
+n
+p
+p
+p
+c
+f
+A
+k
+X
+X
+X
+a
+X
+X
+"}
+(14,1,1) = {"
+n
+n
+p
+p
+p
+p
+K
+H
+f
+k
+X
+X
+a
+X
+n
+"}
+(15,1,1) = {"
+n
+n
+n
+n
+p
+p
+i
+P
+P
+Z
+J
+J
+o
+n
+n
+"}

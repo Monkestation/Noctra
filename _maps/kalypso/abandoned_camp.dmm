@@ -1,0 +1,284 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"i" = (
+/obj/structure/gravemarker,
+/obj/structure/closet/dirthole/closed/loot,
+/turf/template_noop,
+/area/template_noop)
+"q" = (
+/obj/structure/table/wood/treestump,
+/turf/template_noop,
+/area/template_noop)
+"x" = (
+/obj/item/weapon/mace/woodclub/train_sword{
+	pixel_y = 21
+	},
+/obj/item/storage/backpack/backpack{
+	pixel_y = 20;
+	pixel_x = -4
+	},
+/turf/template_noop,
+/area/template_noop)
+"z" = (
+/turf/open/floor/dirt/road,
+/area/template_noop)
+"L" = (
+/turf/closed/wall/mineral/tent,
+/area/template_noop)
+"O" = (
+/obj/structure/roguetent,
+/turf/template_noop,
+/area/template_noop)
+"R" = (
+/turf/open/floor/cobblerock,
+/area/template_noop)
+"Z" = (
+/obj/machinery/light/fueled/campfire{
+	fueluse = 0
+	},
+/turf/open/floor/dirt/road,
+/area/template_noop)
+
+(1,1,1) = {"
+R
+z
+a
+a
+a
+a
+L
+L
+a
+a
+"}
+(2,1,1) = {"
+z
+z
+R
+a
+a
+O
+a
+O
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+q
+R
+L
+a
+L
+x
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+R
+z
+R
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+i
+a
+Z
+z
+R
+z
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+R
+R
+q
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+L
+L
+a
+a
+a
+a
+L
+a
+L
+a
+"}
+(8,1,1) = {"
+O
+a
+O
+a
+a
+a
+O
+a
+O
+a
+"}
+(9,1,1) = {"
+a
+a
+L
+a
+a
+R
+a
+L
+L
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+R
+z
+a
+a
+a
+a
+"}
+
+(1,1,2) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,2) = {"
+a
+a
+a
+a
+a
+L
+a
+L
+a
+a
+"}
+(3,1,2) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,2) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,2) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(6,1,2) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(7,1,2) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(8,1,2) = {"
+a
+L
+L
+a
+a
+a
+L
+L
+a
+a
+"}
+(9,1,2) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(10,1,2) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

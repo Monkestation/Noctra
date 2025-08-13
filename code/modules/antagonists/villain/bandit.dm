@@ -19,17 +19,26 @@
 
 /datum/antagonist/bandit/examine_friendorfoe(datum/antagonist/examined_datum, mob/examiner, mob/examined)
 	if(istype(examined_datum, /datum/antagonist/bandit))
-		return "<span class='boldnotice'>Another free man. My ally.</span>"
+		if(examiner.real_name in GLOB.outlawed_players)
+			if(examined.real_name in GLOB.outlawed_players)
+				return span_boldnotice("Another free man. My ally.")
+			else
+				return span_boldnotice("Pardoned free man?! Can I still trust [examined.p_them()]?!")
+		else if(examined.real_name in GLOB.outlawed_players)
+			return span_boldnotice("Free man still on the run. Fool.")
+		else
+			return span_boldnotice("Fellow pardoned free man.")
 
 /datum/antagonist/bandit/on_gain()
 	owner.special_role = "Bandit"
-	owner.purge_combat_knowledge()
+	owner.current?.purge_combat_knowledge()
 	move_to_spawnpoint()
 	owner.current.roll_mob_stats()
 	forge_objectives()
 	. = ..()
 	finalize_bandit()
 	equip_bandit()
+	addtimer(CALLBACK(owner.current, TYPE_PROC_REF(/mob/living/carbon/human, choose_name_popup), "BANDIT"), 5 SECONDS)
 
 /datum/antagonist/bandit/proc/finalize_bandit()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/music/traitor.ogg', 80, FALSE, pressure_affected = FALSE)
@@ -74,21 +83,3 @@
 		else
 			to_chat(world, "[the_name] was a bandit. He stole [amt] triumphs worth of loot.")
 	return
-
-/*	.................   Unique Bandit recipes   ................... */
-/datum/crafting_recipe/bandit_volfhelm
-	name = "(Bandit) Volfhelm"
-	time = 4 SECONDS
-	reqs = list(/obj/item/natural/fur/volf = 2)
-	result = /obj/item/clothing/head/helmet/leather/volfhelm
-	category = CAT_NONE
-	always_availible = FALSE
-
-/datum/crafting_recipe/cult_hood
-	name = "(Cult) Ominous Hood"
-	time = 4 SECONDS
-	reqs = list(/obj/item/natural/hide = 1)
-	result = /obj/item/clothing/head/helmet/leather/hood_ominous
-	category = CAT_NONE
-	always_availible = FALSE
-
