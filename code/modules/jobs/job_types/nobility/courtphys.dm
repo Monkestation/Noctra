@@ -41,9 +41,9 @@
 	beltr = /obj/item/weapon/whip/cane/physician
 	armor = /obj/item/clothing/shirt/robe/courtphysician
 	if(H.gender == FEMALE)
-		pants = /obj/item/clothing/pants/skirt/random
+		pants = /obj/item/clothing/pants/skirt/colored/random
 	else
-		pants = /obj/item/clothing/pants/tights/random
+		pants = /obj/item/clothing/pants/tights/colored/random
 	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
