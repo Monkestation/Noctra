@@ -51,6 +51,7 @@ GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
 GLOBAL_LIST_EMPTY(mob_renown_list)
 GLOBAL_LIST_EMPTY(mob_kill_count) //not sure how useful that these will be, but eh. maybe someone will have use for it too
 GLOBAL_LIST_EMPTY(mob_sentient_kill_count)
+GLOBAL_LIST_EMPTY(sentient_legiable)
 
 /proc/update_config_movespeed_type_lookup(update_mobs = TRUE)
 	var/list/mob_types = list()

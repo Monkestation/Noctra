@@ -422,3 +422,8 @@
 	timer = 5 MINUTES
 	stressadd = 2
 	desc = span_warning("I lost my job at the Mercenary Guild...")
+
+/datum/stressevent/touched_headeater_spawn
+	timer = 10 MINUTES
+	stressadd = 8
+	desc = span_warning("Foul, disgusting thing!!")

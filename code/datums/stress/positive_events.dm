@@ -212,3 +212,23 @@
 	stressadd = -1
 	desc = span_green("I love the night!")
 	timer = 20 MINUTES
+
+/datum/stressevent/elevated_optimism
+	stressadd = -10
+	desc = span_green("Just purse your lips and whistle, that's the thing!")
+	timer = INFINITY
+
+/datum/stressevent/autograph_fangirl_1
+	stressadd = -1
+	desc = span_green("I have known mercenaries autograph, so cool!")
+	timer = 1 MINUTES
+
+/datum/stressevent/autograph_fangirl_2
+	stressadd = -1
+	desc = span_green("I have well known mercenaries autograph, so cool!")
+	timer = 1 MINUTES
+
+/datum/stressevent/autograph_fangirl_3
+	stressadd = -3
+	desc = span_green("I have total legend's autograph, so cool!")
+	timer = 1 MINUTES

@@ -1,5 +1,4 @@
-//N/A lamerd version of the headeater until Aberra actually gives the thumbs up for the real one
-//doesnt even give headprices for assassin or bandits like I wanted - the clown
+//N/A lamerd version of the headeater until I make it not suck
 
 /obj/item/natural/head
 	var/headprice = 0
@@ -48,13 +47,21 @@
 		. += "<span class='info'>HEADEATER value: [headprice]</span>"
 
 /obj/structure/fake_machine/headeater
-	name = "head eating HAILER"
-	desc = "A machine that feeds on certain heads for coin, this itteration seems unfinished, what a sell out"
+	name = "HEAD EATER"
+	desc = "A machine that feeds on certain heads for coin, despite all this time... this itteration still seems unfinished, what a sell out"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "headeater"
 	density = FALSE
 	blade_dulling = DULLING_BASH
 	pixel_y = 32
+
+/obj/structure/fake_machine/headeater/Initialize()
+	SSroguemachine.headeater = src
+	. = ..()
+
+/obj/structure/fake_machine/headeater/Destroy()
+	SSroguemachine.headeater = null
+	. = ..()
 
 /obj/structure/fake_machine/headeater/r
 	pixel_y = 0
@@ -71,7 +78,7 @@
 		return
 
 	if(!HAS_TRAIT(user, TRAIT_BURDEN) && !is_gaffer_assistant_job(user.mind.assigned_role))
-		to_chat(user, span_danger("you can't feed the [src] without carrying his burden"))
+		to_chat(user, span_danger("you can't feed the [src] without carrying it's burden"))
 		return
 
 	if(istype(H, /obj/item/bodypart/head))
@@ -79,6 +86,7 @@
 		if(E.headprice > 0)
 			to_chat(user, span_danger("the [src] consumes the [E] spitting out coins in its place!"))
 			budget2change(E.headprice, user)
+			playsound(src, 'sound/misc/godweapons/gorefeast3.ogg', 70, FALSE, ignore_walls = TRUE)
 			qdel(E)
 			return
 
@@ -87,6 +95,7 @@
 		if(A.headprice > 0)
 			to_chat(user, span_danger("the [src] consumes the [A] spitting out coins in its place!"))
 			budget2change(A.headprice, user)
+			playsound(src, 'sound/misc/godweapons/gorefeast3.ogg', 70, FALSE, ignore_walls = TRUE)
 			qdel(A)
 			return
 
@@ -95,6 +104,7 @@
 		if(D.headprice > 0)
 			to_chat(user, span_danger("as the [src] consumes [D] without a trace, you are hit with a wistful feeling, your past...gone in an instant."))
 			user.add_stress(/datum/stressevent/destroyed_past)
+			playsound(src, 'sound/misc/godweapons/gorefeast3.ogg', 70, FALSE, ignore_walls = TRUE)
 			budget2change(D.headprice, user)
 			qdel(D)
 			return
@@ -103,5 +113,29 @@
 		var/obj/item/painting/lorehead/Y = H
 		if(Y.headprice > 0)
 			to_chat(user, span_danger("the [src] consumes the [Y] spitting out coins in its place!"))
+			playsound(src, 'sound/misc/godweapons/gorefeast3.ogg', 70, FALSE, ignore_walls = TRUE)
 			budget2change(Y.headprice, user)
 			qdel(Y)
+
+	if(istype(H, /obj/item/paper/inn_partnership))
+		var/obj/item/paper/inn_partnership/inn = H
+		if(!inn.gaffsigned || !inn.used || !inn.inkeep)
+			return
+		var/obj/core = new /obj/item/hailer_core
+		if(!usr.put_in_hands(core))
+			core.forceMove(get_turf(user))
+		//N/A sound and message
+		return
+	if(istype(H, /obj/item/paper/merchant_merger))
+		var/obj/item/paper/merchant_merger/guild = H
+		if(!guild.gaffsigned || !guild.used || !guild.merchant)
+			return
+		var/obj/hspawn = new /obj/item/headeater_spawn
+		if(!usr.put_in_hands(hspawn))
+			hspawn.forceMove(get_turf(user))
+		//N/A sound and message
+		return
+
+/obj/structure/fake_machine/headeater/proc/aggresive_income(income)
+	if(income)
+		budget2change(income)

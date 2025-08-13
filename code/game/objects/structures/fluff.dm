@@ -671,6 +671,31 @@
 	blade_dulling = DULLING_BASH
 	icon_state = "astrata"
 	icon = 'icons/roguetown/misc/tallandwide.dmi'
+	var/breaking = FALSE
+
+/obj/structure/fluff/statue/astrata/Initialize()
+	GLOB.astrata_statues += src
+	. = ..()
+
+/obj/structure/fluff/statue/astrata/examine(mob/user)
+	. = ..()
+	if(breaking)
+		if(isliving(user))
+			var/mob/living/luser = user
+			if(luser.patron == /datum/patron/divine/astrata)
+				. += "<span class='warning'>HER VISAGE IS DEFILED!!</span>"
+				return
+		. += "<span class='warning'>Cracks form in the Tyrant's rule.</span>"
+
+
+/obj/structure/fluff/statue/astrata/update_overlays()
+	if(breaking)
+		playsound(src, 'sound/misc/gods/astrata_scream.ogg', 10, ignore_walls = TRUE)
+		playsound(src, 'sound/combat/hits/onstone/stonedeath.ogg', 100, ignore_walls = TRUE)
+		. += mutable_appearance(icon, "[icon_state]_hurt")
+	else
+		icon_state = initial(icon_state)
+	. = ..()
 
 /obj/structure/fluff/statue/astrata/OnCrafted(dirin, mob/user)
 	. = ..()
@@ -1279,7 +1304,7 @@
 		to_chat(user, span_danger("It is not mine to have..."))
 		return
 	to_chat(user, span_danger("As you extend your hand over to the glowing ring, you feel a shiver go up your spine, as if unseen eyes turned to glare at you..."))
-	var/gaffed = alert(user, "Will you bear the burden? (Be the next Gaffer)", "YOUR DESTINY", "Yes", "No")
+	var/gaffed = browser_alert(user, "Will you bear the burden? (Be the next Gaffer)", "YOUR DESTINY", "Yes", "No")
 
 	if(gaffed == "No" && ring_destroyed == TRUE)
 		to_chat(user, span_danger("yes...best to leave it alone."))

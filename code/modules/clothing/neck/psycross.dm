@@ -7,6 +7,24 @@
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS
 	sellprice = 10
 	experimental_onhip = TRUE
+	var/rotting = FALSE
+
+/obj/item/clothing/neck/psycross/Initialize(mapload, ...)
+	GLOB.psycrosses += src
+	. = ..()
+
+/obj/item/clothing/neck/psycross/examine(mob/user)
+	. = ..()
+	if(rotting)
+		. += "<span class='warning'>It is being overtaken by rot, but how?</span>"
+
+/obj/item/clothing/neck/psycross/update_overlays() //I am willing to ignore that these are not represented in the mob overlay its like 5 pixels
+	if(rotting)
+		. += mutable_appearance(icon, "[icon_state]_rot")
+	else
+		. -= mutable_appearance(icon, "[icon_state]_rot")
+	. = ..()
+
 
 // SILVER PSYCROSS START
 
@@ -27,6 +45,10 @@
 	icon_state = "astrata"
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/neck/psycross/silver/astrata/update_overlays()
+	. = ..()
+	return
+
 // Only non-refactored psycross because Noc likes vamps. Neeeerd!
 /obj/item/clothing/neck/psycross/noc
 	name = "amulet of Noc"
@@ -34,11 +56,19 @@
 	icon_state = "noc"
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/neck/psycross/noc/update_overlays()
+	. = ..()
+	return
+
 /obj/item/clothing/neck/psycross/silver/dendor
 	name = "amulet of Dendor"
 	desc = "Nature is a body of which we are but its entrails."
 	icon_state = "dendor"
 	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/psycross/silver/dendor/update_overlays()
+	. = ..()
+	return
 
 /obj/item/clothing/neck/psycross/silver/abyssor
 	name = "amulet of Abyssor"
@@ -46,11 +76,19 @@
 	icon_state = "abyssor"
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/neck/psycross/silver/abyssor/update_overlays()
+	. = ..()
+	return
+
 /obj/item/clothing/neck/psycross/silver/necra
 	name = "amulet of Necra"
 	desc = "Where, grave, thy victory? I triumph still while the Veiled Lady abides by me."
 	icon_state = "necra"
 	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/psycross/silver/necra/update_overlays()
+	. = ..()
+	return
 
 /obj/item/clothing/neck/psycross/silver/ravox
 	name = "amulet of Ravox"
@@ -58,11 +96,19 @@
 	icon_state = "ravox"
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/neck/psycross/silver/ravox/update_overlays()
+	. = ..()
+	return
+
 /obj/item/clothing/neck/psycross/silver/xylix
 	name = "amulet of Xylix"
 	desc = "Be not fooled, and be not afraid to."
 	icon_state = "xylix"
 	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/psycross/silver/xylix/update_overlays()
+	. = ..()
+	return
 
 /obj/item/clothing/neck/psycross/silver/eora
 	name = "amulet of Eora"
@@ -70,11 +116,19 @@
 	icon_state = "eora"
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/neck/psycross/silver/eora/update_overlays()
+	. = ..()
+	return
+
 /obj/item/clothing/neck/psycross/silver/holy/eora
 	name = "Eora's love potion"
 	desc = "Eora's blessing is upon thy, use me on someone else and you shall be soulbond."
 	icon_state = "eora"
 	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/psycross/silver/holy/eora/update_overlays()
+	. = ..()
+	return
 
 /obj/item/clothing/neck/psycross/silver/holy/eora/attack(mob/living/love_target, mob/user)
 	if(!isliving(love_target) || love_target.stat == DEAD)
@@ -104,6 +158,9 @@
 	icon_state = "pestra"
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/neck/psycross/silver/pestra/update_overlays()
+	. = ..()
+	return
 
 /obj/item/clothing/neck/psycross/silver/malum
 	name = "amulet of Malum"
@@ -111,11 +168,20 @@
 	icon_state = "malum"
 	resistance_flags = FIRE_PROOF
 
+
+/obj/item/clothing/neck/psycross/silver/malum/update_overlays()
+	. = ..()
+	return
+
 /obj/item/clothing/neck/psycross/silver/malum_steel
 	name = "amulet of Malum"
 	desc = "Let the tools that guide thee be thy hands."
 	icon_state = "malum_alt"
 	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/psycross/silver/malum_steel/update_overlays()
+	. = ..()
+	return
 
 /obj/item/clothing/neck/psycross/g
 	name = "golden psycross"

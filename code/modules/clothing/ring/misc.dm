@@ -275,7 +275,7 @@
 	if(HAS_TRAIT(user, TRAIT_BURDEN))
 		return TRUE
 
-	var/gaffed = alert(user, "Will you bear the burden? (Be the next Gaffer)", "YOUR DESTINY", "Yes", "No")
+	var/gaffed = browser_alert(user, "Will you bear the burden? (Be the next Gaffer)", "YOUR DESTINY", "Yes", "No")
 	var/gaffed_time = world.time
 
 	if((gaffed == "No" || world.time > gaffed_time + 5 SECONDS) && user.is_holding(src))
@@ -285,6 +285,7 @@
 
 	if((gaffed == "Yes") && user.is_holding(src))
 		ADD_TRAIT(user, TRAIT_BURDEN, type)
+		ADD_TRAIT(user, TRAIT_MERCGUILD, type)
 		user.equip_to_slot_if_possible(src, ITEM_SLOT_RING, FALSE, FALSE, TRUE, TRUE)
 		to_chat(user, span_danger("A constricting weight grows around your neck as you adorn the ring"))
 		return TRUE
@@ -303,6 +304,7 @@
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(on_ring_drop),user), 5 MINUTES)
 	REMOVE_TRAIT (user, TRAIT_BURDEN, type)
+	REMOVE_TRAIT (user, TRAIT_MERCGUILD, type)
 	addtimer(CALLBACK(src, PROC_REF(psstt)), rand(10,20) SECONDS)
 
 /obj/item/clothing/ring/gold/burden/proc/psstt()
@@ -367,3 +369,27 @@
 		active_item = FALSE
 	return
 
+/obj/item/clothing/ring/weepers_boon
+	name = "Makers ring"
+	desc = "The wearer is a proud member of the Makers' guild."
+	icon_state = "weepers_boon"
+	sellprice = 0
+
+/obj/item/clothing/ring/weepers_boon/Initialize(mapload, ...)
+	addtimer(CALLBACK(src, PROC_REF(wheep)), 2 SECONDS)
+	. = ..()
+
+/obj/item/clothing/ring/weepers_boon/proc/wheep()
+	playsound(src, pick('sound/vo/female/gen/cry (1).ogg',
+							'sound/vo/female/gen/cry (2).ogg',
+							'sound/vo/female/gen/cry (3).ogg',
+							'sound/vo/female/gen/cry (4).ogg',
+							'sound/vo/female/gen/cry (5).ogg',
+							'sound/vo/female/gen/cry (6).ogg',
+							'sound/vo/female/gen/cry (7).ogg',
+							'sound/vo/male/gen/cry (1).ogg',
+							'sound/vo/male/gen/cry (2).ogg',
+							'sound/vo/male/gen/cry (3).ogg',
+							'sound/vo/male/gen/cry (4).ogg'))
+	var/timer = rand(2 SECONDS, 7 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(wheep)), timer)

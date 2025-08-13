@@ -11,16 +11,109 @@
 	var/budget = 0
 	var/static/list/paerpywork = list(
 		"Parchment" = list(
-            "type" = /obj/item/paper,
-            "cost" = 10,
-            "desc" = "bo bo bo",
-        ),
-        "bo hoo keey" = list(
-            "type" = /obj/item/paper,
-            "cost" = 10,
-            "desc" = "bo bo bo",
-        ),
+			"type" = /obj/item/paper,
+			"cost" = 10,
+			"desc" = "bo bo bo",
+		),
+		"bo hoo keey" = list(
+			"type" = /obj/item/key/mercenary,
+			"cost" = 10,
+			"desc" = "bo bo bo",
+		),
+		"bo hoo keey" = list(
+			"type" = /obj/item/gold_prick,
+			"cost" = 10,
+			"desc" = "bo bo bo",
+		),
+		"bo hoo keey" = list(
+			"type" = /obj/item/merctoken,
+			"cost" = 10,
+			"desc" = "bo bo bo",
+		),
+		"bo hoo keey" = list(
+			"type" = /obj/item/paper/merc_contract,
+			"cost" = 10,
+			"desc" = "bo bo bo",
+		),
+		"bo hoo keey" = list(
+			"type" = /obj/item/paper/merc_contract/worker,
+			"cost" = 10,
+			"desc" = "bo bo bo",
+		),
+		"bo hoo keey" = list(
+			"type" = /obj/item/paper/merc_work_onetime,
+			"cost" = 10,
+			"desc" = "bo bo bo",
+		),
+		"bo hoo keey" = list(
+			"type" = /obj/item/paper/merc_work_conti,
+			"cost" = 10,
+			"desc" = "bo bo bo",
+		),
+		"bo hoo keey" = list(
+			"type" = /obj/item/paper/merc_autograph,
+			"cost" = 10,
+			"desc" = "bo bo bo",
+		),
+		"bo hoo keey" = list(
+			"type" = /obj/item/paper/merc_will,
+			"cost" = 10,
+			"desc" = "bo bo bo",
+		),
+		"bo hoo keey" = list(
+			"type" = /obj/item/paper/merc_will/adven_will,
+			"cost" = 10,
+			"desc" = "bo bo bo",
+		),
+		"bo hoo keey" = list(
+			"type" = /obj/item/paper/political_PM/guild_tax_exempt,
+			"cost" = 10,
+			"desc" = "bo bo bo",
+		),
+		"bo hoo keey" = list(
+			"type" = /obj/item/paper/political_PM/merc_parade,
+			"cost" = 10,
+			"desc" = "bo bo bo",
+		),
+		"bo hoo keey" = list(
+			"type" = /obj/item/paper/political_PM/bloodseal/exemptfromlaw,
+			"cost" = 10,
+			"desc" = "bo bo bo",
+		),
+		"bo hoo keey" = list(
+			"type" = /obj/item/paper/political_PM/bloodseal/exempt_from_cruelty,
+			"cost" = 10,
+			"desc" = "bo bo bo",
+		),
+		"bo hoo keey" = list(
+			"type" = /obj/item/paper/merchant_merger,
+			"cost" = 10,
+			"desc" = "bo bo bo",
+		),
+		"bo hoo keey" = list(
+			"type" = /obj/item/paper/inn_partnership,
+			"cost" = 10,
+			"desc" = "bo bo bo",
+		),
     )
+
+/obj/structure/fake_machine/hateface/Initialize()
+	. = ..()
+	START_PROCESSING(SSslowobj, src)
+
+/obj/structure/fake_machine/hateface/Destroy()
+	STOP_PROCESSING(SSslowobj, src)
+	return ..()
+
+/obj/structure/fake_machine/hateface/process()//hailer hails? damn
+	. = ..()
+	if(prob(0.1))
+		hate_monologue()
+		return
+	say("HATE! HATE!!")
+
+/obj/structure/fake_machine/hateface/proc/hate_monologue() //N/A write later
+	return
 
 /obj/structure/fake_machine/hateface/examine(mob/user)
 	. = ..()
@@ -65,15 +158,14 @@
 		contents += "<a href='byond://?src=[REF(src)];change=1'>[stars("MAMMON LOADED:")]</a> [budget]<BR>"
 	contents += "</center><BR>"
 	for(var/name in paerpywork)
-		var/dapaper_data = paerpywork[name]
-		var/paper_cost = dapaper_data["cost"]
-		var/paper_desc = dapaper_data["desc"]
-		var/paper_type = dapaper_data["type"]
+		var/paper_cost = name["cost"]
+		var/paper_desc = name["desc"]
+		var/paper_type = name["type"]
 
 		if(user.can_perform_action(src, NEED_LITERACY|FORBID_TELEKINESIS_REACH))
-			contents += "[icon2html((paper_type), user)] - [name] - [paper_cost] <a href='byond://?src=[REF(src)];buy=[REF(paerpywork)]'>BUY</a><BR> [paper_desc] <BR>"
+			contents += "[icon2html((paper_type), user)] - [name] - [paper_cost] <a href='byond://?src=[REF(src)];buy=[REF(name)]'>BUY</a><BR> [paper_desc] <BR>"
 		else
-			contents += "[icon2html((paper_type), user)] - [stars(name)] - [paper_cost] <a href='byond://?src=[REF(src)];buy=[REF(paerpywork)]'>[stars("BUY")]</a><BR> [stars(paper_desc)] <BR>"
+			contents += "[icon2html((paper_type), user)] - [stars(name)] - [paper_cost] <a href='byond://?src=[REF(src)];buy=[REF(name)]'>[stars("BUY")]</a><BR> [stars(paper_desc)] <BR>"
 	var/datum/browser/popup = new(user, "HATEFULMACHINE", "", 370, 400)
 	popup.set_content(contents)
 	popup.open()

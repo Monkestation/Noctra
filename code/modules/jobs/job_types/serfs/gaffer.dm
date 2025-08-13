@@ -17,7 +17,7 @@
 	the next Guild Master. Gone are the excitements of your past, today your life is engrossed with two \
 	things: administrative work, and feeding the monstrous Head Eater. Act as the\
 	Mercenary Guild's master in town, and make sure your members bring back the heads of any slain monsters\
-	or bandits. For the Head Eater hungers..."
+	or beasts. For the Head Eater hungers..."
 
 	display_order = JDO_GAFFER
 	cmode_music = 'sound/music/cmode/towner/CombatGaffer.ogg'

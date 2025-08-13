@@ -4,9 +4,9 @@
 #define TITLE_NOUN_PEPHRASE 4
 #define TITLE_NOUN 5
 
-/mob/proc/process_renown_beast(npc_mob = TRUE, sentient_kill = FALSE)
-	if(!npc_mob)
-		var/playerrenown = GLOB.mob_renown_list[src.mobid]
+/mob/proc/process_renown_beast(sentient_kill = FALSE)
+	//if(!npc_mob)
+		//var/playerrenown = GLOB.mob_renown_list[src.mobid]
 		//if(playerrenown == 8)
 			//check if they are already in the list here
 				//GLOB.legendary_name_maybeevil_regex += src.real_name
@@ -27,18 +27,31 @@
 	if(sentient_kill)
 		var/sentkillcount = GLOB.mob_sentient_kill_count[src.mobid]
 		if(sentkillcount == 1)
-			make_beast_sentient()
-			//however the hell you check if a mob is near a player or being viewed you we check it here
-			//apply_mob_quirk
+			if(!isliving(src))
+				return
+			var/mob/living/bober = src
+			if(bober.dontmakesentient)
+				return
+			if(src.ckey || src.client)
+				return
+			if(length(SSmapping.retainer.sentientmob) >= 5)
+				return
+			SSmapping.add_world_trait(/datum/world_trait/sentient_mob, -1)
+			GLOB.sentient_legiable += src
+			for(var/mob/dead/observer/D in GLOB.player_list)
+				D.sentient_beast_call()
+			for(var/mob/living/carbon/spirit/D in GLOB.player_list)
+				D.sentient_beast_call()
+
 
 /mob/proc/give_beast_name()
 	if(!isliving(src))
 		return
 	var/previoustitle = src.real_name
-	var/title = pick("Chax", "Gifflet", "Abigor", "Akar", "Tuwile", "Ernesh", "Leah", "Daghishat", "Nirnasha", "Azazel", "Heath", "Agrona", "Gorgon", "khazz", "Trurr", "Thekuax", "Gyrr", "Thruc", "Gengol", "Sryt", "Matirè", "Nikot", "Rithod", "Asmuk", "Cifano", "Sasmok", "Lebes", "Kök", "Rashgur", "Osp", "Geshak", "Zursmu", "Ber", "Metava", "Fer", "Suku", "Zewoth", "Imici", "Sinsot", "Rathi", "Vulo", "Disuth", "Mozfel", "Ogthrak", "Pushkrimp", "Golm") //bunch of fuck off names, mostly dwarf fortress words.
+	var/title = pick("Chax", "Gifflet", "Abigor", "Akar", "Tuwile", "Ernesh", "Leah", "Daghishat", "Nirnasha", "Azazel", "Heath", "Agrona", "Gorgon", "khazz", "Trurr", "Thekuax", "Gyrr", "Thruc", "Gengol", "Sryt", "Matirè", "Nikot", "Rithod", "Asmuk", "Cifano", "Sasmok", "Lebes", "Kök", "Rashgur", "Osp", "Geshak", "Zursmu", "Ber", "Metava", "Fer", "Suku", "Zewoth", "Imici", "Sinsot", "Rathi", "Vulo", "Disuth", "Mozfel", "Ogthrak", "Pushkrimp", "Golm", "John") //bunch of fuck off names, mostly dwarf fortress words.
 	var/adjective = pick("Strong", "Weak", "Fast", "Slow", "Beast", "Wild", "Sophisticated", "Silent", "Savage", "Frenzied", "Brutal", "Bloodthirsty", "Unstoppable", "Vicious", "Puny", "Shy", "tricky", "Wicked", "Swift", "Reaper", "Heartless", "Timid", "Wastefull", "One-Word", "Biter", "One", "Blast", "Cannibal", "Itchy", "Smelly", "Fat", "Bewitched", "Handsome", "Charming", "Angry", "Bloated", "Agonizer", "Cruel", "Dead", "Gentle", "Friendly", "Greedy", "Funny", "Hungry", "Dumb", "Screamer", "Merciful", "Ever-Loving", "Stone-Gut", "Oblivious", "Poet", "Runt", "Messenger", "Prophet", "Whiner", "Teary-Eyed", "Shamed")
 	var/noun = pick("Annihilator", "Destroyer", "Scourge", "Bane", "Breaker", "Killer", "Slayer", "Slaver", "Eater", "Crusher", "Cleaver", "Desecrator", "Wrecker", "Ravager", "Ruiner", "Vandal", "Devastater")
-	var/pephrase = pick("Bones", "Worlds", "Towns", "Elves", "Skulls", "Dwarves", "Trees", "Mountains", "Iron", "Steel", "Humens", "Orcs", "Goblins", "Trolls", "Spiders", "Harpies", "Kobolds", "Hollow-Kin", "Tieflings", "Blood-suckers", "Werevolves", "Volves", "Moo-Beast", "Adventurers", "Fools", "Mercenaries", "Cities", "Machines", "Hearts", "Spleens", "Horcs", "Drow", "Lungs", "Throats", "Eyes", "Tongues", "Zizo", "Astrasta", "Noc", "Dendor", "Necra", "Ravox", "Xylix", "Pestra", "Malum", "Eora", "Graggar", "Matthios", "Baotha", "Faithless", "Walls", "Towers", "Houses", "Guilds", "Legs", "Arms", "Fingers", "Armour", "Weapons", "Thrones")
+	var/pephrase = pick("Bones", "Worlds", "Towns", "Elves", "Skulls", "Dwarves", "Trees", "Mountains", "Iron", "Steel", "Humens", "Orcs", "Goblins", "Trolls", "Spiders", "Harpies", "Kobolds", "Hollow-Kin", "Tieflings", "Blood-suckers", "Werevolves", "Volves", "Moo-Beast", "Adventurers", "Fools", "Mercenaries", "Cities", "Machines", "Hearts", "Spleens", "Horcs", "Drow", "Lungs", "Throats", "Eyes", "Tongues", "Zizo", "astrata", "Noc", "Dendor", "Necra", "Ravox", "Xylix", "Pestra", "Malum", "Eora", "Graggar", "Matthios", "Baotha", "Faithless", "Walls", "Towers", "Houses", "Guilds", "Legs", "Arms", "Fingers", "Armour", "Weapons", "Thrones")
 	switch(rand(1,5))
 		if(TITLE_PREVIOUSTITLE) // title + previoustitle, ie 'john the goblin', this of course means we are hoping that the npc title is the species of the owner, otherwise this is going to get dumb
 			src.real_name = "[title] the [previoustitle]"
@@ -71,24 +84,36 @@
 	O.STAINT += 1
 	O.STAEND += 1
 
-/mob/proc/make_beast_sentient()
-	set waitfor = 1
-	if(!isliving(src))
-		return
-	var/mob/living/bober = src
-	if(bober.dontmakesentient)
-		return
-	if(bober.ckey)
-		return
-	var/name = bober.real_name
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("[name] HAS EARNED HIGHER INTELLIGENCE, WILL YOU CONTROL THEM?", null, null, null, 150, bober, null, new_players = TRUE)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		bober.ckey = C.key
-		bober.visible_message("[name] blinks repeatedly, their eyes flared with newfound intelligence.")
-		log_game("[key_name(C)] has taken control of ([key_name(bober)]) as their sentience")
 
-///mob/proc/apply_mob_quirk
+/mob/proc/sentient_beast_call()
+	SEND_SOUND(src, sound('sound/misc/notice (2).ogg'))
+	if(alert(src, "A beast calls for higher intelligence", "Be sentience?", "Yes", "No") == "Yes")
+		if(!has_world_trait(/datum/world_trait/sentient_mob))
+			to_chat(src, span_warning("Another mind was chosen."))
+		returntolobby()
+
+/mob/proc/make_beast_sentient(mob/user)
+	for(var/mob/bober in GLOB.sentient_legiable)
+		var/name = bober.real_name
+		bober.ckey = user.key
+		bober.visible_message(span_warning("[name] blinks repeatedly, their eyes flared with newfound intelligence."))
+		log_game("[key_name(user)] has taken control of ([key_name(bober)]) as their sentience")
+
+		GLOB.sentient_legiable -= bober
+		SSmapping.retainer.sentientmob |= user.mind
+
+		//canning all of this shit for later, I spent hours trying to fix make_beast_sentient proc
+		//if I look at this place for any longer I'll fucking shoot myself -clown
+
+		//for(var/mob/entity in range(src, loc))
+			//if(!entity)
+				//apply_mob_quirk()
+				//return
+			//if(!entity.ckey && !entity.client)
+
+//mob/proc/apply_mob_quirk
+	//if(!GLOB.mob_quirks)
+		//build_mob_quirks()
 
 
 
@@ -98,13 +123,8 @@
 #undef TITLE_NOUN_PEPHRASE
 #undef TITLE_NOUN
 
-//this is just special_trait, couldn't make it a subtype cause its for carbon/human which wouldn't let simple mobs
-//and I don't know how to make a work around for that. its not even functional right now, why?
-//because its hot as fuck, my cat is in heat and wont shut up, and I can't even test pollcandformob.
-//I am dying here, and this is the unsexy part of hobby code contribution that needs actual talent and skill
-
-
 //N/A put this shit in its own file
+/*
 /datum/mob_quirks
 	abstract_type = /datum/mob_quirks
 	/// name of the trait
@@ -128,142 +148,55 @@ GLOBAL_LIST_INIT(mob_quirks, build_mob_quirks())
 			continue
 		.[type] = new type()
 	return .
-
-/*/proc/roll_random_mob_quirks(client/player)
+*/
+/*datum/mob_quirks/proc/roll_random_mob_quirks(client/player)
 	var/list/eligible_weight = list()
 	for(var/trait_type in GLOB.mob_quirks)
-		var/datum/mob_quirks/special = MOB_QUIRK(quirk_type)
-		eligible_weight[trait_type] = special.weight
+		var/datum/mob_quirks/quirk = MOB_QUIRK(quirk_type)
+		eligible_weight[trait_type] = quirk.weight
 
 	if(!length(eligible_weight))
 		return null
 
 	return pickweight(eligible_weight)
 
-/proc/print_quirk_text(mob/user, quirk_type)
-	var/datum/special_trait/quirk = MOB_QUIRK(quirk_type)
-	to_chat(user, span_notice("<b>[quirk.name]</b>"))
-	to_chat(user, quirk.greet_text)
-	//if(quirk.req_text)
-		//to_chat(user, span_boldwarning("Requirements: [special.req_text]"))
-
-/proc/try_apply_character_post_equipment(mob/living/carbon/human/character, client/player)
-	var/datum/job/job
-	if(character.job)
-		job = SSjob.name_occupations[character.job]
-	if(!job)
-		// Apply the stuff if we dont have a job for some reason
-		apply_character_post_equipment(character, player)
-		return
-	if(length(job.advclass_cat_rolls))
-		// Dont apply the stuff, let adv class handler do it later
-		return
-	// Apply the stuff if we have a job that has no adv classes
-	apply_character_post_equipment(character, player)
-
-/proc/apply_character_post_equipment(mob/living/carbon/human/character, client/player)
-	if(!player)
-		player = character.client
-	apply_prefs_special(character, player)
-
-/proc/apply_prefs_special(mob/character, client/player)
-	if(!player)
-		player = character.client
-	if(!player)
-		return
-	if(!player.prefs)
-		return
-	var/trait_type = player.prefs.next_special_trait
-	if(!trait_type)
-		return
-	apply_special_trait_if_able(character, player, trait_type)
-	player.prefs.next_special_trait = null
-
-/proc/apply_mob_quirk_if_able(mob/living/character, client/player, quirk_type)
+/datum/mob_quirks/proc/apply_mob_quirk_if_able(mob/living/character, client/player, quirk_type)
 	if(!charactet_eligible_for_quirk(character, player, quirk_type))
-		log_game("SPECIALS: Failed to apply [quirk_type] for [key_name(character)]")
+		log_game("QUIRKS: Failed to apply [quirk_type] for [key_name(character)]")
 		return FALSE
-	log_game("SPECIALS: Applied [quirk_type] for [key_name(character)]")
+	log_game("QUIRKS: Applied [quirk_type] for [key_name(character)]")
 	apply_mob_quirk(character, quirk_type)
 	return TRUE
 
-/// Applies random special trait IF the client has specials enabled in prefs
-/proc/apply_random_mob_quirk(mob/living/character, client/player)
-	if(!player)
-		player = character.client
-	if(!player)
-		return
-	var/quirk_type = get_random_special_for_char(character, player)
-	if(!quirk_type) // Ineligible for all of them, somehow
-		return
-	apply_special_trait(character, quirk_type)
+/datum/mob_quirks/proc/charactet_eligible_for_quirk(mob/living/character, client/player, quirk_type)
+	var/datum/mob_quirks/quirk = MOB_QUIRK(quirk_type)
+	if(!isnull(quirk.allowed_races) && !(character.dna.species.type in special.allowed_races))
+		return FALSE
 
-/proc/charactet_eligible_for_quirk(mob/living/character, client/player, quirk_type)
-	var/datum/special_trait/special = MOB_QUIRK(quirk_type)
-	var/datum/job/job
-	if(character.job)
-		job = SSjob.name_occupations[character.job]
-	if(!isnull(special.allowed_jobs))
-		if(!job)
-			return FALSE
-		if(!(job.type in special.allowed_jobs))
-			return FALSE
-	if(!isnull(special.restricted_jobs) && job && (job.type in special.restricted_jobs))
-		return FALSE
-	if(!isnull(special.allowed_races) && !(character.dna.species.type in special.allowed_races))
-		return FALSE
-	if(!isnull(special.allowed_migrants))
-		if(!character.migrant_type)
-			return FALSE
-		if(!(character.migrant_type in special.allowed_migrants))
-			return FALSE
-	if(!isnull(special.restricted_migrants) && character.migrant_type && (character.migrant_type in special.restricted_migrants))
-		return FALSE
-	if(!isnull(special.restricted_races) && (character.dna.species.type in special.restricted_races))
-		return FALSE
-	if(!isnull(special.allowed_sexes) && !(character.gender in special.allowed_sexes))
-		return FALSE
-	if(!isnull(special.allowed_ages) && !(character.age in special.allowed_ages))
-		return FALSE
-	if(!isnull(special.allowed_patrons) && !(character.patron.type in special.allowed_patrons))
-		return FALSE
-	if(!isnull(special.restricted_traits))
-		var/has_trait
-		for(var/trait in special.restricted_traits)
-			if(HAS_TRAIT(character, trait))
-				has_trait = TRUE
-				break
-		if(has_trait)
-			return FALSE
-
-	//put if for allowed races here
-	if(!special.can_apply(character))
+	if(!quirk.can_apply(character))
 		return FALSE
 	return TRUE
 
 /proc/get_random_quirk_for_char(mob/living/character, client/player)
 	var/list/eligible_weight = list()
 	for(var/trait_type in GLOB.mob_quirks)
-		var/datum/mob_quirks/special = MOB_QUIRK(quirk_type)
+		var/datum/mob_quirks/quirk = MOB_QUIRK(quirk_type)
 		if(!charactet_eligible_for_trait(character, player, quirk_type))
 			continue
-		eligible_weight[quirk_type] = special.weight
+		eligible_weight[quirk_type] = quirk.weight
 
 	if(!length(eligible_weight))
 		return null
 
 	return pickweight(eligible_weight)
 
-/proc/apply_mob_quirk(mob/living/character, trait_type, silent)
-	var/datum/mob_quirks/special = MOB_QUIRK(quirk_type)
-	special.on_apply(character, silent)
-	if(!silent && special.greet_text)
-		to_chat(character, special.greet_text)
+/datum/mob_quirks/proc/apply_mob_quirk(mob/living/character, trait_type, silent)
+	var/datum/mob_quirks/quirk = MOB_QUIRK(quirk_type)
+	quirk.on_apply(character, silent)
+	if(!silent && quirk.greet_text)
+		to_chat(character, quirk.greet_text)
 
-/datum/mob_quirks/proc/can_apply(mob/living/carbon/human/character)
-	return TRUE
 
-/// called after latejoin and transfercharacter in roundstart
 /datum/mob_quirks/proc/on_apply(mob/living/carbon/human/character, silent)
 	return
 */
@@ -284,7 +217,8 @@ GLOBAL_LIST_INIT(mob_quirks, build_mob_quirks())
 		var/mob/living/carbon/human/O = character
 		O.virginity = TRUE
 
-/*/datum/mob_quirks/well_acquainted
+/*
+/datum/mob_quirks/well_acquainted
 	name = "well met"
 	greet_text = span_notice("I know everybody around here, I've been to some's weddings' at a distance, and they won't even wave back!")
 	weight = 50
@@ -292,7 +226,7 @@ GLOBAL_LIST_INIT(mob_quirks, build_mob_quirks())
 
 /datum/mob_quirks/well_acquainted/on_apply(mob/living/character, silent)
 	for(var/X in GLOB.player_list)
-		character.peopleiknow += X
+		character.known_people += X
 */
 
 /datum/mob_quirks/web_walker
@@ -376,6 +310,7 @@ GLOBAL_LIST_INIT(mob_quirks, build_mob_quirks())
 	character.reagents.add_reagent(/datum/reagent/consumable/ethanol/beer, 999)
 	character.reagents.add_reagent(/datum/reagent/moondust, 999) //lets hope the boatha trait prevents the screen effects, otherwise, this is unplayable
 	character.reagents.add_reagent(/datum/reagent/ozium, 999)
+	//could use some stats too cause its clearly not fucked enough
 
 /datum/mob_quirks/perceptive
 	name = "Perceptive"
@@ -388,7 +323,7 @@ GLOBAL_LIST_INIT(mob_quirks, build_mob_quirks())
 
 /datum/mob_quirks/thickskin
 	name = "Tough"
-	greet_text = span_notice("I feel it. Thick Skin. Dense Flesh. Durable Bones. I'm a punch-taking machine.")
+	greet_text = span_notice("I feel it. Thick Skin. Dense Flesh. Durable Bones. I'm a punch-taking machine.") //N/A can be less blatantly copy pasted
 	weight = 40
 
 /datum/mob_quirk/thickskin/on_apply(mob/living/character, silent)
@@ -398,7 +333,7 @@ GLOBAL_LIST_INIT(mob_quirks, build_mob_quirks())
 /datum/mob_quirks/dead_king
 	name = "Risen King"
 	greet_text = span_notice("I used to rule the lands, Seas would rise when I gave the word. I have taken my rest, I will rule again.")
-	restricted_races = list(/mob/living/carbon/human/races/skeleton)
+	restricted_races = list(/mob/living/carbon/human/races/skeleton, /mob/living/carbon/human/races/zizombie)
 	weight = 10
 
 /datum/mob_quirks/dead_king/on_apply(mob/living/character, silent)
@@ -424,10 +359,11 @@ GLOBAL_LIST_INIT(mob_quirks, build_mob_quirks())
 	character.equip_to_slot_or_del(new /obj/item/clothing/gloves/plate/blk(character), ITEM_SLOT_GLOVES)
 	character.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/armor/blkknight(character), ITEM_SLOT_SHOES)
 	//N/A give them rebel leader datum
+	//more skills and stats should be fine too, who the hell is going to rebel to the side of the dead guy?
 
 /datum/mob_quirks/dead_inq
 	name = "Risen Inquisitor"
-	greet_text = span_notice("I walked before the Patheon was many, and I rested as our Father's name was smeared, now I am given a second chance.")
+	greet_text = span_notice("I walked before the Patheon was many, and I rested as our Father's name was smeared, now I am given a second chance.") //holy moly its shadow the hedgehog
 	restricted_races = list(/mob/living/carbon/human/races/skeleton)
 	weight = 20
 
@@ -453,4 +389,88 @@ GLOBAL_LIST_INIT(mob_quirks, build_mob_quirks())
 	var/obj/item/gunpowder = new /obj/item/reagent_containers/glass/bottle/aflask(get_turf(character))
 	character.put_in_hands(gun,forced = TRUE)
 	character.put_in_hands(gunpowder,forced = TRUE)
-*/
+	//needs gun skills, maybe the inquisitor verbs too.
+
+/datum/mob_quirks/optimist
+	name = "Optimist"
+	greet_text = span_notice("I may be hated by everything at large and not particularly favored by the patheon, but I'll get through it, and I'll do it with a smile!")
+	weight = 38
+
+/datum/mob_quirks/optimist/on_apply(mob/living/character, silent)
+	character.(/datum/stressevent/elevated_optimist)
+
+/datum/mob_quirks/werewolf, //self explanatory, exclusive to rousman
+/datum/mob_quirks/bandit, //self explanatory, non exlusive, gives them the bandit hat or mask
+/datum/mob_quirks/assassin, //self explanatory, gives copper mask too
+/datum/mob_quirks/vampire, //self explanatory, exclusive to goblins and rousman from feeding
+/datum/mob_quirks/maniac, //self explanatory, non exclusive
+/datum/mob_quirks/lich, //self explanatory, zizozom and skeleton
+/datum/mob_quirks/blood_brother, //polls for a second mob to spawn alongside the original. they are within the same team
+/datum/mob_quirks/monster_king, //a king monster noble (not actually noble blooded). spawns with 2 'royal guards'
+/datum/mob_quirks/monster_diplomat, //like the monster king, but only spawns with a single mercenary guard
+/datum/mob_quirks/jester, //self explanatory, gives them the jester gitup
+/datum/mob_quirk/bard, //self explanatory, gives the bard hat and an instrument
+/datum/mob_quirks/nemesis_gaffer, //orc exclusive, one eyed, spawns with the hint of beef at an unspecified 'that archer', it is supposed to be someone the gaffer shot in the eye once, but its left ambigious incase the player doesn't want to play along
+/datum/mob_quirks/nemesis_courtmage, //see above, skeleton rousman that had all of their meaty parts burnt off.
+/datum/mob_quirks/nemesis_vet, //see above, battle scarred goblin
+/datum/mob_quirks/nemesis_matron, //see above, skeleton missing an arm, which was stolen
+/datum/mob_quirks/nemesis_elder, //see above a charmed zizozombie that kept its intelligence
+/datum/mob_quirks/nemesis_inq, //see above, a burnt man that was falsely sentenced
+/datum/mob_quirks/whip, //self explanatory, whip skill and the whip it self
+/datum/mob_quirks/quack_doc, //non exclusive, gives physicker mask and robes, with medical skill
+/datum/mob_quirks/butcher, //self explanatory, gives a bag of meat and a cleaver
+/datum/mob_quirks/biter, //self explanatory, gives strong biter trait
+/datum/mob_quirks/dwarf, //self explanatory, shortens player sprite size
+/datum/mob_quirks/giant, //self explanatory, makes sprite bigger
+/datum/mob_quirks/magician_weak, //self explanatory
+/datum/mob_quirks/magician_mid, //self explanatory
+/datum/mob_quirks/beutiful, //self explanatory
+/datum/mob_quirks/ugly, //self explanatory
+/datum/mob_quirks/high, //self explanatory, gives them a bunch of drugs
+/datum/mob_quirks/booms, //gives the skill and tools for making bombs
+/datum/mob_quirks/horse, //self explanatory, spawns them with a tamed and saddled horse
+/datum/mob_quirks/tourist, //knows all languages
+/datum/mob_quirks/silent, //self explanatory
+/datum/mob_quirks/drunk, //self explanatory
+/datum/mob_quirks/addict, //self explanatory
+/datum/mob_quirks/wartorn, //battle scarred
+/datum/mob_quirks/cyclops, //self explanatory
+/datum/mob_quirks/tongueless, //self explanatory
+/datum/mob_quirks/screamer, //gives barbarian yell and prevents them from talking
+/datum/mob_quirks/coal, //gives a pick as their weapon, some mason and mining and smithing skill
+/datum/mob_quirks/dodge_expert, //self explanatory
+/datum/mob_quirks/jester_phobic, //self explanatory
+/datum/mob_quirks/lone_wolf, //gives the loner flaw
+/datum/mob_quirks/diary, //don't think this flaw actually got added
+/datum/mob_quirks/paranoid, //self explanatory
+/datum/mob_quirks/bad_sight, //self explanatory
+/datum/mob_quirks/hunted, //self explanatory, points out how its a bit redundant
+/datum/mob_quirks/masocist, //self explanatory
+/datum/mob_quirks/two_mind //gives double personality trauma (if it even works)
+/datum/mob_quirks/big_bud //goblin exclusive, spawns a troll friend (also sentient)
+/datum/mob_quirks/odd_merc //spawns them with merc clothes and face hidden, trying to blend into the town
+/datum/mob_quirks/odd_acoltye //above but acolyte
+/datum/mob_quirks/odd_guard //above
+/datum/mob_quirks/odd_traveler //you get it
+/datum/mob_quirks/monster_legend_archer //these are all monster variants of the old adventurer party. maybe exclusive
+/datum/mob_quirks/monster_legend_magic
+/datum/mob_quirks/monster_legend_tank
+/datum/mob_quirks/monster_legend_support
+/datum/mob_quirks/monster_legend_thief
+/datum/mob_quirks/RNGEEZ //gives all the stats based on RNG
+/datum/mob_quirks/love_birds //spawns them married with another monster (sentient)
+/datum/mob_quirks/dragonborn //you get it
+/datum/mob_quirks/tamer //self explanatory, tames animals
+/datum/mob_quirks/wayfarer //its own inque rare antag, has the power of making the same type of monsters as it sentient, think: that scene from detroit become human with the robots touching the other making them sentient, probably has some church miracle rules for casting
+/datum/mob_quirks/sophisticated //gives them the stuck up noble clothes
+/datum/mob_quirks/null //combines the effects from other quirks at complete random
+/datum/mob_quirks/potionboy //has potions, has skill to make them too
+/datum/mob_quirks/poison //has many poison types on them
+/datum/mob_quirks/experiment //disfigured orc
+/datum/mob_quirks/monster_priest //an astrata priest, but a monster
+/datum/mob_quirks/spider //has a posse of 3 spiders, can call for more if they die
+/datum/mob_quirks/
+
+
+
+\*/
