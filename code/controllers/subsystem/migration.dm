@@ -285,7 +285,7 @@ SUBSYSTEM_DEF(migrants)
 		return FALSE
 	var/can_join = TRUE
 	if(role.allowed_races && !(prefs.pref_species.id in role.allowed_races))
-		if(!(player.triumph_ids.Find("race_all")))
+		if(!(player.has_triumph_buy(TRIUMPH_BUY_RACE_ALL)))
 			to_chat(player, span_warning("Wrong species. Your prioritized role only allows [role.allowed_races.Join(", ")]."))
 			can_join = FALSE
 	if(role.allowed_sexes && !(prefs.gender in role.allowed_sexes))

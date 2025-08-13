@@ -1,0 +1,125 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"t" = (
+/turf/open/water/cleanshallow,
+/area/template_noop)
+"u" = (
+/obj/structure/wild_plant/nospread/wheat,
+/turf/open/floor/grass/yel,
+/area/template_noop)
+"K" = (
+/turf/open/floor/grass/yel,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+a
+t
+t
+K
+K
+K
+a
+a
+"}
+(2,1,1) = {"
+K
+t
+t
+t
+t
+u
+u
+u
+a
+"}
+(3,1,1) = {"
+K
+t
+t
+t
+t
+u
+u
+u
+u
+"}
+(4,1,1) = {"
+K
+K
+t
+t
+t
+t
+u
+u
+u
+"}
+(5,1,1) = {"
+K
+K
+u
+u
+t
+t
+t
+u
+u
+"}
+(6,1,1) = {"
+a
+u
+u
+u
+u
+t
+t
+u
+u
+"}
+(7,1,1) = {"
+a
+u
+u
+u
+u
+t
+t
+t
+K
+"}
+(8,1,1) = {"
+a
+K
+u
+u
+t
+t
+t
+t
+t
+"}
+(9,1,1) = {"
+a
+a
+u
+u
+t
+t
+t
+t
+t
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+t
+t
+t
+a
+"}

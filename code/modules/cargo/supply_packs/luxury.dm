@@ -23,6 +23,11 @@
 	cost = 40
 	contains = /obj/item/clothing/face/spectacles/golden
 
+/datum/supply_pack/luxury/spectacles_onyxa
+	name = "smokey onyxa spectacles"
+	cost = 40
+	contains = /obj/item/clothing/face/spectacles/sglasses
+
 /datum/supply_pack/luxury/glassware_set
 	name = "Set of Glassware Shot Glasses (3)"
 	cost = 60 // These glasses are really expensive

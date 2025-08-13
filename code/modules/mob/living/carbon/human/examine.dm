@@ -164,10 +164,10 @@
 			if((real_name in GLOB.outlawed_players) && HAS_TRAIT(user, TRAIT_KNOWBANDITS))
 				. += span_userdanger("BANDIT!")
 
-			if(mind && mind.special_role == "Vampire Lord")
-				var/datum/component/vampire_disguise/disguise_comp = GetComponent(/datum/component/vampire_disguise)
-				if(!disguise_comp.disguised)
-					. += span_userdanger("A MONSTER!")
+		if(mind && mind.special_role == "Vampire Lord")
+			var/datum/component/vampire_disguise/disguise_comp = GetComponent(/datum/component/vampire_disguise)
+			if(!disguise_comp.disguised)
+				. += span_userdanger("A MONSTER!")
           
 		if(!is_bandit && (real_name in GLOB.outlawed_players))
 			. += span_userdanger("OUTLAW!")

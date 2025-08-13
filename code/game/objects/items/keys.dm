@@ -20,7 +20,7 @@
 	dropshrink = 0.75
 	throwforce = 0
 	max_integrity = 10
-	picklvl = 1
+	var/picklvl = 1
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_MOUTH|ITEM_SLOT_NECK
 	destroy_sound = 'sound/items/pickbreak.ogg'
 	grid_width = 32

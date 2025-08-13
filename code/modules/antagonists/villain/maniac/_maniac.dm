@@ -27,6 +27,8 @@
 		TRAIT_SCHIZO_AMBIENCE,
 		TRAIT_DARKVISION,
 		TRAIT_NOPAINSTUN,
+		TRAIT_NOENERGY,
+		TRAIT_CRITICAL_RESISTANCE,
 	)
 	/// Traits that only get applied in the final sequence
 	var/static/list/final_traits = list(
@@ -92,13 +94,17 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 	if(owner.current)
 		if(ishuman(owner.current))
 			var/mob/living/carbon/human/dreamer = owner.current
+			var/datum/physiology/phy = dreamer.physiology
 			dreamer.set_patron(/datum/patron/inhumen/graggar_zizo)
 			old_cm = dreamer.cmode_music
 			dreamer.cmode_music = 'sound/music/cmode/antag/combat_maniac.ogg'
 			dreamer.adjust_skillrank(/datum/skill/combat/knives, 6, TRUE)
 			dreamer.adjust_skillrank(/datum/skill/combat/wrestling, 5, TRUE)
 			dreamer.adjust_skillrank(/datum/skill/combat/unarmed, 5, TRUE)
+			dreamer.adjust_skillrank(/datum/skill/misc/climbing, 5, TRUE)
+			dreamer.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
 			dreamer.adjust_skillrank(/datum/skill/misc/medicine, 4, TRUE)
+			phy.bleed_mod *= 0.5
 			for(var/datum/status_effect/effect in dreamer.status_effects) //necessary to prevent exploits
 				dreamer.remove_status_effect(effect)
 			var/extra_strength = max(16 - dreamer.base_strength, 0)
@@ -118,6 +124,7 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 				heart.maniacs = list()
 			dreamer.remove_stress(/datum/stressevent/saw_wonder)
 			dreamer.remove_curse(/datum/curse/zizo)
+			RegisterSignal(dreamer, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 		//	dreamer.remove_client_colour(/datum/client_colour/maniac_marked)
 		owner.current.refresh_looping_ambience()
 		hallucinations = owner.current.overlay_fullscreen("maniac", /atom/movable/screen/fullscreen/maniac)
@@ -137,9 +144,12 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 			to_chat(owner.current,span_danger("I am no longer a MANIAC!"))
 		if(ishuman(owner.current))
 			var/mob/living/carbon/human/dreamer = owner.current
+			var/datum/physiology/phy = dreamer.physiology
 			dreamer.set_patron(/datum/patron/inhumen/zizo)
 			dreamer.cmode_music = old_cm
 			dreamer.remove_stat_modifier("[type]")
+			phy.bleed_mod *= 2
+			UnregisterSignal(dreamer, COMSIG_LIVING_DEATH)
 			var/client/client = dreamer?.client
 			if(client) //clear screenshake animation
 				animate(client, dreamer.pixel_y)
@@ -451,3 +461,10 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 	extra_range = 6
 	channel = CHANNEL_IMSICK
 	persistent_loop = TRUE
+
+/datum/antagonist/maniac/proc/on_death(mob/living/source) //Upon death, this should basically stop the music.
+	SIGNAL_HANDLER
+
+	if(combat_music_loop)
+		combat_music_loop.stop()
+	music_enabled = FALSE

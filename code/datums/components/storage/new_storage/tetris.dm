@@ -740,12 +740,6 @@
 			else
 				storing.forceMove(parent.drop_location())
 		return FALSE
-	storing.on_enter_storage(master)
-	storing.item_flags |= IN_STORAGE
-	storing.mouse_opacity = MOUSE_OPACITY_OPAQUE //So you can click on the area around the item to equip it, instead of having to pixel hunt
-	if(ismovable(parent))
-		if(ismob(parent:loc))
-			parent:loc:encumbrance_to_speed()
 	if(user)
 		if(user.client && (user.active_storage != src))
 			user.client.screen -= storing
@@ -795,6 +789,13 @@
 		else
 			coordinates = screen_loc_to_grid_coordinates(coordinates)
 		grid_add_item(storing, coordinates)
+
+	storing.on_enter_storage(master)
+	storing.item_flags |= IN_STORAGE
+	storing.mouse_opacity = MOUSE_OPACITY_OPAQUE //So you can click on the area around the item to equip it, instead of having to pixel hunt
+	if(ismovable(parent))
+		if(ismob(parent:loc))
+			parent:loc:encumbrance_to_speed()
 	update_icon()
 	refresh_mob_views()
 	return TRUE

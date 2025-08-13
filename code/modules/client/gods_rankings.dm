@@ -19,19 +19,19 @@
 
 		// Top 3 penalties
 		if(i == 1)
-			initialized_storyteller.influence_modifier = 0.9
+			initialized_storyteller.influence_modifier = 0.875
 		else if(i == 2)
-			initialized_storyteller.influence_modifier = 0.95
+			initialized_storyteller.influence_modifier = 0.925
 		else if(i == 3)
-			initialized_storyteller.influence_modifier = 0.975
+			initialized_storyteller.influence_modifier = 0.95
 
 		// Bottom 3 bonuses
 		else if(i == length(storytellers))
-			initialized_storyteller.influence_modifier = 1.1
+			initialized_storyteller.influence_modifier = 1.125
 		else if(i == (length(storytellers) - 1))
-			initialized_storyteller.influence_modifier = 1.05
+			initialized_storyteller.influence_modifier = 1.075
 		else if(i == (length(storytellers) - 2))
-			initialized_storyteller.influence_modifier = 1.025
+			initialized_storyteller.influence_modifier = 1.05
 
 		// Handle ascension
 		var/points = json[initialized_storyteller.name] || 0

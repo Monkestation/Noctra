@@ -1,0 +1,333 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/grass,
+/area/template_noop)
+"b" = (
+/obj/item/natural/stone,
+/obj/structure/flora/grass,
+/turf/open/floor/grass,
+/area/template_noop)
+"f" = (
+/obj/item/natural/stone,
+/turf/open/floor/dirt,
+/area/template_noop)
+"g" = (
+/obj/structure/wild_plant/random,
+/turf/open/floor/dirt,
+/area/template_noop)
+"h" = (
+/obj/structure/flora/ausbushes/leafybush,
+/turf/open/water/marsh,
+/area/template_noop)
+"j" = (
+/obj/structure/flora/grass/water,
+/turf/open/water/marsh,
+/area/template_noop)
+"l" = (
+/obj/item/reagent_containers/food/snacks/truffles,
+/turf/open/floor/dirt,
+/area/template_noop)
+"m" = (
+/obj/structure/flora/tree,
+/obj/structure/fluff/walldeco/vinez,
+/turf/open/floor/grass,
+/area/template_noop)
+"n" = (
+/turf/open/water/marsh,
+/area/template_noop)
+"o" = (
+/obj/structure/table/wood/treestump/shroomstump,
+/turf/open/floor/dirt,
+/area/template_noop)
+"p" = (
+/obj/structure/flora/grass/bush_meagre/yellow,
+/turf/open/floor/dirt,
+/area/template_noop)
+"t" = (
+/obj/structure/fluff/walldeco/vinez,
+/obj/structure/flora/grass/bush/wall/tall/bog,
+/turf/open/water/marsh,
+/area/template_noop)
+"u" = (
+/turf/template_noop,
+/area/template_noop)
+"v" = (
+/obj/structure/wild_plant/nospread/onion,
+/turf/open/floor/grass,
+/area/template_noop)
+"x" = (
+/mob/living/simple_animal/hostile/retaliate/trufflepig/male,
+/turf/open/floor/dirt,
+/area/template_noop)
+"y" = (
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/water/marsh,
+/area/template_noop)
+"A" = (
+/obj/structure/wild_plant/random,
+/turf/open/floor/grass,
+/area/template_noop)
+"B" = (
+/obj/structure/wild_plant/nospread/turnip,
+/turf/open/floor/grass,
+/area/template_noop)
+"C" = (
+/obj/structure/closet/dirthole,
+/turf/open/floor/dirt,
+/area/template_noop)
+"D" = (
+/obj/structure/flora/grass/water,
+/obj/item/reagent_containers/food/snacks/truffles,
+/turf/open/water/marsh,
+/area/template_noop)
+"F" = (
+/obj/structure/flora/grass,
+/turf/open/floor/dirt,
+/area/template_noop)
+"H" = (
+/obj/structure/closet/dirthole,
+/obj/item/reagent_containers/food/snacks/truffles,
+/turf/open/floor/grass,
+/area/template_noop)
+"K" = (
+/turf/open/floor/dirt,
+/area/template_noop)
+"L" = (
+/obj/effect/falling_leaves,
+/obj/structure/fluff/walldeco/vinez,
+/turf/open/floor/grass,
+/area/template_noop)
+"M" = (
+/obj/structure/fluff/walldeco/vinez,
+/turf/open/floor/grass,
+/area/template_noop)
+"O" = (
+/obj/structure/flora/grass/water/reeds,
+/turf/open/water/marsh,
+/area/template_noop)
+"Q" = (
+/obj/structure/fluff/walldeco/vinez,
+/turf/open/water/marsh,
+/area/template_noop)
+"S" = (
+/mob/living/simple_animal/hostile/retaliate/trufflepig/female,
+/turf/open/floor/grass,
+/area/template_noop)
+"T" = (
+/obj/structure/flora/grass/water,
+/obj/structure/flora/ausbushes/leafybush,
+/turf/open/water/marsh,
+/area/template_noop)
+"V" = (
+/obj/structure/flora/grass/bush/wall/tall/bog,
+/turf/open/floor/grass,
+/area/template_noop)
+"W" = (
+/obj/structure/flora/grass/bush_meagre/yellow,
+/turf/open/floor/grass,
+/area/template_noop)
+"X" = (
+/obj/structure/flora/grass,
+/turf/open/floor/grass,
+/area/template_noop)
+"Z" = (
+/mob/living/simple_animal/hostile/retaliate/trufflepig/male,
+/obj/structure/wild_plant/nospread/turnip,
+/turf/open/floor/grass,
+/area/template_noop)
+
+(1,1,1) = {"
+u
+a
+a
+K
+F
+F
+F
+F
+K
+A
+a
+"}
+(2,1,1) = {"
+a
+v
+a
+L
+O
+p
+x
+X
+b
+K
+a
+"}
+(3,1,1) = {"
+a
+a
+m
+Q
+y
+O
+p
+B
+a
+v
+K
+"}
+(4,1,1) = {"
+K
+K
+M
+Q
+D
+y
+n
+X
+H
+a
+a
+"}
+(5,1,1) = {"
+K
+F
+F
+n
+n
+j
+n
+X
+X
+Z
+a
+"}
+(6,1,1) = {"
+K
+a
+X
+F
+O
+j
+j
+n
+X
+X
+F
+"}
+(7,1,1) = {"
+p
+B
+a
+X
+K
+O
+y
+n
+n
+K
+K
+"}
+(8,1,1) = {"
+K
+a
+X
+S
+a
+o
+n
+O
+n
+y
+K
+"}
+(9,1,1) = {"
+K
+C
+X
+X
+B
+K
+n
+n
+O
+n
+K
+"}
+(10,1,1) = {"
+g
+F
+W
+a
+K
+n
+n
+h
+n
+O
+K
+"}
+(11,1,1) = {"
+a
+F
+l
+f
+n
+n
+n
+n
+n
+V
+K
+"}
+(12,1,1) = {"
+X
+V
+O
+n
+j
+T
+n
+n
+L
+v
+a
+"}
+(13,1,1) = {"
+a
+O
+n
+j
+j
+n
+n
+t
+m
+X
+X
+"}
+(14,1,1) = {"
+K
+n
+y
+n
+n
+n
+M
+M
+X
+F
+p
+"}
+(15,1,1) = {"
+u
+K
+F
+F
+F
+K
+v
+a
+F
+p
+u
+"}

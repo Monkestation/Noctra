@@ -1,5 +1,6 @@
 /datum/objective/coin_flip
 	name = "Flip Coin"
+	triumph_count = 2
 	var/obj/item/coin/required_coin_type = /obj/item/coin/gold
 	var/winning_side
 
@@ -38,7 +39,7 @@
 		if(prob(50))
 			to_chat(user, span_greentext("The coin landed on the winning side! You won the game and earned Xylix's favor!"))
 			user.adjust_triumphs(triumph_count)
-			adjust_storyteller_influence("Xylix", 10)
+			adjust_storyteller_influence(XYLIX, 10)
 		else
 			change_rules(our_coin)
 			return

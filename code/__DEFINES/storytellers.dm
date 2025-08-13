@@ -183,3 +183,21 @@
 
 /// All storytellers
 #define STORYTELLERS_ALL (DIVINE_STORYTELLERS + INHUMEN_STORYTELLERS)
+
+// Divine pantheon
+#define ASTRATA "Astrata"
+#define NOC "Noc"
+#define RAVOX "Ravox"
+#define ABYSSOR "Abyssor"
+#define XYLIX "Xylix"
+#define NECRA "Necra"
+#define PESTRA "Pestra"
+#define MALUM "Malum"
+#define EORA "Eora"
+#define DENDOR "Dendor"
+
+// Inhumen pantheon
+#define ZIZO "Zizo"
+#define BAOTHA "Baotha"
+#define GRAGGAR "Graggar"
+#define MATTHIOS "Matthios"

@@ -38,8 +38,10 @@
 	if(!bd || !bd.selected_recipe)
 		name = "Direction: None"
 		color = "#666666"
+		dir = SOUTH
 		return
 
+	dir = bd.build_dir
 	if(!bd.selected_recipe.supports_directions)
 		name = "Direction: Fixed"
 		color = "#666666"

@@ -10,7 +10,7 @@
 	head = /obj/item/clothing/head/helmet/heavy/rust
 	neck = /obj/item/clothing/neck/gorget
 	armor = /obj/item/clothing/armor/plate/rust
-	shirt = /obj/item/clothing/armor/gambeson/heavy/dark
+	shirt = /obj/item/clothing/armor/gambeson/heavy/colored/dark
 	wrists = /obj/item/clothing/wrists/bracers
 	gloves = /obj/item/clothing/gloves/plate/rust
 	pants = /obj/item/clothing/pants/platelegs/rust

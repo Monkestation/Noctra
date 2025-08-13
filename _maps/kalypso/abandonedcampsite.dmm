@@ -1,0 +1,129 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"d" = (
+/obj/structure/table/wood/treestump,
+/obj/item/reagent_containers/glass/bottle/waterskin,
+/turf/open/floor/dirt,
+/area/template_noop)
+"i" = (
+/turf/open/floor/hay,
+/area/template_noop)
+"k" = (
+/turf/open/floor/hexstone,
+/area/template_noop)
+"p" = (
+/obj/structure/roguetent,
+/turf/open/floor/hay,
+/area/template_noop)
+"q" = (
+/obj/structure/table/wood/treestump,
+/turf/open/floor/dirt,
+/area/template_noop)
+"s" = (
+/obj/machinery/light/fueled/campfire/densefire,
+/turf/open/floor/hexstone,
+/area/template_noop)
+"z" = (
+/obj/item/grown/log/tree,
+/turf/open/floor/hay,
+/area/template_noop)
+"G" = (
+/turf/closed/wall/mineral/tent,
+/area/template_noop)
+"H" = (
+/obj/item/grown/log/tree,
+/turf/open/floor/dirt,
+/area/template_noop)
+"I" = (
+/turf/open/floor/naturalstone,
+/area/template_noop)
+"P" = (
+/turf/open/floor/dirt,
+/area/template_noop)
+"T" = (
+/obj/item/reagent_containers/glass/bottle/waterskin,
+/turf/open/floor/hexstone,
+/area/template_noop)
+
+(1,1,1) = {"
+i
+i
+P
+q
+P
+I
+I
+I
+"}
+(2,1,1) = {"
+i
+i
+i
+P
+k
+T
+I
+I
+"}
+(3,1,1) = {"
+a
+i
+z
+k
+s
+k
+H
+I
+"}
+(4,1,1) = {"
+G
+G
+G
+k
+k
+P
+P
+I
+"}
+(5,1,1) = {"
+G
+i
+p
+i
+d
+i
+i
+i
+"}
+(6,1,1) = {"
+G
+G
+G
+i
+P
+G
+p
+G
+"}
+(7,1,1) = {"
+a
+i
+i
+i
+a
+G
+i
+G
+"}
+(8,1,1) = {"
+a
+i
+i
+a
+a
+G
+G
+G
+"}

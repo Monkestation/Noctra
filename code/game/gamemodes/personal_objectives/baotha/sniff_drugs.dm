@@ -1,5 +1,6 @@
 /datum/objective/sniff_drugs
 	name = "Sniff Drugs"
+	triumph_count = 2
 	var/sniff_count = 0
 	var/required_count = 2
 
@@ -24,7 +25,7 @@
 		to_chat(owner.current, span_greentext("You have sniffed enough drugs to complete Baotha's objective!"))
 		owner.current.adjust_triumphs(triumph_count)
 		completed = TRUE
-		adjust_storyteller_influence("Baotha", 10)
+		adjust_storyteller_influence(BAOTHA, 10)
 		escalate_objective()
 		UnregisterSignal(owner.current, COMSIG_DRUG_SNIFFED)
 	else

@@ -287,7 +287,7 @@
 /area/rogue/under/tomb/indoors)
 "Ve" = (
 /obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/shirt/robe/plain,
+/obj/item/clothing/shirt/robe/colored/plain,
 /turf/open/floor/herringbone,
 /area/rogue/under/tomb/indoors)
 "Vp" = (

@@ -182,6 +182,8 @@ GLOBAL_LIST_EMPTY(heretical_players)
 			A.t0,
 		)
 		for(var/datum/action/cooldown/spell/spell as anything in spells)
+			if(!spell)
+				continue
 			H.add_spell(spell, source = src)
 
 	level = CLERIC_T0

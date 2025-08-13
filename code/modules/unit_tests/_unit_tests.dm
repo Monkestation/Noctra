@@ -65,6 +65,7 @@
 #include "anchored_mobs.dm"
 #include "component_tests.dm"
 #include "connect_loc.dm"
+#include "craftable_clothes.dm"
 #include "craftable_turfs.dm"
 #include "create_and_destroy.dm"
 #include "faction_supply_packs.dm"

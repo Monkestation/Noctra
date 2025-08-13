@@ -93,13 +93,6 @@
 /obj/structure/bars,
 /turf/open/floor/metal/barograte,
 /area/rogue/under/tomb/cave/spider)
-"cM" = (
-/obj/effect/decal/cleanable/blood/old,
-/obj/item/clothing/shirt/shortshirt/random{
-	pixel_x = -8
-	},
-/turf/open/floor/blocks/stonered,
-/area/rogue/under/tomb/indoors)
 "cV" = (
 /obj/effect/decal/cleanable/blood/gibs/torso,
 /turf/open/floor/blocks/stonered/tiny,
@@ -125,18 +118,6 @@
 /obj/effect/dungeon_directional_helper/east,
 /turf/open/floor/naturalstone,
 /area/rogue/under/tomb/cave/wet)
-"dB" = (
-/obj/structure/table/stone_small,
-/obj/item/clothing/shirt/shortshirt/random{
-	pixel_x = 7;
-	pixel_y = -4
-	},
-/obj/item/clothing/shoes/boots/leather{
-	pixel_y = 7;
-	pixel_x = -4
-	},
-/turf/open/floor/blocks/stonered/tiny,
-/area/rogue/under/tomb/indoors)
 "dK" = (
 /obj/structure/closet/crate/chest,
 /obj/machinery/light/fueled/wallfire/candle/blue{
@@ -172,7 +153,7 @@
 /area/rogue/under/tomb/cave)
 "fb" = (
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/item/clothing/pants/tights/random,
+/obj/item/clothing/pants/tights/colored/random,
 /turf/open/floor/blocks/stonered/tiny,
 /area/rogue/under/tomb/indoors)
 "fc" = (
@@ -396,22 +377,6 @@
 /obj/structure/stairs/stone/church,
 /turf/open/floor/herringbone,
 /area/rogue/under/tomb)
-"nT" = (
-/obj/item/explosive/bottle{
-	pixel_x = 6;
-	pixel_y = -3
-	},
-/obj/item/explosive/bottle{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/structure/closet/crate/chest,
-/obj/machinery/light/fueled/wallfire/candle/blue/r,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
-/turf/open/floor/blocks/stonered/tiny,
-/area/rogue/under/tomb/indoors)
 "nU" = (
 /obj/item/natural/rock/salt,
 /turf/open/floor/dirt/road,
@@ -949,6 +914,18 @@
 "Ha" = (
 /turf/closed/wall/mineral/decostone/end,
 /area/rogue/under/tomb/cave/spider)
+"Hb" = (
+/obj/structure/table/stone_small,
+/obj/item/clothing/shirt/shortshirt/colored/random{
+	pixel_x = 7;
+	pixel_y = -4
+	},
+/obj/item/clothing/shoes/boots/leather{
+	pixel_y = 7;
+	pixel_x = -4
+	},
+/turf/open/floor/blocks/stonered/tiny,
+/area/rogue/under/tomb/indoors)
 "Hg" = (
 /obj/structure/fluff/walldeco/stone{
 	icon_state = "walldec3"
@@ -1144,6 +1121,22 @@
 	pixel_x = 7
 	},
 /turf/open/floor/church,
+/area/rogue/under/tomb/indoors)
+"Le" = (
+/obj/item/explosive/bottle{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/item/explosive/bottle{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/structure/closet/crate/chest,
+/obj/machinery/light/fueled/wallfire/candle/blue/r,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/cobweb/cobweb2,
+/turf/open/floor/blocks/stonered/tiny,
 /area/rogue/under/tomb/indoors)
 "Lr" = (
 /turf/open/floor/blocks/stonered/tiny,
@@ -1385,6 +1378,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/churchrough,
 /area/rogue/under/tomb/cave/spider)
+"Tt" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/clothing/shirt/shortshirt/colored/random{
+	pixel_x = -8
+	},
+/turf/open/floor/blocks/stonered,
+/area/rogue/under/tomb/indoors)
 "TD" = (
 /obj/structure/fluff/walldeco/painting/castle{
 	pixel_y = 32
@@ -3107,9 +3107,9 @@ hq
 ho
 rV
 la
-cM
+Tt
 cV
-dB
+Hb
 ho
 ZJ
 ZJ
@@ -3147,7 +3147,7 @@ ho
 Gr
 ho
 ho
-nT
+Le
 ho
 WO
 hb

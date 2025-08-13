@@ -81,10 +81,13 @@
 		return FALSE
 
 	if(length(allowed_races) && !(H.dna.species.id in allowed_races))
-		if(!(H.client.triumph_ids.Find("race_all")))
+		if(!(H.client.has_triumph_buy(TRIUMPH_BUY_RACE_ALL)))
 			return FALSE
 
 	if(length(allowed_ages) && !(H.age in allowed_ages))
+		return FALSE
+
+	if(length(allowed_patrons) && !(H.patron.type in allowed_patrons))
 		return FALSE
 
 	if(maximum_possible_slots > -1)

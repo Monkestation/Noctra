@@ -22,7 +22,7 @@
 		TRAIT_TOXIMMUNE,
 		TRAIT_STEELHEARTED,
 		TRAIT_NOSLEEP,
-		TRAIT_VAMPMANSION,
+		TRAIT_INHUMENCAMP,
 		TRAIT_NOMOOD,
 		TRAIT_NOLIMBDISABLE,
 		TRAIT_SHOCKIMMUNE,
@@ -112,7 +112,7 @@
 	shoes = /obj/item/clothing/shoes/shortboots
 	neck = /obj/item/clothing/neck/chaincoif
 	armor = /obj/item/clothing/shirt/robe/necromancer
-	shirt = /obj/item/clothing/shirt/tunic/ucolored
+	shirt = /obj/item/clothing/shirt/tunic/colored
 	wrists = /obj/item/clothing/wrists/bracers
 	gloves = /obj/item/clothing/gloves/chain
 	belt = /obj/item/storage/belt/leather/black

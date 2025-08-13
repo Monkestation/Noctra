@@ -501,8 +501,8 @@
 	var/outline_color = "#ad0202"
 	duration = 15 SECONDS
 
-/datum/status_effect/buff/bloodrage/on_creation(mob/living/new_owner, duration_override, ...)
-	var/holyskill = owner.get_skill_level(/datum/skill/magic/holy)
+/datum/status_effect/buff/bloodrage/on_creation(mob/living/carbon/new_owner, duration_override, ...)
+	var/holyskill = new_owner.get_skill_level(/datum/skill/magic/holy)
 	duration = ((15 SECONDS) * holyskill)
 	if(holyskill >= SKILL_LEVEL_APPRENTICE)
 		effectedstats = list(STATKEY_STR = 2)

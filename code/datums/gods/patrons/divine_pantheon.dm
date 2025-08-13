@@ -18,7 +18,7 @@
 /* ----------------- */
 
 /datum/patron/divine/astrata
-	name = "Astrata"
+	name = ASTRATA
 	domain = "Goddess of Order, the Sun Queen"
 	desc = "Crafted from the head of Psydon, twin of Noc. She gifted mankind the Sun, protecting Psydonia from all forces which may seek it harm: from both outside and within."
 	flaws = "Tyrannical, Ill-Tempered, Uncompromising"
@@ -37,7 +37,7 @@
 	storyteller = /datum/storyteller/astrata
 
 /datum/patron/divine/noc
-	name = "Noc"
+	name = NOC
 	domain = "God of Knowledge, the Moon Prince"
 	desc = "Crafted from the helmet of Psydon, twin of Astrata. He gifted mankind divine wisdom."
 	flaws = "Cynical, Isolationist, Unfiltered Honesty"
@@ -56,7 +56,7 @@
 	storyteller = /datum/storyteller/noc
 
 /datum/patron/divine/dendor
-	name = "Dendor"
+	name = DENDOR
 	domain = "God of Nature and Beasts"
 	desc = "Crafted from the bones of Psydon as the embodiment of the natural world. Driven mad with time."
 	flaws = "Madness, Rebelliousness, Disorderliness"
@@ -75,7 +75,7 @@
 	storyteller = /datum/storyteller/dendor
 
 /datum/patron/divine/abyssor
-	name = "Abyssor"
+	name = ABYSSOR
 	domain = "God of Seas and Storms"
 	desc = "Crafted from the blood of Psydon as sovereign of the waters. Enraged by ignorance of Him from followers of The Ten."
 	flaws= "Reckless, Stubborn, Destructive"
@@ -94,7 +94,7 @@
 	storyteller = /datum/storyteller/abyssor
 
 /datum/patron/divine/necra
-	name = "Necra"
+	name = NECRA
 	domain = "Mother Goddess of Death and Time"
 	desc = "The Veiled Lady, once close partner to Psydon. She created the Nine others from his corpse, guiding them from the Underworld."
 	flaws = "Unchanging, Apathetic, Easy to Bore"
@@ -113,7 +113,7 @@
 	storyteller = /datum/storyteller/necra
 
 /datum/patron/divine/ravox
-	name = "Ravox"
+	name = RAVOX
 	domain = "God of Warfare, Justice, and Bravery"
 	desc = "Crafted from the the blade of Psydon, a champion of all who seek righteousness for themselves and others."
 	flaws = "Carelessness, Aggression, Pride"
@@ -132,7 +132,7 @@
 	storyteller = /datum/storyteller/ravox
 
 /datum/patron/divine/xylix
-	name = "Xylix"
+	name = XYLIX
 	domain = "Diety of Trickery, Freedom, and Inspiration"
 	desc = "Crafted from the silver tongue of Psydon. Xylix is a force of change and deceit, yet allows little known of their gender let alone presence."
 	flaws = "Petulance, Deception, Gambling-Prone"
@@ -157,7 +157,7 @@
 	storyteller = /datum/storyteller/xylix
 
 /datum/patron/divine/pestra
-	name = "Pestra"
+	name = PESTRA
 	domain = "Goddess of Disease, Alchemy, and Medicine"
 	desc = "A mistake; Psydon's intestines left behind. She slithered out, bringing forth the cycle of life and decay."
 	flaws = "Drunkenness, Crudeness, Irresponsibility"
@@ -177,7 +177,7 @@
 	storyteller = /datum/storyteller/pestra
 
 /datum/patron/divine/malum
-	name = "Malum"
+	name = MALUM
 	domain = "God of Toil, Innovation, and Creation"
 	desc = "Crafted from the hands of Psydon. He would later use his own to construct wonderous inventions."
 	flaws = "Obsessive, Exacting, Overbearing"
@@ -196,7 +196,7 @@
 	storyteller = /datum/storyteller/malum
 
 /datum/patron/divine/eora
-	name = "Eora"
+	name = EORA
 	domain = "Goddess of Love, Family, and Art"
 	desc = "Crafted from the heart of Psydon, a spreader of love and beauty, and strengthener of bonds."
 	flaws= "Naivete, Impulsiveness, Bigotry"

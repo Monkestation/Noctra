@@ -4,52 +4,56 @@
 	gender = PLURAL
 	icon_state = "tights"
 	item_state = "tights"
+	color = CLOTHING_LINEN
 
-/obj/item/clothing/pants/tights/random/Initialize()
+/obj/item/clothing/pants/tights/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
+/obj/item/clothing/pants/tights/colored/random/Initialize()
 	color = pick_assoc(GLOB.peasant_dyes)
 	return ..()
 
-/obj/item/clothing/pants/tights/uncolored
+/obj/item/clothing/pants/tights/colored/uncolored
 	color = CLOTHING_LINEN
 
-/obj/item/clothing/pants/tights/black
+/obj/item/clothing/pants/tights/colored/black
 	color = CLOTHING_SOOT_BLACK
 
-/obj/item/clothing/pants/tights/red
+/obj/item/clothing/pants/tights/colored/red
 	color = CLOTHING_BLOOD_RED
 
-/obj/item/clothing/pants/tights/purple
+/obj/item/clothing/pants/tights/colored/purple
 	color = CLOTHING_PLUM_PURPLE
 
-/obj/item/clothing/pants/tights/green
+/obj/item/clothing/pants/tights/colored/green
 	color = CLOTHING_FOREST_GREEN
 
-/obj/item/clothing/pants/tights/jester
+/obj/item/clothing/pants/tights/colored/jester
 	desc = "Funny tights!"
 	color = CLOTHING_SALMON
 
-/obj/item/clothing/pants/tights/lord
+/obj/item/clothing/pants/tights/colored/lord
 	color = CLOTHING_PLUM_PURPLE
 
-/obj/item/clothing/pants/tights/vagrant
+/obj/item/clothing/pants/tights/colored/vagrant
 	r_sleeve_status = SLEEVE_TORN
 	body_parts_covered = GROIN|LEG_LEFT
 	torn_sleeve_number = 1
 
-/obj/item/clothing/pants/tights/vagrant/l
+/obj/item/clothing/pants/tights/colored/vagrant/l
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_TORN
 	body_parts_covered = GROIN|LEG_RIGHT
 
-/obj/item/clothing/pants/tights/vagrant/Initialize()
+/obj/item/clothing/pants/tights/colored/vagrant/Initialize()
 	color = pick(CLOTHING_MUD_BROWN, CLOTHING_OLD_LEATHER, CLOTHING_SPRING_GREEN, CLOTHING_BARK_BROWN, CLOTHING_CANVAS	)
 	return ..()
 
-/obj/item/clothing/pants/tights/guard
+/obj/item/clothing/pants/tights/colored/guard
 	color = CLOTHING_PLUM_PURPLE
 	uses_lord_coloring = LORD_PRIMARY
 
-/obj/item/clothing/pants/tights/guardsecond
+/obj/item/clothing/pants/tights/colored/guardsecond
 	color = CLOTHING_BLOOD_RED
 	uses_lord_coloring = LORD_SECONDARY
 

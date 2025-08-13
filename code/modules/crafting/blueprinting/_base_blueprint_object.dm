@@ -19,6 +19,8 @@
 	var/stored_pixel_y = 0
 	var/stored_pixel_x = 0
 
+	var/time_when_placed
+
 /obj/structure/blueprint/Initialize(mapload)
 	. = ..()
 	GLOB.active_blueprints += src
@@ -44,6 +46,8 @@
 		return
 
 	name = "[recipe.name] blueprint"
+	if(recipe.supports_directions)
+		name += " ([dir2text(blueprint_dir)])"
 	var/list/desc_lines = list()
 	desc_lines += "[recipe.desc]"
 	desc_lines += ""
@@ -174,10 +178,11 @@
 		var/available_amount = available_materials[mat_type] || 0
 		if(available_amount < needed_amount)
 			var/atom/temp = mat_type
-			to_chat(user, "<span class='warning'>Need [needed_amount - available_amount] more [initial(temp.name)]!</span>")
+			to_chat(user, span_warning("Need [needed_amount - available_amount] more [initial(temp.name)]!</span>"))
 			return FALSE
 
-	to_chat(user, "<span class='notice'>You begin constructing \the [recipe.name]...</span>")
+	user.face_atom(src)
+	to_chat(user, span_notice("You begin constructing \the [recipe.name]..."))
 
 	for(var/i = 1 to 100)
 		if(!do_after(user, recipe.build_time, target = src))
@@ -236,6 +241,7 @@
 
 		consume_materials(user, needed_materials)
 
+		var/final_dir = recipe.supports_directions ? blueprint_dir : user.dir
 		if(!ispath(recipe.result_type, /turf))
 			var/atom/new_structure = new recipe.result_type(get_turf(src))
 			if(recipe.supports_directions)
@@ -244,15 +250,15 @@
 			new_structure.pixel_y = stored_pixel_y
 			if(!initial(recipe.edge_density) && ((abs(pixel_x) >= 14) || (abs(pixel_y) >= 14)))
 				new_structure.density = FALSE
-			new_structure.OnCrafted(user.dir, user)
+			new_structure.OnCrafted(final_dir, user)
 		else
 			var/turf/turf = get_turf(src)
 			var/turf/new_turf = turf.ChangeTurf(recipe.result_type)
 			if(new_turf)
-				new_turf.OnCrafted(user.dir, user)
+				new_turf.OnCrafted(final_dir, user)
 
-		user.visible_message("<span class='notice'>[user] [recipe.verbage_tp] \the [recipe.name]!</span>", \
-							"<span class='notice'>I \the [recipe.verbage] [recipe.name]!</span>")
+		user.visible_message(span_smallnotice("[user] [recipe.verbage_tp] \the [recipe.name]!"), \
+							span_notice("I [recipe.verbage] \the [recipe.name]!"))
 
 		if(recipe.craftsound)
 			playsound(get_turf(src), recipe.craftsound, 100, TRUE)

@@ -75,7 +75,7 @@ GLOBAL_LIST_EMPTY(tennite_schisms)
 
 	if(astrata_count >= challenger_count)
 		priority_announce("Astrata's light prevails over the challenge of [challenger.name]! The Sun Queen confirms her status as a true heir of Psydon!", "Astrata is VICTORIOUS!", 'sound/magic/ahh2.ogg')
-		adjust_storyteller_influence("Astrata", 200)
+		adjust_storyteller_influence(ASTRATA, 200)
 		adjust_storyteller_influence(challenger.name, -50)
 
 		for(var/datum/weakref/supporter_ref in supporters_astrata)
@@ -104,7 +104,7 @@ GLOBAL_LIST_EMPTY(tennite_schisms)
 	else if(challenger_count > astrata_count)
 		priority_announce("[challenger.name]'s challenge succeeds against Astrata's tyranny! The Sun Queen is grudgingly forced to share power with [challenger.name]...", "[challenger.name] RULES!", 'sound/magic/inspire_02.ogg')
 		adjust_storyteller_influence(challenger.name, 200)
-		adjust_storyteller_influence("Astrata", -50)
+		adjust_storyteller_influence(ASTRATA, -50)
 
 		for(var/datum/weakref/supporter_ref in supporters_challenger)
 			var/mob/living/carbon/human/supporter = supporter_ref.resolve()
@@ -381,7 +381,7 @@ GLOBAL_LIST_EMPTY(tennite_schisms)
 /proc/find_strongest_challenger()
 	var/datum/patron/strongest_challenger
 	var/highest_influence = 0
-	var/astrata_influence = get_storyteller_influence("Astrata") || 0
+	var/astrata_influence = get_storyteller_influence(ASTRATA) || 0
 
 	for(var/type in subtypesof(/datum/patron/divine) - list(/datum/patron/divine/astrata, /datum/patron/divine/eora))
 		var/datum/patron/divine/god = GLOB.patronlist[type]

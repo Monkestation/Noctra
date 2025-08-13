@@ -23,6 +23,7 @@
 	required_materials = list(/obj/item/grown/log/tree/small = 2)
 	supports_directions = TRUE
 	craftdiff = 0
+	build_time = 4 SECONDS
 
 /datum/blueprint_recipe/carpentry/swing_door
 	name = "swing door"
@@ -42,6 +43,7 @@
 	)
 	supports_directions = TRUE
 	craftdiff = 1
+	build_time = 4 SECONDS
 
 /datum/blueprint_recipe/carpentry/viewport_door
 	name = "wooden door (viewport)"
@@ -53,6 +55,7 @@
 	)
 	supports_directions = TRUE
 	craftdiff = 2
+	build_time = 4 SECONDS
 
 /datum/blueprint_recipe/carpentry/fancy_door
 	name = "fancy wooden door"
@@ -61,6 +64,7 @@
 	required_materials = list(/obj/item/grown/log/tree/small = 2)
 	supports_directions = TRUE
 	craftdiff = 3
+	build_time = 4 SECONDS
 
 /datum/blueprint_recipe/carpentry/bin
 	name = "wooden bin"
@@ -357,9 +361,8 @@
 	desc = "A restraining device for punishment."
 	result_type = /obj/structure/pillory
 	required_materials = list(
-		/obj/item/grown/log/tree/small = 1,
+		/obj/item/grown/log/tree/small = 2,
 		/obj/item/ingot/iron = 1,
-		/obj/item/customlock/finished = 1
 	)
 	supports_directions = TRUE
 	craftdiff = 2
@@ -407,7 +410,6 @@
 	result_type = /obj/structure/composter
 	required_materials = list(/obj/item/grown/log/tree/small = 1)
 	craftdiff = 0
-	build_time = 2 SECONDS
 
 /datum/blueprint_recipe/carpentry/structure/plough
 	name = "plough"

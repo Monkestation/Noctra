@@ -41,7 +41,7 @@
 		/obj/item/bottlemessage/ancient=22,
 		/obj/item/weapon/knife/cleaver=22,
 		/obj/item/weapon/mace=22,
-		/obj/item/clothing/cloak/raincloak/mortus=22,
+		/obj/item/clothing/cloak/raincloak/colored/mortus=22,
 		/obj/item/reagent_containers/food/snacks/butter=22,
 		/obj/item/clothing/face/cigarette/pipe=10,
 		/obj/item/clothing/face/cigarette/pipe/westman=10,

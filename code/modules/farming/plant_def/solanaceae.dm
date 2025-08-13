@@ -13,6 +13,7 @@
 	nitrogen_production = 30
 	phosphorus_production = 0
 	potassium_production = 0
+	seed_identity = "potato seedlings"
 
 /datum/plant_def/potato/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	base_genetics.yield_trait = TRAIT_GRADE_EXCELLENT
