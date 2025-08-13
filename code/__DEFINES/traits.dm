@@ -406,6 +406,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 // JOB RELATED TRAITS
 
+#define TRAIT_MERCGUILD "Mercenary Guild Member"
 #define TRAIT_MALUMFIRE "Professional Smith"
 #define TRAIT_CRATEMOVER "Crate Mover"
 #define TRAIT_BURDEN "Burdened" //Gaffer stuff
