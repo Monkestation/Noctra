@@ -208,4 +208,8 @@
 	var/tempatarget = null
 	var/pegleg = 0			//Handles check & slowdown for peglegs. Fuckin' bootleg, literally, but hey it at least works.
 	var/pet_passive = FALSE
+	/// amount of spell points this mob currently has
+	var/spell_points
+	/// amount of spell points this mob has used
+	var/used_spell_points
 	var/dontmakesentient = FALSE // to check if you should make the thing sentient if they get enough kills to earn it. used for bosses or shit that would suck to be a player on
