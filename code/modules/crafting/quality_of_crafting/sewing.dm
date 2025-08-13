@@ -297,7 +297,7 @@
 	craftdiff = 1
 	category = "Neck"
 
-/datum/repeatable_crafting_recipe/sewing/phys_collar
+/datum/repeatable_crafting_recipe/sewing/courtphys_collar
 	name = "court physician's collar"
 	requirements = list(/obj/item/natural/cloth = 3, /obj/item/natural/fibers = 2,)
 	output = /obj/item/clothing/neck/courtphysician
