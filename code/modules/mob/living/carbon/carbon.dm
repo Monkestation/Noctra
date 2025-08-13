@@ -974,7 +974,6 @@
 				set_stat(SOFT_CRIT)
 			else
 				set_stat(CONSCIOUS)
-		// update_mobility()
 	update_damage_hud()
 	update_health_hud()
 	update_spd()

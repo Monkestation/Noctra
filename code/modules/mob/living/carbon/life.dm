@@ -404,7 +404,7 @@
 					if(BP.chronic_pain == 0)
 						BP.chronic_pain_type = null
 						to_chat(src, span_green("The chronic pain in your [BP.name] seems to have finally subsided."))
-
+	update_damage_hud()
 
 /mob/living/carbon/proc/pain_resistance_multiplier()
 	var/multiplier = 1.0

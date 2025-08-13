@@ -703,7 +703,6 @@
 	else
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
 			SetSleeping(400) //Short nap
-	// update_mobility()
 
 /mob/proc/get_contents()
 	return
@@ -943,7 +942,6 @@
 	slurring = 0
 	jitteriness = 0
 	slowdown = 0
-	// update_mobility()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
