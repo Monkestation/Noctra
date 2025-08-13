@@ -16,7 +16,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	faction = FACTION_TOWN
 	total_positions = 0
 	spawn_positions = 1
-	min_pq = 0
+	min_pq = 25
 
 	spells = list(
 		/datum/action/cooldown/spell/undirected/list_target/grant_title,
