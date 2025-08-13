@@ -372,6 +372,7 @@
 // --------- STEEL -----------
 /datum/anvil_recipe/armor/steel
 	req_bar = /obj/item/ingot/steel
+	abstract_type = /datum/anvil_recipe/armor/steel
 	craftdiff = 2
 
 /datum/anvil_recipe/armor/steel/bevor
@@ -421,57 +422,58 @@
 
 /datum/anvil_recipe/armor/steel/templar
 	craftdiff = 3
+	abstract_type = /datum/anvil_recipe/armor/steel/templar
 
 /datum/anvil_recipe/armor/steel/templar/helmet_noc
-	name = "Noc Helmet"
+	name = "Noc Helmet (+Silver Bar)"
 	recipe_name = "a noc helmet"
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/noc
 	additional_items = list(/obj/item/ingot/silver)
 
 /datum/anvil_recipe/armor/steel/templar/gold_helmet
-	name = "Gold Helmet"
+	name = "Gold Helmet (+Gold Bar)"
 	recipe_name = "a golden helmet"
 	created_item = /obj/item/clothing/head/helmet/heavy/bucket/gold
 	additional_items = list(/obj/item/ingot/gold)
 
 /datum/anvil_recipe/armor/steel/templar/helmet_astrata
-	name = "Astratan Helmet"
+	name = "Astratan Helmet (+Gold Bar)"
 	recipe_name = "an astratan helmet"
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/astrata
 	additional_items = list(/obj/item/ingot/gold)
 
 /datum/anvil_recipe/armor/steel/templar/helmet_necra
-	name = "Necran Helmet"
+	name = "Necran Helmet (+Iron Bar)"
 	recipe_name = "a necran helmet"
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/necra
 	additional_items = list(/obj/item/ingot/iron)
 
 /datum/anvil_recipe/armor/steel/templar/helmet_dendor
-	name = "Dendor Helmet"
+	name = "Dendor Helmet (+Small Log)"
 	recipe_name = "a dendorian helmet"
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/dendorhelm
 	additional_items = list(/obj/item/grown/log/tree/small)
 
 /datum/anvil_recipe/armor/steel/templar/helmet_pestra
-	name = "Pestran Helmet"
+	name = "Pestran Helmet (+Iron Bar)"
 	recipe_name = "a pestran helmet"
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/pestrahelm
 	additional_items = list(/obj/item/ingot/iron)
 
 /datum/anvil_recipe/armor/steel/templar/helmet_malum
-	name = "Malum Helmet"
+	name = "Malum Helmet (+Iron Bar)"
 	recipe_name = "a malumite helmet"
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/malumhelm
 	additional_items = list(/obj/item/ingot/iron)
 
 /datum/anvil_recipe/armor/steel/templar/helmet_ravox
-	name = "Ravox Helmet"
+	name = "Ravox Helmet (+Iron Bar)"
 	recipe_name = "a ravoxian helmet"
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/ravox
 	additional_items = list(/obj/item/ingot/iron)
 
 /datum/anvil_recipe/armor/steel/templar/helmet_xylix
-	name = "Xylix Helmet"
+	name = "Xylix Helmet (+Iron Bar)"
 	recipe_name = "a xylixian helmet"
 	created_item = /obj/item/clothing/head/helmet/heavy/necked/xylix
 	additional_items = list(/obj/item/ingot/iron)
