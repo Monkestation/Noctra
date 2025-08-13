@@ -71,6 +71,10 @@ GLOBAL_LIST_INIT(wolf_suffixes, list("Fang", "Claw", "Stalker", "Prowler", "Roar
 #define FAMILY_NEWLYWED "Newlywed"
 #define FAMILY_FULL "Parent"
 
+#define ANY_GENDER "Any gender"
+#define SAME_GENDER "Same gender"
+#define DIFFERENT_GENDER "Different gender"
+
 #define FAMILY_FATHER "Father"
 #define FAMILY_MOTHER "Mother"
 #define FAMILY_PROGENY "Progeny"
