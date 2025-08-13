@@ -432,9 +432,11 @@
 		*/
 		if(C.domhand)
 			used_str = C.get_str_arms(C.used_hand)
-	//STR is +1 from STRONG stance and -1 from WEAK stance
+	//STR is +1 from STRONG stance and -1 from SWIFT stance
 	if(istype(user.rmb_intent, /datum/rmb_intent/strong))
 		used_str++
+	if(istype(user.rmb_intent, /datum/rmb_intent/swift))
+		used_str--
 	if(istype(user.rmb_intent, /datum/rmb_intent/weak))
 		used_str /= 2
 	//Your max STR is 20.
