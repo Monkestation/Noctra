@@ -298,5 +298,38 @@
                 "bugfix": "stamina regen is no longer affected by the energy bar if you have the boundless energy trait."
             }
         ]
+    },
+    "2025-08-13": {
+        "Wabberspace": [
+            {
+                "rscadd": "Added Beastish to hollow-kin/demihumens."
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "balance": " Malum Masterwork stat gives more influence"
+            }
+        ],
+        "Wabberpace": [
+            {
+                "bugfix": "Fixed swampweed zigs from constantly overdosing by changing the reagent dosage from 60 > 30."
+            }
+        ],
+        "grungussuss": [
+            {
+                "bugfix": "lich can now return to his mansion"
+            },
+            {
+                "qol": "slapcrafting and dye-ing now have a better UI"
+            },
+            {
+                "bugfix": "fixed sacks being uncraftable"
+            }
+        ],
+        "Wrench-1": [
+            {
+                "image": "modified the Adept's Cowl icon and onmob sprites."
+            }
+        ]
     }
 }
