@@ -29,6 +29,7 @@
 	. = ..()
 	H.virginity = TRUE
 	shoes = /obj/item/clothing/shoes/shortboots
+	shirt = /obj/item/clothing/shirt/undershirt/fancy
 	backr = /obj/item/storage/backpack/satchel
 	backl = /obj/item/storage/backpack/satchel/surgbag
 	gloves = /obj/item/clothing/gloves/leather/feld
@@ -38,7 +39,6 @@
 	belt = /obj/item/storage/belt/leather
 	beltl = /obj/item/storage/keyring/physician
 	beltr = /obj/item/weapon/whip/cane/physician
-	shirt = /obj/item/clothing/shirt/undershirt/fancy
 	armor = /obj/item/clothing/shirt/robe/courtphysician
 	if(H.gender == FEMALE)
 		pants = /obj/item/clothing/pants/skirt/random
