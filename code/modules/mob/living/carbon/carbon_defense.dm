@@ -101,7 +101,7 @@
 		used_limb = parse_zone(I.sublimb_grabbed)
 
 	if(used_limb)
-		if(target != src) // No self love here
+		if(!cmode && target != src) // No self love here
 			if(used_limb == parse_zone(BODY_ZONE_PRECISE_R_HAND) || used_limb == parse_zone(BODY_ZONE_PRECISE_L_HAND))
 				record_round_statistic(STATS_HANDS_HELD)
 		target.visible_message(span_warning("[src] grabs [target]'s [used_limb]."), \

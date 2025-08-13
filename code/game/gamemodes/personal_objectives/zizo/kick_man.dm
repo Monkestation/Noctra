@@ -1,5 +1,6 @@
 /datum/objective/kick_groin
 	name = "Kick Groin"
+	triumph_count = 2
 
 /datum/objective/kick_groin/on_creation()
 	. = ..()

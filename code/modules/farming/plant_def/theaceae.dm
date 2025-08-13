@@ -19,6 +19,7 @@
 	nitrogen_production = 25
 	phosphorus_production = 0
 	potassium_production = 0
+	seed_identity = "tea seeds"
 
 /datum/plant_def/tea/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	base_genetics.quality_trait = TRAIT_GRADE_EXCELLENT  // Tea is prized for quality

@@ -196,6 +196,8 @@
 		I = get_inactive_held_item()
 
 	var/used_sound
+	var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
+	var/turf/end_T = get_turf(target)
 
 	if(I)
 		if(istype(I, /obj/item/grabbing))
@@ -204,6 +206,7 @@
 				if(isliving(pulling))
 					var/mob/living/throwable_mob = pulling
 					if(!throwable_mob.buckled)
+						var/obj/item/grabbing/other_grab = offhand ? get_active_held_item() : get_inactive_held_item()
 						stop_pulling()
 						if(G.grab_state < GRAB_AGGRESSIVE)
 							return
@@ -213,12 +216,12 @@
 						thrown_thing = throwable_mob
 						thrown_speed = 1
 						thrown_range = round((STASTR/throwable_mob.STACON)*2)
-						var/turf/start_T = get_turf(loc) //Get the start and target tile for the descriptors
-						var/turf/end_T = get_turf(target)
-						if(!HAS_TRAIT(thrown_thing, TRAIT_TINY) || body_position == LYING_DOWN || (throwable_mob.cmode && throwable_mob.body_position != LYING_DOWN))
+						if(body_position == LYING_DOWN || (!HAS_TRAIT(thrown_thing, TRAIT_TINY) && throwable_mob.cmode && (throwable_mob.body_position != LYING_DOWN || STASTR < 15)))
 							while(end_T.z > start_T.z)
 								end_T = GET_TURF_BELOW(end_T)
 						if((end_T.z > start_T.z) && throwable_mob.cmode)
+							thrown_range -= 1
+						if(!istype(other_grab) || other_grab.grabbed != throwable_mob)
 							thrown_range -= 1
 						if(thrown_range <= 0)
 							return
@@ -251,8 +254,8 @@
 		visible_message("<span class='danger'>[src] throws [thrown_thing].</span>", \
 						"<span class='danger'>I toss [thrown_thing].</span>")
 		log_message("has thrown [thrown_thing]", LOG_ATTACK)
-		newtonian_move(get_dir(target, src))
-		thrown_thing.safe_throw_at(target, thrown_range, thrown_speed, src, null, null, null, move_force)
+		newtonian_move(get_dir(end_T, src))
+		thrown_thing.safe_throw_at(end_T, thrown_range, thrown_speed, src, null, null, null, move_force)
 		if(!used_sound)
 			used_sound = pick(PUNCHWOOSH)
 		playsound(get_turf(src), used_sound, 60, FALSE)

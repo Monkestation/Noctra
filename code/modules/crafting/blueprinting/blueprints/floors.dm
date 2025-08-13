@@ -2,6 +2,7 @@
 	abstract_type = /datum/blueprint_recipe/floor
 	category = "Floors"
 	pixel_offsets = FALSE
+	build_time = 3 SECONDS
 
 /datum/blueprint_recipe/floor/woodfloor
 	name = "Wooden Floor"
@@ -11,7 +12,6 @@
 		/obj/item/grown/log/tree/small = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 3 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -26,7 +26,6 @@
 		/obj/item/grown/log/tree/small = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 3 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -41,7 +40,6 @@
 		/obj/item/grown/log/tree/small = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 3 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -72,7 +70,6 @@
 		/obj/item/natural/stone = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -92,7 +89,6 @@
 		/obj/item/natural/stone = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -120,7 +116,6 @@
 		/obj/item/natural/stoneblock = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 5 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -135,7 +130,6 @@
 		/obj/item/natural/stoneblock = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 5 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -150,7 +144,6 @@
 		/obj/item/natural/stoneblock = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 5 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -165,7 +158,6 @@
 		/obj/item/natural/stoneblock = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 6 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -180,7 +172,6 @@
 		/obj/item/natural/stoneblock = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 6 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -196,7 +187,7 @@
 		/obj/item/natural/stoneblock = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 6 SECONDS
+	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -212,7 +203,6 @@
 		/obj/item/grown/log/tree/stick = 2
 	)
 	construct_tool = /obj/item/weapon/knife
-	build_time = 3 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -240,7 +230,6 @@
 		/obj/item/natural/dirtclod = 3
 	)
 	construct_tool = /obj/item/weapon/shovel
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -253,7 +242,6 @@
 		/obj/item/natural/dirtclod = 3
 	)
 	construct_tool = /obj/item/weapon/shovel
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -266,7 +254,6 @@
 		/obj/item/natural/brick = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -282,7 +269,6 @@
 		/obj/item/natural/brick = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -298,7 +284,6 @@
 		/obj/item/natural/brick = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -313,7 +298,6 @@
 		/obj/item/natural/stoneblock = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -341,7 +325,6 @@
 		/obj/item/natural/brick = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -361,7 +344,6 @@
 		/obj/item/natural/stoneblock = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 	skillcraft = /datum/skill/craft/masonry
@@ -375,7 +357,6 @@
 		/obj/item/natural/stoneblock = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 	skillcraft = /datum/skill/craft/masonry
@@ -389,7 +370,6 @@
 		/obj/item/natural/stoneblock = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 	skillcraft = /datum/skill/craft/masonry
@@ -403,7 +383,6 @@
 		/obj/item/natural/stoneblock = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 	skillcraft = /datum/skill/craft/masonry
@@ -417,7 +396,6 @@
 		/obj/item/natural/stoneblock = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 	skillcraft = /datum/skill/craft/masonry
@@ -431,7 +409,6 @@
 		/obj/item/natural/stoneblock = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 	skillcraft = /datum/skill/craft/masonry
@@ -445,7 +422,6 @@
 		/obj/item/natural/stoneblock = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 	skillcraft = /datum/skill/craft/masonry
@@ -459,7 +435,6 @@
 		/obj/item/natural/stoneblock = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 	skillcraft = /datum/skill/craft/masonry
@@ -473,7 +448,6 @@
 		/obj/item/natural/stoneblock = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 	skillcraft = /datum/skill/craft/masonry
@@ -487,7 +461,6 @@
 		/obj/item/natural/brick = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 	skillcraft = /datum/skill/craft/masonry
@@ -501,7 +474,6 @@
 		/obj/item/natural/stoneblock = 3
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 	skillcraft = /datum/skill/craft/masonry
@@ -515,7 +487,6 @@
 		/obj/item/natural/brick = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 	skillcraft = /datum/skill/craft/masonry
@@ -529,7 +500,6 @@
 		/obj/item/natural/stoneblock = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 	skillcraft = /datum/skill/craft/masonry
@@ -543,7 +513,6 @@
 		/obj/item/natural/brick = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 	skillcraft = /datum/skill/craft/masonry
@@ -559,7 +528,6 @@
 		/obj/item/natural/dirtclod = 2
 	)
 	construct_tool = /obj/item/weapon/shovel
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -573,7 +541,6 @@
 		/obj/item/natural/dirtclod = 2
 	)
 	construct_tool = /obj/item/weapon/shovel
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -587,7 +554,6 @@
 		/obj/item/natural/dirtclod = 2
 	)
 	construct_tool = /obj/item/weapon/shovel
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -601,7 +567,6 @@
 		/obj/item/natural/dirtclod = 2
 	)
 	construct_tool = /obj/item/weapon/shovel
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -615,7 +580,6 @@
 		/obj/item/natural/dirtclod = 2
 	)
 	construct_tool = /obj/item/weapon/shovel
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -629,7 +593,6 @@
 		/obj/item/natural/dirtclod = 1
 	)
 	construct_tool = /obj/item/weapon/pitchfork
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -641,7 +604,6 @@
 		/obj/item/grown/log/tree/small = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 3 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -656,7 +618,6 @@
 		/obj/item/grown/log/tree/small = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 3 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -671,7 +632,6 @@
 		/obj/item/grown/log/tree/small = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 3 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -686,7 +646,6 @@
 		/obj/item/grown/log/tree/small = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 3 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -701,7 +660,6 @@
 		/obj/item/grown/log/tree/small = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 3 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -716,7 +674,6 @@
 		/obj/item/grown/log/tree/small = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 3 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -731,7 +688,6 @@
 		/obj/item/grown/log/tree/small = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 3 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -746,7 +702,6 @@
 		/obj/item/grown/log/tree/small = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 3 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -761,7 +716,6 @@
 		/obj/item/grown/log/tree/small = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 3 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -777,7 +731,6 @@
 	)
 	supports_directions = TRUE
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -793,7 +746,6 @@
 	)
 	supports_directions = TRUE
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 4 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -808,7 +760,6 @@
 		/obj/item/natural/stoneblock = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 5 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -823,7 +774,6 @@
 		/obj/item/natural/stoneblock = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 5 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -838,7 +788,6 @@
 		/obj/item/natural/stoneblock = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 5 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -853,7 +802,6 @@
 		/obj/item/natural/stoneblock = 1
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 5 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -868,7 +816,6 @@
 		/obj/item/natural/stoneblock = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 5 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -883,7 +830,6 @@
 		/obj/item/natural/stoneblock = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 5 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 
@@ -898,7 +844,6 @@
 		/obj/item/natural/stone = 2
 	)
 	construct_tool = /obj/item/weapon/hammer
-	build_time = 5 SECONDS
 	category = "Floors"
 	floor_object = TRUE
 

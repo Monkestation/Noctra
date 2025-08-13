@@ -94,6 +94,20 @@
 	. = ..()
 	enchant(/datum/enchantment/silver)
 
+//................ Psydon Whip ............... //
+/obj/item/weapon/whip/psydon
+	force = DAMAGE_WHIP+2
+	name = "psydonian whip"
+	desc = "A whip fashioned with the iconography of Psydon, and crafted entirely out of silver."
+	icon_state = "psywhip"
+	resistance_flags = FIRE_PROOF
+	smeltresult = /obj/item/ingot/silver
+	last_used = 0
+
+/obj/item/weapon/whip/psydon/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
+
 //................ Caning Stick.................//
 /obj/item/weapon/whip/cane
 	name = "caning stick"

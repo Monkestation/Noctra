@@ -14,6 +14,7 @@
 	potassium_production =  25
 	nitrogen_production = 0
 	phosphorus_production = 0
+	seed_identity = "sunflower seeds"
 
 /datum/plant_def/sunflower/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	base_genetics.growth_speed = TRAIT_GRADE_EXCELLENT
@@ -34,6 +35,7 @@
 	potassium_production =  0
 	nitrogen_production = 30
 	phosphorus_production = 0
+	seed_identity = "fyritius seeds"
 
 /datum/plant_def/fyritiusflower/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	base_genetics.quality_trait = TRAIT_GRADE_EXCELLENT
@@ -55,6 +57,7 @@
 	potassium_production =  35
 	nitrogen_production = 0
 	phosphorus_production = 0
+	seed_identity = "manabloom seeds"
 
 /datum/plant_def/manabloom/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	base_genetics.quality_trait = TRAIT_GRADE_EXCELLENT
@@ -75,6 +78,7 @@
 	potassium_production =  0
 	nitrogen_production = 40
 	phosphorus_production = 0
+	seed_identity = "poppy seeds"
 
 /datum/plant_def/poppy/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	base_genetics.quality_trait = TRAIT_GRADE_EXCELLENT

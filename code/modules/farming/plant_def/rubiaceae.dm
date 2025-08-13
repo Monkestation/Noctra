@@ -18,6 +18,7 @@
 	nitrogen_production = 0
 	phosphorus_production = 0
 	potassium_production = 25
+	seed_identity = "coffee seeds"
 
 /datum/plant_def/coffee/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	base_genetics.quality_trait = TRAIT_GRADE_EXCELLENT  // Coffee is prized for quality

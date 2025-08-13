@@ -29,7 +29,7 @@
 /datum/outfit/job/mageapprentice/pre_equip(mob/living/carbon/human/H)
 	allowed_patrons = list(/datum/patron/divine/noc, /datum/patron/inhumen/zizo)//see court mage for explaination
 	if(H.gender == MALE)
-		pants = /obj/item/clothing/pants/tights/random
+		pants = /obj/item/clothing/pants/tights/colored/random
 		shoes = /obj/item/clothing/shoes/simpleshoes
 		shirt = /obj/item/clothing/shirt/shortshirt
 		belt = /obj/item/storage/belt/leather/rope
@@ -39,9 +39,8 @@
 		backr = /obj/item/storage/backpack/satchel
 		head = /obj/item/clothing/head/wizhat/gen
 	else
-		shoes = /obj/item/clothing/shoes/simpleshoes
-		shirt = /obj/item/clothing/shirt/dress/silkdress/black
-		pants = /obj/item/clothing/pants/tights/random
+		shoes = /obj/item/clothing/shoes/sandals
+		shirt = /obj/item/clothing/shirt/dress/silkdress/colored/random
 		belt = /obj/item/storage/belt/leather/rope
 		beltl = /obj/item/storage/keyring/mageapprentice
 		beltr = /obj/item/storage/magebag/apprentice

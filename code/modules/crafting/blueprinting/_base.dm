@@ -19,7 +19,7 @@ GLOBAL_LIST_EMPTY(blueprint_recipes)
 	var/atom/result_type = null // What gets built
 	var/list/required_materials = list() // Materials needed (path = amount)
 	var/atom/construct_tool
-	var/build_time = 5 SECONDS
+	var/build_time = 2 SECONDS
 	var/category = "General"
 	var/supports_directions = FALSE // Whether this recipe can be rotated
 	var/default_dir = SOUTH // Default direction for the recipe

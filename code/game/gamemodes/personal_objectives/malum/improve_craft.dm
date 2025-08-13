@@ -1,5 +1,6 @@
 /datum/objective/improve_craft
 	name = "Improve Craft Skills"
+	triumph_count = 2
 	var/levels_gained = 0
 	var/required_levels = 2
 

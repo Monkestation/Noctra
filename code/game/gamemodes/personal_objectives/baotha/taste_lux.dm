@@ -1,6 +1,6 @@
 /datum/objective/taste_lux
 	name = "Taste Divine Essence"
-	triumph_count = 2
+	triumph_count = 3
 
 /datum/objective/taste_lux/on_creation()
 	. = ..()

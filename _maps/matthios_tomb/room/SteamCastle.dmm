@@ -477,6 +477,29 @@
 /obj/effect/spawner/map_spawner/loot,
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/under/tomb/indoors)
+"fQ" = (
+/obj/effect/mapping_helpers/floor_clothing_equipper,
+/obj/item/clothing/ring/silver/dorpel,
+/obj/item/clothing/cloak/half/guard/second,
+/mob/living/carbon/human/species/skeleton/npc/no_equipment{
+	base_strength = 15;
+	base_speed = 15;
+	base_constitution = 14;
+	base_endurance = 14;
+	base_fortune = 12;
+	candodge = 0;
+	real_name = "Undead Knight"
+	},
+/obj/item/clothing/neck/mercmedal/grenzelhoft,
+/obj/item/clothing/armor/plate/full,
+/obj/item/clothing/gloves/plate,
+/obj/item/clothing/pants/platelegs,
+/obj/item/clothing/shoes/boots/armor,
+/obj/item/clothing/head/helmet/heavy/decorated/hounskull,
+/obj/item/weapon/mace/warhammer/steel,
+/obj/item/weapon/shield/tower/buckleriron,
+/turf/open/floor/churchmarble,
+/area/rogue/under/tomb/indoors/royal)
 "fS" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -770,28 +793,6 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb/indoors/royal)
-"iT" = (
-/mob/living/carbon/human/species/skeleton/npc/no_equipment{
-	base_strength = 15;
-	base_speed = 15;
-	base_constitution = 14;
-	base_endurance = 14;
-	base_fortune = 12;
-	candodge = 0;
-	real_name = "Undead Knight"
-	},
-/obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/item/weapon/shield/tower/buckleriron,
-/obj/item/weapon/sword/rapier/dec,
-/obj/item/clothing/ring/gold,
-/obj/item/clothing/cloak/half/guard/second,
-/obj/item/clothing/gloves/plate,
-/obj/item/clothing/armor/plate,
-/obj/item/clothing/pants/platelegs,
-/obj/item/clothing/shoes/boots/armor,
-/obj/item/clothing/head/helmet/visored/hounskull,
-/turf/open/floor/churchmarble,
-/area/rogue/under/tomb/indoors/royal)
 "iV" = (
 /obj/structure/bars/pipe,
 /turf/open/transparent/openspace,
@@ -925,6 +926,28 @@
 /obj/effect/decal/cleanable/blood/gibs/torso,
 /turf/open/floor/naturalstone,
 /area/rogue/under/tomb)
+"kE" = (
+/mob/living/carbon/human/species/skeleton/npc/no_equipment{
+	base_strength = 15;
+	base_speed = 15;
+	base_constitution = 14;
+	base_endurance = 14;
+	base_fortune = 12;
+	candodge = 0;
+	real_name = "Undead Knight"
+	},
+/obj/effect/mapping_helpers/floor_clothing_equipper,
+/obj/item/weapon/shield/tower/buckleriron,
+/obj/item/weapon/sword/rapier/dec,
+/obj/item/clothing/ring/gold,
+/obj/item/clothing/cloak/half/guard/second,
+/obj/item/clothing/gloves/plate,
+/obj/item/clothing/armor/plate,
+/obj/item/clothing/pants/platelegs,
+/obj/item/clothing/shoes/boots/armor,
+/obj/item/clothing/head/helmet/visored/hounskull,
+/turf/open/floor/churchmarble,
+/area/rogue/under/tomb/indoors/royal)
 "kG" = (
 /obj/structure/trap/shock,
 /turf/open/floor/hexstone,
@@ -1482,6 +1505,28 @@
 /obj/machinery/light/fueled/wallfire/candle/blue,
 /turf/open/floor/tile/masonic/single,
 /area/rogue/under/tomb/indoors/magic)
+"qm" = (
+/mob/living/carbon/human/species/skeleton/npc/no_equipment{
+	base_strength = 15;
+	base_speed = 15;
+	base_constitution = 14;
+	base_endurance = 14;
+	base_fortune = 12;
+	candodge = 0;
+	real_name = "Undead Knight"
+	},
+/obj/effect/mapping_helpers/floor_clothing_equipper,
+/obj/structure/fluff/railing/border,
+/obj/item/weapon/polearm/halberd/bardiche,
+/obj/item/clothing/ring/silver,
+/obj/item/clothing/cloak/half/colored/red,
+/obj/item/clothing/armor/plate/full,
+/obj/item/clothing/gloves/plate,
+/obj/item/clothing/pants/platelegs,
+/obj/item/clothing/shoes/boots/armor,
+/obj/item/clothing/head/helmet/heavy/decorated/bascinet,
+/turf/open/floor/churchbrick,
+/area/rogue/under/tomb/indoors/royal)
 "qp" = (
 /obj/structure/trap/fire,
 /turf/open/floor/tile/masonic/spiral,
@@ -1568,26 +1613,6 @@
 "rk" = (
 /turf/closed/wall/mineral/decostone,
 /area/rogue/under/tomb/indoors)
-"rl" = (
-/obj/machinery/light/fueled/chand,
-/mob/living/carbon/human/species/skeleton/npc/no_equipment{
-	real_name = "Forgotten King";
-	base_speed = 20;
-	base_perception = 12;
-	base_intelligence = 8;
-	base_fortune = 8;
-	base_strength = 12;
-	base_endurance = 8;
-	base_constitution = 12
-	},
-/obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/item/weapon/knife/dagger/steel,
-/obj/item/clothing/shirt/jester,
-/obj/item/clothing/shoes/jester,
-/obj/item/clothing/head/jester,
-/obj/item/clothing/pants/tights/jester,
-/turf/open/transparent/openspace,
-/area/rogue/under/tomb/indoors/royal)
 "rp" = (
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/tile/masonic/spiral,
@@ -3171,29 +3196,6 @@
 /obj/machinery/light/fueled/wallfire/candle,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/under/tomb/indoors)
-"Iy" = (
-/obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/item/clothing/ring/silver/dorpel,
-/obj/item/clothing/cloak/half/guard/second,
-/mob/living/carbon/human/species/skeleton/npc/no_equipment{
-	base_strength = 15;
-	base_speed = 15;
-	base_constitution = 14;
-	base_endurance = 14;
-	base_fortune = 12;
-	candodge = 0;
-	real_name = "Undead Knight"
-	},
-/obj/item/clothing/neck/mercmedal/grenzelhoft,
-/obj/item/clothing/armor/plate/full,
-/obj/item/clothing/gloves/plate,
-/obj/item/clothing/pants/platelegs,
-/obj/item/clothing/shoes/boots/armor,
-/obj/item/clothing/head/helmet/heavy/decorated/hounskull,
-/obj/item/weapon/mace/warhammer/steel,
-/obj/item/weapon/shield/tower/buckleriron,
-/turf/open/floor/churchmarble,
-/area/rogue/under/tomb/indoors/royal)
 "IC" = (
 /obj/effect/decal/cleanable/blood,
 /obj/machinery/light/fueled/firebowl/church,
@@ -3219,6 +3221,28 @@
 /obj/item/reagent_containers/glass/cup/wooden,
 /turf/open/floor/twig,
 /area/rogue/under/tomb/indoors)
+"IQ" = (
+/mob/living/carbon/human/species/skeleton/npc/no_equipment{
+	base_strength = 15;
+	base_speed = 15;
+	base_constitution = 14;
+	base_endurance = 14;
+	base_fortune = 12;
+	candodge = 0;
+	real_name = "Undead Knight"
+	},
+/obj/effect/mapping_helpers/floor_clothing_equipper,
+/obj/item/weapon/shield/tower/buckleriron,
+/obj/item/clothing/ring/silver/gemerald,
+/obj/item/clothing/cloak/half/guard/second,
+/obj/item/weapon/sword/sabre/cutlass,
+/obj/item/clothing/gloves/plate,
+/obj/item/clothing/armor/plate,
+/obj/item/clothing/pants/platelegs,
+/obj/item/clothing/shoes/boots/armor,
+/obj/item/clothing/head/helmet/visored/hounskull,
+/turf/open/floor/churchmarble,
+/area/rogue/under/tomb/indoors/royal)
 "IR" = (
 /obj/structure/fluff/railing/border{
 	dir = 8
@@ -3373,28 +3397,6 @@
 /obj/structure/table/wood/fancy/black,
 /turf/open/floor/ruinedwood/chevron,
 /area/rogue/under/tomb/indoors)
-"Ls" = (
-/mob/living/carbon/human/species/skeleton/npc/no_equipment{
-	base_strength = 15;
-	base_speed = 15;
-	base_constitution = 14;
-	base_endurance = 14;
-	base_fortune = 12;
-	candodge = 0;
-	real_name = "Undead Knight"
-	},
-/obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/item/clothing/ring/gold,
-/obj/item/clothing/cloak/half/guard/second,
-/obj/item/clothing/neck/mercmedal/grenzelhoft,
-/obj/item/clothing/armor/plate/full,
-/obj/item/clothing/gloves/plate,
-/obj/item/clothing/pants/platelegs,
-/obj/item/clothing/shoes/boots/armor,
-/obj/item/clothing/head/helmet/heavy/decorated/bucket,
-/obj/item/weapon/sword/long/judgement,
-/turf/open/floor/churchmarble,
-/area/rogue/under/tomb/indoors/royal)
 "Lv" = (
 /obj/item/natural/stone,
 /turf/open/floor/naturalstone,
@@ -3651,28 +3653,6 @@
 /obj/machinery/light/fueled/wallfire/candle/r,
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/under/tomb/indoors)
-"Oi" = (
-/mob/living/carbon/human/species/skeleton/npc/no_equipment{
-	base_strength = 15;
-	base_speed = 15;
-	base_constitution = 14;
-	base_endurance = 14;
-	base_fortune = 12;
-	candodge = 0;
-	real_name = "Undead Knight"
-	},
-/obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/item/weapon/shield/tower/buckleriron,
-/obj/item/clothing/ring/silver/gemerald,
-/obj/item/clothing/cloak/half/guard/second,
-/obj/item/weapon/sword/sabre/cutlass,
-/obj/item/clothing/gloves/plate,
-/obj/item/clothing/armor/plate,
-/obj/item/clothing/pants/platelegs,
-/obj/item/clothing/shoes/boots/armor,
-/obj/item/clothing/head/helmet/visored/hounskull,
-/turf/open/floor/churchmarble,
-/area/rogue/under/tomb/indoors/royal)
 "Ok" = (
 /mob/living/carbon/human/species/goblin/npc/ambush/cave,
 /turf/open/floor/herringbone,
@@ -3980,28 +3960,6 @@
 	},
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb)
-"RI" = (
-/mob/living/carbon/human/species/skeleton/npc/no_equipment{
-	base_strength = 15;
-	base_speed = 15;
-	base_constitution = 14;
-	base_endurance = 14;
-	base_fortune = 12;
-	candodge = 0;
-	real_name = "Undead Knight"
-	},
-/obj/effect/mapping_helpers/floor_clothing_equipper,
-/obj/structure/fluff/railing/border,
-/obj/item/weapon/polearm/halberd/bardiche,
-/obj/item/clothing/ring/silver,
-/obj/item/clothing/cloak/half/red,
-/obj/item/clothing/armor/plate/full,
-/obj/item/clothing/gloves/plate,
-/obj/item/clothing/pants/platelegs,
-/obj/item/clothing/shoes/boots/armor,
-/obj/item/clothing/head/helmet/heavy/decorated/bascinet,
-/turf/open/floor/churchbrick,
-/area/rogue/under/tomb/indoors/royal)
 "RK" = (
 /obj/effect/mapping_helpers/secret_door_creator{
 	redstone_id = "CastleSecret1"
@@ -4040,6 +3998,26 @@
 /obj/item/reagent_containers/glass/cup,
 /turf/open/floor/hexstone,
 /area/rogue/under/tomb/indoors)
+"Sf" = (
+/obj/machinery/light/fueled/chand,
+/mob/living/carbon/human/species/skeleton/npc/no_equipment{
+	real_name = "Forgotten King";
+	base_speed = 20;
+	base_perception = 12;
+	base_intelligence = 8;
+	base_fortune = 8;
+	base_strength = 12;
+	base_endurance = 8;
+	base_constitution = 12
+	},
+/obj/effect/mapping_helpers/floor_clothing_equipper,
+/obj/item/weapon/knife/dagger/steel,
+/obj/item/clothing/shirt/jester,
+/obj/item/clothing/shoes/jester,
+/obj/item/clothing/head/jester,
+/obj/item/clothing/pants/tights/colored/jester,
+/turf/open/transparent/openspace,
+/area/rogue/under/tomb/indoors/royal)
 "Sm" = (
 /mob/living/carbon/human/species/orc/marauder,
 /obj/effect/decal/cleanable/blood,
@@ -4525,6 +4503,28 @@
 /obj/structure/trap/fire,
 /turf/open/floor/tile/masonic/spiral,
 /area/rogue/under/tomb/indoors)
+"WS" = (
+/mob/living/carbon/human/species/skeleton/npc/no_equipment{
+	base_strength = 15;
+	base_speed = 15;
+	base_constitution = 14;
+	base_endurance = 14;
+	base_fortune = 12;
+	candodge = 0;
+	real_name = "Undead Knight"
+	},
+/obj/effect/mapping_helpers/floor_clothing_equipper,
+/obj/item/clothing/ring/gold,
+/obj/item/clothing/cloak/half/guard/second,
+/obj/item/clothing/neck/mercmedal/grenzelhoft,
+/obj/item/clothing/armor/plate/full,
+/obj/item/clothing/gloves/plate,
+/obj/item/clothing/pants/platelegs,
+/obj/item/clothing/shoes/boots/armor,
+/obj/item/clothing/head/helmet/heavy/decorated/bucket,
+/obj/item/weapon/sword/long/judgement,
+/turf/open/floor/churchmarble,
+/area/rogue/under/tomb/indoors/royal)
 "WT" = (
 /obj/structure/rack/shelf/biggest,
 /obj/structure/spider/stickyweb,
@@ -6515,14 +6515,14 @@ iK
 ap
 HI
 Dq
-RI
+qm
 WL
 XN
-Iy
+fQ
 WL
 XN
 WL
-iT
+kE
 Jx
 mh
 ny
@@ -6806,11 +6806,11 @@ Dq
 iw
 WL
 oh
-Ls
+WS
 WL
 oh
 WL
-Oi
+IQ
 Jx
 yj
 tY
@@ -10264,7 +10264,7 @@ PK
 Ri
 vG
 Ri
-rl
+Sf
 Ri
 SD
 Ri

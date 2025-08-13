@@ -55,7 +55,7 @@
 	head = /obj/item/clothing/head/helmet/sallet
 	neck = /obj/item/clothing/neck/chaincoif/iron
 	armor = /obj/item/clothing/armor/chainmail
-	shirt = /obj/item/clothing/armor/gambeson/guard
+	shirt = /obj/item/clothing/armor/gambeson/colored/guard
 	backr = /obj/item/weapon/shield/heater
 	backl = /obj/item/storage/backpack/satchel
 	beltr = /obj/item/flashlight/flare/torch/lantern
@@ -93,10 +93,10 @@
 
 /datum/outfit/job/guardsman/archer/pre_equip(mob/living/carbon/human/H)
 	..()
-	head = /obj/item/clothing/head/helmet/kettle
-	neck = /obj/item/clothing/neck/chaincoif/iron
-	armor = /obj/item/clothing/armor/gambeson/heavy/guard
-	shirt = pick(/obj/item/clothing/shirt/undershirt/guard, /obj/item/clothing/shirt/undershirt/guardsecond)
+	head = /obj/item/clothing/head/helmet/townwatch/alt
+	neck = /obj/item/clothing/neck/chaincoif
+	armor = /obj/item/clothing/armor/gambeson/heavy/colored/guard
+	shirt = pick(/obj/item/clothing/shirt/undershirt/colored/guard, /obj/item/clothing/shirt/undershirt/colored/guardsecond)
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 	backl = /obj/item/ammo_holder/quiver/arrows
 	beltr = /obj/item/flashlight/flare/torch/lantern
@@ -134,7 +134,7 @@
 	..()
 	head = /obj/item/clothing/head/helmet/sallet
 	armor = /obj/item/clothing/armor/chainmail
-	shirt = /obj/item/clothing/armor/gambeson/guard
+	shirt = /obj/item/clothing/armor/gambeson/colored/guard
 	neck = /obj/item/clothing/neck/chaincoif/iron
 	backl = /obj/item/storage/backpack/satchel
 	backr = /obj/item/weapon/polearm/spear

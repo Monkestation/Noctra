@@ -6,7 +6,7 @@
 /datum/supply_pack/apparel/hood
 	name = "Shoulder Hood"
 	cost = 10
-	contains = /obj/item/clothing/head/roguehood/random
+	contains = /obj/item/clothing/head/roguehood/colored/random
 
 /datum/supply_pack/apparel/menacing
 	name = "Sack Hood"
@@ -32,6 +32,16 @@
 	name = "Fur Hat"
 	cost = 5
 	contains = /obj/item/clothing/head/hatfur
+
+/datum/supply_pack/apparel/hatblu
+	name = "Blue Fur Hat"
+	cost = 5
+	contains = /obj/item/clothing/head/hatblu
+
+/datum/supply_pack/apparel/engineering_goggles
+	name = "Engineering goggles"
+	cost = 50
+	contains = /obj/item/clothing/face/goggles
 
 /datum/supply_pack/apparel/chaperon
 	name = "Chaperon"
@@ -81,17 +91,17 @@
 /datum/supply_pack/apparel/raincloak_random
 	name = "Raincloak"
 	cost = 18
-	contains = /obj/item/clothing/cloak/raincloak/random
+	contains = /obj/item/clothing/cloak/raincloak/colored/random
 
 /datum/supply_pack/apparel/raincloak_furcloak_brown
 	name = "Brown Furcloak"
 	cost = 25
-	contains = /obj/item/clothing/cloak/raincloak/furcloak/brown
+	contains = /obj/item/clothing/cloak/raincloak/furcloak/colored/brown
 
 /datum/supply_pack/apparel/halfcloak_random
 	name = "Halfcloak"
 	cost = 12
-	contains = /obj/item/clothing/cloak/half/random
+	contains = /obj/item/clothing/cloak/half/colored/random
 
 /datum/supply_pack/apparel/armordress
 	name = "Padded Dress"
@@ -101,7 +111,7 @@
 /datum/supply_pack/apparel/leather_vest_random
 	name = "Leather Vest"
 	cost = 15
-	contains = /obj/item/clothing/armor/leather/vest/random
+	contains = /obj/item/clothing/armor/leather/vest/colored/random
 
 /datum/supply_pack/apparel/workervest
 	name = "Worker Vest"
@@ -116,7 +126,7 @@
 /datum/supply_pack/apparel/undershirt_random
 	name = "Undershirt"
 	cost = 4
-	contains = /obj/item/clothing/shirt/undershirt/random
+	contains = /obj/item/clothing/shirt/undershirt/colored/random
 
 /datum/supply_pack/apparel/undershirt_sailor
 	name = "Sailor Undershirt"
@@ -131,32 +141,32 @@
 /datum/supply_pack/apparel/shortshirt_random
 	name = "Shortshirt"
 	cost = 3
-	contains = /obj/item/clothing/shirt/shortshirt/random
+	contains = /obj/item/clothing/shirt/shortshirt/colored/random
 
 /datum/supply_pack/apparel/tunic_random
 	name = "Tunic"
 	cost = 6
-	contains = /obj/item/clothing/shirt/tunic/random
+	contains = /obj/item/clothing/shirt/tunic/colored/random
 
 /datum/supply_pack/apparel/dress_gen_random
 	name = "Cloth Dress"
 	cost = 7
-	contains = /obj/item/clothing/shirt/dress/gen/random
+	contains = /obj/item/clothing/shirt/dress/gen/colored/random
 
 /datum/supply_pack/apparel/silkdress_random
 	name = "Silk Dress"
 	cost = 30
-	contains = /obj/item/clothing/shirt/dress/silkdress/random
+	contains = /obj/item/clothing/shirt/dress/silkdress
 
 /datum/supply_pack/apparel/robe
 	name = "Robe"
 	cost = 5
-	contains = /obj/item/clothing/shirt/robe/mage
+	contains = /obj/item/clothing/shirt/robe/colored/mage
 
 /datum/supply_pack/apparel/tights_random
 	name = "Cloth Tights"
 	cost = 4
-	contains = /obj/item/clothing/pants/tights/random
+	contains = /obj/item/clothing/pants/tights/colored/random
 
 /datum/supply_pack/apparel/tights_sailor
 	name = "Sailor Tights"

@@ -1,5 +1,6 @@
 /datum/objective/inhumen_scorn
 	name = "Scorn Inhumen"
+	triumph_count = 2
 	var/spits_done = 0
 	var/spits_required = 2
 

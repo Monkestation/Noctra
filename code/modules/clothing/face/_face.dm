@@ -22,6 +22,8 @@
 	var/mask_adjusted = 0
 	var/adjusted_flags = null
 	var/obj/item/clothing/connectedmask
+	abstract_type = /obj/item/clothing/face
+
 
 /obj/item/clothing/face/Destroy()
 	connectedmask = null
@@ -47,6 +49,7 @@
 			connectedmask.RemoveMask()
 		else
 			qdel(src)
+
 
 /obj/item/clothing/face/attack_self(mob/user, params)
 	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))

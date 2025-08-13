@@ -22,7 +22,7 @@
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 3, TRUE)
 	belt = /obj/item/storage/belt/leather
-	shirt = /obj/item/clothing/shirt/shortshirt/random
+	shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 	pants = /obj/item/clothing/pants/trou
 	head = /obj/item/clothing/head/brimmed
 	neck = /obj/item/clothing/neck/coif

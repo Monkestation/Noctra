@@ -1,5 +1,6 @@
 /datum/objective/blood_splash
 	name = "Splash Blood"
+	triumph_count = 2
 
 /datum/objective/blood_splash/on_creation()
 	. = ..()

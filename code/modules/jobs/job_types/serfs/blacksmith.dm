@@ -59,16 +59,16 @@
 		H.change_stat(STATKEY_SPD, -1)
 	else
 		pants = /obj/item/clothing/pants/trou
-		armor = /obj/item/clothing/shirt/dress/gen/random
+		armor = /obj/item/clothing/shirt/dress/gen/colored/random
 		shoes = /obj/item/clothing/shoes/shortboots
 		belt = /obj/item/storage/belt/leather
 		cloak = /obj/item/clothing/cloak/apron/brown
 		beltl = /obj/item/storage/belt/pouch/coins/poor
 		beltr = /obj/item/key/blacksmith
-		backl =	/obj/item/weapon/hammer/sledgehammer
 		H.change_stat(STATKEY_STR, 1)
 		H.change_stat(STATKEY_END, 2)
 		H.change_stat(STATKEY_SPD, -1)
+	backl =	/obj/item/weapon/hammer/sledgehammer
 	backpack_contents = list(/obj/item/recipe_book/blacksmithing = 1)
 
 /datum/job/weaponsmith
@@ -126,13 +126,12 @@
 		beltl = /obj/item/storage/belt/pouch/coins/poor
 		beltr = /obj/item/key/blacksmith
 		cloak = /obj/item/clothing/cloak/apron/brown
-		backl =	/obj/item/weapon/hammer/sledgehammer
 		H.change_stat(STATKEY_STR, 1)
 		H.change_stat(STATKEY_END, 2)
 		H.change_stat(STATKEY_SPD, -1)
 	else
 		pants = /obj/item/clothing/pants/trou
-		armor = /obj/item/clothing/shirt/dress/gen/random
+		armor = /obj/item/clothing/shirt/dress/gen/colored/random
 		shoes = /obj/item/clothing/shoes/shortboots
 		belt = /obj/item/storage/belt/leather
 		cloak = /obj/item/clothing/cloak/apron/brown
@@ -141,4 +140,5 @@
 		H.change_stat(STATKEY_STR, 1)
 		H.change_stat(STATKEY_END, 2)
 		H.change_stat(STATKEY_SPD, -1)
+	backl =	/obj/item/weapon/hammer/sledgehammer
 	backpack_contents = list(/obj/item/recipe_book/blacksmithing = 1)

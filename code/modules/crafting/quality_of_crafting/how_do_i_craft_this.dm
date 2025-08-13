@@ -420,8 +420,7 @@
 				"skill_required" = recipe.appro_skill,
 				"materials_needed" = recipe.num_of_materials,
 				"rotations_required" = recipe.rotations_required,
-				"creates_multiple" = recipe.createmultiple,
-				"created_count" = recipe.createditem_num + 1
+				"created_count" = recipe.createditem_extra + 1
 			)
 		)
 

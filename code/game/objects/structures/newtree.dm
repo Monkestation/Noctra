@@ -18,6 +18,7 @@
 	var/burnt = FALSE
 	var/underlay_base = "center-leaf"
 	var/num_underlay_icons = 2
+	var/tree_initalized = FALSE
 
 /obj/structure/flora/newtree/Initialize()
 	. = ..()

@@ -232,8 +232,10 @@
 						if(!item || !attempt_insert_with_flipping(item, new_item, null, TRUE, TRUE))
 							item = H.get_item_by_slot(ITEM_SLOT_BELT)
 							if(!item || !attempt_insert_with_flipping(item, new_item, null, TRUE, TRUE))
-								new_item.forceMove(get_turf(H))
-								message_admins("[type] had backpack_contents set but no room to store:[new_item]")
+								item = H.get_item_by_slot(ITEM_SLOT_NECK)
+								if(!item || !attempt_insert_with_flipping(item, new_item, null, TRUE, TRUE))
+									new_item.forceMove(get_turf(H))
+									message_admins("[type] had backpack_contents set but no room to store:[new_item]")
 
 
 	post_equip(H, visualsOnly)

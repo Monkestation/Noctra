@@ -1,6 +1,6 @@
 /datum/objective/nobility
 	name = "Become Noble"
-	triumph_count = 2
+	triumph_count = 3
 
 /datum/objective/nobility/on_creation()
 	. = ..()
