@@ -204,8 +204,8 @@
 	if(damagetype != BRUTE || damagetype != BURN)
 		return
 
-	if(prob(damage / 2))
-		to_chat(owner, span_warning("The hit knocks you out of the air!"))
+	if(prob(damage / 4))
+		to_chat(owner, span_warning("The damage knocks you out of the air!"))
 		fall()
 		if(isliving(owner))
 			var/mob/living/flier = owner
