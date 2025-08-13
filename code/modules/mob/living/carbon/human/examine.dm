@@ -24,7 +24,7 @@
 			if(isgrenzel(user))
 				user.add_stress(/datum/stressevent/elf/major)
 				user.add_stress(/datum/stressevent/bad_species/major)
-			else if(isdwarfmountain(user))
+			else if(isdwarf(user))
 				user.add_stress(/datum/stressevent/elf)
 				user.add_stress(/datum/stressevent/bad_species)
 		if(!isdwarf(user) && isdwarf(src))
@@ -198,7 +198,7 @@
 			var/datum/component/vampire_disguise/disguise_comp = GetComponent(/datum/component/vampire_disguise)
 			if(!disguise_comp.disguised)
 				. += span_userdanger("A MONSTER!")
-          
+
 		if(!is_bandit && (real_name in GLOB.outlawed_players))
 			. += span_userdanger("OUTLAW!")
 

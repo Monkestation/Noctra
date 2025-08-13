@@ -203,10 +203,10 @@
 	desc = null
 
 /datum/stressevent/dwarf
-	desc = span_red("Rock-stompers and Oremongers, the whole of them!")
+	desc = span_red("Rock-stompers and Oremongers, the whole lot of them!")
 
 /datum/stressevent/elf
-	desc = span_red("A pole-proportioned dendrophile!") //Not in use right now.
+	desc = span_red("A pole-proportioned dendrophile!")
 
 /datum/stressevent/elf/major
 	desc = span_danger("Weed eaters and mushroom dancers, damned be those elves!")
