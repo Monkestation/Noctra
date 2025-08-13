@@ -20,7 +20,7 @@
 		/datum/supply_pack/apparel/satchel,
 		/datum/supply_pack/apparel/pouch,
 		/datum/supply_pack/tools/rope,
-		/datum/supply_pack/food/water,
+		/datum/supply_pack/food/drinks/water,
 		/datum/supply_pack/food/hardtack,
 		/datum/supply_pack/apparel/leather_belt,
 		/datum/supply_pack/tools/sack
@@ -42,7 +42,7 @@
 		/datum/supply_pack/food/cheese,
 		/datum/supply_pack/food/pepper,
 		/datum/supply_pack/food/honey,
-		/datum/supply_pack/food/cutlery,
+		/datum/supply_pack/luxury/premiun_cutlery,
 		// Tools for survival
 		/datum/supply_pack/tools/candles,
 		/datum/supply_pack/tools/flint,
@@ -77,14 +77,14 @@
 		/datum/supply_pack/apparel/dress_gen_random,
 		/datum/supply_pack/armor/leather_armor,
 		// Weapons
-		/datum/supply_pack/weapons/huntingknife,
-		/datum/supply_pack/weapons/dagger,
-		/datum/supply_pack/weapons/sdagger,
-		/datum/supply_pack/weapons/whip,
-		/datum/supply_pack/weapons/sflail,
+		/datum/supply_pack/weapons/iron/huntingknife,
+		/datum/supply_pack/weapons/iron/dagger,
+		/datum/supply_pack/weapons/steel/sdagger,
+		/datum/supply_pack/weapons/ranged/whip,
+		/datum/supply_pack/weapons/steel/sflail,
 		// Food & Drink
-		/datum/supply_pack/food/beer,
-		/datum/supply_pack/food/onin,
+		/datum/supply_pack/food/drinks/beer,
+		/datum/supply_pack/food/drinks/onin,
 		// Tools
 		/datum/supply_pack/tools/lamptern,
 		/datum/supply_pack/tools/dyebin,
@@ -110,14 +110,14 @@
 		/datum/supply_pack/apparel/armordress,
 		/datum/supply_pack/armor/studleather,
 		// Weapons
-		/datum/supply_pack/weapons/spear,
-		/datum/supply_pack/weapons/bow,
-		/datum/supply_pack/weapons/saxe,
-		/datum/supply_pack/weapons/crossbow,
-		/datum/supply_pack/weapons/quivers,
-		/datum/supply_pack/weapons/arrowquiver,
+		/datum/supply_pack/weapons/iron/spear,
+		/datum/supply_pack/weapons/ranged/shortbow,
+		/datum/supply_pack/weapons/steel/baxe,
+		/datum/supply_pack/weapons/ranged/crossbow,
+		/datum/supply_pack/weapons/ammo/quivers,
+		/datum/supply_pack/weapons/ammo/arrowquiver,
 		// Food
-		/datum/supply_pack/food/spottedhen,
+		/datum/supply_pack/food/drinks/spottedhen,
 		// Materials
 		/datum/supply_pack/rawmats/silk,
 		// Seeds

@@ -65,7 +65,7 @@
 		/datum/supply_pack/tools/bucket,
 		// Food - Hearty dwarven fare
 		/datum/supply_pack/food/meat,
-		/datum/supply_pack/food/blackgoat,
+		/datum/supply_pack/food/drinks/blackgoat,
 		/datum/supply_pack/food/potato,
 		/datum/supply_pack/food/wheat,
 		/datum/supply_pack/food/egg,
@@ -90,17 +90,17 @@
 		/datum/supply_pack/apparel/leather_vest_random,
 		/datum/supply_pack/apparel/trousers,
 		// Weapons - Dwarven combat gear
-		/datum/supply_pack/weapons/axe,
-		/datum/supply_pack/weapons/mace,
-		/datum/supply_pack/weapons/smace,
-		/datum/supply_pack/weapons/shortsword,
-		/datum/supply_pack/weapons/sword_iron,
-		/datum/supply_pack/weapons/shield,
-		/datum/supply_pack/weapons/towershield,
+		/datum/supply_pack/weapons/steel/baxe,
+		/datum/supply_pack/weapons/iron/mace,
+		/datum/supply_pack/weapons/steel/smace,
+		/datum/supply_pack/weapons/iron/shortsword,
+		/datum/supply_pack/weapons/iron/sword_iron,
+		/datum/supply_pack/weapons/shield/iron,
+		/datum/supply_pack/weapons/shield/towershield,
 		// Food & Drink
-		/datum/supply_pack/food/butterhair,
-		/datum/supply_pack/food/stonebeard,
-		/datum/supply_pack/food/grenzelbeer,
+		/datum/supply_pack/food/drinks/butterhair,
+		/datum/supply_pack/food/drinks/stonebeard,
+		/datum/supply_pack/food/drinks/grenzelbeer,
 		/datum/supply_pack/food/salami,
 		// Instruments
 		/datum/supply_pack/instruments/mbox,
@@ -119,13 +119,13 @@
 		// Apparel
 		/datum/supply_pack/apparel/ridingboots,
 		// Weapons
-		/datum/supply_pack/weapons/greatsword,
-		/datum/supply_pack/weapons/halberd,
-		/datum/supply_pack/weapons/sword,
-		/datum/supply_pack/weapons/greatmace,
-		/datum/supply_pack/weapons/flail,
+		/datum/supply_pack/weapons/iron/greatsword,
+		/datum/supply_pack/weapons/steel/halberd,
+		/datum/supply_pack/weapons/steel/sword,
+		/datum/supply_pack/weapons/iron/greatmace,
+		/datum/supply_pack/weapons/iron/flail,
 		// Food & Luxury
-		/datum/supply_pack/food/voddena,
+		/datum/supply_pack/food/drinks/voddena,
 		/datum/supply_pack/jewelry/circlet,
 		/datum/supply_pack/luxury/silver_plaque_belt
 	)
