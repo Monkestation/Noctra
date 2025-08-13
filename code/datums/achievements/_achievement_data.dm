@@ -20,7 +20,7 @@
 	initialized = TRUE
 	load_all_achievements() //So we know which achievements we have unlocked so far.
 
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
+	var/datum/asset/spritesheet_batched/assets = get_asset_datum(/datum/asset/spritesheet_batched/achievements)
 	AchievementIcons = list()
 	for(var/achievement_type in SSachievements.achievements)
 		var/datum/award/achievement = SSachievements.achievements[achievement_type]
@@ -79,13 +79,13 @@
 		data[achievement_type] = 0
 
 /datum/achievement_data/ui_base_html(html)
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
+	var/datum/asset/spritesheet_batched/assets = get_asset_datum(/datum/asset/spritesheet_batched/achievements)
 	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
 
 /datum/achievement_data/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-//		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
+//		var/datum/asset/spritesheet_batched/assets = get_asset_datum(/datum/asset/spritesheet_batched/achievements)
 //		assets.send(user)
 		ui = new(user, src, ui_key, "achievements", "Achievements Menu", 800, 1000, master_ui, state)
 		ui.open()
@@ -95,7 +95,7 @@
 	ret_data["categories"] = list("Bosses", "Misc")
 	ret_data["achievements"] = list()
 
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
+	var/datum/asset/spritesheet_batched/assets = get_asset_datum(/datum/asset/spritesheet_batched/achievements)
 
 	for(var/achievement_type in SSachievements.achievements)
 		if(!SSachievements.achievements[achievement_type].name) //No name? we a subtype.

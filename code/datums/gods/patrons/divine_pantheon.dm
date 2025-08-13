@@ -1,7 +1,7 @@
 /datum/patron/divine
 	name = null
 	associated_faith = /datum/faith/divine_pantheon
-	t0 = /obj/effect/proc_holder/spell/invoked/lesser_heal
+	t0 = /datum/action/cooldown/spell/healing
 
 /datum/patron/divine/can_pray(mob/living/follower)
 	//you can pray anywhere inside a church
@@ -18,7 +18,7 @@
 /* ----------------- */
 
 /datum/patron/divine/astrata
-	name = "Astrata"
+	name = ASTRATA
 	domain = "Goddess of Order, the Sun Queen"
 	desc = "Crafted from the head of Psydon, twin of Noc. She gifted mankind the Sun, protecting Psydonia from all forces which may seek it harm: from both outside and within."
 	flaws = "Tyrannical, Ill-Tempered, Uncompromising"
@@ -26,10 +26,9 @@
 	sins = "Betrayal, Sloth, Witchcraft"
 	boons = "Your stamina regeneration delay is lowered during daytime."
 	added_traits = list(TRAIT_APRICITY)
-	t0 = /obj/effect/proc_holder/spell/invoked/lesser_heal
-	t1 = /obj/effect/proc_holder/spell/invoked/sacred_flame_rogue
-	t2 = /obj/effect/proc_holder/spell/invoked/heal
-	t3 = /obj/effect/proc_holder/spell/invoked/revive
+	t1 = /datum/action/cooldown/spell/sacred_flame
+	t2 = /datum/action/cooldown/spell/healing/greater
+	t3 = /datum/action/cooldown/spell/revive
 	confess_lines = list(
 		"ASTRATA IS MY LIGHT!",
 		"ASTRATA BRINGS LAW!",
@@ -38,18 +37,17 @@
 	storyteller = /datum/storyteller/astrata
 
 /datum/patron/divine/noc
-	name = "Noc"
+	name = NOC
 	domain = "God of Knowledge, the Moon Prince"
 	desc = "Crafted from the helmet of Psydon, twin of Astrata. He gifted mankind divine wisdom."
 	flaws = "Cynical, Isolationist, Unfiltered Honesty"
 	worshippers = "Magic Practitioners, Scholars, Scribes"
 	sins = "Suppressing Truth, Burning Books, Censorship"
-	boons = "You learn and teach apprentices slightly better."
+	boons = "You learn, dream, and teach apprentices slightly better. Access to roles with magic."
 	added_traits = list(TRAIT_TUTELAGE)
-	t0 = /obj/effect/proc_holder/spell/invoked/lesser_heal
-	t1 = /obj/effect/proc_holder/spell/invoked/invisibility
-	t2 = /obj/effect/proc_holder/spell/invoked/blindness
-	t3 = /obj/effect/proc_holder/spell/invoked/projectile/moondagger
+	t1 = /datum/action/cooldown/spell/status/invisibility
+	t2 = /datum/action/cooldown/spell/blindness/miracle
+	t3 = /datum/action/cooldown/spell/projectile/moonlit_dagger
 	confess_lines = list(
 		"NOC IS NIGHT!",
 		"NOC SEES THE TRUTH!",
@@ -58,7 +56,7 @@
 	storyteller = /datum/storyteller/noc
 
 /datum/patron/divine/dendor
-	name = "Dendor"
+	name = DENDOR
 	domain = "God of Nature and Beasts"
 	desc = "Crafted from the bones of Psydon as the embodiment of the natural world. Driven mad with time."
 	flaws = "Madness, Rebelliousness, Disorderliness"
@@ -66,10 +64,9 @@
 	sins = "Deforestation, Overhunting, Disrespecting Nature"
 	boons = "You are immune to kneestingers."
 	added_traits = list(TRAIT_KNEESTINGER_IMMUNITY)
-	t0 = /obj/effect/proc_holder/spell/invoked/lesser_heal
-	t1 = /obj/effect/proc_holder/spell/targeted/blesscrop
-	t2 = /obj/effect/proc_holder/spell/self/beastsense
-	t3 = /obj/effect/proc_holder/spell/targeted/beasttame
+	t1 = /datum/action/cooldown/spell/undirected/bless_crops
+	t2 = /datum/action/cooldown/spell/undirected/beast_sense
+	t3 =/datum/action/cooldown/spell/beast_tame
 	confess_lines = list(
 		"DENDOR PROVIDES!",
 		"THE TREEFATHER BRINGS BOUNTY!",
@@ -78,7 +75,7 @@
 	storyteller = /datum/storyteller/dendor
 
 /datum/patron/divine/abyssor
-	name = "Abyssor"
+	name = ABYSSOR
 	domain = "God of Seas and Storms"
 	desc = "Crafted from the blood of Psydon as sovereign of the waters. Enraged by ignorance of Him from followers of The Ten."
 	flaws= "Reckless, Stubborn, Destructive"
@@ -86,10 +83,9 @@
 	sins = "Fear, Hubris, Forgetfulness"
 	boons = "Leeches will drain very little of your blood."
 	added_traits = list(TRAIT_LEECHIMMUNE)
-	t0 = /obj/effect/proc_holder/spell/invoked/lesser_heal
-	t1 = /obj/effect/proc_holder/spell/invoked/projectile/swordfish
-	t2 = /obj/effect/proc_holder/spell/self/summon_trident
-	t3 = /obj/effect/proc_holder/spell/invoked/ocean_embrace
+	t1 = /datum/action/cooldown/spell/projectile/swordfish
+	t2 = /datum/action/cooldown/spell/undirected/conjure_item/summon_trident
+	t3 = /datum/action/cooldown/spell/ocean_embrace
 	confess_lines = list(
 		"ABYSSOR COMMANDS THE WAVES!",
 		"THE OCEAN'S FURY IS ABYSSOR'S WILL!",
@@ -98,18 +94,17 @@
 	storyteller = /datum/storyteller/abyssor
 
 /datum/patron/divine/necra
-	name = "Necra"
-	domain = "Mother Goddess of Death and Decay"
+	name = NECRA
+	domain = "Mother Goddess of Death and Time"
 	desc = "The Veiled Lady, once close partner to Psydon. She created the Nine others from his corpse, guiding them from the Underworld."
 	flaws = "Unchanging, Apathetic, Easy to Bore"
 	worshippers = "Orderlies, Gravetenders, Mourners"
 	sins = "Heretical Magic, Untimely Death, Disturbance of Rest"
 	boons = "You may see the presence of a soul in a body."
 	added_traits = list(TRAIT_SOUL_EXAMINE)
-	t0 = /obj/effect/proc_holder/spell/invoked/lesser_heal
-	t1 = /obj/effect/proc_holder/spell/targeted/burialrite
-	t2 = /obj/effect/proc_holder/spell/targeted/soulspeak
-	t3 = /obj/effect/proc_holder/spell/targeted/churn
+	t1 = /datum/action/cooldown/spell/burial_rites
+	t2 = /datum/action/cooldown/spell/undirected/soul_speak
+	t3 = /datum/action/cooldown/spell/aoe/churn_undead
 	confess_lines = list(
 		"ALL SOULS FIND THEIR WAY TO NECRA!",
 		"THE UNDERMAIDEN IS OUR FINAL REPOSE!",
@@ -118,7 +113,7 @@
 	storyteller = /datum/storyteller/necra
 
 /datum/patron/divine/ravox
-	name = "Ravox"
+	name = RAVOX
 	domain = "God of Warfare, Justice, and Bravery"
 	desc = "Crafted from the the blade of Psydon, a champion of all who seek righteousness for themselves and others."
 	flaws = "Carelessness, Aggression, Pride"
@@ -126,10 +121,9 @@
 	sins = "Cowardice, Cruelty, Stagnation"
 	boons = "Your used weapons dull slower."
 	added_traits = list(TRAIT_SHARPER_BLADES)
-	t0 = /obj/effect/proc_holder/spell/invoked/lesser_heal
-	t1 = /obj/effect/proc_holder/spell/self/call_to_arms
-	t2 = /obj/effect/proc_holder/spell/self/divine_strike
-	t3 = /obj/effect/proc_holder/spell/invoked/persistence
+	t1 = /datum/action/cooldown/spell/undirected/call_to_arms
+	t2 = /datum/action/cooldown/spell/undirected/divine_strike
+	t3 = /datum/action/cooldown/spell/persistence
 	confess_lines = list(
 		"RAVOX IS JUSTICE!",
 		"THROUGH STRIFE, GRACE!",
@@ -138,7 +132,7 @@
 	storyteller = /datum/storyteller/ravox
 
 /datum/patron/divine/xylix
-	name = "Xylix"
+	name = XYLIX
 	domain = "Diety of Trickery, Freedom, and Inspiration"
 	desc = "Crafted from the silver tongue of Psydon. Xylix is a force of change and deceit, yet allows little known of their gender let alone presence."
 	flaws = "Petulance, Deception, Gambling-Prone"
@@ -146,9 +140,8 @@
 	sins = "Boredom, Predictability, Routine"
 	boons = "You can rig different forms of gambling in your favor."
 	added_traits = list(TRAIT_BLACKLEG)
-	t0 = /obj/effect/proc_holder/spell/invoked/lesser_heal
-	t1 = /obj/effect/proc_holder/spell/invoked/vicious_mimicry
-	t2 = /obj/effect/proc_holder/spell/invoked/wheel
+	t1 = /datum/action/cooldown/spell/undirected/list_target/vicious_mimicry
+	t2 = /datum/action/cooldown/spell/status/wheel
 	confess_lines = list(
 		"ASTRATA IS MY LIGHT!",
 		"NOC IS NIGHT!",
@@ -164,18 +157,18 @@
 	storyteller = /datum/storyteller/xylix
 
 /datum/patron/divine/pestra
-	name = "Pestra"
+	name = PESTRA
 	domain = "Goddess of Disease, Alchemy, and Medicine"
-	desc = "Crafted from Psydon's intestines left behind. She slithered out, bringing forth the cycle of life and decay."
+	desc = "A mistake; Psydon's intestines left behind. She slithered out, bringing forth the cycle of life and decay."
 	flaws = "Drunkenness, Crudeness, Irresponsibility"
 	worshippers = "The Ill and Infirm, Alchemists, Physicians"
 	sins = "´Curing´ Abnormalities, Refusing to Help Unfortunates, Groveling"
 	boons = "You may consume rotten food without being sick."
 	added_traits = list(TRAIT_ROT_EATER)
-	t0 = /obj/effect/proc_holder/spell/invoked/diagnose
-	t1 = /obj/effect/proc_holder/spell/invoked/lesser_heal
-	t2 = /obj/effect/proc_holder/spell/invoked/attach_bodypart
-	t3 = /obj/effect/proc_holder/spell/invoked/cure_rot
+	t0 = /datum/action/cooldown/spell/diagnose/holy
+	t1 = /datum/action/cooldown/spell/healing
+	t2 = /datum/action/cooldown/spell/attach_bodypart
+	t3 = /datum/action/cooldown/spell/cure_rot
 	confess_lines = list(
 		"PESTRA SOOTHES ALL ILLS!",
 		"DECAY IS A CONTINUATION OF LIFE!",
@@ -184,7 +177,7 @@
 	storyteller = /datum/storyteller/pestra
 
 /datum/patron/divine/malum
-	name = "Malum"
+	name = MALUM
 	domain = "God of Toil, Innovation, and Creation"
 	desc = "Crafted from the hands of Psydon. He would later use his own to construct wonderous inventions."
 	flaws = "Obsessive, Exacting, Overbearing"
@@ -192,10 +185,9 @@
 	sins = "Cheating, Shoddy Work, Suicide"
 	boons = "You recover more energy when sleeping."
 	added_traits = list(TRAIT_BETTER_SLEEP)
-	t0 = /obj/effect/proc_holder/spell/invoked/lesser_heal
-	t1 = /obj/effect/proc_holder/spell/invoked/vigorouscraft
-	t2 = /obj/effect/proc_holder/spell/invoked/hammerfall
-	t3 = /obj/effect/proc_holder/spell/invoked/heatmetal
+	t1 = /datum/action/cooldown/spell/status/vigorous_craft
+	t2 = /datum/action/cooldown/spell/hammer_fall
+	t3 = /datum/action/cooldown/spell/heat_metal
 	confess_lines = list(
 		"MALUM IS MY FORGE!",
 		"TRUE VALUE IS IN THE TOIL!",
@@ -204,18 +196,17 @@
 	storyteller = /datum/storyteller/malum
 
 /datum/patron/divine/eora
-	name = "Eora"
+	name = EORA
 	domain = "Goddess of Love, Family, and Art"
 	desc = "Crafted from the heart of Psydon, a spreader of love and beauty, and strengthener of bonds."
-	flaws= "Naivete, Impulsiveness, Ignorance"
+	flaws= "Naivete, Impulsiveness, Bigotry"
 	worshippers = "Mothers, Artists, Married Couples"
 	sins = "Sadism, Abandonment, Ruining Beauty"
 	boons = "You can understand others' needs better."
 	added_traits = list(TRAIT_EXTEROCEPTION)
-	t0 = /obj/effect/proc_holder/spell/invoked/lesser_heal
-	t1 = /obj/effect/proc_holder/spell/invoked/instill_perfection
-	t2 = /obj/effect/proc_holder/spell/invoked/projectile/eoracurse
-	t3 = /obj/effect/proc_holder/spell/invoked/bud
+	t1 = /datum/action/cooldown/spell/instill_perfection
+	t2 = /datum/action/cooldown/spell/projectile/eora_curse
+	t3 = /datum/action/cooldown/spell/eoran_bloom
 	confess_lines = list(
 		"EORA BRINGS US TOGETHER!",
 		"HER BEAUTY IS EVEN IN THIS TORMENT!",

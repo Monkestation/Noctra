@@ -12,11 +12,11 @@
 	//dropshrink = 0.75
 	wlength = WLENGTH_GREAT
 	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = ITEM_SLOT_HIP | ITEM_SLOT_BELT
+	slot_flags = ITEM_SLOT_HIP
 	associated_skill = /datum/skill/combat/whipsflails
 	anvilrepair = /datum/skill/craft/tanning
 	resistance_flags = FLAMMABLE // Fully made of leather
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 	can_parry = FALSE
 	swingsound = WHIPWOOSH
 	throwforce = 5
@@ -80,6 +80,94 @@
 	smeltresult = /obj/item/ingot/steel
 	sellprice = 50
 
+
+//................ Silver Whip ............... //
+/obj/item/weapon/whip/silver
+	name = "silver whip"
+	desc = "A whip with a silver handle, core and tip. It has been modified for inflicting burning pain on Nitebeasts."
+	icon_state = "silverwhip"
+	resistance_flags = FIRE_PROOF
+	smeltresult = /obj/item/ingot/silver
+	last_used = 0
+
+/obj/item/weapon/whip/silver/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
+
+//................ Psydon Whip ............... //
+/obj/item/weapon/whip/psydon
+	force = DAMAGE_WHIP+2
+	name = "psydonian whip"
+	desc = "A whip fashioned with the iconography of Psydon, and crafted entirely out of silver."
+	icon_state = "psywhip"
+	resistance_flags = FIRE_PROOF
+	smeltresult = /obj/item/ingot/silver
+	last_used = 0
+
+/obj/item/weapon/whip/psydon/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
+
+//................ Caning Stick.................//
+/obj/item/weapon/whip/cane
+	name = "caning stick"
+	desc = "A thin cane meant for striking others as punishment."
+	icon_state = "canestick"
+	possible_item_intents = list(/datum/intent/whip/lash/cane)
+	force = DAMAGE_WHIP / 2
+	wlength = WLENGTH_NORMAL
+	max_integrity = 4 // Striking unarmoured parts doesn't take integrity, four hits to anything with an armor value will break it.
+	sellprice = 0
+
+/obj/item/weapon/whip/cane/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list(
+					"shrink" = 0.5,
+					"sx" = -6,
+					"sy" = -6,
+					"nx" = 6,
+					"ny" = -5,
+					"wx" = -1,
+					"wy" = -5,
+					"ex" = -1,
+					"ey" = -5,
+					"nturn" = -45,
+					"sturn" = -45,
+					"wturn" = -45,
+					"eturn" = -45,
+					"nflip" = 0,
+					"sflip" = 0,
+					"wflip" = 0,
+					"eflip" = 0,
+					"northabove" = FALSE,
+					"southabove" = TRUE,
+					"eastabove" = TRUE,
+					"westabove" = FALSE
+				)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
+/obj/item/weapon/whip/cane/physician
+	name = "physician's cane"
+	desc = "A prized cane. Embellished with a golden serpent, representing the Kingsfield university."
+	icon_state = "fancy_cane"
+	max_integrity = 100
+	sellprice = 30
+
+/datum/intent/whip/lash/cane
+	attack_verb = list("lashes", "canes")
+	chargetime = 20
+	no_early_release = TRUE
+	penfactor = 0
+	reach = 1 //no added range
+	misscost = 10
+	icon_state = "inlash"
+	canparry = TRUE //Not meant for fighting with
+	item_damage_type = "slash"
+
 //................ Lashkiss Whip ............... //
 /obj/item/weapon/whip/spiderwhip
 	force = DAMAGE_WHIP+3
@@ -87,3 +175,34 @@
 	desc = "A dark whip with segmented, ashen spines for a base. Claimed to be hewn from dendrified prisoners of terror."
 	icon_state = "spiderwhip"
 	minstr = 6
+
+//................ Chain Whip ............... //
+/obj/item/weapon/whip/chain
+	force = DAMAGE_WHIP+3
+	possible_item_intents = list(/datum/intent/whip/crack/metal, /datum/intent/whip/lash/metal)
+	name = "chain whip"
+	desc = "An iron chain, fixed to a leather grip. Its incredibly heavy, and unwieldy. You'll likely hurt yourself more then anyone else with this."
+	icon_state = "whip_chain"
+	w_class = WEIGHT_CLASS_BULKY
+	resistance_flags = FIRE_PROOF
+	smeltresult = /obj/item/ingot/iron
+	anvilrepair = /datum/skill/craft/weaponsmithing
+	minstr = 9
+	melt_amount = 75
+
+/datum/intent/whip/lash/metal
+	chargetime = 10
+	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
+	recovery = 5
+	penfactor = 15
+
+/datum/intent/whip/crack/metal
+	penfactor = 20
+
+
+//................ Xylix Whip ............... //
+/obj/item/weapon/whip/xylix
+	name = "cackle lash"
+	force = DAMAGE_WHIP+4
+	desc = "The chimes of this whip are said to sound as the trickster's laughter itself."
+	icon_state = "xylixwhip"

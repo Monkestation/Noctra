@@ -24,7 +24,7 @@
 
 /obj/item/storage/sack/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
-	if(slot == SLOT_HEAD)
+	if(slot & ITEM_SLOT_HEAD)
 		user.become_blind("blindfold_[REF(src)]")
 	if(HAS_TRAIT(user, TRAIT_ROTMAN))
 		to_chat(user, span_info("The [src] slips through dead fingers..."))
@@ -44,22 +44,27 @@
 	else
 		return TRUE
 
-
-/obj/item/storage/sack/attack_right(mob/user)
+/obj/item/storage/sack/attack_hand_secondary(mob/user, params)
 	. = ..()
-	if(.)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	user.changeNext_move(CLICK_CD_MELEE)
-	testing("yea144")
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(user.get_active_held_item())
+		to_chat(user, span_warning("My hands are full, I cannot reach into [src]!"))
+		return
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	var/list/things = STR.contents()
-	if(things.len)
-		testing("yea64")
-		var/obj/item/I = pick(things)
-		STR.remove_from_storage(I, get_turf(user))
-		user.put_in_hands(I)
+	if(!length(things))
+		to_chat(user, span_warning("The sack is empty!"))
+		return
+	var/obj/item/I = pick(things)
+	STR.remove_from_storage(I, get_turf(user))
+	user.put_in_hands(I)
+	user.changeNext_move(CLICK_CD_MELEE)
+	return
 
-/obj/item/storage/sack/update_icon()
+/obj/item/storage/sack/update_icon_state()
+	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	var/list/things = STR.contents()
 	if(things.len)
@@ -103,22 +108,20 @@
 	desc = "A cloth and leather satchel for storing the fruit of one's hunt."
 	icon_state = "gamesatchel"
 	icon = 'icons/roguetown/clothing/storage.dmi'
-	slot_flags = ITEM_SLOT_BELT|ITEM_SLOT_BACK_L|ITEM_SLOT_BACK_R|ITEM_SLOT_HIP
+	slot_flags = ITEM_SLOT_BACK_L|ITEM_SLOT_BACK_R|ITEM_SLOT_HIP
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = NONE
 	max_integrity = 300
 	component_type = /datum/component/storage/concrete/grid/sack/meat
 
-/obj/item/storage/meatbag/attack_right(mob/user)
+/obj/item/storage/meatbag/attack_hand_secondary(mob/user, params)
 	. = ..()
 	if(.)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	testing("yea144")
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	var/list/things = STR.contents()
 	if(things.len)
-		testing("yea64")
 		var/obj/item/I = pick(things)
 		STR.remove_from_storage(I, get_turf(user))
 		user.put_in_hands(I)

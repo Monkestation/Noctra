@@ -1,5 +1,3 @@
-#define TRAIT_STATUS_EFFECT(effect_id) "[effect_id]-trait"
-
 //Largely negative status effects go here, even if they have small benificial effects
 //STUN EFFECTS
 /datum/status_effect/incapacitating
@@ -8,34 +6,32 @@
 	alert_type = null
 	var/needs_update_stat = FALSE
 
-/datum/status_effect/incapacitating/on_creation(mob/living/new_owner, set_duration, updating_canmove)
-	if(isnum(set_duration))
-		duration = set_duration
+/datum/status_effect/incapacitating/on_creation(mob/living/new_owner, duration_override, ...)
 	. = ..()
-	if(.)
-		if(updating_canmove)
-			owner.update_mobility()
-			if(needs_update_stat)
-				owner.update_stat()
-
-/datum/status_effect/incapacitating/on_apply()
-	. = ..()
-	if(!.)
-		return
-	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	if(. && needs_update_stat)
+		owner.update_stat()
 
 /datum/status_effect/incapacitating/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
-	if(owner)
-		owner.update_mobility()
-		if(needs_update_stat) //silicons need stat updates in addition to normal canmove updates
-			owner.update_stat()
+	if(needs_update_stat) //silicons need stat updates in addition to normal canmove updates
+		owner.update_stat()
 	return ..()
 
 //STUN
 /datum/status_effect/incapacitating/stun
 	id = "stun"
 	alert_type = /atom/movable/screen/alert/status_effect/stun
+
+/datum/status_effect/incapacitating/stun/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/stun/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	return ..()
 
 /atom/movable/screen/alert/status_effect/stun
 	name = "Stunned"
@@ -47,6 +43,16 @@
 	id = "knockdown"
 	alert_type = /atom/movable/screen/alert/status_effect/knocked_down
 
+/datum/status_effect/incapacitating/knockdown/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/knockdown/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
+	return ..()
+
 /atom/movable/screen/alert/status_effect/knocked_down
 	name = "Knocked Down"
 	desc = ""
@@ -57,24 +63,72 @@
 	id = "immobilized"
 	alert_type = /atom/movable/screen/alert/status_effect/immobilized
 
+/datum/status_effect/incapacitating/immobilized/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/immobilized/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	return ..()
+
 /atom/movable/screen/alert/status_effect/immobilized
 	name = "Immobilized"
 	desc = ""
 	icon_state = "immob"
 
+
+//PARALYZED
 /datum/status_effect/incapacitating/paralyzed
 	id = "paralyzed"
 	alert_type = /atom/movable/screen/alert/status_effect/paralyzed
+
+/datum/status_effect/incapacitating/paralyzed/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/paralyzed/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_IMMOBILIZED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_FLOORED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_HANDS_BLOCKED, TRAIT_STATUS_EFFECT(id))
+	return ..()
 
 /atom/movable/screen/alert/status_effect/paralyzed
 	name = "Paralyzed"
 	desc = ""
 	icon_state = "paralyze"
 
+/datum/status_effect/shock_recovery
+	id = "shock_recovery"
+	alert_type = /atom/movable/screen/alert/status_effect/paralyzed/recovery
+
+/datum/status_effect/stress/shock_recovery
+
+/atom/movable/screen/alert/status_effect/paralyzed/recovery
+	name = "Shock Recovery"
+	desc = "I have recently been shocked. \n"
+
 //UNCONSCIOUS
 /datum/status_effect/incapacitating/unconscious
 	id = "unconscious"
 	needs_update_stat = TRUE
+
+/datum/status_effect/incapacitating/unconscious/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/unconscious/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	return ..()
 
 //SLEEPING
 /datum/status_effect/incapacitating/sleeping
@@ -83,21 +137,18 @@
 	needs_update_stat = TRUE
 	var/sleptonground = FALSE
 
-/datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner, updating_canmove)
+/datum/status_effect/incapacitating/sleeping/on_creation(mob/living/new_owner)
 	. = ..()
 	if(!.)
 		return
+	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 
 	owner.cmode = FALSE
-	SSdroning.kill_droning(owner.client)
-	SSdroning.kill_loop(owner.client)
-	SSdroning.kill_rain(owner.client)
 	owner.set_typing_indicator(FALSE)
 
 /datum/status_effect/incapacitating/sleeping/on_remove()
-	var/area/this_area = get_area(owner)
-	SSdroning.play_area_sound(this_area, owner.client)
-	SSdroning.play_loop(this_area, owner.client)
+	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	owner.refresh_looping_ambience()
 
 	if(ishuman(owner) && sleptonground)
 		var/mob/living/carbon/human/human_owner = owner
@@ -114,10 +165,14 @@
 	var/mob/living/carbon/carbon_owner = iscarbon(owner) ? owner : null
 	var/mob/living/carbon/human/human_owner = ishuman(owner) ? owner : null
 
-	if(!(locate(/obj/structure/bed) in owner.loc) && !(locate(/obj/structure/table) in owner.loc))
-		sleptonground = TRUE
-	else if(locate(/obj/structure/bed/sleepingbag) in owner.loc)
-		sleptonground = TRUE
+	if(!sleptonground)
+		if(!(locate(/obj/structure/bed) in owner.loc) && !(locate(/obj/structure/table) in owner.loc))
+			sleptonground = TRUE
+		else
+			for(var/obj/structure/bed/bed in owner.loc)
+				if(bed.type == /obj/structure/bed/sleepingbag)
+					sleptonground = TRUE
+					break
 
 	human_owner?.drunkenness *= 0.997 //reduce drunkenness by 0.3% per tick, 6% per 2 seconds
 	if(prob(20))
@@ -161,17 +216,12 @@
 			to_chat(mob_viewer, "<span class='notice'>I succesfuly remove the durathread strand.</span>")
 			L.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 
-
-/datum/status_effect/pacify/on_creation(mob/living/new_owner, set_duration)
-	if(isnum(set_duration))
-		duration = set_duration
-	. = ..()
-
 /datum/status_effect/pacify/on_apply()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
 	return ..()
 
 /datum/status_effect/pacify/on_remove()
+	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
 
 //OTHER DEBUFFS
@@ -182,16 +232,12 @@
 	duration = 100
 	alert_type = null
 
-/datum/status_effect/pacify/on_creation(mob/living/new_owner, set_duration)
-	if(isnum(set_duration))
-		duration = set_duration
-	. = ..()
-
 /datum/status_effect/pacify/on_apply()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
 	return ..()
 
 /datum/status_effect/pacify/on_remove()
+	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
 
 /datum/status_effect/neck_slice
@@ -231,10 +277,11 @@
 
 /datum/status_effect/trance/tick()
 	if(stun)
-		owner.Stun(60, TRUE, TRUE)
+		owner.Stun(6 SECONDS, TRUE)
 	owner.dizziness = 20
 
 /datum/status_effect/trance/on_apply()
+	. = ..()
 	if(!iscarbon(owner))
 		return FALSE
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, PROC_REF(hypnotize))
@@ -244,12 +291,12 @@
 	"<span class='warning'>[pick("You feel my thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")]</span>")
 	return TRUE
 
-/datum/status_effect/trance/on_creation(mob/living/new_owner, _duration, _stun = TRUE)
-	duration = _duration
+/datum/status_effect/trance/on_creation(mob/living/new_owner, duration_override, _stun = TRUE)
 	stun = _stun
 	return ..()
 
 /datum/status_effect/trance/on_remove()
+	. = ..()
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	REMOVE_TRAIT(owner, TRAIT_MUTE, "trance")
 	owner.dizziness = 0
@@ -276,11 +323,11 @@
 	if(prob(15))
 		switch(rand(1,5))
 			if(1)
-				if((owner.mobility_flags & MOBILITY_MOVE) && isturf(owner.loc))
+				if(!HAS_TRAIT(owner, TRAIT_IMMOBILIZED) && isturf(owner.loc))
 					to_chat(owner, "<span class='warning'>My leg spasms!</span>")
 					step(owner, pick(GLOB.cardinals))
 			if(2)
-				if(owner.incapacitated())
+				if(owner.incapacitated(IGNORE_GRAB))
 					return
 				var/obj/item/I = owner.get_active_held_item()
 				if(I)
@@ -312,7 +359,7 @@
 				owner.ClickOn(owner)
 				owner.a_intent = prev_intent
 			if(5)
-				if(owner.incapacitated())
+				if(owner.incapacitated(IGNORE_GRAB))
 					return
 				var/obj/item/I = owner.get_active_held_item()
 				var/list/turf/targets = list()
@@ -331,7 +378,7 @@
 	alert_type = /atom/movable/screen/alert/status_effect/go_away
 	var/direction
 
-/datum/status_effect/go_away/on_creation(mob/living/new_owner, set_duration, updating_canmove)
+/datum/status_effect/go_away/on_creation(mob/living/new_owner, duration_override, ...)
 	. = ..()
 	direction = pick(NORTH, SOUTH, EAST, WEST)
 	new_owner.setDir(direction)

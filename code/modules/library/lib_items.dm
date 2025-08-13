@@ -23,7 +23,7 @@
 	max_integrity = 200
 	armor = list("blunt" = 0, "slash" = 0, "stab" = 0,  "piercing" = 0, "fire" = 50, "acid" = 0)
 	var/state = 0
-	var/list/allowed_books = list(/obj/item/book, /obj/item/storage/book, /obj/item/recipe_book) //Things allowed in the bookcase
+	var/list/allowed_books = list(/obj/item/book, /obj/item/recipe_book) //Things allowed in the bookcase
 
 /obj/structure/bookcase/examine(mob/user)
 	. = ..()
@@ -49,7 +49,9 @@
 	for(var/obj/item/I in loc)
 		if(istype(I, /obj/item/book))
 			I.forceMove(src)
-	update_icon()
+		if(istype(I, /obj/item/recipe_book))
+			I.forceMove(src)
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/bookcase/attack_hand(mob/living/user)
 	. = ..()
@@ -60,27 +62,26 @@
 	if(contents.len)
 		var/obj/item/book/choice = input(user, "Which book would you like to remove from the shelf?") as null|obj in contents.Copy()
 		if(choice)
-			if(!(user.mobility_flags & MOBILITY_USE) || user.stat || user.restrained() || !in_range(loc, user))
+			if(!(user.mobility_flags & MOBILITY_USE) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) || !in_range(loc, user))
 				return
 			if(ishuman(user))
 				if(!user.get_active_held_item())
 					user.put_in_hands(choice)
 			else
 				choice.forceMove(drop_location())
-			update_icon()
-
+			update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/bookcase/deconstruct(disassembled = TRUE)
 	for(var/obj/item/B in contents)
 		B.forceMove(get_turf(src))
 	qdel(src)
 
-
-/obj/structure/bookcase/update_icon()
-	if((contents.len >= 1) && (contents.len <= 15))
+/obj/structure/bookcase/update_icon_state()
+	if((length(contents) >= 1) && (length(contents) <= 15))
 		icon_state = "[based][length(contents)]"
 	else
 		icon_state = "bookcase"
+	return ..()
 
 /obj/structure/bookcase/attackby(obj/item/I, mob/user, params)
 	. = ..()
@@ -92,7 +93,7 @@
 	if(!do_after(user, 0.75 SECONDS, src))
 		return
 	I.forceMove(src)
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/bookcase/random_recipes
 	var/random_books = 4
@@ -106,6 +107,6 @@
 		books -= listed_book
 
 	for(var/i = 1 to random_books)
-		var/obj/item/recipe_book/book = pick(books)
+		var/obj/item/recipe_book/book = pick_n_take(books)
 		new book(src)
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)

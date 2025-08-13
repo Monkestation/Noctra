@@ -38,7 +38,7 @@
 	new /obj/effect/decal/cleanable/dyes(get_turf(src))
 	var/obj/item/bin/I = new(loc)
 	I.kover = TRUE
-	I.update_icon()
+	I.update_appearance()
 	return ..()
 
 
@@ -115,7 +115,7 @@
 		dat += "<A href='byond://?src=[ref];action=eject'>Remove item.</A>"
 		dat += "<HR>"
 
-		dat += "Color: <font color='[active_color]'>&#9899;</font>"
+		dat += "Color: <span style='color:[active_color];'>&#9898;</span>"
 		dat += "<BR>"
 		dat += "<A href='byond://?src=[ref];action=select'>Select new color.</A>"
 		dat += "<BR>"
@@ -142,12 +142,12 @@
 	var/mob/living/user = usr
 	if(!istype(user))
 		return
-	if(!user.canUseTopic(src, TRUE))
+	if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 
 	switch(href_list["action"])
 		if("select")
-			var/choice = input(user,"Choose your dye:", "Dyes", null) as null|anything in selectable_colors
+			var/choice = browser_input_list(user,"Choose your dye:", "Dyes", selectable_colors)
 			if(!choice)
 				return
 			active_color = selectable_colors[choice]
@@ -156,9 +156,6 @@
 			if(!inserted)
 				return
 			if(!active_color)
-				return
-			if(user.mind?.get_skill_level(/datum/skill/misc/sewing) <= 2) // We're not letting people with 0 knowledge in sewing do dying, so they don't step on the toes of the seamstress
-				to_chat(user, span_warning("I do not know enough about this craft..."))
 				return
 
 			playsound(src, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 50, FALSE)
@@ -171,7 +168,7 @@
 				if(href_list["type"] == "detail" && isclothing(inserted))
 					var/obj/item/clothing/cloth = inserted
 					cloth.detail_color = active_color
-					cloth.update_icon()
+					cloth.update_appearance()
 				else
 					inserted.add_atom_colour(active_color, FIXED_COLOUR_PRIORITY)
 
@@ -192,7 +189,6 @@
 			inserted = null
 
 			icon_state = initial(icon_state)
-			update_icon()
 
 	updateUsrDialog()
 

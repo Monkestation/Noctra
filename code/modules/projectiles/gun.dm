@@ -8,7 +8,7 @@
 	icon_state = "detective"
 	item_state = "gun"
 	flags_1 =  CONDUCT_1
-	slot_flags = ITEM_SLOT_BELT
+	slot_flags = ITEM_SLOT_HIP
 	w_class = WEIGHT_CLASS_NORMAL
 	possible_item_intents = list(INTENT_GENERIC, RANGED_FIRE)
 	throwforce = 5
@@ -38,6 +38,10 @@
 	var/automatic = 0 //can gun use it, 0 is no, anything above 0 is the delay between clicks in ds
 	var/pb_knockback = 0
 
+/obj/item/gun/Initialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
 /obj/item/gun/Destroy()
 	if(chambered) //Not all guns are chambered (EMP'ed energy guns etc)
 		QDEL_NULL(chambered)
@@ -46,7 +50,7 @@
 /obj/item/gun/handle_atom_del(atom/A)
 	if(A == chambered)
 		chambered = null
-		update_icon()
+		update_appearance()
 	return ..()
 
 //called after the gun has successfully fired its chambered ammo.
@@ -73,19 +77,16 @@
 						"<span class='danger'>I shoot [src]!</span>", \
 						COMBAT_MESSAGE_RANGE)
 
-/obj/item/gun/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/gun/afterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
 	. = ..()
-	testing("gun afterattack")
 	if(!target)
-		testing("no target")
 		return
 	if(!user?.used_intent.tranged) //melee attack
 		return
-	if(flag) //It's adjacent, is the user, or is on the user's person
+	if(proximity_flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
 		if(!ismob(target)) //melee attack
-			testing("gun with melee attack selected")
 			return
 		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
 			return
@@ -104,10 +105,7 @@
 		shoot_with_empty_chamber(user)
 		return
 
-	if(user?.used_intent.arc_check() && target.z != user.z) //temporary fix for openspace arrow dupe
-		target = get_turf(locate(target.x, target.y, user.z))
-
-	return process_fire(target, user, TRUE, params, null, 0)
+	return process_fire(target, user, TRUE, click_parameters, null, 0)
 
 
 /obj/item/gun/proc/recharge_newshot()
@@ -115,6 +113,11 @@
 
 
 /obj/item/gun/proc/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(user)
+		SEND_SIGNAL(user, COMSIG_MOB_FIRED_GUN, src, target, params, zone_override)
+
+	SEND_SIGNAL(src, COMSIG_GUN_FIRED, user, target, params, zone_override)
+
 	add_fingerprint(user)
 
 	var/sprd = 0
@@ -139,7 +142,7 @@
 		shoot_with_empty_chamber(user)
 		return
 	process_chamber()
-	update_icon()
+	update_appearance()
 
 	if(user)
 		user.update_inv_hands()
@@ -185,3 +188,5 @@
 
 /obj/item/gun/get_examine_string(mob/user, thats = FALSE)
 	return "[thats? "That's ":""]<b>[get_examine_name(user)]</b>"
+
+#undef DUALWIELD_PENALTY_EXTRA_MULTIPLIER

@@ -30,13 +30,15 @@
 
 	grid_width = 64
 	grid_height = 96
+	item_weight = 7
 
 	var/fire_resist = T0C+100
 	var/blood_overlay_type = "suit"
 	var/togglename = null
+	abstract_type = /obj/item/clothing/armor
 
-/obj/item/clothing/armor/worn_overlays(isinhands = FALSE)
-	. = list()
+/obj/item/clothing/armor/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, dummy_block = FALSE)
+	. = ..()
 	if(!isinhands)
 		var/mob/living/carbon/human/M = loc
 		if(ishuman(M) && M.wear_pants)

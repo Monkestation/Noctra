@@ -3,17 +3,7 @@
 	var/outfit
 	var/tutorial = "Choose me!"
 	var/list/allowed_sexes
-	var/list/allowed_races = list(
-	"Humen",
-	"Rakshari",
-	"Elf",
-	"Half-Elf",
-	"Dwarf",
-	"Tiefling",
-	"Dark Elf",
-	"Aasimar",
-	"Half-Orc"
-	)
+	var/list/allowed_races = RACES_PLAYER_ALL
 	var/list/allowed_patrons
 	var/list/allowed_ages
 	var/pickprob = 100
@@ -51,7 +41,7 @@
 	if(TU)
 		if(horse)
 			new horse(TU)
-	H.mind?.apprentice_name = apprentice_name
+	H.set_apprentice_name(apprentice_name)
 
 /*	for(var/trait in traits_applied)
 		ADD_TRAIT(H, trait, ADVENTURER_TRAIT) */
@@ -64,14 +54,15 @@
 	// Remove the stun first, then grant us the torch.
 	for(var/datum/status_effect/incapacitating/stun/S in H.status_effects)
 		H.remove_status_effect(S)
-
 	post_equip(H)
 
+	apply_character_post_equipment(H)
+
 /datum/advclass/proc/post_equip(mob/living/carbon/human/H)
-	addtimer(CALLBACK(H,TYPE_PROC_REF(/mob/living/carbon/human, add_credit)), 20)
+	addtimer(CALLBACK(SScrediticons, TYPE_PROC_REF(/datum/controller/subsystem/crediticons, add_credit), H), 2 SECONDS)
 	if(cmode_music)
 		H.cmode_music = cmode_music
-	sleep(5)
+	sleep(5 DECISECONDS) ///why
 	var/obj/item/flashlight/flare/torch/T = new()
 	T.spark_act()
 	H.put_in_hands(T, forced = TRUE)
@@ -89,11 +80,14 @@
 	if(length(local_allowed_sexes) && !(H.gender in local_allowed_sexes))
 		return FALSE
 
-	if(length(allowed_races) && !(H.dna.species.name in allowed_races))
-		if(!(H.client.triumph_ids.Find("race_all")))
+	if(length(allowed_races) && !(H.dna.species.id in allowed_races))
+		if(!(H.client.has_triumph_buy(TRIUMPH_BUY_RACE_ALL)))
 			return FALSE
 
 	if(length(allowed_ages) && !(H.age in allowed_ages))
+		return FALSE
+
+	if(length(allowed_patrons) && !(H.patron.type in allowed_patrons))
 		return FALSE
 
 	if(maximum_possible_slots > -1)

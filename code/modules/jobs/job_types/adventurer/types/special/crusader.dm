@@ -1,15 +1,10 @@
 /datum/advclass/pilgrim/rare/crusader
 	name = "Totod Order Emissary"
-	tutorial = "The Crusaders are knights who have pledged \
-	their wealth and lands to the Church, taking up the banner \
-	of the Totod Order dedicated to retaking Valoria. \
+	tutorial = "The Crusaders are knights who have pledged their wealth and lands to the Church, \
+	taking up the banner of the Totod Order dedicated to retaking Valoria. \
 	Three cults provide knights for the Order: Astrata, Necra and Psydon. \
 	You were sent to Vanderlin by the Order to get any and all assistance from the faithful for the Crusade."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Dwarf"
-	)
+	allowed_races = RACES_PLAYER_NONHERETICAL
 	allowed_patrons = list(/datum/patron/divine/astrata, /datum/patron/divine/necra, /datum/patron/psydon)
 	outfit = /datum/outfit/job/adventurer/crusader
 	category_tags = list(CTAG_ADVENTURER)
@@ -28,50 +23,55 @@
 	armor = /obj/item/clothing/armor/chainmail/hauberk
 	cloak = /obj/item/clothing/cloak/cape/crusader
 	gloves = /obj/item/clothing/gloves/chain
-	shirt = /obj/item/clothing/shirt/tunic/random
+	shirt = /obj/item/clothing/shirt/tunic/colored/random
 	pants = /obj/item/clothing/pants/chainlegs
 	shoes = /obj/item/clothing/shoes/boots/armor/light
 	backr = /obj/item/weapon/shield/tower/metal
-	backl = /obj/item/clothing/cloak/cape/crusader
 	belt = /obj/item/storage/belt/leather/plaquesilver
 	beltl = /obj/item/weapon/sword/silver
-	backpack_contents = list(/obj/item/storage/belt/pouch/coins/rich = 1)
 
 	switch(H.patron?.name)
 		if("Astrata")
+			H.cmode_music = 'sound/music/cmode/church/CombatAstrata.ogg'
 			cloak = /obj/item/clothing/cloak/stabard/crusader // Gold for Astrata regardless of gender
 			wrists = /obj/item/clothing/neck/psycross/silver/astrata
 		if("Necra")
+			H.cmode_music = 'sound/music/cmode/church/CombatGravekeeper.ogg'
 			cloak = /obj/item/clothing/cloak/stabard/templar/necra
 			wrists = /obj/item/clothing/neck/psycross/silver/necra
 		if("Psydon")
+			H.cmode_music = 'sound/music/cmode/church/CombatInquisitor.ogg'
 			wrists = /obj/item/clothing/neck/psycross/silver
 			if(H.gender == FEMALE) // Silver for female, gold for male
 				cloak = /obj/item/clothing/cloak/stabard/crusader/t
 			else
 				cloak = /obj/item/clothing/cloak/stabard/crusader
 		else // Failsafe
+			H.cmode_music = 'sound/music/cmode/adventurer/CombatIntense.ogg'
 			cloak = /obj/item/clothing/cloak/stabard/crusader // Gold version regardless of gender or patron
 			wrists = /obj/item/clothing/neck/psycross/silver
 
-	H.mind?.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/shields, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/riding, 4, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/shields, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/riding, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
 	H.change_stat(STATKEY_END, 2)
 	H.change_stat(STATKEY_CON, 2)
 	H.change_stat(STATKEY_STR, 1)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
+	if(H.dna?.species)
+		if(H.dna.species.id == SPEC_ID_HUMEN)
+			H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
 
 	// Females are crossbow and dagger based
 	if(H.gender == FEMALE)
@@ -79,12 +79,15 @@
 		backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 		beltl = /obj/item/weapon/knife/dagger/silver
 		beltr = /obj/item/ammo_holder/quiver/bolts
-		H.mind?.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+		backl = /obj/item/storage/backpack/satchel/black
+		backpack_contents = list(/obj/item/storage/belt/pouch/coins/rich = 1)
 	// Males are sword and shield based
 	else
-		H.mind?.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/shields, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/shields, 1, TRUE)
+		beltr = /obj/item/storage/belt/pouch/coins/rich
 	// Finally, grant us the language
 
 	if(!H.has_language(/datum/language/oldpsydonic))
@@ -114,7 +117,7 @@
 
 /obj/item/clothing/cloak/cape/crusader
 	name = "desert cape"
-	desc = "Zybantu is known for it's legacies in tailoring, this particular cape is interwoven with fine stained silks and leather - a sand elf design, renown for it's style and durability."
+	desc = "Zaladin is known for it's legacies in tailoring, this particular cape is interwoven with fine stained silks and leather - a sand elf design, renown for it's style and durability."
 	icon_state = "crusader_cloak"
 	icon = 'icons/roguetown/clothing/special/crusader.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/crusader.dmi'
@@ -140,16 +143,9 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 
-/obj/item/clothing/cloak/cape/crusader/ComponentInitialize()
+/obj/item/clothing/cloak/cape/crusader/Initialize(mapload, ...)
 	. = ..()
 	AddComponent(/datum/component/storage/concrete/grid/cloak/lord)
-
-/obj/item/clothing/cloak/cape/crusader/attack_right(mob/user)
-	var/datum/component/storage/CP = GetComponent(/datum/component/storage)
-	if(CP)
-		CP.rmb_show(user)
-		return TRUE
-	..()
 
 /obj/item/clothing/cloak/cape/crusader/dropped(mob/living/carbon/human/user)
 	..()

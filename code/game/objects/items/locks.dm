@@ -1,14 +1,34 @@
-
-
-//custom lock unfinished
-/obj/item/customlock
+/obj/item/customlock //custom lock unfinished
 	name = "unfinished lock"
 	desc = "A lock without its pins set. Endless possibilities..."
 	icon = 'icons/roguetown/items/keys.dmi'
 	icon_state = "lock"
 	w_class = WEIGHT_CLASS_SMALL
 	dropshrink = 0.75
-	var/lockhash = 0
+
+/obj/item/customlock/examine()
+	. = ..()
+	if(get_access())
+		. += span_info("It has been etched with [access2string()].")
+		return
+	. += span_info("Its pins can be set with a hammer or copied from an existing lock or key.")
+
+/obj/item/customlock/proc/check_access(obj/item/I)
+	var/access
+	if(istype(I, /obj/item/key/custom))
+		var/obj/item/key/custom/k = I
+		if(k.access2add)
+			access = k.access2add
+		else
+			access = k.get_access()
+	else
+		access = I.get_access()
+	if(!access)
+		return FALSE
+	for(var/id as anything in lockids)
+		if(id in access)
+			return TRUE
+	return FALSE
 
 /obj/item/customlock/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/hammer))
@@ -17,74 +37,59 @@
 		if(!input)
 			return
 		to_chat(user, span_notice("You set the lock ID to [input]."))
-		lockhash = 10000 + input //same deal as the customkey
-	else if(istype(I, /obj/item/key))
-		var/obj/item/key/ID = I
-		if(ID.lockhash == src.lockhash)
-			to_chat(user, span_notice("[I] twists cleanly in [src]."))
-		else
-			to_chat(user, span_warning("[I] jams in [src]."))
-	else if(istype(I, /obj/item/key_custom_blank))
-		var/obj/item/key_custom_blank/ID = I
-		if(ID.lockhash == src.lockhash)
-			to_chat(user, span_notice("[I] twists cleanly in [src].")) //this makes no sense since the teeth aren't formed yet but i want people to be able to check whether the locks theyre making actually fit
-		else
-			to_chat(user, span_warning("[I] jams in [src]."))
+		lockids = list("[input]")
+		return
+	if(!check_access(I))
+		to_chat(user, span_warning("[I] jams in [src]!"))
+		return
+	to_chat(user, span_notice("[I] twists cleanly in [src]."))
 
-/obj/item/customlock/attack_right(mob/user)
-	if(istype(user.get_active_held_item(), /obj/item/key))//i need to figure out how to avoid these massive if/then trees, this sucks
-		var/obj/item/key/held = user.get_active_held_item()
-		src.lockhash = held.lockhash
-		to_chat(user, span_notice("You align the lock's internals to [held].")) //locks for non-custom keys
-	else if(istype(user.get_active_held_item(), /obj/item/key_custom_blank))
-		var/obj/item/key_custom_blank/held = user.get_active_held_item()
-		src.lockhash = held.lockhash
-		to_chat(user, span_notice("You align the lock's internals to [held]."))
-	else if(istype(user.get_active_held_item(), /obj/item/weapon/hammer) && src.lockhash != 0)
+/obj/item/customlock/attackby_secondary(obj/item/I, mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(istype(I, /obj/item/weapon/hammer))
+		if(!length(lockids))
+			to_chat(user, span_notice("[src] is not ready, its pins are not set!"))
+			return
 		var/obj/item/customlock/finished/F = new (get_turf(src))
-		F.lockhash = src.lockhash
+		F.lockids = lockids
 		to_chat(user, span_notice("You finish [F]."))
+		var/old_loc = loc
 		qdel(src)
+		if(user == old_loc)
+			user.put_in_hands(F)
+		return
+	if(!copy_access(I))
+		to_chat(user, span_warning("I cannot base the pins on [I]!"))
+		return
+	to_chat(user, span_notice("I set the pins based on [I]."))
 
 //finished lock
 /obj/item/customlock/finished
 	name = "lock"
-	desc = "A customized iron lock that is used by keys."
+	desc = "A customized iron lock that is used by keys. A name can be etched in with a hammer."
 	var/holdname = ""
 
 /obj/item/customlock/finished/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/weapon/hammer))
-		src.holdname = input(user, "What would you like to name this?", "", "") as text
-		if(holdname)
-			to_chat(user, span_notice("You label the [name] with [holdname]."))
-	else
+	if(!istype(I, /obj/item/weapon/hammer))
 		..()
+	holdname = input(user, "What would you like to name this?", "", "") as text
+	if(holdname)
+		to_chat(user, span_notice("You label the [name] with [holdname]."))
 
-/obj/item/customlock/finished/attack_right(mob/user)//does nothing. probably better ways to do this but whatever
+/obj/item/customlock/finished/attackby_secondary(obj/item/I, mob/user, params)
 
-/obj/item/customlock/finished/attack_obj(obj/structure/K, mob/living/user)
-	if(istype(K, /obj/structure/closet))
-		var/obj/structure/closet/KE = K
-		if(KE.keylock == TRUE)
-			to_chat(user, span_warning("[K] already has a lock."))
-		else
-			KE.keylock = TRUE
-			KE.lockhash = src.lockhash
-			if(src.holdname)
-				KE.name = (src.holdname + " " + KE.name)
-			to_chat(user, span_notice("You add [src] to [K]."))
-			qdel(src)
-	if(istype(K, /obj/structure/mineral_door))
-		var/obj/structure/mineral_door/KE = K
-		if(KE.can_add_lock)
-			if(KE.keylock == TRUE)
-				to_chat(user, span_warning("[K] already has a lock."))
-			else
-				KE.keylock = TRUE
-				KE.lockhash = src.lockhash
-				if(src.holdname)
-					KE.name = src.holdname
-				to_chat(user, span_notice("You add [src] to [K]."))
-				qdel(src)
-		else
-			to_chat(user, span_warning("A lock can't be added to [K]."))
+/obj/item/customlock/finished/attack_obj(obj/O, mob/living/user)
+	if(!O.can_add_lock)
+		to_chat(user, span_notice("There is no place for a lock on [O]."))
+		return
+	if(O.lock)
+		to_chat(user, span_notice("[O] already has a lock."))
+		return
+	if(holdname)
+		O.name = holdname
+	O.lock = new /datum/lock/key(O, lockids)
+	to_chat(user, span_notice("I fit [src] to [O]."))
+	qdel(src)

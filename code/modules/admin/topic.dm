@@ -9,14 +9,14 @@
 		message_admins("Debug mode enabled, call not blocked. Please ask my coders to review this round's logs.")
 		log_world("UAH: [href]")
 		return TRUE
-	log_admin_private("[key_name(usr)] clicked an href with [msg] authorization key! [href]")
+	log_admin_private("[key_name_admin(usr)] clicked an href with [msg] authorization key! [href]")
 
 /datum/admins/Topic(href, href_list)
 	..()
 
 	if(usr.client != src.owner || !check_rights(0))
 		message_admins("[usr.key] has attempted to override the admin panel!")
-		log_admin("[key_name(usr)] tried to use the admin panel without authorization.")
+		log_admin("[key_name_admin(usr)] tried to use the admin panel without authorization.")
 		return
 
 	if(!CheckAdminHref(href, href_list))
@@ -154,7 +154,7 @@
 				if("No")
 					delmob = FALSE
 
-		log_admin("[key_name(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]")
+		log_admin("[key_name_admin(usr)] has used rudimentary transformation on [key_name(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has used rudimentary transformation on [key_name_admin(M)]. Transforming to [href_list["simplemake"]].; deletemob=[delmob]</span>")
 		switch(href_list["simplemake"])
 			if("observer")
@@ -170,10 +170,6 @@
 				M.change_mob_type( /mob/living/carbon/monkey , null, null, delmob )
 			if("cat")
 				M.change_mob_type( /mob/living/simple_animal/pet/cat , null, null, delmob )
-			if("parrot")
-				M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob )
-			if("polyparrot")
-				M.change_mob_type( /mob/living/simple_animal/parrot/Poly , null, null, delmob )
 
 	else if(href_list["boot2"])
 		if(!check_rights(R_ADMIN))
@@ -367,16 +363,16 @@
 			return
 
 		if (SSticker.HasRoundStarted())
-			if (askuser(usr, "The game has already started. Would you like to save this as the default mode effective next round?", "Save mode", "Yes", "Cancel", Timeout = null) == 1)
+			if(browser_alert(usr, "The game has already started. Would you like to save this as the default mode effective next round?", "Save mode", DEFAULT_INPUT_CHOICES) == CHOICE_YES)
 				SSticker.save_mode(href_list["c_mode2"])
 			HandleCMode()
 			return
 		GLOB.master_mode = href_list["c_mode2"]
-		log_admin("[key_name(usr)] set the mode as [GLOB.master_mode].")
+		log_admin("[key_name_admin(usr)] set the mode as [GLOB.master_mode].")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the mode as [GLOB.master_mode].</span>")
 		to_chat(world, "<span class='adminnotice'><b>The mode is now: [GLOB.master_mode]</b></span>")
 		Game() // updates the main game menu
-		if (askuser(usr, "Would you like to save this as the default mode for the server?", "Save mode", "Yes", "No", Timeout = null) == 1)
+		if(browser_alert(usr, "Would you like to save this as the default mode for the server?", "Save mode", DEFAULT_INPUT_CHOICES) == CHOICE_YES)
 			SSticker.save_mode(GLOB.master_mode)
 		HandleCMode()
 
@@ -389,7 +385,7 @@
 		if(GLOB.master_mode != "secret")
 			return alert(usr, "The game mode has to be secret!", null, null, null, null)
 		GLOB.secret_force_mode = href_list["f_secret2"]
-		log_admin("[key_name(usr)] set the forced secret mode as [GLOB.secret_force_mode].")
+		log_admin("[key_name_admin(usr)] set the forced secret mode as [GLOB.secret_force_mode].")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] set the forced secret mode as [GLOB.secret_force_mode].</span>")
 		Game() // updates the main game menu
 		HandleFSecret()
@@ -403,7 +399,7 @@
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/human.")
 			return
 
-		log_admin("[key_name(usr)] attempting to monkeyize [key_name(H)].")
+		log_admin("[key_name_admin(usr)] attempting to monkeyize [key_name(H)].")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] attempting to monkeyize [key_name_admin(H)].</span>")
 		H.monkeyize()
 
@@ -416,7 +412,7 @@
 			to_chat(usr, "This can only be used on instances of type /mob/living/carbon/monkey.")
 			return
 
-		log_admin("[key_name(usr)] attempting to humanize [key_name(Mo)].")
+		log_admin("[key_name_admin(usr)] attempting to humanize [key_name(Mo)].")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] attempting to humanize [key_name_admin(Mo)].</span>")
 		Mo.humanize()
 
@@ -433,7 +429,7 @@
 			return
 		M.say(speech, forced = "admin speech")
 		speech = sanitize(speech) // Nah, we don't trust them
-		log_admin("[key_name(usr)] forced [key_name(M)] to say: [speech]")
+		log_admin("[key_name_admin(usr)] forced [key_name(M)] to say: [speech]")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] forced [key_name_admin(M)] to say: [speech]</span>")
 
 	else if(href_list["sendtoprison"])
@@ -469,7 +465,8 @@
 		if(!M.client)
 			to_chat(usr, "<span class='warning'>[M] doesn't seem to have an active client.</span>")
 			return
-		log_admin("[key_name(usr)] has sent [key_name(M)] back to the Lobby.")
+		log_admin("[key_name_admin(usr)] has sent [key_name(M)] back to the Lobby.")
+		message_admins("[key_name_admin(usr)] sent [key_name_admin(M)] back to the lobby")
 
 		var/mob/dead/new_player/NP = new()
 		NP.ckey = M.ckey
@@ -479,6 +476,13 @@
 				qdel(M)
 		else
 			qdel(M)
+
+	else if(href_list["cryomob"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = locate(href_list["cryomob"])
+		usr.client.send_to_cryo(M)
 
 	else if(href_list["revive"])
 		if(!check_rights(R_ADMIN))
@@ -507,6 +511,21 @@
 	else if(href_list["adminplayeropts"])
 		var/mob/M = locate(href_list["adminplayeropts"])
 		show_player_panel(M)
+
+	else if(href_list["ppbyckey"])
+		var/target_ckey = href_list["ppbyckey"]
+		var/mob/original_mob = locate(href_list["ppbyckeyorigmob"]) in GLOB.mob_list
+		var/mob/target_mob = get_mob_by_ckey(target_ckey)
+		if(!target_mob)
+			to_chat(usr, span_warning("No mob found with that ckey."))
+			return
+
+		if(original_mob == target_mob)
+			to_chat(usr, span_warning("[target_ckey] is still in their original mob: [original_mob]."))
+			return
+
+		to_chat(usr, span_notice("Jumping to [target_ckey]'s new mob: [target_mob]!"))
+		show_player_panel(target_mob)
 
 	else if(href_list["adminplayerobservefollow"])
 		if(!isobserver(usr) && !check_rights(R_ADMIN))
@@ -568,7 +587,7 @@
 
 		//Job + antagonist
 		if(M.mind)
-			special_role_description = "Role: <b>[M.mind.assigned_role]</b>; Antagonist: <font color='red'><b>[M.mind.special_role]</b></font>"
+			special_role_description = "Role: <b>[M.mind.assigned_role.title]</b>; Antagonist: <font color='red'><b>[M.mind.special_role]</b></font>"
 		else
 			special_role_description = "Role: <i>Mind datum missing</i> Antagonist: <i>Mind datum missing</i>"
 
@@ -610,7 +629,7 @@
 
 		var/Add = href_list["addjobslot"]
 
-		for(var/datum/job/job in SSjob.occupations)
+		for(var/datum/job/job in SSjob.joinable_occupations)
 			if(job.title == Add)
 				job.total_positions += 1
 				break
@@ -624,7 +643,7 @@
 
 		var/Add = href_list["customjobslot"]
 
-		for(var/datum/job/job in SSjob.occupations)
+		for(var/datum/job/job in SSjob.joinable_occupations)
 			if(job.title == Add)
 				var/newtime = null
 				newtime = input(usr, "How many jebs do you want?", "Add wanted posters", "[newtime]") as num|null
@@ -642,7 +661,7 @@
 
 		var/Remove = href_list["removejobslot"]
 
-		for(var/datum/job/job in SSjob.occupations)
+		for(var/datum/job/job in SSjob.joinable_occupations)
 			if(job.title == Remove && job.total_positions - job.current_positions > 0)
 				job.total_positions -= 1
 				break
@@ -655,7 +674,7 @@
 
 		var/Unlimit = href_list["unlimitjobslot"]
 
-		for(var/datum/job/job in SSjob.occupations)
+		for(var/datum/job/job in SSjob.joinable_occupations)
 			if(job.title == Unlimit)
 				job.total_positions = -1
 				break
@@ -668,7 +687,7 @@
 
 		var/Limit = href_list["limitjobslot"]
 
-		for(var/datum/job/job in SSjob.occupations)
+		for(var/datum/job/job in SSjob.joinable_occupations)
 			if(job.title == Limit)
 				job.total_positions = job.current_positions
 				break
@@ -724,12 +743,59 @@
 		var/mob/M = locate(href_list["getmob"])
 		usr.client.Getmob(M)
 
+	else if(href_list["increase_skill"])
+		var/mob/M = locate(href_list["increase_skill"])
+		var/datum/skill/skill = href_list["skill"]
+		M.adjust_skillrank(text2path(skill), 1)
+		log_admin("[key_name_admin(usr)] increased [key_name_admin(M)]'s [initial(skill.name)] skill.")
+		show_player_panel_next(M, "skills")
+
+	else if(href_list["decrease_skill"])
+		var/mob/M = locate(href_list["decrease_skill"])
+		var/datum/skill/skill = href_list["skill"]
+		M.adjust_skillrank(text2path(skill), -1)
+		log_admin("[key_name_admin(usr)] decreased [key_name_admin(M)]'s [initial(skill.name)] skill.")
+		show_player_panel_next(M, "skills")
+
+	else if(href_list["add_language"])
+		var/mob/M = locate(href_list["add_language"])
+		var/datum/language/lang = text2path(href_list["language"])
+		M.grant_language(lang)
+		log_admin("[key_name_admin(usr)] added [lang] to [key_name_admin(M)].")
+		message_admins("[key_name_admin(usr)] added [lang] to [key_name_admin(M)].")
+		show_player_panel_next(M, "languages")
+
+	else if(href_list["remove_language"])
+		var/mob/M = locate(href_list["remove_language"])
+		var/datum/language/lang = text2path(href_list["language"])
+		M.remove_language(lang)
+		log_admin("[key_name_admin(usr)] removed [lang] to [key_name_admin(M)].")
+		message_admins("[key_name_admin(usr)] removed [lang] to [key_name_admin(M)].")
+		show_player_panel_next(M, "languages")
+
+	else if(href_list["add_stat"])
+		var/mob/living/M = locate(href_list["add_stat"])
+		var/statkey = href_list["stat"]
+		M.change_stat(statkey, 1)
+		log_admin("[key_name_admin(usr)] increased [key_name_admin(M)]'s [statkey].")
+		message_admins("[key_name_admin(usr)] increased [key_name_admin(M)]'s [statkey].")
+		show_player_panel_next(M, "stats")
+
+	else if(href_list["lower_stat"])
+		var/mob/living/M = locate(href_list["lower_stat"])
+		var/statkey = href_list["stat"]
+		M.change_stat(statkey, -1)
+		log_admin("[key_name_admin(usr)] decreased [key_name_admin(M)]'s [statkey].")
+		message_admins("[key_name_admin(usr)] decreased [key_name_admin(M)]'s [statkey].")
+		show_player_panel_next(M, "stats")
+
 	else if(href_list["sendmob"])
 		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/M = locate(href_list["sendmob"])
 		usr.client.sendmob(M)
+
 
 	else if(href_list["narrateto"])
 		if(!check_rights(R_ADMIN))
@@ -754,7 +820,7 @@
 			to_chat(usr, "This can only be used on instances of type /mob.")
 			return
 
-		show_individual_logging_panel(M, href_list["log_src"], href_list["log_type"])
+		show_individual_logging_panel(usr.client, M, href_list["log_src"], href_list["log_type"])
 	else if(href_list["languagemenu"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1016,6 +1082,71 @@
 
 		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
 
+	else if(href_list["centcomlookup"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		if(!CONFIG_GET(string/centcom_ban_db))
+			to_chat(usr, span_warning("Centcom Galactic Ban DB is disabled!"))
+			return
+
+		var/ckey = href_list["centcomlookup"]
+
+		// Make the request
+		var/datum/http_request/request = new()
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/centcom_ban_db)]/[ckey]", "", "")
+		request.begin_async()
+		UNTIL(request.is_complete() || !usr)
+		if (!usr)
+			return
+		var/datum/http_response/response = request.into_response()
+
+		var/list/bans
+
+		var/list/dat = list("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><body>")
+
+		if(response.errored)
+			dat += "<br>Failed to connect to CentCom."
+		else if(response.status_code != 200)
+			dat += "<br>Failed to connect to CentCom. Status code: [response.status_code]"
+		else
+			if(response.body == "[]")
+				dat += "<center><b>0 bans detected for [ckey]</b></center>"
+			else
+				bans = json_decode(response.body)
+
+				//Ignore bans from non-whitelisted sources, if a whitelist exists
+				var/list/valid_sources
+				if(CONFIG_GET(string/centcom_source_whitelist))
+					valid_sources = splittext(CONFIG_GET(string/centcom_source_whitelist), ",")
+					dat += "<center><b>Bans detected for [ckey]</b></center>"
+				else
+					//Ban count is potentially inaccurate if they're using a whitelist
+					dat += "<center><b>[bans.len] ban\s detected for [ckey]</b></center>"
+
+				for(var/list/ban in bans)
+					if(valid_sources && !(ban["sourceName"] in valid_sources))
+						continue
+					dat += "<b>Server: </b> [sanitize(ban["sourceName"])]<br>"
+					dat += "<b>RP Level: </b> [sanitize(ban["sourceRoleplayLevel"])]<br>"
+					dat += "<b>Type: </b> [sanitize(ban["type"])]<br>"
+					dat += "<b>Banned By: </b> [sanitize(ban["bannedBy"])]<br>"
+					dat += "<b>Reason: </b> [sanitize(ban["reason"])]<br>"
+					dat += "<b>Datetime: </b> [sanitize(ban["bannedOn"])]<br>"
+					var/expiration = ban["expires"]
+					dat += "<b>Expires: </b> [expiration ? "[sanitize(expiration)]" : "Permanent"]<br>"
+					if(ban["type"] == "job")
+						dat += "<b>Jobs: </b> "
+						var/list/jobs = ban["jobs"]
+						dat += sanitize(jobs.Join(", "))
+						dat += "<br>"
+					dat += "<hr>"
+
+		dat += "<br></body>"
+		var/datum/browser/popup = new(usr, "centcomlookup-[ckey]", "<div align='center'>Central Command Galactic Ban Database</div>", 700, 600)
+		popup.set_content(dat.Join())
+		popup.open(0)
+
 	else if(href_list["modantagrep"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1047,6 +1178,102 @@
 		var/mob/M = locate(href_list["mob"]) in GLOB.mob_list
 		var/client/mob_client = M.client
 		check_pq_menu(mob_client.key)
+	else if(href_list["showtriumphs"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/mob/M = locate(href_list["mob"]) in GLOB.mob_list
+		var/client/mob_client = M.client
+		check_triumphs_menu(mob_client.ckey)
+
+	else if(href_list["edittriumphs"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/mob/M = (locate(href_list["mob"]) in GLOB.mob_list)
+		if(!M?.key)
+			alert(usr, "[M] does not have a key.")
+			return
+
+		var/amt2change = input(usr, "How much to modify the Triumphs by? (100 to -100)") as null|num
+		amt2change = clamp(amt2change, -100, 100)
+		if(!amt2change)
+			return
+
+		var/raisin = stripped_input(usr, "State a short reason for this change", "Game Master", null, null)
+		M.adjust_triumphs(amt2change, FALSE, raisin)
+		message_admins("[key_name_admin(usr)] adjusted [M.key]'s triumphs by [amt2change] with [!raisin ? "no reason given" : "reason: [raisin]"].")
+		log_admin("[key_name_admin(usr)] adjusted [M.key]'s triumphs by [amt2change] with [!raisin ? "no reason given" : "reason: [raisin]"].")
+
+	else if(href_list["changepatron"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = (locate(href_list["mob"]) in GLOB.mob_list)
+
+		if(!ishuman(M))
+			return
+
+		var/patron_to_change_to = browser_input_list(usr, "Change to what patron?", "THE GODS", GLOB.patronlist)
+		if(!patron_to_change_to)
+			return
+
+		var/mob/living/carbon/human/being_changed = M
+
+		message_admins("[key_name_admin(usr)] changed [key_name_admin(M)]'s patron from [being_changed.patron] to [patron_to_change_to]")
+		log_admin("[key_name_admin(usr)] changed [key_name_admin(M)]'s patron from [being_changed.patron] to [patron_to_change_to]")
+
+		being_changed.set_patron(patron_to_change_to)
+
+	else if(href_list["changeflaw"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/mob/M = (locate(href_list["mob"]) in GLOB.mob_list)
+
+		if(!ishuman(M))
+			return
+
+		var/list/flawslist = GLOB.character_flaws.Copy()
+		var/flaw_to_change_to = browser_input_list(usr, "Change to what flaw?", "EVERYONE HAS A VICE", flawslist)
+
+		if(!flaw_to_change_to)
+			return
+
+		flaw_to_change_to = flawslist[flaw_to_change_to]
+
+		var/mob/living/carbon/human/being_changed = M
+
+		message_admins("[key_name_admin(usr)] changed [key_name_admin(M)]'s flaw from [being_changed.charflaw ? being_changed.charflaw : "NA"] to [flaw_to_change_to]")
+		log_admin("[key_name_admin(usr)] changed [key_name_admin(M)]'s flaw from [being_changed.charflaw ? being_changed.charflaw : "NA"] to [flaw_to_change_to]")
+
+		being_changed.set_flaw(flaw_to_change_to)
+
+	else if(href_list["modifycurses"])
+
+		// admin rights checked in admin_curse
+		var/mob/M = (locate(href_list["mob"]) in GLOB.mob_list)
+
+		admin_curse(M)
+
+	else if(href_list["setjob"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/mob/M = (locate(href_list["mob"]) in GLOB.mob_list)
+		if(isnull(M?.mind))
+			return
+
+		var/list/jobslist = get_job_assignment_order()
+		var/job_to_change_to = browser_input_list(usr, "Change to what job?", "THEIR ROLE IN THIS WORLD", jobslist)
+
+		if(!job_to_change_to || isnull(M.mind))
+			return
+
+		var/datum/job/new_job = job_to_change_to
+		var/datum/mind/mind_of_mob = M.mind
+
+		message_admins("[key_name_admin(usr)] changed [key_name_admin(M)]'s job from [mind_of_mob.assigned_role ? mind_of_mob.assigned_role.title : "NA"] to [new_job.title]")
+		log_admin("[key_name_admin(usr)] changed [key_name_admin(M)]'s job from [mind_of_mob.assigned_role ? mind_of_mob.assigned_role.title : "NA"] to [new_job.title]")
+
+		mind_of_mob.set_assigned_role(new_job)
 
 	else if(href_list["roleban"])
 		if(!check_rights(R_ADMIN))
@@ -1253,7 +1480,7 @@
 		if(!fexists(json_file))
 			WRITE_FILE(json_file, "{}")
 		var/list/json = json_decode(file2text(json_file))
-		for(var/curse in CURSE_MASTER_LIST)
+		for(var/curse in list("brokedick"))
 			var/yes_cursed
 			for(var/X in json)
 				if(X == curse)

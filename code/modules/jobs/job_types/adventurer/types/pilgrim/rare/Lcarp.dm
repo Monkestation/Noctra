@@ -6,47 +6,38 @@
 	As a master carpenter, you transform trees into anything from furniture to entire fortifications."
 
 	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Rakshari",
-		"Elf",
-		"Half-Elf",
-		"Dwarf",
-		"Tiefling",
-		"Dark Elf",
-		"Aasimar",
-		"Half-Orc"
-	)
+
 	outfit = /datum/outfit/job/adventurer/mastercarpenter
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
 	maximum_possible_slots = 1
 	pickprob = 15
 	apprentice_name = "Carpenter Apprentice"
+	cmode_music = 'sound/music/cmode/towner/CombatTowner2.ogg'
 
 /datum/outfit/job/adventurer/mastercarpenter/pre_equip(mob/living/carbon/human/H)
 	..()
 
-	H.mind?.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE) // They work at great heights.
-	H.mind?.adjust_skillrank(/datum/skill/craft/crafting, 4, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/craft/carpentry, 6, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/craft/engineering, 1, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/labor/lumberjacking, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE) // They work at great heights.
+	H.adjust_skillrank(/datum/skill/craft/crafting, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/carpentry, 6, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/engineering, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 4, TRUE)
 
 	head = pick(/obj/item/clothing/head/hatfur, /obj/item/clothing/head/hatblu, /obj/item/clothing/head/brimmed)
 	neck = /obj/item/clothing/neck/coif
 	armor = /obj/item/clothing/armor/leather/jacket
 	pants = /obj/item/clothing/pants/trou
-	shirt = /obj/item/clothing/shirt/undershirt/random
+	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	wrists = /obj/item/clothing/wrists/bracers/leather
 	shoes = /obj/item/clothing/shoes/boots/leather
 	belt = /obj/item/storage/belt/leather

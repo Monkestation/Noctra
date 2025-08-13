@@ -1,11 +1,4 @@
 ///VANDERLIN NOTE: This completely overrides generic storage.
-/// Must be in the user's hands to be accessed
-#define STORAGE_NO_WORN_ACCESS (1<<0)
-/// Must be out of the user to be accessed
-#define STORAGE_NO_EQUIPPED_ACCESS (1<<1)
-// ~storage component
-///from base of datum/component/storage/can_user_take(): (mob/user)
-#define COMSIG_STORAGE_BLOCK_USER_TAKE "storage_block_user_take"
 
 /atom/proc/reset_grid_inventory()
 	var/drop_location = drop_location()
@@ -46,6 +39,16 @@
 			item_in_source.moveToNullspace()
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, item_in_source, null, TRUE, TRUE, FALSE)
 
+/obj/item/storage/on_enter_storage(datum/component/storage/concrete/S)
+	. = ..()
+	for(var/atom/movable/item in contents)
+		item.on_enter_storage(S)
+
+/obj/item/storage/on_exit_storage(datum/component/storage/concrete/S)
+	. = ..()
+	for(var/atom/movable/item in contents)
+		item.on_exit_storage(S)
+
 /datum/component/storage
 	screen_max_columns = 3
 	screen_max_rows = 8
@@ -60,10 +63,10 @@
 	var/static/list/mutable_appearance/underlay_appearances_by_size = list()
 	var/list/grid_coordinates_to_item
 	var/list/item_to_grid_coordinates
+	var/list/first_coordinates_item = list()
 	var/maximum_depth = 1
 	var/storage_flags = NONE
 
-	var/list/first_coordinates_item = list()
 
 /datum/component/storage/proc/get_grid_box_size()
 	return world.icon_size
@@ -372,12 +375,10 @@
 		if(istype(attacking_item, /obj/item/needle))
 			var/obj/item/needle/sewer = attacking_item
 			var/obj/item/storage/this_item = parent
-			if(sewer.can_repair && this_item.sewrepair && this_item.max_integrity && !this_item.obj_broken && this_item.obj_integrity < this_item.max_integrity && user.mind.get_skill_level(/datum/skill/misc/sewing) >= 1 && this_item.ontable() && !being_repaired)
-				being_repaired = TRUE
+			if(sewer.can_repair && this_item.sewrepair && this_item.max_integrity && !this_item.obj_broken && this_item.obj_integrity < this_item.max_integrity && this_item.ontable())
 				return FALSE
 		if(user.used_intent.type == /datum/intent/snip) //This makes it so we can salvage
 			return FALSE
-	being_repaired = FALSE
 
 	. = TRUE //no afterattack
 	if(!can_be_inserted(attacking_item, FALSE, user, params = params, storage_click = storage_click))
@@ -642,7 +643,7 @@
 			final_y = coordinate_y+current_y
 			calculated_coordinates = "[final_x],[final_y]"
 			testing("handle_item_insertion SUCCESS calculated_coordinates: ([calculated_coordinates])")
-			LAZYADDASSOC(grid_coordinates_to_item, calculated_coordinates, storing)
+			LAZYADDASSOCLIST(grid_coordinates_to_item, calculated_coordinates, storing)
 			LAZYINITLIST(item_to_grid_coordinates)
 			LAZYINITLIST(item_to_grid_coordinates[storing])
 			LAZYADD(item_to_grid_coordinates[storing], calculated_coordinates)
@@ -671,7 +672,7 @@
 	//This is where the pain begins
 	if(grid)
 		var/list/modifiers = params2list(params)
-		var/coordinates = LAZYACCESS(modifiers, "screen-loc")
+		var/coordinates = LAZYACCESS(modifiers, SCREEN_LOC)
 		var/grid_box_ratio = (world.icon_size/grid_box_size)
 
 		var/enchanted = FALSE
@@ -739,9 +740,6 @@
 			else
 				storing.forceMove(parent.drop_location())
 		return FALSE
-	storing.on_enter_storage(master)
-	storing.item_flags |= IN_STORAGE
-	storing.mouse_opacity = MOUSE_OPACITY_OPAQUE //So you can click on the area around the item to equip it, instead of having to pixel hunt
 	if(user)
 		if(user.client && (user.active_storage != src))
 			user.client.screen -= storing
@@ -755,7 +753,7 @@
 				mob_item_insertion_feedback(usr, user, storing)
 	if(grid)
 		var/list/modifiers = params2list(params)
-		var/coordinates = LAZYACCESS(modifiers, "screen-loc")
+		var/coordinates = LAZYACCESS(modifiers, SCREEN_LOC)
 		var/grid_box_ratio = (world.icon_size/grid_box_size)
 
 		//if it's not a storage click, find the first cell that happens to be valid
@@ -791,6 +789,13 @@
 		else
 			coordinates = screen_loc_to_grid_coordinates(coordinates)
 		grid_add_item(storing, coordinates)
+
+	storing.on_enter_storage(master)
+	storing.item_flags |= IN_STORAGE
+	storing.mouse_opacity = MOUSE_OPACITY_OPAQUE //So you can click on the area around the item to equip it, instead of having to pixel hunt
+	if(ismovable(parent))
+		if(ismob(parent:loc))
+			parent:loc:encumbrance_to_speed()
 	update_icon()
 	refresh_mob_views()
 	return TRUE
@@ -823,7 +828,8 @@
 	else
 		//Being destroyed, just move to nullspace now (so it's not in contents for the icon update)
 		removed.moveToNullspace()
-	removed.update_icon()
+	removed.update_appearance()
+	SEND_SIGNAL(parent, COMSIG_STORAGE_REMOVED, removed)
 	update_icon()
 	refresh_mob_views()
 	return TRUE
@@ -837,7 +843,7 @@
 	. = ..()
 	var/datum/component/storage/storage_master = master
 	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, "shift"))
+	if(LAZYACCESS(modifiers, SHIFT_CLICKED))
 		if(!istype(storage_master))
 			return
 		storage_master.screen_start_x = initial(storage_master.screen_start_x)
@@ -848,7 +854,7 @@
 		storage_master.show_to(usr)
 		testing("storage screen variables reset.")
 		to_chat(usr, span_notice("Storage window position has been reset."))
-	else if(LAZYACCESS(modifiers, "ctrl"))
+	else if(LAZYACCESS(modifiers, CTRL_CLICKED))
 		locked = !locked
 		to_chat(usr, span_notice("Storage window [locked ? "" : "un"]locked."))
 	else
@@ -871,7 +877,7 @@
 	var/maximum_y_pixels = 16 * world.icon_size
 	var/minimum_y_pixels = (16 - storage_master.screen_max_rows) * world.icon_size
 
-	var/screen_loc = LAZYACCESS(modifiers, "screen-loc")
+	var/screen_loc = LAZYACCESS(modifiers, SCREEN_LOC)
 	testing("storage close button MouseDrop() screen_loc: ([screen_loc])")
 
 	var/screen_x = copytext(screen_loc, 1, findtext(screen_loc, ","))
@@ -900,7 +906,7 @@
 /atom/movable/screen/storage
 	icon = 'icons/hud/storage.dmi'
 	icon_state = "background"
-	layer = HUD_LAYER
+	plane = HUD_PLANE
 	alpha = 180
 	var/atom/movable/screen/storage_hover/hovering
 
@@ -930,7 +936,7 @@
 		return
 	usr.client.screen -= hovering
 	var/datum/component/storage/storage_master = master
-	if(!istype(storage_master) || !(usr in storage_master.is_using) || !isliving(usr) || usr.incapacitated())
+	if(!istype(storage_master) || !(usr in storage_master.is_using) || !isliving(usr) || usr.incapacitated(IGNORE_GRAB))
 		return
 	var/obj/item/held_item = usr.get_active_held_item()
 	if(!held_item)
@@ -939,7 +945,7 @@
 	if(!storage_master.grid)
 		return
 	var/list/modifiers = params2list(params)
-	var/screen_loc = LAZYACCESS(modifiers, "screen-loc")
+	var/screen_loc = LAZYACCESS(modifiers, SCREEN_LOC)
 	var/coordinates = storage_master.screen_loc_to_grid_coordinates(screen_loc)
 	if(!coordinates)
 		return
@@ -972,7 +978,7 @@
 		return
 	usr.client.screen -= hovering
 	var/datum/component/storage/storage_master = master
-	if(!istype(storage_master) || !(usr in storage_master.is_using) || !isliving(usr) || usr.incapacitated())
+	if(!istype(storage_master) || !(usr in storage_master.is_using) || !isliving(usr) || usr.incapacitated(IGNORE_GRAB))
 		return
 	var/obj/item/held_item = usr.get_active_held_item()
 	if(!held_item)
@@ -981,7 +987,7 @@
 	if(!storage_master.grid)
 		return
 	var/list/modifiers = params2list(params)
-	var/screen_loc = LAZYACCESS(modifiers, "screen-loc")
+	var/screen_loc = LAZYACCESS(modifiers, SCREEN_LOC)
 	var/coordinates = storage_master.screen_loc_to_grid_coordinates(screen_loc)
 	if(!coordinates)
 		return
@@ -1014,6 +1020,5 @@
 	icon = 'icons/hud/storage.dmi'
 	icon_state = "white"
 	plane = ABOVE_HUD_PLANE
-	layer = HUD_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 96

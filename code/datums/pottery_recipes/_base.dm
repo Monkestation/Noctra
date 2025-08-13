@@ -1,5 +1,6 @@
 /datum/pottery_recipe
 	abstract_type = /datum/pottery_recipe
+	var/category = "Pottery"
 	var/name
 	///the thing created by the recipe
 	var/atom/created_item
@@ -19,7 +20,7 @@
 /datum/pottery_recipe/proc/get_delay(mob/user, rotations_per_minute)
 	rotations_per_minute = max(1, rotations_per_minute)
 	var/time = step_to_time[1]
-	var/skill_level = max(1, user?.mind?.get_skill_level(/datum/skill/craft/masonry))
+	var/skill_level = max(1, user?.get_skill_level(/datum/skill/craft/masonry))
 
 	if(rotations_per_minute < speed_sweetspot)
 		time *= ((speed_sweetspot / rotations_per_minute) * 0.25)
@@ -36,13 +37,15 @@
 	return TRUE
 
 /datum/pottery_recipe/proc/update_step(mob/living/user, rotations_per_minute)
-	var/skill_level = max(1, user?.mind?.get_skill_level(/datum/skill/craft/masonry))
-	var/fail_chance = (25 * difficulty) + (skill_level * 25)
+	var/skill_level = max(0, user?.get_skill_level(/datum/skill/craft/masonry))
+	var/success_chance = 25 * ((skill_level - difficulty) + 1)
+	success_chance = clamp(success_chance, 5, 95) // No reason to block pottery with lower masonry skills, just make it not worth the time.
+
 	if(rotations_per_minute > speed_sweetspot)
-		fail_chance += (rotations_per_minute - speed_sweetspot) * 2
-	if(prob(fail_chance))
+		success_chance -= (rotations_per_minute - speed_sweetspot) * 2
+	if(!prob(success_chance))
 		if(user.client?.prefs.showrolls)
-			to_chat(user, "<span class='danger'>I've messed up \the [name]. (Success chance: [max(0, 100 - fail_chance)]%)</span>")
+			to_chat(user, "<span class='danger'>I've messed up \the [name]. (Success chance: [success_chance]%)</span>")
 			return
 		to_chat(user, "<span class='danger'>I've messed up \the [name].</span>")
 		return
@@ -94,14 +97,14 @@
 			}
 			h1 {
 				text-align: center;
-				font-size: 2.5em;
+				font-size: 2em;
 				border-bottom: 2px solid #3e2723;
 				padding-bottom: 10px;
-				margin-bottom: 20px;
+				margin-bottom: 10px;
 			}
 			.icon {
-				width: 96px;
-				height: 96px;
+				width: 64px;
+				height: 64px;
 				vertical-align: middle;
 				margin-right: 10px;
 			}
@@ -110,7 +113,7 @@
 		  <div>
 		    <h1>[name]</h1>
 		    <div>
-		      <strong>Requirements</strong>
+		      <h2>Requirements</h2>
 			  <br>
 			  <strong>Rotational Sweetspot: [speed_sweetspot]</strong>
 			  <br>
@@ -122,7 +125,7 @@
 		html += "Then spin for [step_to_time[number] / 10] Seconds.<br>"
 
 	html += "<br>"
-	html += "<strong class=class='scroll'>and then you get</strong> <br> [icon2html(new created_item, user)] <br> [initial(created_item.name)]<br>"
+	html += "icon2html(new created_item, user)] <strong class=class='scroll'>and then you get [initial(created_item.name)]. </strong><br>"
 
 	html += {"
 		</div>

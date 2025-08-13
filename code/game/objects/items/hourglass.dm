@@ -15,7 +15,7 @@
 	. = ..()
 	countdown = new(src)
 
-/obj/item/hourglass/attack_self(mob/user)
+/obj/item/hourglass/attack_self(mob/user, params)
 	. = ..()
 	if(hand_activated)
 		toggle(user)
@@ -29,11 +29,9 @@
 		to_chat(user,"<span class='notice'>I stop the [src].</span>") //Sand magically flows back because that's more convinient to use.
 		stop()
 
-/obj/item/hourglass/update_icon()
-	if(timing_id)
-		icon_state = "hourglass_active"
-	else
-		icon_state = "hourglass_idle"
+/obj/item/hourglass/update_icon_state()
+	icon_state = "hourglass[timing_id ? "_active" : "_idle"]"
+	return ..()
 
 /obj/item/hourglass/proc/start()
 	finish_time = world.time + time
@@ -54,7 +52,7 @@
 	countdown.stop()
 	finish_time = null
 	animate(src)
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/hourglass/proc/finish()
 	visible_message("<span class='notice'>[src] stops.</span>")

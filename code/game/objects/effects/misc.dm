@@ -12,10 +12,6 @@
 	var/def_zone
 	pass_flags = PASSTABLE
 
-
-/obj/effect/spawner
-	name = "object spawner"
-
 /obj/effect/list_container
 	name = "list container"
 
@@ -44,7 +40,6 @@
 	icon = 'icons/effects/alphacolors.dmi'
 	icon_state = "white"
 	plane = LIGHTING_PLANE
-	layer = LIGHTING_LAYER
 	blend_mode = BLEND_ADD
 
 /obj/effect/abstract/marker

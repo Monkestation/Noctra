@@ -6,6 +6,7 @@
 
 	body_parts_covered = COVERAGE_NASAL
 	max_integrity = INTEGRITY_STANDARD
+	item_weight = 5.5 * IRON_MULTIPLIER
 
 //................ Skull Cap ............... //
 /obj/item/clothing/head/helmet/skullcap
@@ -15,11 +16,12 @@
 	sellprice = VALUE_CHEAP_IRON_HELMET
 
 	max_integrity = INTEGRITY_POOR
+	item_weight = 5.5 * IRON_MULTIPLIER
 
 //............... Grenzelhoft Plume Hat ............... // - worn over a skullcap
 /obj/item/clothing/head/helmet/skullcap/grenzelhoft
 	name = "grenzelhoft plume hat"
-	desc = "Slaying foul creachers or fair maidens: Grenzelhoft stands."
+	desc = "Slaying foul creachers or fair maidens: Grenzelhoft stands. A stylish hat concealing an iron skullcap."
 	icon_state = "grenzelhat"
 	item_state = "grenzelhat"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/stonekeep_merc.dmi'
@@ -28,14 +30,15 @@
 	colorgrenz = TRUE
 	sellprice = VALUE_FANCY_HAT
 
-/obj/item/clothing/head/helmet/skullcap/grenzelhoft/update_icon()
-	cut_overlays()
-	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
-		pic.appearance_flags = RESET_COLOR
-		if(get_detail_color())
-			pic.color = get_detail_color()
-		add_overlay(pic)
+/obj/item/clothing/head/helmet/skullcap/grenzelhoft/update_overlays()
+	. = ..()
+	if(!get_detail_tag())
+		return
+	var/mutable_appearance/pic = mutable_appearance(icon, "[icon_state][detail_tag]")
+	pic.appearance_flags = RESET_COLOR
+	if(get_detail_color())
+		pic.color = get_detail_color()
+	. += pic
 
 //................ Cultist Hood ............... //
 /obj/item/clothing/head/helmet/skullcap/cult
@@ -54,6 +57,7 @@
 	desc = "A crude horned cap usually worn by brute barbarians to invoke fear unto their enemies."
 	icon_state = "hornedcap"
 	sellprice = VALUE_CHEAP_IRON_HELMET
+	item_weight = 5.5 * IRON_MULTIPLIER
 
 //................ Winged Cap ............... //
 /obj/item/clothing/head/helmet/winged
@@ -64,6 +68,7 @@
 	worn_y_dimension = 64
 	bloody_icon = 'icons/effects/blood64x64.dmi'
 	bloody_icon_state = "helmetblood_big"
+	item_weight = 5.5 * IRON_MULTIPLIER
 
 //................ Kettle Helmet ............... //
 /obj/item/clothing/head/helmet/kettle
@@ -76,19 +81,39 @@
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 	flags_inv = HIDEEARS
-	sellprice = VALUE_CHEAP_IRON_HELMET
+	sellprice = VALUE_CHEAP_STEEL_HELMET
+	max_integrity = INTEGRITY_STANDARD
 
 	body_parts_covered = COVERAGE_HEAD
+	item_weight = 5.5 * STEEL_MULTIPLIER
+
+/obj/item/clothing/head/helmet/kettle/iron
+	name = "iron kettle helmet"
+	desc = "A lightweight iron helmet generally worn by crossbowmen and garrison archers."
+	icon_state = "ikettle"
+	item_state = "ikettle"
+	sellprice = VALUE_CHEAP_IRON_HELMET
+	armor = ARMOR_SCALE
+	max_integrity = INTEGRITY_POOR
+	item_weight = 5.5 * IRON_MULTIPLIER
 
 //................ Kettle Helmet (Slitted)............... //
 /obj/item/clothing/head/helmet/kettle/slit
-	name = "kettle helmet"
+	name = "slitted kettle helmet"
 	desc = "A lightweight steel helmet generally worn by crossbowmen and garrison archers. This one has eyeslits for the paranoid."
 	icon_state = "slitkettle"
 	flags_cover = HEADCOVERSEYES
 	body_parts_covered = HEAD|HAIR|EARS|EYES
 
-
+/obj/item/clothing/head/helmet/kettle/slit/iron
+	name = "iron slitted kettle helmet"
+	desc = "A lightweight iron helmet generally worn by crossbowmen and garrison archers. This one has eyeslits for the paranoid."
+	icon_state = "islitkettle"
+	item_state = "islitkettle"
+	sellprice = VALUE_CHEAP_IRON_HELMET
+	armor = ARMOR_SCALE
+	max_integrity = INTEGRITY_POOR
+	item_weight = 5.5 * IRON_MULTIPLIER
 //................ Iron Pot Helmet ............... //
 /obj/item/clothing/head/helmet/ironpot
 	name = "pot helmet"
@@ -98,6 +123,7 @@
 	sellprice = VALUE_IRON_HELMET
 
 	body_parts_covered = COVERAGE_HEAD_NOSE
+	item_weight = 5.5 * IRON_MULTIPLIER
 
 
 //................ Copper Lamellar Cap ............... //
@@ -113,6 +139,7 @@
 	body_parts_covered = COVERAGE_HEAD
 	prevent_crits = ONLY_VITAL_ORGANS
 	max_integrity = INTEGRITY_POOR
+	item_weight = 5.5 * COPPER_MULTIPLIER
 
 //............... Battle Nun ........................... (unique kit for the role, iron coif mechanically.)
 /obj/item/clothing/head/helmet/battlenun
@@ -130,11 +157,8 @@
 	armor = ARMOR_MAILLE
 	body_parts_covered = NECK|HAIR|EARS|HEAD
 	prevent_crits = ALL_EXCEPT_BLUNT
+	item_weight = 9 * IRON_MULTIPLIER
 
-
-/*-------------\
-| Steel Helmet |
-\-------------*/
 
 //................ Sallet ............... //
 /obj/item/clothing/head/helmet/sallet
@@ -148,9 +172,22 @@
 	armor =  ARMOR_PLATE
 	body_parts_covered = COVERAGE_HEAD
 	max_integrity = INTEGRITY_STRONG
+	item_weight = 9 * STEEL_MULTIPLIER
+
+/obj/item/clothing/head/helmet/sallet/iron
+	name = "iron sallet"
+	icon_state = "isallet"
+	item_state = "isallet"
+	desc = "A simple iron helmet with no attachments. Helps protect the ears."
+	smeltresult = /obj/item/ingot/iron
+	sellprice = VALUE_IRON_HELMET
+
+	armor =  ARMOR_PLATE_BAD
+	max_integrity = INTEGRITY_STANDARD
+	item_weight = 9 * IRON_MULTIPLIER
 
 //................ Elf Sallet ............... //
-/obj/item/clothing/head/helmet/sallet/elven	// blackoak merc helmet
+/obj/item/clothing/head/helmet/sallet/rare/elven	// blackoak merc helmet
 	desc = "A steel helmet with a thin gold plating designed for Elven woodland guardians."
 	icon_state = "bascinet_novisor"
 	color = COLOR_ASSEMBLY_GOLD
@@ -159,8 +196,8 @@
 //	icon_state = "elven_barbute_winged"
 //	item_state = "elven_barbute_winged"
 
-//................ Zybantine Kulah Khud ............... //
-/obj/item/clothing/head/helmet/sallet/zybantine // Unique Zybantu merc kit
+//................ Zalad Kulah Khud ............... //
+/obj/item/clothing/head/helmet/sallet/zalad // Unique Zaladin merc kit
 	name = "kulah khud"
 	desc = "Known as devil masks amongst the Western Kingdoms, these serve part decorative headpiece, part protective helmet."
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
@@ -181,6 +218,7 @@
 
 	body_parts_covered = COVERAGE_HEAD
 	max_integrity = INTEGRITY_STRONG
+	item_weight = 6 * STEEL_MULTIPLIER
 
 
 
@@ -200,13 +238,14 @@
 	block2add = FOV_BEHIND
 	equip_delay_self = 3 SECONDS
 	unequip_delay_self = 3 SECONDS
-	smeltresult = /obj/item/ingot/steel // All visored helmets are made of steel
+	smeltresult = /obj/item/ingot/steel // Most visored helmets are made of steel
 	sellprice = VALUE_STEEL_HELMET+BONUS_VALUE_TINY
 
 	armor = ARMOR_PLATE
 	body_parts_covered = FULL_HEAD
 	max_integrity = INTEGRITY_STRONG
 	prevent_crits = ALL_CRITICAL_HITS
+	abstract_type = /obj/item/clothing/head/helmet/visored
 
 /obj/item/clothing/head/helmet/visored/AdjustClothes(mob/user)
 	if(loc == user)
@@ -224,10 +263,6 @@
 				H.update_inv_head()
 		else if(adjustable == CADJUSTED)
 			ResetAdjust(user)
-//			body_parts_covered = FULL_HEAD
-//			prevent_crits = ALL_CRITICAL_HITS
-//			flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR
-//			flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 			if(user)
 				if(ishuman(user))
 					var/mob/living/carbon/H = user
@@ -242,7 +277,18 @@
 	name = "visored sallet"
 	desc = "A steel helmet offering good overall protection. Its visor can be flipped over for higher visibility at the cost of eye protection."
 	icon_state = "sallet_visor"
+	item_weight = 6 * STEEL_MULTIPLIER
 
+/obj/item/clothing/head/helmet/visored/sallet/iron
+	name = "visored iron sallet"
+	desc = "An iron helmet offering good overall protection. Its visor can be flipped over for higher visibility at the cost of eye protection."
+	icon_state = "isallet_visor"
+	item_state = "isallet_visor"
+	item_weight = 6 * IRON_MULTIPLIER
+	smeltresult = /obj/item/ingot/iron
+	sellprice = VALUE_IRON_HELMET+BONUS_VALUE_TINY
+	armor = ARMOR_PLATE_BAD
+	max_integrity = INTEGRITY_STANDARD
 
 //............... Hounskull ............... //
 /obj/item/clothing/head/helmet/visored/hounskull
@@ -254,11 +300,12 @@
 	emote_environment = 3
 
 	armor = ARMOR_PLATE_GOOD
+	item_weight = 7 * STEEL_MULTIPLIER
 
 //............... Knights Helmet ............... //
 /obj/item/clothing/head/helmet/visored/knight
 	name = "knights helmet"
-	desc = "A lightweight armet that protects dreams of chivalrous friendship, fair maidens to rescue, and glorious deeds of combat. Its visor can be flipped over for higher visibility at the cost of eye protection."
+	desc = "A lightweight steel armet that protects dreams of chivalrous friendship, fair maidens to rescue, and glorious deeds of combat. Its visor can be flipped over for higher visibility at the cost of eye protection."
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
 	icon_state = "knight"
 	bloody_icon = 'icons/effects/blood64x64.dmi'
@@ -267,9 +314,30 @@
 	worn_y_dimension = 64
 
 	emote_environment = 3
+	item_weight = 5.6 * STEEL_MULTIPLIER
 
 /obj/item/clothing/head/helmet/visored/knight/black
 	color = CLOTHING_SOOT_BLACK
+
+/obj/item/clothing/head/helmet/visored/knight/iron
+	name = "iron knights helmet"
+	desc = "A lightweight iron armet that protects dreams of chivalrous friendship, fair maidens to rescue, and glorious deeds of combat. Its visor can be flipped over for higher visibility at the cost of eye protection."
+	icon_state = "iknight"
+
+	item_weight = 5.6 * IRON_MULTIPLIER
+	smeltresult = /obj/item/ingot/iron
+	sellprice = VALUE_IRON_HELMET+BONUS_VALUE_TINY
+
+	armor = ARMOR_PLATE_BAD
+	max_integrity = INTEGRITY_STANDARD
+
+//................. Royal Knight's helmet .............. //
+/obj/item/clothing/head/helmet/visored/royalknight
+	name = "royal knights helmet"
+	desc = "A knightly armet that protects dreams of chivalry, fair maidens to rescue, and glorious feats of melee. Purpose made for the protector of the royal lineage. Its visor can be flipped over for higher visibility at the cost of eye protection."
+	icon_state = "knightarmet"
+	emote_environment = 3
+	item_weight = 5.6 * STEEL_MULTIPLIER
 
 //................. Captain's Helmet .............. //
 /obj/item/clothing/head/helmet/visored/captain
@@ -278,6 +346,7 @@
 	icon = 'icons/roguetown/clothing/special/captain.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/captain.dmi'
 	icon_state = "capbarbute"
+	item_weight = 13 * STEEL_MULTIPLIER
 
 //................. Town Watch Helmet .............. //
 /obj/item/clothing/head/helmet/townwatch
@@ -292,10 +361,44 @@
 	slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_HIP
 	smeltresult = /obj/item/ingot/iron
 	sellprice = VALUE_IRON_ARMOR_UNUSUAL
+	item_weight = 6 * STEEL_MULTIPLIER
 
 /obj/item/clothing/head/helmet/townwatch/alt
-	desc = "An old archaic helmet of a symbol long forgotten. The shape resembles the bars of a prison."
 	icon_state = "gatehelm"
+
+/obj/item/clothing/head/helmet/townwatch/gatemaster
+	name = "barred helmet"
+	flags_inv = HIDEEARS|HIDEHAIR
+	desc = "An old archaic helmet of a symbol long forgotten, now owned by the Gatemaster. The shape resembles the bars of a gate."
+	icon = 'icons/roguetown/clothing/special/gatemaster.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gatemaster.dmi'
+	icon_state = "master_helm"
+
+//................. Zizo Barbute .............. //
+
+/obj/item/clothing/head/helmet/visored/zizo
+	name = "darksteel barbute"
+	desc = "A darksteel barbute. This one has an adjustable visor. Called forth from the edge of what should be known. In Her name."
+	icon_state = "zizobarbute"
+	icon = 'icons/roguetown/clothing/special/evilarmor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sellprice = 0 // Incredibly evil Zizoid armor, this should be burnt, nobody wants this
+	item_weight = 5 * STEEL_MULTIPLIER
+
+//................. Silver Bascinet .............. //
+
+/obj/item/clothing/head/helmet/visored/silver
+	name = "silver bascinet"
+	desc = "A finely forged silver bascinet, with adjustable visor to protect the face."
+	icon_state = "silverbascinet"
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	smeltresult = /obj/item/ingot/silver
+	allowed_ages = ALL_AGES_LIST //placeholder until younglings have onmob sprites for this item
+	armor = ARMOR_PLATE_SILVER
+	sellprice = VALUE_SILVER_ARMOR
+	item_weight = 6 * SILVER_MULTIPLIER
+	worn_x_dimension = 64
+	worn_y_dimension = 64
 
 //............... Feldshers Cage ............... //
 /obj/item/clothing/head/helmet/feld
@@ -310,6 +413,10 @@
 
 	body_parts_covered = FULL_HEAD
 	prevent_crits = BLUNT_AND_MINOR_CRITS
+	item_weight = 5.5 * STEEL_MULTIPLIER
+
+/obj/item/clothing/head/helmet/blacksteel
+	abstract_type = /obj/item/clothing/head/helmet/blacksteel
 
 /obj/item/clothing/head/helmet/blacksteel/bucket
 	name = "Blacksteel Great Helm"
@@ -327,3 +434,4 @@
 	max_integrity = 425
 	anvilrepair = /datum/skill/craft/blacksmithing
 	smeltresult = /obj/item/ingot/blacksteel
+	item_weight = 6 * BLACKSTEEL_MULTIPLIER

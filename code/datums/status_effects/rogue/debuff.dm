@@ -20,12 +20,6 @@
 		var/mob/living/carbon/C = owner
 		C.add_stress(/datum/stressevent/peckish)
 
-/datum/status_effect/debuff/hungryt1/refresh()
-	. = ..()
-	if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		C.add_stress(/datum/stressevent/peckish)
-
 /datum/status_effect/debuff/hungryt1/on_remove()
 	. = ..()
 	if(iscarbon(owner))
@@ -49,12 +43,6 @@
 		var/mob/living/carbon/C = owner
 		C.add_stress(/datum/stressevent/hungry)
 
-/datum/status_effect/debuff/hungryt2/refresh()
-	. = ..()
-	if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		C.add_stress(/datum/stressevent/hungry)
-
 /datum/status_effect/debuff/hungryt2/on_remove()
 	. = ..()
 	if(iscarbon(owner))
@@ -73,12 +61,6 @@
 	icon_state = "hunger3"
 
 /datum/status_effect/debuff/hungryt3/on_apply()
-	. = ..()
-	if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		C.add_stress(/datum/stressevent/starving)
-
-/datum/status_effect/debuff/hungryt3/refresh()
 	. = ..()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
@@ -161,12 +143,6 @@
 		var/mob/living/carbon/C = owner
 		C.add_stress(/datum/stressevent/thirst)
 
-/datum/status_effect/debuff/thirstyt2/refresh()
-	. = ..()
-	if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		C.add_stress(/datum/stressevent/thirst)
-
 /datum/status_effect/debuff/thirstyt2/on_remove()
 	. = ..()
 	if(iscarbon(owner))
@@ -185,12 +161,6 @@
 	icon_state = "thirst3"
 
 /datum/status_effect/debuff/thirstyt3/on_apply()
-	. = ..()
-	if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		C.add_stress(/datum/stressevent/parched)
-
-/datum/status_effect/debuff/thirstyt3/refresh()
 	. = ..()
 	if(iscarbon(owner))
 		var/mob/living/carbon/C = owner
@@ -329,6 +299,11 @@
 		var/mob/living/carbon/C = owner
 		C.remove_stress(/datum/stressevent/sleepytime)
 
+// We use this to not have triumph gain and dreaming tied to tiredness
+/datum/status_effect/debuff/dreamytime
+	id = "dreamytime"
+	alert_type = null
+
 /atom/movable/screen/alert/status_effect/debuff/netted
 	name = "Net"
 	desc = "<span class='boldwarning'>A net was thrown on me.. how can I move?</span>\n"
@@ -432,11 +407,6 @@
 	duration = 85
 	alert_type = null
 
-/datum/status_effect/eorapacify/on_creation(mob/living/new_owner, set_duration)
-	if(isnum(set_duration))
-		duration = set_duration
-	. = ..()
-
 /datum/status_effect/eorapacify/on_apply()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, "[type]")
 	return ..()
@@ -455,3 +425,49 @@
 	name = "Eoran Wine"
 	desc = span_warning("I am intoxicated from ambromsia not meant for mortal mouths.\n")
 	icon_state = "drunk"
+
+
+/datum/status_effect/debuff/call_to_slaughter
+	id = "call_to_slaughter"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/call_to_slaughter
+	effectedstats = list("endurance" = -2, "constitution" = -2)
+	duration = 2.5 MINUTES
+
+/atom/movable/screen/alert/status_effect/debuff/call_to_slaughter
+	name = "Call to Slaughter"
+	desc = "A putrid rotting scent fills your nose as Graggar's call for slaughter rattles you to your core.."
+	icon_state = "call_to_slaughter"
+
+/datum/status_effect/debuff/baothadruqks
+	id = "baothadruqks"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/baothadruqks
+	effectedstats = list(STATKEY_PER = -2, STATKEY_SPD = -1, STATKEY_LCK = -5)
+	duration = 20 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/baothadruqks
+	name = "Baothan Dust"
+	desc = span_warning("Someone blew some powders at me..\n")
+	icon_state = "drunk"
+
+/datum/status_effect/debuff/lux_drained
+	id = "lux_drained"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/lux_drained
+	effectedstats = list(STATKEY_LCK = -3, STATKEY_CON = -1, STATKEY_END = -1, STATKEY_INT = -1, STATKEY_PER = -1, STATKEY_SPD = -1, STATKEY_STR = -1)
+	duration = -1
+
+/atom/movable/screen/alert/status_effect/debuff/lux_drained
+	name = "Lux Drained"
+	desc = span_danger("I can't feel my soul, WHY CAN'T I FEEL MY SOUL!\n")
+
+//charflaw variant of lux_drained, used when the flaw is selected
+/datum/status_effect/debuff/flaw_lux_taken
+	id = "lux_taken"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/flaw_lux_taken
+	effectedstats = list(STATKEY_LCK = -3, STATKEY_CON = -1, STATKEY_END = -1, STATKEY_INT = -1, STATKEY_PER = -1, STATKEY_SPD = -1, STATKEY_STR = -1)
+	duration = -1
+
+/atom/movable/screen/alert/status_effect/debuff/flaw_lux_taken
+	name = "Lux Drained"
+	desc = span_danger("Oh- \n I don't... have it anymore.\n")
+
+

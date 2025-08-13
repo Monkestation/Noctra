@@ -45,8 +45,8 @@
 /datum/wound/artery/neck
 	name = "torn carotid"
 	check_name = "<span class='artery'><B>CAROTID</B></span>"
-	severity = WOUND_SEVERITY_FATAL
 	crit_message = "Blood sprays from %VICTIM's throat!"
+	severity = WOUND_SEVERITY_FATAL
 	whp = 100
 	sewn_whp = 25
 	bleed_rate = 60
@@ -54,10 +54,13 @@
 	woundpain = 45
 	sewn_woundpain = 20
 	mob_overlay = "s1_throat"
+	mortal = TRUE
 
 /datum/wound/artery/neck/on_mob_gain(mob/living/affected)
 	. = ..()
 	ADD_TRAIT(affected, TRAIT_GARGLE_SPEECH, "[type]")
+	if(HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS))
+		affected.death()
 
 /datum/wound/artery/neck/on_mob_loss(mob/living/affected)
 	. = ..()
@@ -66,6 +69,7 @@
 /datum/wound/artery/chest
 	name = "aortic dissection"
 	check_name = "<span class='artery'><B>AORTA</B></span>"
+	crit_message = "A tide of blood gushes from %VICTIM's chest!"
 	severity = WOUND_SEVERITY_FATAL
 	whp = 100
 	sewn_whp = 35
@@ -73,6 +77,7 @@
 	sewn_bleed_rate = 0.8
 	woundpain = 80
 	sewn_woundpain = 50
+	mortal = TRUE
 
 /datum/wound/artery/chest/on_mob_gain(mob/living/affected)
 	. = ..()
@@ -87,8 +92,6 @@
 		"MY HEART IS BLEEDING!",
 	)
 	to_chat(affected, "<span class='userdanger'>[pick(heartaches)]</span>")
-	if(HAS_TRAIT(affected, TRAIT_CRITICAL_WEAKNESS))
-		affected.death()
 
 /datum/wound/artery/chest/on_life()
 	. = ..()

@@ -2,8 +2,8 @@
 	name = "pointer"
 	icon = 'icons/mob/screen_gen.dmi'
 	icon_state = "arrow"
-	layer = POINT_LAYER
-	duration = 25
+	plane = POINT_PLANE
+	duration = 3 SECONDS
 
 /obj/effect/temp_visual/point/still
 	icon_state = "arrow_still"
@@ -22,10 +22,3 @@
 	icon = 'icons/obj/chempuff.dmi'
 	pass_flags = PASSTABLE | PASSGRILLE
 	layer = FLY_LAYER
-
-/obj/effect/decal/fakelattice
-	name = "lattice"
-	desc = ""
-	icon = 'icons/obj/smooth_structures/lattice.dmi'
-	icon_state = "lattice"
-	density = TRUE

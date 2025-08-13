@@ -24,6 +24,8 @@
 
 
 /mob/Login()
+	if(QDELETED(src) || QDELETED(client))
+		return
 	GLOB.player_list |= src
 	lastKnownIP	= client.address
 	computer_id	= client.computer_id
@@ -42,7 +44,7 @@
 
 	..()
 	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
-	
+
 	if (client && key != client.key)
 		key = client.key
 	reset_perspective(loc)
@@ -70,11 +72,12 @@
 
 	update_client_colour()
 	update_mouse_pointer()
+	update_ambience_area(get_area(src))
+
+	if(!can_hear())
+		stop_sound_channel(CHANNEL_AMBIENCE)
+
 	if(client)
-		client.change_view(CONFIG_GET(string/default_view)) // Resets the client.view in case it was changed.
-
-		client.show_popup_menus = FALSE
-
 		if(client.player_details.player_actions.len)
 			for(var/datum/action/A in client.player_details.player_actions)
 				A.Grant(src)
@@ -89,10 +92,13 @@
 		do_game_over()
 
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
+	enable_client_mobs_in_contents(client)
+
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
 	addtimer(CALLBACK(src, PROC_REF(send_pref_messages)), 2 SECONDS)
 	if(client.holder)
 		client.hearallasghost()
+	resend_all_uis()
 
 /mob/proc/send_pref_messages()
 	if(client?.prefs)

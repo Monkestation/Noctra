@@ -1,5 +1,15 @@
 /datum/sprite_accessory
 	abstract_type = /datum/sprite_accessory
+	/// Name of the sprite accessories, which may be presented to pick from in the preferences menu
+	var/name
+	/// Icon file of the accessory
+	var/icon
+	/// Icon state of the accessory
+	var/icon_state
+	///our dynamic file used incases where we need to cull a specific portion like hair
+	var/dynamic_file
+	///this accessories gender
+	var/gender = NEUTER
 	/// Whether the states for this accessory have an extra state that will get overlayed ontop of the resulting state. Per layer, suffix "_extra"
 	var/extra_state = FALSE
 	/// Pixel x offset
@@ -24,6 +34,8 @@
 	var/gendered_variants = FALSE
 	/// List of generated icons based on the [type x icon_state x colors] combination.
 	var/static/list/accessory_icon_cache = list()
+	///are we emissive
+	var/glows = FALSE
 
 /datum/sprite_accessory/New()
 	if(color_keys > 1)
@@ -36,20 +48,31 @@
 /datum/sprite_accessory/proc/is_visible(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	return TRUE
 
-/datum/sprite_accessory/proc/generic_gender_feature_adjust(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner, feature_male_key, feature_female_key)
-	if(!ishuman(owner))
+/datum/sprite_accessory/proc/generic_gender_feature_adjust(list/appearance_list, obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner, feature_key)
+	if(QDELETED(owner) || !ishuman(owner))
 		return
-	var/mob/living/carbon/human/humie = owner
-	var/datum/species/species = owner.dna.species
-	for(var/mutable_appearance/appearance as anything in appearance_list)
-		var/list/offset_list
-		if(humie.gender == FEMALE)
-			offset_list = species.offset_features[feature_female_key]
-		else
-			offset_list = species.offset_features[feature_male_key]
-		if(offset_list)
-			appearance.pixel_x += offset_list[1]
-			appearance.pixel_y += offset_list[2]
+
+	var/mob/living/carbon/human/H = owner
+	var/datum/species/species = H.dna?.species
+
+	if(!species)
+		return
+
+	var/use_female_sprites = FALSE
+	if(species?.sexes)
+		if(H.gender == FEMALE && !species.swap_female_clothes || H.gender == MALE && species.swap_male_clothes)
+			use_female_sprites = FEMALE_SPRITES
+
+	var/list/offsets
+	if(use_female_sprites)
+		offsets = (H.age == AGE_CHILD) ? species.offset_features_child : species.offset_features_f
+	else
+		offsets = (H.age == AGE_CHILD) ? species.offset_features_child : species.offset_features_m
+
+	if(LAZYACCESS(offsets, feature_key))
+		for(var/mutable_appearance/appearance as anything in appearance_list)
+			appearance.pixel_x += offsets[feature_key][1]
+			appearance.pixel_y += offsets[feature_key][2]
 
 /datum/sprite_accessory/proc/validate_color_keys_for_owner(mob/living/carbon/owner, colors)
 	if(!color_keys)
@@ -73,6 +96,8 @@
 		owner = organ.owner
 	else if (bodypart)
 		owner = bodypart.owner
+		if(!owner)
+			owner = bodypart.original_owner
 	else
 		return
 	if(!is_visible(organ, bodypart, owner))
@@ -80,16 +105,16 @@
 	var/icon_state_to_use = get_icon_state(organ, bodypart, owner)
 	if(!icon_state_to_use)
 		return null
-	var/list/appearance_list = get_overlay(icon_state_to_use, color_string)
+	var/list/appearance_list = get_overlay(icon_state_to_use, color_string, dummy_block = istype(owner, /mob/living/carbon/human/dummy))
 	adjust_appearance_list(appearance_list, organ, bodypart, owner)
 	return appearance_list
 
-/datum/sprite_accessory/proc/get_overlay(overlay_icon_state, color_string)
+/datum/sprite_accessory/proc/get_overlay(overlay_icon_state, color_string, dummy_block = FALSE)
 	color_string = sanitize_color_string(color_string)
-	var/key = "[type]-[overlay_icon_state]-[color_string]"
+	var/key = "[type]-[overlay_icon_state]-[color_string]-[glows]"
 	if(!accessory_icon_cache[key])
 		var/list/icon_states = generate_icon_states(overlay_icon_state, color_string)
-		var/icon/icon_bundle = icon('icons/Testing/greyscale_error.dmi')
+		var/icon/icon_bundle = icon('icons/testing/greyscale_error.dmi')
 		for(var/icon_state in icon_states)
 			icon_bundle.Insert(icon_states[icon_state], icon_state)
 
@@ -103,14 +128,27 @@
 			var/mutable_appearance/appearance = mutable_appearance(cached_icon, "[overlay_icon_state]_[get_layer_suffix(iterated_layer)]", layer = -iterated_layer)
 			appearance.pixel_x = pixel_x
 			appearance.pixel_y = pixel_y
-			//appearance.overlays += emissive_blocker(cached_icon, "[overlay_icon_state]_[get_layer_suffix(iterated_layer)]")
+			if(!dummy_block)
+				appearance.overlays += emissive_blocker(cached_icon, "[overlay_icon_state]_[get_layer_suffix(iterated_layer)]")
 			appearance_list += appearance
+			if(glows)
+				var/mutable_appearance/emissive = emissive_appearance(icon, "[overlay_icon_state]_[get_layer_suffix(iterated_layer)]", layer = -iterated_layer, appearance_flags = KEEP_TOGETHER)
+				emissive.pixel_x = pixel_x
+				emissive.pixel_y = pixel_y
+				appearance_list += emissive
 	else
 		var/mutable_appearance/appearance = mutable_appearance(cached_icon, overlay_icon_state, layer = -layer)
 		appearance.pixel_x = pixel_x
 		appearance.pixel_y = pixel_y
-		//appearance.overlays += emissive_blocker(cached_icon, overlay_icon_state)
+		if(!dummy_block)
+			appearance.overlays += emissive_blocker(cached_icon, overlay_icon_state)
 		appearance_list += appearance
+		if(glows)
+			var/mutable_appearance/emissive = emissive_appearance(icon, overlay_icon_state, layer = -layer)
+			emissive.pixel_x = pixel_x
+			emissive.pixel_y = pixel_y
+			appearance_list += emissive
+
 	return appearance_list
 
 /datum/sprite_accessory/proc/sanitize_color_string(color_string)
@@ -208,40 +246,27 @@
 			return KEY_MUT_COLOR_THREE
 
 /proc/color_key_source_list_from_prefs(datum/preferences/prefs)
-	var/list/features = prefs.features
-	var/list/sources = list()
-	sources[KEY_MUT_COLOR_ONE] = features["mcolor"]
-	sources[KEY_MUT_COLOR_TWO] = features["mcolor2"]
-	sources[KEY_MUT_COLOR_THREE] = features["mcolor3"]
-	/// Read specific organ entries to deduce eye, hair and facial hair color
-	if(MUTCOLORS in prefs.pref_species.species_traits)
-		sources[KEY_SKIN_COLOR] = sources[KEY_MUT_COLOR_ONE]
-	else
+	if(istype(prefs))
+		var/list/sources = list()
 		sources[KEY_SKIN_COLOR] = prefs.skin_tone
-	sources[KEY_EYE_COLOR] = prefs.get_eye_color()
-	sources[KEY_HAIR_COLOR] = prefs.get_hair_color()
-	sources[KEY_FACE_HAIR_COLOR] = prefs.get_facial_hair_color()
-	sources[KEY_CHEST_COLOR] = sources[KEY_SKIN_COLOR]
-	var/chest_color = prefs.get_chest_color()
-	if(chest_color)
-		sources[KEY_CHEST_COLOR] = chest_color
-	return sources
+		sources[KEY_EYE_COLOR] = prefs.get_eye_color()
+		sources[KEY_HAIR_COLOR] = prefs.get_hair_color()
+		sources[KEY_FACE_HAIR_COLOR] = prefs.get_facial_hair_color()
+		sources[KEY_CHEST_COLOR] = sources[KEY_SKIN_COLOR]
+		var/chest_color = prefs.get_chest_color()
+		if(chest_color)
+			sources[KEY_CHEST_COLOR] = chest_color
+		return sources
+	else
+		return color_key_source_list_from_carbon(prefs)
+
 
 /proc/color_key_source_list_from_carbon(mob/living/carbon/carbon)
-	var/datum/dna/dna = carbon.dna
-	var/datum/species/species = dna.species
-	var/list/features = dna.features
 	var/list/sources = list()
-	sources[KEY_MUT_COLOR_ONE] = features["mcolor"]
-	sources[KEY_MUT_COLOR_TWO] = features["mcolor2"]
-	sources[KEY_MUT_COLOR_THREE] = features["mcolor3"]
 	/// Read specific organ DNA entries to deduce eye, hair and facial hair color
 	if(ishuman(carbon))
 		var/mob/living/carbon/human/human = carbon
-		if(MUTCOLORS in species.species_traits)
-			sources[KEY_SKIN_COLOR] = sources[KEY_MUT_COLOR_ONE]
-		else
-			sources[KEY_SKIN_COLOR] = human.skin_tone
+		sources[KEY_SKIN_COLOR] = human.skin_tone
 		sources[KEY_EYE_COLOR] = human.get_eye_color()
 		sources[KEY_HAIR_COLOR] = human.get_hair_color()
 		sources[KEY_FACE_HAIR_COLOR] = human.get_facial_hair_color()

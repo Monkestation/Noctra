@@ -13,6 +13,25 @@
 	sewrepair = FALSE
 	smeltresult = /obj/item/ingot/iron //no 1 to 1 conversion
 
+/obj/item/clothing/wrists/bracers/iron
+	name = "iron plate vambraces"
+	desc = "Plate forearm guards that offer good protection while allowing mobility."
+	icon_state = "ibracers"
+	item_state = "ibracers"
+	armor = ARMOR_MAILLE
+	max_integrity = INTEGRITY_STANDARD
+
+
+/obj/item/clothing/wrists/bracers/jackchain
+	name = "jack chains"
+	desc = "Thin strips of steel attached to small shoulder and elbow plates, worn on the outside of the arms to protect against slashes."
+	icon_state = "jackchain"
+	item_state = "jackchain"
+	armor = ARMOR_MAILLE
+	max_integrity = INTEGRITY_STANDARD
+	prevent_crits = CUT_AND_MINOR_CRITS
+	smeltresult = null //Gives two per smith, gives none per smelt.
+
 /obj/item/clothing/wrists/bracers/leather
 	name = "leather bracers"
 	desc = "Boiled leather bracers typically worn by archers to protect their forearms."
@@ -22,14 +41,13 @@
 	prevent_crits = list(BCLASS_LASHING, BCLASS_BITE, BCLASS_CUT)
 	resistance_flags = null
 	blocksound = SOFTHIT
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 	blade_dulling = DULLING_BASHCHOP
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	anvilrepair = null
 	sewrepair = TRUE
-	salvage_amount = 1
-	salvage_result = /obj/item/natural/hide/cured
+	salvage_result = null
 
 /obj/item/clothing/wrists/bracers/leather/advanced
 	name = "hardened leather bracers"

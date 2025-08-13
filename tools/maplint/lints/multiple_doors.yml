@@ -1,0 +1,3 @@
+/obj/structure/door:
+  banned_neighbors:
+  - /obj/structure/door

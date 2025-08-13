@@ -11,7 +11,8 @@
 	armor = ARMOR_PADDED_BAD
 	prevent_crits = CUT_AND_MINOR_CRITS
 	max_integrity = INTEGRITY_POOR
-	salvage_result = /obj/item/natural/hide/cured
+	salvage_result = null
+	item_weight = 3
 
 /obj/item/clothing/gloves/leather/black
 	color = CLOTHING_SOOT_BLACK
@@ -48,3 +49,38 @@
 	name = "apothecary gloves"
 	desc = "Thick leather gloves for pulling thorny plants... or cracking skulls."
 	icon_state = "apothgloves"
+
+/obj/item/clothing/gloves/leather/otavan
+	name = "otavan leather gloves"
+	desc = "A pair of heavy Otavan leather gloves, commonly used by fencers, renowned for their quality."
+	icon_state = "fencergloves"
+	item_state = "fencergloves"
+	armor = ARMOR_LEATHER_GOOD
+	prevent_crits = list(BCLASS_CHOP, BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
+	resistance_flags = FIRE_PROOF
+	blocksound = SOFTHIT
+	max_integrity = 250
+	blade_dulling = DULLING_BASHCHOP
+	break_sound = 'sound/foley/cloth_rip.ogg'
+	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
+	anvilrepair = null
+	sewrepair = TRUE
+
+/obj/item/clothing/gloves/leather/otavan/inqgloves
+	name = "inquisitorial leather gloves"
+	desc = "Gloves of worn leather. Alas, the psydonian fetish wrapped around one is but a powerless replica."
+	icon_state = "inqgloves"
+	item_state = "inqgloves"
+
+//Valorian Duelist Merc - On par with grenzelhoftian's stats.
+/obj/item/clothing/gloves/leather/duelgloves
+	desc = "Gloves of worn leather, Seems to be padded and commonly used by fencers, renowned for their quality.."
+	color = CLOTHING_SOOT_BLACK
+	blocksound = SOFTHIT
+	blade_dulling = DULLING_BASHCHOP
+	resistance_flags = FLAMMABLE // Made of leather
+	armor = ARMOR_LEATHER
+	prevent_crits = ALL_EXCEPT_CHOP_AND_STAB
+	max_integrity = INTEGRITY_STANDARD
+	salvage_result = /obj/item/natural/fur
+	item_weight = 4

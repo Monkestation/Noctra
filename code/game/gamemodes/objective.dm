@@ -11,16 +11,32 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/completed = 0					//currently only used for custom objectives.
 	var/martyr_compatible = 0			//If the objective is compatible with martyr objective, i.e. if you can still do it while dead.
 	var/triumph_count = 1
-	var/flavor = "Objective" //so it appear as "goal", "dream", "aspiration", etc
+	var/flavor = "Goal" //so it appear as "goal", "dream", "aspiration", etc
 
-/datum/objective/New(text)
+/datum/objective/New(text, datum/mind/owner)
 	if(text)
 		explanation_text = text
+	if(owner)
+		src.owner = owner
+	on_creation()
+
+/datum/objective/proc/on_creation()
+	if(owner && !(owner in GLOB.personal_objective_minds))
+		GLOB.personal_objective_minds |= owner
+	return
 
 /datum/objective/proc/get_owners() // Combine owner and team into a single list.
 	. = (team && team.members) ? team.members.Copy() : list()
 	if(owner)
 		. += owner
+
+/datum/objective/proc/escalate_objective(event_track = EVENT_TRACK_PERSONAL, second_event_track = EVENT_TRACK_INTERVENTION)
+	if(event_track)
+		var/first_points_to_add = SSgamemode.point_thresholds[event_track] * rand(0.5, 0.75)
+		SSgamemode.event_track_points[event_track] += first_points_to_add
+	if(second_event_track)
+		var/second_points_to_add = SSgamemode.point_thresholds[second_event_track] * rand(0.05, 0.1)
+		SSgamemode.event_track_points[second_event_track] += second_points_to_add
 
 /datum/objective/proc/admin_edit(mob/admin)
 	return
@@ -102,8 +118,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		dupe_search_range = get_owners()
 	var/list/possible_targets = list()
 	var/try_target_late_joiners = FALSE
-	for(var/I in owners)
-		var/datum/mind/O = I
+	for(var/datum/mind/O as anything in owners)
 		if(O.late_joiner)
 			try_target_late_joiners = TRUE
 	for(var/datum/mind/possible_target in get_crewmember_minds())
@@ -112,39 +127,12 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 				possible_targets += possible_target
 	if(try_target_late_joiners)
 		var/list/all_possible_targets = possible_targets.Copy()
-		for(var/I in all_possible_targets)
-			var/datum/mind/PT = I
+		for(var/datum/mind/PT as anything in all_possible_targets)
 			if(!PT.late_joiner)
 				possible_targets -= PT
 		if(!possible_targets.len)
 			possible_targets = all_possible_targets
 	if(possible_targets.len > 0)
-		target = pick(possible_targets)
-	update_explanation_text()
-	return target
-
-/datum/objective/proc/find_target_by_role(role, role_type=FALSE,invert=FALSE)//Option sets either to check assigned role or special role. Default to assigned., invert inverts the check, eg: "Don't choose a Ling"
-	var/list/datum/mind/owners = get_owners()
-	var/list/possible_targets = list()
-	for(var/datum/mind/possible_target in get_crewmember_minds())
-		if(!(possible_target in owners) && ishuman(possible_target.current))
-			var/is_role = FALSE
-			if(role_type)
-				if(possible_target.special_role == role)
-					is_role = TRUE
-			else
-				if(possible_target.assigned_role == role)
-					is_role = TRUE
-
-			if(invert)
-				if(is_role)
-					continue
-				possible_targets += possible_target
-				break
-			else if(is_role)
-				possible_targets += possible_target
-				break
-	if(length(possible_targets))
 		target = pick(possible_targets)
 	update_explanation_text()
 	return target
@@ -158,7 +146,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	if(receiver && receiver.current)
 		if(ishuman(receiver.current))
 			var/mob/living/carbon/human/H = receiver.current
-			var/list/slots = list("backpack" = SLOT_IN_BACKPACK)
+			var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK)
 			for(var/eq_path in special_equipment)
 				var/obj/O = new eq_path
 				H.equip_in_one_of_slots(O, slots)
@@ -169,18 +157,13 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	martyr_compatible = 0
 	triumph_count = 3
 
-/datum/objective/assassinate/find_target_by_role(role, role_type=FALSE,invert=FALSE)
-	if(!invert)
-		target_role_type = role_type
-	..()
-
 /datum/objective/assassinate/check_completion()
 	return completed || (!considered_alive(target))
 
 /datum/objective/assassinate/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Put [target.name] the [!target_role_type ? target.assigned_role : target.special_role] to sleep forever."
+		explanation_text = "Put [target.name] the [!target_role_type ? target.assigned_role.title : target.special_role] to sleep forever."
 
 /datum/objective/assassinate/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
@@ -198,11 +181,6 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/target_role_type=FALSE
 	martyr_compatible = 1
 
-/datum/objective/mutiny/find_target_by_role(role, role_type=FALSE,invert=FALSE)
-	if(!invert)
-		target_role_type = role_type
-	..()
-
 /datum/objective/mutiny/check_completion()
 	if(!target || !considered_alive(target) || considered_afk(target))
 		return TRUE
@@ -212,7 +190,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/mutiny/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Assassinate or exile [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "Assassinate or exile [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]."
 	else
 		explanation_text = "Free Objective"
 
@@ -221,17 +199,12 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	var/target_role_type=FALSE
 	martyr_compatible = 1
 
-/datum/objective/maroon/find_target_by_role(role, role_type=FALSE,invert=FALSE)
-	if(!invert)
-		target_role_type = role_type
-	..()
-
 /datum/objective/maroon/check_completion()
 	return !target || !considered_alive(target) || (!target.current.onCentCom())
 
 /datum/objective/maroon/update_explanation_text()
 	if(target && target.current)
-		explanation_text = "Prevent [target.name], the [!target_role_type ? target.assigned_role : target.special_role], from escaping alive."
+		explanation_text = "Prevent [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role], from escaping alive."
 	else
 		explanation_text = "Free Objective"
 
@@ -241,11 +214,6 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/debrain
 	name = "debrain"
 	var/target_role_type=0
-
-/datum/objective/debrain/find_target_by_role(role, role_type=FALSE,invert=FALSE)
-	if(!invert)
-		target_role_type = role_type
-	..()
 
 /datum/objective/debrain/check_completion()
 	if(!target)//If it's a free objective.
@@ -265,7 +233,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/debrain/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Steal the brain of [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "Steal the brain of [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]."
 	else
 		explanation_text = "Free Objective"
 
@@ -274,15 +242,9 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 
 /datum/objective/protect//The opposite of killing a dude.
 	name = "protect"
-	martyr_compatible = 1
+	martyr_compatible = TRUE
 	var/target_role_type = FALSE
 	var/human_check = TRUE
-
-/datum/objective/protect/find_target_by_role(role, role_type=FALSE,invert=FALSE)
-	if(!invert)
-		target_role_type = role_type
-	..()
-	return target
 
 /datum/objective/protect/check_completion()
 	return !target || considered_alive(target, enforce_human = human_check)
@@ -290,7 +252,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/protect/update_explanation_text()
 	..()
 	if(target && target.current)
-		explanation_text = "Protect [target.name], the [!target_role_type ? target.assigned_role : target.special_role]."
+		explanation_text = "Protect [target.name], the [!target_role_type ? target.assigned_role.title : target.special_role]."
 	else
 		explanation_text = "Free Objective"
 
@@ -318,8 +280,6 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 		if(!considered_escaped(M))
 			return FALSE
 	return TRUE
-
-
 
 /datum/objective/dungeoneer
 	name = "protect"
@@ -392,7 +352,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 			if(!is_unique_objective(possible_item.targetitem,dupe_search_range))
 				continue
 			for(var/datum/mind/M in owners)
-				if(M.current.mind.assigned_role in possible_item.excludefromjob)
+				if(M.current.mind.assigned_role.title in possible_item.excludefromjob)
 					continue check_items
 			approved_targets += possible_item
 	return set_target(safepick(approved_targets))
@@ -562,11 +522,10 @@ GLOBAL_LIST_EMPTY(possible_items)
 		/datum/objective/steal,
 		/datum/objective/capture,
 		/datum/objective/custom
-	),/proc/cmp_typepaths_asc)
+	),GLOBAL_PROC_REF(cmp_typepaths_asc))
 
-	for(var/T in allowed_types)
-		var/datum/objective/X = T
-		GLOB.admin_objective_list[initial(X.name)] = T
+	for(var/datum/objective/objective as anything in allowed_types)
+		GLOB.admin_objective_list[initial(objective.name)] = objective
 
 /datum/objective/contract
 	var/payout = 0
@@ -577,7 +536,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 /datum/objective/contract/proc/generate_dropoff()
 	var/found = FALSE
 	while (!found)
-		var/area/dropoff_area = pick(GLOB.sortedAreas)
+		var/area/dropoff_area = pick(GLOB.areas)
 		if(dropoff_area && is_station_level(dropoff_area.z) && !dropoff_area.outdoors)
 			dropoff = dropoff_area
 			found = TRUE

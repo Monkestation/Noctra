@@ -38,30 +38,9 @@
 /datum/reagent/consumable/coffee/on_mob_life(mob/living/carbon/M)
 	M.dizziness = max(0,M.dizziness-5)
 	M.drowsyness = max(0,M.drowsyness-3)
-	M.AdjustSleeping(-40, FALSE)
+	M.AdjustSleeping(-40)
 	//310.15 is the normal bodytemp.
 	M.adjust_bodytemperature(25 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
-	..()
-	. = 1
-
-/datum/reagent/consumable/tea
-	name = "Tea"
-	description = "Tasty black tea, it has antioxidants, it's good for you!"
-	color = "#101000" // rgb: 16, 16, 0
-	nutriment_factor = 0
-	taste_description = "tart black tea"
-	glass_icon_state = "teaglass"
-	glass_name = "glass of tea"
-	glass_desc = ""
-
-/datum/reagent/consumable/tea/on_mob_life(mob/living/carbon/M)
-	M.dizziness = max(0,M.dizziness-2)
-	M.drowsyness = max(0,M.drowsyness-1)
-	M.jitteriness = max(0,M.jitteriness-3)
-	M.AdjustSleeping(-20, FALSE)
-	if(M.getToxLoss() && prob(20))
-		M.adjustToxLoss(-1, 0)
-	M.adjust_bodytemperature(20 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
 	..()
 	. = 1
 
@@ -78,3 +57,72 @@
 /datum/reagent/consumable/ice/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(-5 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
 	..()
+
+/datum/reagent/consumable/golden_calendula_tea
+	name = "Golden Calendula Tea"
+	description = "A refreshing tea, great to soothe wounds and relieve fatigue."
+	color = "#b38e17"
+
+/datum/reagent/consumable/golden_calendula_tea/on_mob_life(mob/living/carbon/M)
+	if(!HAS_TRAIT(M,TRAIT_NOSTAMINA))
+		M.adjust_stamina(-0.5, internal_regen = FALSE)
+	if(M.blood_volume < BLOOD_VOLUME_NORMAL)
+		M.blood_volume = min(M.blood_volume+5, BLOOD_VOLUME_MAXIMUM)
+	var/list/wCount = M.get_wounds()
+	if(wCount.len > 0)
+		M.heal_wounds(1) //at a motabalism of .5 U a tick this translates to 120WHP healing with 20 U Most wounds are unsewn 15-100. This is powerful on single wounds but rapidly weakens at multi wounds.
+	if(volume > 0.99)
+		M.adjustBruteLoss(-0.75*REM, 0)
+		M.adjustFireLoss(-0.75*REM, 0)
+		M.adjustOxyLoss(-0.25, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1*REM)
+		M.adjustCloneLoss(-0.75*REM, 0)
+	..()
+
+/datum/reagent/consumable/soothing_valerian_tea
+	name = "Soothing Valerin Tea"
+	description = "A refreshing tea, great to ease fatigue and relieve stress."
+	color = "#3b9146"
+	quality = DRINK_FANTASTIC
+
+/datum/reagent/consumable/soothing_valerian_tea/on_mob_life(mob/living/carbon/M)
+	if(!HAS_TRAIT(M,TRAIT_NOSTAMINA))
+		M.adjust_stamina(-0.3, internal_regen = FALSE)
+	..()
+
+/datum/reagent/consumable/caffeine
+	name = "Caffeine"
+	description = "Why are you seeing this?"
+	hydration_factor = 5
+	overdose_threshold = 60
+
+/datum/reagent/consumable/caffeine/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	M.adjust_stamina(5)
+	M.apply_status_effect(/datum/status_effect/buff/vigor)
+
+/datum/reagent/consumable/caffeine/overdose_process(mob/living/carbon/M)
+	. = ..()
+	M.Jitter(2)
+	if(prob(5))
+		M.heart_attack()
+
+/datum/reagent/consumable/caffeine/coffee
+	name = "Coffee"
+	description = "Coffee beans brewed into a hot drink. With a hint of bitterness. Rejuvenating."
+	reagent_state = LIQUID
+	color = "#482000"
+	taste_description = "caramelized bitterness" // coffee has so many flavors I am going for one
+	metabolization_rate = REAGENTS_METABOLISM
+	alpha = 173
+	quality = DRINK_GOOD
+
+/datum/reagent/consumable/caffeine/tea
+	name = "Exotic Tea"
+	description = "Tea leaves brewed into a hot drink. Slight hint of bitterness. Smooth."
+	reagent_state = LIQUID
+	color = "#508141" // Deeper green to make it look better
+	taste_description = "smooth grassiness" // Yeah, uh.
+	metabolization_rate = REAGENTS_METABOLISM
+	alpha = 173
+	quality = DRINK_GOOD

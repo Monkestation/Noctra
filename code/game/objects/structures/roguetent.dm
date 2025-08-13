@@ -2,12 +2,13 @@
 /obj/structure/roguetent
 	name = "tent door"
 	desc = "A door made of sturdy fabric and wooden frames."
-	icon = 'icons/turf/roguewall.dmi'
+	icon = 'icons/turf/walls.dmi'
 	icon_state = "tent_door1"
 	layer = TABLE_LAYER
 	density = TRUE
 	anchored = TRUE
 	opacity = FALSE
+	weatherproof = TRUE
 	max_integrity = 100
 	var/base_state = "tent_door"
 	blade_dulling = DULLING_BASHCHOP
@@ -15,10 +16,11 @@
 	destroy_sound = 'sound/combat/hits/onwood/destroywalldoor.ogg'
 
 /obj/structure/roguetent/Initialize()
-	update_icon()
-	..()
+	. = ..()
+	update_appearance(UPDATE_ICON_STATE)
 
-/obj/structure/roguetent/update_icon()
+/obj/structure/roguetent/update_icon_state()
+	. = ..()
 	if(density)
 		icon_state = "[base_state][pick(1,2)]"
 	else
@@ -29,14 +31,14 @@
 	playsound(src, 'sound/foley/equip/rummaging-02.ogg', 100, FALSE)
 	density = FALSE
 	opacity = FALSE
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/roguetent/proc/close_up(mob/user)
 	visible_message("<span class='info'>[user] closes [src].</span>")
 	playsound(src, 'sound/foley/equip/rummaging-02.ogg', 100, FALSE)
 	density = TRUE
 	opacity = TRUE
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/roguetent/attack_paw(mob/living/user)
 	attack_hand(user)

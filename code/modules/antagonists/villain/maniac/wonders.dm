@@ -1,52 +1,3 @@
-//Wonder recipes
-//NOTE: Wonders are named after their proper keys, the wonder structure handles that code
-/datum/crafting_recipe/structure/wonder
-	name = "wonder"
-	result = /obj/structure/wonder
-	reqs = list(
-		/obj/item/bodypart = 2,
-		/obj/item/organ/stomach = 1,
-	)
-	verbage = "constructs"
-	craftsound = 'sound/foley/Building-01.ogg'
-	skillcraft = null
-	always_availible = FALSE
-	subtype_reqs = TRUE
-
-/datum/crafting_recipe/structure/wonder/first
-	name = "first wonder (2 bodyparts, 1 stomach)"
-	result = /obj/structure/wonder
-	reqs = list(
-		/obj/item/bodypart = 2,
-		/obj/item/organ/stomach = 1,
-	)
-
-/datum/crafting_recipe/structure/wonder/second
-	name = "second wonder (2 bodyparts, 2 lungs)"
-	result = /obj/structure/wonder
-	reqs = list(
-		/obj/item/bodypart = 2,
-		/obj/item/organ/lungs = 2,
-	)
-
-/datum/crafting_recipe/structure/wonder/third
-	name = "third wonder (2 bodyparts, 3 heads, 2 stomachs)"
-	result = /obj/structure/wonder
-	reqs = list(
-		/obj/item/bodypart/head = 3,
-		/obj/item/bodypart = 2,
-		/obj/item/organ/stomach = 2,
-	)
-
-/datum/crafting_recipe/structure/wonder/fourth
-	name = "fourth wonder (4 tongues, 3 eyes, 4 livers)"
-	result = /obj/structure/wonder
-	reqs = list(
-		/obj/item/organ/tongue = 4,
-		/obj/item/organ/eyes = 3,
-		/obj/item/organ/liver = 4,
-	)
-
 //Wonder structure
 /obj/structure/wonder
 	name = "wonder"
@@ -54,7 +5,7 @@
 	icon = 'icons/roguetown/maniac/creations.dmi'
 	icon_state = "creation1"
 	resistance_flags = INDESTRUCTIBLE
-	density = TRUE
+	density = FALSE
 	anchored = TRUE
 	/// The maniac that made this structure
 	var/datum/antagonist/maniac/dream_master

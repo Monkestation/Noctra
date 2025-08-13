@@ -3,9 +3,8 @@
 	greet_text = "You are the captain of a dwarven's expedition, following the tracks of Matthios's influence you shall lead your party in Malum's name."
 	outfit = /datum/outfit/job/dwarven_company/captain
 
-	allowed_races = list("Dwarf")
+	allowed_races = list(SPEC_ID_DWARF)
 	grant_lit_torch = TRUE
-	show_wanderer_examine = FALSE
 
 /datum/outfit/job/dwarven_company/captain/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -30,23 +29,23 @@
 	H.change_stat(STATKEY_SPD, 1)
 
 	if(H.mind)
-		H.mind?.adjust_skillrank(/datum/skill/combat/shields, 4, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/axesmaces, 4, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/blacksmithing, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/armorsmithing, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/weaponsmithing, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/smelting, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/engineering, 1, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/traps, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/shields, 4, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/axesmaces, 4, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/blacksmithing, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/armorsmithing, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/smelting, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/engineering, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/traps, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
 		ADD_TRAIT(H, TRAIT_MALUMFIRE, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
@@ -56,34 +55,33 @@
 	greet_text = " You are the weaponsmith of a dwarven expedition, obey your foremand as they lead you in Malum's name into the tomb of Matthios."
 	outfit = /datum/outfit/job/dwarven_company/weaponsmith
 
-	allowed_races = list("Dwarf")
+	allowed_races = list(SPEC_ID_DWARF)
 	grant_lit_torch = TRUE
-	show_wanderer_examine = FALSE
 
 /datum/outfit/job/dwarven_company/weaponsmith/pre_equip(mob/living/carbon/human/H)
 	..()
-	id = /obj/item/clothing/ring/silver/makers_guild
+	ring = /obj/item/clothing/ring/silver/makers_guild
 	head = /obj/item/clothing/head/hatfur
 	if(prob(50))
 		head = /obj/item/clothing/head/hatblu
 	if(H.mind)
-		H.mind?.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/blacksmithing, 4, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/armorsmithing, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/weaponsmithing, 4, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/smelting, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/engineering, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/traps, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/blacksmithing, 4, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/armorsmithing, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 4, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/smelting, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/engineering, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/traps, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
 		ADD_TRAIT(H, TRAIT_MALUMFIRE, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 		if(H.age == AGE_OLD)
-			H.mind?.adjust_skillrank(/datum/skill/craft/blacksmithing, pick(1,2), TRUE)
-			H.mind?.adjust_skillrank(/datum/skill/craft/weaponsmithing, pick(1,2), TRUE)
+			H.adjust_skillrank(/datum/skill/craft/blacksmithing, pick(1,2), TRUE)
+			H.adjust_skillrank(/datum/skill/craft/weaponsmithing, pick(1,2), TRUE)
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/trou
 		shoes = /obj/item/clothing/shoes/boots/leather
@@ -99,7 +97,7 @@
 		H.change_stat(STATKEY_SPD, -1)
 	else
 		pants = /obj/item/clothing/pants/trou
-		shirt = /obj/item/clothing/shirt/dress/gen/random
+		shirt = /obj/item/clothing/shirt/dress/gen/colored/random
 		armor = /obj/item/clothing/armor/leather/splint
 		shoes = /obj/item/clothing/shoes/shortboots
 		belt = /obj/item/storage/belt/leather
@@ -116,34 +114,33 @@
 	greet_text = " You are the armorsmith of a dwarven expedition, obey your foremand as they lead you in Malum's name into the tomb of Matthios."
 	outfit = /datum/outfit/job/dwarven_company/armorsmith
 
-	allowed_races = list("Dwarf")
+	allowed_races = list(SPEC_ID_DWARF)
 	grant_lit_torch = TRUE
-	show_wanderer_examine = FALSE
 
 /datum/outfit/job/dwarven_company/armorsmith/pre_equip(mob/living/carbon/human/H)
 	..()
-	id = /obj/item/clothing/ring/silver/makers_guild
+	ring = /obj/item/clothing/ring/silver/makers_guild
 	head = /obj/item/clothing/head/hatfur
 	if(prob(50))
 		head = /obj/item/clothing/head/hatblu
 	if(H.mind)
-		H.mind?.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/blacksmithing, 4, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/armorsmithing, 4, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/weaponsmithing, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/smelting, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/engineering, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/traps, 2, TRUE) //
-		H.mind?.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/blacksmithing, 4, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/armorsmithing, 4, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/smelting, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/engineering, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/traps, 2, TRUE) //
+		H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
 		ADD_TRAIT(H, TRAIT_MALUMFIRE, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 		if(H.age == AGE_OLD)
-			H.mind?.adjust_skillrank(/datum/skill/craft/blacksmithing, pick(1,2), TRUE)
-			H.mind?.adjust_skillrank(/datum/skill/craft/armorsmithing, pick(1,2), TRUE)
+			H.adjust_skillrank(/datum/skill/craft/blacksmithing, pick(1,2), TRUE)
+			H.adjust_skillrank(/datum/skill/craft/armorsmithing, pick(1,2), TRUE)
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/trou
 		shoes = /obj/item/clothing/shoes/simpleshoes/buckle
@@ -159,7 +156,7 @@
 		H.change_stat(STATKEY_SPD, -1)
 	else
 		pants = /obj/item/clothing/pants/trou
-		shirt = /obj/item/clothing/shirt/dress/gen/random
+		shirt = /obj/item/clothing/shirt/dress/gen/colored/random
 		armor = /obj/item/clothing/armor/chainmail
 		shoes = /obj/item/clothing/shoes/shortboots
 		belt = /obj/item/storage/belt/leather

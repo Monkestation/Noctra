@@ -7,8 +7,7 @@
 		//If a specific bodypart is targetted, check how that bodypart is protected and return the value.
 
 	//If you don't specify a bodypart, it checks ALL my bodyparts for protection, and averages out the values
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in bodyparts)
 		armorval += checkarmor(BP, type, damage, armor_penetration)
 		organnum++
 	return (armorval/max(organnum, 1))
@@ -22,8 +21,7 @@
 		def_zone = CBP.body_zone
 	var/protection = 0
 	var/obj/item/clothing/used
-	//Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
-	var/list/body_parts = list(skin_armor, head, wear_mask, wear_wrists, gloves, wear_neck, cloak, wear_armor, wear_shirt, shoes, wear_pants, backr, backl, belt, s_store, ears, wear_ring)
+	var/list/body_parts = list(skin_armor, head, wear_mask, wear_wrists, gloves, wear_neck, cloak, wear_armor, wear_shirt, shoes, wear_pants, backr, backl, belt, wear_ring)
 	for(var/bp in body_parts)
 		if(!bp)
 			continue
@@ -35,15 +33,15 @@
 						continue
 				var/val = C.armor.getRating(d_type)
 				// The code below finally fixes the targetting order of armor > shirt > flesh. - Foxtrot (#gundamtanaka)
-				var/armorworn = src.get_item_by_slot(SLOT_ARMOR) // The armor we're wearing
-				var/shirtworn = src.get_item_by_slot(SLOT_SHIRT) // The shirt we're wearing
+				var/obj/item/armorworn = src.get_item_by_slot(ITEM_SLOT_ARMOR) // The armor we're wearing
+				var/obj/item/shirtworn = src.get_item_by_slot(ITEM_SLOT_SHIRT) // The shirt we're wearing
 				if(bp == armorworn) // If the targeted bodypart has an armor...
 					if(val > 0) // ...and it's an actual armor with armor values...
 						if(val > protection)
 							protection = val
 							used = armorworn // ...force us to use it above all!
 				// If we don't have armor equipped or the one we have is broken...
-				else if(bp == shirtworn && src.wear_armor?.obj_integrity <= 0 || armorworn == null)
+				else if(bp == shirtworn && (!armorworn || (armorworn.max_integrity && armorworn.obj_integrity <= 0) || !zone2covered(def_zone, armorworn.body_parts_covered)))
 					if(val > 0) // ...and it's not just a linen shirt...
 						if(val > protection)
 							protection = val
@@ -73,7 +71,7 @@
 	if(isbodypart(def_zone))
 		var/obj/item/bodypart/CBP = def_zone
 		def_zone = CBP.body_zone
-	var/list/body_parts = list(head, wear_mask, wear_wrists, wear_shirt, wear_neck, cloak, wear_armor, wear_pants, backr, backl, gloves, shoes, belt, s_store, ears, wear_ring) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
+	var/list/body_parts = list(head, wear_mask, wear_wrists, wear_shirt, wear_neck, cloak, wear_armor, wear_pants, backr, backl, gloves, shoes, belt, wear_ring)
 	for(var/bp in body_parts)
 		if(!bp)
 			continue
@@ -83,33 +81,13 @@
 				if(C.obj_integrity > 1)
 					if(d_type in C.prevent_crits)
 						return TRUE
-/*
-/mob/proc/checkwornweight()
-	return 0
 
-/mob/living/carbon/human/checkwornweight()
-	var/weight = 0
-	var/list/body_parts = list(head, wear_mask, wear_wrists, wear_shirt, wear_neck, wear_armor, wear_pants, back, gloves, shoes, belt, s_store, glasses, ears, wear_ring) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
-	for(var/bp in body_parts)
-		if(!bp)
-			continue
-		if(bp && istype(bp , /obj/item/clothing))
-			var/obj/item/clothing/C = bp
-			if(C.eweight)
-				weight +=  C.eweight
-	return max(weight, 0)
-*/
 /mob/living/carbon/human/on_hit(obj/projectile/P)
 	if(dna && dna.species)
 		dna.species.on_hit(P, src)
 
 
 /mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone = BODY_ZONE_CHEST)
-	if(istype(P, /obj/projectile/bullet))
-		if((P.damage_type == BURN) || (P.damage_type == BRUTE))
-			if(!P.nodamage && P.damage < src.health && isliving(P.firer))
-				retaliate(P.firer)
-
 	if(dna && dna.species)
 		var/spec_return = dna.species.bullet_act(P, src, def_zone)
 		if(spec_return)
@@ -123,7 +101,6 @@
 				return martial_art_result
 
 	if(!(P.original == src && P.firer == src)) //can't block or reflect when shooting yourself
-		retaliate(P.firer)
 		if(P.reflectable & REFLECT_NORMAL)
 			if(check_reflect(def_zone)) // Checks if you've passed a reflection% check
 				visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
@@ -193,7 +170,7 @@
 
 /mob/living/carbon/human/proc/check_block()
 	if(mind)
-		if(mind.martial_art && prob(mind.martial_art.block_chance) && mind.martial_art.can_use(src) && in_throw_mode && !incapacitated(FALSE, TRUE))
+		if(mind.martial_art && prob(mind.martial_art.block_chance) && mind.martial_art.can_use(src) && in_throw_mode && !incapacitated(IGNORE_GRAB))
 			return TRUE
 	return FALSE
 
@@ -209,9 +186,6 @@
 		throwpower = I.throwforce
 		if(I.thrownby == src) //No throwing stuff at myself to trigger hit reactions
 			return ..()
-		else
-			if(ismob(I.thrownby))
-				retaliate(I.thrownby)
 	if(check_shields(AM, throwpower, "\the [AM.name]", THROWN_PROJECTILE_ATTACK))
 		hitpush = FALSE
 		skipcatch = TRUE
@@ -234,8 +208,7 @@
 /mob/living/carbon/human/grippedby(mob/living/user, instant = FALSE)
 	if(wear_pants)
 		wear_pants.add_fingerprint(user)
-	retaliate(user)
-	..()
+	. = ..()
 
 
 /mob/living/carbon/human/attacked_by(obj/item/I, mob/living/user)
@@ -246,9 +219,11 @@
 	var/useder = user.zone_selected
 	if(!lying_attack_check(user,I))
 		return 0
+	var/accurate = FALSE
 	if(user.tempatarget)
 		useder = user.tempatarget
 		user.tempatarget = null
+		accurate = TRUE
 	affecting = get_bodypart(check_zone(useder)) //precise attacks, on yourself or someone you are grabbing
 //	else
 //		affecting = get_bodypart_complex(user.used_intent.height2limb(user.aimheight)) //this proc picks a bodypart at random as long as it's in the height list
@@ -261,16 +236,12 @@
 	SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[I.force]", "[I.type]"))
 	SSblackbox.record_feedback("tally", "zone_targeted", 1, useder)
 
-	if(I.force)
-		retaliate(user)
-
 	// the attacked_by code varies among species
-	return dna.species.spec_attacked_by(I, user, affecting, used_intent, src, useder)
+	return dna.species.spec_attacked_by(I, user, affecting, used_intent, src, useder, accurate)
 
 /mob/living/carbon/human/attack_hand(mob/user)
 	if(..())	//to allow surgery to return properly.
 		return
-	retaliate(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		dna.species.spec_attack_hand(H, src)
@@ -284,8 +255,6 @@
 		..() //shaking
 		return 0
 
-	retaliate(M)
-
 	if(M.used_intent.type == INTENT_DISARM) //Always drop item in hand, if no item, get stunned instead.
 		var/obj/item/I = get_active_held_item()
 		if(I && dropItemToGround(I, silent = FALSE))
@@ -295,7 +264,7 @@
 			to_chat(M, "<span class='danger'>I disarm [src]!</span>")
 		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
 			playsound(loc, 'sound/blank.ogg', 25, TRUE, -1)
-			if (src.IsKnockdown() && !src.IsParalyzed())
+			if(HAS_TRAIT(src, TRAIT_FLOORED) && !IsParalyzed())
 				Paralyze(40)
 				log_combat(M, src, "pinned")
 				visible_message("<span class='danger'>[M] pins [src] down!</span>", \
@@ -351,8 +320,6 @@
 		next_attack_msg.Cut()
 		if(nodmg)
 			return FALSE
-		else
-			retaliate(M)
 
 /mob/living/carbon/human/ex_act(severity, target, epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range)
 	..()
@@ -380,8 +347,6 @@
 				brute_loss = ((100 * (2 - round(bomb_armor*0.01, 0.05)) * ddist) - ((100 * (2 - round(bomb_armor*0.01, 0.05))) * fodist) * dmgmod)
 				burn_loss = brute_loss
 			damage_clothes(max(brute_loss - bomb_armor, 0), BRUTE, "blunt")
-//				if (!istype(ears, /obj/item/clothing/ears/earmuffs))
-//					adjustEarDamage(30, 120)
 			Unconscious((50 * ddist) - (15 * fodist))
 			Knockdown(((30 * ddist) - (30 * fodist)) - (bomb_armor * 1.6))
 
@@ -392,8 +357,6 @@
 				brute_loss = ((30 * (2 - round(bomb_armor*0.01, 0.05)) * hdist) - ((30 * (2 - round(bomb_armor*0.01, 0.05))) * fodist) * dmgmod)
 				burn_loss = brute_loss
 			damage_clothes(max(brute_loss - bomb_armor, 0), BRUTE, "blunt")
-//				if (!istype(ears, /obj/item/clothing/ears/earmuffs))
-//					adjustEarDamage(30, 120)
 			Unconscious((10 * hdist) - (5 * fodist))
 			Knockdown(((30 * hdist) - (30 * fodist)) - (bomb_armor * 1.6))
 
@@ -402,16 +365,12 @@
 			if(bomb_armor)
 				brute_loss = (10 * (2 - round(bomb_armor*0.01, 0.05)) * ldist) - ((10 * (2 - round(bomb_armor*0.01, 0.05))) * fodist)
 				damage_clothes(max(brute_loss - bomb_armor, 0), BRUTE, "blunt")
-//				if (!istype(ears, /obj/item/clothing/ears/earmuffs))
-//					adjustEarDamage(15,60)
-
 	take_overall_damage(brute_loss,burn_loss)
 
 	//attempt to dismember bodyparts
 	if(severity <= 2)
 		var/max_limb_loss = rand(0, floor(3/severity))
-		for(var/X in bodyparts)
-			var/obj/item/bodypart/BP = X
+		for(var/obj/item/bodypart/BP as anything in bodyparts)
 			if(prob(25/severity) && !prob(15) && BP.body_zone != BODY_ZONE_HEAD && BP.body_zone != BODY_ZONE_CHEST)
 				BP.brute_dam = BP.max_damage
 				BP.dismember()
@@ -458,7 +417,6 @@
 		if(head_clothes)
 			if(!(head_clothes.resistance_flags & UNACIDABLE))
 				head_clothes.acid_act(acidpwr, acid_volume)
-				update_inv_glasses()
 				update_inv_wear_mask()
 				update_inv_neck()
 				update_inv_head()
@@ -468,8 +426,6 @@
 			. = get_bodypart(BODY_ZONE_HEAD)
 			if(.)
 				damaged += .
-			if(ears)
-				inventory_items_to_kill += ears
 
 	//CHEST//
 	if(!bodyzone_hit || bodyzone_hit == BODY_ZONE_CHEST)
@@ -481,7 +437,6 @@
 		if(chest_clothes)
 			if(!(chest_clothes.resistance_flags & UNACIDABLE))
 				chest_clothes.acid_act(acidpwr, acid_volume)
-				update_inv_w_uniform()
 				update_inv_wear_suit()
 			else
 				to_chat(src, "<span class='notice'>My [chest_clothes.name] protects my body from the acid!</span>")
@@ -491,13 +446,6 @@
 				damaged += .
 			if(wear_ring)
 				inventory_items_to_kill += wear_ring
-			if(r_store)
-				inventory_items_to_kill += r_store
-			if(l_store)
-				inventory_items_to_kill += l_store
-			if(s_store)
-				inventory_items_to_kill += s_store
-
 
 	//ARMS & HANDS//
 	if(!bodyzone_hit || bodyzone_hit == BODY_ZONE_L_ARM || bodyzone_hit == BODY_ZONE_R_ARM)
@@ -513,7 +461,6 @@
 			if(!(arm_clothes.resistance_flags & UNACIDABLE))
 				arm_clothes.acid_act(acidpwr, acid_volume)
 				update_inv_gloves()
-				update_inv_w_uniform()
 				update_inv_wear_suit()
 			else
 				to_chat(src, "<span class='notice'>My [arm_clothes.name] protects my arms and hands from the acid!</span>")
@@ -539,7 +486,6 @@
 			if(!(leg_clothes.resistance_flags & UNACIDABLE))
 				leg_clothes.acid_act(acidpwr, acid_volume)
 				update_inv_shoes()
-				update_inv_w_uniform()
 				update_inv_wear_suit()
 			else
 				to_chat(src, "<span class='notice'>My [leg_clothes.name] protects my legs and feet from the acid!</span>")
@@ -560,9 +506,7 @@
 			if(prob(min(acidpwr*acid_volume/10, 90))) //Applies disfigurement
 				affecting.receive_damage(acidity, 2*acidity)
 				emote("scream")
-				facial_hairstyle = "Shaved"
-				hairstyle = "Bald"
-				update_hair()
+				dna?.species.go_bald(src)
 				ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)
 
 		update_damage_overlays()
@@ -570,8 +514,10 @@
 	//MELTING INVENTORY ITEMS//
 	//these items are all outside of armour visually, so melt regardless.
 	if(!bodyzone_hit)
-		if(back)
-			inventory_items_to_kill += back
+		if(backr)
+			inventory_items_to_kill += backr
+		if(backl)
+			inventory_items_to_kill += backl
 		if(belt)
 			inventory_items_to_kill += belt
 
@@ -710,8 +656,6 @@
 			head_clothes = head
 		if(head_clothes)
 			torn_items += head_clothes
-		else if(ears)
-			torn_items += ears
 
 	//CHEST//
 	if(!def_zone || def_zone == BODY_ZONE_CHEST)

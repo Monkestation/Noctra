@@ -62,6 +62,8 @@
 
 	var/fueluse = -1 // How much fuel the machinery starts with. At -1, it is never turned off with the passing of time.
 
+	var/obj/effect/fog_parter/fog_parter_effect = /obj/effect/fog_parter // set to null to remove fog parter
+
 /obj/machinery/light/broken
 	status = LIGHT_BROKEN
 	icon_state = "tube-broken"
@@ -102,8 +104,6 @@
 	status = LIGHT_EMPTY
 	update(0)
 
-
-
 // create a new lighting fixture
 /obj/machinery/light/Initialize(mapload)
 	. = ..()
@@ -114,43 +114,46 @@
 	addtimer(CALLBACK(src, PROC_REF(update), 0), 1)
 
 /obj/machinery/light/Destroy()
+	if(istype(fog_parter_effect))
+		QDEL_NULL(fog_parter_effect)
 	var/area/A = get_area(src)
 	if(A)
 		on = FALSE
 	return ..()
 
-/obj/machinery/light/update_icon()
-	cut_overlays()
-	switch(status)		// set icon_states
-		if(LIGHT_OK)
-			if(emergency_mode)
-				icon_state = "[base_state]_emergency"
-				icon_state = null
-			else
-				icon_state = "[base_state]"
-				icon_state = null
-				if(on)
-					var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE)
-					glowybit.alpha = CLAMP(light_power*250, 30, 200)
-					add_overlay(glowybit)
-		if(LIGHT_EMPTY)
-			icon_state = "[base_state]-empty"
-		if(LIGHT_BURNED)
-			icon_state = "[base_state]-burned"
-		if(LIGHT_BROKEN)
-			icon_state = "[base_state]-broken"
-	return
+// /obj/machinery/light/update_icon()
+// 	cut_overlays()
+// 	switch(status)		// set icon_states
+// 		if(LIGHT_OK)
+// 			if(emergency_mode)
+// 				icon_state = "[base_state]_emergency"
+// 				icon_state = null
+// 			else
+// 				icon_state = "[base_state]"
+// 				icon_state = null
+// 				if(on)
+// 					var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE)
+// 					glowybit.alpha = CLAMP(light_power*250, 30, 200)
+// 					add_overlay(glowybit)
+// 		if(LIGHT_EMPTY)
+// 			icon_state = "[base_state]-empty"
+// 		if(LIGHT_BURNED)
+// 			icon_state = "[base_state]-burned"
+// 		if(LIGHT_BROKEN)
+// 			icon_state = "[base_state]-broken"
+// 	return
 
 // update the icon_state and luminosity of the light depending on its state
 /obj/machinery/light/proc/update(trigger = TRUE)
 	emergency_mode = FALSE
+	var/should_update_light = !isnull(set_light_on(on))
 	if(on)
 		var/BR = brightness
 		var/PO = bulb_power
 		var/CO = bulb_colour
 		if(color)
 			CO = color
-		if (nightshift_enabled)
+		if(nightshift_enabled)
 			switch(nightshift_enabled)
 				if("night")
 					BR = nightshift_brightness
@@ -184,8 +187,9 @@
 	else
 		emergency_mode = TRUE
 		START_PROCESSING(SSmachines, src)
-	update_icon()
-
+	if(should_update_light)
+		update_light()
+	update_appearance(UPDATE_ICON_STATE)
 	broken_sparks(start_only=TRUE)
 
 /obj/machinery/light/update_atom_colour()
@@ -213,8 +217,8 @@
 /obj/machinery/light/proc/burn_out()
 	if(on)
 		on = FALSE
-		set_light(0)
-		update_icon()
+		update()
+		update_appearance(UPDATE_ICON_STATE)
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
@@ -231,27 +235,10 @@
 		if(prob(damage_amount * 5))
 			break_light_tube()
 
-
-
-
-/obj/machinery/light/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	switch(damage_type)
-		if(BRUTE)
-			switch(status)
-				if(LIGHT_EMPTY)
-					playsound(loc, 'sound/blank.ogg', 50, TRUE)
-				if(LIGHT_BROKEN)
-					playsound(loc, 'sound/blank.ogg', 90, TRUE)
-				else
-					playsound(loc, 'sound/blank.ogg', 90, TRUE)
-		if(BURN)
-			playsound(src.loc, 'sound/blank.ogg', 100, TRUE)
-
 // returns whether this light has power
 // true if area has power and lightswitch is on
 /obj/machinery/light/proc/has_power()
 	return TRUE
-
 
 /obj/machinery/light/proc/flicker(amount = rand(10, 20))
 	set waitfor = 0
@@ -278,7 +265,6 @@
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	add_fingerprint(user)
-
 
 // break the light and make sparks if was on
 
@@ -327,3 +313,24 @@
 	brightness = 4
 	layer = 2.5
 	fitting = "bulb"
+
+// FOG RELATED PROC OVERRIDES
+
+/obj/machinery/light/set_light_on(new_value)
+	. = ..()
+	if(isnull(fog_parter_effect))
+		return
+	if(on)
+		if(!istype(fog_parter_effect))
+			fog_parter_effect = new fog_parter_effect(get_turf(src), light_outer_range)
+	else
+		if(istype(fog_parter_effect)) // to check if its initialized instead of a path
+			qdel(fog_parter_effect)
+		fog_parter_effect = initial(fog_parter_effect)
+
+/obj/machinery/light/set_light_range(new_inner_range, new_outer_range)
+	. = ..()
+	if(isnull(.))
+		return
+	if(istype(fog_parter_effect))
+		fog_parter_effect.set_range(light_outer_range)

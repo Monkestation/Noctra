@@ -11,39 +11,12 @@
 	sleevetype = "shirt"
 	nodismemsleeves = TRUE
 	inhand_mod = TRUE
-	allowed_race = list("human", "tiefling", "elf", "aasimar")
+	allowed_race = SPECIES_BASE_BODY
 	detail_tag = "_det"
 	detail_color = CLOTHING_PLUM_PURPLE
+	uses_lord_coloring = LORD_PRIMARY
 
-/obj/item/clothing/cloak/lordcloak/update_icon()
-	cut_overlays()
-	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
-		pic.appearance_flags = RESET_COLOR
-		if(get_detail_color())
-			pic.color = get_detail_color()
-		add_overlay(pic)
-
-/obj/item/clothing/cloak/lordcloak/lordcolor(primary,secondary)
-	detail_color = primary
-	update_icon()
-	if(ismob(loc))
-		var/mob/L = loc
-		L.update_inv_cloak()
-
-/obj/item/clothing/cloak/lordcloak/Initialize()
-	. = ..()
-	if(GLOB.lordprimary)
-		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
-	else
-		GLOB.lordcolor += src
-
-/obj/item/clothing/cloak/lordcloak/Destroy()
-	GLOB.lordcolor -= src
-	return ..()
-
-
-/obj/item/clothing/cloak/lordcloak/ComponentInitialize()
+/obj/item/clothing/cloak/lordcloak/Initialize(mapload, ...)
 	. = ..()
 	AddComponent(/datum/component/storage/concrete/grid/cloak/lord)
 
@@ -67,6 +40,5 @@
 	sleeved = 'icons/roguetown/clothing/onmob/cloaks.dmi'
 	sleevetype = "shirt"
 	nodismemsleeves = TRUE
-	allowed_race = list("human", "tiefling", "elf", "aasimar", "dwarf", "halforc")
 	detail_tag = "_detail"
 	detail_color = CLOTHING_SOOT_BLACK

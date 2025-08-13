@@ -6,8 +6,8 @@ MAP=$1
 echo Testing $MAP
 
 tools/deploy.sh ci_test
-mkdir ci_test/config
-mkdir ci_test/data
+mkdir -p ci_test/config
+mkdir -p ci_test/data
 
 #test config
 cp tools/ci/ci_config.txt ci_test/config/config.txt
@@ -16,7 +16,7 @@ cp tools/ci/ci_config.txt ci_test/config/config.txt
 cp _maps/$MAP.json ci_test/data/next_map.json
 
 cd ci_test
-DreamDaemon stonekeep.dmb -close -trusted -verbose -params "log-directory=ci"
+DreamDaemon vanderlin.dmb -close -trusted -verbose -params "log-directory=ci"
 
 cd ..
 

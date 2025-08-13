@@ -1,4 +1,3 @@
-#define INIT_ORDER_GAMEMODE 70
 ///how many storytellers can be voted for along with always_votable ones
 #define DEFAULT_STORYTELLER_VOTE_OPTIONS 4
 ///amount of players we can have before no longer running votes for storyteller
@@ -31,6 +30,7 @@ SUBSYSTEM_DEF(gamemode)
 	/// Associative list of even track points.
 	var/list/event_track_points = list(
 		EVENT_TRACK_MUNDANE = 0,
+		EVENT_TRACK_PERSONAL = 0,
 		EVENT_TRACK_MODERATE = 0,
 		EVENT_TRACK_INTERVENTION = 0,
 		EVENT_TRACK_CHARACTER_INJECTION = 0,
@@ -40,6 +40,7 @@ SUBSYSTEM_DEF(gamemode)
 	/// Last point amount gained of each track. Those are recorded for purposes of estimating how long until next event.
 	var/list/last_point_gains = list(
 		EVENT_TRACK_MUNDANE = 0,
+		EVENT_TRACK_PERSONAL = 0,
 		EVENT_TRACK_MODERATE = 0,
 		EVENT_TRACK_INTERVENTION = 0,
 		EVENT_TRACK_CHARACTER_INJECTION = 0,
@@ -49,26 +50,29 @@ SUBSYSTEM_DEF(gamemode)
 	/// Point thresholds at which the events are supposed to be rolled, it is also the base cost for events.
 	var/list/point_thresholds = list(
 		EVENT_TRACK_MUNDANE = MUNDANE_POINT_THRESHOLD,
+		EVENT_TRACK_PERSONAL = MUNDANE_POINT_THRESHOLD,
 		EVENT_TRACK_MODERATE = MODERATE_POINT_THRESHOLD,
 		EVENT_TRACK_INTERVENTION = MAJOR_POINT_THRESHOLD,
 		EVENT_TRACK_CHARACTER_INJECTION = ROLESET_POINT_THRESHOLD,
-		EVENT_TRACK_OMENS = OBJECTIVES_POINT_THRESHOLD,
+		EVENT_TRACK_OMENS = MUNDANE_POINT_THRESHOLD,
 		EVENT_TRACK_RAIDS = OBJECTIVES_POINT_THRESHOLD * 2,
 		)
 
 	/// Minimum population thresholds for the tracks to fire off events.
 	var/list/min_pop_thresholds = list(
 		EVENT_TRACK_MUNDANE = MUNDANE_MIN_POP,
+		EVENT_TRACK_PERSONAL = MODERATE_MIN_POP,
 		EVENT_TRACK_MODERATE = MODERATE_MIN_POP,
 		EVENT_TRACK_INTERVENTION = MAJOR_MIN_POP,
 		EVENT_TRACK_CHARACTER_INJECTION = CHARACTER_INJECTION_MIN_POP,
-		EVENT_TRACK_OMENS = OBJECTIVES_MIN_POP,
+		EVENT_TRACK_OMENS = MUNDANE_MIN_POP,
 		EVENT_TRACK_RAIDS = OBJECTIVES_MIN_POP,
 		)
 
 	/// Configurable multipliers for point gain over time.
 	var/list/point_gain_multipliers = list(
 		EVENT_TRACK_MUNDANE = 1,
+		EVENT_TRACK_PERSONAL = 1,
 		EVENT_TRACK_MODERATE = 1,
 		EVENT_TRACK_INTERVENTION = 1,
 		EVENT_TRACK_CHARACTER_INJECTION = 1,
@@ -78,6 +82,7 @@ SUBSYSTEM_DEF(gamemode)
 	/// Configurable multipliers for roundstart points.
 	var/list/roundstart_point_multipliers = list(
 		EVENT_TRACK_MUNDANE = 1,
+		EVENT_TRACK_PERSONAL = 1,
 		EVENT_TRACK_MODERATE = 1,
 		EVENT_TRACK_INTERVENTION = 1,
 		EVENT_TRACK_CHARACTER_INJECTION = 1,
@@ -90,26 +95,29 @@ SUBSYSTEM_DEF(gamemode)
 	/// Associative list of pop scale thresholds.
 	var/list/pop_scale_thresholds = list(
 		EVENT_TRACK_MUNDANE = MUNDANE_POP_SCALE_THRESHOLD,
+		EVENT_TRACK_PERSONAL = MODERATE_POP_SCALE_THRESHOLD,
 		EVENT_TRACK_MODERATE = MODERATE_POP_SCALE_THRESHOLD,
 		EVENT_TRACK_INTERVENTION = MAJOR_POP_SCALE_THRESHOLD,
 		EVENT_TRACK_CHARACTER_INJECTION = ROLESET_POP_SCALE_THRESHOLD,
-		EVENT_TRACK_OMENS = OBJECTIVES_POP_SCALE_THRESHOLD,
+		EVENT_TRACK_OMENS = MUNDANE_POP_SCALE_THRESHOLD,
 		EVENT_TRACK_RAIDS = RAID_POP_SCALE_THRESHOLD,
 		)
 
 	/// Associative list of pop scale penalties.
 	var/list/pop_scale_penalties = list(
 		EVENT_TRACK_MUNDANE = MUNDANE_POP_SCALE_PENALTY,
+		EVENT_TRACK_PERSONAL = MODERATE_POP_SCALE_PENALTY,
 		EVENT_TRACK_MODERATE = MODERATE_POP_SCALE_PENALTY,
 		EVENT_TRACK_INTERVENTION = MAJOR_POP_SCALE_PENALTY,
 		EVENT_TRACK_CHARACTER_INJECTION = ROLESET_POP_SCALE_PENALTY,
-		EVENT_TRACK_OMENS = OBJECTIVES_POP_SCALE_PENALTY,
+		EVENT_TRACK_OMENS = MUNDANE_POP_SCALE_PENALTY,
 		EVENT_TRACK_RAIDS = RAID_POP_SCALE_PENALTY,
 		)
 
 	/// Associative list of active multipliers from pop scale penalty.
 	var/list/current_pop_scale_multipliers = list(
 		EVENT_TRACK_MUNDANE = 1,
+		EVENT_TRACK_PERSONAL = 1,
 		EVENT_TRACK_MODERATE = 1,
 		EVENT_TRACK_INTERVENTION = 1,
 		EVENT_TRACK_CHARACTER_INJECTION = 1,
@@ -118,6 +126,11 @@ SUBSYSTEM_DEF(gamemode)
 		)
 
 
+	//Gods dreams for the dreamwatcher
+	var/list/god_dreams = list()
+
+	//Antag dreams for the dreamwatcher
+	var/list/antag_dreams = list()
 
 	/// Associative list of control events by their track category. Compiled in Init
 	var/list/event_pools = list()
@@ -177,12 +190,41 @@ SUBSYSTEM_DEF(gamemode)
 	var/roundvoteend = FALSE
 	var/reb_end_time = 0
 
+	var/list/chronicle_sets = list(
+		"Total Skills" = list(
+			CHRONICLE_STATS_MOST_SKILLS_PERSON,
+			CHRONICLE_STATS_LEAST_SKILLS_PERSON,
+		),
+		"Strength" = list(
+			CHRONICLE_STATS_STRONGEST_PERSON,
+			CHRONICLE_STATS_WEAKEST_PERSON,
+		),
+		"Intelligence" = list(
+			CHRONICLE_STATS_SMARTEST_PERSON,
+			CHRONICLE_STATS_DUMBEST_PERSON,
+		),
+		"Speed" = list(
+			CHRONICLE_STATS_FASTEST_PERSON,
+			CHRONICLE_STATS_SLOWEST_PERSON,
+		),
+		"Wealth" = list(
+			CHRONICLE_STATS_RICHEST_PERSON,
+			CHRONICLE_STATS_POOREST_PERSON,
+		),
+		"Luck" = list(
+			CHRONICLE_STATS_LUCKIEST_PERSON,
+			CHRONICLE_STATS_UNLUCKIEST_PERSON,
+		),
+	)
+
+	/// Chosen chronicle stats of the notable people, which show at the end round panel
+	var/list/chosen_chronicle_stats = list()
+
 /datum/controller/subsystem/gamemode/Initialize(time, zlevel)
 #if defined(UNIT_TESTS) || defined(AUTOWIKI) // lazy way of doing this but idc
 	flags |= SS_NO_FIRE
 	return ..()
 #endif
-
 	// Populate event pools
 	for(var/track in event_tracks)
 		event_pools[track] = list()
@@ -202,6 +244,188 @@ SUBSYSTEM_DEF(gamemode)
 			continue // event isn't good for this map no point in trying to add it to the list
 		control += event //add it to the list of all events (controls)
 
+		///List of Possible influence dreams for the Dreamwatcher
+		god_dreams = list(
+
+			//Divine Pantheon
+
+			"Psydon" = list(
+				"...golden threads drift through the void, stitching stars where wounds once were... something sacred stirs beneath the quiet...",
+				"...a vast warmth flickers behind your closed eyes... broken pieces drift, searching for their whole...",
+				"...you walk among ruins humming with warmth... pieces of something divine lie scattered, each pulse a memory, each breath a promise..."
+			),
+
+			"Astrata"= list(
+				"...radiance floods your dream... it’s not warmth, but judgment disguised as light...",
+				"...you dream of unending sunrise, gold pouring over endless skies... judgment walks in daylight’s shoes...",
+				"...a glare pierces your soul... you feel seen, judged, burned, yet safe... the light watches, unwavering and eternal..."
+			),
+
+			"Noc" = list(
+				"...silver light spills across ink-black halls... you hear pages fluttering without wind, and a voice speaks in riddles...",
+				"...a tapestry of stars weaves itself in your mind... patterns emerge and vanish, revealing truths never spoken aloud...",
+				"...moonlight coils into a key... you reach for it, but your hands are made of questions..."
+			),
+
+			"Necra"= list(
+				"...the dream begins with a closed door... you knock. Silence answers... when it opens, everything you were is counted, weighed...",
+				"...everything is still... you are the last heartbeat in a world already buried... a cold smile waits just past the veil...",
+				"...a quiet woman sits by a river made of ash... she nods once, counting your breath..."
+			),
+
+			"Pestra"= list(
+				"...your dream wilts, then blooms. A garden of endings and beginnings surrounds you...",
+				"...you hold your own bones like seeds. Rain falls, and they whisper with life...",
+				"...you see a flower bloom in ash. It dies and returns, brighter, stranger. The rhythm of endings comforts you...",
+			),
+
+			"Ravox"= list(
+				"...a sword rests beside a scale... neither tips...",
+				"...steel sings in your dreams... a verdict is written in blood and flame, but justice waits before it lands...",
+				"...you duel a mirror image of yourself... the victor is neither, yet the fight continues... law and war share the same breath..."
+			),
+
+			"Malum"= list(
+				"...hammers echo through your sleep... something is being made, perhaps you...",
+				"...your hands ache... you build something vast, but can never see the whole... sparks kiss your skin, and you smile...",
+				"...endless clanging fills your mind... with each strike, something within you hardens, reforged in smoke and effort..."
+			),
+
+			"Dendor"= list(
+				"...animals scream in tongues you almost understand... trees whisper old pain, searching for their shepherd...",
+				"...vines coil around your limbs. Roots burst from your feet... the forest within you howls, a kingdom lost to madness...",
+				"...eyes glow among tangled thorns... something ancient, betrayed, hungers again..."
+			),
+
+			"Abyssor"= list(
+				"...the sea invades your lungs... a storm of blood and salt rises...",
+				"...fins brush past your legs... the water tastes of fury and old wounds...",
+				"...tides drag you under... in the silence, you hear sobbing, not yours... the sea remembers every wound..."
+			),
+
+
+			"Xylix"= list(
+				"...you laugh without knowing why... your reflection winks back as a stranger...",
+				"...you wear masks you’ve never owned... each one laughs in a new voice... you are a guest in your own skin...",
+				"...every path splits... every answer lies... yet you smile... trickery is truth when worn well..."
+			),
+
+			"Eora"= list(
+				"...you dream in color,red threads, gold loops, blue knots... all pulling gently...",
+				"...a weaving surrounds you... every face you’ve loved or hated is there...",
+				"...your heart is a loom... dreams pass through it, weaving bonds to people you’ve never met, yet feel you’ve always known..."
+			),
+
+			//Inhumen Pantheon
+
+			"Matthios"= list(
+				"...a shadow slips your pocket open... you feel lighter in your dream...",
+				"...a purse vanishes from your belt... a laugh echoes in your ears... you check your pockets, your name is gone...",
+				"...you follow footprints that vanish behind you... no one walks beside you, yet you’re never alone..."
+			),
+
+			"Baotha" = list(
+				"...everything glows with joy... then it melts, and you, giggle anyway...",
+				"...you float through a city of glass, laughter echoing in colors... you smile with no mouth and sing without sound...",
+				"...your body dances without thought... every breath tastes like honey and smoke... you forget, and it feels divine..."
+			),
+
+			"Graggar"= list(
+				"...your mouth is not your own... it’s laughing, snarling, hungry...",
+				"...you tear through flesh with joy... your dream is soaked in red... hunger knows your name, and calls you friend...",
+				"...an ancient drum beats under your ribs... it demands violence in return for peace..."
+			),
+
+			"Zizo"= list(
+				"...eyes stare from skulls that still weep... you cradle a child made of frost and ash... it whispers secrets backwards...",
+				"...your name is forgotten by everyone in your dream... only bones remember...",
+				"...a girl with white eyes smiles at you... her lullaby stitches flesh to spirit..."
+			),
+
+			"Unknown" = list("You feel a presence watching your sleep... old, vast, and unknowable. You do not yet know their name.")
+		)
+
+		///List of possible antag dreams for the dream watcher
+		antag_dreams = list(
+			/datum/antagonist/vampire/lord = list(
+					"... a pale figure watches from afar... its gaze weighs heavy on your soul",
+					"... red velvet, torn and trailing... a presence unseen but always near",
+					"... a name you cannot remember sits on your tongue... it tastes of blood and dust"
+				),
+			/datum/antagonist/vampire = list(
+					"... a hand reaches from the dark... obedient, yet trembling",
+					"... you kneel, not knowing why... the voice behind you compels it",
+					"... a collar of roses and rust... worn by the willing"
+				),
+			/datum/antagonist/vampire/lesser = list (
+					"... fangs bloom from cracked lips... hunger shudders through the air",
+					"... you see your reflection... it smiles with borrowed teeth",
+					"... a laugh beneath floorboards... young, broken, blood-wet"
+				),
+			/datum/antagonist/lich = list (
+					"... a cold wind whispers names no longer spoken",
+					"... the tower bleeds light... skeletal hands trace forbidden runes",
+					"... bones rattle in a jar... they whisper of eternity"
+				),
+			/datum/antagonist/werewolf = list(
+					"... fur and fury rise... the moon stains the sky",
+					"... howling splits the silence... your hands ache with claws",
+					"... you wake with dirt under your nails... and a taste of fur"
+				),
+			/datum/antagonist/werewolf/lesser = list(
+					"... bones snap in rhythm... hunger guides their paws",
+					"... they follow the alpha's scent... and dream of killing him",
+					"... a low growl rumbles under moonlight... fur and fury rise"
+				),
+			/datum/antagonist/zizocultist = list(
+					"...a circle chants beneath shifting stars... their eyes are wrong",
+					"...ink flows upward... the words burn in reverse",
+					"...your thoughts are not your own... they hum in unison"
+				),
+			/datum/antagonist/zizocultist/leader = list(
+					"... a silent servant tends to a spiral... it never ends",
+					"... you hand someone a book... you've never seen it before",
+					"... something stands just behind your shoulder... always just behind"
+				),
+			/datum/antagonist/prebel = list(
+					"... muddy boots march across broken fields... fire follows",
+					"... the crowd roars without faces... you hold the torch",
+					"... a scythe buried in stone... your hand fits its grip perfectly"
+				),
+			/datum/antagonist/prebel/head = list(
+					"... a crowned figure of burlap and ash... they speak with your voice",
+					"... a throne made of pitchforks... it wobbles with every heartbeat",
+					"... children chant in the ruins... the rhythm carries a blade"
+				),
+			/datum/antagonist/aspirant = list(
+					"...you climb a tower of mirrors... none reflect the same face",
+					"...a blade sings your name... but you've never heard it before",
+					"...the stars rearrange themselves... spelling failure"
+				),
+			/datum/antagonist/bandit = list(
+					"... coin clinks like bone... your pockets are never full",
+					"... a dagger flickers in the candlelight... too fast to see",
+					"... a mask laughs... the voice behind it is yours"
+				),
+			/datum/antagonist/assassin = list(
+					"... a shadow parts from your own... and doesn't return",
+					"... footsteps on the ceiling... you hold your breath",
+					"... ink-black gloves close around your throat... gently"
+				),
+			/datum/antagonist/maniac = list(
+					"... a door opens inside a room that shouldn't exist... behind it, a thousand mirrors... none show your face",
+					"... you hear the world breathe... a hiss, a code, a loop... someone is watching from behind the glass",
+					"... you see structures made of meat and bone... they form words you can almost understand... then collapse"
+				),
+			"Unknown" = list(
+					"... something lingers in the darkness",
+					"... you feel an unseen presence watching",
+					"... the air grows heavy with forgotten whispers"
+				)
+		)
+
+
+
 	load_config_vars()
 	load_event_config_vars()
 
@@ -213,11 +437,16 @@ SUBSYSTEM_DEF(gamemode)
 		event_pools[event.track] += event //Add it to the categorized event pools
 
 	load_roundstart_data()
+
+	check_roundstart_gods_rankings()
+
+	pick_chronicle_stats()
+
 	. = ..()
 
 /datum/controller/subsystem/gamemode/fire(resumed = FALSE)
 	if(last_devotion_check < world.time)
-		pick_most_devoted()
+		pick_most_influential()
 		last_devotion_check = world.time + 2 MINUTES
 
 	if(SSticker.HasRoundStarted() && (world.time - SSticker.round_start_time) >= ROUNDSTART_VALID_TIMEFRAME)
@@ -325,9 +554,9 @@ SUBSYSTEM_DEF(gamemode)
 						break
 				if(real)
 					continue
-			if(restricted_roles && (candidate.mind.assigned_role in restricted_roles))
+			if(restricted_roles && (candidate.mind.assigned_role.title in restricted_roles))
 				continue
-			if(length(required_roles) && !(candidate.mind.assigned_role in required_roles))
+			if(length(required_roles) && !(candidate.mind.assigned_role.title in required_roles))
 				continue
 
 		if(be_special)
@@ -337,7 +566,7 @@ SUBSYSTEM_DEF(gamemode)
 		//if(midround_antag_pref)
 			//continue
 
-		if(job_ban && is_banned_from(candidate.ckey, list(job_ban, ROLE_VILLAIN)))
+		if(job_ban && is_banned_from(candidate.ckey, list(job_ban, ROLE_MANIAC)))
 			continue
 		candidates += candidate
 	return candidates
@@ -385,6 +614,9 @@ SUBSYSTEM_DEF(gamemode)
 			if(EVENT_TRACK_MUNDANE)
 				base_amt = ROUNDSTART_MUNDANE_BASE
 				gain_amt = ROUNDSTART_MUNDANE_GAIN
+			if(EVENT_TRACK_PERSONAL)
+				base_amt = ROUNDSTART_PERSONAL_BASE
+				gain_amt = ROUNDSTART_PERSONAL_GAIN
 			if(EVENT_TRACK_MODERATE)
 				base_amt = ROUNDSTART_MODERATE_BASE
 				gain_amt = ROUNDSTART_MODERATE_GAIN
@@ -444,10 +676,10 @@ SUBSYSTEM_DEF(gamemode)
 		INVOKE_ASYNC(event, TYPE_PROC_REF(/datum/round_event, try_start))
 
 /// Schedules an event to run later.
-/datum/controller/subsystem/gamemode/proc/schedule_event(datum/round_event_control/passed_event, passed_time, passed_cost, passed_ignore, passed_announce, _forced = FALSE)
+/datum/controller/subsystem/gamemode/proc/schedule_event(datum/round_event_control/passed_event, passed_time, passed_cost, passed_ignore, passed_announce, _forced = FALSE, omen = FALSE)
 	if(_forced)
 		passed_ignore = TRUE
-	var/datum/scheduled_event/scheduled = new (passed_event, world.time + passed_time, passed_cost, passed_ignore, passed_announce)
+	var/datum/scheduled_event/scheduled = new (passed_event, world.time + passed_time, passed_cost, passed_ignore, passed_announce, omen)
 	var/round_started = SSticker.HasRoundStarted()
 	if(round_started)
 		message_admins("Event: [passed_event] has been scheduled to run in [passed_time / 10] seconds. (<a href='byond://?src=[REF(scheduled)];action=cancel'>CANCEL</a>) (<a href='byond://?src=[REF(scheduled)];action=refund'>REFUND</a>)")
@@ -509,7 +741,7 @@ SUBSYSTEM_DEF(gamemode)
 		event.max_occurrences = 0
 	else if(. == EVENT_READY)
 		event.runEvent(random = TRUE, admin_forced = forced) // fallback to dynamic
-		add_abstract_elastic_data("storyteller", event.name, 1, 1)
+		add_abstract_elastic_data(ELASCAT_STORYTELLER, event.name, 1, 1)
 
 ///Resets frequency multiplier.
 /datum/controller/subsystem/gamemode/proc/resetFrequency()
@@ -520,7 +752,15 @@ SUBSYSTEM_DEF(gamemode)
 	if(!length(storytellers))
 		for(var/type in subtypesof(/datum/storyteller))
 			storytellers[type] = new type()
-	set_storyteller(/datum/storyteller/astrata)
+
+	for(var/storyteller_name in storytellers)
+		var/datum/storyteller/initialized_storyteller = storytellers[storyteller_name]
+		if(initialized_storyteller?.ascendant)
+			to_chat(world, "<br>")
+			to_chat(world, span_reallybig("[initialized_storyteller.name] is ascendant!"))
+			to_chat(world, "<br>")
+
+	pick_most_influential(TRUE)
 	calculate_ready_players()
 	roll_pre_setup_points()
 	//handle_pre_setup_roundstart_events()
@@ -540,6 +780,7 @@ SUBSYSTEM_DEF(gamemode)
 			delay = (4 MINUTES) //default to 4 minutes if the delay isn't defined.
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(reopen_roundstart_suicide_roles)), delay)
 
+	refresh_alive_stats()
 	handle_post_setup_roundstart_events()
 	handle_post_setup_points()
 	roundstart_event_view = FALSE
@@ -560,11 +801,11 @@ SUBSYSTEM_DEF(gamemode)
 	if(ttime >= GLOB.round_timer)
 		if(roundvoteend)
 			if(ttime >= round_ends_at)
-				for(var/mob/living/carbon/human/H in GLOB.human_list)
-					if(H.stat != DEAD)
-						if(H.allmig_reward)
-							H.adjust_triumphs(H.allmig_reward)
-							H.allmig_reward = 0
+				// for(var/mob/living/carbon/human/H in GLOB.human_list)
+				// 	if(H.stat != DEAD)
+				// 		if(H.allmig_reward)
+				// 			H.adjust_triumphs(H.allmig_reward)
+				// 			H.allmig_reward = 0
 				return TRUE
 		else
 			if(!SSvote.mode)
@@ -627,31 +868,35 @@ SUBSYSTEM_DEF(gamemode)
 /// Loads config values from game_options.txt
 /datum/controller/subsystem/gamemode/proc/load_config_vars()
 	point_gain_multipliers[EVENT_TRACK_MUNDANE] = CONFIG_GET(number/mundane_point_gain_multiplier)
+	point_gain_multipliers[EVENT_TRACK_PERSONAL] = CONFIG_GET(number/moderate_point_gain_multiplier) * 1.25
 	point_gain_multipliers[EVENT_TRACK_MODERATE] = CONFIG_GET(number/moderate_point_gain_multiplier)
 	point_gain_multipliers[EVENT_TRACK_INTERVENTION] = CONFIG_GET(number/major_point_gain_multiplier)
 	point_gain_multipliers[EVENT_TRACK_CHARACTER_INJECTION] = CONFIG_GET(number/roleset_point_gain_multiplier)
-	point_gain_multipliers[EVENT_TRACK_OMENS] = CONFIG_GET(number/objectives_point_gain_multiplier)
+	point_gain_multipliers[EVENT_TRACK_OMENS] = CONFIG_GET(number/mundane_point_gain_multiplier)
 	point_gain_multipliers[EVENT_TRACK_RAIDS] = 1
 
 	roundstart_point_multipliers[EVENT_TRACK_MUNDANE] = CONFIG_GET(number/mundane_roundstart_point_multiplier)
+	roundstart_point_multipliers[EVENT_TRACK_PERSONAL] = CONFIG_GET(number/moderate_roundstart_point_multiplier)
 	roundstart_point_multipliers[EVENT_TRACK_MODERATE] = CONFIG_GET(number/moderate_roundstart_point_multiplier)
 	roundstart_point_multipliers[EVENT_TRACK_INTERVENTION] = CONFIG_GET(number/major_roundstart_point_multiplier)
 	roundstart_point_multipliers[EVENT_TRACK_CHARACTER_INJECTION] = CONFIG_GET(number/roleset_roundstart_point_multiplier)
-	roundstart_point_multipliers[EVENT_TRACK_OMENS] = CONFIG_GET(number/objectives_roundstart_point_multiplier)
+	roundstart_point_multipliers[EVENT_TRACK_OMENS] = CONFIG_GET(number/mundane_roundstart_point_multiplier)
 	roundstart_point_multipliers[EVENT_TRACK_RAIDS] = 1
 
 	min_pop_thresholds[EVENT_TRACK_MUNDANE] = CONFIG_GET(number/mundane_min_pop)
+	min_pop_thresholds[EVENT_TRACK_PERSONAL] = CONFIG_GET(number/moderate_min_pop)
 	min_pop_thresholds[EVENT_TRACK_MODERATE] = CONFIG_GET(number/moderate_min_pop)
 	min_pop_thresholds[EVENT_TRACK_INTERVENTION] = CONFIG_GET(number/major_min_pop)
 	min_pop_thresholds[EVENT_TRACK_CHARACTER_INJECTION] = CONFIG_GET(number/roleset_min_pop)
-	min_pop_thresholds[EVENT_TRACK_OMENS] = CONFIG_GET(number/objectives_min_pop)
+	min_pop_thresholds[EVENT_TRACK_OMENS] = CONFIG_GET(number/mundane_min_pop)
 	min_pop_thresholds[EVENT_TRACK_RAIDS] = CONFIG_GET(number/objectives_min_pop)
 
 	point_thresholds[EVENT_TRACK_MUNDANE] = CONFIG_GET(number/mundane_point_threshold)
+	point_thresholds[EVENT_TRACK_PERSONAL] = CONFIG_GET(number/mundane_point_threshold)
 	point_thresholds[EVENT_TRACK_MODERATE] = CONFIG_GET(number/moderate_point_threshold)
 	point_thresholds[EVENT_TRACK_INTERVENTION] = CONFIG_GET(number/major_point_threshold)
 	point_thresholds[EVENT_TRACK_CHARACTER_INJECTION] = CONFIG_GET(number/roleset_point_threshold)
-	point_thresholds[EVENT_TRACK_OMENS] = CONFIG_GET(number/objectives_point_threshold)
+	point_thresholds[EVENT_TRACK_OMENS] = CONFIG_GET(number/mundane_point_threshold)
 	point_thresholds[EVENT_TRACK_RAIDS] = CONFIG_GET(number/objectives_point_threshold) * 2
 
 /datum/controller/subsystem/gamemode/proc/handle_picking_storyteller()
@@ -659,7 +904,7 @@ SUBSYSTEM_DEF(gamemode)
 		secret_storyteller = TRUE
 		selected_storyteller = pickweight(get_valid_storytellers(TRUE))
 		return
-	pick_most_devoted(TRUE)
+	pick_most_influential(TRUE)
 
 /datum/controller/subsystem/gamemode/proc/storyteller_vote_choices()
 	var/list/final_choices = list()
@@ -713,10 +958,11 @@ SUBSYSTEM_DEF(gamemode)
 		message_admins("Attempted to set an invalid storyteller type: [passed_type], force setting to guide instead.")
 		current_storyteller = storytellers[/datum/storyteller/astrata] //if we dont have any then we brick, lets not do that
 		CRASH("Attempted to set an invalid storyteller type: [passed_type].")
-	current_storyteller = storytellers[passed_type]
-	if(!secret_storyteller)
-		send_to_playing_players(span_notice("<b>Storyteller is [current_storyteller.name]!</b>"))
-		send_to_playing_players(span_notice("[current_storyteller.welcome_text]"))
+
+	var/datum/storyteller/chosen_storyteller = storytellers[passed_type]
+	chosen_storyteller.times_chosen++
+	GLOB.featured_stats[FEATURED_STATS_STORYTELLERS]["entries"][initial(chosen_storyteller.name)] = chosen_storyteller.times_chosen
+	current_storyteller = chosen_storyteller
 
 /// Panel containing information, variables and controls about the gamemode and scheduled event
 /datum/controller/subsystem/gamemode/proc/admin_panel(mob/user)
@@ -724,7 +970,7 @@ SUBSYSTEM_DEF(gamemode)
 	var/round_started = SSticker.HasRoundStarted()
 	var/list/dat = list()
 	dat += "Storyteller: [current_storyteller ? "[current_storyteller.name]" : "None"] "
-	dat += " <a href='byond://?src=[REF(src)];panel=main;action=halt_storyteller' [halted_storyteller ? "class='linkOn'" : ""]>HALT Storyteller</a> <a href='byond://?src=[REF(src)];panel=main;action=open_stats'>Event Panel</a> <a href='byond://?src=[REF(src)];panel=main;action=set_storyteller'>Set Storyteller</a> <a href='byond://?src=[REF(src)];panel=main'>Refresh</a>"
+	dat += " <a href='byond://?src=[REF(src)];panel=main;action=halt_storyteller' [halted_storyteller ? "class='linkOn'" : ""]>HALT Storyteller</a> <a href='byond://?src=[REF(src)];panel=main;action=open_stats'>Event Panel</a> <a href='byond://?src=[REF(src)];panel=main;action=set_storyteller'>Set Storyteller</a> <a href='byond://?src=[REF(user.client)];panel=main;viewinfluences=1'>View Influences</a> <a href='byond://?src=[REF(src)];panel=main'>Refresh</a>"
 	dat += "<BR><font color='#888888'><i>Storyteller determines points gained, event chances, and is the entity responsible for rolling events.</i></font>"
 	dat += "<BR>Active Players: [active_players]   (Royalty: [royalty], Garrison: [garrison], Town Workers: [constructor], Church: [church])"
 	dat += "<BR>Antagonist Count vs Maximum: [get_antag_count()] / [get_antag_cap()]"
@@ -802,7 +1048,7 @@ SUBSYSTEM_DEF(gamemode)
 			var/sorted_scheduled = list()
 			for(var/datum/scheduled_event/scheduled as anything in scheduled_events)
 				sorted_scheduled[scheduled] = scheduled.start_time
-			sortTim(sorted_scheduled, cmp=/proc/cmp_numeric_asc, associative = TRUE)
+			sortTim(sorted_scheduled, associative = TRUE)
 			even = TRUE
 			for(var/datum/scheduled_event/scheduled as anything in sorted_scheduled)
 				even = !even
@@ -894,7 +1140,7 @@ SUBSYSTEM_DEF(gamemode)
 			assoc_spawn_weight[event] = event.calculated_weight
 		else
 			assoc_spawn_weight[event] = 0
-	sortTim(assoc_spawn_weight, cmp=/proc/cmp_numeric_dsc, associative = TRUE)
+	sortTim(assoc_spawn_weight, cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
 	for(var/datum/round_event_control/event as anything in assoc_spawn_weight)
 		even = !even
 		var/background_cl = even ? "#17191C" : "#23273C"
@@ -1042,41 +1288,458 @@ SUBSYSTEM_DEF(gamemode)
 			if(listed.name != event_name)
 				continue
 			listed.occurrences++
-			listed.occurrences++
 
-/datum/controller/subsystem/gamemode/proc/pick_most_devoted(roundstart = FALSE)
-	var/list/storytellers_with_votes = list()
-	for(var/client/client in GLOB.clients)
-		var/mob/living/living = client.mob
-		if(!roundstart)
-			if(!living.mind)
-				continue
-			if(living.stat == DEAD)
-				continue
-			if(!living.patron)
-				continue
-			if(!initial(living.patron.storyteller))
-				continue
-			storytellers_with_votes |= initial(living.patron.storyteller)
-			storytellers_with_votes[initial(living.patron.storyteller)]++
-		else
-			storytellers_with_votes |= initial(client.prefs.selected_patron.storyteller)
-			storytellers_with_votes[initial(client.prefs.selected_patron.storyteller)]++
+/// Chooses a number of chronicle stats from the chronicle sets which will be shown at the round end panel
+/datum/controller/subsystem/gamemode/proc/pick_chronicle_stats()
+	var/list/available_sets = chronicle_sets.Copy()
 
+	while(length(chosen_chronicle_stats) < 8 && length(available_sets))
+		var/picked_set_name = pick(available_sets)
+		var/list/picked_set = available_sets[picked_set_name]
+
+		var/stats_needed = 8 - length(chosen_chronicle_stats)
+		var/stats_to_take = min(length(picked_set), stats_needed)
+
+		for(var/i in 1 to stats_to_take)
+			chosen_chronicle_stats += picked_set[i]
+
+		available_sets -= picked_set_name
+
+	if(length(chosen_chronicle_stats) < 8)
+		for(var/set_name in chronicle_sets)
+			if(length(chosen_chronicle_stats) >= 8)
+				break
+
+			if(!(set_name in available_sets))
+				continue
+
+			var/list/remaining_set = chronicle_sets[set_name]
+			var/stats_needed = 8 - length(chosen_chronicle_stats)
+			var/stats_to_take = min(length(remaining_set), stats_needed)
+
+			for(var/i in 1 to stats_to_take)
+				chosen_chronicle_stats += remaining_set[i]
+
+/// Compares influence of all storytellers and sets a new storyteller with a highest influence
+/datum/controller/subsystem/gamemode/proc/pick_most_influential(roundstart = FALSE)
+	refresh_alive_stats(roundstart)
+	var/list/storytellers_with_influence = list()
 	var/datum/storyteller/highest
-	for(var/datum/storyteller/listed as anything in storytellers_with_votes)
-		if(!highest)
-			highest = listed
+	var/datum/storyteller/lowest
+
+	for(var/storyteller_type in storytellers)
+		var/datum/storyteller/initialized_storyteller = storytellers[storyteller_type]
+		if(!initialized_storyteller)
 			continue
-		if(storytellers_with_votes[listed] < storytellers_with_votes[highest])
+		var/influence = calculate_storyteller_influence(storyteller_type)
+		storytellers_with_influence[initialized_storyteller] = influence
+
+		if(!highest)
+			highest = initialized_storyteller
+			lowest = initialized_storyteller
 			continue
 
-		if(storytellers_with_votes[listed] == storytellers_with_votes[highest] && prob(50))
-			continue
-		highest = listed
+		if(influence > storytellers_with_influence[highest])
+			highest = initialized_storyteller
+		else if(influence == storytellers_with_influence[highest] && prob(50))
+			highest = initialized_storyteller
+
+		if(influence < storytellers_with_influence[lowest])
+			lowest = initialized_storyteller
+		else if(influence == storytellers_with_influence[lowest] && prob(50))
+			lowest = initialized_storyteller
+
 	if(!highest)
 		return
-	set_storyteller(highest)
+
+	var/adjustment = min(3, 1 + (0.4 * FLOOR(max(0, highest.times_chosen - 5) / 5, 1)))
+
+	if(storytellers_with_influence[highest] > adjustment)
+		highest.bonus_points -= adjustment
+
+	lowest.bonus_points += adjustment
+
+	set_storyteller(highest.type)
+
+/// To get the most influential God
+/datum/controller/subsystem/gamemode/proc/get_most_influential(roundstart = FALSE)
+	var/list/storytellers_with_influence = list()
+	var/datum/storyteller/highest
+	for(var/datum/storyteller/initalized_storyteller as anything in storytellers)
+		storytellers_with_influence[initalized_storyteller] = calculate_storyteller_influence(initalized_storyteller.type, roundstart)
+		if(!highest)
+			highest = initalized_storyteller
+			continue
+		if(storytellers_with_influence[initalized_storyteller] < storytellers_with_influence[highest])
+			continue
+		if(storytellers_with_influence[initalized_storyteller] == storytellers_with_influence[highest] && prob(50))
+			continue
+		highest = initalized_storyteller
+	return highest
+
+/// Refreshes statistics regarding alive statuses of certain professions or antags, like nobles
+/datum/controller/subsystem/gamemode/proc/refresh_alive_stats(roundstart = FALSE)
+	if(SSticker.current_state == GAME_STATE_FINISHED)
+		return
+
+	GLOB.patron_follower_counts.Cut()
+
+	GLOB.featured_stats[FEATURED_STATS_FLAWS]["entries"] = list()
+
+	var/list/statistics_to_clear = list(
+		STATS_TOTAL_POPULATION,
+		STATS_PSYCROSS_USERS,
+		STATS_ALIVE_NOBLES,
+		STATS_ALIVE_GARRISON,
+		STATS_ALIVE_CLERGY,
+		STATS_ALIVE_TRADESMEN,
+		STATS_ILLITERATES,
+		STATS_WEREVOLVES,
+		STATS_VAMPIRES,
+		STATS_DEADITES_ALIVE,
+		STATS_CLINGY_PEOPLE,
+		STATS_ALCOHOLICS,
+		STATS_JUNKIES,
+		STATS_KLEPTOMANIACS,
+		STATS_GREEDY_PEOPLE,
+		STATS_PARENTS,
+		STATS_PACIFISTS,
+		STATS_MARRIED,
+		STATS_MALE_POPULATION,
+		STATS_FEMALE_POPULATION,
+		STATS_OTHER_GENDER,
+		STATS_CHILD_POPULATION,
+		STATS_ADULT_POPULATION,
+		STATS_MIDDLEAGED_POPULATION,
+		STATS_ELDERLY_POPULATION,
+		STATS_IMMORTAL_POPULATION,
+		STATS_ALIVE_TIEFLINGS,
+		STATS_ALIVE_NORTHERN_HUMANS,
+		STATS_ALIVE_DWARVES,
+		STATS_ALIVE_DARK_ELVES,
+		STATS_ALIVE_SNOW_ELVES,
+		STATS_ALIVE_HALF_ELVES,
+		STATS_ALIVE_HALF_DROWS,
+		STATS_ALIVE_HALF_ORCS,
+		STATS_ALIVE_KOBOLDS,
+		STATS_ALIVE_RAKSHARI,
+		STATS_ALIVE_AASIMAR,
+		STATS_ALIVE_HOLLOWKINS,
+		STATS_ALIVE_HARPIES,
+		STATS_ALIVE_TRITONS,
+		STATS_ALIVE_MEDICATORS,
+	)
+
+	for(var/stat_name in statistics_to_clear)
+		force_set_round_statistic(stat_name, 0)
+
+	var/list/current_valid_humans = list()
+
+	var/mob/living/carbon/human/valid_psydon_favourite
+
+	var/highest_total_stats = -1
+	var/highest_strength = -1
+	var/highest_intelligence = -1
+	var/highest_wealth = -1
+	var/highest_luck = -1
+	var/highest_speed = -1
+
+	var/lowest_total_stats
+	var/lowest_strength
+	var/lowest_intelligence
+	var/lowest_wealth
+	var/lowest_luck
+	var/lowest_speed
+
+	for(var/client/client in GLOB.clients)
+		if(roundstart)
+			GLOB.patron_follower_counts[client.prefs.selected_patron.name]++
+		var/mob/living/living = client.mob
+		if(!istype(living))
+			continue
+		if(!living.mind)
+			continue
+		if(living.stat == DEAD)
+			continue
+
+		if(!roundstart)
+			if(living.patron)
+				GLOB.patron_follower_counts[living.patron.name]++
+				if(living.job == "Monarch")
+					force_set_round_statistic(STATS_MONARCH_PATRON, living.patron.name)
+		if(living.mind.has_antag_datum(/datum/antagonist/werewolf))
+			record_round_statistic(STATS_WEREVOLVES)
+		if(living.mind.has_antag_datum(/datum/antagonist/vampire))
+			record_round_statistic(STATS_VAMPIRES)
+		if(living.mind.has_antag_datum(/datum/antagonist/zombie) || living.mind.has_antag_datum(/datum/antagonist/skeleton) || living.mind.has_antag_datum(/datum/antagonist/lich))
+			record_round_statistic(STATS_DEADITES_ALIVE)
+		if(ishuman(living))
+			var/mob/living/carbon/human/human_mob = client.mob
+			current_valid_humans += human_mob
+			record_round_statistic(STATS_TOTAL_POPULATION)
+			for(var/obj/item/clothing/neck/current_item in human_mob.get_equipped_items(TRUE))
+				if(current_item.type in list(/obj/item/clothing/neck/psycross, /obj/item/clothing/neck/psycross/silver, /obj/item/clothing/neck/psycross/g))
+					record_round_statistic(STATS_PSYCROSS_USERS)
+					break
+			switch(human_mob.gender)
+				if(MALE)
+					record_round_statistic(STATS_MALE_POPULATION)
+				if(FEMALE)
+					record_round_statistic(STATS_FEMALE_POPULATION)
+				else
+					record_round_statistic(STATS_OTHER_GENDER)
+			switch(human_mob.age)
+				if(AGE_CHILD)
+					record_round_statistic(STATS_CHILD_POPULATION)
+				if(AGE_ADULT)
+					record_round_statistic(STATS_ADULT_POPULATION)
+				if(AGE_MIDDLEAGED)
+					record_round_statistic(STATS_MIDDLEAGED_POPULATION)
+				if(AGE_OLD)
+					record_round_statistic(STATS_ELDERLY_POPULATION)
+				if(AGE_IMMORTAL)
+					record_round_statistic(STATS_IMMORTAL_POPULATION)
+			if(human_mob.charflaw)
+				record_featured_object_stat(FEATURED_STATS_FLAWS, human_mob.charflaw.name)
+			if(human_mob.is_noble())
+				record_round_statistic(STATS_ALIVE_NOBLES)
+			if(human_mob.mind.assigned_role.title in GLOB.garrison_positions)
+				record_round_statistic(STATS_ALIVE_GARRISON)
+			if(human_mob.mind.assigned_role.title in GLOB.church_positions)
+				record_round_statistic(STATS_ALIVE_CLERGY)
+			if((human_mob.mind.assigned_role.title in GLOB.serf_positions) || (human_mob.mind.assigned_role.title in GLOB.peasant_positions) || (human_mob.mind.assigned_role.title in GLOB.company_positions))
+				record_round_statistic(STATS_ALIVE_TRADESMEN)
+			if(!human_mob.is_literate())
+				record_round_statistic(STATS_ILLITERATES)
+			if(human_mob.has_flaw(/datum/charflaw/clingy))
+				record_round_statistic(STATS_CLINGY_PEOPLE)
+			if(human_mob.has_flaw(/datum/charflaw/addiction/alcoholic))
+				record_round_statistic(STATS_ALCOHOLICS)
+			if(human_mob.has_flaw(/datum/charflaw/addiction/junkie))
+				record_round_statistic(STATS_JUNKIES)
+			if(human_mob.has_flaw(/datum/charflaw/addiction/kleptomaniac))
+				record_round_statistic(STATS_KLEPTOMANIACS)
+			if(human_mob.has_flaw(/datum/charflaw/greedy))
+				record_round_statistic(STATS_GREEDY_PEOPLE)
+			if(HAS_TRAIT_NOT_FROM(human_mob, TRAIT_PACIFISM, "hugbox"))
+				record_round_statistic(STATS_PACIFISTS)
+			if(human_mob.family_datum && human_mob.family_member_datum)
+				var/datum/family_member/member = human_mob.family_member_datum
+				// Check if they have children (making them a parent)
+				if(member.children.len > 0)
+					record_round_statistic(STATS_PARENTS)
+				// Check if married or has children
+				if(human_mob.IsWedded() || member.children.len > 0)
+					record_round_statistic(STATS_MARRIED)
+
+			// Races
+			if(istiefling(human_mob))
+				record_round_statistic(STATS_ALIVE_TIEFLINGS)
+			if(ishumannorthern(human_mob))
+				record_round_statistic(STATS_ALIVE_NORTHERN_HUMANS)
+			if(isdwarf(human_mob))
+				record_round_statistic(STATS_ALIVE_DWARVES)
+			if(isdarkelf(human_mob))
+				record_round_statistic(STATS_ALIVE_DARK_ELVES)
+			if(issnowelf(human_mob))
+				record_round_statistic(STATS_ALIVE_SNOW_ELVES)
+			if(ishalfelf(human_mob))
+				record_round_statistic(STATS_ALIVE_HALF_ELVES)
+			if(ishalfdrow(human_mob))
+				record_round_statistic(STATS_ALIVE_HALF_DROWS)
+			if(ishalforc(human_mob))
+				record_round_statistic(STATS_ALIVE_HALF_ORCS)
+			if(iskobold(human_mob))
+				record_round_statistic(STATS_ALIVE_KOBOLDS)
+			if(israkshari(human_mob))
+				record_round_statistic(STATS_ALIVE_RAKSHARI)
+			if(isaasimar(human_mob))
+				record_round_statistic(STATS_ALIVE_AASIMAR)
+			if(ishollowkin(human_mob))
+				record_round_statistic(STATS_ALIVE_HOLLOWKINS)
+			if(isharpy(human_mob))
+				record_round_statistic(STATS_ALIVE_HARPIES)
+			if(istriton(human_mob))
+				record_round_statistic(STATS_ALIVE_TRITONS)
+			if(ismedicator(human_mob))
+				record_round_statistic(STATS_ALIVE_MEDICATORS)
+
+			// Chronicle statistics
+
+			if(human_mob.client.has_triumph_buy(TRIUMPH_BUY_PSYDON_FAVOURITE))
+				valid_psydon_favourite = human_mob
+
+			var/total_stats = human_mob.STASTR + human_mob.STAINT + human_mob.STAEND + human_mob.STACON + human_mob.STAPER + human_mob.STASPD + human_mob.STALUC
+			if(total_stats > highest_total_stats)
+				highest_total_stats = total_stats
+				set_chronicle_stat(CHRONICLE_STATS_MOST_SKILLS_PERSON, human_mob, "PRODIGY", "#e9de43", "[total_stats] total stats")
+
+			if(human_mob.STASTR > highest_strength)
+				highest_strength = human_mob.STASTR
+				set_chronicle_stat(CHRONICLE_STATS_STRONGEST_PERSON, human_mob, "STRONGMAN", "#bd1717", "[human_mob.STASTR] strength")
+
+			if(human_mob.STAINT > highest_intelligence)
+				highest_intelligence = human_mob.STAINT
+				set_chronicle_stat(CHRONICLE_STATS_SMARTEST_PERSON, human_mob, "GENIUS", "#5eb6e6", "[human_mob.STAINT] intelligence")
+
+			if(human_mob.STALUC > highest_luck)
+				highest_luck = human_mob.STALUC
+				set_chronicle_stat(CHRONICLE_STATS_LUCKIEST_PERSON, human_mob, "LUCKY DEVIL", "#54d666", "[human_mob.STALUC] luck")
+
+			if(human_mob.STASPD > highest_speed)
+				highest_speed = human_mob.STASPD
+				set_chronicle_stat(CHRONICLE_STATS_FASTEST_PERSON, human_mob, "SPEEDSTER", "#54d6c2", "[human_mob.STASPD] speed")
+
+			var/wealth = get_mammons_in_atom(human_mob)
+			if(wealth > highest_wealth)
+				highest_wealth = wealth
+				set_chronicle_stat(CHRONICLE_STATS_RICHEST_PERSON, human_mob, "MAGNATE", "#d8dd90", "[wealth] mammons")
+
+			if(!lowest_total_stats)
+				lowest_total_stats = total_stats
+				set_chronicle_stat(CHRONICLE_STATS_LEAST_SKILLS_PERSON, human_mob, "HOPELESS", "#8a8887", "[total_stats] total stats")
+			else if(total_stats < lowest_total_stats)
+				lowest_total_stats = total_stats
+				set_chronicle_stat(CHRONICLE_STATS_LEAST_SKILLS_PERSON, human_mob, "HOPELESS", "#8a8887", "[total_stats] total stats")
+
+			if(!lowest_strength)
+				lowest_strength = human_mob.STASTR
+				set_chronicle_stat(CHRONICLE_STATS_WEAKEST_PERSON, human_mob, "WIMP", "#a0836a", "[human_mob.STASTR] strength")
+			else if(human_mob.STASTR < lowest_strength)
+				lowest_strength = human_mob.STASTR
+				set_chronicle_stat(CHRONICLE_STATS_WEAKEST_PERSON, human_mob, "WIMP", "#a0836a", "[human_mob.STASTR] strength")
+
+			if(!lowest_intelligence)
+				lowest_intelligence = human_mob.STAINT
+				set_chronicle_stat(CHRONICLE_STATS_DUMBEST_PERSON, human_mob, "IDIOT", "#e67e22", "[human_mob.STAINT] intelligence")
+			else if(human_mob.STAINT < lowest_intelligence)
+				lowest_intelligence = human_mob.STAINT
+				set_chronicle_stat(CHRONICLE_STATS_DUMBEST_PERSON, human_mob, "IDIOT", "#e67e22", "[human_mob.STAINT] intelligence")
+
+			if(!lowest_speed)
+				lowest_speed = human_mob.STASPD
+				set_chronicle_stat(CHRONICLE_STATS_SLOWEST_PERSON, human_mob, "TURTLE", "#a569bd", "[human_mob.STASPD] speed")
+			else if(human_mob.STASPD < lowest_speed)
+				lowest_speed = human_mob.STASPD
+				set_chronicle_stat(CHRONICLE_STATS_SLOWEST_PERSON, human_mob, "TURTLE", "#a569bd", "[human_mob.STASPD] speed")
+
+			if(!lowest_luck)
+				lowest_luck = human_mob.STALUC
+				set_chronicle_stat(CHRONICLE_STATS_UNLUCKIEST_PERSON, human_mob, "WALKING DISASTER", "#e74c3c", "[human_mob.STALUC] luck")
+			else if(human_mob.STALUC < lowest_luck)
+				lowest_luck = human_mob.STALUC
+				set_chronicle_stat(CHRONICLE_STATS_UNLUCKIEST_PERSON, human_mob, "WALKING DISASTER", "#e74c3c", "[human_mob.STALUC] luck")
+
+			if(!lowest_wealth)
+				lowest_wealth = wealth
+				set_chronicle_stat(CHRONICLE_STATS_POOREST_PERSON, human_mob, "PAUPER", "#909c63", "[wealth] mammons")
+			else if(wealth < lowest_wealth)
+				lowest_wealth = wealth
+				set_chronicle_stat(CHRONICLE_STATS_POOREST_PERSON, human_mob, "PAUPER", "#909c63", "[wealth] mammons")
+
+	if(length(current_valid_humans) >= 2 && valid_psydon_favourite)
+		var/list/potential_passers = current_valid_humans.Copy()
+		potential_passers -= valid_psydon_favourite
+		var/mob/living/carbon/human/random_passerby = pick(potential_passers)
+
+		chosen_chronicle_stats[1] = CHRONICLE_STATS_PSYDON_FAVOURITE
+		set_chronicle_stat(CHRONICLE_STATS_PSYDON_FAVOURITE, valid_psydon_favourite, "PSYDON'S FAVOURITE", "#e6e6e6", "buying his way in")
+
+		if(random_passerby)
+			chosen_chronicle_stats[2] = CHRONICLE_STATS_RANDOM_PASSERBY
+			set_chronicle_stat(CHRONICLE_STATS_RANDOM_PASSERBY, random_passerby, "RANDOM PASSERBY", "#888888", "just happening to be here")
+
+	else if(!isnull(GLOB.chronicle_stats[CHRONICLE_STATS_PSYDON_FAVOURITE]))
+		chosen_chronicle_stats = list()
+		pick_chronicle_stats()
+
+/// Returns total follower influence for the given storyteller
+/datum/controller/subsystem/gamemode/proc/get_follower_influence(datum/storyteller/chosen_storyteller)
+	var/datum/storyteller/initialized_storyteller = storytellers[chosen_storyteller]
+	if(!initialized_storyteller)
+		return 0
+
+	var/follower_count = GLOB.patron_follower_counts[initialized_storyteller.name] || 0
+	var/base_mod = initialized_storyteller.follower_modifier
+	var/diminish_threshold = 4
+	var/second_diminish_threshold = 9
+	var/min_mod = 15
+	var/second_min_mod = 10
+
+	// Calculate total influence with diminishing returns
+	var/total_influence = 0
+	for(var/i in 1 to follower_count)
+		if(i <= diminish_threshold)
+			total_influence += base_mod
+		else if(i <= second_diminish_threshold)
+			total_influence += max(min_mod, base_mod - (i - diminish_threshold))
+		else
+			total_influence += max(second_min_mod, base_mod - (i - diminish_threshold))
+
+	return total_influence
+
+/// Returns influence value for a given storyteller for his given statistic
+/datum/controller/subsystem/gamemode/proc/calculate_specific_influence(datum/storyteller/chosen_storyteller, statistic)
+	var/datum/storyteller/initialized_storyteller = storytellers[chosen_storyteller]
+	if(!initialized_storyteller)
+		return
+
+	if(!(statistic in initialized_storyteller.influence_factors))
+		return
+
+	var/influence = 0
+	var/stat_value = GLOB.vanderlin_round_stats[statistic]
+	var/list/factors = initialized_storyteller.influence_factors[statistic]
+	var/modifier = factors["points"]
+	var/capacity = factors["capacity"]
+
+	var/scaling_factor = initialized_storyteller.influence_modifier
+	if(modifier < 0)
+		scaling_factor = 1 / scaling_factor
+
+	var/raw_contribution = (stat_value * modifier) * scaling_factor
+	influence = (modifier < 0) ? max(raw_contribution, capacity) : min(raw_contribution, capacity)
+
+	return influence
+
+/// Return total influence of the storyteller, which includes all his statistics and number of their followers
+/datum/controller/subsystem/gamemode/proc/calculate_storyteller_influence(datum/storyteller/chosen_storyteller)
+	var/datum/storyteller/initialized_storyteller = storytellers[chosen_storyteller]
+	if(!initialized_storyteller)
+		return 0
+
+	var/total_influence = get_follower_influence(chosen_storyteller)
+
+	for(var/influence_factor in initialized_storyteller.influence_factors)
+		total_influence += calculate_specific_influence(chosen_storyteller, influence_factor)
+
+	total_influence += initialized_storyteller.bonus_points
+
+	return total_influence
+
+/// Adjusts bonus points of the storyteller, which is added to their total influence
+/proc/adjust_storyteller_influence(god_name, amount)
+	for(var/storyteller_type in SSgamemode.storytellers)
+		var/datum/storyteller/S = SSgamemode.storytellers[storyteller_type]
+		if(S.name == god_name)
+			S.bonus_points += amount
+			break
+
+/// Gets total storyteller influence by their name
+/proc/get_storyteller_influence(god_name)
+	for(var/storyteller_type in SSgamemode.storytellers)
+		var/datum/storyteller/S = SSgamemode.storytellers[storyteller_type]
+		if(S.name == god_name)
+			return SSgamemode.calculate_storyteller_influence(S.type)
+	return 0
+
+/// Checks if the given storyteller is ascendant
+/proc/is_ascendant(god_name)
+	. = FALSE
+	for(var/storyteller_type in SSgamemode.storytellers)
+		var/datum/storyteller/S = SSgamemode.storytellers[storyteller_type]
+		if(S.ascendant && (S.name == god_name))
+			return TRUE
 
 #undef DEFAULT_STORYTELLER_VOTE_OPTIONS
 #undef MAX_POP_FOR_STORYTELLER_VOTE

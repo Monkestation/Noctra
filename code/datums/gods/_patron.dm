@@ -2,12 +2,15 @@
 #define PRIEST_SPELLS "Priest"
 
 GLOBAL_LIST_EMPTY(patronlist)
-GLOBAL_LIST_EMPTY(patrons_by_faith)
-GLOBAL_LIST_EMPTY(preference_patrons)
+GLOBAL_LIST_EMPTY(patrons_by_faith) // Does not include patrons with preference_accessible as FALSE
+GLOBAL_LIST_EMPTY(preference_patrons) // Does not include patrons with preference_accessible as FALSE
+GLOBAL_LIST_EMPTY(prayers)
 
 /datum/patron
 	/// Name of the god
 	var/name
+	/// Display name of the patron in the prefs menu
+	var/display_name
 	/// Domain of the god, such as earth, fire, water, murder etc
 	var/domain = "Bad coding practices"
 	/// Description of the god
@@ -40,17 +43,23 @@ GLOBAL_LIST_EMPTY(preference_patrons)
 
 	///our traits thats applied by set_patron and removed when changed
 	var/list/added_traits
-	var/non_faith = FALSE
+
+	///verbs applied by set_patron and removed when changed
+	var/list/added_verbs
 
 	var/datum/storyteller/storyteller
 
 /datum/patron/proc/on_gain(mob/living/pious)
 	for(var/trait in added_traits)
 		ADD_TRAIT(pious, trait, "[type]")
+	for(var/verb in added_verbs)
+		pious.verbs |= verb
 
 /datum/patron/proc/on_remove(mob/living/pious)
 	for(var/trait in added_traits)
 		REMOVE_TRAIT(pious, trait, "[type]")
+	for(var/verb in added_verbs)
+		pious.verbs -= verb
 
 /* -----PRAYERS----- */
 
@@ -77,6 +86,8 @@ GLOBAL_LIST_EMPTY(preference_patrons)
 		return FALSE
 
 	. = TRUE //the prayer has succeeded by this point forward
+	GLOB.prayers |= prayer
+	record_round_statistic(STATS_PRAYERS_MADE)
 
 	if(findtext(prayer, name))
 		reward_prayer(follower)
@@ -85,7 +96,7 @@ GLOBAL_LIST_EMPTY(preference_patrons)
 /datum/patron/proc/punish_prayer(mob/living/follower)
 	follower.adjust_divine_fire_stacks(100)
 	follower.IgniteMob()
-	SSticker.pplsmited++
+	record_round_statistic(STATS_PEOPLE_SMITTEN)
 	follower.add_stress(/datum/stressevent/psycurse)
 
 /// The follower has prayed in a special way to the patron and is being rewarded.

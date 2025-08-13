@@ -1,45 +1,18 @@
 //Defines for atom layers and planes
 //KEEP THESE IN A NICE ACSCENDING ORDER, PLEASE
 
-#define FIELD_OF_VISION_BLOCKER_PLANE -199
-#define FIELD_OF_VISION_BLOCKER_RENDER_TARGET "*fovblock"
-
-//---------- DEFILTER PLANES -------------
-#define DEFILTER_REFLECTIVE_PLANE_ALL -102
-#define DEFILTER_REFLECTIVE_PLANE_ALL_RENDER_TARGET "*DEFILTER_REFLECTIVE_PLANE_ALL_RENDER_TARGET"
-#define DEFILTER_MANUAL_REFLECTIVE_PLANE -101
-#define DEFILTER_MANUAL_REFLECTIVE_PLANE_RENDER_TARGET "*DEFILTER_MANUAL_REFLECTIVE_PLANE_RENDER_TARGET"
-#define DEFILTER_MANUAL_REFLECTIVE_MASK_PLANE -100
-#define DEFILTER_MANUAL_REFLECTIVE_PLANE_MASK_RENDER_TARGET "*DEFILTER_MANUAL_REFLECTIVE_PLANE_MASK_RENDER_TARGET"
-
-#define CLICKCATCHER_PLANE -99
-
-#define PLANE_SPACE -95
-#define PLANE_SPACE_PARALLAX -90
-
-#define WEATHER_OVERLAY_PLANE -80
-#define WEATHER_OVERLAY_LAYER -80
-#define WEATHER_RENDER_TARGET "*WEATHER_OVERLAY_PLANE"
-
-#define OPENSPACE_LAYER 17 //Openspace layer over all
-#define OPENSPACE_PLANE -8 //Openspace plane below all turfs
-#define OPENSPACE_BACKDROP_PLANE -7
-
-#define FLOOR_PLANE -6
-#define GAME_PLANE -5
-#define GAME_PLANE_RENDER_TARGET "GAME_PLANE_RENDER_TARGET"
-#define GAME_PLANE_FOV_HIDDEN -4
-#define GAME_PLANE_UPPER -3
-#define WEATHER_EFFECT_PLANE -2
-#define REFLECTION_PLANE_ABOVE -1
-#define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
-
+//---------- LAYERS -------------
+//#define FLOAT_LAYER -1 // byond record keeping
+//#define DEFAULT_LAYER 0 // byond record keeping
+#define LOWER_LEYLINE_LAYER 1
 #define SPACE_LAYER 1.8
 //#define TURF_LAYER 2 //For easy recordkeeping; this is a byond define
+#define UPPER_LEYLINE_LAYER 2
 #define MID_TURF_LAYER 2.02
 #define HIGH_TURF_LAYER 2.03
 #define TURF_PLATING_DECAL_LAYER 2.031
-#define TURF_DECAL_LAYER 2.039 //Makes turf decals appear in DM how they will look inworld.
+#define CULT_OVERLAY_LAYER 2.01
+#define TURF_DECAL_LAYER 2.039 //! Makes turf decals appear in DM how they will look inworld.
 #define ABOVE_OPEN_TURF_LAYER 2.04
 #define CLOSED_TURF_LAYER 2.05
 #define BULLET_HOLE_LAYER 2.06
@@ -62,8 +35,8 @@
 #define BELOW_OPEN_DOOR_LAYER 2.6
 #define BLASTDOOR_LAYER 2.65
 #define OPEN_DOOR_LAYER 2.7
-#define DOOR_HELPER_LAYER 2.71 //keep this above OPEN_DOOR_LAYER
-#define PROJECTILE_HIT_THRESHHOLD_LAYER 2.75 //projectiles won't hit objects at or below this layer if possible
+#define DOOR_HELPER_LAYER 2.71 //! keep this above OPEN_DOOR_LAYER
+#define PROJECTILE_HIT_THRESHHOLD_LAYER 2.75 //! projectiles won't hit objects at or below this layer if possible
 #define TABLE_LAYER 2.8
 #define BELOW_OBJ_LAYER 2.9
 #define LOW_ITEM_LAYER 2.95
@@ -93,78 +66,149 @@
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
 #define GASFIRE_LAYER 5.05
 #define RIPPLE_LAYER 5.1
-
-#define GHOST_LAYER 6
-#define LOW_LANDMARK_LAYER 9
-#define MID_LANDMARK_LAYER 9.1
-#define HIGH_LANDMARK_LAYER 9.2
-//#define AREA_LAYER 10
-#define MASSIVE_OBJ_LAYER 11
-#define POINT_LAYER 12
-
-#define CHAT_LAYER 12.1
-
-#define WARN_LAYER 12.2
-
-#define AREA_PLANE	12
 #define AREA_LAYER	12
 
-#define GRAIN_LAYER 13
+#define OPENSPACE_LAYER 600 //! Openspace layer over all
 
-#define WEATHER_PLANE 13
+///1000 is an unimportant number, it's just to normalize copied layers
+#define RADIAL_LAYER 1000
+#define RADIAL_BACKGROUND_LAYER 0
+#define RADIAL_CONTENT_LAYER 1
 
-#define INDOOR_PLANE 14
+//---------- PLANES -------------
+/// NEVER HAVE ANYTHING BELOW THIS PLANE ADJUST IF YOU NEED MORE SPACE
+#define LOWEST_EVER_PLANE -200
 
-#define EMISSIVE_BLOCKER_PLANE 15
-#define EMISSIVE_BLOCKER_LAYER 12
-#define EMISSIVE_BLOCKER_RENDER_TARGET "*EMISSIVE_BLOCKER_PLANE"
+#define FIELD_OF_VISION_BLOCKER_PLANE -199
+#define FIELD_OF_VISION_BLOCKER_RENDER_TARGET "*FOV_RENDER_TARGET"
 
-#define EMISSIVE_PLANE 16
-#define EMISSIVE_RENDER_TARGET "*EMISSIVE_PLANE"
+#define CLICKCATCHER_PLANE -99
 
-#define EMISSIVE_UNBLOCKABLE_PLANE 17
-#define EMISSIVE_UNBLOCKABLE_LAYER 17
-#define EMISSIVE_UNBLOCKABLE_RENDER_TARGET "*EMISSIVE_UNBLOCKABLE_PLANE"
+#define SPACE_PLANE -95
 
+#define SPACE_PLANE_PARALLAX -90
 
-#define SUNLIGHTING_PLANE 18
-#define SUNLIGHTING_RENDER_TARGET "*SUNLIGHT_PLANE"
+#define WEATHER_OVERLAY_PLANE -80
+#define WEATHER_RENDER_TARGET "*WEATHER_RENDER_TARGET"
 
-#define LIGHTING_PLANE 19
-#define LIGHTING_LAYER 15 //15
+#define OPENSPACE_PLANE -11 //! Openspace plane below all turfs
+#define OPENSPACE_BACKDROP_PLANE -10 //! Black square just over openspace plane to guaranteed cover all in openspace turf
 
-#define O_LIGHTING_VISUAL_PLANE 20
-#define O_LIGHTING_VISUAL_LAYER 18
-#define O_LIGHTING_VISUAL_RENDER_TARGET "O_LIGHT_VISUAL_PLANE"
+#define FLOOR_PLANE -9
+#define FLOOR_PLANE_RENDER_TARGET "FLOOR_PLANE_RENDER_TARGET"
+#define REFLECTION_PLANE -8
 
-#define ABOVE_LIGHTING_PLANE 21
-#define ABOVE_LIGHTING_LAYER 19
-#define ABOVE_LIGHTING_RENDER_TARGET "ABOVE_LIGHTING_PLANE"
+#define GAME_PLANE -7
+#define GAME_PLANE_RENDER_TARGET "GAME_PLANE_RENDER_TARGET"
+#define GAME_PLANE_FOV_HIDDEN -6
+#define GAME_PLANE_UPPER -5
 
-#define BYOND_LIGHTING_PLANE 22
-#define BYOND_LIGHTING_LAYER 21
+#define WEATHER_EFFECT_PLANE -4
+#define STRATEGY_PLANE -3
+#define LEYLINE_PLANE -2
+//#define FLOAT_PLANE -1 // byond record keeping
 
-#define CAMERA_STATIC_PLANE 23
-#define CAMERA_STATIC_LAYER 22
+#define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
+#define BLACKNESS_PLANE_RENDER_TARGET "BLACKNESS_RENDER_TARGET"
 
+#define LANDMARK_PLANE 50
+#define LOW_LANDMARK_LAYER 1
+#define MID_LANDMARK_LAYER 2
+#define HIGH_LANDMARK_LAYER 3
+
+#define AREA_PLANE 60
+#define MASSIVE_OBJ_PLANE 70
+#define GHOST_PLANE 80
+#define POINT_PLANE 90
+
+#define WEATHER_PLANE 100
+#define INDOOR_PLANE 110
+
+//---------- LIGHTING -------------
+/// Displays reflections
+#define REFLECTIVE_DISPLACEMENT_PLANE 120
+#define REFLECTIVE_DISPLACEMENT_PLANE_RENDER_TARGET "*REFLECTIVE_DISPLACEMENT_RENDER_TARGET"
+
+/// Fog weather rendering
+#define PLANE_FOG_CUTTER 130
+#define FOG_RENDER_TARGET "FOG_RENDER_TARGET"
+
+/// Sunlight effect
+#define SUNLIGHTING_PLANE 140
+#define SUNLIGHTING_RENDER_TARGET "*SUNLIGHT_RENDER_TARGET"
+
+///Normal 1 per turf dynamic lighting objects
+#define LIGHTING_PLANE 150
+#define LIGHTING_RENDER_TARGET "LIGHT_RENDER_TARGET"
+
+///Lighting objects that are "free floating"
+#define O_LIGHTING_VISUAL_PLANE 160
+#define O_LIGHTING_VISUAL_RENDER_TARGET "O_LIGHT_VISUAL_RENDER_TARGET"
+
+///Things that should render ignoring lighting
+#define ABOVE_LIGHTING_PLANE 170
+#define ABOVE_LIGHTING_RENDER_TARGET "ABOVE_LIGHTING_RENDER_TARGET"
+
+///visibility + hiding of things outside of light source range
+#define BYOND_LIGHTING_PLANE 180
+#define BYOND_LIGHTING_RENDER_TARGET "BYOND_LIGHTING_RENDER_TARGET"
+
+//---------- EMISSIVES -------------
+//Layering order of these is not particularly meaningful.
+//Important part is the seperation of the planes for control via plane_master
+
+///This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas
+#define EMISSIVE_PLANE 190
+/// The render target used by the emissive layer.
+#define EMISSIVE_RENDER_TARGET "*EMISSIVE_RENDER_TARGET"
+/// The layer you should use if you _really_ don't want an emissive overlay to be blocked.
+#define EMISSIVE_LAYER_UNBLOCKABLE 9999
+
+//---------------- MISC -----------------------
+///AI Camera Static
+#define CAMERA_STATIC_PLANE 200
+#define CAMERA_STATIC_RENDER_TARGET "CAMERA_STATIC_RENDER_TARGET"
+
+// Floating chat messages
+#define RUNECHAT_PLANE 250
+
+///--------------- FULLSCREEN IMAGES ------------
+#define FULLSCREEN_PLANE 500
+#define FULLSCREEN_RENDER_TARGET "FULLSCREEN_RENDER_TARGET"
+#define FLASH_LAYER 1
+#define FULLSCREEN_LAYER 2
+#define UI_DAMAGE_LAYER 3
+#define BLIND_LAYER 4
+#define CRIT_LAYER 5
+#define CURSE_LAYER 6
+#define ECHO_LAYER 7
+#define BACKHUD_LAYER 8
+
+//-------------------- HUD ---------------------
 //HUD layer defines
+#define HUD_PLANE 1000
+#define HUD_RENDER_TARGET "HUD_RENDER_TARGETE"
 
+#define ABOVE_HUD_PLANE 1100
+#define ABOVE_HUD_RENDER_TARGET "ABOVE_HUD_RENDER_TARGET"
 
-#define FULLSCREEN_PLANE 24
-#define FLASH_LAYER 23
-#define FULLSCREEN_LAYER 23.1
-#define UI_DAMAGE_LAYER 23.2
-#define BLIND_LAYER 23.3
-#define CRIT_LAYER 23.4
-#define CURSE_LAYER 23.5
-#define BACKHUD_LAYER 23.6
+#define LOBBY_MENU_PLANE 5000
+#define LOBBY_MENU_RENDER_TARGET "LOBBY_MENU_RENDER_TARGET"
 
-#define HUD_PLANE 25
-#define HUD_LAYER 24
-#define ABOVE_HUD_PLANE 26
-#define ABOVE_HUD_LAYER 25
+///Layer for lobby menu collapse button
+#define LOBBY_BELOW_MENU_LAYER 2
+/// Layer for background
+#define LOBBY_BACKGROUND_LAYER 3
+///Layer for main buttons (Join/Ready, Observe, Character Prefs)
+#define LOBBY_MENU_LAYER 4
+///Layer for lobby menu shutter, which covers up the menu to collapse/expand it
+#define LOBBY_SHUTTER_LAYER 5
+///Layer for lobby menu buttons that are hanging away from and lower than the main panel
+#define LOBBY_BOTTOM_BUTTON_LAYER 6
 
-#define SPLASHSCREEN_LAYER 26
-#define SPLASHSCREEN_PLANE 28
+///Plane of the "splash" icon used that shows on the lobby screen. Nothing should ever be above this.
+#define SPLASHSCREEN_PLANE 9999
+#define SPLASHSCREEN_RENDER_TARGET "SPLASHSCREEN_RENDER_TARGET"
 
-#define FOV_EFFECTS_LAYER 10000
+///Plane master controller keys
+#define PLANE_MASTERS_GAME "plane_masters_game"

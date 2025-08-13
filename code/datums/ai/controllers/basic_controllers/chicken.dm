@@ -4,11 +4,12 @@
 	blackboard = list(
 		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items(),
 		BB_NEST_LIST = list(/obj/structure/fluff/nest),
+		BB_NEST_MATERIAL_LIST = list(/obj/item/natural/fibers, /obj/item/grown/log/tree/stick),
 		BB_NEST_IGNORE_LIST = list(),
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
-	ai_movement = /datum/ai_movement/basic_avoidance
+	ai_movement = /datum/ai_movement/hybrid_pathing
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/lay_egg,
@@ -26,7 +27,7 @@
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
-	ai_movement = /datum/ai_movement/basic_avoidance
+	ai_movement = /datum/ai_movement/hybrid_pathing
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/find_food,

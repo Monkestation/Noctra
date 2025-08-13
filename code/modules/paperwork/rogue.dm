@@ -11,13 +11,12 @@
 	throw_range = 3
 	var/old_render = TRUE
 
-
 /obj/item/paper/scroll/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	if(istype(P, /obj/item/natural/thorn) || istype(P, /obj/item/natural/feather))
 		if(!open)
 			to_chat(user, "<span class='warning'>Open me.</span>")
 			return
-	..()
+	. = ..()
 
 /obj/item/paper/scroll/getonmobprop(tag)
 	. = ..()
@@ -35,65 +34,57 @@
 				if("onbelt")
 					return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/paper/scroll/attack_self(mob/user)
+/obj/item/paper/scroll/attack_self(mob/user, params)
 	if(mailer)
 		user.visible_message("<span class='notice'>[user] opens the missive from [mailer].</span>")
 		mailer = null
 		mailedto = null
-		update_icon()
+		update_appearance(UPDATE_ICON_STATE | UPDATE_NAME)
 		return
 	if(!open)
-		attack_right(user)
+		attack_hand_secondary(user, params)
 		return
 	..()
 	user.update_inv_hands()
 
 /obj/item/paper/scroll/read(mob/user)
-	if(!open)
+	if(!open && !isobserver(user))
 		to_chat(user, "<span class='info'>Open me.</span>")
 		return
-	if(!user.client || !user.hud_used)
-		return
-	if(!user.hud_used.reads)
-		return
-	if(!user.can_read(src))
-		if(info)
-			user.mind.adjust_experience(/datum/skill/misc/reading, 2, FALSE)
-		return
-	/*font-size: 125%;*/
-	if(in_range(user, src) || isobserver(user))
-		if(old_render)
-			user << browse_rsc('html/book.png')
-			var/dat = {"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
-			<html><head><style type=\"text/css\">
-			body { background-image:url('book.png');background-repeat: repeat; }</style></head><body scroll=yes>"}
-			dat += "[info]<br>"
-			dat += "<a href='?src=[REF(src)];close=1' style='position:absolute;right:50px'>Close</a>"
-			dat += "</body></html>"
-			user << browse(dat, "window=reading;size=460x300;can_close=0;can_minimize=0;can_maximize=0;can_resize=0")
-		else
-			user.hud_used.reads.icon_state = "scroll"
-			user.hud_used.reads.show()
-			user.hud_used.reads.maptext = info
-			user.hud_used.reads.maptext_width = 230
-			user.hud_used.reads.maptext_height = 200
-			user.hud_used.reads.maptext_y = 150
-			user.hud_used.reads.maptext_x = 120
+	. = ..()
 
-		onclose(user, "reading", src)
+/obj/item/paper/scroll/show_paper_hud(mob/user)
+	if(old_render)
+		user << browse_rsc('html/book.png')
+		var/dat = {"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+		<html><head><style type=\"text/css\">
+		body { background-image:url('book.png');background-repeat: repeat; }</style></head><body scroll=yes>"}
+		dat += "[info]<br>"
+		dat += "<a href='?src=[REF(src)];close=1' style='position:absolute;right:50px'>Close</a>"
+		dat += "</body></html>"
+		user << browse(dat, "window=reading;size=460x460;can_close=0;can_minimize=0;can_maximize=0;can_resize=0")
 	else
-		return "<span class='warning'>I'm too far away to read it.</span>"
+		user.hud_used.reads.icon_state = "scroll"
+		user.hud_used.reads.show()
+		user.hud_used.reads.maptext = info
+		user.hud_used.reads.maptext_width = 230
+		user.hud_used.reads.maptext_height = 200
+		user.hud_used.reads.maptext_y = 150
+		user.hud_used.reads.maptext_x = 120
+
+	onclose(user, "reading", src)
 
 /obj/item/paper/scroll/Initialize()
-	open = FALSE
-	update_icon_state()
-	..()
+	. = ..()
+	update_appearance(UPDATE_ICON_STATE | UPDATE_NAME)
 
-/obj/item/paper/scroll/rmb_self(mob/user)
-	attack_right(user)
-	return
+/obj/item/paper/scroll/attack_self_secondary(mob/user, params)
+	attack_hand_secondary(user, params)
 
-/obj/item/paper/scroll/attack_right(mob/user)
+/obj/item/paper/scroll/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	if(open)
 		slot_flags |= ITEM_SLOT_HIP
 		open = FALSE
@@ -102,27 +93,36 @@
 		slot_flags &= ~ITEM_SLOT_HIP
 		open = TRUE
 		playsound(src, 'sound/items/scroll_open.ogg', 100, FALSE)
-	update_icon_state()
+	update_appearance(UPDATE_ICON_STATE | UPDATE_NAME)
 	user.update_inv_hands()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/paper/scroll/update_icon_state()
+	. = ..()
 	if(mailer)
 		icon_state = "scroll_prep"
 		open = FALSE
-		name = "missive"
 		slot_flags |= ITEM_SLOT_HIP
 		throw_range = 7
 		return
 	throw_range = initial(throw_range)
-	if(open)
-		if(info)
-			icon_state = "scrollwrite"
-		else
-			icon_state = "scroll"
-		name = initial(name)
-	else
+	if(!open)
 		icon_state = "scroll_closed"
+		return
+	if(info)
+		icon_state = "scrollwrite"
+	else
+		icon_state = "scroll"
+
+/obj/item/paper/scroll/update_name()
+	. = ..()
+	if(mailer)
+		name = "missive"
+		return
+	if(!open)
 		name = "scroll"
+	else
+		name = initial(name)
 
 /obj/item/paper/scroll/cargo
 	name = "shipping order"
@@ -130,6 +130,7 @@
 	var/signedname
 	var/signedjob
 	var/list/orders = list()
+	var/list/reputation_orders = list()
 	var/list/fufilled_orders = list()
 	open = TRUE
 	textper = 150
@@ -143,41 +144,45 @@
 /obj/item/paper/scroll/cargo/examine(mob/user)
 	. = ..()
 	if(signedname)
-		. += "It was signed by [signedname] the [signedjob]."
+		. += "This was signed by [signedname] the [signedjob]."
 
 	//for each order, add up total price and display orders
 
 /obj/item/paper/scroll/cargo/update_icon_state()
-	if(open)
-		if(signedname)
-			icon_state = "contractsigned"
-		else
-			icon_state = "contractunsigned"
-		name = initial(name)
-	else
+	. = ..()
+	if(!open)
 		icon_state = "scroll_closed"
-		name = "scroll"
+		return ..()
+	if(signedname)
+		icon_state = "contractsigned"
+	else
+		icon_state = "contractunsigned"
 
+/obj/item/paper/scroll/cargo/update_name()
+	. = ..()
+	if(!open)
+		name = "scroll"
+	else
+		name = initial(name)
 
 /obj/item/paper/scroll/cargo/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	if(istype(P, /obj/item/natural/feather))
 		if(user.is_literate() && open)
 			if(signedname)
-				to_chat(user, "<span class='warning'>[signedname]</span>")
+				to_chat(user, span_warning("[signedname]"))
 				return
 			switch(alert("Sign your name?",,"Yes","No"))
-				if("Yes")
-					if(user.mind && user.mind.assigned_role)
-						if(do_after(user, 2 SECONDS, src))
-							signedname = user.real_name
-							signedjob = user.mind.assigned_role
-							icon_state = "contractsigned"
-							user.visible_message("<span class='notice'>[user] signs the [src].</span>")
-							update_icon_state()
-							playsound(src, 'sound/items/write.ogg', 100, FALSE)
-							rebuild_info()
 				if("No")
 					return
+				if("Yes")
+					if(user.mind?.assigned_role)
+						if(do_after(user, 2 SECONDS, src))
+							signedname = user.real_name
+							signedjob = user.mind.assigned_role.get_informed_title(user)
+							user.visible_message(span_notice("[user] signs [src]."), span_notice("I sign [src]."))
+							update_appearance(UPDATE_ICON_STATE)
+							playsound(src, 'sound/items/write.ogg', 100, FALSE)
+							rebuild_info()
 
 /obj/item/paper/scroll/cargo/proc/rebuild_info()
 	info = null
@@ -189,21 +194,22 @@
 		info += "<ul>"
 		for(var/datum/supply_pack/A in orders)
 			if(!A.contraband)
-				info += "<li style='color:#06080F;font-size:11px;font-family:\"Segoe Script\"'>[A.name] - [A.cost] mammons</li><br/>"
+				info += "<li style='color:#06080F;font-size:11px;font-family:\"Segoe Script\"'>[A.name] x[orders[A]] - [A.cost * orders[A]] mammons</li><br/>"
 			else
-				info += "<li style='color:#610018;font-size:11px;font-family:\"Segoe Script\"'>[A.name] - [A.cost] mammons</li><br/>"
+				info += "<li style='color:#610018;font-size:11px;font-family:\"Segoe Script\"'>[A.name] x[orders[A]] - [A.cost * orders[A]] mammons</li><br/>"
 		info += "</ul>"
 
 	info += "<br/></font>"
 
 	if(signedname)
-		info += "<font size=\"2\" face=\"[FOUNTAIN_PEN_FONT]\" color=#27293f>[signedname] the [signedjob] of Vanderlin</font>"
+		info += "<font size=\"2\" face=\"[FOUNTAIN_PEN_FONT]\" color=#27293f>[signedname] the [signedjob] of [SSmapping.config.map_name]</font>"
 
 	info += "</div>"
 
 /obj/item/paper/confession
 	name = "confession of villainy"
 	icon_state = "confession"
+	base_icon_state = "confession"
 	desc = "A drab piece of parchment stained with the magical ink of the Order lodges. Looking at it fills you with profound guilt."
 	info = "THE GUILTY PARTY ADMITS THEIR SINFUL NATURE AS ___. THEY WILL SERVE ANY PUNISHMENT OR SERVICE AS REQUIRED BY THE ORDER OF THE PSYCROSS UNDER PENALTY OF DEATH.<br/><br/>SIGNED,"
 	var/signed = null
@@ -219,51 +225,68 @@
 
 /obj/item/paper/confession/attackby(atom/A, mob/living/user, params)
 	if(signed)
-		return ..()
+		return
 	if(istype(A, /obj/item/natural/feather))
 		attempt_confession(user)
 		return TRUE
 	return ..()
 
 /obj/item/paper/confession/update_icon_state()
+	. = ..()
 	if(mailer)
 		icon_state = "paper_prep"
-		name = "letter"
 		throw_range = 7
 		return
-	name = initial(name)
 	throw_range = initial(throw_range)
-	if(signed)
-		icon_state = "confessionsigned"
-		return
-	icon_state = "confession"
-
-/obj/item/paper/confession/attack(mob/living/carbon/human/M, mob/user)
-	testing("paper confession offer. target is [M], user is [user].")
-	if(signed)
-		return ..()
-	if(M.stat >= UNCONSCIOUS) //unconscious cannot talk to confess, but soft crit can
-		return ..()
-	if(!ishuman(M))
-		return ..()
-	to_chat(user, span_info("I courteously offer the confession to [M]."))
-	attempt_confession(M, user)
+	icon_state = "[base_icon_state][signed ? "signed" : ""]"
 	return
+
+/obj/item/paper/confession/update_name()
+	. = ..()
+	if(mailer)
+		name = "letter"
+	else
+		name = initial(name)
 
 /obj/item/paper/confession/proc/attempt_confession(mob/living/carbon/human/M, mob/user)
 	if(!ishuman(M))
 		return
-	var/input = alert(M, "Sign the confession of your true nature?", "CONFESSION OF [confession_type == "antag" ? "VILLAINY" : "FAITH"]", "Yes", "No")
+	var/input = alert(M, "Sign the confession of your true nature?", "CONFESSION OF [confession_type == "antag" ? "VILLAINY" : "FAITH"]", "Yes", "Lie", "No")
 	if(M.stat >= UNCONSCIOUS)
+		return
+	if(!M.CanReach(src))
 		return
 	if(signed)
 		return
-	testing("[M] is signing the confession.")
 	if(input == "Yes")
-		M.visible_message(span_info("[M] has agreed to confess their true [confession_type == "antag" ? "villainy" : "faith"]."), span_info("I agree to confess my true nature."))
-		M.confess_sins(confession_type, resist=FALSE, user=user, torture=FALSE, confession_paper = src)
+		playsound(src, 'sound/items/write.ogg', 50, FALSE, ignore_walls = FALSE)
+		M.visible_message(span_info("[M] has agreed to confess their true [confession_type == "antag" ? "villainy" : "faith"]."), span_info("I agree to confess my true nature."), vision_distance = COMBAT_MESSAGE_RANGE)
+		M.confess_sins(confession_type, resist=FALSE, interrogator=user, torture=FALSE, confession_paper = src, false_result = TRUE)
+	else if(input == "Lie")
+		var/fake = TRUE
+		if(confession_type == "patron")
+			var/list/divine_gods = list()
+			for(var/datum/patron/path as anything in GLOB.patrons_by_faith[/datum/faith/divine_pantheon] + GLOB.patrons_by_faith[/datum/faith/psydon])
+				if(!path.name)
+					continue
+				var/pref_name = path.display_name ? path.display_name : path.name
+				divine_gods[pref_name] = path
+			if(length(divine_gods)) // sanity check
+				var/fake_patron = input(M, "Who will you pretend your patron is?", "DECEPTION") as null|anything in divine_gods
+				if(!fake)
+					fake_patron = pick(divine_gods)
+				fake = divine_gods[fake_patron]
+		if(M.stat >= UNCONSCIOUS)
+			return
+		if(!M.CanReach(src))
+			return
+		if(signed)
+			return
+		playsound(src, 'sound/items/write.ogg', 50, FALSE, ignore_walls = FALSE)
+		M.visible_message(span_info("[M] has agreed to confess their true [confession_type == "antag" ? "villainy" : "faith"]."), span_info("I agree to confess my true nature."), vision_distance = COMBAT_MESSAGE_RANGE)
+		M.confess_sins(confession_type, resist=FALSE, interrogator=user, torture=FALSE, confession_paper = src, false_result = fake)
 	else
-		M.visible_message(span_boldwarning("[M] refused to sign the confession!"), span_boldwarning("I refused to sign the confession!"))
+		M.visible_message(span_boldwarning("[M] refused to sign the confession!"), span_boldwarning("I refused to sign the confession!"), vision_distance = COMBAT_MESSAGE_RANGE)
 	return
 
 /obj/item/paper/confession/read(mob/user)
@@ -273,7 +296,7 @@
 		return
 	if(!user.can_read(src))
 		if(info)
-			user.mind.adjust_experience(/datum/skill/misc/reading, 2, FALSE)
+			user.adjust_experience(/datum/skill/misc/reading, 2, FALSE)
 		return
 	/*font-size: 125%;*/
 	if(in_range(user, src) || isobserver(user))
@@ -291,15 +314,15 @@
 	else
 		return "<span class='warning'>I'm too far away to read it.</span>"
 
-/obj/item/paper/confession/rmb_self(mob/user)
-	return TRUE
+/obj/item/paper/confession/attack_self_secondary(mob/user, params)
+	return SECONDARY_ATTACK_CALL_NORMAL
 
-/obj/item/paper/confession/attack_right(mob/user)
-	return TRUE
+/obj/item/paper/confession/attack_hand_secondary(mob/user, params)
+	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/item/merctoken
 	name = "mercenary token"
-	desc = "A small, palm-fitting bound scroll - a minuature writ of commendation for a mercenary under MGE. Present to a Guild representative for signing."
+	desc = "A small, palm-fitting bound scroll - a minuature writ of commendation for a mercenary under MGE."
 	icon_state = "merctoken"
 	icon = 'icons/roguetown/items/misc.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -310,32 +333,33 @@
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_MOUTH
 	var/signee = null
 	var/signeejob = null
-	var/signed = 0
+
+/obj/item/merctoken/examine(mob/user)
+	. = ..()
+	if(!signee)
+		. += span_info("Present to a Guild representative for signing.")
+	else
+		. += span_info("SIGNEE: [signee], [signeejob] of Vanderlin.")
 
 /obj/item/merctoken/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	if(istype(P, /obj/item/natural/thorn) || istype(P, /obj/item/natural/feather))
 		if(!user.can_read(src))
-			to_chat(user, "<span class='warning'>Even a reader would find these verba incomprehensible.</span>")
+			to_chat(user, span_warning("Even a reader would find these verba incomprehensible."))
 			return
-		if(signed == 1)
-			to_chat(user, "<span class='warning'>This token has already been signed.</span>")
+		if(signee)
+			to_chat(user, span_warning("This token has already been signed."))
 			return
-		if(user.can_read(src))
-			if(user.mind.assigned_role == "Mercenary")
-				to_chat(user, "<span class='warning'>Signing my own commendation would only befool me.</span>")
-				return
-			if(user.mind.assigned_role != "Merchant")
-				to_chat(user, "<span class='warning'>This is incomprehensible.</span>")
-				return
-			if(user.mind.assigned_role == "Merchant")
-				signee = user.real_name
-				signeejob = user.mind.assigned_role
-				visible_message("<span class='warning'>[user] writes their name down on the token.</span>")
-				playsound(src, 'sound/items/write.ogg', 100, FALSE)
-				desc = "A small, palm-fitting bound scroll that can be sent by mail to the Guild. Most of the fine print is unintelligible, save for one bold SIGNEE: [signee], [signeejob] of Vanderlin."
-				signed = 1
-				return
+		if(!is_gaffer_job(user.mind.assigned_role) && !is_merchant_job(user.mind.assigned_role))
+			if(is_mercenary_job(user.mind.assigned_role))
+				to_chat(user, span_warning("I can not sign my own commendation."))
+			else
+				to_chat(user, span_warning("This is incomprehensible."))
+			return
 		else
+			signee = user.real_name
+			signeejob = user.mind.assigned_role.get_informed_title(user)
+			visible_message(span_warning("[user] writes [user.p_their()] name on [src]."))
+			playsound(src, 'sound/items/write.ogg', 100, FALSE)
 			return
 
 
@@ -343,10 +367,9 @@
 	. = ..()
 	real_names |= GLOB.roundstart_court_agents
 
-
 /obj/item/paper/scroll/frumentarii
-	name = "List of Known Agents"
-	desc = "A list of the hand's fingers."
+	name = "frumentarii scroll"
+	desc = "A list of the hand's fingers. Strike a candidate with this to allow them servitude. Use a writing utensil to cross out a finger."
 	old_render = FALSE
 
 	var/list/real_names = list()
@@ -369,7 +392,7 @@
 	if(!attacked_target.client)
 		return
 
-	var/choice = input(attacked_target,"Do you list to become one of the Hand's fingers?","Binding Contract",null) as null|anything in list("Yes", "No")
+	var/choice = input(attacked_target,"Do you wish to become one of the Hand's fingers?","Binding Contract",null) as null|anything in list("Yes", "No")
 
 	if(choice != "Yes")
 		return
@@ -413,8 +436,18 @@
 	info += "</div>"
 
 
+/obj/item/paper/scroll/keep_plans
+	name = "keep architectural drawings"
+	desc = "Paper etched with the floor plans for the entire keep."
+
+/obj/item/paper/scroll/keep_plans/read(mob/user)
+	to_chat(user, span_purple("<b>These look like secret passages...</b>"))
+	ADD_TRAIT(user, TRAIT_KNOWKEEPPLANS, TRAIT_GENERIC)
+	user.playsound_local(user, 'sound/misc/notice (2).ogg', 100, FALSE)
+
+
 /obj/item/paper/scroll/sold_manifest
-	name = "Shipping Manifest"
+	name = "shipping manifest"
 	old_render = FALSE
 	var/list/count = list()
 	var/list/items = list()
@@ -446,7 +479,7 @@
 
 	faction = faction_name
 	if(!faction)
-		faction = pick("Heartfelt", "Zybantine", "Grenzelhoft", "Kingsfield")
+		faction = pick("Heartfelt", "Zalad", "Grenzelhoft", "Kingsfield")
 
 	sell_prices = prices
 	if(!length(sell_prices))
@@ -455,13 +488,18 @@
 	rebuild_info()
 
 /obj/item/paper/scroll/sell_price_changes/update_icon_state()
+	. = ..()
 	if(open)
 		icon_state = "contractsigned"
-		name = initial(name)
 	else
 		icon_state = "scroll_closed"
-		name = "scroll"
 
+/obj/item/paper/scroll/sell_price_changes/update_name()
+	. = ..()
+	if(open)
+		name = initial(name)
+	else
+		name = "scroll"
 
 /obj/item/paper/scroll/sell_price_changes/proc/rebuild_info()
 	info = null
@@ -469,6 +507,8 @@
 	info += "<h2 style='color:#06080F;font-family:\"Segoe Script\"'>Purchasing Prices</h2>"
 	info += "<hr/>"
 
+	if(!sell_prices)
+		return
 	if(sell_prices.len)
 		info += "<ul>"
 		for(var/atom/type_path as anything in sell_prices)
@@ -479,7 +519,8 @@
 	info += "<br/></font>"
 
 	info += "<font size=\"2\" face=\"[FOUNTAIN_PEN_FONT]\" color=#27293f>[writers_name] Shipwright of [faction]</font>"
-
+	info += "<br/>"
+	info += "<font size=\"2\" face=\"[FOUNTAIN_PEN_FONT]\" color=#27293f>Time: [gameTimestamp("hh:mm:ss", world.time - SSticker.round_start_time)]</font>"
 	info += "</div>"
 
 /obj/item/paper/scroll/sell_price_changes/proc/generated_test_data()

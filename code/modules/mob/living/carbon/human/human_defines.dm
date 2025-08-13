@@ -2,34 +2,24 @@
 	name = "Unknown"
 	real_name = "Unknown"
 	icon = 'icons/mob/human.dmi'
-	icon_state = "human_basic"
+	// Appearance is built by overlays
+	icon_state = MAP_SWITCH("", "human_basic")
 	appearance_flags = KEEP_TOGETHER|TILE_BOUND|PIXEL_SCALE
 	hud_possible = list(ANTAG_HUD)
 	hud_type = /datum/hud/human
 	base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB, INTENT_HARM)
 	possible_mmb_intents = list(INTENT_STEAL, INTENT_JUMP, INTENT_KICK, INTENT_BITE, INTENT_GIVE)
 	can_buckle = TRUE
-	buckle_lying = FALSE
+	buckle_lying = 0
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 
-	ambushable = 1
+	ambushable = TRUE //! DEPRECATED VAR, USE TRAIT_NOAMBUSH
 
 	voice_pitch = 1
 
 	var/footstep_type = FOOTSTEP_MOB_HUMAN
 
 	var/last_sound //last emote so we have no doubles
-
-	//Hair colour and style
-	var/hair_color = "000"
-	var/hairstyle = "Bald"
-
-	//Facial hair colour and style
-	var/facial_hair_color = "000"
-	var/facial_hairstyle = "Shaved"
-
-	//Eye colour
-	var/eye_color = "000"
 
 	var/voice_color = "a0a0a0"
 
@@ -65,9 +55,6 @@
 	var/obj/item/beltr = null
 	var/obj/item/wear_ring = null
 	var/obj/item/wear_wrists = null
-	var/obj/item/r_store = null
-	var/obj/item/l_store = null
-	var/obj/item/s_store = null
 	var/obj/item/cloak = null
 	var/obj/item/clothing/wear_shirt = null
 
@@ -82,24 +69,16 @@
 
 	var/list/datum/bioware = list()
 
-	var/static/list/can_ride_typecache = typecacheof(list(/mob/living/carbon/human, /mob/living/simple_animal/parrot))
+	var/static/list/can_ride_typecache = typecacheof(list(/mob/living/carbon/human))
 	var/lastpuke = 0
 	var/last_fire_update
-	var/account_id
+	var/account_id //! DEPRECATED
 
 	canparry = TRUE
 	candodge = TRUE
 
 	dodgecd = FALSE
 	dodgetime = 0
-
-	var/list/possibleclass = list()
-	var/list/special_classes = list()
-	var/list/shuffle_special= list()
-	var/list/shuffle_combat = list()
-	var/classesunlocked = FALSE
-	var/advsetup = 0
-
 
 //	var/alignment = ALIGNMENT_TN
 
@@ -112,6 +91,7 @@
 	var/mob/living/carbon/spouse_mob
 	var/image/spouse_indicator
 	var/setspouse
+	var/gender_choice_pref = ANY_GENDER
 	var/familytree_pref = FAMILY_NONE
 	var/datum/heritage/family_datum
 	var/list/temp_ui_list = list()
@@ -124,6 +104,9 @@
 	var/funeral = FALSE // Whether the body has received rites or not.
 
 	var/datum/devotion/cleric_holder/cleric = null // Used for cleric_holder for priests
+
+	var/headshot_link = null
+	var/flavortext = null
 
 	var/confession_points = 0 // Used to track how many confessions the Inquisitor has gotten signed. Used to buy items at mailboxes.
 	var/purchase_history = null // Used to track what the Inquisitor has bought from the mailbox.
@@ -143,6 +126,22 @@
 	/datum/rmb_intent/weak)
 
 	rot_type = /datum/component/rot/corpse
+
+	/// voice type of the mob
+	var/voice_type = null //  defines what sound pack we use. keep this null so mobs resort to their typical gender typing - preferences set this
+
+	blocks_emissive = NONE
+	var/datum/charflaw/charflaw
+
+	/// List of curses on this mob
+	var/list/curses = list()
+
+	/// List of minions that this mob has control over. Used for things like the Lich's "Command Undead" spell.
+	var/list/mob/minions = list()
+
+	var/mob/stored_mob = null // werewolf bullshit
+
+	fovangle = FOV_DEFAULT // our fov
 
 //Checking the highest armor class worn
 //Limb armors use the second highest armor class
@@ -165,7 +164,7 @@
 	torso_class = max(shirt_ac, chest_ac)			//Use heaviest Torso Armor Class
 
 	//Get Limb values, use heaviest pair
-	var/list/accessories = list(head, wear_mask, wear_wrists, wear_neck, cloak, wear_pants, gloves, shoes, belt, s_store)
+	var/list/accessories = list(head, wear_mask, wear_wrists, wear_neck, cloak, wear_pants, gloves, shoes, belt)
 	var/acc_class = ARMOR_CLASS_NONE
 	var/heavy_count = 0
 	var/medium_count = 0

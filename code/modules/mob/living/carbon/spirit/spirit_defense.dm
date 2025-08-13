@@ -67,7 +67,7 @@
 				visible_message("<span class='warning'>[M]'s shove goes through [name]!</span>", \
 								"<span class='warning'>[M]'s shove goes through you!</span>", "<span class='hear'>I hear the sound scuffling of the damned!</span>", COMBAT_MESSAGE_RANGE, M)
 				to_chat(M, "<span class='danger'>My shove goes through [name]!</span>")
-			if(!IsUnconscious())
+			if(stat < UNCONSCIOUS)
 				M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 				if (prob(25))
 					Paralyze(40)
@@ -140,8 +140,7 @@
 	//attempt to dismember bodyparts
 	if(severity <= 2)
 		var/max_limb_loss = round(4/severity) //so you don't lose four limbs at severity 3.
-		for(var/X in bodyparts)
-			var/obj/item/bodypart/BP = X
+		for(var/obj/item/bodypart/BP as anything in bodyparts)
 			if(prob(50/severity) && BP.body_zone != BODY_ZONE_CHEST)
 				BP.brute_dam = BP.max_damage
 				BP.dismember()

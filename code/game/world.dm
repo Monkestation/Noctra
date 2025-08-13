@@ -41,7 +41,6 @@ GLOBAL_PROTECT(tracy_init_reason)
 /world/proc/Genesis(tracy_initialized = FALSE)
 	RETURN_TYPE(/datum/controller/master)
 
-	// monkestation edit: some tracy refactoring
 	if(!tracy_initialized)
 		GLOB.tracy_initialized = FALSE
 #ifndef OPENDREAM
@@ -68,6 +67,8 @@ GLOBAL_PROTECT(tracy_init_reason)
 #endif
 	// THAT'S IT, WE'RE DONE, THE. FUCKING. END.
 	Master = new
+
+#undef USE_TRACY_PARAMETER
 
 /world/New()
 
@@ -115,8 +116,6 @@ GLOBAL_PROTECT(tracy_init_reason)
 
 	load_bypassage()
 
-	load_patreons()
-
 //	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
 	GLOB.timezoneOffset = world.timezone * 36000
@@ -147,7 +146,7 @@ GLOBAL_PROTECT(tracy_init_reason)
 #else
 	cb = VARSET_CALLBACK(SSticker, force_ending, TRUE)
 #endif
-	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(addtimer), cb, 10 SECONDS))
+	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), cb, 10 SECONDS))
 
 /world/proc/SetupLogs()
 	var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
@@ -200,6 +199,9 @@ GLOBAL_PROTECT(tracy_init_reason)
 	GLOB.world_job_debug_log = "[GLOB.log_directory]/job_debug.log"
 	GLOB.world_paper_log = "[GLOB.log_directory]/paper.log"
 	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
+#ifdef REFERENCE_DOING_IT_LIVE
+	GLOB.harddel_log = "[GLOB.log_directory]/harddel.log"
+#endif
 	set_db_log_directory()
 
 #ifdef UNIT_TESTS
@@ -219,13 +221,15 @@ GLOBAL_PROTECT(tracy_init_reason)
 	start_log(GLOB.character_list_log)
 	start_log(GLOB.hunted_log)
 
-	GLOB.changelog_hash = md5('html/changelog.html') //for telling if the changelog has changed recently
 	if(fexists(GLOB.config_error_log))
 		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
 		fdel(GLOB.config_error_log)
 
 	if(GLOB.round_id)
 		log_game("Round ID: [GLOB.round_id]")
+
+	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
+	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently
 
 	// This was printed early in startup to the world log and config_error.log,
 	// but those are both private, so let's put the commit info in the runtime
@@ -336,6 +340,7 @@ GLOBAL_PROTECT(tracy_init_reason)
 	'sound/roundend/intermission.ogg',
 	'sound/roundend/motherfuckers.ogg',
 	'sound/roundend/poppop.ogg',
+	'sound/roundend/cursedswords.ogg',
 	'sound/roundend/dwarfs.ogg')
 	for(var/client/thing in GLOB.clients)
 		if(!thing)
@@ -347,9 +352,7 @@ GLOBAL_PROTECT(tracy_init_reason)
 			log_admin("[key_name(usr)] Has requested an immediate world restart via client side debugging tools")
 			message_admins("[key_name_admin(usr)] Has requested an immediate world restart via client side debugging tools")
 		to_chat(world, span_boldannounce("Rebooting World immediately due to host request."))
-		SSplexora._Shutdown(PLEXORA_SHUTDOWN_HARDEST, usr ? key_name(usr) : null)
 	else
-		SSplexora._Shutdown(PLEXORA_SHUTDOWN_HARD, usr ? key_name(usr) : null)
 		to_chat(world, "Please be patient as the server restarts. You will be automatically reconnected in about 60 seconds.")
 		Master.Shutdown() //run SS shutdowns
 
@@ -381,10 +384,12 @@ GLOBAL_PROTECT(tracy_init_reason)
 			log_world("World hard rebooted at [time_stamp()]")
 			shutdown_logging() // See comment below.
 			shutdown_byond_tracy()
+			SSplexora._Shutdown()
 			TgsEndProcess()
 	else
 		testing("tgsavailable [TgsAvailable()]")
 
+	SSplexora._Shutdown()
 	log_world("World rebooted at [time_stamp()]")
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
 
@@ -395,24 +400,13 @@ GLOBAL_PROTECT(tracy_init_reason)
 /world/proc/update_status()
 	var/s = ""
 	s += "<center><a href=\"https://discord.gg/zNAGFDcQ\">"
-#ifdef MATURESERVER
 	s += "<big><b>Vanderlin - Now 24/7 (Hosted by Monkestation)</b></big></a><br>"
 	s += "<b>Dark Medieval Fantasy Roleplay<b><br>"
-
-#else
-	s += "<big><b>ROGUEWORLD</b></big></a><br>"
-	s += "<b>Fantasy Computer Survival Game</b></center><br>"
-#endif
-//	s += "<img src=\"https://i.imgur.com/shj547T.jpg\"></a></center>"
-
-//	s += "! <b>UPDATE 4.4</b> 4/22/2022<br><br>"
-#ifdef MATURESERVER
 	s += "\["
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
 		s += "<b>GAME STATUS:</b> IN LOBBY"
 	else
 		s += "<b>GAME STATUS:</b> PLAYING"
-#endif
 	status = s
 	return s
 
@@ -481,10 +475,35 @@ GLOBAL_PROTECT(tracy_init_reason)
 	else
 		hub_password = "SORRYNOPASSWORD"
 
+/**
+
+
+ * Handles incresing the world's maxx var and intializing the new turfs and assigning them to the global area.
+
+
+ * If map_load_z_cutoff is passed in, it will only load turfs up to that z level, inclusive.
+
+
+ * This is because maploading will handle the turfs it loads itself.
+
+
+ */
+
+
+/world/proc/increase_max_x(new_maxx, map_load_z_cutoff = maxz)
+	if(new_maxx <= maxx)
+		return
+	maxx = new_maxx
+
+/world/proc/increase_max_y(new_maxy, map_load_z_cutoff = maxz)
+	if(new_maxy <= maxy)
+		return
+	maxy = new_maxy
+
 /world/proc/incrementMaxZ()
 	maxz++
 	SSmobs.MaxZChanged()
-	SSidlenpcpool.MaxZChanged()
+	SSai_controllers.on_max_z_changed()
 
 
 /*
@@ -539,7 +558,7 @@ GLOBAL_PROTECT(tracy_init_reason)
 		GLOB.tracy_initialized = TRUE
 		SEND_TEXT(world.log, "byond-tracy already initialized ([GLOB.tracy_log ? "logfile: [GLOB.tracy_log]" : "no logfile"])")
 	else if(init_result != "0")
-		GLOB.tracy_init_error = init_result // monkestation edit: log tracy errors
+		GLOB.tracy_init_error = init_result
 		SEND_TEXT(world.log, "Error initializing byond-tracy: [init_result]")
 		CRASH("Error initializing byond-tracy: [init_result]")
 	else
@@ -561,3 +580,5 @@ GLOBAL_PROTECT(tracy_init_reason)
 			SEND_TEXT(world.log, "Error flushing byond-tracy log: [flush_result]")
 			CRASH("Error flushing byond-tracy log: [flush_result]")
 		SEND_TEXT(world.log, "Flushed byond-tracy log")
+
+#undef RESTART_COUNTER_PATH

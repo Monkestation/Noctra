@@ -8,7 +8,6 @@
 	speak = list("ribbit","croak")
 	emote_see = list("hops in a circle.", "shakes.")
 	speak_chance = 1
-	turns_per_move = 5
 	maxHealth = 15
 	health = 15
 	melee_damage_lower = 5
@@ -28,6 +27,11 @@
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	mob_size = MOB_SIZE_TINY
 	gold_core_spawnable = HOSTILE_SPAWN
+
+	ai_controller = /datum/ai_controller/frog
+
+
+
 	var/stepped_sound = 'sound/blank.ogg'
 
 /mob/living/simple_animal/hostile/retaliate/frog/Initialize()

@@ -9,7 +9,6 @@
 
 /mob/living/brain/Initialize()
 	. = ..()
-	testing("WWOLFDNA")
 	create_dna(src)
 	stored_dna.initialize_dna()
 	if(isturf(loc)) //not spawned in an MMI or brain organ (most likely adminspawned)
@@ -17,12 +16,8 @@
 		OB.brainmob = src
 		forceMove(OB)
 
-
-/mob/living/brain/proc/create_dna()
-	stored_dna = new /datum/dna/stored(src)
-	if(!stored_dna.species)
-		var/rando_race = pick(GLOB.roundstart_races)
-		stored_dna.species = new rando_race()
+		ADD_TRAIT(src, TRAIT_IMMOBILIZED, BRAIN_UNAIDED)
+		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, BRAIN_UNAIDED)
 
 /mob/living/brain/Destroy()
 	if(key)				//If there is a mob connected to this thing. Have to check key twice to avoid false death reporting.
@@ -30,12 +25,14 @@
 			death(1)	//Brains can die again. AND THEY SHOULD AHA HA HA HA HA HA
 		if(mind)	//You aren't allowed to return to brains that don't exist
 			mind.current = null
-		testing("BASEDLOL ")
 		ghostize(drawskip=TRUE)		//Ghostize checks for key so nothing else is necessary.
 	return ..()
 
-/mob/living/brain/update_mobility()
-	mobility_flags = NONE
+/mob/living/brain/proc/create_dna()
+	stored_dna = new /datum/dna/stored(src)
+	if(!stored_dna.species)
+		var/rando_race = pick(get_selectable_species())
+		set_species(rando_race)
 
 /mob/living/brain/ex_act() //you cant blow up brainmobs because it makes transfer_to() freak out when borgs blow up.
 	return
@@ -52,7 +49,6 @@
 /mob/living/brain/can_be_revived()
 	. = 1
 	if(health <= HEALTH_THRESHOLD_DEAD)
-		testing("noresbrain")
 		return 0
 
 /mob/living/brain/fully_replace_character_name(oldname,newname)
@@ -68,12 +64,6 @@
 		doMove(destination)
 	else
 		CRASH("Brainmob without a container [src] attempted to move to [destination].")
-
-/mob/living/brain/update_mouse_pointer()
-	if (!client)
-		return
-	if (client && ranged_ability && ranged_ability.ranged_mousepointer)
-		client.mouse_pointer_icon = ranged_ability.ranged_mousepointer
 
 /mob/living/brain/proc/get_traumas()
 	. = list()

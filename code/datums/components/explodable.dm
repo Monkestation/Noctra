@@ -10,7 +10,7 @@
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(explodable_attack))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(explodable_attack))
 	RegisterSignal(parent, COMSIG_TRY_STORAGE_INSERT, PROC_REF(explodable_insert_item))
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(detonate))
 	if(ismovableatom(parent))
@@ -74,10 +74,10 @@
 	var/list/equipment_items = list()
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
-		equipment_items += list(C.head, C.wear_mask, C.back, C.gloves, C.shoes, C.ears)
+		equipment_items += list(C.head, C.wear_mask, C.gloves, C.shoes)
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
-			equipment_items += list(H.wear_armor, H.wear_pants, H.belt, H.s_store, H.wear_ring)
+			equipment_items += list(H.wear_armor, H.wear_pants, H.belt, H.wear_ring)
 
 	for(var/bp in equipment_items)
 		if(!bp)

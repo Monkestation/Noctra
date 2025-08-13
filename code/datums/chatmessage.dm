@@ -1,19 +1,12 @@
-#define CHAT_MESSAGE_SPAWN_TIME		0.2 SECONDS
-#define CHAT_MESSAGE_LIFESPAN		5 SECONDS
-#define CHAT_MESSAGE_EOL_FADE		0.7 SECONDS
-#define CHAT_MESSAGE_EXP_DECAY		0.7 // Messages decay at pow(factor, idx in stack)
-#define CHAT_MESSAGE_HEIGHT_DECAY	0.9 // Increase message decay based on the height of the message
-#define CHAT_MESSAGE_APPROX_LHEIGHT	11 // Approximate height in pixels of an 'average' line, used for height decay
-#define CHAT_MESSAGE_WIDTH			96 // pixels
-#define CHAT_MESSAGE_MAX_LENGTH		110 // characters
-//#define WXH_TO_HEIGHT(x)			text2num(copytext((x), findtextEx((x), "x") + 1)) // thanks lummox
-#define WXH_TO_HEIGHT(measurement, return_var) \
-	do { \
-		var/_measurement = measurement; \
-		return_var = text2num(copytext(_measurement, findtextEx(_measurement, "x") + 1)); \
-	} while(FALSE);
-#define LAZYREMOVEASSOC(L, K, V) if(L) { if(L[K]) { L[K] -= V; if(!length(L[K])) L -= K; } if(!length(L)) L = null; }
-#define LAZYADDASSOC(L, K, V) if(!L) { L = list(); } L[K] += list(V);
+///Base layer of chat elements
+#define CHAT_LAYER 1
+///Highest possible layer of chat elements
+#define CHAT_LAYER_MAX 2
+/// Maximum precision of float before rounding errors occur (in this context)
+#define CHAT_LAYER_Z_STEP 0.0001
+/// The number of z-layer 'slices' usable by the chat message layering
+#define CHAT_LAYER_MAX_Z (CHAT_LAYER_MAX - CHAT_LAYER) / CHAT_LAYER_Z_STEP
+
 /**
  * # Chat Message Overlay
  *
@@ -41,7 +34,7 @@
  * * extra_classes - Extra classes to apply to the span that holds the text
  * * lifespan - The lifespan of the message in deciseconds
  */
-/datum/chatmessage/New(text, atom/target, mob/owner, list/extra_classes = null, lifespan = CHAT_MESSAGE_LIFESPAN)
+/datum/chatmessage/New(text, atom/target, mob/owner, datum/language/language, list/extra_classes = list(), lifespan = CHAT_MESSAGE_LIFESPAN)
 	. = ..()
 	if (!istype(target))
 		CRASH("Invalid target given for chatmessage")
@@ -49,7 +42,7 @@
 		stack_trace("/datum/chatmessage created with [isnull(owner) ? "null" : "invalid"] mob owner")
 		qdel(src)
 		return
-	INVOKE_ASYNC(src, PROC_REF(generate_image), text, target, owner, extra_classes, lifespan)
+	INVOKE_ASYNC(src, PROC_REF(generate_image), text, target, owner, language, extra_classes, lifespan)
 
 /datum/chatmessage/Destroy()
 	if (owned_by)
@@ -62,6 +55,14 @@
 	return ..()
 
 /**
+ * Calls qdel on the chatmessage when its parent is deleted, used to register qdel signal
+ */
+/datum/chatmessage/proc/on_parent_qdel()
+	SIGNAL_HANDLER
+
+	qdel(src)
+
+/**
  * Generates a chat message image representation
  *
  * Arguments:
@@ -71,10 +72,12 @@
  * * extra_classes - Extra classes to apply to the span that holds the text
  * * lifespan - The lifespan of the message in deciseconds
  */
-/datum/chatmessage/proc/generate_image(text, atom/target, mob/owner, list/extra_classes, lifespan)
+/datum/chatmessage/proc/generate_image(text, atom/target, mob/owner, datum/language/language, list/extra_classes, lifespan)
+	/// Cached icons to show what language the user is speaking
+	var/static/list/language_icons
 	// Register client who owns this message
 	owned_by = owner.client
-	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, PROC_REF(qdel), src)
+	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_qdel))
 
 	// Clip message
 	var/maxlen = owned_by.prefs.max_chat_length
@@ -110,11 +113,19 @@
 	if (!ismob(target))
 		extra_classes |= "small"
 
-	// Append radio icon if from a virtual speaker
-	if (extra_classes.Find("virtual-speaker"))
-		var/image/r_icon = image('icons/UI_Icons/chat/chat_icons.dmi', icon_state = "radio")
-		text =  "\icon[r_icon]&nbsp;" + text
+	var/list/prefixes
 
+	// Append language icon if the language uses one
+	var/datum/language/language_instance = GLOB.language_datum_instances[language]
+	if (language_instance?.display_icon(owner))
+		var/icon/language_icon = LAZYACCESS(language_icons, language)
+		if (isnull(language_icon))
+			language_icon = icon(language_instance.icon, icon_state = language_instance.icon_state)
+			language_icon.Scale(9, 9)
+			LAZYSET(language_icons, language, language_icon)
+		LAZYADD(prefixes, "\icon[language_icon]")
+
+	text = "[prefixes?.Join("&nbsp;")][text]"
 	// We dim italicized text to make it more distinguishable from regular text
 	var/tgt_color = extra_classes.Find("italics") ? target.chat_color_darkened : target.chat_color
 
@@ -145,7 +156,7 @@
 	if(!target || QDELETED(target))
 		return qdel(src)
 	approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
-	message_loc = target
+	message_loc = isturf(target) ? target : get_atom_on_turf(target)
 	// Translate any existing messages upwards, apply exponential decay factors to timers
 	if (owned_by.seen_messages)
 //		var/idx = 1
@@ -162,8 +173,8 @@
 			qdel(m)
 
 	// Build message image
-	message = image(loc = message_loc, layer = ABOVE_HUD_LAYER)
-	message.plane = ABOVE_HUD_PLANE
+	message = image(loc = message_loc, layer = CHAT_LAYER)
+	message.plane = RUNECHAT_PLANE
 	message.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
 	message.alpha = 0
 	message.pixel_y = owner.bound_height * 0.95
@@ -173,7 +184,7 @@
 	message.maptext = complete_text
 
 	// View the message
-	LAZYADDASSOC(owned_by.seen_messages, message_loc, src)
+	LAZYADDASSOCLIST(owned_by.seen_messages, message_loc, src)
 	owned_by.images |= message
 	animate(message, alpha = 150, time = CHAT_MESSAGE_SPAWN_TIME)
 
@@ -205,9 +216,10 @@
  * * message_language - The language that the message is said in
  * * raw_message - The text content of the message
  * * spans - Additional classes to be added to the message
- * * message_mode - Bitflags relating to the mode of the message
  */
-/mob/proc/create_chat_message(atom/movable/speaker, datum/language/message_language, raw_message, list/spans, message_mode)
+/mob/proc/create_chat_message(atom/movable/speaker, datum/language/message_language, raw_message, list/spans)
+	if(HAS_TRAIT(speaker, TRAIT_RUNECHAT_HIDDEN))
+		return
 	// Ensure the list we are using, if present, is a copy so we don't modify the list provided to us
 	spans = spans?.Copy()
 
@@ -223,62 +235,15 @@
 		return
 
 	var/text
-	if(spans.Find("emote"))
+	if(spans?.Find("emote"))
 		text = raw_message
 	else
 		text = lang_treat(speaker, message_language, raw_message, spans, null, TRUE)
 
 	// Display visual above source
-	new /datum/chatmessage(text, speaker, src, spans)
+	new /datum/chatmessage(text, speaker, src, message_language, spans)
 
-// Tweak these defines to change the available color ranges
-#define CM_COLOR_SAT_MIN	0.6
-#define CM_COLOR_SAT_MAX	0.7
-#define CM_COLOR_LUM_MIN	0.65
-#define CM_COLOR_LUM_MAX	0.75
-
-/**
- * Gets a color for a name, will return the same color for a given string consistently within a round.atom
- *
- * Note that this proc aims to produce pastel-ish colors using the HSL colorspace. These seem to be favorable for displaying on the map.
- *
- * Arguments:
- * * name - The name to generate a color for
- * * sat_shift - A value between 0 and 1 that will be multiplied against the saturation
- * * lum_shift - A value between 0 and 1 that will be multiplied against the luminescence
- */
-/datum/chatmessage/proc/colorize_string(name, sat_shift = 1, lum_shift = 1)
-	// seed to help randomness
-	var/static/rseed = rand(1,26)
-
-	// get hsl using the selected 6 characters of the md5 hash
-	var/hash = copytext(md5(name + GLOB.round_id), rseed, rseed + 6)
-	var/h = hex2num(copytext(hash, 1, 3)) * (360 / 255)
-	var/s = (hex2num(copytext(hash, 3, 5)) >> 2) * ((CM_COLOR_SAT_MAX - CM_COLOR_SAT_MIN) / 63) + CM_COLOR_SAT_MIN
-	var/l = (hex2num(copytext(hash, 5, 7)) >> 2) * ((CM_COLOR_LUM_MAX - CM_COLOR_LUM_MIN) / 63) + CM_COLOR_LUM_MIN
-
-	// adjust for shifts
-	s *= clamp(sat_shift, 0, 1)
-	l *= clamp(lum_shift, 0, 1)
-
-	// convert to rgb
-	var/h_int = round(h/60) // mapping each section of H to 60 degree sections
-	var/c = (1 - abs(2 * l - 1)) * s
-	var/x = c * (1 - abs((h / 60) % 2 - 1))
-	var/m = l - c * 0.5
-	x = (x + m) * 255
-	c = (c + m) * 255
-	m *= 255
-	switch(h_int)
-		if(0)
-			return "#[num2hex(c, 2)][num2hex(x, 2)][num2hex(m, 2)]"
-		if(1)
-			return "#[num2hex(x, 2)][num2hex(c, 2)][num2hex(m, 2)]"
-		if(2)
-			return "#[num2hex(m, 2)][num2hex(c, 2)][num2hex(x, 2)]"
-		if(3)
-			return "#[num2hex(m, 2)][num2hex(x, 2)][num2hex(c, 2)]"
-		if(4)
-			return "#[num2hex(x, 2)][num2hex(m, 2)][num2hex(c, 2)]"
-		if(5)
-			return "#[num2hex(c, 2)][num2hex(m, 2)][num2hex(x, 2)]"
+#undef CHAT_LAYER
+#undef CHAT_LAYER_MAX
+#undef CHAT_LAYER_Z_STEP
+#undef CHAT_LAYER_MAX_Z

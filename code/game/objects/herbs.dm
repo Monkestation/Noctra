@@ -3,6 +3,7 @@
 	desc = "A bush,for an herb. This shouldn't show up."
 	icon = 'icons/roguetown/misc/herbfoliage.dmi'
 	icon_state = "spritemeplz"
+	num_random_icons = 0
 	var/res_replenish
 	max_integrity = 10
 	climbable = FALSE
@@ -16,18 +17,16 @@
 
 /obj/structure/flora/grass/herb/Initialize()
 	. = ..()
-	desc = "An herb. This one looks like [name]."
+	desc = "A herb. This one looks like [name]."
 	alchemy_effect = new(get_turf(src), src)
 	GLOB.herb_locations |= src
 	loot_replenish()
 
 /obj/structure/flora/grass/herb/Destroy()
-	. = ..()
 	GLOB.harvested_herbs -= src
 	GLOB.herb_locations -= src
+	return ..()
 
-/obj/structure/flora/grass/herb/update_icon()
-	return
 
 /obj/structure/flora/grass/herb/attack_hand(mob/user)
 	if(harvested)
@@ -64,6 +63,7 @@
 /obj/structure/flora/grass/herb/random
 	name = "random herb"
 	desc = "Haha, im in danger."
+	icon_state = "herb_random"
 
 /obj/structure/flora/grass/herb/random/Initialize()
 	var/type = pick(list(/obj/structure/flora/grass/herb/atropa,/obj/structure/flora/grass/herb/matricaria,
@@ -72,9 +72,10 @@
 	/obj/structure/flora/grass/herb/calendula,/obj/structure/flora/grass/herb/mentha,
 	/obj/structure/flora/grass/herb/urtica,/obj/structure/flora/grass/herb/salvia,
 	/obj/structure/flora/grass/herb/hypericum,/obj/structure/flora/grass/herb/benedictus,
-	/obj/structure/flora/grass/herb/valeriana,/obj/structure/flora/grass/herb/artemisia))
+	/obj/structure/flora/grass/herb/valeriana,/obj/structure/flora/grass/herb/artemisia,
+	/obj/structure/wild_plant/nospread/poppy,/obj/structure/flora/grass/herb/euphorbia))
 
-	var/obj/structure/flora/grass/herb/boi = new type
+	var/obj/structure/boi = new type
 	boi.forceMove(get_turf(src))
 	boi.pixel_x += rand(-3,3)
 	. = ..()
@@ -84,85 +85,96 @@
 
 /obj/structure/flora/grass/herb/atropa
 	name = "atropa"
-	icon_state = "atropa"
+	icon_state = "atropa2"
 
 	herbtype = /obj/item/alch/atropa
 
 /obj/structure/flora/grass/herb/matricaria
 	name = "matricaria"
-	icon_state = "matricaria"
+	icon_state = "matricaria2"
 
 	herbtype = /obj/item/alch/matricaria
 
 /obj/structure/flora/grass/herb/symphitum
 	name = "symphitum"
-	icon_state = "symphitum"
+	icon_state = "symphitum2"
 
 	herbtype = /obj/item/alch/symphitum
 
 /obj/structure/flora/grass/herb/taraxacum
 	name = "taraxacum"
-	icon_state = "taraxacum"
+	icon_state = "taraxacum2"
 
 	herbtype = /obj/item/alch/taraxacum
 
 /obj/structure/flora/grass/herb/euphrasia
 	name = "euphrasia"
-	icon_state = "euphrasia"
+	icon_state = "euphrasia2"
 
 	herbtype = /obj/item/alch/euphrasia
 
 /obj/structure/flora/grass/herb/paris
 	name = "paris"
-	icon_state = "paris"
+	icon_state = "paris2"
 
 	herbtype = /obj/item/alch/paris
 
 /obj/structure/flora/grass/herb/calendula
 	name = "calendula"
-	icon_state = "calendula"
+	icon_state = "calendula2"
 
 	herbtype = /obj/item/alch/calendula
 
 /obj/structure/flora/grass/herb/mentha
 	name = "mentha"
-	icon_state = "mentha"
+	icon_state = "mentha2"
 
 	herbtype = /obj/item/alch/mentha
 
 /obj/structure/flora/grass/herb/urtica
 	name = "urtica"
-	icon_state = "urtica"
+	icon_state = "urtica2"
 
 	herbtype = /obj/item/alch/urtica
 
 /obj/structure/flora/grass/herb/salvia
 	name = "salvia"
-	icon_state = "salvia"
+	icon_state = "salvia2"
 
 	herbtype = /obj/item/alch/salvia
 
 /obj/structure/flora/grass/herb/hypericum
 	name = "hypericum"
-	icon_state = "hypericum"
+	icon_state = "hypericum2"
 
 	herbtype = /obj/item/alch/hypericum
 
 /obj/structure/flora/grass/herb/benedictus
 	name = "benedictus"
-	icon_state = "benedictus"
+	icon_state = "benedictus2"
 
 	herbtype = /obj/item/alch/benedictus
 
 /obj/structure/flora/grass/herb/valeriana
 	name = "valeriana"
-	icon_state = "valeriana"
+	icon_state = "valeriana2"
 
 	herbtype = /obj/item/alch/valeriana
 
 /obj/structure/flora/grass/herb/artemisia
 	name = "artemisia"
-	icon_state = "artemisia"
+	icon_state = "artemisia2"
 
 	herbtype = /obj/item/alch/artemisia
 
+/obj/structure/flora/grass/herb/rosa
+	name = "rosa"
+	icon_state = "rosa2"
+
+	herbtype = /obj/item/alch/rosa
+
+/obj/structure/flora/grass/herb/euphorbia
+	name = "euphorbia"
+	icon_state = "euphorbia2"
+
+	herbtype = /obj/item/alch/euphorbia

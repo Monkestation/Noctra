@@ -33,8 +33,11 @@
 
 /atom/movable/Initialize(mapload, ...)
 	. = ..()
-	if(light_system == MOVABLE_LIGHT)
+	if((light_system == MOVABLE_LIGHT) && !istype(src, /atom/movable/outdoor_effect) && !istype(src, /atom/movable/lighting_object))
 		AddComponent(/datum/component/overlay_lighting)
+	if (has_initial_mana_pool && can_have_mana_pool())
+		mana_pool = initialize_mana_pool()
+		after_manapool_init()
 
 ///Keeps track of the sources of dynamic luminosity and updates our visibility with the highest.
 /atom/movable/proc/update_dynamic_luminosity()
@@ -59,10 +62,10 @@
 /obj/effect/overlay/light_visible
 	name = ""
 	icon = 'icons/effects/light_overlays/light_32.dmi'
-	icon_state = "light"
-	layer = O_LIGHTING_VISUAL_LAYER
+	icon_state = "light2"
 	plane = O_LIGHTING_VISUAL_PLANE
 	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 0
 	vis_flags = NONE
+	blocks_emissive = NONE

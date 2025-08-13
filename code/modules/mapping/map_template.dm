@@ -40,14 +40,12 @@
 							locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ]))
 	var/list/border = block(locate(max(bounds[MAP_MINX]-1, 1),			max(bounds[MAP_MINY]-1, 1),			 bounds[MAP_MINZ]),
 							locate(min(bounds[MAP_MAXX]+1, world.maxx),	min(bounds[MAP_MAXY]+1, world.maxy), bounds[MAP_MAXZ])) - turfs
-	for(var/L in turfs)
-		var/turf/B = L
+	for(var/turf/B as anything in turfs)
 		atoms += B
 		areas |= B.loc
 		for(var/A in B)
 			atoms += A
-	for(var/L in border)
-		var/turf/T = L
+	for(var/turf/T as anything in border)
 		T.air_update_turf(TRUE) //calculate adjacent turfs along the border to prevent runtimes
 
 	if(SSatoms.initialized)
@@ -59,13 +57,20 @@
 	var/y = round((world.maxy - height)/2)
 
 	var/datum/space_level/level = SSmapping.add_new_zlevel(name, list(ZTRAIT_AWAY = TRUE))
-	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE)
+	var/datum/parsed_map/parsed = load_map(
+		file(mappath),
+		x,
+		y,
+		level.z_value,
+		no_changeturf = (SSatoms.initialized == INITIALIZATION_INSSATOMS),
+		place_on_top = TRUE,
+		new_z = TRUE
+	)
 	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return FALSE
 
-	repopulate_sorted_areas()
-
+	require_area_resort()
 	//initialize things that are normally initialized after map load
 	parsed.initTemplateBounds()
 	smooth_zlevel(world.maxz)
@@ -93,13 +98,13 @@
 	// ruins clogging up memory for the whole round.
 	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
 	cached_map = keep_cached_map ? parsed : null
-	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=TRUE))
+	if(!parsed.load(T.x, T.y, T.z, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), place_on_top=TRUE))
 		return
 	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return
 
-	repopulate_sorted_areas()
+	require_area_resort()
 
 	//initialize things that are normally initialized after map load
 	parsed.initTemplateBounds()

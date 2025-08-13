@@ -68,7 +68,7 @@
 
 	var/armor = null
 
-	var/id = null
+	var/ring = null
 
 	///Type path of item to go in the right hand
 	var/r_hand = null
@@ -103,6 +103,13 @@
 	 * These are all added and returns in the list for get_chamelon_diguise_info proc
 	 */
 	var/list/chameleon_extras
+
+	/**
+	  * The sheaths this job should start with
+	  *
+	  * Format of this list is (typepath, typepath, typepath)
+	  */
+	var/list/scabbards = null
 
 /**
  * Called at the start of the equip proc
@@ -145,44 +152,42 @@
 /datum/outfit/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	pre_equip(H, visualsOnly)
 
-	if(suit)
-		H.equip_to_slot_or_del(new suit(H),SLOT_ARMOR, TRUE)
 	if(belt)
-		H.equip_to_slot_or_del(new belt(H),SLOT_BELT, TRUE)
+		H.equip_to_slot_or_del(new belt(H),ITEM_SLOT_BELT, TRUE)
 	if(gloves)
-		H.equip_to_slot_or_del(new gloves(H),SLOT_GLOVES, TRUE)
+		H.equip_to_slot_or_del(new gloves(H),ITEM_SLOT_GLOVES, TRUE)
 	if(shoes)
-		H.equip_to_slot_or_del(new shoes(H),SLOT_SHOES, TRUE)
+		H.equip_to_slot_or_del(new shoes(H),ITEM_SLOT_SHOES, TRUE)
 	if(head)
-		H.equip_to_slot_or_del(new head(H),SLOT_HEAD, TRUE)
+		H.equip_to_slot_or_del(new head(H),ITEM_SLOT_HEAD, TRUE)
 	if(mask)
-		H.equip_to_slot_or_del(new mask(H),SLOT_WEAR_MASK, TRUE)
+		H.equip_to_slot_or_del(new mask(H),ITEM_SLOT_MASK, TRUE)
 	if(neck)
-		H.equip_to_slot_or_del(new neck(H),SLOT_NECK, TRUE)
-	if(id)
-		H.equip_to_slot_or_del(new id(H),SLOT_RING, TRUE)
+		H.equip_to_slot_or_del(new neck(H),ITEM_SLOT_NECK, TRUE)
+	if(ring)
+		H.equip_to_slot_or_del(new ring(H),ITEM_SLOT_RING, TRUE)
 	if(wrists)
-		H.equip_to_slot_or_del(new wrists(H),SLOT_WRISTS, TRUE)
+		H.equip_to_slot_or_del(new wrists(H),ITEM_SLOT_WRISTS, TRUE)
 	if(cloak)
-		H.equip_to_slot_or_del(new cloak(H),SLOT_CLOAK, TRUE)
+		H.equip_to_slot_or_del(new cloak(H),ITEM_SLOT_CLOAK, TRUE)
 	if(beltl)
-		H.equip_to_slot_or_del(new beltl(H),SLOT_BELT_L, TRUE)
+		H.equip_to_slot_or_del(new beltl(H),ITEM_SLOT_BELT_L, TRUE)
 	if(beltr)
-		H.equip_to_slot_or_del(new beltr(H),SLOT_BELT_R, TRUE)
+		H.equip_to_slot_or_del(new beltr(H),ITEM_SLOT_BELT_R, TRUE)
 	if(backr)
-		H.equip_to_slot_or_del(new backr(H),SLOT_BACK_R, TRUE)
+		H.equip_to_slot_or_del(new backr(H),ITEM_SLOT_BACK_R, TRUE)
 	if(backl)
-		H.equip_to_slot_or_del(new backl(H),SLOT_BACK_L, TRUE)
+		H.equip_to_slot_or_del(new backl(H),ITEM_SLOT_BACK_L, TRUE)
 	if(mouth)
-		H.equip_to_slot_or_del(new mouth(H),SLOT_MOUTH, TRUE)
+		H.equip_to_slot_or_del(new mouth(H),ITEM_SLOT_MOUTH, TRUE)
 	if(undershirt)
 		H.undershirt = initial(undershirt.name)
 	if(pants)
-		H.equip_to_slot_or_del(new pants(H),SLOT_PANTS, TRUE)
+		H.equip_to_slot_or_del(new pants(H),ITEM_SLOT_PANTS, TRUE)
 	if(armor)
-		H.equip_to_slot_or_del(new armor(H),SLOT_ARMOR, TRUE)
+		H.equip_to_slot_or_del(new armor(H),ITEM_SLOT_ARMOR, TRUE)
 	if(shirt)
-		H.equip_to_slot_or_del(new shirt(H),SLOT_SHIRT, TRUE)
+		H.equip_to_slot_or_del(new shirt(H),ITEM_SLOT_SHIRT, TRUE)
 	if(accessory)
 		var/obj/item/clothing/pants/U = H.wear_pants
 		if(U)
@@ -193,24 +198,25 @@
 	if(!visualsOnly)
 		if(l_hand)
 	//		H.put_in_hands(new l_hand(get_turf(H)),TRUE)
-			H.equip_to_slot_or_del(new l_hand(H),SLOT_HANDS, TRUE)
+			H.equip_to_slot_or_del(new l_hand(H),ITEM_SLOT_HANDS, TRUE)
 		if(r_hand)
-			testing("PIH")
 		//	H.put_in_hands(new r_hand(get_turf(H)),TRUE)
-			H.equip_to_slot_or_del(new r_hand(H),SLOT_HANDS, TRUE)
+			H.equip_to_slot_or_del(new r_hand(H),ITEM_SLOT_HANDS, TRUE)
+		if(scabbards)
+			var/list/copied_scabbards = scabbards.Copy()
+			for(var/obj/item/item as anything in H.get_equipped_items())
+				if(!length(copied_scabbards))
+					break
+				var/slot = H.get_slot_by_item(item)
+				for(var/obj/item/weapon/scabbard/scabbard_path as anything in copied_scabbards)
+					var/obj/item/weapon/scabbard/scabbard = new scabbard_path()
+					if(SEND_SIGNAL(scabbard, COMSIG_TRY_STORAGE_INSERT, item, null, TRUE, FALSE))
+						H.temporarilyRemoveItemFromInventory(item, TRUE)
+						H.equip_to_slot_or_del(scabbard, slot, TRUE)
+						copied_scabbards -= scabbard_path
+						break
 
 	if(!visualsOnly) // Items in pockets or backpack don't show up on mob's icon.
-		if(l_pocket)
-			H.equip_to_slot_or_del(new l_pocket(H),SLOT_L_STORE, TRUE)
-		if(r_pocket)
-			H.equip_to_slot_or_del(new r_pocket(H),SLOT_R_STORE, TRUE)
-
-//		if(box)
-//			if(!backpack_contents)
-//				backpack_contents = list()
-//			backpack_contents.Insert(1, box)
-//			backpack_contents[box] = 1
-
 		if(backpack_contents)
 			for(var/path in backpack_contents)
 				var/number = backpack_contents[path]
@@ -218,16 +224,18 @@
 					number = 1
 				for(var/i in 1 to number)
 					var/obj/item/new_item = new path(H)
-					var/obj/item/item = H.get_item_by_slot(SLOT_BACK_L)
+					var/obj/item/item = H.get_item_by_slot(ITEM_SLOT_BACK_L)
 					if(!item)
-						item = H.get_item_by_slot(SLOT_BACK_R)
-					if(!item || !SEND_SIGNAL(item, COMSIG_TRY_STORAGE_INSERT, new_item, null, TRUE, TRUE))
-						item = H.get_item_by_slot(SLOT_BACK_R)
-						if(!item || !SEND_SIGNAL(item, COMSIG_TRY_STORAGE_INSERT, new_item, null, TRUE, TRUE))
-							item = H.get_item_by_slot(SLOT_BELT)
-							if(!item || !SEND_SIGNAL(item, COMSIG_TRY_STORAGE_INSERT, new_item, null, TRUE, TRUE))
-								new_item.forceMove(get_turf(H))
-								message_admins("[type] had backpack_contents set but no room to store:[new_item]")
+						item = H.get_item_by_slot(ITEM_SLOT_BACK_R)
+					if(!item || !attempt_insert_with_flipping(item, new_item, null, TRUE, TRUE))
+						item = H.get_item_by_slot(ITEM_SLOT_BACK_R)
+						if(!item || !attempt_insert_with_flipping(item, new_item, null, TRUE, TRUE))
+							item = H.get_item_by_slot(ITEM_SLOT_BELT)
+							if(!item || !attempt_insert_with_flipping(item, new_item, null, TRUE, TRUE))
+								item = H.get_item_by_slot(ITEM_SLOT_NECK)
+								if(!item || !attempt_insert_with_flipping(item, new_item, null, TRUE, TRUE))
+									new_item.forceMove(get_turf(H))
+									message_admins("[type] had backpack_contents set but no room to store:[new_item]")
 
 
 	post_equip(H, visualsOnly)
@@ -237,6 +245,14 @@
 
 	H.update_body()
 	return TRUE
+
+/datum/outfit/proc/attempt_insert_with_flipping(obj/item/storage_item, obj/item/object_to_insert, mob/living/carbon/human/H, silent, force)
+	var/success = FALSE
+	success = SEND_SIGNAL(storage_item, COMSIG_TRY_STORAGE_INSERT, object_to_insert, H, silent, force)
+	if(!success)
+		object_to_insert.inventory_flip()
+		success = SEND_SIGNAL(storage_item, COMSIG_TRY_STORAGE_INSERT, object_to_insert, H, silent, force)
+	return success
 
 /client/proc/test_spawn_outfits()
 	for(var/path in subtypesof(/datum/outfit/job))
@@ -253,10 +269,6 @@
 /datum/outfit/proc/apply_fingerprints(mob/living/carbon/human/H)
 	if(!istype(H))
 		return
-	if(H.back)
-		H.back.add_fingerprint(H,1)	//The 1 sets a flag to ignore gloves
-		for(var/obj/item/I in H.back.contents)
-			I.add_fingerprint(H,1)
 	if(H.wear_ring)
 		H.wear_ring.add_fingerprint(H,1)
 	if(H.wear_pants)
@@ -273,25 +285,17 @@
 		H.shoes.add_fingerprint(H,1)
 	if(H.gloves)
 		H.gloves.add_fingerprint(H,1)
-	if(H.ears)
-		H.ears.add_fingerprint(H,1)
 	if(H.belt)
 		H.belt.add_fingerprint(H,1)
 		for(var/obj/item/I in H.belt.contents)
 			I.add_fingerprint(H,1)
-	if(H.s_store)
-		H.s_store.add_fingerprint(H,1)
-	if(H.l_store)
-		H.l_store.add_fingerprint(H,1)
-	if(H.r_store)
-		H.r_store.add_fingerprint(H,1)
 	for(var/obj/item/I in H.held_items)
 		I.add_fingerprint(H,1)
 	return 1
 
 /// Return a list of all the types that are required to disguise as this outfit type
 /datum/outfit/proc/get_chameleon_disguise_info()
-	var/list/types = list(suit, belt, gloves, shoes, head, mask, neck, glasses, id, l_pocket, r_pocket, r_hand, l_hand)
+	var/list/types = list(suit, belt, gloves, shoes, head, mask, neck, glasses, ring, l_pocket, r_pocket, r_hand, l_hand)
 	types += chameleon_extras
 	listclearnulls(types)
 	return types
@@ -301,22 +305,20 @@
 	. = list()
 	.["outfit_type"] = type
 	.["name"] = name
-	.["suit"] = suit
-	.["toggle_helmet"] = toggle_helmet
-	.["belt"] = belt
-	.["gloves"] = gloves
-	.["shoes"] = shoes
 	.["head"] = head
 	.["mask"] = mask
 	.["neck"] = neck
-	.["glasses"] = glasses
-	.["id"] = id
-	.["l_pocket"] = l_pocket
-	.["r_pocket"] = r_pocket
-	.["r_hand"] = r_hand
-	.["l_hand"] = l_hand
-	.["backpack_contents"] = backpack_contents
-	.["accessory"] = accessory
+	.["cloak"] = cloak
+	.["backl"] = backl
+	.["backr"] = backr
+	.["ring"] = ring
+	.["wrists"] = wrists
+	.["gloves"] = gloves
+	.["shirt"] = shirt
+	.["armor"] = armor
+	.["pants"] = pants
+	.["belt"] = belt
+	.["shoes"] = shoes
 
 /// Prompt the passed in mob client to download this outfit as a json blob
 /datum/outfit/proc/save_to_file(mob/admin)
@@ -331,26 +333,20 @@
 /// Create an outfit datum from a list of json data
 /datum/outfit/proc/load_from(list/outfit_data)
 	//This could probably use more strict validation
+
 	name = outfit_data["name"]
-	suit = text2path(outfit_data["suit"])
-	toggle_helmet = outfit_data["toggle_helmet"]
-	belt = text2path(outfit_data["belt"])
-	gloves = text2path(outfit_data["gloves"])
-	shoes = text2path(outfit_data["shoes"])
 	head = text2path(outfit_data["head"])
 	mask = text2path(outfit_data["mask"])
 	neck = text2path(outfit_data["neck"])
-	glasses = text2path(outfit_data["glasses"])
-	id = text2path(outfit_data["id"])
-	l_pocket = text2path(outfit_data["l_pocket"])
-	r_pocket = text2path(outfit_data["r_pocket"])
-	r_hand = text2path(outfit_data["r_hand"])
-	l_hand = text2path(outfit_data["l_hand"])
-	var/list/backpack = outfit_data["backpack_contents"]
-	backpack_contents = list()
-	for(var/item in backpack)
-		var/itype = text2path(item)
-		if(itype)
-			backpack_contents[itype] = backpack[item]
-	accessory = text2path(outfit_data["accessory"])
+	cloak = text2path(outfit_data["cloak"])
+	backl = text2path(outfit_data["backl"])
+	backr = text2path(outfit_data["backr"])
+	ring = text2path(outfit_data["ring"])
+	wrists = text2path(outfit_data["wrists"])
+	gloves = text2path(outfit_data["gloves"])
+	shirt = text2path(outfit_data["shirt"])
+	armor = text2path(outfit_data["armor"])
+	pants = text2path(outfit_data["pants"])
+	belt = text2path(outfit_data["belt"])
+	shoes = text2path(outfit_data["shoes"])
 	return TRUE

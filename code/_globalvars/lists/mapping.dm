@@ -18,12 +18,12 @@ GLOBAL_LIST_EMPTY(department_security_spawns)	//list of all department security 
 GLOBAL_LIST_EMPTY(generic_event_spawns)			//handles clockwork portal+eminence teleport destinations
 GLOBAL_LIST_EMPTY(jobspawn_overrides)			//These will take precedence over normal spawnpoints if created.
 
+GLOBAL_LIST_EMPTY(lich_starts)
 GLOBAL_LIST_EMPTY(bandit_starts)
 GLOBAL_LIST_EMPTY(admin_warp)
 GLOBAL_LIST_EMPTY(vlord_starts)
 GLOBAL_LIST_EMPTY(vspawn_starts)
 GLOBAL_LIST_EMPTY(dknight_starts)
-GLOBAL_LIST_EMPTY(vlordspawn_starts)
 GLOBAL_LIST_EMPTY(delf_starts)
 GLOBAL_LIST_EMPTY(newplayer_start)
 GLOBAL_LIST_EMPTY(prisonwarp)	//admin prisoners go to these
@@ -34,10 +34,18 @@ GLOBAL_LIST_EMPTY(underworld_coinpull_locs) //When picking up coin maze, warp he
 GLOBAL_LIST_EMPTY(hauntstart)
 GLOBAL_LIST_EMPTY(testportals)
 GLOBAL_LIST_EMPTY(traveltiles)
+GLOBAL_LIST_EMPTY(traveltile_spawners)
 GLOBAL_LIST_EMPTY(emergencyresponseteamspawn)
 GLOBAL_LIST_EMPTY(ruin_landmarks)
 
-	//used by jump-to-area etc. Updated by area/updateName()
+/// List of all the maps that have been cached for /proc/load_map
+GLOBAL_LIST_EMPTY(cached_maps)
+
+/// Just a list of all the area objects in the game
+/// Note, areas can have duplicate types
+GLOBAL_LIST_EMPTY(areas)
+/// Used by jump-to-area etc. Updated by area/updateName()
+/// If this is null, it needs to be recalculated. Use get_sorted_areas() as a getter please
 GLOBAL_LIST_EMPTY(sortedAreas)
 /// An association from typepath to area instance. Only includes areas with `unique` set.
 GLOBAL_LIST_EMPTY_TYPED(areas_by_type, /area)

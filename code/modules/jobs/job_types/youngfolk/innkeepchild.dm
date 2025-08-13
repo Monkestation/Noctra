@@ -1,42 +1,44 @@
 /datum/job/innkeep_son
 	title = "Innkeepers Son"
 	f_title = "Innkeepers Daughter"
+	tutorial = "One nite the Innkeeper took you in during a harsh winter, \
+	you've been thankful ever since." //rewrite probably?
 	flag = INNKEEPCHILD
 	department_flag = YOUNGFOLK
-	faction = "Station"
+	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
+	display_order = JDO_INNKEEP_CHILD
+	faction = FACTION_TOWN
 	total_positions = 1
 	spawn_positions = 1
-
-	allowed_races = ALL_PLAYER_RACES_BY_NAME
+	min_pq = -5
+	bypass_lastclass = TRUE
 
 	allowed_ages = list(AGE_CHILD)
-
-	tutorial = "One nite the Innkeeper took you in durring a harsh winter, you've been thankful ever since."
+	allowed_races = RACES_PLAYER_ALL
 
 	outfit = /datum/outfit/job/innkeep_son
-	display_order = JDO_INNKEEP_CHILD
-	give_bank_account = TRUE
-	give_bank_account = 5
-	min_pq = -5
 	can_have_apprentices = FALSE
 	cmode_music = 'sound/music/cmode/towner/CombatInn.ogg'
+
+/datum/outfit/job/innkeep_son
+	job_bitflag = BITFLAG_CONSTRUCTOR
 
 /datum/outfit/job/innkeep_son/pre_equip(mob/living/carbon/human/H)
 	..()
 	if(H.mind)
-		H.mind?.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/cooking, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/stealing, 1, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/cooking, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/stealing, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
 		H.change_stat(STATKEY_END, 1)
 		H.change_stat(STATKEY_STR, -1)
 		H.change_stat(STATKEY_CON, -1)
-	pants = /obj/item/clothing/pants/tights/random
-	shirt = /obj/item/clothing/shirt/shortshirt/random
+	pants = /obj/item/clothing/pants/tights/colored/random
+	shirt = /obj/item/clothing/shirt/shortshirt/colored/random
 	shoes = /obj/item/clothing/shoes/shortboots
 	belt = /obj/item/storage/belt/leather
 	beltl = /obj/item/storage/belt/pouch/coins/poor

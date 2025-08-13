@@ -26,7 +26,7 @@
 			. = 1
 
 /mob/living/carbon/human/mob_negates_gravity()
-	return ((shoes && shoes.negates_gravity()) || (dna.species.negates_gravity(src)))
+	return ((shoes && shoes.negates_gravity()) || (dna?.species?.negates_gravity(src)))
 
 /mob/living/carbon/human/Move(NewLoc, direct)
 /*	if(fixedeye || tempfixeye)
@@ -49,31 +49,23 @@
 		if(!has_gravity(loc))
 			return
 
-		if(hostage) // If we have a hostage.
-			hostage.hostagetaker = null
-			hostage = null
-			to_chat(src, "<span class='danger'>I need to stand still to make sure I don't lose concentration on my hostage!</span>")
-
-		if(hostagetaker) // If we are TAKEN hostage. Confusing vars at first but then it makes sense.
-			attackhostage()
-
 		if(wear_armor)
-			if(mobility_flags & MOBILITY_STAND)
+			if(body_position != LYING_DOWN)
 				var/obj/item/clothing/C = wear_armor
 				C.step_action()
 
 		if(wear_shirt)
-			if(mobility_flags & MOBILITY_STAND)
+			if(body_position != LYING_DOWN)
 				var/obj/item/clothing/C = wear_shirt
 				C.step_action()
 
 		if(cloak)
-			if(mobility_flags & MOBILITY_STAND)
+			if(body_position != LYING_DOWN)
 				var/obj/item/clothing/C = cloak
 				C.step_action()
 
 		if(shoes)
-			if(mobility_flags & MOBILITY_STAND)
+			if(body_position != LYING_DOWN)
 				var/obj/item/clothing/shoes/S = shoes
 
 				//Bloody footprints
@@ -89,8 +81,8 @@
 						FP.blood_state = S.blood_state
 						FP.entered_dirs |= dir
 						FP.bloodiness = S.bloody_shoes[S.blood_state] - BLOOD_LOSS_IN_SPREAD
-						FP.add_blood_DNA(S.return_blood_DNA())
-						FP.update_icon()
+						FP.add_blood_DNA(GET_ATOM_BLOOD_DNA(S))
+						FP.update_appearance()
 					update_inv_shoes()
 				//End bloody footprints
 				S.step_action()
@@ -102,13 +94,14 @@
 			for(var/obj/item/I in held_items)
 				if(I.minstr)
 					var/effective = I.minstr
-					if(I.wielded)
-						effective = max(I.minstr / 2, 1)
+					if(HAS_TRAIT(I, TRAIT_WIELDED))
+						if(!is_child(src))
+							effective = max(I.minstr / 2, 1)
 					if(effective > STASTR)
 						if(prob(effective))
 							dropItemToGround(I, silent = FALSE)
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0) //Temporary laziness thing. Will change to handles by species reee.
-	if(dna.species.space_move(src))
+	if(dna?.species?.space_move(src))
 		return TRUE
 	return ..()

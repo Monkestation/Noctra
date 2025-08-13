@@ -9,7 +9,7 @@
 	gripped_intents = list(/datum/intent/shovelscoop, /datum/intent/irrigate, /datum/intent/mace/strike/shovel, /datum/intent/axe/chop)
 	name = "shovel"
 	desc = ""
-	icon_state = "shovel1"
+	icon_state = "shovel"
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	mob_overlay_icon = 'icons/roguetown/onmob/onmob.dmi'
 	experimental_onhip = FALSE
@@ -45,29 +45,21 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	return TRUE
 
-/obj/item/weapon/shovel/New()
-	. = ..()
-	if(icon_state == "shovel1")
-		icon_state = "shovel[rand(1,2)]"
-
 /obj/item/weapon/shovel/Destroy()
 	if(heldclod)
 		QDEL_NULL(heldclod)
 	return ..()
 
 /obj/item/weapon/shovel/dropped(mob/user)
+	. = ..()
 	if(heldclod && isturf(loc))
 		heldclod.forceMove(loc)
 		heldclod = null
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
+
+/obj/item/weapon/shovel/update_icon_state()
 	. = ..()
-
-/obj/item/weapon/shovel/update_icon()
-	if(heldclod)
-		icon_state = "dirt[initial(icon_state)]"
-	else
-		icon_state = "[initial(icon_state)]"
-
+	icon_state = "[heldclod ? "dirt" : ""][initial(icon_state)]"
 
 /datum/intent/mace/strike/shovel
 	name = "strike"
@@ -107,15 +99,13 @@
 	if(. && heldclod && get_turf(M))
 		heldclod.forceMove(get_turf(M))
 		heldclod = null
-		update_icon()
+		update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/weapon/shovel/attack_turf(turf/T, mob/living/user)
 	user.changeNext_move(user.used_intent.clickcd)
 	if(user.used_intent.type == /datum/intent/irrigate)
 		if(istype(T, /turf/open/floor/dirt))
 			var/turf/open/floor/dirt/D = T
-			if(D.planted_crop)
-				return
 			user.visible_message("[user] starts digging an irrigation channel.", "You start digging an irrigation channel.")
 			if(!do_after(user, 5 SECONDS * time_multiplier, D))
 				return
@@ -124,10 +114,10 @@
 
 	else if(user.used_intent.type == /datum/intent/shovelscoop)
 		if(istype(T, /turf/open/floor/dirt))
-			var/turf/open/floor/dirt/D = T
+			var/obj/structure/closet/dirthole/holie = locate() in T
 			if(heldclod)
-				if(D.holie && D.holie.stage < 4)
-					D.holie.attackby(src, user)
+				if(holie && holie.stage < 4)
+					holie.attackby(src, user)
 				else
 					if(istype(T, /turf/open/floor/dirt/road))
 						qdel(heldclod)
@@ -136,30 +126,28 @@
 						heldclod.forceMove(T)
 					heldclod = null
 					playsound(T,'sound/items/empty_shovel.ogg', 100, TRUE)
-					update_icon()
+					update_appearance(UPDATE_ICON_STATE)
 					return
 			else
-				if(D.holie)
-					D.holie.attackby(src, user)
+				if(holie)
+					holie.attackby(src, user)
 				else
-					if(!D.planted_crop)
-						if(istype(T, /turf/open/floor/dirt/road))
-							new /obj/structure/closet/dirthole(T)
-						else
-							T.ChangeTurf(/turf/open/floor/dirt/road, flags = CHANGETURF_INHERIT_AIR)
-						heldclod = new(src)
-						playsound(T,'sound/items/dig_shovel.ogg', 100, TRUE)
-						update_icon()
+					if(istype(T, /turf/open/floor/dirt/road))
+						new /obj/structure/closet/dirthole(T)
+					else
+						T.ChangeTurf(/turf/open/floor/dirt/road, flags = CHANGETURF_INHERIT_AIR)
+					heldclod = new(src)
+					playsound(T,'sound/items/dig_shovel.ogg', 100, TRUE)
+					update_appearance(UPDATE_ICON_STATE)
 			return
 		if(heldclod)
 			if(istype(T, /turf/open/water))
 				qdel(heldclod)
-//				T.ChangeTurf(/turf/open/floor/dirt/road, flags = CHANGETURF_INHERIT_AIR)
 			else
 				heldclod.forceMove(T)
 			heldclod = null
 			playsound(T,'sound/items/empty_shovel.ogg', 100, TRUE)
-			update_icon()
+			update_appearance(UPDATE_ICON_STATE)
 			return
 		if(istype(T, /turf/open/floor/grass))
 			to_chat(user, "<span class='warning'>There is grass in the way.</span>")
@@ -237,6 +225,7 @@
 	max_blade_int = 0
 	grid_height = 64
 	time_multiplier = 2
+	smeltresult = null
 
 /obj/item/weapon/shovel/small/getonmobprop(tag)
 	. = ..()
@@ -258,7 +247,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/unfoldedbag_path = /obj/structure/closet/burial_shroud
 
-/obj/item/burial_shroud/attack_self(mob/user)
+/obj/item/burial_shroud/attack_self(mob/user, params)
 	deploy_bodybag(user, user.loc)
 
 /obj/item/burial_shroud/afterattack(atom/target, mob/user, proximity)
@@ -281,6 +270,7 @@
 	desc = ""
 	icon = 'icons/obj/bodybag.dmi'
 	icon_state = "shroud"
+	base_icon_state = "shroud"
 	density = FALSE
 	mob_storage_capacity = 1
 	open_sound = 'sound/blank.ogg'
@@ -288,7 +278,6 @@
 	open_sound_volume = 15
 	close_sound_volume = 15
 	integrity_failure = 0
-	delivery_icon = null //unwrappable
 	anchorable = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	drag_slowdown = 0
@@ -336,7 +325,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/unfoldedbag_path = /obj/structure/closet/body_bag
 
-/obj/item/bodybag/attack_self(mob/user)
+/obj/item/bodybag/attack_self(mob/user, params)
 	deploy_bodybag(user, user.loc)
 
 /obj/item/bodybag/afterattack(atom/target, mob/user, proximity)
@@ -376,7 +365,6 @@
 	open_sound_volume = 15
 	close_sound_volume = 15
 	integrity_failure = 0
-	delivery_icon = null //unwrappable
 	anchorable = FALSE
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	drag_slowdown = 0

@@ -22,7 +22,6 @@ SUBSYSTEM_DEF(title)
 	var/list/title_screens = list()
 	var/use_rare_screens = prob(1)
 
-	SSmapping.HACK_LoadMapConfig()
 	for(var/S in provisional_title_screens)
 		var/list/L = splittext(S,"+")
 		if((L.len == 1 && (L[1] != "exclude" && L[1] != "blank.png"))|| (L.len > 1 && ((use_rare_screens && lowertext(L[1]) == "rare") || (lowertext(L[1]) == lowertext(SSmapping.config.map_name)))))
@@ -32,11 +31,8 @@ SUBSYSTEM_DEF(title)
 		file_path = "[global.config.directory]/title_screens/images/[pick(title_screens)]"
 
 	if(!file_path)
-#ifndef ROGUEWORLD
 		file_path = "icons/default_title.dmi"
-#else
-		file_path = "icons/rogueworld_title.dmi"
-#endif
+
 	ASSERT(fexists(file_path))
 
 	icon = new(fcopy_rsc(file_path))

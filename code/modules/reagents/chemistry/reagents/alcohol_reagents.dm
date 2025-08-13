@@ -1,10 +1,8 @@
-#define ALCOHOL_THRESHOLD_MODIFIER 1 //Greater numbers mean that less alcohol has greater intoxication potential
-#define ALCOHOL_RATE 0.005 //The rate at which alcohol affects you
-#define ALCOHOL_EXPONENT 1.6 //The exponent applied to boozepwr to make higher volume alcohol at least a little bit damaging to the liver
-
 ////////////// I don't know who made this header before I refactored alcohols but I'm going to fucking strangle them because it was so ugly, holy Christ
 // ALCOHOLS //
 //////////////
+#define ALCOHOL_THRESHOLD_MODIFIER 1 //Greater numbers mean that less alcohol has greater intoxication potential
+#define ALCOHOL_EXPONENT 1.6 //The exponent applied to boozepwr to make higher volume alcohol at least a little bit damaging to the liver
 
 /datum/reagent/consumable/ethanol
 	name = "Ethanol"
@@ -14,8 +12,34 @@
 	taste_description = "alcohol"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	liquid_fire_power = 10
+	hydration_factor = 10
 	var/boozepwr = 65 //Higher numbers equal higher hardness, higher hardness equals more intense alcohol poisoning
+	var/datum/reagent/age_path
+	var/age_time = 10 MINUTES
+	var/age_timer
 
+/datum/reagent/consumable/ethanol/New()
+	. = ..()
+	if(age_path && holder)
+		age_timer = addtimer(CALLBACK(src, PROC_REF(age_beer)), age_time, TIMER_OVERRIDE | TIMER_STOPPABLE | TIMER_UNIQUE)
+
+/datum/reagent/consumable/ethanol/on_merge(data, amount)
+	. = ..()
+	if(age_path && holder)
+		var/timeleft = timeleft(age_timer)
+		var/total_amount = volume + amount
+
+		var/existing_progress = (volume / total_amount) * (age_time - timeleft)
+		var/new_progress = (amount / total_amount) * age_time
+		var/adjusted_progress = existing_progress + new_progress
+
+		age_timer = addtimer(CALLBACK(src, PROC_REF(age_beer)), adjusted_progress, TIMER_OVERRIDE | TIMER_STOPPABLE | TIMER_UNIQUE)
+
+/datum/reagent/consumable/ethanol/proc/age_beer()
+	var/old_volume = volume
+	var/datum/reagents/old_holder = holder
+	holder?.remove_reagent(src.type, volume)
+	old_holder?.add_reagent(age_path, old_volume)
 /*
 Boozepwr Chart
 Note that all higher effects of alcohol poisoning will inherit effects for smaller amounts (i.e. light poisoning inherts from slight poisoning)
@@ -73,18 +97,37 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "ale"
 	glass_name = "glass of beer"
 	glass_desc = ""
-	hydration_factor = 10
+
+/datum/reagent/consumable/ethanol/rum
+	name = "Rum"
+	description = ""
+	color = "#5f3b23" // rgb: 102, 67, 0
+	boozepwr = 25
+	taste_description = "rum"
 
 /datum/reagent/consumable/ethanol/cider
 	name = "Apple Cider"
 	boozepwr = 40
 	taste_description = "cider"
 	glass_name = "glass of cider"
-	color = "#6aa945"
+	color = "#d8a175"
 	quality = DRINK_NICE
 
 /datum/reagent/consumable/ethanol/cider/pear
 	name = "Pear Cider"
+	color = "#6aa945"
+
+/datum/reagent/consumable/ethanol/cider/strawberry
+	name = "Strawberry Cider"
+	color = "#da4d4d"
+	taste_description = "strawberry cider"
+
+/datum/reagent/consumable/ethanol/aqua_vitae
+	name = "Aqua Vitae"
+	boozepwr = 150
+	taste_description = "death"
+	color = "#6e6e6e"
+	quality = DRINK_NICE
 
 /datum/reagent/consumable/ethanol/brandy
 	name = "Apple Brandy"
@@ -96,6 +139,18 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/brandy/pear
 	name = "Pear Brandy"
+
+/datum/reagent/consumable/ethanol/brandy/strawberry
+	name = "Strawberry Brandy"
+	color = "#bb1a1a"
+
+/datum/reagent/consumable/ethanol/brandy/tangerine
+	name = "Tangerine Brandy"
+	color = "#bb751a"
+
+/datum/reagent/consumable/ethanol/brandy/plum
+	name = "Plum Brandy"
+	color = "#5c0449"
 
 /datum/reagent/consumable/ethanol/wine
 	name = "Wine"
@@ -143,6 +198,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 // BEERS - Imported for now, later the styles will be 'mockable', if and when I get to brewing.
 
 // Humen Production - Underwhelming, but cheap.
+
+/datum/reagent/consumable/ethanol/gin
+	name = "Gin"
+	boozepwr = 12
+	taste_description = "fruity"
+	color = "#809978"
+	quality = DRINK_NICE
 
 /datum/reagent/consumable/ethanol/spottedhen
 	name = "Spotted Hen"
@@ -211,6 +273,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#a1a1a1"
 	quality = DRINK_NICE
 
+/datum/reagent/consumable/ethanol/limoncello
+	name = "Limoncello"
+	boozepwr = 45  // holy shit
+	taste_description = "burning and lemony"
+	color = "#d2da63"
+	quality = DRINK_GOOD
+
 // WINE - Fancy.. And yes: all drinks are beer, technically. Cope. Seethe. I didnt code it like this.
 
 // Humen Production - Grape Based
@@ -241,6 +310,8 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "sickly sweet young wine"
 	color = "#3b2342"
 	quality = DRINK_NICE
+	age_path = /datum/reagent/consumable/ethanol/jackberrywine/aged
+	age_time = 10 MINUTES
 
 /datum/reagent/consumable/ethanol/jackberrywine/aged
 	name = "Aged Jackberry Wine"
@@ -248,6 +319,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "sickly sweet aged wine"
 	color = "#402249"
 	quality = DRINK_GOOD
+	age_path = /datum/reagent/consumable/ethanol/jackberrywine/delectable
 
 /datum/reagent/consumable/ethanol/jackberrywine/delectable
 	name = "Delectable Jackberry Wine"
@@ -255,6 +327,129 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "sickly sweet delectably aged wine"
 	color = "#652679"
 	quality = DRINK_VERYGOOD
+	age_path = null
+
+/datum/reagent/consumable/ethanol/plum_wine
+	name = "Umeshu"
+	boozepwr = 15
+	taste_description = "sickly sweet young wine"
+	color = "#c997d8"
+	quality = DRINK_NICE
+	age_path = /datum/reagent/consumable/ethanol/plum_wine/aged
+	age_time = 10 MINUTES
+
+/datum/reagent/consumable/ethanol/plum_wine/aged
+	name = "Aged Umeshu"
+	boozepwr = 30
+	taste_description = "sickly sweet aged wine"
+	color = "#c27cd8"
+	quality = DRINK_GOOD
+	age_path = /datum/reagent/consumable/ethanol/plum_wine/delectable
+
+/datum/reagent/consumable/ethanol/plum_wine/delectable
+	name = "Delectable Umeshu"
+	boozepwr = 30
+	taste_description = "sickly sweet delectably aged wine"
+	color = "#a854c2"
+	quality = DRINK_VERYGOOD
+	age_path = null
+
+/datum/reagent/consumable/ethanol/tangerine
+	name = "Tangerine Wine"
+	boozepwr = 15
+	taste_description = "bitter sweet young wine"
+	color = "#e7aa59"
+	quality = DRINK_NICE
+	age_path = /datum/reagent/consumable/ethanol/tangerine/aged
+
+/datum/reagent/consumable/ethanol/tangerine/aged
+	name = "Aged Tangerine Wine"
+	boozepwr = 30
+	taste_description = "bitter sweet aged wine"
+	color = "#d68d2d"
+	quality = DRINK_GOOD
+	age_path = /datum/reagent/consumable/ethanol/tangerine/delectable
+
+/datum/reagent/consumable/ethanol/tangerine/delectable
+	name = "Delectable Tangerine Wine"
+	boozepwr = 30
+	taste_description = "bitter sweet delectably aged wine"
+	color = "#eb9321"
+	quality = DRINK_VERYGOOD
+	age_path = null
+
+/datum/reagent/consumable/ethanol/raspberry
+	name = "Raspberry Wine"
+	boozepwr = 15
+	taste_description = "bitter sweet young wine"
+	color = "#ee5ea6"
+	quality = DRINK_NICE
+	age_path = /datum/reagent/consumable/ethanol/raspberry/aged
+
+/datum/reagent/consumable/ethanol/raspberry/aged
+	name = "Aged Raspberry Wine"
+	boozepwr = 30
+	taste_description = "bitter sweet aged wine"
+	color = "#d83788"
+	quality = DRINK_GOOD
+	age_path = /datum/reagent/consumable/ethanol/raspberry/delectable
+
+/datum/reagent/consumable/ethanol/raspberry/delectable
+	name = "Delectable Raspberry Wine"
+	boozepwr = 30
+	taste_description = "bitter sweet delectably aged wine"
+	color = "#db0d74"
+	quality = DRINK_VERYGOOD
+	age_path = null
+
+/datum/reagent/consumable/ethanol/blackberry
+	name = "Blackberry Wine"
+	boozepwr = 15
+	taste_description = "bitter tart young wine"
+	color = "#861491"
+	quality = DRINK_NICE
+	age_path = /datum/reagent/consumable/ethanol/blackberry/aged
+
+/datum/reagent/consumable/ethanol/blackberry/aged
+	name = "Aged Blackberry Wine"
+	boozepwr = 30
+	taste_description = "bitter tart aged wine"
+	color = "#58065f"
+	quality = DRINK_GOOD
+	age_path = /datum/reagent/consumable/ethanol/blackberry/delectable
+
+/datum/reagent/consumable/ethanol/blackberry/delectable
+	name = "Delectable Blackberry Wine"
+	boozepwr = 30
+	taste_description = "bitter tart delectably aged wine"
+	color = "#330038"
+	quality = DRINK_VERYGOOD
+	age_path = null
+
+/datum/reagent/consumable/ethanol/tiefling
+	name = "Tiefling Blood Wine"
+	boozepwr = 15
+	taste_description = "bitter young wine"
+	color = "#b32525"
+	quality = DRINK_NICE
+	glows = TRUE
+	age_path = /datum/reagent/consumable/ethanol/tiefling/aged
+
+/datum/reagent/consumable/ethanol/tiefling/aged
+	name = "Aged Tiefling Blood Wine"
+	boozepwr = 30
+	taste_description = "bitter aged wine"
+	color = "#e21313"
+	quality = DRINK_GOOD
+	age_path = /datum/reagent/consumable/ethanol/tiefling/delectable
+
+/datum/reagent/consumable/ethanol/tiefling/delectable
+	name = "Delectable Tiefling Blood Wine"
+	boozepwr = 30
+	taste_description = "bitter delectably aged wine"
+	color = "#ff0000"
+	quality = DRINK_VERYGOOD
+	age_path = null
 
 // Elf Production - Berries & Herbal
 
@@ -362,3 +557,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "meadglass"
 	glass_name = "Mead"
 	glass_desc = ""
+
+/datum/reagent/consumable/ethanol/mead/spider
+	color = "#660061"
+	glows = TRUE
+
+#undef ALCOHOL_THRESHOLD_MODIFIER
+#undef ALCOHOL_EXPONENT

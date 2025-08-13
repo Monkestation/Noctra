@@ -1,12 +1,13 @@
 
 /datum/looping_sound/dmusloop
 	mid_sounds = list()
-	mid_length = 60
+	mid_length = 2400
 	volume = 100
-	falloff = 2
+	falloff_exponent = 2
 	extra_range = 5
 	var/stress2give = /datum/stressevent/music
 	persistent_loop = TRUE
+	sound_group = /datum/sound_group/instruments
 
 /datum/looping_sound/dmusloop/on_hear_sound(mob/M)
 	. = ..()
@@ -20,26 +21,33 @@
 	desc = "A renown design of the Dwarven Cult of Malum, bombastic machine with odd musical functions."
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "mbox0"
-	gripped_intents = list(INTENT_GENERIC)
 	w_class = WEIGHT_CLASS_HUGE
-	twohands_required = TRUE
 	force = 20
 	throwforce = 20
 	throw_range = 2
 	var/datum/looping_sound/dmusloop/soundloop
 	var/curfile
 	var/playing = FALSE
-	var/loaded = TRUE
+	var/loaded = FALSE
 	var/lastfilechange = 0
 	var/curvol = 100
 
 /obj/item/dmusicbox/Initialize()
-	soundloop = new(src, FALSE)
-//	soundloop.start()
-	update_icon()
 	. = ..()
+	soundloop = new(src, FALSE)
+	update_appearance(UPDATE_ICON_STATE)
 
-/obj/item/dmusicbox/update_icon()
+/obj/item/dmusicbox/examine(mob/user)
+	. = ..()
+	. += span_notice("Right click [src] to select a .ogg file. Interact with self to toggle music.")
+
+/obj/item/dmusicbox/Destroy()
+	if(soundloop)
+		QDEL_NULL(soundloop)
+	return ..()
+
+/obj/item/dmusicbox/update_icon_state()
+	. = ..()
 	if(playing)
 		icon_state = "mboxon"
 	else
@@ -50,19 +58,23 @@
 		if(istype(P, /obj/item/coin/gold))
 			loaded=TRUE
 			qdel(P)
-			update_icon()
+			update_appearance(UPDATE_ICON_STATE)
 			playsound(loc, 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
 			return
-	. = ..()
+	return ..()
 
-/obj/item/dmusicbox/rmb_self(mob/user)
-	attack_right(user)
-	return
-
-/obj/item/dmusicbox/attack_right(mob/user)
+/obj/item/dmusicbox/attack_self_secondary(mob/user, params)
 	. = ..()
-	if(.)
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
+	attack_hand_secondary(user, params)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/dmusicbox/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(loc != user)
 		return
 	if(!user.ckey)
@@ -101,10 +113,9 @@
 	curfile = file("data/jukeboxuploads/[user.ckey]/[filename]")
 
 	loaded = FALSE
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
-
-/obj/item/dmusicbox/attack_self(mob/living/user)
+/obj/item/dmusicbox/attack_self(mob/living/user, params)
 	. = ..()
 	if(.)
 		return
@@ -119,4 +130,4 @@
 	else
 		playing = FALSE
 		soundloop.stop()
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)

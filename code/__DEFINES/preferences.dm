@@ -15,15 +15,14 @@
 #define DISABLE_DEATHRATTLE		(1<<12)
 #define DISABLE_ARRIVALRATTLE	(1<<13)
 #define COMBOHUD_LIGHTING		(1<<14)
-
 #define DEADMIN_ALWAYS			(1<<15)
 #define DEADMIN_ANTAGONIST		(1<<16)
 #define DEADMIN_POSITION_HEAD	(1<<17)
 #define DEADMIN_POSITION_SECURITY	(1<<18)
 #define DEADMIN_POSITION_SILICON	(1<<19)
-
 #define TOGGLE_FULLSCREEN		(1<<20)
 #define SCHIZO_VOICE			(1<<21)
+#define UI_SCALE				(1<<22)
 
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|MEMBER_PUBLIC|INTENT_STYLE|MIDROUND_ANTAG|SOUND_INSTRUMENTS|SOUND_SHIP_AMBIENCE|SOUND_PRAYERS|SOUND_ANNOUNCEMENTS|TOGGLE_FULLSCREEN)
 
@@ -47,6 +46,16 @@
 #define PARALLAX_MED     1
 #define PARALLAX_LOW     2
 #define PARALLAX_DISABLE 3 //this option must be the highest number
+
+#define PIXEL_SCALING_AUTO 0
+#define PIXEL_SCALING_1X 1
+#define PIXEL_SCALING_1_2X 1.5
+#define PIXEL_SCALING_2X 2
+#define PIXEL_SCALING_3X 3
+
+#define SCALING_METHOD_NORMAL "normal"
+#define SCALING_METHOD_DISTORT "distort"
+#define SCALING_METHOD_BLUR "blur"
 
 #define PARALLAX_DELAY_DEFAULT world.tick_lag
 #define PARALLAX_DELAY_MED     1
@@ -81,18 +90,37 @@
 #define RANDOM_SPECIES "random_species"
 #define RANDOM_GENDER "random_gender"
 #define RANDOM_GENDER_ANTAG "random_gender_antag"
+#define RANDOM_PRONOUNS "random_pronouns"
+#define RANDOM_PRONOUNS_ANTAG "random_pronouns_antag"
+#define RANDOM_VOICETYPE "random_voicetype"
+#define RANDOM_VOICETYPE_ANTAG "random_voicetype_antag"
 #define RANDOM_AGE "random_age"
 #define RANDOM_AGE_ANTAG "random_age_antag"
 #define RANDOM_UNDERWEAR "random_underwear"
 #define RANDOM_UNDERWEAR_COLOR "random_underwear_color"
 #define RANDOM_UNDERSHIRT "random_undershirt"
-#define RANDOM_SOCKS "random_socks"
-#define RANDOM_HAIRSTYLE "random_hairstyle"
-#define RANDOM_HAIR_COLOR "random_hair_color"
-#define RANDOM_FACIAL_HAIR_COLOR "random_facial_hair_color"
-#define RANDOM_FACIAL_HAIRSTYLE "random_facial_hairstyle"
 #define RANDOM_SKIN_TONE "random_skin_tone"
 #define RANDOM_EYE_COLOR "random_eye_color"
+
+// randomise_appearance_prefs() and randomize_human_appearance() proc flags
+#define RANDOMIZE_GENDER (1<<0)
+#define RANDOMIZE_SPECIES (1<<1)
+#define RANDOMIZE_PRONOUNS (1<<2)
+#define RANDOMIZE_VOICETYPE (1<<3)
+#define RANDOMIZE_NAME (1<<4)
+#define RANDOMIZE_AGE (1<<5)
+#define RANDOMIZE_UNDERWEAR (1<<6)
+#define RANDOMIZE_HAIRSTYLE (1<<7)
+#define RANDOMIZE_FACIAL_HAIRSTYLE (1<<8)
+#define RANDOMIZE_HAIR_COLOR (1<<9)
+#define RANDOMIZE_FACIAL_HAIR_COLOR (1<<10)
+#define RANDOMIZE_SKIN_TONE (1<<11)
+#define RANDOMIZE_EYE_COLOR (1<<12)
+#define RANDOMIZE_FEATURES (1<<13)
+
+#define RANDOMIZE_HAIR_FEATURES (RANDOMIZE_HAIRSTYLE | RANDOMIZE_FACIAL_HAIRSTYLE)
+#define RANDOMIZE_HAIR_COLORS (RANDOMIZE_HAIR_COLOR | RANDOMIZE_HAIR_COLORS)
+#define RANDOMIZE_HAIR_ALL (RANDOMIZE_HAIR_FEATURES | RANDOMIZE_HAIR_COLORS)
 
 //Age ranges
 #define AGE_CHILD			"Youngling"
@@ -101,8 +129,31 @@
 #define AGE_OLD				"Old"
 #define AGE_IMMORTAL		"Immortal"
 
-#define ALL_AGES_LIST		list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
-#define ALL_AGES_LIST_WITH_CHILD		list(AGE_CHILD, AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
+#define NORMAL_AGES_LIST			list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
+#define NORMAL_AGES_LIST_CHILD		list(AGE_CHILD, AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
+#define ALL_AGES_LIST				list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
+#define ALL_AGES_LIST_CHILD			list(AGE_CHILD, AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
+
+// Pronouns
+#define HE_HIM			"He/Him"
+#define SHE_HER			"She/Her"
+#define THEY_THEM		"They/Them"
+#define IT_ITS			"It/Its"
+
+#define PRONOUNS_LIST list(HE_HIM, SHE_HER, THEY_THEM, IT_ITS)
+#define PRONOUNS_LIST_NO_IT list(HE_HIM, SHE_HER, THEY_THEM)
+#define PRONOUNS_LIST_IT_ONLY list(IT_ITS)
+
+// Voice types
+
+#define VOICE_TYPE_MASC		"Masculine"
+#define VOICE_TYPE_FEM		"Feminine"
+#define VOICE_TYPE_ANDRO	"Androgynous"
+
+#define VOICE_TYPES_LIST list(VOICE_TYPE_MASC, VOICE_TYPE_FEM, VOICE_TYPE_ANDRO)
+
+#define VOICE_TYPES_MASCANDRO list(VOICE_TYPE_MASC, VOICE_TYPE_ANDRO)
+#define VOICE_TYPES_FEMANDRO list(VOICE_TYPE_FEM, VOICE_TYPE_ANDRO)
 
 //alignment
 #define ALIGNMENT_LG		"Lawful Good"
@@ -124,3 +175,6 @@
 							ALIGNMENT_LE,\
 							ALIGNMENT_NE,\
 							ALIGNMENT_CE)
+
+#define UI_PREFERENCE_LIGHT_MODE "light mode"
+#define UI_PREFERENCE_DARK_MODE "dark mode"

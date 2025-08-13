@@ -27,11 +27,13 @@
 	sewrepair = TRUE
 	smeltresult = /obj/item/ingot/iron
 	sellprice = VALUE_IRON_ARMOR_UNUSUAL
-
+	// It looks better without these
+	flags_inv = HIDEUNDIES
 	armor_class = AC_LIGHT
 	armor = ARMOR_LEATHER_GOOD
 	body_parts_covered = COVERAGE_TORSO
 	prevent_crits = ALL_EXCEPT_BLUNT
+	item_weight = 7 * IRON_MULTIPLIER
 
 //................ Brigandine ............... //
 /obj/item/clothing/armor/brigandine
@@ -47,20 +49,15 @@
 	clothing_flags = CANT_SLEEP_IN
 
 	armor_class = AC_HEAVY
-	armor = ARMOR_PLATE_BAD
+	armor = ARMOR_BRIGANDINE
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	max_integrity = INTEGRITY_STRONGEST
-	prevent_crits = ALL_EXCEPT_STAB
-	do_sound_plate = TRUE
+	prevent_crits = ALL_EXCEPT_BLUNT
+	item_weight = 3.2 * IRON_MULTIPLIER
 
-/obj/item/clothing/armor/brigandine/update_icon()
-	cut_overlays()
-	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
-		pic.appearance_flags = RESET_COLOR
-		if(get_detail_color())
-			pic.color = get_detail_color()
-		add_overlay(pic)
+/obj/item/clothing/armor/brigandine/Initialize()
+	. = ..()
+	AddComponent(/datum/component/item_equipped_movement_rustle, custom_sounds = SFX_PLATE_COAT_STEP)
 
 /obj/item/clothing/armor/captain
 	name = "captain's brigandine"
@@ -82,80 +79,26 @@
 	armor = ARMOR_PLATE_BAD
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	max_integrity = INTEGRITY_STRONGEST
-	prevent_crits = ALL_EXCEPT_STAB
-	do_sound_plate = TRUE
-
-/obj/item/clothing/armor/captain/update_icon()
-	cut_overlays()
-	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
-		pic.appearance_flags = RESET_COLOR
-		if(get_detail_color())
-			pic.color = get_detail_color()
-		add_overlay(pic)
-
-/obj/item/clothing/armor/captain/lordcolor(primary,secondary)
-	detail_color = primary
-	update_icon()
+	prevent_crits = ALL_EXCEPT_BLUNT
+	item_weight = 7 * STEEL_MULTIPLIER
+	uses_lord_coloring = LORD_PRIMARY
 
 /obj/item/clothing/armor/captain/Initialize()
 	. = ..()
-	if(GLOB.lordprimary)
-		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
-	else
-		GLOB.lordcolor += src
-
-/obj/item/clothing/armor/captain/Destroy()
-	GLOB.lordcolor -= src
-	return ..()
+	AddComponent(/datum/component/item_equipped_movement_rustle, custom_sounds = SFX_PLATE_COAT_STEP)
 
 //................ Coat of Plate ............... //
 /obj/item/clothing/armor/brigandine/coatplates
 	name = "coat of plates"
-	desc = "A Zybantine leather coat with steel scales woven with miniscule threads of adamantine, \
+	desc = "A Zalad leather coat with steel scales woven with miniscule threads of adamantine, \
 			ensuring the wearer an optimal defence with forgiving breathability and mobility."
 	icon_state = "coat_of_plates"
 	blocksound = PLATEHIT
 	sellprice = VALUE_SNOWFLAKE_STEEL
+	armor = ARMOR_PLATE_BAD
+	// add armor plate bad from defines
 
 	max_integrity = INTEGRITY_STRONG
-
-
-//................ Ancient Haubergon ............... //
-/obj/item/clothing/armor/haubergon_vampire
-	name = "ancient haubergon"
-	desc = "A style of armor long out of use. Rests easy on the shoulders."
-	icon_state = "vunder"
-	blocksound = CHAINHIT
-	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
-	pickup_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	equip_sound = 'sound/foley/equip/equip_armor_chain.ogg'
-	anvilrepair = /datum/skill/craft/armorsmithing
-	smeltresult = /obj/item/ingot/steel
-	sellprice = VALUE_IRON_ARMOR_UNUSUAL
-
-	armor_class = AC_LIGHT
-	armor = ARMOR_SCALE
-	body_parts_covered = COVERAGE_ALL_BUT_LEGS
-	prevent_crits = ALL_EXCEPT_BLUNT
-
-// VAMPIRE ARMORS BELOW
-
-/obj/item/clothing/pants/platelegs/vampire
-	name = "ancient plate greaves"
-	desc = ""
-	gender = PLURAL
-	icon_state = "vpants"
-	item_state = "vpants"
-	sewrepair = FALSE
-	armor = ARMOR_PLATE_GOOD
-	prevent_crits = ALL_CRITICAL_HITS_VAMP // Vampire armors don't protect against lashing, Castlevania reference
-	blocksound = PLATEHIT
-	do_sound = FALSE
-	anvilrepair = /datum/skill/craft/armorsmithing
-	smeltresult = /obj/item/ingot/steel
-	r_sleeve_status = SLEEVE_NOMOD
-	l_sleeve_status = SLEEVE_NOMOD
 
 /obj/item/clothing/shirt/vampire
 	slot_flags = ITEM_SLOT_SHIRT|ITEM_SLOT_ARMOR

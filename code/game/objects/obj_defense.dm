@@ -8,7 +8,6 @@
 	if((resistance_flags & INDESTRUCTIBLE) || !max_integrity)
 		return
 	damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir, armor_penetration)
-	testing("damamount [damage_amount]")
 	if(damage_amount < DAMAGE_PRECISION)
 		return
 	. = damage_amount
@@ -18,32 +17,24 @@
 		animate(src, pixel_x = oldx+1, time = 0.5)
 		animate(pixel_x = oldx-1, time = 0.5)
 		animate(pixel_x = oldx, time = 0.5)
-	//BREAKING FIRST
 	if(!obj_broken && integrity_failure && obj_integrity <= integrity_failure * max_integrity)
 		obj_break(damage_flag)
-	//DESTROYING SECOND
 	if(!obj_destroyed && obj_integrity <= 0)
-		testing("destroy1")
 		obj_destruction(damage_flag)
 
 
 ///returns the damage value of the attack after processing the obj's various armor protections
 /obj/proc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armor_penetration = 0)
 	if(damage_flag == "blunt" && damage_amount < damage_deflection)
-		testing("damtest55")
 		return 0
 	if(damage_type != BRUTE && damage_type != BURN)
-		testing("damtest66")
 		return 0
 	var/armor_protection = 0
 	if(damage_flag)
-		armor_protection = armor.getRating(damage_flag)
+		armor_protection = armor?.getRating(damage_flag)
 	if(armor_protection)		//Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
 		armor_protection = CLAMP(armor_protection - armor_penetration, min(armor_protection, 0), 100)
 	return round(damage_amount * (100 - armor_protection)*0.01, DAMAGE_PRECISION)
-
-/obj
-	var/attacked_sound = 'sound/blank.ogg'
 
 ///the sound played when the obj is damaged.
 /obj/proc/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -61,7 +52,7 @@
 
 /obj/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum, damage_type = "blunt")
 	..()
-	if(AM.throwforce > 5)
+	if(!QDELETED(src) && AM.throwforce > 5)
 		take_damage(AM.throwforce*0.1, BRUTE, damage_type, 1, get_dir(src, AM))
 
 /obj/ex_act(severity, target, epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range)
@@ -91,7 +82,7 @@
 		var/stacks = ((fdist - fodist) * 2)
 		fire_act(stacks)
 
-/obj/bullet_act(obj/projectile/P)
+/obj/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
 	. = ..()
 	playsound(src.loc, P.hitsound, 50, TRUE)
 	visible_message("<span class='danger'>[src] is hit by \a [P]!</span>", null, null, COMBAT_MESSAGE_RANGE)
@@ -99,7 +90,7 @@
 		take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armor_penetration)
 
 /obj/proc/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0) //used by attack_alien, attack_animal, and attack_slime
-	user.do_attack_animation(src)
+	user.do_attack_animation(src, used_intent = user.used_intent)
 	user.changeNext_move(CLICK_CD_MELEE)
 	return take_damage(damage_amount, damage_type, damage_flag, sound_effect, get_dir(src, user), armor_penetration)
 
@@ -223,12 +214,13 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	qdel(src)
 
 ///called after the obj takes damage and integrity is below integrity_failure level
-/obj/proc/obj_break(damage_flag)
+/obj/proc/obj_break(damage_flag, silent = FALSE)
 	obj_broken = TRUE
-	if(break_sound)
-		playsound(src, break_sound, 100, TRUE)
-	if(break_message)
-		visible_message(break_message)
+	if(!silent)
+		if(break_sound)
+			playsound(src, break_sound, 100, TRUE)
+		if(break_message)
+			visible_message(break_message)
 
 ///what happens when the obj's integrity reaches zero.
 /obj/proc/obj_destruction(damage_flag)
@@ -265,3 +257,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 ///returns how much the object blocks an explosion. Used by subtypes.
 /obj/proc/GetExplosionBlock()
 	CRASH("Unimplemented GetExplosionBlock()")
+
+/obj/proc/on_fall_impact(mob/living/impactee, fall_speed)
+	SHOULD_CALL_PARENT(TRUE)
+	return

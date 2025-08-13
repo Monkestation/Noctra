@@ -111,9 +111,15 @@
 			var/armor = run_armor_check(zone, damage_type, "", "",I.armor_penetration, damage = I.throwforce)
 			next_attack_msg.Cut()
 			var/nodmg = FALSE
-			if(!apply_damage(I.throwforce, damage_type, zone, armor))
+			var/damagetype = damage_type
+			switch(damage_type)
+				if("blunt", "slash", "stab", "piercing")
+					damagetype = BRUTE
+				if("fire", "acid")
+					damagetype = BURN
+			if(!apply_damage(I.throwforce, damagetype, zone, armor))
 				nodmg = TRUE
-				next_attack_msg += " <span class='warning'>Armor stops the damage.</span>"
+				next_attack_msg += span_warning(" Armor stops the damage.")
 			if(!nodmg)
 				if(iscarbon(src))
 					var/obj/item/bodypart/affecting = get_bodypart(zone)
@@ -154,106 +160,88 @@
 		adjust_fire_stacks(1)
 	IgniteMob()
 
-/mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = FALSE, item_override)
+/mob/living/proc/grabbedby(mob/living/carbon/user, suppress_message = FALSE, item_override)
 	if(!user || !src || anchored || !isturf(user.loc))
 		return FALSE
 
 	if(!user.pulling || user.pulling == src)
-		user.start_pulling(src, supress_message = supress_message, item_override = item_override)
+		user.start_pulling(src, suppress_message = suppress_message, item_override = item_override)
 		return
-/*
-	if(!(status_flags & CANPUSH) || HAS_TRAIT(src, TRAIT_PUSHIMMUNE))
-		to_chat(user, "<span class='warning'>[src] can't be grabbed more aggressively!</span>")
-		return FALSE
-
-	if(user.grab_state >= GRAB_AGGRESSIVE && HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, "<span class='warning'>I don't want to risk hurting [src]!</span>")
-		return FALSE
-	grippedby(user)*/
 
 //proc to upgrade a simple pull into a more aggressive grab.
 /mob/living/proc/grippedby(mob/living/carbon/user, instant = FALSE)
 	user.changeNext_move(CLICK_CD_GRABBING)
+	var/skill_diff = 0
+	var/combat_modifier = 1
+	if(user.mind)
+		skill_diff += (user.get_skill_level(/datum/skill/combat/wrestling)) //NPCs don't use this
+	if(mind)
+		skill_diff -= (get_skill_level(/datum/skill/combat/wrestling))
 
 	if(user == src)
 		instant = TRUE
 
-//	if(user.pulling != src)
-//		return
+	if(surrendering)
+		combat_modifier = 2
 
-	var/probby =  20 - ((user.STACON - STACON) * 10)
-	if(src.pulling == user && !instant)
-		probby += 30
+	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
+		combat_modifier += 0.4
+
+	if(body_position == LYING_DOWN && user.body_position != LYING_DOWN)
+		combat_modifier += 0.05
+	if(user.cmode && !cmode)
+		combat_modifier += 0.3
+	else if(!user.cmode && cmode)
+		combat_modifier -= 0.3
 
 	if(src.dir == turn(get_dir(src,user), 180))
-		probby = (probby - 30)
-	probby = clamp(probby, 5, 95)
+		combat_modifier += 0.1
 
-	if(prob(probby) && !instant && !stat && cmode)
-		visible_message("<span class='warning'>[user] struggles with [src]!</span>",
-						"<span class='warning'>[user] struggles to restrain me!</span>", "<span class='hear'>I hear aggressive shuffling!</span>", null, user)
+	for(var/obj/item/grabbing/G in grabbedby)
+		if(G.chokehold)
+			combat_modifier += 0.15
+
+	var/probby = clamp((((8 + (((user.STASTR - STASTR)/4) + skill_diff)) * 5 + rand(-5, 5)) * combat_modifier), 5, 95)
+
+	if(!prob(probby) && !instant && !stat && cmode)
+		var/self_message
 		if(src.client?.prefs.showrolls)
-			to_chat(user, "<span class='warning'>I struggle with [src]! ([probby]%)</span>")
+			self_message = span_warning("I struggle with [user]! ([probby]%)")
 		else
-			to_chat(user, "<span class='warning'>I struggle with [src]!</span>")
+			self_message = span_warning("I struggle with [user]!")
+		visible_message(span_warning("[user] struggles with [src]!"), self_message, span_hear("I hear aggressive shuffling!"))
 		playsound(src.loc, 'sound/foley/struggle.ogg', 100, FALSE, -1)
-		user.Immobilize(2 SECONDS)
-		user.changeNext_move(2 SECONDS)
-		user.adjust_stamina(5)
-		src.Immobilize(1 SECONDS)
-		src.changeNext_move(1 SECONDS)
+		user.Immobilize(1 SECONDS)
+		user.changeNext_move(1 SECONDS)
+		user.adjust_stamina(rand(2,6))
+		src.Immobilize(0.5 SECONDS)
+		src.changeNext_move(0.5 SECONDS)
 		return
 
 	if(!instant)
 		var/sound_to_play = 'sound/foley/grab.ogg'
 		playsound(src.loc, sound_to_play, 100, FALSE, -1)
 
-	testing("eheh1")
 	user.setGrabState(GRAB_AGGRESSIVE)
 	if(user.active_hand_index == 1)
 		if(user.r_grab)
 			user.r_grab.grab_state = GRAB_AGGRESSIVE
+			user.r_grab.update_grab_intents()
 	if(user.active_hand_index == 2)
 		if(user.l_grab)
 			user.l_grab.grab_state = GRAB_AGGRESSIVE
-
-	user.update_grab_intents()
+			user.l_grab.update_grab_intents()
 
 	var/add_log = ""
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		add_log = " (pacifist)"
 	send_grabbed_message(user)
 	if(user != src)
-		stop_pulling()
+		if(pulling != user) // If the person we're pulling aggro grabs us don't break the grab
+			stop_pulling()
 		user.set_pull_offsets(src, user.grab_state)
 	log_combat(user, src, "grabbed", addition="aggressive grab[add_log]")
 	return 1
-
-/mob/living/proc/update_grab_intents(mob/living/target)
-	return
-
-/mob/living/carbon/update_grab_intents()
-	var/obj/item/grabbing/G = get_active_held_item()
-	if(!istype(G))
-		return
-	if(ismob(G.grabbed))
-		if(isitem(G.sublimb_grabbed))
-			var/obj/item/I = G.sublimb_grabbed
-			G.possible_item_intents = I.grabbedintents(src, G.sublimb_grabbed)
-		else
-			if(iscarbon(G.grabbed) && G.limb_grabbed)
-				var/obj/item/I = G.limb_grabbed
-				G.possible_item_intents = I.grabbedintents(src, G.sublimb_grabbed)
-			else
-				var/mob/M = G.grabbed
-				G.possible_item_intents = M.grabbedintents(src, G.sublimb_grabbed)
-	if(isobj(G.grabbed))
-		var/obj/I = G.grabbed
-		G.possible_item_intents = I.grabbedintents(src, G.sublimb_grabbed)
-	if(isturf(G.grabbed))
-		var/turf/T = G.grabbed
-		G.possible_item_intents = T.grabbedintents(src)
-	update_a_intents()
 
 /turf/proc/grabbedintents(mob/living/user)
 	//RTD up and down
@@ -292,7 +280,8 @@
 		return FALSE
 
 	M.do_attack_animation(src, visual_effect_icon = M.a_intent.animname)
-	playsound(get_turf(M), pick(M.attack_sound), 100, FALSE)
+	if(M.attack_sound)
+		playsound(get_turf(M), pick(M.attack_sound), 100, FALSE)
 
 	var/cached_intent = M.used_intent
 
@@ -304,7 +293,7 @@
 		return FALSE
 	if(!M.Adjacent(src))
 		return FALSE
-	if(M.incapacitated())
+	if(M.incapacitated(IGNORE_GRAB))
 		return FALSE
 
 	if(checkmiss(M))
@@ -395,7 +384,7 @@
 	if(!(flags & SHOCK_ILLUSION))
 		adjustFireLoss(shock_damage)
 	visible_message(
-		"<span class='danger'>[src] was shocked by \the [source]!</span>", \
+		"<span class='danger'>[src] was shocked by [source ? "\the [source]" : "something"]!</span>", \
 		"<span class='danger'>I feel a powerful shock coursing through my body!</span>", \
 		"<span class='hear'>I hear a heavy electrical crack.</span>" \
 	)
@@ -420,8 +409,7 @@
 /mob/living/proc/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
 	return
 
-
-/mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect)
+/mob/living/do_attack_animation(atom/A, visual_effect_icon, obj/item/used_item, no_effect, item_animation_override = null, datum/intent/used_intent, atom_bounce)
 	if(!used_item)
 		used_item = get_active_held_item()
 	..()

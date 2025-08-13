@@ -5,12 +5,11 @@
 	requirements = list(
 		/obj/item/reagent_containers/food/snacks/produce/dry_westleach = 2
 	)
-	attacking_atom = /obj/item/reagent_containers/food/snacks/produce/dry_westleach
+	attacked_atom = /obj/item/reagent_containers/food/snacks/produce/dry_westleach
 
 	craft_time = 10 SECONDS
 	crafting_message = "starts rolling a westleach zig"
 	craftdiff = 0
-	uses_attacking_atom = TRUE
 	subtypes_allowed = TRUE
 
 /datum/repeatable_crafting_recipe/sigsweet
@@ -20,29 +19,31 @@
 	requirements = list(
 		/obj/item/reagent_containers/food/snacks/produce/swampweed_dried = 2
 	)
-	attacking_atom = /obj/item/reagent_containers/food/snacks/produce/swampweed_dried
+	attacked_atom = /obj/item/reagent_containers/food/snacks/produce/swampweed_dried
 
 	craft_time = 10 SECONDS
 	crafting_message = "starts rolling a swampweed zig"
 	craftdiff = 0
-	uses_attacking_atom = TRUE
 	subtypes_allowed = TRUE
-
 
 /datum/repeatable_crafting_recipe/canvas
 	name = "canvas"
 	output = /obj/item/canvas
-	starting_atom = /obj/item/paper
 	requirements = list(
-		/obj/item/paper = 2
+		/obj/item/paper = 2,
 	)
-	attacking_atom = /obj/item/paper
-
+	tool_usage = list(
+		/obj/item/needle = list("starts to weave", "start to weave")
+	)
+	starting_atom = /obj/item/needle
+	attacked_atom = /obj/item/paper
 	craft_time = 3 SECONDS
 	crafting_message = "starts weaving a canvas"
 	craftdiff = 0
-	uses_attacking_atom = TRUE
 	subtypes_allowed = TRUE
+
+/datum/repeatable_crafting_recipe/canvas/create_blacklisted_paths()
+	blacklisted_paths = subtypesof(/obj/item/paper)
 
 /datum/repeatable_crafting_recipe/paintbrush
 	name = "paint brush"
@@ -52,12 +53,12 @@
 		/obj/item/grown/log/tree/stick = 1,
 		/obj/item/natural/feather = 1,
 	)
-	attacking_atom = /obj/item/grown/log/tree/stick
+	attacked_atom = /obj/item/grown/log/tree/stick
+	allow_inverse_start = TRUE
 
 	craft_time = 3 SECONDS
 	crafting_message = "starts tying a paint brush"
 	craftdiff = 0
-	uses_attacking_atom = TRUE
 	subtypes_allowed = TRUE
 
 /datum/repeatable_crafting_recipe/paint_palette
@@ -67,11 +68,32 @@
 	requirements = list(
 		/obj/item/grown/log/tree/stick = 1,
 		/obj/item/natural/wood/plank = 1,
+		/obj/item/alch = 1,
 	)
-	attacking_atom = /obj/item/natural/wood/plank
+	attacked_atom = /obj/item/natural/wood/plank
+	allow_inverse_start = TRUE
 
 	craft_time = 3 SECONDS
 	crafting_message = "starts constructing a paint palette"
 	craftdiff = 0
-	uses_attacking_atom = TRUE
 	subtypes_allowed = TRUE
+
+/datum/repeatable_crafting_recipe/woodthresher
+	name = "thresher"
+	output = /obj/item/weapon/thresher
+	requirements = list(
+		/obj/item/grown/log/tree/small = 1,
+		/obj/item/rope = 1
+	)
+	starting_atom = /obj/item/rope
+	attacked_atom = /obj/item/grown/log/tree/small
+
+/datum/repeatable_crafting_recipe/militarythresher
+	name = "military flail"
+	output = /obj/item/weapon/thresher/military
+	requirements = list(
+		/obj/item/weapon/thresher = 1,
+		/obj/item/ingot/iron = 1
+	)
+	attacked_atom = /obj/item/weapon/thresher
+	starting_atom = /obj/item/ingot/iron

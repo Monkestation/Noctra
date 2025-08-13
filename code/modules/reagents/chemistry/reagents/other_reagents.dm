@@ -10,6 +10,10 @@
 	glass_desc = ""
 	shot_glass_icon_state = "shotglassred"
 
+/datum/reagent/blood/tiefling
+	name = "Tiefling Blood"
+	glows = TRUE
+
 /datum/reagent/blood/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	if(iscarbon(L))
 		var/mob/living/carbon/C = L
@@ -19,6 +23,10 @@
 				C.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 			else
 				C.blood_volume = min(C.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+
+	if((method == INGEST) && L.clan)
+		L.adjust_bloodpool(reac_volume)
+		L.clan.handle_bloodsuck(BLOOD_PREFERENCE_FANCY)
 
 
 /datum/reagent/blood/on_merge(list/mix_data)
@@ -130,10 +138,13 @@
 	if(reac_volume >= 5)
 		T.add_water(reac_volume * 3) //nuprocet)
 
-	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in T)
-	if(hotspot)
-		hotspot.extinguish()
-
+	for(var/atom/movable/thing as anything in T.contents)
+		if(ismob(thing))
+			var/mob/M = thing
+			reaction_mob(M, reac_volume)
+		else if(isobj(thing))
+			var/obj/O = thing
+			reaction_obj(O, reac_volume)
 /*
  *	Water reaction to an object
  */
@@ -155,7 +166,7 @@
 			RB.reagents.add_reagent(src.type, reac_volume)
 
 	else if(istype(O, /obj/item/natural/cloth))
-		O.wash_act()
+		O.wash(CLEAN_WASH)
 /*
  *	Water reaction to a mob
  */
@@ -166,9 +177,7 @@
 	if(method == TOUCH)
 		M.adjust_fire_stacks(-(reac_volume / 10))
 		M.SoakMob(FULL_BODY)
-//		for(var/obj/effect/decal/cleanable/blood/target in M)
-//			qdel(target)
-	..()
+	return ..()
 
 
 /datum/reagent/mercury
@@ -178,7 +187,7 @@
 	taste_mult = 0 // apparently tasteless.
 
 /datum/reagent/mercury/on_mob_life(mob/living/carbon/M)
-	if((M.mobility_flags & MOBILITY_MOVE))
+	if(!HAS_TRAIT(M, TRAIT_IMMOBILIZED))
 		step(M, pick(GLOB.cardinals))
 	if(prob(5))
 		M.emote(pick("twitch","drool","moan"))
@@ -264,3 +273,32 @@
 	reagent_state = LIQUID
 	color = "#515151"
 	taste_description = "ash"
+
+/datum/reagent/soap
+	name = "Soap"
+	description = "A combination of ash and animal fats used for cleaning."
+	color = "#cbb165"
+	alpha = 180
+	taste_description = "soapy grease"
+	metabolization_rate = 0.5
+	glass_icon_state = "glass_clear"
+	glass_name = "glass"
+	evaporation_rate = 2
+	shot_glass_icon_state = "shotglassclear"
+	alpha = 100
+	taste_mult = 2 // yuck!
+
+/datum/reagent/soap/on_mob_life(mob/living/carbon/M)
+	..()
+	if(ishuman(M))
+		M.add_stress(/datum/stressevent/mouthsoap)
+
+/datum/reagent/soap/add_to_member(obj/effect/abstract/liquid_turf/adder)
+	. = ..()
+	if(!adder.GetComponent(/datum/component/slippery))
+		adder.AddComponent(/datum/component/slippery, 30)
+
+/datum/reagent/soap/remove_from_member(obj/effect/abstract/liquid_turf/remover)
+	. = ..()
+	var/datum/component/slipComp = remover.GetComponent(/datum/component/slippery)
+	slipComp?.Destroy()

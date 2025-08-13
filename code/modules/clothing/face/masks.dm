@@ -7,6 +7,21 @@
 /obj/item/clothing/face/lordmask/l
 	icon_state = "lmask_l"
 
+/obj/item/clothing/face/lordmask/faceless
+	name = "half-face"
+	desc = "A face for the faceless."
+	color = CLOTHING_SOOT_BLACK
+
+/obj/item/clothing/face/lordmask/faceless/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
+/obj/item/clothing/face/lordmask/faceless/dropped(mob/living/carbon/human/user)
+	. = ..()
+	if(QDELETED(src))
+		return
+	qdel(src)
+
 /obj/item/clothing/face/facemask
 	name = "iron mask"
 	icon_state = "imask"
@@ -61,6 +76,15 @@
 	desc = "A knightly steel mask that both conceals and protects the face. Usually paired with a bascinet."
 	max_integrity = 300
 
+/obj/item/clothing/face/facemask/silver
+	name = "silver mask"
+	icon = 'icons/roguetown/clothing/special/adept.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/adept.dmi'
+	icon_state = "silvermask"
+	armor = list("blunt" = 100, "slash" = 100, "stab" = 100,  "piercing" = 85, "fire" = 0, "acid" = 0)
+	desc = "A custom made silver penance mask, created especially for the Adepts of the Inquisitorial Lodge."
+	max_integrity = 300
+
 /obj/item/clothing/face/facemask/shadowfacemask
 	name = "anthraxi war mask"
 	desc = "A metal mask resembling a spider's face. Such a visage haunts many an older dark elf's nitemares - while the younger generation simply scoffs at such relics."
@@ -77,6 +101,7 @@
 	toggle_icon_state = TRUE
 	experimental_onhip = TRUE
 	salvage_amount = 1
+	gas_transfer_coefficient = 0.3
 
 /obj/item/clothing/face/shepherd/AdjustClothes(mob/user)
 	if(loc == user)
@@ -89,6 +114,7 @@
 			if(ishuman(user))
 				var/mob/living/carbon/H = user
 				H.update_inv_wear_mask()
+			gas_transfer_coefficient = 0
 		else if(adjustable == CADJUSTED)
 			ResetAdjust(user)
 			flags_inv = HIDEFACE|HIDEFACIALHAIR
@@ -97,6 +123,7 @@
 				if(ishuman(user))
 					var/mob/living/carbon/H = user
 					H.update_inv_wear_mask()
+		user.regenerate_clothes()
 
 /obj/item/clothing/face/shepherd/rag
 	icon_state = "ragmask"
@@ -116,6 +143,7 @@
 	body_parts_covered = FACE|EARS|EYES|MOUTH|NECK
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
 	sewrepair = TRUE
+	gas_transfer_coefficient = 0.3
 
 /obj/item/clothing/face/phys
 	name = "physicker's mask"
@@ -127,6 +155,7 @@
 	body_parts_covered = FACE|EARS|EYES|MOUTH|NECK
 	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
 	sewrepair = TRUE
+	gas_transfer_coefficient = 0.3
 
 /obj/item/clothing/face/facemask/copper
 	name = "copper mask"
@@ -181,7 +210,7 @@
 	smeltresult = /obj/item/alch/bone
 
 /obj/item/clothing/face/facemask/goldmask
-	name = "Gold Mask"
+	name = "gold mask"
 	icon_state = "goldmask"
 	max_integrity = 150
 	sellprice = 100

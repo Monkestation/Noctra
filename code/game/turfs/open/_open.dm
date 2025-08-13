@@ -1,7 +1,6 @@
 /turf/open
 	plane = FLOOR_PLANE
 	var/slowdown = 0 //negative for faster, positive for slower
-
 	var/postdig_icon_change = FALSE
 	var/postdig_icon
 	var/wet
@@ -12,20 +11,34 @@
 	var/footstepstealth = FALSE
 	baseturfs = /turf/open/transparent/openspace
 
-/turf/proc/get_slowdown(mob/user)
-	return 0
+	smoothing_groups = SMOOTH_GROUP_OPEN
 
-/turf/open/get_slowdown(mob/user)
-	return slowdown + snow?.get_slowdown()
+	var/obj/effect/hotspot/active_hotspot
 
-/turf
-	var/landsound = null
+	nomouseover = TRUE
 
-/turf/open/ComponentInitialize()
+	appearance_flags = LONG_GLIDE | TILE_BOUND
+	/// Pollution of this turf
+	var/datum/pollution/pollution
+
+/turf/open/Initialize(mapload)
 	. = ..()
 	if(wet)
 		AddComponent(/datum/component/wet_floor, wet, INFINITY, 0, INFINITY, TRUE)
 
+/turf/proc/get_slowdown(mob/user)
+	return 0
+
+/turf/open/get_slowdown(mob/user)
+	var/total_slowdown = slowdown
+	for(var/obj/obj in contents)
+		if(obj.obj_flags & BLOCK_Z_OUT_DOWN)
+			return slowdown
+		total_slowdown += obj.object_slowdown
+	return total_slowdown
+
+/turf
+	var/landsound = null
 
 //direction is direction of travel of A
 /turf/open/zPassIn(atom/movable/A, direction, turf/source)
@@ -68,7 +81,7 @@
 /turf/open/proc/water_vapor_gas_act()
 	MakeSlippery(TURF_WET_WATER, min_wet_time = 100, wet_time_to_add = 50)
 
-	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+	SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WASH)
 	return TRUE
 
 /turf/open/handle_slip(mob/living/carbon/C, knockdown_amount, obj/O, lube, paralyze_amount, force_drop)
@@ -81,7 +94,7 @@
 			if(!(lube&GALOSHES_DONT_HELP)) //can't slip while buckled unless it's lube.
 				return 0
 		else
-			if(!(lube&SLIP_WHEN_CRAWLING) && (!(C.mobility_flags & MOBILITY_STAND) || !(C.status_flags & CANKNOCKDOWN))) // can't slip unbuckled mob if they're lying or can't fall.
+			if(!(lube&SLIP_WHEN_CRAWLING) && (C.body_position == LYING_DOWN) || !(C.status_flags & CANKNOCKDOWN)) // can't slip unbuckled mob if they're lying or can't fall.
 				return 0
 			if(C.m_intent == MOVE_INTENT_WALK && (lube&NO_SLIP_WHEN_WALKING))
 				return 0
@@ -129,3 +142,52 @@
 
 /turf/open/proc/ClearWet()//Nuclear option of immediately removing slipperyness from the tile instead of the natural drying over time
 	qdel(GetComponent(/datum/component/wet_floor))
+
+/turf/open/attacked_by(obj/item/I, mob/living/user)
+	if(!(flags_1 & CAN_BE_ATTACKED_1))
+		return FALSE
+	. = ..()
+
+/turf/open/OnCrafted(dirin, mob/user)
+	. = ..()
+	flags_1 |= CAN_BE_ATTACKED_1
+
+///this will always use the highest value given depending on if set for negative
+/turf/proc/add_turf_temperature(key, value, weight = 1)
+	if(!temperature_sources)
+		temperature_sources = list()
+
+	temperature_sources[key] = list(value, weight)
+	rebuild_turf_temperature()
+
+
+/turf/proc/remove_turf_temperature(key)
+	if(temperature_sources && (key in temperature_sources))
+		temperature_sources -= key
+	rebuild_turf_temperature()
+
+/turf/proc/rebuild_turf_temperature()
+	var/total = 0
+	var/total_weight = 0
+
+	for(var/source in temperature_sources)
+		var/data = temperature_sources[source]
+		var/value = data[1]
+		var/weight = data[2]
+
+		total += value * weight
+		total_weight += weight
+
+	var/delta = total_weight ? (total / total_weight) : 0
+	temperature_modification = delta
+
+/turf/proc/return_temperature()
+	var/ambient_temperature = SSParticleWeather.selected_forecast.current_ambient_temperature
+	if(ambient_temperature < 15 && (outdoor_effect?.weatherproof || !outdoor_effect))
+		ambient_temperature += 5
+	if(!("[z]" in GLOB.cellar_z))
+		if(SSmapping.level_has_any_trait(z, list(ZTRAIT_CELLAR_LIKE)))
+			GLOB.cellar_z |= "[z]"
+	if("[z]" in GLOB.cellar_z)
+		ambient_temperature = 11 + CEILING(ambient_temperature * 0.1, 1)
+	return temperature_modification + ambient_temperature

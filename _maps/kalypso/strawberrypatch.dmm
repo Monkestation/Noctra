@@ -1,0 +1,173 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"d" = (
+/obj/structure/soil,
+/turf/open/floor/dirt,
+/area/template_noop)
+"k" = (
+/obj/structure/soil,
+/obj/item/weapon/hoe/stone,
+/turf/open/floor/dirt,
+/area/template_noop)
+"l" = (
+/obj/structure/wild_plant/nospread/strawberry,
+/obj/structure/soil,
+/turf/open/floor/dirt,
+/area/template_noop)
+"p" = (
+/turf/open/floor/grass/yel,
+/area/template_noop)
+"q" = (
+/turf/open/water/cleanshallow,
+/area/template_noop)
+"z" = (
+/obj/structure/soil,
+/obj/structure/wild_plant/nospread/strawberry,
+/turf/open/floor/dirt,
+/area/template_noop)
+"G" = (
+/obj/structure/trench,
+/turf/open/floor/grass/yel,
+/area/template_noop)
+"I" = (
+/obj/structure/trench,
+/turf/open/floor/dirt,
+/area/template_noop)
+"P" = (
+/turf/open/floor/dirt,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+p
+a
+p
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+G
+G
+I
+P
+p
+"}
+(3,1,1) = {"
+a
+a
+a
+P
+P
+d
+I
+l
+p
+p
+"}
+(4,1,1) = {"
+a
+a
+P
+P
+P
+l
+I
+d
+p
+p
+"}
+(5,1,1) = {"
+a
+G
+G
+G
+P
+l
+I
+d
+P
+a
+"}
+(6,1,1) = {"
+p
+d
+I
+d
+P
+d
+I
+l
+p
+p
+"}
+(7,1,1) = {"
+p
+z
+I
+d
+P
+G
+G
+G
+q
+a
+"}
+(8,1,1) = {"
+p
+z
+I
+z
+p
+p
+q
+q
+q
+a
+"}
+(9,1,1) = {"
+p
+k
+I
+z
+a
+q
+q
+q
+q
+a
+"}
+(10,1,1) = {"
+a
+G
+G
+G
+q
+q
+q
+q
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+q
+q
+q
+a
+a
+a
+"}

@@ -8,10 +8,6 @@
 	density = TRUE
 	climbable = TRUE
 
-/obj/item // This is probably a bad idea. Sorry...
-	/// Artificers Recipe
-	var/datum/artificer_recipe/artrecipe
-
 /obj/machinery/artificer_table/examine(mob/user)
 	. = ..()
 	if(material)
@@ -22,7 +18,7 @@
 		if(!material)
 			I.forceMove(src)
 			material = I
-			update_icon()
+			update_appearance(UPDATE_OVERLAYS)
 			return
 	if(istype(I, /obj/item/weapon/hammer))
 		user.changeNext_move(CLICK_CD_RAPID)
@@ -38,16 +34,16 @@
 		var/turf/front = get_turf(src)
 		S.set_up(1, 1, front)
 		S.start()
-		var/skill = user.mind.get_skill_level(material.artrecipe.appro_skill)
+		var/skill = user.get_skill_level(material.artrecipe.appro_skill)
 		if(material.artrecipe.progress == 100)
 			for(var/i in 1 to material.artrecipe.created_amount)
 				new material.artrecipe.created_item(get_turf(src))
 			var/obj/item/created_item_instance = material.artrecipe.created_item
 			user.visible_message(span_info("[user] creates \a [created_item_instance.name]."))
-			user.mind.add_sleep_experience(material.artrecipe.appro_skill, (user.STAINT * (material.artrecipe.craftdiff + 1)/2) * user.mind?.get_learning_boon(material.artrecipe.appro_skill)) //may need to be adjusted
+			user.mind.add_sleep_experience(material.artrecipe.appro_skill, (user.STAINT * (material.artrecipe.craftdiff + 1)/2) * user.get_learning_boon(material.artrecipe.appro_skill)) //may need to be adjusted
 			qdel(material)
 			material = null
-			update_icon()
+			update_appearance(UPDATE_OVERLAYS)
 			return
 		if(skill < material.artrecipe.craftdiff)
 			if(prob(max(0, 25 - user.goodluck(2) - (skill * 2))))
@@ -111,10 +107,10 @@
 	material = null
 	I.loc = user.loc
 	user.put_in_active_hand(I)
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
 
-/obj/machinery/artificer_table/update_icon()
-	cut_overlays()
+/obj/machinery/artificer_table/update_overlays()
+	. = ..()
 	if(!material)
 		return
 	var/obj/item/I = material
@@ -124,4 +120,4 @@
 	M.transform *= 0.8
 	M.pixel_y = 6
 	M.pixel_x = 0
-	add_overlay(M)
+	. += M

@@ -127,9 +127,7 @@
 
 /obj/item/weapon/surgery/cautery/update_icon_state()
 	. = ..()
-	icon_state = initial(icon_state)
-	if(heated)
-		icon_state = "[initial(icon_state)]_hot"
+	icon_state = "[initial(icon_state)][heated ? "_hot" : ""]"
 
 /obj/item/weapon/surgery/cautery/pre_attack(atom/A, mob/living/user, params)
 	if(!istype(user.a_intent, /datum/intent/use))
@@ -165,7 +163,7 @@
 		damtype = BURN
 	else
 		damtype = BRUTE
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/weapon/surgery/hammer
 	name = "examination hammer"
@@ -188,7 +186,7 @@
 /obj/item/weapon/surgery/hammer/pre_attack(atom/A, mob/living/user, params)
 	if(!istype(user.a_intent, /datum/intent/use))
 		return ..()
-	if(user.mind.get_skill_level(/datum/skill/misc/medicine) < 1)
+	if(user.get_skill_level(/datum/skill/misc/medicine) < 1)
 		return ..()
 	if(ishuman(A))
 		if(A == user)

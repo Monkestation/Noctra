@@ -1,7 +1,3 @@
-/atom
-	///this is the path to the enchantment not the actual enchantment
-	var/list/enchantments
-
 /obj/item/proc/enchant(datum/enchantment/path)
 	if(!path)
 		path = pickweight(SSenchantment.weighted_enchantments)
@@ -23,6 +19,8 @@
 
 	var/should_process = FALSE
 	var/enchantment_color = COLOR_BLUE_GRAY
+
+	var/list/essence_recipe = list() // Format: list(/datum/thaumaturgical_essence/type = amount)
 
 /datum/enchantment/New()
 	. = ..()
@@ -48,10 +46,7 @@
 	RegisterSignal(enchanter, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 	RegisterSignal(enchanter, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_use))
 	RegisterSignal(enchanter, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
-
-
-	if(starting_duration)
-		addtimer(CALLBACK(src, PROC_REF(remove_item), WEAKREF(enchanter)), starting_duration)
+	RegisterSignal(enchanter, COMSIG_ITEM_HIT_RESPONSE, PROC_REF(on_hit_response))
 	return TRUE
 
 /datum/enchantment/proc/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
@@ -62,7 +57,14 @@
 
 /datum/enchantment/proc/on_use(obj/item/i, mob/living/user)
 
-/datum/enchantment/proc/on_drop()
+/datum/enchantment/proc/on_drop(obj/item/i, mob/living/user)		//when enchanted item is dropped, do effect
+	addtimer(CALLBACK(src, PROC_REF(drop_effects), i, user), 1)
+
+/datum/enchantment/proc/drop_effects(obj/item/i, mob/living/user)
+
+/datum/enchantment/proc/projectile_hit(atom/fired_from, atom/movable/firer, atom/target, Angle)	//effects when shooting a protectile from an enchanted item
+
+/datum/enchantment/proc/on_hit_response(obj/item/I, mob/living/carbon/human/owner, mob/living/carbon/human/attacker)//use for worn items such as armor to have effects on hit.
 
 /datum/enchantment/proc/remove_item(datum/weakref/weakref)
 	var/atom/item

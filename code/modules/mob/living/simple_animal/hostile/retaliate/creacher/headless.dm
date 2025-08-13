@@ -17,7 +17,7 @@
 						/obj/item/reagent_containers/food/snacks/fat = 2,
 						/obj/item/alch/sinew = 2,
 						/obj/item/alch/bone = 1)
-	faction = list("orcs")
+	faction = list(FACTION_ORCS)
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_REPTILE
 	health = 350
 	maxHealth = 350
@@ -31,9 +31,9 @@
 	food_type = list()
 	footstep_type = null
 	pooptype = null
-	TOTALCON = 6
-	TOTALSTR = 13
-	TOTALSPD = 10
+	base_constitution = 6
+	base_strength = 13
+	base_speed = 10
 	deaggroprob = 0
 	defprob = 10
 	defdrain = 5
@@ -46,8 +46,8 @@
 	body_eater = TRUE
 
 	ai_controller = /datum/ai_controller/headless
-	AIStatus = AI_OFF
-	can_have_ai = FALSE
+
+
 
 	var/mob/living/swallowed_mob
 	var/health_at_swallow = 1000
@@ -58,6 +58,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/headless/Initialize()
 	. = ..()
+	AddComponent(/datum/component/ai_aggro_system)
 	AddElement(/datum/element/ai_flee_while_injured, 0.75, retreat_health)
 
 /mob/living/simple_animal/hostile/retaliate/headless/AttackingTarget()
@@ -97,20 +98,6 @@
 				//Half the cooldown since they successfully killed their target. Worst possible outcome has occured.
 				swallow_cooldown = world.time + (swallow_cooldown_delay / 2)
 	return ..()
-
-//Consume the corpses of allies code.
-/mob/living/simple_animal/hostile/retaliate/headless/CanAttack(atom/the_target)
-	. = ..()
-	if(!.)
-		if(body_eater && isliving(the_target))
-			var/mob/living/L = the_target
-			if(L.stat == DEAD)
-				return TRUE
-
-
-//Headless prefer to eat whole bodies
-/mob/living/simple_animal/hostile/retaliate/headless/DismemberBody(mob/living/L)
-	SwallowEnemy(L)
 
 /mob/living/simple_animal/hostile/retaliate/headless/simple_limb_hit(zone)
 	if(!zone)

@@ -13,7 +13,7 @@
 	item_state = "nocwrappings"
 
 //Aasimar hoplite bracers
-/obj/item/clothing/wrists/bracers/hoplite
+/obj/item/clothing/wrists/bracers/rare/hoplite
 	name = "ancient bracers"
 	desc = "Stalwart bronze bracers, from an age long past."
 	icon_state = "aasimarwrist"
@@ -46,27 +46,4 @@
 	item_state = "royalsleeves"
 	detail_tag = "_detail"
 	detail_color = CLOTHING_SOOT_BLACK
-
-/obj/item/clothing/wrists/royalsleeves/update_icon()
-	cut_overlays()
-	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
-		pic.appearance_flags = RESET_COLOR
-		if(get_detail_color())
-			pic.color = get_detail_color()
-		add_overlay(pic)
-
-/obj/item/clothing/wrists/royalsleeves/lordcolor(primary,secondary)
-	detail_color = primary
-	update_icon()
-
-/obj/item/clothing/wrists/royalsleeves/Initialize()
-	. = ..()
-	if(GLOB.lordprimary)
-		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
-	else
-		GLOB.lordcolor += src
-
-/obj/item/clothing/wrists/royalsleeves/Destroy()
-	GLOB.lordcolor -= src
-	return ..()
+	uses_lord_coloring = LORD_PRIMARY

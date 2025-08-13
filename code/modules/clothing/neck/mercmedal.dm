@@ -2,7 +2,7 @@
 
 /obj/item/clothing/neck/mercmedal
 	name = "mercenary medal"
-	desc = "A medal commemorating one's diligent work under the MGE."
+	desc = "A medal commemorating one's diligent work under the Mercenary guild."
 	icon_state = "shalal"
 	//dropshrink = 0.75
 	resistance_flags = FIRE_PROOF
@@ -43,3 +43,8 @@
 	name = "petrified larvae charm"
 	desc = "The husk of a desiccated beespider larva, passed down within the ranks of those whose names have been struck from dark elven history. The old tyranny's uprooting would be their last act of true valor."
 	icon_state = "spider"
+
+/obj/item/clothing/neck/mercmedal/duelist
+	name = "valorian blade pendant"
+	desc = "A silver pendant shaped as a rapier lined with gems, Worn by Valorian Duelists to honor their mastery of the blade and unyielding pursuit of glory in combat."
+	icon_state = "duelistcharm"

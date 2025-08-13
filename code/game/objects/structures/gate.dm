@@ -19,6 +19,17 @@ GLOBAL_LIST_EMPTY(biggates)
 	var/gid
 	attacked_sound = list('sound/combat/hits/onmetal/sheet (1).ogg', 'sound/combat/hits/onmetal/sheet (2).ogg')
 	var/obj/structure/attached_to
+	/// this is dumb but I'm not refactoring this right meow.
+	var/is_big_gate = TRUE
+	/// which bodyparts we affect when crushing a carbon mob.
+	var/static/list/bodyparts_to_crush = list(
+			BODY_ZONE_HEAD,
+			BODY_ZONE_CHEST,
+			BODY_ZONE_L_ARM,
+			BODY_ZONE_R_ARM,
+			BODY_ZONE_L_LEG,
+			BODY_ZONE_R_LEG,
+		)
 
 /obj/structure/gate/preopen
 	icon_state = "gate0"
@@ -47,39 +58,55 @@ GLOBAL_LIST_EMPTY(biggates)
 	opacity = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
+/obj/gblock/not_opaque
+	opacity = FALSE
+
 /obj/structure/gate/Initialize()
 	. = ..()
-	update_icon()
-	if(initial(opacity))
-		var/turf/T = loc
-		var/G = new /obj/gblock(T)
-		turfsy += T
-		blockers += G
-		T = get_step(T, EAST)
-		G = new /obj/gblock(T)
-		turfsy += T
-		blockers += G
-		T = get_step(T, EAST)
-		G = new /obj/gblock(T)
-		turfsy += T
-		blockers += G
-	GLOB.biggates += src
+	update_appearance(UPDATE_ICON)
+	var/turf/current_turf = loc
+	var/blocker_ref
+	var/blocker
+
+	if(!opacity)
+		blocker_ref = /obj/gblock/not_opaque
+	else
+		blocker_ref = /obj/gblock
+	blocker = new blocker_ref(current_turf)
+	turfsy += current_turf
+	blockers += blocker
+	current_turf = get_step(current_turf, EAST)
+	blocker = new blocker_ref(current_turf)
+	turfsy += current_turf
+	blockers += blocker
+	current_turf = get_step(current_turf, EAST)
+	blocker = new blocker_ref(current_turf)
+	turfsy += current_turf
+	blockers += blocker
+	if(is_big_gate)
+		GLOB.biggates += src
 
 /obj/structure/gate/Destroy()
-	for(var/A in blockers)
-		qdel(A)
+	if(is_big_gate)
+		GLOB.biggates -= src
+	for(var/A as anything in blockers)
+		QDEL_NULL(A)
+	blockers.Cut()
+	turfsy.Cut()
 	if(attached_to)
 		var/obj/structure/winch/W = attached_to
 		W.attached_gate = null
-	..()
+	return ..()
 
-/obj/structure/gate/update_icon()
-	cut_overlays()
+/obj/structure/gate/update_icon_state()
+	. = ..()
 	icon_state = "[base_state][density]"
-	if(!density && !isSwitchingStates)
-		add_overlay(mutable_appearance(icon, "[base_state]0_part", ABOVE_MOB_LAYER))
-	else
-		add_overlay(mutable_appearance(icon, "[base_state]1_part", ABOVE_MOB_LAYER))
+
+/obj/structure/gate/update_overlays()
+	. = ..()
+	if(isSwitchingStates)
+		return
+	. += mutable_appearance(icon, "[base_state][density]_part", ABOVE_MOB_LAYER)
 
 /obj/structure/gate/proc/toggle()
 	if(density)
@@ -100,28 +127,44 @@ GLOBAL_LIST_EMPTY(biggates)
 	for(var/obj/gblock/B in blockers)
 		B.opacity = FALSE
 	isSwitchingStates = FALSE
-	update_icon()
-
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/gate/proc/close()
 	if(isSwitchingStates || density)
 		return
 	isSwitchingStates = TRUE
-	update_icon()
+	update_appearance(UPDATE_ICON)
 	layer = ABOVE_MOB_LAYER
 	playsound(src, 'sound/misc/gate.ogg', 100, extrarange = 5)
 	flick("[base_state]_closing",src)
 	sleep(10)
 	for(var/turf/T in turfsy)
 		for(var/mob/living/M in T)
-			M.gib()
+			M.log_message("has been crushed by the [src]!", LOG_ATTACK)
+			crush(M)
 	density = initial(density)
 	opacity = initial(opacity)
 	layer = initial(layer)
 	for(var/obj/gblock/B in blockers)
-		B.opacity = TRUE
+		B.opacity = initial(B.opacity)
 	isSwitchingStates = FALSE
-	update_icon()
+	update_appearance(UPDATE_ICON)
+
+/obj/structure/gate/proc/crush(mob/living/crushed_mob)
+	crushed_mob.gib()
+
+/obj/structure/gate/bars/crush(mob/living/crushed_mob)
+	if(iscarbon(crushed_mob))
+		var/mob/living/carbon/crushed_carbon = crushed_mob
+		for(var/limb_index in bodyparts_to_crush)
+			var/obj/item/bodypart/limb_to_crush = crushed_carbon.get_bodypart(limb_index)
+			if(limb_to_crush)
+				var/random_number = rand(50, 120)
+				if(crushed_carbon.apply_damage(random_number, BRUTE, limb_to_crush, crushed_carbon.run_armor_check(limb_to_crush, BCLASS_STAB)))
+					limb_to_crush.try_crit(BCLASS_STAB, random_number/7.5)
+		crushed_carbon.update_damage_overlays()
+		return
+	crushed_mob.gib()
 
 /obj/structure/winch
 	name = "winch"
@@ -138,18 +181,18 @@ GLOBAL_LIST_EMPTY(biggates)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/structure/winch/Destroy()
-	if(attached_gate)
-		var/obj/structure/gate/W = attached_gate
-		W.attached_to = null
-	..()
-
 /obj/structure/winch/LateInitialize()
 	for(var/obj/structure/gate/G in GLOB.biggates)
 		if(G.gid == gid)
 			GLOB.biggates -= G
 			attached_gate = G
 			G.attached_to = src
+
+/obj/structure/winch/Destroy()
+	if(attached_gate)
+		var/obj/structure/gate/W = attached_gate
+		W.attached_to = null
+	return ..()
 
 /obj/structure/winch/attack_hand(mob/user)
 	. = ..()

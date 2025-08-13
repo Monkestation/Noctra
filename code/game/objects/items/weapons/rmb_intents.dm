@@ -9,10 +9,10 @@
 		return
 	if(!user)
 		return
-	if(user.incapacitated())
+	if(user.incapacitated(IGNORE_GRAB))
 		return
 	var/mob/living/L = target
-	user.changeNext_move(CLICK_CD_RAPID)
+	user.changeNext_move(CLICK_CD_FAST)
 	playsound(user, 'sound/combat/feint.ogg', 100, TRUE)
 	user.visible_message("<span class='danger'>[user] feints an attack at [target]!</span>")
 	var/perc = 50
@@ -22,15 +22,15 @@
 		var/theirskill = 0
 		if(I)
 			if(I.associated_skill)
-				ourskill = user.mind.get_skill_level(I.associated_skill)
+				ourskill = user.get_skill_level(I.associated_skill)
 			if(L.mind)
 				I = L.get_active_held_item()
 				if(I?.associated_skill)
-					theirskill = L.mind.get_skill_level(I.associated_skill)
+					theirskill = L.get_skill_level(I.associated_skill)
 		perc += (ourskill - theirskill)*15 	//skill is of the essence
 		perc += (user.STAINT - L.STAINT)*10	//but it's also mostly a mindgame
 		perc += (user.STASPD - L.STASPD)*5 	//yet a speedy feint is hard to counter
-	if(!L.cmode)
+	if(!user.cmode)
 		perc = 0
 	if(L.has_status_effect(/datum/status_effect/debuff/feinted))
 		perc = 0
@@ -118,5 +118,5 @@
 
 /datum/rmb_intent/weak
 	name = "weak"
-	desc = "Your attacks have -1 strength and will never critically-hit. Surgery steps can only be done with this intent. Useful for longer punishments, play-fighting, and bloodletting."
+	desc = "Your attacks have halved strength and will never critically-hit. Surgery steps can only be done with this intent. Useful for longer punishments, play-fighting, and bloodletting."
 	icon_state = "rmbweak"

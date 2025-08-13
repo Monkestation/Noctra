@@ -6,10 +6,9 @@
 	icon_living = "vv"
 	icon_dead = "vvd"
 
-	faction = list("orcs")
+	faction = list(FACTION_ORCS)
 	emote_hear = null
 	emote_see = null
-	turns_per_move = 5
 	see_in_dark = 9
 	move_to_delay = 2
 	vision_range = 9
@@ -41,9 +40,9 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 
-	TOTALCON = 6
-	TOTALSTR = 6
-	TOTALSPD = 12
+	base_constitution = 6
+	base_strength = 6
+	base_speed = 12
 
 	simple_detect_bonus = 20
 	retreat_distance = 0
@@ -61,9 +60,22 @@
 	body_eater = TRUE
 
 	///this mob was updated to new ai
-	AIStatus = AI_OFF
-	can_have_ai = FALSE
+
+
 	ai_controller = /datum/ai_controller/volf
+	var/static/list/pet_commands = list(
+		/datum/pet_command/fish,
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/good_boy,
+		/datum/pet_command/follow,
+		/datum/pet_command/attack,
+		/datum/pet_command/fetch,
+		/datum/pet_command/play_dead,
+		/datum/pet_command/protect_owner,
+		/datum/pet_command/aggressive,
+		/datum/pet_command/calm,
+	)
 
 /obj/effect/decal/remains/wolf
 	name = "remains"
@@ -72,28 +84,26 @@
 	icon = 'icons/roguetown/mob/monster/vol.dmi'
 
 /mob/living/simple_animal/hostile/retaliate/wolf/Initialize()
+	AddComponent(/datum/component/obeys_commands, pet_commands) // here due to signal overridings from pet commands // due to signal overridings from pet commands
 	. = ..()
+	AddComponent(/datum/component/ai_aggro_system)
 	AddElement(/datum/element/ai_flee_while_injured, 0.75, retreat_health)
 
 	gender = MALE
 	if(prob(33))
 		gender = FEMALE
 	ADD_TRAIT(src, TRAIT_CRITICAL_WEAKNESS, TRAIT_GENERIC)
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/simple_animal/hostile/retaliate/wolf/death(gibbed)
 	..()
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
 
-
-/mob/living/simple_animal/hostile/retaliate/wolf/update_icon()
-	cut_overlays()
-	..()
-	if(stat != DEAD)
-		var/mutable_appearance/eye_lights = mutable_appearance(icon, "vve")
-		eye_lights.plane = 19
-		eye_lights.layer = 19
-		add_overlay(eye_lights)
+/mob/living/simple_animal/hostile/retaliate/wolf/update_overlays()
+	. = ..()
+	if(stat == DEAD)
+		return
+	. += emissive_appearance(icon, "vve")
 
 /mob/living/simple_animal/hostile/retaliate/wolf/get_sound(input)
 	switch(input)
@@ -110,21 +120,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/wolf/taunted(mob/user)
 	emote("aggro")
-	Retaliate()
-	GiveTarget(user)
 	return
-
-/mob/living/simple_animal/hostile/retaliate/wolf/Life()
-	..()
-	if(pulledby)
-		Retaliate()
-		GiveTarget(pulledby)
-
-
-/mob/living/simple_animal/hostile/retaliate/wolf/find_food()
-	. = ..()
-	if(!.)
-		return eat_bodies()
 
 /mob/living/simple_animal/hostile/retaliate/wolf/simple_limb_hit(zone)
 	if(!zone)

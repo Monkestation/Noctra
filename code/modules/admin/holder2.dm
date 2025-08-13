@@ -25,6 +25,8 @@ GLOBAL_PROTECT(href_token)
 
 	var/deadmined
 	var/datum/role_ban_panel/role_ban_panel
+	var/datum/pathfind_debug/path_debug
+
 
 /datum/admins/New(datum/admin_rank/R, ckey, force_active = FALSE, protected)
 	if(IsAdminAdvancedProcCall())
@@ -63,6 +65,7 @@ GLOBAL_PROTECT(href_token)
 		message_admins("[key_name_admin(usr)][msg]")
 		log_admin("[key_name(usr)][msg]")
 		return QDEL_HINT_LETMELIVE
+	QDEL_NULL(path_debug)
 	. = ..()
 
 /datum/admins/proc/activate()
@@ -76,7 +79,7 @@ GLOBAL_PROTECT(href_token)
 	deadmined = FALSE
 	if (GLOB.directory[target])
 		associate(GLOB.directory[target])	//find the client for a ckey if they are connected and associate them with us
-
+		owner?.toggled_leylines = TRUE
 
 /datum/admins/proc/deactivate()
 	if(IsAdminAdvancedProcCall())
@@ -91,6 +94,8 @@ GLOBAL_PROTECT(href_token)
 	if ((C = owner) || (C = GLOB.directory[target]))
 		disassociate()
 		C.verbs += /client/proc/readmin
+	QDEL_NULL(path_debug)
+	owner?.toggled_leylines = FALSE
 
 /datum/admins/proc/associate(client/C)
 	if(IsAdminAdvancedProcCall())
@@ -145,25 +150,6 @@ GLOBAL_PROTECT(href_token)
 
 /datum/admins/vv_edit_var(var_name, var_value)
 	return FALSE //nice try trialmin
-
-/datum/admins/proc/admin_command(command, target)
-	var/mob/resolved = locate(target)
-	if(QDELETED(resolved))
-		return
-
-	switch(command)
-		if(FLAG_GIB)
-			resolved.gib()
-		if(FLAG_PP)
-			show_player_panel(resolved)
-		if(FLAG_VV)
-			owner.debug_variables(resolved)
-		if(FLAG_JUMP)
-			owner.jumptomob(resolved)
-		if(FLAG_JUMP_GHOST)
-			if(!isobserver(owner))
-				owner.admin_ghost()
-			owner.jumptomob(resolved)
 /*
 checks if usr is an admin with at least ONE of the flags in rights_required. (Note, they don't need all the flags)
 if rights_required == 0, then it simply checks if they are an admin.
@@ -224,33 +210,3 @@ you will have to do something like if(client.rights & R_ADMIN) myself.
 /proc/HrefTokenFormField(forceGlobal = FALSE)
 	return "<input type='hidden' name='admin_token' value='[RawHrefToken(forceGlobal)]'>"
 
-/atom
-	var/list/message_flags = list(FLAG_JUMP, FLAG_JUMP_GHOST, FLAG_PP, FLAG_VV)
-
-/atom/proc/get_message_flags()
-	var/built_string = "\["
-	var/first = TRUE
-	for(var/flag in message_flags)
-		if(first)
-			built_string += {""[flag]""}
-			first = FALSE
-		else
-			built_string += {","[flag]""}
-	built_string += "\]"
-	return built_string
-
-/atom/proc/get_admin_flags()
-	return "\[\]"
-
-/mob/get_admin_flags()
-	var/built_string = "\["
-	if(client?.holder)
-		var/first = TRUE
-		for(var/flag in client?.holder?.rank?.admin_flags)
-			if(first)
-				built_string += {""[flag]""}
-				first = FALSE
-			else
-				built_string += {","[flag]""}
-	built_string += "\]"
-	return built_string

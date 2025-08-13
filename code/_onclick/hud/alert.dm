@@ -47,7 +47,6 @@
 	if(new_master)
 		var/old_layer = new_master.layer
 		var/old_plane = new_master.plane
-		new_master.layer = FLOAT_LAYER
 		new_master.plane = FLOAT_PLANE
 		thealert.add_overlay(new_master)
 		new_master.layer = old_layer
@@ -85,10 +84,6 @@
 		hud_used.reorganize_alerts()
 		client.screen -= alert
 	qdel(alert)
-
-#define ALERT_STATUS	0
-#define ALERT_DEBUFF	1
-#define ALERT_BUFF		2
 
 /atom/movable/screen/alert
 	icon = 'icons/mob/screen_alert.dmi'
@@ -283,7 +278,7 @@
 	if(!istype(L) || !L.can_resist())
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
-	if(L.mobility_flags & MOBILITY_MOVE)
+	if(!HAS_TRAIT(L, TRAIT_IMMOBILIZED))
 		return L.resist_fire() //I just want to start a flame in your hearrrrrrtttttt.
 
 //Ethereal
@@ -338,7 +333,7 @@
 //OBJECT-BASED
 
 /atom/movable/screen/alert/restrained/buckled
-	name = "Sitting/laying"
+	name = "Buckled"
 	desc = ""
 	icon_state = "buckled"
 
@@ -358,12 +353,14 @@
 	if(!istype(L) || !L.can_resist())
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
-	if((L.mobility_flags & MOBILITY_MOVE) && (L.last_special <= world.time))
+	if(!HAS_TRAIT(L, TRAIT_IMMOBILIZED) && (L.last_special <= world.time))
 		return L.resist_restraints()
 
 /atom/movable/screen/alert/restrained/buckled/Click()
 	var/mob/living/L = usr
 	if(!istype(L) || !L.can_resist())
+		return
+	if(!L.buckled)
 		return
 	L.changeNext_move(CLICK_CD_RESIST)
 	if(L.last_special <= world.time)

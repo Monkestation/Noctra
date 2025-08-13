@@ -1,3 +1,11 @@
+/obj/item/clothing/head/padded/pestra
+	name = "naga hood"
+	desc = "Worn by the faithful of Pestra. Resembling the face of the Naga clothed in rot."
+	icon_state = "pestrahood"
+	icon = 'icons/roguetown/clothing/patron_hoods.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/patron_hoods.dmi'
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
 /obj/item/clothing/head/roguehood/nochood
 	name = "moon hood"
 	desc = "The face of the Moon Prince. Worn by the faitful of Noc."
@@ -8,6 +16,8 @@
 
 	armor = ARMOR_WEAK
 	prevent_crits = MINOR_CRITICALS
+	salvage_amount = 1
+	salvage_result = /obj/item/natural/silk
 
 /obj/item/clothing/head/padded/deathface
 	name = "death shroud"
@@ -22,6 +32,20 @@
 	name = "death shroud"
 	desc = "Worn by the faithful of Necra, or less savory individuals."
 	icon_state = "necrahood"
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
+/obj/item/clothing/head/padded/pestra
+	name = "naga hood"
+	desc = "Worn by the faithful of Pestra. Resembling the face of the Naga clothed in rot."
+	icon_state = "pestrahood"
+	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+
+/obj/item/clothing/head/padded/abyssor
+	name = "sea hood"
+	desc = "A green hood worn by the faithful of Abyssor."
+	icon_state = "abysshood"
+	icon = 'icons/roguetown/clothing/patron_hoods.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/patron_robes.dmi'
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/padded/operavisage
@@ -98,10 +122,11 @@
 					var/mob/living/carbon/H = user
 					H.update_inv_head()
 		user.update_fov_angles()
+		user.regenerate_clothes()
 
 /obj/item/clothing/head/roguehood/priest/equipped(mob/user, slot)
 	. = ..()
-	if (slot == SLOT_HEAD && istype(user))
+	if ((slot & ITEM_SLOT_HEAD) && istype(user))
 		ADD_TRAIT(user, TRAIT_ANTIMAGIC,"Anti-Magic")
 	else
 		REMOVE_TRAIT(user, TRAIT_ANTIMAGIC,"Anti-Magic")
@@ -112,7 +137,7 @@
 
 /obj/item/clothing/head/roguehood/priest/pickup(mob/living/user)
 	if((user.job != "Priest") && (user.job != "Priestess"))
-		playsound(user, 'sound/misc/astratascream.ogg', 80,  falloff = 0.2)
+		playsound(user, 'sound/misc/gods/astrata_scream.ogg', 80, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 		user.visible_message(span_reallybig("UNWORTHY HANDS TOUCH MY VISAGE, CEASE OR BE PUNISHED"))
 		spawn(30)
 			if(loc == user)
@@ -140,3 +165,4 @@
 		return
 	else
 		. = ..()
+

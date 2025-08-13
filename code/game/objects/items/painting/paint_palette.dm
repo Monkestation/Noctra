@@ -20,7 +20,7 @@
 
 /obj/item/paint_palette/Initialize()
 	. = ..()
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/paint_palette/proc/add_color(mob/user)
 	if(length(colors) >= 5)
@@ -35,30 +35,31 @@
 		return
 	colors |= color_name
 	colors[color_name] = add_color
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/paint_palette/proc/remove_color(mob/user)
 	var/remove_color = input(user, "Choose a color to remove") as anything in colors
 	if(!remove_color)
 		return
 	colors -= remove_color
-	update_overlays()
+	update_appearance(UPDATE_OVERLAYS)
 
-
-/obj/item/paint_palette/attack_right(mob/user)
+/obj/item/paint_palette/attack_hand_secondary(mob/user, params)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	remove_color(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/paint_palette/attack_self(mob/user)
+/obj/item/paint_palette/attack_self(mob/user, params)
 	. = ..()
 	add_color(user)
 
 /obj/item/paint_palette/update_overlays()
 	. = ..()
-	cut_overlays()
 
 	for(var/i = 1 to length(colors))
 		var/mutable_appearance/MA = mutable_appearance(icon, "palette-greyscale[i]")
 		var/color_name = colors[i]
 		MA.color = colors[color_name]
-		add_overlay(MA)
+		. += MA

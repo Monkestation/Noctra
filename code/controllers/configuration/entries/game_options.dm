@@ -283,10 +283,12 @@
 /datum/config_entry/number/max_law_len
 	config_entry_value = 1024
 
+/// TO BE DELETED
 /datum/config_entry/number/overflow_cap
 	config_entry_value = -1
 	min_val = -1
 
+/// TO BE DELETED
 /datum/config_entry/string/overflow_job
 	config_entry_value = "None"
 
@@ -351,3 +353,12 @@
 	min_val = 0
 
 /datum/config_entry/flag/dynamic_config_enabled
+
+/datum/config_entry/flag/cache_assets
+	default = TRUE
+
+/datum/config_entry/flag/smart_cache_assets
+	default = TRUE
+
+/datum/config_entry/flag/save_spritesheets
+	default = FALSE

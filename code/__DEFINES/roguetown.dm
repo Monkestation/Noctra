@@ -1,11 +1,8 @@
-//used in various places
-#define ALL_RACES_LIST			list("human", "rakshari", "dwarf", "elf", "tiefling", "aasimar", "halforc", "orc", "zizombie")
-
-#define ALL_PLAYER_RACES_BY_NAME		list("Humen", "Rakshari", "Half-Elf", "Dark Elf", "Elf", "Dwarf","Tiefling", "Half-Orc", "Aasimar")
-
 #define ALL_TEMPLE_PATRONS 		list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/necra, /datum/patron/divine/ravox, /datum/patron/divine/xylix, /datum/patron/divine/pestra, /datum/patron/divine/malum, /datum/patron/divine/eora)
 #define ALL_CLERIC_PATRONS 		list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/necra, /datum/patron/divine/ravox, /datum/patron/divine/xylix, /datum/patron/divine/pestra, /datum/patron/divine/malum, /datum/patron/divine/eora)
-#define ALL_TEMPLAR_PATRONS 	list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/eora, /datum/patron/divine/necra, /datum/patron/divine/ravox, /datum/patron/divine/pestra, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/malum)
+#define ALL_PALADIN_PATRONS 	list(/datum/patron/psydon, /datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/necra, /datum/patron/divine/ravox, /datum/patron/divine/xylix, /datum/patron/divine/pestra, /datum/patron/divine/malum, /datum/patron/divine/eora)
+#define ALL_TEMPLAR_PATRONS 	list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/eora, /datum/patron/divine/necra, /datum/patron/divine/ravox, /datum/patron/divine/pestra, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/malum, /datum/patron/divine/xylix)
+#define ALL_PROFANE_PATRONS 	list(/datum/patron/inhumen/graggar, /datum/patron/inhumen/zizo, /datum/patron/inhumen/matthios, /datum/patron/inhumen/baotha)
 
 GLOBAL_LIST_INIT(curse_names, list())
 
@@ -64,9 +61,6 @@ GLOBAL_LIST_INIT(curse_names, list())
 			else
 				return pick('sound/combat/hits/armor/light_blunt (1).ogg','sound/combat/hits/armor/light_blunt (2).ogg','sound/combat/hits/armor/light_blunt (3).ogg')
 
-GLOBAL_LIST_INIT(lockhashes, list())
-GLOBAL_LIST_INIT(lockids, list())
-GLOBAL_LIST_EMPTY(credits_icons)
 GLOBAL_LIST_EMPTY(confessors)
 
 GLOBAL_LIST_INIT(wolf_prefixes, list("Red", "Moon", "Bloody", "Hairy", "Eager", "Sharp"))
@@ -76,6 +70,10 @@ GLOBAL_LIST_INIT(wolf_suffixes, list("Fang", "Claw", "Stalker", "Prowler", "Roar
 #define FAMILY_PARTIAL "Siblings"
 #define FAMILY_NEWLYWED "Newlywed"
 #define FAMILY_FULL "Parent"
+
+#define ANY_GENDER "Any gender"
+#define SAME_GENDER "Same gender"
+#define DIFFERENT_GENDER "Different gender"
 
 #define FAMILY_FATHER "Father"
 #define FAMILY_MOTHER "Mother"
@@ -93,7 +91,7 @@ GLOBAL_LIST_EMPTY(job_respawn_delays)
 #define STRESS_BAD 3
 #define STRESS_NEUTRAL 2
 #define STRESS_GOOD 1
-#define STRESS_VGOOD 0
+#define STRESS_VGOOD -1
 
 /*	........   Nutrition defines   ................ */
 #define MEAL_FILLING 30
@@ -148,21 +146,55 @@ GLOBAL_LIST_EMPTY(job_respawn_delays)
 #define CTAG_FORGARRISON	"CAT_FORGARRISON"
 #define CTAG_ADEPT			"CAT_ADEPT" // Used for Adept class selection
 #define CTAG_SQUIRE 		"CAT_SQUIRE" // Squire Love, Classes, as above.
+#define CTAG_MAGIE			"CAT_MAGIE" //for Mage Associate
 #define CTAG_HEIR			"CAT_HEIR"
 #define CTAG_HAND			"CAT_HAND"			// Hand class - Handles Hand class selector
 #define CTAG_CONSORT 		"CAT_CONSORT" 		// Consort classes
 #define CTAG_VETERAN		"CAT_VETERAN"		// Veteran class - Handles Veteran class selector
+#define CTAG_TOWN_ELDER		"CAT_TOWN_ELDER"		// Town Elder class - Handles Town Elder class selector
+#define CTAG_ROYALKNIGHT	"CAT_ROYAL_KNIGHT"
 #define CTAG_MENATARMS		"CAT_MENATARMS"
 #define CTAG_SERVANT		"CAT_SERVANT" 		// Servant class - 4 type of servant to fill in someplace.
+#define CTAG_GATEMASTER		"CAT_GATEMASTER"
 
-/*
-	Defines for the triumph buy datum categories
-*/
-#define TRIUMPH_CAT_ROUND_EFX "ROUND-EFX"
+// Character category and its buys
 #define TRIUMPH_CAT_CHARACTER "CHARACTER"
-#define TRIUMPH_CAT_MISC "MISC!"
-#define TRIUMPH_CAT_ACTIVE_DATUMS "ACTIVE"
 
+#define TRIUMPH_BUY_RACE_ALL "race_all"
+#define TRIUMPH_BUY_ANY_CLASS "pick_any"
+#define TRIUMPH_BUY_ADOPTION "adoption"
+
+// Storyteller category and its buys
+#define TRIUMPH_CAT_STORYTELLER "STORYTELLER"
+
+#define TRIUMPH_BUY_ASTRATA_INFLUENCE "astrata_influence"
+#define TRIUMPH_BUY_NOC_INFLUENCE "noc_influence"
+#define TRIUMPH_BUY_RAVOX_INFLUENCE "ravox_influence"
+#define TRIUMPH_BUY_ABYSSOR_INFLUENCE "abyssor_influence"
+#define TRIUMPH_BUY_XYLIX_INFLUENCE "xylix_influence"
+#define TRIUMPH_BUY_NECRA_INFLUENCE "necra_influence"
+#define TRIUMPH_BUY_PESTRA_INFLUENCE "pestra_influence"
+#define TRIUMPH_BUY_MALUM_INFLUENCE "malum_influence"
+#define TRIUMPH_BUY_EORA_INFLUENCE "eora_influence"
+#define TRIUMPH_BUY_DENDOR_INFLUENCE "dendor_influence"
+#define TRIUMPH_BUY_ZIZO_INFLUENCE "zizo_influence"
+#define TRIUMPH_BUY_BAOTHA_INFLUENCE "baotha_influence"
+#define TRIUMPH_BUY_GRAGGAR_INFLUENCE "graggar_influence"
+#define TRIUMPH_BUY_MATTHIOS_INFLUENCE "matthios_influence"
+
+// Misc category and its buys
+#define TRIUMPH_CAT_MISC "MISC"
+
+#define TRIUMPH_BUY_PSYDON_FAVOURITE "psydon_favourite"
+
+// Misc category and its buys
+#define TRIUMPH_CAT_COMMUNAL "COMMUNAL"
+
+#define TRIUMPH_BUY_PSYDON_RETIREMENT "psydon_retirement"
+#define TRIUMPH_BUY_ORPHANAGE_RENOVATION "orphanage_renovation"
+
+// Bought triumph buys category
+#define TRIUMPH_CAT_ACTIVE_DATUMS "BOUGHT"
 
 // .............. SELLPRICE/VALUE DEFINES ..................... //
 // Basicallly material cost + work cost will be the value from now on. Needs work to value these things in comparison but its a simple way to get some consistency to it
@@ -243,6 +275,7 @@ GLOBAL_LIST_EMPTY(job_respawn_delays)
 #define VALUE_IRON_ARMOR_UNUSUAL	VALUE_IRON_ITEM+BONUS_VALUE_TINY
 #define VALUE_STEEL_ARMOR			VALUE_STEEL_ITEM
 #define VALUE_STEEL_ARMOR_FINE		VALUE_STEEL_ITEM+BONUS_VALUE_TINY
+#define VALUE_SILVER_ARMOR			VALUE_SILVER_ITEM
 #define VALUE_BRIGANDINE			VALUE_STEEL_ITEM*2+M_CLOTH+BONUS_VALUE_TINY
 #define VALUE_FULL_PLATE			VALUE_STEEL_ITEM*3
 #define VALUE_SNOWFLAKE_STEEL		VALUE_STEEL_ARMOR+BONUS_VALUE_MODEST
@@ -325,12 +358,13 @@ Thing can move up or down an armor class by significant changes to coverage & cr
 #define ARMOR_MAILLE_IRON	list("blunt" = 45, "slash" = 45, "stab" = 50, "piercing" = 30, "fire" = 0, "acid" = 0)
 #define ARMOR_MAILLE		list("blunt" = 55, "slash" = 55, "stab" = 55, "piercing" = 40, "fire" = 0, "acid" = 0)
 #define ARMOR_MAILLE_GOOD	list("blunt" = 60, "slash" = 60, "stab" = 60, "piercing" = 45, "fire" = 0, "acid" = 0)
-
 #define ARMOR_SCALE			list("blunt" = 65, "slash" = 65, "stab" = 65, "piercing" = 65, "fire" = 0, "acid" = 0)
+#define ARMOR_BRIGANDINE	list("blunt" = 70, "slash" = 70, "stab" = 70, "piercing" = 50, "fire" = 0, "acid" = 0)
 
 // Heavy AC
-#define ARMOR_PLATE_BAD		list("blunt" = 70, "slash" = 70, "stab" = 70, "piercing" = 50, "fire" = 0, "acid" = 0)
+#define ARMOR_PLATE_BAD		list("blunt" = 75, "slash" = 75, "stab" = 75, "piercing" = 55, "fire" = 0, "acid" = 0)
 #define ARMOR_PLATE			list("blunt" = 85, "slash" = 85, "stab" = 85, "piercing" = 70, "fire" = 0, "acid" = 0)
+#define ARMOR_PLATE_SILVER	list("blunt" = 85, "slash" = 85, "stab" = 85, "piercing" = 80, "fire" = 0, "acid" = 0)
 #define ARMOR_PLATE_GOOD	list("blunt" = 90, "slash" = 90, "stab" = 90, "piercing" = 85, "fire" = 0, "acid" = 0)
 
 
@@ -396,6 +430,7 @@ BCLASS_TWIST)
 // Plates cover only a few organs and bones
 #define ONLY_VITAL_ORGANS list(\
 BCLASS_CHOP, \
+BCLASS_STAB, \
 BCLASS_BLUNT)
 
 #define ALL_EXCEPT_CHOP_AND_STAB list(\
@@ -539,3 +574,14 @@ BCLASS_TWIST)
 		"Windmill"="windmill_bascinet",\
 		"Oathtaker"="oathtaker_bascinet",\
 		"Skull"="skull_bascinet")
+
+#define SKULLMET_ICONS list(\
+		"volf"="skullmet_volf",\
+		"bear"="skullmet_bear",\
+		"gote"="skullmet_goat")
+
+#define DENDOR_TAME_PROB_NONE 0
+#define DENDOR_TAME_PROB_LOW 25
+#define DENDOR_TAME_PROB_MEDIUM 50
+#define DENDOR_TAME_PROB_HIGH 75
+#define DENDOR_TAME_PROB_GURANTEED 100

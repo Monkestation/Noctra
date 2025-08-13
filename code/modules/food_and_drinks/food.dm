@@ -12,7 +12,6 @@
 	volume = 50	//Sets the default container amount for all food items.
 	reagent_flags = INJECTABLE
 	resistance_flags = FLAMMABLE
-	destroy_sound
 	grid_width = 32
 	grid_height = 32
 	var/do_random_pixel_offset = TRUE
@@ -21,7 +20,7 @@
 	var/in_container = FALSE //currently just stops "was bitten X times!" messages on canned food
 
 	/// How palatable is this food for a given social class?
-	var/faretype = FARE_IMPOVERISHED
+	var/faretype = FARE_NEUTRAL
 	/// If false, this will inflict mood debuffs on nobles who eat it without being near a table.
 	var/portable = TRUE
 

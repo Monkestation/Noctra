@@ -35,7 +35,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 		broken = TRUE
 		message_admins("Couldn't start chat for [key_name_admin(owner)]!")
 		. = FALSE
-		alert(owner.mob, "Updated chat window does not exist. If you are using a custom skin file please allow the game to update.")
+		if(owner)
+			alert(owner.mob, "Updated chat window does not exist. If you are using a custom skin file please allow the game to update.")
 		return
 
 	if(!owner) // In case the client vanishes before winexists returns
@@ -58,6 +59,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 	var/datum/asset/stuff = get_asset_datum(/datum/asset/group/goonchat)
 	stuff.send(owner)
 
+	//owner << browse(file('code/modules/goonchat/browserassets/html/browserOutput.html'), "window=recipe;size=500x810")
+
 	owner << browse(file('code/modules/goonchat/browserassets/html/browserOutput.html'), "window=browseroutput")
 
 	if (load_attempts < 5) //To a max of 5 load attempts
@@ -71,13 +74,6 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 /datum/chatOutput/Topic(href, list/href_list)
 	if(usr.client != owner)
 		return TRUE
-
-	if(href_list["admin_command"])
-		if(!owner.holder)
-			return
-		owner.holder.admin_command(href_list["admin_command"], href_list["target"])
-		return
-
 	// Build arguments.
 	// Arguments are in the form "param[paramname]=thing"
 	var/list/params = list()
@@ -118,10 +114,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 	if(loaded || !owner)
 		return
 
-	testing("Chat loaded for [owner.ckey]")
 	loaded = TRUE
 	showChat()
-
 
 	for(var/message in messageQueue)
 		// whitespace has already been handled by the original to_chat
@@ -191,6 +185,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 	deets["clientData"]["compid"] = owner.computer_id
 	var/data = json_encode(deets)
 	ehjax_send(data = data)
+
 
 //Called by client, sent data to investigate (cookie history so far)
 /datum/chatOutput/proc/analyzeClientData(cookie = "")
@@ -300,3 +295,5 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 
 /datum/chatOutput/proc/swaptodarkmode()
 	owner.force_dark_theme()
+
+#undef MAX_COOKIE_LENGTH

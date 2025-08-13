@@ -153,6 +153,28 @@
 /proc/angle2text(degree)
 	return dir2text(angle2dir(degree))
 
+/// Returns a list(x, y), being the change in position required to step in the passed in direction
+/proc/dir2offset(dir)
+	switch(dir)
+		if(NORTH)
+			return list(0, 1)
+		if(SOUTH)
+			return list(0, -1)
+		if(EAST)
+			return list(1, 0)
+		if(WEST)
+			return list(-1, 0)
+		if(NORTHEAST)
+			return list(1, 1)
+		if(SOUTHEAST)
+			return list(1, -1)
+		if(NORTHWEST)
+			return list(-1, 1)
+		if(SOUTHWEST)
+			return list(-1, -1)
+		else
+			return list(0, 0)
+
 //Converts a blend_mode constant to one acceptable to icon.Blend()
 /proc/blendMode2iconMode(blend_mode)
 	switch(blend_mode)
@@ -325,22 +347,22 @@
 
 /proc/slot2body_zone(slot)
 	switch(slot)
-		if(SLOT_BACK, SLOT_ARMOR, SLOT_BELT, SLOT_SHIRT, SLOT_CLOAK, SLOT_BACK_R, SLOT_BACK_L, SLOT_BELT_R, SLOT_BELT_L)
+		if(ITEM_SLOT_ARMOR, ITEM_SLOT_BELT, ITEM_SLOT_SHIRT, ITEM_SLOT_CLOAK, ITEM_SLOT_BACK_R, ITEM_SLOT_BACK_L, ITEM_SLOT_BELT_R, ITEM_SLOT_BELT_L)
 			return BODY_ZONE_CHEST
 
-		if(SLOT_GLOVES, SLOT_HANDS, SLOT_HANDCUFFED, SLOT_RING)
+		if(ITEM_SLOT_GLOVES, ITEM_SLOT_HANDS, ITEM_SLOT_HANDCUFFED, ITEM_SLOT_RING)
 			return pick(BODY_ZONE_PRECISE_L_HAND, BODY_ZONE_PRECISE_R_HAND)
 
-		if(SLOT_HEAD, SLOT_NECK)
+		if(ITEM_SLOT_HEAD, ITEM_SLOT_NECK)
 			return BODY_ZONE_HEAD
 
-		if(SLOT_WEAR_MASK, SLOT_MOUTH)
+		if(ITEM_SLOT_MASK, ITEM_SLOT_MOUTH)
 			return BODY_ZONE_PRECISE_MOUTH
 
-		if(SLOT_SHOES)
+		if(ITEM_SLOT_SHOES)
 			return pick(BODY_ZONE_PRECISE_R_FOOT, BODY_ZONE_PRECISE_L_FOOT)
 
-		if(SLOT_LEGCUFFED, SLOT_PANTS)
+		if(ITEM_SLOT_LEGCUFFED, ITEM_SLOT_PANTS)
 			return pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 
 //adapted from http://www.tannerhelland.com/4435/convert-temperature-rgb-algorithm-code/

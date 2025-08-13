@@ -2,56 +2,109 @@
 	race = /datum/species/halforc
 
 /datum/species/halforc
-	id = "halforc"
 	name = "Half-Orc"
+	id = SPEC_ID_HALF_ORC
 	desc = "The bastards of Graggar. \
 	\n\n\
-	Half-Orcs are the offspring of orcs and another race, \
-	the powerful Graggarite genes of the former corrupting and maiming those of their fairer mates. \
-	This causes their children to be severely deformed, looking much more like their monstrous progenitor. \
+	Half-Orcs are the offspring of orcs and another species, half-orcs, \
+	or another species who has consumed much kinsflesh on their way to orcishness. \
+	An outsider cannot tell a half-orc product of heritage or cannibalism at a glance, leading to much social ostracization.\
 	\n\n\
-	Due to their orcish parent's refusal to nurture them, \
-	as well as their other parent often rejecting or attacking them, \
-	most Half-Orcs will grow as orphans. \
+	Due to their parent's refusal to nurture them, \
+	as well as their other parent often rejecting or attacking them, most Half-Orcs will grow as orphans. \
 	Their rejection by the rest of society causes their growth to stunt, \
 	often making them hostile and prone to violence. Because of this, most will assume the worst in them, \
 	believing that they are cursed to follow their orcish parent's footsteps in the gorging of kin-flesh. \
 	\n\n\
-	A Half-Orc may look much like its monstrous progenitor, sporting tusks and natural strength. \
+	A Half-Orc may display Orcish features, sporting tusks and natural strength. \
+	Many are nigh-indistinguishable visually from full orcs, save for their remaining grasp on self-control.\
 	\n\n\
-	THIS IS AN <I>EXTREMELY</I> DISCRIMINATED SPECIES. EXPECT A MORE DIFFICULT EXPERIENCE. PLAY AT YOUR OWN RISK."
+	THIS IS AN <I>EXTREMELY</I> DISCRIMINATED SPECIES. EXPECT A MORE DIFFICULT EXPERIENCE. <B>NOBLES EVEN MORE SO.</B> PLAY AT YOUR OWN RISK."
 
 	skin_tone_wording = "Clan"
 
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,STUBBLE,OLDGREY)
-	inherent_traits = list(TRAIT_NOMOBSWAP)
-	default_features = list("mcolor" = "FFF", "ears" = "ElfH", "wings" = "None")
-	mutant_bodyparts = list("ears")
+	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, STUBBLE, OLDGREY)
+	inherent_traits = list(TRAIT_NOMOBSWAP, TRAIT_NOSTINK)
+
+	allowed_voicetypes_m = VOICE_TYPES_MASCANDRO
+
+	allowed_voicetypes_f = VOICE_TYPES_MASCANDRO
+
+	// horcs are STINKY
+	components_to_add = list(/datum/component/rot/stinky_person)
+
 	use_skintones = 1
-	disliked_food = NONE
-	liked_food = NONE
-	possible_ages = list(AGE_CHILD, AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
+
+	possible_ages = NORMAL_AGES_LIST_CHILD
+	changesource_flags = WABBAJACK
+
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/mt_muscular.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/ft_muscular.dmi'
-	dam_icon = 'icons/roguetown/mob/bodies/dam/dam_male.dmi'
+
 	dam_icon_f = 'icons/roguetown/mob/bodies/dam/dam_male.dmi'
-	use_m = TRUE
+
+	swap_female_clothes = TRUE
+
 	soundpack_m = /datum/voicepack/male/elf
 	soundpack_f = /datum/voicepack/female/elf
-	offset_features = list(OFFSET_ID = list(0,1), OFFSET_GLOVES = list(0,1), OFFSET_WRISTS = list(0,1),\
-	OFFSET_CLOAK = list(0,1), OFFSET_FACEMASK = list(0,1), OFFSET_HEAD = list(0,1), \
-	OFFSET_FACE = list(0,1), OFFSET_BELT = list(0,1), OFFSET_BACK = list(0,1), \
-	OFFSET_NECK = list(0,1), OFFSET_MOUTH = list(0,1), OFFSET_PANTS = list(0,1), \
-	OFFSET_SHIRT = list(0,1), OFFSET_ARMOR = list(0,1), OFFSET_HANDS = list(0,1), OFFSET_UNDIES = list(0,1), \
-	OFFSET_ID_F = list(0,1), OFFSET_GLOVES_F = list(0,1), OFFSET_WRISTS_F = list(0,1), OFFSET_HANDS_F = list(0,1), \
-	OFFSET_CLOAK_F = list(0,1), OFFSET_FACEMASK_F = list(0,1), OFFSET_HEAD_F = list(0,1), \
-	OFFSET_FACE_F = list(0,0), OFFSET_BELT_F = list(0,1), OFFSET_BACK_F = list(0,1), \
-	OFFSET_NECK_F = list(0,1), OFFSET_MOUTH_F = list(0,1), OFFSET_PANTS_F = list(0,0), \
-	OFFSET_SHIRT_F = list(0,1), OFFSET_ARMOR_F = list(0,1), OFFSET_UNDIES_F = list(0,1))
-	specstats = list(STATKEY_STR = 2, STATKEY_PER = -2, STATKEY_INT = -2, STATKEY_CON = 2, STATKEY_END = 1, STATKEY_SPD = 0, STATKEY_LCK = -1)
-	specstats_f = list(STATKEY_STR = 2, STATKEY_PER = -2, STATKEY_INT = -1, STATKEY_CON = 1, STATKEY_END = 1, STATKEY_SPD = 0, STATKEY_LCK = -1)
+
+	offset_features_m = list(
+		OFFSET_RING = list(0,1),\
+		OFFSET_GLOVES = list(0,1),\
+		OFFSET_WRISTS = list(0,1),\
+		OFFSET_HANDS = list(0,1),\
+		OFFSET_CLOAK = list(0,1),\
+		OFFSET_FACEMASK = list(0,1),\
+		OFFSET_HEAD = list(0,1),\
+		OFFSET_FACE = list(0,1),\
+		OFFSET_BELT = list(0,1),\
+		OFFSET_BACK = list(0,1),\
+		OFFSET_NECK = list(0,1),\
+		OFFSET_MOUTH = list(0,1),\
+		OFFSET_PANTS = list(0,1),\
+		OFFSET_SHIRT = list(0,1),\
+		OFFSET_ARMOR = list(0,1),\
+		OFFSET_UNDIES = list(0,1),\
+	)
+
+	offset_features_f = list()
+
+	specstats_m = list(STATKEY_STR = 2, STATKEY_PER = -2, STATKEY_INT = -2, STATKEY_CON = 2, STATKEY_END = 1, STATKEY_SPD = 0, STATKEY_LCK = 0)
+	specstats_f = list(STATKEY_STR = 2, STATKEY_PER = -2, STATKEY_INT = -1, STATKEY_CON = 1, STATKEY_END = 1, STATKEY_SPD = 0, STATKEY_LCK = 0)
+
 	enflamed_icon = "widefire"
+
+	exotic_bloodtype = /datum/blood_type/human/horc
+	meat = /obj/item/reagent_containers/food/snacks/meat/strange
+
+	customizers = list(
+		/datum/customizer/organ/ears/halforc,
+		/datum/customizer/organ/eyes/humanoid,
+		/datum/customizer/bodypart_feature/hair/head/humanoid,
+		/datum/customizer/bodypart_feature/hair/facial/humanoid,
+		/datum/customizer/bodypart_feature/accessory,
+		/datum/customizer/bodypart_feature/face_detail,
+	)
+
+	bodypart_features = list(
+		/datum/bodypart_feature/hair/head,
+		/datum/bodypart_feature/hair/facial,
+	)
+
+	organs = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/brain,
+		ORGAN_SLOT_HEART = /obj/item/organ/heart,
+		ORGAN_SLOT_LUNGS = /obj/item/organ/lungs,
+		ORGAN_SLOT_EYES = /obj/item/organ/eyes,
+		ORGAN_SLOT_EARS = /obj/item/organ/ears/halforc,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/tongue,
+		ORGAN_SLOT_LIVER = /obj/item/organ/liver,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach,
+		ORGAN_SLOT_APPENDIX = /obj/item/organ/appendix,
+		ORGAN_SLOT_GUTS = /obj/item/organ/guts,
+	)
+
+	nutrition_mod = 2 // 200% higher hunger rate. Hungry, hungry horcs
 
 /datum/species/halforc/check_roundstart_eligible()
 	return TRUE
@@ -109,4 +162,7 @@
 	return null
 
 /datum/species/halforc/get_accent_list()
-	return strings("halforc_replacement.json", "halforc")
+	return strings("accents/halforc_replacement.json", "halforc")
+
+/datum/species/halforc/get_native_language()
+	return "Orcish"

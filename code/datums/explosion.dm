@@ -125,7 +125,7 @@ GLOBAL_LIST_EMPTY(explosions)
 					baseshakeamount = sqrt((orig_max_distance - dist)*0.1)
 				// If inside the blast radius + world.view - 2
 				if(dist <= round(max_range + world.view - 2, 1))
-					M.playsound_local(epicenter, null, 100, 1, frequency, falloff = 5, S = explosion_sound)
+					M.playsound_local(epicenter, null, 100, 1, frequency, S = explosion_sound)
 					if(baseshakeamount > 0)
 						shake_camera(M, 25, CLAMP(baseshakeamount, 0, 10))
 				// You hear a far explosion if you're outside the blast radius. Small bombs shouldn't be heard all over the station.
@@ -133,7 +133,7 @@ GLOBAL_LIST_EMPTY(explosions)
 					var/far_volume = CLAMP(far_dist, 50, 100) // Volume is based on explosion size and dist
 					far_volume += (dist <= far_dist * 0.5 ? 50 : 0) // add 50 volume if the mob is pretty close to the explosion
 					far_volume = CLAMP(far_volume, 50, 100)
-					M.playsound_local(epicenter, null, far_volume, 1, frequency, falloff = 5, S = far_explosion_sound)
+					M.playsound_local(epicenter, null, far_volume, 1, frequency, S = far_explosion_sound)
 					if(baseshakeamount > 0)
 						shake_camera(M, 10, CLAMP(baseshakeamount*0.25, 0, 2.5))
 			EX_PREPROCESS_CHECK_TICK
@@ -184,10 +184,9 @@ GLOBAL_LIST_EMPTY(explosions)
 	//lists are guaranteed to contain at least 1 turf at this point
 
 	var/iteration = 0
-	var/affTurfLen = affected_turfs.len
-	var/expBlockLen = cached_exp_block.len
-	for(var/TI in affected_turfs)
-		var/turf/T = TI
+	var/affTurfLen = length(affected_turfs)
+	var/expBlockLen = length(cached_exp_block)
+	for(var/turf/T as anything in affected_turfs)
 		++iteration
 		var/init_dist = cheap_hypotenuse(T.x, T.y, x0, y0)
 		var/dist = init_dist
@@ -215,12 +214,10 @@ GLOBAL_LIST_EMPTY(explosions)
 		var/atom/target
 		if(T == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
 			var/list/items = list()
-			for(var/I in T)
-				var/atom/A = I
+			for(var/atom/A as anything in T)
 				if (!(A.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
 					items += A.GetAllContents()
-			for(var/O in items)
-				var/atom/A = O
+			for(var/atom/A as anything in items)
 				if(!QDELETED(A))
 					A.ex_act(dist, target, epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range)
 
@@ -280,14 +277,12 @@ GLOBAL_LIST_EMPTY(explosions)
 
 			var/circumference = (PI * (init_dist + 4) * 2) //+4 to radius to prevent shit gaps
 			if(exploded_this_tick.len > circumference)	//only do this every revolution
-				for(var/Unexplode in exploded_this_tick)
-					var/turf/UnexplodeT = Unexplode
+				for(var/turf/UnexplodeT as anything in exploded_this_tick)
 					UnexplodeT.explosion_level = 0
 				exploded_this_tick.Cut()
 
 	//unfuck the shit
-	for(var/Unexplode in exploded_this_tick)
-		var/turf/UnexplodeT = Unexplode
+	for(var/turf/UnexplodeT as anything in exploded_this_tick)
 		UnexplodeT.explosion_level = 0
 	exploded_this_tick.Cut()
 
@@ -409,8 +404,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(wipe_color_and_text), wipe_colours), 100)
 
 /proc/wipe_color_and_text(list/atom/wiping)
-	for(var/i in wiping)
-		var/atom/A = i
+	for(var/atom/A as anything in wiping)
 		A.color = null
 		A.maptext = ""
 
@@ -429,3 +423,5 @@ GLOBAL_LIST_EMPTY(explosions)
 // 10 explosion power is a (1, 3, 6) explosion.
 // 5 explosion power is a (0, 1, 3) explosion.
 // 1 explosion power is a (0, 0, 1) explosion.
+
+#undef EXPLOSION_THROW_SPEED

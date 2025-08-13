@@ -149,7 +149,6 @@
 		if(!GLOB.badomens.len)
 			return EVENT_CANCELLED
 		badomen(pick_n_take(GLOB.badomens))
-		testing("[name] has started")
 
 	triggering = FALSE
 
@@ -386,30 +385,53 @@ GLOBAL_LIST_INIT(badomens, list())
 
 /proc/addomen(input)
 	if(!(input in GLOB.badomens))
-		testing("Omen added: [input]")
 		GLOB.badomens += input
 
 /proc/removeomen(input)
 	if(!hasomen(input))
 		return
-	testing("Omen removed: [input]")
 	GLOB.badomens -= input
 
 /datum/round_event_control/proc/badomen(eventreason)
-	var/used
+	var/used = "Zizo."
+	var/title = "Bad Omen"
+	var/sound = 'sound/misc/evilevent.ogg'
 	switch(eventreason)
 		if(OMEN_ROUNDSTART)
-			used = "Zizo."
-		if(OMEN_NOPRIEST)
-			used = "The Priest has perished! The Ten are weakened..."
-		if(OMEN_SKELETONSIEGE)
-			used = "Unwelcome visitors!"
+			used = pick( \
+				"Zizo.", \
+				"Unholy invocations channel the will of Her.", \
+				"Forbidden rituals cause echoes through the plane.", \
+				"Whispers of the Dark Lady in the shadows.", \
+				"The servants of Zizo undermine the Ten.", \
+				"Her influence becomes more tangible...", \
+				"A foul curse temporarily takes the land.", \
+				"The dead churn and dig at their graves.", \
+			)
+			title = pick( \
+				"Zizo Sneers", \
+				"The Dark Lady Watches", \
+				"Zizo's Attention", \
+				"She Peers", \
+				"Zizo Smirks", \
+			)
+			sound = 'sound/misc/gods/zizo_omen.ogg'
 		if(OMEN_NOLORD)
 			used = "The Monarch is dead! We need a new ruler."
+		if(OMEN_NOPRIEST)
+			used = "The High Priest is dead!"
+		if(OMEN_NOBLEDEATH)
+			used = "A Noble has perished."
 		if(OMEN_SUNSTEAL)
 			used = "The Sun, she is wounded!"
-		if(OMEN_ASCEND)
-			used = "Zizo will rise once again!"
-	if(eventreason && used)
-		priority_announce(used, "Bad Omen", 'sound/misc/evilevent.ogg')
-
+		if(OMEN_SKELETONSIEGE)
+			used = "Unwelcome visitors!"
+		if("ascend")
+			used = "Zizo will rise once again."
+		if("psycross")
+			used = "You have angered the gods!"
+	if(!eventreason)
+		return
+	if(!used || !title || !sound)
+		return
+	priority_announce(used, title, sound)

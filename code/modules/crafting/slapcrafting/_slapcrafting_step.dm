@@ -107,7 +107,7 @@
 	return TRUE
 
 /// Make a user perform this step, by using an item on the assembly, trying to progress the assembly.
-/datum/slapcraft_step/proc/perform(mob/living/user, obj/item/item, obj/item/slapcraft_assembly/assembly, instant = FALSE, silent = FALSE, list/error_list = list())
+/datum/slapcraft_step/proc/perform(mob/living/user, obj/item/item, obj/item/slapcraft_assembly/assembly, instant = FALSE, silent = FALSE, list/error_list = list(), minimum_perform_time)
 	if(!perform_check(user, item, assembly, error_list = error_list) || !assembly.recipe.check_correct_step(type, assembly.step_states))
 		return FALSE
 
@@ -117,7 +117,7 @@
 				span_small(step_replace_text(start_msg, user, item, assembly)),
 				span_small(step_replace_text(start_msg_self, user, item, assembly))
 				)
-		if(!perform_do_after(user, item, assembly, perform_time * get_speed_multiplier(user, item, assembly)))
+		if(!perform_do_after(user, item, assembly, max(perform_time * get_speed_multiplier(user, item, assembly), minimum_perform_time)))
 			return FALSE
 
 		// Do checks again because we spent time in a do_after(), this time also check deletions.
@@ -183,7 +183,7 @@
 /// Proc to perform handling a do_after, return FALSE if it failed, TRUE if succeeded.
 /datum/slapcraft_step/proc/perform_do_after(mob/living/user, obj/item/item, obj/item/slapcraft_assembly/assembly, time_to_do)
 	if(skill_type)
-		time_to_do *=  (2 / max(1, user.mind?.get_skill_level(skill_type)))
+		time_to_do *=  (2 / max(1, user.get_skill_level(skill_type)))
 
 	if(!do_after(user, time_to_do, item))
 		return FALSE

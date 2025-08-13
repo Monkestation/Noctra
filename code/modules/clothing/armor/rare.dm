@@ -14,52 +14,57 @@
 	armor_class = AC_HEAVY
 	armor = ARMOR_PLATE_GOOD
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
-	prevent_crits = ALL_EXCEPT_STAB
+	prevent_crits = ALL_EXCEPT_BLUNT
 	max_integrity = INTEGRITY_STRONGEST
 
 /obj/item/clothing/armor/rare/Initialize()
 	. = ..()
 	AddComponent(/datum/component/squeak, list('sound/foley/footsteps/armor/fullplate (1).ogg',\
 												'sound/foley/footsteps/armor/fullplate (2).ogg',\
-												'sound/foley/footsteps/armor/fullplate (3).ogg'), 80)
+												'sound/foley/footsteps/armor/fullplate (3).ogg'), 80, falloff_exponent = 20)
 
 /obj/item/clothing/armor/rare/elfplate
 	name = "dark elf plate"
 	desc = "A fine suit of sleek, moulded dark elf metal. Its interlocking nature and light weight allow for increased maneuverability."
 	icon_state = "elfchest"
-	allowed_race = list("elf", "half-elf", "dark elf")
+	allowed_race = RACES_PLAYER_ELF_ALL
 	equip_delay_self = 2 SECONDS
 	unequip_delay_self = 2 SECONDS
 
 	armor_class = AC_MEDIUM // Elven craft, also a cuirass
 	body_parts_covered = COVERAGE_VEST
+	item_weight = 12 * STEEL_MULTIPLIER
 
 /obj/item/clothing/armor/rare/elfplate/welfplate
 	name = "elvish plate"
 	desc = "A suit of steel interwoven, through honed elven technique, with hardened bark plates."
 	icon_state = "welfchest"
+	item_weight = 12 * STEEL_MULTIPLIER
 
 /obj/item/clothing/armor/rare/dwarfplate
 	name = "dwarvish plate"
 	desc = "Plate armor made out of the sturdiest, finest dwarvish metal armor. It's as heavy and durable as it gets."
 	icon_state = "dwarfchest"
-	allowed_race = list("dwarf")
+	allowed_race = list(SPEC_ID_DWARF)
+	item_weight = 12 * STEEL_MULTIPLIER
 
 /obj/item/clothing/armor/rare/grenzelplate
 	name = "grenzelhoftian plate regalia"
-	desc = "Engraved on this masterwork of humen metallurgy lies \"Thrice Slain, Thrice Risen, Thrice Pronged\" alongside the symbol of Psydon in its neck guard."
+	desc = "Engraved on this masterwork of humen metallurgy lies \"Thrice Fingered, Thrice Betrayed, Thrice Pronged\" alongside the symbol of Psydon in its neck guard. No one is certain what the third betrayal is meant to signify, yet Samantha's poetry is clear."
 	icon_state = "human_swordchest"
-	allowed_race = list("human")
+	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_AASIMAR)
 	allowed_sex = list(MALE)
+	item_weight = 12 * STEEL_MULTIPLIER
 
 /obj/item/clothing/armor/rare/zybanplate
 	name = "kataphractoe scaleskin"
 	desc = "Steel scales woven into armor with miniscule threads of adamantine, \
 			ensuring the wearer optimal defence with forgiving breathability. \
-			The sigil of the Zybantu Kataphractoe is embezzeled at the throat guard."
+			The sigil of the Zaladin Kataphractoe is embezzeled at the throat guard."
 	icon_state = "human_spearchest"
-	allowed_race = list("human")
+	allowed_race = list(SPEC_ID_HUMEN)
 	allowed_sex = list(MALE)
+	item_weight = 12 * STEEL_MULTIPLIER
 
 // Aasimar hoplite armor, a very rare armor indeed
 /obj/item/clothing/armor/rare/hoplite
@@ -69,8 +74,9 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/armor.dmi'
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_armor.dmi'
 	icon_state = "aasimarplate"
-	allowed_race = list("aasimar")
+	allowed_race = list(SPEC_ID_AASIMAR)
 	smeltresult = /obj/item/ingot/bronze
 	sellprice = VALUE_SNOWFLAKE_STEEL+BONUS_VALUE_MODEST // It has great value to historical collectors
 
 	body_parts_covered = COVERAGE_ALL_BUT_ARMS
+	item_weight = 7 * STEEL_MULTIPLIER

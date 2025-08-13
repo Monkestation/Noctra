@@ -5,6 +5,8 @@
 
 	icon = 'icons/effects/dungeon_helper.dmi'
 	icon_state = "helper"
+	invisibility = INVISIBILITY_ABSTRACT
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	var/top = FALSE
 
@@ -16,6 +18,10 @@
 		SSdungeon_generator.markers |= src
 	alpha = 0
 
+/obj/effect/dungeon_directional_helper/Destroy(force)
+	if(src in SSdungeon_generator.markers)
+		SSdungeon_generator.markers -= src
+	return ..()
 
 /obj/effect/dungeon_directional_helper/south
 	dir = SOUTH

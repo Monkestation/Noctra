@@ -79,9 +79,9 @@
 	icon_state = "auto"
 	no_attack = TRUE
 
-/obj/item/fishingrod/attack_self(mob/user)
-	if(user.doing)
-		user.doing = 0
+/obj/item/fishingrod/attack_self(mob/user, params)
+	if(user.doing())
+		user.stop_all_doing()
 	else
 		..()
 
@@ -133,10 +133,13 @@
 					I.forceMove(src)
 					reel = I
 					to_chat(user, "<span class='notice'>I add [I] to [src]...</span>")
-	update_icon()
-	return
+	update_appearance(UPDATE_OVERLAYS)
 
-/obj/item/fishingrod/attack_right(mob/user)
+/obj/item/fishingrod/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/attacheditems = list()
 	if(baited)
 		attacheditems += baited
@@ -165,8 +168,7 @@
 			line = null
 		user.put_in_hands(totake)
 		to_chat(user, "<span class='notice'>I take [totake] off of [src].</span>")
-		update_icon()
-		return
+		update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/fishingrod/examine(mob/user)
 	. = ..()
@@ -195,19 +197,20 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/fishingrod/update_icon()
-	cut_overlays()
-	if(baited)
-		var/obj/item/I = baited
-		I.pixel_x = 6
-		I.pixel_y = -6
-		add_overlay(new /mutable_appearance(I))
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
+/obj/item/fishingrod/update_overlays()
+	. = ..()
+	if(!baited)
+		return
+	var/obj/item/I = baited
+	I.pixel_x = 0
+	I.pixel_y = 0
+	var/mutable_appearance/M = new /mutable_appearance(I)
+	M.pixel_x = 6
+	M.pixel_y = -6
+	. += M
 
-#define FISHRARITYWEIGHTS = list("com" = 70, "rare" = 20, "ultra" = 9, "gold" = 1)
-#define FISHSIZEWEIGHTS = list("tiny" = 4, "small" = 4, "normal" = 4, "large" = 2, "prize" = 1)
+#define FISHRARITYWEIGHTS list("com" = 70, "rare" = 20, "ultra" = 9, "gold" = 1)
+#define FISHSIZEWEIGHTS list("tiny" = 4, "small" = 4, "normal" = 4, "large" = 2, "prize" = 1)
 
 /obj/item/fishingrod/proc/checkreqs(mob/living/user)
 	. = FALSE
@@ -215,7 +218,7 @@
 		return
 	if(!user.Process_Spacemove(0) && user.inertia_dir)
 		return
-	if(user.IsStun() || user.IsParalyzed())
+	if(HAS_TRAIT(user, TRAIT_INCAPACITATED))
 		return
 	if(user.loc != startingturf)
 		return
@@ -273,11 +276,10 @@
 /obj/item/fishingrod/afterattack(obj/target, mob/user, proximity, params)
 	if(!check_allowed_items(target,target_self=1) \
 	|| (user.used_intent.type != ROD_CAST && user.used_intent.type != ROD_AUTO) \
-	|| user.doing \
+	|| user.doing() \
 	|| !isliving(user) \
 	|| !user.loc
 	)
-
 		return
 
 	if(user.client)
@@ -323,8 +325,8 @@
 
 	//initialize fishing modifiers
 	var/deepmod = 0
-	var/list/raritypicker = list("com" = 70, "rare" = 20, "ultra" = 9, "gold" = 1)
-	var/list/sizepicker = list("tiny" = 4, "small" = 4, "normal" = 4, "large" = 2, "prize" = 1)
+	var/list/raritypicker = FISHRARITYWEIGHTS
+	var/list/sizepicker = FISHSIZEWEIGHTS
 	var/obj/item/fishing/bait/B = null
 	fisher = user
 	var/specialcatchprob = 0
@@ -339,7 +341,7 @@
 	attacheditems += line
 	attacheditems += baited
 	if(fisher.mind)
-		skillmod = fisher.mind.get_skill_level(/datum/skill/labor/fishing)
+		skillmod = fisher.get_skill_level(/datum/skill/labor/fishing)
 	difficulty = -skillmod
 	linehealth = skillmod + 6
 	hookwindow = skillmod*3 + 4 + average_ping
@@ -486,7 +488,7 @@
 	acceleration = max(acceleration, 1)
 
 
-	var/sl = user.mind.get_skill_level(/datum/skill/labor/fishing) // User's skill level
+	var/sl = user.get_skill_level(/datum/skill/labor/fishing) // User's skill level
 	var/fishing_time = 12 SECONDS //Time to get a catch, in ticks
 	var/fpp =  100 - (40 + (sl * 10)) // Fishing power penalty based on fishing skill level
 
@@ -495,7 +497,7 @@
 	if(!check_allowed_items(target,target_self=1))
 		return ..()
 	if(user.used_intent.type != ROD_CAST)
-		if(user.used_intent.type == ROD_AUTO && !user.doing)
+		if(user.used_intent.type == ROD_AUTO && !user.doing())
 			if(target in range(user,5))
 				user.visible_message("<span class='warning'>[user] casts a line!</span>", \
 									"<span class='notice'>I cast a line.</span>")
@@ -523,10 +525,10 @@
 							playsound(src.loc, 'sound/items/fishing_plouf.ogg', 100, TRUE)
 							if(!do_after(user, opportunity_window, target))
 								var/mob/living/fisherman = user
-								var/boon = user.mind.get_learning_boon(/datum/skill/labor/fishing)
+								var/boon = user.get_learning_boon(/datum/skill/labor/fishing)
 								caught = TRUE
 								to_chat(user, "<span class='warning'>Reel 'em in!</span>")
-								user.mind.adjust_experience(/datum/skill/labor/fishing, round(fisherman.STAINT * boon, 1), FALSE) // Level up!
+								user.adjust_experience(/datum/skill/labor/fishing, round(fisherman.STAINT * boon, 1), FALSE) // Level up!
 								playsound(src.loc, 'sound/items/Fish_out.ogg', 100, TRUE)
 								if(prob(80 - (sl * 10))) // Higher skill levels make you less likely to lose your bait
 									to_chat(user, "<span class='warning'>Damn, it ate my bait.</span>")
@@ -549,7 +551,7 @@
 				else
 					to_chat(user, "<span class='warning'>I must stand still to fish.</span>")
 					return
-			update_icon()
+			update_appearance(UPDATE_OVERLAYS)
 		else //where all nonfishing intents end up
 			return ..()
 	else
@@ -566,7 +568,6 @@
 		var/initialfish = fishhealth
 		var/facestate = 1
 		createui(fisher)
-		fisher.doing = TRUE
 		fishtarget = 90
 
 		while(currentlyfishing)
@@ -671,9 +672,11 @@
 	else
 		to_chat(user, "<span class = 'notice'>I pull something out of the water!</span>")
 		playsound(loc, 'sound/items/Fish_out.ogg', 100, TRUE)
-		fisher.mind.adjust_experience(/datum/skill/labor/fishing, clamp(difficulty, 1, 3) * fisher.STAINT)
+		fisher.adjust_experience(/datum/skill/labor/fishing, clamp(difficulty, 1, 3) * fisher.STAINT)
 		if(ispath(fishtype, /obj/item/reagent_containers/food/snacks/fish))
-			var/obj/item/reagent_containers/food/snacks/caughtfish = new fishtype(get_turf(fisher))
+			var/obj/item/reagent_containers/food/snacks/fish/caughtfish = new fishtype(get_turf(fisher))
+			if(fishrarity != "com")
+				caughtfish.rare = TRUE
 			var/raritydesc
 			var/sizedesc
 
@@ -682,30 +685,20 @@
 					switch(fishrarity)
 						if("rare")
 							raritydesc = "rare"
+							caughtfish.rarity_rank = 1
 							caughtfish.raritymod = list("com"= -30)//some incentive to use rarer tiny fish as bait
 						if("ultra")
 							raritydesc = "ultra-rare"
+							caughtfish.rarity_rank = 2
 							caughtfish.raritymod = list("com"= -50)
 						if("gold")
 							raritydesc = "legendary"
+							caughtfish.rarity_rank = 3
 							caughtfish.raritymod = list("com"= -70, "rare" = -20)
 						else
 							raritydesc = "common"
+							caughtfish.rarity_rank = 0
 					caughtfish.icon_state = "[caughtfish.icon_state][fishrarity]"
-					if(fishrarity != "com")
-						switch(fishtype)
-							if(/obj/item/reagent_containers/food/snacks/fish/carp)
-								caughtfish.fried_type = /obj/item/reagent_containers/food/snacks/fryfish/carp/rare
-								caughtfish.cooked_type = /obj/item/reagent_containers/food/snacks/fryfish/carp/rare
-							if(/obj/item/reagent_containers/food/snacks/fish/eel)
-								caughtfish.fried_type = /obj/item/reagent_containers/food/snacks/fryfish/eel/rare
-								caughtfish.cooked_type = /obj/item/reagent_containers/food/snacks/fryfish/eel/rare
-							if(/obj/item/reagent_containers/food/snacks/fish/angler)
-								caughtfish.fried_type = /obj/item/reagent_containers/food/snacks/fryfish/angler/rare
-								caughtfish.cooked_type = /obj/item/reagent_containers/food/snacks/fryfish/angler/rare
-							if(/obj/item/reagent_containers/food/snacks/fish/clownfish)
-								caughtfish.fried_type = /obj/item/reagent_containers/food/snacks/fryfish/clownfish/rare
-								caughtfish.cooked_type = /obj/item/reagent_containers/food/snacks/fryfish/clownfish/rare
 				else
 					raritydesc = fishrarity
 
@@ -730,6 +723,9 @@
 				else
 					caughtfish.name = "[sizedesc] [raritydesc] [caughtfish.name]"
 					caughtfish.sellprice *= costmod
+			if(fisher.mind)
+				record_featured_stat(FEATURED_STATS_FISHERS, fisher)
+				record_round_statistic(STATS_FISH_CAUGHT)
 		else//only occurs on special catch that most likely won't have special modifiers
 			if(turfcatch)
 				var/atom/caughtthing = new fishtype(targeted)
@@ -742,20 +738,19 @@
 					var/obj/item/fishing/bait/specialmaker = baited
 					specialmaker.makespecial(caughtthing2)
 
-	fisher.doing = FALSE
 	stopgame(fisher)
 	qdel(baited)
 	baited = null
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
+
+#undef FISHRARITYWEIGHTS
+#undef FISHSIZEWEIGHTS
 
 /obj/item/fishingrod/fisher
 
-/obj/item/fishingrod/fisher/New()
+/obj/item/fishingrod/fisher/Initialize(mapload, ...)
 	. = ..()
 	icon_state = "rod[rand(1,3)]"
-
-/obj/item/fishingrod/fisher/Initialize()
-	. = ..()
 	reel = new /obj/item/fishing/reel/silk(src)
 	hook = new /obj/item/fishing/hook/iron(src)
 	line = new /obj/item/fishing/line/bobber(src)

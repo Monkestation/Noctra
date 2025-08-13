@@ -9,7 +9,7 @@
 	grid_width = 64
 	COOLDOWN_DECLARE(sound_horn)
 
-/obj/item/signal_horn/attack_self(mob/living/user)
+/obj/item/signal_horn/attack_self(mob/living/user, params)
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, sound_horn))
 		to_chat(user, span_warning("[src] is not ready to be used yet!"))
@@ -21,6 +21,7 @@
 
 /obj/item/signal_horn/proc/sound_horn(mob/living/user)
 	user.visible_message(span_warning("[user] sounds the alarm!"))
+	// New sound made by fem_tanyl
 	playsound(src, 'sound/items/signalhorn.ogg', 100, TRUE)
 	var/turf/origin_turf = get_turf(src)
 
@@ -67,6 +68,6 @@
 			else
 				disttext = " very far"
 
-		//sound played for other players
+		//sound played for other players, by fem_tanyl !!!1!!
 		player.playsound_local(get_turf(player), 'sound/items/signalhorn.ogg', 35, FALSE, pressure_affected = FALSE)
 		to_chat(player, span_warning("I hear the horn alarm somewhere[disttext][dirtext]!"))

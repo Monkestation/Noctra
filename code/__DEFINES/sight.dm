@@ -4,6 +4,9 @@
 
 #define SEE_INVISIBLE_LIVING 25
 
+#define SEE_INVISIBLE_LEYLINES 26
+#define INVISIBILITY_LEYLINES 26
+
 //#define SEE_INVISIBLE_LEVEL_ONE 35 //currently unused
 //#define INVISIBILITY_LEVEL_ONE 35 //currently unused
 
@@ -12,6 +15,8 @@
 
 #define INVISIBILITY_OBSERVER 60
 #define SEE_INVISIBLE_OBSERVER 60
+#define INVISIBILITY_GHOST 50
+#define SEE_INVISIBLE_GHOST 50
 
 #define INVISIBILITY_MAXIMUM 100 //the maximum allowed for "real" objects
 

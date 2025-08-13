@@ -47,6 +47,7 @@ GLOBAL_PROTECT(hunted_log)
 
 GLOBAL_LIST_EMPTY(character_list)
 GLOBAL_LIST_EMPTY(character_ckey_list)
+GLOBAL_LIST_EMPTY(actors_list)
 GLOBAL_VAR(rogue_round_id)
 
 GLOBAL_LIST_EMPTY(bombers)
@@ -78,3 +79,8 @@ GLOBAL_PROTECT(picture_logging_id)
 GLOBAL_VAR(picture_logging_prefix)
 GLOBAL_PROTECT(picture_logging_prefix)
 /////
+
+#ifdef REFERENCE_DOING_IT_LIVE
+GLOBAL_LIST_EMPTY(harddel_log)
+GLOBAL_PROTECT(harddel_log)
+#endif

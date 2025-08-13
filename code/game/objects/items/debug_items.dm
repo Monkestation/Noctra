@@ -19,7 +19,7 @@
 		if(selected_species)
 			H.set_species(selected_species)
 
-/obj/item/debug/human_spawner/attack_self(mob/user)
+/obj/item/debug/human_spawner/attack_self(mob/user, params)
 	..()
 	var/choice = input("Select a species", "Human Spawner", null) in GLOB.species_list
 	selected_species = GLOB.species_list[choice]

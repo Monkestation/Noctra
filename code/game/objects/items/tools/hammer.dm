@@ -44,17 +44,17 @@
 		var/obj/item/bodypart/attacked_prosthetic = O
 		if(!attacked_prosthetic.anvilrepair || !isturf(attacked_prosthetic.loc))
 			return
-		if(attacked_prosthetic.obj_integrity >= attacked_prosthetic.max_integrity && attacked_prosthetic.brute_dam == 0 && attacked_prosthetic.burn_dam == 0 && attacked_prosthetic.wounds == null && attacked_prosthetic.disabled == BODYPART_NOT_DISABLED) //A mouthful
+		if(attacked_prosthetic.obj_integrity >= attacked_prosthetic.max_integrity && attacked_prosthetic.brute_dam == 0 && attacked_prosthetic.burn_dam == 0 && attacked_prosthetic.wounds == null && attacked_prosthetic.bodypart_disabled == BODYPART_NOT_DISABLED) //A mouthful
 			to_chat(user, span_warning("There is nothing to further repair on [attacked_prosthetic]."))
 			return
 
-		if(blacksmith_mind.get_skill_level(attacked_prosthetic.anvilrepair) <= 0)
+		if(user.get_skill_level(attacked_prosthetic.anvilrepair) <= 0)
 			if(prob(30))
 				repair_percent = 0.01
 			else
 				repair_percent = 0
 		else
-			repair_percent *= blacksmith_mind.get_skill_level(attacked_prosthetic.anvilrepair)
+			repair_percent *= user.get_skill_level(attacked_prosthetic.anvilrepair)
 
 		playsound(src,'sound/items/bsmith3.ogg', 100, FALSE)
 		if(repair_percent)
@@ -68,12 +68,12 @@
 			else
 				user.visible_message(span_info("[user] repairs [attacked_prosthetic]!"))
 				attacked_prosthetic.wounds = null //You need actual skill to do this
-				attacked_prosthetic.disabled = BODYPART_NOT_DISABLED
+				attacked_prosthetic.bodypart_disabled = BODYPART_NOT_DISABLED
 			blacksmith_mind.add_sleep_experience(attacked_prosthetic.anvilrepair, amt2raise)
 		else
 			user.visible_message(span_warning("[user] fumbles trying to repair [attacked_prosthetic]!"))
 			attacked_prosthetic.take_damage(attacked_prosthetic.max_integrity * 0.1, BRUTE, "blunt")
-		attacked_prosthetic.update_icon()
+		attacked_prosthetic.update_appearance()
 		return
 
 	if(isitem(O) && !user.cmode)
@@ -82,13 +82,13 @@
 			to_chat(user, span_warning("[attacked_item] cannot be repaired any further."))
 			return
 
-		if(blacksmith_mind.get_skill_level(attacked_item.anvilrepair) <= 0)
+		if(user.get_skill_level(attacked_item.anvilrepair) <= 0)
 			if(prob(30))
 				repair_percent = 0.01
 			else
 				repair_percent = 0
 		else
-			repair_percent *= blacksmith_mind.get_skill_level(attacked_item.anvilrepair)
+			repair_percent *= user.get_skill_level(attacked_item.anvilrepair)
 
 		playsound(src,'sound/items/bsmithfail.ogg', 40, FALSE)
 		if(repair_percent)
@@ -103,7 +103,7 @@
 		else
 			user.visible_message("<span class='warning'>[user] damages [attacked_item]!</span>")
 			attacked_item.take_damage(attacked_item.max_integrity * 0.1, BRUTE, "blunt")
-		attacked_item.update_icon()
+		attacked_item.update_appearance()
 		return
 
 	if(isstructure(O) && !user.cmode)
@@ -111,16 +111,16 @@
 		if(!attacked_structure.hammer_repair || !attacked_structure.max_integrity || attacked_structure.obj_broken)
 			to_chat(user, span_warning("[attacked_structure] cannot be repaired any further."))
 			return
-		if(blacksmith_mind.get_skill_level(attacked_structure.hammer_repair) <= 0)
+		if(user.get_skill_level(attacked_structure.hammer_repair) <= 0)
 			to_chat(user, span_warning("I don't know how to repair this.."))
 			return
 		var/amt2raise = floor(user.STAINT * 0.25)
-		repair_percent *= blacksmith_mind.get_skill_level(attacked_structure.hammer_repair) * attacked_structure.max_integrity
+		repair_percent *= user.get_skill_level(attacked_structure.hammer_repair) * attacked_structure.max_integrity
 		attacked_structure.obj_integrity = min(attacked_structure.obj_integrity + repair_percent, attacked_structure.max_integrity)
 		blacksmith_mind.add_sleep_experience(attacked_structure.hammer_repair, amt2raise)
 		playsound(src,'sound/items/bsmithfail.ogg', 100, FALSE)
 		user.visible_message(span_info("[user] repairs [attacked_structure]!"))
-		attacked_structure.update_icon()
+		attacked_structure.update_appearance()
 		return
 
 	. = ..()
@@ -159,7 +159,7 @@
 	force = 4
 	smeltresult = null
 	can_smith = FALSE
-	time_multiplier = 1.5
+	time_multiplier = 1.2
 
 /obj/item/weapon/hammer/wood/getonmobprop(tag)
 	. = ..()
@@ -204,6 +204,8 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	associated_skill = /datum/skill/combat/axesmaces
 	smeltresult = /obj/item/ingot/iron
+	grid_width = null
+	grid_height = null
 
 /obj/item/weapon/hammer/sledgehammer/getonmobprop(tag)
 	. = ..()

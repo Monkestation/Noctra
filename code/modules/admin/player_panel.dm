@@ -4,6 +4,10 @@
 	log_admin("[key_name(usr)] checked the player panel.")
 	var/dat = "<html><head><meta http-equiv='X-UA-Compatible' content='IE=edge'/><title>Player Panel</title></head>"
 
+	var/client/user = usr.client
+
+	dat += user.prefs.get_ui_theme_stylesheet()
+
 	//javascript, the part that does most of the work~
 	dat += {"
 
@@ -75,8 +79,6 @@
 					body += "<a href='?_src_=holder;[HrefToken()];showmessageckey="+ckey+"'>N</a> - "
 					body += "<a href='?_src_=vars;[HrefToken()];Vars="+ref+"'>VV</a> - "
 					body += "<a href='?_src_=holder;[HrefToken()];traitor="+ref+"'>TP</a> - "
-					if (job == "Cyborg")
-						body += "<a href='?_src_=holder;[HrefToken()];borgpanel="+ref+"'>BP</a> - "
 					body += "<a href='?priv_msg="+ckey+"'>PM</a> - "
 					body += "<a href='?_src_=holder;[HrefToken()];subtlemessage="+ref+"'>SM</a> - "
 					body += "<a href='?_src_=holder;[HrefToken()];adminplayerobservefollow="+ref+"'>FLW</a> - "
@@ -201,6 +203,12 @@
 
 	"}
 
+
+	var/ui_mode = user.prefs.ui_theme
+	var/dark_ui = FALSE
+	if(ui_mode == UI_PREFERENCE_DARK_MODE)
+		dark_ui = TRUE
+
 	//player table header
 	dat += {"
 		<span id='maintable_data_archive'>
@@ -211,9 +219,9 @@
 	for(var/mob/M in mobs)
 		if(M.ckey)
 
-			var/color = "#e6e6e6"
+			var/color = dark_ui ? "#2a2a2a" : "#e6e6e6"
 			if(i%2 == 0)
-				color = "#f2f2f2"
+				color = dark_ui ? "#1e1d1d" : "#f2f2f2"
 			var/is_antagonist = is_special_character(M)
 
 			var/M_job = ""

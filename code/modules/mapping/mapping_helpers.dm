@@ -5,11 +5,9 @@
 /obj/effect/baseturf_helper //Set the baseturfs of every turf in the /area/ it is placed.
 	name = "baseturf editor"
 	icon_state = ""
-
+	plane = POINT_PLANE
 	var/list/baseturf_to_replace
 	var/baseturf
-
-	layer = POINT_LAYER
 
 /obj/effect/baseturf_helper/Initialize()
 	. = ..()
@@ -47,11 +45,8 @@
 	else
 		thing.PlaceOnBottom(null, baseturf)
 
-/obj/effect/baseturf_helper/lava
-	name = "lava baseturf editor"
-	baseturf = /turf/open/lava/smooth
-
 /obj/effect/mapping_helpers
+	icon = 'icons/effects/mapping_helpers.dmi'
 	icon_state = ""
 	var/late = FALSE
 
@@ -92,7 +87,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 		if(target_type && !istype(A,target_type))
 			continue
 		var/cargs = build_args()
-		A.AddComponent(arglist(cargs))
+		A._AddComponent(cargs)
 		qdel(src)
 		return
 
@@ -108,7 +103,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/dead_body_placer/LateInitialize()
 	var/list/trays = list()
 	if(!trays.len)
-		log_mapping("[src] at [x],[y] could not find any morgues.")
+		log_mapping("[src] at [AREACOORD(src)] could not find any morgues.")
 		return
 	for (var/i = 1 to bodycount)
 		var/mob/living/carbon/human/h = new /mob/living/carbon/human(get_turf(src), 1)
@@ -129,7 +124,11 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 
 /obj/effect/landmark/map_load_mark/Initialize()
 	. = ..()
-	LAZYADD(SSmapping.map_load_marks,src)
+	LAZYADD(SSmapping.map_load_marks, src)
+
+/obj/effect/landmark/map_load_mark/Destroy()
+	LAZYREMOVE(SSmapping.map_load_marks, src)
+	return ..()
 
 /obj/effect/mapping_helpers/outfit_handler
 	name = "generic outfit equipper (SET PATH IN VARS)"
@@ -170,3 +169,61 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	for(var/obj/item/weapon/weapon in get_turf(src))
 		located.put_in_hands(weapon)
 	qdel(src)
+
+/obj/effect/mapping_helpers/access
+	name = "access helper parent"
+	layer = DOOR_HELPER_LAYER
+	late = TRUE
+
+/obj/effect/mapping_helpers/access/LateInitialize()
+	var/static/list/valid = list(
+		/obj/structure/door, \
+		/obj/structure/closet, \
+		/obj/structure/fake_machine/vendor, \
+	)
+
+	// Get the first thing we find starting with doors and closets
+	for(var/thing as anything in valid)
+		var/obj/found = locate(thing) in loc
+		if(found)
+			payload(found)
+			qdel(src)
+			return
+
+	log_mapping("[src] failed to find a target at [AREACOORD(src)]")
+	qdel(src)
+
+/obj/effect/mapping_helpers/access/proc/payload(obj/payload)
+	return
+
+/obj/effect/mapping_helpers/access/locker
+	name = "access lock helper"
+	icon_state = "door_locker"
+
+/obj/effect/mapping_helpers/access/locker/payload(obj/payload)
+	if(!payload.lock_check())
+		log_mapping("[src] at [AREACOORD(src)] tried to lock [payload] but it hasn't got a lock!")
+		return
+	if(payload.locked())
+		log_mapping("[src] at [AREACOORD(src)] tried to lock [payload] but it's already locked!")
+		return
+	payload.lock()
+
+/obj/effect/mapping_helpers/structure
+	name = "structure helper"
+	layer = WALL_OBJ_LAYER
+	plane = GAME_PLANE_UPPER
+	late = TRUE
+
+/obj/effect/mapping_helpers/structure/LateInitialize()
+	var/list/valid = subtypesof(/obj/structure) - typesof(/obj/structure/flora)
+	for(var/obj/structure/S in loc)
+		if(is_type_in_list(S, valid))
+			payload(S)
+			qdel(src)
+			return
+	log_mapping("[src] failed to find target at [AREACOORD(src)]")
+	qdel(src)
+
+/obj/effect/mapping_helpers/structure/proc/payload(obj/payload)
+	return

@@ -3,7 +3,7 @@
 
 	var/obj/structure/vine/SV = new()
 
-	for(var/area/rogue/outdoors/town/A in world)
+	for(var/area/rogue/outdoors/town/A as anything in GLOB.areas)
 		for(var/turf/open/F in A)
 			if(F.Enter(SV))
 				if(!istype(F, /turf/open/transparent/openspace))
@@ -210,7 +210,7 @@
 	density = FALSE
 	layer = SPACEVINE_LAYER
 	mouse_opacity = MOUSE_OPACITY_OPAQUE //Clicking anywhere on the turf is good enough
-	pass_flags = PASSTABLE | PASSGRILLE
+	pass_flags_self = PASSTABLE | PASSGRILLE
 	max_integrity = 5
 	resistance_flags = FLAMMABLE
 	damage_deflection = 5
@@ -226,18 +226,6 @@
 	dir = pick(GLOB.cardinals)
 	icon_state = "Light[rand(1,2)]"
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
-
-/obj/structure/vine/examine(mob/user)
-	. = ..()/*
-	var/text = "This one is a"
-	if(mutations.len)
-		for(var/A in mutations)
-			var/datum/vine_mutation/SM = A
-			text += " [SM.name]"
-	else
-		text += " normal"
-	text += " vine."
-	. += text*/
 
 /obj/structure/vine/Destroy()
 	for(var/datum/vine_mutation/SM in mutations)
@@ -346,6 +334,8 @@
 
 /datum/vine_controller/Destroy()
 	STOP_PROCESSING(SSobj, src)
+	tree = null
+	vines = null
 	return ..()
 
 /datum/vine_controller/proc/spawn_spacevine_piece(turf/location, obj/structure/vine/parent, list/muts)
@@ -371,7 +361,7 @@
 	return SV
 
 /datum/vine_controller/proc/endvines()
-	for(var/obj/structure/vine/V in vines)
+	for(var/obj/structure/vine/V as anything in vines)
 		V.dieepic()
 	qdel(src)
 
@@ -380,10 +370,6 @@
 	vines -= S
 	growth_queue -= S
 	if(!vines.len)
-//		var/obj/item/seeds/kudzu/KZ = new(S.loc)
-//		KZ.mutations |= S.mutations
-//		KZ.set_potency(mutativeness * 10)
-//		KZ.set_production((spread_cap / initial(spread_cap)) * 5)
 		qdel(src)
 
 /datum/vine_controller/process()
@@ -489,15 +475,14 @@
 	if(!override)
 		qdel(src)
 
-/obj/structure/vine/CanPass(atom/movable/mover, turf/target)
+/obj/structure/vine/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(isvineimmune(mover))
-		. = TRUE
-	else
-		. = ..()
+		return TRUE
 
 /proc/isvineimmune(atom/A)
 	. = FALSE
 	if(isliving(A))
 		var/mob/living/M = A
-		if(("vines" in M.faction) || ("plants" in M.faction))
+		if((FACTION_VINES in M.faction) || (FACTION_PLANTS in M.faction))
 			. = TRUE

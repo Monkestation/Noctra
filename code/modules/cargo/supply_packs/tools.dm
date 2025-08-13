@@ -18,6 +18,11 @@
 	cost = 20
 	contains = /obj/item/lockpickring/mundane
 
+/datum/supply_pack/tools/keyrings
+	name = "Keyring"
+	cost = 7
+	contains = /obj/item/storage/keyring
+
 /datum/supply_pack/tools/needle
 	name = "Sewing Needle"
 	cost = 10
@@ -45,35 +50,34 @@
 
 /datum/supply_pack/tools/flint
 	name = "Flint"
-	cost = 20
+	cost = 10
 	contains = /obj/item/flint
 
 /datum/supply_pack/tools/dyebin
-	name = "Fine dyes"
-	cost = 200
+	name = "Dye Bin"
+	cost = 150
 	contains = /obj/structure/dye_bin
 
-
 /datum/supply_pack/tools/candles
-	name = "Candles"
-	cost = 10
+	name = "Candles (3)"
+	cost = 8
 	contains = list(/obj/item/candle/yellow,
 	/obj/item/candle/yellow,
 	/obj/item/candle/yellow)
 
 /datum/supply_pack/tools/lamptern
 	name = "Iron Lamptern"
-	cost = 12
+	cost = 20
 	contains = /obj/item/flashlight/flare/torch/lantern
 
 /datum/supply_pack/tools/pick
-	name = "Pickaxe"
+	name = "Iron Pickaxe"
 	cost = 15
 	contains = /obj/item/weapon/pick
 
 /datum/supply_pack/tools/tongs
 	name = "Tongs"
-	cost = 20
+	cost = 15
 	contains = /obj/item/weapon/tongs
 
 /datum/supply_pack/tools/hammer
@@ -101,19 +105,29 @@
 	cost = 15
 	contains = /obj/item/weapon/hoe
 
+/datum/supply_pack/tools/thresher
+	name = "Thresher"
+	cost = 15
+	contains = /obj/item/weapon/thresher
+
+/datum/supply_pack/tools/plough
+	name = "Plough"
+	cost = 60
+	contains = /obj/structure/plough
+
 /datum/supply_pack/tools/bottle
 	name = "Glass Bottle"
-	cost = 3
+	cost = 2
 	contains = /obj/item/reagent_containers/glass/bottle
 
 /datum/supply_pack/tools/alch_bottle
 	name = "Alchemy Bottle"
-	cost = 1
+	cost = 3
 	contains = /obj/item/reagent_containers/glass/alchemical
 
 /datum/supply_pack/tools/alch_bottles
-	name = "Bulk Alchemy Bottles" //Buy 8 now get 1 free!
-	cost = 8
+	name = "Bulk Alchemy Bottles (9)"
+	cost = 20
 	contains = list(/obj/item/reagent_containers/glass/alchemical,/obj/item/reagent_containers/glass/alchemical,/obj/item/reagent_containers/glass/alchemical,
 	/obj/item/reagent_containers/glass/alchemical,/obj/item/reagent_containers/glass/alchemical,/obj/item/reagent_containers/glass/alchemical,
 	/obj/item/reagent_containers/glass/alchemical,/obj/item/reagent_containers/glass/alchemical,/obj/item/reagent_containers/glass/alchemical)
@@ -125,7 +139,7 @@
 
 /datum/supply_pack/tools/fryingpan
 	name = "Frying Pan"
-	cost = 12
+	cost = 10
 	contains = /obj/item/cooking/pan
 
 /datum/supply_pack/tools/pot
@@ -136,7 +150,7 @@
 /datum/supply_pack/food/cutlery
 	name = "Set of Cutlery"
 	cost = 10
-	contains = list(/obj/item/kitchen/platter/clay,
+	contains = list(/obj/item/plate/clay,
 	/obj/item/reagent_containers/glass/bowl/clay,
 	/obj/item/reagent_containers/glass/cup,
 	/obj/item/kitchen/fork,
@@ -144,26 +158,26 @@
 
 /datum/supply_pack/tools/wpipe
 	name = "Westman Pipe"
-	cost = 10
+	cost = 5
 	contains = /obj/item/clothing/face/cigarette/pipe/westman
 
 /datum/supply_pack/tools/fishingrod
 	name = "Fishing Rod"
-	cost = 12
+	cost = 10
 	contains = /obj/item/fishingrod
 
 /datum/supply_pack/tools/bait
 	name = "Fishing Grub"
-	cost = 6
+	cost = 4
 	contains = /obj/item/fishing/bait/deluxe
 
 /datum/supply_pack/tools/fishingline
-	name = "Premium Fishing line"
+	name = "Premium Fishing Line"
 	cost = 25
 	contains = /obj/item/fishing/reel/deluxe
 
 /datum/supply_pack/tools/fishinghook
-	name = "Premium Fishing hook"
+	name = "Premium Fishing Hook"
 	cost = 25
 	contains = /obj/item/fishing/hook/deluxe
 
@@ -189,20 +203,10 @@
 
 /datum/supply_pack/tools/surgerybag
 	name = "Set of Surgical Tools"
-	cost = 100
+	cost = 65
 	contains = /obj/item/storage/backpack/satchel/surgbag
 
-/datum/supply_pack/tools/glassware_set
-	name = "Set of Glassware Cups"
-	cost = 34 // These glasses are really expensive
-	contains = list(/obj/item/reagent_containers/glass/cup/glassware, /obj/item/reagent_containers/glass/cup/glassware, /obj/item/reagent_containers/glass/cup/glassware)
-
-/datum/supply_pack/tools/glassware_set
-	name = "Set of Glassware Wine Glasses"
-	cost = 34 // These glasses are really expensive
-	contains = list(/obj/item/reagent_containers/glass/cup/glassware/wineglass, /obj/item/reagent_containers/glass/cup/glassware/wineglass, /obj/item/reagent_containers/glass/cup/glassware/wineglass)
-
-/datum/supply_pack/tools/glassware_set
-	name = "Set of Glassware Shot Glasses"
-	cost = 28 // These glasses are really expensive
-	contains = list(/obj/item/reagent_containers/glass/cup/glassware/shotglass, /obj/item/reagent_containers/glass/cup/glassware/shotglass, /obj/item/reagent_containers/glass/cup/glassware/shotglass,)
+/datum/supply_pack/tools/bottle_kit
+	name = "Bottle Kit"
+	cost = 50
+	contains = list(/obj/item/bottle_kit)

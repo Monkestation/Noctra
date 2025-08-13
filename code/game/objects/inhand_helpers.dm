@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	var/extra_index = get_extra_onmob_index()
 	if(extra_index) //WIP, unimplemented
 		used_index += extra_index
-	if(HAS_BLOOD_DNA(src))
+	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
 		used_index += "_b"
 	var/static/list/onmob_sprites = list()
 	var/icon/onmob = onmob_sprites["[tag][behind][mirrored][used_index]"]
@@ -77,31 +77,36 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 			GLOB.IconStates_cache[icon] = istates
 
 		if("[icon_state]_behind" in GLOB.IconStates_cache[icon])
-			blended=icon("icon"=icon, "icon_state"="[icon_state]_behind")
+			blended = icon("icon" = icon, "icon_state" = "[icon_state]_behind")
 			skipoverlays = TRUE
 		else
-			blended=icon("icon"=icon, "icon_state"=icon_state)
+			blended = icon("icon" = icon, "icon_state" = icon_state)
 	else
-		blended=icon("icon"=icon, "icon_state"=icon_state)
+		blended = icon("icon" = icon, "icon_state" = icon_state)
 
 	if(!blended)
-		blended=getFlatIcon(src)
+		blended = getFlatIcon(src)
 
 	if(!blended)
 		return
+
 	if(!skipoverlays)
-		for(var/V in overlays)
-			var/image/IM = V
-			var/icon/image_overlay = new(IM.icon,IM.icon_state)
-			if(IM.color)
-				image_overlay.Blend(IM.color,ICON_MULTIPLY)
-			blended.Blend(image_overlay,ICON_OVERLAY)
+		for(var/mutable_appearance/overlay as anything in overlays)
+			var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, FLOOR_PLANE)
+			if(!(overlay.plane in plane_whitelist))
+				continue
+			var/icon/image_overlay = new(overlay.icon, overlay.icon_state)
+			if(image_overlay)
+				if(overlay.color)
+					image_overlay.Blend(overlay.color, ICON_MULTIPLY)
+				blended.Blend(image_overlay, ICON_OVERLAY)
 
 	var/icon/holder
 	if(blended.Height() == 32)
 		UW = 32
 		UH = 32
 		used_mask = 'icons/roguetown/helpers/inhand.dmi'
+
 	var/icon/masky
 	var/px = 0
 	var/py = 0
@@ -335,7 +340,7 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	if(I)
 		if(!used_cat && I.altgripped)
 			used_cat = "altgrip"
-		if(!used_cat && I.wielded)
+		if(!used_cat && HAS_TRAIT(I, TRAIT_WIELDED))
 			used_cat = "wielded"
 		if(!used_cat)
 			used_cat = "gen"
@@ -386,7 +391,7 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	if(I)
 		if(!used_cat && I.altgripped)
 			used_cat = "altgrip"
-		if(!used_cat && I.wielded)
+		if(!used_cat && HAS_TRAIT(I, TRAIT_WIELDED))
 			used_cat = "wielded"
 		if(!used_cat)
 			used_cat = "gen"
@@ -437,7 +442,7 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	if(I)
 		if(!used_cat && I.altgripped)
 			used_cat = "altgrip"
-		if(!used_cat && I.wielded)
+		if(!used_cat && HAS_TRAIT(I, TRAIT_WIELDED))
 			used_cat = "wielded"
 		if(!used_cat)
 			used_cat = "gen"
@@ -488,7 +493,7 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	if(I)
 		if(!used_cat && I.altgripped)
 			used_cat = "altgrip"
-		if(!used_cat && I.wielded)
+		if(!used_cat && HAS_TRAIT(I, TRAIT_WIELDED))
 			used_cat = "wielded"
 		if(!used_cat)
 			used_cat = "gen"
@@ -539,7 +544,7 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	if(I)
 		if(!used_cat && I.altgripped)
 			used_cat = "altgrip"
-		if(!used_cat && I.wielded)
+		if(!used_cat && HAS_TRAIT(I, TRAIT_WIELDED))
 			used_cat = "wielded"
 		if(!used_cat)
 			used_cat = "gen"
@@ -603,7 +608,7 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	if(I)
 		if(!used_cat && I.altgripped)
 			used_cat = "altgrip"
-		if(!used_cat && I.wielded)
+		if(!used_cat && HAS_TRAIT(I, TRAIT_WIELDED))
 			used_cat = "wielded"
 		if(!used_cat)
 			used_cat = "gen"
@@ -656,7 +661,7 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	if(I)
 		if(!used_cat && I.altgripped)
 			used_cat = "altgrip"
-		if(!used_cat && I.wielded)
+		if(!used_cat && HAS_TRAIT(I, TRAIT_WIELDED))
 			used_cat = "wielded"
 		if(!used_cat)
 			used_cat = "gen"
@@ -700,21 +705,15 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	if(I)
 		if(!used_cat && I.altgripped)
 			used_cat = "altgrip"
-		if(!used_cat && I.wielded)
+		if(!used_cat && HAS_TRAIT(I, TRAIT_WIELDED))
 			used_cat = "wielded"
 		if(!used_cat)
 			used_cat = "gen"
 
-		for(var/X in I.onprop)
-			if(X == used_cat)
-				var/list/L = I.onprop[X]
-				if(L.len)
-					if(!needtofind in L)
-						L += needtofind
-					for(var/P in L)
-						if(P == needtofind)
-							L[P] += 0.1
-							to_chat(LI, "[needtofind] = [L[P]]")
+		if(length(I.onprop?[used_cat]))
+			var/list/L = I.onprop[used_cat]
+			L[needtofind] += 0.1
+			to_chat(LI, "[needtofind] = [L[needtofind]]")
 	LI.update_inv_hands()
 	LI.update_inv_belt()
 	LI.update_inv_back()
@@ -744,22 +743,15 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 	if(I)
 		if(!used_cat && I.altgripped)
 			used_cat = "altgrip"
-		if(!used_cat && I.wielded)
+		if(!used_cat && HAS_TRAIT(I, TRAIT_WIELDED))
 			used_cat = "wielded"
 		if(!used_cat)
 			used_cat = "gen"
 
-		for(var/X in I.onprop)
-			if(X == used_cat)
-				var/list/L = I.onprop[X]
-				if(L.len)
-					if(!needtofind in L)
-						L += needtofind
-					for(var/P in L)
-						if(P == needtofind)
-							L[P] -= 0.1
-							to_chat(LI, "[needtofind] = [L[P]]")
-	LI.update_inv_hands()
+		if(length(I.onprop?[used_cat]))
+			var/list/L = I.onprop[used_cat]
+			L[needtofind] -= 0.1
+			to_chat(LI, "[needtofind] = [L[needtofind]]")
 	LI.update_inv_belt()
 	LI.update_inv_back()
 
@@ -805,18 +797,4 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 			var/list/screens = list(C.hud_used.plane_masters["[FLOOR_PLANE]"], C.hud_used.plane_masters["[GAME_PLANE]"], C.hud_used.plane_masters["[LIGHTING_PLANE]"])
 			for(var/whole_screen in screens)
 				animate(whole_screen, transform = matrix(), time = 5, easing = QUAD_EASING)
-#endif
-
-#ifdef TESTING
-/client/verb/door_test_button()
-	set category = "DEBUGTEST"
-	set name = "door_test_button"
-	if(mob)
-		var/mob/M = mob
-		if(isturf(M.loc))
-			var/turf/T = M.loc
-			for(var/obj/structure/mineral_door/D in T)
-				to_chat(M, "DOOR - [D]")
-				to_chat(M, "LOCKID: [D.lockid]")
-				to_chat(M, "LOCKSTATUS: [D.locked]")
 #endif

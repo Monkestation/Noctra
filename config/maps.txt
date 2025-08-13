@@ -18,10 +18,17 @@ map vanderlin
 	votable
 endmap
 
-#until vanderlin is working roguetown should be default
-map roguetown
+map rosewood
+	minplayers 90
+	votable
 endmap
 
-map dun_manor
-	disabled
+map daftmarsh
+	maxplayers 75
+	votable
+endmap
+
+map whitepalacepass
+	maxplayers 90
+	votable
 endmap

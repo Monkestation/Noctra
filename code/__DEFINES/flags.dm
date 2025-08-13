@@ -25,11 +25,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PROCESSING_PROJECTILE	(1<<5)
 #define PROCESSING_TODCHANGE	(1<<6)
 #define PROCESSING_INCONE		(1<<7)
-#define PROCESSING_HUMANNPC		(1<<8)
-#define PROCESSING_WATERLEVEL	(1<<9)
-#define PROCESSING_LIGHTING		(1<<10)
-#define PROCESSING_LOBBY	(1<<11)
-#define PROCESSING_DAMOVERLAYS	(1<<12)
+#define PROCESSING_WATERLEVEL	(1<<8)
+#define PROCESSING_LIGHTING		(1<<9)
+#define PROCESSING_LOBBY	(1<<10)
+#define PROCESSING_DAMOVERLAYS	(1<<11)
 
 //FLAGS BITMASK
 
@@ -57,11 +56,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Is the thing currently spinning?
 #define IS_SPINNING_1 (1<<15)
 /// Is this atom on top of another atom, and as such has click priority?
-#define IS_ONTOP_1 (1<<13)
+#define IS_ONTOP_1 (1<<16)
+/// Are we in the overlay queue
+#define OVERLAY_QUEUED_1 (1<<17)
 
-//turf-only flags
-#define NOJAUNT_1					(1<<0)
-#define UNUSED_RESERVATION_TURF_1	(1<<1)
 /// If a turf can be made dirty at roundstart. This is also used in areas.
 #define CAN_BE_DIRTY_1				(1<<2)
 /// If blood cultists can draw runes or build structures on this turf
@@ -70,27 +68,50 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_LAVA_GEN_1				(1<<6)
 /// Blocks ruins spawning on the turf
 #define NO_RUINS_1					(1<<10)
+/// If a turf can be damaged when attacked by items
+#define CAN_BE_ATTACKED_1			(1<<11)
 
 /*
 	These defines are used specifically with the atom/pass_flags bitmask
 	the atom/checkpass() proc uses them (tables will call movable atom checkpass(PASSTABLE) for example)
 */
 //flags for pass_flags
-#define PASSTABLE		(1<<0)
-#define PASSGLASS		(1<<1)
-#define PASSGRILLE		(1<<2)
-#define PASSBLOB		(1<<3)
-#define PASSMOB			(1<<4)
-#define PASSCLOSEDTURF	(1<<5)
-#define LETPASSTHROW	(1<<6)
+/// Allows you to pass over tables.
+#define PASSTABLE (1<<0)
+/// Allows you to pass over glass(this generally includes anything see-through that's glass-adjacent, ie. windows, windoors, airlocks with glass, etc.)
+#define PASSGLASS (1<<1)
+/// Allows you to pass over grilles.
+#define PASSGRILLE (1<<2)
+/// Allows you to pass over blob tiles.
+#define PASSBLOB (1<<3)
+/// Allows you to pass over mobs.
+#define PASSMOB (1<<4)
+/// Allows you to pass over closed turfs, ie. walls.
+#define PASSCLOSEDTURF (1<<5)
+/// Let thrown things past us. **ONLY MEANINGFUL ON pass_flags_self!**
+#define LETPASSTHROW (1<<6)
+/// Allows you to pass over structures, ie. racks, tables(if you don't already have PASSTABLE), etc.
+#define PASSSTRUCTURE (1<<7)
+/// Allows you to pass over doors.
+#define PASSDOORS (1<<8)
+/// Allows you to pass over dense items.
+#define PASSITEM (1<<9)
+/// Do not intercept click attempts during Adjacent() checks. See [turf/proc/ClickCross]. **ONLY MEANINGFUL ON pass_flags_self!**
+#define LETPASSCLICKS (1<<10)
+/// Allows you to pass over windows and window-adjacent stuff, like windows and windoors. Does not include doors with glass in them.
+#define PASSWINDOW (1<<11)
 
 //Movement Types
-#define GROUND			(1<<0)
-#define FLYING			(1<<1)
-#define VENTCRAWLING	(1<<2)
-#define FLOATING		(1<<3)
-/// When moving, will Bump()/Cross()/Uncross() everything, but won't be stopped.
-#define UNSTOPPABLE		(1<<4)
+/// Regular ground based movment
+#define GROUND (1<<0)
+/// Flying, typically with wings
+#define FLYING (1<<1)
+/// Not used but if we had vents it would use this
+#define VENTCRAWLING (1<<2)
+/// Like flying but for zero G where you lack control
+#define FLOATING (1<<3)
+/// When moving, will Cross()/Uncross() everything, but won't stop or Bump() anything.
+#define PHASING (1<<4)
 
 //Fire and Acid stuff, for resistance_flags
 #define LAVA_PROOF		(1<<0)
@@ -107,15 +128,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// can't be frozen
 #define FREEZE_PROOF	(1<<7)
 
-//tesla_zap
-#define TESLA_MACHINE_EXPLOSIVE		(1<<0)
-#define TESLA_ALLOW_DUPLICATES		(1<<1)
-#define TESLA_OBJ_DAMAGE			(1<<2)
-#define TESLA_MOB_DAMAGE			(1<<3)
-#define TESLA_MOB_STUN				(1<<4)
-
-#define TESLA_DEFAULT_FLAGS ALL
-#define TESLA_FUSION_FLAGS TESLA_OBJ_DAMAGE | TESLA_MOB_DAMAGE | TESLA_MOB_STUN
+#define EVERYTHING_PROOF (LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | INDESTRUCTIBLE | FREEZE_PROOF)
 
 //EMP protection
 #define EMP_PROTECT_SELF (1<<0)
@@ -125,7 +138,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 //Mob mobility var flags
 /// can move
 #define MOBILITY_MOVE			(1<<0)
-/// can, and is, standing up
+/// can stand
 #define MOBILITY_STAND			(1<<1)
 /// can pickup items
 #define MOBILITY_PICKUP			(1<<2)
@@ -137,11 +150,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define MOBILITY_STORAGE		(1<<5)
 /// can pull things
 #define MOBILITY_PULL			(1<<6)
-/// can stand, not affected by whether they are standing or not. Mostly used for AI. Revisit this bitflag
-#define MOBILITY_CANSTAND		(1<<7)
 
-#define MOBILITY_FLAGS_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL | MOBILITY_CANSTAND)
-#define MOBILITY_FLAGS_INTERACTION (MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_UI | MOBILITY_STORAGE)
+#define MOBILITY_FLAGS_DEFAULT (MOBILITY_MOVE | MOBILITY_STAND | MOBILITY_PICKUP | MOBILITY_USE | MOBILITY_UI | MOBILITY_STORAGE | MOBILITY_PULL)
 
 //alternate appearance flags
 #define AA_TARGET_SEE_APPEARANCE (1<<0)

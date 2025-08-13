@@ -1,6 +1,6 @@
 /obj/item/canvas
 	name = "canvas"
-	desc = "A perfect place to paint"
+	desc = "A perfect place to capture Psydonia through art."
 
 	icon = 'icons/paint_supplies/canvas_32.dmi'
 	icon_state = "canvas"
@@ -49,9 +49,10 @@
 	RegisterSignal(src, COMSIG_MOVABLE_TURF_ENTERED, PROC_REF(remove_showers))
 
 /obj/item/canvas/Destroy()
-	. = ..()
-	for(var/mob/mob in showers)
+	for(var/mob/mob as anything in showers)
 		remove_shower(mob)
+	QDEL_NULL(used_canvas)
+	return ..()
 
 /obj/item/canvas/attack_hand(mob/user)
 	. = ..()
@@ -63,15 +64,16 @@
 			anchored = FALSE
 			to_chat(user, "I unmount [src].")
 
-/obj/item/canvas/attack_right(mob/user)
+/obj/item/canvas/attack_hand_secondary(mob/user, params)
 	. = ..()
-	if(user.get_active_held_item())
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 	if(user in showers)
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user?.client.screen += used_canvas
 	showers |= user
 	RegisterSignal(user, COMSIG_MOVABLE_TURF_ENTERED, PROC_REF(remove_shower))
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/canvas/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -165,6 +167,10 @@
 	icon = draw
 	underlays += base
 
+/atom/movable/screen/canvas/Destroy()
+	host = null
+	return ..()
+
 /atom/movable/screen/canvas/Click(location, control, params)
 	. = ..()
 	if(host.item_flags & IN_STORAGE)
@@ -175,15 +181,15 @@
 	var/current_color = brush.current_color
 	if(!current_color)
 		return
-	var/list/param_list = params2list(params)
 
-	var/x = text2num(param_list["icon-x"])
-	var/y = text2num(param_list["icon-y"])
+	var/list/modifiers = params2list(params)
+	var/x = text2num(LAZYACCESS(modifiers, ICON_X))
+	var/y = text2num(LAZYACCESS(modifiers, ICON_Y))
 
 	y = min(FLOOR(y / host.canvas_divider_y, 1), host.canvas_size_y-1)
 	x = min(FLOOR(x / host.canvas_divider_x, 1), host.canvas_size_x-1)
 
-	if(param_list["right"])
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		var/original_color = base_icon.GetPixel(x, y)
 		current_color = original_color
 		modified_areas -= "[x][y]"

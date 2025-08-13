@@ -26,7 +26,7 @@
 	return
 
 ///When a carbon mob breathes in the pollutant
-/datum/pollutant/proc/breathe_act(mob/living/carbon/victim, amount)
+/datum/pollutant/proc/breathe_act(mob/living/carbon/victim, amount, total_amount)
 	return
 
 ///When a carbon mob smells scents this is called
@@ -34,12 +34,14 @@
 	return
 
 
-/datum/pollutant/fragrance/on_life(parent)
+/datum/pollutant/fragrance/on_smell(parent)
 	. = ..()
 	for(var/mob/living/carbon/human/H in view(1, parent))
 		if(!H)
 			continue
 		if(!considered_alive(H.mind))
+			continue
+		if(!H.can_smell())
 			continue
 		if(H.has_stress(/datum/stressevent/perfume))
 			continue

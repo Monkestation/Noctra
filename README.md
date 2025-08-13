@@ -1,14 +1,15 @@
 # VANDERLIN
 
-[![BYOND Build](https://github.com/Vanderlin-Tales-Of-Wine/Vanderlin/actions/workflows/ci_suite.yml/badge.svg)](https://github.com/Vanderlin-Tales-Of-Wine/Vanderlin/actions/workflows/ci_suite.yml)
+[![BYOND Build](https://github.com/Monkestation/Vanderlin/actions/workflows/ci_suite.yml/badge.svg)](https://github.com/Monkestation/Vanderlin/actions/workflows/ci_suite.yml)
 
 | Website                   | Link                                           |
 |---------------------------|------------------------------------------------|
-| Discord | [https://discord.com/invite/monkestation](https://discord.com/invite/monkestation) |
-| Code    | [https://github.com/Vanderlin-Tales-Of-Wine/Vanderlin](https://github.com/Vanderlin-Tales-Of-Wine/Vanderlin)    |
+| Discord | [https://discord.monkestation.com](https://discord.monkestation.com) |
+| Code    | [https://github.com/Monkestation/Vanderlin](https://github.com/Monkestation/Vanderlin)    |
 | Wiki    | N/A |
 
 ## LICENSE
+Original Fork Originates from [commit c28b351807bad950d2b323ada048190844bbda32](https://github.com/tgstation/tgstation/commit/c28b351807bad950d2b323ada048190844bbda32).
 
 All code after [commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST](https://github.com/tgstation/tgstation/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under [GNU AGPL v3](https://www.gnu.org/licenses/agpl-3.0.html).
 

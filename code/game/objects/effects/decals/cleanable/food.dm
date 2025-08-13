@@ -3,6 +3,7 @@
 	icon = 'icons/effects/tomatodecal.dmi'
 	gender = NEUTER
 	beauty = -100
+	clean_type = CLEAN_TYPE_HARD_DECAL
 
 /obj/effect/decal/cleanable/food/tomato_smudge
 	name = "tomato smudge"
@@ -31,9 +32,20 @@
 	name = "salt pile"
 	desc = ""
 	icon_state = "salt_pile"
+	clean_type = CLEAN_TYPE_LIGHT_DECAL
+
+/atom/proc/salt_act()
+	return
+
+/obj/effect/decal/cleanable/food/salt/Initialize(mapload)
+	. = ..()
+	for(var/atom/movable/AM in loc)
+		AM.salt_act()
 
 /obj/effect/decal/cleanable/food/flour
 	name = "flour"
 	desc = ""
 	icon_state = "flour"
 	mouse_opacity = 0
+	clean_type = CLEAN_TYPE_LIGHT_DECAL
+

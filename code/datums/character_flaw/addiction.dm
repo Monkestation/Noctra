@@ -1,8 +1,3 @@
-
-/mob/living/carbon/human
-	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
-	var/datum/charflaw/charflaw
-
 /mob/proc/sate_addiction()
 	return
 
@@ -20,15 +15,14 @@
 			remove_status_effect(A.debuff)
 
 /datum/charflaw/addiction
+	abstract_type = /datum/charflaw/addiction
 	var/next_sate = 0
 	var/sated = TRUE
 	var/time = 5 MINUTES
-//	var/debuff = /datum/status_effect/debuff/addiction
 	var/debuff = /datum/status_effect/debuff/addiction
 	var/needsate_text
 	var/sated_text = "That's much better..."
 	var/unsate_time
-
 
 /datum/charflaw/addiction/New()
 	..()
@@ -40,7 +34,7 @@
 		return
 	if(user.mind?.antag_datums)
 		for(var/datum/antagonist/D in user.mind?.antag_datums)
-			if(istype(D, /datum/antagonist/vampirelord) || istype(D, /datum/antagonist/werewolf) || istype(D, /datum/antagonist/skeleton) || istype(D, /datum/antagonist/zombie))
+			if(istype(D, /datum/antagonist/vampire) || istype(D, /datum/antagonist/werewolf) || istype(D, /datum/antagonist/skeleton) || istype(D, /datum/antagonist/zombie))
 				return
 	var/mob/living/carbon/human/H = user
 	var/oldsated = sated
@@ -110,19 +104,12 @@
 	time = 30 MINUTES
 	needsate_text = "I need to STEAL something! I'll die if I don't!"
 
-/// PAIN FREEK
-
-/datum/charflaw/addiction/masochist
-	name = "Pain Freek"
-	desc = "They call me a freek, but it just feels so good..."
-	time = 25 MINUTES
-	needsate_text = "I need to feel good... punch me in the face!"
-
 /// LOVES SEEING VISCERA OR SOME SHIT
 
 /datum/charflaw/addiction/maniac // this will probably NOT be used as an actual flaw
 	name = "Maniac"
 	desc = "The worms call me the maniac... I just like seeing limbs fly and blood drip, is there something so BAD about that?"
+	random_exempt = TRUE
 	time = 40 MINUTES // we dont wanna contribute to fragging
 	needsate_text = "Where's all the blood?"
 

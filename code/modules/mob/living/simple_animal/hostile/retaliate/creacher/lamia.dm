@@ -16,7 +16,7 @@
 						/obj/item/reagent_containers/food/snacks/fat = 1,
 						/obj/item/alch/sinew = 2,
 						/obj/item/alch/bone = 1)
-	faction = list("orcs")
+	faction = list(FACTION_ORCS)
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_REPTILE
 	health = 200
 	maxHealth = 200
@@ -30,9 +30,9 @@
 	food_type = list(/obj/item/reagent_containers/food/snacks/meat, /obj/item/bodypart, /obj/item/organ)
 	footstep_type = null
 	pooptype = null
-	TOTALCON = 6
-	TOTALSTR = 11
-	TOTALSPD = 12
+	base_constitution = 6
+	base_strength = 11
+	base_speed = 12
 	deaggroprob = 0
 	defprob = 35
 	defdrain = 5
@@ -42,34 +42,20 @@
 	dodgetime = 15
 	aggressive = 1
 	remains_type = null
-	body_eater = TRUE
-	var/sneaking = FALSE
-	var/light_check = 0
-	var/light_check_delay = 3 SECONDS
-	var/sneak_cooldown = 0
-	var/sneak_cooldown_delay = 30 SECONDS
+
+	ai_controller = /datum/ai_controller/lamia
+
+
 
 /mob/living/simple_animal/hostile/retaliate/lamia/Initialize()
 	. = ..()
+	AddComponent(/datum/component/ai_aggro_system)
+	AddElement(/datum/element/ai_flee_while_injured, 0.2, retreat_health)
 	if(prob(20))
 		gender = MALE
 		icon_state = "lamia"
 		icon_living = "lamia"
-	update_icon()
-
-/mob/living/simple_animal/hostile/retaliate/lamia/AttackingTarget()
-	if(sneaking)
-		break_sneak()
-	return ..()
-
-/mob/living/simple_animal/hostile/retaliate/lamia/handle_automated_action()
-	if(!sneaking && world.time >= sneak_cooldown && isturf(loc) && light_check < world.time)
-		var/turf/ourlocation = get_turf(src)
-		var/light_amount = ourlocation.get_lumcount()
-		light_check = world.time + light_check_delay
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			sneak_now()
-	return ..()
+	update_appearance()
 
 /mob/living/simple_animal/hostile/retaliate/lamia/simple_limb_hit(zone)
 	if(!zone)
@@ -112,13 +98,3 @@
 		if(BODY_ZONE_L_ARM)
 			return "tail"
 	return ..()
-
-/mob/living/simple_animal/hostile/retaliate/lamia/proc/sneak_now()
-	if(!sneaking && world.time >= sneak_cooldown)
-		sneaking = TRUE
-		alpha = 100
-
-/mob/living/simple_animal/hostile/retaliate/lamia/proc/break_sneak()
-	sneaking = FALSE
-	alpha = 255
-	sneak_cooldown = world.time + sneak_cooldown_delay

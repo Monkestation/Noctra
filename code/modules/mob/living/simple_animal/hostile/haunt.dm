@@ -1,3 +1,15 @@
+/datum/intent/simple/slash
+	name = "slash"
+	icon_state = "inchop"
+	attack_verb = list("cuts", "slashes")
+	animname = "slash"
+	blade_class = BCLASS_CHOP
+	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
+	chargetime = 0
+	penfactor = 10
+	swingdelay = 3
+	item_damage_type = "slash"
+
 /mob/living/simple_animal/hostile/haunt
 	name = "haunt"
 	desc = ""
@@ -13,7 +25,6 @@
 	base_intents = list(/datum/intent/simple/slash)
 	gender = MALE
 	speak_chance = 0
-	turns_per_move = 5
 	response_help_continuous = "passes through"
 	response_help_simple = "pass through"
 	maxHealth = 50
@@ -27,7 +38,6 @@
 	obj_damage = 1
 	melee_damage_lower = 15
 	melee_damage_upper = 20
-	attack_same = FALSE
 	attack_sound = 'sound/combat/wooshes/bladed/wooshmed (1).ogg'
 	dodge_sound = 'sound/combat/dodge.ogg'
 	parry_sound = "sword"
@@ -35,14 +45,22 @@
 	speak_emote = list("growls")
 	limb_destroyer = 1
 	del_on_death = TRUE
-	TOTALLUC = 11
-	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	faction = list("undead")
+	faction = list(FACTION_UNDEAD)
 	footstep_type = null
 	defdrain = 20
 	canparry = TRUE
 	var/obj/structure/bonepile/slavepile
+
+	base_fortune = 11
+
+	ai_controller = /datum/ai_controller/haunt
+
+
+
+/mob/living/simple_animal/hostile/haunt/Initialize()
+	. = ..()
+	AddComponent(/datum/component/ai_aggro_system)
 
 /mob/living/simple_animal/hostile/haunt/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	return FALSE
@@ -109,7 +127,7 @@
 	layer = BELOW_OBJ_LAYER
 	attacked_sound = 'sound/vo/mobs/ghost/skullpile_hit.ogg'
 
-/obj/structure/intert_bonepile
+/obj/structure/inert_bonepile
 	icon = 'icons/roguetown/mob/monster/wraith.dmi'
 	icon_state = "hauntpile"
 	max_integrity = 100
@@ -124,9 +142,19 @@
 	soundloop.start()
 	for(var/i in 1 to maxhaunts)
 		spawn_haunt()
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
-/obj/structure/bonepile/update_icon()
+/obj/structure/bonepile/Destroy()
+	if(soundloop)
+		QDEL_NULL(soundloop)
+	for(var/mob/living/simple_animal/hostile/haunt/H as anything in haunts)
+		H.death()
+	haunts.Cut()
+	var/spawned = pick(/obj/item/reagent_containers/powder/spice)
+	new spawned(get_turf(src))
+	return ..()
+
+/obj/structure/bonepile/update_icon_state()
 	. = ..()
 	if(spawning_haunt)
 		icon_state = "hauntpile-r"
@@ -139,36 +167,16 @@
 	spawning_haunt = FALSE
 	var/mob/living/simple_animal/hostile/haunt/H = new (get_turf(src))
 	H.slavepile = src
+	H.ai_controller.set_blackboard_key(BB_LEYLINE_SOURCE, src)
 	haunts += H
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/bonepile/proc/spawn_haunt()
 	if(QDELETED(src))
 		return
 	spawning_haunt = TRUE
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 	addtimer(CALLBACK(src, PROC_REF(createhaunt)), rand(4,6) SECONDS)
-
-/obj/structure/bonepile/Destroy()
-	soundloop.stop()
-	spawning_haunt = null
-	for(var/H in haunts)
-		var/mob/living/simple_animal/hostile/haunt/D = H
-		D.death()
-	var/spawned = pick(/obj/item/reagent_containers/powder/spice)
-	new spawned(get_turf(src))
-	. = ..()
-
-/obj/structure/bonepile/attackby(obj/item/W, mob/user, params)
-	. = ..()
-	if(user)
-		for(var/H in haunts)
-			var/mob/living/simple_animal/hostile/haunt/D = H
-			D.GiveTarget(user)
-
-/mob/living/simple_animal/hostile/haunt/taunted(mob/user)
-	GiveTarget(user)
-	return
 
 /mob/living/simple_animal/hostile/haunt/Initialize()
 	. = ..()

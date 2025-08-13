@@ -28,11 +28,10 @@
 
 	. = ..()
 
+	SEND_SIGNAL(src, COMSIG_HUMAN_LIFE)
+
 	if (QDELETED(src))
 		return 0
-
-	if(. && (mode != AI_OFF))
-		handle_ai()
 
 	if(advsetup)
 		Stun(50)
@@ -46,10 +45,16 @@
 	if(IsSleeping())
 		if(health > 0)
 			remove_status_effect(/datum/status_effect/debuff/trainsleep)
-			if(has_status_effect(/datum/status_effect/debuff/sleepytime))
-				remove_status_effect(/datum/status_effect/debuff/sleepytime)
+			remove_status_effect(/datum/status_effect/debuff/sleepytime)
+			if(has_status_effect(/datum/status_effect/debuff/dreamytime))
+				remove_status_effect(/datum/status_effect/debuff/dreamytime)
 				if(mind)
 					mind.sleep_adv.advance_cycle()
+					if(!mind.antag_datums || !mind.antag_datums.len)
+						allmig_reward++
+						to_chat(src, span_danger("Nights Survived: \Roman[allmig_reward]"))
+						if(allmig_reward > 0 && allmig_reward % 2 == 0)
+							adjust_triumphs(1)
 	if(HAS_TRAIT(src, TRAIT_LEPROSY))
 		if(MOBTIMER_FINISHED(src, MT_LEPERBLEED, 6 MINUTES))
 			if(prob(10))
@@ -70,7 +75,7 @@
 		charflaw.flaw_on_life(src)
 	if(health <= 0)
 		apply_damage(1, OXY)
-	if(mode == AI_OFF && !client && !HAS_TRAIT(src, TRAIT_NOSLEEP))
+	if(!client && !HAS_TRAIT(src, TRAIT_NOSLEEP) && !ai_controller)
 		if(MOBTIMER_EXISTS(src, MT_SLO))
 			if(MOBTIMER_FINISHED(src, MT_SLO, 90 SECONDS)) //?????
 				Sleeping(100)
@@ -110,7 +115,7 @@
 				if(gender == MALE)
 					if(prob(50))
 						has_stubble = TRUE
-						update_hair()
+						update_body()
 
 
 /mob/living/carbon/human/handle_traits()
@@ -175,7 +180,7 @@
 	. = ..()
 	var/coverhead
 	//add belt slots to this for rusting
-	var/list/body_parts = list(head, wear_mask, wear_wrists, wear_shirt, wear_neck, cloak, wear_armor, wear_pants, backr, backl, gloves, shoes, belt, s_store, ears, wear_ring) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
+	var/list/body_parts = list(head, wear_mask, wear_wrists, wear_shirt, wear_neck, cloak, wear_armor, wear_pants, backr, backl, gloves, shoes, belt, wear_ring)
 	for(var/bp in body_parts)
 		if(!bp)
 			continue
@@ -342,7 +347,7 @@
 		return
 	if(!eyesclosed)
 		return
-	if(mobility_flags & MOBILITY_STAND)
+	if(body_position != LYING_DOWN)
 		return
 	if(!istype(loc, /obj/structure/closet/crate/coffin))
 		return

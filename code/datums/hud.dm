@@ -5,8 +5,13 @@ GLOBAL_LIST_EMPTY(all_huds)
 //GLOBAL HUD LIST
 GLOBAL_LIST_INIT(huds, list(
 	ROGUE_HUD_MARRIED = new/datum/atom_hud/antag(),
-	ANTAG_HUD_TRAITOR = new/datum/atom_hud/antag/hidden(),
+	ANTAG_HUD_HIDDEN = new/datum/atom_hud/antag/hidden(),
 	ANTAG_HUD_REV = new/datum/atom_hud/antag(),
+	ANTAG_HUD_NECROMANCY = new/datum/atom_hud/antag(),
+	ANTAG_HUD_VAMPIRE = new/datum/atom_hud/antag(),
+	ANTAG_HUD_WEREWOLF = new/datum/atom_hud/antag(),
+	ANTAG_HUD_ZIZOID = new/datum/atom_hud/antag(),
+	ANTAG_HUD_BANDIT = new/datum/atom_hud/antag(),
 	))
 
 /datum/atom_hud
@@ -121,3 +126,13 @@ GLOBAL_LIST_INIT(huds, list(
 
 /mob/dead/new_player/add_click_catcher()
 	return
+
+/mob/proc/add_family_hud(antag_hud_type, antag_hud_name)
+	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
+	hud.join_hud(src)
+	set_antag_hud(src, antag_hud_name)
+
+/mob/proc/remove_family_hud(antag_hud_type)
+	var/datum/atom_hud/antag/hud = GLOB.huds[antag_hud_type]
+	hud.leave_hud(src)
+	set_antag_hud(src, null)

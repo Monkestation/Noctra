@@ -2,7 +2,6 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 
 /mob/living/carbon/human/species/rousman
 	name = "rousman"
-
 	icon = 'icons/roguetown/mob/monster/rousman.dmi'
 	icon_state = "rousman"
 	race = /datum/species/rousman
@@ -13,42 +12,44 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 	ambushable = FALSE
 	base_intents = list(INTENT_STEAL, INTENT_HELP, INTENT_DISARM, /datum/intent/unarmed/claw, /datum/intent/simple/bite, /datum/intent/jump)
 	possible_rmb_intents = list()
-	vitae_pool = 200
+	bloodpool = 200
 
 /mob/living/carbon/human/species/rousman/Initialize()
 	. = ..()
-	//Eyes glow in the dark
-	if(stat != DEAD)
-		var/mutable_appearance/eye_overlay = mutable_appearance('icons/roguetown/mob/monster/rousman.dmi', "rousman_eyes")
-		eye_overlay.plane = 19
-		eye_overlay.layer = 19
-		add_overlay(eye_overlay)
+	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/carbon/human/species/rousman/death(gibbed)
-	..()
-	//Stop glowing in the dark when dead
-	var/mutable_appearance/eye_overlay = mutable_appearance('icons/roguetown/mob/monster/rousman.dmi', "rousman_eyes")
-	eye_overlay.color = COLOR_BLACK
-	eye_overlay.plane = 19
-	eye_overlay.layer = 19
-	add_overlay(eye_overlay)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/mob/living/carbon/human/species/rousman/update_overlays()
+	. = ..()
+	if(stat == DEAD)
+		return
+	. += emissive_appearance('icons/roguetown/mob/monster/rousman.dmi', "rousman_eyes", alpha = src.alpha)
 
 /mob/living/carbon/human/species/rousman/npc
-	aggressive = 1
-	mode = AI_IDLE
+	ai_controller = /datum/ai_controller/human_npc
 	dodgetime = 13
 	canparry = TRUE
 	flee_in_pain = TRUE
 	wander = FALSE
 
+/mob/living/carbon/human/species/rousman/npc/Initialize()
+	. = ..()
+	AddComponent(/datum/component/ai_aggro_system)
+	AddComponent(/datum/component/combat_noise, list("scream" = 5, "laugh" = 1))
+
+/mob/living/carbon/human/species/rousman/ambush
+	ai_controller = /datum/ai_controller/human_npc
+
 /mob/living/carbon/human/species/rousman/ambush/after_creation()
 	. = ..()
+	AddComponent(/datum/component/ai_aggro_system)
 	job = "Ambusher Rousman"
 	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/job/npc/rousman/ambush)
-	aggressive=1
-	mode = AI_IDLE
 	dodgetime = 13
 	canparry = TRUE
 	flee_in_pain = TRUE
@@ -124,20 +125,23 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 /obj/item/bodypart/head/rousman/skeletonize()
 	. = ..()
 	icon_state = "rousman_skel_head"
+	headprice = 2
 	sellprice = 2
 
 
 /datum/species/rousman
 	name = "rousman"
-	id = "rousman"
-	species_traits = list(NO_UNDERWEAR,NOEYESPRITES)
+	id = SPEC_ID_ROUSMAN
+	species_traits = list(NO_UNDERWEAR)
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE, TRAIT_EASYDISMEMBER, TRAIT_CRITICAL_WEAKNESS, TRAIT_NASTY_EATER, TRAIT_LEECHIMMUNE, TRAIT_INHUMENCAMP)
-	no_equip = list(SLOT_SHIRT, SLOT_WEAR_MASK, SLOT_GLOVES, SLOT_SHOES, SLOT_PANTS, SLOT_S_STORE)
-	nojumpsuit = 1
-	sexes = 1
-	offset_features = list(OFFSET_HANDS = list(0,-4), OFFSET_HANDS_F = list(0,-4))
+
+	no_equip = list(ITEM_SLOT_SHIRT, ITEM_SLOT_MASK, ITEM_SLOT_GLOVES, ITEM_SLOT_SHOES, ITEM_SLOT_PANTS)
+	offset_features_m = list(OFFSET_HANDS = list(0,-4))
+	offset_features_f = list(OFFSET_HANDS = list(0,-4))
+	dam_icon_f = null
+	dam_icon_m = null
 	damage_overlay_type = ""
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
+	changesource_flags = WABBAJACK
 	var/raceicon = "rousman"
 
 /datum/species/rousman/update_damage_overlays(mob/living/carbon/human/H)
@@ -188,7 +192,7 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 	apply_overlay(BODY_LAYER)
 	dna.species.update_damage_overlays()
 
-/mob/living/carbon/human/species/rousman/update_inv_head()
+/mob/living/carbon/human/species/rousman/update_inv_head(hide_nonstandard = FALSE)
 	update_wearable()
 /mob/living/carbon/human/species/rousman/update_inv_armor()
 	update_wearable()
@@ -197,24 +201,17 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
 
-/mob/living/carbon/human/species/rousman/handle_combat()
-	if(mode == AI_HUNT)
-		if(prob(5))
-			emote("scream")
-		else if(prob(1))
-			emote("laugh")
-	. = ..()
-
 /mob/living/carbon/human/species/rousman/after_creation()
 	..()
 	gender = MALE
 	if(src.dna && src.dna.species)
 		src.dna.species.soundpack_m = new /datum/voicepack/rousman()
 		src.dna.species.soundpack_f = new /datum/voicepack/rousman()
-		var/obj/item/headdy = get_bodypart("head")
+		var/obj/item/bodypart/head/headdy = get_bodypart("head")
 		if(headdy)
 			headdy.icon = 'icons/roguetown/mob/monster/rousman.dmi'
 			headdy.icon_state = "[src.dna.species.id]_head"
+			headdy.headprice = rand(7,20)
 			headdy.sellprice = rand(7,20)
 	var/obj/item/organ/eyes/eyes = src.getorganslot(ORGAN_SLOT_EYES)
 	if(eyes)
@@ -226,7 +223,7 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 	if(src.charflaw)
 		QDEL_NULL(src.charflaw)
 	update_body()
-	faction = list("rats")
+	faction = list(FACTION_RATS)
 	name = "rousman"
 	real_name = "rousman"
 	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
@@ -235,10 +232,14 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 
 /datum/component/rot/corpse/rousman/process()
 	var/amt2add = 10 //1 second
+	var/time_elapsed = last_process ? (world.time - last_process)/10 : 1
 	if(last_process)
 		amt2add = ((world.time - last_process)/10) * amt2add
 	last_process = world.time
 	amount += amt2add
+	if(has_world_trait(/datum/world_trait/pestra_mercy))
+		amount -= (is_ascendant(PESTRA) ? 2.5 : 5) * time_elapsed
+
 	var/mob/living/carbon/C = parent
 	if(!C)
 		qdel(src)
@@ -257,10 +258,10 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 			if(!B.rotted)
 				B.rotted = TRUE
 				should_update = TRUE
-			if(B.rotted && amount < 16 MINUTES)
+			if(B.rotted && amount < 16 MINUTES && !(FACTION_MATTHIOS in C.faction))
 				var/turf/open/T = C.loc
 				if(istype(T))
-					T.pollute_turf(/datum/pollutant/rot, 10)
+					T.pollute_turf(/datum/pollutant/rot, 4)
 	if(should_update)
 		if(amount > 20 MINUTES)
 			C.update_body()
@@ -277,12 +278,12 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 
 /datum/outfit/job/npc/rousman/ambush/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.TOTALSTR = rand(6, 10)
-	H.TOTALPER = rand(6, 10)
-	H.TOTALINT = rand(2, 5)
-	H.TOTALCON = rand(4, 8)
-	H.TOTALEND = rand(7, 10)
-	H.TOTALSPD = rand(10, 15)
+	H.base_strength = rand(6, 10)
+	H.base_perception = rand(6, 10)
+	H.base_intelligence = rand(2, 5)
+	H.base_constitution = rand(4, 8)
+	H.base_endurance = rand(7, 10)
+	H.base_speed = rand(10, 15)
 
 	var/loadout = rand(1,4)
 	switch(loadout)
@@ -328,9 +329,9 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 
 /obj/structure/rousman_hole
 	name = "narrow hole"
-	desc = ""
+	desc = "Is that infernal squeaking coming from this?"
 	icon = 'icons/roguetown/topadd/rousman/structures.dmi'
-	icon_state = ""
+	icon_state = "rousman_hole_inactive"
 	layer = BELOW_OBJ_LAYER
 	density = FALSE
 	anchored = TRUE
@@ -345,9 +346,16 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 	var/try_activating_timer = 12 MINUTES  //Timer to recheck if this obj can activate
 
 /obj/structure/rousman_hole/Initialize()
-	GLOB.rousman_ambush_objects |= src
 	. = ..()
+	GLOB.rousman_ambush_objects |= src
 	pre_activate_check()
+
+/obj/structure/rousman_hole/Destroy()
+	GLOB.rousman_ambush_objects -= src
+	for(var/obj/structure/rousman_alarm/alarm as anything in all_alarms)
+		QDEL_NULL(alarm)
+	all_alarms.Cut()
+	return ..()
 
 /obj/structure/rousman_hole/proc/pre_activate_check()
 	if(activated == TRUE && already_ambushed == TRUE)
@@ -369,10 +377,6 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 		all_alarms.Add(alarm)
 		alarm.hole = src
 
-/obj/structure/rousman_hole/Destroy()
-	GLOB.rousman_ambush_objects -= src
-	return ..()
-
 /obj/structure/rousman_hole/proc/ambush(mob/living/carbon/human/ambushed_mob)
 	if(already_ambushed == TRUE)
 		return
@@ -380,7 +384,7 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 	for(var/i = 1; i <= num_mobs; i++)
 		var/mob/living/carbon/human/species/rousman/ambush/A = new /mob/living/carbon/human/species/rousman/ambush(get_turf(src))
 		A.del_on_deaggro = 1 MINUTES
-		A.retaliate(ambushed_mob)
+		A.ai_controller?.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, ambushed_mob)
 	ambushed_mob.playsound_local(ambushed_mob, pick('sound/misc/jumphumans (1).ogg','sound/misc/jumphumans (2).ogg','sound/misc/jumphumans (3).ogg','sound/misc/jumpscare (1).ogg','sound/misc/jumpscare (2).ogg','sound/misc/jumpscare (3).ogg','sound/misc/jumpscare (4).ogg'), 100)
 	already_ambushed = TRUE
 	icon_state = "rousman_hole_inactive"
@@ -401,6 +405,10 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 	density = FALSE
 	anchored = TRUE
 	var/obj/structure/rousman_hole/hole
+
+/obj/structure/rousman_alarm/Destroy()
+	hole = null
+	return ..()
 
 /obj/structure/rousman_alarm/Crossed(atom/movable/AM)
 	. = ..()

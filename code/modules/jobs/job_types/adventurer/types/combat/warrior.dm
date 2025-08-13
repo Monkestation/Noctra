@@ -2,17 +2,7 @@
 /datum/advclass/combat/sfighter
 	name = "Warrior"
 	tutorial = "Wandering sellswords, foolhardy gloryhounds, deserters... many and varied folk turn to the path of the warrior. Very few meet anything greater than the bottom of a tankard or the wrong end of a noose."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Elf",
-		"Half-Elf",
-		"Dwarf",
-		"Dark Elf",
-		"Tiefling",
-		"Aasimar",
-		"Half-Orc"
-	)
+	allowed_races = RACES_PLAYER_NONEXOTIC
 	outfit = /datum/outfit/job/adventurer/sfighter
 	category_tags = list(CTAG_ADVENTURER)
 	min_pq = 0
@@ -21,20 +11,20 @@
 
 /datum/outfit/job/adventurer/sfighter/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.mind?.adjust_skillrank(/datum/skill/combat/crossbows, pick(1,2), TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/whipsflails, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/bows, pick(1,2), TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/knives, pick(1,1,2), TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/riding, pick(1,1,2), TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/reading, pick(0,1,1), TRUE)
+	H.adjust_skillrank(/datum/skill/combat/crossbows, pick(1,2), TRUE)
+	H.adjust_skillrank(/datum/skill/combat/whipsflails, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/bows, pick(1,2), TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, pick(1,1,2), TRUE)
+	H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/riding, pick(1,1,2), TRUE)
+	H.adjust_skillrank(/datum/skill/misc/reading, pick(0,1,1), TRUE)
 
 	if(H.gender == FEMALE)
 		H.underwear = "Femleotard"
@@ -43,7 +33,7 @@
 	shoes = /obj/item/clothing/shoes/boots
 	gloves = /obj/item/clothing/gloves/leather
 	belt = /obj/item/storage/belt/leather
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	backl = /obj/item/storage/backpack/satchel
 	backr = /obj/item/weapon/shield/wood
 	beltr = /obj/item/storage/belt/pouch/coins/poor
@@ -63,19 +53,19 @@
 	switch(weapontype) // We get +1 weapon skill in either axes/maces, swords, or flails depending on our starting weapon
 		if("Axe")
 			beltl = /obj/item/weapon/axe/iron
-			H.mind?.adjust_skillrank(/datum/skill/combat/axesmaces, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/combat/axesmaces, 1, TRUE)
 		if("Mace")
 			beltl = /obj/item/weapon/mace
-			H.mind?.adjust_skillrank(/datum/skill/combat/axesmaces, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/combat/axesmaces, 1, TRUE)
 		if("Messer")
 			beltl = /obj/item/weapon/sword/scimitar/messer
-			H.mind?.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 		if("Sword")
 			beltl = /obj/item/weapon/sword/iron
-			H.mind?.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 		if("Flail") // Big roller gets one of the best weapons to pair with a shield, even if it is only iron tier. Lucky bastard
 			beltl = /obj/item/weapon/flail
-			H.mind?.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
 
 	if(prob(66))
 		neck = /obj/item/clothing/neck/gorget

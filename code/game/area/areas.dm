@@ -13,10 +13,20 @@
 	plane = BLACKNESS_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
+	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 
-	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
+	/// List of all turfs currently inside this area as nested lists indexed by zlevel.
+	/// Acts as a filtered bersion of area.contents For faster lookup
+	/// (area.contents is actually a filtered loop over world)
+	/// Semi fragile, but it prevents stupid so I think it's worth it
+	var/list/list/turf/turfs_by_zlevel = list()
+	/// turfs_by_z_level can become MASSIVE lists, so rather then adding/removing from it each time we have a problem turf
+	/// We should instead store a list of turfs to REMOVE from it, then hook into a getter for it
+	/// There is a risk of this and contained_turfs leaking, so a subsystem will run it down to 0 incrementally if it gets too large
+	/// This uses the same nested list format as turfs_by_zlevel
+	var/list/list/turf/turfs_to_uncontain_by_zlevel = list()
 
-	var/valid_territory = TRUE // If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
+	var/area_flags = VALID_TERRITORY | UNIQUE_AREA
 
 	var/totalbeauty = 0 //All beauty in this area combined, only includes indoor area.
 	var/beauty = 0 // Beauty average per open turf in the area
@@ -32,59 +42,54 @@
 	var/mood_message = "<span class='nicegreen'>This area is pretty nice!\n</span>"
 
 	var/has_gravity = STANDARD_GRAVITY
-	///Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
-	var/noteleport = FALSE
-	///Hides area from player Teleport function.
-	var/hidden = FALSE
-	///Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
-	var/safe = FALSE
-	/// If false, loading multiple maps with this area type will create multiple instances.
-	var/unique = TRUE
-
-//	var/no_air = null
 
 	var/parallax_movedir = 0
 
-	var/list/ambientsounds = null
-	var/list/ambientrain = null
-	var/list/ambientnight = null
+	/// The background music that plays in this area
+	/// This overrides the others if they are absent
+	var/sound/background_track
+	/// The background music that plays in this area at dusk
+	var/sound/background_track_dusk
+	/// The background music that plays in this area at night
+	var/sound/background_track_night
+	/// Alternative droning loops to replace the background music
+	/// To make things more spooky
+	/// Do not set directly on /area use the index
+	var/list/alternative_droning
+	var/droning_index
+	/// Alternative droning loops for night
+	/// Do not set directly on /area use the index
+	var/list/alternative_droning_night
+	var/droning_index_night
+	/// Self explanatory
+	var/uses_alt_droning = TRUE
 
-	var/min_ambience_cooldown = 70 SECONDS
-	var/max_ambience_cooldown = 120 SECONDS
+	/// A list of sounds to pick from every so often to play to clients.
+	/// Do not set directly on /area use the index
+	var/list/ambientsounds
+	var/ambient_index
+	/// A list of sounds to pick but at night
+	/// Do not set directly on /area use the index
+	var/list/ambientnight
+	var/ambient_index_night
+	/// Does this area immediately play an ambience sound upon enter?
+	var/forced_ambience = FALSE
+	///Used to decide what the minimum time between ambience is
+	var/min_ambience_cooldown = 25 SECONDS
+	///Used to decide what the maximum time between ambience is
+	var/max_ambience_cooldown = 35 SECONDS
 
-	var/droningniqqa = TRUE
-	var/loopniqqa = TRUE
-
-	var/droning_sound_current = null
-	var/droning_sound_dawn = null
-	var/droning_sound = null
-	var/droning_sound_dusk = null
-	var/droning_sound_night = null
-	var/droning_vary = 0
-	var/droning_repeat = TRUE
-	var/droning_wait = 0
-	var/droning_volume = 90 // From 100, part of soundscape polishing THIS VAR DOES NOTHING
-	var/droning_channel = CHANNEL_BUZZ
-	var/droning_frequency = 0
-
-	var/list/spookysounds = null
-	var/list/spookynight = null
-
-	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 	var/soundenv = 0
 
 	var/first_time_text = null
 	var/custom_area_sound = null
-
-	/// typecache to limit the areas that atoms in this area can smooth with, used for shuttles IIRC
-	var/list/canSmoothWithAreas
 
 	var/list/ambush_types
 	var/list/ambush_mobs
 	var/list/ambush_times
 
 	var/converted_type
-
+	var/coven_protected = FALSE
 
 /**
  * A list of teleport locations
@@ -104,19 +109,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * The returned list of turfs is sorted by name
  */
 /proc/process_teleport_locs()
-	for(var/V in GLOB.sortedAreas)
-		var/area/AR = V
-		if(AR.noteleport)
-			continue
+	for(var/area/AR as anything in get_sorted_areas())
 		if(GLOB.teleportlocs[AR.name])
 			continue
-		if (!AR.contents.len)
+		if (!AR.has_contained_turfs())
 			continue
-		var/turf/picked = AR.contents[1]
-		if (picked && is_station_level(picked.z))
+		if (is_station_level(AR.z))
 			GLOB.teleportlocs[AR.name] = AR
 
-	sortTim(GLOB.teleportlocs, GLOBAL_PROC_REF(cmp_text_asc))
 
 /**
  * Called when an area loads
@@ -126,12 +126,101 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/New()
 	// This interacts with the map loader, so it needs to be set immediately
 	// rather than waiting for atoms to initialize.
-	if (unique)
+	if(area_flags & UNIQUE_AREA)
 		GLOB.areas_by_type[type] = src
+	GLOB.areas += src
 	return ..()
 
 /area/proc/can_craft_here()
 	return TRUE
+
+/// Returns the highest zlevel that this area contains turfs for
+/area/proc/get_highest_zlevel()
+	for (var/area_zlevel in length(turfs_by_zlevel) to 1 step -1)
+		if (length(turfs_to_uncontain_by_zlevel) >= area_zlevel)
+			if (length(turfs_by_zlevel[area_zlevel]) - length(turfs_to_uncontain_by_zlevel[area_zlevel]) > 0)
+				return area_zlevel
+		else
+			if (length(turfs_by_zlevel[area_zlevel]))
+				return area_zlevel
+	return 0
+
+/// Returns a nested list of lists with all turfs split by zlevel.
+/// only zlevels with turfs are returned. The order of the list is not guaranteed.
+/area/proc/get_zlevel_turf_lists()
+	if(length(turfs_to_uncontain_by_zlevel))
+		cannonize_contained_turfs()
+
+	var/list/zlevel_turf_lists = list()
+
+	for (var/list/zlevel_turfs as anything in turfs_by_zlevel)
+		if (length(zlevel_turfs))
+			zlevel_turf_lists[++zlevel_turf_lists.len] = zlevel_turfs
+
+	return zlevel_turf_lists
+
+/// Returns a list with all turfs in this zlevel.
+/area/proc/get_turfs_by_zlevel(zlevel)
+	if (length(turfs_to_uncontain_by_zlevel) >= zlevel && length(turfs_to_uncontain_by_zlevel[zlevel]))
+		cannonize_contained_turfs_by_zlevel(zlevel)
+
+	if (length(turfs_by_zlevel) < zlevel)
+		return list()
+
+	return turfs_by_zlevel[zlevel]
+
+
+/// Merges a list containing all of the turfs zlevel lists from get_zlevel_turf_lists inside one list. Use get_zlevel_turf_lists() or get_turfs_by_zlevel() unless you need all the turfs in one list to avoid generating large lists
+/area/proc/get_turfs_from_all_zlevels()
+	. = list()
+	for (var/list/zlevel_turfs as anything in get_zlevel_turf_lists())
+		. += zlevel_turfs
+
+/// Ensures that the contained_turfs list properly represents the turfs actually inside us
+/area/proc/cannonize_contained_turfs_by_zlevel(zlevel_to_clean, _autoclean = TRUE)
+	// This is massively suboptimal for LARGE removal lists
+	// Try and keep the mass removal as low as you can. We'll do this by ensuring
+	// We only actually add to contained turfs after large changes (Also the management subsystem)
+	// Do your damndest to keep turfs out of /area/space as a stepping stone
+	// That sucker gets HUGE and will make this take actual seconds
+	if (zlevel_to_clean <= length(turfs_by_zlevel) && zlevel_to_clean <= length(turfs_to_uncontain_by_zlevel))
+		turfs_by_zlevel[zlevel_to_clean] -= turfs_to_uncontain_by_zlevel[zlevel_to_clean]
+
+	if (_autoclean) // Removes empty lists from the end of this list
+		var/new_length = length(turfs_to_uncontain_by_zlevel)
+		// Walk backwards thru the list
+		for (var/i in length(turfs_to_uncontain_by_zlevel) to 0 step -1)
+			if (i && length(turfs_to_uncontain_by_zlevel[i]))
+				break // Stop the moment we find a useful list
+			new_length = i
+
+		if (new_length < length(turfs_to_uncontain_by_zlevel))
+			turfs_to_uncontain_by_zlevel.len = new_length
+
+		if (new_length >= zlevel_to_clean)
+			turfs_to_uncontain_by_zlevel[zlevel_to_clean] = list()
+	else
+		turfs_to_uncontain_by_zlevel[zlevel_to_clean] = list()
+
+
+/// Ensures that the contained_turfs list properly represents the turfs actually inside us
+/area/proc/cannonize_contained_turfs()
+	for (var/area_zlevel in 1 to length(turfs_to_uncontain_by_zlevel))
+		cannonize_contained_turfs_by_zlevel(area_zlevel, _autoclean = FALSE)
+
+	turfs_to_uncontain_by_zlevel = list()
+
+
+/// Returns TRUE if we have contained turfs, FALSE otherwise
+/area/proc/has_contained_turfs()
+	for (var/area_zlevel in 1 to length(turfs_by_zlevel))
+		if (length(turfs_to_uncontain_by_zlevel) >= area_zlevel)
+			if (length(turfs_by_zlevel[area_zlevel]) - length(turfs_to_uncontain_by_zlevel[area_zlevel]) > 0)
+				return TRUE
+		else
+			if (length(turfs_by_zlevel[area_zlevel]))
+				return TRUE
+	return FALSE
 
 /**
  * Initalize this area
@@ -142,16 +231,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * returns INITIALIZE_HINT_LATELOAD
  */
 /area/Initialize()
+	setup_ambience()
 	if(!outdoors)
 		plane = INDOOR_PLANE
 		icon_state = "mask"
 	else
 		icon_state = ""
-	layer = AREA_LAYER
-	map_name = name // Save the initial (the name set in the map) name of the area.
-	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
 	first_time_text = uppertext(first_time_text) // Standardization
-
 
 	if(dynamic_lighting == DYNAMIC_LIGHTING_FORCED)
 		dynamic_lighting = DYNAMIC_LIGHTING_ENABLED
@@ -172,9 +258,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 	return INITIALIZE_HINT_LATELOAD
 
-/**
- * Sets machine power levels in the area
- */
 /area/LateInitialize()
 	update_beauty()
 
@@ -188,7 +271,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  * areas don't have a valid z themself or something
  */
 /area/proc/reg_in_areas_in_z()
-	if(contents.len)
+	if(!has_contained_turfs())
 		var/list/areas_in_z = SSmapping.areas_in_z
 		var/z
 		update_areasize()
@@ -205,6 +288,18 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			areas_in_z["[z]"] = list()
 		areas_in_z["[z]"] += src
 
+/// Setup all ambience tracks
+/area/proc/setup_ambience()
+	if(!ambientsounds && ambient_index)
+		ambientsounds = GLOB.ambience_assoc_sounds[ambient_index]
+	if(!ambientnight && ambient_index_night)
+		ambientnight = GLOB.ambience_assoc_sounds[ambient_index_night]
+
+	if(!alternative_droning && droning_index)
+		alternative_droning = GLOB.ambience_assoc_droning[droning_index]
+	if(!alternative_droning_night && droning_index_night)
+		alternative_droning_night = GLOB.ambience_assoc_droning[droning_index_night]
+
 /**
  * Destroy an area and clean it up
  *
@@ -216,7 +311,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/Destroy()
 	if(GLOB.areas_by_type[type] == src)
 		GLOB.areas_by_type[type] = null
+	GLOB.sortedAreas -= src
+	GLOB.areas -= src
 	STOP_PROCESSING(SSobj, src)
+
+	turfs_by_zlevel = null
+	turfs_to_uncontain_by_zlevel = null
 	return ..()
 
 /**
@@ -234,13 +334,14 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 //			weather_icon = TRUE
 //	if(!weather_icon)
 //		icon_state = null
-	return
+	return ..()
 
 /**
  * Update the icon of the area (overridden to always be null for space
  */
 /area/space/update_icon_state()
 	icon_state = null
+	return ..()
 
 /**
  * Call back when an atom enters an area
@@ -249,7 +350,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  *
  * If the area has ambience, then it plays some ambience music to the ambience channel
  */
-/area/Entered(atom/movable/M, atom/OldLoc)
+/area/Entered(atom/movable/M, atom/old_loc)
 	set waitfor = FALSE
 	SEND_SIGNAL(src, COMSIG_AREA_ENTERED, M)
 	SEND_SIGNAL(M, COMSIG_ENTER_AREA, src) //The atom that enters the area
@@ -260,22 +361,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(!L.ckey || L.stat == DEAD)
 		return
 
-	// Ambience goes down here -- make sure to list each area separately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
-//	if(L.client && !L.client.ambience_playing && L.client.prefs.toggles & SOUND_SHIP_AMBIENCE)
-//		L.client.ambience_playing = 1
-//		SEND_SOUND(L, sound('sound/blank.ogg', repeat = 1, wait = 0, volume = 35, channel = CHANNEL_BUZZ))
+	if(ismob(M))
+		var/mob/mob = M
+		mob.update_ambience_area(src)
 
 	if(first_time_text)
 		L.intro_area(src)
-
-	var/mob/living/living_arrived = M
-
-	if(istype(living_arrived) && living_arrived.client && !living_arrived.cmode)
-		//Ambience if combat mode is off
-		SSdroning.area_entered(src, living_arrived.client)
-		SSdroning.play_loop(src, living_arrived.client)
-
-//	L.play_ambience(src)
 
 /client
 	var/musicfading = 0
@@ -298,11 +389,15 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	T.maptext_height = 209
 	T.maptext_x = 12
 	T.maptext_y = 64
-	if(A.custom_area_sound)
-		playsound_local(src, A.custom_area_sound, 125, FALSE)
-	else
-		playsound_local(src, 'sound/misc/area.ogg', 100, FALSE)
+	var/used_sound = 'sound/misc/stings/generic.ogg'
+	var/map_sound = SSmapping.config.custom_area_sound
+	var/area_sound = A.custom_area_sound
+	if(area_sound)
+		used_sound = area_sound
+	else if(map_sound)
+		used_sound = map_sound
 
+	SEND_SOUND(src, sound(used_sound, repeat = 0, wait = 0, volume = 40))
 	animate(T, alpha = 255, time = 10, easing = EASE_IN)
 	addtimer(CALLBACK(src, PROC_REF(clear_area_text), T), 35)
 
@@ -316,7 +411,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(client)
 		if(client.screen && A)
 			client.screen -= A
-			qdel(A)
+	qdel(A)
 
 /mob/living/proc/clear_time_icon(atom/movable/screen/A)
 	if(!A)
@@ -361,8 +456,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
  */
 /area/proc/setup(a_name)
 	name = a_name
-	valid_territory = FALSE
-	addSorted()
+	area_flags &= ~VALID_TERRITORY
+	require_area_resort()
+
 /**
  * Set the area size of the area
  *
@@ -373,8 +469,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(outdoors)
 		return FALSE
 	areasize = 0
-	for(var/turf/open/T in contents)
-		areasize++
+	for (var/list/zlevel_turfs as anything in get_zlevel_turf_lists())
+		for(var/turf/open/thisvarisunused in zlevel_turfs)
+			areasize++
 
 /**
  * Causes a runtime error
@@ -401,12 +498,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/on_joining_game(mob/living/boarder)
 	. = ..()
 	if(istype(boarder) && boarder.client)
-		SSdroning.area_entered(src, boarder.client)
 		boarder.client.update_ambience_pref()
-		SSdroning.play_loop(src, boarder.client)
+		boarder.refresh_looping_ambience()
 
 /area/reconnect_game(mob/living/boarder)
 	. = ..()
 	if(istype(boarder) && boarder.client)
-		SSdroning.area_entered(src, boarder.client)
-		SSdroning.play_loop(src, boarder.client)
+		boarder.refresh_looping_ambience()

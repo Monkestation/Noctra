@@ -77,6 +77,7 @@
 
 	var/cached_mailer
 	var/cached_mailedto
+	var/trapped
 
 /obj/item/paper/get_real_price()
 	if(info)
@@ -105,29 +106,38 @@
 			contact_poison = null
 	..()
 
-/obj/item/paper/update_icon()
-	. = ..()
-	update_icon_state()
-
 /obj/item/paper/Initialize()
 	. = ..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
-	update_icon_state()
+	update_appearance(UPDATE_ICON_STATE | UPDATE_NAME)
 	updateinfolinks()
+
+/obj/item/paper/Destroy()
+	info = null
+	stamps = null
+	LAZYCLEARLIST(stamped)
+	updateinfolinks()
+	return ..()
 
 /obj/item/paper/update_icon_state()
 	if(mailer)
 		icon_state = "paper_prep"
-		name = "letter"
 		throw_range = 7
-		return
-	name = initial(name)
+		return ..()
 	throw_range = initial(throw_range)
 	if(info)
 		icon_state = "paperwrite"
-		return
+		return ..()
 	icon_state = "paper"
+	return ..()
+
+/obj/item/paper/update_name()
+	if(mailer)
+		name = "letter"
+		return ..()
+	name = initial(name)
+	return ..()
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
@@ -136,30 +146,32 @@
 	else
 		. += "It's from [mailer], addressed to [mailedto].</a>"
 
-/obj/item/paper/proc/read(mob/user)
+/obj/item/paper/proc/read(mob/user, ignore_distance = FALSE)
 	if(!user.client || !user.hud_used)
 		return
 	if(!user.hud_used.reads)
 		return
 	if(!user.can_read(src))
 		if(info)
-			user.mind.adjust_experience(/datum/skill/misc/reading, 2, FALSE)
+			user.adjust_experience(/datum/skill/misc/reading, 2, FALSE)
 		return
 	if(mailer)
 		return
-	if(in_range(user, src) || isobserver(user))
-//		var/obj/screen/read/R = user.hud_used.reads
-		var/dat = {"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
-			<html><head><style type=\"text/css\">
-			body { background-image:url('book.png');background-repeat: repeat; }</style></head><body scroll=yes>"}
-		dat += info
-		dat += "<br>"
-		dat += "<a href='byond://?src=[REF(src)];close=1' style='position:absolute;right:50px'>Close</a>"
-		dat += "</body></html>"
-		user << browse(dat, "window=reading;size=500x400;can_close=1;can_minimize=0;can_maximize=0;can_resize=1;titlebar=0;border=0")
-		onclose(user, "reading", src)
+	if(ignore_distance || in_range(user, src) || isobserver(user))
+		show_paper_hud(user)
 	else
 		return span_warning("I'm too far away to read it.")
+
+/obj/item/paper/proc/show_paper_hud(mob/user)
+	var/dat = {"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+		<html><head><style type=\"text/css\">
+		body { background-image:url('book.png');background-repeat: repeat; }</style></head><body scroll=yes>"}
+	dat += info
+	dat += "<br>"
+	dat += "<a href='byond://?src=[REF(src)];close=1' style='position:absolute;right:50px'>Close</a>"
+	dat += "</body></html>"
+	user << browse(dat, "window=reading;size=500x400;can_close=1;can_minimize=0;can_maximize=0;can_resize=1;titlebar=0;border=0")
+	onclose(user, "reading", src)
 
 /*
 	if(in_range(user, src) || isobserver(user))
@@ -190,7 +202,7 @@
 	set hidden = 1
 	set src in usr
 
-	if(usr.incapacitated() || !usr.is_literate())
+	if(usr.incapacitated(IGNORE_GRAB) || !usr.is_literate())
 		return
 	var/n_name = stripped_input(usr, "What would you like to label the paper?", "Paper Labelling", null, MAX_NAME_LEN)
 	if((loc == usr && usr.stat == CONSCIOUS))
@@ -205,15 +217,23 @@
 /obj/item/paper/proc/reset_spamflag()
 	spam_flag = FALSE
 
-/obj/item/paper/attack_self(mob/user)
+/obj/item/paper/attack_self(mob/user, params)
 	if(mailer)
 		user.visible_message("<span class='notice'>[user] opens the letter from [mailer].</span>")
 		cached_mailer = mailer
 		cached_mailedto = mailedto
 		mailer = null
 		mailedto = null
-		update_icon()
+		update_appearance(UPDATE_ICON_STATE | UPDATE_NAME)
 		return
+	if(trapped)
+		var/mob/living/victim = user
+		victim.visible_message(span_notice("[user] opens the [src]."))
+		to_chat(user, span_warning("This parchment is full of strange symbols that start to glow. How odd. Wait-"))
+		sleep(5)
+		victim.adjust_fire_stacks(15)
+		victim.IgniteMob()
+		victim.visible_message(span_danger("[user] bursts into flames upon reading [src]!"))
 	read(user)
 	if(rigged && (SSevents.holidays && SSevents.holidays[APRIL_FOOLS]))
 		if(!spam_flag)
@@ -272,8 +292,7 @@
 	LAZYCLEARLIST(stamped)
 	cut_overlays()
 	updateinfolinks()
-	update_icon_state()
-
+	update_appearance(UPDATE_ICON_STATE | UPDATE_NAME)
 
 /obj/item/paper/proc/parsepencode(t, obj/item/P, mob/user, iscrayon = 0)
 	if(length(t) < 1)		//No input means nothing needs to be parsed
@@ -341,12 +360,21 @@
 				user.hud_used.reads.destroy_read()
 			user << browse(null, "window=reading")
 
-	var/literate = usr.is_literate()
-	if(!usr.canUseTopic(src, BE_CLOSE, literate))
+	if(!usr.can_read())
+		return
+	if(!usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 
 	if(href_list["read"])
 		read(usr)
+		if(trapped)
+			var/mob/living/victim = usr
+			victim.visible_message(span_notice("[usr] opens the [src]."))
+			to_chat(usr, span_warning("This parchment is full of strange symbols that start to glow. How odd. Wait-"))
+			sleep(5)
+			victim.adjust_fire_stacks(15)
+			victim.IgniteMob()
+			victim.visible_message(span_danger("[usr] bursts into flames upon reading [src]!"))
 
 	if(href_list["help"])
 		openhelp(usr)
@@ -354,8 +382,8 @@
 
 	if(href_list["write"])
 		var/id = href_list["write"]
-		var/t =  stripped_multiline_input("Enter what you want to write:", "Write", no_trim=TRUE)
-		if(!t || !usr.canUseTopic(src, BE_CLOSE, literate))
+		var/t =  browser_input_text(usr, "Enter what you want to write:", "Write", multiline = TRUE)
+		if(!t || !usr.can_perform_action(src, NEED_DEXTERITY|NEED_LITERACY|FORBID_TELEKINESIS_REACH))
 			return
 		var/obj/item/i = usr.get_active_held_item()	//Check to see if he still got that darn pen, also check if he's using a crayon or pen.
 		if(!istype(i, /obj/item/natural/thorn))
@@ -376,12 +404,10 @@
 				addtofield(text2num(id), t) // He wants to edit a field, let him.
 			else
 				info += t // Oh, he wants to edit to the end of the file, let him.
-				testing("[length(info)]")
-				testing("[findtext(info, "\n")]")
 				updateinfolinks()
 			playsound(src, 'sound/items/write.ogg', 100, FALSE)
 			format_browse(info_links, usr)
-			update_icon_state()
+			update_appearance(UPDATE_ICON_STATE | UPDATE_NAME)
 
 /obj/item/paper/attackby(obj/item/P, mob/living/user, params)
 	if(resistance_flags & ON_FIRE)
@@ -390,9 +416,9 @@
 	if(mailer)
 		return ..()
 
-	if(istype(P, /obj/item/paper)) //Make a manuscript
-		if(user.mind.get_skill_level(/datum/skill/misc/reading) <= 0)
-			to_chat(user, span_warning("I fumble with [src] for a bit."))
+	if(P.type == /obj/item/paper) //Make a manuscript
+		if(user.get_skill_level(/datum/skill/misc/reading) <= 0)
+			to_chat(user, span_warning("I fumble with [src] and fail to form the manuscript!"))
 			user.changeNext_move(2 SECONDS, user.active_hand_index) //lmao
 			return
 
@@ -412,6 +438,13 @@
 		user.put_in_hands(new_manuscript)
 		return
 
+	if(istype(P, /obj/item/natural/feather/infernal))
+		if(trapped)
+			to_chat(user, span_warning("[src] is already trapped."))
+		else
+			to_chat(user, span_warning("I draw infernal symbols on this [src], rigging it to explode."))
+			trapped = TRUE
+
 	if(istype(P, /obj/item/natural/thorn) || istype(P, /obj/item/natural/feather))
 		if(is_blind(user))
 			to_chat(user, span_warning("I want to write on [src], but I cannot."))
@@ -422,7 +455,7 @@
 			return
 		if(user.can_read(src))
 			format_browse(info_links, user)
-			update_icon_state()
+			update_appearance(UPDATE_ICON_STATE | UPDATE_NAME)
 			return
 		else
 			to_chat(user, "<span class='warning'>I can't write.</span>")
@@ -464,9 +497,6 @@
 	name = "paper scrap"
 	icon_state = "scrap"
 	slot_flags = null
-
-/obj/item/paper/crumpled/update_icon_state()
-	return
 
 /obj/item/paper/crumpled/bloody
 	icon_state = "scrap_bloodied"

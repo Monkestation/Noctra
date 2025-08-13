@@ -5,17 +5,31 @@
 	gender = PLURAL
 	icon = 'icons/roguetown/items/misc.dmi'
 	icon_state = "rope"
-	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_NECK
-	throwforce = 5
+	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_WRISTS|ITEM_SLOT_NECK|ITEM_SLOT_BELT
+	throwforce = 3
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 1
-	throw_range = 3
-	breakouttime = 5 SECONDS
-	slipouttime = 1 MINUTES
+	throw_range = 5
+	breakouttime = 10 SECONDS
+	slipouttime = 30 SECONDS
 	possible_item_intents = list(/datum/intent/tie)
 	firefuel = 5 MINUTES
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	var/legcuff_multiplicative_slowdown = 3
+
+/obj/item/rope/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning, bypass_equip_delay_self)
+	. = ..()
+	if(.)
+		if((slot & ITEM_SLOT_BELT) && !equipper)
+			if(!do_after(M, 1.5 SECONDS, src))
+				return FALSE
+
+/obj/item/rope/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_BELT)
+		user.temporarilyRemoveItemFromInventory(src)
+		user.equip_to_slot_if_possible(new /obj/item/storage/belt/leather/rope(get_turf(user)), ITEM_SLOT_BELT)
+		qdel(src)
 
 /datum/intent/tie
 	name = "tie"
@@ -30,7 +44,7 @@
 	if(iscarbon(loc))
 		var/mob/living/carbon/M = loc
 		if(M.handcuffed == src)
-			M.handcuffed = null
+			M.set_handcuffed(null)
 			M.update_handcuffed()
 			if(M.buckled && M.buckled.buckle_requires_restraints)
 				M.buckled.unbuckle_mob(M)
@@ -50,15 +64,15 @@
 
 	if(user.aimheight >= 5)
 		if(!C.handcuffed)
-			if(C.get_num_arms(FALSE))
+			if(C.num_hands)
 				C.visible_message(span_warning("[user] is trying to tie [C]'s arms with [src.name]!"), \
 									span_danger("[user] is trying to tie my arms with [src.name]!"))
-				if(do_after(user, 6 SECONDS * (C.surrendering ? 0.5 : 1), C) && C.get_num_arms(FALSE))
+				if(do_after(user, 6 SECONDS * (C.surrendering ? 0.5 : 1), C) && C.num_hands)
 					apply_cuffs(C, user, leg = FALSE)
 					C.visible_message(span_warning("[user] ties [C]' arms with [src.name]."), \
 										span_danger("[user] ties my arms up with [src.name]."))
 					SSblackbox.record_feedback("tally", "handcuffs", 1, type)
-					user.mind?.adjust_experience(/datum/skill/craft/traps, C.STAINT, FALSE)
+					user.adjust_experience(/datum/skill/craft/traps, C.STAINT, FALSE)
 					log_combat(user, C, "handcuffed")
 				else
 					to_chat(user, span_warning("I fail to tie up [C]'s arms!</span>"))
@@ -66,15 +80,15 @@
 				to_chat(user, span_warning("[C] is missing two or one arms."))
 	else
 		if(!C.legcuffed)
-			if(C.get_num_legs(FALSE))
+			if(C.num_legs)
 				C.visible_message(span_warning("[user] is trying to tie [C]'s legs with [src.name]!"), \
 									span_danger("[user] is trying to tie my legs with [src.name]!"))
-				if(do_after(user, 6 SECONDS * (C.surrendering ? 0.5 : 1), C) && C.get_num_legs(FALSE))
+				if(do_after(user, 6 SECONDS * (C.surrendering ? 0.5 : 1), C) && C.num_legs)
 					apply_cuffs(C, user, leg = TRUE)
 					C.visible_message(span_warning("[user] ties [C]' legs with [src.name]."), \
 										span_danger("[user] ties my legs up with [src.name]."))
 					SSblackbox.record_feedback("tally", "legcuffs", 1, type)
-					user.mind?.adjust_experience(/datum/skill/craft/traps, C.STAINT, FALSE)
+					user.adjust_experience(/datum/skill/craft/traps, C.STAINT, FALSE)
 					log_combat(user, C, "legcuffed")
 				else
 					to_chat(user, span_warning("I fail to tie up [C]'s legs!</span>"))
@@ -92,7 +106,7 @@
 		var/obj/item/cuffs = src
 
 		cuffs.forceMove(target)
-		target.handcuffed = cuffs
+		target.set_handcuffed(cuffs)
 
 		target.update_handcuffed()
 		return
@@ -120,12 +134,17 @@
 	icon_state = "chain"
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_WRISTS
 	force = 10
+	blade_dulling = DULLING_BASHCHOP
+	parrysound = list('sound/combat/parry/parrygen.ogg')
+	swingsound = WHIPWOOSH
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
+	associated_skill = /datum/skill/combat/whipsflails
+	wdefense = 1
 	throw_speed = 1
 	throw_range = 3
-	breakouttime = 1 MINUTES
-	slipouttime = 5 MINUTES
+	breakouttime = 30 SECONDS
+	slipouttime = 1 MINUTES
 	possible_item_intents = list(/datum/intent/tie, /datum/intent/whip)
 	firefuel = null
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
@@ -147,11 +166,11 @@
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
 	icon_state = "net"
-	breakouttime = 35//easy to apply, easy to break out of
+	breakouttime = 3.5 SECONDS //easy to apply, easy to break out of
 	gender = NEUTER
 	var/knockdown = 0
 
-/obj/item/net/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback)
+/obj/item/net/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE)
 	if(!..())
 		return
 	playsound(src.loc,'sound/blank.ogg', 75, TRUE)
@@ -162,7 +181,7 @@
 	ensnare(hit_atom)
 
 /obj/item/net/proc/ensnare(mob/living/carbon/C)
-	if(!C.legcuffed && C.get_num_legs(FALSE) >= 2)
+	if(!C.legcuffed && C.num_legs >= 2)
 		visible_message("<span class='danger'>\The [src] ensnares [C]!</span>")
 		C.legcuffed = src
 		forceMove(C)
@@ -210,7 +229,7 @@
 	desc = "Stranded and hanging, limp and dead."
 	icon_state = "gallows"
 	pixel_y = 0
-	max_integrity = 9999
+	max_integrity = 100
 
 /obj/structure/noose/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -224,8 +243,33 @@
 				buckled_mob.Knockdown(60)
 	return ..()
 
+/obj/structure/noose/attackby(obj/item/W, mob/user, params)
+	if (W.get_sharpness())
+		if(do_after(user, 1 SECONDS, src))
+			new /obj/item/rope(loc)
+			playsound(src, 'sound/foley/dropsound/cloth_drop.ogg', 50, TRUE)
+			if (istype(src, /obj/structure/noose/gallows))
+				new /obj/machinery/light/fueled/lanternpost/unfixed(loc)
+				user.visible_message(span_notice("[user] cuts the noose down from the gallows."), span_notice("I cut the noose down from the gallows."), span_hear("I hear something snap."))
+			else
+				user.visible_message(span_notice("[user] cuts down the noose."), span_notice("I cut down the noose."), span_hear("I hear something snap."))
+			qdel(src)
+	else
+		return ..()
+
+/obj/structure/noose/bullet_act(obj/projectile/P, def_zone, piercing_hit = FALSE)
+	. = ..()
+	new /obj/item/rope(loc)
+	playsound(src, 'sound/foley/dropsound/cloth_drop.ogg', 50, TRUE)
+	if(istype(src, /obj/structure/noose/gallows))
+		new /obj/machinery/light/fueled/lanternpost/unfixed(loc)
+		visible_message(span_danger("The noose is shot down from the gallows!"))
+	else
+		visible_message(span_danger("The noose is shot down!"))
+	qdel(src)
+
 /obj/structure/noose/user_buckle_mob(mob/living/M, mob/user, check_loc)
-	if(!in_range(user, src) || user.stat != CONSCIOUS || !iscarbon(M))
+	if(!in_range(user, src) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_RESTRAINED) || !iscarbon(M))
 		return FALSE
 
 	if (!M.get_bodypart("head"))
@@ -250,6 +294,11 @@
 	if(has_buckled_mobs())
 		START_PROCESSING(SSobj, src)
 		M.set_mob_offsets("bed_buckle", _x = 0, _y = 10)
+
+/obj/structure/noose/gallows/post_buckle_mob(mob/living/M)
+	if(has_buckled_mobs())
+		START_PROCESSING(SSobj, src)
+		M.set_mob_offsets("bed_buckle", _x = 6, _y = 16)
 
 /obj/structure/noose/post_unbuckle_mob(mob/living/M)
 	STOP_PROCESSING(SSobj, src)

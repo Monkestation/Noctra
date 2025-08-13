@@ -65,13 +65,11 @@
 		if(mind)
 			mind.transfer_to(O)
 
-		for(var/X in internal_organs)
-			var/obj/item/organ/I = X
+		for(var/obj/item/organ/I as anything in internal_organs)
 			int_organs += I
 			I.Remove(src, 1)
 
-		for(var/X in int_organs)
-			var/obj/item/organ/I = X
+		for(var/obj/item/organ/I as anything in int_organs)
 			I.Insert(O, 1)
 
 	var/obj/item/bodypart/chest/torso = O.get_bodypart(BODY_ZONE_CHEST)
@@ -198,13 +196,11 @@
 
 		if(mind)
 			mind.transfer_to(O)
-		for(var/X in internal_organs)
-			var/obj/item/organ/I = X
+		for(var/obj/item/organ/I as anything in internal_organs)
 			int_organs += I
 			I.Remove(src, 1)
 
-		for(var/X in int_organs)
-			var/obj/item/organ/I = X
+		for(var/obj/item/organ/I as anything in int_organs)
 			I.Insert(O, 1)
 
 
@@ -230,7 +226,7 @@
 		O.Immobilize(AmountImmobilized(), ignore_canstun = TRUE)
 		O.Paralyze(AmountParalyzed(), ignore_canstun = TRUE)
 		O.Unconscious(AmountUnconscious(), ignore_canstun = TRUE)
-		O.Sleeping(AmountSleeping(), ignore_canstun = TRUE)
+		O.Sleeping(AmountSleeping())
 
 	//transfer reagents
 	if(tr_flags & TR_KEEPREAGENTS)
@@ -319,8 +315,6 @@
 //Good mobs!
 	if(ispath(MP, /mob/living/simple_animal/pet/cat))
 		return 1
-	if(ispath(MP, /mob/living/simple_animal/parrot))
-		return 1 //Parrots are no longer unfinished! -Nodrak
 
 	//Not in here? Must be untested!
 	return 0

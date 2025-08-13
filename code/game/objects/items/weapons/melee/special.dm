@@ -12,13 +12,15 @@
 	wlength = WLENGTH_NORMAL
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_HIP
-	resistance_flags = FIRE_PROOF|LAVA_PROOF // Nigh indestructible due to how important it is
+	resistance_flags = FIRE_PROOF|LAVA_PROOF|ACID_PROOF // Nigh indestructible due to how important it is
 	associated_skill = /datum/skill/combat/axesmaces
 	smeltresult = null // No
 	melting_material = null
 	swingsound = BLUNTWOOSH_MED
 	minstr = 5
 	blade_dulling = DULLING_BASHCHOP
+	var/static/list/rod_jobs = null
+	COOLDOWN_DECLARE(scepter)
 
 	grid_height = 96
 	grid_width = 32
@@ -59,39 +61,59 @@
 	. = ..()
 	if(get_dist(user, target) > 7)
 		return
-
 	user.changeNext_move(CLICK_CD_MELEE)
-	user.visible_message("<span class='warning'>[user] points [src] at [target].</span>")
+
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/HU = user
 
-		if((HU.job != "Monarch"))
+		if(!is_lord_job(HU.mind?.assigned_role))
 			to_chat(user, "<span class='danger'>The rod doesn't obey me.</span>")
 			return
 
 		if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 
+			user.visible_message("<span class='warning'>[user] points [src] at [target].</span>")
+
 			if(H == HU)
 				return
 
-			if(H.anti_magic_check())
+			if(H.can_block_magic(MAGIC_RESISTANCE))
 				return
 
-			if(!(H.job in GLOB.rod_jobs))
+			if(!rod_jobs)
+				rod_jobs = GLOB.noble_positions | GLOB.garrison_positions | list(
+				/datum/job/jester::title,
+				/datum/job/servant::title,
+				/datum/job/adventurer/courtagent::title,
+				/datum/job/butler::title,
+				/datum/job/squire::title,
+			)
+
+			if(!((H.mind?.assigned_role.title in rod_jobs)))
+				return
+
+			if(!COOLDOWN_FINISHED(src, scepter))
+				to_chat(user, span_danger("The [src] is not ready yet! [round(COOLDOWN_TIMELEFT(src, scepter) / 10, 1)] seconds left!"))
 				return
 
 			if(istype(user.used_intent, /datum/intent/lord_electrocute))
-				HU.visible_message("<span class='warning'>[HU] electrocutes [H] with \the [src].</span>")
+				HU.visible_message(span_warning("[HU] electrocutes [H] with \the [src]."))
+				user.Beam(target, icon_state = "lightning[rand(1, 12)]", time = 0.5 SECONDS) // LIGHTNING
+				playsound(user, 'sound/magic/lightningshock.ogg', 70, TRUE)
 				H.electrocute_act(5, src)
-				to_chat(H, "<span class='danger'>I'm electrocuted by the scepter!</span>")
+				HU.log_message("has shocked [H.real_name] with the [src]!", LOG_ATTACK)
+				to_chat(H, span_danger("I'm electrocuted by the scepter!"))
+				COOLDOWN_START(src, scepter, 20 SECONDS)
 				return
 
 			if(istype(user.used_intent, /datum/intent/lord_silence))
-				HU.visible_message("<span class='warning'>[HU] silences [H] with \the [src].</span>")
+				HU.visible_message(span_warning("[HU] silences [H] with \the [src]."))
 				H.set_silence(20 SECONDS)
-				to_chat(H, "<span class='danger'>I'm silenced by the scepter!</span>")
+				HU.log_message("has silenced [H.real_name] with the [src]!", LOG_ATTACK)
+				to_chat(H, span_danger("I'm silenced by the scepter!"))
+				COOLDOWN_START(src, scepter, 10 SECONDS)
 				return
 
 /obj/item/weapon/mace/stunmace
@@ -110,7 +132,7 @@
 	var/on = FALSE
 
 /datum/intent/mace/strike/stunner/afterchange()
-	var/obj/item/weapon/mace/stunmace/I = masteritem
+	var/obj/item/weapon/mace/stunmace/I = get_master_item()
 	if(I)
 		if(I.on)
 			hitsound = list('sound/items/stunmace_hit (1).ogg','sound/items/stunmace_hit (2).ogg')
@@ -119,7 +141,7 @@
 	. = ..()
 
 /datum/intent/mace/smash/stunner/afterchange()
-	var/obj/item/weapon/mace/stunmace/I = masteritem
+	var/obj/item/weapon/mace/stunmace/I = get_master_mob()
 	if(I)
 		if(I.on)
 			hitsound = list('sound/items/stunmace_hit (1).ogg','sound/items/stunmace_hit (2).ogg')
@@ -143,19 +165,17 @@
 		if(charge <= 0)
 			on = FALSE
 			charge = 0
-			update_icon()
+			update_appearance(UPDATE_ICON_STATE)
 			if(user.a_intent)
 				var/datum/intent/I = user.a_intent
 				if(istype(I))
 					I.afterchange()
 
-/obj/item/weapon/mace/stunmace/update_icon()
-	if(on)
-		icon_state = "stunmace1"
-	else
-		icon_state = "stunmace0"
+/obj/item/weapon/mace/stunmace/update_icon_state()
+	. = ..()
+	icon_state = "stunmace[on]"
 
-/obj/item/weapon/mace/stunmace/attack_self(mob/user)
+/obj/item/weapon/mace/stunmace/attack_self(mob/user, params)
 	if(on)
 		on = FALSE
 	else
@@ -170,7 +190,7 @@
 		var/datum/intent/I = user.a_intent
 		if(istype(I))
 			I.afterchange()
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 	add_fingerprint(user)
 
 /obj/item/weapon/mace/stunmace/process()
@@ -182,7 +202,7 @@
 	if(charge <= 0)
 		on = FALSE
 		charge = 0
-		update_icon()
+		update_appearance(UPDATE_ICON_STATE)
 		var/mob/user = loc
 		if(istype(user))
 			if(user.a_intent)
@@ -198,5 +218,5 @@
 			user.electrocute_act(5, src)
 		on = FALSE
 		charge = 0
-		update_icon()
+		update_appearance(UPDATE_ICON_STATE)
 		playsound(src, pick('sound/items/stunmace_toggle (1).ogg','sound/items/stunmace_toggle (2).ogg','sound/items/stunmace_toggle (3).ogg'), 100, TRUE)

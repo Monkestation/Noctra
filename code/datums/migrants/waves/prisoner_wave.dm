@@ -1,20 +1,20 @@
 /datum/migrant_role/gaoler
 	name = "Gaoler"
 	greet_text = "The lords of Vanderlins sent you to Heartfelt to rappatriate some prisoners that were in their prison, you are now on your way back."
-	allowed_sexes = list(MALE, FEMALE)
 	grant_lit_torch = TRUE
 	outfit = /datum/outfit/job/gaoler
-	show_wanderer_examine = FALSE
-	allowed_races = list(
-		"Humen",
-		"Elf",
-		"Half-Elf",
-		"Dwarf",
-		"Tiefling",
-		"Dark Elf",
-		"Aasimar",
-		"Half-Orc")
-
+	is_foreigner = FALSE
+	allowed_races = list(\
+		SPEC_ID_HUMEN,\
+		SPEC_ID_ELF,\
+		SPEC_ID_HALF_ELF,\
+		SPEC_ID_DWARF,\
+		SPEC_ID_TIEFLING,\
+		SPEC_ID_DROW,\
+		SPEC_ID_HALF_DROW,\
+		SPEC_ID_AASIMAR,\
+		SPEC_ID_HALF_ORC,\
+	)
 
 /datum/outfit/job/gaoler/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -30,17 +30,17 @@
 	backr = /obj/item/storage/backpack/satchel
 	backpack_contents = list(/obj/item/storage/keyring/dungeoneer = 1, /obj/item/rope/chain = 1)
 	if(H.mind)
-		H.mind?.adjust_skillrank(/datum/skill/combat/whipsflails, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/craft/traps, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/whipsflails, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/traps, 3, TRUE)
 		H.change_stat(STATKEY_STR, 2)
 		H.change_stat(STATKEY_INT, -2)
 		H.change_stat(STATKEY_END, 2)
@@ -48,41 +48,32 @@
 		H.change_stat(STATKEY_SPD, -1)
 		H.change_stat(STATKEY_PER, -1)
 	if(H.dna?.species)
-		if(H.dna.species.id == "human")
+		if(H.dna.species.id == SPEC_ID_HUMEN)
 			H.dna.species.soundpack_m = new /datum/voicepack/male/warrior()
-	H.cmode_music = 'sound/music/cmode/garrison/CombatJailor.ogg'
+	H.cmode_music = 'sound/music/cmode/nobility/CombatDungeoneer.ogg'
 	H.verbs |= /mob/living/carbon/human/proc/torture_victim
 
 /datum/migrant_role/mig_prisoner
 	name = "Prisoner"
 	greet_text = "You had fled Vanderlin, took refuge in Heartfelt yet the lords over there caught you and thus handed you over to those who seeked you before."
 	outfit = /datum/outfit/job/mig_prisoner
-	allowed_races = list(
-		"Humen",
-		"Elf",
-		"Half-Elf",
-		"Dwarf",
-		"Tiefling",
-		"Dark Elf",
-		"Aasimar",
-		"Half-Orc")
 
 /datum/outfit/job/mig_prisoner/pre_equip(mob/living/carbon/human/H)
 	..()
-	pants = /obj/item/clothing/pants/loincloth/brown
+	pants = /obj/item/clothing/pants/loincloth/colored/brown
 	mask = /obj/item/clothing/face/facemask/prisoner
 	if(H.mind)
-		H.mind?.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/sneaking, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/lockpicking, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/riding, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/sneaking, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/lockpicking, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/riding, 1, TRUE)
 		H.change_stat(STATKEY_STR, -1)
 		H.change_stat(STATKEY_PER, 2)
 		H.change_stat(STATKEY_INT, 2)
@@ -95,9 +86,19 @@
 	name = "Guard"
 	greet_text = "You are apart of a convoy returning prisoners to Vanderlin. Obey the gaoler and ensure the prisoners get back to the dungeons."
 	outfit = /datum/outfit/job/mig_guard
-	allowed_races = list("Humen","Dwarf","Aasimar")
+	allowed_races = list(\
+		SPEC_ID_HUMEN,\
+		SPEC_ID_ELF,\
+		SPEC_ID_HALF_ELF,\
+		SPEC_ID_DWARF,\
+		SPEC_ID_TIEFLING,\
+		SPEC_ID_DROW,\
+		SPEC_ID_HALF_DROW,\
+		SPEC_ID_AASIMAR,\
+		SPEC_ID_HALF_ORC,\
+	)
 	grant_lit_torch = TRUE
-	show_wanderer_examine = FALSE
+	is_foreigner = FALSE
 
 /datum/outfit/job/mig_guard/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -114,16 +115,16 @@
 	belt = /obj/item/storage/belt/leather
 	backpack_contents = list(/obj/item/storage/keyring/guard, /obj/item/rope/chain = 1)
 	if(H.mind)
-		H.mind?.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/shields, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 		H.change_stat(STATKEY_STR, 1)
 		H.change_stat(STATKEY_END, 2)
 		H.change_stat(STATKEY_CON, 1)
@@ -133,7 +134,7 @@
 	H.verbs |= /mob/proc/haltyell
 
 /datum/migrant_wave/prisoner_convoy
-	name = "The prisoners convoy"
+	name = "The Prisoners' Convoy"
 	max_spawns = 3
 	shared_wave_type = /datum/migrant_wave/prisoner_convoy
 	downgrade_wave = /datum/migrant_wave/prisoner_convoy_down
@@ -146,7 +147,7 @@
 	greet_text = "Nobody escape the rule of Vanderlin's monarchs. Some have fled to the neighbouring kingdom, Heartfelt and got caught, they are now on their way back."
 
 /datum/migrant_wave/prisoner_convoy_down
-	name = "The prisoners convoy"
+	name = "The Prisoners' Convoy"
 	shared_wave_type = /datum/migrant_wave/prisoner_convoy
 	downgrade_wave = /datum/migrant_wave/prisoner_convoy_down_two
 	can_roll = FALSE
@@ -158,7 +159,7 @@
 	greet_text = "Nobody escape the rule of Vanderlin's monarchs. Some have fled to the neighbouring kingdom, Heartfelt and got caught, they are now on their way back."
 
 /datum/migrant_wave/prisoner_convoy_down_two
-	name = "The prisoners convoy"
+	name = "The Prisoner Convoy"
 	shared_wave_type = /datum/migrant_wave/prisoner_convoy
 	can_roll = FALSE
 	roles = list(

@@ -2,7 +2,7 @@
 	icon = 'icons/misc/buildmode.dmi'
 	var/datum/buildmode/bd
 	// If we don't do this, we get occluded by item action buttons
-	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
 
 /atom/movable/screen/buildmode/New(bld)
 	bd = bld
@@ -18,16 +18,19 @@
 	screen_loc = "NORTH,WEST"
 
 /atom/movable/screen/buildmode/mode/Click(location, control, params)
-	var/list/pa = params2list(params)
+	var/list/modifiers = params2list(params)
+	var/left_click = LAZYACCESS(modifiers, LEFT_CLICK)
+	var/right_click = LAZYACCESS(modifiers, RIGHT_CLICK)
 
-	if(pa.Find("left"))
+	if(left_click)
 		bd.toggle_modeswitch()
-	else if(pa.Find("right"))
+	else if(right_click)
 		bd.mode.change_settings(usr.client)
-	update_icon()
-	return 1
+	update_appearance(UPDATE_ICON_STATE)
+	return TRUE
 
-/atom/movable/screen/buildmode/mode/update_icon()
+/atom/movable/screen/buildmode/mode/update_icon_state()
+	. = ..()
 	icon_state = bd.mode.get_button_iconstate()
 
 /atom/movable/screen/buildmode/help
@@ -44,13 +47,13 @@
 	screen_loc = "NORTH,WEST+2"
 	name = "Change Dir"
 
-/atom/movable/screen/buildmode/bdir/update_icon()
+/atom/movable/screen/buildmode/bdir/update_icon_state()
+	. = ..()
 	dir = bd.build_dir
-	return
 
 /atom/movable/screen/buildmode/bdir/Click()
 	bd.toggle_dirswitch()
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 	return 1
 
 // used to switch between modes

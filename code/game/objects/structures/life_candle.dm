@@ -37,7 +37,7 @@
 		user.visible_message("<span class='notice'>[user] touches [src]. It seems to respond to [user.p_their()] presence!</span>", "<span class='warning'>I create a connection between you and [src].</span>")
 		linked_minds |= user.mind
 
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 	float(linked_minds.len)
 	if(linked_minds.len)
 		START_PROCESSING(SSobj, src)
@@ -46,8 +46,9 @@
 		STOP_PROCESSING(SSobj, src)
 		set_light(0)
 
-/obj/structure/life_candle/update_icon()
-	if(linked_minds.len)
+/obj/structure/life_candle/update_icon_state()
+	. = ..()
+	if(length(linked_minds))
 		icon_state = icon_state_active
 	else
 		icon_state = icon_state_inactive
@@ -64,8 +65,7 @@
 		STOP_PROCESSING(SSobj, src)
 		return
 
-	for(var/m in linked_minds)
-		var/datum/mind/mind = m
+	for(var/datum/mind/mind as anything in linked_minds)
 		if(!mind.current || (mind.current && mind.current.stat == DEAD))
 			addtimer(CALLBACK(src, PROC_REF(respawn), mind), respawn_time, TIMER_UNIQUE)
 
@@ -81,7 +81,7 @@
 		body = new mob_type(T)
 		var/mob/ghostie = mind.get_ghost(TRUE)
 		if(ghostie.client && ghostie.client.prefs)
-			ghostie.client.prefs.copy_to(body)
+			ghostie.client.prefs.apply_prefs_to(body)
 		mind.transfer_to(body)
 	else
 		body.forceMove(T)

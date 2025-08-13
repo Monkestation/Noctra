@@ -17,6 +17,7 @@
 	weight = 12
 
 	earliest_start = 0 SECONDS
+	min_players = 50
 
 	typepath = /datum/round_event/antagonist/solo/werewolf
 	antag_datum = /datum/antagonist/werewolf
@@ -24,35 +25,16 @@
 	restricted_roles = list(
 		"Monarch",
 		"Consort",
-		"Dungeoneer",
-		"Inquisitor",
-		"Men-at-arms",
-		"Merchant",
-		"Priest",
-		"Acolyte",
-		"Adepts",
-		"Templar",
-		"Bandit",
-		"Prince",
-		"Princess",
 		"Hand",
-		"Steward",
-		"Feldsher",
-		"Town Elder",
 		"Captain",
-		"Archivist",
+		"Prince",
+		"Priest",
 		"Merchant",
-		"Royal Knight",
-		"Garrison Guard",
-		"Jailor",
-		"Court Magician",
 		"Forest Warden",
 		"Inquisitor",
-		"Adepts",
-		"Forest Guard",
-		"Squire",
-		"Veteran",
-		"Apothecary"
+		"Adept",
+		"Royal Knight",
+		"Templar",
 	)
 
 /datum/round_event/antagonist/solo/werewolf

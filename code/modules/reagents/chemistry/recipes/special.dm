@@ -1,24 +1,3 @@
-GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related food types
-
-/proc/build_reagents_to_food()
-	. = list()
-	for (var/type in subtypesof(/obj/item/reagent_containers/food))
-		var/obj/item/reagent_containers/food/item = new type()
-		for(var/r in item.list_reagents)
-			if (!.[r])
-				.[r] = list()
-			.[r] += type
-		qdel(item)
-	//dang plant snowflake
-	for (var/type in subtypesof(/obj/item/seeds))
-		var/obj/item/seeds/item = new type()
-		for(var/r in item.reagents_add)
-			if (!.[r])
-				.[r] = list()
-			.[r] += type
-		qdel(item)
-
-
 #define RNGCHEM_INPUT "input"
 #define RNGCHEM_CATALYSTS "catalysts"
 #define RNGCHEM_OUTPUT "output"
@@ -145,3 +124,7 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 		return FALSE
 	required_container =  containerpath
 	return TRUE
+
+#undef RNGCHEM_INPUT
+#undef RNGCHEM_CATALYSTS
+#undef RNGCHEM_OUTPUT

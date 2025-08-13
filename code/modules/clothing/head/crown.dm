@@ -4,6 +4,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	sewrepair = FALSE
 	anvilrepair = /datum/skill/craft/armorsmithing
+	abstract_type = /obj/item/clothing/head/crown
 
 /obj/item/clothing/head/crown/circlet
 	name = "golden circlet"
@@ -30,12 +31,17 @@
 
 /obj/item/clothing/head/crown/serpcrown/Initialize()
 	. = ..()
+	name = "crown of [SSmapping.config.map_name]"
 	if(type == /obj/item/clothing/head/crown/serpcrown && !istype(loc, /mob/living/carbon/human/dummy)) //dummies spawn this in character setup
 		SSroguemachine.crown = src
 
+/obj/item/clothing/head/crown/serpcrown/Destroy()
+	if(SSroguemachine.crown == src)
+		SSroguemachine.crown = null
+	return ..()
+
 /obj/item/clothing/head/crown/serpcrown/proc/anti_stall()
-	src.visible_message(span_warning("[src] crumbles to dust, the ashes spiriting away in the direction of the Keep."))
-	SSroguemachine.crown = null //Do not harddel.
+	visible_message(span_warning("[src] crumbles to dust, the ashes spiriting away in the direction of the Keep."))
 	qdel(src) //Anti-stall
 
 /obj/item/clothing/head/crown/serpcrown/surplus
@@ -59,7 +65,7 @@
 
 /obj/item/clothing/head/crown/circlet/vision/equipped(mob/user, slot)
 	. = ..()
-	if (slot == SLOT_HEAD && istype(user))
+	if ((slot & ITEM_SLOT_HEAD) && istype(user))
 		ADD_TRAIT(user, TRAIT_THERMAL_VISION,"thermal_vision")
 	else
 		REMOVE_TRAIT(user, TRAIT_THERMAL_VISION,"thermal_vision")
@@ -74,7 +80,7 @@
 
 /obj/item/clothing/head/crown/circlet/sleepless/equipped(mob/user, slot)
 	. = ..()
-	if (slot == SLOT_HEAD && istype(user))
+	if ((slot & ITEM_SLOT_HEAD) && istype(user))
 		ADD_TRAIT(user, TRAIT_NOSLEEP,"Fatal Insomnia")
 	else
 		REMOVE_TRAIT(user, TRAIT_NOSLEEP,"Fatal Insomnia")
@@ -89,7 +95,7 @@
 
 /obj/item/clothing/head/crown/circlet/stink/equipped(mob/user, slot)
 	. = ..()
-	if (slot == SLOT_HEAD && istype(user))
+	if ((slot & ITEM_SLOT_HEAD) && istype(user))
 		ADD_TRAIT(user, TRAIT_NOSTINK,"Dead Nose")
 	else
 		REMOVE_TRAIT(user, TRAIT_NOSTINK,"Dead Nose")

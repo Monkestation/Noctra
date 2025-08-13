@@ -28,14 +28,14 @@
 		mod *= S.nextmove_modifier()
 		adj += S.nextmove_adjust()
 	if(!hand)
-		next_move = world.time + ((num + adj)*mod)
+		next_move = world.time + ((num + adj)*mod * (InCritical()? 3 : 1))
 		hud_used?.cdmid?.mark_dirty()
 		return
 	if(hand == 1)
-		next_lmove = world.time + ((num + adj)*mod)
+		next_lmove = world.time + ((num + adj)*mod * (InCritical()? 3 : 1))
 		hud_used?.cdleft?.mark_dirty()
 	else
-		next_rmove = world.time + ((num + adj)*mod)
+		next_rmove = world.time + ((num + adj)*mod * (InCritical()? 3 : 1))
 		hud_used?.cdright?.mark_dirty()
 
 /*
@@ -49,6 +49,9 @@
 */
 /atom/Click(location,control,params)
 	if(flags_1 & INITIALIZED_1)
+		if(ismob(usr))
+			if(istype(usr:focus, /obj/abstract/visual_ui_element/console_input))
+				usr:focus:unfocus()
 		SEND_SIGNAL(src, COMSIG_CLICK, location, control, params, usr)
 		usr.ClickOn(src, params)
 	return
@@ -74,8 +77,19 @@
 	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
-/mob/proc/ClickOn( atom/A, params )
+/mob/proc/ClickOn(atom/A, params)
+	if(QDELETED(A)) // :)))))
+		return
+
 	var/list/modifiers = params2list(params)
+
+	if(LAZYACCESS(modifiers, RIGHT_CLICK) && LAZYACCESS(modifiers, SHIFT_CLICKED))
+		if(mind && mind.active_uis["quake_console"])
+			if(client.holder)
+				client.holder.marked_datum = A
+				var/datum/visual_ui/console/console =  mind.active_uis["quake_console"]
+				var/obj/abstract/visual_ui_element/scrollable/console_output/output = locate(/obj/abstract/visual_ui_element/scrollable/console_output) in console.elements
+				output.add_line("MARKED: [A]")
 
 	if(curplaying)
 		curplaying.on_mouse_up()
@@ -96,7 +110,7 @@
 	if(next_move > world.time)
 		return
 
-	if(modifiers["middle"])
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 		if(atkswinging != "middle")
 			return
 		if(mmb_intent)
@@ -104,7 +118,8 @@
 				if(mmb_intent.no_early_release && client?.chargedprog < 100)
 					changeNext_move(mmb_intent.clickcd)
 					return
-	if(modifiers["left"])
+
+	if(LAZYACCESS(modifiers, LEFT_CLICK))
 		if(atkswinging != "left")
 			return
 		if(active_hand_index == 1)
@@ -115,73 +130,41 @@
 			used_hand = 2
 			if(next_rmove > world.time)
 				return
-		if(used_intent.get_chargetime())
-			if(used_intent.no_early_release && client?.chargedprog < 100)
-				var/adf = used_intent.clickcd
-				if(istype(rmb_intent, /datum/rmb_intent/aimed))
-					adf = round(adf * 1.4)
-				if(istype(rmb_intent, /datum/rmb_intent/swift))
-					adf = round(adf * 0.6)
-				changeNext_move(adf,used_hand)
-				return
-	if(modifiers["right"])
-		if(oactive)
-			if(atkswinging != "right")
-				return
-			if(active_hand_index == 1)
-				used_hand = 2
-				if(next_rmove > world.time)
-					return
-			else
-				used_hand = 1
-				if(next_lmove > world.time)
-					return
-			if(used_intent.get_chargetime())
+		if(uses_intents)
+			if(!ispath(used_intent) && used_intent?.get_chargetime())
 				if(used_intent.no_early_release && client?.chargedprog < 100)
-					changeNext_move(used_intent.clickcd,used_hand)
+					var/adf = used_intent.clickcd
+					if(istype(rmb_intent, /datum/rmb_intent/aimed))
+						adf = round(adf * 1.4)
+					if(istype(rmb_intent, /datum/rmb_intent/swift))
+						adf = round(adf * 0.6)
+					changeNext_move(adf,used_hand)
 					return
 
-
-//	if(modifiers["shift"] && modifiers["middle"])
-//		changeNext_move(CLICK_CD_MELEE)
-//		ShiftMiddleClickOn(A)
-//		return
-//	if(modifiers["shift"] && modifiers["ctrl"])
-//		CtrlShiftClickOn(A)
-//		return
-	if(modifiers["shift"] && modifiers["right"])
+	if(LAZYACCESS(modifiers, SHIFT_CLICKED) && LAZYACCESS(modifiers, RIGHT_CLICK))
 		ShiftRightClickOn(A, params)
 		return
-	if(modifiers["ctrl"] && modifiers["right"])
-//		face_atom(A)
+	if(LAZYACCESS(modifiers, CTRL_CLICKED) && LAZYACCESS(modifiers, RIGHT_CLICK))
 		CtrlRightClickOn(A, params)
 		return
-	if(modifiers["alt"] && modifiers["right"])
+	if(LAZYACCESS(modifiers, ALT_CLICKED) && LAZYACCESS(modifiers, RIGHT_CLICK))
 		face_atom(A)
 		AltRightClickOn(A, params)
 		return
-//	if(modifiers["shift"] && modifiers["middle"])
-//		ShiftMiddleClickOn(A)
-//		return
-	if(modifiers["middle"])
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK))
 		MiddleClickOn(A, params)
 		return
-	if(modifiers["shift"])
+	if(LAZYACCESS(modifiers, SHIFT_CLICKED))
 		ShiftClickOn(A)
 		return
-//	if(modifiers["alt"]) // alt and alt-gr (rightalt)
-//		AltClickOn(A)
-//		return
-//	if(modifiers["ctrl"])
-//		CtrlClickOn(A)
-//		return
-	if(modifiers["right"])
-		testing("right")
-		if(!oactive)
-			RightClickOn(A, params)
-			return
+	if(LAZYACCESS(modifiers, ALT_CLICKED)) // alt and alt-gr (rightalt)
+		AltClickOn(A)
+		return
+	if(LAZYACCESS(modifiers, CTRL_CLICKED))
+		CtrlClickOn(A)
+		return
 
-	if(incapacitated(ignore_restraints = TRUE))
+	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB))
 		return
 
 	if(!atkswinging)
@@ -193,28 +176,30 @@
 	if(dir == get_dir(A,src)) //they are behind us and we are not facing them
 		return
 
-	if(restrained())
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
-		RestrainedClickOn(A)
+		UnarmedAttack(A)
 		return
 
 	if(in_throw_mode)
-		if(modifiers["right"])
-			if(oactive)
-				throw_item(A, TRUE)
-				return
 		throw_item(A)
 		return
 
 	var/obj/item/W = get_active_held_item()
-	if(modifiers["right"])
-		if(oactive)
-			W = get_inactive_held_item()
 
 	if(W == A)
-		W.attack_self(src)
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
+			W.attack_self_secondary(src, params)
+			update_inv_hands()
+			return
+		W.attack_self(src, params)
 		update_inv_hands()
 		return
+
+	if(!A.Adjacent(src) && LAZYACCESS(params2list(params), RIGHT_CLICK))
+		if(uses_intents && used_intent.rmb_ranged)
+			used_intent.rmb_ranged(A, src) //get the message from the intent
+			return
 
 	// operate three levels deep here (item in backpack in src; item in box in backpack in src, not any deeper)
 	if(!isturf(A) && A == loc || (A in contents) || (A.loc in contents) || (A.loc && (A.loc.loc in contents)))
@@ -266,7 +251,7 @@
 */
 
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
-	if(isturf(A) || isturf(A.loc) || (A.loc && isturf(A.loc.loc)))
+	if(isturf(A) || isturf(A.loc) || (A.loc && (isturf(A.loc.loc) || isturf(A.loc.loc.loc))))
 		if(CanReach(A) || CanReach(A, W))
 			if(isopenturf(A))
 				var/turf/T = A
@@ -274,13 +259,12 @@
 					resolveAdjacentClick(A,W,params,used_hand)
 					return
 				if(T)
-					testing("beginautoaim")
 					var/list/mobs_here = list()
 					for(var/mob/M in T)
 						if(M.invisibility || M == src)
 							continue
 						mobs_here += M
-					if(mobs_here.len)
+					if(length(mobs_here))
 						var/mob/target = pick(mobs_here)
 						if(target)
 							if(target.Adjacent(src))
@@ -288,25 +272,8 @@
 								atkswinging = null
 								//update_warning()
 								return
-					if(!used_intent.noaa)
-						changeNext_move(CLICK_CD_MELEE)
-						do_attack_animation(T, visual_effect_icon = used_intent.animname)
-						if(W)
-							playsound(get_turf(src), pick(W.swingsound), 100, FALSE)
-							var/adf = used_intent.clickcd
-							if(istype(rmb_intent, /datum/rmb_intent/aimed))
-								adf = round(adf * 1.4)
-							if(istype(rmb_intent, /datum/rmb_intent/swift))
-								adf = round(adf * 0.6)
-							changeNext_move(adf)
-						else
-							playsound(get_turf(src), used_intent.miss_sound, 100, FALSE)
-							if(used_intent.miss_text)
-								visible_message("<span class='warning'>[src] [used_intent.miss_text]</span>", \
-												"<span class='warning'>I [used_intent.miss_text]</span>")
-					aftermiss()
-					atkswinging = null
-					//update_warning()
+
+					resolveAdjacentClick(T,W,params,used_hand)
 					return
 			else
 				resolveAdjacentClick(A,W,params,used_hand)
@@ -374,8 +341,7 @@
 	return FALSE
 
 /turf/IsObscured()
-	for(var/item in src)
-		var/atom/movable/AM = item
+	for(var/atom/movable/AM as anything in src)
 		if(AM.flags_1 & PREVENT_CLICK_UNDER_1)
 			return TRUE
 	return FALSE
@@ -481,15 +447,8 @@
 	animals lunging, etc.
 */
 /mob/proc/RangedAttack(atom/A, params)
-	SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, params)
-/*
-	Restrained ClickOn
-
-	Used when you are handcuffed and click things.
-	Not currently used by anything but could easily be.
-*/
-/mob/proc/RestrainedClickOn(atom/A)
-	return
+	if(SEND_SIGNAL(src, COMSIG_MOB_ATTACK_RANGED, A, params) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
 
 /**
  *Middle click
@@ -543,6 +502,7 @@
 	if(atomy[AB].loc != src)
 		return
 	var/AE = atomy[AB]
+	user.cast_move = 0
 	user.used_intent = user.a_intent
 	user.UnarmedAttack(AE,1,params)
 
@@ -592,6 +552,7 @@
 	. = SEND_SIGNAL(src, COMSIG_MOB_ALTCLICKON, A)
 	if(. & COMSIG_MOB_CANCEL_CLICKON)
 		return
+	A.AltClick(src)
 
 /atom/proc/AltClick(mob/user)
 	SEND_SIGNAL(src, COMSIG_CLICK_ALT, user)
@@ -681,7 +642,7 @@
 			setDir(WEST)
 
 /mob/face_atom(atom/A)
-	if(!canface())
+	if(!canface(A))
 		return FALSE
 	..()
 
@@ -698,9 +659,6 @@
 	var/matrix/M = new
 	M.Scale(x1,y1)
 	transform = M
-
-/atom
-	var/xyoverride = FALSE //so we can 'face' the click catcher even though it doesn't have an x or a y
 
 /atom/movable/screen/click_catcher
 	icon = 'icons/mob/screen_gen.dmi'
@@ -729,9 +687,12 @@
 	M.Scale(px/sx, py/sy)
 	transform = M
 
+#undef MAX_SAFE_BYOND_ICON_SCALE_TILES
+#undef MAX_SAFE_BYOND_ICON_SCALE_PX
+
 /atom/movable/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr.client ? usr.client.eye : usr), usr.client)
+	var/turf/T = params2turf(LAZYACCESS(modifiers, SCREEN_LOC), get_turf(usr.client ? usr.client.eye : usr), usr.client)
 	params += "&catcher=1"
 	if(T)
 		T.Click(location, control, params)
@@ -739,7 +700,7 @@
 
 /atom/movable/screen/click_catcher/face_me(location, control, params)
 	var/list/modifiers = params2list(params)
-	var/turf/T = params2turf(modifiers["screen-loc"], get_turf(usr.client ? usr.client.eye : usr), usr.client)
+	var/turf/T = params2turf(LAZYACCESS(modifiers, SCREEN_LOC), get_turf(usr.client ? usr.client.eye : usr), usr.client)
 	if(T)
 		return T
 
@@ -751,7 +712,7 @@
 
 /mob/living/MouseWheelOn(atom/A, delta_x, delta_y, params)
 	var/list/modifiers = params2list(params)
-	if(modifiers["shift"])
+	if(LAZYACCESS(modifiers, SHIFT_CLICKED))
 		if(delta_y > 0)
 			aimheight_change("up")
 		else
@@ -781,43 +742,21 @@
 
 	return FALSE
 
-/* RightClickOn */
-
-/atom/proc/rmb_self(mob/user)
-	return
-
-/mob/proc/rmb_on(atom/A, params)
-	return
-
-/mob/proc/RightClickOn(atom/A, params)
-	if(stat >= UNCONSCIOUS)
-		return
-	if(A.Adjacent(src))
-		if(A.loc == src && (A == get_active_held_item()) )
-			A.rmb_self(src)
-		else
-			rmb_on(A, params)
-	else if(used_intent.rmb_ranged)
-		used_intent.rmb_ranged(A, src) //get the message from the intent
-	changeNext_move(CLICK_CD_MELEE)
-	if(isturf(A.loc))
-		face_atom(A)
-
 /mob/proc/TargetMob(mob/target)
 	if(ismob(target))
 		if(targetting) //untarget old target
 			UntargetMob()
 		targetting = target
 		if(!fixedeye) //If fixedeye isn't already enabled, we need to set this var
-			atom_flags |= NO_DIR_CHANGE
+			atom_flags |= NO_DIR_CHANGE_ON_MOVE
 		tempfixeye = TRUE //Change icon to 'target' red eye
-		targeti = image('icons/mouseover.dmi', targetting.loc, "target", ABOVE_HUD_LAYER+0.1)
+		targeti = image('icons/mouseover.dmi', targetting.loc, "target")
 		var/icon/I = icon(icon, icon_state, dir)
 		targeti.pixel_y = I.Height() - world.icon_size - 4
 		targeti.pixel_x = -1
 		src.client.images |= targeti
 		for(var/atom/movable/screen/eye_intent/eyet in hud_used.static_inventory)
-			eyet.update_icon(src) //Update eye icon
+			eyet.update_appearance(UPDATE_ICON)
 	else
 		UntargetMob()
 
@@ -832,11 +771,11 @@
 	targetting = null
 	tempfixeye = FALSE
 	if(!fixedeye)
-		atom_flags &= ~NO_DIR_CHANGE
+		atom_flags &= ~NO_DIR_CHANGE_ON_MOVE
 	src.client.images -= targeti
 	//clear hud icon
 	for(var/atom/movable/screen/eye_intent/eyet in hud_used.static_inventory)
-		eyet.update_icon(src)
+		eyet.update_appearance(UPDATE_ICON)
 
 /mob/proc/ShiftRightClickOn(atom/A, params)
 //	linepoint(A, params)
@@ -872,7 +811,7 @@
 	temptarget = TRUE
 	targetting = swingtarget
 	if(!fixedeye)
-		atom_flags |= NO_DIR_CHANGE
+		atom_flags |= NO_DIR_CHANGE_ON_MOVE
 	tempfixeye = TRUE
 	for(var/atom/movable/screen/eye_intent/eyet in hud_used.static_inventory)
-		eyet.update_icon(src) //Update eye icon
+		eyet.update_appearance(UPDATE_ICON)

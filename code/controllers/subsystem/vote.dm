@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(vote)
 			var/datum/browser/noclose/client_popup
 			for(var/client/C in voting)
 				client_popup = new(C, "vote", "Voting Panel")
-				client_popup.set_window_options("can_close=0")
+				client_popup.set_window_options(can_close = FALSE)
 				client_popup.set_content(interface(C))
 				client_popup.open(FALSE)
 
@@ -221,9 +221,9 @@ SUBSYSTEM_DEF(vote)
 			if("gamemode")
 				choices.Add(config.votable_modes)
 			if("map")
-				for(var/map in global.config.maplist)
+				for(var/map in config.maplist)
 					var/datum/map_config/VM = config.maplist[map]
-					if(!VM.votable)
+					if(!VM.available_for_vote())
 						continue
 					choices.Add(VM.map_name)
 			if("custom")
@@ -236,7 +236,13 @@ SUBSYSTEM_DEF(vote)
 						break
 					choices.Add(option)
 			if("endround")
-				initiator_key = pick("Zlod", "Sun King", "Gaia", "Aeon", "Gemini", "Aries")
+				var/rng = rand(1, 1000)
+				if(rng > 200) // 80%
+					initiator_key = pick("Astrata", "Noc", "Dendor", "Abyssor", "Necra", "Ravox", "Xylix", "Pestra", "Malum", "Eora")
+				else if(rng > 50) // 15%
+					initiator_key = pick("Zizo", "Graggar", "Matthios", "Baotha")
+				else
+					initiator_key = "Psydon"
 				choices.Add("Continue Playing","End Round")
 			if("storyteller")
 				choices.Add(SSgamemode.storyteller_vote_choices())
@@ -372,8 +378,7 @@ SUBSYSTEM_DEF(vote)
 	usr.vote()
 
 /datum/controller/subsystem/vote/proc/remove_action_buttons()
-	for(var/v in generated_actions)
-		var/datum/action/vote/V = v
+	for(var/datum/action/vote/V as anything in generated_actions)
 		if(!QDELETED(V))
 			V.remove_from_client()
 			V.Remove(V.owner)
@@ -384,7 +389,7 @@ SUBSYSTEM_DEF(vote)
 	set name = "Vote"
 	set hidden = 1
 	var/datum/browser/noclose/popup = new(src, "vote", "Voting Panel")
-	popup.set_window_options("can_close=0")
+	popup.set_window_options(can_close = FALSE)
 	popup.set_content(SSvote.interface(client))
 	popup.open(FALSE)
 
@@ -392,7 +397,7 @@ SUBSYSTEM_DEF(vote)
 	name = "Vote!"
 	button_icon_state = "vote"
 
-/datum/action/vote/Trigger()
+/datum/action/vote/Trigger(trigger_flags)
 	if(owner)
 		owner.vote()
 		remove_from_client()

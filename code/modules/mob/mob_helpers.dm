@@ -117,7 +117,7 @@
 
 /proc/relative_angular_facing(mob/living/user, mob/living/target)
 	var/target_facing = dir2angle(target.dir)
-	var/abs_angle = Get_Angle(target, user)
+	var/abs_angle = get_angle(target, user)
 	target_facing = 360 + (abs_angle - target_facing)
 	if(target_facing > 360)
 		target_facing -= 360
@@ -372,6 +372,7 @@
 			for(var/j in 1 to rand(0, 2))
 				letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
 		. += letter
+
 ///Shake the camera of the person viewing the mob SO REAL!
 /proc/shake_camera(mob/M, duration, strength=1)
 	if(!M || !M.client || duration < 1)
@@ -459,7 +460,9 @@
 			else
 				to_examine = possible_a_intents[numb]
 	if(to_examine)
-		to_examine.examine(src)
+		var/list/result = to_examine.examine(src)
+		result += "<br>----------------------"
+		to_chat(src, "[result.Join()]")
 
 /mob/verb/rog_intent_change(numb as num,offhand as num)
 	set name = "intent-change"
@@ -512,8 +515,9 @@
 		if(a_intent)
 			a_intent.afterchange()
 		used_intent = a_intent
+		cast_move = 0
 	if(hud_used?.action_intent)
-		hud_used.action_intent.switch_intent(r_index,l_index,oactive)
+		hud_used.action_intent.switch_intent(r_index,l_index)
 
 /mob/proc/update_a_intents()
 	possible_a_intents.Cut()
@@ -522,7 +526,7 @@
 	var/obj/item/Masteritem = get_active_held_item()
 	if(Masteritem)
 		intents = Masteritem.possible_item_intents
-		if(Masteritem.wielded)
+		if(HAS_TRAIT(Masteritem, TRAIT_WIELDED) && LAZYLEN(Masteritem.gripped_intents))
 			intents = Masteritem.gripped_intents
 		if(Masteritem.altgripped)
 			intents = Masteritem.alt_intents
@@ -540,7 +544,7 @@
 	Masteritem = get_inactive_held_item()
 	if(Masteritem)
 		intents = Masteritem.possible_item_intents
-		if(Masteritem.wielded)
+		if(HAS_TRAIT(Masteritem, TRAIT_WIELDED))
 			intents = Masteritem.gripped_intents
 		if(Masteritem.altgripped)
 			intents = Masteritem.alt_intents
@@ -557,9 +561,9 @@
 			possible_offhand_intents += new defintent(src)
 	if(hud_used?.action_intent)
 		if(active_hand_index == 1)
-			hud_used.action_intent.update_icon(possible_a_intents,possible_offhand_intents,oactive)
+			hud_used.action_intent.update(possible_a_intents, possible_offhand_intents)
 		else
-			hud_used.action_intent.update_icon(possible_offhand_intents,possible_a_intents,oactive)
+			hud_used.action_intent.update(possible_offhand_intents, possible_a_intents)
 	if(active_hand_index == 1)
 		if(l_index <= possible_a_intents.len)
 			rog_intent_change(l_index)
@@ -580,12 +584,10 @@
 		return
 	if(atkswinging)
 		stop_attack()
+
 	if(!input)
 		qdel(mmb_intent)
 		mmb_intent = null
-	if(input != QINTENT_SPELL)
-		if(ranged_ability)
-			ranged_ability.deactivate()
 	switch(input)
 		if(QINTENT_KICK)
 			if(mmb_intent?.type == INTENT_KICK)
@@ -622,25 +624,9 @@
 				mmb_intent = null
 			else
 				mmb_intent = new INTENT_GIVE(src)
-		if(QINTENT_SPELL)
-			if(mmb_intent)
-				qdel(mmb_intent)
-			testing("spellselect [ranged_ability]")
-			mmb_intent = new INTENT_SPELL(src)
-			mmb_intent.releasedrain = ranged_ability.get_fatigue_drain()
-			mmb_intent.chargedrain = ranged_ability.chargedrain
-			mmb_intent.chargetime = ranged_ability.get_chargetime()
-			mmb_intent.warnie = ranged_ability.warnie
-			mmb_intent.charge_invocation = ranged_ability.charge_invocation
-			mmb_intent.no_early_release = ranged_ability.no_early_release
-			mmb_intent.movement_interrupt = ranged_ability.movement_interrupt
-			mmb_intent.charging_slowdown = ranged_ability.charging_slowdown
-			mmb_intent.chargedloop = ranged_ability.chargedloop
-			mmb_intent.update_chargeloop()
 
 	hud_used.quad_intents?.switch_intent(input)
 	hud_used.give_intent?.switch_intent(input)
-	givingto = null
 
 /mob/verb/def_intent_change(input as num)
 	set name = "def-change"
@@ -652,7 +638,7 @@
 	playsound_local(src, 'sound/misc/click.ogg', 100)
 	if(hud_used)
 		if(hud_used.def_intent)
-			hud_used.def_intent.update_icon()
+			hud_used.def_intent.update_appearance(UPDATE_ICON_STATE)
 	update_inv_hands()
 
 
@@ -666,27 +652,22 @@
 	var/client/client = L.client
 	if(L.IsSleeping() || L.surrendering)
 		if(cmode)
-			playsound_local(src, 'sound/misc/comboff.ogg', 100)
-			SSdroning.play_area_sound(get_area(src), client)
 			cmode = FALSE
-		if(hud_used)
-			if(hud_used.cmode_button)
-				hud_used.cmode_button.update_icon()
+		refresh_looping_ambience()
+		hud_used?.cmode_button?.update_appearance(UPDATE_ICON_STATE)
 		return
+
 	if(cmode)
 		playsound_local(src, 'sound/misc/comboff.ogg', 100)
-		SSdroning.play_area_sound(get_area(src), client)
 		cmode = FALSE
 		if(client && HAS_TRAIT(src, TRAIT_SCHIZO_AMBIENCE) && !HAS_TRAIT(src, TRAIT_SCREENSHAKE))
 			animate(client, pixel_y) // stops screenshake if you're not on 4th wonder yet.
 	else
 		cmode = TRUE
 		playsound_local(src, 'sound/misc/combon.ogg', 100)
-		if(L.cmode_music)
-			SSdroning.play_combat_music(L.cmode_music, client)
-	if(hud_used)
-		if(hud_used.cmode_button)
-			hud_used.cmode_button.update_icon()
+
+	refresh_looping_ambience()
+	hud_used?.cmode_button?.update_appearance(UPDATE_ICON_STATE)
 
 /mob
 	var/last_aimhchange = 0
@@ -746,7 +727,7 @@
 		playsound_local(src, 'sound/misc/click.ogg', 50, TRUE)
 		if(hud_used)
 			if(hud_used.zone_select)
-				hud_used.zone_select.update_icon()
+				hud_used.zone_select.update_appearance()
 
 /mob/proc/select_organ_slot(choice)
 	organ_slot_selected = choice
@@ -872,7 +853,6 @@
 				A.target = source
 				if(!alert_overlay)
 					alert_overlay = new(source)
-				alert_overlay.layer = FLOAT_LAYER
 				alert_overlay.plane = FLOAT_PLANE
 				A.add_overlay(alert_overlay)
 
@@ -906,8 +886,6 @@
 		return
 	if(!check_rights_for(user.client, R_ADMIN)) // Are they allowed?
 		return
-	if(!user.client.AI_Interact) // Do they have it enabled?
-		return
 	return TRUE
 
 /**
@@ -921,9 +899,9 @@
 		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
 		message_admins("[key_name_admin(usr)] has offered control of ([ADMIN_LOOKUPFLW(M)]) to ghosts")
 	var/poll_message = "Do you want to play as [M.real_name]?"
-	if(M.mind && M.mind.assigned_role)
-		poll_message = "[poll_message] Job:[M.mind.assigned_role]."
-	if(M.mind && M.mind.special_role)
+	if(M.mind?.assigned_role)
+		poll_message = "[poll_message] Job:[M.mind.assigned_role.title]."
+	if(M.mind?.special_role)
 		poll_message = "[poll_message] Status:[M.mind.special_role]."
 	else if(M.mind)
 		var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
@@ -1022,7 +1000,7 @@
 	. = list()
 	. += "[type]"
 	if(mind)
-		. += mind.assigned_role
+		. += mind.assigned_role.title
 		. += mind.special_role //In case there's something special leftover, try to avoid
 		for(var/datum/antagonist/A in mind.antag_datums)
 			. += "[A.type]"
@@ -1042,15 +1020,7 @@
 		var/datum/job/J = SSjob.GetJob(job)
 		if(!J)
 			return "Unknown"
-		used_title = J.title
-		if((gender == FEMALE) && J.f_title)
-			used_title = J.f_title
-
-		if(J.title == "Monarch")
-			if(gender == FEMALE)
-				used_title = "Queen"
-			else
-				used_title = "King"
-	if(mind?.apprentice)
-		used_title = mind.our_apprentice_name
+		used_title = J.get_informed_title(src)
+	if(is_apprentice())
+		used_title = return_our_apprentice_name()
 	return used_title

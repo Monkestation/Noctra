@@ -1,26 +1,38 @@
 /datum/artificer_recipe
 	appro_skill = /datum/skill/craft/engineering
 
+// --------- GENERAL -----------
+
 /datum/artificer_recipe/general
 	i_type = "General"
+	category = "General"
+
+/datum/artificer_recipe/general/bronze_cast
+	name = "Bronze Casting"
+	required_item = /obj/item/ingot/copper
+	additional_items = list(/obj/item/ingot/tin = 1)
+	created_item = /obj/item/ingot/bronze
+	hammers_per_item = 3
+	created_amount = 2
+	craftdiff = 0
 
 /datum/artificer_recipe/general/woodcog //This looks a bit silly but due to how these datums work is necessary for other things to inherit from it
-	name = "Wooden Cog"
+	name = "Wooden Gear"
 	required_item = /obj/item/natural/wood/plank
 	created_item = /obj/item/gear/wood/basic
 	hammers_per_item = 5
 	craftdiff = 1
 
 /datum/artificer_recipe/general/woodcogupgrade2
-	name = "Reliable Wooden Cog (+1 Essence of Lumber)"
+	name = "Reliable Wooden Gear (+1 Essence of Lumber)"
 	required_item = /obj/item/natural/wood/plank
 	created_item = /obj/item/gear/wood/reliable
-	additional_items = list(/obj/item/grown/log/tree/small/essence = 1)
+	additional_items = list(/obj/item/grown/log/tree/essence = 1)
 	hammers_per_item = 5
 	craftdiff = 2
 
 /datum/artificer_recipe/general/unstable
-	name = "Unstable Wooden Cog (+1 Essence of Wilderness)"
+	name = "Unstable Wooden Gear (+1 Essence of Wilderness)"
 	required_item = /obj/item/natural/wood/plank
 	created_item = /obj/item/gear/wood/unstable
 	additional_items = list(/obj/item/natural/cured/essence = 1)
@@ -28,12 +40,23 @@
 	craftdiff = 3
 
 /datum/artificer_recipe/general/cog
-	name = "3x Cogs"
+	name = "3x Bronze Gears"
 	required_item = /obj/item/ingot/bronze
 	created_item = /obj/item/gear/metal/bronze
 	hammers_per_item = 10
 	craftdiff = 1
 	created_amount = 3
+
+/datum/artificer_recipe/general/cog/iron
+	name = "Iron Gear"
+	required_item = /obj/item/ingot/iron
+	created_item = /obj/item/gear/metal/iron
+	created_amount = 1
+
+/datum/artificer_recipe/general/cog/steel
+	name = "3x Steel Gears"
+	required_item = /obj/item/ingot/steel
+	created_item = /obj/item/gear/metal/steel
 
 /datum/artificer_recipe/general/locks
 	name = "5x Custom Locks"
@@ -46,31 +69,69 @@
 /datum/artificer_recipe/general/keys
 	name = "5x Blank Custom Keys"
 	required_item = /obj/item/ingot/bronze
-	created_item = /obj/item/key_custom_blank
+	created_item = /obj/item/key/custom
 	hammers_per_item = 5
 	craftdiff = 1
 	created_amount = 5
 
-/datum/artificer_recipe/general/bronze_cast
-	name = "Bronze Casting"
-	required_item = /obj/item/ingot/copper
-	additional_items = list(/obj/item/ingot/tin = 1)
-	created_item = /obj/item/ingot/bronze
-	hammers_per_item = 3
-	created_amount = 2
-	craftdiff = 0
+/datum/artificer_recipe/general/bronze_chisel
+	name = "Bronze Chisel"
+	required_item = /obj/item/ingot/bronze
+	created_item = /obj/item/weapon/chisel/bronze
+	hammers_per_item = 5
+	craftdiff = 1
+
+/datum/artificer_recipe/general/headhook
+	name = "Bronze Headhook (+Fibers x2)"
+	required_item = /obj/item/ingot/bronze
+	created_item = /obj/item/storage/hip/headhook/bronze
+	additional_items = list(/obj/item/natural/fibers = 2)
+	hammers_per_item = 6
+	craftdiff = 3
+
+/datum/artificer_recipe/gold/headhook
+	name = "Royal Headhook"
+	required_item = /obj/item/ingot/gold
+	created_item = /obj/item/storage/hip/headhook/royal
+	additional_items = list(/obj/item/natural/silk = 2)
+	hammers_per_item = 6
+	craftdiff = 3
 
 // --------- TOOLS -----------
 
 /datum/artificer_recipe/tools
 	i_type = "Tools"
+	category = "Tools"
 
 /datum/artificer_recipe/tools/lamptern
 	name = "Bronze Lamptern"
 	required_item = /obj/item/ingot/bronze
 	created_item = /obj/item/flashlight/flare/torch/lantern/bronzelamptern
 	hammers_per_item = 9
+	craftdiff = 3
+
+/datum/artificer_recipe/tools/lockpicks
+	name = "2x Lockpicks"
+	required_item = /obj/item/ingot/iron
+	created_item = /obj/item/lockpick
+	hammers_per_item = 5
+	created_amount = 3
 	craftdiff = 2
+
+/datum/artificer_recipe/tools/lockpickring
+	name = "Lockpick ring"
+	required_item = /obj/item/ingot/iron
+	created_item = /obj/item/lockpickring
+	hammers_per_item = 5
+	craftdiff = 2
+
+/datum/artificer_recipe/tools/drill
+	name = "Clockwork Drill (+1 Bronze Bar) (+1 Metal Gear) (+1 Wooden Plank)"
+	required_item = /obj/item/ingot/bronze
+	additional_items = list(/obj/item/ingot/bronze = 1, /obj/item/gear/metal = 1, /obj/item/natural/wood/plank = 1)
+	created_item = /obj/item/weapon/pick/drill
+	hammers_per_item = 6
+	craftdiff = 4
 
 // --------- WEAPON -----------
 
@@ -89,6 +150,7 @@
 
 /datum/artificer_recipe/contraptions
 	i_type = "Contraptions"
+	category = "Contraptions"
 
 /datum/artificer_recipe/contraptions/metalizer
 	name = "Wood Metalizer (+1 Wooden Cog)"
@@ -115,7 +177,7 @@
 	craftdiff = 4
 
 /datum/artificer_recipe/contraptions/linker
-	name = "Engineering Linker (+1 Gold)"
+	name = "Engineering Wrench (+1 Gold)"
 	required_item = /obj/item/ingot/bronze
 	additional_items = list(/obj/item/ingot/gold = 1)
 	created_item = /obj/item/contraption/linker
@@ -130,10 +192,19 @@
 	hammers_per_item = 8
 	craftdiff = 3
 
+/datum/artificer_recipe/contraptions/coolingbackpack
+	name = "Cooling Backpack (+1 Backpack, +2 Cogs)"
+	required_item = /obj/item/ingot/bronze
+	created_item = /obj/item/storage/backpack/backpack/artibackpack
+	additional_items = list(/obj/item/gear/metal = 2, /obj/item/storage/backpack/backpack)
+	hammers_per_item = 4
+	craftdiff = 5
+
 // --------- Ammo -----------
 
 /datum/artificer_recipe/ammo
 	i_type = "Ammo"
+	category = "Ammo"
 
 /datum/artificer_recipe/ammo/lead_bullet
 	name = "Lead Bullets 2x"
@@ -161,10 +232,31 @@
 	craftdiff = 2
 	created_amount = 5
 
+/datum/artificer_recipe/ammo/arrows/pyro
+	name = "Fire Arrows 5x (+1 Iron +1 Blast Powder)"
+	required_item = /obj/item/natural/wood/plank
+	additional_items = list(/obj/item/ingot/iron, /obj/item/reagent_containers/powder/blastpowder)
+	created_item = /obj/item/ammo_casing/caseless/arrow/pyro
+	hammers_per_item = 6
+	craftdiff = 3
+	created_amount = 5
+
+/datum/artificer_recipe/ammo/bolts/pyro
+	name = "Crossbow Bolts 5x (+1 Iron +1 Blast Powder)"
+	required_item = /obj/item/natural/wood/plank
+	additional_items = list(/obj/item/ingot/iron, /obj/item/reagent_containers/powder/blastpowder)
+	created_item = /obj/item/ammo_casing/caseless/bolt/pyro
+	hammers_per_item = 6
+	craftdiff = 3
+	created_amount = 5
+
+// TODO: add Vial bolts/arrows
+
 // --------- WOODEN PROSTHETICS -----------
 
 /datum/artificer_recipe/prosthetics
 	i_type = "Prosthetics"
+	category = "Prosthetics"
 
 /datum/artificer_recipe/prosthetics/wood
 	name = "Left Wooden Arm (+1 Plank)"
@@ -270,6 +362,7 @@
 
 /datum/artificer_recipe/psycross
 	i_type = "Psycross"
+	category = "Psycross"
 
 /datum/artificer_recipe/psycross/silver
 	name = "silver Psycross"
@@ -348,17 +441,30 @@
 	hammers_per_item = 5
 	craftdiff = 2
 
-/datum/artificer_recipe/psycross/malum/silver
-	name = "Malum silver Psycross"
+/datum/artificer_recipe/psycross/malum_silver
+	name = "Malum Silver Psycross"
 	required_item = /obj/item/ingot/silver
 	created_item = /obj/item/clothing/neck/psycross/silver/malum
 	hammers_per_item = 5
 	craftdiff = 2
 
-/datum/artificer_recipe/psycross/malum_steel/steel
-	name = "Malum steel Psycross"
+/datum/artificer_recipe/psycross/malum_steel
+	name = "Malum Steel Psycross"
 	required_item = /obj/item/ingot/silver
 	created_item = /obj/item/clothing/neck/psycross/silver/malum_steel
 	additional_items = list(/obj/item/ingot/steel = 1)
 	hammers_per_item = 7
 	craftdiff = 3
+
+// --------- Misc -----------
+
+/datum/artificer_recipe/misc
+	i_type = "Misc"
+	category = "Misc"
+
+/datum/artificer_recipe/misc/jinglebells
+	name = "Jingle Bells"
+	required_item = /obj/item/ingot/iron
+	created_item = /obj/item/jingle_bells
+	hammers_per_item = 5
+	craftdiff = 2

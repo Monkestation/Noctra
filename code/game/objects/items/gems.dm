@@ -25,19 +25,26 @@
 		else
 			new_gem = pick(subtypesof(/obj/item/gem))
 		var/obj/item/gem/spawned = new new_gem(get_turf(src))
-		spawned.update_icon_state()
+		spawned.update_appearance(UPDATE_ICON_STATE)
 		return INITIALIZE_HINT_QDEL
-	update_icon_state()
+	update_appearance(UPDATE_ICON_STATE)
+
+/obj/item/gem/on_consume(mob/living/eater)
+	. = ..()
+	if(attuned)
+		eater.adjust_spell_points(0.5)
+		eater.mana_pool.adjust_attunement(attuned, 0.1)
 
 ///This is a switch incase anyone would like to add more...
 /obj/item/gem/update_icon_state()
-	if(icon_state == "aros")
+	if(icon_state == "aros") // :(
 		switch(rand(1,2))
 			if(1)
 				icon_state = "d_cut"
 			if(2)
 				icon_state = "e_cut"
-	return
+	return ..()
+
 /obj/item/gem/getonmobprop(tag)
 	. = ..()
 	if(tag)
@@ -57,6 +64,7 @@
 	//color = "#15af158c"
 	icon_state = "emerald_cut"
 	sellprice = 44
+	attuned = /datum/attunement/earth
 
 /obj/item/gem/blue
 	name = "blortz"
@@ -64,6 +72,7 @@
 	//color = "#1ca5aa8c"
 	icon_state = "quartz_cut"
 	sellprice = 88
+	attuned = /datum/attunement/ice
 
 /obj/item/gem/yellow
 	name = "toper"
@@ -71,6 +80,7 @@
 	//color = "#e6a0088c"
 	icon_state = "topaz_cut"
 	sellprice = 25
+	attuned = /datum/attunement/electric
 
 /obj/item/gem/violet
 	name = "saffira"
@@ -78,6 +88,7 @@
 	//color = "#1733b38c"
 	icon_state = "sapphire_cut"
 	sellprice = 56
+	attuned = /datum/attunement/arcyne
 
 /obj/item/gem/diamond
 	name = "dorpel"
@@ -85,6 +96,7 @@
 	//color = "#ffffff8c"
 	icon_state = "diamond_cut"
 	sellprice = 121
+	attuned = /datum/attunement/light
 
 /obj/item/gem/red
 	name = "rubor"
@@ -92,6 +104,7 @@
 	//color = "#ff00008c"
 	icon_state = "ruby_cut"
 	sellprice = 100
+	attuned = /datum/attunement/fire
 
 /obj/item/gem/black
 	name = "onyxa"
@@ -99,6 +112,7 @@
 	color = "#200013dd"
 	sellprice = 76
 	dropshrink = 0.7
+	attuned = /datum/attunement/dark
 
 /// riddle
 
@@ -114,7 +128,7 @@
 	slot_flags = ITEM_SLOT_MOUTH
 	dropshrink = 0.4
 	drop_sound = 'sound/items/gem.ogg'
-	sellprice = 554
+	sellprice = 454
 
 /obj/item/riddleofsteel/Initialize()
 	. = ..()

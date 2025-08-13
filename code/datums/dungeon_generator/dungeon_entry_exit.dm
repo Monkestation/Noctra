@@ -1,9 +1,13 @@
 GLOBAL_LIST_INIT(unlinked_dungeon_entries, list())
-GLOBAL_LIST_INIT(dungeon_entrys, list())
-GLOBAL_LIST_INIT(dungeon_exit, list())
+GLOBAL_LIST_INIT(dungeon_entries, list())
+GLOBAL_LIST_INIT(dungeon_exits, list())
 
 /obj/structure/dungeon_entry/center
 	dungeon_id = "center"
+
+/obj/structure/dungeon_entry/center/vanderlin
+	icon_state = "portal_noenter"
+	entry_requirements = list("Time" = "day")
 
 /obj/structure/dungeon_entry
 	name = "The Tomb of Matthios"
@@ -22,31 +26,57 @@ GLOBAL_LIST_INIT(dungeon_exit, list())
 
 	var/dungeon_id
 	var/list/dungeon_exits = list()
+	var/can_enter = TRUE
+	/// Requirements for entry/exit
+	/// "Time" = "dat" etc
+	var/list/entry_requirements = list()
+	/// Make the requirements not inclusive
+	var/requires_all = FALSE
+
 
 /obj/structure/dungeon_entry/New(loc, ...)
-	GLOB.dungeon_entrys |= src
+	GLOB.dungeon_entries |= src
 	if(!dungeon_id)
 		GLOB.unlinked_dungeon_entries |= src
-	. = ..()
+	if(LAZYACCESS(entry_requirements, "Time"))
+		GLOB.TodUpdate += src
+	return ..()
+
+/obj/structure/dungeon_entry/update_tod(todd)
+	if(todd == entry_requirements["Time"])
+		icon_state = "portal"
+	else
+		icon_state = "portal_noenter"
 
 /obj/structure/dungeon_entry/Initialize()
 	. = ..()
 	if(dungeon_id)
-		for(var/obj/structure/dungeon_exit/exit as anything in GLOB.dungeon_exit)
+		for(var/obj/structure/dungeon_exit/exit as anything in GLOB.dungeon_exits)
 			if(exit.dungeon_id != dungeon_id)
 				continue
 			dungeon_exits |= exit
 			exit.entry = src
 			GLOB.unlinked_dungeon_entries -= src
-	else
-		shuffle_inplace(GLOB.dungeon_exit)
-		for(var/obj/structure/dungeon_exit/exit as anything in GLOB.dungeon_exit)
-			if(exit.dungeon_id)
-				continue
-			dungeon_exits |= exit
-			exit.entry = src
-			GLOB.unlinked_dungeon_entries -= src
-			break
+		return
+	shuffle_inplace(GLOB.dungeon_exits)
+	for(var/obj/structure/dungeon_exit/exit as anything in GLOB.dungeon_exits)
+		if(exit.dungeon_id)
+			continue
+		dungeon_exits |= exit
+		exit.entry = src
+		GLOB.unlinked_dungeon_entries -= src
+		break
+
+/obj/structure/dungeon_entry/Destroy()
+	for(var/obj/structure/dungeon_exit/exit as anything in dungeon_exits)
+		exit.entry = null
+	dungeon_exits = null
+	GLOB.dungeon_entries -= src
+	GLOB.unlinked_dungeon_entries -= src
+	if(LAZYACCESS(entry_requirements, "Time"))
+		GLOB.TodUpdate -= src
+
+	return ..()
 
 /obj/structure/dungeon_entry/attack_hand(mob/user)
 	. = ..()
@@ -62,7 +92,28 @@ GLOBAL_LIST_INIT(dungeon_exit, list())
 	use(user, TRUE)
 	return ..()
 
+/obj/structure/dungeon_entry/proc/attempt_entry(mob/user, is_ghost)
+	if(!is_ghost && !can_enter)
+		return FALSE
+	if(entry_requirements && !is_ghost)
+		if(!has_requirements(user))
+			return FALSE
+	return TRUE
+
+/obj/structure/dungeon_entry/proc/has_requirements(mob/user)
+	var/requirements_met = 0
+	var/time_req = LAZYACCESS(entry_requirements, "Time")
+	if(time_req && GLOB.tod == time_req)
+		requirements_met ++
+	if(!requires_all && requirements_met > 0)
+		return TRUE
+	if(requirements_met < length(entry_requirements))
+		return FALSE
+	return TRUE
+
 /obj/structure/dungeon_entry/proc/use(mob/user, is_ghost)
+	if(!attempt_entry(user, is_ghost))
+		return
 	if(!length(dungeon_exits))
 		return
 	var/atom/exit = pick(dungeon_exits)
@@ -71,7 +122,7 @@ GLOBAL_LIST_INIT(dungeon_exit, list())
 		playsound(src, 'sound/foley/ladder.ogg', 100, FALSE)
 		if(!do_after(user, 3 SECONDS, src))
 			return
-	mob_move_travel_z_level(user, get_turf(exit))
+	movable_travel_z_level(user, get_turf(exit))
 
 /obj/structure/dungeon_exit
 	name = "dungeon exit"
@@ -84,28 +135,34 @@ GLOBAL_LIST_INIT(dungeon_exit, list())
 
 	var/dungeon_id
 	var/obj/structure/dungeon_entry/entry
+	var/list/entry_requirements = list()
+	var/requires_all = FALSE
 
 /obj/structure/dungeon_exit/Initialize()
 	. = ..()
-	GLOB.dungeon_exit |= src
+	GLOB.dungeon_exits |= src
 
 	if(dungeon_id)
-		for(var/obj/structure/dungeon_entry/exit as anything in GLOB.dungeon_entrys)
+		for(var/obj/structure/dungeon_entry/exit as anything in GLOB.dungeon_entries)
 			if(exit.dungeon_id != dungeon_id)
 				continue
 			exit.dungeon_exits |= src
 			entry = exit
 			GLOB.unlinked_dungeon_entries -= exit
+		return
+	shuffle_inplace(GLOB.unlinked_dungeon_entries)
+	for(var/obj/structure/dungeon_entry/exit as anything in GLOB.unlinked_dungeon_entries)
+		if(exit.dungeon_id)
+			continue
+		exit.dungeon_exits |= src
+		entry = exit
+		GLOB.unlinked_dungeon_entries -= exit
+		break
 
-	else
-		shuffle_inplace(GLOB.unlinked_dungeon_entries)
-		for(var/obj/structure/dungeon_entry/exit as anything in GLOB.unlinked_dungeon_entries)
-			if(exit.dungeon_id)
-				continue
-			exit.dungeon_exits |= src
-			entry = exit
-			GLOB.unlinked_dungeon_entries -= exit
-			break
+/obj/structure/dungeon_exit/Destroy()
+	entry = null
+	GLOB.dungeon_exits -= src
+	return ..()
 
 /obj/structure/dungeon_exit/attack_hand(mob/user)
 	. = ..()
@@ -122,10 +179,33 @@ GLOBAL_LIST_INIT(dungeon_exit, list())
 	return ..()
 
 /obj/structure/dungeon_exit/proc/use(mob/user, is_ghost)
-	if(!entry)
+	if(!attempt_entry(user, is_ghost))
 		return
 	if(!is_ghost)
 		playsound(src, 'sound/foley/ladder.ogg', 100, FALSE)
 		if(!do_after(user, 3 SECONDS, src))
 			return
-	mob_move_travel_z_level(user, get_turf(entry))
+	movable_travel_z_level(user, get_turf(entry))
+
+/*
+	suggest making this proc shared beftween the two, or a refatoring that makes that work
+	instead of repeating code that is
+*/
+/obj/structure/dungeon_exit/proc/attempt_entry(mob/user, is_ghost)
+	if(!is_ghost && !entry)
+		return FALSE
+	if(entry_requirements && !is_ghost)
+		if(!has_requirements(user))
+			return FALSE
+	return TRUE
+
+/obj/structure/dungeon_exit/proc/has_requirements(mob/user)
+	var/requirements_met = 0
+	var/time_req = LAZYACCESS(entry_requirements, "Time")
+	if(time_req && GLOB.tod == time_req)
+		requirements_met ++
+	if(!requires_all && requirements_met > 0)
+		return TRUE
+	if(requirements_met < length(entry_requirements))
+		return FALSE
+	return TRUE

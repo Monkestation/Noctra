@@ -7,9 +7,6 @@
 /mob
 	var/fovangle
 
-/mob/living/carbon/human
-	fovangle = FOV_DEFAULT
-
 //Procs
 /atom/proc/InCone(atom/center = usr, dir = NORTH)
 	if(get_dist(center, src) == 0 || src == center) return 0
@@ -93,35 +90,18 @@
 	if(hud_used?.fov)
 		if(hud_used.fov.alpha == 0)
 			return
+	//! IMPORTANT: If Animations break remove this, tested most seemed fine
 	var/image/I = image(src, src)
-	I.override = 1
+
 	I.plane = GAME_PLANE_UPPER
 	I.layer = layer
+	I.override = TRUE
 	I.pixel_x = 0
 	I.pixel_y = 0
 	client.images += I
 	client.hidden_images += I
-	I.appearance_flags = RESET_TRANSFORM|KEEP_TOGETHER
-	if(buckled)
-		var/image/IB = image(buckled, buckled)
-		IB.override = 1
-		IB.plane = GAME_PLANE_UPPER
-		IB.layer = IB.layer
-		IB.pixel_x = 0
-		IB.pixel_y = 0
-		IB.appearance_flags = RESET_TRANSFORM|KEEP_TOGETHER
-		client.hidden_images += IB
-		client.images += IB
-	if(pulling)
-		var/image/IB = image(pulling, pulling)
-		IB.override = 1
-		IB.plane = GAME_PLANE_UPPER
-		IB.layer = IB.layer
-		IB.pixel_x = 0
-		IB.pixel_y = 0
-		IB.appearance_flags = RESET_TRANSFORM|KEEP_TOGETHER
-		client.hidden_images += IB
-		client.images += IB
+	I.appearance_flags = KEEP_TOGETHER
+
 /*	if(hud_used && hud_used.fov_blocker)
 		fov_blocker
 
@@ -255,9 +235,7 @@
 		return hide_cone()
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if(H.resting || H.lying)
-			return hide_cone()
-		if(!H.client && (H.mode != AI_OFF))
+		if(H.resting || H.body_position == LYING_DOWN)
 			return hide_cone()
 	return show_cone()
 
@@ -352,5 +330,4 @@
 	name = " "
 	screen_loc = "1,1"
 	mouse_opacity = 0
-	layer = HUD_LAYER
 	plane = HUD_PLANE-1

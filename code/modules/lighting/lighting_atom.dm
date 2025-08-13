@@ -1,3 +1,24 @@
+/// Will update the light (duh).
+/// Creates or destroys it if needed, makes it update values, makes sure it's got the correct source turf...
+/atom/proc/update_light()
+	SHOULD_NOT_SLEEP(TRUE)
+
+	if(light_system != STATIC_LIGHT)
+		CRASH("update_light() for [src] with following light_system value: [light_system]")
+
+	if (!light_power || !light_outer_range || !light_on) // We won't emit light anyways, destroy the light source.
+		QDEL_NULL(light)
+	else
+		if (!ismovable(loc)) // We choose what atom should be the top atom of the light here.
+			. = src
+		else
+			. = loc
+
+		if (!QDELETED(light)) // Update the light or create it if it does not exist.
+			light.update(.)
+		else
+			light = new/datum/light_source(src, .)
+
 // The proc you should always use to set the light of this atom.
 // Nonesensical value for l_color default, so we can detect if it gets set to null.
 #define NONSENSICAL_VALUE -99999
@@ -39,28 +60,6 @@
 	light_color = new_color
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_COLOR, .)
 
-/// Will update the light (duh).
-/// Creates or destroys it if needed, makes it update values, makes sure it's got the correct source turf...
-/atom/proc/update_light()
-	SHOULD_NOT_SLEEP(TRUE)
-
-	if(light_system != STATIC_LIGHT)
-		CRASH("update_light() for [src] with following light_system value: [light_system]")
-
-	if (!light_power || !light_outer_range || !light_on) // We won't emit light anyways, destroy the light source.
-		QDEL_NULL(light)
-	else
-		if (!ismovable(loc)) // We choose what atom should be the top atom of the light here.
-			. = src
-		else
-			. = loc
-
-		if (light) // Update the light or create it if it does not exist.
-			light.update(.)
-		else
-			light = new/datum/light_source(src, .)
-
-
 /atom/proc/set_light_range(new_inner_range, new_outer_range)
 	if(isnull(new_inner_range) && new_outer_range)
 		new_inner_range = new_outer_range/4
@@ -77,6 +76,7 @@
 	light_outer_range = new_outer_range
 	light_inner_range = new_inner_range
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_RANGE, old_inner_range, old_outer_range)
+	return TRUE
 
 /// Setter for this atom's light falloff curve.
 /atom/proc/set_light_curve(new_curve)
@@ -108,16 +108,6 @@
 	light_on = new_value
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_LIGHT_ON, .)
 
-// If we have opacity, make sure to tell (potentially) affected light sources.
-/atom/movable/Destroy()
-	var/turf/T = loc
-	. = ..()
-	if (opacity && istype(T))
-		var/old_has_opaque_atom = T.has_opaque_atom
-		T.recalc_atom_opacity()
-		if (old_has_opaque_atom != T.has_opaque_atom)
-			T.reconsider_lights()
-
 // Should always be used to change the opacity of an atom.
 // It notifies (potentially) affected light sources so they can update (if needed).
 /atom/proc/set_opacity(new_opacity)
@@ -137,15 +127,6 @@
 		T.recalc_atom_opacity()
 		if (old_has_opaque_atom != T.has_opaque_atom)
 			T.reconsider_lights()
-
-
-/atom/movable/Moved(atom/OldLoc, Dir)
-	. = ..()
-	var/datum/light_source/L
-	var/thing
-	for (thing in light_sources) // Cycle through the light sources on this atom and tell them to update.
-		L = thing
-		L.source_atom.update_light()
 
 /atom/vv_edit_var(var_name, var_value)
 	switch (var_name)

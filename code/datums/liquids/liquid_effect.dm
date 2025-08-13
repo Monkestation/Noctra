@@ -12,6 +12,7 @@
 	light_color = LIGHT_COLOR_FIRE
 
 	mouse_opacity = FALSE
+	shine = SHINE_REFLECTIVE
 
 	var/datum/liquid_group/liquid_group
 	var/turf/my_turf
@@ -41,14 +42,15 @@
 
 /obj/effect/abstract/liquid_turf/proc/set_connection(dir)
 	connected["[dir]"] = 1
-	update_icon()
+	update_appearance(UPDATE_ICON)
 
 /obj/effect/abstract/liquid_turf/proc/unset_connection(dir)
 	connected["[dir]"] = 0
-	update_icon()
+	update_appearance(UPDATE_ICON)
 
-/obj/effect/abstract/liquid_turf/update_icon()
+/obj/effect/abstract/liquid_turf/update_icon_state()
 	. = ..()
+	make_unshiny()
 	var/new_overlay = ""
 	for(var/i in connected)
 		if(connected[i])
@@ -56,7 +58,29 @@
 	icon_state = "[new_overlay]"
 	if(!new_overlay)
 		icon_state = "puddle"
+	make_shiny(initial(shine))
 
+/obj/effect/abstract/liquid_turf/update_overlays()
+	. = ..()
+	var/number = liquid_state - 1
+	if(number != 0)
+		. += mutable_appearance('icons/effects/liquid_overlays.dmi', "stage[number]_bottom", plane = GAME_PLANE_UPPER, layer = ABOVE_MOB_LAYER)
+		. += mutable_appearance('icons/effects/liquid_overlays.dmi', "stage[number]_top", plane =GAME_PLANE, layer = BELOW_MOB_LAYER)
+	if(liquid_group?.glows)
+		. += mutable_appearance(icon, icon_state, plane = EMISSIVE_PLANE)
+
+/obj/effect/abstract/liquid_turf/make_shiny(_shine = SHINE_REFLECTIVE)
+	if(total_reflection_mask)
+		if(shine != _shine)
+			cut_overlay(total_reflection_mask)
+		else
+			return
+	switch(_shine)
+		if(SHINE_MATTE)
+			return
+	total_reflection_mask = mutable_appearance(icon, "[icon_state]-puddle-reflective", plane = REFLECTIVE_DISPLACEMENT_PLANE)
+	add_overlay(total_reflection_mask)
+	shine = _shine
 
 /obj/effect/abstract/liquid_turf/Initialize(mapload, datum/liquid_group/group_to_add)
 	. = ..()
@@ -93,12 +117,12 @@
 			set_connection(get_dir(src, pipe))
 			pipe.set_connection(get_dir(pipe, src))
 	if(z)
-		update_icon()
+		update_appearance(UPDATE_ICON)
 		for(var/direction in GLOB.cardinals)
 			var/turf/turf = get_step(src, direction)
 			if(!turf.liquids)
 				continue
-			turf.liquids.update_icon()
+			turf.liquids.update_appearance(UPDATE_ICON)
 
 /obj/effect/abstract/liquid_turf/Destroy(force)
 	UnregisterSignal(my_turf, list(COMSIG_ATOM_ENTERED, COMSIG_PARENT_EXAMINE))
@@ -118,7 +142,7 @@
 				return
 			set_connection(get_dir(src, pipe))
 			pipe.set_connection(get_dir(pipe, src))
-			pipe.update_icon()
+			pipe.update_appearance()
 
 	for(var/direction in GLOB.cardinals)
 		var/turf/turf = get_step(src, direction)
@@ -163,23 +187,15 @@
 	var/number = new_state - 1
 	if(number != 0)
 		icon_state = null
-		update_icon()
-
+		update_appearance(UPDATE_OVERLAYS)
 	else
 		icon_state = initial(icon_state)
-		update_icon()
+		update_appearance(UPDATE_OVERLAYS)
 		for(var/direction in GLOB.cardinals)
 			var/turf/turf = get_step(src, direction)
 			if(!turf.liquids)
 				continue
-			turf.liquids.update_icon()
-
-/obj/effect/abstract/liquid_turf/update_overlays()
-	. = ..()
-	var/number = liquid_state - 1
-	if(number != 0)
-		. += mutable_appearance('icons/effects/liquid_overlays.dmi', "stage[number]_bottom", plane = GAME_PLANE_UPPER, layer = ABOVE_MOB_LAYER)
-		. += mutable_appearance('icons/effects/liquid_overlays.dmi', "stage[number]_top", plane =GAME_PLANE, layer = BELOW_MOB_LAYER)
+			turf.liquids.update_appearance(UPDATE_OVERLAYS)
 
 /obj/effect/abstract/liquid_turf/proc/set_fire_effect()
 	if(displayed_content)
@@ -236,7 +252,7 @@
 	else if (isliving(AM))
 		var/mob/living/L = AM
 		if(liquid_group.slippery)
-			if(prob(7) && !(L.movement_type & FLYING) && !L.lying)
+			if(prob(7) && !(L.movement_type & FLYING) && L.body_position != LYING_DOWN)
 				L.slip(30, T, NO_SLIP_WHEN_WALKING, 0, TRUE)
 
 	if(fire_state)
@@ -274,7 +290,7 @@
 	RegisterSignal(my_turf, COMSIG_ATOM_ENTERED, PROC_REF(movable_entered))
 
 /**
- * Handles COMSIG_ATOM_EXAMINE for the turf.
+ * Handles COMSIG_PARENT_EXAMINE for the turf.
  *
  * Adds reagent info to examine text.
  * Arguments:

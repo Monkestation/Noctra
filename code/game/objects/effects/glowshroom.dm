@@ -13,6 +13,16 @@
 	blade_dulling = DULLING_CUT
 	resistance_flags = FLAMMABLE
 
+/obj/structure/kneestingers/Initialize()
+	. = ..()
+	var/turf/turf = get_turf(src)
+	turf.path_weight += 50
+
+/obj/structure/kneestingers/Destroy()
+	var/turf/turf = get_turf(src)
+	turf.path_weight -= 50
+	. = ..()
+
 /obj/structure/kneestingers/fire_act(added, maxstacks)
 	visible_message(span_warning("[src] catches fire!"))
 	var/turf/T = get_turf(src)
@@ -44,7 +54,7 @@
 				return FALSE
 	..()
 
-/obj/structure/kneestingers/New(loc, obj/item/seeds/newseed, mutate_stats)
+/obj/structure/kneestingers/New(loc, obj/item/neuFarm/seed/newseed, mutate_stats)
 	..()
 	set_light(1.5, 1.5, 1.5, l_color ="#d4fcac")
 	if(icon_state == "glowshroom1" )

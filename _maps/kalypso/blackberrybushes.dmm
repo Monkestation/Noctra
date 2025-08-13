@@ -1,0 +1,115 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/flora/grass/herb/random,
+/turf/open/water/cleanshallow/dirt,
+/area/template_noop)
+"k" = (
+/turf/open/floor/grass,
+/area/template_noop)
+"p" = (
+/obj/structure/flora/grass,
+/turf/open/floor/dirt,
+/area/template_noop)
+"C" = (
+/obj/structure/flora/grass,
+/turf/open/floor/grass,
+/area/template_noop)
+"G" = (
+/obj/structure/wild_plant/nospread/blackberry,
+/turf/open/floor/grass,
+/area/template_noop)
+"H" = (
+/obj/structure/flora/grass/herb/random,
+/turf/open/floor/grass,
+/area/template_noop)
+"I" = (
+/turf/open/water/cleanshallow/dirt,
+/area/template_noop)
+"P" = (
+/turf/open/floor/dirt,
+/area/template_noop)
+"T" = (
+/obj/structure/wild_plant/nospread/blackberry,
+/turf/open/floor/dirt,
+/area/template_noop)
+
+(1,1,1) = {"
+a
+a
+a
+H
+a
+a
+G
+G
+a
+"}
+(2,1,1) = {"
+a
+a
+G
+G
+k
+G
+G
+G
+a
+"}
+(3,1,1) = {"
+a
+C
+G
+G
+T
+P
+T
+I
+a
+"}
+(4,1,1) = {"
+a
+P
+H
+T
+T
+P
+P
+b
+I
+"}
+(5,1,1) = {"
+a
+G
+G
+p
+P
+p
+G
+G
+I
+"}
+(6,1,1) = {"
+G
+G
+G
+P
+G
+k
+G
+G
+G
+"}
+(7,1,1) = {"
+G
+G
+a
+a
+G
+k
+H
+G
+G
+"}

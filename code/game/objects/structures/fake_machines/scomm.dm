@@ -8,12 +8,19 @@
 	blade_dulling = DULLING_BASH
 	max_integrity = 0
 	pixel_y = 32
-	flags_1 = HEAR_1
 	anchored = TRUE
 	var/next_decree = 0
 	var/listening = TRUE
 	var/speaking = TRUE
 	var/dictating = FALSE
+
+/obj/structure/fake_machine/scomm/Initialize()
+	. = ..()
+	become_hearing_sensitive()
+
+/obj/structure/fake_machine/scomm/Destroy()
+	lose_hearing_sensitivity()
+	return ..()
 
 /obj/structure/fake_machine/scomm/r
 	pixel_y = 0
@@ -33,9 +40,11 @@
 		. += "<span class='warning'>Uhhh... I can't read them...</span>"
 		return
 	for(var/i in 1 to length(GLOB.laws_of_the_land))
-		. += "<span class='small'>[i]. [GLOB.laws_of_the_land[i]]</span>"
+		. += span_info("[i]. [GLOB.laws_of_the_land[i]]")
 
 /obj/structure/fake_machine/scomm/process()
+	if(obj_broken)
+		return
 	if(world.time > next_decree)
 		next_decree = world.time + rand(3 MINUTES, 8 MINUTES)
 		if(GLOB.lord_decrees.len)
@@ -45,54 +54,50 @@
 	. = ..()
 	if(.)
 		return
+	if(obj_broken)
+		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	listening = !listening
 	speaking = !speaking
 	to_chat(user, "<span class='info'>I [speaking ? "unmute" : "mute"] the SCOM.</span>")
-	update_icon()
+	update_appearance(UPDATE_ICON_STATE)
 
-/obj/structure/fake_machine/scomm/attack_right(mob/user)
-	if(.)
+/obj/structure/fake_machine/scomm/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.changeNext_move(CLICK_CD_MELEE)
 	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
 	var/canread = user.can_read(src, TRUE)
 	var/contents
-	if(SSticker.rulertype == "Monarch")
-		contents += "<center>MONARCH'S DECREES<BR>"
+	var/datum/job/lord/ruler_job = SSjob.GetJobType(/datum/job/lord)
+	contents += "<center>[ruler_job.get_informed_title(SSticker.rulermob)]'s DECREES<BR>"
 
 	contents += "-----------<BR><BR></center>"
 	for(var/i = GLOB.lord_decrees.len to 1 step -1)
 		contents += "[i]. <span class='info'>[GLOB.lord_decrees[i]]</span><BR>"
 	if(!canread)
 		contents = stars(contents)
-	var/datum/browser/popup = new(user, "VENDORTHING", "", 370, 220)
+	var/datum/browser/popup = new(user, "VENDORTHING", "", 370, 400)
 	popup.set_content(contents)
 	popup.open()
 
-/obj/structure/fake_machine/scomm/obj_break(damage_flag)
-	..()
-	speaking = FALSE
-	listening = FALSE
-	update_icon()
-	icon_state = "[icon_state]-br"
-
 /obj/structure/fake_machine/scomm/Initialize()
 	. = ..()
-//	icon_state = "scomm[rand(1,2)]"
 	START_PROCESSING(SSroguemachine, src)
-	update_icon()
 	SSroguemachine.scomm_machines += src
 
-/obj/structure/fake_machine/scomm/update_icon()
-	if(obj_broken)
-		set_light(0)
-		return
-	if(listening)
-		icon_state = "scomm1"
-	else
-		icon_state = "scomm0"
+/obj/structure/fake_machine/scomm/update_icon_state()
+	. = ..()
+	icon_state = "scomm[listening]"
+
+/obj/structure/fake_machine/scomm/obj_break(damage_flag, silent)
+	. = ..()
+	set_light(0)
+	speaking = FALSE
+	listening = FALSE
 
 /obj/structure/fake_machine/scomm/Destroy()
 	SSroguemachine.scomm_machines -= src
@@ -110,7 +115,7 @@
 		say(message, language = message_language)
 	voicecolor_override = null
 
-/obj/structure/fake_machine/scomm/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/structure/fake_machine/scomm/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	if(speaker == src)
 		return
 	if(speaker.loc != loc)
@@ -171,13 +176,25 @@
 	slot_flags = ITEM_SLOT_MOUTH|ITEM_SLOT_HIP|ITEM_SLOT_NECK|ITEM_SLOT_RING
 
 	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = HEAR_1
 	muteinmouth = TRUE
 	var/listening = TRUE
 	var/speaking = TRUE
 	sellprice = 35
+
+/obj/item/scomstone/Initialize()
+	. = ..()
+	become_hearing_sensitive()
+
+/obj/item/scomstone/Destroy()
+	lose_hearing_sensitivity()
+	return ..()
+
 //wip
-/obj/item/scomstone/attack_right(mob/user)
+/obj/item/scomstone/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.changeNext_move(CLICK_CD_MELEE)
 	var/input_text = input(user, "Enter your message:", "Message")
 	if(input_text)
@@ -194,7 +211,6 @@
 	listening = !listening
 	speaking = !speaking
 	to_chat(user, "<span class='info'>I [speaking ? "unmute" : "mute"] the scomstone.</span>")
-	update_icon()
 
 /obj/item/scomstone/Destroy()
 	SSroguemachine.scomm_machines -= src
@@ -202,7 +218,6 @@
 
 /obj/item/scomstone/Initialize()
 	. = ..()
-	update_icon()
 	SSroguemachine.scomm_machines += src
 
 /obj/item/scomstone/proc/repeat_message(message, atom/A, tcolor, message_language)
@@ -232,7 +247,7 @@
 	else
 		send_speech(message, 1, src, , spans, message_language=language)
 
-/obj/item/scomstone/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, message_mode)
+/obj/item/scomstone/Hear(message, atom/movable/speaker, message_language, raw_message, radio_freq, list/spans, list/message_mods = list())
 	if(speaker == src)
 		return
 	if(loc != speaker)

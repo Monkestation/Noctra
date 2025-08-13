@@ -9,6 +9,9 @@ SUBSYSTEM_DEF(paintings)
 	update_paintings()
 	return ..()
 
+/datum/controller/subsystem/paintings/proc/get_painting_filename(title)
+	return "data/player_generated_paintings/paintings/[title].png"
+
 /datum/controller/subsystem/paintings/proc/update_paintings()
 	paintings = list()
 
@@ -31,17 +34,12 @@ SUBSYSTEM_DEF(paintings)
 	if(!filename)
 		return list()
 	var/json_file = file("data/player_generated_paintings/[filename].json")
-	testing("playerfilebegin")
 	if(fexists(json_file))
-		testing("playerfile1")
 		var/list/contents = json_decode(file2text(json_file))
 		if(isnull(contents))
-			testing("playerfile2")
 			return list()
 		return contents
-	testing("playerfile4")
 	return list()
-
 
 /datum/controller/subsystem/paintings/proc/playerpainting2file(icon/painting, painting_title = "Unknown", author = "Unknown", author_ckey = "Unknown", canvas_size, obj/item/canvas/canvas)
 	if(!painting)
@@ -63,15 +61,12 @@ SUBSYSTEM_DEF(paintings)
 	if(!(istext(painting_title) && istext(author) && istext(author_ckey)))
 		return "This painting is incorrectly formatted!"
 
-	testing("playerpainting2file1")
-
 	var/list/contents = list("painting_title" = "[painting_title]", "author" = "[author]", "author_ckey" = "[author_ckey]", "canvas_size" = canvas_size)
 	//url_encode should escape all the characters that do not belong in a file name. If not, god help us
 	var/file_name = "data/player_generated_paintings/[url_encode(painting_title)].json"
 	text2file(json_encode(contents), file_name)
 
 	if(fexists("data/player_generated_paintings/_painting_titles.json"))
-		testing("playerpainting2file2")
 		var/list/_painting_titles_contents = json_decode(file2text("data/player_generated_paintings/_painting_titles.json"))
 		_painting_titles_contents += "[url_encode(painting_title)]"
 		fdel("data/player_generated_paintings/_painting_titles.json")
@@ -87,6 +82,8 @@ SUBSYSTEM_DEF(paintings)
 
 /datum/controller/subsystem/paintings/proc/get_random_painting(canvas_size)
 	var/list/painting_titles = pull_player_painting_titles()
+	if(!length(painting_titles))
+		return
 	var/list/paint_list = file2playerpainting(pick_n_take(painting_titles))
 
 	while((paint_list["canvas_size"] != canvas_size) && length(painting_titles))
@@ -98,20 +95,23 @@ SUBSYSTEM_DEF(paintings)
 /datum/controller/subsystem/paintings/proc/del_player_painting(painting_title)
 	if(!painting_title)
 		return FALSE
-	var/json_file = file("data/player_generated_paintings/[painting_title].json")
+
+	var/encoded_title = url_encode(painting_title)
+	var/json_file = file("data/player_generated_paintings/[encoded_title].json")
 	var/png = file("data/player_generated_paintings/paintings/[painting_title].png")
+
 	if(!fexists(json_file))
 		return FALSE
+
 	if(fexists("data/player_generated_paintings/_painting_titles.json"))
-		testing("delplayerbook")
 		fdel(json_file)
 		if(fexists(png))
-			fdel("data/player_generated_paintings/paintings/[painting_title].png")
+			fdel(png)
 		var/list/_painting_titles_contents = json_decode(file2text("data/player_generated_paintings/_painting_titles.json"))
-		_painting_titles_contents -= "[painting_title]"
+		_painting_titles_contents -= encoded_title
 		fdel("data/player_generated_paintings/_painting_titles.json")
 		text2file(json_encode(_painting_titles_contents), "data/player_generated_paintings/_painting_titles.json")
 		return TRUE
 	else
-		message_admins("!!! _painting_titles.json no longer exists, previous painting title list has been lost. !!!")
+		message_admins("!!! _painting_titles.json missing during deletion!")
 		return FALSE

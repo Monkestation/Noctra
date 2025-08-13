@@ -2,7 +2,7 @@
 	name = "millstone"
 	desc = ""
 	icon = 'icons/obj/rotation_machines.dmi'
-	icon_state = "millstone6"
+	icon_state = "millstone"
 	density = TRUE
 	anchored = TRUE
 	blade_dulling = DULLING_BASH
@@ -10,20 +10,22 @@
 
 	rotation_structure = TRUE
 	stress_use = 64
+	initialize_dirs = CONN_DIR_FORWARD | CONN_DIR_FLIP | CONN_DIR_LEFT | CONN_DIR_RIGHT
 
 	var/mill_progress = 0
 	var/list/millable_contents = list()
 
-/obj/structure/fluff/millstone/Initialize()
+/obj/structure/fluff/millstone/Initialize(mapload, ...)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	AddComponent(/datum/component/simple_rotation, ROTATION_REQUIRE_WRENCH|ROTATION_IGNORE_ANCHORED)
 
 /obj/structure/fluff/millstone/Destroy()
-	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	for(var/obj/item/item in millable_contents)
 		item.forceMove(get_turf(src))
 		millable_contents -= item
+	return ..()
 
 /obj/structure/fluff/millstone/attackby(obj/item/W, mob/living/user, params)
 	if(istype(W, /obj/item/reagent_containers/food/snacks))
@@ -34,12 +36,16 @@
 			return
 	..()
 
-/obj/structure/fluff/millstone/attack_right(mob/living/carbon/human/user)
+/obj/structure/fluff/millstone/attack_hand_secondary(mob/living/carbon/human/user, params)
 	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	var/obj/item/item = input("Choose an item to remove") as anything in millable_contents
 	if(!item)
-		return
-	if(QDELETED(item) || !(item in millable_contents))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(QDELETED(item))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(item in millable_contents)
 		item.forceMove(get_turf(src))
 		millable_contents -= item
 		var/wound_prob = 60
@@ -50,6 +56,7 @@
 			user.flash_fullscreen("redflash3")
 			user.emote("painscream")
 			user.take_overall_damage(4 + rotations_per_minute)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/fluff/millstone/attack_hand(mob/user)
 	var/running = TRUE
@@ -60,10 +67,15 @@
 
 /obj/structure/fluff/millstone/set_rotations_per_minute(speed)
 	. = ..()
+	if(!.)
+		return
 	set_stress_use(64 * (speed / 8))
 
 /obj/structure/fluff/millstone/update_animation_effect()
-	if(!rotation_network || rotation_network?.overstressed || !rotations_per_minute)
+	if(!rotation_network || length(rotation_network.connected) == 1)
+		animate(src, icon_state = "millstone", time = 1)
+		return
+	if(rotation_network?.overstressed || !rotations_per_minute || !rotation_network?.total_stress)
 		animate(src, icon_state = "millstone1", time = 1)
 		return
 	var/frame_stage = 1 / ((rotations_per_minute / 60) * 6)

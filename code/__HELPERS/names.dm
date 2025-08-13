@@ -21,7 +21,6 @@ GLOBAL_VAR(command_name)
 	return name
 
 /proc/change_command_name(name)
-
 	GLOB.command_name = name
 
 	return name
@@ -41,16 +40,7 @@ GLOBAL_VAR(command_name)
 
 /proc/set_station_name(newname)
 	GLOB.station_name = newname
-
-#ifdef ROGUEWORLD
 	world.name = "VANDERLIN"
-#else
-	world.name = "VANDERLIN"
-#endif
-#ifdef TESTSERVER
-	world.name = "VANDERLIN"
-#endif
-
 
 /proc/new_station_name()
 	var/random = rand(1,5)

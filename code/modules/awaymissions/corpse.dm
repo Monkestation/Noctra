@@ -23,7 +23,7 @@
 	var/oxy_damage = 0
 	var/burn_damage = 0
 	var/mob_color //Change the mob's color
-	var/assignedrole
+	var/datum/job/assignedrole
 	var/show_flavour = TRUE
 	var/banType = ROLE_NECRO_SKELETON
 	var/ghost_usable = TRUE
@@ -105,7 +105,7 @@
 				O.owner = MM
 				A.objectives += O
 		if(assignedrole)
-			M.mind.assigned_role = assignedrole
+			M.mind.set_assigned_role(assignedrole)
 		special(M)
 		MM.name = M.real_name
 	if(uses > 0)
@@ -126,7 +126,6 @@
 	var/id_job = null			//Such as "Clown" or "Chef." This just determines what the ID reads as, not their access
 	var/id_access = null		//This is for access. See access.dm for which jobs give what access. Use "Captain" if you want it to be all access.
 	var/id_access_list = null	//Allows you to manually add access to an ID card.
-	assignedrole = "Ghost Role"
 
 	var/husk = null
 	//these vars are for lazy mappers to override parts of the outfit
@@ -169,19 +168,13 @@
 	H.undershirt = "Nude"
 	H.socks = "Nude"
 	if(hairstyle)
-		H.hairstyle = hairstyle
-	else
-		H.hairstyle = random_hairstyle(H.gender)
+		H.set_hair_style(hairstyle, FALSE)
 	if(facial_hairstyle)
-		H.facial_hairstyle = facial_hairstyle
-	else
-		H.facial_hairstyle = random_facial_hairstyle(H.gender)
+		H.set_facial_hair_style(facial_hairstyle, FALSE)
 	if(skin_tone)
 		H.skin_tone = skin_tone
-	else
-		H.skin_tone = random_skin_tone()
-	H.update_hair()
 	H.update_body()
+	H.update_body_parts()
 	if(outfit)
 		var/static/list/slots = list("uniform", "r_hand", "l_hand", "suit", "shoes", "gloves", "ears", "glasses", "mask", "head", "belt", "r_pocket", "l_pocket", "back", "id", "neck", "backpack_contents", "suit_store")
 		for(var/slot in slots)

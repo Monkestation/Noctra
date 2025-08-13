@@ -41,8 +41,8 @@
 /obj/item/bodypart/proc/inspect_limb(mob/user)
 	var/bodypart_status = list("<B>[capitalize(name)]:</B>")
 	var/observer_privilege = isobserver(user)
-	if(owner && disabled)
-		switch(disabled)
+	if(owner && bodypart_disabled)
+		switch(bodypart_disabled)
 			if(BODYPART_DISABLED_DAMAGE)
 				bodypart_status += "[src] is numb to touch."
 			if(BODYPART_DISABLED_PARALYSIS)
@@ -93,7 +93,7 @@
 			bodypart_status += "<B>Wounds:</B>"
 			if(bandage)
 				var/usedclass = "notice"
-				if(bandage.return_blood_DNA())
+				if(GET_ATOM_BLOOD_DNA(bandage))
 					usedclass = "bloody"
 				bodypart_status += "<a href='byond://?src=[owner_ref];bandage=[REF(bandage)];bandaged_limb=[REF(src)]' class='[usedclass]'>Bandaged</a>"
 			if(!bandage || observer_privilege)
@@ -184,12 +184,12 @@
 			status += "<a href='byond://?src=[owner_ref];embedded_limb=[REF(src)];embedded_object=[REF(embedded)];' class='info'>[uppertext(embedded.name)]</a>"
 
 	if(bandage)
-		if(HAS_BLOOD_DNA(bandage))
+		if(GET_ATOM_BLOOD_DNA_LENGTH(bandage))
 			status += "<a href='byond://?src=[owner_ref];bandaged_limb=[REF(src)];bandage=[REF(bandage)]' class='bloody'>[uppertext(bandage.name)]</a>"
 		else
 			status += "<a href='byond://?src=[owner_ref];bandaged_limb=[REF(src)];bandage=[REF(bandage)]' class='info'>[uppertext(bandage.name)]</a>"
 
-	if(disabled)
+	if(bodypart_disabled)
 		status += "<span class='deadsay'>CRIPPLED</span>"
 
 	return status
@@ -297,8 +297,7 @@
 	var/broken_plural
 	var/damaged_plural
 	//Sets organs into their proper list
-	for(var/O in internal_organs)
-		var/obj/item/organ/organ = O
+	for(var/obj/item/organ/organ as anything in internal_organs)
 		if(organ.organ_flags & ORGAN_FAILING)
 			if(broken.len)
 				broken += ", "

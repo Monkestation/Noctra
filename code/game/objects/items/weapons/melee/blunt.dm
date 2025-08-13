@@ -23,7 +23,7 @@
 	melt_amount = 75
 	parrysound = list('sound/combat/parry/parrygen.ogg')
 	swingsound = BLUNTWOOSH_MED
-	max_integrity = 300
+	max_integrity = INTEGRITY_STRONG
 	minstr = 7
 	wdefense = AVERAGE_PARRY
 	wbalance = EASY_TO_DODGE
@@ -36,9 +36,9 @@
 	if(tag)
 		switch(tag)
 			if("gen")
-				return list("shrink" = 0.6,"sx" = -12,"sy" = -10,"nx" = 12,"ny" = -10,"wx" = -8,"wy" = -7,"ex" = 3,"ey" = -9,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -90,"eturn" = 90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+				return list("shrink" = 0.5,"sx" = -12,"sy" = -10,"nx" = 12,"ny" = -10,"wx" = -8,"wy" = -7,"ex" = 3,"ey" = -9,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -90,"eturn" = 90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 			if("wielded")
-				return list("shrink" = 0.6,"sx" = -12,"sy" = 3,"nx" = 12,"ny" = 2,"wx" = -8,"wy" = 2,"ex" = 4,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+				return list("shrink" = 0.5,"sx" = -12,"sy" = 3,"nx" = 12,"ny" = 2,"wx" = -8,"wy" = 2,"ex" = 4,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -6,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
 	return ..()
@@ -161,14 +161,37 @@
 	max_integrity = 300
 
 
+//................ Iron Bludgeon ............... // Bludgeons have less force, less integrity, and worse parry than their mace counterarts, but are harder to dodge.
+/obj/item/weapon/mace/bludgeon
+	force = DAMAGE_CLUB+3
+	force_wielded = DAMAGE_CLUB_WIELD+2
+	name = "iron bludgeon"
+	desc = "An iron headed club, useful for beating the dregs back into their gutters."
+	icon_state = "ibludgeon"
+	max_integrity = INTEGRITY_STRONG-50
+	wbalance = HARD_TO_DODGE
+	wdefense = MEDIOCHRE_PARRY
+
+/obj/item/weapon/mace/bludgeon/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -11,"sy" = -8,"nx" = 10,"ny" = -6,"wx" = -1,"wy" = -8,"ex" = 3,"ey" = -8,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 91,"sturn" = -90,"wturn" = -90,"eturn" = 90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = -11,"sy" = 2,"nx" = 12,"ny" = 2,"wx" = -8,"wy" = 2,"ex" = 4,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.4,"sx" = -5,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = -15,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 1,"eflip" = 0)
+
+
 //................ Copper bludgeon ............... //
-/obj/item/weapon/mace/copperbludgeon
-	force = DAMAGE_CLUB
-	force_wielded = DAMAGE_CLUB_WIELD
+/obj/item/weapon/mace/bludgeon/copper
+	force = DAMAGE_CLUB+1
+	force_wielded = DAMAGE_CLUB_WIELD+1
 	name = "copper bludgeon"
 	desc = "An extremely crude weapon for cruder bastards."
 	icon_state = "cbludgeon"
-	max_integrity = 80
+	max_integrity = INTEGRITY_POOR-20
 	minstr = 5
 	melting_material = /datum/material/copper
 	melt_amount = 75
@@ -187,7 +210,7 @@
 	resistance_flags = FLAMMABLE // Weapon made mostly of wood
 	possible_item_intents = list(/datum/intent/mace/strike/wood)
 	gripped_intents = list(/datum/intent/mace/strike/wood, /datum/intent/mace/smash/wood)
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 	melting_material = null
 	minstr = 2
 	sellprice = 5
@@ -208,7 +231,7 @@
 	desc = "A stubby little club favored for thwacking thieves and smart-mouthed peasant folk."
 	gripped_intents = null
 	resistance_flags = FLAMMABLE // Weapon made mostly of wood
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 	melting_material = null
 	wlength = WLENGTH_SHORT
 	w_class = WEIGHT_CLASS_NORMAL
@@ -242,7 +265,7 @@
 	name = "wooden sword"
 	desc = "Crude wood assembled into the shape of a sword, a terrible weapon to be on the recieving end of during a training spat."
 	icon_state = "wsword"
-	wbalance = 0
+	wbalance = DODGE_CHANCE_NORMAL
 	associated_skill = /datum/skill/combat/swords
 	wdefense = ULTMATE_PARRY
 	metalizer_result = /obj/item/weapon/sword/iron
@@ -253,12 +276,11 @@
 	if(tag)
 		switch(tag)
 			if("gen")
-				return list("shrink" = 0.6,"sx" = -12,"sy" = -10,"nx" = 12,"ny" = -10,"wx" = -8,"wy" = -7,"ex" = 3,"ey" = -9,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -90,"eturn" = 90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+				return list("shrink" = 0.6,"sx" = -10,"sy" = -8,"nx" = 13,"ny" = -8,"wx" = -8,"wy" = -7,"ex" = 7,"ey" = -8,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -80,"eturn" = 81,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 			if("wielded")
-				return list("shrink" = 0.6,"sx" = -12,"sy" = 3,"nx" = 12,"ny" = 2,"wx" = -8,"wy" = 2,"ex" = 4,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+				return list("shrink" = 0.6,"sx" = 3,"sy" = 4,"nx" = -1,"ny" = 4,"wx" = -8,"wy" = 3,"ex" = 7,"ey" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 15,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 			if("onbelt")
-				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
-
+				return list("shrink" = 0.5,"sx" = -4,"sy" = -6,"nx" = 5,"ny" = -6,"wx" = 0,"wy" = -6,"ex" = -1,"ey" = -6,"nturn" = 100,"sturn" = 156,"wturn" = 90,"eturn" = 180,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 
 //................ Goedendag ............... //
@@ -280,7 +302,7 @@
 	wlength = WLENGTH_LONG
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 	melting_material = null
 	resistance_flags = FLAMMABLE // Weapon made mostly of wood
 	minstr = 10
@@ -300,6 +322,16 @@
 				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
+/obj/item/weapon/mace/goden/deepduke
+	name = "deep duke's staff"
+	desc = "A staff made of seaglass and sturdy but unusual metal, holding no power after its misled owner's death. More useful as a bashing tool than a magic focus."
+	icon = 'icons/roguetown/mob/monster/pufferboss.dmi'
+	icon_state = "pufferprod"
+	force = 15
+	force_wielded = 35
+	minstr = 11
+	max_integrity = 900
 
 //................ Grand mace ............... //
 /obj/item/weapon/mace/goden/steel
@@ -326,6 +358,43 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
 
+
+/obj/item/weapon/mace/goden/steel/malum
+	name = "forgefiend"
+	desc = "This hammer's creation took a riddle in its own making. A great sacrifice for perfect quality"
+	icon_state = "malumhammer"
+	gripped_intents = list(/datum/intent/mace/strike/heavy, /datum/intent/mace/smash/heavy)
+	max_integrity = 200
+
+//................ Psydonian Grand Mace ............... //
+/obj/item/weapon/mace/goden/psydon
+	name = "psydonian grand mace"
+	desc = "A mighty mace which seems to be a large psycross with a handle, though no less effective at crushing the spirit and bones of the inhumen."
+	icon_state = "psymace"
+	resistance_flags = FIRE_PROOF
+	melting_material = /datum/material/silver
+	melt_amount = 150
+	wbalance = DODGE_CHANCE_NORMAL
+	sellprice = 100
+	wdefense = GOOD_PARRY
+	minstr = 11
+
+/obj/item/weapon/mace/goden/psydon/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
+
+/obj/item/weapon/mace/goden/psydon/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.7,"sx" = -8,"sy" = 6,"nx" = 8,"ny" = 6,"wx" = -5,"wy" = 6,"ex" = 0,"ey" = 6,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 32,"eturn" = -32,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.7,"sx" = 5,"sy" = -2,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -2,"ex" = 5,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -24,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
+
+
 //................ Shillelagh ............... //
 /obj/item/weapon/mace/goden/shillelagh		// The Briar signature weapon. Sturdy oak war club.
 	gripped_intents = list(/datum/intent/mace/smash/wood)
@@ -337,12 +406,14 @@
 	pixel_x = 0
 	bigboy = FALSE
 	gripsprite = TRUE
-	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
-	walking_stick = TRUE
+	slot_flags = ITEM_SLOT_BACK
 	max_integrity = 200
 	minstr = 8
 	sellprice = 5
 
+/obj/item/weapon/mace/goden/shillelagh/Initialize()
+	. = ..()
+	AddComponent(/datum/component/walking_stick)
 
 /obj/item/weapon/mace/goden/shillelagh/getonmobprop(tag)
 	. = ..()
@@ -395,17 +466,17 @@
 
 //................ Warhammers ............... //
 /obj/item/weapon/mace/warhammer
-	force = 20
+	force = DAMAGE_MACE
 	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/mace/warhammer/impale)
 	gripped_intents = null
 	name = "iron warhammer"
 	desc = "Made to punch through armor and skull alike."
 	icon_state = "iwarhammer"
-	wbalance = -1
+	wbalance = EASY_TO_DODGE
 	melting_material = /datum/material/iron
 	melt_amount = 75
 	blade_dulling = DULLING_BASH
-	wdefense = 3
+	wdefense = GOOD_PARRY
 
 /obj/item/weapon/mace/warhammer/getonmobprop(tag)
 	if(tag)
@@ -426,7 +497,7 @@
 	icon_state = "swarhammer"
 	melting_material = /datum/material/steel
 	melt_amount = 150
-	wdefense = 4
+	wdefense = GREAT_PARRY
 
 /datum/intent/mace/warhammer/stab
 	name = "thrust"
@@ -453,3 +524,29 @@
 	penfactor = 80
 	damfactor = 0.9
 	item_damage_type = "stab"
+
+//................ Elven Club  ............... //
+
+/obj/item/weapon/mace/elvenclub
+	name = "elven war club"
+	desc = "A one-handed war club with a sharp end."
+	icon_state = "elvenclub"
+	force = DAMAGE_MACE - 1
+	force_wielded = DAMAGE_MACE_WIELD - 1
+	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/axe/cut)
+	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/axe/cut, /datum/intent/axe/chop) //can't smash with this weapon.
+	minstr = 5
+	sharpness = IS_SHARP
+
+/obj/item/weapon/mace/elvenclub/steel
+	name = "regal elven war club"
+	desc = "A sleek, one-handed war club, reforged from captured Grenzel steel. Its elegant design channels elven grace, It is capable of delivering swift, painful blows"
+	icon_state = "regalelvenclub"
+	force = DAMAGE_MACE
+	force_wielded = DAMAGE_MACE_WIELD
+	blade_dulling = DULLING_BASH
+	melting_material = /datum/material/steel
+	melt_amount = 150
+	wbalance = DODGE_CHANCE_NORMAL
+	sellprice = 60
+	wdefense = GOOD_PARRY

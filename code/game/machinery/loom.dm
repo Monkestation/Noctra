@@ -32,7 +32,10 @@
 			to_chat(user, "You can't add any more fiber.")
 	. = ..()
 
-/obj/machinery/loom/attack_right(mob/user)
+/obj/machinery/loom/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
 	var/mob/living/L = user
 	if(isliving(user) && L.stat == CONSCIOUS && !user.get_active_held_item())
 		if(src.storedfiber > 0)
@@ -43,11 +46,13 @@
 		else
 			to_chat(user, "There's nothing to take from [src].")
 
-/obj/machinery/loom/attack_hand(mob/user)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/loom/attack_hand(mob/user, params)
 	var/mob/living/weaver = user
 	var/weavetime = 2 SECONDS //time to weave a cloth, duh
 	var/skilltimemod = 0.2 SECONDS //how much each level of skill lowers the time to weave
-	var/skill = weaver.mind.get_skill_level(/datum/skill/misc/sewing)
+	var/skill = weaver.get_skill_level(/datum/skill/misc/sewing)
 	if(isliving(user) && weaver.stat == CONSCIOUS)
 		if(src.storedfiber < 2)
 			to_chat(user, "You don't have enough fiber to do this.")

@@ -1,42 +1,34 @@
 /datum/job/consort
 	title = "Consort"
+	tutorial = "Yours was a marriage of political convenience rather than love, \
+	yet you have remained the ruling monarch's good friend and confidant throughout your marriage. \
+	But your love and loyalty will be tested, for daggers are equally pointed at your throat."
 	flag = CONSORT
 	department_flag = NOBLEMEN
-	faction = "Station"
+	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
+	display_order = JDO_CONSORT
+	faction = FACTION_TOWN
 	total_positions = 0
 	spawn_positions = 1
+	min_pq = 6
+	bypass_lastclass = TRUE
 
-	spells = list(/obj/effect/proc_holder/spell/self/convertrole/servant)
-	allowed_races = list(
-		"Humen",
-		"Elf",
-		"Half-Elf"
-	)
-
-	tutorial = "Yours was a marriage of political convenience rather than love, yet you have remained the ruling monarch's good friend and confidant throughout your marriage. But your love and loyalty will be tested, for daggers are equally pointed at your throat."
-
+	spells = list(/datum/action/cooldown/spell/undirected/list_target/convert_role/servant)
+	allowed_races = RACES_PLAYER_ROYALTY
 	outfit = /datum/outfit/job/consort
 	advclass_cat_rolls = list(CTAG_CONSORT = 20)
-
-	display_order = JDO_CONSORT
-	bypass_lastclass = TRUE
-	min_pq = 6
 	give_bank_account = 500
-
-	cmode_music = 'sound/music/cmode/nobility/combat_noble.ogg'
 	apprentice_name = "Servant"
+	cmode_music = 'sound/music/cmode/nobility/combat_noble.ogg'
+	noble_income = 22
 
-/datum/job/consort/after_spawn(mob/living/L, mob/M, latejoin = TRUE)
+/datum/job/consort/after_spawn(mob/living/spawned, client/player_client)
 	..()
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		H.advsetup = 1
-		H.invisibility = INVISIBILITY_MAXIMUM
-		H.become_blind("advsetup")
-		if(H.gender == FEMALE)
-			SSfamilytree.AddRoyal(H, FAMILY_MOTHER)
-		else
-			SSfamilytree.AddRoyal(H, FAMILY_FATHER)
+	var/mob/living/carbon/human/H = spawned
+	addtimer(CALLBACK(SSfamilytree, TYPE_PROC_REF(/datum/controller/subsystem/familytree, AddRoyal), H, (H.gender == FEMALE) ? FAMILY_MOTHER : FAMILY_FATHER), 3 SECONDS)
+	if(GLOB.keep_doors.len > 0)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(know_keep_door_password), H), 5 SECONDS)
+	ADD_TRAIT(H, TRAIT_KNOWKEEPPLANS, TRAIT_GENERIC)
 
 /datum/outfit/job/consort
 	job_bitflag = BITFLAG_ROYALTY
@@ -44,7 +36,7 @@
 /datum/outfit/job/consort // Default equipment regardless of class.
 	head = /obj/item/clothing/head/crown/nyle/consortcrown
 	shoes = /obj/item/clothing/shoes/boots
-	id = /obj/item/clothing/ring/silver
+	ring = /obj/item/clothing/ring/silver
 	belt = /obj/item/storage/belt/leather
 	beltl = /obj/item/storage/keyring/consort
 	beltr = /obj/item/storage/belt/pouch/coins/rich
@@ -67,27 +59,28 @@
 /datum/outfit/job/consort/highborn/pre_equip(mob/living/carbon/human/H)
 	. = ..()
 	if(H.gender == MALE)
-		pants = /obj/item/clothing/pants/tights/black
-		shirt = /obj/item/clothing/shirt/undershirt/black
+		pants = /obj/item/clothing/pants/tights/colored/black
+		shirt = /obj/item/clothing/shirt/undershirt/colored/black
 		armor = /obj/item/clothing/armor/leather/vest/winterjacket
 	else
-		pants = /obj/item/clothing/pants/tights/random
+		pants = /obj/item/clothing/pants/tights/colored/random
 		armor = /obj/item/clothing/armor/leather/vest/winterjacket
 		shirt = /obj/item/clothing/armor/gambeson/heavy/winterdress
 
 
-	H.mind.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/sneaking, 1, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/riding, 1, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/sneaking, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/riding, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/labor/mathematics, 3, TRUE)
 	if(H.age == AGE_OLD)
-		H.mind.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 	H.change_stat(STATKEY_INT, 3)
 	H.change_stat(STATKEY_END, 1)
 	H.change_stat(STATKEY_PER, 3)
@@ -96,6 +89,9 @@
 	ADD_TRAIT(H, TRAIT_SEEPRICES, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NUTCRACKER, TRAIT_GENERIC)
+	switch(H.patron?.type)
+		if(/datum/patron/inhumen/baotha)
+			H.cmode_music = 'sound/music/cmode/antag/CombatBaotha.ogg'
 
 /datum/advclass/consort/courtesan
 	name = "Courtesan Consort"
@@ -107,28 +103,29 @@
 /datum/outfit/job/consort/courtesan/pre_equip(mob/living/carbon/human/H)
 	. = ..()
 	if(H.gender == MALE)
-		pants = /obj/item/clothing/pants/tights/black
-		shirt = /obj/item/clothing/shirt/undershirt/black
+		pants = /obj/item/clothing/pants/tights/colored/black
+		shirt = /obj/item/clothing/shirt/undershirt/colored/black
 		armor = /obj/item/clothing/armor/leather/vest/winterjacket // this is kind of stupid but i love it anyway
 	else
-		pants = /obj/item/clothing/pants/tights/random
+		pants = /obj/item/clothing/pants/tights/colored/random
 		shirt = /obj/item/clothing/armor/gambeson/heavy/winterdress
 		armor = /obj/item/clothing/armor/leather/vest/winterjacket
 		cloak = /obj/item/clothing/cloak/raincloak/furcloak
 
-	H.mind.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/sneaking, 3, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/stealing, 3, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE) // oh you know
-	H.mind.adjust_skillrank(/datum/skill/misc/lockpicking, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/sneaking, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/stealing, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE) // oh you know
+	H.adjust_skillrank(/datum/skill/misc/lockpicking, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/labor/mathematics, 2, TRUE)
 	if(H.age == AGE_OLD)
-		H.mind.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
 	H.change_stat(STATKEY_STR, 1)
 	H.change_stat(STATKEY_INT, -1)
 	H.change_stat(STATKEY_END, 2)
@@ -136,6 +133,9 @@
 	H.change_stat(STATKEY_LCK, 3)
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NUTCRACKER, TRAIT_GENERIC)
+	switch(H.patron?.type)
+		if(/datum/patron/inhumen/baotha)
+			H.cmode_music = 'sound/music/cmode/antag/CombatBaotha.ogg'
 
 /datum/advclass/consort/lowborn
 	name = "Lowborn Consort"
@@ -147,26 +147,26 @@
 /datum/outfit/job/consort/lowborn/pre_equip(mob/living/carbon/human/H)
 	. = ..()
 	if(H.gender == MALE)
-		pants = /obj/item/clothing/pants/tights/green
-		shirt = /obj/item/clothing/shirt/undershirt/black
-		armor = /obj/item/clothing/shirt/tunic/green
+		pants = /obj/item/clothing/pants/tights/colored/green
+		shirt = /obj/item/clothing/shirt/undershirt/colored/black
+		armor = /obj/item/clothing/shirt/tunic/colored/green
 	else
-		shirt = /obj/item/clothing/shirt/dress/silkdress/princess
+		shirt = /obj/item/clothing/shirt/dress/silkdress/colored/princess
 		armor = /obj/item/clothing/armor/leather/jacket/silk_coat
 
-	H.mind.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/sewing, 3, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/labor/farming, 3, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/craft/cooking, 3, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
-	H.mind.adjust_skillrank(/datum/skill/misc/riding, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/sewing, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/labor/farming, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/cooking, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/riding, 1, TRUE)
 	if(H.age == AGE_OLD)
-		H.mind.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/unarmed, 1, TRUE)
 	H.change_stat(STATKEY_STR, 1)
 	H.change_stat(STATKEY_CON, 2) // good old peasant constitution. in exchange for making them dumb, they will be STRONG.
 	H.change_stat(STATKEY_INT, -2) // either a hapless dumbass, or just not educated
@@ -176,6 +176,9 @@
 	ADD_TRAIT(H, TRAIT_SEEDKNOW, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NUTCRACKER, TRAIT_GENERIC)
+	switch(H.patron?.type)
+		if(/datum/patron/inhumen/baotha)
+			H.cmode_music = 'sound/music/cmode/antag/CombatBaotha.ogg'
 
 /datum/advclass/consort/courtesan/night_spy
 	name = "Night-Mother's Spy Consort"
@@ -188,7 +191,7 @@
 	title = "Ex-Consort"
 	flag = CONSORT
 	department_flag = NOBLEMEN
-	faction = "Station"
+	faction = FACTION_TOWN
 	total_positions = 0
 	spawn_positions = 0
 	display_order = JDO_CONSORT
@@ -199,13 +202,3 @@
 	to_chat(H, "<span class='info'>I can gesture in thieves' cant with ,t before my speech.</span>")
 	ADD_TRAIT(H, TRAIT_THIEVESGUILD, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NUTCRACKER, TRAIT_GENERIC)
-
-/obj/effect/proc_holder/spell/self/convertrole/servant
-	name = "Recruit Servant"
-	new_role = "Servant"
-	overlay_state = "recruit_servant"
-	recruitment_faction = "Servants"
-	recruitment_message = "Join the keep's servants, %RECRUIT!"
-	accept_message = "I serve the Crown!"
-	refuse_message = "I refuse."
-	charge_max = 100

@@ -25,7 +25,6 @@
 	metalizer_result = /obj/item/restraints/legcuffs/beartrap/armed
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/getonmobprop(tag)
-	. = ..()
 	if(tag)
 		switch(tag)
 			if("gen")
@@ -35,31 +34,27 @@
 			if("onback")
 				return list("shrink" = 0.6,"sx" = 1,"sy" = -1,"nx" = 1,"ny" = -1,"wx" = 3,"wy" = -1,"ex" = 0,"ey" = -1,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 8,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0)
 
-
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/shoot_with_empty_chamber()
-	update_icon()
 	return
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/equipped(mob/user, slot, initial)
 	. = ..()
-	if(chambered && slot != SLOT_HANDS)
+	if(chambered && !(slot & ITEM_SLOT_HANDS))
 		chambered = null
 		for(var/obj/item/ammo_casing/CB in get_ammo_list(TRUE, TRUE))
 			CB.forceMove(drop_location())
-//			CB.bounce_away(FALSE, NONE)
-		update_icon()
+		update_appearance(UPDATE_ICON_STATE)
 
-/obj/item/gun/ballistic/revolver/grenadelauncher/bow/dropped()
+/obj/item/gun/ballistic/revolver/grenadelauncher/bow/dropped(mob/user)
 	. = ..()
-	if(chambered)
+	if(loc != user && chambered)
 		chambered = null
 		for(var/obj/item/ammo_casing/CB in get_ammo_list(TRUE, TRUE))
 			CB.forceMove(drop_location())
-//			CB.bounce_away(FALSE, NONE)
-		update_icon()
+		update_appearance(UPDATE_ICON_STATE)
 
 //Bows are subtype of grenadelauncher and use BOLT_TYPE_NO_BOLT code
-/obj/item/gun/ballistic/revolver/grenadelauncher/bow/attack_self(mob/living/user)
+/obj/item/gun/ballistic/revolver/grenadelauncher/bow/attack_self(mob/living/user, params)
 	chambered = null
 	var/num_unloaded = 0
 	for(var/obj/item/ammo_casing/CB in get_ammo_list(TRUE, TRUE))
@@ -68,10 +63,10 @@
 	if(num_unloaded)
 		to_chat(user, "<span class='notice'>I remove [(num_unloaded == 1) ? "the [cartridge_wording]" : "[num_unloaded] [cartridge_wording]\s "] from [src].</span>")
 		playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
-		update_icon()
+		update_appearance(UPDATE_ICON_STATE)
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/bow/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	if(user.get_num_arms(FALSE) < 2)
+	if(user.usable_hands < 2)
 		return FALSE
 	if(user.get_inactive_held_item())
 		return FALSE
@@ -98,25 +93,21 @@
 			if(user.STAPER > 10) // Every point over 10 PER adds 10% damage
 				BB.damage = BB.damage * (user.STAPER / 10)
 		BB.damage *= damfactor // Apply bow's inherent damage multiplier regardless of PER
-		BB.bonus_accuracy += (user.mind.get_skill_level(/datum/skill/combat/bows) * 5) //+5 accuracy per level in bows. Bonus accuracy will not drop-off.
+		BB.bonus_accuracy += (user.get_skill_level(/datum/skill/combat/bows) * 5) //+5 accuracy per level in bows. Bonus accuracy will not drop-off.
 	. = ..()
 	if(.)
 		if(istype(user) && user.mind)
-			var/modifier = 1/(spread+1)
-			var/boon = user.mind.get_learning_boon(/datum/skill/combat/bows)
+			var/modifier = 1.25/(spread+1)
+			var/boon = user.get_learning_boon(/datum/skill/combat/bows)
 			var/amt2raise = user.STAINT/2
-			user.mind.adjust_experience(/datum/skill/combat/bows, amt2raise * boon * modifier * 0.5, FALSE)
+			user.adjust_experience(/datum/skill/combat/bows, amt2raise * boon * modifier, FALSE)
 
-/obj/item/gun/ballistic/revolver/grenadelauncher/bow/update_icon()
+/obj/item/gun/ballistic/revolver/grenadelauncher/bow/update_icon_state()
 	. = ..()
-	cut_overlays()
 	if(chambered)
 		icon_state = "[base_icon]_ready"
 	else
 		icon_state = "[base_icon]"
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
 
 /obj/item/ammo_box/magazine/internal/shot/bow
 	ammo_type = /obj/item/ammo_casing/caseless/arrow
@@ -130,30 +121,33 @@
 	charging_slowdown = 1
 
 /datum/intent/shoot/bow/can_charge()
-	if(mastermob)
-		if(mastermob.get_num_arms(FALSE) < 2)
+	var/mob/living/master = get_master_mob()
+	if(master)
+		if(master.usable_hands < 2)
 			return FALSE
-		if(mastermob.get_inactive_held_item())
+		if(master.get_inactive_held_item())
 			return FALSE
 	return TRUE
 
 /datum/intent/shoot/bow/prewarning()
-	if(mastermob)
-		mastermob.visible_message("<span class='warning'>[mastermob] draws [masteritem]!</span>")
-		playsound(mastermob, pick('sound/combat/Ranged/bow-draw-01.ogg'), 100, FALSE)
+	var/mob/master = get_master_mob()
+	if(master)
+		master.visible_message("<span class='warning'>[master] draws [get_master_item()]!</span>")
+		playsound(master, pick('sound/combat/Ranged/bow-draw-01.ogg'), 100, FALSE)
 
 /datum/intent/shoot/bow/get_chargetime()
-	if(mastermob && chargetime)
+	var/mob/living/master = get_master_mob()
+	if(master && chargetime)
 		var/newtime = 0
 		//skill block
 		newtime = newtime + 10
-		newtime = newtime - (mastermob.mind?.get_skill_level(/datum/skill/combat/bows) * (10/6))
+		newtime = newtime - (master.get_skill_level(/datum/skill/combat/bows) * (10/6))
 		//str block //rtd replace 10 with drawdiff on bows that are hard and scale str more (10/20 = 0.5)
 		newtime = newtime + 10
-		newtime = newtime - (mastermob.STASTR * (10/20))
+		newtime = newtime - (master.STASTR * (10/20))
 		//per block
 		newtime = newtime + 20
-		newtime = newtime - (mastermob.STAPER * 1) //20/20 is 1
+		newtime = newtime - (master.STAPER * 1) //20/20 is 1
 		if(newtime > 0)
 			return newtime
 		else
@@ -166,30 +160,34 @@
 	charging_slowdown = 1
 
 /datum/intent/arc/bow/can_charge()
-	if(mastermob)
-		if(mastermob.get_num_arms(FALSE) < 2)
+	var/mob/living/master = get_master_mob()
+	if(master)
+		if(master.usable_hands < 2)
 			return FALSE
-		if(mastermob.get_inactive_held_item())
+		if(master.get_inactive_held_item())
 			return FALSE
 	return TRUE
 
 /datum/intent/arc/bow/prewarning()
-	if(mastermob)
-		mastermob.visible_message("<span class='warning'>[mastermob] draws [masteritem]!</span>")
-		playsound(mastermob, pick('sound/combat/Ranged/bow-draw-01.ogg'), 100, FALSE)
+	var/mob/master_mob = get_master_mob()
+	var/obj/item/master_item = get_master_item()
+	if(master_item && master_mob)
+		master_mob.visible_message("<span class='warning'>[master_mob] draws [master_item]!</span>")
+		playsound(master_mob, pick('sound/combat/Ranged/bow-draw-01.ogg'), 100, FALSE)
 
 /datum/intent/arc/bow/get_chargetime()
-	if(mastermob && chargetime)
+	var/mob/living/master = get_master_mob()
+	if(master && chargetime)
 		var/newtime = 0
 		//skill block
 		newtime = newtime + 10
-		newtime = newtime - (mastermob.mind?.get_skill_level(/datum/skill/combat/bows) * (10/6))
+		newtime = newtime - (master.get_skill_level(/datum/skill/combat/bows) * (10/6))
 		//str block //rtd replace 10 with drawdiff on bows that are hard and scale str more (10/20 = 0.5)
 		newtime = newtime + 10
-		newtime = newtime - (mastermob.STASTR * (10/20))
+		newtime = newtime - (master.STASTR * (10/20))
 		//per block
 		newtime = newtime + 20
-		newtime = newtime - (mastermob.STAPER * 1) //20/20 is 1
+		newtime = newtime - (master.STAPER * 1) //20/20 is 1
 		if(newtime > 0)
 			return newtime
 		else
@@ -215,14 +213,18 @@
 	damfactor = 1.2
 
 /datum/intent/shoot/bow/long/prewarning()
-	if(mastermob)
-		mastermob.visible_message("<span class='warning'>[mastermob] draws [masteritem]!</span>")
-		playsound(mastermob, pick('sound/combat/Ranged/bow-draw-04.ogg'), 100, FALSE)
+	var/mob/master_mob = get_master_mob()
+	var/obj/item/master_item = get_master_item()
+	if(master_mob && master_item)
+		master_mob.visible_message("<span class='warning'>[master_mob] draws [master_item]!</span>")
+		playsound(master_mob, pick('sound/combat/Ranged/bow-draw-04.ogg'), 100, FALSE)
 
 /datum/intent/arc/bow/long/prewarning()
-	if(mastermob)
-		mastermob.visible_message("<span class='warning'>[mastermob] draws [masteritem]!</span>")
-		playsound(mastermob, pick('sound/combat/Ranged/bow-draw-04.ogg'), 100, FALSE)
+	var/mob/master_mob = get_master_mob()
+	var/obj/item/master_item = get_master_item()
+	if(master_mob && master_item)
+		master_mob.visible_message("<span class='warning'>[master_mob] draws [master_item]!</span>")
+		playsound(master_mob, pick('sound/combat/Ranged/bow-draw-04.ogg'), 100, FALSE)
 
 /datum/intent/shoot/bow/long
 	chargetime = 1.5
@@ -237,26 +239,26 @@
 
 
 /*------------\
-| Recurve Bow |
+| Short Bow |
 \------------*/
 
-/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve
-	name = "recurve bow"
+/obj/item/gun/ballistic/revolver/grenadelauncher/bow/short
+	name = "short bow"
 	desc = "As the eagle was killed by the arrow winged with his own feather, so the hand of the world is wounded by its own skill."
-	icon_state = "recurve"
+	icon_state = "recurve" // sprite should be changed eventually
 	base_icon = "recurve"
-	possible_item_intents = list(/datum/intent/shoot/bow/recurve, /datum/intent/arc/bow/recurve,INTENT_GENERIC)
+	possible_item_intents = list(/datum/intent/shoot/bow/short, /datum/intent/arc/bow/short,INTENT_GENERIC)
 	randomspread = 1
 	spread = 1
 	force = 9
 	damfactor = 0.9
 
-/datum/intent/shoot/bow/recurve
+/datum/intent/shoot/bow/short
 	chargetime = 0.75
 	chargedrain = 1.5
 	charging_slowdown = 2.5
 
-/datum/intent/arc/bow/recurve
+/datum/intent/arc/bow/short
 	chargetime = 0.75
 	chargedrain = 1.5
 	charging_slowdown = 2.5

@@ -28,8 +28,7 @@
 					I.screen_loc = ui_hand_position(get_held_index_of_item(I))
 			client.screen += I
 			if(observers && observers.len)
-				for(var/M in observers)
-					var/mob/dead/observe = M
+				for(var/mob/dead/observe as anything in observers)
 					if(observe.client && observe.client.eye == src)
 						observe.client.screen += I
 					else
@@ -164,12 +163,10 @@
 
 /mob/living/simple_animal/hostile/werewolf/update_damage_overlays()
 	remove_overlay(DAMAGE_LAYER)
-	testing("dambegin")
 	var/list/hands = list()
 	var/mutable_appearance/inhand_overlay = mutable_appearance("[icon_state]-dam", layer=-DAMAGE_LAYER)
 	var/numba = 255 * (health / maxHealth)
 	inhand_overlay.alpha = 255 - numba
-	testing("damalpha [inhand_overlay.alpha]")
 	hands += inhand_overlay
 
 	overlays_standing[DAMAGE_LAYER] = hands

@@ -1,6 +1,3 @@
-/mob/living/carbon/human
-	var/mob/stored_mob = null
-
 /datum/antagonist/werewolf/on_life(mob/user)
 	if(!user) return
 	var/mob/living/carbon/human/H = user
@@ -71,9 +68,6 @@
 	var/oldinv = invisibility
 	invisibility = INVISIBILITY_MAXIMUM
 	cmode = FALSE
-	if(client)
-		SSdroning.play_area_sound(get_area(src), client)
-//	stop_cmusic()
 
 	src.fully_heal(FALSE)
 
@@ -100,11 +94,11 @@
 	W.after_creation()
 	W.stored_language = new
 	W.stored_language.copy_known_languages_from(src)
-	W.stored_skills = mind.known_skills.Copy()
-	W.stored_experience = mind.skill_experience.Copy()
-	mind.transfer_to(W)
-	W.mind.known_skills = list()
-	W.mind.skill_experience = list()
+	W.stored_skills = skills?.known_skills.Copy()
+	W.stored_experience = skills?.skill_experience.Copy()
+	mind?.transfer_to(W)
+	W.skills?.known_skills = list()
+	W.skills?.skill_experience = list()
 	W.grant_language(/datum/language/beast)
 
 	W.base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
@@ -113,17 +107,17 @@
 	to_chat(W, span_userdanger("I transform into a horrible beast!"))
 	W.emote("rage")
 
-	W.mind.adjust_skillrank(/datum/skill/combat/wrestling, 5, TRUE)
-	W.mind.adjust_skillrank(/datum/skill/combat/unarmed, 5, TRUE)
-	W.mind.adjust_skillrank(/datum/skill/misc/climbing, 6, TRUE)
+	W.adjust_skillrank(/datum/skill/combat/wrestling, 5, TRUE)
+	W.adjust_skillrank(/datum/skill/combat/unarmed, 5, TRUE)
+	W.adjust_skillrank(/datum/skill/misc/climbing, 6, TRUE)
 
-	W.TOTALSTR = 15
-	W.TOTALCON = 15
-	W.TOTALEND = 15
+	W.base_strength = 15
+	W.base_constitution = 15
+	W.base_endurance = 15
 	W.dodgetime = 36
 
-	W.AddSpell(new /obj/effect/proc_holder/spell/self/howl)
-	W.AddSpell(new /obj/effect/proc_holder/spell/self/claws)
+	W.add_spell(/datum/action/cooldown/spell/undirected/howl)
+	W.add_spell(/datum/action/cooldown/spell/undirected/claws)
 
 	ADD_TRAIT(src, TRAIT_NOSLEEP, TRAIT_GENERIC)
 
@@ -174,13 +168,14 @@
 
 	var/mob/living/carbon/human/species/werewolf/WA = src
 	W.copy_known_languages_from(WA.stored_language)
-	W.mind.known_skills = WA.stored_skills.Copy()
-	W.mind.skill_experience = WA.stored_experience.Copy()
+	W.skills.known_skills = WA.stored_skills.Copy()
+	W.skills.skill_experience = WA.stored_experience.Copy()
 	W.dodgetime = 12
 
-	W.RemoveSpell(new /obj/effect/proc_holder/spell/self/howl)
-	W.RemoveSpell(new /obj/effect/proc_holder/spell/self/claws)
+	W.remove_spell(/datum/action/cooldown/spell/undirected/howl)
+	W.remove_spell(/datum/action/cooldown/spell/undirected/claws)
 
+	W.fully_heal(FALSE)
 	W.regenerate_icons()
 
 	to_chat(W, span_userdanger("I return to my facade."))

@@ -61,6 +61,30 @@
 	..()
 	. = 1
 
+/datum/reagent/medicine/rosawater
+	name = "Rosa Water"
+	description = "Steeped rose petals with mild regeneration."
+	reagent_state = LIQUID
+	color = "#f398b6"
+	taste_description = "floral"
+	overdose_threshold = 0
+	metabolization_rate = REAGENTS_METABOLISM
+	alpha = 173
+
+/datum/reagent/medicine/rosawater/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	if (M.mob_biotypes & MOB_BEAST)
+		M.adjustFireLoss(0.5*REM)
+	else
+		M.adjustBruteLoss(-0.1*REM)
+		M.adjustFireLoss(-0.1*REM)
+		M.adjustOxyLoss(-0.1, 0)
+		var/list/our_wounds = M.get_wounds()
+		if (LAZYLEN(our_wounds))
+			var/upd = M.heal_wounds(1)
+			if (upd)
+				M.update_damage_overlays()
+
 /datum/reagent/medicine/gender_potion
 	name = "Gender Potion"
 	description = "Change the user's gender."
@@ -102,8 +126,14 @@
 	alpha = 173
 
 /datum/reagent/medicine/manapot/on_mob_life(mob/living/carbon/M)
-	if(!HAS_TRAIT(M,TRAIT_NOSTAMINA))
-		M.adjust_energy(30)
+	M.mana_pool.adjust_mana(4)
+	..()
+
+/datum/reagent/medicine/manapot/weak
+	name = "Weak Mana Potion"
+
+/datum/reagent/medicine/manapot/weak/on_mob_life(mob/living/carbon/M)
+	M.mana_pool.adjust_mana(2)
 	..()
 
 /datum/reagent/medicine/strongmana
@@ -116,9 +146,9 @@
 	metabolization_rate = REAGENTS_METABOLISM * 3
 
 /datum/reagent/medicine/strongmana/on_mob_life(mob/living/carbon/M)
-	if(!HAS_TRAIT(M,TRAIT_NOSTAMINA))
-		M.adjust_energy(120)
+	M.mana_pool.adjust_mana(8)
 	..()
+
 
 /datum/reagent/medicine/stampot
 	name = "Stamina Potion"
@@ -196,7 +226,6 @@
 	scent_description = "meat"
 
 /datum/reagent/buff/strength/on_mob_add(mob/living/carbon/M)
-	testing("str pot in system")
 	if(M.has_status_effect(/datum/status_effect/buff/alch/strengthpot))
 		return ..()
 	if(M.reagents.has_reagent(/datum/reagent/buff/strength,4))
@@ -212,7 +241,6 @@
 	scent_description = "urine"
 
 /datum/reagent/buff/perception/on_mob_life(mob/living/carbon/M)
-	testing("per pot in system")
 	if(M.has_status_effect(/datum/status_effect/buff/alch/perceptionpot))
 		return ..()
 	if(M.reagents.has_reagent((/datum/reagent/buff/perception),4))
@@ -228,7 +256,6 @@
 	scent_description = "moss"
 
 /datum/reagent/buff/intelligence/on_mob_life(mob/living/carbon/M)
-	testing("int pot in system")
 	if(M.has_status_effect(/datum/status_effect/buff/alch/intelligencepot))
 		return ..()
 	if(M.reagents.has_reagent((/datum/reagent/buff/intelligence),4))
@@ -244,7 +271,6 @@
 	scent_description = "vomit"
 
 /datum/reagent/buff/constitution/on_mob_life(mob/living/carbon/M)
-	testing("con pot in system")
 	if(M.has_status_effect(/datum/status_effect/buff/alch/constitutionpot))
 		return ..()
 	if(M.reagents.has_reagent((/datum/reagent/buff/constitution),4))
@@ -260,7 +286,6 @@
 	scent_description = "urine"
 
 /datum/reagent/buff/endurance/on_mob_life(mob/living/carbon/M)
-	testing("end pot in system")
 	if(M.has_status_effect(/datum/status_effect/buff/alch/endurancepot))
 		return ..()
 	if(M.reagents.has_reagent((/datum/reagent/buff/endurance),4))
@@ -276,7 +301,6 @@
 	scent_description = "sweat"
 
 /datum/reagent/buff/speed/on_mob_life(mob/living/carbon/M)
-	testing("spd pot in system")
 	if(M.has_status_effect(/datum/status_effect/buff/alch/speedpot))
 		return ..()
 	if(M.reagents.has_reagent((/datum/reagent/buff/speed),4))
@@ -292,7 +316,6 @@
 	scent_description = "urine"
 
 /datum/reagent/buff/fortune/on_mob_life(mob/living/carbon/M)
-	testing("luck pot in system")
 	if(M.has_status_effect(/datum/status_effect/buff/alch/fortunepot))
 		return ..()
 	if(M.reagents.has_reagent((/datum/reagent/buff/fortune),4))
@@ -314,7 +337,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	color = "#47b2e0"
 	random_reagent_color = TRUE
 	taste_description = "bitterness"
-	scent_description = "berries"
+	scent_description = "berry"
 	metabolization_rate = REAGENTS_SLOW_METABOLISM
 
 /datum/reagent/berrypoison/on_mob_life(mob/living/carbon/M)
@@ -329,7 +352,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 
 
 /datum/reagent/strongpoison		// Strong poison, meant to be somewhat difficult to produce using alchemy or spawned with select antags. Designed to kill in one full dose (5u) better drink antidote fast
-	name = "Strong Poison"
+	name = "Doom Poison"
 	description = ""
 	reagent_state = LIQUID
 	color = "#1a1616"
@@ -339,7 +362,6 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	metabolization_rate = REAGENTS_SLOW_METABOLISM
 
 /datum/reagent/strongpoison/on_mob_life(mob/living/carbon/M)
-	testing("Someone was poisoned")
 	if(volume > 0.09)
 		if(isdwarf(M))
 			M.add_nausea(1)
@@ -363,6 +385,9 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	if(!HAS_TRAIT(M, TRAIT_NASTY_EATER) && !HAS_TRAIT(M, TRAIT_ORGAN_EATER))
 		M.add_nausea(9)
 		M.adjustToxLoss(2)
+	else if(volume >= 1.5 && HAS_TRAIT(M, TRAIT_ORGAN_EATER))
+		M.apply_status_effect(/datum/status_effect/buff/foodbuff)
+		M.reagents.remove_reagent(/datum/reagent/organpoison, 1.5)
 	return ..()
 
 /datum/reagent/stampoison
@@ -469,7 +494,7 @@ If you want to expand on poisons theres tons of fun effects TG chemistry has tha
 	metabolization_rate = 0.5
 
 /datum/reagent/toxin/fyritiusnectar/on_mob_life(mob/living/carbon/M)
-	if(volume > 0.49)
+	if(volume > 0.49 && prob(33))
 		M.add_nausea(9)
 		M.adjustFireLoss(2, 0)
 		M.adjust_fire_stacks(1)

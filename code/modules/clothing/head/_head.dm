@@ -24,18 +24,19 @@
 
 	sewrepair = TRUE
 	anvilrepair = null
-	smeltresult = /obj/item/ash // Helmets have pre-defined smeltresults, this is for hats
+	smeltresult = /obj/item/fertilizer/ash // Helmets have pre-defined smeltresults, this is for hats
 	sellprice = VALUE_CHEAP_CLOTHING
 	edelay_type = 1
 
 	var/blockTracking = 0 //For AI tracking
 	var/can_toggle = null
+	abstract_type = /obj/item/clothing/head
 
 /obj/item/clothing/head/Initialize()
 	. = ..()
 	if(ishuman(loc) && dynamic_hair_suffix)
 		var/mob/living/carbon/human/H = loc
-		H.update_hair()
+		H.update_body_parts()
 
 ///Special throw_impact for hats to frisbee hats at people to place them on their heads/attempt to de-hat them.
 /obj/item/clothing/head/throw_impact(atom/hit_atom, datum/thrownthing/thrownthing)
@@ -45,13 +46,15 @@
 /obj/item/clothing/head/equipped(mob/user, slot)
 	. = ..()
 	user.update_fov_angles()
+	if(!(slot & ITEM_SLOT_HEAD))
+		flags_inv = null
+	else
+		flags_inv = initial(flags_inv)
 
 /obj/item/clothing/head/dropped(mob/user)
 	. = ..()
 	user.update_fov_angles()
-
-/obj/item/clothing/head/worn_overlays(isinhands = FALSE)
-	. = list()
+	flags_inv = initial(flags_inv)
 
 /obj/item/clothing/head/update_clothes_damaged_state(damaging = TRUE)
 	..()

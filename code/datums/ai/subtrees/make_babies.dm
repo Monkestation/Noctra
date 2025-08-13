@@ -4,7 +4,7 @@
 /datum/ai_planning_subtree/make_babies
 	operational_datums = list(/datum/component/breed)
 	///chance to make babies
-	var/chance = 5
+	var/chance = 10
 	///make babies behavior we will use
 	var/datum/ai_behavior/reproduce_behavior = /datum/ai_behavior/make_babies
 
@@ -14,7 +14,7 @@
 	if(!SPT_PROB(chance, seconds_per_tick))
 		return
 	var/mob/living/simple_animal/mob = controller.pawn
-	if(mob.food < mob.food_max * 0.5)
+	if(mob.food < mob.food_max * 0.15)
 		return
 	if(controller.blackboard_key_exists(BB_BABIES_TARGET))
 		controller.queue_behavior(reproduce_behavior, BB_BABIES_TARGET, BB_BABIES_CHILD_TYPES)

@@ -45,13 +45,14 @@ SUBSYSTEM_DEF(adjacent_air)
 /turf
 	//list of open turfs adjacent to us
 	var/list/atmos_adjacent_turfs
-	///the chance this turf has to spread, basically 3% by default
-	var/spread_chance = 0
+	///the chance this turf has to spread, basically 1% by default
+	var/spread_chance = 1
 	///means fires last at base 15 seconds
 	var/burn_power = 0
 	var/obj/effect/abstract/liquid_turf/liquids
 	var/liquid_height = 0
 	var/turf_height = 0
+	var/path_weight = 50
 
 
 
@@ -77,6 +78,8 @@ SUBSYSTEM_DEF(adjacent_air)
 
 /turf/proc/add_liquid_from_reagents(datum/reagents/giver, no_react = FALSE, chem_temp, amount)
 	var/list/compiled_list = list()
+	if(!giver.total_volume)
+		return
 	var/multiplier = amount ? amount / giver.total_volume : 1
 	for(var/r in giver.reagent_list)
 		var/datum/reagent/R = r
@@ -109,11 +112,6 @@ SUBSYSTEM_DEF(adjacent_air)
 	liquids.liquid_group.add_reagent(liquids, reagent, amount, chem_temp)
 	//Expose turf
 	liquids.liquid_group.expose_members_turf(liquids)
-
-
-/turf/open
-	var/obj/effect/hotspot/active_hotspot
-
 
 /turf/CanAtmosPass = ATMOS_PASS_NO
 /turf/CanAtmosPassVertical = ATMOS_PASS_NO

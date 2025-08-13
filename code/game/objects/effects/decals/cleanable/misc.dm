@@ -44,44 +44,14 @@
 	. = ..()
 	reagents.add_reagent(/datum/reagent/undeadash, 20)
 
-/obj/effect/decal/cleanable/glass
-	name = "tiny shards"
-	desc = ""
-	icon = 'icons/obj/shards.dmi'
-	icon_state = "tiny"
-	beauty = -100
-
-/obj/effect/decal/cleanable/glass/Initialize()
-	. = ..()
-	setDir(pick(GLOB.cardinals))
-
-/obj/effect/decal/cleanable/glass/ex_act()
-	qdel(src)
-
-/obj/effect/decal/cleanable/glass/plasma
-	icon_state = "plasmatiny"
-
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
 	desc = ""
 	icon_state = "dirt"
-	canSmoothWith = list(/obj/effect/decal/cleanable/dirt, /turf/closed/wall)
-	smooth = SMOOTH_FALSE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	beauty = -75
 
-/obj/effect/decal/cleanable/dirt/Initialize()
-	. = ..()
-	var/turf/T = get_turf(src)
-	if(T.tiled_dirt)
-		smooth = SMOOTH_MORE
-		icon = 'icons/effects/dirt.dmi'
-		icon_state = ""
-		queue_smooth(src)
-	queue_smooth_neighbors(src)
-
 /obj/effect/decal/cleanable/dirt/Destroy()
-	queue_smooth_neighbors(src)
 	return ..()
 
 /obj/effect/decal/cleanable/dirt/dust
@@ -138,10 +108,12 @@
 	random_icon_states = list("vomit_1", "vomit_2", "vomit_3", "vomit_4")
 	beauty = -150
 	alpha = 160
+	clean_type = CLEAN_TYPE_LIGHT_DECAL
 
 /obj/effect/decal/cleanable/vomit/old
 	name = "dried vomit"
 	desc = ""
+	clean_type = CLEAN_TYPE_HARD_DECAL
 
 /obj/effect/decal/cleanable/vomit/old/Initialize(mapload)
 	. = ..()
@@ -208,6 +180,7 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
+	clean_type = CLEAN_TYPE_BLOOD
 
 /*	.................   Dye spill   ................... */
 /obj/effect/decal/cleanable/dyes
@@ -216,6 +189,48 @@
 	icon_state = "flour"
 	random_icon_states = list("flour", "smashed_plant")
 	beauty = -100
+	clean_type = CLEAN_TYPE_LIGHT_DECAL
+
 /obj/effect/decal/cleanable/dyes/Initialize()
+	. = ..()
 	color = pick(CLOTHING_ROYAL_TEAL, CLOTHING_BOG_GREEN, CLOTHING_ROYAL_PURPLE	)
-	..()
+
+//................	Debris decals (result from crafting or destroying items thats just visual)	............... //
+/obj/effect/decal/cleanable/debris
+	name = ""
+	desc = ""
+	icon = 'icons/obj/objects.dmi'
+	beauty = -20
+
+/obj/effect/decal/cleanable/debris/Initialize()
+	. = ..()
+	setDir(pick(GLOB.cardinals))
+
+/obj/effect/decal/cleanable/debris/glass
+	name = "glass shards"
+	icon = 'icons/obj/shards.dmi'
+	icon_state = "tiny"
+	beauty = -100
+
+/obj/effect/decal/cleanable/debris/glass/Crossed(mob/living/L)
+	. = ..()
+	playsound(loc,'sound/foley/glass_step.ogg', 50, FALSE)
+
+/obj/effect/decal/cleanable/debris/stone
+	name = "stone chippings"
+	icon_state = "pebbly"
+
+/obj/effect/decal/cleanable/debris/wood	// sawdust gets cleared by weather
+	name = "sawdust"
+	icon_state = "woody"
+
+/obj/effect/decal/cleanable/debris/wood/Initialize()
+	. = ..()
+	GLOB.weather_act_upon_list += src
+
+/obj/effect/decal/cleanable/debris/wood/Destroy()
+	. = ..()
+	GLOB.weather_act_upon_list -= src
+
+/obj/effect/decal/cleanable/debris/wood/weather_act_on(weather_trait, severity)
+	qdel(src)

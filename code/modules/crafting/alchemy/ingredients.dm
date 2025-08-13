@@ -40,28 +40,26 @@
 /obj/item/alch/examine(mob/user)
 	. = ..()
 	if(user.mind)
-		var/alch_skill = user.mind.get_skill_level(/datum/skill/craft/alchemy)
+		var/alch_skill = user.get_skill_level(/datum/skill/craft/alchemy)
 		var/perint = 0
 		if(isliving(user))
 			var/mob/living/lmob = user
 			perint = FLOOR((lmob.STAPER + lmob.STAINT)/2,1)
-		if(HAS_TRAIT(user,TRAIT_LEGENDARY_ALCHEMIST))
-			if(!isnull(major_name))
-				. += span_notice(" Strongly attuned to making [major_name].")
-			if(!isnull(med_name))
-				. += span_notice(" Moderately attuned to making [med_name].")
-			if(!isnull(minor_name))
-				. += span_notice(" Minorly attuned to making [minor_name].")
-		else
-			if(!isnull(major_smell))
-				if(alch_skill >= SKILL_LEVEL_NOVICE || perint >= 6)
-					. += span_notice(" Smells strongly of [major_smell].")
-			if(!isnull(med_smell))
-				if(alch_skill >= SKILL_LEVEL_APPRENTICE || perint >= 10)
-					. += span_notice(" Smells slightly of [med_smell].")
-			if(!isnull(minor_smell))
-				if(alch_skill >= SKILL_LEVEL_EXPERT || perint >= 16)
-					. += span_notice(" Smells weakly of [minor_smell].")
+
+		var/datum/natural_precursor/precursor = get_precursor_data(src)
+		for(var/datum/thaumaturgical_essence/essence as anything in precursor.essence_yields)
+			var/amount = precursor.essence_yields[essence]
+			var/smell = initial(essence.smells_like)
+			switch(amount)
+				if(10 to 1000)
+					if(alch_skill >= SKILL_LEVEL_NOVICE || perint >= 6)
+						. += span_notice(" Smells strongly of [smell].")
+				if(5 to 9)
+					if(alch_skill >= SKILL_LEVEL_APPRENTICE || perint >= 10)
+						. += span_notice(" Smells slightly of [smell].")
+				if(1 to 4)
+					if(alch_skill >= SKILL_LEVEL_EXPERT || perint >= 16)
+						. += span_notice(" Smells weakly of [smell].")
 /obj/item/alch/viscera
 	name = "viscera"
 	icon_state = "viscera"
@@ -70,18 +68,11 @@
 	minor_pot = /datum/alch_cauldron_recipe/antidote
 
 /obj/item/alch/waterdust
-	name = "water rune dust"
+	name = "water essentia"
 	icon_state = "water_runedust"
 	major_pot = /datum/alch_cauldron_recipe/int_potion
 	med_pot = /datum/alch_cauldron_recipe/big_mana_potion
 	minor_pot = /datum/alch_cauldron_recipe/per_potion
-
-/obj/item/alch/bonemeal
-	name = "bone meal"
-	icon_state = "bonemeal"
-	major_pot = /datum/alch_cauldron_recipe/mana_potion
-	med_pot = /datum/alch_cauldron_recipe/per_potion
-	minor_pot = /datum/alch_cauldron_recipe/antidote
 
 /obj/item/alch/seeddust
 	name = "seed dust"
@@ -91,7 +82,7 @@
 	minor_pot = /datum/alch_cauldron_recipe/disease_cure
 
 /obj/item/alch/runedust
-	name = "rune dust"
+	name = "raw essentia"
 	icon_state = "runedust"
 	major_pot = /datum/alch_cauldron_recipe/int_potion
 	med_pot = /datum/alch_cauldron_recipe/big_mana_potion
@@ -112,14 +103,14 @@
 	minor_pot = /datum/alch_cauldron_recipe/big_health_potion
 
 /obj/item/alch/magicdust
-	name = "magic dust"
+	name = "pure essentia"
 	icon_state = "magic_runedust"
 	major_pot = /datum/alch_cauldron_recipe/big_mana_potion
 	med_pot = /datum/alch_cauldron_recipe/end_potion
 	minor_pot = /datum/alch_cauldron_recipe/con_potion
 
 /obj/item/alch/firedust
-	name = "fire rune dust"
+	name = "fire essentia"
 	icon_state = "fire_runedust"
 	major_pot = /datum/alch_cauldron_recipe/str_potion
 	med_pot = /datum/alch_cauldron_recipe/con_potion
@@ -141,7 +132,7 @@
 	minor_pot = /datum/alch_cauldron_recipe/str_potion
 
 /obj/item/alch/airdust
-	name = "air rune dust"
+	name = "air essentia"
 	icon_state = "air_runedust"
 	major_pot = /datum/alch_cauldron_recipe/spd_potion
 	med_pot = /datum/alch_cauldron_recipe/stamina_potion
@@ -162,7 +153,7 @@
 	minor_pot = /datum/alch_cauldron_recipe/spd_potion
 
 /obj/item/alch/earthdust
-	name = "earth rune dust"
+	name = "earth essentia"
 	icon_state = "earth_runedust"
 	major_pot = /datum/alch_cauldron_recipe/con_potion
 	med_pot = /datum/alch_cauldron_recipe/end_potion
@@ -179,6 +170,14 @@
 	major_pot = /datum/alch_cauldron_recipe/disease_cure
 	med_pot = /datum/alch_cauldron_recipe/health_potion
 	minor_pot = /datum/alch_cauldron_recipe/con_potion
+	grid_height = 32
+	grid_width = 32
+
+	attunement_values = list(
+		/datum/attunement/death = 0.05,
+		/datum/attunement/life = -0.1,
+		/datum/attunement/light = -0.1,
+	)
 
 /obj/item/alch/horn
 	name = "troll horn"
@@ -241,6 +240,10 @@
 /obj/item/alch/matricaria
 	name = "matricaria"
 	icon_state = "matricaria"
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	body_parts_covered = NONE
+	w_class = WEIGHT_CLASS_TINY
+	alternate_worn_layer  = 8.9
 
 	major_pot = /datum/alch_cauldron_recipe/berrypoison
 	med_pot = /datum/alch_cauldron_recipe/per_potion
@@ -281,6 +284,10 @@
 /obj/item/alch/calendula
 	name = "calendula"
 	icon_state = "calendula"
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	body_parts_covered = NONE
+	w_class = WEIGHT_CLASS_TINY
+	alternate_worn_layer  = 8.9
 
 	major_pot = /datum/alch_cauldron_recipe/big_health_potion
 	med_pot = /datum/alch_cauldron_recipe/end_potion
@@ -305,10 +312,50 @@
 /obj/item/alch/salvia
 	name = "salvia"
 	icon_state = "salvia"
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	body_parts_covered = NONE
+	w_class = WEIGHT_CLASS_TINY
+	alternate_worn_layer  = 8.9
 
 	major_pot = /datum/alch_cauldron_recipe/con_potion
 	med_pot = /datum/alch_cauldron_recipe/str_potion
 	minor_pot = /datum/alch_cauldron_recipe/end_potion
+
+/obj/item/alch/rosa
+	name = "rosa"
+	icon_state = "rosa"
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_MOUTH
+	body_parts_covered = NONE
+	w_class = WEIGHT_CLASS_TINY
+	spitoutmouth = FALSE
+	alternate_worn_layer  = 8.9 //On top of helmet
+
+	major_pot = /datum/alch_cauldron_recipe/rosawater_potion
+	med_pot = /datum/alch_cauldron_recipe/end_potion
+	minor_pot = /datum/alch_cauldron_recipe/antidote
+
+/obj/item/alch/rosa/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(slot & ITEM_SLOT_MOUTH)
+		icon_state = "rosa_mouth"
+		user.update_inv_mouth()
+	else
+		icon_state = "rosa"
+		user.update_appearance()
+
+/obj/item/alch/euphorbia
+	name = "euphorbia"
+	icon_state = "euphorbia"
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	body_parts_covered = NONE
+	w_class = WEIGHT_CLASS_TINY
+	alternate_worn_layer  = 8.9
+// not sure if still relevant considering the alchemy revamp
+	major_pot = /datum/alch_cauldron_recipe/str_potion
+	med_pot = /datum/alch_cauldron_recipe/doompoison
+	minor_pot = /datum/alch_cauldron_recipe/stam_poison
 
 /obj/item/alch/hypericum
 	name = "hypericum"
@@ -341,44 +388,3 @@
 	major_pot = /datum/alch_cauldron_recipe/lck_potion
 	med_pot = /datum/alch_cauldron_recipe/spd_potion
 	minor_pot = /datum/alch_cauldron_recipe/health_potion
-
-//dust mix crafting
-/datum/crafting_recipe/alch/feaudust
-	name = "feau dust"
-	result = list(/obj/item/alch/feaudust,
-				/obj/item/alch/feaudust)
-	reqs = list(/obj/item/alch/irondust = 1,
-				/obj/item/alch/golddust = 1)
-	structurecraft = /obj/structure/table
-	verbage = "mix"
-	verbage_tp = "mixes"
-	craftsound = 'sound/foley/scribble.ogg'
-	skillcraft = /datum/skill/craft/alchemy
-	craftdiff = 2
-
-/datum/crafting_recipe/alch/magicdust
-	name = "magic dust"
-	result = list(/obj/item/alch/magicdust)
-	reqs = list(/obj/item/alch/waterdust = 1, /obj/item/alch/firedust = 1,
-				/obj/item/alch/airdust = 1, /obj/item/alch/earthdust = 1)
-	structurecraft = /obj/structure/table
-	verbage = "mix"
-	verbage_tp = "mixes"
-	craftsound = 'sound/foley/scribble.ogg'
-	skillcraft = /datum/skill/craft/alchemy
-	craftdiff = 3
-
-/datum/crafting_recipe/alch/transistus
-	name = "transis dust"
-	result = /obj/item/alch/transisdust
-	reqs = list(/obj/item/alch/artemisia = 1,
-		/obj/item/alch/benedictus = 1,
-		/obj/item/alch/hypericum = 1,
-		/obj/item/alch/salvia = 1,
-		/obj/item/alch/atropa = 1,
-		/obj/item/alch/taraxacum =1)
-	structurecraft = /obj/structure/table
-	verbage = "mix"
-	verbage_tp = "mixes"
-	skillcraft = /datum/skill/craft/alchemy
-	craftdiff = 4

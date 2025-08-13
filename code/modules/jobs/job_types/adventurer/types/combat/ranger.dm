@@ -2,15 +2,15 @@
 	name = "Ranger"
 	tutorial = "Humen and elf rangers often live among each other, as these bow-wielding \
 	adventurers are often scouting the lands for the same purpose."
-	allowed_sexes = list(MALE, FEMALE)
-	allowed_races = list(
-		"Humen",
-		"Elf",
-		"Half-Elf",
-		"Tiefling",
-		"Dark Elf",
-		"Aasimar",
-		"Half-Orc"
+	allowed_races = list(\
+		SPEC_ID_HUMEN,\
+		SPEC_ID_ELF,\
+		SPEC_ID_HALF_ELF,\
+		SPEC_ID_TIEFLING,\
+		SPEC_ID_DROW,\
+		SPEC_ID_AASIMAR,\
+		SPEC_ID_HALF_ORC,\
+		SPEC_ID_RAKSHARI,\
 	)
 	outfit = /datum/outfit/job/adventurer/ranger
 	min_pq = 0
@@ -20,29 +20,29 @@
 /datum/outfit/job/adventurer/ranger/pre_equip(mob/living/carbon/human/H)
 	..()
 	shoes = /obj/item/clothing/shoes/boots/leather
-	H.mind?.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/bows, 3, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/craft/tanning, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/labor/taming, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/sewing, 3, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/craft/traps, 1, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
-	H.mind?.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/bows, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/tanning, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/labor/taming, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/sewing, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/traps, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/trou/leather
 		shirt = /obj/item/clothing/shirt/undershirt
 	else
 		pants = /obj/item/clothing/pants/tights
 		if(prob(50))
-			pants = /obj/item/clothing/pants/tights/black
+			pants = /obj/item/clothing/pants/tights/colored/black
 		shirt = /obj/item/clothing/shirt/undershirt
 	if(prob(23))
 		gloves = /obj/item/clothing/gloves/leather
@@ -51,9 +51,9 @@
 	wrists = /obj/item/clothing/wrists/bracers/leather
 	belt = /obj/item/storage/belt/leather
 	armor = /obj/item/clothing/armor/leather/hide
-	cloak = /obj/item/clothing/cloak/raincloak/brown
+	cloak = /obj/item/clothing/cloak/raincloak/colored/brown
 	if(prob(33))
-		cloak = /obj/item/clothing/cloak/raincloak/green
+		cloak = /obj/item/clothing/cloak/raincloak/colored/green
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 	backl = /obj/item/storage/backpack/satchel
 	beltr = /obj/item/flashlight/flare/torch/lantern

@@ -26,7 +26,6 @@
 		detached_pockets = storage
 	U.attached_accessory = src
 	forceMove(U)
-	layer = FLOAT_LAYER
 	plane = FLOAT_PLANE
 	if(minimize_when_attached)
 		transform *= 0.5	//halve the size so it doesn't overpower the under
@@ -73,7 +72,7 @@
 	return
 
 /obj/item/clothing/accessory/AltClick(mob/user)
-	if(istype(user) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(istype(user) && user.can_perform_action(src, NEED_DEXTERITY|FORBID_TELEKINESIS_REACH))
 		if(initial(above_suit))
 			above_suit = !above_suit
 			to_chat(user, "[src] will be worn [above_suit ? "above" : "below"] my suit.")

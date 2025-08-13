@@ -51,6 +51,8 @@
 
 #define DAMAGE_THRESHOLD_FIRE_CRIT 150
 
+#define HALFWAYCRITDEATH ((HEALTH_THRESHOLD_CRIT + HEALTH_THRESHOLD_DEAD) * 0.5)
+
 //Actual combat defines
 
 //click cooldowns, in tenths of a second, used for various combat actions
@@ -76,7 +78,7 @@
 #define GRAB_KILL					3
 
 //Grab breakout odds
-#define BASE_GRAB_RESIST_CHANCE 	30
+#define BASE_GRAB_RESIST_CHANCE 	33
 
 //slowdown when in softcrit. Note that crawling slowdown will also apply at the same time!
 #define SOFTCRIT_ADD_SLOWDOWN 1
@@ -177,17 +179,33 @@
 #define ROD_AUTO			/datum/intent/auto
 #define ROD_REEL			/datum/intent/reel
 
+#define INTENT_FILL			/datum/intent/fill
 #define INTENT_SPLASH		/datum/intent/splash
 #define INTENT_POUR			/datum/intent/pour
 
-//Intent blade class for dismember class
+#define INTENT_SOAK			/datum/intent/soak
+#define INTENT_WRING		/datum/intent/wring
+
+#define INTENT_USE			/datum/intent/use
+
+#define SHIELD_BASH		/datum/intent/shield/bash
+#define SHIELD_BLOCK		/datum/intent/shield/block
+
+// animation types
+#define ATTACK_ANIMATION_BONK "bonk"
+#define ATTACK_ANIMATION_SWIPE "swipe"
+#define ATTACK_ANIMATION_THRUST "thrust"
+
+//Intent blade class for dismember class, if you add more here - you need to update the lists get_attack_animation_type() uses
 #define BCLASS_BLUNT		"blunt"
 #define BCLASS_SMASH		"smashing"
+#define BCLASS_DRILL		"drilling"
 #define BCLASS_CUT			"slash"
 #define BCLASS_CHOP			"chopping"
-#define BCLASS_STAB			"stabbing"
+#define BCLASS_STAB			"stab"
+#define BCLASS_PIERCE		"pierce"
 #define BCLASS_SHOT			"shot"
-#define BCLASS_PICK			"stab"
+#define BCLASS_PICK			"pick"
 #define BCLASS_TWIST		"twist"
 #define BCLASS_PUNCH		"punch"
 #define BCLASS_BITE			"bite"
@@ -325,8 +343,23 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define DAMAGE_PRECISION 0.1
 
 //bullet_act() return values
-#define BULLET_ACT_HIT				"HIT"		//It's a successful hit, whatever that means in the context of the thing it's hitting.
-#define BULLET_ACT_BLOCK			"BLOCK"		//It's a blocked hit, whatever that means in the context of the thing it's hitting.
-#define BULLET_ACT_FORCE_PIERCE		"PIERCE"	//It pierces through the object regardless of the bullet being piercing by default.
-#define BULLET_ACT_TURF				"TURF"		//It hit us but it should hit something on the same turf too. Usually used for turfs.
-#define BULLET_ACT_MISS				"MISS"
+/// It's a successful hit, whatever that means in the context of the thing it's hitting.
+#define BULLET_ACT_HIT "HIT"
+// /It's a blocked hit, whatever that means in the context of the thing it's hitting.
+#define BULLET_ACT_BLOCK "BLOCK"
+/// It pierces through the object regardless of the bullet being piercing by default.
+#define BULLET_ACT_FORCE_PIERCE		"PIERCE"
+
+/// Alternate attack defines. Return these at the end of procs like afterattack_secondary.
+/// Calls the normal attack proc. For example, if returned in afterattack_secondary, will call afterattack.
+/// Will continue the chain depending on the return value of the non-alternate proc, like with normal attacks.
+#define SECONDARY_ATTACK_CALL_NORMAL 1
+
+/// Cancels the attack chain entirely.
+#define SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN 2
+
+/// Proceed with the attack chain, but don't call the normal methods.
+#define SECONDARY_ATTACK_CONTINUE_CHAIN 3
+
+/// If a carbon is thrown at a speed faster than normal and impacts something solid, they take extra damage for every extra speed up to this number (see [/mob/living/carbon/proc/throw_impact])
+#define CARBON_MAX_IMPACT_SPEED_BONUS 5

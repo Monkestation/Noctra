@@ -21,8 +21,9 @@
 	var/modifies_speech = FALSE
 	var/mask_adjusted = 0
 	var/adjusted_flags = null
+	abstract_type = /obj/item/clothing/face
 
-/obj/item/clothing/face/attack_self(mob/user)
+/obj/item/clothing/face/attack_self(mob/user, params)
 	if(CHECK_BITFIELD(clothing_flags, VOICEBOX_TOGGLABLE))
 		TOGGLE_BITFIELD(clothing_flags, VOICEBOX_DISABLED)
 		var/status = !CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED)
@@ -30,7 +31,7 @@
 
 /obj/item/clothing/face/equipped(mob/user, slot)
 	. = ..()
-	if (slot == SLOT_WEAR_MASK && modifies_speech)
+	if ((slot & ITEM_SLOT_MASK) && modifies_speech)
 		RegisterSignal(user, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	else
 		UnregisterSignal(user, COMSIG_MOB_SAY)
@@ -43,9 +44,6 @@
 
 /obj/item/clothing/face/proc/handle_speech()
 
-/obj/item/clothing/face/worn_overlays(isinhands = FALSE)
-	. = list()
-
 /obj/item/clothing/face/update_clothes_damaged_state(damaging = TRUE)
 	..()
 	if(ismob(loc))
@@ -54,7 +52,7 @@
 
 //Proc that moves gas/breath masks out of the way, disabling them and allowing pill/food consumption
 /obj/item/clothing/face/proc/adjustmask(mob/living/user)
-	if(user && user.incapacitated())
+	if(user && user.incapacitated(IGNORE_GRAB))
 		return
 	mask_adjusted = !mask_adjusted
 	if(!mask_adjusted)
@@ -78,4 +76,3 @@
 			slot_flags = adjusted_flags
 	if(user)
 		user.wear_mask_update(src, toggle_off = mask_adjusted)
-		user.update_action_buttons_icon() //when mask is adjusted out, we update all buttons icon so the user's potential internal tank correctly shows as off.

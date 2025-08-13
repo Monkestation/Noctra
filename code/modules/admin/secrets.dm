@@ -195,7 +195,7 @@
 			for(var/i in GLOB.human_list)
 				var/mob/living/carbon/human/H = i
 				if(H.ckey)
-					dat += "<tr><td>[H]</td><td>[md5(H.dna.uni_identity)]</td></tr>"
+					dat += "<tr><td>[H]</td><td>[md5(H.dna.unique_identity)]</td></tr>"
 			dat += "</table>"
 			usr << browse(dat, "window=fingerprints;size=440x410")
 
@@ -249,7 +249,7 @@
 				var/mob/living/carbon/human/H = i
 				SEND_SOUND(H, sound('sound/blank.ogg'))
 
-				if(H.dna.species.id == "human")
+				if(H.dna.species.id == SPEC_ID_HUMEN)
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
 						var/obj/item/organ/ears/cat/ears = new
 						var/obj/item/organ/tail/cat/tail = new
@@ -260,7 +260,6 @@
 					var/forename = names.len > 1 ? names[2] : names[1]
 					var/newname = "[forename]-[pick(honorifics["[H.gender]"])]"
 					H.fully_replace_character_name(H.real_name,newname)
-					H.update_mutant_bodyparts()
 				else
 					to_chat(H, "<span class='warning'>You're not kawaii enough for this!</span>")
 
@@ -291,16 +290,6 @@
 				priority_announce("The NAP is now in full effect.", null, 'sound/blank.ogg')
 			else
 				priority_announce("The NAP has been revoked.", null, 'sound/blank.ogg')
-
-		if("dorf")
-			if(!check_rights(R_FUN))
-				return
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Dwarf Beards"))
-			for(var/i in GLOB.human_list)
-				var/mob/living/carbon/human/B = i
-				B.facial_hairstyle = "Dward Beard"
-				B.update_hair()
-			message_admins("[key_name_admin(usr)] activated dorf mode")
 
 	if(E)
 		E.processing = FALSE
@@ -335,7 +324,7 @@
 		if (length(players))
 			var/mob/chosen = players[1]
 			if (chosen.client)
-				chosen.client.prefs.copy_to(spawnedMob)
+				chosen.client.prefs.safe_transfer_prefs_to(spawnedMob)
 				spawnedMob.key = chosen.key
 			players -= chosen
 		if (ishuman(spawnedMob) && ispath(humanoutfit, /datum/outfit))

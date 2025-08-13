@@ -10,60 +10,69 @@
 	w_class = WEIGHT_CLASS_TINY
 	dropshrink = 0
 	throwforce = 0
-	var/list/keys = list() //Used to generate starting keys on initialization, check contents instead for actual keys
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_NECK|ITEM_SLOT_MOUTH|ITEM_SLOT_WRISTS
 	experimental_inhand = FALSE
 	dropshrink = 0.7
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
 	component_type = /datum/component/storage/concrete/grid/keyring
+	var/list/keys = list() //Used to generate starting keys on initialization, check contents instead for actual keys
+	var/list/combined_access
 
 /obj/item/storage/keyring/Initialize()
 	. = ..()
-	for(var/X in keys)
+	if(!length(keys))
+		return
+	if(length(keys) > 10)
+		stack_trace("Keyring [src] has too many keys and the list will get cut short!")
+	for(var/X as anything in keys)
 		var/obj/item/key/new_key = new X(loc)
 		if(!SEND_SIGNAL(src, COMSIG_TRY_STORAGE_INSERT, new_key, null, TRUE, FALSE))
 			qdel(new_key)
+		LAZYREMOVE(keys, X)
 
-	update_icon()
-	update_desc()
+	update_appearance(UPDATE_ICON_STATE | UPDATE_DESC)
 
-/obj/item/storage/keyring/attack_right(mob/user)
-	var/datum/component/storage/CP = GetComponent(/datum/component/storage)
-	if(CP)
-		CP.rmb_show(user)
-		return TRUE
+/obj/item/storage/keyring/update_icon_state()
+	icon_state = "keyring[clamp(length(contents), 0, 5)]"
+	return ..()
 
-/obj/item/storage/keyring/update_icon()
-	. = ..()
-	switch(contents.len)
-		if(0)
-			icon_state = "keyring0"
-		if(1)
-			icon_state = "keyring1"
-		if(2)
-			icon_state = "keyring2"
-		if(3)
-			icon_state = "keyring3"
-		if(4)
-			icon_state = "keyring4"
-		else
-			icon_state = "keyring5"
+/obj/item/storage/keyring/update_desc()
+	if(!length(contents))
+		desc = initial(desc)
+		return
+	desc = span_info("Holds \Roman[length(contents)] key\s, including:")
+	for(var/obj/item/key/KE in contents)
+		desc += span_info("\n- [KE.name ? "\A [KE.name]." : "An unknown key."]")
+	return ..()
 
-/obj/item/storage/keyring/proc/update_desc()
-	if(contents.len)
-		desc = span_info("Holds \Roman[contents.len] key\s, including:")
-		for(var/obj/item/key/KE in contents)
-			desc += span_info("\n- [KE.name ? "\A [KE.name]." : "An unknown key."]")
-	else
-		desc = ""
+/obj/item/storage/keyring/proc/refresh_keys()
+	LAZYCLEARLIST(combined_access)
+
+	if(!length(contents))
+		return
+
+	LAZYINITLIST(combined_access)
+
+	for(var/obj/item/key/K in contents)
+		if(!length(K.lockids))
+			continue
+
+		combined_access |= K.get_access()
+
+/obj/item/storage/keyring/get_access()
+	if(LAZYLEN(combined_access))
+		return combined_access.Copy()
+	return null
 
 /obj/item/storage/keyring/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	update_desc()
+	update_appearance(UPDATE_ICON_STATE | UPDATE_DESC)
+	refresh_keys()
 
 /obj/item/storage/keyring/Exited(atom/movable/gone, direction)
 	. = ..()
-	update_desc()
+	update_appearance(UPDATE_ICON_STATE | UPDATE_DESC)
+	refresh_keys()
 
 /obj/item/storage/keyring/getonmobprop(tag)
 	. = ..()
@@ -115,7 +124,6 @@
 		for(var/X in picks)
 			addtoring(new X())
 			picks -= X
-	update_icon()
 
 /obj/item/lockpickring/getonmobprop(tag)
 	. = ..()
@@ -151,8 +159,7 @@
 		return 0
 	I.loc = src
 	picks += I
-	update_icon()
-	update_desc()
+	update_appearance(UPDATE_ICON_STATE | UPDATE_DESC)
 
 /obj/item/lockpickring/proc/removefromring(mob/user)
 	if(!picks.len)
@@ -160,8 +167,7 @@
 	var/obj/item/lockpick/K = picks[picks.len]
 	picks -= K
 	K.loc = user.loc
-	update_icon()
-	update_desc()
+	update_appearance(UPDATE_ICON_STATE | UPDATE_DESC)
 	return K
 
 /obj/item/lockpickring/attackby(obj/item/I, mob/user)
@@ -174,114 +180,109 @@
 	else
 		return ..()
 
-/obj/item/lockpickring/attack_right(mob/user)
-	if(picks.len)
+/obj/item/lockpickring/attack_hand_secondary(mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(length(picks))
 		to_chat(user, span_notice("I steal a pick off the ring."))
 		var/obj/item/lockpick/K = removefromring(user)
 		user.put_in_active_hand(K)
-
-/obj/item/lockpickring/update_icon()
-	..()
-	if(!picks.len)
-		icon_state = "pickring0"
-		return
-	if(picks.len >= 3)
-		icon_state = "pickring3"
-		return
-	switch(picks.len)
-		if(1)
-			icon_state = "pickring1"
-		if(2)
-			icon_state = "pickring2"
-		if(3)
-			icon_state = "pickring3"
-
-/obj/item/lockpickring/proc/update_desc()
-	if(picks.len)
-		desc = span_info("\Roman[picks.len] lockpick\s.")
 	else
-		desc = ""
+		to_chat(user, span_notice("No picks."))
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/lockpickring/update_icon_state()
+	icon_state = "pickring[clamp(length(contents), 0, 3)]"
+	return ..()
+
+/obj/item/lockpickring/update_desc()
+	if(!length(contents))
+		desc = initial(desc)
+		return
+	desc = span_info("\Roman[length(contents)] lockpick\s.")
+	return ..()
 
 /obj/item/lockpickring/mundane
 	picks = list(/obj/item/lockpick, /obj/item/lockpick, /obj/item/lockpick)
 
 /obj/item/storage/keyring/captain
-	keys = list(/obj/item/key/captain, /obj/item/key/dungeon, /obj/item/key/garrison, /obj/item/key/forrestgarrison, /obj/item/key/walls, /obj/item/key/manor, /obj/item/key/guest)
+	keys = list(/obj/item/key/captain, /obj/item/key/dungeon, /obj/item/key/garrison, /obj/item/key/forrestgarrison, /obj/item/key/atarms, /obj/item/key/walls, /obj/item/key/manor, /obj/item/key/guest)
 
 /obj/item/storage/keyring/consort
-	keys = list(/obj/item/key/dungeon, /obj/item/key/garrison, /obj/item/key/forrestgarrison, /obj/item/key/walls, /obj/item/key/manor, /obj/item/key/consort, /obj/item/key/guest)
+	keys = list(/obj/item/key/dungeon, /obj/item/key/atarms, /obj/item/key/walls, /obj/item/key/manor, /obj/item/key/consort, /obj/item/key/guest)
 
 /obj/item/storage/keyring/guard
-	keys = list(/obj/item/key/dungeon, /obj/item/key/garrison)
+	keys = list(/obj/item/key/garrison)
 
 /obj/item/storage/keyring/manorguard
-	keys = list(/obj/item/key/manor, /obj/item/key/dungeon, /obj/item/key/garrison, /obj/item/key/walls)
+	keys = list(/obj/item/key/manor, /obj/item/key/dungeon, /obj/item/key/atarms, /obj/item/key/walls)
 
 /obj/item/storage/keyring/archivist
 	keys = list(/obj/item/key/archive, /obj/item/key/manor)
 
 /obj/item/storage/keyring/merchant
-	keys = list(/obj/item/key/shop, /obj/item/key/merchant, /obj/item/key/mercenary)
-
-/obj/item/storage/keyring/mguard
-	keys = list(/obj/item/key/dungeon, /obj/item/key/garrison, /obj/item/key/walls, /obj/item/key/manor, /obj/item/key/guest)
+	keys = list(/obj/item/key/merchant, /obj/item/key/mercenary, /obj/item/key/warehouse)
 
 /obj/item/storage/keyring/mage
 	keys = list(/obj/item/key/manor, /obj/item/key/tower, /obj/item/key/mage)
+
+/obj/item/storage/keyring/mageapprentice
+	keys = list(/obj/item/key/manor, /obj/item/key/tower)
 
 /obj/item/storage/keyring/innkeep
 	keys = list(/obj/item/key/tavern, /obj/item/key/roomhunt, /obj/item/key/medroomiv, /obj/item/key/medroomiii, /obj/item/key/medroomii, /obj/item/key/medroomi, /obj/item/key/luxroomiv, /obj/item/key/luxroomiii, /obj/item/key/luxroomii, /obj/item/key/luxroomi)
 
 /obj/item/storage/keyring/priest
-	keys = list(/obj/item/key/priest, /obj/item/key/confession, /obj/item/key/church, /obj/item/key/graveyard, /obj/item/key/monastery, /obj/item/key/inquisition, /obj/item/key/manor)
+	keys = list(/obj/item/key/priest, /obj/item/key/church, /obj/item/key/graveyard,  /obj/item/key/inquisition)
 
 /obj/item/storage/keyring/inquisitor
 	keys = list(/obj/item/key/inquisition, /obj/item/key/church)
 
-/obj/item/storage/keyring/shepherd
-	keys = list(/obj/item/key/inquisition, /obj/item/key/church)
-
-/obj/item/storage/keyring/niteman
-	keys = list(/obj/item/key/niteman, /obj/item/key/nitemaiden)
+/obj/item/storage/keyring/apothecary
+	keys = list(/obj/item/key/apothecary, /obj/item/key/bathhouse, /obj/item/key/clinic)
 
 /obj/item/storage/keyring/gravetender
 	keys = list(/obj/item/key/church, /obj/item/key/graveyard)
 
 /obj/item/storage/keyring/hand
-	keys = list(/obj/item/key/hand, /obj/item/key/steward, /obj/item/key/tavern, /obj/item/key/church, /obj/item/key/merchant, /obj/item/key/dungeon, /obj/item/key/walls, /obj/item/key/garrison, /obj/item/key/forrestgarrison, /obj/item/key/manor, /obj/item/key/guest)
+	keys = list(/obj/item/key/hand, /obj/item/key/manor, /obj/item/key/steward, /obj/item/key/church, /obj/item/key/merchant, /obj/item/key/dungeon, /obj/item/key/walls, /obj/item/key/garrison, /obj/item/key/forrestgarrison, /obj/item/key/atarms)
 
 /obj/item/storage/keyring/steward
 	keys = list(/obj/item/key/steward, /obj/item/key/vault, /obj/item/key/manor, /obj/item/key/warehouse)
 
 /obj/item/storage/keyring/dungeoneer
-	keys = list(/obj/item/key/dungeon, /obj/item/key/manor, /obj/item/key/garrison, /obj/item/key/walls)
+	keys = list(/obj/item/key/dungeon, /obj/item/key/manor, /obj/item/key/walls, /obj/item/key/atarms)
 
 /obj/item/storage/keyring/butler
-	keys = list(/obj/item/key/manor, /obj/item/key/butler)
+	keys = list(/obj/item/key/manor, /obj/item/key/guest)
 
 /obj/item/storage/keyring/jester
-	keys = list(/obj/item/key/manor, /obj/item/key/garrison, /obj/item/key/walls)
+	keys = list(/obj/item/key/manor, /obj/item/key/atarms, /obj/item/key/walls)
 
-/obj/item/storage/keyring/weaponsmith
-	keys = list(/obj/item/key/weaponsmith, /obj/item/key/blacksmith)
+/obj/item/storage/keyring/physician
+	keys = list(/obj/item/key/manor, /obj/item/key/atarms, /obj/item/key/dungeon, /obj/item/key/courtphys)
 
-/obj/item/storage/keyring/armorsmith
-	keys = list(/obj/item/key/armorsmith, /obj/item/key/blacksmith)
+/obj/item/storage/keyring/elder
+	keys = list(/obj/item/key/veteran, /obj/item/key/walls, /obj/item/key/elder, /obj/item/key/butcher, /obj/item/key/soilson, /obj/item/key/manor)
 
-/obj/item/storage/keyring/mayor
-	keys = list(/obj/item/key/veteran, /obj/item/key/walls, /obj/item/key/elder, /obj/item/key/butcher, /obj/item/key/soilson, /obj/item/key/manor, /obj/item/key/apartments/penthouse2)
+/obj/item/storage/keyring/feldsher
+	keys = list(/obj/item/key/feldsher, /obj/item/key/clinic, /obj/item/key/bathhouse, /obj/item/key/apothecary)
 
-/obj/item/storage/keyring/doctor
-	keys = list(/obj/item/key/doctor, /obj/item/key/manor, /obj/item/key/clinic)
-
-/obj/item/storage/keyring/physicker
-	keys = list(/obj/item/key/doctor, /obj/item/key/clinic)
+/obj/item/storage/keyring/artificer
+	keys = list(/obj/item/key/artificer, /obj/item/key/blacksmith, /obj/item/key/miner)
 
 /obj/item/storage/keyring/veteran
-	keys = list(/obj/item/key/veteran, /obj/item/key/dungeon, /obj/item/key/garrison, /obj/item/key/walls, /obj/item/key/elder, /obj/item/key/butcher, /obj/item/key/soilson)
-
-/obj/item/storage/keyring/tailor
-	keys = list(/obj/item/key/tailor)
+	keys = list(/obj/item/key/veteran, /obj/item/key/dungeon, /obj/item/key/garrison, /obj/item/key/atarms, /obj/item/key/walls, /obj/item/key/elder, /obj/item/key/butcher, /obj/item/key/soilson, /obj/item/key/manor)
 
 /obj/item/storage/keyring/stevedore
-	keys = list(/obj/item/key/warehouse, /obj/item/key/shop)
+	keys = list(/obj/item/key/warehouse, /obj/item/key/merchant)
+
+/obj/item/storage/keyring/gaffer
+	keys = list(/obj/item/key/gaffer, /obj/item/key/mercenary, /obj/item/key/mercenary, /obj/item/key/mercenary, /obj/item/key/mercenary)
+
+/obj/item/storage/keyring/master_of_crafts_and_labor
+	keys = list(/obj/item/key/elder, /obj/item/key/blacksmith,/obj/item/key/tailor,/obj/item/key/tavern,/obj/item/key/apothecary, /obj/item/key/butcher, /obj/item/key/soilson,/obj/item/key/artificer,/obj/item/key/clinic)
+
+/obj/item/storage/keyring/gaffer_assistant
+	keys = list(/obj/item/key/gaffer, /obj/item/key/mercenary)

@@ -5,7 +5,6 @@
 	gender = PLURAL
 	icon_state = "trou"
 	item_state = "trou"
-//	adjustable = CAN_CADJUST
 	sewrepair = TRUE
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
@@ -16,6 +15,7 @@
 	prevent_crits = MINOR_CRITICALS
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/hide/cured
+	item_weight = 3
 
 /obj/item/clothing/pants/trou/leather
 	name = "leather trousers"
@@ -24,13 +24,9 @@
 	armor = ARMOR_LEATHER
 	max_integrity = INTEGRITY_POOR
 
-/obj/item/clothing/pants/trou/leather/guard/Initialize()
-	. = ..()
-	color = pick(CLOTHING_PLUM_PURPLE, CLOTHING_BLOOD_RED)
-	if(GLOB.lordprimary)
-		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
-	else
-		GLOB.lordcolor += src
+/obj/item/clothing/pants/trou/leather/guard
+	uses_lord_coloring = LORD_PRIMARY
+	misc_flags = CRAFTING_TEST_EXCLUDE
 
 /obj/item/clothing/pants/trou/leather/advanced
 	name = "hardened leather chausses"
@@ -38,6 +34,9 @@
 	max_integrity = 200
 	prevent_crits = list(BCLASS_CUT, BCLASS_BLUNT, BCLASS_TWIST)
 	armor = list("blunt" = 70, "slash" = 60, "stab" = 30, "piercing" = 20,"fire" = 0, "acid" = 0)
+
+/obj/item/clothing/pants/trou/leather/advanced/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
 
 /obj/item/clothing/pants/trou/leather/masterwork
 	name = "masterwork leather chausses"
@@ -90,3 +89,11 @@
 	desc = "Dark leather trousers adorned with far too many buckles to be pragmatic."
 	icon_state = "beltpants"
 	item_state = "beltpants"
+
+//Valorian Duelist Merc - On par with grenzelhoftian's stats.
+/obj/item/clothing/pants/trou/leather/advanced/colored/duelpants
+	desc = "Padded pants, favored by Valoria's Duelists, Legs are often a prime target in a duel, and these pants seem to have seen their fair share of it"
+	color = "#5a5a5a"
+	armor = ARMOR_PADDED
+	prevent_crits = MINOR_CRITICALS
+	max_integrity = INTEGRITY_STANDARD

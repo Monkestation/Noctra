@@ -8,6 +8,8 @@
 	item_state = "blackboots"
 	armor = list("blunt" = 15, "slash" = 15, "stab" = 15,  "piercing" = 5, "fire" = 0, "acid" = 0)
 	sellprice = 10
+	salvage_result = /obj/item/natural/hide/cured
+	salvage_amount = 1
 
 /obj/item/clothing/shoes/boots/armor
 	name = "plated boots"
@@ -29,6 +31,7 @@
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 	break_sound = 'sound/foley/breaksound.ogg'
 	sellprice = 25
+	item_weight = 7 * STEEL_MULTIPLIER
 
 /obj/item/clothing/shoes/boots/armor/light
 	name = "light plate boots"
@@ -39,6 +42,7 @@
 	max_integrity = 250
 	armor_class = AC_MEDIUM
 	sellprice = 20
+	item_weight = 7 * IRON_MULTIPLIER
 
 /obj/item/clothing/shoes/boots/armor/light/rust
 	name = "rusted light plate boots"
@@ -63,9 +67,9 @@
 	armor = list("blunt" = 20, "slash" = 20, "stab" = 20,  "piercing" = 10, "fire" = 0, "acid" = 0)
 	resistance_flags = FLAMMABLE
 	sellprice = 10
-	salvage_amount = 1
 	salvage_result = /obj/item/natural/hide/cured
-
+	salvage_amount = 1
+	item_weight = 3
 
 /obj/item/clothing/shoes/boots/leather/advanced
 	name = "hardened leather boots"
@@ -93,6 +97,9 @@
 	item_state = "furlinedboots"
 	sewrepair = TRUE
 	armor = list("blunt" = 30, "slash" = 10, "stab" = 20,  "piercing" = 0, "fire" = 0, "acid" = 0)
+	salvage_result = /obj/item/natural/fur
+	salvage_amount = 1
+	item_weight = 3
 
 /obj/item/clothing/shoes/boots/furlinedanklets
 	name = "fur lined anklets"
@@ -103,6 +110,8 @@
 	sewrepair = TRUE
 	armor = list("blunt" = 30, "slash" = 10, "stab" = 20,  "piercing" = 0, "fire" = 0, "acid" = 0)
 	is_barefoot = TRUE
+	salvage_amount = 1
+	salvage_result = /obj/item/natural/fur
 
 /obj/item/clothing/shoes/boots/clothlinedanklets
 	name = "cloth lined anklets"
@@ -113,16 +122,47 @@
 	is_barefoot = TRUE
 	sewrepair = TRUE
 	armor = list("blunt" = 5, "slash" = 5, "stab" = 5,  "piercing" = 0, "fire" = 0, "acid" = 0) //Thinks its fair for a piece of cloth and fiber.
-
+	salvage_result = /obj/item/natural/cloth
+	salvage_amount = 1
+	item_weight = 2
 
 /obj/item/clothing/shoes/boots/armor/vampire
 	name = "ancient ceremonial boots"
 	desc = "Antediluvian boots with ceremonial ornamets from ages past."
-	body_parts_covered = FEET
 	icon_state = "vboots"
 	item_state = "vboots"
 	prevent_crits = ALL_CRITICAL_HITS_VAMP
-	color = null
-	blocksound = PLATEHIT
-	smeltresult = /obj/item/ingot/steel
 	armor = ARMOR_PLATE_GOOD
+	item_weight = 5 * STEEL_MULTIPLIER
+
+//............... Evil Boots ............... //
+
+/obj/item/clothing/shoes/boots/armor/zizo
+	name = "darksteel boots"
+	desc = "Plate boots. Called forth from the edge of what should be known. In Her name."
+	icon_state = "zizoboots"
+	item_state = "zizoboots"
+	icon = 'icons/roguetown/clothing/special/evilarmor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sleeved = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sellprice = 0 // Incredibly evil Zizoid armor, this should be burnt, nobody wants this
+
+/obj/item/clothing/shoes/boots/armor/matthios
+	name = "gilded boots"
+	desc = "Plate boots. A door kicked in, treasures to behold inside."
+	icon_state = "matthiosboots"
+	item_state = "matthiosboots"
+	icon = 'icons/roguetown/clothing/special/evilarmor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sleeved = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sellprice = 0 // See above comment
+
+/obj/item/clothing/shoes/boots/armor/graggar
+	name = "vicious boots"
+	desc = "A menacing pair of plate boots, caked in blood and brain matter. Known for crushing skulls."
+	icon_state = "graggarplateboots"
+	item_state = "graggarplateboots"
+	icon = 'icons/roguetown/clothing/special/evilarmor.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sleeved = 'icons/roguetown/clothing/special/onmob/evilarmor.dmi'
+	sellprice = 0 // See above comment

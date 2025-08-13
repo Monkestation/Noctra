@@ -128,13 +128,17 @@
 
 /datum/reagent/consumable/sugar/overdose_start(mob/living/M)
 	to_chat(M, "<span class='danger'>I go into hyperglycaemic shock! Lay off the twinkies!</span>")
-	M.AdjustSleeping(600, FALSE)
+	M.AdjustSleeping(600)
 	. = 1
 
 /datum/reagent/consumable/sugar/overdose_process(mob/living/M)
-	M.AdjustSleeping(40, FALSE)
+	M.AdjustSleeping(40)
 	..()
 	. = 1
+
+/datum/reagent/consumable/sugar/molasses
+	name ="Molasses"
+	color = "#835c5c"
 
 /datum/reagent/consumable/sodiumchloride
 	name = "Table Salt"

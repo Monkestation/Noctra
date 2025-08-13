@@ -26,17 +26,8 @@
 /datum/body_marking/proc/get_default_color(list/features, datum/species/pref_species) //Needs features for the color information
 	var/list/colors
 	switch(default_color)
-		if(DEFAULT_PRIMARY)
-			colors = features["mcolor"]
-		if(DEFAULT_SECONDARY)
-			colors = features["mcolor2"]
-		if(DEFAULT_TERTIARY)
-			colors = features["mcolor3"]
 		if(DEFAULT_SKIN_OR_PRIMARY)
-			if(pref_species && pref_species.use_skintones)
-				colors = features["skin_color"]
-			else
-				colors = features["mcolor"]
+			colors = features["skin_color"]
 		else
 			colors = default_color
 
@@ -301,3 +292,17 @@
 	affected_bodyparts = CHEST
 	default_color = DEFAULT_SECONDARY
 	covers_chest = TRUE
+
+/datum/body_marking/flushed_cheeks
+	icon = 'icons/mob/body_markings/other_markings.dmi'
+	name = "Flushed Cheeks"
+	icon_state = "flushed_cheeks"
+	default_color = "FF0000"
+	affected_bodyparts = HEAD
+
+/datum/body_marking/eyeliner
+	icon = 'icons/mob/body_markings/other_markings.dmi'
+	name = "Eyeliner"
+	icon_state = "eyeliner"
+	default_color = "FF0000"
+	affected_bodyparts = HEAD

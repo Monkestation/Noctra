@@ -25,7 +25,7 @@
 
 /datum/stressevent/viewexecution
 	timer = 5 MINUTES
-	stressadd = -2
+	stressadd = -3 // to counteract the +1 from watching death
 	desc = span_green("Nice civilized entertainment.")
 
 /datum/stressevent/psyprayer
@@ -39,13 +39,13 @@
 	desc = span_green("ZIZOZIZOZIZO")
 
 /datum/stressevent/joke
-	timer = 30 MINUTES
-	stressadd = -5
+	timer = 1 MINUTES
+	stressadd = -2
 	desc = span_green("I heard a good joke.")
 
 /datum/stressevent/tragedy
-	timer = 30 MINUTES
-	stressadd = -5
+	timer = 1 MINUTES
+	stressadd = -2
 	desc = span_green("Life isn't so bad after all.")
 
 /datum/stressevent/blessed
@@ -113,6 +113,11 @@
 	stressadd = 0 // you suck at music
 	desc = span_green("This music is pleasant.")
 
+/datum/stressevent/beautiful
+	timer = 2 MINUTES
+	stressadd = -2
+	desc = span_green("Their face is a work of art!")
+
 /datum/stressevent/music/two
 	stressadd = -1
 	desc = span_green("This music is relaxing.")
@@ -153,7 +158,13 @@
 /datum/stressevent/bathwater
 	stressadd = -1
 	desc = span_blue("Relaxing.")
-	timer = 1 MINUTES
+	timer = 15 SECONDS
+
+/datum/stressevent/bathwater/on_apply(mob/living/user)
+	. = ..()
+	if(user.client)
+		record_round_statistic(STATS_BATHS_TAKEN)
+		SEND_SIGNAL(user, COMSIG_BATH_TAKEN)
 
 /datum/stressevent/ozium
 	stressadd = -99
@@ -187,3 +198,23 @@
 	timer = 5 MINUTES
 	stressadd = -3
 	desc = span_green("My apprentice is improving, all thanks to me!")
+
+/datum/stressevent/saw_old_party
+	timer = 2 MINUTES
+	stressadd = -2
+	desc = span_green("Its always good to see an old friends face.")
+
+/datum/stressevent/astrata_grandeur
+	timer = 30 MINUTES
+	stressadd = -2
+	desc = span_green("Astrata's light shines brightly through me. I must not let others ever forget that.")
+
+/datum/stressevent/graggar_culling_finished
+	stressadd = -1
+	desc = span_green("I have prevailed over my rival! Graggar favours me now!")
+	timer = INFINITY
+
+/datum/stressevent/night_owl_night
+	stressadd = -1
+	desc = span_green("I love the night!")
+	timer = 20 MINUTES

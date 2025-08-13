@@ -10,9 +10,9 @@
 | Bolts |
 \------*/
 
-/obj/item/ammo_casing/caseless/unembedded()
+/obj/item/ammo_casing/caseless/unembedded(mob/living/owner)
 	if(!QDELETED(src) && prob(25))
-		src.visible_message(span_warning("[src] breaks as it falls out!"), vision_distance = COMBAT_MESSAGE_RANGE)
+		owner.visible_message(span_warning("[src] breaks as it falls out!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		qdel(src)
 		return TRUE
 
@@ -20,16 +20,20 @@
 /obj/item/ammo_casing/caseless/bolt
 	name = "bolt"
 	desc = "A small and sturdy bolt, with simple plume and metal tip, alongside a groove to load onto a crossbow."
-	projectile_type = /obj/projectile/bullet/reusable/bolt
-	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust)
-	caliber = "regbolt"
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "bolt"
+	projectile_type = /obj/projectile/bullet/reusable/bolt
+	possible_item_intents = list(/datum/intent/dagger/thrust)
+	caliber = "regbolt"
 	dropshrink = 0.8
 	max_integrity = 10
-	force = 10
+	force = DAMAGE_KNIFE-2
 	embedding = list("embedded_pain_multiplier" = 3, "embedded_fall_chance" = 0)
 	firing_effect_type = null
+
+/obj/item/ammo_casing/caseless/bolt/Initialize(mapload, ...)
+	. = ..()
+	AddElement(/datum/element/tipped_item, _max_reagents = 2, _dip_amount = 2, _attack_injects = FALSE)
 
 /obj/projectile/bullet/reusable/bolt
 	name = "bolt"
@@ -43,31 +47,19 @@
 	hitsound = 'sound/combat/hits/hi_arrow2.ogg'
 	embedchance = 100
 	armor_penetration = BOLT_PENETRATION
-	woundclass = BCLASS_STAB
+	woundclass = BCLASS_PIERCE
 	flag =  "piercing"
 	speed = 0.3
 	accuracy = 85 //Crossbows have higher accuracy
-
-//................ Poison Bolt ............... //
-/obj/item/ammo_casing/caseless/bolt/poison
-	name = "poison bolt"
-	desc = "A bolt dipped with a weak poison."
-	icon_state = "bolt_poison"
-	projectile_type = /obj/projectile/bullet/reusable/bolt/poison/weak
-
-/obj/projectile/bullet/reusable/bolt/poison
-	name = "poison bolt"
-	icon_state = "boltpoison_proj"
-	damage = BOLT_DAMAGE-10
-	range = 15
 	var/piercing = FALSE
+	var/can_inject = TRUE
 
-/obj/projectile/bullet/reusable/bolt/poison/Initialize()
+/obj/projectile/bullet/reusable/bolt/Initialize(mapload, ...)
 	. = ..()
 	create_reagents(50, NO_REACT)
 
-/obj/projectile/bullet/reusable/bolt/poison/on_hit(atom/target, blocked = FALSE)
-	if(iscarbon(target))
+/obj/projectile/bullet/reusable/bolt/on_hit(atom/target, blocked = FALSE)
+	if(can_inject && iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(blocked != 100) // not completely blocked
 			if(M.can_inject(null, FALSE, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
@@ -86,22 +78,20 @@
 	return BULLET_ACT_HIT
 
 //................ Poison Bolt (weak) ............... //
-/obj/projectile/bullet/reusable/bolt/poison/weak
-	desc = "A bolt dipped with a weak poison."
+/obj/item/ammo_casing/caseless/bolt/poison
+	name = "poison bolt"
+	desc = "A bolt coated with a weak poison."
+	icon_state = "bolt_poison"
 
-/obj/projectile/bullet/reusable/bolt/poison/weak/Initialize()
+/obj/item/ammo_casing/caseless/bolt/poison/Initialize(mapload, ...)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/berrypoison, 2)
 
 //................ Poison Bolt (potent) ............... //
 /obj/item/ammo_casing/caseless/bolt/poison/potent
-	desc = "A bolt dipped with a potent poison."
-	projectile_type = /obj/projectile/bullet/reusable/bolt/poison/potent
+	desc = "A bolt coated with a potent poison."
 
-/obj/projectile/bullet/reusable/bolt/poison/potent
-	desc = "A bolt dipped with a potent poison."
-
-/obj/projectile/bullet/reusable/bolt/poison/potent/Initialize()
+/obj/item/ammo_casing/caseless/bolt/poison/potent/Initialize(mapload, ...)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/strongpoison, 2)
 
@@ -109,42 +99,130 @@
 /obj/item/ammo_casing/caseless/bolt/pyro
 	name = "pyroclastic bolt"
 	desc = "A bolt smeared with a flammable tincture."
-	projectile_type = /obj/projectile/bullet/bolt/pyro
-	possible_item_intents = list(/datum/intent/mace/strike)
 	icon_state = "bolt_pyroclastic"
+	projectile_type = /obj/projectile/bullet/reusable/bolt/pyro
 
-/obj/projectile/bullet/bolt/pyro
+/obj/item/ammo_casing/caseless/bolt/pyro/Initialize(mapload, ...)
+	. = ..()
+	RemoveElement(/datum/element/tipped_item)
+	qdel(reagents)
+
+/obj/projectile/bullet/reusable/bolt/pyro
 	name = "pyroclastic bolt"
 	desc = "A bolt smeared with a flammable tincture."
-	damage = BOLT_DAMAGE-20
 	icon_state = "boltpyro_proj"
 	range = 15
+	ammo_type = null
+	can_inject = FALSE
 	hitsound = 'sound/blank.ogg'
 	embedchance = 0
 	woundclass = BCLASS_BLUNT
+	damage = BOLT_DAMAGE-20
 	armor_penetration = BOLT_PENETRATION-30
 	var/explode_sound = list('sound/misc/explode/incendiary (1).ogg','sound/misc/explode/incendiary (2).ogg')
 
-//explosion values
-	var/exp_heavy = 0
-	var/exp_light = 0
-	var/exp_flash = 0
-	var/exp_fire = 1
-
-/obj/projectile/bullet/bolt/pyro/on_hit(target)
+/obj/projectile/bullet/reusable/bolt/pyro/on_hit(target)
 	. = ..()
 	if(ismob(target))
 		var/mob/living/M = target
-		M.adjust_fire_stacks(6)
-//		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, my at about 65 damage if you stop drop and roll immediately
-	var/turf/T
-	if(isturf(target))
-		T = target
-	else
-		T = get_turf(target)
-	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire, soundin = explode_sound)
+		M.fire_act(6)
+	explosion(get_turf(target), -1, flame_range = 2, soundin = explode_sound)
 
+//................ Vial Bolt ............... //
+/obj/item/ammo_casing/caseless/bolt/vial
+	name = "vial bolt"
+	desc = "An bolt with its tip replaced by a vial of... something, shatters on impact."
+	icon_state = "bolt_vial"
+	abstract_type = /obj/item/ammo_casing/caseless/bolt/vial
+	max_integrity = 10
+	possible_item_intents = list(/datum/intent/hit)
+	force = DAMAGE_KNIFE-2
+	var/datum/reagent/reagent
 
+/obj/item/ammo_casing/caseless/bolt/vial/Initialize(mapload, ...)
+	. = ..()
+	RemoveElement(/datum/element/tipped_item)
+	update_icon()
+
+/obj/item/ammo_casing/caseless/bolt/vial/update_overlays()
+	. = ..()
+	if(reagent)
+		var/mutable_appearance/filling = mutable_appearance(icon, "[icon_state]_filling")
+		filling.color = initial(reagent.color)
+		. += filling
+
+/obj/item/ammo_casing/caseless/bolt/vial/water
+	projectile_type = /obj/projectile/bullet/reusable/bolt/vial/water
+	reagent = /datum/reagent/water
+
+/obj/projectile/bullet/reusable/bolt/vial
+	name = "vial bolt"
+	desc = "An bolt with its tip replaced by a vial of... something, shatters on impact."
+	icon_state = "boltvial_proj"
+	abstract_type = /obj/projectile/bullet/reusable/bolt/vial
+	ammo_type = null
+	can_inject = FALSE
+	embedchance = 0
+	woundclass = BCLASS_CUT
+	damage = BOLT_DAMAGE-15
+	armor_penetration = BOLT_PENETRATION-25
+	var/datum/reagent/reagent
+
+/obj/projectile/bullet/reusable/bolt/vial/Initialize(mapload, ...)
+	. = ..()
+	if(reagent)
+		reagents?.add_reagent(reagent, 15)
+
+/obj/projectile/bullet/reusable/bolt/vial/on_hit(target)
+	var/target_loc = get_turf(src)
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		target_loc = get_turf(C)
+		var/obj/item/bodypart/BP = C.get_bodypart(def_zone)
+		BP.add_embedded_object(new /obj/item/natural/glass/shard())
+	new /obj/effect/decal/cleanable/debris/glass(target_loc)
+	playsound(target_loc, "glassbreak", 30, TRUE, -3)
+	chem_splash(target_loc, 2, list(reagents))
+	return ..()
+
+/obj/projectile/bullet/reusable/bolt/vial/water
+	desc = "An bolt with its tip replaced by a vial of water, shatters on impact."
+	reagent = /datum/reagent/water
+
+//................ Water Bolt ............... //
+/obj/item/ammo_casing/caseless/bolt/water
+	name = "water bolt"
+	desc = "An bolt with its tip replaced by a water crystal, creates a splash on impact."
+	icon_state = "bolt_water"
+	projectile_type = /obj/projectile/bullet/reusable/bolt/water
+	max_integrity = 10
+	force = DAMAGE_KNIFE-2
+
+/obj/item/ammo_casing/caseless/bolt/water/Initialize(mapload, ...)
+	. = ..()
+	RemoveElement(/datum/element/tipped_item)
+
+/obj/projectile/bullet/reusable/bolt/water
+	name = "water bolt"
+	desc = "An bolt with its tip replaced by a water crystal, creates a splash on impact."
+	icon_state = "boltwater_proj"
+	ammo_type = null
+	can_inject = FALSE
+	woundclass = BCLASS_BLUNT
+	damage = BOLT_DAMAGE-9
+	armor_penetration = BOLT_PENETRATION-15
+	embedchance = 0
+
+/obj/projectile/bullet/reusable/bolt/water/Initialize(mapload, ...)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/water, 25)
+
+/obj/projectile/bullet/reusable/bolt/water/on_hit(target)
+	var/target_loc = get_turf(src)
+	if(ismob(target))
+		target_loc = get_turf(target)
+	chem_splash(target_loc, 3, list(reagents))
+	return ..()
 
 /*-------\
 | Arrows |
@@ -158,12 +236,16 @@
 	caliber = "arrow"
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "arrow"
-	force = 20
+	force = DAMAGE_KNIFE-2
 	dropshrink = 0.8
-	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust)
+	possible_item_intents = list(/datum/intent/dagger/thrust)
 	max_integrity = 20
 	embedding = list("embedded_pain_multiplier" = 3, "embedded_fall_chance" = 0)
 	firing_effect_type = null
+
+/obj/item/ammo_casing/caseless/arrow/Initialize(mapload, ...)
+	. = ..()
+	AddElement(/datum/element/tipped_item, _max_reagents = 2, _dip_amount = 2, _attack_injects = FALSE)
 
 /obj/projectile/bullet/reusable/arrow
 	name = "arrow"
@@ -177,9 +259,33 @@
 	hitsound = 'sound/combat/hits/hi_arrow2.ogg'
 	embedchance = 100
 	armor_penetration = ARROW_PENETRATION
-	woundclass = BCLASS_STAB
+	woundclass = BCLASS_PIERCE
 	flag =  "piercing"
 	speed = 0.4
+	var/piercing = FALSE
+	var/can_inject = TRUE
+
+/obj/projectile/bullet/reusable/arrow/Initialize(mapload, ...)
+	. = ..()
+	create_reagents(50, NO_REACT)
+
+/obj/projectile/bullet/reusable/arrow/on_hit(atom/target, blocked = FALSE)
+	if(can_inject && iscarbon(target))
+		var/mob/living/carbon/M = target
+		if(blocked != 100) // not completely blocked
+			if(M.can_inject(null, FALSE, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
+				..()
+				reagents.reaction(M, INJECT)
+				reagents.trans_to(M, reagents.total_volume)
+				return BULLET_ACT_HIT
+			else
+				blocked = 100
+				target.visible_message(	span_danger("\The [src] was deflected!"), span_danger("My armor protected me against \the [src]!"))
+
+	..(target, blocked)
+	DISABLE_BITFIELD(reagents.flags, NO_REACT)
+	reagents.handle_reactions()
+	return BULLET_ACT_HIT
 
 //................ Stone Arrow ............... //
 /obj/item/ammo_casing/caseless/arrow/stone
@@ -195,108 +301,154 @@
 	armor_penetration = 0
 	damage = ARROW_DAMAGE-2
 
-
 //................ Poison Arrow ............... //
 /obj/item/ammo_casing/caseless/arrow/poison
 	name = "poison arrow"
-	desc = "An arrow with its tip drenched in a weak poison."
-	projectile_type = /obj/projectile/bullet/reusable/arrow/poison/weak
+	desc = "An arrow with its tip coated in a weak poison."
 	icon_state = "arrow_poison"
 
-/obj/projectile/bullet/reusable/arrow/poison
-	name = "poison arrow"
-	desc = "An arrow with its tip drenched in a powerful poison."
-	icon_state = "arrowpoison_proj"
-	damage = ARROW_DAMAGE-10
-	range = 15
-	var/piercing = FALSE
-
-/obj/projectile/bullet/reusable/arrow/poison/Initialize()
-	. = ..()
-	create_reagents(50, NO_REACT)
-
-/obj/projectile/bullet/reusable/arrow/poison/on_hit(atom/target, blocked = FALSE)
-	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		if(blocked != 100) // not completely blocked
-			if(M.can_inject(null, FALSE, def_zone, piercing)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
-				..()
-				reagents.reaction(M, INJECT)
-				reagents.trans_to(M, reagents.total_volume)
-				return BULLET_ACT_HIT
-			else
-				blocked = 100
-				target.visible_message(	span_danger("\The [src] was deflected!"), span_danger("My armor protected me against \the [src]!"))
-
-
-	..(target, blocked)
-	DISABLE_BITFIELD(reagents.flags, NO_REACT)
-	reagents.handle_reactions()
-	return BULLET_ACT_HIT
-
-//................ Poison Arrow (weak) ............... //
-/obj/projectile/bullet/reusable/arrow/poison/weak
-	desc = "An arrow with its tip drenched in a weak poison."
-
-/obj/projectile/bullet/reusable/arrow/poison/weak/Initialize()
+/obj/projectile/bullet/reusable/arrow/poison/Initialize(mapload, ...)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/berrypoison, 2)
 
 //................ Poison Arrow (potent) ............... //
 /obj/item/ammo_casing/caseless/arrow/poison/potent
-	desc = "An arrow with it's tip drenched in a potent poison."
-	projectile_type = /obj/projectile/bullet/reusable/arrow/poison/potent
+	desc = "An arrow with its tip coated in a potent poison."
 
-/obj/item/ammo_casing/caseless/arrow/poison/potent
-	desc = "An arrow with it's tip drenched in a powerful poison."
-
-/obj/projectile/bullet/reusable/arrow/poison/potent/Initialize()
+/obj/item/ammo_casing/caseless/arrow/poison/potent/Initialize(mapload, ...)
 	. = ..()
 	reagents.add_reagent(/datum/reagent/strongpoison, 2)
 
 //................ Pyro Arrow ............... //
 /obj/item/ammo_casing/caseless/arrow/pyro
 	name = "pyroclastic arrow"
-	desc = "An arrow with its tip drenched in a flammable tincture."
-	projectile_type = /obj/projectile/bullet/arrow/pyro
-	possible_item_intents = list(/datum/intent/mace/strike)
+	desc = "An arrow with its tip smeared with a flammable tincture."
+	projectile_type = /obj/projectile/bullet/reusable/arrow/pyro
 	icon_state = "arrow_pyroclastic"
 	max_integrity = 10
-	force = 10
+	force = DAMAGE_KNIFE-2
 
-/obj/projectile/bullet/arrow/pyro
+/obj/item/ammo_casing/caseless/arrow/pyro/Initialize(mapload, ...)
+	. = ..()
+	RemoveElement(/datum/element/tipped_item)
+	qdel(reagents)
+
+/obj/projectile/bullet/reusable/arrow/pyro
 	name = "pyroclastic arrow"
-	desc = "An arrow with its tip drenched in a flammable tincture."
+	desc = "An arrow with its tip smeared with a flammable tincture."
 	icon_state = "arrowpyro_proj"
-	damage = ARROW_DAMAGE-15
+	ammo_type = null
+	can_inject = FALSE
 	range = 15
 	hitsound = 'sound/blank.ogg'
 	embedchance = 0
 	woundclass = BCLASS_BLUNT
+	damage = ARROW_DAMAGE-15
 	armor_penetration = ARROW_PENETRATION-15
 	var/explode_sound = list('sound/misc/explode/incendiary (1).ogg','sound/misc/explode/incendiary (2).ogg')
 
-//explosion values
-	var/exp_heavy = 0
-	var/exp_light = 0
-	var/exp_flash = 0
-	var/exp_fire = 1
-
-/obj/projectile/bullet/arrow/pyro/on_hit(target)
+/obj/projectile/bullet/reusable/arrow/pyro/on_hit(target)
 	. = ..()
 	if(ismob(target))
 		var/mob/living/M = target
-		M.adjust_fire_stacks(6)
-		M.IgniteMob()
-//		M.take_overall_damage(0,10) //between this 10 burn, the 10 brute, the explosion brute, and the onfire burn, my at about 65 damage if you stop drop and roll immediately
-	var/turf/T
-	if(isturf(target))
-		T = target
-	else
-		T = get_turf(target)
-	explosion(T, -1, exp_heavy, exp_light, exp_flash, 0, flame_range = exp_fire, soundin = explode_sound)
+		M.fire_act(6)
+	explosion(get_turf(target), -1, flame_range = 2, soundin = explode_sound)
 
+//................ Vial Arrow ............... //
+/obj/item/ammo_casing/caseless/arrow/vial
+	name = "vial arrow"
+	desc = "An arrow with its tip replaced by a vial of... something, shatters on impact."
+	icon_state = "arrow_vial"
+	abstract_type = /obj/item/ammo_casing/caseless/arrow/vial
+	max_integrity = 10
+	possible_item_intents = list(/datum/intent/hit)
+	force = DAMAGE_KNIFE-2
+	var/datum/reagent/reagent
 
+/obj/item/ammo_casing/caseless/arrow/vial/Initialize(mapload, ...)
+	. = ..()
+	RemoveElement(/datum/element/tipped_item)
+	update_icon()
+
+/obj/item/ammo_casing/caseless/arrow/vial/update_overlays()
+	. = ..()
+	if(reagent)
+		var/mutable_appearance/filling = mutable_appearance(icon, "[icon_state]_filling")
+		filling.color = initial(reagent.color)
+		. += filling
+
+/obj/item/ammo_casing/caseless/arrow/vial/water
+	projectile_type = /obj/projectile/bullet/reusable/arrow/vial/water
+	reagent = /datum/reagent/water
+
+/obj/projectile/bullet/reusable/arrow/vial
+	name = "vial arrow"
+	desc = "An arrow with its tip replaced by a vial of... something, shatters on impact."
+	icon_state = "arrowvial_proj"
+	abstract_type = /obj/projectile/bullet/reusable/arrow/vial
+	ammo_type = null
+	can_inject = FALSE
+	embedchance = 0
+	woundclass = BCLASS_CUT
+	damage = ARROW_DAMAGE-15
+	armor_penetration = ARROW_PENETRATION-20
+	var/datum/reagent/reagent
+
+/obj/projectile/bullet/reusable/arrow/vial/Initialize(mapload, ...)
+	. = ..()
+	if(reagent)
+		reagents?.add_reagent(reagent, 15)
+
+/obj/projectile/bullet/reusable/arrow/vial/on_hit(target)
+	var/target_loc = get_turf(src)
+	if(iscarbon(target))
+		var/mob/living/carbon/C = target
+		target_loc = get_turf(C)
+		var/obj/item/bodypart/BP = C.get_bodypart(def_zone)
+		BP.add_embedded_object(new /obj/item/natural/glass/shard())
+	new /obj/effect/decal/cleanable/debris/glass(target_loc)
+	playsound(target_loc, "glassbreak", 30, TRUE, -3)
+	chem_splash(target_loc, 2, list(reagents))
+	return ..()
+
+/obj/projectile/bullet/reusable/arrow/vial/water
+	desc = "An arrow with its tip replaced by a vial of water, shatters on impact."
+	reagent = /datum/reagent/water
+
+//................ Water Arrow ............... //
+/obj/item/ammo_casing/caseless/arrow/water
+	name = "water arrow"
+	desc = "An arrow with its tip replaced by a water crystal, creates a splash on impact."
+	icon_state = "arrow_water"
+	projectile_type = /obj/projectile/bullet/reusable/arrow/water
+	max_integrity = 10
+	force = DAMAGE_KNIFE-2
+
+/obj/item/ammo_casing/caseless/arrow/water/Initialize(mapload, ...)
+	. = ..()
+	RemoveElement(/datum/element/tipped_item)
+
+/obj/projectile/bullet/reusable/arrow/water
+	name = "water arrow"
+	desc = "An arrow with its tip replaced by a water crystal, creates a splash on impact."
+	icon_state = "arrowwater_proj"
+	ammo_type = null
+	can_inject = FALSE
+	woundclass = BCLASS_BLUNT
+	damage = ARROW_DAMAGE-8
+	armor_penetration = ARROW_PENETRATION-10
+	embedchance = 0
+
+/obj/projectile/bullet/reusable/arrow/water/Initialize(mapload, ...)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/water, 25)
+
+/obj/projectile/bullet/reusable/arrow/water/on_hit(target)
+	var/target_loc = get_turf(src)
+	if(ismob(target))
+		target_loc = get_turf(target)
+	chem_splash(target_loc, 3, list(reagents))
+	return ..()
 
 /*--------\
 | Bullets |
@@ -351,7 +503,7 @@
 	dropshrink = 0.5
 	possible_item_intents = list(/datum/intent/use)
 	max_integrity = 0
-	force = 20
+	force = 3
 
 //................ Cannon Ball ............... //
 /obj/projectile/bullet/reusable/cannonball
@@ -397,7 +549,7 @@
 	max_integrity = 1
 	randomspread = 0
 	variance = 0
-	force = 20
+	force = 10
 
 /obj/item/ammo_casing/caseless/cball/grapeshot
 	name = "berryshot"
@@ -405,13 +557,6 @@
 	icon_state = "grapeshot" // NEEDS SPRITE
 	dropshrink = 0.5
 	projectile_type = /obj/projectile/bullet/fragment
-
-
-
-/*------\
-| Darts |
-\------*/
-
 
 /*------\
 | Darts |
@@ -421,19 +566,21 @@
 	name = "dart"
 	desc = "A thorn fasioned into a primitive dart."
 	projectile_type = /obj/projectile/bullet/reusable/dart
-	caliber = "dart"
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "dart"
+	caliber = "dart"
 	dropshrink = 0.9
 	max_integrity = 10
-	force = 10
+	force = DAMAGE_KNIFE/2
 	firing_effect_type = null
+
+/obj/item/ammo_casing/caseless/dart/Initialize(mapload, ...)
+	. = ..()
+	AddElement(/datum/element/tipped_item, _max_reagents = 3, _dip_amount = 3, _attack_injects = FALSE)
 
 /obj/projectile/bullet/reusable/dart
 	name = "dart"
-	desc = "A thorn faschioned into a primitive dart."
-	damage = BLOWDART_DAMAGE
-	damage_type = BRUTE
+	desc = "A thorn fashioned into a primitive dart."
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "dart_proj"
 	ammo_type = /obj/item/ammo_casing/caseless/dart
@@ -441,28 +588,16 @@
 	hitsound = 'sound/combat/hits/hi_arrow2.ogg'
 	embedchance = 100
 	woundclass = BCLASS_STAB
-	flag = "piercing"
+	damage = BLOWDART_DAMAGE
 	speed = 0.3
 	accuracy = 50
-
-//................ Poison Dart ............... //
-/obj/item/ammo_casing/caseless/dart/poison
-	name = "poison dart"
-	desc = "A dart with its tip drenched in a weak poison."
-	projectile_type = /obj/projectile/bullet/reusable/dart/poison
-	icon_state = "dart_poison"
-
-/obj/projectile/bullet/reusable/dart/poison
-	name = "poison dart"
-	desc = "A dart with its tip drenched in a weak poison."
 	var/piercing = FALSE
 
-/obj/projectile/bullet/reusable/dart/poison/Initialize()
+/obj/projectile/bullet/reusable/dart/Initialize(mapload, ...)
 	. = ..()
 	create_reagents(50, NO_REACT)
-	reagents.add_reagent(/datum/reagent/berrypoison, 3)
 
-/obj/projectile/bullet/reusable/dart/poison/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/reusable/dart/on_hit(atom/target, blocked = FALSE)
 	if(iscarbon(target))
 		var/mob/living/carbon/M = target
 		if(blocked != 100) // not completely blocked
@@ -479,6 +614,23 @@
 	DISABLE_BITFIELD(reagents.flags, NO_REACT)
 	reagents.handle_reactions()
 	return BULLET_ACT_HIT
+
+//................ Poison Dart (weak) ............... //
+/obj/item/ammo_casing/caseless/dart/poison
+	name = "poison dart"
+	desc = "A dart with its tip coated in a weak poison."
+	icon_state = "dart_poison"
+	projectile_type = /obj/projectile/bullet/reusable/dart/poison
+
+/obj/item/ammo_casing/caseless/dart/poison/Initialize(mapload, ...)
+	. = ..()
+	reagents.add_reagent(/datum/reagent/berrypoison, 3)
+
+/obj/projectile/bullet/reusable/dart/poison
+	name = "poison dart"
+	desc = "A dart with its tip coated in a weak poison."
+	icon_state = "dartpoison_proj"
+	ammo_type = /obj/item/ammo_casing/caseless/dart/poison
 
 #undef BLOWDART_DAMAGE
 #undef ARROW_DAMAGE

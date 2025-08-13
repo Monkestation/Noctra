@@ -43,17 +43,18 @@
 		return FALSE
 	return TRUE
 
-/obj/structure/plasticflaps/CanAStarPass(ID, to_dir, caller)
-	if(isliving(caller))
-		var/mob/living/M = caller
+/obj/structure/plasticflaps/CanAStarPass(ID, to_dir, requester)
+	if(isliving(requester))
+		var/mob/living/M = requester
 		if(!M.ventcrawler && M.mob_size != MOB_SIZE_TINY)
 			return FALSE
-	var/atom/movable/M = caller
+	var/atom/movable/M = requester
 	if(M && M.pulling)
 		return CanAStarPass(ID, to_dir, M.pulling)
 	return TRUE //diseases, stings, etc can pass
 
-/obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
+/obj/structure/plasticflaps/CanAllowThrough(atom/movable/A, turf/T)
+	. = ..()
 	if(istype(A) && (A.pass_flags & PASSGLASS))
 		return prob(60)
 
@@ -63,9 +64,8 @@
 
 	else if(isliving(A)) // You Shall Not Pass!
 		var/mob/living/M = A
-		if((M.mobility_flags & MOBILITY_STAND) && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
+		if((M.body_position != LYING_DOWN) && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
 			return FALSE
-	return ..()
 
 /obj/structure/plasticflaps/Initialize()
 	. = ..()

@@ -1017,30 +1017,41 @@ GLOBAL_LIST_EMPTY(friendly_animal_types)
 	return 0
 
 //For creating consistent icons for human looking simple animals
-/proc/get_flat_human_icon(icon_id, datum/job/J, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals, outfit_override = null)
+/proc/get_flat_human_icon(icon_id, datum/job/job, datum/preferences/prefs, dummy_key, showDirs = GLOB.cardinals, outfit_override = null)
 	var/static/list/humanoid_icon_cache = list()
-	if(!icon_id || !humanoid_icon_cache[icon_id])
-		var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key)
-
-		if(prefs)
-			prefs.copy_to(body,TRUE,FALSE)
-		if(J)
-			J.equip(body, TRUE, FALSE, outfit_override = outfit_override)
-		else if (outfit_override)
-			body.equipOutfit(outfit_override,visualsOnly = TRUE)
-
-
-		var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
-		for(var/D in showDirs)
-			body.setDir(D)
-			var/icon/partial = getFlatIcon(body)
-			out_icon.Insert(partial,dir=D)
-
-		humanoid_icon_cache[icon_id] = out_icon
-		dummy_key? unset_busy_human_dummy(dummy_key) : qdel(body)
-		return out_icon
-	else
+	if(icon_id && humanoid_icon_cache[icon_id])
 		return humanoid_icon_cache[icon_id]
+
+	var/mob/living/carbon/human/dummy/body = generate_or_wait_for_human_dummy(dummy_key)
+
+	if(prefs)
+		prefs.apply_prefs_to(body, TRUE)
+
+	var/datum/outfit/outfit = outfit_override || job?.outfit
+	if(job)
+		body.dna.species.pre_equip_species_outfit(job, body, TRUE)
+	if(outfit)
+		body.equipOutfit(outfit, TRUE)
+
+	body.update_inv_hands(hide_experimental = TRUE)
+	body.update_inv_belt(hide_experimental = TRUE)
+	body.update_inv_back(hide_experimental = TRUE)
+	body.update_inv_head(hide_nonstandard = TRUE)
+
+	var/icon/out_icon = icon('icons/effects/effects.dmi', "nothing")
+	for(var/D in showDirs)
+		body.setDir(D)
+		var/icon/partial = getFlatIcon(body, defdir=D)
+		out_icon.Insert(partial,dir=D)
+
+	body.update_inv_hands()
+	body.update_inv_belt()
+	body.update_inv_back()
+	body.update_inv_head()
+
+	humanoid_icon_cache[icon_id] = out_icon
+	dummy_key ? unset_busy_human_dummy(dummy_key) : qdel(body)
+	return out_icon
 
 //Hook, override to run code on- wait this is images
 //Images have dir without being an atom, so they get their own definition.
@@ -1068,6 +1079,20 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 		alpha += 25
 		obj_flags &= ~FROZEN
 
+/// generates a filename for a given asset.
+/// like generate_asset_name(), except returns the rsc reference and the rsc file hash as well as the asset name (sans extension)
+/// used so that certain asset files dont have to be hashed twice
+/proc/generate_and_hash_rsc_file(file, dmi_file_path)
+	var/rsc_ref = fcopy_rsc(file)
+	var/hash
+	//if we have a valid dmi file path we can trust md5'ing the rsc file because we know it doesnt have the bug described in http://www.byond.com/forum/post/2611357
+	if(dmi_file_path)
+		hash = md5(rsc_ref)
+	else //otherwise, we need to do the expensive fcopy() workaround
+		hash = md5asfile(rsc_ref)
+
+	return list(rsc_ref, hash, "asset.[hash]")
+
 /// Generate a filename for this asset
 /// The same asset will always lead to the same asset name
 /// (Generated names do not include file extention.)
@@ -1080,65 +1105,160 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 /proc/icon2base64(icon/icon, iconKey = "misc")
 	if (!isicon(icon))
 		return FALSE
-	WRITE_FILE(GLOB.iconCache[iconKey], icon)
-	var/iconData = GLOB.iconCache.ExportText(iconKey)
+	var/savefile/dummySave = new("tmp/dummySave.sav")
+	WRITE_FILE(dummySave["dummy"], icon)
+	var/iconData = dummySave.ExportText("dummy")
 	var/list/partial = splittext(iconData, "{")
-	return replacetext(copytext(partial[2], 3, -5), "\n", "")
+	. = replacetext(copytext_char(partial[2], 3, -5), "\n", "") //if cleanup fails we want to still return the correct base64
+	dummySave.Unlock()
+	dummySave = null
+	fdel("tmp/dummySave.sav") //if you get the idea to try and make this more optimized, make sure to still call unlock on the savefile after every write to unlock it.
 
-/proc/icon2html(thing, target, icon_state, dir, frame = 1, moving = FALSE)
-	if (!thing)
+///given a text string, returns whether it is a valid dmi icons folder path
+/proc/is_valid_dmi_file(icon_path)
+	if(!istext(icon_path) || !length(icon_path))
+		return FALSE
+
+	var/is_in_icon_folder = findtextEx(icon_path, "icons/")
+	var/is_dmi_file = findtextEx(icon_path, ".dmi")
+
+	if(is_in_icon_folder && is_dmi_file)
+		return TRUE
+	return FALSE
+
+/// given an icon object, dmi file path, or atom/image/mutable_appearance, attempts to find and return an associated dmi file path.
+/// a weird quirk about dm is that /icon objects represent both compile-time or dynamic icons in the rsc,
+/// but stringifying rsc references returns a dmi file path
+/// ONLY if that icon represents a completely unchanged dmi file from when the game was compiled.
+/// so if the given object is associated with an icon that was in the rsc when the game was compiled, this returns a path. otherwise it returns ""
+/proc/get_icon_dmi_path(icon/icon)
+	/// the dmi file path we attempt to return if the given object argument is associated with a stringifiable icon
+	/// if successful, this looks like "icons/path/to/dmi_file.dmi"
+	var/icon_path = ""
+
+	if(isatom(icon) || istype(icon, /image) || istype(icon, /mutable_appearance))
+		var/atom/atom_icon = icon
+		icon = atom_icon.icon
+		//atom icons compiled in from 'icons/path/to/dmi_file.dmi' are weird and not really icon objects that you generate with icon().
+		//if theyre unchanged dmi's then they're stringifiable to "icons/path/to/dmi_file.dmi"
+
+	if(isicon(icon) && isfile(icon))
+		//icons compiled in from 'icons/path/to/dmi_file.dmi' at compile time are weird and arent really /icon objects,
+		///but they pass both isicon() and isfile() checks. theyre the easiest case since stringifying them gives us the path we want
+		var/icon_ref = "\ref[icon]"
+		var/locate_icon_string = "[locate(icon_ref)]"
+
+		icon_path = locate_icon_string
+
+	else if(isicon(icon) && "[icon]" == "/icon")
+		// icon objects generated from icon() at runtime are icons, but they ARENT files themselves, they represent icon files.
+		// if the files they represent are compile time dmi files in the rsc, then
+		// the rsc reference returned by fcopy_rsc() will be stringifiable to "icons/path/to/dmi_file.dmi"
+		var/rsc_ref = fcopy_rsc(icon)
+
+		var/icon_ref = "\ref[rsc_ref]"
+
+		var/icon_path_string = "[locate(icon_ref)]"
+
+		icon_path = icon_path_string
+
+	else if(istext(icon))
+		var/rsc_ref = fcopy_rsc(icon)
+		//if its the text path of an existing dmi file, the rsc reference returned by fcopy_rsc() will be stringifiable to a dmi path
+
+		var/rsc_ref_ref = "\ref[rsc_ref]"
+		var/rsc_ref_string = "[locate(rsc_ref_ref)]"
+
+		icon_path = rsc_ref_string
+
+	if(is_valid_dmi_file(icon_path))
+		return icon_path
+
+	return FALSE
+
+/**
+ * generate an asset for the given icon or the icon of the given appearance for [thing], and send it to any clients in target.
+ * Arguments:
+ * * thing - either a /icon object, or an object that has an appearance (atom, image, mutable_appearance).
+ * * target - either a reference to or a list of references to /client's or mobs with clients
+ * * icon_state - string to force a particular icon_state for the icon to be used
+ * * dir - dir number to force a particular direction for the icon to be used
+ * * frame - what frame of the icon_state's animation for the icon being used
+ * * moving - whether or not to use a moving state for the given icon
+ * * sourceonly - if TRUE, only generate the asset and send back the asset url, instead of tags that display the icon to players
+ * * extra_clases - string of extra css classes to use when returning the icon string
+ */
+/proc/icon2html(atom/thing, client/target, icon_state, dir = SOUTH, frame = 1, moving = FALSE, sourceonly = FALSE, extra_classes = null)
+	if(!thing || !target)
 		return
 
-	var/key
-	var/icon/I = thing
-	if (!target)
-		return
-	if (target == world)
+	if(target == world)
 		target = GLOB.clients
 
 	var/list/targets
-	if (!islist(target))
+	if(!islist(target))
 		targets = list(target)
 	else
 		targets = target
-		if (!targets.len)
-			return
-	if (!isicon(I))
-		if (isfile(thing)) //special snowflake
+	if(!length(targets))
+		return
+
+	var/icon/icon2collapse = thing
+	if(!isicon(icon2collapse))
+		if(isfile(thing)) //special snowflake
 			var/name = sanitize_filename("[generate_asset_name(thing)].png")
-			SSassets.transport.register_asset(name, thing)
-			for (var/mob/thing2 in targets)
-				if(!istype(thing2) || !thing2.client)
-					continue
-				SSassets.transport.send_assets(thing2?.client, key)
-			return "<img class='icon icon-misc' src=\"[url_encode(name)]\">"
-		var/atom/A = thing
-		if (isnull(dir))
-			dir = A.dir
-		if (isnull(icon_state))
-			icon_state = A.icon_state
-		I = A.icon
-		if (ishuman(thing)) // Shitty workaround for a BYOND issue.
-			var/icon/temp = I
-			I = icon()
-			I.Insert(temp, dir = SOUTH)
+			if(!SSassets.cache[name])
+				SSassets.transport.register_asset(name, thing)
+			for(var/thing2 in targets)
+				SSassets.transport.send_assets(thing2, name)
+			if(sourceonly)
+				return SSassets.transport.get_asset_url(name)
+			return "<img class='[extra_classes] icon icon-misc' src='[SSassets.transport.get_asset_url(name)]'>"
+
+		//its either an atom, image, or mutable_appearance, we want its icon var
+		icon2collapse = thing.icon
+
+		if(isnull(icon_state))
+			icon_state = thing.icon_state
+			//Despite casting to atom, this code path supports mutable appearances, so let's be nice to them
+			if(isnull(icon_state))
+				icon_state = initial(thing.icon_state)
+				if(isnull(dir))
+					dir = initial(thing.dir)
+
+		if(isnull(dir))
+			dir = thing.dir
+
+		if(ishuman(thing)) // Shitty workaround for a BYOND issue.
+			var/icon/temp = icon2collapse
+			icon2collapse = icon()
+			icon2collapse.Insert(temp, dir = SOUTH)
 			dir = SOUTH
 	else
-		if (isnull(dir))
+		if(isnull(dir))
 			dir = SOUTH
-		if (isnull(icon_state))
+		if(isnull(icon_state))
 			icon_state = ""
 
-	I = icon(I, icon_state, dir, frame, moving)
+	icon2collapse = icon(icon2collapse, icon_state, dir, frame, moving)
 
-	key = "[generate_asset_name(I)].png"
-	SSassets.transport.register_asset(key, I)
-	for (var/mob/thing2 in targets)
-		if(!istype(thing2) || !thing2.client)
-			continue
-		SSassets.transport.send_assets(thing2?.client, key)
+	//check if the given object is associated with a dmi file in the icons folder. if it is then we dont need to do a lot of work
+	//for asset generation to get around byond limitations
+	var/icon_path = get_icon_dmi_path(thing)
 
-	return "<img class='icon icon-[icon_state]' src='[SSassets.transport.get_asset_url(key)]'>"
+	var/list/name_and_ref = generate_and_hash_rsc_file(icon2collapse, icon_path)//pretend that tuples exist
+
+	var/rsc_ref = name_and_ref[1] //weird object thats not even readable to the debugger, represents a reference to the icons rsc entry
+	var/file_hash = name_and_ref[2]
+	var/key = "[name_and_ref[3]].png"
+
+	if(!SSassets.cache[key])
+		SSassets.transport.register_asset(key, rsc_ref, file_hash, icon_path)
+	for(var/client_target in targets)
+		SSassets.transport.send_assets(client_target, key)
+	if(sourceonly)
+		return SSassets.transport.get_asset_url(key)
+	return "<img class='[extra_classes] icon icon-[icon_state]' src='[SSassets.transport.get_asset_url(key)]'>"
 
 /proc/icon2base64html(thing)
 	if (!thing)
@@ -1173,6 +1293,106 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 
 	return "<img class='icon icon-[A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
 
+
+/// Strips all underlays on a different plane from an appearance.
+/// Returns the stripped appearance.
+/proc/strip_appearance_underlays(mutable_appearance/appearance) as /mutable_appearance
+	RETURN_TYPE(/mutable_appearance)
+	var/base_plane = appearance.plane
+	for(var/mutable_appearance/underlay as anything in appearance.underlays)
+		if(isnull(underlay))
+			continue
+		if(underlay.plane != base_plane)
+			appearance.underlays -= underlay
+	return appearance
+
+/**
+ * Copies the passed /appearance, returns a /mutable_appearance
+ *
+ * Filters out certain overlays from the copy, depending on their planes
+ * Prevents stuff like lighting from being copied to the new appearance
+ */
+/proc/copy_appearance_filter_overlays(appearance_to_copy) as /mutable_appearance
+	RETURN_TYPE(/mutable_appearance)
+	var/mutable_appearance/copy = new(appearance_to_copy)
+	var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, FLOOR_PLANE)
+
+	copy.overlays = recursively_filter_emissive_blockers(copy.overlays, plane_whitelist)
+	copy.underlays = recursively_filter_emissive_blockers(copy.underlays, plane_whitelist)
+
+	return copy
+
+/proc/recursively_filter_emissive_blockers(list/input_list, list/plane_whitelist)
+	var/list/filtered_list = list()
+
+	for(var/mutable_appearance/overlay_item as anything in input_list)
+		if(isnull(overlay_item))
+			continue
+
+		var/mutable_appearance/real = new()
+		real.appearance = overlay_item
+
+		// Skip emissive blockers
+		if(is_emissive_blocker(real))
+			continue
+
+		// Skip non-whitelisted planes
+		if(!(real.plane in plane_whitelist))
+			continue
+
+		if(length(real.overlays))
+			real.overlays = recursively_filter_emissive_blockers(real.overlays, plane_whitelist)
+		if(length(real.underlays))
+			real.underlays = recursively_filter_emissive_blockers(real.underlays, plane_whitelist)
+
+		filtered_list += real
+
+	return filtered_list
+
+/proc/is_emissive_blocker(mutable_appearance/MA)
+	if(MA.plane == EMISSIVE_PLANE)
+		return TRUE
+	return FALSE
+
+/// Makes a client temporarily aware of an appearance via and invisible vis contents object.
+/mob/proc/send_appearance(mutable_appearance/appearance) as /atom/movable/screen
+	RETURN_TYPE(/atom/movable/screen)
+	if(!hud_used || isnull(appearance))
+		return
+
+	var/atom/movable/screen/container = new
+	container.appearance = appearance
+
+	hud_used.vis_holder.vis_contents += container
+	addtimer(CALLBACK(src, PROC_REF(remove_appearance), container), 5 SECONDS)
+
+	return container
+
+/mob/proc/remove_appearance(atom/movable/container)
+	if(!hud_used)
+		return
+
+	hud_used.vis_holder.vis_contents -= container
+
+/proc/ma2html(mutable_appearance/appearance, mob/viewer, extra_classes = "")
+	if(isatom(appearance))
+		var/atom/atom = appearance
+		appearance = copy_appearance_filter_overlays(atom.appearance)
+	else if(isappearance_or_image(appearance) || isicon(appearance))
+		appearance = copy_appearance_filter_overlays(appearance)
+	else
+		CRASH("Invalid appearance passed to ma2html - either a appearance, image, icon, or atom must be passed!")
+
+	if(istype(viewer, /client))
+		var/datum/client_interface/client = viewer
+		viewer = client.mob
+	if(!ismob(viewer))
+		CRASH("Invalid viewer passed to ma2html")
+	var/atom/movable/screen/container = viewer.send_appearance(appearance)
+	if(QDELETED(container))
+		CRASH("Failed to send appearance to client")
+	return "<img class='icon [extra_classes]' src='\ref[container]' style='image-rendering: pixelated; -ms-interpolation-mode: nearest-neighbor'>"
+
 //Costlier version of icon2html() that uses getFlatIcon() to account for overlays, underlays, etc. Use with extreme moderation, ESPECIALLY on mobs.
 /proc/costly_icon2html(thing, target)
 	if (!thing)
@@ -1183,3 +1403,153 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 
 	var/icon/I = getFlatIcon(thing)
 	return icon2html(I, target)
+
+/**
+ * Center's an image.
+ * Requires:
+ * The Image
+ * The x dimension of the icon file used in the image
+ * The y dimension of the icon file used in the image
+ * eg: center_image(image_to_center, 32,32)
+ * eg2: center_image(image_to_center, 96,96)
+**/
+/proc/center_image(image/I, x_dimension = 0, y_dimension = 0)
+	if(!I)
+		return
+
+	if(!x_dimension || !y_dimension)
+		return
+
+	if((x_dimension == world.icon_size) && (y_dimension == world.icon_size))
+		return I
+
+	//Offset the image so that it's bottom left corner is shifted this many pixels
+	//This makes it infinitely easier to draw larger inhands/images larger than world.iconsize
+	//but still use them in game
+	var/x_offset = -((x_dimension/world.icon_size)-1)*(world.icon_size*0.5)
+	var/y_offset = -((y_dimension/world.icon_size)-1)*(world.icon_size*0.5)
+
+	//Correct values under world.icon_size
+	if(x_dimension < world.icon_size)
+		x_offset *= -1
+	if(y_dimension < world.icon_size)
+		y_offset *= -1
+
+	I.pixel_x = x_offset
+	I.pixel_y = y_offset
+
+	return I
+
+///Flickers an overlay on an atom
+/proc/flick_overlay_static(O, atom/A, duration)
+	set waitfor = 0
+	if(!A || !O)
+		return
+	A.add_overlay(O)
+	sleep(duration)
+	A.cut_overlay(O)
+
+/atom/proc/Shake(pixelshiftx = 15, pixelshifty = 15, duration = 250)
+	var/initialpixelx = pixel_x
+	var/initialpixely = pixel_y
+	var/shiftx = rand(-pixelshiftx,pixelshiftx)
+	var/shifty = rand(-pixelshifty,pixelshifty)
+	animate(src, pixel_x = pixel_x + shiftx, pixel_y = pixel_y + shifty, time = 0.2, loop = duration)
+	pixel_x = initialpixelx
+	pixel_y = initialpixely
+
+/// Checks whether a given icon state exists in a given icon file. If `file` and `state` both exist,
+/// this will return `TRUE` - otherwise, it will return `FALSE`.
+///
+/// If you want a stack trace to be output when the given state/file doesn't exist, use
+/// `/proc/icon_exists_or_scream()`.
+/proc/icon_exists(file, state)
+	var/static/list/icon_states_cache = list()
+	if(isnull(file) || isnull(state))
+		return FALSE //This is common enough that it shouldn't panic, imo.
+
+	if(isnull(icon_states_cache[file]))
+		icon_states_cache[file] = list()
+		var/file_string = "[file]"
+		if(length(file_string)) // ensure that it's actually a file, and not a runtime icon
+			for(var/istate in json_decode(rustg_dmi_icon_states(file_string)))
+				icon_states_cache[file][istate] = TRUE
+		else // Otherwise, we have to use the slower BYOND proc
+			for(var/istate in icon_states(file))
+				icon_states_cache[file][istate] = TRUE
+
+	return !isnull(icon_states_cache[file][state])
+
+/// Functions the same as `/proc/icon_exists()`, but with the addition of a stack trace if the
+/// specified file or state doesn't exist.
+///
+/// Stack traces will only be output once for each file.
+/proc/icon_exists_or_scream(file, state)
+	if(icon_exists(file, state))
+		return TRUE
+	var/static/list/screams = list()
+	if(!isnull(screams[file]))
+		screams[file] = TRUE
+		stack_trace("State [state] in file [file] does not exist.")
+	return FALSE
+
+/// Returns a list containing the width and height of an icon file
+/proc/get_icon_dimensions(icon_path)
+	if (isnull(GLOB.icon_dimensions[icon_path]))
+		var/icon/my_icon = icon(icon_path)
+		GLOB.icon_dimensions[icon_path] = list("width" = my_icon.Width(), "height" = my_icon.Height())
+	return GLOB.icon_dimensions[icon_path]
+
+GLOBAL_LIST_EMPTY(headshot_cache)
+
+/proc/get_headshot_icon(mob/living/carbon/human/target, size = 64, crop_height = 32)
+	if(!target || !istype(target))
+		return ""
+
+	var/datum/weakref/weak_target = WEAKREF(target)
+	var/cache_key = weak_target
+	var/appearance_signature = "[target.icon]-[target.icon_state]-[length(target.overlays)]-[length(target.underlays)]-[target.color]"
+
+	var/list/cache_entry = GLOB.headshot_cache[cache_key]
+	if(cache_entry)
+		var/mob/living/cached_target = weak_target.resolve()
+		if(cached_target && cache_entry["signature"] == appearance_signature)
+			return cache_entry["html"]
+		else
+			GLOB.headshot_cache -= cache_key
+
+	target.update_inv_hands(hide_experimental = TRUE)
+	target.update_inv_belt(hide_experimental = TRUE)
+	target.update_inv_back(hide_experimental = TRUE)
+	target.update_inv_head(hide_nonstandard = TRUE)
+	var/was_typing = target.typing
+	if(was_typing)
+		target.set_typing_indicator(FALSE)
+
+	var/image/dummy = image(target.icon, target, target.icon_state, target.layer, target.dir)
+	dummy.appearance = target.appearance
+	dummy.dir = SOUTH
+
+	target.update_inv_hands()
+	target.update_inv_belt()
+	target.update_inv_back()
+	target.update_inv_head()
+	if(was_typing)
+		target.set_typing_indicator(TRUE)
+
+	var/icon/headshot = getFlatIcon(dummy, SOUTH, no_anim = TRUE)
+	headshot.Scale(size, size)
+	headshot.Crop(1, size - crop_height + 1, size, size)
+
+	var/icon_html = "<img src='data:image/png;base64,[icon2base64(headshot)]' style='width:[size]px;height:[crop_height]px;image-rendering:pixelated;'>"
+
+	if(length(GLOB.headshot_cache) >= 200)
+		var/num_to_remove = round(200 * 0.15)
+		for(var/i in 1 to num_to_remove)
+			GLOB.headshot_cache.Cut(1, 2)
+
+	GLOB.headshot_cache[cache_key] = list(
+		"signature" = appearance_signature,
+		"html" = icon_html
+	)
+	return icon_html

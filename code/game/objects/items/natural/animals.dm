@@ -42,7 +42,7 @@
 /obj/item/natural/fur // a piece of skin with animal hair on it. Could be called a fur but its untanned and also encompasses rat skins and goat skins so pelt is more suitable at least to my ears.
 	name = "fur"
 	icon_state = "wool1"
-	desc = "pelt from one of Dendor's creachers."
+	desc = "Pelt from one of Dendor's creachers."
 	dropshrink = 0.90
 	force = 0
 	throwforce = 0
@@ -52,42 +52,130 @@
 	sellprice = 5
 
 /obj/item/natural/fur/gote
-	desc = "from a gote."
+	desc = "Pelt from a gote."
 	icon_state = "pelt_gote"
 
 /obj/item/natural/fur/volf
-	desc = "from a volf."
+	desc = "Pelt from a volf."
 	icon_state = "pelt_volf"
 
 /obj/item/natural/fur/mole
-	desc = "from a mole."
+	desc = "Pelt from a mole."
 	icon_state = "pelt_mole"
 
 /obj/item/natural/fur/rous
-	desc = "from a rous."
+	desc = "Pelt from a rous."
 	icon_state = "pelt_rous"
 
 /obj/item/natural/fur/cabbit
-	desc = "from a cabbit."
+	desc = "Pelt from a cabbit."
 	icon_state = "wool2"
+
+/obj/item/natural/head
+	possible_item_intents = list(/datum/intent/use)
 
 /obj/item/natural/head/volf
 	name = "volf head"
-	desc = "the head of a fearsome volf."
+	desc = "The severed head of a fearsome volf."
 	icon_state = "volfhead"
 	layer = 3.1
+	grid_height = 64
+	grid_width = 64
+	headpricemin = 3
+	headpricemax = 7
+	sellprice = 5
 
 /obj/item/natural/head/saiga
 	name = "saiga head"
-	desc = "the head of a proud saiga."
+	desc = "The severed head of a proud saiga."
 	icon_state = "saigahead"
 	layer = 3.1
+	grid_height = 64
+	grid_width = 64
+	headprice = 3
+	sellprice = 3
+
+/obj/item/natural/head/troll
+	name = "troll head"
+	desc = "The severed head of a giant troll."
+	icon_state = "trollhead"
+	layer = 3.1
+	w_class = WEIGHT_CLASS_HUGE
+	headpricemin = 80
+	headpricemax = 230
+	sellprice = 155
+
+/obj/item/natural/head/troll/apply_components()
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
+
+/obj/item/natural/head/troll/axe
+	name = "troll head"
+	desc = "The severed head of a once mighty warrior troll."
+	icon_state = "trollhead_axe"
+	headpricemin = 90
+	headpricemax = 250
+	sellprice = 170
+
+/obj/item/natural/head/troll/cave
+	name = "cave troll head"
+	icon_state = "cavetrollhead"
+	headpricemin = 120
+	headpricemax = 280
+	sellprice = 200
+
+/obj/item/natural/head/rous
+	name = "rous head"
+	desc = "The severed head of an unusually large rat."
+	icon_state = "roushead"
+	layer = 3.1
+	grid_height = 64
+	grid_width = 64
+	headpricemin = 3
+	headpricemax = 7
+	sellprice = 5
+
+/obj/item/natural/head/spider
+	name = "honeyspider head"
+	desc = "The severed head of a venomous honeyspider."
+	icon_state = "spiderhead"
+	layer = 3.1
+	grid_height = 64
+	grid_width = 64
+	headpricemin = 4
+	headpricemax = 20
+	sellprice = 12
+
+/obj/item/natural/head/bug
+	name = "bogbug head"
+	desc = "The severed head of a gross bogbug."
+	icon_state = "boghead"
+	layer = 3.1
+	grid_height = 64
+	grid_width = 64
+	headpricemin = 4
+	headpricemax = 15
+	sellprice = 10
+
+/obj/item/natural/head/mole
+	name = "mole head"
+	desc = "The severed head of a lesser mole."
+	icon_state = "molehead"
+	layer = 3.1
+	w_class = WEIGHT_CLASS_HUGE
+	headpricemin = 3
+	headpricemax = 7
+	sellprice = 5
+
+/obj/item/natural/head/mole/apply_components()
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 
 /obj/item/natural/head/gote
 	name = "gote head"
-	desc = "the head of a fiery gote."
+	desc = "The severed head of a fiery gote."
 	icon_state = "gotehead"
 	layer = 3.1
+	headprice = 2
+	sellprice = 2
 
 //RTD make this a storage item and make clickign on animals with things put it in storage
 /obj/item/natural/saddle
@@ -101,14 +189,14 @@
 	force = 0
 	throwforce = 0
 	sellprice = 80
-	twohands_required = TRUE
+
+/obj/item/natural/saddle/apply_components()
+	AddComponent(/datum/component/two_handed, require_twohands=TRUE)
 
 /obj/item/natural/saddle/attack(mob/living/target, mob/living/carbon/human/user)
 	if(istype(target, /mob/living/simple_animal))
-		testing("yea1")
 		var/mob/living/simple_animal/S = target
 		if(S.can_saddle && !S.ssaddle)
-			testing("yea2")
 			if(!target.has_buckled_mobs())
 				user.visible_message("<span class='warning'>[user] tries to saddle [target]...</span>")
 				if(do_after(user, 4 SECONDS, target))
@@ -116,7 +204,7 @@
 					user.dropItemToGround(src)
 					S.ssaddle = src
 					src.forceMove(S)
-					S.update_icon()
+					S.update_appearance()
 		return
 	..()
 
@@ -148,3 +236,9 @@
 			visible_message(span_danger("The werewolf bites into [src] and thrashes!"))
 		else
 			visible_message(span_danger("[user] bites [src]! What is wrong with them?"))
+		if(HAS_TRAIT(user, TRAIT_POISONBITE))
+			if(src.reagents)
+				var/poison = user.STACON/2
+				src.reagents.add_reagent(/datum/reagent/toxin/venom, poison/2)
+				src.reagents.add_reagent(/datum/reagent/medicine/soporpot, poison)
+				to_chat(user, span_warning("Your fangs inject venom into [src]!"))

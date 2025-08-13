@@ -32,6 +32,15 @@
 	flick(state,screen)
 	return screen
 
+/mob/proc/update_fullscreen_alpha(category, alpha = 255, time = 1 SECONDS)
+	var/atom/movable/screen/fullscreen/screen = screens[category]
+	if(!screen)
+		screens -= category
+		return
+	if (client)
+		client.screen -= screen
+		animate(screen, alpha = alpha, time = time)
+		client.screen += screen
 
 /mob/proc/clear_fullscreen(category, animated = 10)
 	var/atom/movable/screen/fullscreen/screen = screens[category]
@@ -132,6 +141,11 @@
 /atom/movable/screen/fullscreen/crit/uncon
 	icon_state = "uncon"
 	layer = 20.511
+	plane = FULLSCREEN_PLANE
+
+/atom/movable/screen/fullscreen/arcyne_eye
+	icon_state = "curse1"
+	layer = 20.49
 	plane = FULLSCREEN_PLANE
 
 /atom/movable/screen/fullscreen/crit/dying
@@ -246,16 +260,61 @@
 	invisibility = INVISIBILITY_LIGHTING
 	layer = BACKGROUND_LAYER+21
 	color = "#000"
-	show_when_dead = TRUE
 
 //Provides whiteness in case you don't see lights so everything is still visible
 /atom/movable/screen/fullscreen/lighting_backdrop/unlit
 	layer = BACKGROUND_LAYER+20
-	show_when_dead = TRUE
 
 /atom/movable/screen/fullscreen/see_through_darkness
 	icon_state = "nightvision"
 	plane = LIGHTING_PLANE
-	layer = LIGHTING_LAYER
 	blend_mode = BLEND_ADD
-	show_when_dead = TRUE
+
+/// Our sunlight planemaster mashes all of our sunlight overlays together into one
+/// The fullscreen then grabs the plane_master with a layer filter, and colours it
+/// We do this so the sunlight fullscreen acts as a big lighting object, in our lighting plane
+/atom/movable/screen/fullscreen/lighting_backdrop/sunlight
+	icon_state  = ""
+	screen_loc = "CENTER-2:-16, CENTER"
+	transform = null
+	blend_mode = BLEND_ADD
+
+/atom/movable/screen/fullscreen/lighting_backdrop/sunlight/Initialize()
+	. = ..()
+	add_filter("sunlight", 1, layering_filter(render_source = SUNLIGHTING_RENDER_TARGET))
+	SSoutdoor_effects.sunlighting_planes |= src
+	SSoutdoor_effects.transition_sunlight_color(src)
+	//color = SSoutdoor_effects.last_color
+
+/atom/movable/screen/fullscreen/lighting_backdrop/sunlight/Destroy()
+	. = ..()
+	SSoutdoor_effects.sunlighting_planes -= src
+
+/atom/movable/screen/fullscreen/astral_border
+	icon = 'icons/mob/screens/vampire.dmi'
+	icon_state = "astraloverlay"
+	alpha = 0
+
+/atom/movable/screen/fullscreen/deafmute_border
+	icon = 'icons/mob/screens/vampire.dmi'
+	icon_state = "conversionoverlay"
+	alpha = 0
+
+/atom/movable/screen/fullscreen/confusion_border
+	icon = 'icons/mob/screens/vampire.dmi'
+	icon_state = "conversionoverlay"
+	alpha = 0
+
+/atom/movable/screen/fullscreen/black
+	icon = 'icons/mob/screens/vampire.dmi'
+	screen_loc = "WEST, SOUTH to EAST, NORTH"
+	icon_state = "black"
+	layer = BLIND_LAYER
+	alpha = 0
+
+/atom/movable/screen/fullscreen/white
+	icon = 'icons/mob/screens/vampire.dmi'
+	screen_loc = "WEST, SOUTH to EAST, NORTH"
+	icon_state = "white"
+	layer = BLIND_LAYER
+	alpha = 0

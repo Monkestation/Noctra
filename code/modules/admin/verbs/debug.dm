@@ -15,8 +15,6 @@
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Debug Two") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-
 /* 21st Sept 2010
 Updated by Skie -- Still not perfect but better!
 Stuff you can't do:
@@ -138,7 +136,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] used the Test Areas debug command checking [log_message].</span>")
 	log_admin("[key_name(usr)] used the Test Areas debug command checking [log_message].")
 
-	for(var/area/A in world)
+	for(var/area/A as anything in GLOB.areas)
 		if(on_station)
 			var/turf/picked = safepick(get_area_turfs(A.type))
 			if(picked && is_station_level(picked.z))
@@ -249,9 +247,6 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		H = M.change_mob_type(/mob/living/carbon/human, null, null, TRUE)
 	else
 		H = M
-		if(H.l_store || H.r_store || H.s_store) //saves a lot of time for admins and coders alike
-			if(alert("Drop Items in Pockets? No will delete them.", "Robust quick dress shop", "Yes", "No") == "No")
-				delete_pocket = TRUE
 
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Select Equipment") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	for (var/obj/item/I in H.get_equipped_items(delete_pocket))
@@ -270,12 +265,11 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	var/list/outfits = list()
 	var/list/paths = subtypesof(/datum/outfit) - typesof(/datum/outfit/job)  - typesof(/datum/outfit/job)
 
-	for(var/path in paths)
-		var/datum/outfit/O = path //not much to initalize here but whatever
+	for(var/datum/outfit/O as anything in paths) //not much to initalize here but whatever
 		if(initial(O.can_be_admin_equipped))
-			outfits[initial(O.name)] = path
+			outfits[initial(O.name)] = O
 
-	var/dresscode = input("Select outfit", "Robust quick dress shop") as null|anything in baseoutfits + sortList(outfits)
+	var/dresscode = browser_input_list(src, "Select outfit", "Robust quick dress shop", baseoutfits + sortList(outfits))
 	if (isnull(dresscode))
 		return
 
@@ -286,7 +280,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		var/list/custom_names = list()
 		for(var/datum/outfit/D in GLOB.custom_outfits)
 			custom_names[D.name] = D
-		var/selected_name = input("Select outfit", "Robust quick dress shop") as null|anything in sortList(custom_names)
+		var/selected_name = browser_input_list(src, "Select outfit", "Robust quick dress shop", sortList(custom_names))
 		dresscode = custom_names[selected_name]
 		if(isnull(dresscode))
 			return
@@ -294,13 +288,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if (dresscode == "As Roguetown Job...")
 		var/list/roguejob_paths = subtypesof(/datum/outfit/job)
 		var/list/roguejob_outfits = list()
-		for(var/path in roguejob_paths)
-			var/datum/outfit/O = path
+		for(var/datum/outfit/O as anything in roguejob_paths)
 			//roguetown coders are morons and didn't give ANY outfits proper fucking names
 			if(initial(O.can_be_admin_equipped))
-				roguejob_outfits["[path]"] = path
+				roguejob_outfits["[O]"] = O
 
-		dresscode = input("Select job equipment", "Robust quick dress shop") as null|anything in sortList(roguejob_outfits)
+		dresscode = browser_input_list(src, "Select job equipment", "Robust quick dress shop", sortList(roguejob_outfits))
 		dresscode = roguejob_outfits[dresscode]
 		if(isnull(dresscode))
 			return
@@ -335,23 +328,32 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set desc = ""
 
 	var/list/dellog = list("<B>List of things that have gone through qdel this round</B><BR><BR><ol>")
-	sortTim(SSgarbage.items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
+	sortTim(SSgarbage.items, cmp = GLOBAL_PROC_REF(cmp_qdel_item_time), associative = TRUE)
 	for(var/path in SSgarbage.items)
 		var/datum/qdel_item/I = SSgarbage.items[path]
 		dellog += "<li><u>[path]</u><ul>"
-		if (I.failures)
+		if(I.qdel_flags & QDEL_ITEM_SUSPENDED_FOR_LAG)
+
+			dellog += "<li>SUSPENDED FOR LAG</li>"
+		if(I.failures)
 			dellog += "<li>Failures: [I.failures]</li>"
 		dellog += "<li>qdel() Count: [I.qdels]</li>"
 		dellog += "<li>Destroy() Cost: [I.destroy_time]ms</li>"
-		if (I.hard_deletes)
+		if(I.hard_deletes)
 			dellog += "<li>Total Hard Deletes [I.hard_deletes]</li>"
 			dellog += "<li>Time Spent Hard Deleting: [I.hard_delete_time]ms</li>"
-		if (I.slept_destroy)
+			dellog += "<li>Highest Time Spent Hard Deleting: [I.hard_delete_max]ms</li>"
+			if (I.hard_deletes_over_threshold)
+				dellog += "<li>Hard Deletes Over Threshold: [I.hard_deletes_over_threshold]</li>"
+		if(I.slept_destroy)
 			dellog += "<li>Sleeps: [I.slept_destroy]</li>"
-		if (I.no_respect_force)
+		if(I.no_respect_force)
 			dellog += "<li>Ignored force: [I.no_respect_force]</li>"
-		if (I.no_hint)
+		if(I.no_hint)
 			dellog += "<li>No hint: [I.no_hint]</li>"
+		if(LAZYLEN(I.extra_details))
+			var/details = I.extra_details.Join("</li><li>")
+			dellog += "<li>Extra Info: <ul><li>[details]</li></ul>"
 		dellog += "</ul></li>"
 
 	dellog += "</ol>"
@@ -479,9 +481,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set desc = ""
 
 	var/sortlist = list(
-		"Avg time"		=	/proc/cmp_profile_avg_time_dsc,
-		"Total Time"	=	/proc/cmp_profile_time_dsc,
-		"Call Count"	=	/proc/cmp_profile_count_dsc
+		"Avg time"		=	GLOBAL_PROC_REF(cmp_profile_avg_time_dsc),
+		"Total Time"	=	GLOBAL_PROC_REF(cmp_profile_time_dsc),
+		"Call Count"	=	GLOBAL_PROC_REF(cmp_profile_count_dsc)
 	)
 	var/sort = input(src, "Sort type?", "Sort Type", "Avg time") as null|anything in sortlist
 	if (!sort)
@@ -497,3 +499,97 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 	if(alert(usr, "Are you absolutely sure you want to reload the configuration from the default path on the disk, wiping any in-round modificatoins?", "Really reset?", "No", "Yes") == "Yes")
 		config.admin_reload()
+
+/// A debug verb to check the sources of currently running timers
+/client/proc/check_timer_sources()
+	set category = "Debug"
+	set name = "Check Timer Sources"
+	set desc = "Checks the sources of the running timers"
+	if (!check_rights(R_DEBUG))
+		return
+
+	var/bucket_list_output = generate_timer_source_output(SStimer.bucket_list)
+	var/second_queue = generate_timer_source_output(SStimer.second_queue)
+	var/datum/browser/browser = new(usr, "check_timer_sources", "Timer Sources", 700, 700)
+	browser.set_content({"
+		<h3>bucket_list</h3>
+		[bucket_list_output]
+
+		<h3>second_queue</h3>
+		[second_queue]
+	"})
+	browser.open()
+
+/proc/generate_timer_source_output(list/datum/timedevent/events)
+	var/list/per_source = list()
+
+	// Collate all events and figure out what sources are creating the most
+	for (var/_event in events)
+		if (!_event)
+			continue
+		var/datum/timedevent/event = _event
+
+		do
+			if (event.source)
+				if (per_source[event.source] == null)
+					per_source[event.source] = 1
+				else
+					per_source[event.source] += 1
+			event = event.next
+		while (event && event != _event)
+
+	// Now, sort them in order
+	var/list/sorted = list()
+	for (var/source in per_source)
+		sorted += list(list("source" = source, "count" = per_source[source]))
+	sortTim(sorted, GLOBAL_PROC_REF(cmp_timer_data))
+
+	// Now that everything is sorted, compile them into an HTML output
+	var/output = "<table border='1'>"
+
+	for (var/_timer_data in sorted)
+		var/list/timer_data = _timer_data
+		output += {"<tr>
+			<td><b>[timer_data["source"]]</b></td>
+			<td>[timer_data["count"]]</td>
+		</tr>"}
+
+	output += "</table>"
+
+	return output
+
+/proc/cmp_timer_data(list/a, list/b)
+	return b["count"] - a["count"]
+
+/client/proc/cmd_regenerate_asset_cache()
+	set category = "Debug"
+	set name = "Regenerate Asset Cache"
+	set desc = "Clears the asset cache and regenerates it immediately."
+	if(!CONFIG_GET(flag/cache_assets))
+		to_chat(usr, "<span class='warning'>Asset caching is disabled in the config!</span>")
+		return
+	var/regenerated = 0
+	for(var/datum/asset/A as anything in subtypesof(/datum/asset))
+		if(!initial(A.cross_round_cachable))
+			continue
+		if(A == initial(A._abstract))
+			continue
+		var/datum/asset/asset_datum = GLOB.asset_datums[A]
+		asset_datum.regenerate()
+		regenerated++
+	to_chat(usr, "<span class='notice'>Regenerated [regenerated] asset\s.</span>")
+
+/client/proc/cmd_clear_smart_asset_cache()
+	set category = "Debug"
+	set name = "Clear Smart Asset Cache"
+	set desc = "Clears the smart asset cache."
+	if(!CONFIG_GET(flag/smart_cache_assets))
+		to_chat(usr, "<span class='warning'>Smart asset caching is disabled in the config!</span>")
+		return
+	var/cleared = 0
+	for(var/datum/asset/spritesheet_batched/A as anything in subtypesof(/datum/asset/spritesheet_batched))
+		if(A == initial(A._abstract))
+			continue
+		fdel("[ASSET_CROSS_ROUND_SMART_CACHE_DIRECTORY]/spritesheet_cache.[initial(A.name)].json")
+		cleared++
+	to_chat(usr, "<span class='notice'>Cleared [cleared] asset\s.</span>")

@@ -112,6 +112,9 @@
 
 #define TORADIANS(degrees) ((degrees) * 0.0174532925)
 
+/// Gets shift x that would be required for the bitflag (1<<x)
+#define TOBITSHIFT(bit) ( log(2, bit) )
+
 // Will filter out extra rotations and negative rotations
 // E.g: 540 becomes 180. -180 becomes 180.
 #define SIMPLIFY_DEGREES(degrees) (MODULUS((degrees), 360))
@@ -213,3 +216,6 @@
 
 #define RULE_OF_THREE(a, b, x) ((a*x)/b)
 // )
+
+/// Avoids division by zero by returning 0 if the divisor is 0 or null.
+#define SAFE_DIVIDE(dividend, divisor) (!divisor ? 0 : dividend/divisor)

@@ -56,14 +56,14 @@
 	. = ..()
 	var/L = new /obj/item/flashlight/flare/torch/lantern/shrunken(src.loc)
 	put_in_hands(L)
-	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_BAREFOOT, 1, 2)
+	AddElement(/datum/element/footstep, FOOTSTEP_MOB_BAREFOOT, 1, -6)
 
 /mob/living/carbon/spirit/create_internal_organs()
 	internal_organs += new /obj/item/organ/lungs
 	internal_organs += new /obj/item/organ/heart
 	internal_organs += new /obj/item/organ/brain
 	internal_organs += new /obj/item/organ/tongue
-	internal_organs += new /obj/item/organ/eyes
+	internal_organs += new /obj/item/organ/eyes/no_render
 	internal_organs += new /obj/item/organ/ears
 	internal_organs += new /obj/item/organ/liver
 	internal_organs += new /obj/item/organ/stomach
@@ -95,7 +95,7 @@
 		to_chat(src, span_danger("Your suffering has not gone unnoticed, your patron has [paid ? "paid for your toll" : "rewarded you with your toll"]."))
 	playsound(src, 'sound/combat/caught.ogg', 80, TRUE, -1)
 
-/mob/living/carbon/spirit/updatehealth()
+/mob/living/carbon/spirit/updatehealth(amount)
 	. = ..()
 	var/slow = 0
 	if(!HAS_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN))
@@ -130,10 +130,7 @@
 		return
 	client.screen.Cut()
 	client.screen += client.void
-//	stop_all_loops()
-	SSdroning.kill_rain(src.client)
-	SSdroning.kill_loop(src.client)
-	SSdroning.kill_droning(src.client)
+
 	remove_client_colour(/datum/client_colour/monochrome)
 	if(!client)
 		log_game("[key_name(usr)] AM failed due to disconnect.")
@@ -172,10 +169,10 @@
 	return src
 
 /mob/proc/pacifyme(mob/user)
-	return pacify_corpse(src, user, coin_pq = 0)
+	return pacify_corpse(src, user)
 
 /// Proc that will search inside a given atom for any corpses and pacify them
-/proc/pacify_coffin(atom/movable/coffin, mob/user, deep = TRUE, burial_pq = PQ_GAIN_BURIAL)
+/proc/pacify_coffin(atom/movable/coffin, mob/user, deep = TRUE)
 	if(!coffin)
 		return FALSE
 	var/success = FALSE
@@ -195,16 +192,13 @@
 		for(var/atom/movable/stuffing in coffin)
 			if(isliving(stuffing) || istype(stuffing, /obj/item/bodypart/head))
 				continue
-			if(pacify_coffin(stuffing, user, deep, burial_pq = 0))
+			if(pacify_coffin(stuffing, user, deep))
 				success = TRUE
-	if(success && burial_pq && user?.ckey)
-		adjust_playerquality(burial_pq, user.ckey)
 	return success
 
 /// Proc that finds the client associated with a given corpse and either 1. Lets ghosts skip Underworld and return to lobby 2. Gives spirits a toll
-/proc/pacify_corpse(mob/living/corpse, mob/user, coin_pq = PQ_GAIN_BURIAL_COIN)
+/proc/pacify_corpse(mob/living/corpse, mob/user)
 	if(QDELETED(corpse) || QDELETED(corpse.mind) || (corpse.stat != DEAD))
-		testing("pacify_corpse fail ([corpse.mind?.key || "no key"])")
 		return FALSE
 	// funeral + buried will make Journey to Underworld function as return to lobby
 	if(ishuman(corpse))
@@ -229,8 +223,6 @@
 					else
 						spirit.put_in_hands(new /obj/item/underworld/coin)
 						to_chat(spirit, span_rose("A coin falls from above into your hands!"))
-					if(coin_pq && user?.ckey)
-						adjust_playerquality(coin_pq, user.ckey)
 					return TRUE
 	else
 		ghost = corpse.ghostize(force_respawn = TRUE)
@@ -238,10 +230,6 @@
 	if(ghost)
 		var/user_acknowledgement = user ? user.real_name : "a mysterious force"
 		to_chat(ghost, span_rose("My soul finds peace buried in consecrated ground, thanks to [user_acknowledgement]."))
-		// return TRUE
-
-	//It can reach here if you take too long to bury someone and they already respawn, but we still want to give the burial message
-	// testing("pacify_corpse fail ([corpse.mind?.key || "no key"])")
 	return TRUE
 
 /mob/living/carbon/spirit/show_inv(mob/user)

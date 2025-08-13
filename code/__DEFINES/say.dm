@@ -2,6 +2,9 @@
 	Defines for use in saycode and text formatting.
 	Currently contains speech spans and message modes
 */
+#define RADIO_EXTENSION "department specific"
+#define RADIO_KEY "department specific key"
+#define LANGUAGE_EXTENSION "language specific"
 
 //Message modes. Each one defines a radio channel, more or less.
 #define MODE_HEADSET "headset"
@@ -20,6 +23,7 @@
 #define MODE_KEY_BINARY "b"
 #define MODE_TOKEN_BINARY ":b"
 
+#define WHISPER_MODE "the type of whisper"
 #define MODE_WHISPER "whisper"
 #define MODE_WHISPER_CRIT "whispercrit"
 
@@ -55,18 +59,19 @@
 #define SPAN_CLOWN "clown"
 
 #define SPAN_SINGING "singing"
-#define MODE_SING "%"
+#define MODE_SING "sing"
 
 #define SPAN_GEN "say"
 #define SPAN_DWARF "dwarf"
 #define SPAN_ELF "elf"
 #define SPAN_OLDPSYDONIC "oldpsydonic"
-#define SPAN_ZYBANTINE "zybantine"
+#define SPAN_ZALAD "zalad"
 #define SPAN_SAND "sandspeak"
 #define SPAN_DELF "delf"
 #define SPAN_HELL "hellspeak"
 #define SPAN_ORC "orc"
 #define SPAN_BEAST "beast"
+#define SPAN_DEEPSPEAK "deepspeak"
 
 //bitflag #defines for return value of the radio() proc.
 #define ITALICS 1
@@ -99,3 +104,7 @@
 // Audio/Visual Flags. Used to determine what sense are required to notice a message.
 #define MSG_VISUAL (1<<0)
 #define MSG_AUDIBLE (1<<1)
+
+// USE ABOVE INSTEAD?
+#define EMOTE_VISIBLE 1
+#define EMOTE_AUDIBLE 2

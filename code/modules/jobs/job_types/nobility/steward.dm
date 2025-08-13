@@ -1,24 +1,24 @@
 /datum/job/steward
 	title = "Steward"
+	tutorial = "Coin, Coin, Coin! Oh beautiful coin: \
+	You're addicted to it, and you hold the position as the King's personal treasurer of both coin and information. \
+	You know the power silver and gold has on a man's mortal soul, \
+	and you know just what lengths they'll go to in order to get even more. Keep your festering economy and your rats alive, theyre the only two things you can weigh any trust into anymore."
 	flag = STEWARD
 	department_flag = NOBLEMEN
-	faction = "Station"
+	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
+	display_order = JDO_STEWARD
+	faction = FACTION_TOWN
 	total_positions = 1
 	spawn_positions = 1
-
-	allowed_races = list(
-		"Humen",
-		"Elf",
-		"Half-Elf",
-		"Dwarf"
-	)
-	allowed_sexes = list(MALE, FEMALE)
-	display_order = JDO_STEWARD
+	min_pq = 2
 	bypass_lastclass = TRUE
-	tutorial = "Coin, Coin, Coin! Oh beautiful coin: Youre addicted to it, and you hold the position as the King's personal treasurer of both coin and information. You know the power silver and gold has on a man's mortal soul, and you know just what lengths theyll go to in order to get even more. Keep your festering economy and your rats alive, theyre the only two things you can weigh any trust into anymore."
+
+	allowed_races = RACES_PLAYER_NONDISCRIMINATED
+
 	outfit = /datum/outfit/job/steward
 	give_bank_account = 100
-	min_pq = 2
+	noble_income = 16
 	cmode_music = 'sound/music/cmode/nobility/combat_noble.ogg'
 
 /datum/outfit/job/steward
@@ -42,17 +42,17 @@
 	beltr = /obj/item/storage/keyring/steward
 	beltl = /obj/item/weapon/knife/dagger/steel
 	backr = /obj/item/storage/backpack/satchel
+	scabbards = list(/obj/item/weapon/scabbard/knife)
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/rich = 1, /obj/item/lockpickring/mundane = 1)
 
-	if(H.mind)
-		H.mind?.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/reading, 6, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/stealing, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
-		H.mind?.adjust_skillrank(/datum/skill/misc/lockpicking, 6, TRUE)
-		H.change_stat(STATKEY_STR, -2)
-		H.change_stat(STATKEY_INT, 8)
-		H.change_stat(STATKEY_CON, -2)
-		H.change_stat(STATKEY_SPD, -2)
+	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/reading, 6, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/stealing, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/lockpicking, 6, TRUE)
+	H.adjust_skillrank(/datum/skill/labor/mathematics, 5, TRUE)
+	H.change_stat(STATKEY_STR, -2)
+	H.change_stat(STATKEY_INT, 5)
+	H.change_stat(STATKEY_CON, -2)
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)

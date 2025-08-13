@@ -189,28 +189,18 @@ GLOBAL_REAL(Master, /datum/controller/master)
 
 	var/start_timeofday = REALTIMEOFDAY
 	// Initialize subsystems.
-//#ifndef TESTSERVER
-//	var/thing_done = FALSE
-//#endif
-	#ifndef LOWMEMORYMODE
 	current_ticklimit = CONFIG_GET(number/tick_limit_mc_init)
-	for (var/datum/controller/subsystem/SS in subsystems)
+	for (var/datum/controller/subsystem/SS as anything in subsystems)
 		if (SS.flags & SS_NO_INIT)
 			continue
-		SS.Initialize(REALTIMEOFDAY)
-		CHECK_TICK
-	current_ticklimit = TICK_LIMIT_RUNNING
-	#else
-	current_ticklimit = CONFIG_GET(number/tick_limit_mc_init)
-	for (var/datum/controller/subsystem/SS in subsystems)
-		if (SS.flags & SS_NO_INIT)
-			continue
+#ifdef LOWMEMORYMODE
 		if(SS.lazy_load)
 			continue
+#endif
 		SS.Initialize(REALTIMEOFDAY)
 		CHECK_TICK
 	current_ticklimit = TICK_LIMIT_RUNNING
-	#endif
+
 	var/time = (REALTIMEOFDAY - start_timeofday) / 10
 
 	var/msg = "Initializations complete within [time] second[time == 1 ? "" : "s"]!"
@@ -315,7 +305,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 		SS.state = SS_IDLE
 		if (SS.flags & SS_TICKER)
 			tickersubsystems += SS
-			timer += world.tick_lag * rand(1, 5)
+			// Timer subsystems aren't allowed to bunch up, so we offset them a bit
+			timer += world.tick_lag * rand(0, 1)
 			SS.next_fire = timer
 			continue
 
@@ -325,7 +316,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			if(ss_runlevels & GLOB.bitflags[I])
 				while(runlevel_sorted_subsystems.len < I)
 					runlevel_sorted_subsystems += list(list())
-				runlevel_sorted_subsystems[I] += SS
+				runlevel_sorted_subsystems[I] |= SS
 				added_to_any = TRUE
 		if(!added_to_any)
 			WARNING("[SS.name] subsystem is not SS_NO_FIRE but also does not have any runlevels set!")
@@ -390,14 +381,16 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			var/checking_runlevel = current_runlevel
 			if(cached_runlevel != checking_runlevel)
 				//resechedule subsystems
+				var/list/old_subsystems = current_runlevel_subsystems
 				cached_runlevel = checking_runlevel
 				current_runlevel_subsystems = runlevel_sorted_subsystems[cached_runlevel]
-				var/stagger = world.time
-				for(var/I in current_runlevel_subsystems)
-					var/datum/controller/subsystem/SS = I
-					if(SS.next_fire <= world.time)
-						stagger += world.tick_lag * rand(1, 5)
-						SS.next_fire = stagger
+
+				//now we'll go through all the subsystems we want to offset and give them a next_fire
+				for(var/datum/controller/subsystem/SS as anything in current_runlevel_subsystems)
+					//we only want to offset it if it's new and also behind
+					if(SS.next_fire > world.time || (SS in old_subsystems))
+						continue
+					SS.next_fire = world.time + world.tick_lag * rand(0, DS2TICKS(min(SS.wait, 2 SECONDS)))
 
 			subsystems_to_check = current_runlevel_subsystems
 		else
@@ -465,7 +458,12 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			continue
 		if ((SS_flags & (SS_TICKER|SS_KEEP_TIMING)) == SS_KEEP_TIMING && SS.last_fire + (SS.wait * 0.75) > world.time)
 			continue
-		SS.enqueue()
+		if (SS.postponed_fires >= 1)
+			SS.postponed_fires--
+			SS.update_nextfire()
+			continue
+		if(!SS.enqueue())
+			return FALSE
 	. = 1
 
 
@@ -506,14 +504,15 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			//	in those cases, so we just let them run)
 			if (queue_node_flags & SS_NO_TICK_CHECK)
 				if (queue_node.tick_usage > TICK_LIMIT_RUNNING - TICK_USAGE && ran_non_ticker)
-					queue_node.queued_priority += queue_priority_count * 0.1
-					queue_priority_count -= queue_node_priority
-					queue_priority_count += queue_node.queued_priority
-					current_tick_budget -= queue_node_priority
-					queue_node = queue_node.queue_next
+					if (!(queue_node_flags & SS_BACKGROUND))
+						queue_node.queued_priority += queue_priority_count * 0.1
+						queue_priority_count -= queue_node_priority
+						queue_priority_count += queue_node.queued_priority
+						current_tick_budget -= queue_node_priority
+						queue_node = queue_node.queue_next
 					continue
 
-			if ((queue_node_flags & SS_BACKGROUND) && !bg_calc)
+			if (!bg_calc && (queue_node_flags & SS_BACKGROUND))
 				current_tick_budget = queue_priority_count_bg
 				bg_calc = TRUE
 
@@ -566,7 +565,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			queue_node.paused_ticks = 0
 			queue_node.paused_tick_usage = 0
 
-			if (queue_node_flags & SS_BACKGROUND) //update our running total
+			if (bg_calc) //update our running total
 				queue_priority_count_bg -= queue_node_priority
 			else
 				queue_priority_count -= queue_node_priority
@@ -574,14 +573,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			queue_node.last_fire = world.time
 			queue_node.times_fired++
 
-			if (queue_node_flags & SS_TICKER)
-				queue_node.next_fire = world.time + (world.tick_lag * queue_node.wait)
-			else if (queue_node_flags & SS_POST_FIRE_TIMING)
-				queue_node.next_fire = world.time + queue_node.wait + (world.tick_lag * (queue_node.tick_overrun/100))
-			else if (queue_node_flags & SS_KEEP_TIMING)
-				queue_node.next_fire += queue_node.wait
-			else
-				queue_node.next_fire = queue_node.queued_time + queue_node.wait + (world.tick_lag * (queue_node.tick_overrun/100))
+			queue_node.update_nextfire()
 
 			queue_node.queued_time = 0
 
@@ -634,6 +626,8 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	log_world("MC: SoftReset: Finished.")
 	. = 1
 
+	for(var/datum/controller/subsystem/ss in subsystems) //this is incase a runlevel error occurs, we don't want random shit being left queued up since if a queue ends up half parsed.
+		ss.state = SS_IDLE
 
 
 /datum/controller/master/stat_entry()
@@ -647,15 +641,13 @@ GLOBAL_REAL(Master, /datum/controller/master)
 	//disallow more than one map to load at once, multithreading it will just cause race conditions
 	while(map_loading)
 		stoplag()
-	for(var/S in subsystems)
-		var/datum/controller/subsystem/SS = S
+	for(var/datum/controller/subsystem/SS as anything in subsystems)
 		SS.StartLoadingMap()
 	map_loading = TRUE
 
 /datum/controller/master/StopLoadingMap(bounds = null)
 	map_loading = FALSE
-	for(var/S in subsystems)
-		var/datum/controller/subsystem/SS = S
+	for(var/datum/controller/subsystem/SS as anything in subsystems)
 		SS.StopLoadingMap()
 
 

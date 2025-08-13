@@ -101,7 +101,6 @@
 		if(used_verb)
 			used_verbage |= used_verb
 	string = treat_mob_descriptor_string(string, described)
-	string += "."
 	return string
 
 /proc/treat_mob_descriptor_string(string, mob/living/described)
@@ -120,9 +119,28 @@
 		him_replace = "him"
 	else
 		him_replace = "her"
+	if (described.pronouns)
+		switch (described.pronouns)
+			if (HE_HIM)
+				they_replace = "he"
+				man_replace = "man"
+				him_replace = "him"
+			if (SHE_HER)
+				they_replace = "she"
+				man_replace = "woman"
+				him_replace = "her"
+			if (THEY_THEM)
+				they_replace = "they"
+				man_replace = "person"
+				him_replace = "them"
+			if (IT_ITS)
+				they_replace = "it"
+				man_replace = "thing"
+				him_replace = "it"
 	string = replacetext(string, "%THEY%", they_replace)
 	string = replacetext(string, "%HAVE%", "has")
 	string = replacetext(string, "%MAN%", man_replace)
 	string = replacetext(string, "%HIM%", him_replace)
 	string = capitalize(string)
+	string += "."
 	return string

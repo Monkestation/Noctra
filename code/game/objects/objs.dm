@@ -46,6 +46,39 @@
 
 	var/animate_dmg = TRUE
 
+	var/object_slowdown = 0
+	var/weatherproof = FALSE
+	var/weather = FALSE
+	var/list/temperature_affected_turfs
+
+	var/component_block = FALSE
+
+	var/attacked_sound = 'sound/blank.ogg'
+
+	// See /code/datums/locks
+
+	/**
+	 * A list of lockids for keys and locks
+	 * If something has a lock it's used to set access of the lock then nulled
+	 */
+	var/list/lockids
+	/// A lock datum that handles access and lockpicking
+	var/datum/lock/lock
+	/// If we don't have a lock datum, can we add one?
+	var/can_add_lock = FALSE
+	/// This is depreciated but I don't want to replace it yet
+	var/lockid
+
+	var/lock_sound = 'sound/foley/lock.ogg'
+	var/unlock_sound = 'sound/foley/unlock.ogg'
+	/// Sound we play when a key fails to unlock
+	var/rattle_sound = 'sound/foley/lockrattle.ogg'
+	/// If this is currently being lockpicked
+	var/being_picked = FALSE
+
+	/// Uses colours defined by the monarch roundstart see [lordcolor.dm]
+	var/uses_lord_coloring = FALSE
+
 	vis_flags = VIS_INHERIT_PLANE
 
 /obj/vv_edit_var(vname, vval)
@@ -63,16 +96,24 @@
 	return ..()
 
 /obj/Initialize(mapload, ...)
-	if (islist(armor))
+	if(islist(armor))
 		armor = getArmor(arglist(armor))
-	else if (!armor)
+	else if(!armor)
 		armor = getArmor()
-	else if (!istype(armor, /datum/armor))
+	else if(!istype(armor, /datum/armor))
 		stack_trace("Invalid type [armor.type] found in .armor during /obj Initialize()")
 	if(main_material)
 		set_material_information()
 	if(obj_integrity == null)
 		obj_integrity = max_integrity
+	if(lockid)
+		//log_mapping("[src] ([type]) at [AREACOORD(src)] has a depreciated lockid varedit.")
+		if(!lockids)
+			lockids = list(lockid)
+			lockid = null
+	if(lock)
+		lock = new lock(src, lockids)
+		lockids = null
 
 	. = ..() //Do this after, else mat datums is mad.
 
@@ -84,6 +125,8 @@
 	set_material_information()
 
 /obj/Destroy(force=FALSE)
+	if(lock)
+		QDEL_NULL(lock)
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	SStgui.close_uis(src)
@@ -93,7 +136,7 @@
 	SEND_SIGNAL(src, COMSIG_OBJ_SETANCHORED, anchorvalue)
 	anchored = anchorvalue
 
-/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
+/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE)
 	..()
 	if(obj_flags & FROZEN)
 		visible_message("<span class='danger'>[src] shatters into a million pieces!</span>")
@@ -168,7 +211,11 @@
 /obj/get_dumping_location(datum/component/storage/source,mob/user)
 	return get_turf(src)
 
-/obj/proc/CanAStarPass()
+/obj/proc/CanAStarPass(ID, to_dir, requester)
+	if(ismovable(requester))
+		var/atom/movable/AM = requester
+		if(AM.pass_flags & pass_flags_self)
+			return TRUE
 	. = !density
 
 /obj/proc/check_uplink_validity()
@@ -234,7 +281,7 @@
 
 /obj/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
+	if(unique_reskin && !current_skin && user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		reskin_obj(user)
 
 /obj/proc/reskin_obj(mob/M)
@@ -246,7 +293,7 @@
 		to_chat(M, "[V]: <span class='reallybig'>[output]</span>")
 
 	var/choice = input(M,"Warning, you can only reskin [src] once!","Reskin Object") as null|anything in sortList(unique_reskin)
-	if(!QDELETED(src) && choice && !current_skin && !M.incapacitated() && in_range(M,src))
+	if(!QDELETED(src) && choice && !current_skin && !M.incapacitated(IGNORE_GRAB) && in_range(M,src))
 		if(!unique_reskin[choice])
 			return
 		current_skin = choice

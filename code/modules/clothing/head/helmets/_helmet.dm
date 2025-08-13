@@ -12,8 +12,10 @@
 	clothing_flags = CANT_SLEEP_IN
 
 	armor = ARMOR_PLATE_BAD
+	max_integrity = INTEGRITY_POOR //Looked like it was defaulting to integrity_worst from head.dm which gave some helmets the same durability has hats.
 	body_parts_covered = COVERAGE_SKULL
 	prevent_crits = ALL_EXCEPT_STAB
 
 	grid_height = 64
 	grid_width = 64
+	abstract_type = /obj/item/clothing/head/helmet

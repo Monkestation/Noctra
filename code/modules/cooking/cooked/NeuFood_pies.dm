@@ -17,6 +17,61 @@
 	dropshrink = 0.9
 
 
+/obj/item/reagent_containers/food/snacks/raw_pie
+	name = "uncooked pie"
+	desc = "The foundation of the fantastical."
+	icon_state = "pieuncooked"
+
+	var/overlay_state = ""
+	var/pie_roof = FALSE
+
+/obj/item/reagent_containers/food/snacks/raw_pie/Initialize()
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/reagent_containers/food/snacks/raw_pie/update_overlays()
+	. = ..()
+	var/mutable_appearance/MA = mutable_appearance(icon, "[overlay_state]3")
+	MA.color = filling_color
+	. +=  MA
+
+	. += mutable_appearance(icon, "pieuncooked")
+	if(pie_roof)
+		. += mutable_appearance(icon, pie_roof)
+
+/obj/item/reagent_containers/food/snacks/raw_pie/fish
+	name = "uncooked fish pie"
+	icon_state = "fishpie_raw"
+	filling_color = "#bb5a93"
+	overlay_state = "fill_fish"
+
+/obj/item/reagent_containers/food/snacks/raw_pie/pot_pie
+	name = "uncooked pot pie"
+	filling_color = "#9d8c3b"
+	overlay_state = "fill_pot"
+
+/obj/item/reagent_containers/food/snacks/raw_pie/apple
+	name = "uncooked apple pie"
+	filling_color = "#eca48c"
+	overlay_state = "fill_apple"
+
+/obj/item/reagent_containers/food/snacks/raw_pie/pear
+	name = "uncooked pear pie"
+	filling_color = "#edd28c"
+	overlay_state = "fill_pear"
+
+/obj/item/reagent_containers/food/snacks/raw_pie/berry
+	name = "uncooked berry pie"
+	filling_color = "#394da5"
+	overlay_state = "fill_berry"
+/obj/item/reagent_containers/food/snacks/raw_pie/berry/poison
+
+/obj/item/reagent_containers/food/snacks/raw_pie/meat
+	name = "uncooked meat pie"
+	icon_state = "meatpie_raw"
+	filling_color = "#b44f44"
+	overlay_state = "fill_meat"
+
 /*--------------\
 | Pie templates |
 \--------------*/
@@ -98,6 +153,8 @@
 	filling_color = "#394da5"
 /obj/item/reagent_containers/food/snacks/pieslice/good/apple
 	filling_color = "#eca48c"
+/obj/item/reagent_containers/food/snacks/pieslice/good/pear
+	filling_color = "#edd28c"
 
 // -------------- MEAT PIE -----------------
 /obj/item/reagent_containers/food/snacks/pie/cooked/meat // bae item
@@ -191,6 +248,21 @@
 	. = ..()
 	good_quality_descriptors()
 
+// -------------- PEAR PIE -----------------
+/obj/item/reagent_containers/food/snacks/pie/cooked/pear
+	name = "pear pie"
+	desc = ""
+	slices_num = 4
+	list_reagents = list(/datum/reagent/consumable/nutriment = FRUITPIE_NUTRITION)
+	tastes = list("pears and butterdough" = 1)
+/obj/item/reagent_containers/food/snacks/pie/cooked/pear/good
+	eat_effect = /datum/status_effect/buff/foodbuff
+	slice_path = /obj/item/reagent_containers/food/snacks/pieslice/good/pear
+	tastes = list("baked pears and crispy butterdough" = 1)
+/obj/item/reagent_containers/food/snacks/pie/cooked/pear/good/New()
+	. = ..()
+	good_quality_descriptors()
+
 /*--------\
 | Handpie |
 \--------*/		// dwarven pie on the go, good shelflife until bitten, made from pie dough and mince, truffles or jacksberries
@@ -199,12 +271,11 @@
 	name = "raw handpie"
 	desc = "The dwarven take on pies, called pierogi in their dialect. A fistfull of food to stand the test of time."
 	icon_state = "handpie_raw"
-	cooked_type = /obj/item/reagent_containers/food/snacks/handpie
-	fried_type = /obj/item/reagent_containers/food/snacks/handpie
 	cooked_smell = /datum/pollutant/food/pie_base
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
 	w_class = WEIGHT_CLASS_NORMAL
 	dropshrink = 0.8
+	transfers_tastes = TRUE
 
 /obj/item/reagent_containers/food/snacks/foodbase/handpieraw/mushroom
 	w_class = WEIGHT_CLASS_NORMAL
@@ -258,7 +329,7 @@
 	. = ..()
 	good_quality_descriptors()
 
-/obj/item/reagent_containers/food/snacks/handpie/On_Consume(mob/living/eater)
+/obj/item/reagent_containers/food/snacks/handpie/on_consume(mob/living/eater)
 	..()
 	icon_state = "handpie[bitecount]"
 	if(bitecount == 1)

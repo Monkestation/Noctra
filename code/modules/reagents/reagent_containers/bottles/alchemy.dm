@@ -83,6 +83,12 @@
 /obj/item/reagent_containers/glass/bottle/vial/antidote
 	list_reagents = list(/datum/reagent/medicine/antidote = 30)
 
+/obj/item/reagent_containers/glass/bottle/vial/healthpot
+	list_reagents = list(/datum/reagent/medicine/healthpot = 30)
+
+/obj/item/reagent_containers/glass/bottle/vial/stronghealthpot
+	list_reagents = list(/datum/reagent/medicine/stronghealth = 30)
+
 //////////////////////////
 /// ALCOHOLIC BOTTLES ///	- add fancy var to retain custom descriptions when corking
 //////////////////////////
@@ -132,7 +138,7 @@
 // WINES - Expensive, Nobleblooded
 /obj/item/reagent_containers/glass/bottle/wine
 	list_reagents = list(/datum/reagent/consumable/ethanol/wine = 70)
-	desc = "A bottle that contains a generic red-wine, likely from Zybantu. It has a red-clay cork-seal."
+	desc = "A bottle that contains a generic red-wine, likely from Zaladin. It has a red-clay cork-seal."
 	fancy = TRUE
 
 /obj/item/reagent_containers/glass/bottle/wine/sourwine
@@ -154,3 +160,6 @@
 /obj/item/reagent_containers/glass/bottle/elfblue
 	list_reagents = list(/datum/reagent/consumable/ethanol/elfblue = 70)
 	desc = "A bottle gilded with a golden cork-seal. This is the legendary Valmora Blue from the Vineyard of Valmora, headed by a sainted Dark-Elf swordsmaster. This bottle would swoon Gods over!"
+
+/obj/item/reagent_containers/glass/bottle/tiefling_wine
+	list_reagents = list(/datum/reagent/consumable/ethanol/tiefling/aged = 45)

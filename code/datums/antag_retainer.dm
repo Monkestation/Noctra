@@ -6,7 +6,9 @@
 	var/list/cultists = list()
 	var/list/liches = list()
 	var/list/aspirants = list()
+	var/list/aspirant_supporters = list()
 	var/list/bandits = list()
+	var/list/harlequins = list()
 
 	var/cult_ascended = FALSE
 	var/head_rebel_decree = FALSE
@@ -18,8 +20,8 @@
 
 
 	///delf stuff
-	var/delf_contribute = 0
-	var/delf_goal = 1
+	var/delf_ears = 0
+	var/delf_goal = 5
 
 	///bandit stuff
 	var/bandit_goal = 1

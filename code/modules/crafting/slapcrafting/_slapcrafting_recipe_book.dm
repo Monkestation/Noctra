@@ -1,9 +1,3 @@
-
-/client/New()
-	. = ..()
-	if(byond_version >= 516) // Enable 516 compat browser storage mechanisms
-		winset(src, null, "browser-options=byondstorage,find,devtools")
-
 /datum/slapcraft_recipe/proc/generate_html(mob/user)
 	var/client/client = user
 	if(!istype(client))
@@ -37,14 +31,14 @@
 			}
 			h1 {
 				text-align: center;
-				font-size: 2.5em;
+				font-size: 2em;
 				border-bottom: 2px solid #3e2723;
 				padding-bottom: 10px;
-				margin-bottom: 20px;
+				margin-bottom: 10px;
 			}
 			.icon {
-				width: 96px;
-				height: 96px;
+				width: 64px;
+				height: 64px;
 				vertical-align: middle;
 				margin-right: 10px;
 			}

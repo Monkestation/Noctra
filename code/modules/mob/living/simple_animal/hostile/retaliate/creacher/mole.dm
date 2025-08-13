@@ -1,16 +1,15 @@
 /mob/living/simple_animal/hostile/retaliate/mole
-	icon = 'icons/roguetown/mob/monster/mole.dmi'
 	name = "lesser brown mole"
 	desc = "Usually lurking underground, they sometimes grow to impossible sizes and come to the surface to satiate a strange, newfound hunger for flesh."
+	icon = 'icons/roguetown/mob/monster/mole.dmi'
 	icon_state = "mole"
 	icon_living = "mole"
 	icon_dead = "mole_dead"
 
-	faction = list("orcs")
+	faction = list(FACTION_ORCS)
 	emote_hear = null
 	emote_see = null
-	turns_per_move = 2
-	move_to_delay = 5
+	move_to_delay = 7
 	vision_range = 7
 	aggro_vision_range = 9
 
@@ -28,23 +27,29 @@
 						/obj/item/natural/hide = 2,
 						/obj/item/natural/fur/mole = 3,
 						/obj/item/alch/sinew = 2,
-						/obj/item/alch/bone = 1)
+						/obj/item/alch/bone = 1,
+						/obj/item/natural/head/mole = 1)
 
 	health = MOLE_HEALTH
 	maxHealth = MOLE_HEALTH
 	food_type = list(/obj/item/reagent_containers/food/snacks/meat,
 					/obj/item/bodypart,
 					/obj/item/organ)
+	tame_chance = 15
+	bonus_tame_chance = 15
 
 	base_intents = list(/datum/intent/simple/claw)
 	attack_sound = list('sound/vo/mobs/mole/MoleAttack1.ogg','sound/vo/mobs/mole/MoleAttack2.ogg')
 	melee_damage_lower = 20
 	melee_damage_upper = 25
 
-	TOTALCON = 8
-	TOTALSTR = 12
-	TOTALSPD = 3
-	TOTALEND = 10
+	base_constitution = 8
+	base_strength = 12
+	base_speed = 3
+	base_endurance = 10
+
+	can_buckle = TRUE
+	can_saddle = FALSE
 
 	retreat_distance = 0
 	minimum_distance = 0
@@ -62,8 +67,6 @@
 	body_eater = TRUE
 
 	ai_controller = /datum/ai_controller/mole
-	AIStatus = AI_OFF
-	can_have_ai = FALSE
 
 /obj/effect/decal/remains/mole
 	name = "remains"
@@ -76,12 +79,28 @@
 	gender = MALE
 	if(prob(33))
 		gender = FEMALE
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
 	AddElement(/datum/element/ai_flee_while_injured, 0.75, retreat_health)
+	if(tame)
+		tamed(owner)
+	ADD_TRAIT(src, TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_GENERIC)
+
+/mob/living/simple_animal/hostile/retaliate/mole/tamed(mob/user)
+	. = ..()
+	deaggroprob = 30
+	if(can_buckle)
+		AddComponent(/datum/component/riding/mole)
+
+/mob/living/simple_animal/hostile/retaliate/mole/update_overlays()
+	. = ..()
+	if(stat != DEAD)
+		if(has_buckled_mobs())
+			var/mutable_appearance/mounted = mutable_appearance(icon, "mole_mounted", 4.3)
+			. += mounted
 
 /mob/living/simple_animal/hostile/retaliate/mole/death(gibbed)
 	..()
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
 
 /mob/living/simple_animal/hostile/retaliate/mole/get_sound(input)//my media player does not work please add new .ogg
 	switch(input)
@@ -98,20 +117,6 @@
 
 /mob/living/simple_animal/hostile/retaliate/mole/taunted(mob/user)
 	emote("aggro")
-	Retaliate()
-	GiveTarget(user)
-	return
-
-/mob/living/simple_animal/hostile/retaliate/mole/Life()
-	..()
-	if(pulledby)
-		Retaliate()
-		GiveTarget(pulledby)
-
-/mob/living/simple_animal/hostile/retaliate/mole/find_food()
-	. = ..()
-	if(!.)
-		return eat_bodies()
 
 /mob/living/simple_animal/hostile/retaliate/mole/simple_limb_hit(zone)
 	if(!zone)
@@ -155,3 +160,15 @@
 			return "foreleg"
 	return ..()
 
+/mob/living/simple_animal/hostile/retaliate/mole/briars
+	name = "Moss Crawler Mole"
+	desc = "One of many miracles of Dendor, they hide in deep forests only able to be summoned by wise briars who dedicate themselves to call for spirits of forest in time of need"
+	icon = 'icons/roguetown/mob/monster/mole.dmi'
+	icon_state = "mole_briars"
+	icon_living = "mole_briars"
+	icon_dead = "mole_dead_briars"
+	base_strength = 16
+	base_constitution = 18
+	food_type = list (/obj/item/bait/forestdelight)
+	tame_chance = 25
+	bonus_tame_chance = 15

@@ -1,23 +1,24 @@
 /datum/job/orphan
 	title = "Orphan"
+	tutorial = "Before you could even form words, you were abandoned, or perhaps lost. \
+	Ever since, you have lived in the Orphanage under the Matron's care. \
+	Will you make something of yourself, or will you die in the streets as a nobody?"
 	flag = ORPHAN
 	department_flag = YOUNGFOLK
-	faction = "Station"
+	job_flags = (JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
+	display_order = JDO_ORPHAN
+	faction = FACTION_TOWN
 	total_positions = 12
 	spawn_positions = 12
+	min_pq = 2
+	bypass_lastclass = TRUE
 
-	allowed_races = ALL_PLAYER_RACES_BY_NAME
+	allowed_races = RACES_PLAYER_ALL
 	allowed_ages = list(AGE_CHILD)
 
-	tutorial = "Your parents are dead and you have no home. Will you make something of yourself or will you die in the streets as a nobody."
-
 	outfit = /datum/outfit/job/orphan
-	display_order = JDO_ORPHAN
-	show_in_credits = FALSE
-	min_pq = 2
-	cmode_music = 'sound/music/cmode/towner/CombatTowner.ogg'
 	can_have_apprentices = FALSE
-	bypass_lastclass = TRUE
+	cmode_music = 'sound/music/cmode/towner/CombatTowner.ogg'
 
 /datum/job/orphan/New()
 	. = ..()
@@ -25,32 +26,51 @@
 
 /datum/outfit/job/orphan/pre_equip(mob/living/carbon/human/H)
 	..()
-	// The guaranteed clothing they wear.
-	if(prob(50))
-		if(prob(50))
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant/l
-		else
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
-		if(prob(50))
-			pants = /obj/item/clothing/pants/tights/vagrant/l
-		else
-			pants = /obj/item/clothing/pants/tights/vagrant
+	var/orphanage_renovated = FALSE
+	if(has_world_trait(/datum/world_trait/orphanage_renovated))
+		orphanage_renovated = TRUE
+
+	if(orphanage_renovated)
+		neck = /obj/item/storage/belt/pouch/coins/poor
+		shirt = /obj/item/clothing/shirt/undershirt/colored/random
+		pants = /obj/item/clothing/pants/tights/colored/random
+		belt = /obj/item/storage/belt/leather/rope
+		shoes = /obj/item/clothing/shoes/simpleshoes
+
+		H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/labor/farming, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/labor/fishing, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/labor/mathematics, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 	else
-		armor = /obj/item/clothing/shirt/rags
-	// Flair
-	if(prob(35))
-		cloak = pick(/obj/item/clothing/cloak/half, /obj/item/clothing/cloak/half/brown)
-	if(prob(30))
+		if(prob(50))
+			if(prob(50))
+				shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant/l
+			else
+				shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
+			if(prob(50))
+				pants = /obj/item/clothing/pants/tights/colored/vagrant/l
+			else
+				pants = /obj/item/clothing/pants/tights/colored/vagrant
+		else
+			armor = /obj/item/clothing/shirt/rags
+
+	if(prob(35) || orphanage_renovated)
+		cloak = pick(/obj/item/clothing/cloak/half, /obj/item/clothing/cloak/half/colored/brown)
+	if(prob(30) || orphanage_renovated)
 		head = pick(/obj/item/clothing/head/knitcap, /obj/item/clothing/head/bardhat, /obj/item/clothing/head/courtierhat, /obj/item/clothing/head/fancyhat)
-	if(prob(15))
+	if(prob(15) || orphanage_renovated)
 		r_hand = pick(/obj/item/instrument/lute, /obj/item/instrument/accord, /obj/item/instrument/guitar, /obj/item/instrument/flute, /obj/item/instrument/hurdygurdy, /obj/item/instrument/viola)
 		if(H.mind)
-			H.mind.adjust_skillrank(/datum/skill/misc/music, pick(2,3,4), TRUE)
+			H.adjust_skillrank(/datum/skill/misc/music, pick(2,3,4), TRUE)
+
 	if(H.mind)
-		H.mind.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
-		H.mind.adjust_skillrank(/datum/skill/misc/stealing, 4, TRUE)
-		H.mind.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
-		H.STALUC = rand(1, 20)
-	H.change_stat(STATKEY_INT, round(rand(-4,4)))
-	H.change_stat(STATKEY_CON, -1)
-	H.change_stat(STATKEY_END, -1)
+		H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/stealing, 4, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE)
+		H.STALUC = orphanage_renovated ? rand(7, 20) : rand(1, 20)
+	H.change_stat(STATKEY_INT, orphanage_renovated ? 4 : round(rand(-4,4)))
+	H.change_stat(STATKEY_CON, orphanage_renovated ? 1 : -1)
+	H.change_stat(STATKEY_END, orphanage_renovated ? 1 : -1)
+	ADD_TRAIT(H, TRAIT_ORPHAN, TRAIT_GENERIC)

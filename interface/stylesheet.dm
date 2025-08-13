@@ -89,7 +89,7 @@ h1.alert, h2.alert	{color: #c9c1ba;font-family: Pterra, TrueType;}
 .smallred				{color: #b84d47;	font-size: 75%;}
 .boldred				{color: #b84d47;	font-weight: bold;}
 .blue					{color: #6a8cb7;}
-.purple					{color: #967aaf;}
+.lightpurple			{color: #967aaf;}
 .nicegreen				{color: #9bccd0;}
 .cult					{color: #960000;}
 .cultlarge				{color: #960000;	font-weight: bold;	font-size: 3;}
@@ -119,7 +119,7 @@ h1.alert, h2.alert	{color: #c9c1ba;font-family: Pterra, TrueType;}
 
 .spider					{color: #4d004d;}
 
-.interface				{color: #330033;}
+.interface				{color: #DA00DA;}
 
 .sans					{font-family: "Comic Sans MS", cursive, sans-serif;}
 .papyrus				{font-family: "Papyrus", cursive, sans-serif;}
@@ -128,7 +128,7 @@ h1.alert, h2.alert	{color: #c9c1ba;font-family: Pterra, TrueType;}
 .human					{font-family: "Honoka Mincho", Pterra;}
 .elf					{font-family: "Dauphin", cursive, Pterra;}
 .oldpsydonic			{font-family: "Breitkopf Fraktur", Pterra; font-size: 120%;}
-.zybantine				{font-family: "Byzantine", Pterra;}
+.zalad					{font-family: "Byzantine", Pterra;}
 .dwarf					{font-family: "MasonAlternate", Pterra;}
 .sandspeak				{font-family: "Arabolical", Pterra;}
 .delf					{font-family: "Dauphin", Pterra;}
@@ -136,6 +136,7 @@ h1.alert, h2.alert	{color: #c9c1ba;font-family: Pterra, TrueType;}
 .undead					{font-family: "FriskyVampire", Pterra;}
 .orc					{font-family: "Thief by The Riddler", Pterra;}
 .beast					{font-family: "Thief by The Riddler", Pterra;}
+.deepspeak				{font-family: "Underwater Love", Pterra;}
 
 .torture				{color: #42ff20}
 
@@ -175,4 +176,6 @@ h1.alert, h2.alert	{color: #c9c1ba;font-family: Pterra, TrueType;}
 .infection				{color: #77c72b;}
 .necrosis				{color: #558d20;}
 .bone					{color: #e3dac9;}
+
+.silver					{color: #c0c0c0;}
 </style>"}

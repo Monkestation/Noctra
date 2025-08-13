@@ -13,23 +13,29 @@
 	possible_rmb_intents = list()
 
 /mob/living/carbon/human/species/zizombie/npc
-	aggressive=1
-	mode = AI_IDLE
+	ai_controller = /datum/ai_controller/human_npc
 	dodgetime = 15 //they can dodge easily, but have a cooldown on it
 	canparry = TRUE
 	flee_in_pain = FALSE
 	wander = FALSE
 
+/mob/living/carbon/human/species/zizombie/npc/Initialize()
+	. = ..()
+	AddComponent(/datum/component/ai_aggro_system)
+	AddComponent(/datum/component/combat_noise, list("rage" = 1, "scream" = 1))
+
+/mob/living/carbon/human/species/zizombie/ambush
+	ai_controller = /datum/ai_controller/human_npc
 
 /mob/living/carbon/human/species/zizombie/ambush/after_creation()
 	..()
+	AddComponent(/datum/component/ai_aggro_system)
 	job = "Ambush zizombie"
+	AddComponent(/datum/component/combat_noise, list("rage" = 1, "scream" = 1))
 	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOSTAMINA, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/job/species/zizombie/npc/random)
-	aggressive=1
-	mode = AI_IDLE
 	dodgetime = 15
 	canparry = TRUE
 	flee_in_pain = FALSE
@@ -55,6 +61,7 @@
 /obj/item/bodypart/head/zizombie/skeletonize()
 	. = ..()
 	icon_state = "zizombie_head_s"
+	headprice = 2
 	sellprice = 2
 
 /mob/living/carbon/human/species/zizombie/update_body()
@@ -92,39 +99,28 @@
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(after_creation)), 1 SECONDS)
 
-/mob/living/carbon/human/species/zizombie/handle_combat()
-	if(mode == AI_HUNT)
-		if(prob(1))
-			emote("rage")
-	. = ..()
-
 /mob/living/carbon/human/species/zizombie/proc/configure_mind()
 	if(!mind)
 		mind = new /datum/mind(src)
 
-	mind.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
-	mind.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
-	mind.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	mind.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-	mind.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
-	mind.adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE)
-
-/mob/living/carbon/human/species/zizombie/handle_combat()
-	if(mode == AI_HUNT)
-		if(prob(1))
-			emote("scream")
-	. = ..()
+	adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
+	adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
+	adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
+	adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
+	adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
+	adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE)
 
 /mob/living/carbon/human/species/zizombie/after_creation()
 	..()
 	gender = MALE
 	if(src.dna && src.dna.species)
 		src.dna.species.soundpack_m = new /datum/voicepack/zombie/m()
-		var/obj/item/headdy = get_bodypart("head")
+		var/obj/item/bodypart/head/headdy = get_bodypart("head")
 		if(headdy)
 			headdy.icon = 'icons/roguetown/mob/monster/zizombie.dmi'
 			headdy.icon_state = "[src.dna.species.id]_head"
-			headdy.sellprice = rand(5)
+			headdy.headprice = rand(15,40)
+			headdy.sellprice = rand(15,40)
 	src.grant_language(/datum/language/common)
 	var/obj/item/organ/eyes/eyes = src.getorganslot(ORGAN_SLOT_EYES)
 	if(eyes)
@@ -136,7 +132,7 @@
 	if(src.charflaw)
 		QDEL_NULL(src.charflaw)
 	update_body()
-	faction = list("undead")
+	faction = list(FACTION_UNDEAD)
 	name = "zizombie"
 	real_name = "zizombie"
 	mob_biotypes |= MOB_UNDEAD
@@ -154,20 +150,19 @@
 
 /datum/species/zizombie
 	name = "zizombie"
-	id = "zizombie"
-	species_traits = list(NO_UNDERWEAR,NOEYESPRITES)
+	id = SPEC_ID_ZIZOMBIE
+	species_traits = list()
 	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_RADIMMUNE)
 	nojumpsuit = 1
 	sexes = 1
 	damage_overlay_type = "human"
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
+	changesource_flags = WABBAJACK
 	var/raceicon = "zizombie"
 
 /datum/species/zizombie/update_damage_overlays(mob/living/carbon/human/H)
 	return
 
 /datum/species/zizombie/regenerate_icons(mob/living/carbon/human/H)
-//	H.cut_overlays()
 	H.icon_state = ""
 	if(H.notransform)
 		return 1
@@ -183,10 +178,14 @@
 
 /datum/component/rot/corpse/zizombie/process()
 	var/amt2add = 10 //1 second
+	var/time_elapsed = last_process ? (world.time - last_process)/10 : 1
 	if(last_process)
 		amt2add = ((world.time - last_process)/10) * amt2add
 	last_process = world.time
 	amount += amt2add
+	if(has_world_trait(/datum/world_trait/pestra_mercy))
+		amount -= (is_ascendant(PESTRA) ? 2.5 : 5) * time_elapsed
+
 	var/mob/living/carbon/C = parent
 	if(!C)
 		qdel(src)
@@ -205,10 +204,10 @@
 			if(!B.rotted)
 				B.rotted = TRUE
 				should_update = TRUE
-			if(B.rotted && amount < 16 MINUTES)
+			if(B.rotted && amount < 16 MINUTES && !(FACTION_MATTHIOS in C.faction))
 				var/turf/open/T = C.loc
 				if(istype(T))
-					T.pollute_turf(/datum/pollutant/rot, 10)
+					T.pollute_turf(/datum/pollutant/rot, 4)
 	if(should_update)
 		if(amount > 20 MINUTES)
 			C.update_body()
@@ -225,8 +224,6 @@
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOSTAMINA, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/job/species/zizombie/npc/peasant)
-	aggressive=1
-	mode = AI_IDLE
 	dodgetime = 15
 	canparry = TRUE
 	flee_in_pain = FALSE
@@ -234,15 +231,15 @@
 
 /datum/outfit/job/species/zizombie/npc/peasant/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.TOTALSTR = 9
-	H.TOTALSPD = 7
-	H.TOTALCON = 10
-	H.TOTALEND = 16//the zombies shouldn't get tired after all
-	shirt = /obj/item/clothing/shirt/undershirt/vagrant
-	pants = /obj/item/clothing/pants/tights/vagrant
+	H.base_strength = 9
+	H.base_speed = 7
+	H.base_constitution = 10
+	H.base_endurance = 16//the zombies shouldn't get tired after all
+	shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
+	pants = /obj/item/clothing/pants/tights/colored/vagrant
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	wrists = /obj/item/clothing/wrists/bracers/leather
-	head = /obj/item/clothing/head/roguehood/random
+	head = /obj/item/clothing/head/roguehood/colored/random
 	var/loadout = rand(1,6)
 	switch(loadout)
 		if(1) //Axe Warrior
@@ -267,8 +264,6 @@
 	ADD_TRAIT(src, TRAIT_NOSTAMINA, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/job/species/zizombie/npc/random)
-	aggressive=1
-	mode = AI_IDLE
 	dodgetime = 15
 	canparry = TRUE
 	flee_in_pain = FALSE
@@ -281,17 +276,17 @@
 	if(prob(50))
 		armor = /obj/item/clothing/armor/chainmail/iron
 	if(prob(30))
-		shirt = /obj/item/clothing/shirt/undershirt/vagrant
+		shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 		if(prob(50))
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 	if(prob(50))
-		pants = /obj/item/clothing/pants/tights/vagrant
+		pants = /obj/item/clothing/pants/tights/colored/vagrant
 		if(prob(50))
-			pants = /obj/item/clothing/pants/tights/vagrant
+			pants = /obj/item/clothing/pants/tights/colored/vagrant
 	if(prob(50))
 		head = /obj/item/clothing/head/helmet/leather
 	if(prob(50))
-		head = /obj/item/clothing/head/roguehood/uncolored
+		head = /obj/item/clothing/head/roguehood/colored/uncolored
 	if(prob(50))
 		r_hand = /obj/item/weapon/sword/iron
 		shoes = /obj/item/clothing/shoes/boots
@@ -308,8 +303,6 @@
 	ADD_TRAIT(src, TRAIT_NOSTAMINA, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/job/species/zizombie/npc/warrior)
-	aggressive=1
-	mode = AI_IDLE
 	dodgetime = 15
 	canparry = TRUE
 	flee_in_pain = FALSE
@@ -317,10 +310,10 @@
 
 /datum/outfit/job/species/zizombie/npc/warrior/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.TOTALSTR = 10
-	H.TOTALSPD = 7
-	H.TOTALCON = 10
-	H.TOTALEND = 16//the zizombies shouldn't get tired after all
+	H.base_strength = 10
+	H.base_speed = 7
+	H.base_constitution = 10
+	H.base_endurance = 16//the zizombies shouldn't get tired after all
 	var/loadout = rand(1,6)
 	switch(loadout)
 		if(1) //zizombie Warrior
@@ -329,8 +322,8 @@
 			shoes = /obj/item/clothing/shoes/boots
 			belt = /obj/item/storage/belt/leather
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
-			pants = /obj/item/clothing/pants/tights/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
+			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			neck = /obj/item/clothing/neck/chaincoif
 			head = /obj/item/clothing/head/helmet/kettle
@@ -340,8 +333,8 @@
 			shoes = /obj/item/clothing/shoes/boots
 			belt = /obj/item/storage/belt/leather
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
-			pants = /obj/item/clothing/pants/tights/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
+			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			neck = /obj/item/clothing/neck/chaincoif
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			head = /obj/item/clothing/head/helmet/kettle
@@ -351,26 +344,26 @@
 			shoes = /obj/item/clothing/shoes/boots
 			belt = /obj/item/storage/belt/leather
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
-			pants = /obj/item/clothing/pants/tights/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
+			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			neck = /obj/item/clothing/neck/chaincoif
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			head = /obj/item/clothing/head/helmet/skullcap
 		if(4) //zizombie Warrior
 			r_hand =/obj/item/weapon/polearm/spear
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
 			neck = /obj/item/clothing/neck/chaincoif
 			shoes = /obj/item/clothing/shoes/boots
-			pants = /obj/item/clothing/pants/tights/vagrant
+			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			head = /obj/item/clothing/head/helmet/kettle
 		if(5) //zizombie Warrior
 			r_hand = /obj/item/weapon/sword/sabre
 			l_hand = /obj/item/weapon/knife/dagger
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
-			pants = /obj/item/clothing/pants/tights/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
+			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			neck = /obj/item/clothing/neck/chaincoif
 			shoes = /obj/item/clothing/shoes/boots
@@ -379,8 +372,8 @@
 			r_hand = /obj/item/weapon/sword/scimitar/messer
 			l_hand = /obj/item/weapon/knife/dagger
 			shoes = /obj/item/clothing/shoes/boots
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
-			pants = /obj/item/clothing/pants/tights/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
+			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			neck = /obj/item/clothing/neck/chaincoif
 			armor = /obj/item/clothing/armor/chainmail/iron
 			wrists = /obj/item/clothing/wrists/bracers/leather
@@ -394,8 +387,6 @@
 	ADD_TRAIT(src, TRAIT_NOSTAMINA, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/job/species/zizombie/npc/militiamen)
-	aggressive=1
-	mode = AI_IDLE
 	dodgetime = 15
 	canparry = TRUE
 	flee_in_pain = FALSE
@@ -403,10 +394,10 @@
 
 /datum/outfit/job/species/zizombie/npc/militiamen/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.TOTALSTR = 10
-	H.TOTALSPD = 7
-	H.TOTALCON = 10
-	H.TOTALEND = 16//the zizombies shouldn't get tired after all
+	H.base_strength = 10
+	H.base_speed = 7
+	H.base_constitution = 10
+	H.base_endurance = 16//the zizombies shouldn't get tired after all
 	var/loadout = rand(1,5)
 	switch(loadout)
 		if(1) //zizombie Warrior
@@ -414,8 +405,8 @@
 			shoes = /obj/item/clothing/shoes/boots/armor/light
 			belt = /obj/item/storage/belt/leather
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
-			pants = /obj/item/clothing/pants/tights/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
+			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			neck = /obj/item/clothing/neck/chaincoif
 			cloak = /obj/item/clothing/cloak/stabard/guard
@@ -425,8 +416,8 @@
 			shoes = /obj/item/clothing/shoes/boots/armor/light
 			belt = /obj/item/storage/belt/leather
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
-			pants = /obj/item/clothing/pants/tights/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
+			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			neck = /obj/item/clothing/neck/chaincoif
 			cloak = /obj/item/clothing/cloak/stabard/guard
@@ -436,8 +427,8 @@
 			shoes = /obj/item/clothing/shoes/boots/armor/light
 			belt = /obj/item/storage/belt/leather
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
-			pants = /obj/item/clothing/pants/tights/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
+			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			neck = /obj/item/clothing/neck/chaincoif
 			cloak = /obj/item/clothing/cloak/stabard/guard
@@ -447,8 +438,8 @@
 			shoes = /obj/item/clothing/shoes/boots/armor/light
 			belt = /obj/item/storage/belt/leather
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
-			pants = /obj/item/clothing/pants/tights/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
+			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			neck = /obj/item/clothing/neck/chaincoif
 			cloak = /obj/item/clothing/cloak/stabard/guard
@@ -458,8 +449,8 @@
 			shoes = /obj/item/clothing/shoes/boots/armor/light
 			belt = /obj/item/storage/belt/leather
 			armor = /obj/item/clothing/armor/chainmail/iron
-			shirt = /obj/item/clothing/shirt/undershirt/vagrant
-			pants = /obj/item/clothing/pants/tights/vagrant
+			shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
+			pants = /obj/item/clothing/pants/tights/colored/vagrant
 			wrists = /obj/item/clothing/wrists/bracers/leather
 			neck = /obj/item/clothing/neck/chaincoif
 			cloak = /obj/item/clothing/cloak/stabard/guard
@@ -473,8 +464,6 @@
 	ADD_TRAIT(src, TRAIT_NOSTAMINA, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	equipOutfit(new /datum/outfit/job/species/zizombie/npc/GRENZEL)
-	aggressive=1
-	mode = AI_IDLE
 	dodgetime = 15
 	canparry = TRUE
 	flee_in_pain = FALSE
@@ -485,10 +474,10 @@
 
 /datum/outfit/job/species/zizombie/npc/GRENZEL/pre_equip(mob/living/carbon/human/H)
 	..()
-	H.TOTALSTR = 12
-	H.TOTALSPD = 7
-	H.TOTALCON = 10
-	H.TOTALEND = 20//the zizombies shouldn't get tired after all
+	H.base_strength = 12
+	H.base_speed = 7
+	H.base_constitution = 10
+	H.base_endurance = 20//the zizombies shouldn't get tired after all
 	var/loadout = rand(1,5)
 	switch(loadout)
 		if(1) //zizombie Warrior

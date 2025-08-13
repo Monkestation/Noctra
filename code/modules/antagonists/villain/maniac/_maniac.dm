@@ -8,9 +8,9 @@
 	roundend_category = "maniacs"
 	antagpanel_category = "Maniac"
 	antag_memory = "<b>Recently I've been visited by a lot of VISIONS. They're all about another WORLD, ANOTHER life. I will do EVERYTHING to know the TRUTH, and return to the REAL world.</b>"
-	job_rank = ROLE_VILLAIN
-	antag_hud_type = ANTAG_HUD_TRAITOR
-	antag_hud_name = "villain"
+	job_rank = ROLE_MANIAC
+	antag_hud_type = ANTAG_HUD_MANIAC
+	antag_hud_name = "generic_villain"
 	confess_lines = list(
 		"I gave them no time to squeal.",
 		"I shant quit ripping them.",
@@ -18,7 +18,7 @@
 		"Do what thou wilt shall be the whole of the law.",
 	)
 	/// Traits we apply to the owner
-	var/static/list/applied_traits = list(
+	innate_traits = list(
 		TRAIT_DECEIVING_MEEKNESS,
 		TRAIT_NOSTINK,
 		TRAIT_EMPATH,
@@ -27,16 +27,14 @@
 		TRAIT_SCHIZO_AMBIENCE,
 		TRAIT_DARKVISION,
 		TRAIT_NOPAINSTUN,
+		TRAIT_NOENERGY,
+		TRAIT_CRITICAL_RESISTANCE,
 	)
 	/// Traits that only get applied in the final sequence
 	var/static/list/final_traits = list(
 		TRAIT_MANIAC_AWOKEN,
 		TRAIT_SCREENSHAKE,
 	)
-	/// Cached old stats in case we get removed
-	var/STASTR
-	var/STACON
-	var/STAEND
 	/// Weapons we can give to the dreamer
 	var/static/list/possible_weapons = list(
 		/obj/item/weapon/knife/cleaver,
@@ -45,10 +43,10 @@
 	)
 	/// Wonder recipes
 	var/static/list/recipe_progression = list(
-		/datum/crafting_recipe/structure/wonder/first,
-		/datum/crafting_recipe/structure/wonder/second,
-		/datum/crafting_recipe/structure/wonder/third,
-		/datum/crafting_recipe/structure/wonder/fourth,
+		/datum/blueprint_recipe/structure/wonder/first,
+		/datum/blueprint_recipe/structure/wonder/second,
+		/datum/blueprint_recipe/structure/wonder/third,
+		/datum/blueprint_recipe/structure/wonder/fourth,
 	)
 	/// Key number > Key text
 	var/list/num_keys = list()
@@ -68,6 +66,13 @@
 	var/list/wonders_made = list()
 	/// Hallucinations screen object
 	var/atom/movable/screen/fullscreen/maniac/hallucinations
+	/// Whether the combat music is enabled
+	var/music_enabled = FALSE
+	var/custom_music_track = null
+	var/last_music_change = 0
+	var/datum/looping_sound/maniac_theme_song/combat_music_loop
+	var/curthemefile = 'sound/music/cmode/antag/combat_maniac.ogg'
+	var/old_cm = null //Cheffie's Req, Cache the old combat music and given back upon removal.
 
 GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 
@@ -83,35 +88,45 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 /datum/antagonist/maniac/on_gain()
 	. = ..()
 	SSfake_world.should_bother = TRUE
-	owner.special_role = ROLE_VILLAIN
+	owner.special_role = ROLE_MANIAC
 	owner.special_items["Maniac"] = pick(possible_weapons)
 	owner.special_items["Surgical Kit"] = /obj/item/storage/backpack/satchel/surgbag
 	if(owner.current)
 		if(ishuman(owner.current))
 			var/mob/living/carbon/human/dreamer = owner.current
+			var/datum/physiology/phy = dreamer.physiology
 			dreamer.set_patron(/datum/patron/inhumen/graggar_zizo)
+			old_cm = dreamer.cmode_music
 			dreamer.cmode_music = 'sound/music/cmode/antag/combat_maniac.ogg'
-			owner.adjust_skillrank(/datum/skill/combat/knives, 6, TRUE)
-			owner.adjust_skillrank(/datum/skill/combat/wrestling, 5, TRUE)
-			owner.adjust_skillrank(/datum/skill/combat/unarmed, 5, TRUE)
-			//owner.adjust_skillrank(/datum/skill/misc/treatment, 3, TRUE)
+			dreamer.adjust_skillrank(/datum/skill/combat/knives, 6, TRUE)
+			dreamer.adjust_skillrank(/datum/skill/combat/wrestling, 5, TRUE)
+			dreamer.adjust_skillrank(/datum/skill/combat/unarmed, 5, TRUE)
+			dreamer.adjust_skillrank(/datum/skill/misc/climbing, 5, TRUE)
+			dreamer.adjust_skillrank(/datum/skill/misc/athletics, 4, TRUE)
+			dreamer.adjust_skillrank(/datum/skill/misc/medicine, 4, TRUE)
+			phy.bleed_mod *= 0.5
+			for(var/datum/status_effect/effect in dreamer.status_effects) //necessary to prevent exploits
+				dreamer.remove_status_effect(effect)
+			var/extra_strength = max(16 - dreamer.base_strength, 0)
+			var/extra_constitution = max(16 - dreamer.base_constitution, 0)
+			var/extra_endurance = max(16 - dreamer.base_endurance, 0)
+			dreamer.set_stat_modifier("[type]", STATKEY_STR, extra_strength)
+			dreamer.set_stat_modifier("[type]", STATKEY_CON, extra_constitution)
+			dreamer.set_stat_modifier("[type]", STATKEY_END, extra_endurance)
+			combat_music_loop = new /datum/looping_sound/maniac_theme_song(dreamer, FALSE)
+			dreamer.verbs += /mob/living/carbon/human/proc/toggle_maniac_music
+			dreamer.verbs += /mob/living/carbon/human/proc/set_custom_music
 			var/obj/item/organ/heart/heart = dreamer.getorganslot(ORGAN_SLOT_HEART)
-			STASTR = dreamer.STASTR
-			STACON = dreamer.STACON
-			STAEND = dreamer.STAEND
-			dreamer.STASTR = 16
-			dreamer.STACON = 16
-			dreamer.STAEND = 16
 			if(heart) // clear any inscryptions, in case of being made maniac midround
 				heart.inscryptions = list()
 				heart.inscryption_keys = list()
 				heart.maniacs2wonder_ids = list()
 				heart.maniacs = list()
 			dreamer.remove_stress(/datum/stressevent/saw_wonder)
-			dreamer.remove_curse(/datum/curse/zizo, TRUE)
+			dreamer.remove_curse(/datum/curse/zizo)
+			RegisterSignal(dreamer, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 		//	dreamer.remove_client_colour(/datum/client_colour/maniac_marked)
-		for(var/trait in applied_traits)
-			ADD_TRAIT(owner.current, trait, "[type]")
+		owner.current.refresh_looping_ambience()
 		hallucinations = owner.current.overlay_fullscreen("maniac", /atom/movable/screen/fullscreen/maniac)
 	LAZYINITLIST(owner.learned_recipes)
 	owner.learned_recipes |= recipe_progression[1]
@@ -129,18 +144,20 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 			to_chat(owner.current,span_danger("I am no longer a MANIAC!"))
 		if(ishuman(owner.current))
 			var/mob/living/carbon/human/dreamer = owner.current
+			var/datum/physiology/phy = dreamer.physiology
 			dreamer.set_patron(/datum/patron/inhumen/zizo)
-			dreamer.STASTR = STASTR
-			dreamer.STACON = STACON
-			dreamer.STAEND = STAEND
-			var/client/clinet = dreamer?.client
-			if(clinet) //clear screenshake animation
-				animate(clinet, dreamer.pixel_y)
-		for(var/trait in applied_traits)
-			REMOVE_TRAIT(owner.current, trait, "[type]")
+			dreamer.cmode_music = old_cm
+			dreamer.remove_stat_modifier("[type]")
+			phy.bleed_mod *= 2
+			UnregisterSignal(dreamer, COMSIG_LIVING_DEATH)
+			var/client/client = dreamer?.client
+			if(client) //clear screenshake animation
+				animate(client, dreamer.pixel_y)
 		for(var/trait in final_traits)
 			REMOVE_TRAIT(owner.current, trait, "[type]")
 		owner.current.clear_fullscreen("maniac")
+		owner.current.verbs -= /mob/living/carbon/human/proc/toggle_maniac_music
+		owner.current.verbs -= /mob/living/carbon/human/proc/set_custom_music
 	QDEL_LIST(wonders_made)
 	wonders_made = null
 	owner.learned_recipes -= recipe_progression
@@ -193,13 +210,15 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 		trey_liam.fully_replace_character_name(trey_liam.name, "Trey Liam")
 		trey_liam.gender = MALE
 		trey_liam.skin_tone = "ffe0d1"
-		trey_liam.hair_color = "999999"
-		trey_liam.hairstyle = "Plain Long"
-		trey_liam.facial_hair_color = "999999"
-		trey_liam.facial_hairstyle = "Knowledge"
+
+		trey_liam.set_hair_color("#999999", FALSE)
+		trey_liam.set_facial_hair_color("#999999", FALSE)
+		trey_liam.set_hair_style(/datum/sprite_accessory/hair/head/thickcurly, FALSE)
+		trey_liam.set_facial_hair_style(/datum/sprite_accessory/hair/facial/know, FALSE)
 		trey_liam.age = AGE_OLD
 		trey_liam.equipOutfit(/datum/outfit/treyliam)
 		trey_liam.regenerate_icons()
+		trey_liam.update_body_parts()
 		for(var/obj/structure/chair/chair in spawnturf)
 			chair.buckle_mob(trey_liam)
 			break
@@ -217,24 +236,25 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 	triumphed = TRUE
 	waking_up = FALSE
 	var/mob/living/carbon/dreamer = owner.current
-	dreamer.log_message("prayed their sum ([sum_keys]), beginning the Maniac TRIUMPH sequence and the end of the round.", LOG_GAME)
-	message_admins("[ADMIN_LOOKUPFLW(dreamer)] as Maniac TRIUMPHED[sum_keys ? " with sum [sum_keys]" : ""]. The round will end shortly.")
+	dreamer.log_message("prayed their sum ([sum_keys]), beginning the Maniac TRIUMPH sequence.", LOG_GAME)
+	message_admins("[ADMIN_LOOKUPFLW(dreamer)] as Maniac TRIUMPHED[sum_keys ? " with sum [sum_keys]" : ""].")
 	// var/client/dreamer_client = dreamer.client // Trust me, we need it later
 	to_chat(dreamer, "...It couldn't be.")
 	dreamer.clear_fullscreen("dream")
 	dreamer.clear_fullscreen("wakeup")
-	var/client/clinet = dreamer?.client
-	if(clinet) //clear screenshake animation
-		animate(clinet, dreamer.pixel_y)
+	var/client/client = dreamer?.client
+	if(client) //clear screenshake animation
+		animate(client, dreamer.pixel_y)
 	for(var/datum/objective/objective in objectives)
 		objective.completed = TRUE
-	for(var/mob/connected_player in GLOB.player_list)
-		if(!connected_player.client)
-			continue
-		SEND_SOUND(connected_player, sound(null))
-		SEND_SOUND(connected_player, 'sound/villain/dreamer_win.ogg')
+	// for(var/mob/connected_player in GLOB.player_list)
+	// 	if(!connected_player.client)
+	// 		continue
+	// 	SEND_SOUND(connected_player, sound(null))
+	// 	SEND_SOUND(connected_player, 'sound/villain/dreamer_win.ogg')
 	var/mob/living/carbon/human/trey_liam = spawn_trey_liam()
 	if(trey_liam)
+		owner.adjust_triumphs(4) // Adjust triumphs here instead of at roundend
 		owner.transfer_to(trey_liam)
 		//Explodie all our wonders
 		for(var/obj/structure/wonder/wondie as anything in wonders_made)
@@ -249,29 +269,31 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 		if(brain)
 			qdel(brain)
 		cull_competitors(trey_liam)
+		SEND_SOUND(trey_liam, 'sound/villain/dreamer_win.ogg')
 		trey_liam.SetSleeping(25 SECONDS)
 		trey_liam.add_stress(/datum/stressevent/maniac_woke_up)
 		sleep(1.5 SECONDS)
 		to_chat(trey_liam, span_deadsay("<span class='reallybig'>... WHERE AM I? ...</span>"))
 		sleep(1.5 SECONDS)
 		var/static/list/slop_lore = list(
-			span_deadsay("... Rockhill? Vanderlin? No ... They doesn't exist ..."),
+			span_deadsay("... Rockhill? Vanderlin? No ... They don't exist ..."),
 			span_deadsay("... My name is Trey. Trey Liam, Scientific Overseer ..."),
 			span_deadsay("... I'm on the Aeon, a self sustaining ship, used to preserve what remains of humanity ..."),
 			span_deadsay("... Launched into the stars, preserving their memories ... Their personalities ..."),
-			span_deadsay("... Keeps them alive in cyberspace, oblivious to the catastrophe ..."),
-			span_deadsay("... There is no hope left. Only the cyberspace deck lets me live in the forgery ..."),
-			span_deadsay("... What have I done!? ..."),
+			span_deadsay("... Keeps them alive in vessels, oblivious to the catastrophe ..."),
+			span_deadsay("... There is no hope left. Only the program lets me live through the avatars ..."),
+			span_deadsay("... What have I done?! ..."),
 		)
 		for(var/slop in slop_lore)
 			to_chat(trey_liam, slop)
 			sleep(3 SECONDS)
+		to_chat(trey_liam, span_big(span_deadsay("I have to go back, I have to go back, I have to go back to Vanderlin.")))
 	else
 		INVOKE_ASYNC(src, PROC_REF(cant_wake_up), dreamer)
 		cull_competitors(dreamer)
-	sleep(15 SECONDS)
-	to_chat(world, span_deadsay("<span class='reallybig'>The Maniac has TRIUMPHED!</span>"))
-	SSticker.declare_completion()
+	// sleep(15 SECONDS)
+	// to_chat(world, span_deadsay("<span class='reallybig'>The Maniac has TRIUMPHED!</span>"))
+	// SSticker.declare_completion()
 
 /datum/antagonist/maniac/proc/cant_wake_up(mob/living/dreamer)
 	if(!iscarbon(dreamer))
@@ -319,7 +341,7 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 /datum/antagonist/roundend_report()
 	var/traitorwin = TRUE
 
-	printplayer(owner)
+	to_chat(world, printplayer(owner))
 
 	var/count = 0
 	if(objectives.len)//If the traitor had no objectives, don't need to process this.
@@ -333,13 +355,13 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 			count += objective.triumph_count
 
 	var/special_role_text = lowertext(name)
-	if(!considered_alive(owner))
-		traitorwin = FALSE
+	// if(!considered_alive(owner))
+	// 	traitorwin = FALSE
 
 	if(traitorwin)
-		if(count)
-			if(owner)
-				owner.adjust_triumphs(count)
+		// if(count)
+		// 	if(owner)
+		// 		owner.adjust_triumphs(count)
 		to_chat(world, span_greentext("The [special_role_text] has TRIUMPHED!"))
 		if(owner?.current)
 			owner.current.playsound_local(get_turf(owner.current), 'sound/misc/triumph.ogg', 100, FALSE, pressure_affected = FALSE)
@@ -347,3 +369,102 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 		to_chat(world, span_redtext("The [special_role_text] has FAILED!"))
 		if(owner?.current)
 			owner.current.playsound_local(get_turf(owner.current), 'sound/misc/fail.ogg', 100, FALSE, pressure_affected = FALSE)
+
+/obj/structure/maniac_return_machine
+	name = "Vanderlin Program"
+	desc = "The Vanderlin Program was created by ██████████ in the year ████, allowing humans to explore hostile worlds and environments through remote-controlled bodies without danger to the user's life."
+	icon_state = "pylon"
+	icon = 'icons/roguetown/misc/mana_pylon.dmi'
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	plane = GAME_PLANE_UPPER
+	layer = ABOVE_MOB_LAYER
+	light_outer_range = MINIMUM_USEFUL_LIGHT_RANGE
+	light_color = COLOR_CYAN
+	density = TRUE
+
+/obj/structure/maniac_return_machine/attack_hand(mob/user)
+	if(user.mind?.has_antag_datum(/datum/antagonist/maniac))
+		to_chat(user, span_notice("I begin plugging myself back into [src]."))
+		if(do_after(user, 10 SECONDS, src))
+			SEND_SOUND(user, sound(null))
+			var/mob/living/carbon/spirit/O = new /mob/living/carbon/spirit(get_turf(src))
+			O.ckey = user.ckey
+			O.returntolobby()
+			user.status_flags |= GODMODE // To prevent Trey Liam from dying
+		return TRUE
+	. = ..()
+
+
+/mob/living/carbon/human/proc/toggle_maniac_music() //BRO.
+	set name = "Toggle Theme Music"
+	set category = "MANIAC"
+
+	var/datum/antagonist/maniac/dreamer = src.mind.has_antag_datum(/datum/antagonist/maniac)
+	if(!dreamer)
+		return
+	dreamer.music_enabled = !dreamer.music_enabled
+	if(dreamer.music_enabled)
+		dreamer.combat_music_loop.start()
+		to_chat(src, span_notice("Theme Song Active"))
+	else
+		dreamer.combat_music_loop.stop()
+		to_chat(src, span_notice("Theme Song disabled."))
+
+/mob/living/carbon/human/proc/set_custom_music()
+	set name = "Set Custom Theme Music"
+	set category = "MANIAC"
+
+	var/datum/antagonist/maniac/dreamer = src.mind.has_antag_datum(/datum/antagonist/maniac)
+	if(!dreamer)
+		return
+
+	if(dreamer.music_enabled)
+		to_chat(src, span_warning("theme song active, can't set a new one."))
+		return
+
+	if(dreamer.last_music_change)
+		if(world.time < dreamer.last_music_change + 3 MINUTES)
+			to_chat(src, span_warning("Can't set a new theme song yet."))
+			return
+
+	var/infile = input(src, "Choose a custom OGG file for your theme song", src) as null|file
+	if(!infile)
+		return
+
+	var/filename = "[infile]"
+	var/file_ext = lowertext(copytext(filename, -4))
+	var/file_size = length(infile)
+
+	if(file_ext != ".ogg")
+		to_chat(src, span_warning("The file must be an OGG."))
+		return
+	if(file_size > 6485760) // 6MB limit
+		to_chat(src, span_warning("The file is too large. Maximum size is 6 MB."))
+		return
+
+	fcopy(infile, "data/jukeboxUploads/[src.ckey]/[filename]")
+	dreamer.custom_music_track = file("data/jukeboxUploads/[src.ckey]/[filename]")
+
+	dreamer.last_music_change = world.time
+	dreamer.curthemefile = dreamer.custom_music_track
+	dreamer.combat_music_loop.mid_sounds = list(dreamer.custom_music_track)
+	dreamer.combat_music_loop.cursound = null
+	src.cmode_music = dreamer.custom_music_track
+
+	to_chat(src, span_notice("Done, check your combat mode music and/or theme song."))
+
+/datum/looping_sound/maniac_theme_song
+	mid_sounds = list()
+	mid_length = 240 SECONDS
+	volume = 100
+	falloff_exponent = 5
+	extra_range = 6
+	channel = CHANNEL_IMSICK
+	persistent_loop = TRUE
+
+/datum/antagonist/maniac/proc/on_death(mob/living/source) //Upon death, this should basically stop the music.
+	SIGNAL_HANDLER
+
+	if(combat_music_loop)
+		combat_music_loop.stop()
+	music_enabled = FALSE

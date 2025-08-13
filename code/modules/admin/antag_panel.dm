@@ -83,7 +83,7 @@ GLOBAL_VAR(antag_prototypes)
 
 	var/out = "<B>[name]</B>[(current && (current.real_name!=name))?" (as [current.real_name])":""]<br>"
 	out += "Mind currently owned by key: [key] [active?"(synced)":"(not synced)"]<br>"
-	out += "Assigned role: [assigned_role]. <a href='byond://?src=[REF(src)];role_edit=1'>Edit</a><br>"
+	out += "Assigned role: [assigned_role.title]. <a href='byond://?src=[REF(src)];role_edit=1'>Edit</a><br>"
 	out += "Faction and special role: <b><font color='red'>[special_role]</font></b><br>"
 
 	var/special_statuses = get_special_statuses()
@@ -99,7 +99,7 @@ GLOBAL_VAR(antag_prototypes)
 				GLOB.antag_prototypes[cat_id] = list(A)
 			else
 				GLOB.antag_prototypes[cat_id] += A
-	sortTim(GLOB.antag_prototypes,/proc/cmp_text_asc,associative=TRUE)
+	sortTim(GLOB.antag_prototypes,GLOBAL_PROC_REF(cmp_text_asc),associative=TRUE)
 
 	var/list/sections = list()
 	var/list/priority_sections = list()

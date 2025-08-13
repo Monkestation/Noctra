@@ -7,17 +7,12 @@
 	drag_slowdown = 2
 	open_sound = 'sound/misc/chestopen.ogg'
 	close_sound = 'sound/misc/chestclose.ogg'
-	keylock = TRUE
-	locked = FALSE
-	sellprice = 1
+	sellprice = 1 // crate recycling program
 	max_integrity = 200
 	blade_dulling = DULLING_BASHCHOP
 	mob_storage_capacity = 1
 	allow_dense = FALSE
-
-/obj/structure/closet/crate/chest/OnCrafted(dirin, mob/user)
-	. = ..()
-	keylock = FALSE
+	static_price = TRUE
 
 /obj/structure/closet/crate/chest/open(mob/living/user)
 	. = ..()
@@ -30,15 +25,13 @@
 	base_icon_state = "chestweird1"
 
 /obj/structure/closet/crate/chest/merchant
-	lockid = "shop"
-	locked = TRUE
-	masterkey = TRUE
+	lock = /datum/lock/key/merchant
 
 /obj/structure/closet/crate/chest/lootbox/PopulateContents()
 	var/list/loot = list(
 		/obj/item/storage/fancy/cigarettes/zig/empty=40,
 		/obj/item/reagent_containers/powder/spice=20,
-		/obj/item/bomb=6,
+		/obj/item/explosive/bottle=6,
 		/obj/item/weapon/knife/dagger=33,
 		/obj/item/reagent_containers/food/snacks/produce/fyritius=10,
 		/obj/item/clothing/armor/gambeson=33,
@@ -48,7 +41,7 @@
 		/obj/item/bottlemessage/ancient=22,
 		/obj/item/weapon/knife/cleaver=22,
 		/obj/item/weapon/mace=22,
-		/obj/item/clothing/cloak/raincloak/mortus=22,
+		/obj/item/clothing/cloak/raincloak/colored/mortus=22,
 		/obj/item/reagent_containers/food/snacks/butter=22,
 		/obj/item/clothing/face/cigarette/pipe=10,
 		/obj/item/clothing/face/cigarette/pipe/westman=10,
@@ -84,6 +77,13 @@
 	open_sound = 'sound/items/book_open.ogg'
 	open_sound = 'sound/items/book_close.ogg'
 	close_sound = 'sound/items/book_close.ogg'
+	sellprice = 0
+
+/obj/structure/closet/crate/chest/wicker/random_soilson/Initialize()
+	for(var/i = 1 to rand(5, 8))
+		var/obj/item/neuFarm/seed/random = pick(subtypesof(/obj/item/neuFarm/seed) - /obj/item/neuFarm/seed/mixed_seed)
+		new random (get_turf(src))
+	. = ..()
 
 /obj/structure/closet/crate/chest/neu
 	name = "sturdy oak chest"
@@ -109,3 +109,12 @@
 	name = "crate"
 	base_icon_state = "woodchest"
 	icon_state = "woodchest"
+
+/obj/structure/closet/crate/chest/crafted
+	name = "handcrafted chest"
+	icon_state = "chest_neu"
+	base_icon_state = "chest_neu"
+	sellprice = 6
+
+/obj/structure/closet/crate/crafted_closet/crafted
+	sellprice = 6

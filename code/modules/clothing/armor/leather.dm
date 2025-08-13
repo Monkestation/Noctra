@@ -10,7 +10,7 @@
 	break_sound = 'sound/foley/cloth_rip.ogg'
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	sewrepair = TRUE
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 	sellprice = VALUE_LEATHER_ARMOR
 
 	armor_class = AC_LIGHT
@@ -19,6 +19,7 @@
 	prevent_crits = ALL_EXCEPT_CHOP_AND_STAB
 	max_integrity = INTEGRITY_STANDARD
 	salvage_result = /obj/item/natural/hide/cured
+	item_weight = 3.2
 
 /obj/item/clothing/armor/leather/advanced
 	name = "hardened leather coat"
@@ -60,6 +61,7 @@
 	armor = ARMOR_LEATHER_GOOD
 	prevent_crits = ALL_EXCEPT_STAB
 	max_integrity = INTEGRITY_STRONG
+	item_weight = 6.7
 
 
 //................ Leather Vest ............... //	- has no sleeves.  - can be worn in armor OR shirt slot
@@ -79,35 +81,31 @@
 	body_parts_covered = COVERAGE_VEST
 	prevent_crits = CUT_AND_MINOR_CRITS
 	salvage_result = /obj/item/natural/hide/cured
+	item_weight = 2.2
 
-/obj/item/clothing/armor/leather/vest/random/Initialize()
+/obj/item/clothing/armor/leather/vest/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
+/obj/item/clothing/armor/leather/vest/colored/random/Initialize()
 	color = pick(CLOTHING_SOOT_BLACK, CLOTHING_BARK_BROWN, CLOTHING_FOREST_GREEN)
-	..()
+	return ..()
 
 //................ Butchers Vest ............... //
-/obj/item/clothing/armor/leather/vest/butcher
+/obj/item/clothing/armor/leather/vest/colored/butcher
 	name = "butchers vest"
 	icon_state = "leathervest"
 	color = "#d69c87" // custom coloring
+	item_weight = 1.8
 
 //................ Other Vests ............... //
-/obj/item/clothing/armor/leather/vest/butler
+/obj/item/clothing/armor/leather/vest/colored/butler
 	color = CLOTHING_BLOOD_RED
+	uses_lord_coloring = LORD_PRIMARY
 
-/obj/item/clothing/armor/leather/vest/butler/Initialize()
-	..()
-	if(GLOB.lordprimary)
-		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
-	else
-		GLOB.lordcolor += src
-/obj/item/clothing/armor/leather/vest/butler/Destroy()
-	GLOB.lordcolor -= src
-	return ..()
-
-/obj/item/clothing/armor/leather/vest/black
+/obj/item/clothing/armor/leather/vest/colored/black
 	color = CLOTHING_DARK_INK
 
-/obj/item/clothing/armor/leather/vest/innkeep // repath to correct padded vest some day
+/obj/item/clothing/armor/leather/vest/colored/innkeep // repath to correct padded vest some day
 	name = "padded vest"
 	desc = "Dyed green, belongs to the owner of the Drunken Saiga inn."
 	icon_state = "striped"
@@ -120,30 +118,7 @@
 	detail_tag = "_detail"
 	color = CLOTHING_WHITE
 	detail_color = CLOTHING_SOOT_BLACK
-
-/obj/item/clothing/armor/leather/vest/winterjacket/update_icon()
-	cut_overlays()
-	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
-		pic.appearance_flags = RESET_COLOR
-		if(get_detail_color())
-			pic.color = get_detail_color()
-		add_overlay(pic)
-
-/obj/item/clothing/armor/leather/vest/winterjacket/lordcolor(primary,secondary)
-	detail_color = primary
-	update_icon()
-
-/obj/item/clothing/armor/leather/vest/winterjacket/Initialize()
-	. = ..()
-	if(GLOB.lordprimary)
-		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
-	else
-		GLOB.lordcolor += src
-
-/obj/item/clothing/armor/leather/vest/winterjacket/Destroy()
-	GLOB.lordcolor -= src
-	return ..()
+	uses_lord_coloring = LORD_PRIMARY
 
 //................ Jacket ............... //	- Has a small storage space
 /obj/item/clothing/armor/leather/jacket
@@ -152,8 +127,9 @@
 	desc = "A heavy leather jacket with wooden buttons, favored by workers who can afford it."
 
 	body_parts_covered = COVERAGE_SHIRT
+	item_weight = 2.2
 
-/obj/item/clothing/armor/leather/jacket/ComponentInitialize()
+/obj/item/clothing/armor/leather/jacket/Initialize(mapload, ...)
 	. = ..()
 	AddComponent(/datum/component/storage/concrete/grid/cloak)
 
@@ -169,6 +145,25 @@
 	name = "artificer jacket"
 	icon_state = "artijacket"
 	desc = "A thick leather jacket adorned with fur and cog decals. The height of Heartfelt fashion."
+
+/obj/item/clothing/armor/leather/jacket/gatemaster_jacket
+	name = "gatemaster's coat"
+	desc = "A thick cloth padded coat specialty made for the gatemaster."
+	icon = 'icons/roguetown/clothing/special/gatemaster.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/gatemaster.dmi'
+	icon_state = "master_coat"
+	blocksound = SOFTHIT
+	slot_flags = ITEM_SLOT_ARMOR
+	armor = ARMOR_MAILLE_IRON
+	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	salvage_result = /obj/item/natural/cloth
+
+/obj/item/clothing/armor/leather/jacket/gatemaster_jacket/armored
+	name = "gatemaster's coat"
+	desc = "A thick cloth padded coat specialty made for the gatemaster."
+	icon_state = "master_coat_cuirass"
+	blocksound = PLATEHIT
+	armor = ARMOR_MAILLE_GOOD
 
 //................ Sea Jacket ............... //
 /obj/item/clothing/armor/leather/jacket/sea
@@ -193,8 +188,8 @@
 	prevent_crits = CUT_AND_MINOR_CRITS
 
 /obj/item/clothing/armor/leather/jacket/silk_coat/Initialize()
-	color = pick(CLOTHING_PLUM_PURPLE, CLOTHING_WHITE,CLOTHING_BLOOD_RED)
-	..()
+	color = pick(CLOTHING_PLUM_PURPLE, CLOTHING_WHITE, CLOTHING_BLOOD_RED)
+	return ..()
 
 //................ Silk Jacket ............... //
 /obj/item/clothing/armor/leather/jacket/apothecary
@@ -223,27 +218,40 @@
 	detail_tag = "_detail"
 	detail_color = CLOTHING_BERRY_BLUE
 	body_parts_covered = COVERAGE_SHIRT
+	uses_lord_coloring = LORD_PRIMARY
 
-/obj/item/clothing/armor/leather/jacket/handjacket/update_icon()
-	cut_overlays()
-	if(get_detail_tag())
-		var/mutable_appearance/pic = mutable_appearance(icon(icon, "[icon_state][detail_tag]"))
-		pic.appearance_flags = RESET_COLOR
-		if(get_detail_color())
-			pic.color = get_detail_color()
-		add_overlay(pic)
+/obj/item/clothing/armor/leather/jacket/leathercoat
+	name = "leather coat"
+	desc = "A tan and purple leather coat."
+	icon_state = "leathercoat"
+	icon = 'icons/roguetown/clothing/leathercoat.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/leathercoat.dmi'
+	sleeved = 'icons/roguetown/clothing/onmob/leathercoat.dmi'
+	boobed = TRUE
+	armor = ARMOR_LEATHER
+	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 
-/obj/item/clothing/armor/leather/jacket/handjacket/lordcolor(primary,secondary)
-	detail_color = primary
-	update_icon()
+/obj/item/clothing/armor/leather/jacket/leathercoat/black
+	name = "black leather coat"
+	desc = "A black and purple leather coat."
+	icon_state = "bleathercoat"
+	icon = 'icons/roguetown/clothing/leathercoat.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/leathercoat.dmi'
+	sleeved = 'icons/roguetown/clothing/onmob/leathercoat.dmi'
+	boobed = TRUE
+	armor = ARMOR_LEATHER
+	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 
-/obj/item/clothing/armor/leather/jacket/handjacket/Initialize()
-	. = ..()
-	if(GLOB.lordprimary)
-		lordcolor(GLOB.lordprimary,GLOB.lordsecondary)
-	else
-		GLOB.lordcolor += src
+/obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
+	name = "black leather coat"
+	desc = "A stylish coat worn by Duelists of Valoria. Light and flexible, it doesn't impede the complex movements they are known for, seems to be quite padded.A stylish coat worn by the Duelists of Valoria. Light and flexible, it doesn't impede the complex movements they are known for, Seems to be well-padded."
+	icon_state = "bwleathercoat"
+	boobed = TRUE
+	armor = ARMOR_LEATHER_GOOD
+	body_parts_covered = COVERAGE_ALL_BUT_LEGS
+	prevent_crits = list(BCLASS_CUT, BCLASS_TWIST, BCLASS_STAB)
 
-/obj/item/clothing/armor/leather/jacket/handjacket/Destroy()
-	GLOB.lordcolor -= src
-	return ..()
+/obj/item/clothing/armor/leather/jacket/leathercoat/renegade
+	name = "renegade's coat"
+	desc = "An insulated leather coat with capelets. It protects you well from the elements, a useful thing for those who like to wait in ambush."
+	icon_state = "renegadecoat"

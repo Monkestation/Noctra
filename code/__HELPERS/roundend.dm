@@ -25,7 +25,7 @@
 				if(ishuman(L))
 					var/mob/living/carbon/human/H = L
 					category = "humans"
-					mob_data += list("job" = H.mind.assigned_role, "species" = H.dna.species.name)
+					mob_data += list("job" = H.mind.assigned_role.title, "species" = H.dna.species.name)
 			else
 				category = "others"
 				mob_data += list("typepath" = m.type)
@@ -92,9 +92,12 @@
 /mob/proc/do_game_over()
 	if(SSticker.current_state != GAME_STATE_FINISHED)
 		return
-	if(client)
-		client.show_game_over()
 	status_flags |= GODMODE
+	ai_controller?.set_ai_status(AI_STATUS_OFF)
+	if(client)
+		client.verbs |= /client/proc/lobbyooc
+		client.verbs |= /client/proc/view_stats
+		client.show_game_over()
 
 /mob/living/do_game_over()
 	..()
@@ -102,29 +105,13 @@
 	Stun(6000, 1, 1)
 	ADD_TRAIT(src, TRAIT_MUTE, TRAIT_GENERIC)
 	walk(src, 0) //stops them mid pathing even if they're stunimmune
-	if(isanimal(src))
-		var/mob/living/simple_animal/S = src
-		S.toggle_ai(AI_OFF)
-	if(ishostile(src))
-		var/mob/living/simple_animal/hostile/H = src
-		H.LoseTarget()
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		H.mode = AI_OFF
 	if(client)
-		client.verbs += /client/proc/lobbyooc
-		client.verbs += /client/proc/commendsomeone
+		client.verbs |= /client/proc/commendsomeone
 
 /client/proc/show_game_over()
 	var/atom/movable/screen/splash/credits/S = new(src, FALSE)
 	S.Fade(FALSE,FALSE)
 	RollCredits()
-//	if(GLOB.credits_icons.len)
-//		for(var/i=0, i<=GLOB.credits_icons.len, i++)
-//			var/atom/movable/screen/P = new()
-//			P.layer = SPLASHSCREEN_LAYER+1
-//			P.appearance = GLOB.credits_icons
-//			screen += P
 
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
@@ -139,42 +126,47 @@
 	var/list/key_list = list()
 	for(var/client/C in GLOB.clients)
 		if(C.mob)
-			SSdroning.kill_droning(C)
+			C.mob.cancel_looping_ambience()
 			C.mob.playsound_local(C.mob, 'sound/misc/roundend.ogg', 100, FALSE)
 		if(isliving(C.mob) && C.ckey)
 			key_list += C.ckey
-//	if(key_list.len)
-//		add_roundplayed(key_list)
+
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H.stat != DEAD)
 			if(H.get_triumphs() < 0)
 				H.adjust_triumphs(1)
+
 	add_roundplayed(key_list)
-//	SEND_SOUND(world, sound(pick('sound/misc/roundend1.ogg','sound/misc/roundend2.ogg')))
-//	SEND_SOUND(world, sound('sound/misc/roundend.ogg'))
+
+	update_god_rankings()
 
 	for(var/mob/M in GLOB.mob_list)
 		M.do_game_over()
 		M.playsound_local(M, 'sound/music/credits.ogg', 100, FALSE)
 
-	for(var/I in round_end_events)
-		var/datum/callback/cb = I
+	for(var/datum/callback/cb as anything in round_end_events)
 		cb.InvokeAsync()
 	LAZYCLEARLIST(round_end_events)
 
 	to_chat(world, "Round ID: [GLOB.rogue_round_id]")
 
-	SSvote.initiate_vote("map", "Psydon")
-
 	sleep(5 SECONDS)
+
+	//TODO: use build_roundend_report()
 
 	gamemode_report()
 
-	sleep(10 SECONDS)
+	sleep(8 SECONDS)
+
+	var/datum/triumph_buy/communal/psydon_retirement_fund/fund = locate() in SStriumphs.triumph_buy_datums
+	if(fund && SStriumphs.communal_pools[fund.type] > 0)
+		fund.on_activate()
+
+	sleep(6 SECONDS)
 
 	players_report()
 
-	stats_report()
+	SSvote.initiate_vote("map", "Psydon")
 
 	CHECK_TICK
 
@@ -216,14 +208,10 @@
 /datum/controller/subsystem/ticker/proc/get_end_reason()
 	var/end_reason
 
-	if(!check_for_lord())
-		end_reason = pick("Without a Monarch, they were doomed to become slaves of Zizo.",
-						"Without a Monarch, they were doomed to be eaten by nite creachers.",
-						"Without a Monarch, they were doomed to become victims of Gehenna.",
-						"Without a Monarch, they were doomed to enjoy a mass-suicide.",
-						"Without a Monarch, the Lich made them his playthings.",
-						"Without a Monarch, some jealous rival reigned in tyranny.",
-						"Without a Monarch, the town was abandoned.")
+	if(!check_for_lord(TRUE)) //TRUE forces the check, otherwise it will autofail.
+		end_reason = pick("Without a Monarch, the forces of Zizo grew ever bolder.",
+						"Without a Monarch, the settlement fell into turmoil.",
+						"Without a Monarch, some jealous rival reigned in tyranny.")
 
 	if(vampire_werewolf() == "vampire")
 		end_reason = "When the Vampires finished sucking the town dry, they moved on to the next one."
@@ -243,12 +231,18 @@
 		to_chat(world, "<span class='big bold'>The town has managed to survive another week.</span>")
 
 /datum/controller/subsystem/ticker/proc/gamemode_report()
+	//TODO: This is a copypaste of antag_report(), this should be deleted
 	var/list/all_teams = list()
 	var/list/all_antagonists = list()
 
+	var/list/header_parts
+	if(GLOB.antagonist_teams.len || GLOB.antagonists.len)
+		header_parts += "<br>"
+		header_parts += "<div style='text-align: center; font-size: 1.2em;'>VILLAINS:</div>"
+		header_parts += "<hr class='paneldivider'>"
+		to_chat(world, header_parts)
+
 	for(var/datum/team/A in GLOB.antagonist_teams)
-		if(!A.members)
-			continue
 		all_teams |= A
 
 	for(var/datum/antagonist/A in GLOB.antagonists)
@@ -257,10 +251,15 @@
 		all_antagonists |= A
 
 	for(var/datum/team/T in all_teams)
-		T.roundend_report()
-		for(var/datum/antagonist/X in all_antagonists)
-			if(X.get_team() == T)
-				all_antagonists -= X
+		//check if we should show the team
+		if(!T.show_roundend_report)
+			continue
+
+		for(var/datum/mind/member_mind as anything in T.members)
+			if(!isnull(member_mind.antag_datums))
+				all_antagonists -= member_mind.antag_datums
+
+		to_chat(world, T.roundend_report())
 		CHECK_TICK
 
 	var/currrent_category
@@ -286,33 +285,7 @@
 		if(last.show_in_roundend)
 			last.roundend_report_footer()
 
-
-	return
-
-/datum/controller/subsystem/ticker/proc/stats_report()
-	var/list/shit = list()
-	shit += "<br><span class='bold'>Δ--------------------Δ</span><br>"
-	shit += "<br><font color='#9b6937'><span class='bold'>Deaths:</span></font> [deaths]"
-	shit += "<br><font color='#825b1c'><span class='bold'>Moat Fallers:</span></font> [moatfallers]"
-	shit += "<br><font color='#700000'><span class='bold'>Ankles Broken:</span></font> [holefall]"
-	shit += "<br><font color='#ffee00'><span class='bold'>People Smiten:</span></font> [pplsmited]"
-	shit += "<br><font color='#af2323'><span class='bold'>Blood spilt:</span></font> [round(blood_lost / 100, 1)]L"
-	shit += "<br><font color='#af2323'><span class='bold'>People Gibbed:</span></font> [gibbs]"
-	shit += "<br><font color='#36959c'><span class='bold'>TRIUMPH(s) Awarded:</span></font> [tri_gained]"
-	shit += "<br><font color='#a02fa4'><span class='bold'>TRIUMPH(s) Stolen:</span></font> [tri_lost * -1]"
-	shit += "<br><font color='#f200ff'><span class='bold'>Drugs Snorted:</span></font> [snort]"
-	shit += "<br><font color='#0f555c'><span class='bold'>Beards Shaved:</span></font> [beardshavers]"
-//	if(cuckers.len)
-//		shit += "<br><font color='#4e488a'><span class='bold'>Adulterers:</span></font> "
-//		for(var/x in cuckers.len)
-//			shit += "[x]"
-	if(GLOB.confessors.len)
-		shit += "<br><font color='#93cac7'><span class='bold'>Confessors:</span></font> "
-		for(var/x in GLOB.confessors)
-			shit += "[x]"
-	shit += "<br><br><span class='bold'>∇--------------------∇</span>"
-	to_chat(world, "[shit.Join()]")
-	return
+	to_chat(world, personal_objectives_report())
 
 /datum/controller/subsystem/ticker/proc/standard_reboot()
 	if(ready_for_reboot)
@@ -328,6 +301,11 @@
 
 	//Antagonists
 	parts += antag_report()
+
+	CHECK_TICK
+
+	//Personal objectives
+	parts += personal_objectives_report()
 
 	CHECK_TICK
 	//Medals
@@ -379,7 +357,6 @@
 	else
 		content = file2text(filename)
 	roundend_report.set_content(content)
-	roundend_report.stylesheets = list()
 //	roundend_report.add_stylesheet("roundend", 'html/browser/roundend.css')
 //	roundend_report.add_stylesheet("font-awesome", 'html/font-awesome/css/all.min.css')
 	roundend_report.open(FALSE)
@@ -428,26 +405,86 @@
 		return "<div class='panel stationborder'>[parts.Join("<br>")]</div>"
 	return ""
 
+/datum/controller/subsystem/ticker/proc/personal_objectives_report()
+	var/list/parts = list()
+	var/failed_chosen = 0
+	var/has_any_objectives = FALSE
+	var/showed_any_champions = FALSE
+
+	// Header
+	parts += "<div class='panel stationborder'>"
+	if(GLOB.personal_objective_minds.len)
+		parts += "<div style='text-align: center; font-size: 1.2em;'>GODS' CHAMPIONS:</div>"
+		parts += "<hr class='paneldivider'>"
+
+	var/list/successful_champions = list()
+	for(var/datum/mind/mind as anything in GLOB.personal_objective_minds)
+		if(!mind.personal_objectives || !mind.personal_objectives.len)
+			continue
+
+		has_any_objectives = TRUE
+		var/any_success = FALSE
+		for(var/datum/objective/objective as anything in mind.personal_objectives)
+			if(objective.check_completion())
+				any_success = TRUE
+				break
+
+		if(any_success)
+			successful_champions += mind
+		else
+			failed_chosen++
+
+	var/last_index = length(successful_champions)
+	var/current_index = 0
+	for(var/datum/mind/mind as anything in successful_champions)
+		current_index++
+		showed_any_champions = TRUE
+		var/name_with_title = mind.current ? printplayer(mind) : "<b>Unknown Champion</b>"
+		parts += name_with_title
+
+		var/obj_count = 1
+		for(var/datum/objective/objective as anything in mind.personal_objectives)
+			var/result = objective.check_completion() ? span_greentext("TRIUMPH!") : span_redtext("FAIL")
+			parts += "<B>Goal #[obj_count]</B>: [objective.explanation_text] - [result]"
+			obj_count++
+
+		if(current_index < last_index)
+			parts += "<br>"
+		CHECK_TICK
+
+	if(!has_any_objectives)
+		parts += "<div style='text-align: center;'>No personal objectives were assigned this round.</div>"
+	else if(failed_chosen > 0)
+		if(showed_any_champions)
+			parts += "<br>"
+		parts += "<div style='text-align: center;'>[failed_chosen] of gods' chosen [failed_chosen == 1 ? "has" : "have"] failed to become [failed_chosen == 1 ? "a champion" : "champions"].</div>"
+
+	parts += "</div>"
+	return parts.Join("<br>")
+
 /datum/controller/subsystem/ticker/proc/antag_report()
 	var/list/result = list()
 	var/list/all_teams = list()
 	var/list/all_antagonists = list()
 
-	for(var/datum/team/A in GLOB.antagonist_teams)
-		if(!A.members)
-			continue
-		all_teams |= A
+	for(var/datum/team/team as anything in GLOB.antagonist_teams)
+		all_teams |= team
 
-	for(var/datum/antagonist/A in GLOB.antagonists)
-		if(!A.owner)
+	for(var/datum/antagonist/antagonist as anything in GLOB.antagonists)
+		if(!antagonist.owner)
 			continue
-		all_antagonists |= A
+		all_antagonists |= antagonist
 
-	for(var/datum/team/T in all_teams)
-		result += T.roundend_report()
-		for(var/datum/antagonist/X in all_antagonists)
-			if(X.get_team() == T)
-				all_antagonists -= X
+	for(var/datum/team/active_team as anything in all_teams)
+		//check if we should show the team
+		if(!active_team.show_roundend_report)
+			continue
+
+		for(var/datum/mind/member_mind as anything in active_team.members)
+			if(!isnull(member_mind.antag_datums))
+				all_antagonists -= member_mind.antag_datums
+
+		result += active_team.roundend_report()
 		result += " "//newline between teams
 		CHECK_TICK
 
@@ -456,19 +493,19 @@
 
 	sortTim(all_antagonists, GLOBAL_PROC_REF(cmp_antag_category))
 
-	for(var/datum/antagonist/A in all_antagonists)
-		if(!A.show_in_roundend)
+	for(var/datum/antagonist/antagonist as anything in all_antagonists)
+		if(antagonist.show_in_roundend)
 			continue
-		if(A.roundend_category != currrent_category)
+		if(antagonist.roundend_category != currrent_category)
 			if(previous_category)
 				result += previous_category.roundend_report_footer()
 				result += "</div>"
 			result += "<div class='panel redborder'>"
-			result += A.roundend_report_header()
-			currrent_category = A.roundend_category
-			previous_category = A
-		result += A.roundend_report()
-		result += "<br><br>"
+			result += antagonist.roundend_report_header()
+			currrent_category = antagonist.roundend_category
+			previous_category = antagonist
+		result += antagonist.roundend_report()
+		result += "<br>"
 		CHECK_TICK
 
 	if(all_antagonists.len)
@@ -489,15 +526,17 @@
 
 /datum/controller/subsystem/ticker/proc/give_show_playerlist_button(client/C)
 	set waitfor = 0
-	to_chat(C,"<a href='byond://?src=[C];playerlistrogue=1'>* SHOW PLAYER LIST *</a>")
+	to_chat(C,"<a href='byond://?src=[C];playerlist=1'>* SHOW PLAYER LIST *</a>")
 	to_chat(C,"<a href='byond://?src=[C];commendsomeone=1'>* Commend a Character *</a>")
+	to_chat(C,"<a href='byond://?src=[C];viewstats=1'>* View Statistics *</a>")
+	C.show_round_stats(pick_assoc(GLOB.featured_stats))
 	C.commendation_popup()
 
 /datum/action/report
 	name = "Show roundend report"
 	button_icon_state = "round_end"
 
-/datum/action/report/Trigger()
+/datum/action/report/Trigger(trigger_flags)
 	if(owner && GLOB.common_report && SSticker.current_state == GAME_STATE_FINISHED)
 		SSticker.show_roundend_report(owner.client, FALSE)
 
@@ -513,38 +552,28 @@
 
 /proc/printplayer(datum/mind/ply, fleecheck)
 	var/jobtext = ""
-	if(ply.assigned_role)
-		jobtext = " the <b>[ply.assigned_role]</b>"
-	var/usede = ply.key
-	if(ply.key)
-		usede = ckey(ply.key)
-		if(ckey(ply.key) in GLOB.anonymize)
-//			if(check_whitelist(ckey(ply.key)))
-			usede = get_fake_key(ckey(ply.key))
+	if(ply.special_role)
+		jobtext = " the <b>[ply.special_role]</b>"
+	else if(ply.assigned_role && ply.current)
+		jobtext = " the <b>[ply.assigned_role.get_informed_title(ply.current)]</b>"
+	var/usede = get_display_ckey(ply.key)
 	var/text = "<b>[usede]</b> was <b>[ply.name]</b>[jobtext] and"
 	if(ply.current)
-		if(ply.current.real_name != ply.name)
-			text += " <span class='redtext'>died</span>"
+		if(ply.current.stat == DEAD)
+			text += span_redtext(" died.")
 		else
-			if(ply.current.stat == DEAD)
-				text += " <span class='redtext'>died</span>"
-			else
-				text += " <span class='greentext'>survived</span>"
-//		if(fleecheck)
-//			var/turf/T = get_turf(ply.current)
-//			if(!T || !is_station_level(T.z))
-//				text += " while <span class='redtext'>fleeing the station</span>"
-//		if(ply.current.real_name != ply.name)
-//			text += " as <b>[ply.current.real_name]</b>"
-	to_chat(world, "[text]")
+			text += span_greentext(" survived.")
+	else
+		text += span_redtext(" died.")
+	return text
 
-/proc/printplayerlist(list/players,fleecheck)
+/proc/printplayerlist(list/datum/mind/players,fleecheck)
 	var/list/parts = list()
 
-	parts += "<ul class='playerlist'>"
+	//parts += "<ul class='playerlist'>"
 	for(var/datum/mind/M in players)
-		parts += "<li>[printplayer(M,fleecheck)]</li>"
-	parts += "</ul>"
+		parts += printplayer(M,fleecheck)//"<li>[printplayer(M,fleecheck)]</li>"
+	//parts += "</ul>"
 	return parts.Join()
 
 

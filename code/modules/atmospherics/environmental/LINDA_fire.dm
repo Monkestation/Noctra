@@ -71,8 +71,7 @@
 
 	location.active_hotspot = src
 
-	for(var/A in location)
-		var/atom/AT = A
+	for(var/atom/AT as anything in location)
 		if(!QDELETED(AT) && AT != src) // It's possible that the item is deleted in temperature_expose
 			AT.fire_act(1, 20)
 	return
@@ -189,7 +188,7 @@
 			can_break = FALSE
 		if(!can_break)
 			continue
-		object.fire_act(temperature * firelevel)
+		object.fire_act(temperature * firelevel * 0.1)
 
 	var/burn_power = 0
 	var/modifier = 1
@@ -197,7 +196,7 @@
 		var/turf/floor= get_turf(src)
 		if(!floor?.outdoor_effect?.weatherproof)
 			modifier = 0.5
-	if(isfloorturf(get_turf(src)))
+	if(isturf(get_turf(src)))
 		var/turf/floor= get_turf(src)
 		floor.burn_power = max(0, floor.burn_power - (1 * firelevel))
 		if(floor.burn_power == 0)
@@ -208,7 +207,15 @@
 
 		if(burn_power)
 			for(var/turf/ranged_floor in range(1, src))
-				if(ranged_floor == src || !ranged_floor.burn_power)
+				var/falling = FALSE
+				if(isopenspace(ranged_floor))
+					falling = TRUE
+					var/sanity = 0
+					while(isopenspace(ranged_floor) && sanity < 10)
+						sanity++
+						ranged_floor = GET_TURF_BELOW(ranged_floor)
+
+				if(ranged_floor == src || (!ranged_floor.burn_power && !falling))
 					continue
 				var/obj/effect/hotspot/located_fire = locate() in ranged_floor
 				if(prob(ranged_floor.spread_chance * modifier) && !located_fire)
@@ -216,6 +223,30 @@
 						ranged_floor.fire_act(temperature * firelevel)
 						continue
 					new /obj/effect/hotspot(ranged_floor, volume, temperature)
+
+					for(var/obj/structure/stairs/stair in ranged_floor)
+
+						var/turf/spreader_level = GET_TURF_ABOVE(get_step(ranged_floor, stair.dir))
+						for(var/obj/structure/stairs/upper_stair in spreader_level)
+							new /obj/effect/hotspot(spreader_level, volume, temperature)
+							break
+
+						spreader_level = GET_TURF_BELOW(get_step(ranged_floor, REVERSE_DIR(stair.dir)))
+						for(var/obj/structure/stairs/lower_stair in spreader_level)
+							new /obj/effect/hotspot(spreader_level, volume, temperature)
+							break
+
+					for(var/obj/structure/ladder/ladder in ranged_floor)
+						var/turf/spreader_level = GET_TURF_ABOVE(ranged_floor)
+						for(var/obj/structure/ladder/upper_stair in spreader_level)
+							new /obj/effect/hotspot(spreader_level, volume, temperature)
+							break
+
+						spreader_level = GET_TURF_BELOW(ranged_floor)
+						for(var/obj/structure/ladder/lower_stair in spreader_level)
+							new /obj/effect/hotspot(spreader_level, volume, temperature)
+							break
+
 
 /obj/effect/hotspot/proc/change_firelevel(level = 1)
 	firelevel = level

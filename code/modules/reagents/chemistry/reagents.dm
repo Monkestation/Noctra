@@ -7,7 +7,6 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		if (length(initial(R.name)))
 			.[ckey(initial(R.name))] = t
 
-
 //Various reagents
 //Toxin & acid reagents
 //Hydroponics stuff
@@ -57,6 +56,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/turf_exposure = FALSE
 	/// are we slippery?
 	var/slippery = TRUE
+	///do we glow?
+	var/glows = FALSE
 
 /datum/reagent/Destroy() // This should only be called by the holder, so it's already handled clearing its references
 	. = ..()
@@ -85,7 +86,18 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /datum/reagent/proc/on_mob_life(mob/living/carbon/M)
 	current_cycle++
 	if(holder)
-		holder.remove_reagent(type, metabolization_rate) //By default it slowly disappears.
+		var/adjusted_metabolization_rate = metabolization_rate
+		if(istype(src, /datum/reagent/consumable/ethanol) && has_world_trait(/datum/world_trait/baotha_revelry))
+			adjusted_metabolization_rate = adjusted_metabolization_rate * (is_ascendant(BAOTHA) ? 0.33 : 0.5)
+		holder.remove_reagent(type, adjusted_metabolization_rate) //By default it slowly disappears.
+		if(M.client)
+			if(!istype(src, /datum/reagent/drug) && reagent_state == LIQUID)
+				record_featured_object_stat(FEATURED_STATS_DRINKS, name, adjusted_metabolization_rate)
+			if(istype(src, /datum/reagent/consumable/ethanol))
+				record_featured_stat(FEATURED_STATS_ALCOHOLICS, M, adjusted_metabolization_rate)
+				record_round_statistic(STATS_ALCOHOL_CONSUMED, adjusted_metabolization_rate)
+			if(istype(src, /datum/reagent/water))
+				record_round_statistic(STATS_WATER_CONSUMED, adjusted_metabolization_rate)
 	return TRUE
 
 /datum/reagent/proc/on_transfer(atom/A, method=TOUCH, trans_volume) //Called after a reagent is transfered

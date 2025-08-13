@@ -10,7 +10,7 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "rag"
 	item_flags = NOBLUDGEON
-	reagent_flags = OPENCONTAINER
+	reagent_flags = TRANSFERABLE
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list()
 	volume = 5
@@ -42,4 +42,4 @@
 		user.visible_message("<span class='notice'>[user] starts to wipe down [A] with [src]!</span>", "<span class='notice'>I start to wipe down [A] with [src]...</span>")
 		if(do_after(user, 3 SECONDS, A))
 			user.visible_message("<span class='notice'>[user] finishes wiping off [A]!</span>", "<span class='notice'>I finish wiping off [A].</span>")
-			SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
+			SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_SCRUB)

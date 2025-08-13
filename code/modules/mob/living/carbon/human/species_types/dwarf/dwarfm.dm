@@ -11,59 +11,90 @@
 
 /datum/species/dwarf/mountain
 	name = "Dwarf"
-	id = "dwarf"
-	desc = "Malum's chosen.\
+	id = SPEC_ID_DWARF
+	desc = "Shaped by Psydon and Necra, chosen by Malum.\
 	\n\n\
-	A proud and robust species of stunted folk, \
-	the dwarves are known for their pride in martial strength \
-	and their tenacity towards their ancient customs. \
+	A proud and robust species of vertically challenged folk, \
+	dwarves are known for their martial strength \
+	and their tenacity towards their ancient customs of craft and honour. \
+	Dwarves hold a strong alliance with humenkind and have done so throughout history, as was their original purpose decreed by Psydon. \
 	A Dwarf, much like the rock that they carve their fortress out of, is stubborn and ancient. \
 	\n\n\
 	They are revered craftsmen, sculptors, smiths, and miners. \
 	As an old and mostly out-of-date saying goes, \"If you want it done right, lose 2 feet and grow a beard.\" \
 	\n\n\
-	Despite their cultural praise, a long-standing fued remains between dwarves and elves \
-	stemming from old industrial practices. Dwarves hold a strong alliance with humenkind."
+	Despite their cultural praise, a long-standing feud remains between dwarves and elves \
+	stemming from old industrial practices."
 
 	skin_tone_wording = "Ore Attunement"
 
 	default_color = "FFFFFF"
-	species_traits = list(EYECOLOR,HAIR,FACEHAIR,LIPS,YOUNGBEARD,STUBBLE,OLDGREY)
+	species_traits = list(EYECOLOR, HAIR, FACEHAIR, LIPS, YOUNGBEARD, STUBBLE, OLDGREY)
 	inherent_traits = list(TRAIT_NOMOBSWAP)
-	possible_ages = list(AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD)
-	default_features = list("mcolor" = "#FFF", "wings" = "None")
-	use_skintones = 1
-	disliked_food = NONE
-	liked_food = NONE
-	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
+	possible_ages = NORMAL_AGES_LIST
+	use_skintones = TRUE
+
+	changesource_flags = WABBAJACK
+
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/md.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/fd.dmi'
-	dam_icon = 'icons/roguetown/mob/bodies/dam/dam_male.dmi'
-	dam_icon_f = 'icons/roguetown/mob/bodies/dam/dam_female.dmi'
+
 	hairyness = "t3"
+
 	soundpack_m = /datum/voicepack/male/dwarf
 	soundpack_f = /datum/voicepack/female/dwarf
+
 	custom_clothes = TRUE
-	offset_features = list(OFFSET_ID = list(0,0), OFFSET_GLOVES = list(0,0), OFFSET_WRISTS = list(0,0),\
-	OFFSET_CLOAK = list(0,0), OFFSET_FACEMASK = list(0,-4), OFFSET_HEAD = list(0,-4), \
-	OFFSET_FACE = list(0,-4), OFFSET_BELT = list(0,-5), OFFSET_BACK = list(0,-4), \
-	OFFSET_NECK = list(0,-4), OFFSET_MOUTH = list(0,-4), OFFSET_PANTS = list(0,0), \
-	OFFSET_SHIRT = list(0,0), OFFSET_ARMOR = list(0,0), OFFSET_HANDS = list(0,-3), \
-	OFFSET_ID_F = list(0,-4), OFFSET_GLOVES_F = list(0,-4), OFFSET_WRISTS_F = list(0,-4), OFFSET_HANDS_F = list(0,-4), \
-	OFFSET_CLOAK_F = list(0,0), OFFSET_FACEMASK_F = list(0,-5), OFFSET_HEAD_F = list(0,-5), \
-	OFFSET_FACE_F = list(0,-5), OFFSET_BELT_F = list(0,-5), OFFSET_BACK_F = list(0,-5), \
-	OFFSET_NECK_F = list(0,-5), OFFSET_MOUTH_F = list(0,-5), OFFSET_PANTS_F = list(0,0), \
-	OFFSET_SHIRT_F = list(0,0), OFFSET_ARMOR_F = list(0,0), OFFSET_UNDIES = list(0,0), OFFSET_UNDIES_F = list(0,0))
-	specstats = list(STATKEY_STR = 1, STATKEY_PER = -2, STATKEY_INT = 0, STATKEY_CON = 2, STATKEY_END = 2, STATKEY_SPD = -1, STATKEY_LCK = 0)
+
+	offset_features_m = list(
+		OFFSET_RING = list(0,0),\
+		OFFSET_GLOVES = list(0,0),\
+		OFFSET_WRISTS = list(0,0),\
+		OFFSET_HANDS = list(0,-3),\
+		OFFSET_CLOAK = list(0,0),\
+		OFFSET_FACEMASK = list(0,-4),\
+		OFFSET_HEAD = list(0,-4),\
+		OFFSET_FACE = list(0,-4),\
+		OFFSET_BELT = list(0,-5),\
+		OFFSET_BACK = list(0,-4),\
+		OFFSET_NECK = list(0,-4),\
+		OFFSET_MOUTH = list(0,-4),\
+		OFFSET_PANTS = list(0,0),\
+		OFFSET_SHIRT = list(0,0),\
+		OFFSET_ARMOR = list(0,0),\
+		OFFSET_UNDIES = list(0,0),\
+	)
+
+	offset_features_f = list(
+		OFFSET_RING = list(0,-4),\
+		OFFSET_GLOVES = list(0,0),\
+		OFFSET_WRISTS = list(0,0),\
+		OFFSET_HANDS = list(0,-4),\
+		OFFSET_CLOAK = list(0,0),\
+		OFFSET_FACEMASK = list(0,-5),\
+		OFFSET_HEAD = list(0,-5),\
+		OFFSET_FACE = list(0,-5),\
+		OFFSET_BELT = list(0,0),\
+		OFFSET_BACK = list(0,-5),\
+		OFFSET_NECK = list(0,-5),\
+		OFFSET_MOUTH = list(0,-5),\
+		OFFSET_PANTS = list(0,0),\
+		OFFSET_SHIRT = list(0,0),\
+		OFFSET_ARMOR = list(0,0),\
+		OFFSET_UNDIES = list(0,0)\
+	)
+
+	specstats_m = list(STATKEY_STR = 1, STATKEY_PER = -2, STATKEY_INT = 0, STATKEY_CON = 2, STATKEY_END = 2, STATKEY_SPD = -1, STATKEY_LCK = 0)
 	specstats_f = list(STATKEY_STR = 1, STATKEY_PER = -2, STATKEY_INT = 0, STATKEY_CON = 2, STATKEY_END = 2, STATKEY_SPD = -1, STATKEY_LCK = 0)
+
 	enflamed_icon = "widefire"
-	patreon_req = 0
 
 	customizers = list(
 		/datum/customizer/organ/eyes/humanoid,
 		/datum/customizer/bodypart_feature/hair/head/humanoid,
 		/datum/customizer/bodypart_feature/hair/facial/humanoid,
 		/datum/customizer/bodypart_feature/accessory,
+		/datum/customizer/bodypart_feature/face_detail,
 	)
 	body_markings = list(
 		/datum/body_marking/tonage,
@@ -128,6 +159,9 @@
 /datum/species/dwarf/mountain/get_possible_surnames(gender = MALE)
 	var/static/list/last_names = world.file2list('strings/rt/names/dwarf/dwarmlast.txt')
 	return last_names
+
+/datum/species/dwarf/mountain/get_accent_list()
+	return strings("accents/dwarf_replacement.json", "dwarf")
 
 /*------------------\
 | Poison Resistance |

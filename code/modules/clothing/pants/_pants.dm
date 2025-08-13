@@ -44,9 +44,10 @@
 	var/mutable_appearance/accessory_overlay
 	var/mutantrace_variation = NO_MUTANTRACE_VARIATION //Are there special sprites for specific situations? Don't use this unless you need to.
 	var/freshly_laundered = FALSE
+	abstract_type = /obj/item/clothing/pants
 
-/obj/item/clothing/pants/worn_overlays(isinhands = FALSE)
-	. = list()
+/obj/item/clothing/pants/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, dummy_block = FALSE)
+	. = ..()
 	if(!isinhands)
 		if(accessory_overlay)
 			. += accessory_overlay
@@ -55,32 +56,10 @@
 	if(!attach_accessory(I, user))
 		return ..()
 
-/obj/item/clothing/pants/AdjustClothes(mob/user)
-#ifdef MATURESERVER
-	if(loc == user)
-		if(adjustable == CAN_CADJUST)
-			adjustable = CADJUSTED
-			icon_state = "[initial(icon_state)]_t"
-			body_parts_covered = null
-			slowdown += 2
-			if(ishuman(user))
-				var/mob/living/carbon/H = user
-				H.update_inv_pants()
-		else if(adjustable == CADJUSTED)
-			ResetAdjust(user)
-			if(user)
-				if(ishuman(user))
-					var/mob/living/carbon/H = user
-					H.update_inv_pants()
-#else
-	return
-#endif
-
 /obj/item/clothing/pants/update_clothes_damaged_state(damaging = TRUE)
 	..()
 	if(ismob(loc))
 		var/mob/M = loc
-		M.update_inv_w_uniform()
 		M.update_inv_pants()
 
 
@@ -92,17 +71,11 @@
 		if(!alt_covers_chest)
 			body_parts_covered |= CHEST
 
-	if(mutantrace_variation && ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(DIGITIGRADE in H.dna.species.species_traits)
-			adjusted = DIGITIGRADE_STYLE
-		H.update_inv_w_uniform()
-
-	if(slot == SLOT_PANTS && freshly_laundered)
+	if((slot & ITEM_SLOT_PANTS) && freshly_laundered)
 		freshly_laundered = FALSE
 		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "fresh_laundry", /datum/mood_event/fresh_laundry)
 
-	if(attached_accessory && slot != SLOT_HANDS && ishuman(user))
+	if(attached_accessory && !(slot & ITEM_SLOT_HANDS) && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		attached_accessory.on_uniform_equip(src, user)
 		if(attached_accessory.above_suit)
@@ -145,7 +118,6 @@
 
 			if(ishuman(loc))
 				var/mob/living/carbon/human/H = loc
-				H.update_inv_w_uniform()
 				H.update_inv_wear_suit()
 
 			return TRUE
@@ -166,7 +138,6 @@
 
 		if(ishuman(loc))
 			var/mob/living/carbon/human/H = loc
-			H.update_inv_w_uniform()
 			H.update_inv_wear_suit()
 
 
@@ -189,12 +160,9 @@
 		to_chat(usr, "<span class='notice'>I adjust the suit back to normal.</span>")
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		H.update_inv_w_uniform()
 		H.update_body()
 
 /obj/item/clothing/pants/proc/toggle_jumpsuit_adjust()
-	if(adjusted == DIGITIGRADE_STYLE)
-		return
 	adjusted = !adjusted
 	if(adjusted)
 		if(fitted != FEMALE_UNIFORM_TOP)
@@ -211,6 +179,3 @@
 	. = ..()
 	if(freshly_laundered)
 		. += "It looks fresh and clean."
-
-/obj/item/clothing/pants/rank
-	dying_key = DYE_REGISTRY_UNDER

@@ -23,8 +23,6 @@
 	toxpwr = 2.5
 	taste_description = "mushroom"
 
-#define	LIQUID_PLASMA_BP (50+T0C)
-
 /datum/reagent/toxin/plasma
 	name = "Plasma"
 	description = "Plasma in its liquid form."
@@ -55,6 +53,28 @@
 	toxpwr = 0.1
 	taste_description = "green tea"
 
+
+
+/datum/reagent/medicine/soporpot
+	name = "Soporific Poison"
+	description = "Weakens those it enters."
+	reagent_state = LIQUID
+	color = "#fcefa8"
+	taste_description = "drowsyness"
+	overdose_threshold = 0
+	metabolization_rate = 1 * REAGENTS_METABOLISM
+	alpha = 225
+
+/datum/reagent/medicine/soporpot/on_mob_life(mob/living/carbon/M)
+	M.confused += 1
+	M.dizziness += 1
+	M.adjust_energy(-25)
+	if(M.stamina > 75)
+		M.drowsyness += 2
+	else
+		M.adjust_stamina(15)
+	..()
+	. = 1
 
 /datum/reagent/toxin/venom
 	name = "Venom"
@@ -97,7 +117,7 @@
 	toxpwr = 0
 
 /datum/reagent/toxin/killersice/on_mob_life(mob/living/carbon/M)
-	testing("Someone was poisoned")
+	//testing("Someone was poisoned") // This is too gold to remove
 	if(volume > 0.95)
 		M.adjustToxLoss(10, 0)
 	return ..()
@@ -151,6 +171,9 @@
 		return
 	C.acid_act(acidpwr, reac_volume)
 
+	if(method == TOUCH)
+		C.try_skin_burn(reac_volume)
+
 /datum/reagent/toxin/acid/reaction_obj(obj/O, reac_volume)
 	if(ismob(O.loc)) //handled in human acid_act()
 		return
@@ -162,3 +185,31 @@
 		return
 	reac_volume = round(reac_volume,0.1)
 	T.acid_act(acidpwr, reac_volume)
+
+/datum/reagent/toxin/manabloom_juice
+	name = "Manabloom Juice"
+	description = "A potent mana regeneration extract, it however has the issue of stopping your bodies ability to naturally disperse mana."
+	glows = TRUE
+	color = "#6eb9e4"
+	taste_description = "flowers"
+	metabolization_rate = 0.1 //this shit will kill you
+
+/datum/reagent/toxin/manabloom_juice/on_mob_metabolize(mob/living/L)
+	. = ..()
+	if(!L.mana_pool)
+		return
+
+	L.mana_pool.halt_mana_disperse("manabloom")
+
+/datum/reagent/toxin/manabloom_juice/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	if(!M.mana_pool)
+		return
+	M.mana_pool.adjust_mana(volume)
+
+/datum/reagent/toxin/manabloom_juice/on_mob_end_metabolize(mob/living/L)
+	. = ..()
+	if(!L.mana_pool)
+		return
+
+	L.mana_pool.restore_mana_disperse("manabloom")
