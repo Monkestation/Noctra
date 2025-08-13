@@ -28,7 +28,7 @@
 	blood = user
 	addtimer(CALLBACK(src, PROC_REF(clear_blood)), 1 MINUTES)
 
-/obj/item/gold_prick/attack_right(mob/user)
+/obj/item/gold_prick/attack_hand_secondary(mob/user, params)
 	. = ..()
 	if(.)
 		return
@@ -222,7 +222,7 @@
 		return
 	if(fuckitupterry == "Absolve Contract")
 		to_chat(user, "without even being claimed by the fire, the contract crumbles to ash.")
-		var/ash = new /obj/item/ash
+		var/ash = new /obj/item/fertilizer/ash
 		qdel(src)
 		user.put_in_active_hand(ash)
 		return
@@ -978,7 +978,7 @@
 		return
 	if(fuckitupterry == "Absolve Contract")
 		to_chat(user, "without even being claimed by the fire, the contract crumbles to ash.")
-		var/ash = new /obj/item/ash
+		var/ash = new /obj/item/fertilizer/ash
 		qdel(src)
 		user.put_in_active_hand(ash)
 		return
