@@ -49,9 +49,9 @@
 	contains = /obj/item/clothing/face/lordmask
 
 /datum/supply_pack/jewelry/gmask
-	name = "Golden Halfmask"
-	cost = 100
-	contains = /obj/item/clothing/face/lordmask
+	name = "SCOM ring"
+	cost = 200
+	contains = /obj/item/scomstone
 
 
 
