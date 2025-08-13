@@ -146,7 +146,7 @@
 	skillcraft = /datum/skill/craft/masonry
 
 /datum/blueprint_recipe/structure/pottery_lathe
-	name = "Potter's Lathe"
+	name = "Potter Lathe"
 	desc = "A lathe for creating pottery."
 	result_type = /obj/structure/pottery_lathe
 	required_materials = list(

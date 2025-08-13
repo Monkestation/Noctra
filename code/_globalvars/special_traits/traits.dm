@@ -112,7 +112,7 @@
 
 /datum/special_trait/beautiful
 	name = "Beautiful"
-	greet_text = span_notice("My face is a work of art.")
+	greet_text = span_notice("My face is a work of art")
 	weight = 100
 
 /datum/special_trait/beautiful/on_apply(mob/living/carbon/human/character, silent)
@@ -238,12 +238,12 @@
 	character.grant_language(/datum/language/zalad)
 	character.grant_language(/datum/language/thievescant)
 
-/*
 /datum/special_trait/civilizedbarbarian
 	name = "Tavern Brawler"
 	greet_text = span_notice("My fists feel heavier!")
 	weight = 100
 
+/*
 // kill all rt coders, honestly.
 /datum/special_trait/civilizedbarbarian/on_apply(mob/living/carbon/human/character, silent)
 	ADD_TRAIT(character, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC) //Need to make trait improve hitting people with chairs, mugs, goblets. YOU FUCKER WHY WOULD YOU LEAVE CODE DEBT
