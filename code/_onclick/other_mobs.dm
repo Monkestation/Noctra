@@ -92,27 +92,9 @@
 		return
 
 	// Anyone can take it to be devilish
-	if(offered_item)
-		if(user.get_active_held_item())
-			to_chat(user, span_warning("I need a free hand to take it!"))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		var/obj/item/I = offered_item.resolve()
-		if(!QDELETED(I))
-			offered_item = null
-			if(I != get_active_held_item())
-				to_chat(src, span_warning("I must keep hold of what i'm offering!"))
-				user.visible_message(
-					span_warning("[user] attempts to take [I] from [src], but it is moved out of reach!"),
-					span_warning("I attempt to take [I], but [user] moved it from my reach!"),
-				)
-				return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-			transferItemToLoc(I, user)
-			user.put_in_active_hand(I)
-			to_chat(src, span_notice("[user] takes [I] from my outstreched hand."))
-			user.visible_message(
-				span_warning("[user] takes [I] from [src]'s outstreched hand!"),
-				span_notice("I take [I] from [src]'s outstreched hand."),
-			)
+	if(offered_item_ref && isliving(user))
+		var/mob/living/living_user = user
+		living_user.try_accept_offered_item(src)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /mob/living/carbon/human/attack_hand_secondary(mob/user, params)

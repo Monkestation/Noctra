@@ -229,29 +229,19 @@
 		return
 	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(src == user)
-		if(offered_item)
-			offered_item = null
-			user.visible_message(
-				span_notice("[user] puts their hand back down."),
-				span_notice("I stop offering the item."),
-			)
+		if(offered_item_ref)
+			cancel_offering_item()
 		else
 			to_chat(user, span_warning("I can't offer myself an item!"))
 		return
-	var/obj/item/offer_attempt = user.get_active_held_item()
-	if(HAS_TRAIT(offer_attempt, TRAIT_NODROP))
+	if(offered_item_ref)
+		to_chat(src, span_notice("I'm already offering something!"))
+		return
+	var/obj/item/offered_item = user.get_active_held_item()
+	if(HAS_TRAIT(offered_item, TRAIT_NODROP))
 		to_chat(user, span_warning("I can't offer this."))
 		return
-	user.offered_item = WEAKREF(offer_attempt)
-	user.visible_message(
-		span_notice("[user] offers [offer_attempt] to [src] with an outstreched hand."),
-		span_notice("I offer [offer_attempt] to [src] with an outstreched hand."), ignored_mobs = list(src), vision_distance = COMBAT_MESSAGE_RANGE
-	)
-	to_chat(user, span_smallnotice("I will hold [offer_attempt] out for 10 seconds. \
-	If I switch hands or take it out my hand it will not be able to be taken.\n \
-	I can stop offering the item by using the same hand on myself."))
-	to_chat(src, span_notice("[user] offers [offer_attempt] to me..."))
-	addtimer(VARSET_CALLBACK(user, offered_item, null), 10 SECONDS)
+	user.offer_item(src, offered_item)
 
 /**
  * Called from [/mob/living/proc/attackby]

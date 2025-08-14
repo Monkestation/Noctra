@@ -101,6 +101,7 @@
 	icon_state = "arrow"
 	plane = POINT_PLANE
 	duration = 3 SECONDS
+	fade_time = 1 SECONDS
 
 /obj/effect/temp_visual/point/still
 	icon_state = "arrow_still"
@@ -113,8 +114,6 @@
 	pixel_y = old_loc.pixel_y
 	invisibility = set_invis
 
-#undef POINT_TIME
-
 // need to update cone on overlays change
 /mob/living/create_point_bubble(atom/pointed_atom)
 	. = ..()
@@ -123,3 +122,5 @@
 /mob/living/clear_point_bubble(mutable_appearance/thought_bubble)
 	. = ..()
 	update_cone()
+
+#undef POINT_TIME

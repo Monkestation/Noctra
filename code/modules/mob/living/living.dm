@@ -2700,3 +2700,63 @@
 	purge_all_skills(silent)
 	remove_spells(silent = silent)
 	reset_spell_points(silent)
+
+/mob/living/proc/offer_item(mob/living/offered_to, obj/item/offered_item)
+	if(isnull(offered_to) || isnull(offered_item))
+		stack_trace("no offered_to or offered_item in offer_item()")
+		return
+
+	offered_item_ref = WEAKREF(offered_item)
+	visible_message(
+		span_notice("[src] offers [offered_item] to [offered_to] with an outstreched hand."),
+		span_notice("I offer [offered_item] to [offered_to] with an outstreched hand."), ignored_mobs = list(src), vision_distance = COMBAT_MESSAGE_RANGE
+	)
+	to_chat(src, span_smallnotice("I will hold [offered_item] out for 10 seconds. \n \
+	I can stop offering the item by using the same hand on myself."))
+	to_chat(offered_to, span_notice("[offered_to] offers [offered_item] to me..."))
+	addtimer(CALLBACK(src, PROC_REF(cancel_offering_item)), 10 SECONDS)
+
+	new /obj/effect/temp_visual/offered_item_effect(get_turf(src), offered_item, src, offered_to)
+
+/mob/living/proc/cancel_offering_item()
+	var/obj/item/offered_item = offered_item_ref.resolve()
+	if(isnull(offered_item))
+		return
+	visible_message(
+		span_notice("[src] puts their hand back down."),
+		span_notice("I stop offering [offered_item ? offered_item : "the item"]."),
+	)
+	stop_offering_item()
+
+/mob/living/proc/stop_offering_item()
+	SEND_SIGNAL(src, COMSIG_LIVING_STOPPED_OFFERING_ITEM)
+	offered_item_ref = null
+
+/mob/living/proc/try_accept_offered_item(mob/living/offerer, obj/item/offered_item)
+	if(get_active_held_item())
+		to_chat(src, span_warning("I need a free hand to take it!"))
+		return FALSE
+
+	if(!QDELETED(offered_item))
+		offerer.stop_offering_item()
+		if(offered_item != get_active_held_item())
+			to_chat(offerer, span_warning("I must keep hold of what I'm offering!"))
+			visible_message(
+				span_warning("[src] attempts to take [offered_item] from [offerer], but it is moved out of reach!"),
+				span_warning("I attempt to take [offered_item], but [offerer] moved it from my reach!"),
+			)
+			return FALSE
+
+	accept_offered_item(offerer, offered_item)
+	offerer.stop_offering_item()
+	return TRUE
+
+/mob/living/proc/accept_offered_item(mob/living/offerer, obj/item/offered_item)
+	transferItemToLoc(offered_item, src)
+	put_in_active_hand(offered_item)
+	to_chat(offerer, span_notice("[src] takes [offered_item] from my outstreched hand."))
+	visible_message(
+		span_warning("[src] takes [offered_item] from [offerer]'s outstreched hand!"),
+		span_notice("I take [offered_item] from [offerer]'s outstreched hand."),
+	)
+

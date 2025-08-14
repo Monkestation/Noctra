@@ -307,8 +307,11 @@
 	if(atkswinging)
 		stop_attack(FALSE)
 	if(I)
-		if(IS_WEAKREF_OF(I, offered_item))
-			offered_item = null
+		if(IS_WEAKREF_OF(I, offered_item_ref))
+			if(isliving(src))
+				var/mob/living/imliving = src
+				imliving.stop_offering_item()
+			offered_item_ref = null
 		if(client)
 			client.screen -= I
 		I.layer = initial(I.layer)
