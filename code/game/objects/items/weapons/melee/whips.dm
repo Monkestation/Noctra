@@ -150,6 +150,17 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
+/datum/intent/whip/lash/cane
+	attack_verb = list("lashes", "canes")
+	chargetime = 20
+	no_early_release = TRUE
+	penfactor = 0
+	reach = 1 //no added range
+	misscost = 10
+	icon_state = "inlash"
+	canparry = TRUE //Not meant for fighting with
+	item_damage_type = "slash"
+
 //................ Lashkiss Whip ............... //
 /obj/item/weapon/whip/spiderwhip
 	force = DAMAGE_WHIP+3
