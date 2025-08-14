@@ -1,6 +1,6 @@
 /datum/triumph_buy/communal/preround
 	name = "Pre-Round Communal Fund"
-	desc = "A communal fund that can only be contributed to before the round starts."
+	desc = "A communal fund that can only be contributed to before the round starts. Refunds otherwise."
 	category = TRIUMPH_CAT_COMMUNAL
 
 /// Refunds all contributions to their respective donators

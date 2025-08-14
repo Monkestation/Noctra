@@ -331,5 +331,41 @@
                 "image": "modified the Adept's Cowl icon and onmob sprites."
             }
         ]
+    },
+    "2025-08-14": {
+        "Arkatos": [
+            {
+                "rscadd": "Added new a new triumph buy - Fart Ability."
+            },
+            {
+                "rscadd": "Added new a new triumph buy - Leprosy."
+            }
+        ],
+        "ApolloVector": [
+            {
+                "balance": "buffed anthraxi knife skill to skilled"
+            },
+            {
+                "balance": "buffed redsands sword skill to expert"
+            },
+            {
+                "balance": "buffed black oak guardian's main weapon skill to expert"
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "rscadd": "A new preference option for newlywed and Parent, called \\\"Preferred Gender\\\"."
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "Changelog entries are sorted descending."
+            }
+        ],
+        "Sulaboy": [
+            {
+                "balance": "fiber bundles can hold 12 fibers now."
+            }
+        ]
     }
 }
