@@ -669,6 +669,10 @@
 	GLOB.astrata_statues += src
 	. = ..()
 
+/obj/structure/fluff/statue/astrata/Destroy()
+	. = ..()
+	GLOB.astrata_statues -= src
+
 /obj/structure/fluff/statue/astrata/examine(mob/user)
 	. = ..()
 	if(breaking)

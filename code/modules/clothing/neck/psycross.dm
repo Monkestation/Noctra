@@ -13,6 +13,10 @@
 	GLOB.psycrosses += src
 	. = ..()
 
+/obj/item/clothing/neck/psycross/Destroy()
+	. = ..()
+	GLOB.psycrosses -= src
+
 /obj/item/clothing/neck/psycross/examine(mob/user)
 	. = ..()
 	if(rotting)
