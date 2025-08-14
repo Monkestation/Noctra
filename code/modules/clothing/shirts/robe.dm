@@ -13,7 +13,6 @@
 	resistance_flags = FLAMMABLE
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
-	color = CLOTHING_LINEN
 
 	armor = ARMOR_MINIMAL
 	prevent_crits = list(BCLASS_TWIST)
@@ -21,6 +20,9 @@
 
 /obj/item/clothing/shirt/robe/colored
 	misc_flags = CRAFTING_TEST_EXCLUDE
+
+/obj/item/clothing/shirt/robe/colored/linen
+	color = CLOTHING_LINEN
 
 /obj/item/clothing/shirt/robe/colored/plain
 	color = CLOTHING_LINEN
