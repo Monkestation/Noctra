@@ -116,6 +116,7 @@
 	desc = "A head covering for the distinguished physician."
 	icon_state = "physicianhat"
 	item_state = "physicianhat"
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/courtphys.dmi'
 
 /obj/item/clothing/head/courtphysician
 	name = "court physician's beret"
