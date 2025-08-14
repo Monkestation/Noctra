@@ -48,7 +48,7 @@
 	cost = 100
 	contains = /obj/item/clothing/face/lordmask
 
-/datum/supply_pack/jewelry/gmask
+/datum/supply_pack/jewelry/scom
 	name = "SCOM ring"
 	cost = 200
 	contains = /obj/item/scomstone
