@@ -52,10 +52,6 @@
 
 	armor = ARMOR_PADDED_GOOD
 
-/obj/item/clothing/armor/gambeson/heavy/guard
-	color = CLOTHING_BLOOD_RED
-	uses_lord_coloring = LORD_SECONDARY
-
 /obj/item/clothing/armor/gambeson/heavy/colored
 	misc_flags = CRAFTING_TEST_EXCLUDE
 
