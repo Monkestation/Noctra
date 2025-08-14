@@ -2,7 +2,7 @@
 	name = "Leprosy"
 	desc = "Become a leper. You will be hated, you will be shunned, you will bleed and you will be weak. But Pestra will be always on your side."
 	triumph_buy_id = TRIUMPH_BUY_LEPROSY
-	triumph_cost = 3
+	triumph_cost = 2
 	category = TRIUMPH_CAT_CHARACTER
 	visible_on_active_menu = TRUE
 	manual_activation = TRUE
