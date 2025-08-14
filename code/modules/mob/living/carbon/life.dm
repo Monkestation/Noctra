@@ -77,13 +77,8 @@
 			var/shock_reduction = min(0.3, current_shock * 0.001) // Max 30% reduction
 			raw_pain *= (1.0 - shock_reduction)
 
-		// Endurance-based pain resistance - higher endurance = better pain tolerance
-		var/endurance_resistance = 1.0 - (STAEND * 0.015) // 1.5% reduction per endurance point
-		endurance_resistance = max(0.7, endurance_resistance) // Minimum 70% pain felt
-		raw_pain *= endurance_resistance
-
 		// Base pain calculation - endurance affects how much pain you feel from damage
-		var/painpercent = raw_pain / (STAEND * 10)
+		var/painpercent = raw_pain / (STAEND * 13)
 		painpercent = painpercent * 100
 
 		// Pain tolerance system - builds up to prevent infinite stunning
