@@ -7,7 +7,7 @@
 	var/datum/weakref/offerer_weak_ref
 	var/datum/weakref/offered_to_weak_ref
 	var/datum/weakref/offered_thing_weak_ref
-	plane = GAME_PLANE_FOV_HIDDEN
+	plane = GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	var/fading_out = FALSE
 
@@ -17,7 +17,7 @@
 	icon_state = offered_thing.icon_state
 	appearance = offered_thing.appearance
 	filters += filter(type="rays")
-	transform /= 1.3
+	transform /= 1.5
 	offered_thing_weak_ref = WEAKREF(offered_thing)
 	offerer_weak_ref = WEAKREF(offerer)
 	offered_to_weak_ref = WEAKREF(offered_to)
@@ -27,6 +27,15 @@
 	RegisterSignal(offerer, COMSIG_LIVING_GAVE_OFFERED_ITEM, PROC_REF(handover))
 	RegisterSignal(offerer, COMSIG_PARENT_QDELETING, PROC_REF(timed_out))
 	calculate_offset()
+
+/obj/effect/temp_visual/offered_item_effect/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(I == offered_thing_weak_ref.resolve())
+		user.cancel_offering_item()
+		return
+
+	var/mob/living/offerer = offerer_weak_ref.resolve()
+	offerer.attackby(arglist(args))
 
 // not including qdel because we still want that
 /obj/effect/temp_visual/offered_item_effect/proc/unregister_signals()
@@ -72,6 +81,7 @@
 		return
 
 	if(!offerer.Adjacent(offered_to))
+		offerer.cancel_offering_item()
 		timed_out()
 		return
 
@@ -98,13 +108,21 @@
 
 /obj/effect/temp_visual/offered_item_effect/attack_hand(mob/living/user)
 	. = ..()
-
-	if(fading_out)
-		return
-
 	var/mob/living/offerer = offerer_weak_ref.resolve()
 	var/obj/offered_thing = offered_thing_weak_ref.resolve()
 	if(isnull(offered_thing) || isnull(offerer))
+		return
+
+	if(user == offerer)
+		offerer.cancel_offering_item()
+		return
+
+	if(user.used_intent.type == INTENT_HARM)
+		offerer.attack_hand(arglist(args))
+		user.changeNext_move(CLICK_CD_MELEE) // this sux
+		return
+
+	if(fading_out)
 		return
 
 	user.try_accept_offered_item(offerer, offered_thing)

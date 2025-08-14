@@ -2713,16 +2713,14 @@
 		span_notice("[src] offers [offered_item] to [offered_to] with an outstreched hand."),
 		span_notice("I offer [offered_item] to [offered_to] with an outstreched hand."), ignored_mobs = list(src), vision_distance = COMBAT_MESSAGE_RANGE
 	)
-	to_chat(src, span_smallnotice("I will hold [offered_item] out for 10 seconds. \n \
-	I can stop offering the item by using the same hand on myself."))
 	to_chat(offered_to, span_notice("[offered_to] offers [offered_item] to me..."))
-	addtimer(CALLBACK(src, PROC_REF(cancel_offering_item)), 10 SECONDS)
 
 	new /obj/effect/temp_visual/offered_item_effect(get_turf(src), offered_item, src, offered_to)
 
 /mob/living/proc/cancel_offering_item()
-	var/obj/item/offered_item = offered_item_ref.resolve()
+	var/obj/item/offered_item = offered_item_ref?.resolve()
 	if(isnull(offered_item))
+		stop_offering_item()
 		return
 	visible_message(
 		span_notice("[src] puts their hand back down."),
