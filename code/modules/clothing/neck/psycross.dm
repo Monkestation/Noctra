@@ -18,12 +18,11 @@
 	if(rotting)
 		. += "<span class='warning'>It is being overtaken by rot, but how?</span>"
 
-/obj/item/clothing/neck/psycross/update_overlays() //I am willing to ignore that these are not represented in the mob overlay its like 5 pixels
+/obj/item/clothing/neck/psycross/proc/do_rot() //I am willing to ignore that these are not represented in the mob overlay its like 5 pixels
 	if(rotting)
-		. += mutable_appearance(icon, "[icon_state]_rot")
+		icon_state = "[icon_state]_rot"
 	else
-		. -= mutable_appearance(icon, "[icon_state]_rot")
-	. = ..()
+		icon_state = initial(icon_state)
 
 
 // SILVER PSYCROSS START
@@ -39,6 +38,7 @@
 /obj/item/clothing/neck/psycross/silver/Initialize(mapload)
 	. = ..()
 	enchant(/datum/enchantment/silver)
+	GLOB.psycrosses += src
 
 // PANTHEON SILVER PSYCROSSES START
 
@@ -48,8 +48,7 @@
 	icon_state = "astrata"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/neck/psycross/silver/astrata/update_overlays()
-	. = ..()
+/obj/item/clothing/neck/psycross/silver/astrata/do_rot()
 	return
 
 // Only non-refactored psycross because Noc likes vamps. Neeeerd!
@@ -59,8 +58,7 @@
 	icon_state = "noc"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/neck/psycross/noc/update_overlays()
-	. = ..()
+/obj/item/clothing/neck/psycross/noc/do_rot()
 	return
 
 /obj/item/clothing/neck/psycross/silver/dendor
@@ -69,8 +67,7 @@
 	icon_state = "dendor"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/neck/psycross/silver/dendor/update_overlays()
-	. = ..()
+/obj/item/clothing/neck/psycross/silver/dendor/do_rot()
 	return
 
 /obj/item/clothing/neck/psycross/silver/abyssor
@@ -79,8 +76,7 @@
 	icon_state = "abyssor"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/neck/psycross/silver/abyssor/update_overlays()
-	. = ..()
+/obj/item/clothing/neck/psycross/silver/abyssor/do_rot()
 	return
 
 /obj/item/clothing/neck/psycross/silver/necra
@@ -89,8 +85,7 @@
 	icon_state = "necra"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/neck/psycross/silver/necra/update_overlays()
-	. = ..()
+/obj/item/clothing/neck/psycross/silver/necra/do_rot()
 	return
 
 /obj/item/clothing/neck/psycross/silver/ravox
@@ -99,8 +94,7 @@
 	icon_state = "ravox"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/neck/psycross/silver/ravox/update_overlays()
-	. = ..()
+/obj/item/clothing/neck/psycross/silver/ravox/do_rot()
 	return
 
 /obj/item/clothing/neck/psycross/silver/xylix
@@ -109,8 +103,7 @@
 	icon_state = "xylix"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/neck/psycross/silver/xylix/update_overlays()
-	. = ..()
+/obj/item/clothing/neck/psycross/silver/xylix/do_rot()
 	return
 
 /obj/item/clothing/neck/psycross/silver/eora
@@ -119,8 +112,7 @@
 	icon_state = "eora"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/neck/psycross/silver/eora/update_overlays()
-	. = ..()
+/obj/item/clothing/neck/psycross/silver/eora/do_rot()
 	return
 
 /obj/item/clothing/neck/psycross/silver/holy/eora
@@ -129,8 +121,7 @@
 	icon_state = "eora"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/neck/psycross/silver/holy/eora/update_overlays()
-	. = ..()
+/obj/item/clothing/neck/psycross/silver/holy/eora/do_rot()
 	return
 
 /obj/item/clothing/neck/psycross/silver/holy/eora/attack(mob/living/love_target, mob/user)
@@ -161,8 +152,7 @@
 	icon_state = "pestra"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/neck/psycross/silver/pestra/update_overlays()
-	. = ..()
+/obj/item/clothing/neck/psycross/silver/pestra/do_rot()
 	return
 
 /obj/item/clothing/neck/psycross/silver/malum
@@ -172,8 +162,7 @@
 	resistance_flags = FIRE_PROOF
 
 
-/obj/item/clothing/neck/psycross/silver/malum/update_overlays()
-	. = ..()
+/obj/item/clothing/neck/psycross/silver/malum/do_rot()
 	return
 
 /obj/item/clothing/neck/psycross/silver/malum_steel
@@ -182,8 +171,7 @@
 	icon_state = "malum_alt"
 	resistance_flags = FIRE_PROOF
 
-/obj/item/clothing/neck/psycross/silver/malum_steel/update_overlays()
-	. = ..()
+/obj/item/clothing/neck/psycross/silver/malum_steel/do_rot()
 	return
 
 /obj/item/clothing/neck/psycross/g

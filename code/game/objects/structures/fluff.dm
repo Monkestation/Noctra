@@ -676,18 +676,18 @@
 			var/mob/living/luser = user
 			if(luser.patron == /datum/patron/divine/astrata)
 				. += "<span class='warning'>HER VISAGE IS DEFILED!!</span>"
+				//N/A a stressevent here would be fine
 				return
 		. += "<span class='warning'>Cracks form in the Tyrant's rule.</span>"
 
 
-/obj/structure/fluff/statue/astrata/update_overlays()
+/obj/structure/fluff/statue/astrata/proc/do_break()
 	if(breaking)
 		playsound(src, 'sound/misc/gods/astrata_scream.ogg', 10, ignore_walls = TRUE)
 		playsound(src, 'sound/combat/hits/onstone/stonedeath.ogg', 100, ignore_walls = TRUE)
-		. += mutable_appearance(icon, "[icon_state]_hurt")
+		icon_state = "[icon_state]_hurt"
 	else
 		icon_state = initial(icon_state)
-	. = ..()
 
 /obj/structure/fluff/statue/astrata/OnCrafted(dirin, mob/user)
 	. = ..()

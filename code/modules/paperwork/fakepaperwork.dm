@@ -1098,11 +1098,11 @@
 	if(priestsigned)
 		for(var/obj/structure/fluff/statue/astrata/statue as anything in GLOB.astrata_statues)
 			statue.breaking = TRUE
-			statue.update_appearance(UPDATE_OVERLAYS)
+			statue.do_break()
 		return
 	for(var/obj/item/clothing/neck/psycross/cross as anything in GLOB.psycrosses)
 		cross.rotting = TRUE
-		cross.update_appearance(UPDATE_OVERLAYS)
+		cross.do_rot()
 
 /obj/item/paper/political_PM/bloodseal/exempt_from_cruelty/triumph_effect()
 	gaffsigned.adjust_triumphs(2)
@@ -1112,11 +1112,11 @@
 		if(signed.mind.assigned_role == "Priest" || signed.mind.assigned_role == "Priestess")
 			for(var/obj/structure/fluff/statue/astrata/statue as anything in GLOB.astrata_statues)
 				statue.breaking = FALSE
-				statue.update_appearance(UPDATE_OVERLAYS)
+				statue.do_break()
 		else
 			for(var/obj/item/clothing/neck/psycross/cross as anything in GLOB.psycrosses)
 				cross.rotting = FALSE
-				cross.update_appearance(UPDATE_OVERLAYS)
+				cross.do_rot()
 	. = ..()
 
 
