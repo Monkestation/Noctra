@@ -44,6 +44,10 @@
 	enchant(/datum/enchantment/silver)
 	GLOB.psycrosses += src
 
+/obj/item/clothing/neck/psycross/silver/Destroy()
+	. = ..()
+	GLOB.psycrosses -= src
+
 // PANTHEON SILVER PSYCROSSES START
 
 /obj/item/clothing/neck/psycross/silver/astrata
