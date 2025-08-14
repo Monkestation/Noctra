@@ -65,6 +65,16 @@
 					if(part)
 						part.add_wound(/datum/wound/slash/small)
 					adjustToxLoss(10)
+		handle_heart()
+		handle_liver()
+		update_stamina()
+		update_energy()
+		handle_environment()
+		if(health <= 0)
+			apply_damage(1, OXY)
+		if(dna?.species)
+			dna.species.spec_life(src) // for mutantraces
+
 	//heart attack stuff
 	handle_curses()
 	if(charflaw && !charflaw.ephemeral)
