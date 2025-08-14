@@ -333,6 +333,14 @@
         ]
     },
     "2025-08-14": {
+        "Arkatos": [
+            {
+                "rscadd": "Added new a new triumph buy - Fart Ability."
+            },
+            {
+                "rscadd": "Added new a new triumph buy - Leprosy."
+            }
+        ],
         "ApolloVector": [
             {
                 "balance": "buffed anthraxi knife skill to skilled"
@@ -352,6 +360,11 @@
         "CheffieGithub": [
             {
                 "bugfix": "Changelog entries are sorted descending."
+            }
+        ],
+        "Sulaboy": [
+            {
+                "balance": "fiber bundles can hold 12 fibers now."
             }
         ]
     }
