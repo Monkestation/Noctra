@@ -292,3 +292,13 @@
 	if(prefs.lastchangelog != GLOB.changelog_hash)
 		prefs.lastchangelog = GLOB.changelog_hash
 		prefs.save_preferences()
+
+/client/verb/do_rp_prompt()
+	set name = "Lore Primer"
+	set category = "OOC"
+	var/list/dat = list()
+	dat += GLOB.roleplay_readme
+	if(dat)
+		var/datum/browser/popup = new(usr, "Primer", "VANDERLIN", 650, 900)
+		popup.set_content(dat.Join())
+		popup.open()
