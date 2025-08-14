@@ -624,12 +624,6 @@
 		return FALSE
 	return ..()
 
-/mob/living/_pointed(atom/pointing_at)
-	if(!..())
-		return FALSE
-	log_message("points at [pointing_at]", LOG_EMOTE)
-	visible_message("<span class='infoplain'>[span_name("[src]")] points at [pointing_at].</span>", span_notice("You point at [pointing_at]."))
-
 
 /mob/living/verb/succumb(whispered as null, reaper as null)
 	set hidden = TRUE

@@ -2469,6 +2469,7 @@
 #include "code\modules\mob\mob_movespeed.dm"
 #include "code\modules\mob\mob_say.dm"
 #include "code\modules\mob\mob_transformation_simple.dm"
+#include "code\modules\mob\point.dm"
 #include "code\modules\mob\status_procs.dm"
 #include "code\modules\mob\transform_procs.dm"
 #include "code\modules\mob\typing_indicator.dm"
