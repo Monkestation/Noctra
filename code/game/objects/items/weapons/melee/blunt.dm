@@ -115,6 +115,17 @@
 	misscost = 15
 	item_damage_type = "blunt"
 
+//................ Court Physician Cane ............... //
+
+/obj/item/weapon/mace/courtphysician
+	name = "physician's cane"
+	desc = "A prized cane. Embellished with a golden serpent, representing the Kingsfield university. The pointy end is quite sharp."
+	icon_state = "fancy_cane"
+	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/thrust)
+	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
+	sellprice = 30
+	wdefense = MEDIOCHRE_PARRY
+
 
 //................ Bell ringer ............... //
 /obj/item/weapon/mace/church

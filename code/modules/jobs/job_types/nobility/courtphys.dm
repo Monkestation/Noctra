@@ -38,7 +38,7 @@
 	neck = /obj/item/clothing/neck/courtphysician
 	belt = /obj/item/storage/belt/leather
 	beltl = /obj/item/storage/keyring/physician
-	beltr = /obj/item/weapon/whip/cane/physician
+	beltr = /obj/item/weapon/mace/courtphysician
 	armor = /obj/item/clothing/shirt/robe/courtphysician
 	if(H.gender == FEMALE)
 		pants = /obj/item/clothing/pants/skirt/colored/random
