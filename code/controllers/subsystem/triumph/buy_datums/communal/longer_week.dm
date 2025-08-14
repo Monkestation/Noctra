@@ -7,7 +7,8 @@
 /datum/triumph_buy/communal/preround/longer_week/on_activate()
 	. = ..()
 	SSmapping.add_world_trait(/datum/world_trait/longer_week, 0)
-	SSticker.time_until_vote += 55 MINUTES // Roughly 40 minutes of real time
+	SSticker.time_until_vote += 40 MINUTES
+	GLOB.round_timer += 40 MINUTES
 
 	to_chat(world, "<br>")
 	to_chat(world, span_reallybig("The working week has been extended! Rejoice!"))
