@@ -108,6 +108,8 @@
 		/datum/supply_pack/tools/medical/prarmr,
 		/datum/supply_pack/tools/medical/prlegl,
 		/datum/supply_pack/tools/medical/prlegr
+		/datum/supply_pack/tools/medical/health,
+		/datum/supply_pack/tools/medical/mana,
 	)
 	rare_pool = list(
 		// Luxury apparel

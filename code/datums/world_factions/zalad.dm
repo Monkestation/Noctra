@@ -112,10 +112,14 @@
 		// Weapons
 		/datum/supply_pack/weapons/iron/spear,
 		/datum/supply_pack/weapons/ranged/shortbow,
+		/datum/supply_pack/weapons/ranged/bow,
 		/datum/supply_pack/weapons/steel/baxe,
 		/datum/supply_pack/weapons/ranged/crossbow,
 		/datum/supply_pack/weapons/ammo/quivers,
 		/datum/supply_pack/weapons/ammo/arrowquiver,
+		/datum/supply_pack/weapons/shield/wood,
+		/datum/supply_pack/weapons/ammo/Blowpouch,
+
 		// Food
 		/datum/supply_pack/food/drinks/spottedhen,
 		// Materials

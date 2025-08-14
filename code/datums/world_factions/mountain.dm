@@ -124,6 +124,11 @@
 		/datum/supply_pack/weapons/steel/sword,
 		/datum/supply_pack/weapons/iron/greatmace,
 		/datum/supply_pack/weapons/iron/flail,
+		/datum/supply_pack/weapons/iron/axe,
+		/datum/supply_pack/weapons/iron/bardiche,
+		/datum/supply_pack/weapons/steel/greatsword,
+		/datum/supply_pack/weapons/steel/greatmace,
+		/datum/supply_pack/weapons/steel/saxe,
 		// Food & Luxury
 		/datum/supply_pack/food/drinks/voddena,
 		/datum/supply_pack/jewelry/circlet,
@@ -137,7 +142,8 @@
 		/datum/supply_pack/rawmats/riddle_of_steel,
 		/datum/supply_pack/luxury/talkstone,
 		/datum/supply_pack/luxury/gold_plaque_belt,
-		/datum/supply_pack/weapons/ranged/puffer
+		/datum/supply_pack/weapons/ranged/puffer,
+		/datum/supply_pack/weapons/ammo/bullets
 	)
 
 /datum/world_faction/mountain_clans/initialize_faction_stock()
