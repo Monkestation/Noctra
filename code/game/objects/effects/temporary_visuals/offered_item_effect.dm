@@ -126,3 +126,6 @@
 		return
 
 	user.try_accept_offered_item(offerer, offered_thing)
+
+#undef HANDOVER_TIME
+#undef STOP_OFFER_TIME
