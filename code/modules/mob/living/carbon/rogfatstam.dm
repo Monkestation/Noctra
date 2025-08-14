@@ -10,6 +10,9 @@
 		added = round(-10+ (added*-40))
 		if(HAS_TRAIT(src, TRAIT_MISSING_NOSE))
 			added = round(added * 0.5, 1)
+		//Assuming full energy bar give you 50 regen, this make it with the trait that even if you have higher endurance/athletics skill, which mean a higher fatigue bar, you won't have your regen halved
+		if(HAS_TRAIT(src, TRAIT_NOENERGY))
+			added = -50
 		if(stamina >= 1)
 			adjust_stamina(added)
 		else

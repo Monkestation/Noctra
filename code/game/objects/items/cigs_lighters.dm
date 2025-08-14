@@ -354,7 +354,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	starts_lit = TRUE
 
 /obj/item/clothing/face/cigarette/rollie/cannabis
-	list_reagents = list(/datum/reagent/drug/space_drugs = 60)
+	list_reagents = list(/datum/reagent/drug/space_drugs = 30)
 
 /obj/item/cigbutt
 	name = "roach"

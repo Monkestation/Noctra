@@ -5,9 +5,9 @@
 	triumph_cost = 3
 	category = TRIUMPH_CAT_MISC
 	visible_on_active_menu = TRUE
+	allow_multiple_buys = FALSE
 	limited = TRUE
 	stock = 1
-	allow_multiple_buys = FALSE
 
 /datum/triumph_buy/psydon_favourite/on_activate()
 	. = ..()

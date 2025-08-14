@@ -1643,7 +1643,7 @@ SUBSYSTEM_DEF(gamemode)
 		var/mob/living/carbon/human/random_passerby = pick(potential_passers)
 
 		chosen_chronicle_stats[1] = CHRONICLE_STATS_PSYDON_FAVOURITE
-		set_chronicle_stat(CHRONICLE_STATS_PSYDON_FAVOURITE, valid_psydon_favourite, "PSYDON'S FAVOURITE", "#e6e6e6", "buying his way in")
+		set_chronicle_stat(CHRONICLE_STATS_PSYDON_FAVOURITE, valid_psydon_favourite, "PSYDON'S FAVOURITE", "#e6e6e6", "buying their way in")
 
 		if(random_passerby)
 			chosen_chronicle_stats[2] = CHRONICLE_STATS_RANDOM_PASSERBY
