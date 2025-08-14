@@ -1,3 +1,6 @@
+#define HANDOVER_TIME 0.5 SECONDS
+#define STOP_OFFER_TIME 0.7 SECONDS
+
 /obj/effect/temp_visual/offered_item_effect
 	duration = 11 SECONDS
 	fade_time = 0.5 SECONDS
@@ -6,8 +9,7 @@
 	var/datum/weakref/offered_thing_weak_ref
 	plane = GAME_PLANE_FOV_HIDDEN
 	mouse_opacity = MOUSE_OPACITY_ICON
-	var/handover_in_progress = FALSE
-
+	var/fading_out = FALSE
 
 /obj/effect/temp_visual/offered_item_effect/Initialize(mapload, obj/offered_thing, mob/living/offerer, mob/living/offered_to)
 	. = ..()
@@ -22,27 +24,44 @@
 	RegisterSignal(offerer, COMSIG_MOVABLE_MOVED, PROC_REF(someone_moved))
 	RegisterSignal(offered_to, COMSIG_MOVABLE_MOVED, PROC_REF(someone_moved))
 	RegisterSignal(offerer, COMSIG_LIVING_STOPPED_OFFERING_ITEM, PROC_REF(stopped_offering))
+	RegisterSignal(offerer, COMSIG_LIVING_GAVE_OFFERED_ITEM, PROC_REF(handover))
 	RegisterSignal(offerer, COMSIG_PARENT_QDELETING, PROC_REF(timed_out))
 	calculate_offset()
 
-/obj/effect/temp_visual/offered_item_effect/proc/stopped_offering(mob/living/offerer)
-	if(handover_in_progress)
-		return
+// not including qdel because we still want that
+/obj/effect/temp_visual/offered_item_effect/proc/unregister_signals()
+	var/mob/living/offered_to = offered_to_weak_ref.resolve()
+	var/mob/living/offerer = offerer_weak_ref.resolve()
+	if(offerer)
+		UnregisterSignal(offerer, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_STOPPED_OFFERING_ITEM, COMSIG_LIVING_GAVE_OFFERED_ITEM))
+	if(offered_to)
+		UnregisterSignal(offered_to, COMSIG_MOVABLE_MOVED)
 
-	handover_in_progress = TRUE
+	fading_out = TRUE
+
+/obj/effect/temp_visual/offered_item_effect/proc/stopped_offering(mob/living/offerer)
+	SIGNAL_HANDLER
+	unregister_signals()
 
 	if((x != offerer.x) || (y != offerer.y))
 		Move(get_turf(offerer))
 
-	animate(src, transform = matrix() * 0, alpha = 0, pixel_w = 0, pixel_z = 0, time = 0.7 SECONDS)
+	animate(src, transform = matrix() * 0, alpha = 0, pixel_w = 0, pixel_z = 0, time = STOP_OFFER_TIME)
+	QDEL_IN(src, STOP_OFFER_TIME)
+
+
+/obj/effect/temp_visual/offered_item_effect/proc/handover()
+	SIGNAL_HANDLER
+	unregister_signals()
+
+	animate(src, transform = matrix() * 0, alpha = 0, pixel_w = src.pixel_w * 2, pixel_z = src.pixel_z * 2 - 8, time = HANDOVER_TIME)
+	QDEL_IN(src, HANDOVER_TIME)
+
 
 /obj/effect/temp_visual/offered_item_effect/proc/someone_moved(datum/parent)
 	SIGNAL_HANDLER
 
 	if(QDELETED(src))
-		return
-
-	if(handover_in_progress)
 		return
 
 	var/mob/living/offerer = offerer_weak_ref.resolve()
@@ -79,17 +98,13 @@
 
 /obj/effect/temp_visual/offered_item_effect/attack_hand(mob/living/user)
 	. = ..()
+
+	if(fading_out)
+		return
+
 	var/mob/living/offerer = offerer_weak_ref.resolve()
 	var/obj/offered_thing = offered_thing_weak_ref.resolve()
 	if(isnull(offered_thing) || isnull(offerer))
 		return
 
-	if(!user.try_accept_offered_item(offerer, offered_thing))
-		return
-
-	if(handover_in_progress)
-		return
-
-	handover_in_progress = TRUE
-
-	animate(src, transform = matrix() * 0, alpha = 0, pixel_w = src.pixel_w * 2, pixel_z = src.pixel_z * 2 - 8, time = 0.5 SECONDS)
+	user.try_accept_offered_item(offerer, offered_thing)

@@ -306,12 +306,8 @@
 		update_inv_hands()
 	if(atkswinging)
 		stop_attack(FALSE)
+
 	if(I)
-		if(IS_WEAKREF_OF(I, offered_item_ref))
-			if(isliving(src))
-				var/mob/living/imliving = src
-				imliving.stop_offering_item()
-			offered_item_ref = null
 		if(client)
 			client.screen -= I
 		I.layer = initial(I.layer)
@@ -330,6 +326,12 @@
 	SEND_SIGNAL(I, COMSIG_ITEM_POST_UNEQUIP, force, newloc, no_move, invdrop, silent)
 	SEND_SIGNAL(src, COMSIG_MOB_UNEQUIPPED_ITEM, I, force, newloc, no_move, invdrop, silent)
 	return TRUE
+
+/mob/living/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
+	. = ..()
+	if(I)
+		if(IS_WEAKREF_OF(I, offered_item_ref))
+			stop_offering_item()
 
 //Outdated but still in use apparently. This should at least be a human proc.
 //Daily reminder to murder this - Remie.

@@ -37,6 +37,8 @@
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 
+	stop_offering_item()
+
 	GLOB.mob_living_list -= src
 	for(var/datum/soullink/S as anything in ownedSoullinks)
 		S.ownerDies(FALSE)
@@ -2737,18 +2739,7 @@
 		to_chat(src, span_warning("I need a free hand to take it!"))
 		return FALSE
 
-	if(!QDELETED(offered_item))
-		offerer.stop_offering_item()
-		if(offered_item != get_active_held_item())
-			to_chat(offerer, span_warning("I must keep hold of what I'm offering!"))
-			visible_message(
-				span_warning("[src] attempts to take [offered_item] from [offerer], but it is moved out of reach!"),
-				span_warning("I attempt to take [offered_item], but [offerer] moved it from my reach!"),
-			)
-			return FALSE
-
 	accept_offered_item(offerer, offered_item)
-	offerer.stop_offering_item()
 	return TRUE
 
 /mob/living/proc/accept_offered_item(mob/living/offerer, obj/item/offered_item)
@@ -2759,4 +2750,6 @@
 		span_warning("[src] takes [offered_item] from [offerer]'s outstreched hand!"),
 		span_notice("I take [offered_item] from [offerer]'s outstreched hand."),
 	)
+	SEND_SIGNAL(offerer, COMSIG_LIVING_GAVE_OFFERED_ITEM, src, offered_item)
+	offerer.stop_offering_item()
 
