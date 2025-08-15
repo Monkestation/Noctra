@@ -6,6 +6,7 @@
 
 	associated_skill = /datum/skill/misc/music
 
+	charge_required = FALSE
 	spell_type = NONE
 	cooldown_time = 30 SECONDS
 	invocation_type = INVOCATION_SHOUT
