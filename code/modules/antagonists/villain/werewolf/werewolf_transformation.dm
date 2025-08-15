@@ -3,6 +3,7 @@
 	var/mob/living/carbon/human/H = user // the werewolf is still a human subtype
 	if(H.stat == DEAD) return
 	if(H.advsetup) return
+	if(H.mind?.has_antag_datum(/datum/antagonist/zombie)) return
 
 	// Werewolf transforms at night AND under the sky
 	if(!transformed && !transforming)
