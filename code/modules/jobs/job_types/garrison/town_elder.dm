@@ -117,7 +117,7 @@
 	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/music, 5, TRUE)
 
-	H.add_spell(/datum/action/cooldown/spell/undirected/list_target/vicious_mockery)
+	H.add_spell(/datum/action/cooldown/spell/vicious_mockery)
 
 	H.change_stat(STATKEY_STR, -1)
 	H.change_stat(STATKEY_PER, 2)
@@ -412,7 +412,7 @@
 
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_BARDIC_TRAINING, TRAIT_GENERIC)
-	H.add_spell(/datum/action/cooldown/spell/undirected/list_target/vicious_mockery)
+	H.add_spell(/datum/action/cooldown/spell/vicious_mockery)
 
 
 /datum/advclass/town_elder/dreamwatcher
