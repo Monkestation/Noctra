@@ -6,7 +6,6 @@
 	category = TRIUMPH_CAT_CHARACTER
 	visible_on_active_menu = TRUE
 	manual_activation = TRUE
-	allow_multiple_buys = FALSE
 	limited = TRUE
 	stock = 3
 
