@@ -84,7 +84,7 @@
 	H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
 	H.change_stat(STATKEY_STR, 2)
 	H.change_stat(STATKEY_END, 3)
 	H.change_stat(STATKEY_CON, 3)
