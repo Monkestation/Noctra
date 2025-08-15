@@ -84,6 +84,7 @@
 	H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
 	H.change_stat(STATKEY_STR, 2)
 	H.change_stat(STATKEY_END, 3)
 	H.change_stat(STATKEY_CON, 3)
@@ -126,6 +127,7 @@
 		H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/axesmaces, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
 		H.change_stat(STATKEY_STR, -2)
 		H.change_stat(STATKEY_END, 1)
 		H.change_stat(STATKEY_PER, 2)
@@ -167,6 +169,7 @@
 		H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/axesmaces, 4, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
 		H.change_stat(STATKEY_STR, 2)
 		H.change_stat(STATKEY_CON, 2)
 		H.change_stat(STATKEY_END, 2)
@@ -192,7 +195,7 @@
 	beltr = /obj/item/ammo_holder/quiver/arrows
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow //placeholder, going to give them a slingshot in another PR later
 	armor = /obj/item/clothing/armor/leather
-	backpack_contents = list(/obj/item/weapon/knife/hunting = 1, /obj/item/cooking/pan = 1, /obj/item/reagent_containers/food/snacks/meat/fatty = 2, /obj/item/reagent_containers/food/snacks/egg = 1, /obj/item/storage/belt/pouch/coins/poor)
+	backpack_contents = list(/obj/item/weapon/knife/hunting = 1, /obj/item/cooking/pan = 1, /obj/item/reagent_containers/food/snacks/egg = 1)
 	H.verbs |= /mob/proc/haltyellorphan //pitch shifted for the lols
 
 	if(H.mind) //if you want your ruffians to have combat skills, take them up as apprentices
@@ -201,21 +204,21 @@
 		H.adjust_skillrank(/datum/skill/misc/climbing, 4, TRUE) //considering master climbing, I can make another youngling subclass for such
 		H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/carpentry, 2, TRUE) //work that shit DWARF
-		H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/carpentry, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/labor/butchering, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/crossbows, 1, TRUE) //weak fuck
 		H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/axesmaces, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/cooking, 3, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/cooking, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/stealing, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
-		H.change_stat(STATKEY_STR, rand(-1,2)) //broadly conscripted street urchins, randomization keeps them from being too powerful/consistent
-		H.change_stat(STATKEY_SPD, rand(1,2)) //FAST.
+		H.adjust_skillrank(/datum/skill/misc/stealing, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
+		H.change_stat(STATKEY_STR, rand(-2,1)) //broadly conscripted street urchins, randomization keeps them from being too powerful/consistent
 		H.change_stat(STATKEY_INT, round(rand(-2,2)))
+		H.change_stat(STATKEY_CON, -1)
 		ADD_TRAIT(H, TRAIT_FORAGER, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_ORPHAN, TRAIT_GENERIC) //someone please abuse this
 
