@@ -91,12 +91,6 @@
 		// Throw hands
 		return
 
-	// Anyone can take it to be devilish
-	if(offered_item_ref && isliving(user))
-		var/mob/living/living_user = user
-		living_user.try_accept_offered_item(src)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /mob/living/carbon/human/attack_hand_secondary(mob/user, params)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)

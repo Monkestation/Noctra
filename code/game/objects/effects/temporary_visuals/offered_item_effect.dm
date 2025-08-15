@@ -17,16 +17,23 @@
 	icon_state = offered_thing.icon_state
 	appearance = offered_thing.appearance
 	filters += filter(type="rays")
-	transform /= 1.5
+	transform = matrix() * 0
 	offered_thing_weak_ref = WEAKREF(offered_thing)
 	offerer_weak_ref = WEAKREF(offerer)
 	offered_to_weak_ref = WEAKREF(offered_to)
 	RegisterSignal(offerer, COMSIG_MOVABLE_MOVED, PROC_REF(someone_moved))
 	RegisterSignal(offered_to, COMSIG_MOVABLE_MOVED, PROC_REF(someone_moved))
 	RegisterSignal(offerer, COMSIG_LIVING_STOPPED_OFFERING_ITEM, PROC_REF(stopped_offering))
-	RegisterSignal(offerer, COMSIG_LIVING_GAVE_OFFERED_ITEM, PROC_REF(handover))
+	RegisterSignal(offered_thing, COMSIG_OBJ_HANDED_OVER, PROC_REF(handover))
 	RegisterSignal(offerer, COMSIG_PARENT_QDELETING, PROC_REF(timed_out))
 	calculate_offset()
+
+/obj/effect/temp_visual/offered_item_effect/timed_out()
+	. = ..()
+	var/mob/living/offerer = offerer_weak_ref.resolve()
+
+	if(offerer)
+		offerer.stop_offering_item()
 
 /obj/effect/temp_visual/offered_item_effect/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -41,10 +48,13 @@
 /obj/effect/temp_visual/offered_item_effect/proc/unregister_signals()
 	var/mob/living/offered_to = offered_to_weak_ref.resolve()
 	var/mob/living/offerer = offerer_weak_ref.resolve()
+	var/obj/offered_thing = offered_thing_weak_ref.resolve()
 	if(offerer)
-		UnregisterSignal(offerer, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_STOPPED_OFFERING_ITEM, COMSIG_LIVING_GAVE_OFFERED_ITEM))
+		UnregisterSignal(offerer, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_STOPPED_OFFERING_ITEM))
 	if(offered_to)
 		UnregisterSignal(offered_to, COMSIG_MOVABLE_MOVED)
+	if(offered_thing)
+		UnregisterSignal(offered_thing, COMSIG_OBJ_HANDED_OVER)
 
 	fading_out = TRUE
 
@@ -59,13 +69,13 @@
 	QDEL_IN(src, STOP_OFFER_TIME)
 
 
-/obj/effect/temp_visual/offered_item_effect/proc/handover()
+/obj/effect/temp_visual/offered_item_effect/proc/handover(obj/handed_thing, mob/living/taker, mob/living/offerer)
 	SIGNAL_HANDLER
 	unregister_signals()
 
-	animate(src, transform = matrix() * 0, alpha = 0, pixel_w = src.pixel_w * 2, pixel_z = src.pixel_z * 2 - 8, time = HANDOVER_TIME)
+	animate(src, transform = matrix() * 0, alpha = 0, pixel_w = 0, pixel_z = 0, time = HANDOVER_TIME)
+	Move(get_turf(taker))
 	QDEL_IN(src, HANDOVER_TIME)
-
 
 /obj/effect/temp_visual/offered_item_effect/proc/someone_moved(datum/parent)
 	SIGNAL_HANDLER
@@ -104,7 +114,7 @@
 	var/w_displace = (offered_to.x - offerer.x) * 16
 	var/z_displace = (offered_to.y - offerer.y) * 16 + 4
 
-	animate(src, pixel_w = w_displace, pixel_z = z_displace, time = 0.2 SECONDS)
+	animate(src, pixel_w = w_displace, pixel_z = z_displace, time = 0.2 SECONDS, transform = matrix() * 0.5)
 
 /obj/effect/temp_visual/offered_item_effect/attack_hand(mob/living/user)
 	. = ..()
