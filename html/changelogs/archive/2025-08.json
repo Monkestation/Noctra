@@ -367,5 +367,20 @@
                 "balance": "fiber bundles can hold 12 fibers now."
             }
         ]
+    },
+    "2025-08-15": {
+        "wgtjunior743": [
+            {
+                "balance": "Pilgrims can have apprentices."
+            },
+            {
+                "bugfix": "Foreigners who got their Job changed by \\\"Change Position\\\" now got their title."
+            }
+        ],
+        "DrSirKnight": [
+            {
+                "qol": "Lore Primer can now be checked at any time, not just in lobby."
+            }
+        ]
     }
 }
