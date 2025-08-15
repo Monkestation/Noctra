@@ -147,7 +147,7 @@
 
 	switch(href_list["action"])
 		if("select")
-			var/choice = input(user,"Choose your dye:", "Dyes", null) as null|anything in selectable_colors
+			var/choice = browser_input_list(user,"Choose your dye:", "Dyes", selectable_colors)
 			if(!choice)
 				return
 			active_color = selectable_colors[choice]

@@ -298,5 +298,89 @@
                 "bugfix": "stamina regen is no longer affected by the energy bar if you have the boundless energy trait."
             }
         ]
+    },
+    "2025-08-13": {
+        "Wabberspace": [
+            {
+                "rscadd": "Added Beastish to hollow-kin/demihumens."
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "balance": " Malum Masterwork stat gives more influence"
+            }
+        ],
+        "Wabberpace": [
+            {
+                "bugfix": "Fixed swampweed zigs from constantly overdosing by changing the reagent dosage from 60 > 30."
+            }
+        ],
+        "grungussuss": [
+            {
+                "bugfix": "lich can now return to his mansion"
+            },
+            {
+                "qol": "slapcrafting and dye-ing now have a better UI"
+            },
+            {
+                "bugfix": "fixed sacks being uncraftable"
+            }
+        ],
+        "Wrench-1": [
+            {
+                "image": "modified the Adept's Cowl icon and onmob sprites."
+            }
+        ]
+    },
+    "2025-08-14": {
+        "Arkatos": [
+            {
+                "rscadd": "Added new a new triumph buy - Fart Ability."
+            },
+            {
+                "rscadd": "Added new a new triumph buy - Leprosy."
+            }
+        ],
+        "ApolloVector": [
+            {
+                "balance": "buffed anthraxi knife skill to skilled"
+            },
+            {
+                "balance": "buffed redsands sword skill to expert"
+            },
+            {
+                "balance": "buffed black oak guardian's main weapon skill to expert"
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "rscadd": "A new preference option for newlywed and Parent, called \\\"Preferred Gender\\\"."
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "Changelog entries are sorted descending."
+            }
+        ],
+        "Sulaboy": [
+            {
+                "balance": "fiber bundles can hold 12 fibers now."
+            }
+        ]
+    },
+    "2025-08-15": {
+        "wgtjunior743": [
+            {
+                "balance": "Pilgrims can have apprentices."
+            },
+            {
+                "bugfix": "Foreigners who got their Job changed by \\\"Change Position\\\" now got their title."
+            }
+        ],
+        "DrSirKnight": [
+            {
+                "qol": "Lore Primer can now be checked at any time, not just in lobby."
+            }
+        ]
     }
 }
