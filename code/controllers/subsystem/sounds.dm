@@ -234,5 +234,6 @@ SUBSYSTEM_DEF(sounds)
 
 /datum/controller/subsystem/sounds/proc/preload_music_for_clients()
 	for(var/client/player as anything in GLOB.clients)
+		player.preload_music()
 
 #undef DATUMLESS
