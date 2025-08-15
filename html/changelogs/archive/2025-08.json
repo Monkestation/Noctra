@@ -361,6 +361,11 @@
             {
                 "bugfix": "Changelog entries are sorted descending."
             }
+        ],
+        "Sulaboy": [
+            {
+                "balance": "fiber bundles can hold 12 fibers now."
+            }
         ]
     }
 }

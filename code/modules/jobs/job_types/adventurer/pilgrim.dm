@@ -20,7 +20,7 @@
 	advclass_cat_rolls = list(CTAG_PILGRIM = 15)
 
 	same_job_respawn_delay = 0
-	can_have_apprentices = FALSE
+	can_have_apprentices = TRUE
 	selection_color = "#a33096"
 
 /datum/job/pilgrim/after_spawn(mob/living/spawned, client/player_client)
