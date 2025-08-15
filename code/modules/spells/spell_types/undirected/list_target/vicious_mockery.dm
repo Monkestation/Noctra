@@ -9,7 +9,6 @@
 	spell_type = NONE
 	cooldown_time = 30 SECONDS
 	invocation_type = INVOCATION_SHOUT
-	choose_target_message = "Choose who to mock."
 
 /datum/action/cooldown/spell/vicious_mockery/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
