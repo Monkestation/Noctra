@@ -213,12 +213,9 @@
 		H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/stealing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
-		H.change_stat(STATKEY_STR, rand(-1,3)) //broadly conscripted street urchins, randomization keeps them from being too powerful/consistent
-		H.change_stat(STATKEY_END, rand(-1,1))
-		H.change_stat(STATKEY_CON, rand(1,2))
-		H.change_stat(STATKEY_SPD, 2) //FAST.
-		H.change_stat(STATKEY_INT, round(rand(-4,4)))
-		ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
+		H.change_stat(STATKEY_STR, rand(-1,2)) //broadly conscripted street urchins, randomization keeps them from being too powerful/consistent
+		H.change_stat(STATKEY_SPD, rand(1,2)) //FAST.
+		H.change_stat(STATKEY_INT, round(rand(-2,2)))
 		ADD_TRAIT(H, TRAIT_FORAGER, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_ORPHAN, TRAIT_GENERIC) //someone please abuse this
 
