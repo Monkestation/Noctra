@@ -1,6 +1,6 @@
 /obj/machinery/essence/research_matrix
-	name = "thaumaturgical research matrix"
-	desc = "A complex crystalline construct that allows researchers to visualize and unlock the interconnected web of thaumaturgical knowledge. The surface shimmers with alchemical symbols."
+	name = "Alchemical  research matrix"
+	desc = "A black hexagonal mass which heat radiates from. The heart of any dedicated alchemy setup, it allows for the  "
 	icon = 'icons/roguetown/misc/alchemy.dmi'
 	icon_state = "placeholder"
 	density = TRUE
