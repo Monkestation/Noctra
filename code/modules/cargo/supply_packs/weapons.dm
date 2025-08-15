@@ -151,7 +151,7 @@
 
 // RANGED WEAPONS (ALL TOGETHER)
 /datum/supply_pack/weapons/ranged
-	group = "Weapons (Ranged&Explosives)"
+	group = "Weapons (Ranged)"
 
 /datum/supply_pack/weapons/ranged/puffer
 	name = "Smuggled Püffer"

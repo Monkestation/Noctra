@@ -1,8 +1,10 @@
+/datum/supply_pack/food/drinks
+	group = "drinks"
+
 /datum/supply_pack/food/drinks/water
 	name = "Water Bottle"
 	cost = 5
 	contains = /obj/item/reagent_containers/glass/bottle/water
-	group = "drinks"
 
 /datum/supply_pack/food/drinks/beer
 	name = "Beer-In-A-Bottle"
