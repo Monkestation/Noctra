@@ -58,7 +58,6 @@
 	icon =  'icons/obj/bottle.dmi'
 	icon_state = "brew_bottle"
 	volume = 50
-	can_label_bottle = FALSE
 
 	// var/glass_name
 	// var/glass_desc

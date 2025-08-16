@@ -22,9 +22,9 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	fillsounds = list('sound/items/fillcup.ogg')
 	poursounds = list('sound/items/fillbottle.ogg')
 	experimental_onhip = TRUE
-	/// Determines if the bottle can be labeled with paper
-	var/can_label_bottle = TRUE
-	/// for bottles with custom descriptors that you don't want to change when bottle manipulated
+	can_label_container = TRUE
+
+	/// Do not change desc when open or closed
 	var/fancy
 
 /obj/item/reagent_containers/glass/bottle/Initialize()
@@ -223,7 +223,6 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	amount_per_transfer_from_this = 8
 	possible_transfer_amounts = list(8)
 	dropshrink = 1
-	can_label_bottle = FALSE
 	spillable = TRUE
 	fill_icon_thresholds = null
 
@@ -245,7 +244,6 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	amount_per_transfer_from_this = 6
 	possible_transfer_amounts = list(6)
 	dropshrink = 1
-	can_label_bottle = FALSE
 	spillable = TRUE
 
 	fill_icon_thresholds = null
