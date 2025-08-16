@@ -63,11 +63,11 @@
 /datum/round_event_control/antagonist/canSpawnEvent(players_amt, gamemode, fake_check)
 	. = ..()
 	if(!check_required())
-		if(!SSticker.HasRoundStarted())
-			log_game("Event [name] failed due to antagonist check required.")
+		log_game("Event [name] failed due to antagonist check required.")
 		return FALSE
 
 	if(!.)
+		log_game("Event [name] failed due to return value.")
 		return
 
 /datum/round_event_control/antagonist/return_failure_string(players_amt)

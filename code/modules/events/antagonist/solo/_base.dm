@@ -29,10 +29,12 @@
 /datum/round_event_control/antagonist/solo/canSpawnEvent(players_amt, gamemode, fake_check)
 	. = ..()
 	if(!.)
+		log_game("Event [name] failed due to antag solo return value.")
 		return
 	var/antag_amt = get_antag_amount()
 	var/list/candidates = get_candidates()
 	if(length(candidates) < antag_amt)
+		log_game("Event [name] failed due to antag amount and antag candidates.")
 		return FALSE
 
 /datum/round_event_control/antagonist/solo/proc/get_antag_amount()

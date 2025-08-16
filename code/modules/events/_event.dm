@@ -100,53 +100,42 @@
 // Admin-created events override this.
 /datum/round_event_control/proc/canSpawnEvent(players_amt, gamemode, fake_check = FALSE)
 	if(SSgamemode.current_storyteller?.disable_distribution || SSgamemode.halted_storyteller)
-		if(!SSticker.HasRoundStarted())
-			log_game("Event [name] failed due to disabled distribution or halted storyteller.")
+		log_game("Event [name] failed due to disabled distribution or halted storyteller.")
 		return FALSE
 	if(event_group && !GLOB.event_groups[event_group].can_run())
-		if(!SSticker.HasRoundStarted())
-			log_game("Event [name] failed due event group can run.")
+		log_game("Event [name] failed due event group can run.")
 		return FALSE
 	if(roundstart && (!SSgamemode.can_run_roundstart || (SSgamemode.ran_roundstart && !fake_check && !SSgamemode.current_storyteller?.ignores_roundstart)))
-		if(!SSticker.HasRoundStarted())
-			log_game("Event [name] failed due to roundstart checks.")
+		log_game("Event [name] failed due to roundstart checks.")
 		return FALSE
 
 	if(occurrences >= max_occurrences)
-		if(!SSticker.HasRoundStarted())
-			log_game("Event [name] failed due to max occurences.")
+		log_game("Event [name] failed due to max occurences.")
 		return FALSE
 
 	if(earliest_start >= world.time-SSticker.round_start_time)
-		if(!SSticker.HasRoundStarted())
-			log_game("Event [name] failed due to earliest start.")
+		log_game("Event [name] failed due to earliest start.")
 		return FALSE
 
 	if(wizardevent != SSevents.wizardmode)
-		if(!SSticker.HasRoundStarted())
-			log_game("Event [name] failed due to wizard mode.")
+		log_game("Event [name] failed due to wizard mode.")
 		return FALSE
 	if(players_amt < min_players)
-		if(!SSticker.HasRoundStarted())
-			log_game("Event [name] failed due to min players.")
+		log_game("Event [name] failed due to min players.")
 		return FALSE
 	if(length(todreq) && !(GLOB.tod in todreq))
-		if(!SSticker.HasRoundStarted())
-			log_game("Event [name] failed due to day requirements.")
+		log_game("Event [name] failed due to day requirements.")
 		return FALSE
 	if(length(allowed_storytellers))
 		if(!(SSgamemode.current_storyteller.type in allowed_storytellers))
-			if(!SSticker.HasRoundStarted())
-				log_game("Event [name] failed due to allowed storytellers.")
+			log_game("Event [name] failed due to allowed storytellers.")
 			return FALSE
 	if(req_omen)
 		if(!GLOB.badomens.len)
-			if(!SSticker.HasRoundStarted())
-				log_game("Event [name] failed due to to missing omen.")
+			log_game("Event [name] failed due to to missing omen.")
 			return FALSE
 	if(!name)
-		if(!SSticker.HasRoundStarted())
-			log_game("Event [name] failed due to to missing name.")
+		log_game("Event [name] failed due to to missing name.")
 		return FALSE
 
 	return TRUE
