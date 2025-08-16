@@ -40,11 +40,11 @@
 					if (prob(25))
 						to_chat(M, span_green("A fine beverage."))
 					if (HM.is_noble() || HM.is_courtier() || HM.is_yeoman())
-						M.remove_stress_list(list(/datum/stressevent/noble_impoverished_food, /datum/stressevent/noble_bland_food))
+						M.remove_stress(list(/datum/stressevent/noble_impoverished_food, /datum/stressevent/noble_bland_food))
 				if (DRINK_VERYGOOD to DRINK_FANTASTIC)
 					if (HM.is_noble() || HM.is_courtier() || HM.is_yeoman())
 						M.add_stress(/datum/stressevent/wine_great)
-						M.remove_stress_list(list(/datum/stressevent/noble_desperate, /datum/stressevent/noble_impoverished_food, /datum/stressevent/noble_bland_food, /datum/stressevent/noble_bad_manners, /datum/stressevent/noble_ate_without_table))
+						M.remove_stress(list(/datum/stressevent/noble_desperate, /datum/stressevent/noble_impoverished_food, /datum/stressevent/noble_bland_food, /datum/stressevent/noble_bad_manners, /datum/stressevent/noble_ate_without_table))
 						if (prob(25))
 							to_chat(M, span_blue("Absolutely exquisite!"))
 					else
