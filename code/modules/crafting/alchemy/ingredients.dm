@@ -388,3 +388,16 @@
 	major_pot = /datum/alch_cauldron_recipe/lck_potion
 	med_pot = /datum/alch_cauldron_recipe/spd_potion
 	minor_pot = /datum/alch_cauldron_recipe/health_potion
+
+/obj/item/alch/thaumicdust
+	name = "thaumic iron dust"
+	icon_state = "thaumicirondust"
+	icon = 'icons/roguetown/misc/thaumicdust.dmi'
+	desc = "An odd, sticky clump of various alchemical ingredients. Smelt this down to create an ingot of thaumic iron."
+	smeltresult = /obj/item/ingot/thaumic
+	melting_material = /datum/material/thaumic_iron
+	/* are these still even used for anything I wonder
+	major_pot = /datum/alch_cauldron_recipe/end_potion
+	med_pot = /datum/alch_cauldron_recipe/con_potion
+	minor_pot = /datum/alch_cauldron_recipe/str_potion
+	*/

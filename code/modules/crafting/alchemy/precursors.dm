@@ -1687,6 +1687,19 @@ GLOBAL_LIST_INIT(natural_precursor_registry, list())
 	)
 
 
+//why would you split thaumic iron after making, I do not know, but you can now
+/datum/natural_precursor/thaumic_iron
+	name = "thaumic iron"
+	essence_yields = list(
+		/datum/thaumaturgical_essence/fire = 10,
+		/datum/thaumaturgical_essence/earth = 5
+	)
+	init_types = list(
+		/obj/item/alch/thaumicdust,
+		/obj/item/ingot/thaumic
+	)
+
+
 /datum/natural_precursor/rotten_food
 	name = "rotten food"
 	essence_yields = list(

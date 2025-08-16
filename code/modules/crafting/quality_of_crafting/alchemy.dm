@@ -80,6 +80,25 @@
 	output_amount = 2
 	craftdiff = 1
 
+//a way to create thaumic iron without having to use a splitter. Not at all efficient, this simply exists so you can
+//create alchemical machinery from scratch without admin intervention
+/datum/repeatable_crafting_recipe/alchemy/thaumic_dust
+	name = "Thaumic Iron Dust"
+	output = /obj/item/alch/thaumicdust
+	requirements = list(
+		/obj/item/alch/firedust = 1,
+		/obj/item/alch/coaldust = 1,
+		/obj/item/alch/earthdust = 1,
+		/obj/item/alch/irondust = 1,
+	)
+	tool_usage = list(
+		/obj/item/pestle = list("starts to mix the dust together", "start to mix the dust together")
+	)
+	attacked_atom = /obj/item/reagent_containers/glass/mortar
+	starting_atom = /obj/item/pestle
+	output_amount = 1
+	craftdiff = 2
+
 //a way to get raw essentia other than rng by grinding down manablooms
 //not a "good" way due to consuming four essentia to get two
 //however, it's a guaranteed method of acquiring, which I believe justifies the costs
