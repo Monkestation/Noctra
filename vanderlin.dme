@@ -2410,6 +2410,7 @@
 #include "code\modules\lighting\lighting_object.dm"
 #include "code\modules\lighting\lighting_source.dm"
 #include "code\modules\lighting\lighting_turf.dm"
+#include "code\modules\mapping\contextual_actor.dm"
 #include "code\modules\mapping\hammer_helpers.dm"
 #include "code\modules\mapping\load_image_template.dm"
 #include "code\modules\mapping\map_template.dm"
