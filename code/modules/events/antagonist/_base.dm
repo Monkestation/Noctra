@@ -64,7 +64,7 @@
 	. = ..()
 	if(!check_required())
 		if(!SSticker.HasRoundStarted())
-			log_game("Event [name] to due to antagonist check required.")
+			log_game("Event [name] failed due to antagonist check required.")
 		return FALSE
 
 	if(!.)
