@@ -172,6 +172,8 @@
 		///If we didn't get any events, remove the points inform admins and dont do anything
 		if(!length(valid_events))
 			message_admins("Storyteller failed to pick an event for track of [track].")
+			if(track == EVENT_TRACK_CHARACTER_INJECTION)
+				message_admins("Storyteller failed to launch roundstart event. Current storyteller: [SSgamemode.current_storyteller || "None!!!!"] Report to maints with round ID!!!")
 			mode.event_track_points[track] *= TRACK_FAIL_POINT_PENALTY_MULTIPLIER
 			return
 		picked_event = pickweight(valid_events)
