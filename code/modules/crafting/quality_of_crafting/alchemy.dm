@@ -65,3 +65,55 @@
 	subtypes_allowed = TRUE // so you can use any subtype of knife
 	output_amount = 3
 
+/datum/repeatable_crafting_recipe/alchemy/feau_dust
+	name = "Feau Dust"
+	output = /obj/item/alch/feaudust
+	requirements = list(
+		/obj/item/alch/golddust = 1,
+		/obj/item/alch/irondust = 1,
+	)
+	tool_usage = list(
+		/obj/item/pestle = list("starts to mix the dust together", "start to mix the dust together")
+	)
+	attacked_atom = /obj/item/reagent_containers/glass/mortar
+	starting_atom = /obj/item/pestle
+	output_amount = 2
+	craftdiff = 1
+
+//a way to get raw essentia other than rng by grinding down manablooms
+//not a "good" way due to consuming four essentia to get two
+//however, it's a guaranteed method of acquiring, which I believe justifies the costs
+/datum/repeatable_crafting_recipe/alchemy/magic_dust
+	name = "Raw Essentia"
+	output = /obj/item/alch/runedust
+	requirements = list(
+		/obj/item/alch/waterdust = 1,
+		/obj/item/alch/airdust = 1,
+		/obj/item/alch/firedust = 1,
+		/obj/item/alch/earthdust = 1,
+	)
+	tool_usage = list(
+		/obj/item/pestle = list("starts to mix the dust together", "start to mix the dust together")
+	)
+	attacked_atom = /obj/item/reagent_containers/glass/mortar
+	starting_atom = /obj/item/pestle
+	output_amount = 2
+	craftdiff = 3
+
+//rather expensive crafting recipe
+//you get more magic essence this way, but lose out on some order and earth essence from the runedust and small mana crystal, respectively
+/datum/repeatable_crafting_recipe/alchemy/rune_dust
+	name = "Pure Essentia"
+	output = /obj/item/alch/magicdust
+	requirements = list(
+		/obj/item/reagent_containers/powder/manabloom = 3,
+		/obj/item/mana_battery/mana_crystal/small = 2,
+		/obj/item/alch/runedust = 1,
+	)
+	tool_usage = list(
+		/obj/item/pestle = list("starts to crush and grind the items together", "start to crush and grind the items together")
+	)
+	attacked_atom = /obj/item/reagent_containers/glass/mortar
+	starting_atom = /obj/item/pestle
+	output_amount = 1
+	craftdiff = 4

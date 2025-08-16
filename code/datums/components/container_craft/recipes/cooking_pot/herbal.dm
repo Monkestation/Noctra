@@ -55,7 +55,7 @@
 	category = "Herbal Remedies"
 	crafting_time = 15 SECONDS
 	reagent_requirements = list(
-		/datum/reagent/consumable/ethanol = 20
+		/datum/reagent/consumable/ethanol = 21
 	)
 	subtype_reagents_allowed = TRUE
 	craft_verb = "preparing "

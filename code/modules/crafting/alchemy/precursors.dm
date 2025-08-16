@@ -122,6 +122,7 @@ GLOBAL_LIST_INIT(natural_precursor_registry, list())
 	)
 	init_types = list(
 		/obj/item/reagent_containers/food/snacks/produce/manabloom,
+		/obj/item/reagent_containers/powder/manabloom
 	)
 
 /datum/natural_precursor/vegetable
@@ -1663,6 +1664,28 @@ GLOBAL_LIST_INIT(natural_precursor_registry, list())
 	init_types = list(
 		/obj/item/alch/euphorbia
 	)
+
+/datum/natural_precursor/mana_crystal
+	name = "mana crystal"
+	essence_yields = list(
+		/datum/thaumaturgical_essence/magic = 5,
+		/datum/thaumaturgical_essence/earth = 5
+	)
+	init_types = list(
+		/obj/item/mana_battery/mana_crystal/standard
+	)
+
+//1 standard crystal can be split into two small ones
+/datum/natural_precursor/mana_crystal_small
+	name = "small mana crystal"
+	essence_yields = list(
+		/datum/thaumaturgical_essence/magic = 2,
+		/datum/thaumaturgical_essence/earth = 1
+	)
+	init_types = list(
+		/obj/item/mana_battery/mana_crystal/small
+	)
+
 
 /datum/natural_precursor/rotten_food
 	name = "rotten food"

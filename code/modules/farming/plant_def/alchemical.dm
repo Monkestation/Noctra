@@ -89,7 +89,7 @@
 /datum/plant_def/alchemical/urtica/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	..()
 	base_genetics.disease_resistance = TRAIT_GRADE_EXCELLENT  // Stinging = pest resistant
-	base_genetics.yield_trait = TRAIT_GRADE_EXCELLENT
+	base_genetics.yield_trait = TRAIT_GRADE_GOOD
 
 /datum/plant_def/alchemical/calendula
 	name = "calendula"
@@ -109,7 +109,7 @@
 /datum/plant_def/alchemical/mentha/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	..()
 	base_genetics.disease_resistance = TRAIT_GRADE_EXCELLENT  // Aromatic oils repel pests
-	base_genetics.yield_trait = TRAIT_GRADE_EXCELLENT
+	base_genetics.yield_trait = TRAIT_GRADE_GOOD
 
 /datum/plant_def/alchemical/salvia
 	name = "salvia"
