@@ -145,8 +145,6 @@ GLOBAL_VAR_INIT(focused_test, focused_test())
 		/obj/item/sendingstonesummoner,
 		// sets all it's shit on initialize
 		/obj/effect/temp_visual/offered_item_effect,
-		// is passed a ref in initialize
-		/obj/effect/tripper,
 		// This should be obvious
 		/obj/merge_conflict_marker,
 	)

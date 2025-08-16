@@ -2035,6 +2035,14 @@
 /obj/structure/flora/grass/herb/hypericum,
 /turf/open/floor/dirt,
 /area/rogue/outdoors/mountains/decap)
+"Bw" = (
+/obj/effect/contextual_actor{
+	radius = 3;
+	text_to_pick_from = "kek";
+	sounds_to_pick_from = sound/effects/ghost2.ogg
+	},
+/turf/open/floor/grass/yel,
+/area/rogue/outdoors)
 "BB" = (
 /obj/effect/landmark/bounty_location/warehouse,
 /turf/open/floor/wood,
@@ -17199,7 +17207,7 @@ ai
 Wr
 ai
 QN
-QN
+Bw
 ai
 Wr
 jC

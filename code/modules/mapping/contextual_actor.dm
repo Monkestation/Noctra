@@ -13,17 +13,15 @@
 
 	var/remove_on_activation = FALSE
 
-	var/x_spanning_radius = 0
-
-	var/y_spanning_radius = 0
-
-	var/area_spanning = FALSE
+	var/radius = 1
 
 	var/delete_me_on_activate = FALSE
 
 	var/reactivation_timer = 5 SECONDS
 
 	var/active = TRUE
+
+	var/datum/proximity_monitor/proximity_monitor
 
 /obj/effect/contextual_actor/Initialize(mapload)
 	. = ..()
@@ -37,21 +35,30 @@
 	create_trippers()
 
 /obj/effect/contextual_actor/proc/create_trippers()
-	if(area_spanning && (!x_spanning_radius || !y_spanning_radius))
-		CRASH("can't create an area with one of the radiuses being 1!")
+	if((radius == 1))
+		return
 
-	if(area_spanning)
+	proximity_monitor = new(src, radius)
 
+/obj/effect/contextual_actor/Destroy(force)
+	. = ..()
+	QDEL_NULL(proximity_monitor)
 
+/obj/effect/contextual_actor/HasProximity(atom/movable/AM)
+	. = ..()
+	stepped_on(AM)
 
 /obj/effect/contextual_actor/Crossed(atom/movable/AM, oldloc)
 	. = ..()
-	if(isliving(AM) && !QDELETED(src))
-		stepped_on()
+	stepped_on(AM)
 
-/obj/effect/contextual_actor/proc/stepped_on()
-	if(active)
-		do_acting()
+/obj/effect/contextual_actor/proc/stepped_on(atom/movable/AM)
+	if(!isliving(AM) || QDELETED(src))
+		return
+	if(!active)
+		return
+
+	do_acting()
 
 /obj/effect/contextual_actor/proc/display_text(mob/displayed_to)
 	to_chat(displayed_to, "[spans_to_pick_from ? "<span class=\'>[pick(spans_to_pick_from)]\'" : ""][pick(text_to_pick_from)][spans_to_pick_from ? "</span>" : ""]")
@@ -69,33 +76,3 @@
 	else
 		active = FALSE
 		addtimer(VARSET_CALLBACK(src, active, TRUE), reactivation_timer)
-
-/obj/effect/tripper
-	name = "don't map this in"
-
-	var/datum/weakref/context_to_pick_from_actor_ref
-
-/obj/effect/tripper/Crossed(atom/movable/AM, oldloc)
-	. = ..()
-	var/obj/effect/contextual_actor/actor = context_to_pick_from_actor_ref.resolve()
-	if(!actor)
-		qdel(src)
-		return
-
-	actor.stepped_on()
-
-/obj/effect/tripper/Initialize(mapload, actor)
-	. = ..()
-	if(!text_to_pick_from)
-		stack_trace("[src] spawned without a passed text_to_pick_from")
-		qdel(src)
-		return
-
-	actor = WEAKREF(text_to_pick_from)
-
-	RegisterSignal(text_to_pick_from, COMSIG_PARENT_QDELETING, PROC_REF(on_parent_deletion))
-
-/obj/effect/tripper/proc/on_parent_deletion(datum/parent)
-	SIGNAL_HANDLER
-	qdel(src)
-
