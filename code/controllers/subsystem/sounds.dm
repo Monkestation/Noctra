@@ -229,8 +229,8 @@ SUBSYSTEM_DEF(sounds)
 
 	all_sounds = pathwalk("sound/", valid_file_extensions)
 
-	all_music_sounds = pathwalk("sound/ambience", valid_file_extensions)
-	all_music_sounds += pathwalk("sounds/music", valid_file_extensions)
+	all_music_sounds = pathwalk("sound/ambience/", valid_file_extensions)
+	all_music_sounds += pathwalk("sounds/music/", valid_file_extensions)
 
 /datum/controller/subsystem/sounds/proc/preload_music_for_clients()
 	for(var/client/player as anything in GLOB.clients)
