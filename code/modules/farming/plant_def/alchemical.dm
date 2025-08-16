@@ -109,7 +109,7 @@
 /datum/plant_def/alchemical/mentha/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	..()
 	base_genetics.disease_resistance = TRAIT_GRADE_EXCELLENT  // Aromatic oils repel pests
-	base_genetics.yield_trait = TRAIT_GRADE_GOOD
+	base_genetics.yield_trait = TRAIT_GRADE_EXCELLENT
 
 /datum/plant_def/alchemical/salvia
 	name = "salvia"
