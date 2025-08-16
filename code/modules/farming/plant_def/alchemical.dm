@@ -89,7 +89,7 @@
 /datum/plant_def/alchemical/urtica/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	..()
 	base_genetics.disease_resistance = TRAIT_GRADE_EXCELLENT  // Stinging = pest resistant
-	base_genetics.yield_trait = TRAIT_GRADE_GOOD
+	base_genetics.yield_trait = TRAIT_GRADE_EXCELLENT
 
 /datum/plant_def/alchemical/calendula
 	name = "calendula"
