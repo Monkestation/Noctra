@@ -12,10 +12,10 @@
 	//so it fits better with the wild cards that is this demographic of people
 	//having said that I am gate keeping the moment felinids are in the damn game
 	allowed_ages = list(AGE_MIDDLEAGED,AGE_OLD, AGE_IMMORTAL) //AGE_OLD with the ring on? I say unlikely - clown
-	tutorial = "Forced out of your old adventure party, you applied to the Mercenary guild. Eventually becoming\
+	tutorial = "Forced out of your old adventure party due to monetary issues, you applied to the Mercenary guild. Eventually becoming \
 	the next Guild Master. Gone are the excitements of your past, today your life is engrossed with two \
-	things: administrative work, and feeding the monstrous Head Eater. Act as the\
-	Mercenary Guild's master in town, and make sure your members bring back the heads of any slain monsters\
+	things: administrative work, and feeding the monstrous Head Eater. Act as the \
+	Mercenary Guild's master in town, and make sure your members bring back the heads of any slain monsters \
 	or bandits. For the Head Eater hungers..."
 
 	display_order = JDO_GAFFER
@@ -53,7 +53,7 @@
 	ADD_TRAIT(H, TRAIT_SEEPRICES, type)
 	ADD_TRAIT(H, TRAIT_BURDEN, type)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, type)
-	ADD_TRAIT(H, TRAIT_OLDPARTY, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_EXPARTY, type)
 
 	H.change_stat("speed", 2)
 	H.change_stat("perception", 1)

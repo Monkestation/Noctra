@@ -27,6 +27,8 @@
 			user.add_stress(/datum/stressevent/ugly)
 	if(HAS_TRAIT(src, TRAIT_OLDPARTY) && HAS_TRAIT(user, TRAIT_OLDPARTY) && user != src)
 		user.add_stress(/datum/stressevent/saw_old_party)
+	if(HAS_TRAIT(src, TRAIT_EXPARTY) && HAS_TRAIT(user, TRAIT_OLDPARTY) && user != src)
+		user.add_stress(/datum/stressevent/saw_exold_party)
 
 /mob/living/carbon/human/examine(mob/user)
 	var/ignore_pronouns = FALSE
@@ -168,7 +170,7 @@
 				var/datum/component/vampire_disguise/disguise_comp = GetComponent(/datum/component/vampire_disguise)
 				if(!disguise_comp.disguised)
 					. += span_userdanger("A MONSTER!")
-          
+
 		if(!is_bandit && (real_name in GLOB.outlawed_players))
 			. += span_userdanger("OUTLAW!")
 

@@ -204,6 +204,11 @@
 	stressadd = -2
 	desc = span_green("Its always good to see an old friends face.")
 
+/datum/stressevent/saw_exold_party
+	timer = 2 MINUTES
+	stressadd = 2
+	desc = span_red("Oh gods.. its <i>him.</i>")
+
 /datum/stressevent/astrata_grandeur
 	timer = 30 MINUTES
 	stressadd = -2

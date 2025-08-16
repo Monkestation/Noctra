@@ -409,6 +409,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CRATEMOVER "Crate Mover"
 #define TRAIT_BURDEN "Burdened" //Gaffer stuff
 #define TRAIT_OLDPARTY "Old Party"
+#define TRAIT_EXPARTY "Ex-Old Party"
 #define TRAIT_EARGRAB "Ear Grab"
 #define TRAIT_FACELESS "Faceless One"
 
