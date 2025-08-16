@@ -128,6 +128,9 @@ SUBSYSTEM_DEF(triumphs)
 	if(!ref_datum.allow_multiple_buys && C.has_triumph_buy(ref_datum.triumph_buy_id))
 		to_chat(C, span_warning("You already have this item!"))
 		return FALSE
+	if(C.has_triumph_buy(ref_datum.triumph_buy_id, TRUE))
+		to_chat(C, span_warning("You already have this item and it was not activated yet!"))
+		return FALSE
 
 	C.adjust_triumphs(ref_datum.triumph_cost * -1, counted = FALSE, silent = TRUE)
 

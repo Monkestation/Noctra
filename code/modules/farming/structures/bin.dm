@@ -188,7 +188,7 @@
 			var/datum/anvil_recipe/R = T.held_item:currecipe
 			var/obj/item/crafteditem = R.created_item
 			for(var/i in 1 to R.createditem_extra + 1)
-				var/obj/item/IT = new crafteditem(used_turf)
+				var/obj/item/IT = new crafteditem(used_turf, TRUE)
 				R.handle_creation(IT)
 				IT.OnCrafted(user.dir, user)
 				record_featured_stat(FEATURED_STATS_SMITHS, user)

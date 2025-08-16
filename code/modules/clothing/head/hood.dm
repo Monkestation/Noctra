@@ -47,7 +47,6 @@
 	body_parts_covered = NECK
 	salvage_amount = 1
 	salvage_result = /obj/item/natural/cloth
-	color = CLOTHING_LINEN
 
 /obj/item/clothing/head/roguehood/colored
 	misc_flags = CRAFTING_TEST_EXCLUDE

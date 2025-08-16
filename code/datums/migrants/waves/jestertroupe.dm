@@ -31,7 +31,7 @@
 	H.adjust_skillrank(/datum/skill/misc/climbing, pick(4,4,4,4,5), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
-	H.add_spell(/datum/action/cooldown/spell/undirected/list_target/vicious_mockery, silent = TRUE)
+	H.add_spell(/datum/action/cooldown/spell/vicious_mockery, silent = TRUE)
 	H.change_stat(STATKEY_STR, -1)
 	H.change_stat(STATKEY_CON, -1)
 	H.change_stat(STATKEY_SPD, 1)

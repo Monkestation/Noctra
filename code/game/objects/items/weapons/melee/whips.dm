@@ -150,13 +150,6 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/weapon/whip/cane/physician
-	name = "physician's cane"
-	desc = "A prized cane. Embellished with a golden serpent, representing the Kingsfield university."
-	icon_state = "fancy_cane"
-	max_integrity = 100
-	sellprice = 30
-
 /datum/intent/whip/lash/cane
 	attack_verb = list("lashes", "canes")
 	chargetime = 20

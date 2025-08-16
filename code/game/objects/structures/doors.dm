@@ -524,6 +524,8 @@
 	opacity = FALSE
 	ridethrough = TRUE
 	animate_time = 0.6 SECONDS
+	lock_sound = 'sound/foley/lock.ogg'
+	unlock_sound = 'sound/foley/unlock.ogg'
 
 /obj/structure/door/iron/bars/cell
 	name = "cell door"
