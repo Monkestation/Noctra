@@ -10,7 +10,7 @@
 	var/obj/item/infusion_target = null
 	var/working = FALSE
 	var/progress = 0
-	var/completion_time = 60
+	var/completion_time = 50
 
 	processing_priority = 1
 
