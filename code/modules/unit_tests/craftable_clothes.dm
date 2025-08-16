@@ -54,6 +54,7 @@ abstract types are automatically excluded.
 		/obj/item/clothing/gloves/leather/otavan/inqgloves,  // inquisitor bullshit
 		/obj/item/clothing/armor/amazon_chainkini, // no horni
 		/obj/item/clothing/head/helmet/leather/hood_ominous, // todo?
+		/obj/item/clothing/neck/tyrants_chain, // special for innkeep merger contract
 
 	)
 	// these don't use misc_flags = CRAFTING_TEST_EXCLUDE because we want to explicitly know which paths we are excluding.

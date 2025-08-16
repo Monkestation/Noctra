@@ -17,6 +17,8 @@ GLOBAL_LIST_EMPTY(trophy_cases)
 
 GLOBAL_LIST_EMPTY(mob_spawners) 		    // All mob_spawn objects
 
+GLOBAL_LIST_EMPTY(psycrosses)
+
 /* COLORS */
 GLOBAL_LIST_INIT(peasant_dyes, list(
 	"Linen" = CLOTHING_LINEN,

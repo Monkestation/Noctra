@@ -36,6 +36,8 @@
 	var/blood_overlay_type = "suit"
 	var/togglename = null
 	abstract_type = /obj/item/clothing/armor
+	var/uniquestyle = TRUE // for armor (and weapon) customizers, prevents them from being icon changed or applied overlays
+	var/madeof = null
 
 /obj/item/clothing/armor/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, dummy_block = FALSE)
 	. = ..()

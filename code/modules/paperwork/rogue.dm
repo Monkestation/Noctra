@@ -320,49 +320,6 @@
 /obj/item/paper/confession/attack_hand_secondary(mob/user, params)
 	return SECONDARY_ATTACK_CALL_NORMAL
 
-/obj/item/merctoken
-	name = "mercenary token"
-	desc = "A small, palm-fitting bound scroll - a minuature writ of commendation for a mercenary under MGE."
-	icon_state = "merctoken"
-	icon = 'icons/roguetown/items/misc.dmi'
-	w_class = WEIGHT_CLASS_TINY
-	dropshrink = 0.5
-	firefuel = 30 SECONDS
-	sellprice = 2
-	throwforce = 0
-	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_MOUTH
-	var/signee = null
-	var/signeejob = null
-
-/obj/item/merctoken/examine(mob/user)
-	. = ..()
-	if(!signee)
-		. += span_info("Present to a Guild representative for signing.")
-	else
-		. += span_info("SIGNEE: [signee], [signeejob] of Vanderlin.")
-
-/obj/item/merctoken/attackby(obj/item/P, mob/living/carbon/human/user, params)
-	if(istype(P, /obj/item/natural/thorn) || istype(P, /obj/item/natural/feather))
-		if(!user.can_read(src))
-			to_chat(user, span_warning("Even a reader would find these verba incomprehensible."))
-			return
-		if(signee)
-			to_chat(user, span_warning("This token has already been signed."))
-			return
-		if(!is_gaffer_job(user.mind.assigned_role) && !is_merchant_job(user.mind.assigned_role))
-			if(is_mercenary_job(user.mind.assigned_role))
-				to_chat(user, span_warning("I can not sign my own commendation."))
-			else
-				to_chat(user, span_warning("This is incomprehensible."))
-			return
-		else
-			signee = user.real_name
-			signeejob = user.mind.assigned_role.get_informed_title(user)
-			visible_message(span_warning("[user] writes [user.p_their()] name on [src]."))
-			playsound(src, 'sound/items/write.ogg', 100, FALSE)
-			return
-
-
 /obj/item/paper/scroll/frumentarii/roundstart/Initialize()
 	. = ..()
 	real_names |= GLOB.roundstart_court_agents

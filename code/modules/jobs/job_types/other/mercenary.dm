@@ -7,7 +7,7 @@
 	\n\n\
 	You care not. Another day, another mammon."
 	flag = GRAVETENDER
-	department_flag = OUTSIDERS
+	department_flag = MERCGUILD
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_MERCENARY
 	faction = FACTION_TOWN
@@ -30,3 +30,7 @@
 /datum/outfit/job/mercenary/post_equip(mob/living/carbon/human/H)
 	..()
 	to_chat(H, tutorial)
+	ADD_TRAIT(H, TRAIT_MERCGUILD, TRAIT_GENERIC)
+	for(var/C in GLOB.landmarks_list)
+		var/obj/effect/landmark/contracthole/merchole = C
+		merchole.addcontract(H)

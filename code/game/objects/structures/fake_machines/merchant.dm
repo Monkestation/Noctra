@@ -113,6 +113,7 @@
 	var/budget = 200
 	var/upgrade_flags
 	var/current_cat = "1"
+	var/headeaterspread
 
 /obj/structure/fake_machine/merchantvend/Initialize()
 	. = ..()
@@ -136,7 +137,85 @@
 		to_chat(user, span_info("I put [money] mammon in [src]."))
 		playsound(get_turf(src), 'sound/misc/machinevomit.ogg', 100, TRUE, -1)
 		return attack_hand(user)
+	if(istype(I, /obj/item/headeater_spawn) && !headeaterspread)
+		//visible_message() //N/A
+		if(!do_after(user, 5 SECONDS, src))
+			to_chat(user, span_danger("I hastily smear the [I] across the [src]'s screen. At last I don't need to feel it on my palms..."))
+			qdel(I)
+			headeaterspread = 1
+			infection()
+			return
+	if(headeaterspread)
+		var/obj/item/the_ring = locate(/obj/item/clothing/ring/weepers_boon) in user
+		if(the_ring)
+			if(istype(I, /obj/item/natural/head))
+				var/obj/item/natural/head/A = I
+				if(A.headprice > 0)
+					var/hardcoldsweetdelicousfuckingmammons = A.headprice * 0.10
+					hardcoldsweetdelicousfuckingmammons = round(hardcoldsweetdelicousfuckingmammons)
+					A.headprice -= hardcoldsweetdelicousfuckingmammons
+					SSroguemachine.headeater.aggresive_income(hardcoldsweetdelicousfuckingmammons)
+					to_chat(user, span_danger("the [src] consumes the [A] spitting out coins in its place!"))
+					playsound(src, 'sound/misc/godweapons/gorefeast3.ogg', 70, FALSE, ignore_walls = TRUE)
+					budget2change(A.headprice, user)
+					qdel(A)
+					return
+			if(istype(I, /obj/item/bodypart/head))
+				var/obj/item/bodypart/head/E = I
+				if(E.headprice > 0)
+					var/hardcoldsweetdelicousfuckingmammonss = E.headprice * 0.10
+					hardcoldsweetdelicousfuckingmammonss = round(hardcoldsweetdelicousfuckingmammonss)
+					E.headprice -= hardcoldsweetdelicousfuckingmammonss
+					SSroguemachine.headeater.aggresive_income(hardcoldsweetdelicousfuckingmammonss)
+					to_chat(user, span_danger("the [src] consumes the [E] spitting out coins in its place!"))
+					playsound(src, 'sound/misc/godweapons/gorefeast3.ogg', 70, FALSE, ignore_walls = TRUE)
+					budget2change(E.headprice, user)
+					qdel(E)
+					return
 	return ..()
+
+/obj/structure/fake_machine/merchantvend/proc/infection()
+	if(headeaterspread == 1)
+		headeaterspread++
+		playsound(src, 'sound/gore/flesh_eat_03.ogg', 70, FALSE, ignore_walls = TRUE)
+		icon_state = "goldvendor_infestation_1"
+		addtimer(CALLBACK(src, PROC_REF(infection)), 10 MINUTES)
+		set_light(1, 1, 1, l_color =  "#b40909")
+		return
+	if(headeaterspread == 2)
+		headeaterspread++
+		playsound(src, 'sound/gore/flesh_eat_03.ogg', 70, FALSE, ignore_walls = TRUE)
+		icon_state = "goldvendor_infestation_2"
+		update_name()
+		addtimer(CALLBACK(src, PROC_REF(infection)), 20 MINUTES)
+		return
+	if(headeaterspread == 3)
+		playsound(src, 'sound/gore/flesh_eat_03.ogg', 70, FALSE, ignore_walls = TRUE)
+		icon_state = "goldvendor_infestation_3"
+		return
+	set_light(1, 1, 1, l_color =  "#1b7bf1")
+	icon_state = initial(icon_state)
+
+/obj/structure/fake_machine/merchantvend/update_name()
+	. = ..()
+	if(headeaterspread == 2)
+		var/n = pick("HEAD", "GOLD", "EATER", "FACE")
+		var/a = pick("HEAD", "GOLD", "EATER", "FACE")
+		var/m = pick("HEAD", "GOLD", "EATER", "FACE")
+		var/e = pick("HEAD", "GOLD", "EATER", "FACE")
+		if(prob(50))
+			name = "[n][a][m][e]"
+			return
+		else
+			name = "[m][e]"
+			return
+	name = initial(name)
+
+/obj/structure/fake_machine/merchantvend/proc/infestation_death()
+	playsound(src, 'sound/combat/gib (1).ogg', 70, FALSE, ignore_walls = TRUE)
+	headeaterspread = null
+	infection()
+	update_name()
 
 /obj/structure/fake_machine/merchantvend/Topic(href, href_list)
 	. = ..()

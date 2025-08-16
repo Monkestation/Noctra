@@ -151,7 +151,7 @@
 	tutorial = "I never had what it took to be a mercenary, but I offered my service to the Guild regardless. \
 	My vow is to serve whomever holds the ring of Burden while avoiding its curse from befalling me."
 	flag = SERVANT
-	department_flag = APPRENTICES
+	department_flag = MERCGUILD
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_SERVANT
 	faction = FACTION_TOWN
@@ -192,3 +192,4 @@
 		H.adjust_skillrank(/datum/skill/misc/music, pick(0,1,1), TRUE)
 		H.change_stat(STATKEY_SPD, 1)
 		H.change_stat(STATKEY_END, 1)
+		ADD_TRAIT(H, TRAIT_MERCGUILD, TRAIT_GENERIC)

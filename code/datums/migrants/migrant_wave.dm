@@ -142,7 +142,7 @@
 /datum/migrant_wave/merc
 	name = "Band of Mercenaries"
 	downgrade_wave = /datum/migrant_wave/merc_down_one
-	weight = 8
+	can_roll = FALSE
 	roles = list(
 		/datum/migrant_role/mercenary = 4,
 	)

@@ -16,6 +16,7 @@
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS //Has shoulder guards, and nothing else to suggest leg protection
 	prevent_crits = ALL_EXCEPT_BLUNT
 	max_integrity = INTEGRITY_STRONGEST
+	madeof = STEEL
 
 /obj/item/clothing/armor/plate/Initialize()
 	. = ..()
@@ -71,6 +72,7 @@
 	armor = ARMOR_PLATE_BAD
 	max_integrity = INTEGRITY_STANDARD
 	item_weight = 12 * IRON_MULTIPLIER
+	madeof = null
 
 /obj/item/clothing/armor/plate/blkknight
 	name = "blacksteel plate"
@@ -83,6 +85,7 @@
 	anvilrepair = /datum/skill/craft/blacksmithing
 	smeltresult = /obj/item/ingot/blacksteel
 	item_weight = 12 * BLACKSTEEL_MULTIPLIER
+	madeof = BLACKSTEEL
 
 //................ Deccorated Half-plate ............... //
 
@@ -94,6 +97,7 @@
 	mob_overlay_icon = 'icons/roguetown/clothing/special/onmob/decorated_armor.dmi'
 	sleeved = 'icons/roguetown/clothing/special/onmob/decorated_armor.dmi'
 	sellprice = VALUE_LUXURY_THING
+	madeof = null
 
 /obj/item/clothing/armor/plate/decorated/corset
 	name = "decorated halfplate with corset"

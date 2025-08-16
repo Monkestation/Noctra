@@ -1356,10 +1356,11 @@ GLOBAL_LIST_EMPTY(patreon_races)
 
 		var/armor_block = target.run_armor_check(selzone, "blunt", blade_dulling = user.used_intent.blade_class)
 
-		target.lastattacker = user.real_name
+		target.last_attacker_name = user.real_name
+		target.fragger = user
 		if(target.mind)
 			target.mind.attackedme[user.real_name] = world.time
-		target.lastattackerckey = user.ckey
+		target.last_attacker_ckey = user.ckey
 		user.dna.species.spec_unarmedattacked(user, target)
 
 		user.do_attack_animation(target, visual_effect_icon = user.used_intent.animname, atom_bounce = TRUE)
@@ -1563,8 +1564,9 @@ GLOBAL_LIST_EMPTY(patreon_races)
 		stander = FALSE
 	if(user.loc == target.loc)
 		if(!stander)
-			target.lastattacker = user.real_name
-			target.lastattackerckey = user.ckey
+			target.last_attacker_name = user.real_name
+			target.fragger = user
+			target.last_attacker_ckey = user.ckey
 			if(target.mind)
 				target.mind.attackedme[user.real_name] = world.time
 			var/selzone = accuracy_check(user.zone_selected, user, target, /datum/skill/combat/unarmed, user.used_intent)
@@ -1687,8 +1689,9 @@ GLOBAL_LIST_EMPTY(patreon_races)
 
 		SEND_SIGNAL(user, COMSIG_MOB_KICK, target, selzone, damage_blocked)
 		playsound(target, 'sound/combat/hits/kick/kick.ogg', 100, TRUE, -1)
-		target.lastattacker = user.real_name
-		target.lastattackerckey = user.ckey
+		target.last_attacker_name = user.real_name
+		target.fragger = user
+		target.last_attacker_ckey = user.ckey
 		if(target.mind)
 			target.mind.attackedme[user.real_name] = world.time
 		user.adjust_stamina(15)

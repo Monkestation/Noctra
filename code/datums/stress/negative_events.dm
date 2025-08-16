@@ -422,3 +422,13 @@
 	timer = INFINITY
 	stressadd = 3
 	desc = span_red("I've been taken hostage!")
+
+/datum/stressevent/merc_fired
+	timer = 5 MINUTES
+	stressadd = 2
+	desc = span_warning("I lost my job at the Mercenary Guild...")
+
+/datum/stressevent/touched_headeater_spawn
+	timer = 10 MINUTES
+	stressadd = 8
+	desc = span_warning("Foul, disgusting thing!!")

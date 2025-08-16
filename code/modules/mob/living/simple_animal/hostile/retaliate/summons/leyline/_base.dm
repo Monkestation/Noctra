@@ -4,6 +4,7 @@
 	ai_controller.set_blackboard_key(BB_LEYLINE_SOURCE, portal)
 	ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_TOXIMMUNE, TRAIT_GENERIC)
+	dontmakesentient = TRUE
 
 /mob/living/simple_animal/hostile/retaliate/leylinelycan
 	icon = 'icons/mob/summonable/32x32.dmi'

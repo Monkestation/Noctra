@@ -10,6 +10,7 @@
 	clothing_flags = CANT_SLEEP_IN
 	prevent_crits = ALL_EXCEPT_STAB
 	abstract_type = /obj/item/clothing/armor/medium
+	madeof = STEEL
 
 /obj/item/clothing/armor/medium/scale // important is how this item covers legs too compared to halfplate
 	name = "scalemail"
@@ -32,6 +33,7 @@
 	detail_tag = "_metal"		// metal bits are the details so keep them uncolorer = white
 	detail_color = COLOR_WHITE
 	item_weight = 7.4
+	madeof = null
 
 /obj/item/clothing/armor/medium/surcoat/Initialize()
 	. = ..()

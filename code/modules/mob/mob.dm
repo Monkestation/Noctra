@@ -69,6 +69,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	GLOB.mob_directory[tag] = src
 	mobid = "mob[GLOB.mobids]"
 	GLOB.mobids++
+	GLOB.mob_renown_list[mobid] = 0
 	if(stat == DEAD)
 		GLOB.dead_mob_list += src
 	else

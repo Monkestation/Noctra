@@ -7,6 +7,27 @@
 	slot_flags = ITEM_SLOT_NECK|ITEM_SLOT_HIP|ITEM_SLOT_WRISTS
 	sellprice = 10
 	experimental_onhip = TRUE
+	var/rotting = FALSE
+
+/obj/item/clothing/neck/psycross/Initialize(mapload, ...)
+	GLOB.psycrosses += src
+	. = ..()
+
+/obj/item/clothing/neck/psycross/Destroy()
+	. = ..()
+	GLOB.psycrosses -= src
+
+/obj/item/clothing/neck/psycross/examine(mob/user)
+	. = ..()
+	if(rotting)
+		. += "<span class='warning'>It is being overtaken by rot, but how?</span>"
+
+/obj/item/clothing/neck/psycross/proc/do_rot() //I am willing to ignore that these are not represented in the mob overlay its like 5 pixels
+	if(rotting)
+		icon_state = "[icon_state]_rot"
+	else
+		icon_state = initial(icon_state)
+
 
 // SILVER PSYCROSS START
 
@@ -21,6 +42,11 @@
 /obj/item/clothing/neck/psycross/silver/Initialize(mapload)
 	. = ..()
 	enchant(/datum/enchantment/silver)
+	GLOB.psycrosses += src
+
+/obj/item/clothing/neck/psycross/silver/Destroy()
+	. = ..()
+	GLOB.psycrosses -= src
 
 // PANTHEON SILVER PSYCROSSES START
 
@@ -30,12 +56,18 @@
 	icon_state = "astrata"
 	resistance_flags = FIRE_PROOF
 
-// Not silver because in old lore, Noc liked vamps. He does not here! TODO: Needs to change!
+/obj/item/clothing/neck/psycross/silver/astrata/do_rot()
+	return
+
+// Only non-refactored psycross because Noc likes vamps. Neeeerd!
 /obj/item/clothing/neck/psycross/noc
 	name = "amulet of Noc"
 	desc = "Diligence, study, pursuit of truth and wisdom. Let nothing deter you from it."
 	icon_state = "noc"
 	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/psycross/noc/do_rot()
+	return
 
 /obj/item/clothing/neck/psycross/silver/dendor
 	name = "amulet of Dendor"
@@ -43,11 +75,17 @@
 	icon_state = "dendor"
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/neck/psycross/silver/dendor/do_rot()
+	return
+
 /obj/item/clothing/neck/psycross/silver/abyssor
 	name = "amulet of Abyssor"
 	desc = "Oceanshaper and guardian of the seas, make them remember his name."
 	icon_state = "abyssor"
 	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/psycross/silver/abyssor/do_rot()
+	return
 
 /obj/item/clothing/neck/psycross/silver/necra
 	name = "amulet of Necra"
@@ -55,11 +93,17 @@
 	icon_state = "necra"
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/neck/psycross/silver/necra/do_rot()
+	return
+
 /obj/item/clothing/neck/psycross/silver/ravox
 	name = "amulet of Ravox"
 	desc = "Struggle. Challenge. And rise to struggle again. That is the sword of he who yet lives to fight again."
 	icon_state = "ravox"
 	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/psycross/silver/ravox/do_rot()
+	return
 
 /obj/item/clothing/neck/psycross/silver/xylix
 	name = "amulet of Xylix"
@@ -67,17 +111,26 @@
 	icon_state = "xylix"
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/neck/psycross/silver/xylix/do_rot()
+	return
+
 /obj/item/clothing/neck/psycross/silver/eora
 	name = "amulet of Eora"
 	desc = "And I love thee because thou art love."
 	icon_state = "eora"
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/neck/psycross/silver/eora/do_rot()
+	return
+
 /obj/item/clothing/neck/psycross/silver/holy/eora
 	name = "Eora's love potion"
 	desc = "Eora's blessing is upon thy, use me on someone else and you shall be soulbond."
 	icon_state = "eora"
 	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/psycross/silver/holy/eora/do_rot()
+	return
 
 /obj/item/clothing/neck/psycross/silver/holy/eora/attack(mob/living/love_target, mob/user)
 	if(!isliving(love_target) || love_target.stat == DEAD)
@@ -107,6 +160,8 @@
 	icon_state = "pestra"
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/neck/psycross/silver/pestra/do_rot()
+	return
 
 /obj/item/clothing/neck/psycross/silver/malum
 	name = "amulet of Malum"
@@ -114,11 +169,18 @@
 	icon_state = "malum"
 	resistance_flags = FIRE_PROOF
 
+
+/obj/item/clothing/neck/psycross/silver/malum/do_rot()
+	return
+
 /obj/item/clothing/neck/psycross/silver/malum_steel
 	name = "amulet of Malum"
 	desc = "Let the tools that guide thee be thy hands."
 	icon_state = "malum_alt"
 	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/psycross/silver/malum_steel/do_rot()
+	return
 
 /obj/item/clothing/neck/psycross/g
 	name = "golden psycross"

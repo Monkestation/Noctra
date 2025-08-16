@@ -169,6 +169,41 @@ GLOBAL_LIST_EMPTY(letters_sent)
 		if(is_inquisitor_job(user.mind.assigned_role) || is_adept_job(user.mind.assigned_role)) // Only Inquisitors and Adepts can sumbit confessions.
 			process_confession(user, P)
 			return
+	if(istype(P, /obj/item/paper/political_PM/merc_parade))
+		var/obj/item/paper/political_PM/merc_parade/MP = P
+		if(!MP.signed || !MP.gaffsigned)
+			say("THIS DECLARATION LACKS THE PROPER SIGNATURES.")
+			return
+		if(!HAS_TRAIT(user, TRAIT_BURDEN) && !is_gaffer_assistant_job(user.mind.assigned_role))
+			to_chat(user, span_warning("I am not in the position to declare this."))
+			return
+
+		log_game("The Mercenary guild started a Mercenary Parade, signed off by [MP.signed.real_name]")
+		qdel(MP)
+		visible_message(span_warning("[user] sends something."))
+		playsound(loc, 'sound/misc/disposalflush.ogg', 100, FALSE, -1)
+
+		sleep(2 SECONDS) //"should be a callback..." well it's still not. -clown
+
+		say("THE PEOPLE WILL KNOW.")
+		playsound(src.loc, 'sound/misc/hiss.ogg', 100, FALSE, -1)
+		//N/A this is so fucked
+		if(prob(30))
+			SSmigrants.set_current_wave(/datum/migrant_wave/merc, 10 MINUTES)
+			return
+		if(prob(40))
+			SSmigrants.set_current_wave(/datum/migrant_wave/merc_down_one, 10 MINUTES)
+			return
+		if(prob(15))
+			SSmigrants.set_current_wave(/datum/migrant_wave/merc_down_two, 10 MINUTES)
+			return
+		if(prob(5))
+			SSmigrants.set_current_wave(/datum/migrant_wave/merc_down_three, 10 MINUTES)
+			return
+		else
+			return
+
+
 	if(istype(P, /obj/item/paper))
 		var/obj/item/paper/given_paper = P
 		if(given_paper.w_class >= WEIGHT_CLASS_BULKY)

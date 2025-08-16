@@ -80,7 +80,6 @@
 #define FELDSHER    (1<<7)
 #define NIGHTMAN    (1<<8)
 #define SCRIBE		(1<<9)
-#define GAFFER		(1<<10)
 
 #define PEASANTS		(1<<4)
 
@@ -114,7 +113,6 @@
 
 #define PILGRIM		(1<<0)
 #define ADVENTURER	(1<<1)
-#define MERCENARY	(1<<2)
 #define MIGRANT		(1<<3)
 #define BANDIT		(1<<4)
 
@@ -123,6 +121,11 @@
 #define MERCHANT	(1<<0)
 #define SHOPHAND	(1<<1)
 #define GRABBER		(1<<2)
+
+#define MERCGUILD		(1<<9)
+
+#define GAFFER		(1<<0)
+#define MERCENARY	(1<<1)
 
 #define UNDEAD		(1<<10)
 

@@ -183,6 +183,9 @@
 			if(HAS_TRAIT(src, TRAIT_THIEVESGUILD) && HAS_TRAIT(user, TRAIT_THIEVESGUILD))
 				. += span_green("A member of the Thieves Guild.")
 
+			if(HAS_TRAIT(src, TRAIT_MERCGUILD) && HAS_TRAIT(user, TRAIT_MERCGUILD))
+				. += span_green("A member of the Mercenary Guild.")
+
 			if(HAS_TRAIT(src, TRAIT_CABAL) && HAS_TRAIT(user, TRAIT_CABAL))
 				. += span_purple("A fellow seeker of Her ascension.")
 

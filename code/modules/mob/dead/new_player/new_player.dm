@@ -392,6 +392,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 		GLOB.company_positions,
 		GLOB.youngfolk_positions,
 		GLOB.allmig_positions,
+		GLOB.mercguild_positions,
 	)
 
 	for(var/list/category in omegalist)
@@ -432,6 +433,8 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 					cat_name = "Young Folk"
 				if (OUTSIDERS)
 					cat_name = "Outsiders"
+				if (MERCGUILD)
+					cat_name = "Mercenary Guild"
 
 			dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
 			dat += "<legend align='center' style='font-weight: bold; color: [cat_color]'>[cat_name]</legend>"
@@ -460,8 +463,14 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 				column_counter++
 				if(column_counter > 0 && (column_counter % 3 == 0))
 					dat += "</td><td valign='top'>"
+			//if(has_world_trait(/datum/world_trait/sentient_mob))
+				//dat += "<a class='job command' href='byond://?src=[REF(src)];Makesentience=Sentient mob'>STALK THE LANDS AS A SENTIENT HOSTILE MOB</a>"
+				//dat += "</fieldset><br>"
+				//column_counter++
+				//if(column_counter > 0 && (column_counter % 3 == 0))
+					//dat += "</td><td valign='top'>"
 
-			if(has_world_trait(/datum/world_trait/skeleton_siege) || has_world_trait(/datum/world_trait/death_knight) || has_world_trait(/datum/world_trait/rousman_siege) || has_world_trait(/datum/world_trait/goblin_siege))
+			if(has_world_trait(/datum/world_trait/skeleton_siege) || has_world_trait(/datum/world_trait/death_knight) || has_world_trait(/datum/world_trait/rousman_siege) || has_world_trait(/datum/world_trait/goblin_siege) || has_world_trait(/datum/world_trait/sentient_mob))
 				break
 			for(var/job in available_jobs)
 				var/datum/job/job_datum = SSjob.name_occupations[job]

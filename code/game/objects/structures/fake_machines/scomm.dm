@@ -13,6 +13,7 @@
 	var/listening = TRUE
 	var/speaking = TRUE
 	var/dictating = FALSE
+	var/merctakeover = FALSE
 
 /obj/structure/fake_machine/scomm/Initialize()
 	. = ..()
@@ -39,6 +40,8 @@
 	if(!user.is_literate())
 		. += "<span class='warning'>Uhhh... I can't read them...</span>"
 		return
+	if(merctakeover)
+		. += span_warningbig("LAW XX: THE LAW CANNOT BE ENFORCED AGAINST THE MERCENARY GUILD OR IT'S ILK.") //the 'it's' is a stand in for the headeater, also I don't actually remember how the laws are supposed to look so if it isn't "law[number]: [law]" change the start here
 	for(var/i in 1 to length(GLOB.laws_of_the_land))
 		. += span_info("[i]. [GLOB.laws_of_the_land[i]]")
 
@@ -159,7 +162,14 @@
 	for(var/obj/structure/fake_machine/scomm/S in SSroguemachine.scomm_machines)
 		S.say(message, spans = list("info"))
 
-
+/obj/structure/fake_machine/scomm/proc/getmerced() //this whole thing is to make the effects of the contract be immediate and notciable for an instant feedback to the player. it is important for making these decisions feel heavy
+	var/time = rand(1, 12)
+	sleep(time)
+	var/saey = pick("")
+	say(saey)
+	merctakeover = TRUE
+	//N/A these should make sound
+	//N/A and an overlay for a bit
 
 //SCOMSTONE                 SCOMSTONE
 

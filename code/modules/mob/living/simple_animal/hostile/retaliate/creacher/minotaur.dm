@@ -41,6 +41,7 @@
 	aggressive = 1
 //	stat_attack = UNCONSCIOUS
 	remains_type = /obj/item/weapon/axe/battle
+	dontmakesentient = TRUE
 
 	ai_controller = /datum/ai_controller/minotaur
 

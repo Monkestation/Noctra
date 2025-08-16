@@ -160,6 +160,7 @@ GLOBAL_LIST_INIT(RATS_DONT_EAT, typecacheof(list(
 	#define is_merchant_job(job_type) (istype(job_type, /datum/job/merchant))
 	#define is_steward_job(job_type) (istype(job_type, /datum/job/steward))
 // Garrison
+	#define is_captain_job(job_type) (istype(job_type, /datum/job/captain))
 // Church
 	#define is_priest_job(job_type) (istype(job_type, /datum/job/priest))
 	#define is_monk_job(job_type) (istype(job_type, /datum/job/monk))
@@ -167,6 +168,7 @@ GLOBAL_LIST_INIT(RATS_DONT_EAT, typecacheof(list(
 	#define is_adept_job(job_type) (istype(job_type, /datum/job/adept))
 // Serfs
 	#define is_gaffer_job(job_type) (istype(job_type, /datum/job/gaffer))
+	#define is_innkeep_job(job_type) (istype(job_type, /datum/job/innkeep))
 // Peasantry
 	#define is_jester_job(job_type) (istype(job_type, /datum/job/jester))
 	#define is_adventurer_job(job_type) (istype(job_type, /datum/job/adventurer))

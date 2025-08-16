@@ -20,6 +20,7 @@
 	max_integrity = INTEGRITY_STANDARD
 	salvage_result = /obj/item/natural/hide/cured
 	item_weight = 3.2
+	madeof = LEATHER
 
 /obj/item/clothing/armor/leather/advanced
 	name = "hardened leather coat"
@@ -50,6 +51,7 @@
 
 	armor = ARMOR_LEATHER
 	salvage_result = /obj/item/natural/hide/cured
+	madeof = HIDE
 
 //................ Splint Mail ............... //
 /obj/item/clothing/armor/leather/splint
@@ -62,6 +64,7 @@
 	prevent_crits = ALL_EXCEPT_STAB
 	max_integrity = INTEGRITY_STRONG
 	item_weight = 6.7
+	madeof = null
 
 
 //................ Leather Vest ............... //	- has no sleeves.  - can be worn in armor OR shirt slot
@@ -186,6 +189,7 @@
 
 	body_parts_covered = COVERAGE_ALL_BUT_ARMS
 	prevent_crits = CUT_AND_MINOR_CRITS
+	madeof = null
 
 /obj/item/clothing/armor/leather/jacket/silk_coat/Initialize()
 	color = pick(CLOTHING_PLUM_PURPLE, CLOTHING_WHITE, CLOTHING_BLOOD_RED)
@@ -199,6 +203,7 @@
 	sellprice = VALUE_LEATHER_ARMOR_LORD
 
 	body_parts_covered = COVERAGE_SHIRT
+	madeof = null
 
 //................ Hand´s Coat ............... //
 /obj/item/clothing/armor/leather/jacket/hand
@@ -208,6 +213,7 @@
 	sellprice = VALUE_LEATHER_ARMOR_LORD
 
 	body_parts_covered = COVERAGE_ALL_BUT_ARMS
+	madeof = null
 
 /obj/item/clothing/armor/leather/jacket/handjacket
 	name = "noble jacket"
@@ -219,6 +225,7 @@
 	detail_color = CLOTHING_BERRY_BLUE
 	body_parts_covered = COVERAGE_SHIRT
 	uses_lord_coloring = LORD_PRIMARY
+	madeof = null
 
 /obj/item/clothing/armor/leather/jacket/leathercoat
 	name = "leather coat"
