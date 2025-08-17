@@ -326,8 +326,8 @@
 
 //................ Wooden sword ............... //
 /obj/item/weapon/mace/woodclub/train_sword
-	force = 5
-	force_wielded = 8
+	force = DAMAGE_CLUB - 10
+	force_wielded = DAMAGE_CLUB_WIELD - 10
 	name = "wooden sword"
 	desc = "Crude wood assembled into the shape of a sword, a terrible weapon to be on the recieving end of during a training spat."
 	icon_state = "wsword"
@@ -401,6 +401,8 @@
 
 //................ Grand mace ............... //
 /obj/item/weapon/mace/goden/steel
+	force = DAMAGE_MACE
+	force_wielded = DAMAGE_MACE_WIELD
 	gripped_intents = list(/datum/intent/mace/smash/heavy) // It's a 2h flanged mace, not a goedendag.
 	name = "grand mace"
 	desc = "A casted polearm, rumored to be the weapon-design used by Psydon himself."
@@ -426,6 +428,8 @@
 
 
 /obj/item/weapon/mace/goden/steel/malum
+	force = DAMAGE_MACE+5
+	force_wielded = DAMAGE_HEAVYCLUB_WIELD
 	name = "forgefiend"
 	desc = "This hammer's creation took a riddle in its own making. A great sacrifice for perfect quality"
 	icon_state = "malumhammer"
@@ -434,6 +438,8 @@
 
 //................ Psydonian Grand Mace ............... //
 /obj/item/weapon/mace/goden/psydon
+	force = DAMAGE_MACE
+	force_wielded = DAMAGE_MACE_WIELD
 	name = "psydonian grand mace"
 	desc = "A mighty mace which seems to be a large psycross with a handle, though no less effective at crushing the spirit and bones of the inhumen."
 	icon_state = "psymace"
@@ -556,7 +562,7 @@
 	return ..()
 
 /obj/item/weapon/mace/warhammer/steel
-	force = 25
+	force = DAMAGE_MACE + 5
 	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/mace/warhammer/impale, /datum/intent/mace/warhammer/stab)
 	name = "steel warhammer"
 	desc = "A fine steel warhammer, makes a satisfying sound when paired with a knight's helm."
