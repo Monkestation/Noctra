@@ -4,7 +4,7 @@
 	Stitched the sores of blades, sealed honey over the bubous of plague. \
 	A thousand deaths stolen from the Carriagemen, yet these people will still call you a charlatan. \
 	At least the Apothecary understands you."
-	department_flag = NOBLEMEN
+	department_flag = SERFS
 	display_order = JDO_FELDSHER
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	faction = FACTION_TOWN
@@ -12,7 +12,7 @@
 	spawn_positions = 2
 	min_pq = 2
 
-	//Reason all races allowed is you are basically a very talented court physician; even 'lower races' would find this to be one of the only ways to obtain a sort of nobility.
+	//Feldshers are now the doctors of the town, hence nonexotic
 	allowed_races = RACES_PLAYER_NONEXOTIC
 
 	outfit = /datum/outfit/job/feldsher
