@@ -3,24 +3,28 @@
 	icon = 'icons/testing/source.dmi'
 	icon_state = MAP_SWITCH("none", "actor")
 
+	/* SHIT MAPPERS CAN CHANGE FOR THEIR PURPOSES BELOW*/
+
+	/// an html to pick from when sending to the player, can be a single or a list
 	var/raw_html_to_pick_from
-
+	/// the range at which the raw html is sent to when activated
 	var/range_to_display_in = 8
-
+	/// a sound to play when activated, can be a single or a list
 	var/sounds_to_pick_from = 'sound/villain/dreamer_warning.ogg'
-
-	var/remove_on_activation = FALSE
-
+	/// how close do you have to step for it to activate
 	var/activation_radius = 2
-
+	/// is this actor deleted on activation? if false, will be disabled for the duration of the reactivation timer on activation
 	var/delete_me_on_activate = FALSE
-
+	/// how long is the cooldown for activation
 	var/reactivation_timer = 5 SECONDS
 
+	/* CODE STUFF BELOW, DON'T TOUCH THIS IF YOU DON'T KNOW WHAT IT DOES */
+
+	/// used for tracking which mobs have triggered this actor already, if they have, they won't activate it.
 	var/weak_refs_to_mobs_that_have_seen_me = list()
-
+	/// tracks if this actor is currently activated
 	var/active = TRUE
-
+	/// proximity monitor associated with the actor
 	var/datum/proximity_monitor/proximity_monitor
 
 /obj/effect/contextual_actor/Initialize(mapload)
@@ -82,44 +86,3 @@
 	else
 		active = FALSE
 		addtimer(VARSET_CALLBACK(src, active, TRUE), reactivation_timer)
-
-/obj/effect/contextual_actor/preset
-	raw_html_to_pick_from = \
-		"<!DOCTYPE html>\
-		<html>\
-		<head>\
-		    <title>DANGER!</title>\
-		    <style>\
-		        .scary-text {\
-		            font-size: 20px;\
-		            text-shadow: 0 0 10px red;\
-					color: darkred;\
-		            animation: flicker 0.5s infinite alternate;\
-		            white-space: pre;\
-		        }\
-		        \
-		        @keyframes flicker {\
-		            0% { opacity: 0.8; }\
-		            100% { opacity: 1; }\
-		        }\
-		    </style>\
-		</head>\
-		<body>\
-		    <div class=\"scary-text\">\
-		        %TEXT_TO_REPLACE_WITH\
-		    </div>\
-		</body>\
-		</html>";
-
-
-	var/text_to_replace_with = "\
-		YOU LOOK AROUND<br>\
-		YOU ARE SURROUNDED BY GOBLINS!\
-		"
-
-/obj/effect/contextual_actor/preset/Initialize(mapload)
-	. = ..()
-	if(!islist(text_to_replace_with))
-		text_to_replace_with = list(text_to_replace_with)
-	for(var/html_num in 1 to length(raw_html_to_pick_from))
-		raw_html_to_pick_from[html_num] = replacetext(raw_html_to_pick_from[html_num], "%TEXT_TO_REPLACE_WITH", pick(text_to_replace_with))
