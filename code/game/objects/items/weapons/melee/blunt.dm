@@ -272,7 +272,7 @@
 	name = "club"
 	desc = "A weapon older than recorded time itself."
 	icon_state = "club1"
-	max_integrity = 120
+	max_integrity = INTEGRITY_POOR - 30
 	resistance_flags = FLAMMABLE // Weapon made mostly of wood
 	possible_item_intents = list(/datum/intent/mace/strike/wood)
 	gripped_intents = list(/datum/intent/mace/strike/wood, /datum/intent/mace/smash/wood)
@@ -301,7 +301,7 @@
 	melting_material = null
 	wlength = WLENGTH_SHORT
 	w_class = WEIGHT_CLASS_NORMAL
-	max_integrity = 180
+	max_integrity = INTEGRITY_STANDARD - 20
 	minstr = 2
 	wbalance = HARD_TO_DODGE
 	sellprice = 15
@@ -368,6 +368,7 @@
 	wlength = WLENGTH_LONG
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
+	max_integrity = INTEGRITY_POOR //poor instead of worst as we can assume it was made specifically to withstand heavy use, like weapons usually are
 	smeltresult = /obj/item/fertilizer/ash
 	melting_material = null
 	resistance_flags = FLAMMABLE // Weapon made mostly of wood
@@ -428,8 +429,9 @@
 
 
 /obj/item/weapon/mace/goden/steel/malum
-	force = DAMAGE_MACE+5
+	force = DAMAGE_MACE + 5
 	force_wielded = DAMAGE_HEAVYCLUB_WIELD
+	max_integrity = INTEGRITY_STRONGEST + 100 //I reckon a riddle of steel would make this even tougher
 	name = "forgefiend"
 	desc = "This hammer's creation took a riddle in its own making. A great sacrifice for perfect quality"
 	icon_state = "malumhammer"
@@ -443,6 +445,7 @@
 	name = "psydonian grand mace"
 	desc = "A mighty mace which seems to be a large psycross with a handle, though no less effective at crushing the spirit and bones of the inhumen."
 	icon_state = "psymace"
+	max_integrity = INTEGRITY_STRONG
 	resistance_flags = FIRE_PROOF
 	melting_material = /datum/material/silver
 	melt_amount = 150
@@ -544,6 +547,7 @@
 	name = "iron warhammer"
 	desc = "Made to punch through armor and skull alike."
 	icon_state = "iwarhammer"
+	max_integrity = INTEGRITY_STRONG
 	wbalance = EASY_TO_DODGE
 	melting_material = /datum/material/iron
 	melt_amount = 75
@@ -563,6 +567,8 @@
 
 /obj/item/weapon/mace/warhammer/steel
 	force = DAMAGE_MACE + 5
+	force_wielded = DAMAGE_MACE_WIELD + 2
+	max_integrity = INTEGRITY_STRONGEST
 	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/mace/warhammer/impale, /datum/intent/mace/warhammer/stab)
 	name = "steel warhammer"
 	desc = "A fine steel warhammer, makes a satisfying sound when paired with a knight's helm."

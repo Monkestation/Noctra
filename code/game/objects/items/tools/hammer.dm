@@ -192,7 +192,7 @@
 
 /obj/item/weapon/hammer/sledgehammer
 	force = DAMAGE_MACE - 5
-	force_wielded = DAMAGE_MACE_WIELD
+	force_wielded = DAMAGE_MACE_WIELD - 2
 	possible_item_intents = list(/datum/intent/mace/strike)
 	gripped_intents = list(/datum/intent/mace/strike/heavy, /datum/intent/mace/smash/heavy)
 	name = "sledgehammer"
@@ -224,8 +224,8 @@
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/weapon/hammer/sledgehammer/war
-	force = DAMAGE_MACE - 3
-	force_wielded = DAMAGE_MACE_WIELD + 5
+	force = DAMAGE_MACE - 2
+	force_wielded = DAMAGE_MACE_WIELD
 	possible_item_intents = list(/datum/intent/mace/strike)
 	gripped_intents = list(/datum/intent/mace/strike/heavy, /datum/intent/mace/smash/heavy)
 	name = "steel sledgehammer"
