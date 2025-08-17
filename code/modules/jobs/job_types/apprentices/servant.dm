@@ -43,6 +43,7 @@
 	H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/stealing, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/music, pick(0,1,1), TRUE)
 	H.change_stat(STATKEY_SPD, 1)
 	H.change_stat(STATKEY_END, 1)

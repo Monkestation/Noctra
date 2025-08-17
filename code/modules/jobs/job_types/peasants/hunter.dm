@@ -32,34 +32,39 @@
 	head = /obj/item/clothing/head/brimmed
 	cloak = /obj/item/clothing/cloak/raincloak/furcloak/colored/brown
 	backr = /obj/item/storage/backpack/satchel
-	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 	belt = /obj/item/storage/belt/leather
-	beltr = /obj/item/ammo_holder/quiver/arrows
 	beltl = /obj/item/storage/meatbag
 	backpack_contents = list(/obj/item/flint = 1, /obj/item/bait = 1, /obj/item/weapon/knife/hunting = 1, /obj/item/flashlight/flare/torch/lantern = 1)
 	gloves = /obj/item/clothing/gloves/leather
+	if(prob(25))
+		beltr = /obj/item/ammo_holder/quiver/bolts
+		backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
+		H.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE)
+	else
+		beltr = /obj/item/ammo_holder/quiver/arrows
+		backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
+		H.adjust_skillrank(/datum/skill/combat/bows, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/crossbows, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/tanning, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/bows, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/butchering, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/taming, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/sneaking, 3, TRUE)//skilled sneaking due to traversing the woods in a light step
 	H.adjust_skillrank(/datum/skill/craft/traps, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/swimming, pick(0,0,1), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/crossbows, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/traps, 1, TRUE)
 		H.change_stat(STATKEY_PER, 1)
-		H.change_stat(STATKEY_END, -1)
-	else
-		H.change_stat(STATKEY_INT, 1)
-		H.change_stat(STATKEY_PER, 3)
+		H.change_stat(STATKEY_END, -2)
+	H.change_stat(STATKEY_PER, 3)
+	H.change_stat(STATKEY_END, 1)
 	ADD_TRAIT(H, TRAIT_FORAGER, TRAIT_GENERIC)

@@ -47,6 +47,7 @@
 			shoes = /obj/item/clothing/shoes/boots
 			pants = /obj/item/clothing/pants/trou/leather/mourning
 			armor = /obj/item/clothing/shirt/robe/necra
+			ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)//accustomed to death
 			H.cmode_music = 'sound/music/cmode/church/CombatGravekeeper.ogg'
 		if(/datum/patron/divine/eora)
 			head = /obj/item/clothing/head/padded/operavisage
@@ -99,6 +100,7 @@
 			armor = /obj/item/clothing/shirt/robe/pestra
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
 			backpack_contents = list(/obj/item/needle/blessed)
+			H.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
 		if(/datum/patron/divine/dendor)
 			head = /obj/item/clothing/head/padded/briarthorns
 			neck = /obj/item/clothing/neck/psycross/silver/dendor
@@ -115,6 +117,7 @@
 			armor = /obj/item/clothing/shirt/robe/abyssor
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
 			H.adjust_skillrank(/datum/skill/labor/fishing, 2, TRUE)
+			H.adjust_skillrank(/datum/skill/misc/swimming, pick(1,1,2), TRUE)
 		if(/datum/patron/divine/ravox)
 			head = /obj/item/clothing/head/roguehood/colored/random
 			neck = /obj/item/clothing/neck/psycross/silver/ravox
@@ -128,8 +131,9 @@
 			shoes = /obj/item/clothing/shoes/boots
 			armor = /obj/item/clothing/shirt/robe/colored/plain
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
-			H.adjust_skillrank(/datum/skill/misc/stealing, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/misc/stealing, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/music, 3, TRUE)
+			H.adjust_skillrank(/datum/skill/misc/climbing, pick(1,2,2), TRUE)//jester behaviour
 		if(/datum/patron/divine/malum)
 			head = /obj/item/clothing/head/roguehood/colored/random
 			neck = /obj/item/clothing/neck/psycross/silver/malum
@@ -137,7 +141,8 @@
 			armor = /obj/item/clothing/shirt/robe/colored/plain
 			backpack_contents += /obj/item/weapon/hammer/iron
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
-			H.adjust_skillrank(/datum/skill/craft/blacksmithing, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/craft/blacksmithing, 2, TRUE)
+			H.adjust_skillrank(/datum/skill/craft/smelting, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/armorsmithing, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 1, TRUE)
 			ADD_TRAIT(H, TRAIT_MALUMFIRE, TRAIT_GENERIC)
@@ -155,10 +160,13 @@
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axesmaces, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/swimming, pick(0,0,1), TRUE)
+	H.adjust_skillrank(/datum/skill/misc/climbing, pick(0,0,1), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/magic/holy, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/cooking, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/labor/mathematics, 1, TRUE)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
 	H.change_stat(STATKEY_INT, 1)

@@ -164,7 +164,6 @@
 	H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/riding, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/carpentry, 1, TRUE) // I don't know what they would build with this but it felt right.
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/cooking, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
@@ -173,7 +172,7 @@
 	H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/firearms, 2, TRUE)
 	H.change_stat(STATKEY_PER, 1)
-	H.change_stat(STATKEY_INT, 2)
+	H.change_stat(STATKEY_INT, 1)
 	H.change_stat(STATKEY_SPD, 1)
 	H.change_stat(STATKEY_CON, -1)
 	ADD_TRAIT(H, TRAIT_FORAGER, TRAIT_GENERIC)

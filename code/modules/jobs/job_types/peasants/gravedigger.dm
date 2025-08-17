@@ -43,16 +43,21 @@
 	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
+	//H.adjust_skillrank(/datum/skill/combat/axesmaces, 1, TRUE) gravetenders don't get the skill, for "balance", you can probably beat a man to death with the shovel anyways
 	H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)//more athletics than acolytes, refer to the comment on the strength stat
+	H.adjust_skillrank(/datum/skill/misc/climbing, pick(0,0,1), TRUE)
+	H.adjust_skillrank(/datum/skill/misc/swimming, pick(0,0,1), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/magic/holy, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/labor/mathematics, 2, TRUE)
-	H.change_stat(STATKEY_STR, 1)
-	H.change_stat(STATKEY_INT, 2)
+	H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)//worse cooking than regular acolytes
+	H.adjust_skillrank(/datum/skill/labor/mathematics, 1, TRUE)
+	if(H.age == AGE_OLD)
+		H.adjust_skillrank(/datum/skill/magic/holy, 1, TRUE)
+	H.change_stat(STATKEY_STR, 2)//in exchange for the above mentioned, they get 2 extra strength. Digging graves and hauling bodies is physically exhausting.
+	H.change_stat(STATKEY_INT, 1)
 	H.change_stat(STATKEY_END, 2)
 	H.change_stat(STATKEY_PER, -1) // similar to acolyte's stats
-	H.change_stat(STATKEY_LCK, -1) // Tradeoff for never being cursed when unearthing graves.
 	if(!H.has_language(/datum/language/celestial)) // For discussing church matters with the other Clergy
 		H.grant_language(/datum/language/celestial)
 		to_chat(H, "<span class='info'>I can speak Celestial with ,c before my speech.</span>")

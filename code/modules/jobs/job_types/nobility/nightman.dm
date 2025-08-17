@@ -16,7 +16,7 @@
 	allowed_races = RACES_PLAYER_NONEXOTIC
 	outfit = /datum/outfit/job/apothecary
 	give_bank_account = 100
-	cmode_music = 'sound/music/cmode/towner/CombatBeggar.ogg'
+	cmode_music = 'sound/music/cmode/nobility/combat_physician.ogg'
 
 /datum/outfit/job/apothecary
 	job_bitflag = BITFLAG_ROYALTY | BITFLAG_CONSTRUCTOR
@@ -33,20 +33,26 @@
 	beltl = /obj/item/storage/belt/pouch/coins/mid
 	ADD_TRAIT(H, TRAIT_LEGENDARY_ALCHEMIST, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_FORAGER, TRAIT_GENERIC)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, pick(0,1,2), TRUE)//occasionaly assists the feldsher I presume
+	H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)//more heavy physical work than the feldsher given the constant farm tending and herb gathering
 	H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sneaking, 4, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)//traversing the woods and basin for herbs probably forces you to have a light step
+	H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/swimming, pick(0,0,1), TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 5, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/medicine, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/farming, 3, TRUE)
 	H.change_stat(STATKEY_STR, -1)
-	H.change_stat(STATKEY_INT, 1)
+	H.change_stat(STATKEY_SPD, -1)
+	H.change_stat(STATKEY_INT, 3)
 
+//not sure why apothecary still had a different voicepack then others
+/*
 	if(H.gender == MALE)
 		if(H.dna?.species)
 			if(H.dna.species.id == SPEC_ID_HUMEN)
 				H.dna.species.soundpack_m = new /datum/voicepack/male/zeth()
+*/

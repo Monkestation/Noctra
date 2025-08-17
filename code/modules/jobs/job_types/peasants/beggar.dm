@@ -54,6 +54,7 @@
 	H.adjust_skillrank(/datum/skill/misc/climbing, pick(2,3,4,5), TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, pick(1,2,3), TRUE) // Street-fu
 	H.adjust_skillrank(/datum/skill/combat/unarmed, pick(1,2,3), TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, pick(1,2,3), TRUE)
 	H.base_fortune = rand(1, 20)
 	if(prob(5))
 		r_hand = /obj/item/weapon/mace/woodclub

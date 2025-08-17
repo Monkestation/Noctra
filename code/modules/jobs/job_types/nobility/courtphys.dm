@@ -51,7 +51,6 @@
 	H.adjust_skillrank(/datum/skill/misc/medicine, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/mathematics, 3, TRUE)
-
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 	H.change_stat(STATKEY_STR, -1)

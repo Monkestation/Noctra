@@ -1,5 +1,5 @@
 /obj/item/weapon/hammer
-	force = 10
+	force = DAMAGE_CLUB - 5
 	possible_item_intents = list(/datum/intent/mace/strike,/datum/intent/mace/smash)
 	name = "hammer"
 	desc = ""
@@ -10,6 +10,7 @@
 	wlength = 10
 	slot_flags = ITEM_SLOT_HIP
 	w_class = WEIGHT_CLASS_NORMAL
+	max_integrity = INTEGRITY_WORST
 	associated_skill = /datum/skill/combat/axesmaces
 	smeltresult = /obj/item/ingot/iron
 
@@ -137,12 +138,14 @@
 // --------- IRON HAMMER -----------
 /obj/item/weapon/hammer/iron
 	icon_state = "hammer"
+	max_integrity = INTEGRITY_STRONG
 	experimental_onhip = FALSE
 	experimental_onback = FALSE
 
 // --------- STEEL HAMMER -----------
 /obj/item/weapon/hammer/steel
 	name = "claw hammer"
+	max_integrity = INTEGRITY_STRONGEST
 	icon_state = "hammer_s"
 	experimental_onhip = FALSE
 	experimental_onback = FALSE
@@ -156,7 +159,7 @@
 	dropshrink = 0.9
 	experimental_onhip = FALSE
 	experimental_onback = FALSE
-	force = 4
+	force = DAMAGE_CLUB - 10
 	smeltresult = null
 	can_smith = FALSE
 	time_multiplier = 1.2
@@ -171,7 +174,7 @@
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/weapon/hammer/copper
-	force = 8
+	force = DAMAGE_CLUB - 7
 	possible_item_intents = list(/datum/intent/mace/strike,/datum/intent/mace/smash)
 	name = "copper hammer"
 	desc = "A simple and rough copper hammer."
@@ -179,6 +182,7 @@
 	icon = 'icons/roguetown/weapons/tools.dmi'
 	sharpness = IS_BLUNT
 	//dropshrink = 0.8
+	max_integrity = INTEGRITY_POOR
 	wlength = 10
 	slot_flags = ITEM_SLOT_HIP
 	w_class = WEIGHT_CLASS_NORMAL
@@ -187,8 +191,8 @@
 	time_multiplier = 1.1
 
 /obj/item/weapon/hammer/sledgehammer
-	force = 15
-	force_wielded = 25
+	force = DAMAGE_MACE - 5
+	force_wielded = DAMAGE_MACE_WIELD + 3
 	possible_item_intents = list(/datum/intent/mace/strike)
 	gripped_intents = list(/datum/intent/mace/strike/heavy, /datum/intent/mace/smash/heavy)
 	name = "sledgehammer"
@@ -196,6 +200,7 @@
 	icon_state = "sledgehammer"
 	icon = 'icons/roguetown/weapons/32.dmi'
 	sharpness = IS_BLUNT
+	max_integrity = INTEGRITY_STRONG
 	//dropshrink = 0.8
 	wlength = 10
 	wbalance = -1 // Heavy
@@ -219,14 +224,14 @@
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/weapon/hammer/sledgehammer/war
-	force = 15
-	force_wielded = 30
+	force = DAMAGE_MACE - 3
+	force_wielded = DAMAGE_MACE_WIELD + 5
 	possible_item_intents = list(/datum/intent/mace/strike)
 	gripped_intents = list(/datum/intent/mace/strike/heavy, /datum/intent/mace/smash/heavy)
 	name = "steel sledgehammer"
 	desc = "A heavy steel sledgehammer, a weapon designed to make knights run in fear, the best option for a common soldier against a knight."
 	icon_state = "warbonker"
 	icon = 'icons/roguetown/weapons/32.dmi'
-	max_integrity = 500
+	max_integrity = INTEGRITY_STRONGEST
 	smeltresult = /obj/item/ingot/steel
 	time_multiplier = 1.5 //it's for crushing skulls not nails

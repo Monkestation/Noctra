@@ -39,16 +39,18 @@
 	mask = /obj/item/clothing/face/feld
 	neck = /obj/item/clothing/neck/feld
 	belt = /obj/item/storage/belt/leather
-	beltl = /obj/item/storage/keyring/feldsher
+	beltr = /obj/item/storage/keyring/feldsher
+	beltl = /obj/item/storage/belt/pouch/coins/mid
 
 	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, pick(1,2), TRUE)//to hold down unruly patients
 	H.adjust_skillrank(/datum/skill/misc/sewing, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/mathematics, 3, TRUE)
-
+	H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 	H.change_stat(STATKEY_STR, -1)
