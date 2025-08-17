@@ -33,9 +33,6 @@
 	create_trippers()
 
 /obj/effect/contextual_actor/proc/create_trippers()
-	if((activation_radius == 1))
-		return
-
 	proximity_monitor = new(src, activation_radius)
 
 /obj/effect/contextual_actor/Destroy(force)
@@ -43,10 +40,6 @@
 	QDEL_NULL(proximity_monitor)
 
 /obj/effect/contextual_actor/HasProximity(atom/movable/AM)
-	. = ..()
-	stepped_on(AM)
-
-/obj/effect/contextual_actor/Crossed(atom/movable/AM, oldloc)
 	. = ..()
 	stepped_on(AM)
 
@@ -90,29 +83,17 @@
 		active = FALSE
 		addtimer(VARSET_CALLBACK(src, active, TRUE), reactivation_timer)
 
-/obj/effect/contextual_actor/example
+/obj/effect/contextual_actor/preset
 	raw_html_to_pick_from = \
 		"<!DOCTYPE html>\
 		<html>\
 		<head>\
 		    <title>DANGER!</title>\
 		    <style>\
-		        body {\
-		            background-color: black;\
-		            margin: 0;\
-		            padding: 0;\
-		            display: flex;\
-		            justify-content: center;\
-		            align-items: center;\
-		            height: 100vh;\
-		            font-family: 'Times New Roman', serif;\
-		            color: darkred;\
-		            text-align: center;\
-		        }\
-		        \
 		        .scary-text {\
 		            font-size: 20px;\
 		            text-shadow: 0 0 10px red;\
+					color: darkred;\
 		            animation: flicker 0.5s infinite alternate;\
 		            white-space: pre;\
 		        }\
@@ -125,8 +106,20 @@
 		</head>\
 		<body>\
 		    <div class=\"scary-text\">\
-		        YOU LOOK AROUND,<br>\
-		        YOU ARE SURROUNDED BY GOBLINS!\
+		        %TEXT_TO_REPLACE_WITH\
 		    </div>\
 		</body>\
 		</html>";
+
+
+	var/text_to_replace_with = "\
+		YOU LOOK AROUND<br>\
+		YOU ARE SURROUNDED BY GOBLINS!\
+		"
+
+/obj/effect/contextual_actor/preset/Initialize(mapload)
+	. = ..()
+	if(!islist(text_to_replace_with))
+		text_to_replace_with = list(text_to_replace_with)
+	for(var/html_num in 1 to length(raw_html_to_pick_from))
+		raw_html_to_pick_from[html_num] = replacetext(raw_html_to_pick_from[html_num], "%TEXT_TO_REPLACE_WITH", pick(text_to_replace_with))
