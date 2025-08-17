@@ -30,25 +30,22 @@
 	H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/mathematics, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/tights/colored/random
 		shirt = /obj/item/clothing/shirt/shortshirt/colored/random
-		shoes = /obj/item/clothing/shoes/shortboots
-		belt = /obj/item/storage/belt/leather
-		beltl = /obj/item/storage/belt/pouch/coins/mid
-		beltr = /obj/item/reagent_containers/glass/bottle/beer/blackgoat
-		neck = /obj/item/storage/keyring/innkeep
 		cloak = /obj/item/clothing/cloak/apron/waist
 		H.change_stat(STATKEY_STR, 1)
 		H.change_stat(STATKEY_END, 1)
 	else
 		armor = /obj/item/clothing/shirt/dress
-		shoes = /obj/item/clothing/shoes/shortboots
-		neck = /obj/item/storage/belt/pouch/coins/mid
-		belt = /obj/item/storage/belt/leather
-		beltl = /obj/item/storage/keyring/innkeep
-		beltr = /obj/item/reagent_containers/glass/bottle/beer/blackgoat
 		H.change_stat(STATKEY_END, 1)
 		H.change_stat(STATKEY_CON, 1)
+	neck = /obj/item/storage/belt/pouch/coins/mid
+	belt = /obj/item/storage/belt/leather
+	beltl = /obj/item/storage/keyring/innkeep
+	beltr = /obj/item/reagent_containers/glass/bottle/beer/blackgoat
+	shoes = /obj/item/clothing/shoes/shortboots
 	backpack_contents = list(/obj/item/recipe_book/cooking, /obj/item/bottle_kit)
 	ADD_TRAIT(H, TRAIT_BOOZE_SLIDER, TRAIT_GENERIC)
