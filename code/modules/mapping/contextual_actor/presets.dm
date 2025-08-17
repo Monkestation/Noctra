@@ -37,7 +37,7 @@
 	YOU ARE SURROUNDED BY GOBLINS!\
 	"
 
-/obj/effect/contextual_actor/preset/with_background
+/obj/effect/contextual_actor/preset/other
 	raw_html_to_pick_from = \
 	"\
 	<style>\
