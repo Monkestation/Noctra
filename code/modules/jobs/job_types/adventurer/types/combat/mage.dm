@@ -25,7 +25,7 @@
 	backpack_contents = list(/obj/item/book/granter/spellbook/apprentice = 1, /obj/item/chalk = 1)
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/misc/reading, 4, TRUE)
-		H.adjust_skillrank(/datum/skill/magic/arcane, 4, TRUE)
+		H.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)
