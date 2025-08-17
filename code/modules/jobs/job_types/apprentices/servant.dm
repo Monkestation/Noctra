@@ -4,7 +4,6 @@
 	You work your fingers to the bone nearly every dae, \
 	and have naught to show for it but boney fingers. \
 	Perhaps this week you will finally be recognized, or allowed some respite?"
-	flag = SERVANT
 	department_flag = APPRENTICES
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_SERVANT
@@ -150,7 +149,6 @@
 	title = "Ring Servant"
 	tutorial = "I never had what it took to be a mercenary, but I offered my service to the Guild regardless. \
 	My vow is to serve whomever holds the ring of Burden while avoiding its curse from befalling me."
-	flag = SERVANT
 	department_flag = APPRENTICES
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_SERVANT

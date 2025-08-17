@@ -1,7 +1,6 @@
 /datum/job/goblin
 	title = "Goblin"
 	tutorial = ""
-	flag = GRAVETENDER
 	//department_flag = PEASANTS
 	job_flags = (JOB_EQUIP_RANK)
 	faction = FACTION_TOWN

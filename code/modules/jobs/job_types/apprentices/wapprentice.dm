@@ -3,7 +3,6 @@
 	tutorial = "Your family managed to send you to college to learn the Arcyne Arts.\
 	 It's been stressful, but you'll earn your degree and become a fully fleged Magician one dae.\
 	  As long as you can keep your grades up, that is..."
-	flag = APPRENTICE
 	department_flag = APPRENTICES
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	faction = FACTION_TOWN

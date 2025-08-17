@@ -4,7 +4,6 @@
 	Time has softened your edge but not your wit, thanks to your unlikely kinship with your old adventuring party.\
 	Now, you guide the orphans with both a firm and gentle hand, ensuring they grow up sharp, swift, and self-sufficient.\
 	Perhaps one dae, those fledglings might leap from the your nest and soar to a greater legacy."
-	flag = JESTER
 	department_flag = PEASANTS
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_MATRON
