@@ -114,7 +114,7 @@
 	var/w_displace = (offered_to.x - offerer.x) * 16
 	var/z_displace = (offered_to.y - offerer.y) * 16 + 4
 
-	animate(src, pixel_w = w_displace, pixel_z = z_displace, time = 0.2 SECONDS, transform = matrix() * 0.5)
+	animate(src, pixel_w = w_displace, pixel_z = z_displace, time = 0.2 SECONDS, transform = matrix() * 1)
 
 /obj/effect/temp_visual/offered_item_effect/attack_hand(mob/living/user)
 	. = ..()
