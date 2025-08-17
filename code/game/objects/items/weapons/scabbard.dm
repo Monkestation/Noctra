@@ -67,6 +67,12 @@
 			if("onbelt")
 				return list("shrink" = 0.5, "sx" = -2, "sy" = -5, "nx" = 4, "ny" = -5, "wx" = 0, "wy" = -5, "ex" = 2, "ey" = -5, "nturn" = 0, "sturn" = 0, "wturn" = 0, "eturn" = 0, "nflip" = 0, "sflip" = 0, "wflip" = 0, "eflip" = 0, "northabove" = 0, "southabove" = 1, "eastabove" = 1, "westabove" = 1)
 
+/obj/item/weapon/scabbard/knife/noble
+	icon_state = "nsheath"
+
+/obj/item/weapon/scabbard/knife/royal
+	icon_state = "rsheath"
+
 /obj/item/weapon/scabbard/sword
 	name = "scabbard"
 	desc = "A sheath designed to hold a sword. The natural conclusion for those wishing to carry longblades."
@@ -99,3 +105,9 @@
 				return list("shrink" = 0.5, "sx" = 1, "sy" = 4, "nx" = 1, "ny" = 2, "wx" = 3, "wy" = 3, "ex" = 0, "ey" = 2, "nturn" = 0, "sturn" = 0, "wturn" = 0, "eturn" = 0, "nflip" = 8, "sflip" = 0, "wflip" = 0, "eflip" = 0, "northabove" = 1, "southabove" = 0, "eastabove" = 0, "westabove" = 0)
 			if("onbelt")
 				return list("shrink" = 0.5, "sx" = -2, "sy" = -5, "nx" = 4, "ny" = -5, "wx" = 0, "wy" = -5, "ex" = 2, "ey" = -5, "nturn" = 0, "sturn" = 0, "wturn" = -90, "eturn" = 0, "nflip" = 0, "sflip" = 0, "wflip" = 0, "eflip" = 0, "northabove" = 0, "southabove" = 1, "eastabove" = 1, "westabove" = 1)
+
+/obj/item/weapon/scabbard/sword/noble
+	icon_state = "nscabbard"
+
+/obj/item/weapon/scabbard/sword/royal
+	icon_state = "rscabbard"
