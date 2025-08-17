@@ -76,7 +76,7 @@
 
 	clamped_adjust_skillrank(/datum/skill/combat/axesmaces, 2, 3, TRUE)
 	clamped_adjust_skillrank(/datum/skill/combat/crossbows, 2, 3, TRUE)
-	clamped_adjust_skillrank(/datum/skill/combat/wrestling, 2, 3, TRUE)
+	clamped_adjust_skillrank(/datum/skill/combat/wrestling, 1, 3, TRUE)
 	clamped_adjust_skillrank(/datum/skill/combat/unarmed, 1, 3, TRUE)
 	clamped_adjust_skillrank(/datum/skill/combat/swords, 2, 3, TRUE)
 
@@ -93,7 +93,6 @@
 	base_intelligence = 4
 	base_speed = 9
 	base_fortune = 6
-
 	cmode_music = 'sound/music/cmode/antag/combat_cult.ogg'
 
 	set_patron(master.patron)
@@ -110,11 +109,10 @@
 		QDEL_NULL(charflaw)
 
 	ADD_TRAIT(src, TRAIT_NOMOOD, TRAIT_GENERIC)
-	ADD_TRAIT(src, TRAIT_NOLIMBDISABLE, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_EASYDISMEMBER, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_LIMBATTACHMENT, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOHUNGER, TRAIT_GENERIC)
-	ADD_TRAIT(src, TRAIT_NOSTAMINA, TRAIT_GENERIC)
+	ADD_TRAIT(src, TRAIT_NOENERGY, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOBREATH, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_NOPAIN, TRAIT_GENERIC)
 	ADD_TRAIT(src, TRAIT_TOXIMMUNE, TRAIT_GENERIC)

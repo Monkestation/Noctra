@@ -382,5 +382,41 @@
                 "qol": "Lore Primer can now be checked at any time, not just in lobby."
             }
         ]
+    },
+    "2025-08-16": {
+        "Wouju": [
+            {
+                "rscadd": "Added new clothes for the courtphysician"
+            },
+            {
+                "image": "courtphysician clothes are in their own seperate dmi file I despise merge conflicts"
+            }
+        ],
+        "SarmentiCampbell": [
+            {
+                "balance": "Nerf Lich by lowering their dagger skill from 5 to 2, in exchange buff their polearm skill from 2 to 4 and grant them 17 spellpoints, equivalent to CM."
+            },
+            {
+                "balance": "Nerf greater skeletons by removing their infinite stamina, swift intent and lowering their wrestling skill gain by 1."
+            }
+        ],
+        "grungussuss": [
+            {
+                "bugfix": "robes are no longer shit colored"
+            },
+            {
+                "sound": "lock unlock door sounds are back"
+            }
+        ],
+        "Arkatos": [
+            {
+                "rscadd": "Added a new communal triumph buy - Longer Week."
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "bugfix": "better cooking qol"
+            }
+        ]
     }
 }

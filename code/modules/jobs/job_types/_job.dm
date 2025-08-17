@@ -268,7 +268,8 @@
 	var/list/owned_triumph_buys = SStriumphs.triumph_buy_owners[player_client.ckey]
 	if(length(owned_triumph_buys))
 		for(var/datum/triumph_buy/T in owned_triumph_buys)
-			T.on_after_spawn(humanguy)
+			if(!T.activated)
+				T.on_after_spawn(humanguy)
 
 /// When our guy is OLD do we do anything extra
 /datum/job/proc/old_age_effects()

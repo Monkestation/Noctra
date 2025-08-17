@@ -1267,7 +1267,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 			whitelisted = 0
 		return whitelisted
 
-/client/proc/has_triumph_buy(triumph_id)
+/client/proc/has_triumph_buy(triumph_id, unactivated_check = FALSE)
 	if(!triumph_id)
 		return FALSE
 
@@ -1277,7 +1277,11 @@ GLOBAL_LIST_EMPTY(respawncounts)
 
 	for(var/datum/triumph_buy/T in my_triumphs)
 		if(T.triumph_buy_id == triumph_id)
-			return TRUE
+			if(unactivated_check)
+				if(!T.activated)
+					return TRUE
+			else
+				return TRUE
 	return FALSE
 
 /client/proc/activate_triumph_buy(triumph_id)
