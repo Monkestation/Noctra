@@ -47,7 +47,7 @@
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, pick(1,2), TRUE)//to hold down unruly patients
 	H.adjust_skillrank(/datum/skill/misc/sewing, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/medicine, 5, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/medicine, pick(4,5), TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/mathematics, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)

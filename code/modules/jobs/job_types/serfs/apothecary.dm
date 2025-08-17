@@ -41,7 +41,7 @@
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)//traversing the woods and basin for herbs probably forces you to have a light step
 	H.adjust_skillrank(/datum/skill/misc/climbing, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, pick(0,0,1), TRUE)
-	H.adjust_skillrank(/datum/skill/craft/alchemy, 5, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/alchemy, pick(4,5), TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/farming, 3, TRUE)
