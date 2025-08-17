@@ -27,7 +27,7 @@
 	H.adjust_skillrank(/datum/skill/combat/wrestling, rand(1,3), TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, rand(1,3), TRUE)
 	H.adjust_skillrank(/datum/skill/labor/lumberjacking, pick(1,1,2), TRUE)
-	H.adjust_skillrank(/datum/skill/labor/carpenter, pick(2,2,3), TRUE)
+	H.adjust_skillrank(/datum/skill/craft/carpentry, pick(2,2,3), TRUE)
 	H.adjust_skillrank(/datum/skill/craft/masonry, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/engineering, 4, TRUE)
