@@ -35,7 +35,7 @@
 	ADD_TRAIT(H, TRAIT_FORAGER, TRAIT_GENERIC)
 	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, pick(0,1,2), TRUE)//occasionaly assists the feldsher I presume
+	H.adjust_skillrank(/datum/skill/combat/wrestling, pick(0,1,1,2), TRUE)//occasionaly assists the feldsher I presume
 	H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)//more heavy physical work than the feldsher given the constant farm tending and herb gathering
 	H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)//traversing the woods and basin for herbs probably forces you to have a light step

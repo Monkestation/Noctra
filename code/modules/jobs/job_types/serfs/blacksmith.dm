@@ -27,7 +27,7 @@
 	head = /obj/item/clothing/head/hatfur
 	if(prob(50))
 		head = /obj/item/clothing/head/hatblu
-	H.adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE)//they constantly use hammers
+	H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, pick(0,0,1), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, pick(0,0,1), TRUE)
@@ -92,7 +92,7 @@
 	head = /obj/item/clothing/head/hatfur
 	if(prob(50))
 		head = /obj/item/clothing/head/hatblu
-	H.adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE)//they constantly use hammers
+	H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, pick(0,0,1), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/climbing, pick(0,0,1), TRUE)
