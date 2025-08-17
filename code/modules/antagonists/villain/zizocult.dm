@@ -19,6 +19,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 	innate_traits = list(
 		TRAIT_STEELHEARTED,
 		TRAIT_VILLAIN,
+		TRAIT_CABAL,
 	)
 
 /datum/antagonist/zizocultist/zizo_knight
