@@ -36,7 +36,7 @@
 	beltl = /obj/item/storage/meatbag
 	backpack_contents = list(/obj/item/flint = 1, /obj/item/bait = 1, /obj/item/weapon/knife/hunting = 1, /obj/item/flashlight/flare/torch/lantern = 1)
 	gloves = /obj/item/clothing/gloves/leather
-	if(prob(25))
+	if(prob(5))
 		beltr = /obj/item/ammo_holder/quiver/bolts
 		backl = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 		H.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE)
