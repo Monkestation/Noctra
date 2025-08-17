@@ -192,7 +192,7 @@
 
 /obj/item/weapon/hammer/sledgehammer
 	force = DAMAGE_MACE - 5
-	force_wielded = DAMAGE_MACE_WIELD + 3
+	force_wielded = DAMAGE_MACE_WIELD
 	possible_item_intents = list(/datum/intent/mace/strike)
 	gripped_intents = list(/datum/intent/mace/strike/heavy, /datum/intent/mace/smash/heavy)
 	name = "sledgehammer"
