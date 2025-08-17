@@ -95,6 +95,7 @@
 #define COOK		(1<<10)
 #define BARD		(1<<12)
 #define CHEESEMAKER (1<<13)
+#define ASSASSIN (1<<14)
 
 #define APPRENTICES		(1<<5)
 
@@ -222,6 +223,7 @@
 #define JDO_VAGRANT 36
 #define JDO_ORPHAN 37
 #define JDO_SOILCHILD 38
+#define JDO_ASSASSIN 39
 
 
 #define BITFLAG_CHURCH (1<<0)
