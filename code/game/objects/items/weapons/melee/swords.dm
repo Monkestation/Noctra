@@ -148,9 +148,28 @@
 	minstr = 5
 	wdefense = ULTMATE_PARRY
 
+/obj/item/weapon/sword/sabre/hwi
+	name = "steel hwi"
+	desc = "A hefty steel sabre of Lakkarian origin. It's defensive design makes it popular amongst Lakkarian footmen"
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	icon_state = "hwi_steel"
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop)
+	force = DAMAGE_SWORD-1
+	force_wielded = DAMAGE_SWORD_WIELD-1
+	minstr = 7
+	wdefense = GREAT_PARRY
+	swingsound = BLADEWOOSH_LARGE
+
+/obj/item/weapon/sword/sabre/hwi/iron
+	name = "iron hwi"
+	desc = "A hefty iron sabre of Lakkarian origin. It's defensive design makes it popular amongst Lakkarian footmen"
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	icon_state = "hwi_iron"
+	smeltresult = /obj/item/ingot/iron
+
 /obj/item/weapon/sword/sabre/dec
 	name = "decorated sabre"
-	desc = "A saber decorated with fashionable gold accents without sacrificing its lethal practicality."
+	desc = "A sabre decorated with fashionable gold accents without sacrificing its lethal practicality."
 	icon_state = "decsaber"
 	sellprice = 140
 
