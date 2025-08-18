@@ -150,7 +150,7 @@
 
 /obj/item/weapon/sword/sabre/hwi
 	name = "steel hwi"
-	desc = "A hefty steel sabre of Lakkarian origin. It's defensive design makes it popular amongst Lakkarian footmen"
+	desc = "A hefty steel sabre of Lakkarian origin. It's defensive design makes it popular amongst Lakkarian footmen."
 	icon = 'icons/roguetown/weapons/lakkari.dmi'
 	icon_state = "hwi_steel"
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop)
@@ -162,7 +162,7 @@
 
 /obj/item/weapon/sword/sabre/hwi/iron
 	name = "iron hwi"
-	desc = "A hefty iron sabre of Lakkarian origin. It's defensive design makes it popular amongst Lakkarian footmen"
+	desc = "A hefty iron sabre of Lakkarian origin. It's defensive design makes it popular amongst Lakkarian footmen."
 	icon = 'icons/roguetown/weapons/lakkari.dmi'
 	icon_state = "hwi_iron"
 	smeltresult = /obj/item/ingot/iron
