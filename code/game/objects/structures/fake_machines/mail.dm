@@ -432,6 +432,16 @@ GLOBAL_LIST_EMPTY(letters_sent)
 			cost = 3,
 			max_purchases = 3
 		),
+		"Psydonian Flail (3)" = list(
+			list(type = /obj/item/weapon/flail/psydon, count = 1),
+			cost = 3,
+			max_purchases = 3
+		),
+		"Psydonian Whip (3)" = list(
+			list(type = /obj/item/weapon/whip/psydon, count = 1),
+			cost = 3,
+			max_purchases = 3
+		),
 		"Tossblade Belt (Silver) (4)" = list(
 			list(type = /obj/item/storage/belt/leather/knifebelt/black/psydon, count = 1),
 			cost = 4,
@@ -448,7 +458,7 @@ GLOBAL_LIST_EMPTY(letters_sent)
 			max_purchases = 1
 		),
 		"Battle Bomb (3)" = list(
-			list(type = /obj/item/bomb, count = 1),
+			list(type = /obj/item/explosive/bottle, count = 1),
 			cost = 3,
 			max_purchases = 2
 		),

@@ -60,7 +60,7 @@
 			to_chat(owner, span_notice("I can retrieve my item from a statue, tree or clock by right clicking it."))
 
 		if(CHOICE_BOMB)
-			owner.special_items["Bomb"] = /obj/item/bomb
+			owner.special_items["Bomb"] = /obj/item/explosive/bottle
 			to_chat(owner, span_notice("I can retrieve my item from a statue, tree or clock by right clicking it."))
 
 
@@ -171,7 +171,7 @@
 /datum/objective/aspirant/coup/two
 	name = "Moral"
 	explanation_text = "I am no kinslayer, I must make sure that the Monarch doesn't die."
-	triumph_count = 10
+	triumph_count = 5
 	var/initialruler
 
 /datum/objective/aspirant/coup/three

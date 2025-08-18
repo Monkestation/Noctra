@@ -21,7 +21,7 @@
 	//What categories we are going to sort it in
 	var/list/category_tags = list(CTAG_DISABLED)
 	var/displays_adv_job = TRUE
-	var/apprentice_name //Must be set to give apprentices the correct title. Note that pilgrims cannot have apprentices.
+	var/apprentice_name //Must be set to give apprentices the correct title.
 
 /datum/advclass/proc/equipme(mob/living/carbon/human/H)
 	// input sleeps....
@@ -81,10 +81,13 @@
 		return FALSE
 
 	if(length(allowed_races) && !(H.dna.species.id in allowed_races))
-		if(!(H.client.triumph_ids.Find("race_all")))
+		if(!(H.client.has_triumph_buy(TRIUMPH_BUY_RACE_ALL)))
 			return FALSE
 
 	if(length(allowed_ages) && !(H.age in allowed_ages))
+		return FALSE
+
+	if(length(allowed_patrons) && !(H.patron.type in allowed_patrons))
 		return FALSE
 
 	if(maximum_possible_slots > -1)

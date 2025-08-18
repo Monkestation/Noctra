@@ -32,22 +32,23 @@
 	H.adjust_skillrank(/datum/skill/misc/lockpicking, 1, TRUE)
 	H.clamped_adjust_skillrank(/datum/skill/misc/music, 4, 4, TRUE) //Due to Harpy's innate music skill giving them legendary
 	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
-	H.add_spell(/datum/action/cooldown/spell/undirected/list_target/vicious_mockery)
+	H.add_spell(/datum/action/cooldown/spell/vicious_mockery)
 	head = /obj/item/clothing/head/bardhat
 	shoes = /obj/item/clothing/shoes/boots
-	pants = /obj/item/clothing/pants/tights/random
+	pants = /obj/item/clothing/pants/tights/colored/random
 	shirt = /obj/item/clothing/shirt/tunic/noblecoat
 	if(prob(30))
 		gloves = /obj/item/clothing/gloves/fingerless
 	belt = /obj/item/storage/belt/leather
 	armor = /obj/item/clothing/armor/leather/vest
-	cloak = /obj/item/clothing/cloak/raincloak/blue
+	cloak = /obj/item/clothing/cloak/raincloak/colored/blue
 	if(prob(50))
-		cloak = /obj/item/clothing/cloak/raincloak/red
+		cloak = /obj/item/clothing/cloak/raincloak/colored/red
 	backl = /obj/item/storage/backpack/satchel
 	beltr = /obj/item/weapon/knife/dagger/steel/special
 	beltl = /obj/item/storage/belt/pouch/coins/poor
 	backpack_contents = list(/obj/item/flint)
+	scabbards = list(/obj/item/weapon/scabbard/knife)
 	if(H.dna?.species?.id == SPEC_ID_DWARF)
 		H.cmode_music = 'sound/music/cmode/combat_dwarf.ogg'
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)

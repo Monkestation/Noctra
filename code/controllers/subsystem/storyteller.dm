@@ -438,6 +438,8 @@ SUBSYSTEM_DEF(gamemode)
 
 	load_roundstart_data()
 
+	check_roundstart_gods_rankings()
+
 	pick_chronicle_stats()
 
 	. = ..()
@@ -750,7 +752,15 @@ SUBSYSTEM_DEF(gamemode)
 	if(!length(storytellers))
 		for(var/type in subtypesof(/datum/storyteller))
 			storytellers[type] = new type()
-	set_storyteller(/datum/storyteller/astrata)
+
+	for(var/storyteller_name in storytellers)
+		var/datum/storyteller/initialized_storyteller = storytellers[storyteller_name]
+		if(initialized_storyteller?.ascendant)
+			to_chat(world, "<br>")
+			to_chat(world, span_reallybig("[initialized_storyteller.name] is ascendant!"))
+			to_chat(world, "<br>")
+
+	pick_most_influential(TRUE)
 	calculate_ready_players()
 	roll_pre_setup_points()
 	//handle_pre_setup_roundstart_events()
@@ -791,15 +801,9 @@ SUBSYSTEM_DEF(gamemode)
 	if(ttime >= GLOB.round_timer)
 		if(roundvoteend)
 			if(ttime >= round_ends_at)
-				// for(var/mob/living/carbon/human/H in GLOB.human_list)
-				// 	if(H.stat != DEAD)
-				// 		if(H.allmig_reward)
-				// 			H.adjust_triumphs(H.allmig_reward)
-				// 			H.allmig_reward = 0
 				return TRUE
-		else
-			if(!SSvote.mode)
-				SSvote.initiate_vote("endround", pick("Zlod", "Sun King", "Gaia", "Moon Queen", "Aeon", "Gemini", "Aries"))
+		else if(!SSvote.mode)
+			SSvote.initiate_vote("endround", "The Gods")
 
 	if(SSmapping.retainer.head_rebel_decree)
 		if(reb_end_time == 0)
@@ -858,7 +862,7 @@ SUBSYSTEM_DEF(gamemode)
 /// Loads config values from game_options.txt
 /datum/controller/subsystem/gamemode/proc/load_config_vars()
 	point_gain_multipliers[EVENT_TRACK_MUNDANE] = CONFIG_GET(number/mundane_point_gain_multiplier)
-	point_gain_multipliers[EVENT_TRACK_PERSONAL] = CONFIG_GET(number/moderate_point_gain_multiplier) * 1.2
+	point_gain_multipliers[EVENT_TRACK_PERSONAL] = CONFIG_GET(number/moderate_point_gain_multiplier) * 1.25
 	point_gain_multipliers[EVENT_TRACK_MODERATE] = CONFIG_GET(number/moderate_point_gain_multiplier)
 	point_gain_multipliers[EVENT_TRACK_INTERVENTION] = CONFIG_GET(number/major_point_gain_multiplier)
 	point_gain_multipliers[EVENT_TRACK_CHARACTER_INJECTION] = CONFIG_GET(number/roleset_point_gain_multiplier)
@@ -1342,7 +1346,7 @@ SUBSYSTEM_DEF(gamemode)
 	if(!highest)
 		return
 
-	var/adjustment = min(2.5, 1 + (0.3 * FLOOR(max(0, highest.times_chosen - 5) / 5, 1)))
+	var/adjustment = min(3, 1 + (0.4 * FLOOR(max(0, highest.times_chosen - 5) / 5, 1)))
 
 	if(storytellers_with_influence[highest] > adjustment)
 		highest.bonus_points -= adjustment
@@ -1423,6 +1427,10 @@ SUBSYSTEM_DEF(gamemode)
 	for(var/stat_name in statistics_to_clear)
 		force_set_round_statistic(stat_name, 0)
 
+	var/list/current_valid_humans = list()
+
+	var/mob/living/carbon/human/valid_psydon_favourite
+
 	var/highest_total_stats = -1
 	var/highest_strength = -1
 	var/highest_intelligence = -1
@@ -1461,6 +1469,7 @@ SUBSYSTEM_DEF(gamemode)
 			record_round_statistic(STATS_DEADITES_ALIVE)
 		if(ishuman(living))
 			var/mob/living/carbon/human/human_mob = client.mob
+			current_valid_humans += human_mob
 			record_round_statistic(STATS_TOTAL_POPULATION)
 			for(var/obj/item/clothing/neck/current_item in human_mob.get_equipped_items(TRUE))
 				if(current_item.type in list(/obj/item/clothing/neck/psycross, /obj/item/clothing/neck/psycross/silver, /obj/item/clothing/neck/psycross/g))
@@ -1551,6 +1560,9 @@ SUBSYSTEM_DEF(gamemode)
 
 			// Chronicle statistics
 
+			if(human_mob.client.has_triumph_buy(TRIUMPH_BUY_PSYDON_FAVOURITE))
+				valid_psydon_favourite = human_mob
+
 			var/total_stats = human_mob.STASTR + human_mob.STAINT + human_mob.STAEND + human_mob.STACON + human_mob.STAPER + human_mob.STASPD + human_mob.STALUC
 			if(total_stats > highest_total_stats)
 				highest_total_stats = total_stats
@@ -1619,6 +1631,22 @@ SUBSYSTEM_DEF(gamemode)
 				lowest_wealth = wealth
 				set_chronicle_stat(CHRONICLE_STATS_POOREST_PERSON, human_mob, "PAUPER", "#909c63", "[wealth] mammons")
 
+	if(length(current_valid_humans) >= 2 && valid_psydon_favourite)
+		var/list/potential_passers = current_valid_humans.Copy()
+		potential_passers -= valid_psydon_favourite
+		var/mob/living/carbon/human/random_passerby = pick(potential_passers)
+
+		chosen_chronicle_stats[1] = CHRONICLE_STATS_PSYDON_FAVOURITE
+		set_chronicle_stat(CHRONICLE_STATS_PSYDON_FAVOURITE, valid_psydon_favourite, "PSYDON'S FAVOURITE", "#e6e6e6", "buying their way in")
+
+		if(random_passerby)
+			chosen_chronicle_stats[2] = CHRONICLE_STATS_RANDOM_PASSERBY
+			set_chronicle_stat(CHRONICLE_STATS_RANDOM_PASSERBY, random_passerby, "RANDOM PASSERBY", "#888888", "just happening to be here")
+
+	else if(!isnull(GLOB.chronicle_stats[CHRONICLE_STATS_PSYDON_FAVOURITE]))
+		chosen_chronicle_stats = list()
+		pick_chronicle_stats()
+
 /// Returns total follower influence for the given storyteller
 /datum/controller/subsystem/gamemode/proc/get_follower_influence(datum/storyteller/chosen_storyteller)
 	var/datum/storyteller/initialized_storyteller = storytellers[chosen_storyteller]
@@ -1646,20 +1674,24 @@ SUBSYSTEM_DEF(gamemode)
 
 /// Returns influence value for a given storyteller for his given statistic
 /datum/controller/subsystem/gamemode/proc/calculate_specific_influence(datum/storyteller/chosen_storyteller, statistic)
-	var/datum/storyteller/initalized_storyteller = storytellers[chosen_storyteller]
-	if(!initalized_storyteller)
+	var/datum/storyteller/initialized_storyteller = storytellers[chosen_storyteller]
+	if(!initialized_storyteller)
 		return
 
-	if(!(statistic in initalized_storyteller.influence_factors))
+	if(!(statistic in initialized_storyteller.influence_factors))
 		return
 
 	var/influence = 0
 	var/stat_value = GLOB.vanderlin_round_stats[statistic]
-	var/list/factors = initalized_storyteller.influence_factors[statistic]
+	var/list/factors = initialized_storyteller.influence_factors[statistic]
 	var/modifier = factors["points"]
 	var/capacity = factors["capacity"]
 
-	var/raw_contribution = stat_value * modifier
+	var/scaling_factor = initialized_storyteller.influence_modifier
+	if(modifier < 0)
+		scaling_factor = 1 / scaling_factor
+
+	var/raw_contribution = (stat_value * modifier) * scaling_factor
 	influence = (modifier < 0) ? max(raw_contribution, capacity) : min(raw_contribution, capacity)
 
 	return influence
@@ -1694,6 +1726,14 @@ SUBSYSTEM_DEF(gamemode)
 		if(S.name == god_name)
 			return SSgamemode.calculate_storyteller_influence(S.type)
 	return 0
+
+/// Checks if the given storyteller is ascendant
+/proc/is_ascendant(god_name)
+	. = FALSE
+	for(var/storyteller_type in SSgamemode.storytellers)
+		var/datum/storyteller/S = SSgamemode.storytellers[storyteller_type]
+		if(S.ascendant && (S.name == god_name))
+			return TRUE
 
 #undef DEFAULT_STORYTELLER_VOTE_OPTIONS
 #undef MAX_POP_FOR_STORYTELLER_VOTE

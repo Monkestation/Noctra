@@ -8,12 +8,10 @@
 	var/sunstolen = FALSE
 
 /obj/structure/vampire/necromanticbook/attack_hand(mob/living/carbon/human/user)
-	var/datum/antagonist/vampire/lord/lord_datum = user.mind.has_antag_datum(/datum/antagonist/vampire/lord)
-	if(!lord_datum)
+	if(!user.clan)
 		return
 
-	var/datum/team/vampires/vamp_team = lord_datum.team
-	if(vamp_team.power_level < 3)
+	if(user.bloodpool < 4000)
 		to_chat(user, span_warning("I have yet to regain this aspect of my power."))
 		return TRUE
 
@@ -24,16 +22,16 @@
 			if(length(SSmapping.retainer.death_knights) >= 3)
 				to_chat(user, span_warning("I cannot summon any more death knights."))
 				return
-			if(!lord_datum.has_vitae(DEATH_KNIGHT_COST))
+			if(!user.has_bloodpool_cost(DEATH_KNIGHT_COST))
 				to_chat(user, span_warning("I do not have enough vitae."))
 				return
 			if(!do_after(user, 10 SECONDS, src))
 				return
-			if(!lord_datum.has_vitae(DEATH_KNIGHT_COST))
+			if(!user.has_bloodpool_cost(DEATH_KNIGHT_COST))
 				to_chat(user, span_warning("I no longer have enough vitae."))
 				return
 
-			lord_datum.adjust_vitae(DEATH_KNIGHT_COST)
+			user.adjust_bloodpool(DEATH_KNIGHT_COST)
 			user.playsound_local(get_turf(src), 'sound/misc/vcraft.ogg', 100, FALSE, pressure_affected = FALSE)
 			to_chat(user, span_notice("I have summoned a knight from the underworld. I need only wait for them to materialize."))
 			SSmapping.add_world_trait(/datum/world_trait/death_knight, -1)
@@ -43,16 +41,16 @@
 				D.death_knight_spawn()
 
 		if("Steal the Sun")
-			if(!can_steal_sun(lord_datum))
+			if(!can_steal_sun(user))
 				return
 			if(browser_alert(user, "Force Vanderlin into Night?<BR>Cost:[SUN_STEAL_COST]","",DEFAULT_INPUT_CHOICES) != CHOICE_YES)
 				return
 			if(!do_after(user, 10 SECONDS, src))
 				return
-			if(!can_steal_sun(lord_datum))
+			if(!can_steal_sun(user))
 				return
 
-			lord_datum.adjust_vitae(SUN_STEAL_COST)
+			user.adjust_bloodpool(SUN_STEAL_COST)
 
 			GLOB.todoverride = "night"
 			sunstolen = TRUE
@@ -68,15 +66,15 @@
 				to_chat(astrater, span_userdanger("You feel the pain of [astrater.patron]!"))
 				astrater.emote("painscream", intentional = FALSE)
 
-/obj/structure/vampire/necromanticbook/proc/can_steal_sun(datum/antagonist/vampire/lord/thief)
+/obj/structure/vampire/necromanticbook/proc/can_steal_sun(mob/living/carbon/human/user)
 	if(sunstolen)
-		to_chat(thief.owner, span_warning("The Sun is already stolen."))
+		to_chat(user, span_warning("The Sun is already stolen."))
 		return
 	if(GLOB.tod == "night")
-		to_chat(thief.owner, span_warning("The Moon is watching. I must wait for Her to return."))
+		to_chat(user, span_warning("The Moon is watching. I must wait for Her to return."))
 		return
-	if(!thief.has_vitae(SUN_STEAL_COST))
-		to_chat(thief.owner, span_warning("I do not have enough vitae."))
+	if(!user.adjust_bloodpool(SUN_STEAL_COST))
+		to_chat(user, span_warning("I do not have enough vitae."))
 		return
 
 	return TRUE

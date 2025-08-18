@@ -28,3 +28,8 @@
 	cost = 240
 	contains = /obj/item/clothing/ring/active/nomag
 
+/datum/supply_pack/jewelry/mercator
+	name = "Mercator Eye"
+	cost = 200
+	contains = /obj/item/clothing/neck/mercator
+

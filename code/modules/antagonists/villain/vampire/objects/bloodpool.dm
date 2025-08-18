@@ -8,14 +8,14 @@
 	icon_state = "vat"
 	var/maximum = 8000
 	var/current = 8000
-	var/list/useoptions = list("Grow Power", "Shape Amulet", "Shape Armor")
-	var/list/levelup_thresholds = list(
-		VAMPCOST_ONE,
-		VAMPCOST_TWO,
-		VAMPCOST_THREE,
-		VAMPCOST_FOUR,
+	var/datum/clan/owner_clan
+
+	var/list/active_projects = list()
+	var/list/available_project_types = list(
+		/datum/vampire_project/power_growth,
+		/datum/vampire_project/amulet_crafting,
+		/datum/vampire_project/armor_crafting
 	)
-	var/datum/team/vampires/owner_team
 
 /obj/structure/vampire/bloodpool/Initialize()
 	. = ..()
@@ -25,73 +25,145 @@
 	. = ..()
 	to_chat(user, span_boldnotice("Blood level: [current]"))
 
+	// Show active projects
+	if(active_projects.len)
+		to_chat(user, span_notice("Active Projects:"))
+		for(var/project_key in active_projects)
+			var/datum/vampire_project/project = active_projects[project_key]
+			var/progress_percent = round((project.paid_amount / project.total_cost) * 100, 1)
+			to_chat(user, span_notice("- [project.display_name]: [project.paid_amount]/[project.total_cost] ([progress_percent]%)"))
+
 /obj/structure/vampire/bloodpool/attack_hand(mob/living/user)
 	var/datum/antagonist/vampire/lord/lord = user.mind.has_antag_datum(/datum/antagonist/vampire/lord)
 	if(!lord)
 		return
-	switch(browser_input_list(user, "What to do?", "VANDERLIN", useoptions))
-		if("Grow Power")
-			var/datum/team/vampires/vamp_team = lord.team
-			if(lord.ascended)
-				to_chat(user, span_warning("I have already reached my pinnacle."))
-				return
 
-			var/next_level = levelup_thresholds[vamp_team.power_level + 1]
+	var/list/available_options = list()
 
-			if(browser_alert(user, "Increase vampire level?<BR>Cost:[next_level]", "ASCENSION", DEFAULT_INPUT_CHOICES) == CHOICE_YES)
-				if(!check_withdraw(-next_level))
-					to_chat(user, span_warning("I do not have enough vitae."))
-					return
+	// Add available project types that aren't already active
+	for(var/project_type in available_project_types)
+		var/datum/vampire_project/temp_project = new project_type()
+		if(temp_project.can_start(user, src) && !(project_type in active_projects))
+			available_options[temp_project.display_name] = project_type
+		qdel(temp_project)
 
-				if(!do_after(user, 10 SECONDS))
-					to_chat(user, span_warning("My growth has been interrupted."))
-					return
+	// Add option to contribute to existing projects
+	if(active_projects.len)
+		available_options["Contribute to Project"] = "contribute"
 
-				if(!check_withdraw(-next_level))
-					to_chat(user, span_warning("I do not have enough vitae."))
-					return
+	// Add option to view/cancel projects
+	if(active_projects.len)
+		available_options["Manage Projects"] = "manage"
 
-				lord.adjust_vitae(-next_level)
-				to_chat(user, span_greentext("My power grows."))
-				vamp_team.grow_in_power()
-				user.playsound_local(get_turf(src), 'sound/misc/batsound.ogg', 100, FALSE, pressure_affected = FALSE)
+	var/choice = browser_input_list(user, "What to do?", "VANDERLIN", available_options)
+	if(!choice)
+		return
 
-		if("Shape Amulet")
-			if(browser_alert(user, "Craft a new amulet?<BR>Cost:500", "WORLD ANCHOR", DEFAULT_INPUT_CHOICES) == CHOICE_YES)
-				if(!check_withdraw(-500))
-					to_chat(user, span_warning("I do not have enough vitae."))
-					return
-				if(do_after(user, 10 SECONDS, src))
-					lord.adjust_vitae(-500)
-					var/naming = input(user, "Select a name for the amulet.", "VANDERLIN") as text|null
-					var/obj/item/clothing/neck/portalamulet/P = new(src.loc)
-					if(naming)
-						P.name = naming
-					user.playsound_local(get_turf(src), 'sound/misc/vcraft.ogg', 100, FALSE, pressure_affected = FALSE)
+	var/action = available_options[choice]
 
-		if("Shape Armor")
-			if(browser_alert(user, "Craft a new set of armor?<BR>Cost:5000", "WICKED PLATE", DEFAULT_INPUT_CHOICES) == CHOICE_YES)
-				if(!check_withdraw(-5000))
-					to_chat(user, span_warning("I do not have enough vitae."))
-					return
-				if(do_after(user, 10 SECONDS, src))
-					lord.adjust_vitae(-5000)
-					new /obj/item/clothing/pants/platelegs/vampire (src.loc)
-					new /obj/item/clothing/gloves/chain/vampire (src.loc)
-					new /obj/item/clothing/armor/chainmail/hauberk/vampire (src.loc)
-					new /obj/item/clothing/armor/cuirass/vampire (src.loc)
-					new /obj/item/clothing/shoes/boots/armor/vampire (src.loc)
-					new /obj/item/clothing/head/helmet/heavy/savoyard (src.loc)
-					user.playsound_local(get_turf(src), 'sound/misc/vcraft.ogg', 100, FALSE, pressure_affected = FALSE)
+	switch(action)
+		if("contribute")
+			handle_project_contribution(user)
+		if("manage")
+			handle_project_management(user)
+		else
+			// It's a project type
+			start_new_project(action, user)
+
+/obj/structure/vampire/bloodpool/proc/start_new_project(project_type, mob/living/user)
+	var/datum/vampire_project/project = new project_type()
+
+	if(!project.can_start(user, src))
+		to_chat(user, span_warning(project.start_failure_message))
+		qdel(project)
+		return
+
+	if(!project.confirm_start(user))
+		qdel(project)
+		return
+
+	project.bloodpool = src
+	project.initiator = user
+	project.on_start(user)
+
+	active_projects[project_type] = project
+
+	to_chat(user, span_greentext("Started project: [project.display_name]. Begin contributing vitae to progress."))
+
+/obj/structure/vampire/bloodpool/proc/handle_project_contribution(mob/living/user)
+	if(!active_projects.len)
+		to_chat(user, span_warning("No active projects to contribute to."))
+		return
+
+	var/list/project_choices = list()
+	for(var/project_type in active_projects)
+		var/datum/vampire_project/project = active_projects[project_type]
+		var/remaining = project.total_cost - project.paid_amount
+		project_choices["[project.display_name] (Remaining: [remaining])"] = project_type
+
+	var/choice = browser_input_list(user, "Select project to contribute to:", "CONTRIBUTION", project_choices)
+	if(!choice)
+		return
+
+	var/project_type = project_choices[choice]
+	var/datum/vampire_project/project = active_projects[project_type]
+
+	project.handle_contribution(user)
+
+/obj/structure/vampire/bloodpool/proc/handle_project_management(mob/living/user)
+	if(!active_projects.len)
+		to_chat(user, span_warning("No active projects to manage."))
+		return
+
+	var/list/project_options = list()
+	for(var/project_type in active_projects)
+		var/datum/vampire_project/project = active_projects[project_type]
+		var/progress_percent = round((project.paid_amount / project.total_cost) * 100, 1)
+		project_options["[project.display_name] ([progress_percent]%)"] = project_type
+
+	var/choice = browser_input_list(user, "Select project to manage:", "PROJECT MANAGEMENT", project_options)
+	if(!choice)
+		return
+
+	var/project_type = project_options[choice]
+	var/datum/vampire_project/project = active_projects[project_type]
+
+	var/action = browser_input_list(user, "What would you like to do?", "MANAGEMENT", list("View Details", "Cancel Project"))
+
+	switch(action)
+		if("View Details")
+			project.show_details(user)
+		if("Cancel Project")
+			if(browser_alert(user, "Cancel [project.display_name]?<BR>All invested vitae will be refunded.", "CANCELLATION", list("Yes", "No")) == "Yes")
+				cancel_project(project_type)
+
+/obj/structure/vampire/bloodpool/proc/complete_project(project_type)
+	var/datum/vampire_project/project = active_projects[project_type]
+
+	// Notify all contributors
+	for(var/mob/living/contributor in project.contributors)
+		to_chat(contributor, span_boldannounce("[project.display_name] has been completed!"))
+		contributor.playsound_local(get_turf(src), project.completion_sound, 100, FALSE, pressure_affected = FALSE)
+
+	// Execute project completion
+	project.on_complete(src)
+
+	active_projects.Remove(project_type)
+	qdel(project)
+
+/obj/structure/vampire/bloodpool/proc/cancel_project(project_type)
+	var/datum/vampire_project/project = active_projects[project_type]
+
+	project.on_cancel()
+
+	active_projects.Remove(project_type)
+	qdel(project)
 
 /obj/structure/vampire/bloodpool/proc/update_pool(change)
 	if(!change)
 		return
-
-	maximum = 8000
-	if(owner_team)
-		maximum += 4000 * length(owner_team.thralls)
-
+	if(owner_clan)
+		owner_clan.adjust_bloodpool_size(change)
 	current = clamp(current + change, 0, maximum)
 
 /obj/structure/vampire/bloodpool/proc/check_withdraw(change)
@@ -99,6 +171,124 @@
 		if(abs(change) > current)
 			return FALSE
 		return TRUE
+
+/datum/vampire_project
+	var/display_name = "Unknown Project"
+	var/description = "A mysterious undertaking."
+	var/total_cost = 1000
+	var/paid_amount = 0
+	var/list/contributors = list()
+	var/obj/structure/vampire/bloodpool/bloodpool
+	var/mob/living/initiator
+	var/start_failure_message = "This project cannot be started."
+	var/completion_sound = 'sound/misc/batsound.ogg'
+
+/datum/vampire_project/proc/can_start(mob/living/user, obj/structure/vampire/bloodpool/pool)
+	return TRUE
+
+/datum/vampire_project/proc/confirm_start(mob/living/user)
+	return browser_alert(user, "Begin [display_name]?<BR>[description]<BR>Total Cost: [total_cost]<BR>You can contribute vitae over time.", "PROJECT START", list("Yes", "No")) == "Yes"
+
+/datum/vampire_project/proc/on_start(mob/living/user)
+	return
+
+/datum/vampire_project/proc/handle_contribution(mob/living/user)
+	var/max_contribution = min(user.bloodpool, total_cost - paid_amount)
+	var/contribution = input(user, "How much vitae to contribute? (Max: [max_contribution])", "CONTRIBUTION") as num|null
+
+	if(!contribution || contribution <= 0)
+		return
+
+	contribution = clamp(contribution, 1, max_contribution)
+
+	if(user.bloodpool < contribution)
+		to_chat(user, span_warning("I do not have enough vitae."))
+		return
+
+	user.adjust_bloodpool(-contribution)
+	paid_amount += contribution
+
+	if(!(user in contributors))
+		contributors += user
+
+	to_chat(user, span_greentext("Contributed [contribution] vitae to [display_name]. ([paid_amount]/[total_cost])"))
+	make_tracker_effects(user.loc, src, 1, "soul", 3, /obj/effect/tracker/drain, 1)
+
+	if(paid_amount >= total_cost)
+		bloodpool.complete_project(type)
+
+/datum/vampire_project/proc/show_details(mob/living/user)
+	to_chat(user, span_notice("Project: [display_name]"))
+	to_chat(user, span_notice("Description: [description]"))
+	to_chat(user, span_notice("Progress: [paid_amount]/[total_cost]"))
+	to_chat(user, span_notice("Contributors: [english_list(contributors)]"))
+
+/datum/vampire_project/proc/on_complete()
+	return
+
+/datum/vampire_project/proc/on_cancel()
+	// Refund vitae to contributors proportionally
+	var/total_refund = paid_amount
+	for(var/mob/living/contributor in contributors)
+		// For simplicity, equal refund to all contributors
+		// You could track individual contributions if needed
+		var/refund_amount = total_refund / contributors.len
+		contributor.adjust_bloodpool(refund_amount)
+		to_chat(contributor, span_notice("Received [refund_amount] vitae refund from cancelled project: [display_name]"))
+
+// Specific project types
+/datum/vampire_project/power_growth
+	display_name = "Ascension Ritual"
+	description = "Channel collective vitae to transcend mortal limitations."
+	total_cost = VAMPCOST_ONE
+	completion_sound = 'sound/misc/batsound.ogg'
+
+/datum/vampire_project/power_growth/can_start(mob/living/user, obj/structure/vampire/bloodpool/pool)
+	var/datum/antagonist/vampire/lord/lord = user.mind?.has_antag_datum(/datum/antagonist/vampire/lord)
+	return lord && !lord.ascended
+
+/datum/vampire_project/power_growth/on_complete()
+	// Find nearby vampire lords who can level up
+	for(var/mob/living/user in range(1, bloodpool))
+		var/datum/antagonist/vampire/lord/lord = user.mind?.has_antag_datum(/datum/antagonist/vampire/lord)
+		if(lord && !lord.ascended)
+			to_chat(user, span_greentext("My power grows through collective sacrifice."))
+			// Add actual level up logic here
+			break
+
+/datum/vampire_project/amulet_crafting
+	display_name = "World Anchor"
+	description = "Forge a mystical amulet to bind souls across realms."
+	total_cost = 500
+	completion_sound = 'sound/misc/vcraft.ogg'
+	var/amulet_name
+
+/datum/vampire_project/amulet_crafting/confirm_start(mob/living/user)
+	if(..())
+		amulet_name = input(user, "Select a name for the amulet.", "VANDERLIN") as text|null
+		return TRUE
+	return FALSE
+
+/datum/vampire_project/amulet_crafting/on_complete(atom/movable/creation_point)
+	var/obj/item/clothing/neck/portalamulet/P = new(bloodpool.loc)
+	if(amulet_name)
+		P.name = amulet_name
+	creation_point.visible_message(span_notice("An amulet materializes from the crimson crucible."))
+
+/datum/vampire_project/armor_crafting
+	display_name = "Wicked Plate"
+	description = "Craft a complete set of vampiric armor from crystallized blood."
+	total_cost = 5000
+	completion_sound = 'sound/misc/vcraft.ogg'
+
+/datum/vampire_project/armor_crafting/on_complete(atom/movable/creation_point)
+	new /obj/item/clothing/pants/platelegs/vampire (bloodpool.loc)
+	new /obj/item/clothing/gloves/chain/vampire (bloodpool.loc)
+	new /obj/item/clothing/armor/chainmail/hauberk/vampire (bloodpool.loc)
+	new /obj/item/clothing/armor/cuirass/vampire (bloodpool.loc)
+	new /obj/item/clothing/shoes/boots/armor/vampire (bloodpool.loc)
+	new /obj/item/clothing/head/helmet/heavy/savoyard (bloodpool.loc)
+	creation_point.visible_message(span_notice("A complete set of armor materializes from the crimson crucible."))
 
 #undef VAMPCOST_ONE
 #undef VAMPCOST_TWO

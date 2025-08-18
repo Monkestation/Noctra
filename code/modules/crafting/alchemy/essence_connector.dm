@@ -6,6 +6,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/obj/machinery/essence/source_device = null
 	var/connecting = FALSE
+	slot_flags = ITEM_SLOT_HIP
 
 /obj/item/essence_connector/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(!proximity_flag)

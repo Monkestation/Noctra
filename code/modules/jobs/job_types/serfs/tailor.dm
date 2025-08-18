@@ -45,15 +45,15 @@
 	H.adjust_skillrank(/datum/skill/labor/mathematics, 2, TRUE)
 	ADD_TRAIT(H, TRAIT_SEEPRICES, TRAIT_GENERIC)
 	if(H.gender == MALE)
-		pants = /obj/item/clothing/pants/tights/red
-		shirt = /obj/item/clothing/shirt/undershirt/red
-		armor = /obj/item/clothing/shirt/tunic/red
+		pants = /obj/item/clothing/pants/tights/colored/red
+		shirt = /obj/item/clothing/shirt/undershirt/colored/red
+		armor = /obj/item/clothing/shirt/tunic/colored/red
 		cloak = /obj/item/clothing/cloak/raincloak/furcloak
 	else
 		cloak = /obj/item/clothing/cloak/raincloak/furcloak
-		shirt = /obj/item/clothing/shirt/dress/gen/purple
-		armor = /obj/item/clothing/shirt/tunic/purple
-		pants = /obj/item/clothing/pants/tights/purple
+		shirt = /obj/item/clothing/shirt/dress/gen/colored/purple
+		armor = /obj/item/clothing/shirt/tunic/colored/purple
+		pants = /obj/item/clothing/pants/tights/colored/purple
 	H.change_stat(STATKEY_INT, 2)
 	H.change_stat(STATKEY_SPD, 2)
 	H.change_stat(STATKEY_PER, 1)

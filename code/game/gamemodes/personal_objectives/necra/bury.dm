@@ -1,5 +1,6 @@
 /datum/objective/proper_burial
 	name = "Consecrate Graves"
+	triumph_count = 2
 	var/burials_completed = 0
 	var/required_burials = 1
 
@@ -31,7 +32,7 @@
 	to_chat(owner.current, span_greentext("You have consecrated enough graves to earn Necra's approval!"))
 	owner.current.adjust_triumphs(triumph_count)
 	completed = TRUE
-	adjust_storyteller_influence("Necra", 15)
+	adjust_storyteller_influence(NECRA, 15)
 	escalate_objective()
 	UnregisterSignal(owner.current, COMSIG_GRAVE_CONSECRATED)
 

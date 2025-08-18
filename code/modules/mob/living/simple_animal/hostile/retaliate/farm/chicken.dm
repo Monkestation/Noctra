@@ -9,7 +9,7 @@
 
 	density = FALSE
 	gender = FEMALE
-	pass_flags = PASSMOB
+	pass_flags = PASSMOB|PASSTABLE
 	mob_size = MOB_SIZE_SMALL
 	ventcrawler = VENTCRAWLER_ALWAYS
 	emote_see = list("pecks at the ground.","flaps its wings viciously.")

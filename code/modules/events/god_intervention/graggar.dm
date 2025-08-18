@@ -81,7 +81,7 @@ GLOBAL_LIST_EMPTY(graggar_cullings)
 	track = EVENT_TRACK_INTERVENTION
 	typepath = /datum/round_event/graggar_culling
 	weight = 8
-	earliest_start = 25 MINUTES
+	earliest_start = 20 MINUTES
 	max_occurrences = 1
 	min_players = 35
 	allowed_storytellers = list(/datum/storyteller/graggar)
@@ -111,8 +111,8 @@ GLOBAL_LIST_EMPTY(graggar_cullings)
 	if(length(contenders) < 2)
 		return
 
-	// 33% chance for grand culling (multiple pairs)
-	var/grand_culling = prob(33)
+	// 33% chance for grand culling (multiple pairs) unless ascendant, then it's guaranteed
+	var/grand_culling = is_ascendant(EORA) || prob(33)
 	var/max_pairs = grand_culling ? floor(length(contenders) / 2) : 1
 
 	for(var/i in 1 to max_pairs)

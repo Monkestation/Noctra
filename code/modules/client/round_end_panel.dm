@@ -18,11 +18,13 @@
 
 	// Chronicle sub-tabs
 	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Gods' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #4a4a5a, #2a2a3a); border: 1px solid #6a6a7a; border-bottom: 2px solid #9a9aaa; color: #e0e0f0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>GODS</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Messages' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a1a, #1a120a); border: 1px solid #5a4a3a; border-bottom: 2px solid #8a7a6a; color: #d4c4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>WHISPERS</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=The Realm' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #2a2a3a, #0a0a1a); border: 1px solid #4a4a5a; border-bottom: 2px solid #7a7a8a; color: #c4c4d4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>THE REALM</a>"
 	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a0a, #1a1200); border: 1px solid #5a4a1a; border-bottom: 2px solid #8a7a3a; color: #dec97a; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>STATISTICS</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Heroes' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a4a5a, #1a1b2a); border: 1px solid #6a7b8a; border-bottom: 2px solid #8f9caa; color: #c0c0d0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>HEROES</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Villains' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a1a1a, #1a0a0a); border: 1px solid #5a3a3a; border-bottom: 2px solid #8a6a6a; color: #d4b4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>VILLAINS</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Outlaws' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #5a3a0a, #3a1a0a); border: 1px solid #7a5a2a; border-bottom: 2px solid #aa8a5a; color: #ffd494; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>OUTLAWS</a>"
 	data += "</div>"
 
 	// Content
@@ -56,11 +58,6 @@
 		if(initialized_storyteller.times_chosen > max_chosen)
 			max_chosen = initialized_storyteller.times_chosen
 			most_frequent = initialized_storyteller
-		else if(initialized_storyteller.times_chosen == max_chosen)
-			if(!most_frequent || influence > SSgamemode.calculate_storyteller_influence(most_frequent.type))
-				most_frequent = initialized_storyteller
-			else if(influence == SSgamemode.calculate_storyteller_influence(most_frequent.type) && prob(50))
-				most_frequent = initialized_storyteller
 
 	// Gods display
 	data += "<div style='text-align: center; margin: 25px auto; width: 80%; max-width: 800px;'>"
@@ -265,45 +262,101 @@
 
 	// Chronicle sub-tabs
 	data += "<div style='width: 100%; text-align: center; margin: 15px 0;'>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Gods' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #4a4a5a, #2a2a3a); border: 1px solid #6a6a7a; border-bottom: 2px solid #9a9aaa; color: #e0e0f0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>GODS</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Messages' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a1a, #1a120a); border: 1px solid #5a4a3a; border-bottom: 2px solid #8a7a6a; color: #d4c4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>WHISPERS</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=The Realm' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #2a2a3a, #0a0a1a); border: 1px solid #4a4a5a; border-bottom: 2px solid #7a7a8a; color: #c4c4d4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>THE REALM</a>"
 	data += "<a href='byond://?src=[REF(src)];viewstats=1' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a2a0a, #1a1200); border: 1px solid #5a4a1a; border-bottom: 2px solid #8a7a3a; color: #dec97a; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>STATISTICS</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Heroes' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a4a5a, #1a1b2a); border: 1px solid #6a7b8a; border-bottom: 2px solid #8f9caa; color: #c0c0d0; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>HEROES</a>"
 	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Villains' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #3a1a1a, #1a0a0a); border: 1px solid #5a3a3a; border-bottom: 2px solid #8a6a6a; color: #d4b4b4; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>VILLAINS</a>"
+	data += "<a href='byond://?src=[REF(src)];viewchronicle=1;chronicletab=Outlaws' style='display: inline-block; width: 100px; padding: 6px 10px; margin: 0 5px; background: linear-gradient(to bottom, #5a3a0a, #3a1a0a); border: 1px solid #7a5a2a; border-bottom: 2px solid #aa8a5a; color: #ffd494; font-weight: bold; text-decoration: none; border-radius: 2px; font-size: 0.8em; box-shadow: 0 1px 3px rgba(0,0,0,0.5);'>OUTLAWS</a>"
 	data += "</div>"
 
 	// Content
 	data += "<div style='margin: 35px;'>"
 	switch(tab)
+		if("Gods")
+
+			// Gods' Interventions Section
+			data += "<div>"
+			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.2em; margin-bottom: 10px;'>GODS' INTERVENTIONS</div>"
+			data += "<div style='border-top: 1px solid #9a9aaa; margin: 20px auto 10px auto; width: 90%;'></div>"
+
+			if(length(SSmapping.active_world_traits))
+				data += "<div style='display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin-top: 20px; margin-bottom: 30px;'>"
+				for(var/datum/world_trait/trait in SSmapping.active_world_traits)
+					data += "<div style='background: #2a2a3a; border: 1px solid #4a4a5a; padding: 10px; border-radius: 4px;'>"
+					data += "<div style='color: #e0e0f0; font-weight: bold; margin-bottom: 5px;'>[trait.name]</div>"
+					data += "<div style='color: #b0b0b0; font-style: italic;'>[trait.desc]</div>"
+					data += "</div>"
+
+				data += "</div>"
+			else
+				data += "<div style='text-align: center; color: #999; font-style: italic; padding: 30px 0;'>The Gods are silent</div>"
+
+			data += "</div>"
+
+			// Ranking of the Gods Section
+			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.2em; margin-bottom: 15px;'>RANKING OF THE GODS</div>"
+			data += "<div style='border-top: 1.5px solid #9a9aaa; margin: 0 auto 20px auto; width: 90%;'></div>"
+
+			var/list/god_rankings = get_god_rankings()
+			var/list/sorted_gods = list()
+
+			for(var/storyteller_name in SSgamemode.storytellers)
+				var/datum/storyteller/S = SSgamemode.storytellers[storyteller_name]
+				if(!S)
+					continue
+				sorted_gods += list(list(
+					"name" = S.name,
+					"points" = god_rankings[S.name] || 0,
+					"color" = S.color_theme
+				))
+
+			sortTim(sorted_gods, GLOBAL_PROC_REF(cmp_god_ranking))
+
+			for(var/list/god_data in sorted_gods)
+				data += create_god_ranking_entry(god_data["name"], god_data["points"], god_data["color"])
+
 		if("Messages")
 			data += "<div style='display: table; width: 100%; table-layout: fixed;'>"
 			data += "<div style='display: table-row;'>"
 
-			// Last Words Column (50%)
-			data += "<div style='display: table-cell; width: 50%; vertical-align: top; padding: 0 15px;'>"
+			// Last Words Column (33%)
+			data += "<div style='display: table-cell; width: 33%; vertical-align: top; padding: 0 5px;'>"
 			data += "<div style='color: #bd1717; font-size: 1.2em; font-weight: bold; text-align: center; margin-bottom: 10px;'>LAST WORDS</div>"
-			data += "<div style='border-top: 1px solid #bd1717; width: 80%; margin: 0 auto 15px auto;'></div>"
+			data += "<div style='border-top: 1px solid #bd1717; width: 90%; margin: 0 auto 15px auto;'></div>"
 
 			if(length(GLOB.last_words))
 				for(var/entry in GLOB.last_words)
-					data += "<div style='color: #ff6b6b; margin: 0 0 12px 30px; padding: 8px; background: rgba(189, 23, 23, 0.08); border-left: 3px solid #bd1717; border-radius: 0 3px 3px 0;'>"
+					data += "<div style='color: #ff6b6b; margin: 0 0 12px 0px; padding: 8px; background: rgba(189, 23, 23, 0.08); border-left: 3px solid #bd1717; border-radius: 0 3px 3px 0;'>"
 					data += "[entry]"
 					data += "</div>"
 			else
 				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>No last words told</div>"
 			data += "</div>"
 
-			// Vertical Divider
-			data += "<div style='display: table-cell; width: 1px; background-color: #444; height: 100%;'></div>"
+			// Prayers Column (33%)
+			data += "<div style='display: table-cell; width: 33%; vertical-align: top; padding: 0 5px;'>"
+			data += "<div style='color: #e6b327; font-size: 1.2em; font-weight: bold; text-align: center; margin-bottom: 10px;'>PRAYERS</div>"
+			data += "<div style='border-top: 1px solid #e6b327; width: 90%; margin: 0 auto 15px auto;'></div>"
 
-			// Correspondence Column (50%)
-			data += "<div style='display: table-cell; width: 50%; vertical-align: top; padding: 0 15px;'>"
-			data += "<div style='color: #e6b327; font-size: 1.2em; font-weight: bold; text-align: center; margin-bottom: 10px;'>CORRESPONDENCE</div>"
-			data += "<div style='border-top: 1px solid #e6b327; width: 80%; margin: 0 auto 15px auto;'></div>"
+			if(length(GLOB.prayers))
+				for(var/entry in GLOB.prayers)
+					data += "<div style='color: #dbd9d9; margin: 0 0 12px 0px; padding: 8px; background: rgba(230, 179, 39, 0.08); border-left: 3px solid #e6b327; border-radius: 0 3px 3px 0;'>"
+					data += "[entry]"
+					data += "</div>"
+			else
+				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>No prayers made</div>"
+			data += "</div>"
+
+			// Correspondence Column (33%)
+			data += "<div style='display: table-cell; width: 33%; vertical-align: top; padding: 0 5px;'>"
+			data += "<div style='color: #a0c4e0; font-size: 1.2em; font-weight: bold; text-align: center; margin-bottom: 10px;'>CORRESPONDENCE</div>"
+			data += "<div style='border-top: 1px solid #a0c4e0; width: 90%; margin: 0 auto 15px auto;'></div>"
 
 			if(length(GLOB.letters_sent))
 				for(var/entry in GLOB.letters_sent)
-					data += "<div style='color: #dbd9d9; margin: 0 0 12px 30px; padding: 8px; background: rgba(230, 179, 39, 0.08); border-left: 3px solid #e6b327; border-radius: 0 3px 3px 0;'>"
+					data += "<div style='color: #e0e8f0; margin: 0 0 12px 0px; padding: 8px; background: rgba(160, 196, 224, 0.08); border-left: 3px solid #a0c4e0; border-radius: 0 3px 3px 0;'>"
 					data += "[entry]"
 					data += "</div>"
 			else
@@ -429,7 +482,7 @@
 
 				data += "</div>"
 			else
-				data += "<div style='text-align: center; color: #999; font-style: italic;'>The Realm has no heroes</div>"
+				data += "<div style='text-align: center; color: #999; font-style: italic;'>Psydon was the last hero to live</div>"
 
 		if("Villains")
 			data += "<div style='text-align: center; color: #d4b4b4; font-size: 1.2em; margin-bottom: 15px;'>VILLAINS OF THE REALM</div>"
@@ -455,7 +508,7 @@
 						all_antagonists |= A
 
 			if(!length(all_teams) && !length(all_antagonists) && !length(GLOB.confessors))
-				data += "<div style='text-align: center; color: #999; font-style: italic;'>The Realm has no villains</div>"
+				data += "<div style='text-align: center; color: #999; font-style: italic;'>The Realm has no villains... for now</div>"
 			else
 				if(length(GLOB.confessors))
 					data += "<div style='background: #1a0a0a; border: 1px solid #5a3a3a; padding: 12px; border-radius: 4px; margin-bottom: 15px;'>"
@@ -553,6 +606,127 @@
 
 				if(all_antagonists.len)
 					data += "</div></div>"
+
+		if("Outlaws")
+			data += "<div style='text-align: center; color: #ffd494; font-size: 1.2em; margin-bottom: 15px;'>WANTED OUTLAWS</div>"
+			data += "<div style='border-top: 1.5px solid #aa8a5a; margin: 0 auto 20px auto; width: 65%;'></div>"
+
+			var/list/outlaws = list()
+			for(var/mob/living/carbon/human/outlaw in GLOB.human_list)
+				if(outlaw.real_name in GLOB.outlawed_players)
+					var/icon/credit_icon = SScrediticons.get_credit_icon(outlaw, TRUE)
+					if(credit_icon)
+						outlaws += list(list(
+							"name" = outlaw.real_name,
+							"icon" = credit_icon
+						))
+
+			if(!length(outlaws))
+				data += "<div style='text-align: center; color: #999; font-style: italic;'>The Realm is peaceful, its inhabitants kind</div>"
+			else
+				data += {"
+				<style>
+					.wanted-container {
+						display: flex;
+						flex-wrap: wrap;
+						justify-content: center;
+						gap: 20px;
+						padding: 15px;
+						max-width: calc(200px * 3 + 20px * 2);
+						margin: 0 auto;
+					}
+					.wanted-poster {
+						width: 175px;
+						height: 228px;
+						border: 3px double #5c2c0f;
+						background-color: #f5e7d0;
+						padding: 8px;
+						box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
+						font-family: 'Times New Roman', serif;
+						display: flex;
+						flex-direction: column;
+					}
+					.wanted-header {
+						color: #c70404;
+						font-size: 28px;
+						font-weight: bold;
+						text-align: center;
+						margin-bottom: 5px;
+						text-transform: uppercase;
+					}
+					.wanted-divider {
+						border-bottom: 2px solid #8B0000;
+						margin: 5px 0;
+					}
+					.wanted-footer {
+						color: #8B0000;
+						font-size: 16px;
+						font-weight: bold;
+						text-align: center;
+						margin-bottom: 8px;
+						text-transform: uppercase;
+					}
+					.wanted-icon-container {
+						width: 120px;
+						height: 85px;
+						margin: 0 auto;
+						border: 2px solid #5c2c0f;
+						background-color: #ccac74;
+						padding: 3px;
+					}
+					.wanted-icon {
+						width: 100%;
+						height: 90%;
+						object-fit: cover;
+						image-rendering: pixelated;
+					}
+					.wanted-name-container {
+						flex-grow: 1;
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+						min-height: 65px;
+						margin-top: 5px;
+					}
+					.wanted-name {
+						color: #000000;
+						font-size: 18px;
+						font-weight: bold;
+						text-align: center;
+						padding: 0 5px;
+						text-transform: uppercase;
+						word-break: break-word;
+						overflow: hidden;
+						display: -webkit-box;
+						-webkit-line-clamp: 3;
+						-webkit-box-orient: vertical;
+					}
+				</style>
+				<div class='wanted-container'>
+				"}
+
+				for(var/list/outlaw_data in outlaws)
+					var/icon_html = ""
+					if(outlaw_data["icon"])
+						icon_html = "<img class='wanted-icon' src='data:image/png;base64,[icon2base64(outlaw_data["icon"])]'>"
+					else
+						icon_html = "<div class='wanted-icon' style='background:#8B4513;'></div>"
+
+					data += {"
+					<div class='wanted-poster'>
+						<div class='wanted-header'>WANTED</div>
+						<div class='wanted-divider'></div>
+						<div class='wanted-footer'>DEAD OR ALIVE</div>
+						<div class='wanted-icon-container'>
+							[icon_html]
+						</div>
+						<div class='wanted-name-container'>
+							<div class='wanted-name'>[outlaw_data["name"]]</div>
+						</div>
+					</div>
+					"}
+
+				data += "</div>"
 
 	data += "</div>"
 
@@ -725,7 +899,7 @@
 	data += "</div></div>"
 
 	mob << browse(null, "window=vanderlin_round_end")
-	var/datum/browser/popup = new(mob, "vanderlin_influences", "<center>Gods Influences</center>", 1325, 875)
+	var/datum/browser/popup = new(mob, "vanderlin_influences", "<center>Gods' Influences</center>", 1325, 875)
 	popup.set_content(data.Join())
 	popup.open()
 
@@ -757,7 +931,10 @@
 			for(var/stat in current_set)
 				var/list/stat_data = current_set[stat]
 				var/stat_value = GLOB.vanderlin_round_stats[stat] || 0
-				var/influence_value = stat_value * stat_data["points"]
+				var/scaling_factor = initialized_storyteller.influence_modifier
+				if(stat_data["points"] < 0)
+					scaling_factor = 1 / scaling_factor
+				var/influence_value = (stat_value * stat_data["points"]) * scaling_factor
 				var/is_active = (stat in initialized_storyteller.influence_factors)
 
 				dynamic_content += "<span style='color: [is_active ? "#88f088" : "#f79090"];'>"
@@ -797,7 +974,7 @@
 
 /// Global proc to show debug version of gods influences
 /client/proc/debug_influences()
-	set name = "Debug Gods Influences"
+	set name = "Debug Gods' Influences"
 	set category = "Debug"
 
 	show_influences(debug = TRUE)

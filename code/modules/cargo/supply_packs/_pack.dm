@@ -18,6 +18,7 @@
 	var/small_item = FALSE //Small items can be grouped into a single crate.
 	var/static_cost = FALSE
 	var/randomprice_factor = 0.07
+	abstract_type = /datum/supply_pack
 
 /datum/supply_pack/New()
 	..()

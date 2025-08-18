@@ -31,15 +31,15 @@
 		return pick(targets)
 
 /mob/living/carbon/has_hand_for_held_index(i, extra_checks)
-	if(i)
-		var/obj/item/bodypart/L = hand_bodyparts[i]
-		if(L && !L.bodypart_disabled)
-			if(extra_checks)
-				if(!L.fingers || HAS_TRAIT(L, TRAIT_FINGERLESS))
-					return FALSE
-			return L
+	if(!i || length(hand_bodyparts) < i)
+		return FALSE
+	var/obj/item/bodypart/hand_instance = hand_bodyparts[i]
+	if(hand_instance && !hand_instance.bodypart_disabled)
+		if(extra_checks)
+			if(!hand_instance.fingers || HAS_TRAIT(hand_instance, TRAIT_FINGERLESS))
+				return FALSE
+		return hand_instance
 	return FALSE
-
 
 /mob/proc/has_left_hand(check_disabled = TRUE)
 	return TRUE

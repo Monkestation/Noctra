@@ -5,7 +5,7 @@
 	weight = 8
 	earliest_start = 10 MINUTES
 	max_occurrences = 2
-	min_players = 5
+	min_players = 15
 	allowed_storytellers = list(/datum/storyteller/malum)
 
 /datum/round_event/malum_diligence/start()

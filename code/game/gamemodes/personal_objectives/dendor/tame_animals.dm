@@ -1,5 +1,6 @@
 /datum/objective/tame_animal
 	name = "Tame an Animal"
+	triumph_count = 2
 	var/tamed_count = 0
 	var/required_tames = 1
 
@@ -27,7 +28,7 @@
 	to_chat(owner.current, span_greentext("You have tamed [animal], fulfilling Dendor's will!"))
 	owner.current.adjust_triumphs(triumph_count)
 	completed = TRUE
-	adjust_storyteller_influence("Dendor", 15)
+	adjust_storyteller_influence(DENDOR, 15)
 	escalate_objective()
 	UnregisterSignal(owner.current, COMSIG_ANIMAL_TAMED)
 

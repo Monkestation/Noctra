@@ -1893,7 +1893,7 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 /datum/marked_target/proc/mark_as_used()
 	used_in_contract = TRUE
 
-/proc/add_mammons_to_atom(atom/movable/target, mammons_to_add)
+/proc/add_mammons_to_atom(mob/target, mammons_to_add)
 	if(!target || mammons_to_add <= 0)
 		return FALSE
 
@@ -1924,7 +1924,11 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 		if(!best_coin_type)
 			break // Can't create any more coins
 
-		var/obj/item/coin/new_coin = new best_coin_type(target)
+		var/obj/item/coin/new_coin = new best_coin_type(get_turf(target))
+		if(ismob(target))
+			target.put_in_hand(new_coin)
+		else
+			new_coin.forceMove(target)
 		var/quantity_to_add = min(remaining_mammons / best_value, 20) // Max stack
 		new_coin.quantity = quantity_to_add
 		remaining_mammons -= quantity_to_add * best_value

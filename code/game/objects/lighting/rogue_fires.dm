@@ -279,7 +279,6 @@
 	return ..()
 
 /obj/machinery/light/fueled/torchholder/OnCrafted(dirin, user)
-	dir = turn(dirin, 180)
 	if(dir == SOUTH)
 		pixel_y = base_pixel_y + 32
 	QDEL_NULL(torchy)

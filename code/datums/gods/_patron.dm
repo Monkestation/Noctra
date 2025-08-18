@@ -4,6 +4,7 @@
 GLOBAL_LIST_EMPTY(patronlist)
 GLOBAL_LIST_EMPTY(patrons_by_faith) // Does not include patrons with preference_accessible as FALSE
 GLOBAL_LIST_EMPTY(preference_patrons) // Does not include patrons with preference_accessible as FALSE
+GLOBAL_LIST_EMPTY(prayers)
 
 /datum/patron
 	/// Name of the god
@@ -85,6 +86,7 @@ GLOBAL_LIST_EMPTY(preference_patrons) // Does not include patrons with preferenc
 		return FALSE
 
 	. = TRUE //the prayer has succeeded by this point forward
+	GLOB.prayers |= prayer
 	record_round_statistic(STATS_PRAYERS_MADE)
 
 	if(findtext(prayer, name))

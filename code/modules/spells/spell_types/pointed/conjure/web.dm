@@ -12,7 +12,7 @@
 	summon_type = list(/obj/structure/spider/stickyweb)
 	summon_radius = 3
 	summon_amount = 0
-
+	spell_flags = SPELL_RITUOS
 	attunements = list(
 		/datum/attunement/death = 0.3,
 	)

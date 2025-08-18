@@ -14,7 +14,7 @@
 /datum/outfit/job/mercenary/verderer/pre_equip(mob/living/carbon/human/H)
 	..()
 	shoes = /obj/item/clothing/shoes/boots/armor/light/rust
-	cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
+	cloak = /obj/item/clothing/cloak/raincloak/furcloak/colored/brown
 	head = /obj/item/clothing/head/helmet/leather/advanced
 	gloves = /obj/item/clothing/gloves/plate/rust
 	belt = /obj/item/storage/belt/leather/mercenary

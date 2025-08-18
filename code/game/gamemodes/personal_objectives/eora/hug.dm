@@ -1,5 +1,6 @@
 /datum/objective/hug_beggar
 	name = "Hug a Beggar"
+	triumph_count = 2
 
 /datum/objective/hug_beggar/on_creation()
 	. = ..()
@@ -20,7 +21,7 @@
 		to_chat(owner.current, span_greentext("You've hugged a beggar, completing Eora's objective!"))
 		owner.current.adjust_triumphs(triumph_count)
 		completed = TRUE
-		adjust_storyteller_influence("Eora", 10)
+		adjust_storyteller_influence(EORA, 10)
 		escalate_objective()
 		UnregisterSignal(owner.current, COMSIG_MOB_HUGGED)
 

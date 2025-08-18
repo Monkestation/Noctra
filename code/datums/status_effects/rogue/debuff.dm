@@ -426,6 +426,29 @@
 	desc = span_warning("I am intoxicated from ambromsia not meant for mortal mouths.\n")
 	icon_state = "drunk"
 
+
+/datum/status_effect/debuff/call_to_slaughter
+	id = "call_to_slaughter"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/call_to_slaughter
+	effectedstats = list("endurance" = -2, "constitution" = -2)
+	duration = 2.5 MINUTES
+
+/atom/movable/screen/alert/status_effect/debuff/call_to_slaughter
+	name = "Call to Slaughter"
+	desc = "A putrid rotting scent fills your nose as Graggar's call for slaughter rattles you to your core.."
+	icon_state = "call_to_slaughter"
+
+/datum/status_effect/debuff/baothadruqks
+	id = "baothadruqks"
+	alert_type = /atom/movable/screen/alert/status_effect/debuff/baothadruqks
+	effectedstats = list(STATKEY_PER = -2, STATKEY_SPD = -1, STATKEY_LCK = -5)
+	duration = 20 SECONDS
+
+/atom/movable/screen/alert/status_effect/debuff/baothadruqks
+	name = "Baothan Dust"
+	desc = span_warning("Someone blew some powders at me..\n")
+	icon_state = "drunk"
+
 /datum/status_effect/debuff/lux_drained
 	id = "lux_drained"
 	alert_type = /atom/movable/screen/alert/status_effect/debuff/lux_drained
@@ -446,4 +469,5 @@
 /atom/movable/screen/alert/status_effect/debuff/flaw_lux_taken
 	name = "Lux Drained"
 	desc = span_danger("Oh- \n I don't... have it anymore.\n")
+
 

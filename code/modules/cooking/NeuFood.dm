@@ -145,6 +145,8 @@
 	desc = "Made from wood."
 	icon_state = "platter"
 	dropshrink = 0.9
+	grid_height = 32
+	grid_width = 64
 	resistance_flags = NONE
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'
 	experimental_inhand = FALSE

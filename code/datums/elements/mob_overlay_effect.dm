@@ -32,6 +32,8 @@
 
 /datum/element/mob_overlay_effect/proc/on_remove(datum/source, datum/target)
 	SIGNAL_HANDLER
+	if(istype(target, /mob/living/simple_animal/hostile/retaliate/astral_projection))
+		return
 	if(ismovable(target))
 		var/atom/movable/AM = target
 		AM.remove_filter(MOB_MOVING_EFFECT_MASK)
@@ -44,6 +46,8 @@
 
 /datum/element/mob_overlay_effect/proc/on_add(datum/source, datum/target)
 	SIGNAL_HANDLER
+	if(istype(target, /mob/living/simple_animal/hostile/retaliate/astral_projection))
+		return
 	for(var/obj/structure/S in get_turf(target))
 		if(S.obj_flags & BLOCK_Z_OUT_DOWN)
 			return

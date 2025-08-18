@@ -145,8 +145,8 @@
 	smoothing_list = SMOOTH_GROUP_FLOOR_DIRT_ROAD
 	neighborlay = "grassedge"
 	max_integrity = 1200
-	spread_chance = 3
-	burn_power = 60
+	spread_chance = 2.5
+	burn_power = 15
 
 /turf/open/floor/grass/Initialize()
 	. = ..()
@@ -234,7 +234,7 @@
 	smoothing_groups = SMOOTH_GROUP_OPEN_FLOOR + SMOOTH_GROUP_FLOOR_DIRT
 	smoothing_list = SMOOTH_GROUP_FLOOR_DIRT_ROAD + SMOOTH_GROUP_FLOOR_GRASS + SMOOTH_GROUP_FLOOR_STONE
 	neighborlay = "dirtedge"
-	spread_chance = 1.6
+	spread_chance = 1.1
 
 	var/muddy = FALSE
 	var/bloodiness = 20
@@ -935,3 +935,14 @@
 	max_integrity = 800
 	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
 	attacked_sound = list('sound/combat/hits/onstone/wallhit.ogg', 'sound/combat/hits/onstone/wallhit2.ogg', 'sound/combat/hits/onstone/wallhit3.ogg')
+
+
+/turf/open/transparent/glass
+	name = "Glass floor"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "woodglass"
+
+	footstep = FOOTSTEP_PLATING
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY

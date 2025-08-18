@@ -474,20 +474,20 @@
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "shelf"
 	climbable = FALSE
-	dir = SOUTH
+	density = FALSE
+	climb_offset = 0
 	SET_BASE_PIXEL(0, 32)
 
 /obj/structure/rack/shelf/big
 	icon_state = "shelf_big"
-	climbable = FALSE
-	dir = SOUTH
 	SET_BASE_PIXEL(0, 16)
 
 /obj/structure/rack/shelf/biggest
 	icon_state = "shelf_biggest"
 	SET_BASE_PIXEL(0, 0)
 
-/obj/structure/rack/shelf/notdense // makes the wall mounted one less weird in a way, got downside of offset when loaded again tho
+// Shelves have been made nondense. The only functional difference this has now is a lower pixel_y
+/obj/structure/rack/shelf/notdense
 	density = FALSE
 	SET_BASE_PIXEL(0, 24)
 

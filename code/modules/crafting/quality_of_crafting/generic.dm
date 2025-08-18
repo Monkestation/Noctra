@@ -77,3 +77,23 @@
 	crafting_message = "starts constructing a paint palette"
 	craftdiff = 0
 	subtypes_allowed = TRUE
+
+/datum/repeatable_crafting_recipe/woodthresher
+	name = "thresher"
+	output = /obj/item/weapon/thresher
+	requirements = list(
+		/obj/item/grown/log/tree/small = 1,
+		/obj/item/rope = 1
+	)
+	starting_atom = /obj/item/rope
+	attacked_atom = /obj/item/grown/log/tree/small
+
+/datum/repeatable_crafting_recipe/militarythresher
+	name = "military flail"
+	output = /obj/item/weapon/thresher/military
+	requirements = list(
+		/obj/item/weapon/thresher = 1,
+		/obj/item/ingot/iron = 1
+	)
+	attacked_atom = /obj/item/weapon/thresher
+	starting_atom = /obj/item/ingot/iron

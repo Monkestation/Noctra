@@ -156,6 +156,18 @@
 				behindhand_overlay.pixel_y += offsets[OFFSET_HANDS][2]
 			hands += inhand_overlay
 			behindhands += behindhand_overlay
+			if(I.blocks_emissive != EMISSIVE_BLOCK_NONE)
+				var/mutable_appearance/emissive_front = emissive_blocker(I.getmoboverlay(used_prop,prop,mirrored=flipsprite), layer=-HANDS_LAYER, appearance_flags = NONE)
+
+				emissive_front.pixel_y = inhand_overlay.pixel_y
+				emissive_front.pixel_x = inhand_overlay.pixel_x
+
+				var/mutable_appearance/emissive_back = emissive_blocker(I.getmoboverlay(used_prop,prop,behind=TRUE,mirrored=flipsprite), layer=-HANDS_BEHIND_LAYER, appearance_flags = NONE)
+				emissive_back.pixel_y = behindhand_overlay.pixel_y
+				emissive_back.pixel_x = behindhand_overlay.pixel_x
+
+				hands += emissive_front
+				behindhands += emissive_back
 		else
 			var/icon_file = I.lefthand_file
 			if(get_held_index_of_item(I) % 2 == 0)
@@ -371,8 +383,17 @@
 //Overlays for the worn overlay so you can overlay while you overlay
 //eg: ammo counters, primed grenade flashing, etc.
 //"icon_file" is used automatically for inhands etc. to make sure it gets the right inhand file
-/obj/item/proc/worn_overlays(isinhands = FALSE, icon_file)
+/obj/item/proc/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, dummy_block = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+	RETURN_TYPE(/list)
+
 	. = list()
+	if((blocks_emissive == EMISSIVE_BLOCK_NONE) || dummy_block)
+		return
+
+	var/mutable_appearance/blocker_overlay = mutable_appearance(standing.icon, standing.icon_state, plane = EMISSIVE_PLANE, appearance_flags = KEEP_APART)
+	blocker_overlay.color = GLOB.em_block_color
+	. += blocker_overlay
 
 
 /mob/living/carbon/update_body()

@@ -166,8 +166,8 @@
 	weight = 100
 
 /datum/special_trait/arsonist/on_apply(mob/living/carbon/human/character, silent)
-	character.mind.special_items["Firebomb One"] = /obj/item/bomb
-	character.mind.special_items["Firebomb Two"] = /obj/item/bomb
+	character.mind.special_items["Firebomb One"] = /obj/item/explosive/bottle
+	character.mind.special_items["Firebomb Two"] = /obj/item/explosive/bottle
 	character.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
 
 /datum/special_trait/tombraider
@@ -499,7 +499,7 @@
 	QDEL_NULL(character.beltr)
 	QDEL_NULL(character.backr)
 	QDEL_NULL(character.head)
-	character.equip_to_slot_or_del(new /obj/item/clothing/pants/tights/random(character), ITEM_SLOT_PANTS)
+	character.equip_to_slot_or_del(new /obj/item/clothing/pants/tights/colored/random(character), ITEM_SLOT_PANTS)
 	character.equip_to_slot_or_del(new /obj/item/clothing/armor/chainmail(character), ITEM_SLOT_ARMOR)
 	character.equip_to_slot_or_del(new /obj/item/storage/belt/leather(character), ITEM_SLOT_BELT)
 	character.equip_to_slot_or_del(new /obj/item/storage/belt/pouch/coins/rich(character), ITEM_SLOT_BELT_R)
@@ -528,9 +528,9 @@
 	character.adjust_skillrank(/datum/skill/combat/wrestling, 6, TRUE)
 	character.adjust_skillrank(/datum/skill/combat/unarmed, 6, TRUE)
 	character.adjust_skillrank(/datum/skill/misc/reading, 3, TRUE)
-	character.STASTR = 20
-	character.STACON = 20
-	character.STAEND = 20
+	character.set_stat_modifier("[type]", STATKEY_STR, 20)
+	character.set_stat_modifier("[type]", STATKEY_CON, 20)
+	character.set_stat_modifier("[type]", STATKEY_END, 20)
 
 /datum/special_trait/my_precious
 	name = "My Precious"
@@ -574,7 +574,7 @@
 	character.change_stat("endurance", -1)
 	character.adjust_skillrank(/datum/skill/magic/arcane, 5, TRUE)
 	character.set_skillrank(/datum/skill/combat/swords, 2, TRUE) //Average only.
-	character.adjust_spellpoints(14) //Less points than Court Mage, why do Court mage get 17 points? what even?
+	character.adjust_spell_points(14) //Less points than Court Mage, why do Court mage get 17 points? what even?
 	character.add_spell(/datum/action/cooldown/spell/undirected/touch/prestidigitation, silent = TRUE)
 	character.generate_random_attunements(rand(4,6))
 	character.mana_pool.set_intrinsic_recharge(MANA_ALL_LEYLINES)

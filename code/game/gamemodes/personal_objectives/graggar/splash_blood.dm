@@ -1,5 +1,6 @@
 /datum/objective/blood_splash
 	name = "Splash Blood"
+	triumph_count = 2
 
 /datum/objective/blood_splash/on_creation()
 	. = ..()
@@ -29,7 +30,7 @@
 	to_chat(owner.current, span_greentext("You have performed the blood ritual, appeasing Graggar!"))
 	owner.current.adjust_triumphs(triumph_count)
 	completed = TRUE
-	adjust_storyteller_influence("Graggar", 15)
+	adjust_storyteller_influence(GRAGGAR, 15)
 	escalate_objective()
 	UnregisterSignal(owner.current, COMSIG_SPLASHED_MOB)
 

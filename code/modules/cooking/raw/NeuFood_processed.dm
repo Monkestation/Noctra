@@ -12,14 +12,14 @@
 	icon_state = "fat"
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_POOR)
 	eat_effect = /datum/status_effect/debuff/uncookedfood
-	possible_item_intents = list(/datum/intent/splash, /datum/intent/food)
+	possible_item_intents = list(/datum/intent/food, /datum/intent/splash)
 
-/obj/item/reagent_containers/food/snacks/attack(mob/living/M, mob/user, proximity)
+/obj/item/reagent_containers/food/snacks/fat/attack(mob/living/M, mob/user, proximity)
 	if(user.used_intent.type == /datum/intent/food)
 		return ..()
 
-	if(!isliving(M))
-		return
+	if(!isliving(M) || (M != user))
+		return ..()
 
 	user.visible_message("[user] starts to oil up [M]", "You start to oil up [M]")
 	if(!do_after(user, 5 SECONDS, M))
@@ -157,7 +157,7 @@
 	dropshrink = 0.6
 	faretype = FARE_POOR
 
-/obj/item/reagent_containers/food/snacks/saltfish/CheckParts(list/parts_list, datum/crafting_recipe/R)
+/obj/item/reagent_containers/food/snacks/saltfish/CheckParts(list/parts_list)
 	for(var/obj/item/reagent_containers/food/snacks/M in parts_list)
 		icon_state = "[initial(M.icon_state)]dried"
 		qdel(M)
@@ -218,7 +218,7 @@
 	foodtype = GRAIN
 	faretype = FARE_POOR
 
-/obj/item/reagent_containers/food/snacks/raisins/CheckParts(list/parts_list, datum/crafting_recipe/R)
+/obj/item/reagent_containers/food/snacks/raisins/CheckParts(list/parts_list)
 	..()
 	for(var/obj/item/reagent_containers/food/snacks/M in parts_list)
 		color = M.filling_color
@@ -407,7 +407,7 @@
 		var/milk = null
 		var/cheese = null
 		if(reagents.has_reagent(/datum/reagent/consumable/milk/salted, 5))
-			milk = /datum/reagent/consumable/milk
+			milk = /datum/reagent/consumable/milk/salted
 			cheese = /obj/item/reagent_containers/food/snacks/cheese
 		if(reagents.has_reagent(/datum/reagent/consumable/milk/salted_gote, 5))
 			milk = /datum/reagent/consumable/milk/salted_gote
@@ -452,6 +452,8 @@
 
 /obj/item/reagent_containers/food/snacks/foodbase/cheesewheel_start/attackby(obj/item/I, mob/living/user, params)
 	var/found_table = locate(/obj/structure/table) in (loc)
+	if(user.mind)
+		short_cooktime = (50 - ((user.get_skill_level(/datum/skill/craft/cooking))*8))
 	if(istype(I, /obj/item/reagent_containers/food/snacks/cheese))
 		if(isturf(loc)&& (found_table))
 			playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 30, TRUE, -1)
@@ -493,7 +495,6 @@
 	icon_state = "cheesewheel_3"
 	w_class = WEIGHT_CLASS_BULKY
 	do_random_pixel_offset = FALSE
-	var/mature_proc = PROC_REF(maturing_done)
 	grid_height = 32
 	grid_width = 96
 
@@ -501,7 +502,7 @@
 	var/found_table = locate(/obj/structure/table) in (loc)
 	if(user.mind)
 		short_cooktime = (50 - ((user.get_skill_level(/datum/skill/craft/cooking))*8))
-	if(istype(I, /obj/item/reagent_containers/food/snacks/cheese))
+	if(istype(I, /obj/item/reagent_containers/food/snacks/cheese) && icon_state != "cheesewheel_end")
 		if(isturf(loc)&& (found_table))
 			playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 30, TRUE, -1)
 			user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.5))
@@ -510,16 +511,16 @@
 				name = "maturing cheese wheel"
 				icon_state = "cheesewheel_end"
 				desc = "Slowly solidifying, best left alone a bit longer."
-				addtimer(CALLBACK(src, mature_proc), 5 MINUTES)
+				addtimer(CALLBACK(src, PROC_REF(maturing_done)), 5 MINUTES)
 		else
 			to_chat(user, span_warning("You need to put [src] on a table to work on it."))
 	else
 		return ..()
 
 /obj/item/reagent_containers/food/snacks/foodbase/cheesewheel_three/proc/maturing_done()
-	playsound(src.loc, 'sound/foley/rustle2.ogg', 100, TRUE, -1)
-	new /obj/item/reagent_containers/food/snacks/cheddar(loc)
-	new /obj/item/natural/cloth(loc)
+	playsound(src, 'sound/foley/rustle2.ogg', 100, TRUE, -1)
+	new /obj/item/reagent_containers/food/snacks/cheddar(get_turf(src))
+	new /obj/item/natural/cloth(get_turf(src))
 	qdel(src)
 
 

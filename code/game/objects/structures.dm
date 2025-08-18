@@ -13,6 +13,8 @@
 	var/climb_offset = 0 //offset up when climbed
 	var/mob/living/structureclimber
 	var/broken = 0 //similar to machinery's stat BROKEN
+
+	var/last_redstone_state = 0
 //	move_resist = MOVE_FORCE_STRONG
 
 /obj/structure/Initialize()
@@ -55,6 +57,15 @@
 			redstone_attached -= O
 		GLOB.redstone_objs -= src
 	return ..()
+
+/obj/structure/proc/trigger_wire_network(mob/user)
+	// Find connected redstone components and trigger them
+	var/power_level = last_redstone_state ? 15 : 0
+	for(var/direction in GLOB.cardinals)
+		var/turf/target_turf = get_step(src, direction)
+		for(var/obj/structure/redstone/component in target_turf)
+			component.set_power(power_level, user, null) // Lever acts as power source
+	last_redstone_state = !last_redstone_state
 
 /obj/structure/attack_hand(mob/user)
 	. = ..()

@@ -89,7 +89,7 @@
 		/obj/item/weapon/knife = list(span_notice("starts to whittle"), span_notice("start to whittle"), 'sound/items/wood_sharpen.ogg'),
 	)
 	attacked_atom = /obj/item/grown/log/tree/small
-	starting_atom= /obj/item/weapon/knife
+	starting_atom = /obj/item/weapon/knife
 	output = /obj/item/weapon/hammer/wood
 	craft_time = 5 SECONDS
 
@@ -215,6 +215,22 @@
 	output = /obj/item/storage/sack
 	skillcraft = /datum/skill/misc/sewing
 
+/datum/repeatable_crafting_recipe/survival/sack_clothing
+	name = "head sack"
+	requirements = list(
+		/obj/item/natural/cloth = 2,
+		/obj/item/natural/fibers = 1,
+	)
+	tool_usage = list(
+		/obj/item/needle = list("starts to sew", "start to sew")
+	)
+	starting_atom = /obj/item/needle
+	attacked_atom = /obj/item/natural/cloth
+	output = /obj/item/clothing/head/sack
+	craftdiff = 1
+	skillcraft = /datum/skill/misc/sewing
+	subtypes_allowed = TRUE
+
 /datum/repeatable_crafting_recipe/survival/clay
 	name = "clay lump"
 	requirements = list(
@@ -262,3 +278,16 @@
 	output = /obj/item/weapon/axe/boneaxe
 	craftdiff = 2
 
+/datum/repeatable_crafting_recipe/survival/claybrick
+	name = "raw claybrick"
+	requirements = list(
+		/obj/item/natural/clay = 1
+	)
+	tool_usage = list(
+		/obj/item/grown/log = list("starts to mold", "start to mold")
+	)
+
+	starting_atom = /obj/item/grown/log
+	attacked_atom = /obj/item/natural/clay
+	skillcraft = /datum/skill/craft/masonry
+	output = /obj/item/natural/raw_brick
