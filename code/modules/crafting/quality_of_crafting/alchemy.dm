@@ -87,9 +87,10 @@
 	output = /obj/item/alch/thaumicdust
 	requirements = list(
 		/obj/item/alch/firedust = 1,
-		/obj/item/alch/coaldust = 1,
-		/obj/item/alch/earthdust = 1,
+		/obj/item/alch/runedust = 1,
 		/obj/item/alch/irondust = 1,
+		/obj/item/alch/coaldust = 2,
+
 	)
 	tool_usage = list(
 		/obj/item/pestle = list("starts to mix the dust together", "start to mix the dust together")

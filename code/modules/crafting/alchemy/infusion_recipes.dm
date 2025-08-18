@@ -119,3 +119,10 @@
 	target_type  = /obj/item/neuFarm/seed
 	result_type = /obj/item/neuFarm/seed/mixed_seed
 	required_essences = list(/datum/thaumaturgical_essence/life = 5)
+
+/datum/essence_infusion_recipe/cinnabar
+	name = "Cinnabar Transmutation"
+	target_type  = /obj/item/alch/silverdust
+	result_type = /obj/item/ore/cinnabar
+	required_essences = list(/datum/thaumaturgical_essence/magic = 30)
+
