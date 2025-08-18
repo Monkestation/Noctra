@@ -214,6 +214,7 @@
 	icon = 'icons/roguetown/items/cooking.dmi'
 	list_reagents = list(/datum/reagent/blastpowder = 30)
 	icon_state = "aflask"
+	can_label_container = FALSE
 
 /obj/item/reagent_containers/glass/bottle/aflask/Initialize()
 	. = ..()

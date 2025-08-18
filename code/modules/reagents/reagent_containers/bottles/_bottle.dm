@@ -2,11 +2,9 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 
 /obj/item/reagent_containers/glass/bottle
 	name = "bottle"
-	var/original_name
 	desc = "A bottle with a cork."
 	icon = 'icons/roguetown/items/glass_reagent_container.dmi'
 	icon_state = "clear_bottle1"
-	var/original_icon_state = null
 	amount_per_transfer_from_this = 6
 	possible_transfer_amounts = list(6)
 	volume = 70
@@ -15,7 +13,6 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_MOUTH
 	obj_flags = CAN_BE_HIT
 	spillable = FALSE
-	var/closed = TRUE
 	reagent_flags = TRANSPARENT
 	w_class = WEIGHT_CLASS_NORMAL
 	drinksounds = list('sound/items/drink_bottle (1).ogg','sound/items/drink_bottle (2).ogg')
@@ -24,6 +21,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	experimental_onhip = TRUE
 	can_label_container = TRUE
 
+	var/closed = TRUE
 	/// Do not change desc when open or closed
 	var/fancy
 
@@ -223,6 +221,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	amount_per_transfer_from_this = 8
 	possible_transfer_amounts = list(8)
 	dropshrink = 1
+	can_label_container = FALSE
 	spillable = TRUE
 	fill_icon_thresholds = null
 
@@ -273,6 +272,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	icon_state = "cup_fancy"
 	volume = 30
 	dropshrink = 0.7
+	can_label_container = FALSE
 
 /obj/item/reagent_containers/glass/bottle/glazed_teapot
 	name = "fancy teapot"
@@ -280,3 +280,4 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	icon_state = "teapot_fancy"
 	volume = 99
 	dropshrink = 0.7
+	can_label_container = FALSE

@@ -166,6 +166,7 @@
 		user.visible_message(span_notice("[user] applies a label to \the [src]."), span_notice("I label \the [src]."), vision_distance = 3)
 	name = label
 	labelled = TRUE
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/reagent_containers/proc/remove_label(mob/user, force)
 	if(!labelled)
@@ -181,6 +182,7 @@
 	user.visible_message(span_warning("[user] tears the label off of \the [src]!"), span_notice("I remove the label from \the [src]."), vision_distance = 3)
 	name = initial(name)
 	labelled = FALSE
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/reagent_containers/proc/apply_initial_label()
 	return
