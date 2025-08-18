@@ -325,7 +325,7 @@
 	complete_message = "The draught radiates purity and cleansing!"
 
 /datum/container_craft/cooking/herbal_tea/purification_draught
-	name = "Purification Draught"
+	name = "Transis Potion"
 	created_reagent = /datum/reagent/medicine/gender_potion
 	water_conversion = 0.5
 	requirements = list(
@@ -335,4 +335,4 @@
 	)
 	crafting_time = 30 SECONDS
 	finished_smell = /datum/pollutant/food/strawberry_cake
-	complete_message = "The brew radiates heat and smells like... strawberry cake?!"
+	complete_message = "The brew radiates heat and a sweet smell."

@@ -87,9 +87,9 @@
 	output = /obj/item/alch/thaumicdust
 	requirements = list(
 		/obj/item/alch/firedust = 1,
-		/obj/item/alch/runedust = 1,
 		/obj/item/alch/irondust = 1,
-		/obj/item/alch/coaldust = 2,
+		/obj/item/alch/feaudust = 1,//faedust as a sort of "catalyst" for the interaction
+		/obj/item/alch/runedust = 1,
 
 	)
 	tool_usage = list(

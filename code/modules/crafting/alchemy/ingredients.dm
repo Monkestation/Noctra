@@ -203,7 +203,7 @@
 
 /obj/item/alch/feaudust
 	name = "feau dust"
-	desc = "Combining gold and iron results in this powder with unique properties."
+	desc = "Combining gold and iron results in this powder with unique alchemical properties."
 	icon_state = "feaudust"
 
 	major_pot = /datum/alch_cauldron_recipe/spd_potion
@@ -221,7 +221,7 @@
 
 /obj/item/alch/transisdust
 	name = "transis dust"
-	desc = "A complex mix of herbs that produce a powder with truly special properties."
+	desc = "A complex mix of herbs that produce a powder which can modify the body."
 	icon_state = "transisdust"
 
 	major_pot = /datum/alch_cauldron_recipe/gender_potion

@@ -126,7 +126,7 @@
 	sellprice = 30
 	minstr = 5
 	force = DAMAGE_MACE - 3
-	force_wielded = DAMAGE_MACE_WIELD - 3
+	force_wielded = DAMAGE_MACE - 1
 	wdefense = MEDIOCHRE_PARRY
 
 /obj/item/weapon/mace/courtphysician/getonmobprop(tag)
