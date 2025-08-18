@@ -2258,7 +2258,6 @@
 	dir = 4;
 	pixel_y = -1
 	},
-/mob/living/simple_animal/hostile/retaliate/cow,
 /turf/open/floor/cobblerock,
 /area/rogue/outdoors)
 "EI" = (
@@ -2780,11 +2779,6 @@
 /obj/structure/fermentation_keg/distiller,
 /turf/open/floor/carpet,
 /area/rogue/indoors)
-"XC" = (
-/obj/structure/flora/grass,
-/mob/living/simple_animal/hostile/retaliate/cow,
-/turf/open/floor/grass/yel,
-/area/rogue/outdoors)
 "XG" = (
 /obj/effect/landmark/start/adventurerlate,
 /turf/open/floor/grass/yel,
@@ -12582,7 +12576,7 @@ Wr
 QN
 cB
 Wr
-XC
+qc
 QN
 at
 at
