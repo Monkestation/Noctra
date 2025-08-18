@@ -114,8 +114,6 @@
 	)
 	craftdiff = 2
 
-
-
 /// Misc Leatherworking
 /datum/repeatable_crafting_recipe/leather/bedsheetpelt
 	name = "leather bedsheet"
