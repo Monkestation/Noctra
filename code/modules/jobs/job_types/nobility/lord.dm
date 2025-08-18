@@ -61,7 +61,8 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	backr = /obj/item/storage/backpack/satchel
 	belt = /obj/item/storage/belt/leather/plaquegold
 	beltl = /obj/item/weapon/knife/dagger/steel/special
-	scabbards = list(/obj/item/weapon/scabbard/knife)
+	beltr = /obj/item/weapon/sword/rapier
+	scabbards = list(/obj/item/weapon/scabbard/knife/royal, /obj/item/weapon/scabbard/sword/royal)
 	ring = /obj/item/clothing/ring/active/nomag
 	l_hand = /obj/item/weapon/lordscepter
 
