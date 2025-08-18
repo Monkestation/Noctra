@@ -9,6 +9,10 @@
 	blade_dulling = DULLING_BASHCHOP
 	possible_item_intents = list(SHIELD_BASH)
 
+/obj/item/weapon/scabbard/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_HARD_TO_STEAL, TRAIT_GENERIC)
+
 /obj/item/weapon/scabbard/update_icon_state()
 	icon_state = initial(icon_state)
 	item_state = initial(item_state)
