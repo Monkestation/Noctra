@@ -98,7 +98,7 @@
 /obj/item/reagent_containers/update_overlays()
 	. = ..()
 	if(labelled)
-		. += mutable_appearance(icon, "[initial(icon_state)]_label")
+		. += mutable_appearance(icon, "[icon_state]_label")
 	if(!reagents?.total_volume)
 		return
 	if(!fill_icon_thresholds)
