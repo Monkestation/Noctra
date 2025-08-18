@@ -97,7 +97,7 @@
 	attacked_atom = /obj/item/reagent_containers/glass/mortar
 	starting_atom = /obj/item/pestle
 	output_amount = 1
-	craftdiff = 2
+	craftdiff = 3
 
 //a way to get raw essentia other than rng by grinding down manablooms
 //not a "good" way due to consuming a bunch of useful stuff for magicians and silver dust
