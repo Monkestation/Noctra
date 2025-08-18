@@ -801,15 +801,9 @@ SUBSYSTEM_DEF(gamemode)
 	if(ttime >= GLOB.round_timer)
 		if(roundvoteend)
 			if(ttime >= round_ends_at)
-				// for(var/mob/living/carbon/human/H in GLOB.human_list)
-				// 	if(H.stat != DEAD)
-				// 		if(H.allmig_reward)
-				// 			H.adjust_triumphs(H.allmig_reward)
-				// 			H.allmig_reward = 0
 				return TRUE
-		else
-			if(!SSvote.mode)
-				SSvote.initiate_vote("endround", pick("Zlod", "Sun King", "Gaia", "Moon Queen", "Aeon", "Gemini", "Aries"))
+		else if(!SSvote.mode)
+			SSvote.initiate_vote("endround", "The Gods")
 
 	if(SSmapping.retainer.head_rebel_decree)
 		if(reb_end_time == 0)
@@ -1643,7 +1637,7 @@ SUBSYSTEM_DEF(gamemode)
 		var/mob/living/carbon/human/random_passerby = pick(potential_passers)
 
 		chosen_chronicle_stats[1] = CHRONICLE_STATS_PSYDON_FAVOURITE
-		set_chronicle_stat(CHRONICLE_STATS_PSYDON_FAVOURITE, valid_psydon_favourite, "PSYDON'S FAVOURITE", "#e6e6e6", "buying his way in")
+		set_chronicle_stat(CHRONICLE_STATS_PSYDON_FAVOURITE, valid_psydon_favourite, "PSYDON'S FAVOURITE", "#e6e6e6", "buying their way in")
 
 		if(random_passerby)
 			chosen_chronicle_stats[2] = CHRONICLE_STATS_RANDOM_PASSERBY

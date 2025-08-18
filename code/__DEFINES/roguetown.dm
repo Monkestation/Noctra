@@ -71,6 +71,10 @@ GLOBAL_LIST_INIT(wolf_suffixes, list("Fang", "Claw", "Stalker", "Prowler", "Roar
 #define FAMILY_NEWLYWED "Newlywed"
 #define FAMILY_FULL "Parent"
 
+#define ANY_GENDER "Any gender"
+#define SAME_GENDER "Same gender"
+#define DIFFERENT_GENDER "Different gender"
+
 #define FAMILY_FATHER "Father"
 #define FAMILY_MOTHER "Mother"
 #define FAMILY_PROGENY "Progeny"
@@ -158,6 +162,9 @@ GLOBAL_LIST_EMPTY(job_respawn_delays)
 
 #define TRIUMPH_BUY_RACE_ALL "race_all"
 #define TRIUMPH_BUY_ANY_CLASS "pick_any"
+#define TRIUMPH_BUY_ADOPTION "adoption"
+#define TRIUMPH_BUY_FART "fart"
+#define TRIUMPH_BUY_LEPROSY "leprosy"
 
 // Storyteller category and its buys
 #define TRIUMPH_CAT_STORYTELLER "STORYTELLER"
@@ -186,6 +193,8 @@ GLOBAL_LIST_EMPTY(job_respawn_delays)
 #define TRIUMPH_CAT_COMMUNAL "COMMUNAL"
 
 #define TRIUMPH_BUY_PSYDON_RETIREMENT "psydon_retirement"
+#define TRIUMPH_BUY_ORPHANAGE_RENOVATION "orphanage_renovation"
+#define TRIUMPH_BUY_LONGER_WEEK "longer_week"
 
 // Bought triumph buys category
 #define TRIUMPH_CAT_ACTIVE_DATUMS "BOUGHT"

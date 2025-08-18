@@ -265,6 +265,12 @@
 		humanguy.invisibility = INVISIBILITY_MAXIMUM
 		humanguy.become_blind("advsetup")
 
+	var/list/owned_triumph_buys = SStriumphs.triumph_buy_owners[player_client.ckey]
+	if(length(owned_triumph_buys))
+		for(var/datum/triumph_buy/T in owned_triumph_buys)
+			if(!T.activated)
+				T.on_after_spawn(humanguy)
+
 /// When our guy is OLD do we do anything extra
 /datum/job/proc/old_age_effects()
 	return
@@ -381,11 +387,6 @@
 			if(check_crownlist(H.ckey))
 				H.mind.special_items["Champion Circlet"] = /obj/item/clothing/head/crown/sparrowcrown
 			give_special_items(H)
-	for(var/list_key in SStriumphs.post_equip_calls)
-		var/datum/triumph_buy/bought_triumph_buy = SStriumphs.post_equip_calls[list_key]
-		bought_triumph_buy.on_activate(H)
-		bought_triumph_buy.on_post_equip(H)
-	return
 
 /// Returns an atom where the mob should spawn in.
 /datum/job/proc/get_roundstart_spawn_point()

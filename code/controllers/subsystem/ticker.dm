@@ -344,6 +344,11 @@ SUBSYSTEM_DEF(ticker)
 		else
 			C.mob.playsound_local(C.mob, 'sound/misc/roundstart.ogg', 100, FALSE)
 
+	for(var/datum_type in SStriumphs.communal_pools)
+		var/datum/triumph_buy/communal/preround/triumph_buy_preround = locate(datum_type) in SStriumphs.triumph_buy_datums
+		if(triumph_buy_preround && istype(triumph_buy_preround))
+			triumph_buy_preround.check_refund()
+
 	current_state = GAME_STATE_PLAYING
 
 	Master.SetRunLevel(RUNLEVEL_GAME)

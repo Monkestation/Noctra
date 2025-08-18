@@ -312,7 +312,7 @@
 	possible_item_intents = list(/datum/intent/use)
 	force = 0
 	throwforce = 0
-	maxamount = 6
+	maxamount = 12
 	color = "#454032"
 	firefuel = 5 MINUTES
 	resistance_flags = FLAMMABLE

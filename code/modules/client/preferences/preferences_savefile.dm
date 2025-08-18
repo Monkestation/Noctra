@@ -274,6 +274,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["detail"] >> detail
 	S["randomise"] >> randomise
 	S["family"] >> family
+	S["gender_choice"] >> gender_choice
 	S["setspouse"] >> setspouse
 	S["selected_accent"] >> selected_accent
 
@@ -368,6 +369,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	voice_type = sanitize_text(voice_type, VOICE_TYPE_MASC)
 	skin_tone = skin_tone
 	family = family
+	gender_choice = gender_choice
 	setspouse = setspouse
 	selected_accent ||= ACCENT_DEFAULT
 
@@ -426,6 +428,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["species"]			, pref_species.name)
 	WRITE_FILE(S["charflaw"]			, charflaw.type)
 	WRITE_FILE(S["family"]			, 	family)
+	WRITE_FILE(S["gender_choice"]			, 	gender_choice)
 	WRITE_FILE(S["setspouse"]			, 	setspouse)
 	WRITE_FILE(S["selected_accent"], selected_accent)
 

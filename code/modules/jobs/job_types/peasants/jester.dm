@@ -22,7 +22,7 @@
 		/datum/action/cooldown/spell/undirected/joke,
 		/datum/action/cooldown/spell/undirected/tragedy,
 		/datum/action/cooldown/spell/undirected/fart,
-		/datum/action/cooldown/spell/undirected/list_target/vicious_mockery,
+		/datum/action/cooldown/spell/vicious_mockery,
 	)
 	give_bank_account = TRUE
 

@@ -33,6 +33,6 @@
 	armor = /obj/item/clothing/armor/gambeson/light/striped
 	beltr = /obj/item/weapon/axe/iron
 	beltl = /obj/item/weapon/knife/villager
-	backpack_contents = list(/obj/item/flint = 1, /obj/item/key/artificer = 1)
+	backpack_contents = list(/obj/item/flint = 1)
 	H.change_stat(STATKEY_STR, 1)
 	H.change_stat(STATKEY_END, 1) // Tree chopping builds endurance

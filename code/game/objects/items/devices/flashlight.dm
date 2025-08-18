@@ -135,6 +135,7 @@
 	possible_item_intents = list(/datum/intent/use, /datum/intent/hit)
 	slot_flags = ITEM_SLOT_HIP
 	var/should_self_destruct = TRUE //added for torch burnout
+	var/max_uses = 12
 	max_integrity = 40
 	fuel = 30 MINUTES
 	light_depth = 0
@@ -227,7 +228,7 @@
 
 		if (should_self_destruct)  // check if self-destruct
 			times_used += 1
-			if (times_used >= 8) //amount used before burning out
+			if (times_used >= max_uses) //amount used before burning out
 				user.visible_message("<span class='warning'>[src] has burnt out and falls apart!</span>")
 				qdel(src)
 
@@ -250,23 +251,12 @@
 	light_outer_range = 6
 	fuel = 120 MINUTES
 	should_self_destruct = TRUE
+	max_uses = 60
 	metalizer_result = null
 
-/obj/item/flashlight/flare/torch/metal/afterattack(atom/movable/A, mob/user, proximity)
+/obj/item/flashlight/flare/torch/metal/prelit/Initialize()
 	. = ..()
-	if(!proximity)
-		return
-	if(on && (prob(50) || (user.used_intent.type == /datum/intent/use)))
-		if(ismob(A))
-			A.spark_act()
-		else
-			A.fire_act(3,3)
-
-		if (should_self_destruct)  // check if self-destruct
-			times_used += 1
-			if (times_used >= 13) //amount used before burning out
-				user.visible_message("<span class='warning'>[src] has burnt out and falls apart!</span>")
-				qdel(src)
+	spark_act()
 
 /obj/item/flashlight/flare/torch/lantern
 	name = "iron lamptern"

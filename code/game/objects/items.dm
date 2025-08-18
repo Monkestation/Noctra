@@ -344,7 +344,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 				B.generate_appearance()
 				B.apply()
 
-/obj/item/Initialize()
+/obj/item/Initialize(mapload, freshly_made = FALSE)
 	if (attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
 
@@ -413,7 +413,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(max_blade_int && !blade_int) //set blade integrity to randomized 60% to 100% if not already set
 		blade_int = max_blade_int + rand(-(max_blade_int * 0.4), 0)
 
-		obj_integrity = max_integrity + rand(-(max_integrity * 0.2), 0)
+		if(!freshly_made)
+			obj_integrity = max_integrity + rand(-(max_integrity * 0.2), 0)
 
 	if(!pixel_x && !pixel_y && !bigboy)
 		pixel_x = rand(-5,5)

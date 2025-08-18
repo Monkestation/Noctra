@@ -124,6 +124,7 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 				heart.maniacs = list()
 			dreamer.remove_stress(/datum/stressevent/saw_wonder)
 			dreamer.remove_curse(/datum/curse/zizo)
+			RegisterSignal(dreamer, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 		//	dreamer.remove_client_colour(/datum/client_colour/maniac_marked)
 		owner.current.refresh_looping_ambience()
 		hallucinations = owner.current.overlay_fullscreen("maniac", /atom/movable/screen/fullscreen/maniac)
@@ -148,6 +149,7 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 			dreamer.cmode_music = old_cm
 			dreamer.remove_stat_modifier("[type]")
 			phy.bleed_mod *= 2
+			UnregisterSignal(dreamer, COMSIG_LIVING_DEATH)
 			var/client/client = dreamer?.client
 			if(client) //clear screenshake animation
 				animate(client, dreamer.pixel_y)
@@ -459,3 +461,10 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 	extra_range = 6
 	channel = CHANNEL_IMSICK
 	persistent_loop = TRUE
+
+/datum/antagonist/maniac/proc/on_death(mob/living/source) //Upon death, this should basically stop the music.
+	SIGNAL_HANDLER
+
+	if(combat_music_loop)
+		combat_music_loop.stop()
+	music_enabled = FALSE

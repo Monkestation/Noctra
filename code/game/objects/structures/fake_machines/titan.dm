@@ -392,6 +392,8 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 	victim.migrant_type = null
 	if(ishuman(victim))
 		var/mob/living/carbon/human/human = victim
+		if(!HAS_TRAIT(human, TRAIT_RECRUITED) && HAS_TRAIT(human, TRAIT_FOREIGNER))
+			ADD_TRAIT(human, TRAIT_RECRUITED, TRAIT_GENERIC)
 		human.advjob = new_pos
 	if(!SScommunications.can_announce(user))
 		return
