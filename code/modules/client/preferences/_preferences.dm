@@ -1144,8 +1144,11 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						to_chat(user, span_notice("Failed to update headshot"))
 						return
 					headshot_link = new_headshot_link
-					to_chat(user, "<span class='notice'>Successfully updated headshot picture</span>")
-					log_game("[user] has set their Headshot image to '[headshot_link]'.")
+					if(!length(headshot_link))
+						to_chat(user, span_notice("Removed headshot link."))
+					else
+						to_chat(user, "<span class='notice'>Successfully updated headshot picture</span>")
+						log_game("[user] has set their Headshot image to '[headshot_link]'.")
 
 				if("species")
 					var/list/selectable = get_selectable_species(patreon)
@@ -1739,7 +1742,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/static/list/valid_extensions = list("jpg", "png", "jpeg", "gif")
 
 	if(!length(value))
-		return FALSE
+		return TRUE
 
 	// Ensure link starts with "https://"
 	if(findtext(value, "https://") != 1)
