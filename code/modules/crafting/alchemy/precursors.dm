@@ -1717,3 +1717,33 @@ GLOBAL_LIST_INIT(natural_precursor_registry, list())
 		/obj/item/reagent_containers/food/snacks/rotten/egg,
 		/obj/item/reagent_containers/food/snacks/rotten/mince,
 	)
+
+//generic organs here
+/datum/natural_precursor/organs
+	name = "organs"
+	essence_yields = list(
+		/datum/thaumaturgical_essence/life = 5,
+		/datum/thaumaturgical_essence/void = 2,
+		/datum/thaumaturgical_essence/chaos = 1
+	)
+	init_types = list(
+		/obj/item/organ/appendix,
+		/obj/item/organ/heart,
+		/obj/item/organ/eyes,
+		/obj/item/organ/liver,
+		/obj/item/organ/lungs,
+		/obj/item/organ/stomach,
+		/obj/item/organ/tongue
+	)
+
+//the brain is unique enough that I think it justifies its own precursor
+/datum/natural_precursor/brain
+	name = "brain"
+	essence_yields = list(
+		/datum/thaumaturgical_essence/life = 8,
+		/datum/thaumaturgical_essence/void = 5,
+		/datum/thaumaturgical_essence/magic = 1
+	)
+	init_types = list(
+		/obj/item/organ/brain,
+	)
