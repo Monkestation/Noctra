@@ -109,7 +109,7 @@
 	name = "iron kaskara"
 	force = DAMAGE_SWORD-1
 	force_wielded = DAMAGE_SWORD_WIELD-1
-	desc = "An iron sword of ancient Lakkarian design, predating the standard equipment of pegasus riders."
+	desc = "A sword of ancient Lakkarian design, predating the standard equipment of pegasus riders."
 	icon_state = "kaskara_iron"
 	max_blade_int = 200
 	max_integrity = INTEGRITY_STRONG
