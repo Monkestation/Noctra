@@ -4,6 +4,10 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 #ifdef USE_CUSTOM_ERROR_HANDLER
 #define ERROR_USEFUL_LEN 2
 
+/proc/runtime_test()
+	var/obj/item/thingie = usr
+	thingie.add_item_action()
+
 /world/Error(exception/E, datum/e_src)
 	GLOB.total_runtimes++
 
@@ -121,6 +125,9 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		GLOB.error_cache.log_error(E, desclines)
 
 	var/main_line = "\[[time_stamp()]] Runtime in [E.file],[E.line]: [E]"
+	#ifdef LOWMEMORYMODE
+		to_chat(world, span_danger(main_line))
+	#endif
 	SEND_TEXT(world.log, main_line)
 	for(var/line in desclines)
 		SEND_TEXT(world.log, line)
