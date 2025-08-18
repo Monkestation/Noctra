@@ -244,8 +244,8 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	possible_transfer_amounts = list(6)
 	dropshrink = 1
 	spillable = TRUE
-
 	fill_icon_thresholds = null
+	can_label_container = FALSE
 
 /obj/item/reagent_containers/glass/bottle/teapot/Initialize()
 	. = ..()
