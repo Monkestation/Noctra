@@ -314,7 +314,7 @@
 			if(skill == /datum/skill/misc/reading && old_level == SKILL_LEVEL_NONE && current.is_literate())
 				record_round_statistic(STATS_LITERACY_TAUGHT)
 		if(skill == /datum/skill/magic/arcane)
-			current?.adjust_spellpoints(1)
+			current?.adjust_spell_points(1)
 
 		return TRUE
 	else
@@ -338,7 +338,7 @@
 	var/amt2gain = 0
 	// Give spellpoints if the skill is arcane
 	if(skill == /datum/skill/magic/arcane)
-		current?.adjust_spellpoints(amt)
+		current?.adjust_spell_points(amt)
 	if(amt > 0)
 		for(var/i in 1 to amt)
 			switch(skill_experience[skill_ref])

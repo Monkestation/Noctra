@@ -43,6 +43,7 @@
 	belt = /obj/item/storage/belt/leather
 	beltr = /obj/item/weapon/sword/arming
 	backl = /obj/item/storage/backpack/satchel
+	scabbards = list(/obj/item/weapon/scabbard/sword)
 	backpack_contents = list(/obj/item/storage/keyring/manorguard = 1)
 
 	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
@@ -102,23 +103,15 @@
 	if(!choice)
 		return
 	var/grant_shield = TRUE
-	var/modifier = reduced_skill
 	switch(choice)
 		if("Flail")
-			H.adjust_skillrank(/datum/skill/combat/whipsflails, 2 - modifier, TRUE)
+			H.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
 		if("Halberd")
-			H.adjust_skillrank(/datum/skill/combat/polearms, 2 - modifier, TRUE)
+			H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
 			grant_shield = FALSE
 		if("Longsword")
-			if(!reduced_skill)
-				H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 			grant_shield = FALSE
-		if("Sabre")
-			if(!reduced_skill)
-				H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 		if("Unarmed")
-			if(!reduced_skill)
-				H.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 			grant_shield = FALSE
@@ -147,7 +140,6 @@
 	category_tags = list(CTAG_ROYALKNIGHT)
 
 /datum/outfit/job/royalknight/steam
-	reduced_skill = TRUE
 
 /datum/outfit/job/royalknight/steam/pre_equip(mob/living/carbon/human/H)
 	. = ..()

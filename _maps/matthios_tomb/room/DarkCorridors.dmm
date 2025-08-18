@@ -117,14 +117,14 @@
 /turf/open/floor/cobble/alt,
 /area/rogue/under/tomb)
 "mw" = (
-/obj/item/ash{
+/obj/item/fertilizer/ash{
 	pixel_x = -10
 	},
-/obj/item/ash{
+/obj/item/fertilizer/ash{
 	pixel_y = 6;
 	pixel_x = 6
 	},
-/obj/item/ash{
+/obj/item/fertilizer/ash{
 	pixel_y = 6;
 	pixel_x = 6
 	},
@@ -530,13 +530,13 @@
 /turf/open/floor/blocks,
 /area/rogue/under/tomb)
 "Xc" = (
-/obj/item/ash{
+/obj/item/fertilizer/ash{
 	pixel_y = -6
 	},
-/obj/item/ash{
+/obj/item/fertilizer/ash{
 	pixel_y = 6
 	},
-/obj/item/ash{
+/obj/item/fertilizer/ash{
 	pixel_x = -10
 	},
 /turf/open/floor/cobble,

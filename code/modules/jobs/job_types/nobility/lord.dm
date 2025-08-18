@@ -60,7 +60,8 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	head = /obj/item/clothing/head/crown/serpcrown
 	backr = /obj/item/storage/backpack/satchel
 	belt = /obj/item/storage/belt/leather/plaquegold
-	backpack_contents = list(/obj/item/weapon/knife/dagger/steel/special = 1)
+	beltl = /obj/item/weapon/knife/dagger/steel/special
+	scabbards = list(/obj/item/weapon/scabbard/knife)
 	ring = /obj/item/clothing/ring/active/nomag
 	l_hand = /obj/item/weapon/lordscepter
 
@@ -86,8 +87,8 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	H.change_stat(STATKEY_PER, 2)
 	H.change_stat(STATKEY_LCK, 5)
 	if(H.gender == MALE)
-		pants = /obj/item/clothing/pants/tights/black
-		shirt = /obj/item/clothing/shirt/undershirt/black
+		pants = /obj/item/clothing/pants/tights/colored/black
+		shirt = /obj/item/clothing/shirt/undershirt/colored/black
 		armor = /obj/item/clothing/armor/gambeson/arming
 		shoes = /obj/item/clothing/shoes/boots
 		cloak = /obj/item/clothing/cloak/lordcloak
@@ -95,7 +96,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 			if(H.dna.species.id == SPEC_ID_HUMEN)
 				H.dna.species.soundpack_m = new /datum/voicepack/male/evil()
 	else
-		pants = /obj/item/clothing/pants/tights/random
+		pants = /obj/item/clothing/pants/tights/colored/random
 		armor = /obj/item/clothing/shirt/dress/royal
 		shoes = /obj/item/clothing/shoes/shortboots
 		cloak = /obj/item/clothing/cloak/lordcloak/ladycloak
@@ -112,6 +113,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NOSEGRAB, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_KNOWKEEPPLANS, TRAIT_GENERIC)
 
 /datum/job/exlord //just used to change the lords title

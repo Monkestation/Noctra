@@ -22,7 +22,7 @@
 	sewrepair = TRUE
 	anvilrepair = null
 	resistance_flags = FLAMMABLE // Made of leather
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 
 	armor = ARMOR_LEATHER
 	body_parts_covered = NECK|HAIR|EARS|HEAD
@@ -78,7 +78,7 @@
 	sewrepair = TRUE
 	anvilrepair = null
 	resistance_flags = FLAMMABLE
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 
 	armor = ARMOR_LEATHER
 	max_integrity = INTEGRITY_WORST
@@ -96,7 +96,7 @@
 	sewrepair = TRUE
 	anvilrepair = null
 	resistance_flags = FLAMMABLE
-	smeltresult = /obj/item/ash
+	smeltresult = /obj/item/fertilizer/ash
 
 	armor = ARMOR_LEATHER
 	max_integrity = INTEGRITY_WORST
@@ -358,6 +358,15 @@
 	icon_state = "surgcollar"
 	item_state = "surgcollar"
 	sellprice = 15
+
+/obj/item/clothing/neck/courtphysician
+	name = "court physician's collar"
+	desc = "Fits snug."
+	icon_state = "courtcollar"
+	item_state = "courtcollar"
+	sellprice = 15
+	icon = 'icons/roguetown/clothing/courtphys.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/courtphys.dmi'
 
 /obj/item/clothing/neck/bogcowl
 	name = "bogcowl"

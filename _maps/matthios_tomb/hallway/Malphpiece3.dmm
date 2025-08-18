@@ -33,7 +33,7 @@
 /turf/open/floor/cobblerock/alt,
 /area/rogue/under/tomb/cave)
 "aA" = (
-/obj/item/clothing/shirt/tunic/blue,
+/obj/item/clothing/shirt/tunic/colored/blue,
 /obj/item/gem/blue,
 /obj/item/clothing/shoes/boots,
 /obj/item/clothing/neck/psycross/silver/malum_steel,
@@ -41,7 +41,7 @@
 /obj/item/storage/belt/leather/plaquesilver,
 /obj/item/weapon/sword/rapier/silver,
 /obj/item/clothing/head/hatblu,
-/obj/item/clothing/cloak/raincloak/blue,
+/obj/item/clothing/cloak/raincloak/colored/blue,
 /obj/item/clothing/gloves/leather/black,
 /mob/living/carbon/human/species/skeleton/npc/no_equipment,
 /obj/effect/mapping_helpers/floor_clothing_equipper,
@@ -85,7 +85,7 @@
 /obj/item/weapon/knife/dagger/steel/dirk,
 /obj/item/clothing/shirt/undershirt/webs,
 /obj/item/clothing/pants/webs,
-/obj/item/clothing/cloak/raincloak/purple,
+/obj/item/clothing/cloak/raincloak/colored/purple,
 /obj/item/clothing/neck/menears,
 /obj/item/clothing/neck/mercmedal/anthrax,
 /turf/open/floor/churchmarble,

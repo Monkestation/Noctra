@@ -1,0 +1,486 @@
+{
+    "2025-08-03": {
+        "PotatoTomahto": [
+            {
+                "rscadd": "scabbards"
+            },
+            {
+                "qol": "inventory click behavior closer to tg"
+            },
+            {
+                "balance": "fire spread tweaks"
+            }
+        ]
+    },
+    "2025-08-04": {
+        "Arkatos": [
+            {
+                "bugfix": "Fixed an issue where you could duplicate the monarch's crown when summoning it."
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "Learning a spell from the spell tree will override that spell if it is present to assure it stays."
+            },
+            {
+                "bugfix": "Rituos will have it spells removed correctly and will not remove arcyne eye or prestidigitation."
+            },
+            {
+                "bugfix": "The learn spell... spell should get properly removed when appropiate."
+            },
+            {
+                "bugfix": "Removing all spells no longer will give a message for every single spell."
+            }
+        ]
+    },
+    "2025-08-05": {
+        "SarmentiCampbell": [
+            {
+                "rscadd": "Zizo's Cleric/Paladin will be able to create cursed water rather than blessed water, healing the undead rather than living being."
+            },
+            {
+                "bugfix": "Transact won't use kobolds as currency."
+            },
+            {
+                "bugfix": "Bloodrage will now properly apply the status effect."
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "Unfix learn spell removal to fix spell tree visual bug."
+            },
+            {
+                "code_imp": "Issue reports are now uploaded to github via bot and do not require users to use github directly, it is still preferable to use github if possible."
+            }
+        ]
+    },
+    "2025-08-06": {
+        "PineappleMan929": [
+            {
+                "balance": "Butler/Housekeep and Servants have mathematics skills"
+            }
+        ],
+        "Arkatos": [
+            {
+                "bugfix": "Fixed an issue where actors menu was not opening"
+            },
+            {
+                "rscadd": "Added ascendant effects for gods' interventions, which makes them stronger and more impactful when the relevant god is ascendant."
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "balance": "fire, silver, ocean's embrace, plant health n growth"
+            }
+        ],
+        "Eagletanker": [
+            {
+                "balance": "Monarch now has Medium Armor"
+            }
+        ]
+    },
+    "2025-08-07": {
+        "Arkatos": [
+            {
+                "bugfix": "Fixed an issue where the game failed to start properly."
+            }
+        ]
+    },
+    "2025-08-08": {
+        "ApolloVector": [
+            {
+                "balance": "Female Antharax now has expert whips"
+            }
+        ],
+        "Arkatos": [
+            {
+                "rscadd": "Added a new triumph buy option to buy an extra influence for any storyteller."
+            },
+            {
+                "rscadd": "Triumph buys that already took effect cannot be refunded."
+            },
+            {
+                "qol": "You can no longer cancel triumph buys of others."
+            },
+            {
+                "qol": "Triumph buys now refund 100% of their cost."
+            },
+            {
+                "qol": "Failed triumph buys will now automatically refund. Roll with no fear!"
+            },
+            {
+                "bugfix": "Fixed an issue where printing press could not find all books or printed random books."
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "balance": "death to gaffer. long live merchant"
+            }
+        ]
+    },
+    "2025-08-09": {
+        "Viviridia": [
+            {
+                "rscadd": "Fertilizing to gnome tend crops command"
+            },
+            {
+                "rscadd": "Alchemical vial & bottle crafting recipes"
+            },
+            {
+                "rscadd": "Added infusions seed randomizer and ore --> iron infusion"
+            },
+            {
+                "qol": "made the essence connector equipable in the hip"
+            },
+            {
+                "qol": "gnome no longer damages plants by walking on them"
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "Shield heraldry works again."
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "balance": "ruin ingots less and smithing craft diff"
+            }
+        ],
+        "SarmentiCampbell": [
+            {
+                "rscadd": "Added Inhumen Paladin/Cleric"
+            },
+            {
+                "bugfix": "Added allowed patron requirement for subclasses so allowed patron actually does something."
+            },
+            {
+                "balance": "Buffed Maniac, specifically, halved their blood loss, gave them critical resistance and they are now unable to lose energy"
+            },
+            {
+                "balance": "Deceiving meekness now falsifie the pitchness of your choice.(originally, High STR lowered your pitch.)"
+            },
+            {
+                "balance": "lessened the chance of a jumpscare popping up."
+            },
+            {
+                "rscadd": "added midround antag, maniac."
+            },
+            {
+                "bugfix": "Fixed VagrantBum, problably"
+            }
+        ],
+        "Arkatos": [
+            {
+                "rscadd": "Influences balancing, added number of medicators as a possible influence for Pestra."
+            },
+            {
+                "bugfix": "Influence modifier is now correctly applied to negative influences."
+            }
+        ]
+    },
+    "2025-08-10": {
+        "wgtjunior743": [
+            {
+                "bugfix": "Fix Vampire Lord undisguised unique warning not appearing"
+            }
+        ]
+    },
+    "2025-08-11": {
+        "SarmentiCampbell": [
+            {
+                "balance": "Added min-pop to roll vampire/werewolf event at roundstart"
+            },
+            {
+                "rscadd": "Added new hallucination for maniac/zizo curse/wonder"
+            },
+            {
+                "balance": "lessened the chance of receiving a mob's jumpscare"
+            }
+        ],
+        "Wrench-1": [
+            {
+                "rscadd": "Psydonian Whip and Psydonian Flail"
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "bugfix": "altgrip onmob sprite"
+            }
+        ],
+        "Eagletanker": [
+            {
+                "balance": "Corsair no longer has it's perception malus."
+            }
+        ],
+        "Arkatos": [
+            {
+                "rscadd": "Added a new triumph buy - Psydon's Favourite."
+            },
+            {
+                "rscadd": "Added a new triumph buy - Psydon's Retirement Fund."
+            },
+            {
+                "rscadd": "Storyteller bonus influence triumph buys are now limited to 2 per round and their price has decreased from 5 to 3."
+            },
+            {
+                "rscadd": "All personal god objectives now award 1 extra triumph upon completion."
+            },
+            {
+                "qol": "Improved Triumph Leaderboard menu."
+            },
+            {
+                "qol": "Improved Triumph Shop menu formatting, layout, pagination and texts."
+            },
+            {
+                "admin": "Triumph changes are now logged."
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "bugfix": "Only silver rapier got the silver enchantment now"
+            }
+        ],
+        "PineappleMan929": [
+            {
+                "balance": "Thieflings can be barbarians"
+            }
+        ]
+    },
+    "2025-08-12": {
+        "wgtjunior743": [
+            {
+                "rscadd": "Foreigner Trait Title first letter now is in uppercase."
+            },
+            {
+                "bugfix": "Fix armor datums appearing on the armor recipe."
+            },
+            {
+                "bugfix": "Steel Templar helmets lacking info about additional bar/items."
+            }
+        ],
+        "Sulaboy": [
+            {
+                "spellcheck": "Simplified Triton accent, now it is just some fish/fishing terms."
+            },
+            {
+                "balance": "Torches can be used slightly more"
+            },
+            {
+                "bugfix": "Metal torches last longer"
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "Fixed seek orphan"
+            },
+            {
+                "bugfix": "Fix species clothing restrictions for species that use the base body proportions (Not dwarves)"
+            }
+        ],
+        "Wrench-1": [
+            {
+                "image": "xylixian surcoat for Templars and Clerics"
+            }
+        ],
+        "Arkatos": [
+            {
+                "rscadd": "Added a new triumph buy - Adoption Ability."
+            },
+            {
+                "rscadd": "Added a new triumph buy - Orphanage Renovation."
+            }
+        ],
+        "SarmentiCampbell": [
+            {
+                "bugfix": "fixed maniac not stopping their music as soon as they die."
+            },
+            {
+                "bugfix": "stamina regen is no longer affected by the energy bar if you have the boundless energy trait."
+            }
+        ]
+    },
+    "2025-08-13": {
+        "Wabberspace": [
+            {
+                "rscadd": "Added Beastish to hollow-kin/demihumens."
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "balance": " Malum Masterwork stat gives more influence"
+            }
+        ],
+        "Wabberpace": [
+            {
+                "bugfix": "Fixed swampweed zigs from constantly overdosing by changing the reagent dosage from 60 > 30."
+            }
+        ],
+        "grungussuss": [
+            {
+                "bugfix": "lich can now return to his mansion"
+            },
+            {
+                "qol": "slapcrafting and dye-ing now have a better UI"
+            },
+            {
+                "bugfix": "fixed sacks being uncraftable"
+            }
+        ],
+        "Wrench-1": [
+            {
+                "image": "modified the Adept's Cowl icon and onmob sprites."
+            }
+        ]
+    },
+    "2025-08-14": {
+        "Arkatos": [
+            {
+                "rscadd": "Added new a new triumph buy - Fart Ability."
+            },
+            {
+                "rscadd": "Added new a new triumph buy - Leprosy."
+            }
+        ],
+        "ApolloVector": [
+            {
+                "balance": "buffed anthraxi knife skill to skilled"
+            },
+            {
+                "balance": "buffed redsands sword skill to expert"
+            },
+            {
+                "balance": "buffed black oak guardian's main weapon skill to expert"
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "rscadd": "A new preference option for newlywed and Parent, called \\\"Preferred Gender\\\"."
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "Changelog entries are sorted descending."
+            }
+        ],
+        "Sulaboy": [
+            {
+                "balance": "fiber bundles can hold 12 fibers now."
+            }
+        ]
+    },
+    "2025-08-15": {
+        "wgtjunior743": [
+            {
+                "balance": "Pilgrims can have apprentices."
+            },
+            {
+                "bugfix": "Foreigners who got their Job changed by \\\"Change Position\\\" now got their title."
+            }
+        ],
+        "DrSirKnight": [
+            {
+                "qol": "Lore Primer can now be checked at any time, not just in lobby."
+            }
+        ]
+    },
+    "2025-08-16": {
+        "Wouju": [
+            {
+                "rscadd": "Added new clothes for the courtphysician"
+            },
+            {
+                "image": "courtphysician clothes are in their own seperate dmi file I despise merge conflicts"
+            }
+        ],
+        "SarmentiCampbell": [
+            {
+                "balance": "Nerf Lich by lowering their dagger skill from 5 to 2, in exchange buff their polearm skill from 2 to 4 and grant them 17 spellpoints, equivalent to CM."
+            },
+            {
+                "balance": "Nerf greater skeletons by removing their infinite stamina, swift intent and lowering their wrestling skill gain by 1."
+            }
+        ],
+        "grungussuss": [
+            {
+                "bugfix": "robes are no longer shit colored"
+            },
+            {
+                "sound": "lock unlock door sounds are back"
+            }
+        ],
+        "Arkatos": [
+            {
+                "rscadd": "Added a new communal triumph buy - Longer Week."
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "bugfix": "better cooking qol"
+            }
+        ]
+    },
+    "2025-08-17": {
+        "grungussuss": [
+            {
+                "qol": "pointing at items in your inventory displays them above you"
+            },
+            {
+                "admin": "orphans are once again a 0 pq role"
+            },
+            {
+                "bugfix": "fixed lag when changing areas caused by loading music files"
+            },
+            {
+                "bugfix": "fixed vicious mockery being an untargeted spell"
+            },
+            {
+                "bugfix": "fixed admin liquid spawn cancel button not working"
+            },
+            {
+                "bugfix": "fixed infinite bronze and steel gear smelt oversight"
+            },
+            {
+                "bugfix": "fixed freshly smithed items being damaged"
+            }
+        ],
+        "Arkatos": [
+            {
+                "rscadd": "Xylix as a storyteller now respects round start events requirements. (But then true silliness begins)"
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "rscdel": "Remove Artificer Keys from pilgrims."
+            }
+        ],
+        "SarmentiCampbell": [
+            {
+                "balance": "Replace Vampire lord's thralls's infinite stamina with infinite energy, Vampire lord will retain their infinite stamina."
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "balance": "royal knights no longer get master skill"
+            },
+            {
+                "balance": "swift intent does less damage"
+            },
+            {
+                "balance": "greatswords and halberds do less damage"
+            }
+        ]
+    },
+    "2025-08-18": {
+        "CheffieGithub": [
+            {
+                "bugfix": "Potentially fix lesser miracle damage nukes."
+            },
+            {
+                "balance": "Stone arrows no longer bypass heart crit requirements."
+            },
+            {
+                "balance": "Arrows and similar projectiles now are crit blocked by stab protection."
+            }
+        ]
+    }
+}

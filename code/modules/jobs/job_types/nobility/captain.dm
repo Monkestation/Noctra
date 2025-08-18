@@ -42,7 +42,7 @@
 	pants = /obj/item/clothing/pants/platelegs/captain
 	armor = /obj/item/clothing/armor/captain
 	neck = /obj/item/clothing/neck/gorget
-	shirt = /obj/item/clothing/shirt/undershirt/guard
+	shirt = /obj/item/clothing/shirt/undershirt/colored/guard
 	shoes = /obj/item/clothing/shoes/boots
 	backl = /obj/item/storage/backpack/satchel
 	backr = /obj/item/weapon/shield/tower/metal
@@ -50,6 +50,7 @@
 	beltl = /obj/item/weapon/sword/sabre/dec
 	beltr = /obj/item/weapon/mace/cudgel
 	cloak = /obj/item/clothing/cloak/captain
+	scabbards = list(/obj/item/weapon/scabbard/sword)
 	backpack_contents = list(/obj/item/storage/keyring/captain = 1, /obj/item/signal_horn = 1)
 	H.adjust_skillrank(/datum/skill/combat/swords, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)

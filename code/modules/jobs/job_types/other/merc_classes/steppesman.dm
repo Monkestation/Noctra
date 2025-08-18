@@ -25,10 +25,11 @@
 	beltr = /obj/item/weapon/sword/sabre
 	beltl= /obj/item/ammo_holder/quiver/arrows
 	shirt = /obj/item/clothing/shirt/undershirt
-	pants = /obj/item/clothing/pants/tights/red
+	pants = /obj/item/clothing/pants/tights/colored/red
 	neck = /obj/item/storage/belt/pouch/coins/poor
 	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow
 	backr = /obj/item/storage/backpack/satchel
+	scabbards = list(/obj/item/weapon/scabbard/sword)
 	backpack_contents = list(/obj/item/weapon/knife/hunting = 1)
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/combat/bows, 4, TRUE)

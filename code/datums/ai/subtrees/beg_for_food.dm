@@ -23,6 +23,21 @@
 
 	return null
 
+/datum/ai_behavior/find_and_set/human_beg/atom_allowed(atom/movable/checking, locate_path, atom/pawn)
+	if(checking == pawn)
+		return FALSE
+	if(!ishuman(checking))
+		return FALSE
+	var/mob/living/carbon/human/human_target = checking
+	if(human_target.stat != CONSCIOUS || isnull(human_target.mind))
+		return FALSE
+	var/mob/living/living_pawn = pawn
+	var/datum/ai_controller/controller = living_pawn.ai_controller
+	var/list/locate_items = controller.blackboard[BB_BASIC_FOODS]
+	if(!length(typecache_filter_list(human_target.held_items, locate_items)))
+		return FALSE
+	return TRUE
+
 /datum/ai_behavior/beacon_for_food
 	action_cooldown = 5 SECONDS
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION

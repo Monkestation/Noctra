@@ -166,9 +166,6 @@
 
 	var/list/next_attack_msg = list()
 
-	var/datum/component/personal_crafting/craftingthing
-	var/last_crafted
-
 	var/obj/item/grabbing/r_grab = null
 	var/obj/item/grabbing/l_grab = null
 
@@ -215,3 +212,6 @@
 	var/spell_points
 	/// amount of spell points this mob has used
 	var/used_spell_points
+
+	/// cooldown for the next time this person can offer
+	COOLDOWN_DECLARE(offer_cooldown)

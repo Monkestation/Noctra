@@ -91,6 +91,7 @@
 	var/mob/living/carbon/spouse_mob
 	var/image/spouse_indicator
 	var/setspouse
+	var/gender_choice_pref = ANY_GENDER
 	var/familytree_pref = FAMILY_NONE
 	var/datum/heritage/family_datum
 	var/list/temp_ui_list = list()
@@ -129,7 +130,7 @@
 	/// voice type of the mob
 	var/voice_type = null //  defines what sound pack we use. keep this null so mobs resort to their typical gender typing - preferences set this
 
-	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	blocks_emissive = NONE
 	var/datum/charflaw/charflaw
 
 	/// List of curses on this mob

@@ -110,11 +110,12 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 40
 	taste_description = "cider"
 	glass_name = "glass of cider"
-	color = "#6aa945"
+	color = "#d8a175"
 	quality = DRINK_NICE
 
 /datum/reagent/consumable/ethanol/cider/pear
 	name = "Pear Cider"
+	color = "#6aa945"
 
 /datum/reagent/consumable/ethanol/cider/strawberry
 	name = "Strawberry Cider"

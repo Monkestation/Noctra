@@ -40,6 +40,8 @@
 
 	var/clothing_flags = NONE
 
+	var/misc_flags = NONE
+
 	var/toggle_icon_state = TRUE //appends _t to our icon state when toggled
 
 	//Var modification - PLEASE be careful with this I know who you are and where you live
@@ -71,10 +73,7 @@
 	. = ..()
 	if(ispath(pocket_storage_component_path))
 		LoadComponent(pocket_storage_component_path)
-	if(prevent_crits)
-		if(prevent_crits.len)
-			has_inspect_verb = TRUE
-	if(armor_class)
+	if(length(prevent_crits) || armor_class)
 		has_inspect_verb = TRUE
 
 	if(uses_lord_coloring)
@@ -101,11 +100,11 @@
 /obj/item/clothing/get_inspect_entries(list/inspect_list)
 	. = ..()
 
-	if(prevent_crits)
-		if(length(prevent_crits))
-			. += "\n<b>DEFENSE:</b>"
-			for(var/X in prevent_crits)
-				. += "\n<b>[X] damage</b>"
+	if(length(prevent_crits))
+		. += "\n<b>DEFENSE:</b>"
+		for(var/X in prevent_crits)
+			. += "\n<b>[X] damage</b>"
+
 	if(body_parts_covered)
 		. += "\n<b>COVERAGE:</b>"
 		for(var/zone in body_parts_covered2organ_names(body_parts_covered))
@@ -260,7 +259,7 @@
 	. = ..()
 	var/mob/M = usr
 
-	if(!M.incapacitated(ignore_grab = TRUE) && loc == M && istype(over_object, /atom/movable/screen/inventory/hand))
+	if(!M.incapacitated(IGNORE_GRAB) && loc == M && istype(over_object, /atom/movable/screen/inventory/hand))
 		if(!allow_attack_hand_drop(M))
 			return
 		var/atom/movable/screen/inventory/hand/H = over_object
@@ -269,7 +268,7 @@
 
 /obj/item/clothing/proc/can_use(mob/user)
 	if(user && ismob(user))
-		if(!user.incapacitated(ignore_grab = TRUE))
+		if(!user.incapacitated(IGNORE_GRAB))
 			return TRUE
 	return FALSE
 
@@ -444,15 +443,13 @@ BLIND     // can't see anything
 		hood = W
 
 /obj/item/clothing/attack_hand_secondary(mob/user, params)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
 	if(hoodtype && (loc == user))
 		ToggleHood()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(adjustable > 0 && (loc == user))
 		AdjustClothes(user)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	. = ..()
 
 /obj/item/clothing/proc/AdjustClothes(mob/usFer)
 	return //override this in the clothing item itself so we can update the right inv

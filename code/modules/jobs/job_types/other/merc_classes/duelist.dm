@@ -21,7 +21,7 @@
 	armor = /obj/item/clothing/armor/leather/jacket/leathercoat/duelcoat
 	shirt = /obj/item/clothing/shirt/undershirt
 	gloves = /obj/item/clothing/gloves/leather/duelgloves
-	pants = /obj/item/clothing/pants/trou/leather/advanced/duelpants
+	pants = /obj/item/clothing/pants/trou/leather/advanced/colored/duelpants
 	shoes = /obj/item/clothing/shoes/nobleboot/duelboots
 	belt = /obj/item/storage/belt/leather/mercenary
 	backl = /obj/item/storage/backpack/satchel
@@ -49,7 +49,7 @@
 			beltl = /obj/item/weapon/sword/rapier/silver //Correct, They have a chance to receive a silver rapier, due to them being from Valoria.
 		if(5 to 6)
 			beltl = /obj/item/weapon/sword/rapier/dec
-
+	scabbards = list(/obj/item/weapon/scabbard/sword)
 	H.merctype = 8
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 	H.change_stat(STATKEY_END, 2)

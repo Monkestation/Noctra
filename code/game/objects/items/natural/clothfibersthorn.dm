@@ -102,7 +102,8 @@
 	if(cleaner.client && ((atom_to_clean in cleaner.client.screen) && !cleaner.is_holding(atom_to_clean)))
 		to_chat(cleaner, span_warning("I need to take \the [atom_to_clean] off before cleaning it!"))
 		return DO_NOT_CLEAN
-	if(!reagents.total_volume)
+	if(reagents.total_volume < 0.1)
+		to_chat(cleaner, span_warning("[src] is too dry to clean with!"))
 		return DO_NOT_CLEAN
 
 	// overly complicated effectiveness calculations
@@ -311,7 +312,7 @@
 	possible_item_intents = list(/datum/intent/use)
 	force = 0
 	throwforce = 0
-	maxamount = 6
+	maxamount = 12
 	color = "#454032"
 	firefuel = 5 MINUTES
 	resistance_flags = FLAMMABLE

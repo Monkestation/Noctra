@@ -178,8 +178,10 @@
 			adjustOxyLoss(5)
 	if(isopenturf(loc))
 		var/turf/open/T = loc
-		if(reagents&& T.pollution)
+		if(reagents && T.pollution)
 			T.pollution.breathe_act(src)
+			if(HAS_TRAIT(src, TRAIT_NOSTINK))
+				return
 			if(next_smell <= world.time)
 				next_smell = world.time + 30 SECONDS
 				T.pollution.smell_act(src)
@@ -202,7 +204,7 @@
 	if(!is_laying && W.water_level < 2)
 		return
 	if(is_laying && !(HAS_TRAIT(src, TRAIT_WATER_BREATHING) || HAS_TRAIT(src, TRAIT_NOBREATH)))
-		var/drown_damage = has_world_trait(/datum/world_trait/abyssor_rage) ? 10 : 5
+		var/drown_damage = has_world_trait(/datum/world_trait/abyssor_rage) ? (is_ascendant(ABYSSOR) ? 15 : 10) : 5
 		adjustOxyLoss(drown_damage)
 		if(stat == DEAD && client)
 			record_round_statistic(STATS_PEOPLE_DROWNED)

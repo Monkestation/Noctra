@@ -62,6 +62,9 @@
 	///overlays managed by update_overlays() to prevent removing overlays that weren't added by the same proc
 	var/list/managed_overlays
 
+	///Used for changing icon states for different base sprites.
+	var/base_icon_state
+
 	///Cooldown tick timer for buckle messages
 	var/buckle_message_cooldown = 0
 	///Last fingerprints to touch this atom
@@ -341,7 +344,7 @@
  *
  * Otherwise it simply forceMoves the atom into this atom
  */
-/atom/proc/CheckParts(list/parts_list, datum/crafting_recipe/R)
+/atom/proc/CheckParts(list/parts_list)
 	for(var/A in parts_list)
 		if(istype(A, /datum/reagent))
 			if(!reagents)
@@ -356,12 +359,8 @@
 			else
 				M.forceMove(src)
 
-/obj/item/CheckParts(list/parts_list, datum/crafting_recipe/R)
+/obj/item/CheckParts(list/parts_list)
 	..()
-	if(R)
-		if(R.sellprice)
-			sellprice = R.sellprice
-			randomize_price()
 
 ///Hook for multiz???
 /atom/proc/update_multiz(prune_on_fail = FALSE)
@@ -493,7 +492,7 @@
 				. += "It's empty."
 		else if(reagents.flags & AMOUNT_VISIBLE)
 			if(reagents.total_volume)
-				. += "<span class='notice'>It has [round(reagents.total_volume / 3)] oz left.</span>"
+				. += "<span class='notice'>It has [round(reagents.total_volume / 3, 0.1)] oz left.</span>"
 			else
 				. += "<span class='danger'>It's empty.</span>"
 		//SNIFFING
@@ -1394,3 +1393,8 @@
 			if(!start.CanAtmosPass(adj))
 				continue
 			_propagate_turf_heat(source, adj, key, next_value, next_weight, falloff, max_depth, depth + 1, seen)
+
+/// Returns the indice in filters of the given filter name.
+/// If it is not found, returns null.
+/atom/proc/get_filter_index(name)
+	return filter_data?.Find(name)

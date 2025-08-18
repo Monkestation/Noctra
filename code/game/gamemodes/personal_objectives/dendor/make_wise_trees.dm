@@ -1,5 +1,6 @@
 /datum/objective/wise_trees
 	name = "Create Wise Trees"
+	triumph_count = 2
 	var/trees_transformed = 0
 	var/trees_required = 3
 
@@ -29,7 +30,7 @@
 	to_chat(owner.current, span_greentext("You have created enough wise trees to satisfy Dendor!"))
 	owner.current.adjust_triumphs(triumph_count)
 	completed = TRUE
-	adjust_storyteller_influence("Dendor", 15)
+	adjust_storyteller_influence(DENDOR, 15)
 	escalate_objective()
 	UnregisterSignal(owner.current, COMSIG_TREE_TRANSFORMED)
 

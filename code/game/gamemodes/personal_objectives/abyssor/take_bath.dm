@@ -1,5 +1,6 @@
 /datum/objective/abyssor_bath
 	name = "Take Bath"
+	triumph_count = 2
 
 /datum/objective/abyssor_bath/on_creation()
 	. = ..()
@@ -33,7 +34,7 @@
 	to_chat(owner.current, span_greentext("You have honored Abyssor by taking a relaxing bath while wearing his amulet!"))
 	owner.current.adjust_triumphs(triumph_count)
 	completed = TRUE
-	adjust_storyteller_influence("Abyssor", 10)
+	adjust_storyteller_influence(ABYSSOR, 10)
 	escalate_objective()
 	UnregisterSignal(owner.current, COMSIG_BATH_TAKEN)
 

@@ -42,7 +42,7 @@
 	SPEC_ID_ROUSMAN,\
 	SPEC_ID_ZIZOMBIE,\
 	SPEC_ID_HUMAN_SPACE,\
-	)
+)
 
 /// Species where females get underwear, no underwear for kobold, rakshari, medicator and triton, dwarves handled seperately
 #define RACES_UNDERWEAR_FEMALE list(\
@@ -247,4 +247,24 @@
 	SPEC_ID_KOBOLD,\
 	SPEC_ID_RAKSHARI,\
 	SPEC_ID_HOLLOWKIN,\
+)
+
+/// Species that use the base human body, adjusted or otherwise
+/// Should include everything but dwarves and kobolds for now
+#define SPECIES_BASE_BODY list(\
+	SPEC_ID_HUMEN,\
+	SPEC_ID_HUMAN_SPACE,\
+	SPEC_ID_AASIMAR,\
+	SPEC_ID_ELF,\
+	SPEC_ID_HALF_ELF,\
+	SPEC_ID_DROW,\
+	SPEC_ID_HALF_DROW,\
+	SPEC_ID_TIEFLING,\
+	SPEC_ID_HARPY,\
+	SPEC_ID_RAKSHARI,\
+	SPEC_ID_TRITON,\
+	SPEC_ID_MEDICATOR,\
+	SPEC_ID_HOLLOWKIN,\
+	SPEC_ID_HALF_ORC,\
+	SPEC_ID_ZIZOMBIE,\
 )

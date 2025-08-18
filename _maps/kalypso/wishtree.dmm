@@ -1,0 +1,528 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/grass,
+/area/template_noop)
+"f" = (
+/obj/structure/flora/newtree/snow,
+/turf/open/floor/dirt,
+/area/template_noop)
+"g" = (
+/obj/structure/flora/grass/herb,
+/turf/open/floor/dirt,
+/area/template_noop)
+"l" = (
+/obj/structure/flora/grass,
+/turf/open/floor/dirt,
+/area/template_noop)
+"n" = (
+/obj/structure/flora/newtree/snow,
+/turf/open/floor/grass,
+/area/template_noop)
+"o" = (
+/obj/structure/flora/grass/herb,
+/turf/open/floor/grass,
+/area/template_noop)
+"q" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/grass,
+/turf/open/floor/grass,
+/area/template_noop)
+"r" = (
+/turf/open/floor/grass,
+/area/template_noop)
+"v" = (
+/obj/structure/flora/grass,
+/obj/structure/flora/grass/herb,
+/turf/open/floor/dirt,
+/area/template_noop)
+"y" = (
+/obj/structure/flora/newtree/snow,
+/obj/structure/flora/newtree/snow,
+/turf/open/floor/dirt,
+/area/template_noop)
+"A" = (
+/turf/template_noop,
+/area/template_noop)
+"C" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/grass,
+/obj/structure/flora/grass/herb,
+/turf/open/floor/dirt,
+/area/template_noop)
+"E" = (
+/turf/open/water/cleanshallow,
+/area/template_noop)
+"F" = (
+/obj/structure/flora/sakura{
+	name = "wishing tree";
+	desc = "This totally isnt pink...";
+	icon_state = "manabloomtree";
+	icon = 'icons/obj/structures/manabloomtree.dmi'
+	},
+/turf/open/water/cleanshallow,
+/area/template_noop)
+"G" = (
+/turf/open/floor/dirt,
+/area/template_noop)
+"H" = (
+/obj/effect/falling_leaves,
+/turf/open/floor/dirt,
+/area/template_noop)
+"J" = (
+/obj/structure/flora/newtree/snow,
+/turf/template_noop,
+/area/template_noop)
+"P" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/structure/flora/grass,
+/turf/open/floor/dirt,
+/area/template_noop)
+"Q" = (
+/obj/machinery/light/fueled/firebowl/church{
+	pixel_x = 22;
+	pixel_y = -24
+	},
+/turf/open/water/cleanshallow,
+/area/template_noop)
+"S" = (
+/obj/effect/falling_leaves,
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/grass,
+/area/template_noop)
+"T" = (
+/obj/structure/flora/newtree/snow,
+/obj/structure/flora/newtree/snow,
+/turf/open/floor/grass,
+/area/template_noop)
+"U" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/floor/dirt,
+/area/template_noop)
+"V" = (
+/obj/effect/falling_leaves,
+/turf/template_noop,
+/area/template_noop)
+"W" = (
+/obj/structure/flora/grass,
+/turf/open/floor/grass,
+/area/template_noop)
+
+(1,1,1) = {"
+A
+A
+A
+A
+f
+f
+n
+r
+G
+G
+f
+f
+G
+G
+G
+G
+r
+A
+A
+A
+"}
+(2,1,1) = {"
+A
+A
+f
+f
+n
+n
+o
+q
+f
+f
+f
+T
+J
+A
+A
+G
+g
+n
+J
+A
+"}
+(3,1,1) = {"
+A
+A
+f
+f
+n
+q
+q
+U
+f
+f
+n
+A
+A
+A
+V
+v
+l
+f
+n
+A
+"}
+(4,1,1) = {"
+A
+f
+f
+n
+q
+q
+G
+f
+f
+f
+o
+A
+A
+J
+n
+n
+q
+f
+f
+o
+"}
+(5,1,1) = {"
+A
+f
+n
+r
+W
+E
+E
+E
+g
+G
+G
+G
+n
+n
+r
+r
+r
+q
+C
+G
+"}
+(6,1,1) = {"
+f
+f
+r
+r
+g
+E
+E
+E
+E
+E
+E
+G
+G
+G
+a
+n
+n
+n
+P
+U
+"}
+(7,1,1) = {"
+f
+n
+o
+n
+f
+G
+E
+E
+E
+E
+E
+E
+g
+G
+U
+U
+n
+n
+r
+U
+"}
+(8,1,1) = {"
+f
+n
+a
+f
+f
+f
+E
+E
+E
+E
+F
+E
+E
+E
+G
+U
+G
+n
+n
+G
+"}
+(9,1,1) = {"
+g
+n
+q
+f
+f
+f
+G
+E
+E
+Q
+E
+E
+E
+E
+l
+P
+U
+n
+n
+f
+"}
+(10,1,1) = {"
+l
+q
+q
+G
+f
+G
+g
+E
+E
+E
+E
+E
+E
+l
+P
+U
+r
+r
+f
+f
+"}
+(11,1,1) = {"
+P
+a
+r
+G
+f
+f
+E
+E
+E
+E
+E
+E
+l
+P
+U
+n
+n
+r
+f
+f
+"}
+(12,1,1) = {"
+l
+n
+r
+H
+U
+G
+E
+E
+E
+E
+E
+G
+U
+U
+f
+n
+G
+G
+f
+l
+"}
+(13,1,1) = {"
+l
+n
+f
+G
+a
+G
+g
+E
+E
+G
+G
+U
+G
+f
+n
+r
+a
+U
+f
+l
+"}
+(14,1,1) = {"
+G
+f
+f
+f
+a
+r
+G
+G
+U
+P
+P
+l
+l
+f
+U
+S
+r
+g
+l
+l
+"}
+(15,1,1) = {"
+G
+G
+g
+n
+a
+r
+n
+f
+f
+G
+l
+l
+g
+a
+a
+n
+f
+l
+G
+r
+"}
+(16,1,1) = {"
+A
+r
+G
+f
+n
+a
+n
+n
+n
+f
+r
+r
+r
+n
+n
+f
+y
+G
+A
+A
+"}
+(17,1,1) = {"
+A
+A
+r
+l
+f
+U
+U
+n
+n
+n
+n
+n
+n
+n
+f
+f
+G
+J
+A
+A
+"}
+(18,1,1) = {"
+A
+A
+A
+l
+l
+G
+U
+U
+f
+f
+f
+f
+f
+f
+f
+g
+A
+A
+A
+A
+"}
+(19,1,1) = {"
+A
+A
+A
+A
+r
+W
+o
+a
+U
+U
+U
+l
+l
+l
+l
+r
+A
+A
+A
+A
+"}

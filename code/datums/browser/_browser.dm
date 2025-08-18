@@ -122,8 +122,12 @@
 		to_chat(user, "<span class='danger'>The [title] browser you tried to open failed a sanity check! Please report this on github!</span>")
 		return
 	var/window_size = ""
-	if (width && height)
-		window_size = "size=[width]x[height];"
+	var/scaling = 1
+	var/client/user_client = isclient(user) ? user : user.client
+	if(user_client?.window_scaling)
+		scaling = user_client.window_scaling
+	if(width && height)
+		window_size = "size=[width * scaling]x[height * scaling];"
 	var/datum/asset/simple/namespaced/common/common_asset = get_asset_datum(/datum/asset/simple/namespaced/common)
 	common_asset.send(user)
 	if (stylesheets.len)

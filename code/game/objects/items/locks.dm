@@ -56,7 +56,10 @@
 		var/obj/item/customlock/finished/F = new (get_turf(src))
 		F.lockids = lockids
 		to_chat(user, span_notice("You finish [F]."))
+		var/old_loc = loc
 		qdel(src)
+		if(user == old_loc)
+			user.put_in_hands(F)
 		return
 	if(!copy_access(I))
 		to_chat(user, span_warning("I cannot base the pins on [I]!"))

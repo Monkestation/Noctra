@@ -185,6 +185,7 @@ SUBSYSTEM_DEF(ticker)
 			current_state = GAME_STATE_PREGAME
 			//Everyone who wants to be an observer is now spawned
 			create_observers()
+			SEND_SIGNAL(src, COMSIG_TICKER_ENTER_PREGAME)
 			fire()
 		if(GAME_STATE_PREGAME)
 			//lobby stats for statpanels
@@ -217,6 +218,7 @@ SUBSYSTEM_DEF(ticker)
 					Master.SetRunLevel(RUNLEVEL_LOBBY)
 				else
 					send2chat(new /datum/tgs_message_content("New round starting on Vanderlin!"), CONFIG_GET(string/chat_announce_new_game))
+					SEND_SIGNAL(src, COMSIG_TICKER_ENTER_SETTING_UP)
 					current_state = GAME_STATE_SETTING_UP
 					Master.SetRunLevel(RUNLEVEL_SETUP)
 					if(start_immediately)
@@ -229,6 +231,7 @@ SUBSYSTEM_DEF(ticker)
 				start_at = world.time + timeDelayAdd
 				timeLeft = null
 				Master.SetRunLevel(RUNLEVEL_LOBBY)
+				SEND_SIGNAL(src, COMSIG_TICKER_ERROR_SETTING_UP)
 
 		if(GAME_STATE_PLAYING)
 			check_queue()
@@ -334,10 +337,17 @@ SUBSYSTEM_DEF(ticker)
 	message_admins(span_boldnotice("Welcome to [SSmapping.config.map_name]!"))
 
 	for(var/client/C in GLOB.clients)
+		if(!C?.mob)
+			continue
 		if(C.mob == SSticker.rulermob)
 			C.mob.playsound_local(C.mob, 'sound/misc/royal_roundstart.ogg', 100, FALSE)
 		else
 			C.mob.playsound_local(C.mob, 'sound/misc/roundstart.ogg', 100, FALSE)
+
+	for(var/datum_type in SStriumphs.communal_pools)
+		var/datum/triumph_buy/communal/preround/triumph_buy_preround = locate(datum_type) in SStriumphs.triumph_buy_datums
+		if(triumph_buy_preround && istype(triumph_buy_preround))
+			triumph_buy_preround.check_refund()
 
 	current_state = GAME_STATE_PLAYING
 

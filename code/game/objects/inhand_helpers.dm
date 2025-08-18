@@ -77,30 +77,36 @@ GLOBAL_LIST_INIT(IconStates_cache, list())
 			GLOB.IconStates_cache[icon] = istates
 
 		if("[icon_state]_behind" in GLOB.IconStates_cache[icon])
-			blended=icon("icon"=icon, "icon_state"="[icon_state]_behind")
+			blended = icon("icon" = icon, "icon_state" = "[icon_state]_behind")
 			skipoverlays = TRUE
 		else
-			blended=icon("icon"=icon, "icon_state"=icon_state)
+			blended = icon("icon" = icon, "icon_state" = icon_state)
 	else
-		blended=icon("icon"=icon, "icon_state"=icon_state)
+		blended = icon("icon" = icon, "icon_state" = icon_state)
 
 	if(!blended)
-		blended=getFlatIcon(src)
+		blended = getFlatIcon(src)
 
 	if(!blended)
 		return
+
 	if(!skipoverlays)
-		for(var/image/IM in overlays)
-			var/icon/image_overlay = new(IM.icon, IM.icon_state)
-			if(image_overlay && IM.color)
-				image_overlay.Blend(IM.color, ICON_MULTIPLY)
-			blended.Blend(image_overlay,ICON_OVERLAY)
+		for(var/mutable_appearance/overlay as anything in overlays)
+			var/static/list/plane_whitelist = list(FLOAT_PLANE, GAME_PLANE, FLOOR_PLANE)
+			if(!(overlay.plane in plane_whitelist))
+				continue
+			var/icon/image_overlay = new(overlay.icon, overlay.icon_state)
+			if(image_overlay)
+				if(overlay.color)
+					image_overlay.Blend(overlay.color, ICON_MULTIPLY)
+				blended.Blend(image_overlay, ICON_OVERLAY)
 
 	var/icon/holder
 	if(blended.Height() == 32)
 		UW = 32
 		UH = 32
 		used_mask = 'icons/roguetown/helpers/inhand.dmi'
+
 	var/icon/masky
 	var/px = 0
 	var/py = 0

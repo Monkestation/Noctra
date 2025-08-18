@@ -131,7 +131,7 @@
 			if(next_rmove > world.time)
 				return
 		if(uses_intents)
-			if(used_intent?.get_chargetime())
+			if(!ispath(used_intent) && used_intent?.get_chargetime())
 				if(used_intent.no_early_release && client?.chargedprog < 100)
 					var/adf = used_intent.clickcd
 					if(istype(rmb_intent, /datum/rmb_intent/aimed))
@@ -164,7 +164,7 @@
 		CtrlClickOn(A)
 		return
 
-	if(incapacitated(ignore_restraints = TRUE, ignore_grab = TRUE))
+	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_GRAB))
 		return
 
 	if(!atkswinging)
@@ -596,7 +596,7 @@
 		user.client.statpanel = T.name
 
 /mob/proc/CtrlRightClickOn(atom/A, params)
-	linepoint(A, params)
+	pointed(A)
 	return
 
 /*
@@ -778,7 +778,6 @@
 		eyet.update_appearance(UPDATE_ICON)
 
 /mob/proc/ShiftRightClickOn(atom/A, params)
-//	linepoint(A, params)
 //	A.ShiftRightClick(src)
 	return
 

@@ -168,7 +168,7 @@
 /area/rogue/under/tomb/wilds)
 "pb" = (
 /obj/effect/decal/cleanable/blood/tracks,
-/obj/item/alch/bonemeal,
+/obj/item/fertilizer/bone_meal,
 /turf/open/floor/dirt,
 /area/rogue/under/tomb/wilds)
 "pY" = (
@@ -238,7 +238,7 @@
 /area/rogue/under/tomb/cave)
 "wk" = (
 /obj/structure/flora/ausbushes/sparsegrass,
-/obj/item/alch/bonemeal,
+/obj/item/fertilizer/bone_meal,
 /turf/open/floor/grass,
 /area/rogue/under/tomb/wilds)
 "xe" = (
@@ -297,7 +297,7 @@
 /obj/structure/flora/ausbushes/fullgrass,
 /obj/effect/decal/cleanable/blood/gibs,
 /obj/effect/decal/cleanable/blood/splatter,
-/obj/item/alch/bonemeal,
+/obj/item/fertilizer/bone_meal,
 /turf/open/floor/grass,
 /area/rogue/under/tomb/wilds)
 "Ek" = (

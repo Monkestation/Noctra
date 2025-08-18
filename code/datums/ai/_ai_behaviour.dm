@@ -4,7 +4,7 @@
 	var/required_distance = 1
 	///Flags for extra behavior
 	var/behavior_flags = NONE
-	///Cooldown between actions performances
+	///Do not read directly or mutate, instead use get_cooldown()
 	var/action_cooldown = 0
 
 /// Called by the ai controller when first being added. Additional arguments depend on the behavior type.
@@ -12,9 +12,14 @@
 /datum/ai_behavior/proc/setup(datum/ai_controller/controller, ...)
 	return TRUE
 
+/// Returns the delay to use for this behavior in the moment
+/// Override to return a conditional delay
+/datum/ai_behavior/proc/get_cooldown(datum/ai_controller/cooldown_for)
+	return action_cooldown
+
 ///Called by the AI controller when this action is performed
 /datum/ai_behavior/proc/perform(delta_time, datum/ai_controller/controller, ...)
-	controller.behavior_cooldowns[src] = world.time + action_cooldown
+	controller.behavior_cooldowns[src] = world.time + get_cooldown(controller)
 	return
 
 ///Called when the action is finished. This needs the same args as perform besides the default ones
