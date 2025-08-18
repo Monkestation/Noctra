@@ -27,7 +27,8 @@
 		COMSIG_TURF_EXITED,
 		COMSIG_TURF_ENTERED,
 		COMSIG_MOB_OVERLAY_FORCE_REMOVE,
-		COMSIG_MOB_OVERLAY_FORCE_UPDATE
+		COMSIG_MOB_OVERLAY_FORCE_UPDATE,
+		COMSIG_PARENT_QDELETING,
 	))
 
 /datum/element/mob_overlay_effect/proc/on_remove(datum/source, datum/target)
@@ -71,7 +72,7 @@
 	var/atom/movable/arrived = target
 	if(effect_alpha)
 		arrived.add_filter(MOB_MOVING_EFFECT_MASK, 1, alpha_mask_filter(0, mask_y_offset + offset, icon('icons/effects/icon_cutter.dmi', "icon_cutter"), null, MASK_INVERSE))
-	RegisterSignal(arrived, COMSIG_ITEM_PICKUP, TYPE_PROC_REF(/datum/element/mob_overlay_effect, on_remove_proxy), override = TRUE)
+	RegisterSignal(arrived, COMSIG_ITEM_PICKUP, PROC_REF(on_remove_proxy), override = TRUE)
 
 /datum/element/mob_overlay_effect/proc/on_remove_proxy(atom/source)
 	SIGNAL_HANDLER
