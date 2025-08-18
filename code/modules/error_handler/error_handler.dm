@@ -4,10 +4,6 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 #ifdef USE_CUSTOM_ERROR_HANDLER
 #define ERROR_USEFUL_LEN 2
 
-/proc/runtime_test()
-	var/obj/item/thingie = usr
-	thingie.add_item_action()
-
 /world/Error(exception/E, datum/e_src)
 	GLOB.total_runtimes++
 
