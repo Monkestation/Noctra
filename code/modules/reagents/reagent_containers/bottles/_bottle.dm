@@ -23,11 +23,18 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 
 	var/closed = TRUE
 	/// Do not change desc when open or closed
-	var/fancy
+	var/fancy = FALSE
+	/// Name to slap on a label
+	var/auto_label_name
 
 /obj/item/reagent_containers/glass/bottle/Initialize()
 	icon_state = "clear_bottle[rand(1,4)]"
 	return ..()
+
+/obj/item/reagent_containers/glass/bottle/apply_initial_label()
+	if(!auto_label_name)
+		return
+	label_container(label = "bottle of [auto_label_name]")
 
 /obj/item/reagent_containers/glass/bottle/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/paper/scroll))

@@ -41,9 +41,6 @@
 /obj/item/reagent_containers/glass/bottle/killersice
 	list_reagents = list(/datum/reagent/killersice = 15)
 
-/obj/item/reagent_containers/glass/bottle/wine
-	list_reagents = list(/datum/reagent/consumable/ethanol/wine = 45)
-
 /obj/item/reagent_containers/glass/bottle/water
 	list_reagents = list(/datum/reagent/water = 45)
 
@@ -95,71 +92,91 @@
 
 // BEER - Cheap, Plentiful, Saviours of Family Life
 /obj/item/reagent_containers/glass/bottle/beer
-	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 70)
+	name = "bottle of beer"
 	desc = "A bottle that contains a generic housebrewed small-beer. It has an improvised corkseal made of hardened clay."
+	list_reagents = list(/datum/reagent/consumable/ethanol/beer = 70)
 	fancy = TRUE
+	auto_label = TRUE
 
 /obj/item/reagent_containers/glass/bottle/beer/spottedhen
+	desc = "A bottle with the spotted-hen cork-seal."
 	list_reagents = list(/datum/reagent/consumable/ethanol/spottedhen = 70)
-	desc = "A bottle with the spotted-hen cork-seal. An extremely cheap lager hailing from a local brewery."
+	auto_label_name = "spotted hen"
 
 /obj/item/reagent_containers/glass/bottle/beer/blackgoat
+	desc = "A bottle with the black goat kriek cork-seal."
 	list_reagents = list(/datum/reagent/consumable/ethanol/blackgoat = 70)
-	desc = "A bottle with the black goat kriek cork-seal. A fruit-sour beer brewed with jackberries for a tangy taste."
+	auto_label_name = "black goat"
 
 /obj/item/reagent_containers/glass/bottle/beer/ratkept
-	list_reagents = list(/datum/reagent/consumable/ethanol/onion = 70)
 	desc = "A bottle with surprisingly no cork-seal. On the glass is carved the word \"ONI-N\", the 'O' seems to have been scratched out completely. Dubious. On the glass is a paper glued to it showing an illustration of rats guarding a cellar filled with bottles against a hoard of beggars."
+	list_reagents = list(/datum/reagent/consumable/ethanol/onion = 70)
+	auto_label_name = "\"ONI-N\""
 
 /obj/item/reagent_containers/glass/bottle/beer/hagwoodbitter
+	desc = "A bottle with the hagwood bitters cork-seal."
 	list_reagents = list(/datum/reagent/consumable/ethanol/hagwoodbitter = 70)
-	desc = "A bottle with the hagwood bitters cork-seal. The least bitter thing to be exported from the Grenzelhoft occupied state of Zorn."
+	auto_label_name = "hagwood bitters"
 
 /obj/item/reagent_containers/glass/bottle/beer/aurorian
+	desc = "A bottle with the aurorian brewhouse cork-seal."
 	list_reagents = list(/datum/reagent/consumable/ethanol/aurorian = 70)
-	desc = "A bottle with the aurorian brewhouse cork-seal. An Elvish beer brewed from an herbal gruit."
+	auto_label_name = "the aurorian"
 
 /obj/item/reagent_containers/glass/bottle/beer/fireleaf
+	desc = "A bottle with a generic leaf cork-seal."
 	list_reagents = list(/datum/reagent/consumable/ethanol/fireleaf= 70)
-	desc = "A bottle with a generic leaf cork-seal. An Elvish beer formed by distilling cabbages. You're pretty sure you can make your own with certainly higher quality."
+	auto_label_name = "fireleaf"
 
 /obj/item/reagent_containers/glass/bottle/beer/butterhairs
+	desc = "A bottle with the Dwarven Federation Trade Alliance cork-seal."
 	list_reagents = list(/datum/reagent/consumable/ethanol/butterhairs = 70)
-	desc = "A bottle with the Dwarven Federation Trade Alliance cork-seal. This beer, known as butterhairs: is widely considered one of the greatest exported by the Dwarves."
+	auto_label_name = "butter hairs"
 
 /obj/item/reagent_containers/glass/bottle/beer/stonebeardreserve
+	desc = "A bottle with the House Stoutenson cork-seal."
 	list_reagents = list(/datum/reagent/consumable/ethanol/stonebeards = 70)
-	desc = "A bottle with the House Stoutenson cork-seal. Stonebeards Reserve is one of the most legendary beers in existence, with only a few hundred barrels made every year."
+	auto_label_name = "stonebeard's reserve"
 
 /obj/item/reagent_containers/glass/bottle/beer/voddena
+	desc = "A bottle with the House Stoutenson cork-seal."
 	list_reagents = list(/datum/reagent/consumable/ethanol/voddena = 45)
-	desc = "A bottle with the House Stoutenson cork-seal. This strange liquid is considered as the most spicy and alcoholic drink in all the Mountainhomes. Bought by nobles of all ages, mostly those with a deathwish."
+	auto_label_name = "voddena"
 
 // WINES - Expensive, Nobleblooded
 /obj/item/reagent_containers/glass/bottle/wine
-	list_reagents = list(/datum/reagent/consumable/ethanol/wine = 70)
+	name = "bottle of wine"
 	desc = "A bottle that contains a generic red-wine, likely from Zaladin. It has a red-clay cork-seal."
+	list_reagents = list(/datum/reagent/consumable/ethanol/wine = 70)
 	fancy = TRUE
+	auto_label = TRUE
 
 /obj/item/reagent_containers/glass/bottle/wine/sourwine
+	desc = "A bottle that contains a Grenzelhoftian classic with a black ink cork-seal."
 	list_reagents = list(/datum/reagent/consumable/ethanol/sourwine = 70)
-	desc = "A bottle that contains a Grenzelhoftian classic with a black ink cork-seal.. An extremely sour wine that is watered down with mineral water."
+	auto_label_name = "black eagle sour"
 
 /obj/item/reagent_containers/glass/bottle/redwine
+	desc = "A bottle with the Valorian Merchant Guild cork-seal."
 	list_reagents = list(/datum/reagent/consumable/ethanol/redwine = 70)
-	desc = "A bottle with the Valorian Merchant Guild cork-seal. This one appears to be labelled as a relatively young red-wine from the coinlord state."
+	auto_label_name = "young valorian red"
 
 /obj/item/reagent_containers/glass/bottle/whitewine
+	desc = "A bottle with the Valorian Merchant Guild cork-seal."
 	list_reagents = list(/datum/reagent/consumable/ethanol/whitewine = 70)
-	desc = "A bottle with the Valorian Merchant Guild cork-seal. This one appears to be labelled as a sweet wine from the colder northern regions."
+	auto_label_name = "sweet valorian white"
 
 /obj/item/reagent_containers/glass/bottle/elfred
+	desc = "A bottle gilded with a silver cork-seal. Likely worth more than what an entire village makes!"
 	list_reagents = list(/datum/reagent/consumable/ethanol/elfred = 70)
-	desc = "A bottle gilded with a silver cork-seal. It appears to be labelled as a elvish red wine from Valoria. Likely worth more than what an entire village makes!"
+	auto_label_name = "elvish valorian red"
 
 /obj/item/reagent_containers/glass/bottle/elfblue
+	desc = "A bottle gilded with a golden cork-seal. This bottle would swoon Gods over!"
 	list_reagents = list(/datum/reagent/consumable/ethanol/elfblue = 70)
-	desc = "A bottle gilded with a golden cork-seal. This is the legendary Valmora Blue from the Vineyard of Valmora, headed by a sainted Dark-Elf swordsmaster. This bottle would swoon Gods over!"
+	auto_label_name = "valmora blue"
 
 /obj/item/reagent_containers/glass/bottle/tiefling_wine
+	desc = "A bottle of generic red-wine, at first glance. The wine is infused with Tiefling blood and glows in the dark."
 	list_reagents = list(/datum/reagent/consumable/ethanol/tiefling/aged = 45)
+	auto_label_name = "tiefling-blood wine"
