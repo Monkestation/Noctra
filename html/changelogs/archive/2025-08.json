@@ -418,5 +418,36 @@
                 "bugfix": "better cooking qol"
             }
         ]
+    },
+    "2025-08-18": {
+        "grungussuss": [
+            {
+                "qol": "pointing at items in your inventory displays them above you"
+            },
+            {
+                "admin": "orphans are once again a 0 pq role"
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "rscdel": "Remove Artificer Keys from pilgrims."
+            }
+        ],
+        "SarmentiCampbell": [
+            {
+                "balance": "Replace Vampire lord's thralls's infinite stamina with infinite energy, Vampire lord will retain their infinite stamina."
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "balance": "royal knights no longer get master skill"
+            },
+            {
+                "balance": "swift intent does less damage"
+            },
+            {
+                "balance": "greatswords and halberds do less damage"
+            }
+        ]
     }
 }
