@@ -53,13 +53,13 @@
 	check_progression()
 
 /datum/devotion/proc/remove()
-	holder_mob?.cleric = null
-	holder_mob = null
 	if(holder_mob)
-		for(var/trait as anything in traits)
-			REMOVE_TRAIT(holder_mob, trait, DEVOTION_TRAIT)
+		holder_mob.cleric = null
 		holder_mob.remove_spells(source = src)
 		holder_mob.verbs -= list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
+		for(var/trait as anything in traits)
+			REMOVE_TRAIT(holder_mob, trait, DEVOTION_TRAIT)
+	holder_mob = null
 
 /datum/devotion/proc/grant_miracle(datum/action/miracle)
 	if(!miracle)
@@ -78,8 +78,12 @@
 	return devotion >= abs(required)
 
 /datum/devotion/proc/update_progression(amount)
+	. += progression
 	progression = clamp(progression += amount, 0, max_progression)
-	check_progression()
+	. -= progression
+
+	if(.)
+		check_progression()
 
 /datum/devotion/proc/check_progression()
 	var/static/list/tiers = list(
