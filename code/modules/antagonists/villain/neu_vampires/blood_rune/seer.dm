@@ -56,8 +56,7 @@ GLOBAL_LIST_EMPTY(seer_rituals)
 	anchored = 1
 	icon = 'icons/effects/vampire/160x160.dmi'
 	icon_state = "rune_seer"
-	pixel_x = -32*2
-	pixel_y = -32*2
+	SET_BASE_PIXEL(-64, -64)
 	alpha = 200
 	invisibility = INVISIBILITY_OBSERVER
 	layer = ABOVE_OBJ_LAYER
