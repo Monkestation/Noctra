@@ -97,6 +97,25 @@
 	wdefense = GOOD_PARRY
 	smeltresult = /obj/item/ingot/iron
 
+/obj/item/weapon/sword/kaskara
+	name = "steel kaskara"
+	desc = "A steel sword of ancient Lakkarian design, predating the standard equipment of pegasus riders."
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	icon_state = "kaskara_steel"
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/chop)
+	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/chop)
+
+/obj/item/weapon/sword/kaskara/iron
+	name = "iron kaskara"
+	force = DAMAGE_SWORD-1
+	force_wielded = DAMAGE_SWORD_WIELD-1
+	desc = "An iron sword of ancient Lakkarian design, predating the standard equipment of pegasus riders."
+	icon_state = "kaskara_iron"
+	max_blade_int = 200
+	max_integrity = INTEGRITY_STRONG
+	wdefense = GOOD_PARRY
+	smeltresult = /obj/item/ingot/iron
+
 /obj/item/weapon/sword/short
 	force = DAMAGE_SHORTSWORD
 	name = "short sword"
