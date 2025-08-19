@@ -30868,6 +30868,7 @@
 /obj/structure/bridge_stakes{
 	dir = 1
 	},
+/obj/effect/landmark/observer_start,
 /turf/open/floor/dirt,
 /area/rogue/outdoors/town)
 "rbY" = (

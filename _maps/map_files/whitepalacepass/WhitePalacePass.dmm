@@ -1783,6 +1783,10 @@
 	},
 /turf/open/floor/grass/cold,
 /area/rogue/outdoors/rtfield)
+"bAy" = (
+/obj/effect/landmark/observer_start,
+/turf/open/floor/cobble,
+/area/rogue/outdoors/rtfield/safe)
 "bAP" = (
 /obj/machinery/light/fueled/wallfire/candle/l,
 /obj/structure/chair/wood,
@@ -86234,7 +86238,7 @@ gbu
 gbu
 qiK
 sfr
-qiK
+bAy
 qiK
 lvg
 gbu
