@@ -49,10 +49,6 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 		"Cancel",
 	)
 
-/obj/structure/fake_machine/titan/examine(mob/user)
-	. = ..()
-	. += span_notice("The current mode is [mode].")
-
 /obj/structure/fake_machine/titan/Initialize()
 	. = ..()
 	become_hearing_sensitive()
@@ -149,6 +145,7 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 	if(!throne)
 		return
 	throne.filters = null
+	throne.throat_mode = mode
 
 /obj/structure/fake_machine/titan/proc/switch_mode(mode_to_switch_to)
 	mode = mode_to_switch_to
@@ -156,8 +153,9 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 	if(!throne)
 		return
 
-	throne.filters = filter(type = "outline", color = "#a38c2e")
-	throne.filters += filter(type = "rays", size = 48, color = "#a38c2e")
+	//throne.filters = filter(type = "outline", color = "#a38c2e")
+	throne.filters += filter(type = "rays", size = 128, color = "#a38c2e")
+	throne.throat_mode = mode
 
 /obj/structure/fake_machine/titan/proc/recognize_command(mob/living/carbon/human/user, message)
 	// message is already sanitized
