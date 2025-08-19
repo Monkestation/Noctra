@@ -159,7 +159,7 @@
 		// Determine which events are valid to pick
 		for(var/datum/round_event_control/event as anything in mode.event_pools[track])
 			var/players_amt = get_active_player_count(alive_check = TRUE, afk_check = TRUE, human_check = TRUE)
-			if(forced)
+			if(forced && SSticker.HasRoundStarted())
 				if(QDELETED(event))
 					message_admins("[event.name] was deleted!")
 					continue

@@ -115,6 +115,72 @@
 	misscost = 15
 	item_damage_type = "blunt"
 
+//................ Court Physician Cane ............... //
+
+/obj/item/weapon/mace/courtphysician
+	name = "physician's cane"
+	desc = "A prized cane. Embellished with a golden serpent, representing the Kingsfield university. The pointy end is quite sharp."
+	icon_state = "fancy_cane"
+	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/thrust)
+	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
+	sellprice = 30
+	wdefense = MEDIOCHRE_PARRY
+
+/obj/item/weapon/mace/courtphysician/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list(
+					"shrink" = 0.5,
+					"sx" = -6,
+					"sy" = -6,
+					"nx" = 6,
+					"ny" = -5,
+					"wx" = -1,
+					"wy" = -5,
+					"ex" = -1,
+					"ey" = -5,
+					"nturn" = -45,
+					"sturn" = -45,
+					"wturn" = -45,
+					"eturn" = -45,
+					"nflip" = 0,
+					"sflip" = 0,
+					"wflip" = 0,
+					"eflip" = 0,
+					"northabove" = FALSE,
+					"southabove" = TRUE,
+					"eastabove" = TRUE,
+					"westabove" = FALSE
+				)
+			if("wielded")
+				return list(
+					"shrink" = 0.5,
+					"sx" = 0,
+					"sy" = 0,
+					"nx" = 0,
+					"ny" = 0,
+					"wx" = -3,
+					"wy" = 0,
+					"ex" = 3,
+					"ey" = 0,
+					"nturn" = -90,
+					"sturn" = 0,
+					"wturn" = -90,
+					"eturn" = 0,
+					"nflip" = 0,
+					"sflip" = 0,
+					"wflip" = 0,
+					"eflip" = 0,
+					"northabove" = FALSE,
+					"southabove" = TRUE,
+					"eastabove" = TRUE,
+					"westabove" = TRUE
+				)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
 
 //................ Bell ringer ............... //
 /obj/item/weapon/mace/church

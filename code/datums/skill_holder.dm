@@ -424,7 +424,14 @@
  ** max - maximum amount up to which the skill will be changed
 */
 /datum/skill_holder/proc/clamped_adjust_skillrank(skill, amt, max, silent)
-	adjust_skillrank(skill, clamp(abs(amt - get_skill_level(skill)), 0, max), silent)
+	var/skill_difference =  max - get_skill_level(skill)
+
+	if(skill_difference <= 0)
+		return
+
+	var/amount_to_adjust_by = min(skill_difference, max)
+
+	adjust_skillrank(skill, amount_to_adjust_by, silent)
 
 /**
  * sets the skill level to a specific amount

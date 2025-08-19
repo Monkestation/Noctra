@@ -13,7 +13,7 @@
 		/mob/living/carbon/human/proc/demand_submission,
 		/mob/living/carbon/human/proc/punish_spawn
 	)
-	lord_traits = list(TRAIT_HEAVYARMOR)
+	lord_traits = list(TRAIT_HEAVYARMOR, TRAIT_NOSTAMINA)
 	lord_title = "Nosferatu"
 
 
@@ -31,7 +31,7 @@
 	blood_preference = BLOOD_PREFERENCE_RATS | BLOOD_PREFERENCE_DEAD | BLOOD_PREFERENCE_KIN
 	clane_traits = list(
 		TRAIT_STRONGBITE,
-		TRAIT_NOSTAMINA,
+		TRAIT_NOENERGY,
 		TRAIT_NOHUNGER,
 		TRAIT_NOBREATH,
 		TRAIT_NOPAIN,

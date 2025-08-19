@@ -71,3 +71,9 @@
 	new /obj/item/natural/melded/t1(deathspot)
 	spill_embedded_objects()
 	return ..()
+
+/mob/living/simple_animal/hostile/retaliate/infernal/watcher/AttackingTarget(mob/living/passed_target)
+	visible_message(span_danger("[src] emits a burst of flames from it's core!"))
+	for(var/t in RANGE_TURFS(1, src))
+		new /obj/effect/hotspot(t)
+	return ..()

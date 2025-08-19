@@ -28,7 +28,7 @@
 	flight_for_species = list(SPEC_ID_HARPY)
 
 /obj/effect/flyer_shadow
-	name = ""
+	name = "humanoid shadow"
 	desc = "A shadow cast from something flying above."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shadow"
@@ -53,7 +53,7 @@
 	if(QDELETED(flying_mob))
 		return
 
-	if(flying_mob.z == user.z || !I.is_pointy_weapon())
+	if(flying_mob.z == user.z || !I.is_pointy_weapon(user))
 		return
 
 	user.visible_message(
@@ -63,7 +63,7 @@
 
 	if(do_after(user, 3 SECONDS, src))
 		I = user.get_active_held_item()
-		if(!I?.is_pointy_weapon() || !flying_mob)
+		if(!I?.is_pointy_weapon(user) || !flying_mob)
 			return
 
 		var/attack_damage = I.force
@@ -75,13 +75,10 @@
 
 		flying_mob.apply_damage(attack_damage, BRUTE)
 
-		if(prob(attack_damage * 1.5 && (flying_mob.movement_type & FLYING)))
-			to_chat(flying_mob, span_userdanger("The attack knocks you out of the air!"))
-			flying_mob.Knockdown(3 SECONDS)
 		return TRUE
 
-/obj/item/proc/is_pointy_weapon()
-	return (reach >= 2) && (sharpness == IS_SHARP || w_class >= WEIGHT_CLASS_NORMAL)
+/obj/item/proc/is_pointy_weapon(mob/user)
+	return (user?.used_intent?.reach >= 2) && (sharpness == IS_SHARP || w_class >= WEIGHT_CLASS_NORMAL)
 
 /datum/action/item_action/organ_action/use/flight
 	name = "Toggle Flying"
@@ -137,6 +134,7 @@
 	owner.movement_type |= FLYING
 	flying = TRUE
 	to_chat(owner, span_notice("I start flying."))
+	init_signals()
 	if(turf != get_turf(owner))
 		var/matrix/original = owner.transform
 		var/prev_alpha = owner.alpha
@@ -148,24 +146,12 @@
 		owner.alpha = prev_alpha
 		owner.forceMove(turf)
 
-		var/turf/below_turf = GET_TURF_BELOW(turf)
-		shadow = new /obj/effect/flyer_shadow(below_turf, owner)
-
-	init_signals()
-
 /datum/action/item_action/organ_action/use/flight/proc/init_signals()
-	if(shadow)
-		RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(cleanup_shadow))
-
-	RegisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(check_damage))
+	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMGE, PROC_REF(check_damage))
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_movement))
 	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(check_laying))
 
-	RegisterSignal(owner, list(
-		SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED),
-		SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT),
-		SIGNAL_ADDTRAIT(TRAIT_FLOORED),
-	), PROC_REF(fall))
+	RegisterSignals(owner, SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED), PROC_REF(fall))
 
 // Stop flying normally
 /datum/action/item_action/organ_action/use/flight/proc/stop_flying()
@@ -191,20 +177,17 @@
 	owner.movement_type &= ~FLYING
 	flying = FALSE
 
+	UnregisterSignal(owner, list(
+		COMSIG_MOB_APPLY_DAMGE,
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_LIVING_SET_BODY_POSITION,
+		SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED)
+	))
+
 	// The fact we have to do this is awful
 	var/turf/open = get_turf(owner)
 	if(isopenspace(open))
 		open.zFall(owner)
-
-	UnregisterSignal(owner, list(
-		COMSIG_PARENT_QDELETING,
-		COMSIG_ATOM_WAS_ATTACKED,
-		COMSIG_MOVABLE_MOVED,
-		COMSIG_LIVING_SET_BODY_POSITION,
-		SIGNAL_ADDTRAIT(TRAIT_IMMOBILIZED),
-		SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT),
-		SIGNAL_ADDTRAIT(TRAIT_FLOORED),
-	))
 
 	if(shadow)
 		QDEL_NULL(shadow)
@@ -215,11 +198,14 @@
 
 	remove_signals()
 
-/datum/action/item_action/organ_action/use/flight/proc/check_damage(datum/source, mob/living/user, mob/living/attacker, damage)
+/datum/action/item_action/organ_action/use/flight/proc/check_damage(datum/source, damage, damagetype, def_zone)
 	SIGNAL_HANDLER
 
-	if(prob(damage))
-		to_chat(owner, span_warning("The hit knocks you out of the air!"))
+	if(damagetype != BRUTE || damagetype != BURN)
+		return
+
+	if(prob(damage / 4))
+		to_chat(owner, span_warning("The damage knocks you out of the air!"))
 		fall()
 		if(isliving(owner))
 			var/mob/living/flier = owner
@@ -247,23 +233,15 @@
 			var/turf/below_turf = GET_TURF_BELOW(get_turf(owner))
 			if(below_turf)
 				shadow.forceMove(below_turf)
-			return
-
-		var/turf/below_turf = GET_TURF_BELOW(get_turf(owner))
-		if(below_turf && istransparentturf(get_turf(owner)))
-			shadow = new /obj/effect/flyer_shadow(below_turf, owner)
-			RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(cleanup_shadow))
+		else
+			var/turf/below_turf = GET_TURF_BELOW(get_turf(owner))
+			if(below_turf && istransparentturf(get_turf(owner)))
+				shadow = new /obj/effect/flyer_shadow(below_turf, owner)
 
 /datum/action/item_action/organ_action/use/flight/proc/check_laying(datum/source, new_pos, old_pos)
 	SIGNAL_HANDLER
 
-	if((old_pos == STANDING_UP ) && (old_pos == new_pos))
+	if((old_pos == STANDING_UP) && (old_pos == new_pos))
 		return
 
 	fall()
-
-/datum/action/item_action/organ_action/use/flight/proc/cleanup_shadow(datum/source)
-	SIGNAL_HANDLER
-
-	if(shadow)
-		QDEL_NULL(shadow)

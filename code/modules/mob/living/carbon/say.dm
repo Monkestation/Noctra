@@ -12,11 +12,6 @@
 		message = tongueless_upper.Replace(message, pick("AA","OO","'"))
 		speech_args[SPEECH_MESSAGE] = message
 
-/mob/living/carbon/can_speak_vocal(message)
-	if(silent)
-		return FALSE
-	return ..()
-
 /mob/living/carbon/could_speak_in_language(datum/language/dt)
 	var/obj/item/organ/tongue/T = getorganslot(ORGAN_SLOT_TONGUE)
 	if(T)
