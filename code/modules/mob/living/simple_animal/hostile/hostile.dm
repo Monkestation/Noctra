@@ -55,6 +55,12 @@
 	if(!targets_from)
 		targets_from = src
 
+	if(ranged)
+		if(projectiletype)
+			AddComponent(/datum/component/ranged_attacks, projectile_type = projectiletype, projectile_sound = projectilesound, burst_shots = rapid, burst_intervals = rapid_fire_delay, cooldown_time = ranged_cooldown_time, ranged_message = ranged_message)
+		else if(casingtype)
+			AddComponent(/datum/component/ranged_attacks, casing_type = casingtype, projectile_sound = projectilesound, burst_shots = rapid, burst_intervals = rapid_fire_delay, cooldown_time = ranged_cooldown_time, ranged_message = ranged_message)
+
 /mob/living/simple_animal/hostile/Destroy()
 	target = null
 	targets_from = null

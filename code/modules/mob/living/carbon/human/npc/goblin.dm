@@ -18,6 +18,9 @@
 	stand_attempts = 6
 	bloodpool = 250 // Small, frail creechers with not so much vitality to gain from.
 
+/mob/living/carbon/human/species/goblin/apply_prefs_job(client/player_client, datum/job/job)
+	return
+
 /mob/living/carbon/human/species/goblin/npc
 	ai_controller = /datum/ai_controller/human_npc
 	dodgetime = 30 //they can dodge easily, but have a cooldown on it

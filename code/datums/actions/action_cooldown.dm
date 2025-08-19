@@ -212,7 +212,7 @@
 /datum/action/cooldown/proc/InterceptClickOn(mob/living/clicker, params, atom/target)
 	if(!LAZYACCESS(params2list(params), MIDDLE_CLICK))
 		return FALSE
-	if(!IsAvailable())
+	if(!IsAvailable(TRUE))
 		return FALSE
 	if(!target)
 		return FALSE

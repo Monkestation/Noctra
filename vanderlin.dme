@@ -2419,6 +2419,8 @@
 #include "code\modules\mapping\reader.dm"
 #include "code\modules\mapping\ruins.dm"
 #include "code\modules\mapping\verify.dm"
+#include "code\modules\mapping\contextual_actor\contextual_actor.dm"
+#include "code\modules\mapping\contextual_actor\presets.dm"
 #include "code\modules\mapping\kalypso\_noise.dm"
 #include "code\modules\mapping\kalypso\feature_spawning.dm"
 #include "code\modules\mapping\kalypso\general_procs.dm"
