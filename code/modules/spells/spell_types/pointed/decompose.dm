@@ -47,7 +47,7 @@
 		return
 	var/mob/living/carbon/human/target = cast_on
 	if(target.stat == DEAD)
-		var/datum/antagonist/zombie/z_check = target.zombie_check()
+		var/datum/antagonist/zombie/z_check = target.zombie_check() //why is this called zombie check when it makes you a zombie...
 		if(!z_check)
 			return
 		z_check.wake_zombie(TRUE)
