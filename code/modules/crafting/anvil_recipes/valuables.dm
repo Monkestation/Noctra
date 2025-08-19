@@ -109,7 +109,7 @@
 /datum/anvil_recipe/valuables/silver/rontzs
 	name = "Silver Rontz Ring"
 	recipe_name = "a Silver Rontz Ring"
-	additional_items = list(/obj/item/gem)
+	additional_items = list(/obj/item/gem/red)
 	created_item = /obj/item/clothing/ring/silver/rontz
 	craftdiff = 4
 
@@ -175,6 +175,6 @@
 /datum/anvil_recipe/valuables/gold/rontz
 	name = "Golden Rontz Ring"
 	recipe_name = "a Golden Rontz Ring"
-	additional_items = list(/obj/item/gem)
+	additional_items = list(/obj/item/gem/red)
 	created_item = /obj/item/clothing/ring/gold/rontz
 	craftdiff = 5

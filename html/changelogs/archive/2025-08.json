@@ -482,5 +482,31 @@
                 "balance": "Arrows and similar projectiles now are crit blocked by stab protection."
             }
         ]
+    },
+    "2025-08-19": {
+        "grungussuss": [
+            {
+                "qol": "the item offer effect is now bigger"
+            },
+            {
+                "bugfix": "fixed clamped adjust skillrank not working correctly"
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "bugfix": "infernal watcher fixed"
+            },
+            {
+                "bugfix": "flight runtimes"
+            },
+            {
+                "balance": "changes math calculation so pain matter again"
+            }
+        ],
+        "Arkatos": [
+            {
+                "bugfix": "Fixed a rare issue where a roundstart event failed to trigger due to wrong timing."
+            }
+        ]
     }
 }

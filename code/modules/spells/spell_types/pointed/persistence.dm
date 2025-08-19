@@ -25,6 +25,9 @@
 /datum/action/cooldown/spell/persistence/cast(mob/living/cast_on)
 	. = ..()
 	if(cast_on.mob_biotypes & MOB_UNDEAD)
+		if(cast_on.mind?.has_antag_datum(/datum/antagonist/vampire/lord))
+			cast_on.visible_message(span_warning("[cast_on] overpowers being inflammed!"), span_greentext("I overpower being inflammed!"))
+			return
 		if(ishuman(cast_on)) //BLEED AND PAIN
 			var/mob/living/carbon/human/human_target = cast_on
 			var/datum/physiology/phy = human_target.physiology
@@ -47,13 +50,18 @@
 		var/obj/item/bodypart/affecting = C.get_bodypart(check_zone(owner.zone_selected))
 		if(affecting)
 			for(var/datum/wound/bleeder in affecting.wounds)
-				bleeder.woundpain = max(bleeder.sewn_woundpain, bleeder.woundpain * 0.25)
+				bleeder.woundpain = max(bleeder.sewn_woundpain, bleeder.woundpain * 0.5)
 				if(!isnull(bleeder.clotting_threshold) && bleeder.bleed_rate > bleeder.clotting_threshold)
 					var/difference = bleeder.bleed_rate - bleeder.clotting_threshold
 					bleeder.bleed_rate = max(bleeder.clotting_threshold, bleeder.bleed_rate - difference * situational_bonus)
+		if(ishuman(C))
+			var/mob/living/carbon/human/human_target = C
+			var/datum/physiology/phy = human_target.physiology
+			phy.pain_mod *= 0.85 // 15% pain reduction
+			addtimer(VARSET_CALLBACK(phy, pain_mod, phy.pain_mod /= 0.85), 19 SECONDS)
 	else if(HAS_TRAIT(cast_on, TRAIT_SIMPLE_WOUNDS))
 		for(var/datum/wound/bleeder in cast_on.simple_wounds)
-			bleeder.woundpain = max(bleeder.sewn_woundpain, bleeder.woundpain * 0.25)
+			bleeder.woundpain = max(bleeder.sewn_woundpain, bleeder.woundpain * 0.5)
 			if(!isnull(bleeder.clotting_threshold) && bleeder.bleed_rate > bleeder.clotting_threshold)
 				var/difference = bleeder.bleed_rate - bleeder.clotting_threshold
 				bleeder.bleed_rate = max(bleeder.clotting_threshold, bleeder.bleed_rate - difference * situational_bonus)

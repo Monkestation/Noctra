@@ -37,6 +37,9 @@
 		cast_on.cursed_freak_out()
 		return
 	if(cast_on.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
+		if(cast_on.mind?.has_antag_datum(/datum/antagonist/vampire/lord))
+			cast_on.visible_message(span_warning("[cast_on] overpowers being burned!"), span_greentext("I overpower being burned!"))
+			return
 		cast_on.visible_message(span_danger("[cast_on] is burned by holy light!"), span_userdanger("I'm burned by holy light!"))
 		if(stun_undead)
 			cast_on.Paralyze(5 SECONDS)

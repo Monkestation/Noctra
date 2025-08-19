@@ -10,13 +10,6 @@
 	var/last_siege
 	var/raid_text = "The skeleton horde approaches."
 
-/datum/round_event_control/worldsiege/canSpawnEvent(players_amt, gamemode, fake_check)
-	if(earliest_start >= world.time-SSticker.round_start_time)
-		return FALSE
-	if(players_amt < min_players)
-		return FALSE
-	. = ..()
-
 /datum/round_event_control/worldsiege/preRunEvent()
 	. = ..()
 	if(. == EVENT_READY)

@@ -43,9 +43,11 @@
 		if(rot && rot.amount < 9.9 MINUTES)
 			rot.amount = 9.9 MINUTES
 		return
-	if(ishuman(cast_on))
-		var/mob/living/carbon/human/H = cast_on
-		var/datum/antagonist/zombie/ZD = H.zombie_check()
-		if(!ZD)
+	if(!ishuman(cast_on))
+		return
+	var/mob/living/carbon/human/target = cast_on
+	if(target.stat == DEAD)
+		var/datum/antagonist/zombie/z_check = target.zombie_check() //why is this called zombie check when it makes you a zombie...
+		if(!z_check)
 			return
-		ZD.wake_zombie(TRUE)
+		z_check.wake_zombie(TRUE)
