@@ -29,3 +29,9 @@
 /obj/structure/throne/examine(mob/user)
 	. = ..()
 	. += span_notice("The current mode is [throat_mode].")
+
+/obj/structure/throne/proc/do_filters_glow()
+	filters = filter(type = "rays", size = 80, color = "#a38c2e")
+
+/obj/structure/throne/proc/remove_filters_glow()
+	filters = null
