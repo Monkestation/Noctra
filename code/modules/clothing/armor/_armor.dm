@@ -35,6 +35,7 @@
 	var/fire_resist = T0C+100
 	var/blood_overlay_type = "suit"
 	var/togglename = null
+	var/stand_speed_reduction = 1 //Multiplies your standing speed by this value.
 	abstract_type = /obj/item/clothing/armor
 
 /obj/item/clothing/armor/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, dummy_block = FALSE)
@@ -54,3 +55,13 @@
 		var/mob/M = loc
 		M.update_inv_shirt()
 		M.update_inv_armor()
+
+/obj/item/clothing/armor/equipped(mob/living/user, slot)
+	. = ..()
+	if(stand_speed_reduction != 1)
+		user.stand_speed_mult *= stand_speed_reduction
+
+/obj/item/clothing/armor/dropped(mob/living/user)
+	. = ..()
+	if(stand_speed_reduction != 1)
+		user.stand_speed_mult /= stand_speed_reduction
