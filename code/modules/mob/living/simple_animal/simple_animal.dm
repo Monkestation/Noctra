@@ -661,7 +661,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	var/do_footstep = FALSE
 
 /mob/living/simple_animal/hostile/RangedAttack(atom/A, params) //Player firing
-	if(ranged && ranged_cooldown <= world.time)
+	if(!ai_controller && ranged && ranged_cooldown <= world.time)
 		target = A
 		OpenFire(A)
 	..()

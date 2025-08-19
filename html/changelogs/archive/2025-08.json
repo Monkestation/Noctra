@@ -419,13 +419,33 @@
             }
         ]
     },
-    "2025-08-18": {
+    "2025-08-17": {
         "grungussuss": [
             {
                 "qol": "pointing at items in your inventory displays them above you"
             },
             {
                 "admin": "orphans are once again a 0 pq role"
+            },
+            {
+                "bugfix": "fixed lag when changing areas caused by loading music files"
+            },
+            {
+                "bugfix": "fixed vicious mockery being an untargeted spell"
+            },
+            {
+                "bugfix": "fixed admin liquid spawn cancel button not working"
+            },
+            {
+                "bugfix": "fixed infinite bronze and steel gear smelt oversight"
+            },
+            {
+                "bugfix": "fixed freshly smithed items being damaged"
+            }
+        ],
+        "Arkatos": [
+            {
+                "rscadd": "Xylix as a storyteller now respects round start events requirements. (But then true silliness begins)"
             }
         ],
         "wgtjunior743": [
@@ -447,6 +467,45 @@
             },
             {
                 "balance": "greatswords and halberds do less damage"
+            }
+        ]
+    },
+    "2025-08-18": {
+        "CheffieGithub": [
+            {
+                "bugfix": "Potentially fix lesser miracle damage nukes."
+            },
+            {
+                "balance": "Stone arrows no longer bypass heart crit requirements."
+            },
+            {
+                "balance": "Arrows and similar projectiles now are crit blocked by stab protection."
+            }
+        ]
+    },
+    "2025-08-19": {
+        "grungussuss": [
+            {
+                "qol": "the item offer effect is now bigger"
+            },
+            {
+                "bugfix": "fixed clamped adjust skillrank not working correctly"
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "bugfix": "infernal watcher fixed"
+            },
+            {
+                "bugfix": "flight runtimes"
+            },
+            {
+                "balance": "changes math calculation so pain matter again"
+            }
+        ],
+        "Arkatos": [
+            {
+                "bugfix": "Fixed a rare issue where a roundstart event failed to trigger due to wrong timing."
             }
         ]
     }

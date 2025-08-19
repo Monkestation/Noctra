@@ -1310,6 +1310,11 @@ GLOBAL_LIST_EMPTY(respawncounts)
 
 	show_round_stats(pick_assoc(GLOB.featured_stats))
 
+/client/proc/preload_music()
+	if(SSsounds.initialized == TRUE)
+		for(var/sound_path as anything in SSsounds.all_music_sounds)
+			src << load_resource(sound_path, -1)
+
 #undef LIMITER_SIZE
 #undef CURRENT_SECOND
 #undef SECOND_COUNT

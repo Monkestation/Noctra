@@ -6,7 +6,6 @@
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_NORMAL
 	body_parts_covered = CHEST|ARMS|VITALS
-	color = CLOTHING_LINEN
 
 /obj/item/clothing/shirt/undershirt/priest
 	name = "undervestments"
