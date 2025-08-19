@@ -25,17 +25,17 @@
 /// Whether this job can be joined through the new_player menu.
 #define JOB_NEW_PLAYER_JOINABLE (1<<4)
 
-#define FACTION_NONE "None"
-#define FACTION_NEUTRAL "Neutral"
-#define FACTION_TOWN "Town"
-#define FACTION_UNDEAD "Undead"
-#define FACTION_PLANTS "Plants"
-#define FACTION_VINES "Vines" //Seemingly unused
-#define FACTION_CABAL "Cabal"
-#define FACTION_RATS "Rats"
-#define FACTION_ORCS "Orcs"
-#define FACTION_BUMS "Bums"
-#define FACTION_MATTHIOS "Matthios"
+#define FACTION_NONE		"None"
+#define FACTION_NEUTRAL		"Neutral"
+#define FACTION_TOWN		"Town"
+#define FACTION_UNDEAD		"Undead"
+#define FACTION_PLANTS		"Plants"
+#define FACTION_VINES		"Vines" //Seemingly unused
+#define FACTION_CABAL		"Cabal"
+#define FACTION_RATS		"Rats"
+#define FACTION_ORCS		"Orcs"
+#define FACTION_BUMS		"Bums"
+#define FACTION_MATTHIOS	"Matthios"
 
 #define NOBLEMEN		(1<<0)
 #define GARRISON		(1<<1)
@@ -43,11 +43,11 @@
 #define SERFS			(1<<3)
 #define PEASANTS		(1<<4)
 #define APPRENTICES		(1<<5)
-#define YOUNGFOLK           (1<<6)
+#define YOUNGFOLK		(1<<6)
 #define OUTSIDERS		(1<<7)
 #define COMPANY			(1<<8)
 
-#define UNDEAD		(1<<10)
+#define UNDEAD			(1<<10)
 
 
 #define JCOLOR_NOBLE "#9c40bf"
