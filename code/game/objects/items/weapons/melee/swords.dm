@@ -375,6 +375,14 @@
 	desc = "A rapier decorated with gold inlaid on its hilt. A regal weapon fit for nobility."
 	sellprice = 140
 
+/obj/item/weapon/sword/rapier/nimcha
+	name = "nimcha"
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "nimcha"
+	desc = "A swift sword of Lakkarian origin. It's popular with the noblewomen of Ei Osalla."
+	wbalance = HARD_TO_DODGE
+	sellprice = 140 // its made with gold and steel, thats pretty valuable
+
 //................ Lord's Rapier ............... //
 /obj/item/weapon/sword/rapier/dec/lord
 	force = DAMAGE_SWORD_WIELD
