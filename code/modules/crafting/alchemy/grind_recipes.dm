@@ -10,7 +10,7 @@
 	bonus_chance_outputs = list(/obj/item/alch/viscera = 75)
 
 /datum/alch_grind_recipe/organs
-	picky = FALSE;
+	picky = FALSE
 	valid_input = /obj/item/organ
 	valid_outputs = list(/obj/item/alch/viscera = 1)
 	bonus_chance_outputs = list(/obj/item/alch/viscera = 50)
