@@ -39,6 +39,7 @@
 	// Chance to destroy the seed as it's being stepped on
 	if(prob(10) && istype(L))
 		playsound(loc,"plantcross", 40, FALSE)
+		visible_message("<span class='warning'>[L] crushes [src] underfoot.</span>")
 		qdel(src)
 
 /obj/item/neuFarm/seed/examine(mob/user)
