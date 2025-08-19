@@ -72,8 +72,8 @@
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 1, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/carpentry, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/carpentry, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/tanning, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE)
@@ -104,7 +104,7 @@
 /datum/outfit/job/forestguard/ranger/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/helmet/medium/decorated/skullmet
-	neck = /obj/item/clothing/neck/chaincoif
+	neck = /obj/item/clothing/neck/gorget
 	beltl = /obj/item/weapon/knife/cleaver/combat
 	beltr = /obj/item/ammo_holder/quiver/arrows
 	armor = /obj/item/clothing/armor/leather/advanced/forrester
@@ -118,16 +118,16 @@
 		H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
-		H.adjust_skillrank(/datum/skill/labor/lumberjacking, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/carpentry, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/labor/lumberjacking, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/carpentry, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/tanning, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/bows, 4, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/crossbows, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/axesmaces, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
+
 		H.change_stat(STATKEY_STR, -2)
 		H.change_stat(STATKEY_END, 1)
 		H.change_stat(STATKEY_PER, 2)
@@ -147,7 +147,7 @@
 /datum/outfit/job/forestguard/reaver/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/helmet/medium/decorated/skullmet
-	neck = /obj/item/clothing/neck/chaincoif
+	neck = /obj/item/clothing/neck/gorget
 	beltl = /obj/item/weapon/mace/steel/morningstar
 	armor = /obj/item/clothing/armor/leather/advanced/forrester
 	backr = /obj/item/weapon/polearm/halberd/bardiche/woodcutter
@@ -161,15 +161,15 @@
 		H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
-		H.adjust_skillrank(/datum/skill/labor/lumberjacking, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/carpentry, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/labor/lumberjacking, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/carpentry, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/tanning, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/axesmaces, 4, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/medicine, 2, TRUE)
+
 		H.change_stat(STATKEY_STR, 2)
 		H.change_stat(STATKEY_CON, 2)
 		H.change_stat(STATKEY_END, 2)
@@ -190,7 +190,7 @@
 /datum/outfit/job/forestguard/ruffian/pre_equip(mob/living/carbon/human/H)
 	..()
 	head = /obj/item/clothing/head/helmet/medium/decorated/skullmet //placeholder, I have to sprite something new for the Brats, like a gator skull
-	neck = /obj/item/clothing/neck/chaincoif
+	neck = /obj/item/clothing/neck/gorget
 	beltl = /obj/item/weapon/knife/cleaver/combat
 	beltr = /obj/item/ammo_holder/quiver/arrows
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow //placeholder, going to give them a slingshot in another PR later
@@ -205,7 +205,7 @@
 		H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/carpentry, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/sewing, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/labor/butchering, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/crossbows, 1, TRUE) //weak fuck
@@ -215,7 +215,6 @@
 		H.adjust_skillrank(/datum/skill/craft/cooking, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/stealing, 2, TRUE)
-		H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 		H.change_stat(STATKEY_STR, rand(-2,1)) //broadly conscripted street urchins, randomization keeps them from being too powerful/consistent
 		H.change_stat(STATKEY_INT, round(rand(-2,2)))
 		H.change_stat(STATKEY_CON, -1)
