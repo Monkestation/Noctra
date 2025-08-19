@@ -62,7 +62,7 @@
 	beltr = /obj/item/weapon/axe/iron
 	armor = /obj/item/clothing/armor/leather/advanced/forrester
 	backr = /obj/item/weapon/shield/heater
-	backpack_contents = list(/obj/item/weapon/knife/hunting = 1, /obj/item/rope/chain = 1, /obj/item/key/forrestgarrison = 1, /obj/item/storage/belt/pouch/coins/poor)
+	backpack_contents = list(/obj/item/weapon/knife/hunting = 1, /obj/item/rope/chain = 1, /obj/item/storage/belt/pouch/coins/poor)
 	H.verbs |= /mob/proc/haltyell
 
 
@@ -108,7 +108,7 @@
 	beltr = /obj/item/ammo_holder/quiver/arrows
 	armor = /obj/item/clothing/armor/leather/advanced/forrester
 	backr = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/long
-	backpack_contents = list(/obj/item/weapon/knife/hunting = 1, /obj/item/rope/chain = 1, /obj/item/key/forrestgarrison = 1, /obj/item/storage/belt/pouch/coins/poor)
+	backpack_contents = list(/obj/item/weapon/knife/hunting = 1, /obj/item/rope/chain = 1, /obj/item/storage/belt/pouch/coins/poor)
 	H.verbs |= /mob/proc/haltyell
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
@@ -150,7 +150,7 @@
 	armor = /obj/item/clothing/armor/leather/advanced/forrester
 	backr = /obj/item/weapon/polearm/halberd/bardiche/woodcutter
 	beltr = /obj/item/weapon/axe/iron
-	backpack_contents = list(/obj/item/weapon/knife/hunting = 1, /obj/item/rope/chain = 1, /obj/item/key/forrestgarrison = 1, /obj/item/storage/belt/pouch/coins/poor)
+	backpack_contents = list(/obj/item/weapon/knife/hunting = 1, /obj/item/rope/chain = 1, /obj/item/storage/belt/pouch/coins/poor)
 	H.verbs |= /mob/proc/haltyell
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/misc/swimming, 3, TRUE)
