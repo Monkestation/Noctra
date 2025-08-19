@@ -13,7 +13,7 @@
 	picky = FALSE
 	valid_input = /obj/item/organ
 	valid_outputs = list(/obj/item/alch/viscera = 1)
-	bonus_chance_outputs = list(/obj/item/alch/viscera = 50)
+	bonus_chance_outputs = list(/obj/item/alch/viscera = 33)
 
 //Objects -> dusts
 /datum/alch_grind_recipe/crow
