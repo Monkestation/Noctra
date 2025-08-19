@@ -974,6 +974,7 @@
 				set_stat(SOFT_CRIT)
 			else
 				set_stat(CONSCIOUS)
+		// update_mobility()
 	update_damage_hud()
 	update_health_hud()
 	update_spd()
@@ -1267,8 +1268,6 @@
 	. = ..()
 	if(!.)
 		return
-	if(silent)
-		return FALSE
 	if(mouth?.muteinmouth)
 		return FALSE
 	for(var/obj/item/grabbing/grab in grabbedby)
@@ -1321,7 +1320,7 @@
 		var/modifier = 1
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
-			if(H.age == AGE_CHILD)
+			if(is_child(H))
 				modifier = 5
 		if(HAS_TRAIT(src, TRAIT_HOLLOWBONES))
 			modifier = 4

@@ -50,7 +50,7 @@
 			armor = /obj/item/clothing/shirt/robe/necra
 			H.cmode_music = 'sound/music/cmode/church/CombatGravekeeper.ogg'
 		if(/datum/patron/divine/eora)
-			mask = /obj/item/clothing/face/operavisage
+			head = /obj/item/clothing/head/padded/operavisage
 			neck = /obj/item/clothing/neck/psycross/silver/eora
 			shoes = /obj/item/clothing/shoes/sandals
 			armor = /obj/item/clothing/shirt/robe/eora
