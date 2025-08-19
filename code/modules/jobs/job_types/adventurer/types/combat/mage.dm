@@ -1,6 +1,7 @@
 /datum/advclass/combat/mage
 	name = "Mage"
-	tutorial = "A wandering graduate of the many colleges of magick across Psydonia, you search for a job to put your degree to use. And they say school was hard..."
+	tutorial = "A wandering graduate of the many colleges of magick across Psydonia, \
+	you search for a job to put your degree to use. And they say school was hard..."
 
 	outfit = /datum/outfit/job/adventurer/mage
 	category_tags = list(CTAG_ADVENTURER)
@@ -18,7 +19,7 @@
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	armor = /obj/item/clothing/shirt/robe/colored/mage
 	belt = /obj/item/storage/belt/leather/rope
-	backr = /obj/item/storage/backpack/satchel
+	backl = /obj/item/storage/backpack/backpack
 	beltr = /obj/item/storage/magebag/poor
 	beltl = /obj/item/reagent_containers/glass/bottle/manapot
 	backpack_contents = list(/obj/item/book/granter/spellbook/apprentice = 1, /obj/item/chalk = 1)
@@ -28,13 +29,16 @@
 		H.adjust_skillrank(/datum/skill/magic/arcane, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)//so they can cast spells without tiring themselves out instantly, they already lose some from reduced endurance
 		H.adjust_skillrank(/datum/skill/craft/alchemy, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
 		if(H.age == AGE_OLD)
 			head = /obj/item/clothing/head/wizhat/gen
 			armor = /obj/item/clothing/shirt/robe/colored/plain
-			backl = /obj/item/storage/backpack/backpack
 			H.adjust_skillrank(/datum/skill/magic/arcane, 1, TRUE)
 			H.change_stat(STATKEY_INT, 1)
+		if(H.gender == FEMALE)
+			head = /obj/item/clothing/head/wizhat/witch
 		H.change_stat(STATKEY_STR, -2)
 		H.change_stat(STATKEY_INT, 3)
 		H.change_stat(STATKEY_CON, -2)

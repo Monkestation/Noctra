@@ -43,7 +43,7 @@
 	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/traps, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/engineering, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/smelting, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/smelting, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 	H.change_stat(STATKEY_STR, 1)
 	H.change_stat(STATKEY_INT, -2)

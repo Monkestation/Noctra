@@ -31,23 +31,20 @@
 	gloves = /obj/item/clothing/gloves/leather/apothecary
 	belt = /obj/item/storage/belt/leather
 	beltr = /obj/item/storage/keyring/apothecary
-	beltl = /obj/item/storage/belt/pouch/coins/mid
+	beltl = /obj/item/storage/belt/pouch/coins/poor
 	ADD_TRAIT(H, TRAIT_LEGENDARY_ALCHEMIST, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_FORAGER, TRAIT_GENERIC)
-	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, pick(1,1,2), TRUE)//to help the feldsher hold down patients
+	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/sneaking, 4, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)//average sneaking and climbing since I assume apothecaries venture into the wild to pick herbs and what not
 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 5, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/crafting, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/medicine, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/farming, 3, TRUE)
 	H.change_stat(STATKEY_STR, -1)
-	H.change_stat(STATKEY_INT, 1)
+	H.change_stat(STATKEY_CON, -1)
+	H.change_stat(STATKEY_INT, 3)
 
-	if(H.gender == MALE)
-		if(H.dna?.species)
-			if(H.dna.species.id == SPEC_ID_HUMEN)
-				H.dna.species.soundpack_m = new /datum/voicepack/male/zeth()

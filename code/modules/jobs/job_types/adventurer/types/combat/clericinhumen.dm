@@ -1,7 +1,7 @@
 //shield
 /datum/advclass/combat/inhumencleric
 	name = "Inhumen Cleric"
-	tutorial = "Those Clerics are wandering warriors of the Inhumens"
+	tutorial = "These Clerics are wandering warriors of the Inhumen gods"
 	allowed_races = RACES_PLAYER_ALL
 	vampcompat = FALSE
 	outfit = /datum/outfit/job/adventurer/inhumencleric

@@ -13,17 +13,7 @@
 	min_pq = -10
 	bypass_lastclass = TRUE
 
-	allowed_races = list(\
-		SPEC_ID_HUMEN,\
-		SPEC_ID_ELF,\
-		SPEC_ID_HALF_ELF,\
-		SPEC_ID_DWARF,\
-		SPEC_ID_DROW,\
-		SPEC_ID_HALF_DROW,\
-		SPEC_ID_TIEFLING,\
-		SPEC_ID_AASIMAR,\
-		SPEC_ID_HARPY,\
-	)
+	allowed_races = RACES_PLAYER_NONEXOTIC
 
 	outfit = /datum/outfit/job/innkeep
 	give_bank_account = 60
@@ -41,6 +31,7 @@
 	H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/mathematics, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 1, TRUE)
 	if(H.gender == MALE)
 		pants = /obj/item/clothing/pants/tights/colored/random
 		shirt = /obj/item/clothing/shirt/shortshirt/colored/random

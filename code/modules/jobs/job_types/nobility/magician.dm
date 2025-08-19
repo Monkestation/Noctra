@@ -58,6 +58,7 @@
 	H.adjust_skillrank(/datum/skill/misc/reading, 6, TRUE)
 	H.adjust_skillrank(/datum/skill/magic/arcane, pick(6,5), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)//old party member, he was an adventurer who saved the city, also buff wizard
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
@@ -71,6 +72,7 @@
 			belt = /obj/item/storage/belt/leather/plaquegold
 			cloak = null
 			if(H.gender == FEMALE)
+				head = /obj/item/clothing/head/wizhat/witch
 				armor = /obj/item/clothing/shirt/robe/colored/courtmage
 			if(H.gender == MALE)
 				armor = /obj/item/clothing/shirt/robe/wizard
