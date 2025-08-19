@@ -27,6 +27,9 @@
 	gloves = /obj/item/clothing/gloves/leather
 	neck = /obj/item/clothing/neck/chaincoif/iron // Everyone gets iron coif, instead of variable neck armor
 	belt = /obj/item/storage/belt/leather
+	backl = /obj/item/storage/backpack/satchel
+	//I assume they were given something for the journey by another parish, or the one they departed from
+	backpack_contents = list(/obj/item/storage/belt/pouch/coins/poor = 1, /obj/item/reagent_containers/food/snacks/hardtack = 1)
 
 	switch(H.patron?.type)
 		if(/datum/patron/divine/astrata)
@@ -37,7 +40,7 @@
 			if(iself(H) || ishalfelf(H))
 				beltl = /obj/item/weapon/mace/elvenclub
 			else
-			beltl = /obj/item/weapon/mace
+				beltl = /obj/item/weapon/mace
 			H.adjust_skillrank(/datum/skill/combat/shields, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
 		if(/datum/patron/divine/dendor)
@@ -55,7 +58,7 @@
 			if(iself(H) || ishalfelf(H))
 				beltl = /obj/item/weapon/mace/elvenclub
 			else
-			beltl = /obj/item/weapon/mace
+				beltl = /obj/item/weapon/mace
 			H.adjust_skillrank(/datum/skill/combat/shields, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
 		if(/datum/patron/divine/eora)
@@ -79,7 +82,9 @@
 		if(/datum/patron/divine/noc)
 			wrists = /obj/item/clothing/neck/psycross/noc
 			cloak = /obj/item/clothing/cloak/stabard/templar/noc
+			backr = /obj/item/weapon/shield/heater
 			beltl = /obj/item/weapon/whip/chain
+			H.adjust_skillrank(/datum/skill/combat/shields, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/whipsflails, 2, TRUE)
 		if(/datum/patron/divine/pestra)
 			wrists = /obj/item/clothing/neck/psycross/silver/pestra
@@ -88,7 +93,7 @@
 			if(iself(H) || ishalfelf(H))
 				beltl = /obj/item/weapon/mace/elvenclub
 			else
-			beltl = /obj/item/weapon/mace
+				beltl = /obj/item/weapon/mace
 			H.adjust_skillrank(/datum/skill/combat/shields, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
 		if(/datum/patron/divine/abyssor)
@@ -102,12 +107,14 @@
 			wrists = /obj/item/clothing/neck/psycross/silver/malum
 			cloak = /obj/item/clothing/cloak/stabard/templar/malum
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatOutlander2.ogg'
-			backr = /obj/item/weapon/hammer/sledgehammer
+			beltl = /obj/item/weapon/hammer/sledgehammer
 			H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
 		if(/datum/patron/divine/xylix)
 			wrists = /obj/item/clothing/neck/psycross/silver/xylix
 			cloak = /obj/item/clothing/cloak/stabard/templar/xylix
+			backr = /obj/item/weapon/shield/heater
 			beltl = /obj/item/weapon/flail
+			H.adjust_skillrank(/datum/skill/combat/shields, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/whipsflails, 2, TRUE)
 		else // Failsafe
 			cloak = /obj/item/clothing/cloak/tabard/crusader // Give us a generic crusade tabard
