@@ -1,5 +1,5 @@
 /datum/ai_controller/watcher
-	movement_delay = 0.5 SECONDS
+	movement_delay = 0.7 SECONDS
 
 	ai_movement = /datum/ai_movement/hybrid_pathing
 

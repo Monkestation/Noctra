@@ -11,19 +11,19 @@
 		H.cmode_music = 'sound/music/cmode/antag/combat_evilwizard.ogg'
 
 	if(!(H.patron == /datum/patron/inhumen/zizo))		//Magic lore-wise is either Noc or Zizo. This class was cast out from the academy, so it's definitely not Noc.
-		H.set_patron(/datum/patron/inhumen/zizo)
+		H.set_patron(/datum/patron/inhumen/zizo, TRUE)
 	H.mana_pool?.set_intrinsic_recharge(MANA_ALL_LEYLINES)
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	pants = /obj/item/clothing/pants/trou/leather
 	shirt = /obj/item/clothing/shirt/shortshirt
-	armor = /obj/item/clothing/shirt/robe/black
+	armor = /obj/item/clothing/shirt/robe/colored/black
 	belt = /obj/item/storage/belt/leather
 	beltr = /obj/item/reagent_containers/glass/bottle/manapot
 	backr = /obj/item/storage/backpack/satchel
 	backpack_contents = list(/obj/item/needle/thorn = 1, /obj/item/natural/cloth = 1, /obj/item/clothing/face/spectacles/sglasses, /obj/item/chalk = 1, /obj/item/book/granter/spellbook/apprentice = 1)
 	mask = /obj/item/clothing/face/facemask/steel //idk if this makes it so they cant cast but i want all of the bandits to have the same mask
 	neck = /obj/item/clothing/neck/coif
-	head = /obj/item/clothing/head/roguehood/black
+	head = /obj/item/clothing/head/roguehood/colored/black
 
 	r_hand = /obj/item/weapon/polearm/woodstaff/quarterstaff/iron
 	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)

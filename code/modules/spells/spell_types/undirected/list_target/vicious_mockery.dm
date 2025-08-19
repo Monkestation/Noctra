@@ -1,4 +1,4 @@
-/datum/action/cooldown/spell/undirected/list_target/vicious_mockery
+/datum/action/cooldown/spell/vicious_mockery
 	name = "Vicious Mockery"
 	desc = "Make a fool of a target and enrage them."
 	button_icon_state = "tragedy"
@@ -6,15 +6,15 @@
 
 	associated_skill = /datum/skill/misc/music
 
+	charge_required = FALSE
 	spell_type = NONE
 	cooldown_time = 30 SECONDS
 	invocation_type = INVOCATION_SHOUT
-	choose_target_message = "Choose who to mock."
 
-/datum/action/cooldown/spell/undirected/list_target/vicious_mockery/is_valid_target(atom/cast_on)
+/datum/action/cooldown/spell/vicious_mockery/is_valid_target(atom/cast_on)
 	return isliving(cast_on)
 
-/datum/action/cooldown/spell/undirected/list_target/vicious_mockery/before_cast(mob/living/cast_on)
+/datum/action/cooldown/spell/vicious_mockery/before_cast(mob/living/cast_on)
 	. = ..()
 	if(. & SPELL_CANCEL_CAST)
 		return
@@ -36,7 +36,7 @@
 
 	invocation = message
 
-/datum/action/cooldown/spell/undirected/list_target/vicious_mockery/cast(mob/living/cast_on)
+/datum/action/cooldown/spell/vicious_mockery/cast(mob/living/cast_on)
 	. = ..()
 	if(cast_on.can_hear())
 		SEND_SIGNAL(owner, COMSIG_VICIOUSLY_MOCKED, cast_on)

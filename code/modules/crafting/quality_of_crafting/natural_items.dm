@@ -215,6 +215,22 @@
 	output = /obj/item/storage/sack
 	skillcraft = /datum/skill/misc/sewing
 
+/datum/repeatable_crafting_recipe/survival/sack_clothing
+	name = "head sack"
+	requirements = list(
+		/obj/item/natural/cloth = 2,
+		/obj/item/natural/fibers = 1,
+	)
+	tool_usage = list(
+		/obj/item/needle = list("starts to sew", "start to sew")
+	)
+	starting_atom = /obj/item/needle
+	attacked_atom = /obj/item/natural/cloth
+	output = /obj/item/clothing/head/sack
+	craftdiff = 1
+	skillcraft = /datum/skill/misc/sewing
+	subtypes_allowed = TRUE
+
 /datum/repeatable_crafting_recipe/survival/clay
 	name = "clay lump"
 	requirements = list(

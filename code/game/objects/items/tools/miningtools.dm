@@ -82,13 +82,13 @@
 	gripspriteonmob = TRUE
 	melting_material = /datum/material/steel
 	melt_amount = 150
-	gripsprite = TRUE
 	pickmult = 1.5
 
 /obj/item/weapon/pick/drill/Initialize()
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	AddComponent(/datum/component/steam_storage, 300, 0)
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, PROC_REF(pre_wield_check))
 
 /obj/item/weapon/pick/drill/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -98,11 +98,10 @@
 	. = ..()
 	SEND_SIGNAL(src, COMSIG_ATOM_STEAM_USE, 5)
 
-/obj/item/weapon/pick/drill/on_wield(obj/item/source, mob/living/carbon/user)
+/obj/item/weapon/pick/drill/proc/pre_wield_check(datum/source, mob/living/carbon/user)
 	if(!SEND_SIGNAL(src, COMSIG_ATOM_STEAM_USE, 1))
 		to_chat(user, span_warning("[src] doesn't have enough power to be wielded!"))
 		return COMPONENT_TWOHANDED_BLOCK_WIELD
-	. = ..()
 
 /obj/item/weapon/pick/drill/process()
 	if(HAS_TRAIT(src, TRAIT_WIELDED))

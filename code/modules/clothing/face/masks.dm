@@ -157,6 +157,20 @@
 	sewrepair = TRUE
 	gas_transfer_coefficient = 0.3
 
+/obj/item/clothing/face/courtphysician
+	name = "court physican's mask"
+	desc = "Similar to a feldsher's mask, this one is made with actual bone! Don't ask whose."
+	icon_state = "courtmask"
+	item_state = "courtmask"
+	resistance_flags = FLAMMABLE
+	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
+	body_parts_covered = FACE|EARS|EYES|MOUTH|NECK
+	slot_flags = ITEM_SLOT_MASK|ITEM_SLOT_HIP
+	sewrepair = TRUE
+	gas_transfer_coefficient = 0.3
+	icon = 'icons/roguetown/clothing/courtphys.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/courtphys.dmi'
+
 /obj/item/clothing/face/facemask/copper
 	name = "copper mask"
 	icon_state = "cmask"
@@ -215,3 +229,18 @@
 	max_integrity = 150
 	sellprice = 100
 	smeltresult = /obj/item/ingot/gold
+
+/obj/item/clothing/face/operavisage
+	name = "opera visage"
+	desc = "A painted wooden opera mask worn by the faithful of Eora, usually during their rituals."
+	icon_state = "eoramask"
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/64x64/head.dmi'
+	bloody_icon = 'icons/effects/blood64x64.dmi'
+	bloody_icon_state = "helmetblood_big"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	dynamic_hair_suffix = ""
+	salvage_result = /obj/item/natural/silk
+	flags_inv = HIDEFACE
+	resistance_flags = FLAMMABLE
+

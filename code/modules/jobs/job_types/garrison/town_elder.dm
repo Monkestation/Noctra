@@ -100,7 +100,7 @@
 	gloves = /obj/item/clothing/gloves/leather/black
 	ring = /obj/item/clothing/ring/gold/toper
 	backl = /obj/item/storage/backpack/satchel
-	cloak = /obj/item/clothing/cloak/raincloak/furcloak/black
+	cloak = /obj/item/clothing/cloak/raincloak/furcloak/colored/black
 	neck = /obj/item/storage/belt/pouch/coins/veryrich
 	belt = /obj/item/storage/belt/leather/plaquesilver
 	beltr = /obj/item/storage/keyring/elder
@@ -117,7 +117,7 @@
 	H.adjust_skillrank(/datum/skill/combat/polearms, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/music, 5, TRUE)
 
-	H.add_spell(/datum/action/cooldown/spell/undirected/list_target/vicious_mockery)
+	H.add_spell(/datum/action/cooldown/spell/vicious_mockery)
 
 	H.change_stat(STATKEY_STR, -1)
 	H.change_stat(STATKEY_PER, 2)
@@ -155,9 +155,9 @@
 /datum/outfit/job/town_elder/master_of_crafts_and_labor/pre_equip(mob/living/carbon/human/H)
 
 	head = /obj/item/clothing/head/hatblu
-	armor = /obj/item/clothing/armor/leather/vest/random
+	armor = /obj/item/clothing/armor/leather/vest/colored/random
 	pants = /obj/item/clothing/pants/trou
-	shirt = /obj/item/clothing/shirt/undershirt/random
+	shirt = /obj/item/clothing/shirt/undershirt/colored/random
 	shoes = /obj/item/clothing/shoes/boots/leather
 	belt = /obj/item/storage/belt/leather
 	beltr = /obj/item/weapon/pick/paxe
@@ -245,7 +245,7 @@
 
 /datum/outfit/job/town_elder/hearth_acolyte/pre_equip(mob/living/carbon/human/H)
 	. = ..()
-	head = /obj/item/clothing/head/roguehood/random
+	head = /obj/item/clothing/head/roguehood/colored/random
 	armor = /obj/item/clothing/shirt/robe
 	shoes = /obj/item/clothing/shoes/sandals
 	belt = /obj/item/storage/belt/leather/rope
@@ -412,7 +412,7 @@
 
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_BARDIC_TRAINING, TRAIT_GENERIC)
-	H.add_spell(/datum/action/cooldown/spell/undirected/list_target/vicious_mockery)
+	H.add_spell(/datum/action/cooldown/spell/vicious_mockery)
 
 
 /datum/advclass/town_elder/dreamwatcher
@@ -426,8 +426,8 @@
 
 
 /datum/outfit/job/town_elder/dreamwatcher/pre_equip(mob/living/carbon/human/H)
-	head = /obj/item/clothing/head/softcap
-	armor = /obj/item/clothing/shirt/robe/black
+	head = /obj/item/clothing/head/armingcap
+	armor = /obj/item/clothing/shirt/robe/colored/black
 	shoes = /obj/item/clothing/shoes/sandals
 	belt = /obj/item/storage/belt/leather/rope
 	beltr = /obj/item/storage/keyring/elder
@@ -438,7 +438,7 @@
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/poor = 1, /obj/item/needle = 1 )
 
 	if(H.patron != /datum/patron/divine/noc)
-		H.set_patron(/datum/patron/divine/noc)
+		H.set_patron(/datum/patron/divine/noc, TRUE)
 
 	H.apply_status_effect(/datum/status_effect/buff/nocblessed)
 	// 3 INT and 2 PER buff, stats will be lowered because of that

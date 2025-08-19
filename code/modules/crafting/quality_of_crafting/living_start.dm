@@ -41,7 +41,10 @@
 	if(!length(recipes))
 		return FALSE
 	var/datum/recipe
-	recipe = input(src, "Choose a recipe to craft", "Recipes") as null|anything in recipes
+	if(length(recipes) == 1 && (istype(recipes[1], /datum/repeatable_crafting_recipe/cooking)))
+		recipe = recipes[1]
+	else
+		recipe = browser_input_list(src, "Choose a recipe to craft", "Recipes", recipes)
 	if(!recipe)
 		return TRUE
 	if(!Adjacent(attacked_atom)) // sanity check

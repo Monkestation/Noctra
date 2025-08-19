@@ -194,6 +194,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	/// Family system
 	var/family = FAMILY_NONE
 	var/setspouse = ""
+	var/gender_choice = ANY_GENDER
 
 	var/crt = FALSE
 
@@ -388,6 +389,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	dat += "<b>Family:</b> <a href='?_src_=prefs;preference=family'>[family ? family : "None"]</a><BR>"
 	if(family == FAMILY_FULL || family == FAMILY_NEWLYWED)
 		dat += "<b>Preferred Spouse:</b> <a href='?_src_=prefs;preference=setspouse'>[setspouse ? setspouse : "None"]</a><BR>"
+		dat += "<b>Preferred Gender:</b> <a href='?_src_=prefs;preference=gender_choice'>[gender_choice ? gender_choice : "Any Gender"]</a><BR>"
 	dat += "<b>Dominance:</b> <a href='?_src_=prefs;preference=domhand'>[domhand == 1 ? "Left-handed" : "Right-handed"]</a><BR>"
 	dat += "</tr></table>"
 	//-----------END OF IDENT TABLE-----------//
@@ -1300,6 +1302,17 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 						setspouse = newspouse
 					else
 						setspouse = null
+				//Gender_choice is part of the family subsytem. It will check existing families members with the same preference of this character and attempt to place you in this family.
+				if("gender_choice")
+					// If pronouns are neutral, lock to ANY_GENDER
+					if(pronouns == THEY_THEM || pronouns == IT_ITS)
+						to_chat(user, span_warning("With neutral pronouns, you may only choose [ANY_GENDER]."))
+						gender_choice = ANY_GENDER
+					else
+						var/list/gender_choice_option_list = list(ANY_GENDER, SAME_GENDER, DIFFERENT_GENDER)
+						var/new_gender_choice  = browser_input_list(user, "SELECT YOUR HERO'S PREFERENCE", "TO LOVE AND TO CHERISH", gender_choice_option_list, gender_choice)
+						if(new_gender_choice)
+							gender_choice = new_gender_choice
 				if("alignment")
 					var/new_alignment = browser_input_list(user, "SELECT YOUR HERO'S MORALITY", "CUT FROM THE SAME CLOTH", ALL_ALIGNMENTS_LIST, alignment)
 					if(new_alignment)
@@ -1588,6 +1601,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	character.voice_color = voice_color
 	character.set_patron(selected_patron)
 	character.familytree_pref = family
+	character.gender_choice_pref = gender_choice
 	character.setspouse = setspouse
 
 	if(charflaw)

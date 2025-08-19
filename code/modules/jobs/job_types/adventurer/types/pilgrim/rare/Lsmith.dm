@@ -70,5 +70,5 @@
 		shirt = /obj/item/clothing/shirt/shortshirt
 	else
 		shoes = /obj/item/clothing/shoes/shortboots
-		armor = /obj/item/clothing/shirt/dress/gen/random
+		armor = /obj/item/clothing/shirt/dress/gen/colored/random
 		shirt = /obj/item/clothing/shirt/undershirt

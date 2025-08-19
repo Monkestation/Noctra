@@ -125,11 +125,6 @@
 	},
 /turf/open/floor/cobble,
 /area/rogue/indoors)
-"at" = (
-/obj/machinery/light/fueled/torchholder/c,
-/obj/structure/chair/bench/coucha/redleft,
-/turf/open/floor/hexstone,
-/area/rogue/indoors)
 "au" = (
 /turf/closed/wall/mineral/decostone/cand,
 /area/rogue/indoors)
@@ -203,28 +198,6 @@
 /obj/structure/flora/ausbushes/lavendergrass,
 /turf/open/floor/grass/yel,
 /area/rogue/outdoors)
-"aF" = (
-/obj/item/clothing/shirt/tunic,
-/obj/item/clothing/shirt/tunic,
-/obj/item/clothing/shirt/tunic,
-/obj/item/clothing/shirt/tunic/blue,
-/obj/item/clothing/shirt/tunic/blue,
-/obj/item/clothing/shirt/tunic/blue,
-/obj/item/clothing/shirt/tunic/green,
-/obj/item/clothing/shirt/tunic/green,
-/obj/item/clothing/shirt/tunic/green,
-/obj/item/clothing/shirt/tunic/green,
-/obj/item/clothing/shirt/tunic/purple,
-/obj/item/clothing/shirt/tunic/purple,
-/obj/item/clothing/shirt/tunic/purple,
-/obj/item/clothing/shirt/tunic/purple,
-/obj/item/clothing/shirt/tunic/red,
-/obj/item/clothing/shirt/tunic/red,
-/obj/structure/closet/crate/crafted_closet/dark{
-	name = "Common Tunics"
-	},
-/turf/open/floor/wood,
-/area/rogue/indoors)
 "aG" = (
 /obj/structure/closet/crate/chest/old_crate,
 /obj/item/reagent_containers/food/snacks/butter,
@@ -274,21 +247,13 @@
 /obj/structure/chair/stool,
 /turf/open/floor/hexstone,
 /area/rogue/indoors)
-"aP" = (
-/obj/structure/table/wood/reinforced,
-/obj/item/clothing/cloak/raincloak/furcloak,
-/obj/item/clothing/cloak/raincloak/furcloak,
-/obj/item/clothing/cloak/raincloak/furcloak,
-/obj/item/clothing/cloak/raincloak/furcloak,
-/obj/item/clothing/cloak/lordcloak,
-/obj/item/clothing/cloak/lordcloak,
-/obj/item/clothing/cloak/raincloak/furcloak/brown,
-/obj/item/clothing/cloak/raincloak/furcloak/brown,
-/obj/item/clothing/cloak/raincloak/furcloak/brown,
-/obj/item/clothing/cloak/raincloak/furcloak/black,
-/obj/item/clothing/cloak/raincloak/furcloak/black,
-/turf/open/floor/carpet,
-/area/rogue/indoors)
+"aO" = (
+/obj/item/clothing/shirt/dress/silkdress,
+/obj/item/clothing/shoes/shortboots,
+/obj/item/clothing/pants/tights/colored/uncolored,
+/obj/structure/mannequin/male/female,
+/turf/open/floor/wood,
+/area/rogue)
 "aQ" = (
 /obj/item/weapon/pick,
 /obj/item/weapon/pick,
@@ -442,11 +407,6 @@
 "bk" = (
 /obj/structure/mannequin/male/female,
 /obj/item/clothing/armor/leather/vest,
-/turf/open/floor/wood,
-/area/rogue/indoors)
-"bl" = (
-/obj/structure/mannequin/male/female,
-/obj/item/clothing/armor/leather/vest/butcher,
 /turf/open/floor/wood,
 /area/rogue/indoors)
 "bm" = (
@@ -1406,6 +1366,12 @@
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/floor/blocks/paving/vert,
 /area/rogue/indoors/vampire_manor)
+"fu" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/clothing/head/wizhat,
+/obj/item/clothing/head/roguehood/colored/black,
+/turf/open/floor/carpet,
+/area/rogue/indoors)
 "fv" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/chair/stool/crafted,
@@ -1455,6 +1421,13 @@
 /obj/structure/door,
 /turf/open/floor/blocks,
 /area/rogue/indoors/vampire_manor)
+"fU" = (
+/obj/item/clothing/shirt/dress/silkdress/colored/black,
+/obj/item/clothing/shoes/shortboots,
+/obj/item/clothing/pants/tights/colored/uncolored,
+/obj/structure/mannequin/male/female,
+/turf/open/floor/wood,
+/area/rogue)
 "fZ" = (
 /obj/structure/rotation_piece{
 	dir = 8
@@ -1507,30 +1480,6 @@
 	},
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/indoors/bandit_lair)
-"gv" = (
-/obj/structure/table/wood/reinforced,
-/obj/item/clothing/pants/tights,
-/obj/item/clothing/pants/tights,
-/obj/item/clothing/pants/tights,
-/obj/item/clothing/pants/tights,
-/obj/item/clothing/pants/tights/black,
-/obj/item/clothing/pants/tights/black,
-/obj/item/clothing/pants/tights/black,
-/obj/item/clothing/pants/tights/black,
-/obj/item/clothing/pants/tights/green,
-/obj/item/clothing/pants/tights/green,
-/obj/item/clothing/pants/tights/green,
-/obj/item/clothing/pants/tights/green,
-/obj/item/clothing/pants/tights/red,
-/obj/item/clothing/pants/tights/red,
-/obj/item/clothing/pants/tights/red,
-/obj/item/clothing/pants/tights/red,
-/obj/item/clothing/pants/trou/leather,
-/obj/item/clothing/pants/trou/leather,
-/obj/item/clothing/pants/trou/leather,
-/obj/item/clothing/pants/trou/leather,
-/turf/open/floor/carpet,
-/area/rogue/indoors)
 "gA" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/flora/grass,
@@ -1634,32 +1583,6 @@
 /obj/machinery/light/fueled/wallfire/candle/weak/l,
 /turf/open/floor/blocks/paving/vert,
 /area/rogue/indoors/vampire_manor)
-"hr" = (
-/obj/item/clothing/shirt/undershirt,
-/obj/item/clothing/shirt/undershirt,
-/obj/item/clothing/shirt/undershirt,
-/obj/item/clothing/shirt/undershirt/black,
-/obj/item/clothing/shirt/undershirt/black,
-/obj/item/clothing/shirt/undershirt/black,
-/obj/item/clothing/shirt/undershirt/green,
-/obj/item/clothing/shirt/undershirt/green,
-/obj/item/clothing/shirt/undershirt/green,
-/obj/item/clothing/shirt/undershirt/guard,
-/obj/item/clothing/shirt/undershirt/guard,
-/obj/item/clothing/shirt/undershirt/guard,
-/obj/item/clothing/shirt/undershirt/guard,
-/obj/item/clothing/shirt/undershirt/purple,
-/obj/item/clothing/shirt/undershirt/purple,
-/obj/item/clothing/shirt/undershirt/purple,
-/obj/item/clothing/shirt/undershirt/red,
-/obj/item/clothing/shirt/undershirt/red,
-/obj/item/clothing/shirt/undershirt/red,
-/obj/structure/closet/crate/crafted_closet/dark{
-	name = "Common Silk Dresses"
-	},
-/obj/machinery/light/fueled/torchholder/c,
-/turf/open/floor/wood,
-/area/rogue/indoors)
 "ht" = (
 /obj/machinery/anvil/crafted,
 /obj/item/weapon/hammer/iron,
@@ -1724,6 +1647,27 @@
 /obj/structure/irrigation_channel,
 /turf/open/floor/grass/yel,
 /area/rogue/outdoors)
+"hP" = (
+/obj/item/clothing/pants/tights,
+/obj/item/clothing/pants/tights,
+/obj/item/clothing/pants/tights,
+/obj/item/clothing/pants/tights/colored/black,
+/obj/item/clothing/pants/tights/colored/black,
+/obj/item/clothing/pants/tights/colored/black,
+/obj/item/clothing/pants/tights/colored/green,
+/obj/item/clothing/pants/tights/colored/green,
+/obj/item/clothing/pants/tights/colored/green,
+/obj/item/clothing/pants/tights/colored/purple,
+/obj/item/clothing/pants/tights/colored/purple,
+/obj/item/clothing/pants/tights/colored/purple,
+/obj/item/clothing/pants/tights/colored/red,
+/obj/item/clothing/pants/tights/colored/red,
+/obj/item/clothing/pants/tights/colored/red,
+/obj/structure/closet/crate/crafted_closet/dark{
+	name = "Common Pants"
+	},
+/turf/open/floor/wood,
+/area/rogue/indoors)
 "hR" = (
 /obj/item/weapon/thresher,
 /obj/item/weapon/thresher,
@@ -1768,6 +1712,13 @@
 	},
 /turf/open/floor/metal/barograte,
 /area/rogue/outdoors/bog/inhumen_camp)
+"ij" = (
+/obj/item/clothing/shirt/dress/gen/colored/maid,
+/obj/item/clothing/shoes/shortboots,
+/obj/item/clothing/pants/tights/colored/uncolored,
+/obj/structure/mannequin/male/female,
+/turf/open/floor/wood,
+/area/rogue)
 "ik" = (
 /obj/structure/winch{
 	gid = "vamplordmanor";
@@ -1952,13 +1903,6 @@
 /obj/structure/fluff/wallclock,
 /turf/open/floor/ruinedwood/chevron,
 /area/rogue/indoors)
-"jw" = (
-/obj/item/clothing/shirt/dress/gen/maid,
-/obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
-/obj/structure/mannequin/male/female,
-/turf/open/floor/wood,
-/area/rogue)
 "jA" = (
 /obj/structure/bed/inn/double,
 /turf/open/floor/carpet/purple,
@@ -2056,6 +2000,14 @@
 "jZ" = (
 /turf/open/floor/hexstone,
 /area/rogue/indoors/vampire_manor)
+"kb" = (
+/obj/structure/mannequin/male,
+/obj/item/clothing/shoes/simpleshoes/buckle,
+/obj/item/clothing/shirt/tunic/colored/black,
+/obj/item/clothing/shirt/undershirt/colored/black,
+/obj/item/clothing/pants/tights/colored/black,
+/turf/open/floor/wood,
+/area/rogue)
 "ke" = (
 /obj/structure/table/wood{
 	dir = 10;
@@ -2075,6 +2027,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/churchrough,
 /area/rogue/indoors/lich)
+"kn" = (
+/obj/structure/mannequin/male/female,
+/obj/item/clothing/armor/leather/vest/colored/innkeep,
+/turf/open/floor/wood,
+/area/rogue/indoors)
 "kq" = (
 /obj/structure/chair/wood/alt/chair_noble/purple{
 	dir = 4
@@ -2109,6 +2066,13 @@
 /obj/structure/hotspring/border/ten,
 /turf/open/floor/dirt/road,
 /area/rogue/outdoors)
+"kH" = (
+/obj/structure/chair/bench/coucha/redright,
+/obj/structure/fluff/railing/border{
+	pixel_y = 25
+	},
+/turf/open/floor/hexstone,
+/area/rogue/indoors)
 "kL" = (
 /obj/structure/closet/dirthole/grave,
 /turf/open/floor/dirt,
@@ -2488,6 +2452,13 @@
 	},
 /turf/open/floor/dirt/road,
 /area/rogue/outdoors)
+"nv" = (
+/obj/item/clothing/shirt/dress/silkdress/colored/silkdressprimary,
+/obj/item/clothing/shoes/shortboots,
+/obj/item/clothing/pants/tights/colored/uncolored,
+/obj/structure/mannequin/male/female,
+/turf/open/floor/wood,
+/area/rogue)
 "nw" = (
 /obj/structure/flora/grass,
 /mob/living/simple_animal/hostile/retaliate/cow,
@@ -2681,28 +2652,6 @@
 	},
 /turf/open/floor/wood,
 /area/rogue/indoors)
-"oB" = (
-/obj/item/clothing/shirt/dress/gen/black,
-/obj/item/clothing/shirt/dress/gen/black,
-/obj/item/clothing/shirt/dress/gen/black,
-/obj/item/clothing/shirt/dress/gen/blue,
-/obj/item/clothing/shirt/dress/gen/blue,
-/obj/item/clothing/shirt/dress/gen/blue,
-/obj/item/clothing/shirt/dress/gen/green,
-/obj/item/clothing/shirt/dress/gen/green,
-/obj/item/clothing/shirt/dress/gen/green,
-/obj/item/clothing/shirt/dress/gen/purple,
-/obj/item/clothing/shirt/dress/gen/purple,
-/obj/item/clothing/shirt/dress/gen/purple,
-/obj/item/clothing/shirt/dress/gen/random,
-/obj/item/clothing/shirt/dress/gen/random,
-/obj/item/clothing/shirt/dress/gen/random,
-/obj/structure/closet/crate/crafted_closet/dark{
-	name = "Common Dresses"
-	},
-/obj/machinery/light/fueled/torchholder/l,
-/turf/open/floor/wood,
-/area/rogue/indoors)
 "oE" = (
 /obj/structure/table/wood/nice/decorated_alt,
 /obj/item/reagent_containers/glass/cup/wooden{
@@ -2894,24 +2843,6 @@
 	},
 /turf/open/floor/wood,
 /area/rogue/indoors)
-"qd" = (
-/obj/structure/table/wood/reinforced,
-/obj/item/clothing/cloak/raincloak/green,
-/obj/item/clothing/cloak/raincloak/green,
-/obj/item/clothing/cloak/raincloak/mortus,
-/obj/item/clothing/cloak/raincloak/mortus,
-/obj/item/clothing/cloak/raincloak/purple,
-/obj/item/clothing/cloak/raincloak/purple,
-/obj/item/clothing/cloak/raincloak/red,
-/obj/item/clothing/cloak/raincloak/red,
-/obj/item/clothing/cloak/half,
-/obj/item/clothing/cloak/half,
-/obj/item/clothing/cloak/half/red,
-/obj/item/clothing/cloak/half/red,
-/obj/item/clothing/cloak/half/brown,
-/obj/item/clothing/cloak/half/brown,
-/turf/open/floor/carpet,
-/area/rogue/indoors)
 "qf" = (
 /obj/effect/decal/cobbleedge/alt{
 	dir = 4
@@ -3011,6 +2942,28 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow,
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/indoors/bandit_lair)
+"qQ" = (
+/obj/item/clothing/shirt/dress/gen/colored/black,
+/obj/item/clothing/shirt/dress/gen/colored/black,
+/obj/item/clothing/shirt/dress/gen/colored/black,
+/obj/item/clothing/shirt/dress/gen/colored/blue,
+/obj/item/clothing/shirt/dress/gen/colored/blue,
+/obj/item/clothing/shirt/dress/gen/colored/blue,
+/obj/item/clothing/shirt/dress/gen/colored/green,
+/obj/item/clothing/shirt/dress/gen/colored/green,
+/obj/item/clothing/shirt/dress/gen/colored/green,
+/obj/item/clothing/shirt/dress/gen/colored/purple,
+/obj/item/clothing/shirt/dress/gen/colored/purple,
+/obj/item/clothing/shirt/dress/gen/colored/purple,
+/obj/item/clothing/shirt/dress/gen/colored/random,
+/obj/item/clothing/shirt/dress/gen/colored/random,
+/obj/item/clothing/shirt/dress/gen/colored/random,
+/obj/structure/closet/crate/crafted_closet/dark{
+	name = "Common Dresses"
+	},
+/obj/machinery/light/fueled/torchholder/l,
+/turf/open/floor/wood,
+/area/rogue/indoors)
 "qS" = (
 /obj/effect/decal/cobblerockedge{
 	dir = 10
@@ -3420,13 +3373,6 @@
 /obj/structure/fluff/stonecoffin,
 /turf/open/floor/churchrough,
 /area/rogue/indoors/lich)
-"tz" = (
-/obj/item/clothing/shirt/dress/gen/black,
-/obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
-/obj/structure/mannequin/male/female,
-/turf/open/floor/wood,
-/area/rogue)
 "tB" = (
 /obj/structure/closet/crate/crafted_closet,
 /turf/open/floor/blocks,
@@ -3458,6 +3404,34 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /turf/open/floor/grass/yel,
 /area/rogue/outdoors)
+"tL" = (
+/obj/item/clothing/armor/leather/vest,
+/obj/item/clothing/armor/leather/vest,
+/obj/item/clothing/armor/leather/vest,
+/obj/item/clothing/armor/leather/vest/colored/black,
+/obj/item/clothing/armor/leather/vest/colored/black,
+/obj/item/clothing/armor/leather/vest/colored/black,
+/obj/item/clothing/armor/leather/vest/colored/butcher,
+/obj/item/clothing/armor/leather/vest/colored/butcher,
+/obj/item/clothing/armor/leather/vest/colored/butcher,
+/obj/item/clothing/armor/leather/jacket/hand,
+/obj/item/clothing/armor/leather/jacket/hand,
+/obj/item/clothing/armor/leather/jacket/hand,
+/obj/item/clothing/armor/leather/vest/colored/innkeep,
+/obj/item/clothing/armor/leather/vest/colored/innkeep,
+/obj/item/clothing/armor/leather/vest/colored/innkeep,
+/obj/item/clothing/armor/leather/jacket/sea,
+/obj/item/clothing/armor/leather/jacket/sea,
+/obj/item/clothing/armor/leather/jacket/sea,
+/obj/item/clothing/armor/leather/jacket/apothecary,
+/obj/item/clothing/armor/leather/jacket/apothecary,
+/obj/item/clothing/armor/leather/jacket/apothecary,
+/obj/item/clothing/shirt/undershirt/puritan,
+/obj/structure/closet/crate/crafted_closet/dark{
+	name = "Common Vests"
+	},
+/turf/open/floor/wood,
+/area/rogue/indoors)
 "tM" = (
 /obj/effect/decal/cobbleedge/alt,
 /obj/machinery/light/fueled/firebowl/blackfire,
@@ -3483,13 +3457,6 @@
 /obj/structure/mannequin/male,
 /turf/open/floor/wood,
 /area/rogue/indoors)
-"tU" = (
-/obj/item/clothing/shirt/dress/silkdress/black,
-/obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
-/obj/structure/mannequin/male/female,
-/turf/open/floor/wood,
-/area/rogue)
 "tW" = (
 /obj/structure/fluff/millstone{
 	pixel_x = -5;
@@ -3518,6 +3485,13 @@
 /obj/structure/door/window,
 /turf/open/floor/blocks,
 /area/rogue/indoors)
+"uj" = (
+/obj/item/clothing/shirt/dress/gen/colored/blue,
+/obj/item/clothing/shoes/shortboots,
+/obj/item/clothing/pants/tights/colored/uncolored,
+/obj/structure/mannequin/male/female,
+/turf/open/floor/wood,
+/area/rogue)
 "uk" = (
 /obj/structure/fluff/railing/stonehedge{
 	dir = 8
@@ -3537,6 +3511,14 @@
 /obj/machinery/light/fueled/wallfire/candle/skull/r,
 /turf/open/floor/church,
 /area/rogue/indoors/lich)
+"uw" = (
+/obj/structure/mannequin/male,
+/obj/item/clothing/shoes/simpleshoes/buckle,
+/obj/item/clothing/shirt/tunic/colored/green,
+/obj/item/clothing/shirt/undershirt/colored/green,
+/obj/item/clothing/pants/tights/colored/green,
+/turf/open/floor/wood,
+/area/rogue)
 "uy" = (
 /obj/structure/flora/tree,
 /obj/structure/flora/tree,
@@ -3679,13 +3661,6 @@
 	},
 /turf/open/floor/cobblerock,
 /area/rogue/outdoors)
-"vp" = (
-/obj/item/clothing/shirt/dress/gen/brown,
-/obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
-/obj/structure/mannequin/male/female,
-/turf/open/floor/wood,
-/area/rogue)
 "vq" = (
 /obj/structure/flora/ausbushes/lavendergrass,
 /obj/structure/flora/grass,
@@ -3713,14 +3688,6 @@
 /obj/structure/door,
 /turf/open/floor/herringbone,
 /area/rogue/indoors/vampire_manor)
-"vB" = (
-/obj/structure/mannequin/male,
-/obj/item/clothing/shoes/simpleshoes/buckle,
-/obj/item/clothing/shirt/tunic/black,
-/obj/item/clothing/shirt/undershirt/black,
-/obj/item/clothing/pants/tights/black,
-/turf/open/floor/wood,
-/area/rogue)
 "vC" = (
 /obj/item/weapon/sword/long,
 /obj/item/weapon/sword/long,
@@ -3805,11 +3772,6 @@
 	},
 /turf/open/floor/tile,
 /area/rogue/indoors/vampire_manor)
-"vW" = (
-/obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/cloak/raincloak/purple,
-/turf/open/floor/church,
-/area/rogue/indoors/lich)
 "vX" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/clothing/shoes/ridingboots,
@@ -3835,6 +3797,32 @@
 	},
 /turf/open/floor/dirt/road,
 /area/rogue/outdoors/bog/inhumen_camp)
+"wk" = (
+/obj/item/clothing/shirt/undershirt,
+/obj/item/clothing/shirt/undershirt,
+/obj/item/clothing/shirt/undershirt,
+/obj/item/clothing/shirt/undershirt/colored/black,
+/obj/item/clothing/shirt/undershirt/colored/black,
+/obj/item/clothing/shirt/undershirt/colored/black,
+/obj/item/clothing/shirt/undershirt/colored/green,
+/obj/item/clothing/shirt/undershirt/colored/green,
+/obj/item/clothing/shirt/undershirt/colored/green,
+/obj/item/clothing/shirt/undershirt/colored/guard,
+/obj/item/clothing/shirt/undershirt/colored/guard,
+/obj/item/clothing/shirt/undershirt/colored/guard,
+/obj/item/clothing/shirt/undershirt/colored/guard,
+/obj/item/clothing/shirt/undershirt/colored/purple,
+/obj/item/clothing/shirt/undershirt/colored/purple,
+/obj/item/clothing/shirt/undershirt/colored/purple,
+/obj/item/clothing/shirt/undershirt/colored/red,
+/obj/item/clothing/shirt/undershirt/colored/red,
+/obj/item/clothing/shirt/undershirt/colored/red,
+/obj/structure/closet/crate/crafted_closet/dark{
+	name = "Common Silk Dresses"
+	},
+/obj/machinery/light/fueled/torchholder/c,
+/turf/open/floor/wood,
+/area/rogue/indoors)
 "wl" = (
 /obj/effect/decal/cobbleedge{
 	dir = 4;
@@ -3870,6 +3858,11 @@
 /obj/effect/landmark/start/new_player,
 /turf/open/floor/blocks,
 /area/start)
+"wH" = (
+/obj/machinery/light/fueled/torchholder/c,
+/obj/structure/chair/bench/coucha/redleft,
+/turf/open/floor/hexstone,
+/area/rogue/indoors)
 "wI" = (
 /obj/structure/flora/grass/bush/wall/tall/bog,
 /turf/open/floor/grass/mixyel,
@@ -3903,13 +3896,6 @@
 	},
 /turf/open/floor/dirt,
 /area/rogue/outdoors/bog/inhumen_camp)
-"wX" = (
-/obj/structure/chair/bench/coucha/redright,
-/obj/structure/fluff/railing/border{
-	pixel_y = 25
-	},
-/turf/open/floor/hexstone,
-/area/rogue/indoors)
 "xa" = (
 /obj/structure/fluff/railing/border{
 	pixel_y = 25
@@ -3989,6 +3975,14 @@
 /obj/machinery/light/fueled/wallfire/candle/weak/r,
 /turf/open/floor/carpet,
 /area/rogue/indoors/vampire_manor)
+"xJ" = (
+/obj/structure/mannequin/male,
+/obj/item/clothing/shoes/simpleshoes/buckle,
+/obj/item/clothing/shirt/tunic/colored/red,
+/obj/item/clothing/shirt/undershirt/colored/red,
+/obj/item/clothing/pants/tights/colored/red,
+/turf/open/floor/wood,
+/area/rogue)
 "xK" = (
 /obj/structure/stairs{
 	dir = 1
@@ -4067,12 +4061,6 @@
 	},
 /turf/open/floor/dirt,
 /area/rogue/outdoors/bog/inhumen_camp)
-"yg" = (
-/obj/item/weapon/shovel,
-/obj/item/clothing/cloak/raincloak/purple,
-/obj/structure/closet/crate/crafted_closet/inn,
-/turf/open/floor/churchmarble,
-/area/rogue/indoors/lich)
 "yj" = (
 /obj/structure/table/wood/large/corner_new{
 	dir = 8;
@@ -4109,11 +4097,6 @@
 /obj/item/clothing/face/cigarette/rollie/nicotine,
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/indoors/bandit_lair)
-"yy" = (
-/obj/item/clothing/shirt/robe/white,
-/obj/structure/table/wood/fancy/royalblue,
-/turf/open/floor/carpet,
-/area/rogue/indoors)
 "yz" = (
 /obj/structure/well,
 /obj/item/reagent_containers/glass/bucket/wooden/alter,
@@ -4177,14 +4160,6 @@
 	},
 /turf/open/water/swamp/deep,
 /area/rogue/outdoors/bog/inhumen_camp)
-"za" = (
-/obj/structure/mannequin/male,
-/obj/item/clothing/shoes/simpleshoes/buckle,
-/obj/item/clothing/shirt/tunic,
-/obj/item/clothing/pants/tights/uncolored,
-/obj/item/clothing/shirt/undershirt/uncolored,
-/turf/open/floor/wood,
-/area/rogue)
 "zb" = (
 /obj/structure/roguerock,
 /turf/open/water/swamp/deep,
@@ -4275,6 +4250,24 @@
 /obj/item/storage/keyring,
 /turf/open/floor/carpet,
 /area/rogue/indoors)
+"zJ" = (
+/obj/structure/table/wood/reinforced,
+/obj/item/clothing/cloak/raincloak/colored/green,
+/obj/item/clothing/cloak/raincloak/colored/green,
+/obj/item/clothing/cloak/raincloak/colored/mortus,
+/obj/item/clothing/cloak/raincloak/colored/mortus,
+/obj/item/clothing/cloak/raincloak/colored/purple,
+/obj/item/clothing/cloak/raincloak/colored/purple,
+/obj/item/clothing/cloak/raincloak/colored/red,
+/obj/item/clothing/cloak/raincloak/colored/red,
+/obj/item/clothing/cloak/half,
+/obj/item/clothing/cloak/half,
+/obj/item/clothing/cloak/half/colored/red,
+/obj/item/clothing/cloak/half/colored/red,
+/obj/item/clothing/cloak/half/colored/brown,
+/obj/item/clothing/cloak/half/colored/brown,
+/turf/open/floor/carpet,
+/area/rogue/indoors)
 "zK" = (
 /turf/open/floor/carpet/green,
 /area/rogue/indoors/lich)
@@ -4294,14 +4287,6 @@
 	},
 /turf/open/floor/grass/yel,
 /area/rogue/outdoors)
-"Aa" = (
-/obj/structure/mannequin/male,
-/obj/item/clothing/shoes/simpleshoes/buckle,
-/obj/item/clothing/shirt/tunic/purple,
-/obj/item/clothing/shirt/undershirt/purple,
-/obj/item/clothing/pants/tights/purple,
-/turf/open/floor/wood,
-/area/rogue)
 "Ab" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/railing/border{
@@ -4394,6 +4379,11 @@
 /obj/structure/chair/bench/couchablack/r,
 /obj/effect/landmark/admin,
 /turf/open/floor/ruinedwood/chevron,
+/area/rogue/indoors)
+"AE" = (
+/obj/structure/mannequin/male/female,
+/obj/item/clothing/armor/leather/vest/colored/butcher,
+/turf/open/floor/wood,
 /area/rogue/indoors)
 "AH" = (
 /obj/structure/grindwheel,
@@ -4513,6 +4503,13 @@
 	},
 /turf/open/floor/churchmarble,
 /area/rogue/indoors/lich)
+"BC" = (
+/obj/item/clothing/shirt/dress/gen/colored/black,
+/obj/item/clothing/shoes/shortboots,
+/obj/item/clothing/pants/tights/colored/uncolored,
+/obj/structure/mannequin/male/female,
+/turf/open/floor/wood,
+/area/rogue)
 "BF" = (
 /obj/structure/table/stone_small,
 /turf/open/floor/churchrough,
@@ -4528,6 +4525,14 @@
 /obj/structure/chair/bench,
 /turf/open/floor/dirt,
 /area/rogue/outdoors/bog/inhumen_camp)
+"BJ" = (
+/obj/structure/mannequin/male,
+/obj/item/clothing/shoes/simpleshoes/buckle,
+/obj/item/clothing/shirt/tunic,
+/obj/item/clothing/pants/tights/colored/uncolored,
+/obj/item/clothing/shirt/undershirt/colored/uncolored,
+/turf/open/floor/wood,
+/area/rogue)
 "BL" = (
 /obj/structure/door/iron/bars{
 	lockid = "mansionvampire"
@@ -4624,12 +4629,6 @@
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/indoors/lich)
-"Co" = (
-/obj/structure/table/wood/fancy/royalblue,
-/obj/item/clothing/head/wizhat,
-/obj/item/clothing/head/roguehood/black,
-/turf/open/floor/carpet,
-/area/rogue/indoors)
 "Cp" = (
 /obj/structure/hotspring/border,
 /turf/open/floor/dirt/road,
@@ -4717,6 +4716,13 @@
 	},
 /turf/open/floor/grass/yel,
 /area/rogue/outdoors/bog/inhumen_camp)
+"CR" = (
+/obj/item/clothing/shirt/dress/gen/colored/brown,
+/obj/item/clothing/shoes/shortboots,
+/obj/item/clothing/pants/tights/colored/uncolored,
+/obj/structure/mannequin/male/female,
+/turf/open/floor/wood,
+/area/rogue)
 "CV" = (
 /obj/structure/chair/wood/alt/fancy,
 /turf/open/floor/carpet/red,
@@ -4728,14 +4734,6 @@
 /obj/structure/fermentation_keg/random/beer,
 /turf/open/floor/tile/kitchen,
 /area/rogue/indoors/bandit_lair)
-"CY" = (
-/obj/structure/mannequin/male,
-/obj/item/clothing/shoes/simpleshoes/buckle,
-/obj/item/clothing/shirt/tunic/red,
-/obj/item/clothing/shirt/undershirt/red,
-/obj/item/clothing/pants/tights/red,
-/turf/open/floor/wood,
-/area/rogue)
 "Df" = (
 /obj/structure/fluff/traveltile/exit_inhumen,
 /turf/open/floor/cobblerock,
@@ -4825,6 +4823,14 @@
 /obj/item/weapon/sword/long/greatsword,
 /turf/open/floor/cobble,
 /area/rogue/indoors)
+"DT" = (
+/obj/structure/mannequin/male,
+/obj/item/clothing/shoes/simpleshoes/buckle,
+/obj/item/clothing/shirt/tunic/colored/blue,
+/obj/item/clothing/shirt/undershirt/colored/lord,
+/obj/item/clothing/pants/tights/colored/lord,
+/turf/open/floor/wood,
+/area/rogue)
 "DX" = (
 /obj/structure/fluff/railing/border{
 	dir = 8;
@@ -4837,45 +4843,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/churchrough,
 /area/rogue/indoors/lich)
-"Ea" = (
-/obj/item/clothing/shirt/dress/silkdress/princess,
-/obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
-/obj/structure/mannequin/male/female,
-/turf/open/floor/wood,
-/area/rogue)
 "Ed" = (
 /obj/item/grown/log/tree/stick,
 /turf/open/floor/dirt/road,
 /area/rogue/outdoors/woods_safe)
-"Eg" = (
-/obj/structure/table/wood/reinforced,
-/obj/item/clothing/shirt/undershirt,
-/obj/item/clothing/shirt/undershirt,
-/obj/item/clothing/shirt/undershirt,
-/obj/item/clothing/shirt/undershirt/black,
-/obj/item/clothing/shirt/undershirt/black,
-/obj/item/clothing/shirt/undershirt/black,
-/obj/item/clothing/shirt/undershirt/green,
-/obj/item/clothing/shirt/undershirt/green,
-/obj/item/clothing/shirt/undershirt/green,
-/obj/item/clothing/shirt/undershirt/guard,
-/obj/item/clothing/shirt/undershirt/guard,
-/obj/item/clothing/shirt/undershirt/guard,
-/obj/item/clothing/shirt/undershirt/guardsecond,
-/obj/item/clothing/shirt/undershirt/guardsecond,
-/obj/item/clothing/shirt/undershirt/guardsecond,
-/obj/item/clothing/shirt/undershirt/lord,
-/obj/item/clothing/shirt/undershirt/lord,
-/obj/item/clothing/shirt/undershirt/lord,
-/obj/item/clothing/shirt/undershirt/purple,
-/obj/item/clothing/shirt/undershirt/purple,
-/obj/item/clothing/shirt/undershirt/purple,
-/obj/item/clothing/shirt/undershirt/red,
-/obj/item/clothing/shirt/undershirt/red,
-/obj/item/clothing/shirt/undershirt/red,
-/turf/open/floor/carpet,
-/area/rogue/indoors)
 "Ek" = (
 /obj/structure/closet/dirthole/closed/loot,
 /obj/structure/gravemarker,
@@ -4920,34 +4891,6 @@
 /obj/structure/rack/underworld,
 /turf/open/floor/grass/yel,
 /area/rogue/outdoors/bog/inhumen_camp)
-"EA" = (
-/obj/item/clothing/armor/leather/vest,
-/obj/item/clothing/armor/leather/vest,
-/obj/item/clothing/armor/leather/vest,
-/obj/item/clothing/armor/leather/vest/black,
-/obj/item/clothing/armor/leather/vest/black,
-/obj/item/clothing/armor/leather/vest/black,
-/obj/item/clothing/armor/leather/vest/butcher,
-/obj/item/clothing/armor/leather/vest/butcher,
-/obj/item/clothing/armor/leather/vest/butcher,
-/obj/item/clothing/armor/leather/jacket/hand,
-/obj/item/clothing/armor/leather/jacket/hand,
-/obj/item/clothing/armor/leather/jacket/hand,
-/obj/item/clothing/armor/leather/vest/innkeep,
-/obj/item/clothing/armor/leather/vest/innkeep,
-/obj/item/clothing/armor/leather/vest/innkeep,
-/obj/item/clothing/armor/leather/jacket/sea,
-/obj/item/clothing/armor/leather/jacket/sea,
-/obj/item/clothing/armor/leather/jacket/sea,
-/obj/item/clothing/armor/leather/jacket/apothecary,
-/obj/item/clothing/armor/leather/jacket/apothecary,
-/obj/item/clothing/armor/leather/jacket/apothecary,
-/obj/item/clothing/shirt/undershirt/puritan,
-/obj/structure/closet/crate/crafted_closet/dark{
-	name = "Common Vests"
-	},
-/turf/open/floor/wood,
-/area/rogue/indoors)
 "EC" = (
 /obj/structure/toilet,
 /turf/open/floor/dirt/road,
@@ -5142,27 +5085,6 @@
 	pixel_x = -24
 	},
 /turf/open/floor/hexstone,
-/area/rogue/indoors)
-"Gp" = (
-/obj/item/clothing/pants/tights,
-/obj/item/clothing/pants/tights,
-/obj/item/clothing/pants/tights,
-/obj/item/clothing/pants/tights/black,
-/obj/item/clothing/pants/tights/black,
-/obj/item/clothing/pants/tights/black,
-/obj/item/clothing/pants/tights/green,
-/obj/item/clothing/pants/tights/green,
-/obj/item/clothing/pants/tights/green,
-/obj/item/clothing/pants/tights/purple,
-/obj/item/clothing/pants/tights/purple,
-/obj/item/clothing/pants/tights/purple,
-/obj/item/clothing/pants/tights/red,
-/obj/item/clothing/pants/tights/red,
-/obj/item/clothing/pants/tights/red,
-/obj/structure/closet/crate/crafted_closet/dark{
-	name = "Common Pants"
-	},
-/turf/open/floor/wood,
 /area/rogue/indoors)
 "Gq" = (
 /obj/structure/fluff/railing/wood{
@@ -5430,6 +5352,11 @@
 /obj/structure/dye_bin/luxury,
 /turf/open/floor/herringbone,
 /area/rogue/indoors/vampire_manor)
+"Ip" = (
+/obj/item/clothing/shirt/robe,
+/obj/structure/table/wood/fancy/royalblue,
+/turf/open/floor/carpet,
+/area/rogue/indoors)
 "Iq" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -5663,6 +5590,11 @@
 /obj/structure/fluff/walldeco/vinez,
 /turf/open/floor/cobble,
 /area/rogue/indoors/lich)
+"Jx" = (
+/obj/structure/closet/crate/crafted_closet/inn,
+/obj/item/clothing/cloak/raincloak/colored/purple,
+/turf/open/floor/church,
+/area/rogue/indoors/lich)
 "Jy" = (
 /obj/structure/flora/ausbushes/brflowers,
 /obj/structure/closet/dirthole/closed/loot,
@@ -5672,6 +5604,13 @@
 /obj/structure/healingfountain,
 /turf/open/floor/concrete,
 /area/rogue/outdoors/woods_safe)
+"JH" = (
+/obj/item/clothing/shirt/dress/gen/colored/green,
+/obj/item/clothing/shoes/shortboots,
+/obj/item/clothing/pants/tights/colored/uncolored,
+/obj/structure/mannequin/male/female,
+/turf/open/floor/wood,
+/area/rogue)
 "JJ" = (
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/grass/yel,
@@ -5749,13 +5688,6 @@
 	},
 /turf/open/floor/cobble,
 /area/rogue/indoors/bandit_lair)
-"Ku" = (
-/obj/item/clothing/shirt/dress/silkdress,
-/obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
-/obj/structure/mannequin/male/female,
-/turf/open/floor/wood,
-/area/rogue)
 "Kx" = (
 /obj/structure/bars/cemetery,
 /obj/structure/fluff/walldeco/maidendrape{
@@ -5971,14 +5903,6 @@
 /obj/effect/spawner/map_spawner/grass_low,
 /turf/open/floor/grass,
 /area/rogue/outdoors/woods_safe)
-"Mi" = (
-/obj/structure/mannequin/male,
-/obj/item/clothing/shoes/simpleshoes/buckle,
-/obj/item/clothing/shirt/tunic/blue,
-/obj/item/clothing/shirt/undershirt/lord,
-/obj/item/clothing/pants/tights/lord,
-/turf/open/floor/wood,
-/area/rogue)
 "Mk" = (
 /obj/structure/mannequin/male,
 /obj/structure/fluff/walldeco/maidendrape,
@@ -6051,6 +5975,13 @@
 /obj/item/grown/log/tree/stick,
 /turf/open/floor/dirt,
 /area/rogue/outdoors/woods_safe)
+"ML" = (
+/obj/structure/closet/crate/crafted_closet/inn,
+/obj/machinery/light/fueled/wallfire/candle/skull,
+/obj/item/clothing/cloak/raincloak/colored/purple,
+/obj/item/rope,
+/turf/open/floor/church,
+/area/rogue/indoors/lich)
 "MP" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/light/fueled/wallfire/candle/r,
@@ -6074,6 +6005,13 @@
 	},
 /turf/open/floor/dirt,
 /area/rogue/outdoors/bog/inhumen_camp)
+"Ng" = (
+/obj/item/clothing/shirt/dress/gen/colored/purple,
+/obj/item/clothing/shoes/shortboots,
+/obj/item/clothing/pants/tights/colored/uncolored,
+/obj/structure/mannequin/male/female,
+/turf/open/floor/wood,
+/area/rogue)
 "Nh" = (
 /obj/structure/bridge_stakes{
 	dir = 8
@@ -6111,11 +6049,6 @@
 /obj/item/coin/silver/pile,
 /obj/item/coin/silver/pile,
 /turf/open/floor/carpet,
-/area/rogue/indoors)
-"Ns" = (
-/obj/structure/mannequin/male/female,
-/obj/item/clothing/armor/leather/vest/innkeep,
-/turf/open/floor/wood,
 /area/rogue/indoors)
 "Nt" = (
 /obj/machinery/anvil,
@@ -6220,14 +6153,6 @@
 /obj/machinery/light/fueled/wallfire/candle/skull/l,
 /turf/open/floor/carpet/lord/left,
 /area/rogue/indoors/lich)
-"NZ" = (
-/obj/structure/mannequin/male,
-/obj/item/clothing/shoes/simpleshoes/buckle,
-/obj/item/clothing/shirt/tunic/green,
-/obj/item/clothing/shirt/undershirt/green,
-/obj/item/clothing/pants/tights/green,
-/turf/open/floor/wood,
-/area/rogue)
 "Oc" = (
 /obj/structure/fluff/railing/fence,
 /obj/structure/fluff/railing/fence{
@@ -6240,6 +6165,21 @@
 /obj/structure/flora/ausbushes/ppflowers,
 /turf/open/floor/grass/yel,
 /area/rogue/outdoors)
+"Og" = (
+/obj/structure/table/wood/reinforced,
+/obj/item/clothing/cloak/raincloak/furcloak,
+/obj/item/clothing/cloak/raincloak/furcloak,
+/obj/item/clothing/cloak/raincloak/furcloak,
+/obj/item/clothing/cloak/raincloak/furcloak,
+/obj/item/clothing/cloak/lordcloak,
+/obj/item/clothing/cloak/lordcloak,
+/obj/item/clothing/cloak/raincloak/furcloak/colored/brown,
+/obj/item/clothing/cloak/raincloak/furcloak/colored/brown,
+/obj/item/clothing/cloak/raincloak/furcloak/colored/brown,
+/obj/item/clothing/cloak/raincloak/furcloak/colored/black,
+/obj/item/clothing/cloak/raincloak/furcloak/colored/black,
+/turf/open/floor/carpet,
+/area/rogue/indoors)
 "Oh" = (
 /obj/effect/decal/cobblerockedge,
 /turf/open/floor/dirt/road,
@@ -6383,24 +6323,10 @@
 	},
 /turf/open/floor/hexstone,
 /area/rogue/indoors/vampire_manor)
-"Pu" = (
-/obj/item/clothing/shirt/dress/gen/purple,
-/obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
-/obj/structure/mannequin/male/female,
-/turf/open/floor/wood,
-/area/rogue)
 "Pw" = (
 /obj/structure/chair/stool/crafted,
 /turf/open/floor/twig,
 /area/rogue/outdoors/bog/inhumen_camp)
-"Px" = (
-/obj/item/clothing/shirt/dress/gen/blue,
-/obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
-/obj/structure/mannequin/male/female,
-/turf/open/floor/wood,
-/area/rogue)
 "PD" = (
 /obj/effect/decal/cobblerockedge{
 	dir = 4
@@ -6546,6 +6472,13 @@
 "Qy" = (
 /turf/open/floor/cobblerock,
 /area/rogue/outdoors/woods_safe)
+"Qz" = (
+/obj/item/clothing/shirt/dress/silkdress/colored/princess,
+/obj/item/clothing/shoes/shortboots,
+/obj/item/clothing/pants/tights/colored/uncolored,
+/obj/structure/mannequin/male/female,
+/turf/open/floor/wood,
+/area/rogue)
 "QA" = (
 /turf/closed/wall/mineral/decostone,
 /area/rogue/indoors/lich)
@@ -6647,7 +6580,7 @@
 /area/rogue/outdoors/bog/inhumen_camp)
 "Rj" = (
 /obj/structure/mannequin/male,
-/obj/item/clothing/head/padded/operavisage,
+/obj/item/clothing/face/operavisage,
 /turf/open/floor/wood,
 /area/rogue/indoors)
 "Rl" = (
@@ -6687,6 +6620,34 @@
 /obj/structure/window/solid,
 /turf/open/floor/wood,
 /area/rogue/indoors/bandit_lair)
+"RA" = (
+/obj/structure/table/wood/reinforced,
+/obj/item/clothing/shirt/undershirt,
+/obj/item/clothing/shirt/undershirt,
+/obj/item/clothing/shirt/undershirt,
+/obj/item/clothing/shirt/undershirt/colored/black,
+/obj/item/clothing/shirt/undershirt/colored/black,
+/obj/item/clothing/shirt/undershirt/colored/black,
+/obj/item/clothing/shirt/undershirt/colored/green,
+/obj/item/clothing/shirt/undershirt/colored/green,
+/obj/item/clothing/shirt/undershirt/colored/green,
+/obj/item/clothing/shirt/undershirt/colored/guard,
+/obj/item/clothing/shirt/undershirt/colored/guard,
+/obj/item/clothing/shirt/undershirt/colored/guard,
+/obj/item/clothing/shirt/undershirt/colored/guardsecond,
+/obj/item/clothing/shirt/undershirt/colored/guardsecond,
+/obj/item/clothing/shirt/undershirt/colored/guardsecond,
+/obj/item/clothing/shirt/undershirt/colored/lord,
+/obj/item/clothing/shirt/undershirt/colored/lord,
+/obj/item/clothing/shirt/undershirt/colored/lord,
+/obj/item/clothing/shirt/undershirt/colored/purple,
+/obj/item/clothing/shirt/undershirt/colored/purple,
+/obj/item/clothing/shirt/undershirt/colored/purple,
+/obj/item/clothing/shirt/undershirt/colored/red,
+/obj/item/clothing/shirt/undershirt/colored/red,
+/obj/item/clothing/shirt/undershirt/colored/red,
+/turf/open/floor/carpet,
+/area/rogue/indoors)
 "RC" = (
 /obj/structure/closet/crate/chest/neu,
 /obj/item/reagent_containers/food/snacks/hardtack,
@@ -6905,6 +6866,28 @@
 	},
 /turf/open/floor/wood,
 /area/rogue/indoors)
+"SR" = (
+/obj/item/clothing/shirt/tunic,
+/obj/item/clothing/shirt/tunic,
+/obj/item/clothing/shirt/tunic,
+/obj/item/clothing/shirt/tunic/colored/blue,
+/obj/item/clothing/shirt/tunic/colored/blue,
+/obj/item/clothing/shirt/tunic/colored/blue,
+/obj/item/clothing/shirt/tunic/colored/green,
+/obj/item/clothing/shirt/tunic/colored/green,
+/obj/item/clothing/shirt/tunic/colored/green,
+/obj/item/clothing/shirt/tunic/colored/green,
+/obj/item/clothing/shirt/tunic/colored/purple,
+/obj/item/clothing/shirt/tunic/colored/purple,
+/obj/item/clothing/shirt/tunic/colored/purple,
+/obj/item/clothing/shirt/tunic/colored/purple,
+/obj/item/clothing/shirt/tunic/colored/red,
+/obj/item/clothing/shirt/tunic/colored/red,
+/obj/structure/closet/crate/crafted_closet/dark{
+	name = "Common Tunics"
+	},
+/turf/open/floor/wood,
+/area/rogue/indoors)
 "SU" = (
 /obj/structure/fluff/nest,
 /obj/structure/fluff/statue/pillar,
@@ -6929,6 +6912,14 @@
 	},
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/outdoors/bog/inhumen_camp)
+"Th" = (
+/obj/structure/mannequin/male,
+/obj/item/clothing/shoes/simpleshoes/buckle,
+/obj/item/clothing/shirt/tunic/colored/purple,
+/obj/item/clothing/shirt/undershirt/colored/purple,
+/obj/item/clothing/pants/tights/colored/purple,
+/turf/open/floor/wood,
+/area/rogue)
 "Tk" = (
 /obj/structure/table/wood/reinforced,
 /obj/item/storage/backpack/satchel,
@@ -7109,13 +7100,6 @@
 /obj/machinery/light/fueled/wallfire/candle/skull/l,
 /turf/open/floor/carpet,
 /area/rogue/indoors/lich)
-"Ur" = (
-/obj/item/clothing/shirt/dress/silkdress/green,
-/obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
-/obj/structure/mannequin/male/female,
-/turf/open/floor/wood,
-/area/rogue)
 "Ut" = (
 /obj/structure/fluff/millstone,
 /obj/structure/table/wood/plain,
@@ -7176,13 +7160,6 @@
 /obj/effect/lily_petal,
 /turf/open/floor/dirt/road,
 /area/rogue/outdoors)
-"US" = (
-/obj/structure/closet/crate/crafted_closet/inn,
-/obj/machinery/light/fueled/wallfire/candle/skull,
-/obj/item/clothing/cloak/raincloak/purple,
-/obj/item/rope,
-/turf/open/floor/church,
-/area/rogue/indoors/lich)
 "UV" = (
 /obj/structure/table/wood{
 	dir = 1;
@@ -7266,23 +7243,6 @@
 "Vm" = (
 /turf/closed/wall/mineral/wooddark,
 /area/rogue)
-"Vp" = (
-/obj/item/clothing/shirt/dress/silkdress,
-/obj/item/clothing/shirt/dress/silkdress,
-/obj/item/clothing/shirt/dress/silkdress,
-/obj/item/clothing/shirt/dress/silkdress/black,
-/obj/item/clothing/shirt/dress/silkdress/black,
-/obj/item/clothing/shirt/dress/silkdress/black,
-/obj/item/clothing/shirt/dress/silkdress/black,
-/obj/item/clothing/shirt/dress/silkdress/green,
-/obj/item/clothing/shirt/dress/silkdress/green,
-/obj/item/clothing/shirt/dress/silkdress/green,
-/obj/item/clothing/shirt/dress/silkdress/green,
-/obj/structure/closet/crate/crafted_closet/dark{
-	name = "Common Shirts"
-	},
-/turf/open/floor/wood,
-/area/rogue/indoors)
 "Vq" = (
 /obj/effect/decal/cobbleedge{
 	dir = 9
@@ -7376,13 +7336,6 @@
 /obj/item/clothing/head/roguehood/astrata,
 /turf/open/floor/wood,
 /area/rogue)
-"VU" = (
-/obj/item/clothing/shirt/dress/silkdress/silkdressprimary,
-/obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
-/obj/structure/mannequin/male/female,
-/turf/open/floor/wood,
-/area/rogue)
 "VW" = (
 /obj/structure/fluff/wallclock/r,
 /turf/open/floor/ruinedwood/turned/darker,
@@ -7393,13 +7346,23 @@
 	},
 /turf/open/floor/grass/yel,
 /area/rogue/outdoors/bog/inhumen_camp)
-"Wc" = (
-/obj/item/clothing/shirt/dress/gen/green,
-/obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/pants/tights/uncolored,
-/obj/structure/mannequin/male/female,
+"Wd" = (
+/obj/item/clothing/shirt/dress/silkdress,
+/obj/item/clothing/shirt/dress/silkdress,
+/obj/item/clothing/shirt/dress/silkdress,
+/obj/item/clothing/shirt/dress/silkdress/colored/black,
+/obj/item/clothing/shirt/dress/silkdress/colored/black,
+/obj/item/clothing/shirt/dress/silkdress/colored/black,
+/obj/item/clothing/shirt/dress/silkdress/colored/black,
+/obj/item/clothing/shirt/dress/silkdress/colored/green,
+/obj/item/clothing/shirt/dress/silkdress/colored/green,
+/obj/item/clothing/shirt/dress/silkdress/colored/green,
+/obj/item/clothing/shirt/dress/silkdress/colored/green,
+/obj/structure/closet/crate/crafted_closet/dark{
+	name = "Common Shirts"
+	},
 /turf/open/floor/wood,
-/area/rogue)
+/area/rogue/indoors)
 "We" = (
 /obj/machinery/tanningrack,
 /turf/open/floor/dirt/road,
@@ -7574,6 +7537,30 @@
 	},
 /turf/open/floor/grass/yel,
 /area/rogue/outdoors/bog/inhumen_camp)
+"XA" = (
+/obj/structure/table/wood/reinforced,
+/obj/item/clothing/pants/tights,
+/obj/item/clothing/pants/tights,
+/obj/item/clothing/pants/tights,
+/obj/item/clothing/pants/tights,
+/obj/item/clothing/pants/tights/colored/black,
+/obj/item/clothing/pants/tights/colored/black,
+/obj/item/clothing/pants/tights/colored/black,
+/obj/item/clothing/pants/tights/colored/black,
+/obj/item/clothing/pants/tights/colored/green,
+/obj/item/clothing/pants/tights/colored/green,
+/obj/item/clothing/pants/tights/colored/green,
+/obj/item/clothing/pants/tights/colored/green,
+/obj/item/clothing/pants/tights/colored/red,
+/obj/item/clothing/pants/tights/colored/red,
+/obj/item/clothing/pants/tights/colored/red,
+/obj/item/clothing/pants/tights/colored/red,
+/obj/item/clothing/pants/trou/leather,
+/obj/item/clothing/pants/trou/leather,
+/obj/item/clothing/pants/trou/leather,
+/obj/item/clothing/pants/trou/leather,
+/turf/open/floor/carpet,
+/area/rogue/indoors)
 "XC" = (
 /obj/structure/flora/grass/herb/urtica,
 /turf/open/floor/grass/yel,
@@ -7594,6 +7581,13 @@
 	},
 /turf/open/floor/grass/mixyel,
 /area/rogue/outdoors/bog/inhumen_camp)
+"XH" = (
+/obj/item/clothing/shirt/dress/silkdress/colored/green,
+/obj/item/clothing/shoes/shortboots,
+/obj/item/clothing/pants/tights/colored/uncolored,
+/obj/structure/mannequin/male/female,
+/turf/open/floor/wood,
+/area/rogue)
 "XN" = (
 /obj/structure/bars/cemetery,
 /turf/open/floor/dirt/road,
@@ -7906,6 +7900,12 @@
 	},
 /turf/open/floor/dirt,
 /area/rogue/outdoors/bog/inhumen_camp)
+"ZK" = (
+/obj/item/weapon/shovel,
+/obj/item/clothing/cloak/raincloak/colored/purple,
+/obj/structure/closet/crate/crafted_closet/inn,
+/turf/open/floor/churchmarble,
+/area/rogue/indoors/lich)
 "ZM" = (
 /obj/structure/fluff/walldeco/painting/skull{
 	pixel_x = -32
@@ -17722,7 +17722,7 @@ ag
 UN
 Tk
 fy
-Eg
+RA
 fy
 fy
 fy
@@ -18242,7 +18242,7 @@ ag
 UN
 Np
 fy
-aP
+Og
 fy
 kO
 IP
@@ -18372,7 +18372,7 @@ ag
 UN
 ph
 fy
-qd
+zJ
 fy
 fy
 fy
@@ -18502,7 +18502,7 @@ ag
 UN
 LK
 fy
-gv
+XA
 fy
 aM
 Yx
@@ -18764,9 +18764,9 @@ uP
 fy
 fy
 fy
-Co
+fu
 ay
-yy
+Ip
 aV
 RM
 uP
@@ -19090,7 +19090,7 @@ HZ
 Up
 yT
 ZW
-vW
+Jx
 ZW
 DH
 SG
@@ -19478,7 +19478,7 @@ ag
 ag
 HZ
 Up
-US
+ML
 ZW
 Op
 ZW
@@ -19872,7 +19872,7 @@ VB
 VB
 yD
 Up
-yg
+ZK
 SG
 md
 nf
@@ -20564,14 +20564,14 @@ HZ
 rQ
 ag
 aw
-hr
-aF
-oB
+wk
+SR
+qQ
 ba
 ba
 uY
 bk
-bl
+AE
 aw
 AU
 xO
@@ -20694,7 +20694,7 @@ HZ
 rQ
 ag
 aw
-EA
+tL
 iu
 iu
 ba
@@ -20824,13 +20824,13 @@ HZ
 rQ
 ag
 aw
-Vp
-Gp
+Wd
+hP
 qc
 ba
 ba
 fl
-Ns
+kn
 oW
 be
 AU
@@ -23035,17 +23035,17 @@ rQ
 ag
 Qe
 av
-za
-vB
-Mi
-NZ
-Aa
-CY
-Ur
-Ea
-VU
-tU
-Ku
+BJ
+kb
+DT
+uw
+Th
+xJ
+XH
+Qz
+nv
+fU
+aO
 av
 Qe
 ob
@@ -23055,7 +23055,7 @@ ob
 lh
 lh
 ob
-at
+wH
 Ot
 Ot
 Ot
@@ -23170,12 +23170,12 @@ Ra
 Ra
 Ra
 Ra
-tz
-Px
-vp
-Wc
-jw
-Pu
+BC
+uj
+CR
+JH
+ij
+Ng
 av
 Qe
 lh
@@ -23185,7 +23185,7 @@ eU
 eU
 eU
 dP
-wX
+kH
 Ot
 Zb
 Ot

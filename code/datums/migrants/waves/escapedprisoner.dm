@@ -11,9 +11,9 @@
 
 /datum/outfit/job/escprisoner/pre_equip(mob/living/carbon/human/H)
 	..()
-	pants = /obj/item/clothing/pants/loincloth/brown
+	pants = /obj/item/clothing/pants/loincloth/colored/brown
 	mask = /obj/item/clothing/face/facemask/prisoner
-	cloak = /obj/item/clothing/cloak/raincloak/furcloak/brown
+	cloak = /obj/item/clothing/cloak/raincloak/furcloak/colored/brown
 	belt = /obj/item/storage/belt/leather/rope
 	beltl = /obj/item/weapon/knife/villager
 	if(H.mind)

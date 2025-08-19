@@ -65,6 +65,11 @@
 	recipe_name = "an iron cuirass"
 	created_item = /obj/item/clothing/armor/cuirass/iron
 
+/datum/anvil_recipe/armor/iron/chausses
+	name = "Iron Plate Chausses"
+	recipe_name = "a pair of iron Plate Chausses"
+	created_item = /obj/item/clothing/pants/platelegs/iron
+
 /datum/anvil_recipe/armor/iron/platemask
 	name = "2x Iron Face Masks"
 	recipe_name = "a Face Mask"
@@ -115,13 +120,129 @@
 	name = "Iron High Collier"
 	recipe_name = "a High Collier"
 	created_item = /obj/item/clothing/neck/highcollier/iron
+	craftdiff = 1
 
-/datum/anvil_recipe/armor/iron/bevor
-	name = "Iron Bevor"
-	recipe_name = "a Bevor"
-	created_item = /obj/item/clothing/neck/bevor/iron
+/datum/anvil_recipe/armor/iron/highcollier_renegade
+	name = "Iron Renegade Collar"
+	recipe_name = "a renegade collar"
+	created_item = /obj/item/clothing/neck/highcollier/iron/renegadecollar
+	craftdiff = 1
 
-// IRON HELMETS
+/datum/anvil_recipe/armor/iron/chainglove
+	name = "2x Iron Chain Gauntlets"
+	recipe_name = "two pairs of Chain Gauntlets"
+	req_bar = /obj/item/ingot/iron
+	created_item = /obj/item/clothing/gloves/chain/iron
+	createditem_extra = 1
+	craftdiff = 0
+
+/datum/anvil_recipe/armor/iron/igauntlets
+	name = "Iron Plate Gauntlets"
+	recipe_name = "a pair of Plate Gauntlets"
+	created_item = /obj/item/clothing/gloves/plate/iron
+
+/datum/anvil_recipe/armor/iron/ibracers
+	name = "Iron Plate Vambraces"
+	recipe_name = "a pair of Plate Vambraces"
+	created_item = /obj/item/clothing/wrists/bracers/iron
+
+/datum/anvil_recipe/armor/iron/chainmail
+	name = "Iron Haubergeon"
+	recipe_name = "a Haubergeon"
+	req_bar = /obj/item/ingot/iron
+	created_item = /obj/item/clothing/armor/chainmail/iron
+
+/datum/anvil_recipe/armor/iron/hauberk
+	name = "Hauberk (+Bar)"
+	recipe_name = "a Hauberk"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/armor/chainmail/hauberk/iron
+
+/datum/anvil_recipe/armor/iron/cuirass
+	name = "Iron Cuirass"
+	recipe_name = "a cuirass"
+	req_bar = /obj/item/ingot/iron
+	created_item = /obj/item/clothing/armor/cuirass/iron
+	craftdiff = 0
+
+/datum/anvil_recipe/armor/iron/platefull
+	name = "Iron Plate Armor (+Bar x3)"
+	recipe_name = "a full set of Full-Plate Armor"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron,/obj/item/ingot/iron,/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/armor/plate/full/iron
+	craftdiff = 2
+
+/datum/anvil_recipe/armor/iron/platefull_shadow
+	name = "Iron Plate Shadow Armor (+Bar x3)"
+	recipe_name = "a full set of Full-Plate Shadow Armor"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron,/obj/item/ingot/iron,/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/armor/cuirass/iron/shadowplate
+	craftdiff = 2
+
+/datum/anvil_recipe/armor/iron/halfplate
+	name = "Iron Half-plate (+Bar x2)"
+	recipe_name = "a Half-Plate Armor"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron,/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/armor/plate/iron
+	craftdiff = 1
+
+/datum/anvil_recipe/armor/iron/platehelmet
+	name = "Iron Plate Helmet (+Bar)"
+	recipe_name = "a heavy iron helmet"
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/head/helmet/heavy/ironplate
+	craftdiff = 1
+
+/datum/anvil_recipe/armor/iron/barred_helmet
+	name = "Barred Helmet (+Bar)"
+	recipe_name = "a heavy iron helmet"
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/head/helmet/townwatch/gatemaster
+	craftdiff = 1
+
+/datum/anvil_recipe/armor/iron/winged_helmet
+	name = "Winged Helmet"
+	recipe_name = "an iron helmet"
+	created_item = /obj/item/clothing/head/helmet/winged
+	craftdiff = 1
+
+/datum/anvil_recipe/armor/iron/horned_helmet
+	name = "Horned Helmet"
+	recipe_name = "an iron helmet"
+	created_item = /obj/item/clothing/head/helmet/horned
+	craftdiff = 1
+
+/datum/anvil_recipe/armor/steel/bastion_helm
+	name = "Bastion helm (+Bar X2)"
+	recipe_name = "a heavy steel bastion helmet"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/helmet/heavy/necked
+	craftdiff = 2
+
+/datum/anvil_recipe/armor/steel/crusader_helm
+	name = "Crusader helm (+Bar X2)"
+	recipe_name = "a heavy steel crusader helmet"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/helmet/heavy/crusader
+	craftdiff = 2
+
+/datum/anvil_recipe/armor/steel/totod_crusader_helm
+	name = "Totod Crusader helm (+Bar X2)"
+	recipe_name = "a heavy steel totod crusader helmet"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/helmet/heavy/crusader/t
+	craftdiff = 2
+
+/datum/anvil_recipe/armor/iron/cage_helmet
+	name = "feldsher's cage"
+	recipe_name = "a cage helmet"
+	created_item = /obj/item/clothing/head/helmet/feld
+	craftdiff = 1
+
 /datum/anvil_recipe/armor/iron/pothelmet
 	name = "Pot Helmet"
 	recipe_name = "a sturdy iron helmet"
@@ -155,8 +276,17 @@
 /datum/anvil_recipe/armor/iron/helmetsallv
 	name = "Visored Iron Sallet (+Bar)"
 	recipe_name = "a Visored Sallet"
+	req_bar = /obj/item/ingot/iron
 	additional_items = list(/obj/item/ingot/iron)
-	created_item = (/obj/item/clothing/head/helmet/visored/sallet/iron)
+	created_item = /obj/item/clothing/head/helmet/visored/sallet/iron
+	craftdiff = 2
+
+/datum/anvil_recipe/armor/iron/eoran_sallet
+	name = "Eoran Sallet (+Bar)"
+	recipe_name = "an Eoran Sallet"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/ingot/iron)
+	created_item = /obj/item/clothing/head/helmet/sallet/eoran
 	craftdiff = 2
 
 /datum/anvil_recipe/armor/iron/helmetknight
@@ -187,33 +317,67 @@
 	created_item = /obj/item/clothing/head/helmet/heavy/ironplate
 	craftdiff = 2
 
-/datum/anvil_recipe/armor/iron/iplatelegs
-	name = "Iron Plate Chausses"
-	recipe_name = "a pair of Plate Chausses"
-	created_item = /obj/item/clothing/pants/platelegs/iron
-	craftdiff = 2
+/datum/anvil_recipe/armor/bronze/gorget
+	name = "Bronze Gorget"
+	recipe_name = "a bronze gorget"
+	req_bar = /obj/item/ingot/bronze
+	created_item = /obj/item/clothing/neck/gorget/hoplite
+	craftdiff = 0
 
-/datum/anvil_recipe/armor/iron/igauntlets
-	name = "Iron Plate Gauntlets"
-	recipe_name = "a pair of Plate Gauntlets"
-	created_item = /obj/item/clothing/gloves/plate/iron
-	craftdiff = 2
-
-/datum/anvil_recipe/armor/iron/ibracers
-	name = "Iron Plate Vambraces"
-	recipe_name = "a pair of Plate Vambraces"
-	created_item = /obj/item/clothing/wrists/bracers/iron
-	craftdiff = 2
+/datum/anvil_recipe/armor/iron/bevor
+	name = "Iron Bevor"
+	recipe_name = "a Bevor"
+	req_bar = /obj/item/ingot/iron
+	created_item = /obj/item/clothing/neck/bevor/iron
 
 /datum/anvil_recipe/armor/iron/platebootlight
 	name = "Light Plate Boots"
 	recipe_name = "a pair of Light Plate Boots"
 	created_item = /obj/item/clothing/shoes/boots/armor/light
-	craftdiff = 2
+
+/datum/anvil_recipe/armor/iron/nasal_helmet
+	name = "Nasal helmet"
+	recipe_name = "a Nasal helmet"
+	req_bar = /obj/item/ingot/iron
+	created_item = /obj/item/clothing/head/helmet/nasal
+	craftdiff = 1
+
+/datum/anvil_recipe/armor/iron/town_watch_helmet
+	name = "Town Watch helmet"
+	recipe_name = "a Town Watch helmet"
+	req_bar = /obj/item/ingot/iron
+	created_item = /obj/item/clothing/head/helmet/townwatch
+	craftdiff = 1
+
+/datum/anvil_recipe/armor/iron/town_watch_helmet_alt
+	name = "Town Watch helmet (alt)"
+	recipe_name = "a Town Watch helmet"
+	req_bar = /obj/item/ingot/iron
+	created_item = /obj/item/clothing/head/helmet/townwatch/alt
+	craftdiff = 1
+
+/datum/anvil_recipe/armor/iron/skullcap
+	name = "Skullcap"
+	recipe_name = "a skullcap"
+	created_item = /obj/item/clothing/head/helmet/skullcap
+
+/datum/anvil_recipe/armor/iron/splint
+	name = "Splint Armor (+Hide)"
+	recipe_name = "durable light armor"
+	req_bar = /obj/item/ingot/iron
+	additional_items = list(/obj/item/natural/hide)
+	created_item = /obj/item/clothing/armor/leather/splint
+	craftdiff = 1
 
 // --------- STEEL -----------
-
 /datum/anvil_recipe/armor/steel
+	req_bar = /obj/item/ingot/steel
+	abstract_type = /datum/anvil_recipe/armor/steel
+	craftdiff = 2
+
+/datum/anvil_recipe/armor/steel/bevor
+	name = "Bevor"
+	recipe_name = "a Bevor"
 	req_bar = /obj/item/ingot/steel
 	craftdiff = 2 // this is the good stuff
 	abstract_type = /datum/anvil_recipe/armor/steel
@@ -243,7 +407,77 @@
 	created_item = /obj/item/clothing/armor/brigandine
 	craftdiff = 3
 
-// STEEL CHAIN ARMOR
+/datum/anvil_recipe/armor/steel/helmetbuc
+	name = "Great Helm"
+	recipe_name = "a Bucket Helmet"
+	req_bar = /obj/item/ingot/steel
+	created_item = (/obj/item/clothing/head/helmet/heavy/bucket)
+	craftdiff = 2
+
+/datum/anvil_recipe/armor/iron/shadow_plate_gauntlets
+	name = "Shadow Plate Gauntlets"
+	recipe_name = "a pair of Shadow Plate Gauntlets"
+	created_item = /obj/item/clothing/gloves/chain/iron/shadowgauntlets
+	craftdiff = 3
+
+/datum/anvil_recipe/armor/steel/templar
+	craftdiff = 3
+	abstract_type = /datum/anvil_recipe/armor/steel/templar
+
+/datum/anvil_recipe/armor/steel/templar/helmet_noc
+	name = "Noc Helmet (+Silver Bar)"
+	recipe_name = "a noc helmet"
+	created_item = /obj/item/clothing/head/helmet/heavy/necked/noc
+	additional_items = list(/obj/item/ingot/silver)
+
+/datum/anvil_recipe/armor/steel/templar/gold_helmet
+	name = "Gold Helmet (+Gold Bar)"
+	recipe_name = "a golden helmet"
+	created_item = /obj/item/clothing/head/helmet/heavy/bucket/gold
+	additional_items = list(/obj/item/ingot/gold)
+
+/datum/anvil_recipe/armor/steel/templar/helmet_astrata
+	name = "Astratan Helmet (+Gold Bar)"
+	recipe_name = "an astratan helmet"
+	created_item = /obj/item/clothing/head/helmet/heavy/necked/astrata
+	additional_items = list(/obj/item/ingot/gold)
+
+/datum/anvil_recipe/armor/steel/templar/helmet_necra
+	name = "Necran Helmet (+Iron Bar)"
+	recipe_name = "a necran helmet"
+	created_item = /obj/item/clothing/head/helmet/heavy/necked/necra
+	additional_items = list(/obj/item/ingot/iron)
+
+/datum/anvil_recipe/armor/steel/templar/helmet_dendor
+	name = "Dendor Helmet (+Small Log)"
+	recipe_name = "a dendorian helmet"
+	created_item = /obj/item/clothing/head/helmet/heavy/necked/dendorhelm
+	additional_items = list(/obj/item/grown/log/tree/small)
+
+/datum/anvil_recipe/armor/steel/templar/helmet_pestra
+	name = "Pestran Helmet (+Iron Bar)"
+	recipe_name = "a pestran helmet"
+	created_item = /obj/item/clothing/head/helmet/heavy/necked/pestrahelm
+	additional_items = list(/obj/item/ingot/iron)
+
+/datum/anvil_recipe/armor/steel/templar/helmet_malum
+	name = "Malum Helmet (+Iron Bar)"
+	recipe_name = "a malumite helmet"
+	created_item = /obj/item/clothing/head/helmet/heavy/necked/malumhelm
+	additional_items = list(/obj/item/ingot/iron)
+
+/datum/anvil_recipe/armor/steel/templar/helmet_ravox
+	name = "Ravox Helmet (+Iron Bar)"
+	recipe_name = "a ravoxian helmet"
+	created_item = /obj/item/clothing/head/helmet/heavy/necked/ravox
+	additional_items = list(/obj/item/ingot/iron)
+
+/datum/anvil_recipe/armor/steel/templar/helmet_xylix
+	name = "Xylix Helmet (+Iron Bar)"
+	recipe_name = "a xylixian helmet"
+	created_item = /obj/item/clothing/head/helmet/heavy/necked/xylix
+	additional_items = list(/obj/item/ingot/iron)
+
 /datum/anvil_recipe/armor/steel/chainleg
 	name = "Chain Chausses"
 	recipe_name = "a pair of Chain Chausses"
@@ -370,6 +604,12 @@
 	name = "Decorated Knight's Helmet (+Bar, +Cloth)"
 	additional_items = list(/obj/item/ingot/steel,/obj/item/natural/cloth)
 	created_item = /obj/item/clothing/head/helmet/heavy/decorated/knight
+	craftdiff = 4
+
+/datum/anvil_recipe/armor/steel/buckethelm
+	name = "Decorated Great Helm (+Bar, +Cloth)"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/natural/cloth)
+	created_item = /obj/item/clothing/head/helmet/heavy/decorated/bucket
 	craftdiff = 4
 
 /datum/anvil_recipe/armor/steel/decoratedhelmetpig

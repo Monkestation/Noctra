@@ -70,6 +70,9 @@
 	target_cross.AOE_flash(owner, 7)
 	target_cross = null
 	if(cast_on.mob_biotypes & MOB_UNDEAD)
+		if(cast_on.mind?.has_antag_datum(/datum/antagonist/vampire/lord))
+			cast_on.visible_message(span_warning("[cast_on] overpowers being unmade!"), span_greentext("I overpower being unmade!"))
+			return
 		cast_on.visible_message(
 			span_danger("[cast_on] is unmade by holy light!"),
 			span_userdanger("I'm unmade by holy light!"),

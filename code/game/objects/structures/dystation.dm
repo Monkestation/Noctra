@@ -147,7 +147,7 @@
 
 	switch(href_list["action"])
 		if("select")
-			var/choice = input(user,"Choose your dye:", "Dyes", null) as null|anything in selectable_colors
+			var/choice = browser_input_list(user,"Choose your dye:", "Dyes", selectable_colors)
 			if(!choice)
 				return
 			active_color = selectable_colors[choice]
@@ -156,9 +156,6 @@
 			if(!inserted)
 				return
 			if(!active_color)
-				return
-			if(user.get_skill_level(/datum/skill/misc/sewing) <= 2) // We're not letting people with 0 knowledge in sewing do dying, so they don't step on the toes of the seamstress
-				to_chat(user, span_warning("I do not know enough about this craft..."))
 				return
 
 			playsound(src, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 50, FALSE)

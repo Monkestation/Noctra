@@ -76,8 +76,6 @@ SUBSYSTEM_DEF(triumphs)
 	var/list/triumph_buy_datums = list()
 	// This is a list of all active datums
 	var/list/active_triumph_buy_queue = list()
-	// These get on_activate() called in /datum/outfit/job/post_equip() in roguetown.dm
-	var/list/post_equip_calls = list()
 	/// This tracks the remaining stock for limited triumph buys
 	var/list/triumph_buy_stocks = list()
 	/// Tracks contributions to communal triumph buys - format: list(type = list(ckey = amount))
@@ -129,6 +127,9 @@ SUBSYSTEM_DEF(triumphs)
 		return FALSE
 	if(!ref_datum.allow_multiple_buys && C.has_triumph_buy(ref_datum.triumph_buy_id))
 		to_chat(C, span_warning("You already have this item!"))
+		return FALSE
+	if(C.has_triumph_buy(ref_datum.triumph_buy_id, TRUE))
+		to_chat(C, span_warning("You already have this item and it was not activated yet!"))
 		return FALSE
 
 	C.adjust_triumphs(ref_datum.triumph_cost * -1, counted = FALSE, silent = TRUE)
@@ -351,7 +352,7 @@ SUBSYSTEM_DEF(triumphs)
 	else
 		webpage += "The hall of triumphs is empty"
 
-	var/datum/browser/popup = new(C, "triumph_leaderboard", "CHAMPIONS OF PSYDONIA", 300, 500)
+	var/datum/browser/popup = new(C, "triumph_leaderboard", "CHAMPIONS OF PSYDONIA", 300, 570)
 	popup.set_content(webpage)
 	popup.open(FALSE)
 
@@ -367,10 +368,11 @@ SUBSYSTEM_DEF(triumphs)
 
 /datum/controller/subsystem/triumphs/proc/adjust_leaderboard(CLIENT_KEY_not_CKEY)
 	var/user_key = CLIENT_KEY_not_CKEY
-	var/triumph_total = triumph_amount_cache[ckey(CLIENT_KEY_not_CKEY)]
+	var/triumph_total = triumph_amount_cache[ckey(user_key)]
 
-	if(5 > triumph_total)
-		return
+	for(var/existing_key in triumph_leaderboard)
+		if(ckey(existing_key) == ckey(user_key))
+			triumph_leaderboard.Remove(existing_key)
 
 	if(triumph_leaderboard_positions_tracked > triumph_leaderboard.len)
 		triumph_leaderboard[user_key] = triumph_total

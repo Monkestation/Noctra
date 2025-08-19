@@ -18,7 +18,7 @@
 	belt = /obj/item/storage/belt/leather/rope
 	beltr = /obj/item/flashlight/flare/torch/lantern
 	shirt = /obj/item/clothing/shirt/undershirt/priest
-	pants = /obj/item/clothing/pants/tights/black
+	pants = /obj/item/clothing/pants/tights/colored/black
 	neck = /obj/item/clothing/neck/psycross
 	head = /obj/item/clothing/head/brimmed
 	r_hand = /obj/item/book/bibble/psy
@@ -31,5 +31,5 @@
 		if(!H.has_language(/datum/language/oldpsydonic))
 			H.grant_language(/datum/language/oldpsydonic)
 			to_chat(H, "<span class='info'>I can speak Old Psydonic with ,m before my speech.</span>")
-		H.set_patron(/datum/patron/psydon)
+		H.set_patron(/datum/patron/psydon, TRUE)
 	ADD_TRAIT(H, TRAIT_FOREIGNER, TRAIT_GENERIC)

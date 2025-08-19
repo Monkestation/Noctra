@@ -16,7 +16,7 @@
 /datum/outfit/job/mercenary/kern/pre_equip(mob/living/carbon/human/H)
 	..()
 	shoes = /obj/item/clothing/shoes/boots/leather
-	head = /obj/item/clothing/head/roguehood/black
+	head = /obj/item/clothing/head/roguehood/colored/black
 	belt = /obj/item/storage/belt/leather/mercenary/black
 	armor = /obj/item/clothing/armor/chainmail/iron
 	cloak = /obj/item/clothing/cloak/stabard/kaledon

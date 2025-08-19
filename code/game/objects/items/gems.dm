@@ -99,7 +99,7 @@
 	attuned = /datum/attunement/light
 
 /obj/item/gem/red
-	name = "rubor"
+	name = "rontz"
 	desc = "Glistening with unkempt rage."
 	//color = "#ff00008c"
 	icon_state = "ruby_cut"

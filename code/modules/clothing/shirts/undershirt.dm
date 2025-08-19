@@ -13,44 +13,47 @@
 	icon_state = "priestunder"
 	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_shirts.dmi'
 
-/obj/item/clothing/shirt/undershirt/uncolored
+/obj/item/clothing/shirt/undershirt/colored
+	misc_flags = CRAFTING_TEST_EXCLUDE
+
+/obj/item/clothing/shirt/undershirt/colored/uncolored
 	color = CLOTHING_LINEN
 
-/obj/item/clothing/shirt/undershirt/black
+/obj/item/clothing/shirt/undershirt/colored/black
 	color = CLOTHING_SOOT_BLACK
 
-/obj/item/clothing/shirt/undershirt/lord
+/obj/item/clothing/shirt/undershirt/colored/lord
 	desc = ""
 	color = CLOTHING_BERRY_BLUE
 
-/obj/item/clothing/shirt/undershirt/blue
+/obj/item/clothing/shirt/undershirt/colored/blue
 	color = CLOTHING_SKY_BLUE
 
-/obj/item/clothing/shirt/undershirt/red
+/obj/item/clothing/shirt/undershirt/colored/red
 	color = CLOTHING_RED_OCHRE
 
-/obj/item/clothing/shirt/undershirt/purple
+/obj/item/clothing/shirt/undershirt/colored/purple
 	color = CLOTHING_PLUM_PURPLE
 
-/obj/item/clothing/shirt/undershirt/green
+/obj/item/clothing/shirt/undershirt/colored/green
 	color = CLOTHING_FOREST_GREEN
 
-/obj/item/clothing/shirt/undershirt/guard
+/obj/item/clothing/shirt/undershirt/colored/guard
 	color = CLOTHING_PLUM_PURPLE
 	uses_lord_coloring = LORD_PRIMARY
 
-/obj/item/clothing/shirt/undershirt/guardsecond
+/obj/item/clothing/shirt/undershirt/colored/guardsecond
 	color = CLOTHING_BLOOD_RED
 	uses_lord_coloring = LORD_SECONDARY
 
-/obj/item/clothing/shirt/undershirt/random/Initialize()
+/obj/item/clothing/shirt/undershirt/colored/random/Initialize()
 	color = pick_assoc(GLOB.peasant_dyes)
 	return ..()
 
 /obj/item/clothing/shirt/undershirt/puritan
 	name = "formal silks"
 	icon_state = "puritan_shirt"
-	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_TIEFLING, SPEC_ID_ELF, SPEC_ID_AASIMAR, SPEC_ID_DWARF)
+	allowed_race = SPECIES_BASE_BODY
 	salvage_result = /obj/item/natural/silk
 
 /obj/item/clothing/shirt/undershirt/artificer
@@ -77,17 +80,17 @@
 /obj/item/clothing/shirt/undershirt/sailor/red
 	icon_state = "sailorreds"
 
-/obj/item/clothing/shirt/undershirt/vagrant
+/obj/item/clothing/shirt/undershirt/colored/vagrant
 	r_sleeve_status = SLEEVE_TORN
 	body_parts_covered = CHEST|ARM_LEFT|VITALS
 	torn_sleeve_number = 1
 
-/obj/item/clothing/shirt/undershirt/vagrant/l
+/obj/item/clothing/shirt/undershirt/colored/vagrant/l
 	r_sleeve_status = SLEEVE_NORMAL
 	l_sleeve_status = SLEEVE_TORN
 	body_parts_covered = CHEST|ARM_RIGHT|VITALS
 
-/obj/item/clothing/shirt/undershirt/vagrant/Initialize()
+/obj/item/clothing/shirt/undershirt/colored/vagrant/Initialize()
 	color = pick(CLOTHING_MUD_BROWN, CLOTHING_OLD_LEATHER, CLOTHING_SPRING_GREEN, CLOTHING_BARK_BROWN, CLOTHING_CANVAS	)
 	return ..()
 

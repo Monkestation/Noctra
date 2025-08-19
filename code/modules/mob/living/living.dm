@@ -37,6 +37,8 @@
 	if(buckled)
 		buckled.unbuckle_mob(src,force=1)
 
+	stop_offering_item()
+
 	GLOB.mob_living_list -= src
 	for(var/datum/soullink/S as anything in ownedSoullinks)
 		S.ownerDies(FALSE)
@@ -624,12 +626,6 @@
 		return FALSE
 	return ..()
 
-/mob/living/_pointed(atom/pointing_at)
-	if(!..())
-		return FALSE
-	log_message("points at [pointing_at]", LOG_EMOTE)
-	visible_message("<span class='infoplain'>[span_name("[src]")] points at [pointing_at].</span>", span_notice("You point at [pointing_at]."))
-
 
 /mob/living/verb/succumb(whispered as null, reaper as null)
 	set hidden = TRUE
@@ -703,7 +699,6 @@
 	else
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
 			SetSleeping(400) //Short nap
-	// update_mobility()
 
 /mob/proc/get_contents()
 	return
@@ -943,7 +938,6 @@
 	slurring = 0
 	jitteriness = 0
 	slowdown = 0
-	// update_mobility()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
@@ -1340,9 +1334,9 @@
 
 	// Height advantage (standing vs lying)
 	if(body_position != LYING_DOWN && target.body_position == LYING_DOWN)
-		modifier += 0.2
+		modifier += 0.35
 	else if(body_position == LYING_DOWN && target.body_position != LYING_DOWN)
-		modifier -= 0.2
+		modifier -= 0.35
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/human = src
@@ -1777,7 +1771,7 @@
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
-	if (HAS_TRAIT(src, TRAIT_NOFIRE))
+	if(!ishuman(src) && HAS_TRAIT(src, TRAIT_NOFIRE))
 		return
 	if((fire_stacks > 0 || divine_fire_stacks > 0) && !on_fire)
 		on_fire = TRUE
@@ -2706,3 +2700,60 @@
 	purge_all_skills(silent)
 	remove_spells(silent = silent)
 	reset_spell_points(silent)
+
+/mob/living/proc/offer_item(mob/living/offered_to, obj/offered_item)
+	if(isnull(offered_to) || isnull(offered_item))
+		stack_trace("no offered_to or offered_item in offer_item()")
+		return
+
+	var/time_left = COOLDOWN_TIMELEFT(src, offer_cooldown)
+
+	if(time_left)
+		to_chat(src, span_danger("I must wait [time_left / 10] seconds before offering again."))
+		return FALSE
+
+	offered_item_ref = WEAKREF(offered_item)
+	visible_message(
+		span_notice("[src] offers [offered_item] to [offered_to] with an outstreched hand."),
+		span_notice("I offer [offered_item] to [offered_to] with an outstreched hand."), ignored_mobs = list(src), vision_distance = COMBAT_MESSAGE_RANGE
+	)
+	to_chat(offered_to, span_notice("[offered_to] offers [offered_item] to me..."))
+
+	new /obj/effect/temp_visual/offered_item_effect(get_turf(src), offered_item, src, offered_to)
+
+/mob/living/proc/cancel_offering_item()
+	var/obj/offered_item = offered_item_ref?.resolve()
+	if(isnull(offered_item))
+		stop_offering_item()
+		return
+	visible_message(
+		span_notice("[src] puts their hand back down."),
+		span_notice("I stop offering [offered_item ? offered_item : "the item"]."),
+	)
+	stop_offering_item()
+
+/mob/living/proc/stop_offering_item()
+	COOLDOWN_START(src, offer_cooldown, 1 SECONDS)
+	SEND_SIGNAL(src, COMSIG_LIVING_STOPPED_OFFERING_ITEM)
+	offered_item_ref = null
+	update_a_intents()
+
+/mob/living/proc/try_accept_offered_item(mob/living/offerer, obj/offered_item)
+	if(get_active_held_item())
+		to_chat(src, span_warning("I need a free hand to take it!"))
+		return FALSE
+
+	accept_offered_item(offerer, offered_item)
+	return TRUE
+
+/mob/living/proc/accept_offered_item(mob/living/offerer, obj/offered_item)
+	transferItemToLoc(offered_item, src)
+	put_in_active_hand(offered_item)
+	to_chat(offerer, span_notice("[src] takes [offered_item] from my outstreched hand."))
+	visible_message(
+		span_warning("[src] takes [offered_item] from [offerer]'s outstreched hand!"),
+		span_notice("I take [offered_item] from [offerer]'s outstreched hand."),
+	)
+	SEND_SIGNAL(offered_item, COMSIG_OBJ_HANDED_OVER, src, offerer)
+	offerer.stop_offering_item()
+

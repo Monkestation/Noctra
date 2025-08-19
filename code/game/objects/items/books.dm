@@ -1691,10 +1691,10 @@ ____________End of Example*/
 	bookfile = "Neu_cooking.json"
 
 /obj/item/book/bibble/psy
-	name = "The Book"
-	icon_state = "psybibble_0"
-	base_icon_state = "psybibble"
-	title = "bible"
+	name = "The PSY Book"
+	icon_state = "bibble_0" // change when sprites avaliable
+	base_icon_state = "bibble"
+	title = "psydon bible"
 	dat = "gott.json"
 	verses_file = "strings/psybibble.txt"
 
