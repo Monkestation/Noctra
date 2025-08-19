@@ -36,7 +36,6 @@
 	stressbuffer = stressbuffer + amt
 	stress = stress + stressbuffer
 	stressbuffer = 0
-
 	if(stress > STRESS_MAX)
 		stressbuffer = STRESS_MAX - stress
 		stress = STRESS_MAX

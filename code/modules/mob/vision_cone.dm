@@ -331,4 +331,3 @@
 	screen_loc = "1,1"
 	mouse_opacity = 0
 	plane = HUD_PLANE-1
-

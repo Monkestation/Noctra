@@ -8,7 +8,7 @@
 		/mob/living/carbon/human/proc/demand_submission,
 		/mob/living/carbon/human/proc/punish_spawn
 	)
-	lord_traits = list(TRAIT_HEAVYARMOR, TRAIT_NOSTAMINA)
+	lord_traits = list(TRAIT_HEAVYARMOR)
 	lord_title = "Elder"
 
 /datum/clan/thronleer

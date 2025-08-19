@@ -13,6 +13,7 @@
 	resistance_flags = FLAMMABLE
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
+	color = CLOTHING_LINEN
 
 	armor = ARMOR_MINIMAL
 	prevent_crits = list(BCLASS_TWIST)
@@ -20,9 +21,6 @@
 
 /obj/item/clothing/shirt/robe/colored
 	misc_flags = CRAFTING_TEST_EXCLUDE
-
-/obj/item/clothing/shirt/robe/colored/linen
-	color = CLOTHING_LINEN
 
 /obj/item/clothing/shirt/robe/colored/plain
 	color = CLOTHING_LINEN
@@ -155,15 +153,6 @@
 	desc = "Part robe, part butcher's apron."
 	icon_state = "surgrobe"
 	item_state = "surgrobe"
-
-/obj/item/clothing/shirt/robe/courtphysician
-	name = "court physician's robe"
-	desc = "The dark red helps hide blood stains, and is elegant."
-	icon_state = "courtrobe"
-	item_state = "courtrobe"
-	icon = 'icons/roguetown/clothing/courtphys.dmi'
-	mob_overlay_icon = 'icons/roguetown/clothing/onmob/courtphys.dmi'
-	sleeved = 'icons/roguetown/clothing/onmob/helpers/sleeves_courtphys.dmi'
 
 /obj/item/clothing/shirt/robe/archivist
 	name = "archivist's robe"

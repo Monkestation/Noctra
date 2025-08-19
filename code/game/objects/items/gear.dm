@@ -11,18 +11,16 @@
 /obj/item/gear/metal
 	desc = "A gear with teeth meticulously crafted for tight interlocking."
 	icon_state = "gear"
-	melt_amount = 25
 
 // To prevent metal transmutation
 /obj/item/gear/metal/bronze
-	melting_material = /datum/material/bronze
+	smeltresult = /obj/item/ingot/bronze
 
 /obj/item/gear/metal/iron
-	melting_material = /datum/material/iron
-	melt_amount = 75
+	smeltresult = /obj/item/ingot/iron
 
 /obj/item/gear/metal/steel
-	melting_material = /datum/material/steel
+	smeltresult = /obj/item/ingot/steel
 
 /obj/item/gear/wood
 	var/cart_capacity = 0

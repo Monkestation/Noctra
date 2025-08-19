@@ -106,10 +106,9 @@
 		feedback = "Praise Dendor for our harvest is bountiful."
 		modifier += is_ascendant(DENDOR) ? 4 : 3
 
-	if(user.client)
-		record_featured_stat(FEATURED_STATS_FARMERS, user)
-		record_featured_object_stat(FEATURED_STATS_CROPS, plant.name)
-		record_round_statistic(STATS_PLANTS_HARVESTED)
+	record_featured_stat(FEATURED_STATS_FARMERS, user)
+	record_featured_object_stat(FEATURED_STATS_CROPS, plant.name)
+	record_round_statistic(STATS_PLANTS_HARVESTED)
 	to_chat(user, span_notice(feedback))
 	yield_produce(modifier)
 

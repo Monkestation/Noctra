@@ -284,7 +284,7 @@
 	var/pronouns = null
 
 	/// Weakref to the item we are offering
-	var/datum/weakref/offered_item_ref
+	var/datum/weakref/offered_item
 
 	/// A ref of the area we're taking our ambient loop from.
 	var/area/ambience_tracked_area

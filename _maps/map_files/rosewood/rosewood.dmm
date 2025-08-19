@@ -3182,10 +3182,6 @@
 "bLX" = (
 /turf/open/floor/grass/cold,
 /area/rogue/outdoors/rtfield/safe)
-"bMs" = (
-/obj/structure/table/wood/fancy/royalblue,
-/turf/open/floor/cobble,
-/area/rogue/outdoors/town)
 "bMt" = (
 /obj/structure/stairs/stone/church,
 /turf/open/floor/cobblerock,
@@ -3433,10 +3429,6 @@
 "bRS" = (
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/church,
-/area/rogue/outdoors/town)
-"bRV" = (
-/obj/effect/landmark/stall,
-/turf/open/floor/cobblerock,
 /area/rogue/outdoors/town)
 "bSh" = (
 /obj/structure/closet/crate/crafted_closet/crafted,
@@ -4256,16 +4248,6 @@
 	},
 /obj/structure/bars/bent,
 /turf/open/floor/snow,
-/area/rogue/outdoors/town)
-"cnk" = (
-/obj/structure/table/wood/fancy/royalblue,
-/obj/structure/fluff/customsign{
-	pixel_x = -1;
-	pixel_y = -13;
-	desc = "A Merchant will visit this location";
-	name = "Traveling Merchant's Stall"
-	},
-/turf/open/floor/cobble,
 /area/rogue/outdoors/town)
 "cnq" = (
 /obj/structure/door,
@@ -102017,7 +101999,7 @@ gYK
 mkQ
 bXe
 omp
-cnk
+pmI
 pmI
 pmI
 omp
@@ -102218,8 +102200,8 @@ rbN
 gYK
 sEz
 kmD
-bRV
-bMs
+omp
+pmI
 coP
 omp
 omp
@@ -102421,7 +102403,7 @@ ttM
 oYt
 aus
 omp
-bMs
+pmI
 omp
 omp
 omp

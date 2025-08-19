@@ -67,10 +67,7 @@
 	pants = /obj/item/clothing/pants/trou/beltpants
 	belt = /obj/item/storage/belt/leather/cloth/lady
 	shoes = /obj/item/clothing/shoes/boots/leather
-	if(has_world_trait(/datum/world_trait/orphanage_renovated))
-		beltl = /obj/item/storage/belt/pouch/coins/rich
-	else
-		beltl = /obj/item/storage/belt/pouch/coins/mid
+	beltl = /obj/item/storage/belt/pouch/coins/mid
 	backr = /obj/item/storage/backpack/satchel
 	cloak = /obj/item/clothing/cloak/matron
 	backpack_contents = list(/obj/item/weapon/knife/dagger/steel = 1, /obj/item/key/matron = 1)

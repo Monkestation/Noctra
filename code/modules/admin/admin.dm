@@ -933,7 +933,6 @@
 			valid_id = TRUE
 		if(!valid_id)
 			to_chat(usr, span_warning("A reagent with that ID doesn't exist!"))
-			return
 	if(!choice)
 		return
 	var/volume = input(usr, "Volume:", "Choose volume") as num

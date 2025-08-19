@@ -29,25 +29,24 @@
 	. = ..()
 	H.virginity = TRUE
 	shoes = /obj/item/clothing/shoes/shortboots
-	shirt = /obj/item/clothing/shirt/undershirt/fancy
+	shirt = /obj/item/clothing/shirt/tunic/colored/green
 	backr = /obj/item/storage/backpack/satchel
 	backl = /obj/item/storage/backpack/satchel/surgbag
 	gloves = /obj/item/clothing/gloves/leather/feld
-	head = /obj/item/clothing/head/courtphysician
-	mask = /obj/item/clothing/face/courtphysician
-	neck = /obj/item/clothing/neck/courtphysician
+	head = /obj/item/clothing/head/physhat
+	mask = /obj/item/clothing/face/spectacles/golden
+	neck = /obj/item/clothing/neck/coif/cloth
 	belt = /obj/item/storage/belt/leather
 	beltl = /obj/item/storage/keyring/physician
-	beltr = /obj/item/weapon/mace/courtphysician
-	armor = /obj/item/clothing/shirt/robe/courtphysician
+	beltr = /obj/item/weapon/whip/cane/physician
+	cloak = /obj/item/clothing/cloak/apron/brown
 	if(H.gender == FEMALE)
-		pants = /obj/item/clothing/pants/skirt/colored/random
+		pants = /obj/item/clothing/pants/skirt/colored/green
 	else
-		pants = /obj/item/clothing/pants/tights/colored/random
+		pants = /obj/item/clothing/pants/tights/colored/green
 	H.adjust_skillrank(/datum/skill/misc/reading, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sewing, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 5, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 3, TRUE)

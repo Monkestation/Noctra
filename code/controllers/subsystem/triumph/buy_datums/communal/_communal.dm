@@ -1,6 +1,6 @@
 /datum/triumph_buy/communal
 	name = "Communal Fund"
-	desc = "Contribute to a shared pool of triumphs for communal effects."
+	desc = "Contribute to a shared pool of triumphs for communal benefits."
 	category = TRIUMPH_CAT_COMMUNAL
 	visible_on_active_menu = TRUE
 	manual_activation = TRUE

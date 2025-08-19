@@ -1,12 +1,12 @@
 /datum/action/cooldown/spell/adopt_child
 	name = "Adopt Child"
-	button_icon_state = "love"
+	button_icon_state = "bless"
 	self_cast_possible = FALSE
 	has_visual_effects = FALSE
 
 	cast_range = 1
-	charge_required = FALSE
-	cooldown_time = 10 SECONDS
+	charge_required = TRUE
+	cooldown_time = 20 SECONDS
 
 /datum/action/cooldown/spell/adopt_child/can_cast_spell(feedback)
 	. = ..()
@@ -17,9 +17,6 @@
 		return FALSE
 
 /datum/action/cooldown/spell/adopt_child/is_valid_target(atom/cast_on)
-	. = ..()
-	if(!.)
-		return FALSE
 	return ishuman(cast_on)
 
 /datum/action/cooldown/spell/adopt_child/before_cast(mob/living/carbon/human/cast_on)

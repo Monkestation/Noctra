@@ -212,6 +212,3 @@
 	var/spell_points
 	/// amount of spell points this mob has used
 	var/used_spell_points
-
-	/// cooldown for the next time this person can offer
-	COOLDOWN_DECLARE(offer_cooldown)
