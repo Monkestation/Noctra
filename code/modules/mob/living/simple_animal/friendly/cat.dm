@@ -78,7 +78,6 @@
 		if(health > 1)
 			icon_state = "[icon_living]"
 			set_resting(FALSE, instant = TRUE)
-			// update_mobility()
 			if(isturf(loc))
 				dir = pick(GLOB.cardinals)
 				step(src, dir)

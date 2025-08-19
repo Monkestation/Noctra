@@ -254,9 +254,6 @@
 	if(HAS_TRAIT(M, TRAIT_RESTRAINED))
 		combat_modifier += 0.25
 
-	if(M.body_position == LYING_DOWN && user.body_position != LYING_DOWN)
-		combat_modifier += 0.1
-
 	if(user.cmode && !M.cmode)
 		combat_modifier += 0.3
 	else if(!user.cmode && M.cmode)
