@@ -162,7 +162,7 @@
 			var/obj/item/weapon/sword/long/ravox/P = new(get_turf(src))
 			H.equip_to_appropriate_slot(P)
 		if(/datum/patron/divine/malum)
-			var/obj/item/weapon/mace/goden/steel/malum/P = new(get_turf(src))
+			var/obj/item/weapon/hammer/sledgehammer/war/malum/P = new(get_turf(src))
 			H.put_in_hands(P, forced = TRUE)
 		if(/datum/patron/divine/abyssor)
 			var/obj/item/weapon/polearm/spear/abyssor/P = new(get_turf(src))
