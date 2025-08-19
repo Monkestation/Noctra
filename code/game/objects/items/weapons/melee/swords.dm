@@ -259,6 +259,17 @@
 	wbalance = EASY_TO_DODGE
 	sellprice = 100
 
+	/obj/item/weapon/sword/scimitar/ngombe
+
+	name = "ngombe ngulu"
+	desc = "A heavy executioner's sword originating from Lakkari. It was used by Astratans to behead Psydonites settlers responsible for the Red Dune Massacre."
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	icon_state = "ngombe"
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/axe/chop)
+	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/axe/chop,)
+	minstr = 8 //this thing is HEAVY
+	swingsound = BLADEWOOSH_HUGE
+
 /obj/item/weapon/sword/scimitar/messer
 	name = "messer"
 	desc = "Straight iron blade, simple cutting edge, no nonsense and a popular northern blade."
@@ -269,7 +280,6 @@
 	wbalance = EASY_TO_DODGE
 	sellprice = 20
 	smeltresult = /obj/item/ingot/iron
-
 
 /*--------\
 | Rapiers |		Onehanded, slightly weaker cut, more AP thrust, harder to dodge.
