@@ -39,6 +39,7 @@
 
 #define NOBLEMEN		(1<<0)
 
+/*
 #define LORD		(1<<0)
 #define CONSORT		(1<<1)
 #define HAND		(1<<2)
@@ -48,9 +49,11 @@
 #define CAPTAIN		(1<<6)
 #define ARCHIVIST   (1<<7)
 #define MINOR_NOBLE	(1<<9)
+*/
 
 #define GARRISON		(1<<1)
 
+/*
 #define GUARDSMAN	(1<<0)
 #define WATCHMAN	(1<<1)
 #define JAILOR	    (1<<2)
@@ -59,17 +62,21 @@
 #define FORWARDEN   (1<<5)
 #define FORGUARD    (1<<6)
 #define GATEMASTER  (1<<7)
+*/
 
 #define CHURCHMEN		(1<<2)
 
+/*
 #define PRIEST		(1<<0)
 #define CLERIC		(1<<1)
 #define PURITAN		(1<<2)
 #define MONK		(1<<3)
 #define GRAVETENDER	(1<<4)
+*/
 
 #define SERFS			(1<<3)
 
+/*
 #define INNKEEP		(1<<0)
 #define BLACKSMITH	(1<<1)
 #define ALCHEMIST	(1<<2)
@@ -81,9 +88,11 @@
 #define NIGHTMAN    (1<<8)
 #define SCRIBE		(1<<9)
 #define GAFFER		(1<<10)
+*/
 
 #define PEASANTS		(1<<4)
 
+/*
 #define HUNTER		(1<<0)
 #define FARMER		(1<<1)
 #define BEASTMASTER	(1<<2)
@@ -95,39 +104,50 @@
 #define COOK		(1<<10)
 #define BARD		(1<<12)
 #define CHEESEMAKER (1<<13)
+*/
 
 #define APPRENTICES		(1<<5)
 
+/*
 #define APPRENTICE	(1<<0)
 #define SQUIRE		(1<<1)
 #define SERVANT		(1<<2)
 #define PRINCE		(1<<3)
+*/
 
 #define YOUNGFOLK           (1<<6)
 
+/*
 #define INNKEEPCHILD    (1<<1)
 #define CHURCHLING      (1<<2)
 #define ORPHAN		    (1<<3)
 #define SOILCHILD		(1<<4)
+*/
 
 #define OUTSIDERS		(1<<7)
 
+/*
 #define PILGRIM		(1<<0)
 #define ADVENTURER	(1<<1)
 #define MERCENARY	(1<<2)
 #define MIGRANT		(1<<3)
 #define BANDIT		(1<<4)
+*/
 
 #define COMPANY			(1<<8)
 
+/*
 #define MERCHANT	(1<<0)
 #define SHOPHAND	(1<<1)
 #define GRABBER		(1<<2)
+*/
 
 #define UNDEAD		(1<<10)
 
+/*
 #define DEATHKNIGHT (1<<0)
 #define SKELETON	(1<<1)
+*/
 
 #define JCOLOR_NOBLE "#9c40bf"
 #define JCOLOR_MERCHANT "#c2b449"
