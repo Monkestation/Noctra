@@ -242,11 +242,11 @@
 /datum/special_trait/tavernbrawler
 	name = "Tavern Brawler"
 	greet_text = span_notice("I love a good pub fight!")
-	weight = 100
+	weight = 50
 
 /datum/special_trait/tavernbrawler/on_apply(mob/living/carbon/human/character)
-	character.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
-	character.adjust_skillrank(/datum/skill/combat/unarmed, 3, TRUE)
+	character.clamped_adjust_skillrank(/datum/skill/combat/wrestling, 3, 4, TRUE)
+	character.clamped_adjust_skillrank(/datum/skill/combat/unarmed, 3, 4, TRUE)
 	character.change_stat(STATKEY_STR, 1)
 	character.change_stat(STATKEY_END, 1)
 	character.change_stat(STATKEY_CON, 1)
