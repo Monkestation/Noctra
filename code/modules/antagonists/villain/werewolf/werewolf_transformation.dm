@@ -21,13 +21,14 @@
 		if(transforming)
 			if (world.time >= transforming + 35 SECONDS) // Stage 3
 				for(var/obj/item/item as anything in H.get_equipped_items(FALSE))
-					if(istype(item, /obj/item/clothing))
+					if(istype(item, /obj/item/clothing) || istype(item, /obj/item/storage/belt))
 						item.take_damage(damage_amount = item.max_integrity * 0.4, sound_effect = FALSE)
 					else if(istype(item, /obj/item/weapon) || istype(item, /obj/item/storage))
 						H.dropItemToGround(item, silent = TRUE)
 
 				var/mob/living/carbon/human/species/werewolf/new_werewolf = generate_werewolf(H)
 				new_werewolf.apply_status_effect(/datum/status_effect/shapechange_mob/die_with_form, H, FALSE)
+				new_werewolf.grant_language(/datum/language/beast)
 				new_werewolf.adjust_skillrank(/datum/skill/combat/wrestling, 4, TRUE)
 				new_werewolf.adjust_skillrank(/datum/skill/combat/unarmed, 5, TRUE)
 				new_werewolf.adjust_skillrank(/datum/skill/misc/climbing, 6, TRUE)
@@ -95,9 +96,6 @@
 	W.skin_armor = new /obj/item/clothing/armor/skin_armor/werewolf_skin(W)
 
 	W.dna?.species.after_creation(src)
-	var/datum/language_holder/werewolf_language = W.get_language_holder()
-	werewolf_language.copy_known_languages_from(user)
-	W.grant_language(/datum/language/beast)
 
 	W.base_intents = list(INTENT_HELP, INTENT_DISARM, INTENT_GRAB)
 	W.update_a_intents()

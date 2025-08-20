@@ -50,7 +50,7 @@
 	)
 
 	changesource_flags = WABBAJACK
-	bleed_mod = 0.4
+	bleed_mod = 0.3
 	pain_mod = 0.2
 
 /datum/species/werewolf/send_voice(mob/living/carbon/human/H)
