@@ -33,6 +33,22 @@
         {
 			"type": "byond",
 			"request": "launch",
+			"name": "Launch DreamDaemon (low memory mode)",
+            "preLaunchTask": "Build All (low memory mode)",
+			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
+			"dreamDaemon": true
+		},
+        {
+			"type": "byond",
+			"request": "launch",
+			"name": "Launch DreamDaemon (low memory mode) no dungeons",
+            "preLaunchTask": "Build All (low memory mode) no dungeons",
+			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
+			"dreamDaemon": true
+		},
+        {
+			"type": "byond",
+			"request": "launch",
 			"name": "Launch DreamDaemon (unit tests)",
             "preLaunchTask": "Build All (unit tests)",
 			"dmb": "${workspaceFolder}/${command:CurrentDMB}",

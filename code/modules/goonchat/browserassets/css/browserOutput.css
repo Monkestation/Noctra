@@ -141,6 +141,11 @@ a.popt {text-decoration: none;}
 	border: 1px dotted #7f4274;
 }
 
+.announcement_block {
+	background: #2c032f;
+	border: 6px inset #990b3f;
+}
+
 /*****************************************
 *
 * OUTPUT NOT RELATED TO ACTUAL MESSAGES
@@ -688,6 +693,8 @@ h1.alert, h2.alert	{color: #c9c1ba;font-family: Pterra, TrueType;}
 .smallnotice			{color: #f1d669;	font-size: 75%;}
 .hear					{color: #6685f5;	font-style: italic;}
 .adminnotice			{color: #6685f5;}
+.adminannouncebig		{color: #6685f5;	font-style: bold;	font-size: 200%}
+.adminannounce			{color: #6685f5;	font-style: bold;	font-size: 120%}
 .adminhelp				{color: #ff0000;	font-weight: bold;}
 .unconscious			{color: #c9c1ba;	font-weight: bold;}
 .suicide				{color: #ff5050;	font-style: italic;}

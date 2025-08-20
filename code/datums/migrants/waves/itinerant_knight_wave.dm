@@ -20,6 +20,11 @@
 	backr = /obj/item/storage/backpack/satchel
 	backl = /obj/item/weapon/sword/long/greatsword
 	backpack_contents = list(/obj/item/clothing/neck/psycross/silver = 1, /obj/item/weapon/knife/dagger/steel = 1, /obj/item/storage/belt/pouch/coins/mid = 1)
+	var/prev_real_name = H.real_name
+	var/prev_name = H.name
+	var/honorary = "Itinerant Knight"
+	H.real_name = "[honorary] [prev_real_name]"
+	H.name = "[honorary] [prev_name]"
 
 	if(H.mind)
 		H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
@@ -45,7 +50,6 @@
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NOSEGRAB, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
-	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
 	H.cmode_music = 'sound/music/cmode/nobility/CombatKnight.ogg'
 
@@ -61,11 +65,11 @@
 /datum/outfit/job/itinerant_squire/pre_equip(mob/living/carbon/human/H)
 	..()
 	shirt = /obj/item/clothing/shirt/dress/gen/colored/black
-	pants = /obj/item/clothing/pants/chainlegs/iron
+	pants =/obj/item/clothing/pants/trou/leather
 	shoes = /obj/item/clothing/shoes/boots
 	belt = /obj/item/storage/belt/leather
 	beltr = /obj/item/ammo_holder/quiver/arrows
-	armor = /obj/item/clothing/armor/plate/full
+	armor = /obj/item/clothing/armor/leather/splint
 	backl = /obj/item/gun/ballistic/revolver/grenadelauncher/bow/short
 	gloves = /obj/item/clothing/gloves/leather
 	wrists = /obj/item/clothing/wrists/bracers/leather

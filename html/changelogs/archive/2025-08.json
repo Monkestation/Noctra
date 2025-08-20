@@ -508,5 +508,47 @@
                 "bugfix": "Fixed a rare issue where a roundstart event failed to trigger due to wrong timing."
             }
         ]
+    },
+    "2025-08-20": {
+        "F-e-r-n": [
+            {
+                "balance": "Decompose now requires your opponent to be dead before turning them into a deadite."
+            }
+        ],
+        "grungussuss": [
+            {
+                "qol": "admin announcements are easier to notice"
+            },
+            {
+                "rscadd": "added new scabbards"
+            },
+            {
+                "balance": "scabbards cannot be pickpocketed"
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "balance": "Change Dark/Itinerant Knight squires plate armor to light armor."
+            },
+            {
+                "rscadd": "Add titles for the Dark and Itinerant Knights"
+            },
+            {
+                "rscdel": "Remove Medium Armor Training from the Dark/Itinerant Knights"
+            }
+        ],
+        "SarmentiCampbell": [
+            {
+                "bugfix": "fixed special antag's patron getting removed while using Subclasses, (Barbarian, Mage, etc)"
+            },
+            {
+                "balance": "Remove the ability for bandits to be maniac."
+            }
+        ],
+        "Sulaboy": [
+            {
+                "bugfix": "necra robe sleeves"
+            }
+        ]
     }
 }

@@ -9,6 +9,10 @@
 	blade_dulling = DULLING_BASHCHOP
 	possible_item_intents = list(SHIELD_BASH)
 
+/obj/item/weapon/scabbard/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_HARD_TO_STEAL, TRAIT_GENERIC)
+
 /obj/item/weapon/scabbard/update_icon_state()
 	icon_state = initial(icon_state)
 	item_state = initial(item_state)
@@ -67,9 +71,19 @@
 			if("onbelt")
 				return list("shrink" = 0.5, "sx" = -2, "sy" = -5, "nx" = 4, "ny" = -5, "wx" = 0, "wy" = -5, "ex" = 2, "ey" = -5, "nturn" = 0, "sturn" = 0, "wturn" = 0, "eturn" = 0, "nflip" = 0, "sflip" = 0, "wflip" = 0, "eflip" = 0, "northabove" = 0, "southabove" = 1, "eastabove" = 1, "westabove" = 1)
 
+/obj/item/weapon/scabbard/knife/noble
+	name = "silver decorated knife sheath"
+	desc = "A slingable sheath made of leather, enamored with elaborate silver decorations, often seen on the hips of nobles"
+	icon_state = "nsheath"
+
+/obj/item/weapon/scabbard/knife/royal
+	name = "gold decorated knife sheath"
+	desc = "A slingable sheath made of leather, enamored with exquisite golden decorations, often seen on the hips of royalty"
+	icon_state = "rsheath"
+
 /obj/item/weapon/scabbard/sword
 	name = "scabbard"
-	desc = "A sheath designed to hold a sword. The natural conclusion for those wishing to carry longblades."
+	desc = "A scabbard designed to hold a sword. The natural conclusion for those wishing to carry longblades."
 	icon_state = "scabbard"
 
 	force = 7
@@ -99,3 +113,13 @@
 				return list("shrink" = 0.5, "sx" = 1, "sy" = 4, "nx" = 1, "ny" = 2, "wx" = 3, "wy" = 3, "ex" = 0, "ey" = 2, "nturn" = 0, "sturn" = 0, "wturn" = 0, "eturn" = 0, "nflip" = 8, "sflip" = 0, "wflip" = 0, "eflip" = 0, "northabove" = 1, "southabove" = 0, "eastabove" = 0, "westabove" = 0)
 			if("onbelt")
 				return list("shrink" = 0.5, "sx" = -2, "sy" = -5, "nx" = 4, "ny" = -5, "wx" = 0, "wy" = -5, "ex" = 2, "ey" = -5, "nturn" = 0, "sturn" = 0, "wturn" = -90, "eturn" = 0, "nflip" = 0, "sflip" = 0, "wflip" = 0, "eflip" = 0, "northabove" = 0, "southabove" = 1, "eastabove" = 1, "westabove" = 1)
+
+/obj/item/weapon/scabbard/sword/noble
+	name = "gold decorated scabbard"
+	desc = "A scabbard designed to hold a sword. This one is decorated on a silver platter."
+	icon_state = "nscabbard"
+
+/obj/item/weapon/scabbard/sword/royal
+	name = "gold decorated scabbard"
+	desc = "A scabbard designed to hold a sword. This one is lined with golden fittings, fit for a royal."
+	icon_state = "rscabbard"

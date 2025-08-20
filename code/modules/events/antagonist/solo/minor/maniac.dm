@@ -21,7 +21,8 @@
 		"Hand",
 		"Forest Warden",
 		"Royal Knight",
-		"Templar"
+		"Templar",
+		"Bandit"
 	)
 
 	base_antags = 1
