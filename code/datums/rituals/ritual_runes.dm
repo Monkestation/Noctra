@@ -376,7 +376,7 @@ GLOBAL_LIST(teleport_runes)
 
 /obj/effect/decal/cleanable/roguerune/arcyne/leylines	//used for better quality of learning, grants temporary 2 minute INT bonus.
 	name = "leyline attunement matrix"
-	desc = "geometry shapes and lines on the ground resonate with power..."
+	desc = "geometric shapes and lines on the ground resonate with power..."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "empowerment"
 	runesize = 1
