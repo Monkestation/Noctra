@@ -18,22 +18,23 @@
 	sharpness = IS_BLUNT
 	wlength = WLENGTH_LONG
 	w_class = WEIGHT_CLASS_BULKY
+	max_integrity = INTEGRITY_POOR
 	minstr = 6
 	gripsprite = TRUE
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'
-	smeltresult = null
+	smeltresult = /obj/item/fertilizer/ash
 	associated_skill = /datum/skill/combat/whipsflails
 	possible_item_intents = list(MACE_STRIKE)
 	gripped_intents = list(/datum/intent/flailthresh, MACE_STRIKE)
 
-	force = 10
-	force_wielded = 14
-	wdefense = 2
+	force = DAMAGE_WEAK_FLAIL - 5
+	force_wielded = DAMAGE_WEAK_FLAIL - 3
+	wdefense = AVERAGE_PARRY
 	wlength = 66
 
 /obj/item/weapon/thresher/military
-	force = 12
-	force_wielded = 25
+	force = DAMAGE_WEAK_FLAIL - 3
+	force_wielded = DAMAGE_NORMAL_FLAIL
 	possible_item_intents = list(MACE_STRIKE)
 	gripped_intents = list(/datum/intent/flail/strike/long, /datum/intent/flail/strike/smash/long, /datum/intent/flailthresh,)
 	name = "military flail"
@@ -167,7 +168,7 @@
 \---------*/
 
 /obj/item/weapon/sickle
-	force = 10
+	force = DAMAGE_KNIFE
 	possible_item_intents = list(DAGGER_CUT)
 	name = "sickle"
 	desc = "Rusted blade, worn handle, symbol of toil."
@@ -183,6 +184,7 @@
 	wdefense = BAD_PARRY
 	drop_sound = 'sound/foley/dropsound/blade_drop.ogg'
 	max_blade_int = 50
+	max_integrity = INTEGRITY_POOR
 	smeltresult = /obj/item/ingot/iron
 	associated_skill = /datum/skill/combat/knives
 
@@ -230,12 +232,12 @@
 	gripped_intents = list(TILL_INTENT,/datum/intent/pick,POLEARM_BASH)
 	associated_skill = /datum/skill/combat/polearms
 
-	force = 5
-	force_wielded = 7
+	force = DAMAGE_STAFF - 5
+	force_wielded = DAMAGE_STAFF_WIELD - 8
 	wdefense = MEDIOCHRE_PARRY
 	wlength = 66
 	var/time_multiplier = 1
-	max_integrity = 150
+	max_integrity = INTEGRITY_POOR
 
 /obj/item/weapon/hoe/Initialize()
 	. = ..()
@@ -361,10 +363,11 @@
 	smeltresult = /obj/item/ingot/iron
 	associated_skill = /datum/skill/combat/polearms
 	thrown_bclass = BCLASS_STAB
-	throwforce = 15
+	throwforce = DAMAGE_SPEAR
+	max_integrity = INTEGRITY_POOR
 
-	force = 10
-	force_wielded = 22
+	force = DAMAGE_STAFF
+	force_wielded = DAMAGE_SPEAR_WIELD - 3
 	wdefense = MEDIOCHRE_PARRY
 	wlength = WLENGTH_LONG
 

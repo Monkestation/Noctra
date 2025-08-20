@@ -69,8 +69,8 @@
 			ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
 			backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 			beltl = /obj/item/ammo_holder/quiver/bolts
-			H.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE)
 			beltr = /obj/item/weapon/knife/dagger //meant as a backup weapon
+			H.adjust_skillrank(/datum/skill/combat/crossbows, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
 		if(/datum/patron/divine/ravox)
 			wrists = /obj/item/clothing/neck/psycross/silver/ravox

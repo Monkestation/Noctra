@@ -4,8 +4,6 @@
 	experimental_inhand = TRUE
 	experimental_onback = TRUE
 	experimental_onhip = TRUE
-	force = 10
-	force_wielded = 15
 	possible_item_intents = list(/datum/intent/pick)
 	gripped_intents = list(/datum/intent/pick,POLEARM_BASH,TILL_INTENT)
 	name = "copper hoe"
@@ -16,7 +14,6 @@
 	time_multiplier = 0.5
 
 /obj/item/weapon/sickle/copper
-	force = 10
 	possible_item_intents = list(DAGGER_CUT)
 	name = "copper sickle"
 	desc = ""
@@ -35,14 +32,9 @@
 	experimental_inhand = TRUE
 	experimental_onback = TRUE
 	experimental_onhip = TRUE
-	force = 10
-	force_wielded = 15
 	bigboy = TRUE
-	wdefense = 2
 	smeltresult = /obj/item/ingot/copper
 	associated_skill = /datum/skill/combat/polearms
-	thrown_bclass = BCLASS_STAB
-	throwforce = 25
 
 /obj/item/weapon/pitchfork/copper/getonmobprop(tag)
 	. = ..()

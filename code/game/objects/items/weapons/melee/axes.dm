@@ -388,8 +388,8 @@
 	name = "bone axe"
 	desc = "A rough axe made of bones"
 	icon_state = "boneaxe"
-	force = 18
-	force_wielded = 22
+	force = DAMAGE_AXE - 2
+	force_wielded = DAMAGE_AXE_WIELD - 3
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop)
 	gripped_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop)
 	max_blade_int = 100
