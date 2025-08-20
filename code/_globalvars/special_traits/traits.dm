@@ -619,3 +619,15 @@
 	QDEL_NULL(character.backr)
 	QDEL_NULL(character.head)
 	character.equip_to_slot_or_del(new /obj/item/weapon/sword/long/greatsword/gutsclaymore(character), ITEM_SLOT_BACK_R)
+
+/datum/special_trai/meow
+	name "Meow"
+	greet_text = span_boldwarning("What?")
+	req_text = "???"
+	weight = 1
+
+/datum/special_trait/overcompensating/on_apply(mob/living/carbon/human/character, silent)
+	var/mob/living/simple_animal/pet/cat/catte = new(get_turf(character))
+	catte = character.real_name
+	catte.ckey = character.ckey
+	qdel(character)
