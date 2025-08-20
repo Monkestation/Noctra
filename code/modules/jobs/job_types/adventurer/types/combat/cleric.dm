@@ -48,7 +48,7 @@
 			wrists = /obj/item/clothing/neck/psycross/silver/dendor
 			cloak = /obj/item/clothing/cloak/stabard/templar/dendor
 			H.cmode_music = 'sound/music/cmode/garrison/CombatForestGarrison.ogg'
-			backr = /obj/item/weapon/polearm/halberd/bardiche
+			backr = /obj/item/weapon/polearm/halberd/bardiche/woodcutter
 			H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
 		if(/datum/patron/divine/necra)
 			wrists = /obj/item/clothing/neck/psycross/silver/necra
