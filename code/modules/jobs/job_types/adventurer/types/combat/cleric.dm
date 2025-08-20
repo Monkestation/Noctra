@@ -68,6 +68,7 @@
 			H.cmode_music = 'sound/music/cmode/church/CombatEora.ogg'
 			H.virginity = FALSE
 			ADD_TRAIT(H, TRAIT_BEAUTIFUL, TRAIT_GENERIC)
+			//its a cupid joke, but in this case with a crossbow
 			backr = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
 			beltl = /obj/item/ammo_holder/quiver/bolts
 			beltr = /obj/item/weapon/knife/dagger //meant as a backup weapon
