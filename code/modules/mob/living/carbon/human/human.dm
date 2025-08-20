@@ -811,7 +811,7 @@
 
 	var/datum/job/role = mind?.assigned_role
 
-	if(role && (role.type in MESSAGE_ADMINS_ROLES))
+	if(role?.type in MESSAGE_ADMINS_ROLES)
 		addtimer(CALLBACK(src, PROC_REF(notify_admins_of_disconnect)), 30 SECONDS)
 
 /mob/living/carbon/human/proc/notify_admins_of_disconnect()
