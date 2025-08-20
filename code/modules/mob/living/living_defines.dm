@@ -113,9 +113,6 @@
 	var/list/status_effects //a list of all status effects the mob has
 	var/druggy = 0
 
-	/// A multiplier that affects how fast you stand up after being prone. Currently only applied by armors
-	var/stand_speed_mult = 1
-
 	//Speech
 	var/stuttering = 0
 	var/slurring = 0

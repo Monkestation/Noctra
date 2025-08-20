@@ -55,13 +55,3 @@
 		var/mob/M = loc
 		M.update_inv_shirt()
 		M.update_inv_armor()
-
-/obj/item/clothing/armor/equipped(mob/living/user, slot)
-	. = ..()
-	if(stand_speed_reduction != 1)
-		user.stand_speed_mult *= stand_speed_reduction
-
-/obj/item/clothing/armor/dropped(mob/living/user)
-	. = ..()
-	if(stand_speed_reduction != 1)
-		user.stand_speed_mult /= stand_speed_reduction
