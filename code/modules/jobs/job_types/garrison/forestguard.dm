@@ -21,10 +21,12 @@
 	allowed_ages = list(AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL, AGE_CHILD)
 	allowed_races = RACES_PLAYER_GUARD
 	give_bank_account = 30
+	can_have_apprentices = FALSE
 	cmode_music = 'sound/music/cmode/garrison/CombatForestGarrison.ogg'
 
 	outfit = /datum/outfit/job/forestguard
 	advclass_cat_rolls = list(CTAG_FORGARRISON = 20)
+
 
 /datum/outfit/job/forestguard
 	job_bitflag = BITFLAG_GARRISON
@@ -72,8 +74,8 @@
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 2, TRUE)
-	H.adjust_skillrank(/datum/skill/craft/carpentry, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/labor/lumberjacking, 1, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/carpentry, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/tanning, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE)
@@ -117,8 +119,8 @@
 		H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
-		H.adjust_skillrank(/datum/skill/labor/lumberjacking, 2, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/carpentry, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/labor/lumberjacking, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/carpentry, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/tanning, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/bows, 4, TRUE)
@@ -159,8 +161,8 @@
 		H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/crafting, 2, TRUE)
-		H.adjust_skillrank(/datum/skill/labor/lumberjacking, 2, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/carpentry, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/labor/lumberjacking, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/carpentry, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/tanning, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
