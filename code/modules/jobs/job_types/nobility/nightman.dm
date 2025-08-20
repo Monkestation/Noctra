@@ -17,7 +17,7 @@
 	allowed_races = RACES_PLAYER_NONEXOTIC
 	outfit = /datum/outfit/job/apothecary
 	give_bank_account = 100
-	cmode_music = 'sound/music/cmode/towner/CombatBeggar.ogg'
+	cmode_music = 'sound/music/cmode/nobility/combat_physician.ogg'
 
 /datum/outfit/job/apothecary
 	job_bitflag = BITFLAG_ROYALTY | BITFLAG_CONSTRUCTOR
