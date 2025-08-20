@@ -805,3 +805,6 @@
 		return TRUE
 
 	return FALSE
+
+/mob/living/carbon/human/Logout()
+	. = ..()
