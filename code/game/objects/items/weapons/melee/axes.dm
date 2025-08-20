@@ -275,7 +275,6 @@
 
 
 //................ Copper Hatchet ............... //
-// Copper Hatchet
 /obj/item/weapon/axe/copper
 	force = DAMAGE_BAD_AXE
 	force_wielded = DAMAGE_BAD_AXE_WIELD
@@ -303,87 +302,7 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
 
-
-//................ Woodcutter Axe ............... //
-/obj/item/weapon/polearm/halberd/bardiche/woodcutter
-	slot_flags = ITEM_SLOT_BACK
-	bigboy = TRUE
-	force = DAMAGE_AXE
-	force_wielded = DAMAGE_HEAVYAXE_WIELD
-	possible_item_intents = list(/datum/intent/axe/cut)
-	name = "woodcutter axe"
-	desc = "The tool, weapon, and loyal companion of woodcutters. Able to chop mighty trees and repel the threats of the forest."
-	icon_state = "woodcutter"
-	icon = 'icons/roguetown/weapons/64.dmi'
-	max_blade_int = 200
-	max_integrity = INTEGRITY_STRONG
-	melting_material = /datum/material/iron
-	melt_amount = 75
-	gripped_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop/great)
-	parrysound = list('sound/combat/parry/wood/parrywood (1).ogg', 'sound/combat/parry/wood/parrywood (2).ogg', 'sound/combat/parry/wood/parrywood (3).ogg')
-	swingsound = BLADEWOOSH_MED
-	resistance_flags = FLAMMABLE // Weapon made mostly of wood
-	associated_skill = /datum/skill/combat/axesmaces
-	wdefense = AVERAGE_PARRY
-	dropshrink = 0.95
-	minstr = 8
-	axe_cut = 15
-	sellprice = 20
-
-/obj/item/weapon/woodchopper/getonmobprop(tag)
-	. = ..()
-	if(tag)
-		switch(tag)
-			if("gen")
-				return list("shrink" = 0.6,"sx" = -7,"sy" = 2,"nx" = 7,"ny" = 3,"wx" = -2,"wy" = 1,"ex" = 1,"ey" = 1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 30,"eturn" = -30,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
-			if("wielded")
-				return list("shrink" = 0.6,"sx" = 9,"sy" = -4,"nx" = -7,"ny" = 1,"wx" = -9,"wy" = 2,"ex" = 10,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 5,"sturn" = -190,"wturn" = -170,"eturn" = -10,"nflip" = 4,"sflip" = 4,"wflip" = 1,"eflip" = 0)
-			if("onbelt")
-				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
-
-
-//................ War Axe ............... //
-//attempting to fix transformation issues//it worked wohoo, don't touch it.
-/obj/item/weapon/polearm/halberd/bardiche/warcutter
-	slot_flags = ITEM_SLOT_BACK
-	force = DAMAGE_AXE
-	force_wielded = DAMAGE_AXE_WIELD
-	possible_item_intents = list(/datum/intent/axe/cut)
-	name = "footman war axe"
-	desc = "An enormous spiked axe. The ideal choice for a militiaman wanting to cut a fancy noble whoreson down to size."
-	icon_state = "warcutter"
-	icon = 'icons/roguetown/weapons/64.dmi'
-	max_blade_int = 200
-	max_integrity = INTEGRITY_STRONG
-	bigboy = TRUE
-	melting_material = /datum/material/iron
-	melt_amount = 150
-	gripped_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop/great, /datum/intent/axe/thrust, /datum/intent/pick)
-	parrysound = list('sound/combat/parry/wood/parrywood (1).ogg', 'sound/combat/parry/wood/parrywood (2).ogg', 'sound/combat/parry/wood/parrywood (3).ogg')
-	swingsound = BLADEWOOSH_MED
-	resistance_flags = FLAMMABLE // Weapon made mostly of wood
-	associated_skill = /datum/skill/combat/axesmaces
-	dropshrink = 0.95
-	minstr = 10
-	wdefense = 3
-	axe_cut = 15
-	sellprice = 20
-
-
-
-/obj/item/weapon/polearm/halberd/bardiche/warcutter/getonmobprop(tag)
-	. = ..()
-	if(tag)
-		switch(tag)
-			if("gen")
-				return list("shrink" = 0.6,"sx" = -7,"sy" = 2,"nx" = 7,"ny" = 3,"wx" = -2,"wy" = 1,"ex" = 1,"ey" = 1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 30,"eturn" = -30,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
-			if("wielded")
-				return list("shrink" = 0.7,"sx" = 5,"sy" = -2,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -2,"ex" = 5,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
-			if("onbelt")
-				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
-
-
-
+//................ Bone Axe ............... //
 /obj/item/weapon/axe/boneaxe
 	name = "bone axe"
 	desc = "A rough axe made of bones"
