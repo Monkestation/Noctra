@@ -43,7 +43,7 @@
 	H.adjust_skillrank(/datum/skill/misc/athletics, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/traps, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/engineering, 2, TRUE)
-		H.adjust_skillrank(/datum/skill/craft/blacksmithing, 1, TRUE)//I assume they would know a thing or two about smithing
+	H.adjust_skillrank(/datum/skill/craft/blacksmithing, 1, TRUE)//I assume they would know a thing or two about smithing
 	H.adjust_skillrank(/datum/skill/craft/smelting, 4, TRUE)//if they are such good smelters
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 	H.change_stat(STATKEY_STR, 1)
