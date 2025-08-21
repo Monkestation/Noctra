@@ -4,7 +4,6 @@
 	Sworn to protect the royal family, you stand as their shield, upholding their rule with steel and sacrifice. \
 	Yet service is not without its trials, and your loyalty will be tested in ways both seen and unseen. \
 	In the end, duty is a path you must walk carefully."
-	flag = GUARDSMAN
 	department_flag = GARRISON
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_ROYALKNIGHT
@@ -43,7 +42,7 @@
 	belt = /obj/item/storage/belt/leather
 	beltr = /obj/item/weapon/sword/arming
 	backl = /obj/item/storage/backpack/satchel
-	scabbards = list(/obj/item/weapon/scabbard/sword)
+	scabbards = list(/obj/item/weapon/scabbard/sword/noble)
 	backpack_contents = list(/obj/item/storage/keyring/manorguard = 1)
 
 	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
@@ -105,15 +104,15 @@
 	var/grant_shield = TRUE
 	switch(choice)
 		if("Flail")
-			H.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
+			H.clamped_adjust_skillrank(/datum/skill/combat/whipsflails, 1, 4, TRUE)
 		if("Halberd")
-			H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
+			H.clamped_adjust_skillrank(/datum/skill/combat/polearms, 1, 4, TRUE)
 			grant_shield = FALSE
 		if("Longsword")
 			grant_shield = FALSE
 		if("Unarmed")
 			H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-			H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+			H.clamped_adjust_skillrank(/datum/skill/combat/knives, 2, 4, TRUE)
 			grant_shield = FALSE
 	if(grant_shield)
 		H.adjust_skillrank(/datum/skill/combat/shields, 1, TRUE)

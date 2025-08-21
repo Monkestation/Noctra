@@ -9,6 +9,7 @@
 	min_pq = 0
 
 	cmode_music = 'sound/music/cmode/adventurer/CombatOutlander.ogg'
+	is_recognized = TRUE
 
 /datum/outfit/job/adventurer/zalad/pre_equip(mob/living/carbon/human/H)
 	..()

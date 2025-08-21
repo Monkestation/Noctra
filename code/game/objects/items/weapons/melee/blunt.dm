@@ -124,6 +124,9 @@
 	possible_item_intents = list(/datum/intent/mace/strike, /datum/intent/mace/thrust)
 	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
 	sellprice = 30
+	minstr = 5
+	force = DAMAGE_MACE - 3
+	force_wielded = DAMAGE_MACE - 1
 	wdefense = MEDIOCHRE_PARRY
 
 /obj/item/weapon/mace/courtphysician/getonmobprop(tag)
