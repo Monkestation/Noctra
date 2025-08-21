@@ -17,6 +17,7 @@
 
 	outfit = /datum/outfit/job/inquisitor
 	is_foreigner = TRUE
+	is_recognized = TRUE
 	cmode_music = 'sound/music/cmode/church/CombatInquisitor.ogg'
 
 /datum/job/inquisitor/after_spawn(mob/living/spawned, client/player_client)

@@ -115,27 +115,29 @@
 			.hierarchy-container {
 				display: flex;
 				width: 100%;
-				height: 100vh;
+				height: calc(100vh - 100px);
 				position: relative;
+				margin-top: 20px;
 			}
-
 			.research-container {
 				flex: 1;
 				position: relative;
 				overflow: auto;
 				background: #1a1a1a;
+				height: calc(100% - 40px);
+				margin-bottom: 20px; 
 			}
 
 			.hierarchy-sidebar {
-				width: 300px;
+				width: 280px;
 				background: #2a2a2a;
 				border-left: 1px solid #444;
-				padding: 15px;
+				padding: 10px;
 				overflow-y: auto;
 				position: fixed;
 				right: 0;
-				top: 0;
-				height: 100vh;
+				top: 80px;
+				height: calc(100vh - 100px);
 				z-index: 1000;
 			}
 
@@ -151,7 +153,8 @@
 			}
 
 			.sidebar-content {
-				color: #ccc;
+				max-height: calc(100% - 50px);
+				overflow-y: auto;
 			}
 
 			.position-details h4 {
@@ -234,8 +237,8 @@
 			/* Node selection styles */
 			.hierarchy-node {
 				position: absolute;
-				width: 120px;
-				height: 80px;
+				width: 110px
+				height: 70px;
 				background: rgba(40, 40, 50, 0.9);
 				border: 2px solid #666;
 				border-radius: 8px;
@@ -302,11 +305,12 @@
 			.modal-content {
 				position: relative;
 				background: #2a2a2a;
-				margin: 5% auto;
+				margin: 10% auto;
 				padding: 20px;
 				width: 500px;
 				border-radius: 8px;
 				color: #fff;
+				overflow-y: auto;
 			}
 
 			.close {
@@ -323,7 +327,7 @@
 			}
 
 			.form-group {
-				margin-bottom: 15px;
+				margin-bottom: 5px;
 			}
 
 			.form-group label {
@@ -334,7 +338,7 @@
 
 			.form-group input, .form-group textarea, .form-group select {
 				width: 100%;
-				padding: 8px;
+				padding: 6px;
 				border: 1px solid #555;
 				background: #1a1a1a;
 				color: #fff;

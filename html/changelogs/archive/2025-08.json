@@ -550,5 +550,17 @@
                 "bugfix": "necra robe sleeves"
             }
         ]
+    },
+    "2025-08-21": {
+        "grungussuss": [
+            {
+                "qol": "{FIX-CHAT} verb renamed to Fix-Chat"
+            }
+        ],
+        "Wouju": [
+            {
+                "code_imp": "removed job flags"
+            }
+        ]
     }
 }
