@@ -218,3 +218,8 @@
 	stressadd = -1
 	desc = span_green("I love the night!")
 	timer = 20 MINUTES
+
+/datum/stressevent/deadelf
+	timer = 30 SECONDS
+	stressadd = -1
+	desc = span_green("Another dagger-head gone...")

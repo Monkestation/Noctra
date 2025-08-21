@@ -121,6 +121,8 @@
 									D.sate_addiction()
 								else
 									D.add_stress(/datum/stressevent/viewdeath)
+					if(isgrenzel(HU) && isantigrenzel(src))
+						HU.add_stress(/datum/stressevent/deadelf)
 
 	. = ..()
 

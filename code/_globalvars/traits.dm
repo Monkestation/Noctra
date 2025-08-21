@@ -156,6 +156,7 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"Loved By Kittens" = TRAIT_KITTEN_MOM,
 		"Waterbreathing" = TRAIT_WATER_BREATHING,
 		"Moonwater Elixir" = TRAIT_MOONWATER_ELIXIR,
+		"Grenzelhoftian" = TRAIT_GRENZEL,
 		"Violator of the Coven" = TRAIT_VIOLATOR,
 		"Endless Slumber" = TRAIT_TORPOR,
 		"Boundless Energy" = TRAIT_NOENERGY,
@@ -262,6 +263,7 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_FLOWERFIELD_IMMUNITY = span_info("I am immune to the effects of flower fields."),
 	TRAIT_SECRET_OFFICIANT = span_love("I am able to conduct secret wedding ceremonies outside of the church. Love cannot be stopped!"),
 	TRAIT_DUALWIELDER = span_info("I am trained in the art of dual wielding."),
+	TRAIT_GRENZEL = span_info("I am from the lands of Grenzelhoft. I am not fond of elves."),
 	TRAIT_NOENERGY = span_info("I don't need rest; I won't ever feel fatigue.")
 ))
 

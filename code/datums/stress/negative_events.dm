@@ -192,19 +192,44 @@
 	stressadd = 1
 	desc = span_red("Same old ugly mug...")
 
-/datum/stressevent/delf
+/datum/stressevent/bad_species
 	timer = 30 SECONDS
 	stressadd = 1
+	desc = null
+
+/datum/stressevent/bad_species/major
+	timer = 1 MINUTES
+	stressadd = 2
+	desc = null
+
+/datum/stressevent/dwarf
+	desc = span_red("Rock-stompers and Oremongers, the whole lot of them!")
+
+/datum/stressevent/elf
+	desc = span_red("A pole-proportioned dendrophile!")
+
+/datum/stressevent/elf/major
+	desc = span_danger("Weed eaters and mushroom dancers, damned be those elves!")
+
+/datum/stressevent/elf/half
+	desc = span_red("A halfbred mutt, a product of a treehugger and a traitor...")
+
+/datum/stressevent/elf/dark
 	desc = "<span class='red'>A loathesome dark elf.</span>"
 
+/datum/stressevent/elf/major/dark
+	desc = span_red("A dirt elf... why does this underscum even exist?")
+
+/datum/stressevent/elf/halfdrow
+	desc = span_red("A cursed mongrel, an outcast from the underdark.")
+
+/datum/stressevent/elf/major/halfdrow
+	desc = span_red("An abomination of zizo, further diluting someones cursed bloodline...")
+
 /datum/stressevent/tieb
-	timer = 30 SECONDS
-	stressadd = 1
 	desc = "<span class='red'>Helldweller... better stay away.</span>"
 
 /datum/stressevent/horc
-	timer = 30 SECONDS
-	stressadd = 1
 	desc = "<span class='red'>A beast in human skin.</span>"
 
 /datum/stressevent/paracrowd
