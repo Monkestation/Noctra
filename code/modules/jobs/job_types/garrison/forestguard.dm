@@ -8,7 +8,6 @@
 	A fellow soldier had been given the title of Forest Warden for their valorant efforts \
 	and they've plucked you from one dangerous position into another. \
 	Atleast with your battle-family by your side, you will never die alone."
-	flag = FORGUARD
 	department_flag = GARRISON
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_FORGUARD
