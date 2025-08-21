@@ -28,11 +28,6 @@
 	cost = 10
 	contains = /obj/item/needle
 
-/datum/supply_pack/tools/sack
-	name = "Sack"
-	cost = 4
-	contains = /obj/item/storage/sack
-
 /datum/supply_pack/tools/sleepingbag
 	name = "Sleeping Bag"
 	cost = 12

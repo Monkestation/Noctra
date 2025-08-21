@@ -1809,6 +1809,7 @@
 #include "code\modules\cargo\supply_packs\narcotics.dm"
 #include "code\modules\cargo\supply_packs\rawmat.dm"
 #include "code\modules\cargo\supply_packs\seeds.dm"
+#include "code\modules\cargo\supply_packs\storage.dm"
 #include "code\modules\cargo\supply_packs\tools.dm"
 #include "code\modules\cargo\supply_packs\weapons.dm"
 #include "code\modules\chatter\chatter.dm"

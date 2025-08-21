@@ -16,19 +16,19 @@
 		/datum/trader_data/tool_merchant = 10,
 	)
 	essential_packs = list(
-		/datum/supply_pack/apparel/backpack,
-		/datum/supply_pack/apparel/satchel,
-		/datum/supply_pack/apparel/pouch,
+		/datum/supply_pack/storage/backpack,
+		/datum/supply_pack/storage/satchel,
+		/datum/supply_pack/storage/pouch,
 		/datum/supply_pack/tools/rope,
 		/datum/supply_pack/food/drinks/water,
 		/datum/supply_pack/food/hardtack,
 		/datum/supply_pack/apparel/leather_belt,
-		/datum/supply_pack/tools/sack
+		/datum/supply_pack/storage/sack
 	)
 	common_pool = list(
 		// Light armor for desert travel
-		/datum/supply_pack/armor/imask,
-		/datum/supply_pack/armor/smask,
+		/datum/supply_pack/armor/light/imask,
+		/datum/supply_pack/armor/steel/smask,
 		// Apparel suited for desert nomads
 		/datum/supply_pack/apparel/headband,
 		/datum/supply_pack/apparel/sandals,
@@ -67,15 +67,15 @@
 	)
 	uncommon_pool = list(
 		// Better armor
-		/datum/supply_pack/armor/studleather_masterwork,
-		/datum/supply_pack/armor/chainmail_hauberk,
+		/datum/supply_pack/armor/light/splint,
+		/datum/supply_pack/armor/light/haukberk,
 		// Apparel
 		/datum/supply_pack/apparel/raincloak_random,
 		/datum/supply_pack/apparel/leather_gloves,
 		/datum/supply_pack/apparel/black_leather_belt,
 		/datum/supply_pack/apparel/raincloak_furcloak_brown,
 		/datum/supply_pack/apparel/dress_gen_random,
-		/datum/supply_pack/armor/leather_armor,
+		/datum/supply_pack/armor/light/lightleather_armor,
 		// Weapons
 		/datum/supply_pack/weapons/iron/huntingknife,
 		/datum/supply_pack/weapons/iron/dagger,
@@ -108,7 +108,7 @@
 		/datum/supply_pack/apparel/shepherd,
 		/datum/supply_pack/apparel/robe,
 		/datum/supply_pack/apparel/armordress,
-		/datum/supply_pack/armor/studleather,
+		/datum/supply_pack/armor/light/studleather,
 		// Weapons
 		/datum/supply_pack/weapons/iron/spear,
 		/datum/supply_pack/weapons/ranged/shortbow,
