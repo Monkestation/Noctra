@@ -9,24 +9,47 @@
 	H.delete_equipment() //Applying VV to wrong objects is not reccomended.
 	. = ..()
 
-/datum/outfit/varedit/proc/set_equipement_by_slot(slot,item_path)
+/datum/outfit/varedit/proc/set_equipement_by_slot(slot, item_path)
 	switch(slot)
+		if(ITEM_SLOT_PANTS)
+			pants = item_path
+		if(ITEM_SLOT_SHIRT)
+			shirt = item_path
 		if(ITEM_SLOT_ARMOR)
 			suit = item_path
-		if(ITEM_SLOT_BELT)
-			belt = item_path
-		if(ITEM_SLOT_GLOVES)
-			gloves = item_path
 		if(ITEM_SLOT_SHOES)
 			shoes = item_path
-		if(ITEM_SLOT_HEAD)
-			head = item_path
-		if(ITEM_SLOT_MASK)
-			mask = item_path
-		if(ITEM_SLOT_NECK)
-			neck = item_path
+		if(ITEM_SLOT_GLOVES)
+			gloves = item_path
 		if(ITEM_SLOT_RING)
 			ring = item_path
+		if(ITEM_SLOT_MASK)
+			mask = item_path
+		if(ITEM_SLOT_MOUTH)
+			mouth = item_path
+		if(ITEM_SLOT_HEAD)
+			head = item_path
+		if(ITEM_SLOT_CLOAK)
+			cloak = item_path
+		if(ITEM_SLOT_NECK)
+			neck = item_path
+		if(ITEM_SLOT_HANDS)
+			gloves = item_path
+		if(ITEM_SLOT_BELT)
+			belt = item_path
+		if(ITEM_SLOT_BACK_R)
+			backr = item_path
+		if(ITEM_SLOT_BACK_L)
+			backl = item_path
+		if(ITEM_SLOT_WRISTS)
+			wrists = item_path
+		if(ITEM_SLOT_BELT_L)
+			if(isscabbard)
+				LAZYADD(scabbards, item_path)
+				beltl =
+			beltl = item_path
+		if(ITEM_SLOT_BELT_R)
+			beltr = item_path
 
 /proc/collect_vv(obj/item/I)
 	//Temporary/Internal stuff, do not copy these.
