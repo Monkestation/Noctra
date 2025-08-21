@@ -9,14 +9,14 @@
 	H.delete_equipment() //Applying VV to wrong objects is not reccomended.
 	. = ..()
 
-/datum/outfit/varedit/proc/set_equipement_by_slot(slot, item_path)
+/datum/outfit/varedit/proc/set_equipment_by_slot(slot, item_path)
 	switch(slot)
 		if(ITEM_SLOT_PANTS)
 			pants = item_path
 		if(ITEM_SLOT_SHIRT)
 			shirt = item_path
 		if(ITEM_SLOT_ARMOR)
-			suit = item_path
+			armor = item_path
 		if(ITEM_SLOT_SHOES)
 			shoes = item_path
 		if(ITEM_SLOT_GLOVES)
@@ -44,12 +44,12 @@
 		if(ITEM_SLOT_WRISTS)
 			wrists = item_path
 		if(ITEM_SLOT_BELT_L)
-			if(isscabbard)
-				LAZYADD(scabbards, item_path)
-				beltl =
 			beltl = item_path
 		if(ITEM_SLOT_BELT_R)
 			beltr = item_path
+
+/datum/outfit/varedit/proc/add_scabbard(scabbard_path)
+	LAZYADD(scabbards, scabbard_path)
 
 /proc/collect_vv(obj/item/I)
 	//Temporary/Internal stuff, do not copy these.
@@ -84,7 +84,13 @@
 		if(vedits)
 			result["[s]"] = vedits
 		if(istype(I))
-			O.set_equipement_by_slot(s,I.type)
+			if(isscabbard(I)) // dogshit.
+				O.add_scabbard(I.type)
+				var/obj/item/thing_inside_scabbard = I.contents[length(I.contents)]
+				if(istype(thing_inside_scabbard))
+					O.set_equipment_by_slot(s, thing_inside_scabbard.type)
+			else
+				O.set_equipment_by_slot(s,I.type)
 
 	//Copy hands
 	if(held_items.len >= 2) //Not in the mood to let outfits transfer amputees
