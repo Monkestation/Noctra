@@ -131,8 +131,19 @@
 	wbalance = HARD_TO_DODGE
 	sellprice = 15
 
+/obj/item/weapon/sword/ida
 
-
+	force = DAMAGE_SHORTSWORD
+	name = "steel ida"
+	desc = "A Lakkarian short sword with a tapered leaf-shaped blade. It's popular amongst the lower class of Ei Osalla."
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	icon_state = "ida_steel"
+	possible_item_intents = list(/datum/intent/sword/cut/short, /datum/intent/sword/thrust/short, /datum/intent/sword/chop/)
+	gripped_intents = null
+	minstr = 5
+	wdefense = GOOD_PARRY
+	wbalance = HARD_TO_DODGE
+	sellprice = 50
 /*-------\
 | Sabres |	Onehanded, slightly weaker thrust, better for parries. Think rapier but cutting focus.
 \-------*/
@@ -150,7 +161,7 @@
 
 /obj/item/weapon/sword/sabre/hwi
 	name = "steel hwi"
-	desc = "A hefty steel sabre of Lakkarian origin. It's defensive design makes it popular amongst Lakkarian footmen."
+	desc = "A hefty steel sabre of Lakkarian origin. It's defensive design is great for stopping lethal blows"
 	icon = 'icons/roguetown/weapons/lakkari.dmi'
 	icon_state = "hwi_steel"
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop)
@@ -162,7 +173,7 @@
 
 /obj/item/weapon/sword/sabre/hwi/iron
 	name = "iron hwi"
-	desc = "A hefty iron sabre of Lakkarian origin. It's defensive design makes it popular amongst Lakkarian footmen."
+	desc = "A hefty iron sabre of Lakkarian origin. It's defensive design is great for stopping lethal blows."
 	icon = 'icons/roguetown/weapons/lakkari.dmi'
 	icon_state = "hwi_iron"
 	smeltresult = /obj/item/ingot/iron
