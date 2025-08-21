@@ -133,7 +133,7 @@
 	cost = 30
 	contains = /obj/item/clothing/armor/gambeson
 
-/datum/supply_pack/armor/gambeson
+/datum/supply_pack/apparel/arming
 	name = "Arming Jacket"
 	cost = 30
 	contains = /obj/item/clothing/armor/gambeson/arming

@@ -47,6 +47,7 @@
 		/datum/supply_pack/apparel/gladiator_sandals,
 		/datum/supply_pack/apparel/hood,
 		/datum/supply_pack/apparel/gambeson,
+		/datum/supply_pack/apparel/arming,
 		/datum/supply_pack/apparel/boots,
 		/datum/supply_pack/apparel/shortboots,
 		/datum/supply_pack/apparel/fingerless_gloves,
