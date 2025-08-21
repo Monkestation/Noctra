@@ -55,24 +55,8 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	outfit_manager(admin)
 
 /datum/admins/proc/create_outfit(mob/admin)
-	var/list/headwear = typesof(/obj/item/clothing/head)
-	var/list/masks = typesof(/obj/item/clothing/face)
-	var/list/necks = typesof(/obj/item/clothing/neck)
-	var/list/cloaks = typesof(/obj/item/clothing/cloak)
-	var/list/backs = typesof(/obj/item/storage/backpack)
-	var/list/rings = typesof(/obj/item/clothing/ring)
-	var/list/wrists = typesof(/obj/item/clothing/wrists)
-	var/list/gloves = typesof(/obj/item/clothing/gloves)
-	var/list/shirts = typesof(/obj/item/clothing/shirt)
-	var/list/armors = typesof(/obj/item/clothing/armor)
-	var/list/pants = typesof(/obj/item/clothing/pants)
-	var/list/belts = typesof(/obj/item/storage/belt)
-	var/list/shoes = typesof(/obj/item/clothing/shoes)
 
-	var/heads_select = "<select name=\"outfit_head\"><option value=\"\">None</option>"
-	for(var/path in headwear)
-		heads_select += "<option value=\"[path]\">[path]</option>"
-	heads_select += "</select>"
+	heads_select += "<input type="text" id="username" name="username">"
 
 	var/masks_select = "<select name=\"outfit_mask\"><option value=\"\">None</option>"
 	for(var/path in masks)
