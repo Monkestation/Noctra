@@ -83,6 +83,7 @@
 		/datum/supply_pack/armor/steel/chaincoif_steel,
 		/datum/supply_pack/armor/steel/chainlegs_steel,
 		/datum/supply_pack/armor/steel/chainkilt_steel,
+		/datum/supply_pack/armor/light/ihalf_plate,
 		/datum/supply_pack/armor/light/heavy_gloves,
 		/datum/supply_pack/armor/steel/steel_boots,
 		// Apparel
@@ -111,9 +112,12 @@
 		// High-end armor
 		/datum/supply_pack/armor/steel/brigandine,
 		/datum/supply_pack/armor/steel/cuirass,
+		/datum/supply_pack/armor/steel/chainmail,
 		/datum/supply_pack/armor/steel/plate_gloves,
 		/datum/supply_pack/armor/steel/sallet,
+		/datum/supply_pack/armor/steel/bracers,
 		/datum/supply_pack/armor/steel/hounskull,
+		/datum/supply_pack/armor/light/ifull_plate,
 		// Apparel
 		/datum/supply_pack/apparel/ridingboots,
 		// Weapons
@@ -135,7 +139,9 @@
 	exotic_pool = list(
 		/datum/supply_pack/armor/steel/coatofplates,
 		/datum/supply_pack/armor/steel/buckethelm,
+		/datum/supply_pack/armor/steel/chainmail_hauberk,
 		/datum/supply_pack/armor/steel/visorsallet,
+		/datum/supply_pack/armor/steel/half_plate,
 		/datum/supply_pack/jewelry/goldring,
 		/datum/supply_pack/rawmats/riddle_of_steel,
 		/datum/supply_pack/luxury/talkstone,

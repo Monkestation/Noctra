@@ -46,6 +46,7 @@
 		/datum/supply_pack/apparel/undershirt_sailor_red,
 		/datum/supply_pack/apparel/gladiator_sandals,
 		/datum/supply_pack/apparel/hood,
+		/datum/supply_pack/apparel/gambeson,
 		/datum/supply_pack/apparel/boots,
 		/datum/supply_pack/apparel/shortboots,
 		/datum/supply_pack/apparel/fingerless_gloves,
@@ -81,6 +82,7 @@
 		/datum/supply_pack/apparel/silkdress_random,
 		/datum/supply_pack/apparel/tabard,
 		/datum/supply_pack/apparel/halfcloak_random,
+		/datum/supply_pack/apparel/luxurymage,
 		// Exotic foods
 		/datum/supply_pack/food/angler,
 		/datum/supply_pack/food/drinks/winezaladin,
