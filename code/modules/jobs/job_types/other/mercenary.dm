@@ -22,6 +22,7 @@
 	give_bank_account = 3
 	advclass_cat_rolls = list(CTAG_MERCENARY = 20)
 	is_foreigner = TRUE
+	is_recognized = TRUE
 
 /datum/outfit/job/mercenary // Reminder message
 	var/tutorial = "<br><br><font color='#855b14'><span class='bold'>The Gaffer, who feeds and houses you may have work for you todae, go see him at the office outside your lodgings.</span></font><br><br>"

@@ -357,6 +357,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// applied to orphans
 #define TRAIT_ORPHAN 					"Orphan"
 #define TRAIT_RECRUITED					"Recruit" //Trait used to give foreigners their new title
+#define TRAIT_RECOGNIZED				"Recognized" // Given to famous migrants, pilgrims and adventurers, enable their title.
 
 // Divine patron trait bonuses:
 #define TRAIT_SOUL_EXAMINE				"Blessing of Necra"  //can check bodies to see if they have departed

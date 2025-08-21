@@ -104,15 +104,15 @@
 	var/grant_shield = TRUE
 	switch(choice)
 		if("Flail")
-			H.adjust_skillrank(/datum/skill/combat/whipsflails, 1, TRUE)
+			H.clamped_adjust_skillrank(/datum/skill/combat/whipsflails, 1, 4, TRUE)
 		if("Halberd")
-			H.adjust_skillrank(/datum/skill/combat/polearms, 1, TRUE)
+			H.clamped_adjust_skillrank(/datum/skill/combat/polearms, 1, 4, TRUE)
 			grant_shield = FALSE
 		if("Longsword")
 			grant_shield = FALSE
 		if("Unarmed")
 			H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-			H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+			H.clamped_adjust_skillrank(/datum/skill/combat/knives, 2, 4, TRUE)
 			grant_shield = FALSE
 	if(grant_shield)
 		H.adjust_skillrank(/datum/skill/combat/shields, 1, TRUE)

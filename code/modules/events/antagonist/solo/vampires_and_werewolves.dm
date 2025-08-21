@@ -16,7 +16,7 @@
 	earliest_start = 0 SECONDS
 	min_players = 30
 	weight = 8
-
+	minor_prob = 25
 	typepath = /datum/round_event/antagonist/solo/vampires_and_werewolves
 
 	restricted_roles = list(

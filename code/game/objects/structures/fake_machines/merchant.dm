@@ -113,6 +113,12 @@
 	var/budget = 200
 	var/upgrade_flags
 	var/current_cat = "1"
+	var/base_price = 0
+	var/final_price = 0
+	var/taxes = 0
+	// this is the list of supply groups that you can purchase with this machine
+	var/list/unlocked_cats = list("Apparel","Storage","Armor(Light)","Armor(Steel)","Food","drinks","Jewelry","Luxury","Tools","Seeds","Shields","Medicine","Raw Materials",
+								"Weapons (Iron)","Weapons (Steel)","Weapons (Ranged)","Ammunition")
 
 /obj/structure/fake_machine/merchantvend/Initialize()
 	. = ..()
@@ -151,20 +157,20 @@
 			message_admins("MERCHANT [usr.key] IS TRYING TO BUY A [path] WITH THE GOLDFACE. THIS IS AN EXPLOIT.")
 			return
 		var/datum/supply_pack/picked_pack = new path
-		var/cost = picked_pack.cost
-		var/tax_amt=round(SStreasury.tax_value * cost)
-		cost=cost+tax_amt
+		base_price = picked_pack.cost
+		taxes = round(SStreasury.tax_value * base_price)
+		final_price = round(base_price + taxes)
 		if(upgrade_flags & UPGRADE_NOTAX)
-			cost = picked_pack.cost
-		if(budget >= cost)
-			budget -= cost
-			record_round_statistic(STATS_GOLDFACE_VALUE_SPENT, cost)
+			final_price -= base_price
+		if(budget >= final_price)
+			budget -= final_price
+			record_round_statistic(STATS_GOLDFACE_VALUE_SPENT, final_price)
 			if(!(upgrade_flags & UPGRADE_NOTAX))
-				SStreasury.give_money_treasury(tax_amt, "goldface import tax")
-				record_featured_stat(FEATURED_STATS_TAX_PAYERS, human_mob, tax_amt)
-				record_round_statistic(STATS_TAXES_COLLECTED, tax_amt)
+				SStreasury.give_money_treasury(taxes, "goldface import tax")
+				record_featured_stat(FEATURED_STATS_TAX_PAYERS, human_mob, taxes)
+				record_round_statistic(STATS_TAXES_COLLECTED, taxes)
 			else
-				record_round_statistic(STATS_TAXES_EVADED, tax_amt)
+				record_round_statistic(STATS_TAXES_EVADED, taxes)
 		else
 			say("Not enough!")
 			return
@@ -227,16 +233,26 @@
 
 	contents += "</center><BR>"
 
-	var/list/unlocked_cats = list("Apparel","Armor","Consumable","Jewelry","Tools","Seeds","Weapons")
+	var/split = ceil(unlocked_cats.len / 2)
 
 	if(current_cat == "1")
-		contents += "<center>"
-		for(var/X in unlocked_cats)
-			contents += "<a href='byond://?src=[REF(src)];changecat=[X]'>[X]</a><BR>"
-		contents += "</center>"
+		contents += "<table style='width: 100%' line-height: 20px;'>"
+		for(var/i = 1 to split)
+			contents += "<tr>"
+			contents += "<td style='width: 50%; text-align: center;'>\
+				<a href='?src=[REF(src)];changecat=[unlocked_cats[i]]'>[unlocked_cats[i]]</a>\
+				</td>"
+			if(i + split <= unlocked_cats.len)
+				contents += "<td style='width: 50%; text-align: center;'>\
+					<a href='?src=[REF(src)];changecat=[unlocked_cats[i+split]]'>[unlocked_cats[i+split]]</a>\
+					</td>"
+			else
+				contents += "<td></td>"
+			contents += "</tr>"
+		contents += "</table>"
 	else
 		contents += "<center>[current_cat]<BR></center>"
-		contents += "<center><a href='byond://?src=[REF(src)];changecat=1'>\[RETURN\]</a><BR><BR></center>"
+		contents += "<center><a href='?src=[REF(src)];changecat=1'>\[RETURN\]</a><BR><BR></center>"
 		var/list/pax = list()
 		for(var/pack in SSmerchant.supply_packs)
 			var/datum/supply_pack/picked_pack = SSmerchant.supply_packs[pack]
@@ -251,7 +267,7 @@
 	if(!canread)
 		contents = stars(contents)
 
-	var/datum/browser/popup = new(user, "VENDORTHING", "", 370, 400)
+	var/datum/browser/popup = new(user, "VENDORTHING", "", 500, 800)
 	popup.set_content(contents)
 	popup.open()
 

@@ -3,24 +3,33 @@
 	crate_name = "merchant guild's crate"
 	crate_type = /obj/structure/closet/crate/chest/merchant
 
+/datum/supply_pack/luxury/premiun_cutlery
+	name = "Set of Premiun Cutlery"
+	cost = 20
+	contains = list(/obj/item/plate/silver,
+	/obj/item/reagent_containers/glass/bowl/pewter,
+	/obj/item/reagent_containers/glass/cup/silver,
+	/obj/item/kitchen/spoon/pewter,
+	/obj/item/kitchen/fork/pewter)
+
 /datum/supply_pack/luxury/merctoken
 	name = "Mercenary Commendation Writ"
-	cost = 80
+	cost = 100
 	contains = /obj/item/merctoken
 
 /datum/supply_pack/luxury/silver_plaque_belt
 	name = "Silver Plaque Belt"
-	cost = 40
+	cost = 60
 	contains = /obj/item/storage/belt/leather/plaquesilver
 
 /datum/supply_pack/luxury/gold_plaque_belt
 	name = "Gold Plaque Belt"
-	cost = 60
+	cost = 80
 	contains = /obj/item/storage/belt/leather/plaquegold
 
 /datum/supply_pack/luxury/spectacles_golden
 	name = "Golden Spectacles"
-	cost = 40
+	cost = 80
 	contains = /obj/item/clothing/face/spectacles/golden
 
 /datum/supply_pack/luxury/spectacles_onyxa
