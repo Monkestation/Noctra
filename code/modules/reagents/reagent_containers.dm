@@ -37,6 +37,8 @@
 
 	/// Can be labelled by parchment
 	var/can_label_container = FALSE
+	/// Label prefix such as "bottle of"
+	var/label_prefix = null
 	/// Label is currently applied to the bottle
 	var/labelled = FALSE
 	/// Auto label with proc [apply_initial_label] of course requires an override.
@@ -170,7 +172,7 @@
 	if(user)
 		playsound(get_turf(src), 'sound/foley/dropsound/paper_drop.ogg', 70)
 		user.visible_message(span_notice("[user] applies a label to \the [src]."), span_notice("I label \the [src]."), vision_distance = 3)
-	name = label_name
+	name = label_prefix ? "[label_prefix][label_name]" : label_name
 	if(label_desc)
 		desc += " [label_desc]"
 	labelled = TRUE

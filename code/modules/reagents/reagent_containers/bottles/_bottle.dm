@@ -19,8 +19,9 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	fillsounds = list('sound/items/fillcup.ogg')
 	poursounds = list('sound/items/fillbottle.ogg')
 	experimental_onhip = TRUE
-	can_label_container = TRUE
 
+	can_label_container = TRUE
+	label_prefix = "bottle of "
 	var/closed = TRUE
 	/// Do not change desc when opened or closed
 	var/fancy = FALSE
@@ -34,9 +35,9 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	return ..()
 
 /obj/item/reagent_containers/glass/bottle/apply_initial_label()
-	if(!auto_label_name)
+	if(!auto_label_name && !auto_label_desc)
 		return
-	label_container(label_name = "bottle of [auto_label_name]", label_desc = auto_label_desc)
+	label_container(label_name = auto_label_name, label_desc = auto_label_desc)
 
 /obj/item/reagent_containers/glass/bottle/label_container(mob/user, label_name, label_desc)
 	. = ..()
@@ -207,6 +208,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	drinksounds = list('sound/items/drink_bottle (1).ogg','sound/items/drink_bottle (2).ogg')
 	fillsounds = list('sound/items/fillcup.ogg')
 	poursounds = list('sound/items/fillbottle.ogg')
+	label_prefix = "vial of "
 
 /obj/item/reagent_containers/glass/bottle/vial/Initialize()
 	. = ..()
@@ -306,14 +308,9 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	desc = "A wine pot made of glazed clay."
 	icon_state = "blackbottle"
 	fill_icon_thresholds = null
+	label_prefix = "pot of "
 
 /obj/item/reagent_containers/glass/bottle/black/Initialize()
 	. = ..()
 	icon_state = "blackbottle"
 	update_appearance(UPDATE_OVERLAYS)
-
-/obj/item/reagent_containers/glass/bottle/black/apply_initial_label()
-	. = ..()
-	if(!auto_label_name)
-		return
-	label_container(label_name = "pot of [auto_label_name]", label_desc = auto_label_desc)
