@@ -48,6 +48,7 @@
 			pants = /obj/item/clothing/pants/trou/leather/mourning
 			armor = /obj/item/clothing/shirt/robe/necra
 			H.cmode_music = 'sound/music/cmode/church/CombatGravekeeper.ogg'
+			ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)//accustomed to death
 		if(/datum/patron/divine/eora)
 			mask = /obj/item/clothing/face/operavisage
 			neck = /obj/item/clothing/neck/psycross/silver/eora
@@ -65,6 +66,7 @@
 			shoes = /obj/item/clothing/shoes/sandals
 			armor = /obj/item/clothing/shirt/robe/noc
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
+			H.adjust_skillrank(/datum/skill/labor/mathematics, 2, TRUE)
 			var/language = pickweight(list("Dwarvish" = 1, "Elvish" = 1, "Hellspeak" = 1, "Zaladin" = 1, "Orcish" = 1,))
 			switch(language)
 				if("Dwarvish")
@@ -98,6 +100,8 @@
 			shoes = /obj/item/clothing/shoes/sandals
 			armor = /obj/item/clothing/shirt/robe/pestra
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
+			H.adjust_skillrank(/datum/skill/misc/medicine, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/craft/alchemy, 1, TRUE)
 			backpack_contents = list(/obj/item/needle/blessed)
 		if(/datum/patron/divine/dendor)
 			head = /obj/item/clothing/head/padded/briarthorns
@@ -115,6 +119,7 @@
 			armor = /obj/item/clothing/shirt/robe/abyssor
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
 			H.adjust_skillrank(/datum/skill/labor/fishing, 2, TRUE)
+			H.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
 		if(/datum/patron/divine/ravox)
 			head = /obj/item/clothing/head/roguehood/colored/random
 			neck = /obj/item/clothing/neck/psycross/silver/ravox
@@ -128,7 +133,7 @@
 			shoes = /obj/item/clothing/shoes/boots
 			armor = /obj/item/clothing/shirt/robe/colored/plain
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
-			H.adjust_skillrank(/datum/skill/misc/stealing, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/misc/stealing, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/misc/music, 3, TRUE)
 		if(/datum/patron/divine/malum)
 			head = /obj/item/clothing/head/roguehood/colored/random
@@ -137,7 +142,8 @@
 			armor = /obj/item/clothing/shirt/robe/colored/plain
 			backpack_contents += /obj/item/weapon/hammer/iron
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
-			H.adjust_skillrank(/datum/skill/craft/blacksmithing, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/craft/blacksmithing, 2, TRUE)
+			H.adjust_skillrank(/datum/skill/craft/smelting, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/armorsmithing, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/weaponsmithing, 1, TRUE)
 			ADD_TRAIT(H, TRAIT_MALUMFIRE, TRAIT_GENERIC)

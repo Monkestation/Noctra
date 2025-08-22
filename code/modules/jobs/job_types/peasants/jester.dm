@@ -49,7 +49,7 @@
 	H.adjust_skillrank(/datum/skill/misc/athletics, pick(4,4,4,4,5), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/music, pick(1,2,3,4,5,6), TRUE)
 	H.adjust_skillrank(/datum/skill/craft/cooking, pick(1,2,3,4,5,6), TRUE)
-	H.adjust_skillrank(/datum/skill/combat/firearms, pick(1,2,3,4,5,6), TRUE)
+	H.adjust_skillrank(/datum/skill/combat/firearms, pick(0,0,0,0,0,6), TRUE)//I think making it a 1/6 chance is even funnier
 
 	H.base_intelligence = rand(1, 20)
 	H.base_fortune = rand(1, 20)
