@@ -941,7 +941,7 @@
 	output = /obj/item/clothing/head/helmet/battlenun
 	requirements = list(/obj/item/natural/cloth = 1,
 				/obj/item/natural/fibers = 1,
-				/obj/item/clothing/neck/chaincoif/steel)
+				/obj/item/clothing/neck/chaincoif)
 	craftdiff = 4
 	category = "Hat"
 

@@ -32,6 +32,11 @@
 	cost = 80
 	contains = /obj/item/clothing/face/spectacles/golden
 
+/datum/supply_pack/luxury/spectacles_inquisitor
+	name = "Crimson Spectacles"
+	cost = 120
+	contains = /obj/item/clothing/face/spectacles/inqglasses
+
 /datum/supply_pack/luxury/spectacles_onyxa
 	name = "smokey onyxa spectacles"
 	cost = 40
