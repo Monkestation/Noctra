@@ -797,13 +797,13 @@
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/rare/grenzelplate
 
-/datum/anvil_recipe/armor/steel/rare/zaladin_plate_boots
+/datum/anvil_recipe/armor/steel/rare/zaladin_plate_helm
 	name = "Zaladin Bastion Plate Helm (+Bar)"
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/rare/zybanplate
 
 /datum/anvil_recipe/armor/steel/rare/hoplite_plate_helm
-	name = "Hoplite Plate Helm (+Bronze Bar +Steel Bar)"
+	name = "Hoplite Plate Helm (+Bronze Bar, +Steel Bar)"
 	additional_items = list(/obj/item/ingot/bronze, /obj/item/ingot/steel)
 	created_item = /obj/item/clothing/head/rare/hoplite
 
@@ -840,6 +840,58 @@
 	recipe_name = "a pair of Premium Plate Chausses"
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/pants/platelegs/captain
+	craftdiff = 6
+
+/datum/anvil_recipe/armor/steel/matthios_plate_pants
+	name = "Matthiosan Plate Chausses (+Bar)"
+	recipe_name = "a pair of Matthiosan Plate Chausses"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/pants/platelegs/matthios
+	craftdiff = 6
+
+/datum/anvil_recipe/armor/steel/graggarite_plate_pants
+	name = "Graggarite Plate Chausses (+Bar)"
+	recipe_name = "a pair of Graggarite Plate Chausses"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/pants/platelegs/graggar
+	craftdiff = 6
+
+/datum/anvil_recipe/armor/steel/matthios_plate
+	name = "Matthiosan Plate Armor (+Bar x3)"
+	recipe_name = "a Full-Plate matthiosan Armor"
+	additional_items = list(/obj/item/ingot/steel,/obj/item/ingot/steel,/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/armor/plate/full/matthios
+	craftdiff = 6
+
+/datum/anvil_recipe/armor/steel/graggar_plate
+	name = "Graggarite Plate Armor (+Bar x3)"
+	recipe_name = "a Full-Plate Graggarite Armor"
+	additional_items = list(/obj/item/ingot/steel,/obj/item/ingot/steel,/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/armor/plate/full/graggar
+	craftdiff = 6
+
+/datum/anvil_recipe/armor/steel/matthios_plate_gauntlets
+	name = "Matthiosan Plate Gauntlets"
+	recipe_name = "a pair of matthiosan Plate gauntlets"
+	created_item = /obj/item/clothing/gloves/plate/matthios
+	craftdiff = 6
+
+/datum/anvil_recipe/armor/steel/graggar_plate_gauntlets
+	name = "Graggarite Plate Gauntlets"
+	recipe_name = "a pair of graggarite Plate gauntlets"
+	created_item = /obj/item/clothing/gloves/plate/graggar
+	craftdiff = 6
+
+/datum/anvil_recipe/armor/steel/matthios_plate_boots
+	name = "Matthiosan Plate Boots"
+	recipe_name = "a pair of matthios Plate gauntlets"
+	created_item = /obj/item/clothing/shoes/boots/armor/matthios
+	craftdiff = 6
+
+/datum/anvil_recipe/armor/steel/graggar_plate_boots
+	name = "Graggarite Plate Boots"
+	recipe_name = "a pair of graggar Plate boots"
+	created_item = /obj/item/clothing/shoes/boots/armor/graggar
 	craftdiff = 6
 
 //////////////////////////////////////////////////////////////////////////////////////////////

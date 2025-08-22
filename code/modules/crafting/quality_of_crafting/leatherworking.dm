@@ -645,7 +645,7 @@
 	craftdiff = 3
 
 /datum/repeatable_crafting_recipe/leather/top_hat
-	name = "top hat"
+	name = "steampunk top hat"
 	requirements = list(
 		/obj/item/natural/hide/cured = 2,
 	)
@@ -834,7 +834,7 @@
 
 /datum/repeatable_crafting_recipe/leather/standalone/inquisitor_duster
 	name = "inquisitorial duster"
-	output = /obj/item/clothing/armor/leather/advanced
+	output = /obj/item/clothing/armor/medium/scale/inqcoat
 	requirements = list(/obj/item/natural/hide/cured = 2,
 				/obj/item/clothing/armor/medium/scale = 1)
 	craftdiff = 4
