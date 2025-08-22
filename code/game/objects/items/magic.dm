@@ -31,7 +31,7 @@
 /obj/item/scrying/attack_self(mob/user, params)
 	. = ..()
 	if(world.time < last_scry + cooldown)
-		to_chat(user, "<span class='warning'>I look into the ball but only see inky smoke. Maybe I should wait.</span>")
+		to_chat(user, "<span class='warning'>I look into [src] but only see inky smoke. Maybe I should wait.</span>")
 		return
 	var/input = stripped_input(user, "Who are you looking for?", "Scrying Orb")
 	if(!input)
@@ -39,7 +39,7 @@
 	if(!user.key)
 		return
 	if(world.time < last_scry + cooldown)
-		to_chat(user, "<span class='warning'>I look into the ball but only see inky smoke. Maybe I should wait.</span>")
+		to_chat(user, "<span class='warning'>I look into [src] but only see inky smoke. Maybe I should wait.</span>")
 		return
 	if(!user.mind || !user.mind.do_i_know(name=input))
 		to_chat(user, "<span class='warning'>I don't know anyone by that name.</span>")
@@ -50,7 +50,7 @@
 			if(!T)
 				continue
 			if(HAS_TRAIT(HL, TRAIT_ANTISCRYING))
-				to_chat(user, span_warning("I peer into the ball, but an impenetrable fog shrouds [input]."))
+				to_chat(user, span_warning("I peer into [src], but an impenetrable fog shrouds [input]."))
 				to_chat(HL, span_warning("My magical shrouding reacted to something."))
 				return
 			log_game("SCRYING: [user.real_name] ([user.ckey]) has used the scrying orb to leer at [HL.real_name] ([HL.ckey])")
