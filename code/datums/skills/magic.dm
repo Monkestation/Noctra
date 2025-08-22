@@ -8,21 +8,26 @@
 	name = "Miracles"
 	desc = "Miracles is a skill that represents your character's ability to perform divine magic. The higher your skill in Miracles, the more powerful your divine magic will be."
 	dreams = list(
-		"...since the death of God, there has been a vacancy in the realm of miracleworkers... you can change this..."
+		"...since the death of God, there has been a vacancy in the realm of miracleworkers... you can change this...",
+		"...the gagged man in the pillory stares at you with fearful eyes... you raise the crown and place it on his head... a muffled scream escapes through his muzzle as you reach for needle and thread...",
+		"...the soothing hymn of the churchlings engulfs you almost entirely... only the occasional roaring thunder of the canons interrupts the serenity... you join the choirs voice, as the walls around you crumble into the brimstone down below..."
 	)
 
 /datum/skill/magic/blood
 	name = "Blood Sorcery"
 	desc = "Blood Sorcery is a skill that represents your character's ability to perform blood magic. The higher your skill in Blood Sorcery, the more powerful your blood magic will be."
 	dreams = list(
-		"...you burst into the tavern, unsheathing an exotic blade. all the folk in the establishment are pale. you raise your left arm, clenching a fist and slicing into your bicep like a viola... light cascades acrost the entire room..."
+		"...you burst into the tavern, unsheathing an exotic blade. all the folk in the establishment are pale. you raise your left arm, clenching a fist and slicing into your bicep like a viola... light cascades acrost the entire room...",
+		"...you close your eyes and breathe in the air of the nite..."
 	)
 
 /datum/skill/magic/arcane
 	name = "Arcane Magic"
 	desc = "Arcane Magic is a skill that represents your character's ability to perform arcane magic. The higher your skill in Arcane Magic, the more powerful your arcane magic will be and you'll have access to more spells." //Placeholder description.
 	dreams = list(
-		"...you look up to your captors, smiling through broken teeth. the cackling brings a kick to your ribs... you spit a broken tooth out of your mouth, and mutter under your breath... you hear gurgling as a baptism of blue fire spews from his open mouth..."
+		"...you look up to your captors, smiling through broken teeth. the cackling brings a kick to your ribs... you spit a broken tooth out of your mouth, and mutter under your breath... you hear gurgling as a baptism of blue fire spews from his open mouth...",
+		"...your eyes dance over the page. The runes join your waltz, and a stabbing pain errupts in your skull. They tell tales of old, and speak terrible things...",
+		"...the words coming from your lips are in a language you do not speak. The audience listening is not one of this plane. A mighty force reaches out its hand. It extends its finger, and it touches you..."
 	)
 
 /datum/skill/magic/druidic

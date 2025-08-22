@@ -9,7 +9,8 @@
 	name = "Mining"
 	desc = "Mining is a skill that represents your character's ability to mine. The higher your skill in Mining, the faster you can mine and the more materials you can get from veins."
 	dreams = list(
-		"...your masters scream as the man and his guards are slain by the knight... your brothers tremble, screaming and staring as the horror looms over the hero. you grab your pick, and begin to break the chains..."
+		"...your masters scream as the man and his guards are slain by the knight... your brothers tremble, screaming and staring as the horror looms over the hero. you grab your pick, and begin to break the chains...",
+		"..."
 	)
 
 /datum/skill/labor/mining/get_skill_speed_modifier(level)
@@ -40,21 +41,22 @@
 	name = "Taming"
 	desc = "Taming is a skill that represents your character's ability to tame animals. The higher your skill in Taming, the more animals you can tame and the more effective you will be at taming with a higher range."
 	dreams = list(
-		"...the water is stillborne, quiet... pristine, as if untouched... the line bobs down, and you let it writhe as you stare down at your reflection..."
+		"...you slowly pull your cape from your shoulders and hold it to your front... you widen your stance, and fumble with the cloth as sweat runs down your brow... the beast before your snorts and lowers its blood-stained head...",
 	)
 
 /datum/skill/labor/fishing
 	name = "Fishing"
 	desc = "Fishing is a skill that represents your character's ability to fish. The higher your skill in Fishing, the better the fish you can catch and the faster you can catch them."
 	dreams = list(
-		"...my only friend, the worm upon my hook. wriggling, writhing, struggling to surmount the mortal pointlessness that permeates this barren world. i am alone. i am empty. and yet, i fish. ..."
+		"...my only friend, the worm upon my hook. wriggling, writhing, struggling to surmount the mortal pointlessness that permeates this barren world. i am alone. i am empty. and yet, i fish. ...",
+		"...the water is stillborne, quiet... pristine, as if untouched... the line bobs down, and you let it writhe as you stare down at your reflection...",
 	)
 
 /datum/skill/labor/butchering
 	name = "Butchering"
 	desc = "Butchering is a skill that represents your character's ability to butcher animals. The higher your skill in Butchering, the more meat and materials you can get from animals."
 	dreams = list(
-		"...you dream of chiseling a marble statue, a small rabbit... and when you open your eyes, the skin is seperated from the flesh..."
+		"...you dream of chiseling a marble statue, a small cabbit... and when you open your eyes, the skin is seperated from the flesh..."
 	)
 
 /datum/skill/labor/lumberjacking
