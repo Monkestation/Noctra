@@ -562,5 +562,91 @@
                 "code_imp": "removed job flags"
             }
         ]
+    },
+    "2025-08-22": {
+        "wgtjunior743": [
+            {
+                "rscadd": "A new migrant wave called \\\" Magic School Expedition\\\""
+            },
+            {
+                "rscadd": "A new trait called \\\"Recognized\\\""
+            },
+            {
+                "balance": "Some Foreigners now got the trait \\\"Recognized\\\" and their title are shown."
+            },
+            {
+                "bugfix": "Vampire subordinate creation UI now works on small resolutions"
+            },
+            {
+                "balance": "Buff Churn Undead"
+            }
+        ],
+        "SarmentiCampbell": [
+            {
+                "rscadd": "Add a new special trait - Devout Knight"
+            },
+            {
+                "rscadd": "Major/minor antag now have a chance to spawn a minor antag"
+            },
+            {
+                "balance": "bandits are now actually considered soft antags"
+            }
+        ],
+        "Diegoflores31": [
+            {
+                "rscadd": "Adds new shipments for the goldface"
+            },
+            {
+                "rscadd": "Adds new categories for the goldface"
+            },
+            {
+                "refactor": "Goldface UI changed size and format . its now 2 rows instead of one and will automatically acomodate new categories."
+            }
+        ],
+        "Wouju": [
+            {
+                "rscadd": "You can craft faeu dust, raw essentia, pure essentia, transis dust and thaumic iron dust"
+            },
+            {
+                "rscadd": "the essence splitter now accepts manabloom powder, standard quartz mana crystals, small quartz mana crystals and thaumic iron (dust)"
+            },
+            {
+                "rscadd": "cinnabar can be made in an infuser"
+            },
+            {
+                "rscadd": "gender change potion to pot making aka herbal remedies"
+            },
+            {
+                "rscadd": "the composter accepts sinew and viscera as compost"
+            },
+            {
+                "bugfix": "essence vials update their sprite when pouring essence into a cauldron"
+            },
+            {
+                "bugfix": "gnome test tube now properly displays how much essence it needs"
+            },
+            {
+                "balance": "essence infuser is faster now, splitter has greater capacity"
+            },
+            {
+                "balance": "disease cure now requires 1 part earth essence"
+            },
+            {
+                "refactor": "made it so herbal salves now require 21 units and not 20, herbal remedies need 27 instead of 25, rounds up better when divided by 3."
+            }
+        ],
+        "grungussuss": [
+            {
+                "qol": "throne will now glow when it is in a mode"
+            },
+            {
+                "admin": "scrying no longer messages admins"
+            }
+        ],
+        "HijackSpaghetti": [
+            {
+                "rscadd": "New chalk rune and ritual for leyline attunement a.k.a. mana baptism."
+            }
+        ]
     }
 }
