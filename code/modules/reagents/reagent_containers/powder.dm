@@ -271,6 +271,9 @@
 	sellprice = 10
 	color = COLOR_CYAN
 
+//generic herbs and spices used in cooking
+//not as strong as pepper is, meant to be used by peasants and poor people to add some extra flavour
+//feel free to make this be used in anything cooking related
 /obj/item/reagent_containers/powder/herbs
 	name = "herbs and spices"
 	desc = "A bunch of herbs and spices mixed together."
