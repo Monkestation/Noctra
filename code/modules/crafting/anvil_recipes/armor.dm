@@ -83,6 +83,12 @@
 	recipe_name = "an iron maille shirt"
 	created_item = /obj/item/clothing/armor/chainmail/iron
 
+/datum/anvil_recipe/armor/iron/chainkini
+	name = "Iron Chainkini (+fur)"
+	recipe_name = "Fur skirt and maille chest holder"
+	additional_items = list(/obj/item/natural/fur)
+	created_item = /obj/item/clothing/armor/amazon_chainkini
+
 /datum/anvil_recipe/armor/iron/hauberk
 	name = "Iron Hauberk (+Bar)"
 	recipe_name = "a Hauberk"
@@ -518,6 +524,20 @@
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = /obj/item/clothing/armor/medium/scale
 	craftdiff = 3
+
+/datum/anvil_recipe/armor/steel/surcoat
+	name = "Armored Surcoat (+Bar)"
+	recipe_name = "an Armored Surcoat"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/armor/medium/surcoat
+	craftdiff = 3
+
+/datum/anvil_recipe/armor/steel/surcoat/heartfelt
+	name = "Armored Heartfelt Surcoat (+Bar)"
+	recipe_name = "an Armored Heartfeltian Surcoat"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/armor/medium/surcoat/heartfelt
+	craftdiff = 4
 
 // STEEL NECK ARMOR
 /datum/anvil_recipe/armor/steel/bevor

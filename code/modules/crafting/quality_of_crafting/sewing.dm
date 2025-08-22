@@ -422,6 +422,16 @@
 	craftdiff = 2
 	category = "Cloak"
 
+/datum/repeatable_crafting_recipe/sewing/stabard
+	name = "jupon"
+	output = /obj/item/clothing/cloak/stabard/jupon
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 2
+	category = "Cloak"
+
+/obj/item/clothing/cloak/stabard
+
 /datum/repeatable_crafting_recipe/sewing/bedsheet
 	name = "bedsheet"
 	output = /obj/item/bedsheet/cloth
@@ -577,6 +587,114 @@
 	craftdiff = 3
 	category = "Cloak"
 
+/datum/repeatable_crafting_recipe/sewing/guard_cape
+	name = "guard cape"
+	output = /obj/item/clothing/cloak/cape/guard
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
+/datum/repeatable_crafting_recipe/sewing/puritan_cape
+	name = "puritan cape"
+	output = /obj/item/clothing/cloak/cape/archivist
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
+/datum/repeatable_crafting_recipe/sewing/guard_half_cloak
+	name = "guard half cloak"
+	output = /obj/item/clothing/cloak/half/guard
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
+
+/datum/repeatable_crafting_recipe/sewing/guard_half_cloak_alt
+	name = "guard half cloak (alt)"
+	output = /obj/item/clothing/cloak/half/guardsecond
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
+/datum/repeatable_crafting_recipe/sewing/town_watch_cloak
+	name = "town watch cloak"
+	output = /obj/item/clothing/cloak/half/vet
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
+/datum/repeatable_crafting_recipe/sewing/duel_cape
+	name = "duelist cape"
+	output = /obj/item/clothing/cloak/half/duelcape
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
+/datum/repeatable_crafting_recipe/sewing/knight_tabard
+	name = "knight's tabbard"
+	output = /obj/item/clothing/cloak/tabard/knight
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
+/datum/repeatable_crafting_recipe/sewing/guard_tabard
+	name = "garrison tabbard"
+	output = /obj/item/clothing/cloak/tabard/knight/guard
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
+/datum/repeatable_crafting_recipe/sewing/crusader_tabard_alt
+	name = "crusader tabbard (alt)"
+	output = /obj/item/clothing/cloak/tabard/crusader/tief
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
+/datum/repeatable_crafting_recipe/sewing/psydon_tabbard
+	name = "psydonic tababrd"
+	output = /obj/item/clothing/cloak/tabard/adept
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
+/datum/repeatable_crafting_recipe/sewing/guard_surcoat
+	name = "garrison surcoat"
+	output = /obj/item/clothing/cloak/stabard/guard
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
+/datum/repeatable_crafting_recipe/sewing/mercenary_surcoat
+	name = "mercenary surcoat"
+	output = /obj/item/clothing/cloak/stabard/mercenary
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
+/datum/repeatable_crafting_recipe/sewing/gallowglass_surcoat
+	name = "gallowglass surcoat"
+	output = /obj/item/clothing/cloak/stabard/kaledon
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
+
+
+
 /datum/repeatable_crafting_recipe/sewing/desertcape
 	name = "desert cape"
 	output = /obj/item/clothing/cloak/cape/crusader
@@ -611,6 +729,30 @@
 	craftdiff = 3
 	category = "Cloak"
 
+/datum/repeatable_crafting_recipe/sewing/astratatemplar/alt
+	name = "solar surcoat (alt)"
+	output =  /obj/item/clothing/cloak/stabard/templar/astrata/alt
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
+/datum/repeatable_crafting_recipe/sewing/golden_order
+	name = "golden order surcoat"
+	output =  /obj/item/clothing/cloak/stabard/crusader
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
+/datum/repeatable_crafting_recipe/sewing/silver_order
+	name = "silver order surcoat"
+	output =  /obj/item/clothing/cloak/stabard/crusader/t
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
 /datum/repeatable_crafting_recipe/sewing/necratemplar
 	name = "necran surcoat"
 	output = /obj/item/clothing/cloak/stabard/templar/necra
@@ -618,6 +760,16 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
 	category = "Cloak"
+
+/datum/repeatable_crafting_recipe/sewing/necratemplar/alt
+	name = "necran surcoat (alt)"
+	output = /obj/item/clothing/cloak/stabard/templar/necra/alt
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
+
 
 /datum/repeatable_crafting_recipe/sewing/dendortemplar
 	name = "dendorian surcoat"
@@ -634,6 +786,23 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
 	category = "Cloak"
+
+/datum/repeatable_crafting_recipe/sewing/noctemplar/alt
+	name = "lunar surcoat (alt)"
+	output = /obj/item/clothing/cloak/stabard/templar/noc/alt
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
+/datum/repeatable_crafting_recipe/sewing/ravoxtemplar
+	name = "ravox surcoat (alt)"
+	output = /obj/item/clothing/cloak/stabard/templar/ravox
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
 
 /datum/repeatable_crafting_recipe/sewing/abyssortemplar
 	name = "abyssal surcoat"
@@ -754,7 +923,7 @@
 
 /datum/repeatable_crafting_recipe/sewing/jupon
 	name = "jupon"
-	output = /obj/item/clothing/cloak/stabard/surcoat
+	output = /obj/item/clothing/cloak/stabard/jupon
 	requirements = list(/obj/item/natural/cloth = 4,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 4

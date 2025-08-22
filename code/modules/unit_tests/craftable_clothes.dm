@@ -23,6 +23,7 @@ abstract types are automatically excluded.
 		/obj/item/clothing/head/priesthat, // unattainable
 		/obj/item/clothing/head/mob_holder, // change this shit to not clothing, wtf.
 		/obj/item/clothing/ring/gold/burden, // uncraftable
+		/obj/item/clothing/cloak/half/shadowcloak/cult, // cultist item
 
 	)
 	// these don't use misc_flags = CRAFTING_TEST_EXCLUDE because we want to explicitly know which paths we are excluding.
