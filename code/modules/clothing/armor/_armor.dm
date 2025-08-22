@@ -35,6 +35,7 @@
 	var/fire_resist = T0C+100
 	var/blood_overlay_type = "suit"
 	var/togglename = null
+	var/stand_speed_reduction = 1 //Multiplies your standing speed by this value.
 	abstract_type = /obj/item/clothing/armor
 
 /obj/item/clothing/armor/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, dummy_block = FALSE)

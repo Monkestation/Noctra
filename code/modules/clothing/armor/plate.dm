@@ -16,6 +16,7 @@
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS //Has shoulder guards, and nothing else to suggest leg protection
 	prevent_crits = ALL_EXCEPT_BLUNT
 	max_integrity = INTEGRITY_STRONGEST
+	stand_speed_reduction = 0.8
 
 /obj/item/clothing/armor/plate/Initialize()
 	. = ..()

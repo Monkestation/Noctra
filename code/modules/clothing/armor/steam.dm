@@ -22,6 +22,7 @@
 	prevent_crits = ALL_EXCEPT_BLUNT
 	max_integrity = INTEGRITY_STRONGEST
 	item_weight = 25 * BRONZE_MULTIPLIER
+	stand_speed_reduction = 0.6
 
 /obj/item/clothing/armor/steam/Initialize()
 	. = ..()

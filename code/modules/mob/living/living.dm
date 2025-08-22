@@ -785,14 +785,30 @@
 
 /mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
-	if(!instant && !do_after(src, 2 SECONDS, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_USER_DIR_CHANGE), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
+	var/timer = 2
+
+	if(iscarbon(src))
+		var/mob/living/carbon/getter_upper = src
+		var/obj/item/clothing/armor/got_armor = getter_upper.get_item_by_slot(ITEM_SLOT_ARMOR) //grabs the item in your armorslot
+
+		var/stand_speed_mult = 1
+		if(got_armor) //sanity checks so mult doesnt runtime
+			stand_speed_mult = (1 + getter_upper.get_encumbrance()) * got_armor.stand_speed_reduction
+
+		var/proto_timer = 2 * stand_speed_mult
+		if(proto_timer >= timer) //sanity check so you can't stand up faster if you somehow get negative encumbrance
+			timer = proto_timer
+
+	if(!instant && !do_after(src, timer SECONDS, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_USER_DIR_CHANGE), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
 		if(body_position == LYING_DOWN) // stay lying down
 			set_resting(TRUE, silent = TRUE)
 		return
+
 	if(!rest_checks_callback())
 		if(body_position == LYING_DOWN)
 			set_resting(TRUE, silent = TRUE)
 		return
+
 	set_lying_angle(0)
 	set_body_position(STANDING_UP)
 
@@ -2516,7 +2532,7 @@
 	return TRUE
 
 /mob/living/proc/get_carry_capacity()
-	return max(45, STAEND * 12)
+	return max(45, max(STAEND, STACON) * 12)
 
 ///this is returned as decimal value between 0 and 1
 /mob/living/proc/get_encumbrance()
