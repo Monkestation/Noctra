@@ -25,7 +25,7 @@
 	sins = "Betrayal, Sloth, Witchcraft"
 	boons = "Your stamina regeneration delay is lowered during daytime."
 	added_traits = list(TRAIT_APRICITY)
-	devotion_holder = /datum/devotion/astrata
+	devotion_holder = /datum/devotion/divine/astrata
 	confess_lines = list(
 		"ASTRATA IS MY LIGHT!",
 		"ASTRATA BRINGS LAW!",
@@ -42,7 +42,7 @@
 	sins = "Suppressing Truth, Burning Books, Censorship"
 	boons = "You learn, dream, and teach apprentices slightly better. Access to roles with magic."
 	added_traits = list(TRAIT_TUTELAGE)
-	devotion_holder = /datum/devotion/noc
+	devotion_holder = /datum/devotion/divine/noc
 	confess_lines = list(
 		"NOC IS NIGHT!",
 		"NOC SEES THE TRUTH!",
@@ -59,7 +59,7 @@
 	sins = "Deforestation, Overhunting, Disrespecting Nature"
 	boons = "You are immune to kneestingers."
 	added_traits = list(TRAIT_KNEESTINGER_IMMUNITY)
-	devotion_holder = /datum/devotion/dendor
+	devotion_holder = /datum/devotion/divine/dendor
 	confess_lines = list(
 		"DENDOR PROVIDES!",
 		"THE TREEFATHER BRINGS BOUNTY!",
@@ -76,7 +76,7 @@
 	sins = "Fear, Hubris, Forgetfulness"
 	boons = "Leeches will drain very little of your blood."
 	added_traits = list(TRAIT_LEECHIMMUNE)
-	devotion_holder = /datum/devotion/abyssor
+	devotion_holder = /datum/devotion/divine/abyssor
 	confess_lines = list(
 		"ABYSSOR COMMANDS THE WAVES!",
 		"THE OCEAN'S FURY IS ABYSSOR'S WILL!",
@@ -93,7 +93,7 @@
 	sins = "Heretical Magic, Untimely Death, Disturbance of Rest"
 	boons = "You may see the presence of a soul in a body."
 	added_traits = list(TRAIT_SOUL_EXAMINE)
-	devotion_holder = /datum/devotion/necra
+	devotion_holder = /datum/devotion/divine/necra
 	confess_lines = list(
 		"ALL SOULS FIND THEIR WAY TO NECRA!",
 		"THE UNDERMAIDEN IS OUR FINAL REPOSE!",
@@ -110,7 +110,7 @@
 	sins = "Cowardice, Cruelty, Stagnation"
 	boons = "Your used weapons dull slower."
 	added_traits = list(TRAIT_SHARPER_BLADES)
-	devotion_holder = /datum/devotion/ravox
+	devotion_holder = /datum/devotion/divine/ravox
 	confess_lines = list(
 		"RAVOX IS JUSTICE!",
 		"THROUGH STRIFE, GRACE!",
@@ -127,7 +127,7 @@
 	sins = "Boredom, Predictability, Routine"
 	boons = "You can rig different forms of gambling in your favor."
 	added_traits = list(TRAIT_BLACKLEG)
-	devotion_holder = /datum/devotion/xylix
+	devotion_holder = /datum/devotion/divine/xylix
 	confess_lines = list(
 		"ASTRATA IS MY LIGHT!",
 		"NOC IS NIGHT!",
@@ -151,7 +151,7 @@
 	sins = "´Curing´ Abnormalities, Refusing to Help Unfortunates, Groveling"
 	boons = "You may consume rotten food without being sick."
 	added_traits = list(TRAIT_ROT_EATER)
-	devotion_holder = /datum/devotion/pestra
+	devotion_holder = /datum/devotion/divine/pestra
 	confess_lines = list(
 		"PESTRA SOOTHES ALL ILLS!",
 		"DECAY IS A CONTINUATION OF LIFE!",
@@ -168,7 +168,7 @@
 	sins = "Cheating, Shoddy Work, Suicide"
 	boons = "You recover more energy when sleeping."
 	added_traits = list(TRAIT_BETTER_SLEEP)
-	devotion_holder = /datum/devotion/malum
+	devotion_holder = /datum/devotion/divine/malum
 	confess_lines = list(
 		"MALUM IS MY FORGE!",
 		"TRUE VALUE IS IN THE TOIL!",
@@ -185,7 +185,7 @@
 	sins = "Sadism, Abandonment, Ruining Beauty"
 	boons = "You can understand others' needs better."
 	added_traits = list(TRAIT_EXTEROCEPTION)
-	devotion_holder = /datum/devotion/eora
+	devotion_holder = /datum/devotion/divine/eora
 	confess_lines = list(
 		"EORA BRINGS US TOGETHER!",
 		"HER BEAUTY IS EVEN IN THIS TORMENT!",
