@@ -67,6 +67,7 @@
 #include "connect_loc.dm"
 #include "craftable_clothes.dm"
 #include "craftable_turfs.dm"
+#include "crafting_recipe_sanity.dm"
 #include "create_and_destroy.dm"
 #include "faction_supply_packs.dm"
 #include "focus_only_tests.dm"
