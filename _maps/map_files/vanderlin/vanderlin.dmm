@@ -37,7 +37,7 @@
 /area/rogue/outdoors/rtfield/safe)
 "abh" = (
 /obj/structure/closet/crate/crafted_closet,
-/obj/item/clothing/shirt/formal,
+/obj/item/clothing/shirt/maniac,
 /obj/item/clothing/shirt/undershirt/colored/black,
 /obj/item/clothing/pants/tights/colored/black,
 /turf/open/floor/wood,
@@ -8894,7 +8894,7 @@
 /area/rogue/indoors/town/church)
 "fiQ" = (
 /obj/structure/closet/crate/crafted_closet,
-/obj/item/clothing/shirt/formal,
+/obj/item/clothing/shirt/maniac,
 /obj/item/clothing/shirt/undershirt/colored/black,
 /obj/item/clothing/pants/tights/colored/black,
 /obj/item/clothing/shoes/nobleboot,
@@ -20745,7 +20745,7 @@
 "mGE" = (
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/pants/tights/colored/black,
-/obj/item/clothing/shirt/formal,
+/obj/item/clothing/shirt/maniac,
 /obj/item/clothing/shoes/nobleboot,
 /turf/open/floor/wood,
 /area/rogue/indoors/town)
@@ -34238,7 +34238,7 @@
 "uYX" = (
 /obj/structure/closet/crate/crafted_closet,
 /obj/item/clothing/shoes/nobleboot,
-/obj/item/clothing/shirt/formal,
+/obj/item/clothing/shirt/maniac,
 /obj/item/clothing/pants/tights/colored/black,
 /turf/open/floor/wood,
 /area/rogue/indoors/town)
