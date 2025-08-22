@@ -11,7 +11,7 @@
 			target.status_traits = list(); \
 			_L = target.status_traits; \
 			_L[trait] = list(source); \
-			SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait)); \
+			SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait), trait); \
 			SEND_GLOBAL_SIGNAL(COMSIG_ATOM_ADD_TRAIT, target, trait); \
 		} else { \
 			_L = target.status_traits; \
@@ -19,7 +19,7 @@
 				_L[trait] |= list(source); \
 			} else { \
 				_L[trait] = list(source); \
-				SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait)); \
+				SEND_SIGNAL(target, SIGNAL_ADDTRAIT(trait), trait); \
 				SEND_GLOBAL_SIGNAL(COMSIG_ATOM_ADD_TRAIT, target, trait); \
 			}; \
 		} \
@@ -41,7 +41,7 @@
 			};\
 			if (!length(_L[trait])) { \
 				_L -= trait; \
-				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait)); \
+				SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(trait), trait); \
 				SEND_GLOBAL_SIGNAL(COMSIG_ATOM_REMOVE_TRAIT, target, trait); \
 			}; \
 			if (!length(_L)) { \
@@ -58,7 +58,7 @@
 				_L[_T] &= _S; \
 				if (!length(_L[_T])) { \
 					_L -= _T; \
-					SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(_T)); \
+					SEND_SIGNAL(target, SIGNAL_REMOVETRAIT(_T), _T); \
 					SEND_GLOBAL_SIGNAL(COMSIG_ATOM_REMOVE_TRAIT, target, trait); \
 				}; \
 			};\
@@ -75,6 +75,15 @@
 /*
 Remember to update _globalvars/traits.dm if you're adding/removing/renaming traits.
 */
+
+///Movement type traits for movables. See elements/movetype_handler.dm
+#define TRAIT_MOVE_GROUND		"move_ground"
+#define TRAIT_MOVE_FLYING		"move_flying"
+#define TRAIT_MOVE_VENTCRAWLING	"move_ventcrawling"
+#define TRAIT_MOVE_FLOATING		"move_floating"
+#define TRAIT_MOVE_PHASING "move_phasing"
+/// Disables the floating animation. See above.
+#define TRAIT_NO_FLOATING_ANIM		"no-floating-animation"
 
 //mob traits
 #define TRAIT_IMMOBILIZED		"immobilized" //! Prevents voluntary movement.
@@ -234,6 +243,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define OXYLOSS_TRAIT "oxyloss"
 #define BLOODLOSS_TRAIT "bloodloss"
 #define TRAIT_PROFANE "profane"
+#define SPECIES_FLIGHT_TRAIT "species-flight"
+#define LIFECANDLE_TRAIT "lifecandle"
+#define LEAPER_BUBBLE_TRAIT "leaper-bubble"
 /// Trait associated to being buckled
 #define BUCKLED_TRAIT "buckled"
 /// Trait associated to being held in a chokehold
@@ -506,6 +518,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// makes your footsteps completely silent
 #define TRAIT_SILENT_FOOTSTEPS "silent_footsteps"
+
+/// Trait from mob/living/update_transform()
+#define UPDATE_TRANSFORM_TRAIT "update_transform"
+
+/// Trait from ai attacks
+#define AI_ATTACK_TRAIT "ai_attack_trait"
 
 #define TRAIT_DUALWIELDER "Dual Wielder"
 

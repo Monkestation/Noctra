@@ -244,7 +244,6 @@ GLOBAL_LIST_EMPTY(buildmode_appearance_cache)
 	preview_image.pixel_x = pixel_x_offset
 	preview_image.pixel_y = pixel_y_offset
 
-
 /**
  * Update the preview object's position and appearance
  */

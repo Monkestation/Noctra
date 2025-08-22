@@ -5,15 +5,12 @@
 	or other /datum/visual_ui that
 	* mind datums and their elements should avoid holding references to atoms in the real world.
 */
-/obj/abstract
-	base_icon_state
 
 /obj/abstract/proc/get_view_size()
 	if(usr && usr.client)
 		. = usr.client.view
 	else
 		. = world.view
-
 
 // During game setup we fill a list with the IDs and types of every /datum/visual_ui subtypes
 GLOBAL_VAR_INIT(visual_ui_init, FALSE)

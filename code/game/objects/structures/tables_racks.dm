@@ -178,8 +178,8 @@
 				if(!icon_x || !icon_y)
 					return
 				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-				I.pixel_x = initial(I.pixel_x) + CLAMP(icon_x - 16, -(world.icon_size/2), world.icon_size/2)
-				I.pixel_y = initial(I.pixel_y) + CLAMP(icon_y - 16, -(world.icon_size/2), world.icon_size/2)
+				I.pixel_x = I.base_pixel_x + CLAMP(icon_x - 16, -(world.icon_size/2), world.icon_size/2)
+				I.pixel_y = I.base_pixel_y + CLAMP(icon_y - 16, -(world.icon_size/2), world.icon_size/2)
 				after_added_effects(I, user)
 				return TRUE
 
@@ -453,8 +453,8 @@
 				if(!icon_x || !icon_y)
 					return
 				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-				I.pixel_x = initial(I.pixel_x) + CLAMP(icon_x - 16, -(world.icon_size/2), world.icon_size/2)
-				I.pixel_y = initial(I.pixel_y) + CLAMP(icon_y - 16, -(world.icon_size/2), world.icon_size/2)
+				I.pixel_x = I.base_pixel_x + CLAMP(icon_x - 16, -(world.icon_size/2), world.icon_size/2)
+				I.pixel_y = I.base_pixel_y + CLAMP(icon_y - 16, -(world.icon_size/2), world.icon_size/2)
 				return 1
 
 /obj/structure/rack/attack_paw(mob/living/user)
@@ -474,30 +474,22 @@
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "shelf"
 	climbable = FALSE
-	dir = SOUTH
-	pixel_y = 32
 	density = FALSE
 	climb_offset = 0
+	SET_BASE_PIXEL(0, 32)
 
 /obj/structure/rack/shelf/big
 	icon_state = "shelf_big"
-	climbable = FALSE
-	dir = SOUTH
-	pixel_y = 16
-	density = FALSE
-	climb_offset = 0
+	SET_BASE_PIXEL(0, 16)
 
 /obj/structure/rack/shelf/biggest
 	icon_state = "shelf_biggest"
-	pixel_y = 0
-	density = TRUE
-	climb_offset = 10
+	SET_BASE_PIXEL(0, 0)
 
 // Shelves have been made nondense. The only functional difference this has now is a lower pixel_y
 /obj/structure/rack/shelf/notdense
 	density = FALSE
-	pixel_y = 24
-	climb_offset = 0
+	SET_BASE_PIXEL(0, 24)
 
 // Necessary to avoid a critical bug with disappearing weapons.
 /obj/structure/rack/attackby(obj/item/I, mob/user, params)
@@ -511,8 +503,8 @@
 				if(!icon_x || !icon_y)
 					return
 				//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-				I.pixel_x = initial(I.pixel_x) + CLAMP(icon_x - 16, -(world.icon_size/2), world.icon_size/2)
-				I.pixel_y = initial(I.pixel_y) + CLAMP(icon_y - 16, -(world.icon_size/2), world.icon_size/2)
+				I.pixel_x = I.base_pixel_x + CLAMP(icon_x - 16, -(world.icon_size/2), world.icon_size/2)
+				I.pixel_y = I.base_pixel_y + CLAMP(icon_y - 16, -(world.icon_size/2), world.icon_size/2)
 				return 1
 	else
 		. = ..()

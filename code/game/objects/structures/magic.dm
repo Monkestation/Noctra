@@ -4,8 +4,7 @@
 	icon = 'icons/roguetown/misc/96x96.dmi'
 	icon_state = "circle"
 	alpha = 180
-	pixel_y = -32
-	pixel_x = -32
+	SET_BASE_PIXEL(-32, -32)
 	var/wall_type = /obj/effect/forcefield/wizard
 	var/depleted
 

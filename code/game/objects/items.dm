@@ -759,12 +759,12 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(item_flags & DROPDEL)
 		qdel(src)
 		return
-	pixel_x = initial(pixel_x)
-	pixel_y = initial(pixel_y)
+	pixel_x = base_pixel_x
+	pixel_y = base_pixel_y
 	if(isturf(loc))
 		if(!ontable())
 			var/oldy = pixel_y
-			pixel_y = pixel_y+5
+			pixel_y += 5
 			animate(src, pixel_y = oldy, time = 0.5)
 	item_flags &= ~IN_INVENTORY
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED,user)
@@ -987,8 +987,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		. = callback.Invoke()
 	item_flags &= ~IN_INVENTORY
 	if(!pixel_y && !pixel_x)
-		pixel_x = rand(-8,8)
-		pixel_y = rand(-8,8)
+		pixel_x = base_pixel_x + rand(-8,8)
+		pixel_y = base_pixel_y + rand(-8,8)
 
 
 /obj/item/proc/remove_item_from_storage(atom/newLoc) //please use this if you're going to snowflake an item out of a obj/item/storage
@@ -1128,8 +1128,8 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(!QDELETED(src))
 		var/turf/T = get_turf(src)
 		var/obj/effect/decal/cleanable/molten_object/MO = new(T)
-		MO.pixel_x = rand(-16,16)
-		MO.pixel_y = rand(-16,16)
+		MO.pixel_x = MO.base_pixel_x + rand(-16,16)
+		MO.pixel_y = MO.base_pixel_y + rand(-16,16)
 		MO.desc = ""
 		..()
 

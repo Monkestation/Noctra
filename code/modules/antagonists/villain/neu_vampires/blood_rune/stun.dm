@@ -86,48 +86,49 @@
 /obj/effect/blood_ritual/stun
 	icon_state = "stun_warning"
 	color = "black"
-	anchored = 1
+	anchored = TRUE
 	alpha = 0
 	plane = GAME_PLANE_UPPER
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/stun_duration = 10 SECONDS
 
-/obj/effect/blood_ritual/stun/New(turf/loc, type = 1, mob/living/carbon/caster)
-	..()
+/obj/effect/blood_ritual/stun/Initialize(mapload, type = 1, mob/living/carbon/caster)
+	. = ..()
 
-	switch (type)
-		if (1)
+	switch(type)
+		if(1)
 			stun_duration = 10 SECONDS
-			anim(target = loc, a_icon = 'icons/effects/vampire/64x64.dmi', flick_anim = "rune_stun", sleeptime = 20, offX = -32/2, offY = -32/2, plane = ABOVE_LIGHTING_PLANE)
+			anim(target = loc, a_icon = 'icons/effects/vampire/64x64.dmi', flick_anim = "rune_stun", sleeptime = 20, offX = -16, offY = -16, plane = ABOVE_LIGHTING_PLANE)
 			icon = 'icons/effects/vampire/480x480.dmi'
-			pixel_x = -224
-			pixel_y = -224
-			animate(src, alpha = 255, time = 10)
-		if (2)
+			SET_BASE_PIXEL(-224, -224)
+			animate(src, alpha = 255, time = 1 SECONDS)
+		if(2)
 			stun_duration = 5 SECONDS
-			anim(target = loc, a_icon = 'icons/effects/vampire/64x64.dmi', flick_anim = "talisman_stun", sleeptime = 20, offX = -32/2, offY = -32/2, plane = ABOVE_LIGHTING_PLANE)
+			anim(target = loc, a_icon = 'icons/effects/vampire/64x64.dmi', flick_anim = "talisman_stun", sleeptime = 20, offX = -16, offY = -16, plane = ABOVE_LIGHTING_PLANE)
 			icon = 'icons/effects/vampire/224x224.dmi'
-			pixel_x = -96
-			pixel_y = -96
-			animate(src, alpha = 255, time = 10)
+			SET_BASE_PIXEL(-96, -96)
+			animate(src, alpha = 255, time = 1 SECONDS)
 
 	playsound(src, 'sound/effects/vampire/stun_rune_charge.ogg', 75, 0, 0)
-	spawn(20)
-		playsound(src, 'sound/effects/vampire/stun_rune.ogg', 75, 0, 0)
-		visible_message(span_warning("The rune explodes in a bright flash of chaotic energies.") )
 
-		for(var/mob/living/L in dview(7, get_turf(src)))
-			var/duration = stun_duration
-			var/dist = cheap_pythag(L.x - src.x, L.y - src.y)
-			if (type == 1 && dist >= 8)
-				continue
-			if (type == 2 && dist >= 4)//talismans have a reduced range
-				continue
-			shadow(L, loc, "rune_stun")
-			if (L.clan)
-				duration = 1 SECONDS
-			if(iscarbon(L))
-				var/mob/living/carbon/C = L
-				C.Knockdown(duration)
-				C.Stun(duration)
-		qdel(src)
+	addtimer(CALLBACK(src, PROC_REF(do_stun)), 2 SECONDS)
+
+/obj/effect/blood_ritual/stun/proc/do_stun()
+	playsound(src, 'sound/effects/vampire/stun_rune.ogg', 75, 0, 0)
+	visible_message(span_warning("The rune explodes in a bright flash of chaotic energies!") )
+
+	for(var/mob/living/L in dview(7, get_turf(src)))
+		var/duration = stun_duration
+		var/dist = cheap_pythag(L.x - src.x, L.y - src.y)
+		if(type == 1 && dist >= 8)
+			continue
+		if(type == 2 && dist >= 4)//talismans have a reduced range
+			continue
+		shadow(L, get_turf(src), "rune_stun")
+		if(L.clan)
+			duration = 1 SECONDS
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			C.Knockdown(duration)
+			C.Stun(duration)
+	qdel(src)

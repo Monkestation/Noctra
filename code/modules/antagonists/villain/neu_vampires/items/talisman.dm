@@ -13,17 +13,10 @@
 	var/spell_type = null
 	var/uses = 1
 
-/obj/item/talisman/New()
-	..()
-	pixel_x = 0
-	pixel_y = 0
-
-
 /obj/item/talisman/salt_act()
 	if (attuned_rune && attuned_rune.active_spell)
 		attuned_rune.active_spell.salt_act(get_turf(src))
 	fire_act(1000, 200)
-
 
 /obj/item/talisman/proc/talisman_name()
 	var/datum/rune_spell/instance = spell_type

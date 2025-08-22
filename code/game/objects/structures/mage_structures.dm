@@ -98,7 +98,7 @@ GLOBAL_LIST_EMPTY(mana_fountains)
 	icon = 'icons/roguetown/misc/64x64.dmi'
 	icon_state = "manafountain"
 	layer = BELOW_MOB_LAYER
-	pixel_x = -16
+	SET_BASE_PIXEL(-16, 0)
 	layer = -0.1
 	has_initial_mana_pool = TRUE
 

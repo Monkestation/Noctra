@@ -7,7 +7,7 @@ GLOBAL_LIST_EMPTY(letters_sent)
 	icon_state = "mail"
 	density = FALSE
 	blade_dulling = DULLING_BASH
-	pixel_y = 32
+	SET_BASE_PIXEL(0, 32)
 	var/coin_loaded = FALSE
 	var/ournum
 	var/mailtag
@@ -253,12 +253,10 @@ GLOBAL_LIST_EMPTY(letters_sent)
 	return ..()
 
 /obj/structure/fake_machine/mail/r
-	pixel_y = 0
-	pixel_x = 32
+	SET_BASE_PIXEL(32, 0)
 
 /obj/structure/fake_machine/mail/l
-	pixel_y = 0
-	pixel_x = -32
+	SET_BASE_PIXEL(-32, 0)
 
 /obj/structure/fake_machine/mail/update_overlays()
 	. = ..()
@@ -300,7 +298,7 @@ GLOBAL_LIST_EMPTY(letters_sent)
 	name = "MASTER OF MAILS"
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "mailspecial"
-	pixel_y = 32
+	SET_BASE_PIXEL(0, 32)
 	max_integrity = 0
 	density = FALSE
 	blade_dulling = DULLING_BASH
