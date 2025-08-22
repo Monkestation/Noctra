@@ -11,7 +11,7 @@
 	if(!user.clan)
 		return
 
-	if(user.bloodpool < 4000)
+	if(user.maxbloodpool < 4000)
 		to_chat(user, span_warning("I have yet to regain this aspect of my power."))
 		return TRUE
 
@@ -23,12 +23,12 @@
 				to_chat(user, span_warning("I cannot summon any more death knights."))
 				return
 			if(!user.has_bloodpool_cost(DEATH_KNIGHT_COST))
-				to_chat(user, span_warning("I do not have enough vitae."))
+				to_chat(user, span_warning("I do not have enough vitae, I need [DEATH_KNIGHT_COST] vitae for a Death Knight."))
 				return
 			if(!do_after(user, 10 SECONDS, src))
 				return
 			if(!user.has_bloodpool_cost(DEATH_KNIGHT_COST))
-				to_chat(user, span_warning("I no longer have enough vitae."))
+				to_chat(user, span_warning("I do not have enough vitae, I need [DEATH_KNIGHT_COST] vitae for a Death Knight."))
 				return
 
 			user.adjust_bloodpool(DEATH_KNIGHT_COST)
@@ -74,7 +74,7 @@
 		to_chat(user, span_warning("The Moon is watching. I must wait for Her to return."))
 		return
 	if(!user.adjust_bloodpool(SUN_STEAL_COST))
-		to_chat(user, span_warning("I do not have enough vitae."))
+		to_chat(user, span_warning("I do not have enough vitae, I need [SUN_STEAL_COST] vitae to steal the Sun."))
 		return
 
 	return TRUE
