@@ -21,11 +21,6 @@
 	/// Traits added by this
 	var/list/traits = list()
 
-/datum/devotion/New()
-	. = ..()
-	if(passive_devotion_gain || passive_progression_gain)
-		START_PROCESSING(SSprocessing, src)
-
 /datum/devotion/Destroy(force)
 	remove()
 	STOP_PROCESSING(SSprocessing, src)
@@ -41,6 +36,8 @@
 /datum/devotion/proc/grant_to(mob/living/carbon/human/holder)
 	if(!holder)
 		return
+	if(passive_devotion_gain || passive_progression_gain)
+		START_PROCESSING(SSprocessing, src)
 	holder_mob = holder
 	holder_mob.cleric = src
 	for(var/trait as anything in traits)
