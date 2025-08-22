@@ -1,5 +1,4 @@
 ////// Roguetown version of the kitchen spike
-#define VIABLE_MOB_CHECK(X) (isliving(X))
 /obj/structure/meathook
 	name = "meathook"
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
@@ -9,7 +8,8 @@
 	anchored = TRUE
 	max_integrity = 250
 	buckle_lying = 0
-	can_buckle = 1
+	can_buckle = TRUE
+	buckle_prevents_pull = TRUE
 
 	var/draining_blood = FALSE
 
@@ -41,39 +41,39 @@
 /obj/structure/meathook/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/meathook/attack_hand(mob/user)
-	if(VIABLE_MOB_CHECK(user.pulling) && !has_buckled_mobs())
-		var/mob/living/L = user.pulling
-		L.visible_message(span_danger("[user] starts hanging [L] on [src]!"), span_danger("[user] starts hanging you on [src]]!"), span_hear("I hear the sound of clanging chains..."))
-		if(do_after(user, 12 SECONDS, src))
-			if(has_buckled_mobs())
-				return
-			if(L.buckled)
-				return
-			if(user.pulling != L)
-				return
-			playsound(src.loc, 'sound/foley/butcher.ogg', 25, TRUE)
-			L.visible_message(span_danger("[user] hangs [L] on [src]!"), span_danger("[user] hangs you on [src]]!"))
-			L.forceMove(drop_location())
-			L.emote("scream")
-			L.add_splatter_floor()
-			L.adjustBruteLoss(30)
-			L.setDir(2)
-			buckle_mob(L, force=1)
-			var/matrix/m90 = matrix(L.transform)
-			m90.Turn(90)
-			m90.Translate(12,12)
-			animate(L, transform = m90, time = 3)
-			L.pixel_y = L.get_standard_pixel_x_offset()
-			draining_blood = FALSE
-	else if (has_buckled_mobs())
-		for(var/mob/living/L in buckled_mobs)
-			user_unbuckle_mob(L, user)
-	else
-		..()
-
 /obj/structure/meathook/user_buckle_mob(mob/living/M, mob/user, check_loc)
-	return
+	if(!isliving(user.pulling))
+		return FALSE
+	if(has_buckled_mobs())
+		return FALSE
+
+	var/mob/living/L = user.pulling
+	L.visible_message(span_danger("[user] starts hanging [L] on [src]!"), span_danger("[user] starts hanging you on [src]]!"), span_hear("I hear the sound of clanging chains..."))
+	if(!do_after(user, 12 SECONDS, src))
+		return FALSE
+
+	if(has_buckled_mobs())
+		return FALSE
+	if(L.buckled)
+		return FALSE
+	if(user.pulling != L)
+		return FALSE
+
+	playsound(src.loc, 'sound/foley/butcher.ogg', 25, TRUE)
+	L.visible_message(span_danger("[user] hangs [L] on [src]!"), span_danger("[user] hangs you on [src]]!"))
+	L.forceMove(drop_location())
+	L.emote("scream")
+	L.add_splatter_floor()
+	L.adjustBruteLoss(30)
+	L.setDir(2)
+	buckle_mob(L, force=1)
+	var/matrix/m90 = matrix(L.transform)
+	m90.Turn(90)
+	m90.Translate(12,12)
+	animate(L, transform = m90, time = 3)
+	L.pixel_y = L.get_standard_pixel_x_offset(180)
+	draining_blood = FALSE
+	return TRUE
 
 /obj/structure/meathook/user_unbuckle_mob(mob/living/buckled_mob, mob/user)
 	if(buckled_mob)
@@ -82,7 +82,7 @@
 			M.visible_message(span_notice("[user] is trying to pull [M] free of [src]!"),\
 				span_notice("[user] is trying to pull me off [src]! It hurts!"),\
 				span_hear("I hear the sound of torn flesh and whimpering..."))
-			if(!do_after(user, 30 SECONDS, src))
+			if(!do_after(user, 12 SECONDS, src))
 				if(M && M.buckled)
 					M.visible_message(span_notice("[user] fails to free [M]!"),\
 					span_notice("[user] fails to pull me off of [src]!"))
@@ -92,7 +92,7 @@
 				span_notice("I struggle to break free from [src], tearing my legs! (Stay still for two minutes.)"),\
 				span_hear("I hear the sound of torn flesh and whimpering..."))
 			M.adjustBruteLoss(30)
-			if(!do_after(M, 2 MINUTES, src))
+			if(!do_after(M, 30 SECONDS, src))
 				if(M && M.buckled)
 					to_chat(M, span_warning("I fail to free myself!"))
 				return
@@ -134,8 +134,8 @@
 
 /obj/structure/meathook/proc/release_mob(mob/living/M)
 	var/matrix/m270 = matrix(M.transform)
-	m270.Turn(270)
 	m270.Translate(-12,-12)
+	m270.Turn(-90)
 	animate(M, transform = m270, time = 3)
 	M.pixel_y = M.get_standard_pixel_y_offset()
 	M.adjustBruteLoss(30)
@@ -243,5 +243,3 @@
 			var/boon = user.get_learning_boon(/datum/skill/labor/butchering)
 			var/amt2raise = user.STAINT
 			user.mind.add_sleep_experience(/datum/skill/labor/butchering, amt2raise * boon, FALSE)
-
-#undef VIABLE_MOB_CHECK

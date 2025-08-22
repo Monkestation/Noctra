@@ -133,6 +133,20 @@
 	output = /obj/item/reagent_containers/food/snacks/cooked/egg
 	cooked_smell = /datum/pollutant/food/fried_eggs
 
+/datum/container_craft/pan/egg/create_start_callback(crafter, initiator, highest_multiplier)
+	return CALLBACK(src, PROC_REF(on_start_recipe), crafter, initiator, highest_multiplier)
+
+/datum/container_craft/pan/egg/proc/on_start_recipe(atom/crafter, initiator, highest_multiplier)
+	var/list/stored_items = crafter.contents
+	playsound(crafter, 'sound/foley/eggbreak.ogg', 100, TRUE, -1)
+	crafter.visible_message("The [lowertext(name)] starts to cook.")
+	var/count = 0
+	for(var/obj/item/reagent_containers/food/snacks/egg/egg in stored_items)
+		if(count >= highest_multiplier)
+			break
+		egg.icon_state = "rawegg"
+	crafter.update_appearance(UPDATE_OVERLAYS)
+
 /datum/container_craft/pan/fried_potato
 	name = "Fried Potato"
 	requirements = list(/obj/item/reagent_containers/food/snacks/veg/potato_sliced = 1)

@@ -41,9 +41,9 @@
             if(!adj_plant_type) continue
 
             var/datum/plant_def/adj_plant = new adj_plant_type()
-            n_bonus += FLOOR(adj_plant.nitrogen_production , 1)
-            p_bonus += FLOOR(adj_plant.phosphorus_production , 1)
-            k_bonus += FLOOR(adj_plant.potassium_production , 1)
+            n_bonus += FLOOR((adj_plant.nitrogen_production)/2, 1)
+            p_bonus += FLOOR((adj_plant.phosphorus_production)/2, 1)
+            k_bonus += FLOOR((adj_plant.potassium_production)/2, 1)
             qdel(adj_plant)
 
     // Calculate net values
@@ -346,9 +346,9 @@
 
                     // Adjacent plant gives half its production (floored) as bonus
                     var/datum/plant_def/adj_plant = new adj_plant_type()
-                    bonus_n_prod += FLOOR(adj_plant.nitrogen_production ,1)
-                    bonus_p_prod += FLOOR(adj_plant.phosphorus_production ,1)
-                    bonus_k_prod += FLOOR(adj_plant.potassium_production ,1)
+                    bonus_n_prod += FLOOR((adj_plant.nitrogen_production)/2, 1)
+                    bonus_p_prod += FLOOR((adj_plant.phosphorus_production)/2, 1)
+                    bonus_k_prod += FLOOR((adj_plant.potassium_production)/2, 1)
                     qdel(adj_plant)
 
     totals["total_n_req"] = total_n_req

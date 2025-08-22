@@ -9,6 +9,7 @@
 	produce_amount_min = 2
 	produce_amount_max = 3
 	maturation_time = FAST_GROWING
+	produce_time = SLOW_PRODUCE_TIME
 	water_drain_rate = 1 / (2 MINUTES)
 	can_grow_underground = FALSE  // Tea needs sunlight
 	plant_family = FAMILY_THEACEAE
@@ -22,6 +23,6 @@
 	seed_identity = "tea seeds"
 
 /datum/plant_def/tea/set_genetic_tendencies(datum/plant_genetics/base_genetics)
-	base_genetics.quality_trait = TRAIT_GRADE_EXCELLENT  // Tea is prized for quality
+	base_genetics.quality_trait = TRAIT_GRADE_GOOD  // Tea is prized for quality
 	base_genetics.disease_resistance = TRAIT_GRADE_GOOD  // Natural compounds provide some resistance
 	base_genetics.water_efficiency = TRAIT_GRADE_GOOD  // Adapted to various climates

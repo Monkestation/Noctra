@@ -1,11 +1,3 @@
-/datum/container_craft/cooking/drugs
-	abstract_type = /datum/container_craft/cooking/drugs
-	cooking_sound = /datum/looping_sound/boiling
-
-/datum/container_craft/cooking/arcyne
-	abstract_type = /datum/container_craft/cooking/arcyne
-	cooking_sound = /datum/looping_sound/boiling
-
 /datum/container_craft/cooking
 	abstract_type = /datum/container_craft/cooking
 	category = "Soups"
@@ -45,17 +37,18 @@
 	return real_cooking_time
 
 /datum/container_craft/cooking/create_item(obj/item/crafter, mob/initiator, list/found_optional_requirements, list/found_optional_wildcards, list/found_optional_reagents)
-	var/turf/pot_turf = get_turf(crafter)
-	var/datum/reagent/first =  reagent_requirements[1]
-	var/reagent_amount =  reagent_requirements[first]
-	for(var/j = 1 to output_amount)
-		crafter.reagents.add_reagent(created_reagent, reagent_amount * water_conversion)
-		after_craft(null, crafter, initiator, found_optional_requirements, found_optional_wildcards, found_optional_reagents)
-		if(finished_smell)
-			pot_turf.pollute_turf(finished_smell, pollute_amount)
-	playsound(pot_turf, "bubbles", 30, TRUE)
-
-
+	if(created_reagent)
+		var/turf/pot_turf = get_turf(crafter)
+		var/datum/reagent/first =  reagent_requirements[1]
+		var/reagent_amount =  reagent_requirements[first]
+		for(var/j = 1 to output_amount)
+			crafter.reagents.add_reagent(created_reagent, reagent_amount * water_conversion)
+			after_craft(null, crafter, initiator, found_optional_requirements, found_optional_wildcards, found_optional_reagents)
+			if(finished_smell)
+				pot_turf.pollute_turf(finished_smell, pollute_amount)
+		playsound(pot_turf, "bubbles", 30, TRUE)
+	else
+		..()
 
 /datum/container_craft/cooking/after_craft(atom/created_output, obj/item/crafter, mob/initiator, list/found_optional_requirements, list/found_optional_wildcards, list/found_optional_reagents, list/removing_items)
 	. = ..()

@@ -11,11 +11,13 @@
 #define NUTRIENT_DEFICIENCY_DAMAGE_RATE 0.04
 
 // Plant growth timing constants
+#define DEFAULT_GROW_TIME 6 MINUTES
 #define FAST_GROWING 5 MINUTES
 #define VERY_FAST_GROWING 4 MINUTES
-#define HUNGRINESS_DEMANDING 35
-#define HUNGRINESS_NORMAL 25
-#define HUNGRINESS_TINY 15
+
+#define SLOW_PRODUCE_TIME 4 MINUTES
+#define DEFAULT_PRODUCE_TIME 3 MINUTES
+#define FAST_PRODUCE_TIME 2 MINUTES
 
 // Genetic trait definitions
 #define TRAIT_YIELD 1
@@ -25,11 +27,11 @@
 #define TRAIT_WATER_EFFICIENCY 5
 #define TRAIT_COLD_RESISTANCE 6
 
-// Trait grades (0-100, higher is better)
+// Trait grades (higher is better)
 #define TRAIT_GRADE_POOR 20
 #define TRAIT_GRADE_AVERAGE 50
-#define TRAIT_GRADE_GOOD 70
-#define TRAIT_GRADE_EXCELLENT 90
+#define TRAIT_GRADE_GOOD 80
+#define TRAIT_GRADE_EXCELLENT 110
 
 // Mutation chances
 #define BASE_MUTATION_CHANCE 1  // 1% base chance

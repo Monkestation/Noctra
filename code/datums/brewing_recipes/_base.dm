@@ -51,7 +51,7 @@
 	var/obj/structure/fermentation_keg/source_keg = source
 	var/obj/item/bottle_kit/bottle_kit = attacked_item
 	var/bottle_name = secondary_name ? "[lowertext(secondary_name)]" : "[lowertext(name)]"
-	for(var/i in 1 to brewed_amount)
+	for(var/i in 1 to (brewed_amount * number_of_repeats))
 		var/obj/item/reagent_containers/glass/bottle/brewing_bottle/bottle_made = new /obj/item/reagent_containers/glass/bottle/brewing_bottle(get_turf(source))
 		bottle_made.icon_state = "[bottle_kit.glass_colour]"
 		bottle_made.name = "brewer's bottle of [bottle_name]"

@@ -56,7 +56,7 @@
 	GLOB.active_container_crafts += src
 
 	if(on_craft_start)
-		on_craft_start.InvokeAsync(crafter, initiator)
+		on_craft_start.InvokeAsync(crafter, initiator, estimated_multiplier)
 
 	if(cooking_sound)
 		src.cooking_sound = new cooking_sound(get_turf(crafter), TRUE)

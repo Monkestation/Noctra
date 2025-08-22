@@ -8,6 +8,7 @@
 	produce_amount_min = 2
 	produce_amount_max = 3
 	maturation_time = FAST_GROWING
+	produce_time = SLOW_PRODUCE_TIME
 	water_drain_rate = 1 / (2 MINUTES)
 	can_grow_underground = FALSE  // Coffee needs sunlight
 	plant_family = FAMILY_RUBIACEAE
@@ -21,6 +22,5 @@
 	seed_identity = "coffee seeds"
 
 /datum/plant_def/coffee/set_genetic_tendencies(datum/plant_genetics/base_genetics)
-	base_genetics.quality_trait = TRAIT_GRADE_EXCELLENT  // Coffee is prized for quality
-	base_genetics.disease_resistance = TRAIT_GRADE_AVERAGE  // Susceptible to various diseases
+	base_genetics.quality_trait = TRAIT_GRADE_GOOD  // Coffee is prized for quality
 	base_genetics.water_efficiency = TRAIT_GRADE_AVERAGE  // Needs consistent moisture

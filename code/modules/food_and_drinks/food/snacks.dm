@@ -317,10 +317,11 @@ All foods are distributed among various categories. Use common sense.
 			record_round_statistic(STATS_LUXURIOUS_FOOD_EATEN)
 		if(eat_effect == /datum/status_effect/debuff/rotfood)
 			SEND_SIGNAL(eater, COMSIG_ROTTEN_FOOD_EATEN, src)
-		qdel(src)
+		var/old_loc = loc
 		var/obj/item/trash = generate_trash(drop_location())
-		if(trash && isliving(loc))
-			var/mob/living/L = loc
+		qdel(src)
+		if(trash && isliving(old_loc))
+			var/mob/living/L = old_loc
 			L.put_in_hands(trash)
 
 	update_appearance(UPDATE_ICON_STATE)

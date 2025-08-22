@@ -156,6 +156,7 @@
 	max_integrity = 500
 	passcrawl = FALSE
 	climb_offset = 6
+	pass_flags_self = PASSSTRUCTURE
 
 /obj/structure/fluff/railing/woodfence/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()

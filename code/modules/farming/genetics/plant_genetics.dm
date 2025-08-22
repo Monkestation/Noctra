@@ -21,8 +21,10 @@
 	/// What string to add in front of the plant_def seed_identity
 	var/seed_identity_modifier
 
-/datum/plant_genetics/New()
+/datum/plant_genetics/New(datum/plant_def/plant_def_instance)
 	. = ..()
+	if(istype(plant_def_instance))
+		plant_def_instance.set_genetic_tendencies(src)
 	// Add some random variation to base genetics
 	randomize_traits(10)  // ±10 points variation
 
@@ -51,7 +53,7 @@
 
 	// Check for mutations
 	if(prob(BASE_MUTATION_CHANCE))
-		offspring.mutate_trait()
+		offspring.mutate_traits()
 
 	return offspring
 
@@ -74,24 +76,19 @@
 	var/variation = rand(-15, 15)  // ±15 point variation
 	return clamp(base_value + variation, 10, 100)
 
-/datum/plant_genetics/proc/mutate_trait()
-	var/trait_to_mutate = rand(1, 6)
-	var/mutation_strength = rand(10, 30)
-	var/positive_mutation = prob(50)  // 50/50 chance for positive/negative
-
-	if(!positive_mutation)
-		mutation_strength = -mutation_strength
-
-	switch(trait_to_mutate)
-		if(TRAIT_YIELD)
-			yield_trait = clamp(yield_trait + mutation_strength, 10, 100)
-		if(TRAIT_DISEASE_RESISTANCE)
-			disease_resistance = clamp(disease_resistance + mutation_strength, 10, 100)
-		if(TRAIT_QUALITY)
-			quality_trait = clamp(quality_trait + mutation_strength, 10, 100)
-		if(TRAIT_GROWTH_SPEED)
-			growth_speed = clamp(growth_speed + mutation_strength, 10, 100)
-		if(TRAIT_WATER_EFFICIENCY)
-			water_efficiency = clamp(water_efficiency + mutation_strength, 10, 100)
-		if(TRAIT_COLD_RESISTANCE)
-			cold_resistance = clamp(cold_resistance + mutation_strength, 10, 100)
+/// Mutate traits to improve them
+/datum/plant_genetics/proc/mutate_traits(amount = 1)
+	for(var/i in 1 to amount)
+		switch(rand(1,6))
+			if(TRAIT_YIELD)
+				yield_trait = clamp(yield_trait + rand(10, 15), 0, TRAIT_GRADE_EXCELLENT)
+			if(TRAIT_DISEASE_RESISTANCE)
+				disease_resistance = clamp(disease_resistance + rand(10, 15), 0, TRAIT_GRADE_EXCELLENT)
+			if(TRAIT_QUALITY)
+				quality_trait = clamp(quality_trait + rand(10, 15), 0, TRAIT_GRADE_EXCELLENT)
+			if(TRAIT_GROWTH_SPEED)
+				growth_speed = clamp(growth_speed + rand(10, 15), 0, TRAIT_GRADE_EXCELLENT)
+			if(TRAIT_WATER_EFFICIENCY)
+				water_efficiency = clamp(water_efficiency + rand(10, 15), 0, TRAIT_GRADE_EXCELLENT)
+			if(TRAIT_COLD_RESISTANCE)
+				cold_resistance = clamp(cold_resistance + rand(10, 15), 0, TRAIT_GRADE_EXCELLENT)

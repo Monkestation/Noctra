@@ -196,6 +196,7 @@
  * Stop listening to a given signal from target
  *
  * Breaks the relationship between target and source datum, removing the callback when the signal fires
+ *
  * Doesn't care if a registration exists or not
  *
  * Arguments:
@@ -203,9 +204,7 @@
  * * sig_typeor_types Signal string key or list of signal keys to stop listening to specifically
  */
 /datum/proc/UnregisterSignal(datum/target, sig_type_or_types)
-	if(!target)
-		return
-	var/list/lookup = target.comp_lookup
+	var/list/lookup = target?.comp_lookup
 	if(!signal_procs || !signal_procs[target] || !lookup)
 		return
 	if(!islist(sig_type_or_types))
@@ -226,6 +225,8 @@
 						target.comp_lookup = null
 						break
 			if(0)
+				if(lookup[sig] != src)
+					continue
 				lookup -= sig
 				if(!length(lookup))
 					target.comp_lookup = null

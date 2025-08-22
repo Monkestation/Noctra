@@ -393,10 +393,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 		reagents.remove_reagent(required_chem, selected_recipe.needed_reagents[required_chem])
 
 	soundloop.start()
-	if(!heated)
-		brew_timer = addtimer(CALLBACK(src, PROC_REF(end_brew)), selected_recipe.brew_time, TIMER_STOPPABLE)
-	else if(heated && !selected_recipe.heat_required)
-		brew_timer = addtimer(CALLBACK(src, PROC_REF(end_brew)), selected_recipe.brew_time * 0.5, TIMER_STOPPABLE)
+	brew_timer = addtimer(CALLBACK(src, PROC_REF(end_brew)), selected_recipe.brew_time, TIMER_STOPPABLE)
 	if(closed_icon_state)
 		icon_state = closed_icon_state
 	start_time = world.time
@@ -482,10 +479,13 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	qdel(item)
 
 /obj/structure/fermentation_keg/proc/create_items(user, I)
-	if(!ready_to_bottle)
+	if(!ready_to_bottle || recipe_completions < 1)
 		return
 
-	selected_recipe.create_items(user, I, src, max(recipe_completions, 1))
+	selected_recipe.create_items(user, I, src, recipe_completions)
+	var/datum/reagent/brewed_reagent = selected_recipe.reagent_to_brew
+	if(brewed_reagent)
+		reagents.remove_reagent(brewed_reagent, selected_recipe.per_brew_amount * selected_recipe.brewed_amount * recipe_completions)
 	reset_keg()
 
 // Only kegs that are ready to bottle can be tapped. Tapped barrels cannot brew and will need to be reset.

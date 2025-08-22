@@ -20,6 +20,7 @@
 	on_craft_failed = fail
 	on_craft_finished = success
 	RegisterSignal(parent, COMSIG_STORAGE_CLOSED, PROC_REF(async_start))
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(async_start))
 	if(temperature_listener)
 		RegisterSignal(parent, COMSIG_REAGENTS_EXPOSE_TEMPERATURE, PROC_REF(async_start))
 

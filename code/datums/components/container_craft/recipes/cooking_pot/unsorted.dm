@@ -1,5 +1,14 @@
+/datum/container_craft/cooking/drugs
+	abstract_type = /datum/container_craft/cooking/drugs
+	category = "Boiling"
+
+/datum/container_craft/cooking/arcyne
+	abstract_type = /datum/container_craft/cooking/arcyne
+	category = "Boiling"
+
 /datum/container_craft/cooking/sugar
 	name = "Sugar"
+	category = "Boiling"
 	created_reagent = /datum/reagent/consumable/sugar
 	requirements = list(/obj/item/reagent_containers/food/snacks/sugar = 1)
 	max_optionals = 0

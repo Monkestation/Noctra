@@ -150,7 +150,7 @@
 	name = "Soilson Key"
 	desc = "This key is used by the Soilsons."
 	icon_state = "rustkey"
-	lockids = list(ACCESS_FARM)
+	lockids = list(ACCESS_FARM, ACCESS_BUTCHER)
 
 /obj/item/key/merchant
 	name = "merchant's key"

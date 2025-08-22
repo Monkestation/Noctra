@@ -154,8 +154,9 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 		initiator = get_mob_by_ckey(crafter.fingerprintslast)
 	var/datum/callback/on_craft_start_ref = on_craft_start
 	var/datum/callback/on_craft_fail_ref = on_craft_failed
-	if(!on_craft_start_ref && !on_craft_fail_ref)
+	if(!on_craft_start_ref)
 		on_craft_start_ref = create_start_callback(crafter, initiator, highest_multiplier)
+	if(!on_craft_fail_ref)
 		on_craft_fail_ref = create_fail_callback(crafter, initiator, highest_multiplier)
 	new /datum/container_craft_operation(crafter, src, initiator, highest_multiplier, on_craft_start_ref, on_craft_fail_ref, cooking_sound)
 	return TRUE
@@ -334,8 +335,8 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 		// Remove all tracked items
 		for(var/obj/item/item_to_delete in items_to_delete)
 			qdel(item_to_delete)
-		var/turf/turf = get_turf(crafter)
-		turf.visible_message(span_green(complete_message))
+	var/turf/turf = get_turf(crafter)
+	turf.visible_message(span_green(complete_message))
 
 /datum/container_craft/proc/create_item(obj/item/crafter, mob/initiator, list/found_optional_requirements, list/found_optional_wildcards, list/found_optional_reagents, list/removing_items)
 	// Variables for quality calculation

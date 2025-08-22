@@ -48,3 +48,11 @@
 	if(!istype(vocal_cords) || !vocal_cords.vocals)
 		return
 	vocal_cords.vocals.attack_self(owner)
+
+/datum/action/item_action/organ_action/use/harpy_sing/update_status_on_signal(datum/source)
+	. = ..()
+	var/obj/item/organ/vocal_cords/harpy/vocal_cords = owner.getorganslot(ORGAN_SLOT_VOICE)
+	if(!istype(vocal_cords) || !vocal_cords.vocals)
+		return
+	if(owner.stat >= UNCONSCIOUS && vocal_cords.vocals.playing)
+		vocal_cords.vocals.terminate_playing(owner)
