@@ -108,7 +108,7 @@
 
 /obj/item/clothing/shoes/shalal
 	name = "babouche"
-	desc = "Leather slippers of zybantean origin."
+	desc = "Leather slippers of Zaladin origin."
 	gender = PLURAL
 	icon_state = "shalal"
 	item_state = "shalal"

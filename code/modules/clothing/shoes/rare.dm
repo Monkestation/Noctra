@@ -65,7 +65,7 @@
 	item_weight = 7 * STEEL_MULTIPLIER
 
 /obj/item/clothing/shoes/boots/rare/zybanplate
-	name = "zybantean segmented plate boots"
+	name = "zaladyne segmented plate boots"
 	allowed_race = list(SPEC_ID_HUMEN)
 	allowed_sex = list(MALE)
 	desc = "The segmented plate boots are a recent alteration to the Zaladin Elite, \

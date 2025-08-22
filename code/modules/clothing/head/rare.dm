@@ -47,7 +47,6 @@
 	clothing_flags = CANT_SLEEP_IN
 	body_parts_covered = HEAD_EXCEPT_MOUTH
 
-
 //............... Swordmaster Helmet ............... //
 /obj/item/clothing/head/rare/grenzelplate // Unique Swordmaster kit
 	name = "chicklet sallet"
@@ -59,7 +58,6 @@
 	flags_inv = HIDEEARS
 	clothing_flags = CANT_SLEEP_IN
 	body_parts_covered = HEAD|EARS|HAIR
-
 
 //............... Kataphract/bastion/spear/zyban Helmet ............... //
 /obj/item/clothing/head/rare/zybanplate // Unique Freelancer kit

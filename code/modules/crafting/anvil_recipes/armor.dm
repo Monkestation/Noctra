@@ -771,7 +771,7 @@
 	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
 	created_item = /obj/item/clothing/armor/rare/dwarfplate
 
-/datum/anvil_recipe/armor/steel/rare/dwarf_plate_torso
+/datum/anvil_recipe/armor/steel/rare/dwarf_plate_boots
 	name = "Dwarven Plate Boots"
 	created_item = /obj/item/clothing/shoes/boots/rare/dwarfplate
 
@@ -791,6 +791,49 @@
 /datum/anvil_recipe/armor/steel/rare/grenzel_plate_boots
 	name = "Grenzel Plate Boots"
 	created_item = /obj/item/clothing/shoes/boots/rare/grenzelplate
+
+/datum/anvil_recipe/armor/steel/rare/grenzel_plate_helm
+	name = "Grenzel Chicklet Plate Helm (+Bar)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/rare/grenzelplate
+
+/datum/anvil_recipe/armor/steel/rare/zaladin_plate_boots
+	name = "Zaladin Bastion Plate Helm (+Bar)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/rare/zybanplate
+
+/datum/anvil_recipe/armor/steel/rare/hoplite_plate_helm
+	name = "Hoplite Plate Helm (+Bronze Bar +Steel Bar)"
+	additional_items = list(/obj/item/ingot/bronze, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/rare/hoplite
+
+/datum/anvil_recipe/armor/steel/rare/zaladin_plate_gauntlets
+	name = "Zaladin Claw Plate Gauntlets"
+	created_item = /obj/item/clothing/gloves/rare/zybanplate
+
+/datum/anvil_recipe/armor/steel/rare/zaladin_plate
+	name = "Zaladin Kataphractoe Scaleskin (+Bar X3)"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/armor/rare/zybanplate
+
+/datum/anvil_recipe/armor/steel/rare/hoplite_plate
+	name = "Hoplite Plate (+Bar x2 +Bronze Bar x2)"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/bronze, /obj/item/ingot/bronze)
+	created_item = /obj/item/clothing/armor/rare/hoplite
+
+/datum/anvil_recipe/armor/steel/rare/zaladin_plate_boots
+	name = "Zaladin Boots"
+	created_item = /obj/item/clothing/shoes/boots/rare/zybanplate
+
+/datum/anvil_recipe/armor/steel/rare/hoplite_plate_bracers
+	name = "Hoplite Bracers (+Bronze Bar)"
+	additional_items = list(/obj/item/ingot/bronze)
+	created_item = /obj/item/clothing/wrists/bracers/rare/hoplite
+
+/datum/anvil_recipe/armor/steel/rare/hoplite_plate_boots
+	name = "Hoplite Sandals (+Bronze Bar)"
+	additional_items = list(/obj/item/ingot/bronze)
+	created_item = /obj/item/clothing/shoes/rare/hoplite
 
 /datum/anvil_recipe/armor/steel/captain_plate_pants
 	name = "Captain Plate Chausses (+Bar)"
