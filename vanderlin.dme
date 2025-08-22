@@ -2920,7 +2920,6 @@
 #include "code\modules\spells\spell_types\pointed\hammer_fall.dm"
 #include "code\modules\spells\spell_types\pointed\healing.dm"
 #include "code\modules\spells\spell_types\pointed\heat_metal.dm"
-#include "code\modules\spells\spell_types\pointed\inhumen_healing.dm"
 #include "code\modules\spells\spell_types\pointed\instill_perfection.dm"
 #include "code\modules\spells\spell_types\pointed\mend_item.dm"
 #include "code\modules\spells\spell_types\pointed\mimicry.dm"

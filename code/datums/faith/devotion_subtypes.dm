@@ -1,5 +1,23 @@
 // Divine
-/datum/devotion/astrata
+/datum/devotion/divine/make_templar()
+	. = ..()
+	miracles_extra += list(
+		/datum/action/cooldown/spell/aoe/abrogation
+	)
+
+/datum/devotion/divine/make_acolyte()
+	. = ..()
+	miracles_extra += list(
+		/datum/action/cooldown/spell/aoe/abrogation
+	)
+
+/datum/devotion/divine/make_churching()
+	. = ..()
+	miracles_extra += list(
+		/datum/action/cooldown/spell/healing
+	)
+
+/datum/devotion/divine/astrata
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/healing,
 		CLERIC_T1 = /datum/action/cooldown/spell/sacred_flame,
@@ -7,7 +25,7 @@
 		CLERIC_T3 = /datum/action/cooldown/spell/revive,
 	)
 
-/datum/devotion/noc
+/datum/devotion/divinenoc
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/healing,
 		CLERIC_T1 = /datum/action/cooldown/spell/status/invisibility,
@@ -15,7 +33,7 @@
 		CLERIC_T3 = /datum/action/cooldown/spell/projectile/moonlit_dagger,
 	)
 
-/datum/devotion/dendor
+/datum/devotion/divine/dendor
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/healing,
 		CLERIC_T1 = /datum/action/cooldown/spell/undirected/bless_crops,
@@ -23,7 +41,7 @@
 		CLERIC_T3 = /datum/action/cooldown/spell/beast_tame,
 	)
 
-/datum/devotion/abyssor
+/datum/devotion/divine/abyssor
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/healing,
 		CLERIC_T1 = /datum/action/cooldown/spell/projectile/swordfish,
@@ -31,7 +49,7 @@
 		CLERIC_T3 = /datum/action/cooldown/spell/ocean_embrace,
 	)
 
-/datum/devotion/abyssor
+/datum/devotion/divine/abyssor
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/healing,
 		CLERIC_T1 = /datum/action/cooldown/spell/sacred_flame,
@@ -39,7 +57,7 @@
 		CLERIC_T3 = /datum/action/cooldown/spell/revive,
 	)
 
-/datum/devotion/necra
+/datum/devotion/divine/necra
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/healing,
 		CLERIC_T1 = /datum/action/cooldown/spell/burial_rites,
@@ -48,20 +66,20 @@
 	)
 	traits = list(TRAIT_DEATHSIGHT)
 
-/datum/devotion/necra/make_acolyte()
+/datum/devotion/divine/necra/make_acolyte()
 	. = ..()
 	miracles_extra += /datum/action/cooldown/spell/avert
 
-/datum/devotion/necra/make_cleric()
+/datum/devotion/divine/necra/make_cleric()
 	. = ..()
 	miracles_extra += /datum/action/cooldown/spell/avert
 
-/datum/devotion/necra/make_templar()
+/datum/devotion/divine/necra/make_templar()
 	. = ..()
 	miracles_extra -= /datum/action/cooldown/spell/aoe/abrogation
 	miracles_extra += list(/datum/action/cooldown/spell/aoe/churn_undead, /datum/action/cooldown/spell/avert)
 
-/datum/devotion/ravox
+/datum/devotion/divine/ravox
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/healing,
 		CLERIC_T1 = /datum/action/cooldown/spell/undirected/call_to_arms,
@@ -69,14 +87,14 @@
 		CLERIC_T3 = /datum/action/cooldown/spell/persistence,
 	)
 
-/datum/devotion/xylix
+/datum/devotion/divine/xylix
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/healing,
 		CLERIC_T1 = /datum/action/cooldown/spell/undirected/list_target/vicious_mimicry,
 		CLERIC_T2 = /datum/action/cooldown/spell/status/wheel,
 	)
 
-/datum/devotion/pestra
+/datum/devotion/divine/pestra
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/diagnose/holy,
 		CLERIC_T1 = /datum/action/cooldown/spell/healing,
@@ -84,7 +102,7 @@
 		CLERIC_T3 = /datum/action/cooldown/spell/cure_rot,
 	)
 
-/datum/devotion/malum
+/datum/devotion/divine/malum
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/healing,
 		CLERIC_T1 = /datum/action/cooldown/spell/status/vigorous_craft,
@@ -92,7 +110,7 @@
 		CLERIC_T3 = /datum/action/cooldown/spell/heat_metal,
 	)
 
-/datum/devotion/eora
+/datum/devotion/divine/eora
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/healing,
 		CLERIC_T1 = /datum/action/cooldown/spell/instill_perfection,
@@ -101,7 +119,25 @@
 	)
 
 // Inhumen
-/datum/devotion/zizo
+/datum/devotion/inhumen/make_cleric()
+	. = ..()
+	miracles_extra += list(
+		/datum/action/cooldown/spell/healing/profane,
+	)
+
+/datum/devotion/inhumen/make_templar()
+	. = ..()
+	miracles_extra += list(
+		/datum/action/cooldown/spell/healing/profane,
+	)
+
+/datum/devotion/inhumen/make_churching()
+	. = ..()
+	miracles_extra += list(
+		/datum/action/cooldown/spell/healing/profane
+	)
+
+/datum/devotion/inhumen/zizo
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/undirected/touch/orison,
 		CLERIC_T1 = /datum/action/cooldown/spell/projectile/profane,
@@ -110,7 +146,7 @@
 	)
 	traits = list(TRAIT_DEATHSIGHT)
 
-/datum/devotion/graggar
+/datum/devotion/inhumen/graggar
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/undirected/bloodrage,
 		CLERIC_T1 = /datum/action/cooldown/spell/undirected/call_to_slaughter,
@@ -118,7 +154,7 @@
 		CLERIC_T3 = /datum/action/cooldown/spell/revel_in_slaughter,
 	)
 
-/datum/devotion/matthios
+/datum/devotion/inhumen/matthios
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/appraise/holy,
 		CLERIC_T1 = /datum/action/cooldown/spell/transact,
@@ -126,7 +162,7 @@
 		CLERIC_T3 = /datum/action/cooldown/spell/churn_wealthy,
 	)
 
-/datum/devotion/baotha
+/datum/devotion/inhumen/baotha
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/find_flaw,
 		CLERIC_T1 = /datum/action/cooldown/spell/baothablessings,

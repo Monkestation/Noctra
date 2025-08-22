@@ -125,9 +125,6 @@
 	max_devotion = CLERIC_REQ_3
 	progression = CLERIC_REQ_1
 	max_progression = CLERIC_REQ_3 - 1
-	miracles_extra += list(
-		/datum/action/cooldown/spell/aoe/abrogation
-	)
 
 /datum/devotion/proc/make_churching()
 	max_devotion = CLERIC_REQ_1
