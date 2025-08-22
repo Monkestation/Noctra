@@ -215,6 +215,8 @@
 
 /datum/action/cooldown/spell/healing/profane
 	name = "Corrupt Lesser Miracle"
+	antimagic_flags = MAGIC_RESISTANCE_UNHOLY
+	required_items = null
 	is_profane = TRUE
 
 /datum/action/cooldown/spell/healing/greater
@@ -233,5 +235,7 @@
 
 /datum/action/cooldown/spell/healing/greater/profane
 	name = "Corrupt Miracle"
+	antimagic_flags = MAGIC_RESISTANCE_UNHOLY
+	required_items = null
 	stun_undead = FALSE
 	is_profane = TRUE
