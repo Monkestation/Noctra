@@ -94,12 +94,12 @@
 	for(var/tier in tiers)
 		var/requirement = tiers[tier]
 		if(progression >= requirement)
-			var/miracles = miracles[tier]
-			if(!islist(miracles))
-				miracles = list(miracles)
-			if(!length(miracles))
+			var/miracle_list = miracles[tier]
+			if(!islist(miracle_list))
+				miracle_list = list(miracle_list)
+			if(!length(miracle_list))
 				continue
-			for(var/miracle in miracles)
+			for(var/miracle in miracle_list)
 				grant_miracle(miracle)
 
 /datum/devotion/proc/make_priest()

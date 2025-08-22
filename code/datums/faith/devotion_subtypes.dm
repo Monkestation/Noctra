@@ -25,7 +25,7 @@
 		CLERIC_T3 = /datum/action/cooldown/spell/revive,
 	)
 
-/datum/devotion/divinenoc
+/datum/devotion/divine/noc
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/healing,
 		CLERIC_T1 = /datum/action/cooldown/spell/status/invisibility,
