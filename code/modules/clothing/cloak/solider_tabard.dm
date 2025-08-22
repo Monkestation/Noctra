@@ -260,7 +260,7 @@
 	picked = TRUE
 
 /obj/item/clothing/cloak/stabard/jupon/guard
-	desc = "A surcoat with the lord's heraldic colors."
+	desc = "A jupon with the lord's heraldic colors."
 	color = CLOTHING_BLOOD_RED
 	detail_tag = "_quad"
 	detail_color = CLOTHING_PLUM_PURPLE

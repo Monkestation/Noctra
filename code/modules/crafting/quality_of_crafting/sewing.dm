@@ -432,12 +432,10 @@
 /datum/repeatable_crafting_recipe/sewing/jupon_cloak
 	name = "jupon"
 	output = /obj/item/clothing/cloak/stabard/jupon
-	requirements = list(/obj/item/natural/cloth = 3,
+	requirements = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 2
 	category = "Cloak"
-
-/obj/item/clothing/cloak/stabard
 
 /datum/repeatable_crafting_recipe/sewing/bedsheet
 	name = "bedsheet"
@@ -978,10 +976,10 @@
 	craftdiff = 4
 	category = "Hat"
 
-/datum/repeatable_crafting_recipe/sewing/jupon
-	name = "jupon"
-	output = /obj/item/clothing/cloak/stabard/jupon
-	requirements = list(/obj/item/natural/cloth = 4,
+/datum/repeatable_crafting_recipe/sewing/jupon_guard
+	name = "guard's jupon"
+	output = /obj/item/clothing/cloak/stabard/jupon/guard
+	requirements = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 4
 	category = "Cloak"
