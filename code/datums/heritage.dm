@@ -145,9 +145,6 @@
 
 	return TRUE
 
-/mob/living/carbon/human
-	var/datum/family_member/family_member_datum
-
 /datum/family_member
 	var/tmp/mob/living/carbon/human/person
 	var/datum/heritage/family

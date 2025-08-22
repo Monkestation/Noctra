@@ -84,14 +84,13 @@ GLOBAL_LIST_INIT(wolf_suffixes, list("Fang", "Claw", "Stalker", "Prowler", "Roar
 
 GLOBAL_LIST_EMPTY(job_respawn_delays)
 
-//stress levels
-#define STRESS_MAX 30
+//stress levels. Stress starts at 0.
 #define STRESS_INSANE 7
 #define STRESS_VBAD 5
 #define STRESS_BAD 3
 #define STRESS_NEUTRAL 2
 #define STRESS_GOOD 1
-#define STRESS_VGOOD -1
+#define STRESS_VGOOD -4
 
 /*	........   Nutrition defines   ................ */
 #define MEAL_FILLING 30

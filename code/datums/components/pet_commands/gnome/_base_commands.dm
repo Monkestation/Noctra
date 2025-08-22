@@ -29,18 +29,17 @@
 	controller.set_blackboard_key(BB_GNOME_TRANSPORT_DEST, waypoint_b)
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 
-
 /datum/pet_command/gnome/stop_move_item
 	command_name = "Stop Move Item"
-	command_desc = "Move items between set waypoints"
+	command_desc = "Stop moving items"
 	radial_icon_state = "move-item-stop"
-	speech_commands = list("move", "transport", "carry", "transfer")
+	speech_commands = list("stop moving", "stop transport", "halt")
 
 /datum/pet_command/gnome/stop_move_item/execute_action(datum/ai_controller/controller)
 	var/mob/living/pawn = controller.pawn
 	controller.set_blackboard_key(BB_GNOME_TRANSPORT_MODE, FALSE)
-	controller.set_blackboard_key(BB_GNOME_TRANSPORT_SOURCE, null)
-	controller.set_blackboard_key(BB_GNOME_TRANSPORT_DEST, null)
+	controller.clear_blackboard_key(BB_GNOME_TRANSPORT_SOURCE)
+	controller.clear_blackboard_key(BB_GNOME_TRANSPORT_DEST)
 	pawn.visible_message(span_notice("[pawn] stops moving items and returns to normal behavior."))
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 

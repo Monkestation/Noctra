@@ -43,7 +43,7 @@
 			continue
 		if(!H.can_smell())
 			continue
-		if(H.has_stress(/datum/stressevent/perfume))
+		if(H.has_stress_type(/datum/stressevent/perfume))
 			continue
 
 		H.add_stress(/datum/stressevent/perfume)

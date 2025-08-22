@@ -141,6 +141,8 @@
 
 	var/mob/stored_mob = null // werewolf bullshit
 
+	var/datum/family_member/family_member_datum
+
 	fovangle = FOV_DEFAULT // our fov
 
 //Checking the highest armor class worn

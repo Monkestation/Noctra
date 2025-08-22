@@ -5,11 +5,11 @@
 /// How long it takes from stage 2 starting to move up to stage 3
 #define DELAY_STAGE_3 (7.5 SECONDS)
 /// How much the damage and wound bonus mod is multiplied when you're on stage 1
-#define MULT_STAGE_1 1
+#define MULT_STAGE_1 1.5
 /// As above, for stage 2
-#define MULT_STAGE_2 2
+#define MULT_STAGE_2 2.5
 /// As above, for stage 3
-#define MULT_STAGE_3 2.5
+#define MULT_STAGE_3 3.5
 /// How many tiles around the target the captor can roam without losing their shot
 #define CAPTOR_STRAY_RANGE 2
 

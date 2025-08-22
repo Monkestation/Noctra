@@ -3,6 +3,9 @@
 
 #define in_range(source, user) (get_dist(source, user) <= 1 && (get_step(source, 0)?:z) == (get_step(user, 0)?:z))
 
+#define in_range_loose(source, user) (get_dist(source, user) <= 2 && (get_step(source, 0)?:z) == (get_step(user, 0)?:z))
+
+
 #define ismovableatom(A) ismovable(A)
 
 
@@ -118,6 +121,8 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isweapon(A) (istype(A, /obj/item/weapon))
 
+#define isscabbard(A) (istype(A, /obj/item/weapon/scabbard))
+
 #define isstructure(A) (istype(A, /obj/structure))
 
 #define ismachinery(A) (istype(A, /obj/machinery))
@@ -181,8 +186,6 @@ GLOBAL_LIST_INIT(RATS_DONT_EAT, typecacheof(list(
 	#define is_rousman_job(job_type) (istype(job_type, /datum/job/rousman))
 	#define is_goblin_job(job_type) (istype(job_type, /datum/job/goblin))
 
-// Age Check
-	#define is_child(A) (A.age == AGE_CHILD)
 // seemingly deprecated:
 //"Preacher" //as a job, there is an equivalent class
 

@@ -15,6 +15,7 @@
 	var/broken = 0 //similar to machinery's stat BROKEN
 
 	var/last_redstone_state = 0
+	var/bonus_pressure = 0
 //	move_resist = MOVE_FORCE_STRONG
 
 /obj/structure/Initialize()

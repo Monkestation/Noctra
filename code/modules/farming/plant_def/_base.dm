@@ -47,6 +47,8 @@
 	var/plant_family = FAMILY_HERB
 	/// Identity of seeds with this type
 	var/seed_identity = "some seeds"
+	///this is if we become seethrough or not
+	var/see_through = FALSE
 
 /datum/plant_def/New()
 	. = ..()

@@ -73,5 +73,8 @@
 
 	var/advsetup = 0
 
+	var/datum/party/current_party
+	var/list/party_hud_elements = list()
+
 	/// if they get a mana pool
 	has_initial_mana_pool = TRUE

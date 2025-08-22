@@ -29,6 +29,13 @@
 
 
 /mob/living/proc/try_recipes(obj/item/attacked_atom, obj/item/starting_atom)
+	if(has_world_trait(/datum/world_trait/delver))
+		var/area/area = get_area(src)
+		if(area.delver_restrictions)
+			return
+		if(!SShousing.check_access(key))
+			return
+
 	if(isitem(attacked_atom))
 		if(attacked_atom.in_progress_slapcraft)
 			return attacked_atom.in_progress_slapcraft.try_process_item(starting_atom, src)

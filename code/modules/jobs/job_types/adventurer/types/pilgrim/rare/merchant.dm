@@ -9,6 +9,7 @@
 	pickprob = 30
 	min_pq = 0
 	cmode_music = 'sound/music/cmode/towner/CombatTowner2.ogg'
+	is_recognized = TRUE
 
 
 /datum/outfit/job/adventurer/merchant/pre_equip(mob/living/carbon/human/H)

@@ -150,7 +150,7 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 /datum/component/trader/proc/check_menu(mob/customer)
 	if(!istype(customer))
 		return FALSE
-	if(IS_DEAD_OR_INCAP(customer) || !customer.Adjacent(parent))
+	if(IS_DEAD_OR_INCAP(customer) || (get_dist(parent, customer) > 2))
 		return FALSE
 	return TRUE
 
@@ -180,13 +180,13 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 				if(initial(seed_genetics_instance.seed_identity_modifier))
 					examine_name = "[initial(seed_genetics_instance.seed_identity_modifier)] " + examine_name
 				path_name = examine_name
-		if(ispath(thing, /obj/item/reagent_containers))
-			var/obj/item/reagent_containers/created_container = new(null)
-			if(length(created_container.list_reagents))
+		if(ispath(thing, /obj/item/reagent_containers/glass))
+			var/obj/item/reagent_containers/glass/created_container = new thing
+			var/list/reagent_list = created_container.list_reagents
+			if(length(reagent_list))
 				var/datum/reagent/reagent = created_container.list_reagents[1]
 				path_name = "[initial(thing.name)] of [initial(reagent.name)]"
 			qdel(created_container)
-
 		display_names["[path_name]"] = thing
 
 		if(!radial_icons_cache[thing])

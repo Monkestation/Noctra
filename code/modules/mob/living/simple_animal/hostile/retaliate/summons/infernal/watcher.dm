@@ -39,7 +39,7 @@
 	defdrain = 10
 	del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
-	food = 0
+
 	attack_sound = list('sound/misc/lava_death.ogg')
 	dodgetime = 30
 	aggressive = 1

@@ -29,7 +29,7 @@
 
 	if(H.mind)
 		if(H.patron != /datum/patron/divine/dendor)
-			H.set_patron(/datum/patron/divine/dendor)
+			H.set_patron(/datum/patron/divine/dendor, TRUE) //Yeah, no sorry, you're an antag, you can't do dendor things.
 
 		H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)

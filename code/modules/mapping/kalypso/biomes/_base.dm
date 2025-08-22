@@ -87,6 +87,13 @@ GLOBAL_LIST_INIT(biome_registry, list(
 		var/herb_type = select_herbs(temp, moisture, elevation)
 		if(herb_type)
 			new herb_type(T)
+			return
+
+	if(prob(understory_chance)) // round 2
+		var/understory_type = select_understory(temp, moisture, elevation)
+		if(understory_type)
+			new understory_type(T)
+			return
 
 /datum/biome/proc/select_tree(temp, moisture, elevation)
 	return pick(trees)

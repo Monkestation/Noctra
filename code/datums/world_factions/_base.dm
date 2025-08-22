@@ -127,7 +127,10 @@
 	var/list/created_traders = list()
 
 	for(var/datum/trader_data/trader_data in next_boat_traders)
-		var/mob/living/simple_animal/hostile/retaliate/trader/faction_trader/new_trader = new(spawn_location, TRUE, pick(trader_outfits), WEAKREF(src))
+		var/picked_outfit = pick(trader_outfits)
+		if(trader_data.outfit_override)
+			picked_outfit = pick(trader_data.outfit_override)
+		var/mob/living/simple_animal/hostile/retaliate/trader/faction_trader/new_trader = new(spawn_location, TRUE, picked_outfit, WEAKREF(src))
 		new_trader.set_custom_trade(trader_data)
 		new_trader.faction_ref = WEAKREF(src)
 		created_traders += new_trader
@@ -464,7 +467,10 @@
 	var/datum/trader_data/trader_data = new trader_type()
 	// Customize trader with faction-specific items
 	customize_trader_inventory(trader_data)
-	var/mob/living/simple_animal/hostile/retaliate/trader/faction_trader/new_trader = new(spawn_location, TRUE, pick(trader_outfits), WEAKREF(src))
+	var/picked_outfit = pick(trader_outfits)
+	if(length(trader_data.outfit_override))
+		picked_outfit = pick(trader_data.outfit_override)
+	var/mob/living/simple_animal/hostile/retaliate/trader/faction_trader/new_trader = new(spawn_location, TRUE, picked_outfit, WEAKREF(src))
 	new_trader.set_custom_trade(trader_data)
 	new_trader.faction_ref = WEAKREF(src)
 	current_trader_ref = WEAKREF(new_trader)

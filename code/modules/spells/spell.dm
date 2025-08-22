@@ -625,7 +625,9 @@
 	if(owner)
 		SEND_SIGNAL(owner, COMSIG_MOB_CAST_SPELL, src, cast_on)
 		if(owner.ckey)
-			owner.log_message("cast the spell [name][cast_on != owner ? " on / at [cast_on]":""].", LOG_ATTACK)
+			owner.log_message("cast the spell [name][cast_on != owner ? " on / at [key_name_admin(cast_on)]":""].", LOG_ATTACK)
+			if(cast_on != owner)
+				cast_on.log_message("affected by spell [name] by [key_name_admin(owner)].", LOG_ATTACK)
 
 /**
  * Actions done after the main cast is finished.
