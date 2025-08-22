@@ -317,7 +317,7 @@
 	// desc = "A profane dagger made of cursed black steel. Whispers emanate from the gem on its hilt."
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust, /datum/intent/peculate)
 	sellprice = 250
-	//icon_state = "pdagger"
+	icon_state = "pdagger"
 	melting_material = null
 	embedding = list("embed_chance" = 0) // Embedding the cursed dagger has the potential to cause duping issues. Keep it like this unless you want to do a lot of bug hunting.
 	resistance_flags = INDESTRUCTIBLE
