@@ -142,7 +142,7 @@ GLOBAL_LIST_EMPTY(heretical_players)
 		return
 
 	var/datum/patron/A = H.patron
-	var/list/spells = list(A.t0, A.t1)
+	var/list/spells = list(A.t0, A.t1, /datum/action/cooldown/spell/undirected/touch/orison)
 
 	if(istype(A, /datum/patron/divine/necra))
 		spells += /datum/action/cooldown/spell/avert
