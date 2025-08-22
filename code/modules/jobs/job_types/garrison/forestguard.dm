@@ -15,6 +15,7 @@
 	total_positions = 4
 	spawn_positions = 4
 	min_pq = 5
+	bypass_lastclass = TRUE
 	selection_color = "#0d6929"
 
 	allowed_ages = list(AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL, AGE_CHILD)
