@@ -75,7 +75,7 @@
 /datum/outfit/job/treyliam
 	name = "Trey Liam"
 	head = /obj/item/clothing/head/maniac
-	shirt = /obj/item/clothing/shirt/maniac/maniac
+	shirt = /obj/item/clothing/shirt/maniac
 	pants = /obj/item/clothing/pants/tights/maniac
 
 /obj/effect/landmark/treyliam

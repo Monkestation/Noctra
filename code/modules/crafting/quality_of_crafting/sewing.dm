@@ -992,7 +992,7 @@
 	name = "Grenzelhoftian hip shirt"
 	output = /obj/item/clothing/shirt/grenzelhoft
 	requirements = list(/obj/item/natural/cloth = 2,
-				/obj/item/natural/silk = 2
+				/obj/item/natural/silk = 2,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 5
 	category = "Shirt"
@@ -1001,7 +1001,7 @@
 	name = "Grenzelhoftian paumpers"
 	output = /obj/item/clothing/pants/grenzelpants
 	requirements = list(/obj/item/natural/cloth = 2,
-				/obj/item/natural/silk = 1
+				/obj/item/natural/silk = 1,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 5
 	category = "Pants"
