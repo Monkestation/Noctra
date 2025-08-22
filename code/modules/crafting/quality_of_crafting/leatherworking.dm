@@ -816,6 +816,13 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 4
 
+/datum/repeatable_crafting_recipe/leather/standalone/inquisitor_duster
+	name = "inquisitorial duster"
+	output = /obj/item/clothing/armor/leather/advanced
+	requirements = list(/obj/item/natural/hide/cured = 2,
+				/obj/item/clothing/armor/medium/scale = 1)
+	craftdiff = 4
+
 /datum/repeatable_crafting_recipe/leather/standalone/coat
 	name = "forrester leather armor"
 	output = /obj/item/clothing/armor/leather/advanced/forrester

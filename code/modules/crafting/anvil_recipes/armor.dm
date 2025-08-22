@@ -610,7 +610,7 @@
 	recipe_name = "a Sallet"
 	created_item = /obj/item/clothing/head/helmet/sallet/elven
 
-/datum/anvil_recipe/armor/steel/elven_sallet
+/datum/anvil_recipe/armor/steel/elven_cuirass
 	name = "Elven Guardian Cuirass (+Gold bar)"
 	additional_items = list(/obj/item/ingot/gold)
 	recipe_name = "a cuirass"
@@ -859,7 +859,7 @@
 	created_item = /obj/item/clothing/gloves/plate/zizo
 	craftdiff = 5
 
-/datum/anvil_recipe/armor/blacksteel/dark_elven_plate_gloves
+/datum/anvil_recipe/armor/blacksteel/elven_plate_gloves
 	name = "Elven Plate Gauntlets"
 	created_item = /obj/item/clothing/gloves/rare/elfplate
 	craftdiff = 5

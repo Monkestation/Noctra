@@ -515,8 +515,8 @@
 	craftdiff = 4
 
 /datum/repeatable_crafting_recipe/sewing/magusrobes
-	name = "magus robes"
-	output = /obj/item/clothing/shirt/robe/wizard
+	name = "magus robe"
+	output = /obj/item/clothing/shirt/robe/magus
 	requirements = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/hide/cured = 4,
 				/obj/item/natural/fibers = 1)
