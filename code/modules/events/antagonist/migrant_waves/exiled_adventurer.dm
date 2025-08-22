@@ -4,7 +4,7 @@
 
 	weight = 4
 	max_occurrences = 2
-
+	min_players = 50
 	earliest_start = 25 MINUTES
 
 	tags = list(

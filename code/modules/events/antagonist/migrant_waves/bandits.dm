@@ -3,7 +3,7 @@
 	wave_type = /datum/migrant_wave/bandit
 
 	weight = 12
-
+	min_players = 30
 	earliest_start = 10 MINUTES
 
 	tags = list(

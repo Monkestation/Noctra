@@ -10,7 +10,7 @@
 	shared_occurence_type = SHARED_HIGH_THREAT
 
 	denominator = 80
-
+	min_players = 50
 	base_antags = 1
 	maximum_antags = 2
 

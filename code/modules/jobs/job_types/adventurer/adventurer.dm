@@ -14,8 +14,8 @@ GLOBAL_VAR_INIT(adventurer_hugbox_duration_still, 3 MINUTES)
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK)
 	display_order = JDO_ADVENTURER
 	faction = FACTION_TOWN
-	total_positions = 14
-	spawn_positions = 14
+	total_positions = 8
+	spawn_positions = 8
 	min_pq = 2
 	bypass_lastclass = TRUE
 
