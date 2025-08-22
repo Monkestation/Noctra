@@ -35,7 +35,7 @@
 	..()
 	if(H.mind)
 		if(H.patron != /datum/patron/divine/abyssor)
-			H.set_patron(/datum/patron/divine/abyssor)
+			H.set_patron(/datum/patron/divine/abyssor, TRUE)
 
 		H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)

@@ -73,7 +73,7 @@ GLOBAL_VAR(lordsecondary)
 
 	UnregisterSignal(SSdcs, COMSIG_LORD_COLORS_SET)
 
-/mob/proc/lord_color_choice()
+/mob/living/carbon/human/proc/lord_color_choice()
 	if(!client)
 		addtimer(CALLBACK(src, PROC_REF(lord_color_choice)), 5 SECONDS)
 		return
@@ -92,6 +92,9 @@ GLOBAL_VAR(lordsecondary)
 	)
 	var/choice = browser_input_list(src, "Choose a Primary Color", "VANDERLIN", lordcolors)
 	if(!choice)
+		if(!client)
+			addtimer(CALLBACK(src, PROC_REF(lord_color_choice)), 5 SECONDS)
+			return
 		choice = pick(lordcolors)
 		return
 	GLOB.lordprimary = lordcolors[choice]

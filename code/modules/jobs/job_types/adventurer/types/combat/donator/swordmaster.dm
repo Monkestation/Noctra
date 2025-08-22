@@ -9,6 +9,7 @@
 	pickprob = 15
 	category_tags = list(CTAG_ADVENTURER)
 	cmode_music = 'sound/music/cmode/combat_grenzelhoft.ogg'
+	is_recognized = TRUE
 
 
 /datum/outfit/job/adventurer/swordmaster/pre_equip(mob/living/carbon/human/H)

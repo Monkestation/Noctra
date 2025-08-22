@@ -246,6 +246,15 @@ GLOBAL_LIST_INIT(t2buffrunerituallist, generate_t2buff_rituallist())
 
 /datum/runerituals/knowledge/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	return TRUE
+/datum/runerituals/leyattunement
+	name = "leyline attunement"
+	tier = 1
+	blacklisted = FALSE
+	required_atoms = list(/obj/item/mana_battery/mana_crystal/small = 1,/obj/item/reagent_containers/food/snacks/produce/manabloom = 2,/obj/item/natural/leyline = 1)
+
+/datum/runerituals/leyattunement/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	return TRUE
+
 
 /datum/runerituals/buff/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	return TRUE

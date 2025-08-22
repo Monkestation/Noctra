@@ -28,25 +28,20 @@
 	cost = 10
 	contains = /obj/item/needle
 
-/datum/supply_pack/tools/sack
-	name = "Sack"
-	cost = 4
-	contains = /obj/item/storage/sack
-
 /datum/supply_pack/tools/sleepingbag
 	name = "Sleeping Bag"
 	cost = 12
 	contains = /obj/item/sleepingbag
 
 /datum/supply_pack/tools/scroll
-	name = "Parchment Scroll"
-	cost = 2
-	contains = /obj/item/paper/scroll
+	name = "Parchment Scroll x5"
+	cost = 10
+	contains = list(/obj/item/paper/scroll,/obj/item/paper/scroll,/obj/item/paper/scroll,/obj/item/paper/scroll,/obj/item/paper/scroll)
 
 /datum/supply_pack/tools/parchment
-	name = "Parchment"
-	cost = 1
-	contains = /obj/item/paper
+	name = "Parchment x5"
+	cost = 10
+	contains = list(/obj/item/paper,/obj/item/paper,/obj/item/paper,/obj/item/paper,/obj/item/paper)
 
 /datum/supply_pack/tools/flint
 	name = "Flint"
@@ -57,6 +52,11 @@
 	name = "Dye Bin"
 	cost = 150
 	contains = /obj/structure/dye_bin
+
+/datum/supply_pack/tools/plough
+	name = "Plough"
+	cost = 60
+	contains = /obj/structure/plough
 
 /datum/supply_pack/tools/candles
 	name = "Candles (3)"
@@ -74,6 +74,11 @@
 	name = "Iron Pickaxe"
 	cost = 15
 	contains = /obj/item/weapon/pick
+
+/datum/supply_pack/tools/pick
+	name = "Steel Pickaxe"
+	cost = 40
+	contains = /obj/item/weapon/pick/steel
 
 /datum/supply_pack/tools/tongs
 	name = "Tongs"
@@ -110,28 +115,6 @@
 	cost = 15
 	contains = /obj/item/weapon/thresher
 
-/datum/supply_pack/tools/plough
-	name = "Plough"
-	cost = 60
-	contains = /obj/structure/plough
-
-/datum/supply_pack/tools/bottle
-	name = "Glass Bottle"
-	cost = 2
-	contains = /obj/item/reagent_containers/glass/bottle
-
-/datum/supply_pack/tools/alch_bottle
-	name = "Alchemy Bottle"
-	cost = 3
-	contains = /obj/item/reagent_containers/glass/alchemical
-
-/datum/supply_pack/tools/alch_bottles
-	name = "Bulk Alchemy Bottles (9)"
-	cost = 20
-	contains = list(/obj/item/reagent_containers/glass/alchemical,/obj/item/reagent_containers/glass/alchemical,/obj/item/reagent_containers/glass/alchemical,
-	/obj/item/reagent_containers/glass/alchemical,/obj/item/reagent_containers/glass/alchemical,/obj/item/reagent_containers/glass/alchemical,
-	/obj/item/reagent_containers/glass/alchemical,/obj/item/reagent_containers/glass/alchemical,/obj/item/reagent_containers/glass/alchemical)
-
 /datum/supply_pack/tools/bucket
 	name = "Bucket"
 	cost = 6
@@ -147,15 +130,6 @@
 	cost = 15
 	contains = /obj/item/reagent_containers/glass/bucket/pot
 
-/datum/supply_pack/food/cutlery
-	name = "Set of Cutlery"
-	cost = 10
-	contains = list(/obj/item/plate/clay,
-	/obj/item/reagent_containers/glass/bowl/clay,
-	/obj/item/reagent_containers/glass/cup,
-	/obj/item/kitchen/fork,
-	/obj/item/kitchen/spoon)
-
 /datum/supply_pack/tools/wpipe
 	name = "Westman Pipe"
 	cost = 5
@@ -167,9 +141,9 @@
 	contains = /obj/item/fishingrod
 
 /datum/supply_pack/tools/bait
-	name = "Fishing Grub"
-	cost = 4
-	contains = /obj/item/fishing/bait/deluxe
+	name = "Fishing Grub x5"
+	cost = 20
+	contains = list(/obj/item/fishing/bait/deluxe,/obj/item/fishing/bait/deluxe,/obj/item/fishing/bait/deluxe,/obj/item/fishing/bait/deluxe,/obj/item/fishing/bait/deluxe)
 
 /datum/supply_pack/tools/fishingline
 	name = "Premium Fishing Line"
@@ -181,32 +155,58 @@
 	cost = 25
 	contains = /obj/item/fishing/hook/deluxe
 
-/datum/supply_pack/tools/prarml
-	name = "Prosthetic Left Wooden Arm"
+/datum/supply_pack/tools/bottle
+	name = "Glass Bottle x3"
+	cost = 10
+	contains = list(/obj/item/reagent_containers/glass/bottle,/obj/item/reagent_containers/glass/bottle,/obj/item/reagent_containers/glass/bottle)
+
+/datum/supply_pack/tools/alch_bottles
+	name = "Alchemy Bottles x5"
+	cost = 20
+	contains = list(/obj/item/reagent_containers/glass/alchemical,/obj/item/reagent_containers/glass/alchemical,
+	/obj/item/reagent_containers/glass/alchemical,/obj/item/reagent_containers/glass/alchemical,/obj/item/reagent_containers/glass/alchemical)
+
+/datum/supply_pack/tools/bottle_kit
+	name = "Bottling Kit"
+	cost = 30
+	contains = list(/obj/item/bottle_kit)
+
+/datum/supply_pack/tools/medical
+	group = "Medicine"
+
+/datum/supply_pack/tools/medical/health
+	name = "Healing Potion"
+	cost = 50
+	contains = /obj/item/reagent_containers/glass/bottle/healthpot
+
+/datum/supply_pack/tools/medical/mana
+	name = "Mana Potion"
+	cost = 50
+	contains = /obj/item/reagent_containers/glass/bottle/manapot
+
+/datum/supply_pack/tools/medical/surgerybag
+	name = "Set of Surgical Tools"
+	cost = 60
+	contains = /obj/item/storage/backpack/satchel/surgbag
+
+/datum/supply_pack/tools/medical/prarml
+	name = "Left Wooden Arm"
 	cost = 15
 	contains = /obj/item/bodypart/l_arm/prosthetic/wood
 
-/datum/supply_pack/tools/prarmr
-	name = "Prosthetic Right Wooden Arm"
+/datum/supply_pack/tools/medical/prarmr
+	name = "Right Wooden Arm"
 	cost = 15
 	contains = /obj/item/bodypart/r_arm/prosthetic/wood
 
-/datum/supply_pack/tools/prlegl
+/datum/supply_pack/tools/medical/prlegl
 	name = "Pegleg Left Leg"
 	cost = 15
 	contains = /obj/item/bodypart/l_leg/prosthetic/wood
 
-/datum/supply_pack/tools/prlegr
+/datum/supply_pack/tools/medical/prlegr
 	name = "Pegleg Right Leg"
 	cost = 15
 	contains = /obj/item/bodypart/r_leg/prosthetic/wood
 
-/datum/supply_pack/tools/surgerybag
-	name = "Set of Surgical Tools"
-	cost = 65
-	contains = /obj/item/storage/backpack/satchel/surgbag
 
-/datum/supply_pack/tools/bottle_kit
-	name = "Bottle Kit"
-	cost = 50
-	contains = list(/obj/item/bottle_kit)

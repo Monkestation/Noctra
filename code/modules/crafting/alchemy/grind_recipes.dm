@@ -9,11 +9,17 @@
 	valid_outputs = list(/obj/item/alch/viscera = 1)
 	bonus_chance_outputs = list(/obj/item/alch/viscera = 75)
 
+/datum/alch_grind_recipe/organs
+	picky = FALSE
+	valid_input = /obj/item/organ
+	valid_outputs = list(/obj/item/alch/viscera = 1)
+	bonus_chance_outputs = list(/obj/item/alch/viscera = 33)
+
 //Objects -> dusts
 /datum/alch_grind_recipe/crow
 	valid_input = /obj/item/reagent_containers/food/snacks/crow
 	valid_outputs = list(/obj/item/alch/airdust = 1)
-	bonus_chance_outputs = list(/obj/item/alch/airdust = 33)
+	bonus_chance_outputs = list(/obj/item/alch/airdust = 33, /obj/item/fertilizer/bone_meal = 33)
 
 /datum/alch_grind_recipe/bone
 	valid_input = /obj/item/alch/bone

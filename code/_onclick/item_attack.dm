@@ -448,7 +448,7 @@
 	if(I.minstr)
 		var/effective = I.minstr
 		if(HAS_TRAIT(I, TRAIT_WIELDED))
-			effective = I.minstr * 0.75
+			effective *= 0.75
 		//Strength influence is reduced to 30%
 		if(effective > user.STASTR)
 			newforce = max(newforce*0.3, 1)

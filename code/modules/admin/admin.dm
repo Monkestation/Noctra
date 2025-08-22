@@ -539,11 +539,14 @@
 	if(!check_rights(0))
 		return
 
-	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
+	var/message = browser_input_text(usr, "Global message to send:", "Admin Announce")
 	if(message)
 		if(!check_rights(R_SERVER,0))
-			message = adminscrub(message,500)
-		to_chat(world, "<span class='adminnotice'><b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b></span>\n \t [message]")
+			message = adminscrub(message, 500)
+
+		var/admin_name = span_adminannounce_big("[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:")
+		var/message_to_announce = ("[span_adminannounce(message)]")
+		to_chat(world, announcement_block("[admin_name] \n \n [message_to_announce]"))
 		log_admin("Announce: [key_name(usr)] : [message]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Announce") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

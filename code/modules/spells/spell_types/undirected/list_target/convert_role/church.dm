@@ -14,6 +14,25 @@
 	C.grant_spells_templar(cast_on)
 	cast_on.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
 
+
+/datum/action/cooldown/spell/undirected/list_target/convert_role/templar/cast(mob/living/carbon/human/cast_on)
+	// Patron-specific checks happen here, AFTER priest picks the target
+	var/mob/living/living_owner = owner
+
+	if(cast_on.patron && (cast_on.patron.type in ALL_PROFANE_PATRONS))
+		to_chat(owner, span_danger("The Ten glare upon you in fury. CHILD, [cast_on.real_name] serves the Inhumen, do not disgrace Our name."))
+		living_owner.adjust_divine_fire_stacks(50) // Half of the damage that you get if you say a profane word, hurts alot.
+		living_owner.IgniteMob()
+		return // Stop the recruitment entirely
+
+	if(cast_on.patron && (cast_on.patron.type == /datum/patron/psydon))
+		to_chat(owner, span_info("The Ten glare upon you in sadness. CHILD, [cast_on.real_name] serves Psydon, he is dead, nobody can answer these prayers."))
+		return // Stop recruitment
+
+	return ..()
+
+
+
 /datum/action/cooldown/spell/undirected/list_target/convert_role/acolyte
 	name = "Recruit Acolyte"
 	button_icon_state = "recruit_acolyte"
@@ -23,6 +42,24 @@
 	recruitment_message = "Serve the Ten, %RECRUIT!"
 	accept_message = "FOR THE TEN!"
 	refuse_message = "I refuse."
+
+
+/datum/action/cooldown/spell/undirected/list_target/convert_role/acolyte/cast(mob/living/carbon/human/cast_on)
+	// Patron-specific checks happen here, AFTER priest picks the target
+	var/mob/living/living_owner = owner
+
+	if(cast_on.patron && (cast_on.patron.type in ALL_PROFANE_PATRONS))
+		to_chat(owner, span_danger("The Ten glare upon you in fury. CHILD, [cast_on.real_name] serves the Inhumen, do not disgrace Our name."))
+		living_owner.adjust_divine_fire_stacks(50) // Half of the damage that you get if you say a profane word, hurts alot.
+		living_owner.IgniteMob()
+		return // Stop the recruitment entirely
+
+	if(cast_on.patron && (cast_on.patron.type == /datum/patron/psydon))
+		to_chat(owner, span_info("The Ten glare upon you in sadness. CHILD, [cast_on.real_name] serves Psydon, he is dead, nobody can answer these prayers."))
+		return // Stop recruitment
+
+	return ..()
+
 
 /datum/action/cooldown/spell/undirected/list_target/convert_role/acolyte/on_conversion(mob/living/carbon/human/cast_on)
 	. = ..()
@@ -39,6 +76,16 @@
 	recruitment_message = "Serve the Ten, %RECRUIT!"
 	accept_message = "FOR THE TEN!"
 	refuse_message = "I refuse."
+
+
+/datum/action/cooldown/spell/undirected/list_target/convert_role/churchling/cast(mob/living/carbon/human/cast_on)
+	// Patron-specific checks happen here, AFTER priest picks the target
+	if(cast_on.patron && (cast_on.patron.type == /datum/patron/psydon))
+		to_chat(owner, span_info("The Ten glare upon you in sadness. CHILD, [cast_on.real_name] serves Psydon, he is dead, nobody can answer these prayers."))
+		return // Stop recruitment
+
+	return ..()
+
 
 /datum/action/cooldown/spell/undirected/list_target/convert_role/churchling/on_conversion(mob/living/carbon/human/cast_on)
 	. = ..()

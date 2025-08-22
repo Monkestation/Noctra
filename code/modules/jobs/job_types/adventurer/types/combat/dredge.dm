@@ -171,7 +171,7 @@
 			if(!H.has_language(/datum/language/oldpsydonic))
 				H.grant_language(/datum/language/oldpsydonic)
 				to_chat(H, "<span class='info'>I can speak Old Psydonic with ,m before my speech.</span>")
-			H.set_patron(/datum/patron/psydon)
+			H.set_patron(/datum/patron/psydon, TRUE)
 			to_chat(H,span_info("\
 			The Ten are false gods, and I loathe those that worship the true corpse god, Necra. Psydon lives, my life for Psydon.")
 			)
@@ -468,7 +468,7 @@
 		if("Mage")
 			H.mana_pool?.set_intrinsic_recharge(MANA_ALL_LEYLINES)
 			if(!(H.patron == /datum/patron/divine/noc || /datum/patron/inhumen/zizo))	//Magicians must follow Noc or Zizo to have access to magic.
-				H.set_patron(/datum/patron/divine/noc)
+				H.set_patron(/datum/patron/divine/noc, TRUE)
 			r_hand = /obj/item/weapon/polearm/woodstaff
 			head = /obj/item/clothing/head/roguehood/colored/mage
 			armor = /obj/item/clothing/shirt/robe/colored/mage
@@ -726,20 +726,20 @@
 			)
 		if("Zizo")
 			H.change_stat(STATKEY_INT, 1)
-			H.set_patron(/datum/patron/inhumen/zizo)
+			H.set_patron(/datum/patron/inhumen/zizo, TRUE)
 			to_chat(H,span_info("\
 			CHAOS REIGNS! HAIL ZIZO!")
 			)
 		if("Abyssor")
 			H.change_stat(STATKEY_END, 1)
-			H.set_patron(/datum/patron/divine/abyssor)
+			H.set_patron(/datum/patron/divine/abyssor, TRUE)
 			to_chat(H,span_info("\
 			Abyssor swallows my soul, his wrath will never be quenched!")
 			)
 		if("Graggar")
 			H.change_stat(STATKEY_END, 1)
 			H.change_stat(STATKEY_CON, 1)
-			H.set_patron(/datum/patron/inhumen/graggar)
+			H.set_patron(/datum/patron/inhumen/graggar, TRUE)
 			l_hand = /obj/item/clothing/head/helmet/heavy/sinistar
 			to_chat(H,span_info("\
 			FOR ALL WHO DENY THE STRUGGLE, THE TRIUMPHANT OVERCOME! GRAGGAR IS THE BEAST I WORSHIP!")
@@ -763,7 +763,7 @@
 			H.change_stat(STATKEY_INT, 4)
 			H.change_stat(STATKEY_END, -2)
 			H.change_stat(STATKEY_STR, -1)
-			H.set_patron(/datum/faith/godless)
+			H.set_patron(/datum/faith/godless, TRUE)
 			to_chat(H,span_info("\
 			In this moment, I am euphoric. Not because of any phony god's blessing, but because I am englightened by my intelligence. No gods, no masters.")
 			)
@@ -771,7 +771,7 @@
 			H.change_stat(STATKEY_INT, -4)
 			H.change_stat(STATKEY_CON, 4)
 			H.change_stat(STATKEY_SPD, -4)
-			H.set_patron(/datum/faith/godless)
+			H.set_patron(/datum/faith/godless, TRUE)
 			to_chat(H,span_info("\
 			If I'm going to be dumb, I'm going to be tough. I dare a motherfucker try to end my life.")
 			)

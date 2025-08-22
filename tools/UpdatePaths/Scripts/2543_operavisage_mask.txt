@@ -1,0 +1,1 @@
+/obj/item/clothing/head/padded/operavisage : /obj/item/clothing/face/operavisage{@OLD}

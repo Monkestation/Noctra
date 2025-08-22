@@ -1,5 +1,5 @@
 /datum/advclass/mercenary/grenzelhoft
-	name = "Grenzelhoft"
+	name = "Grenzelhoft Mercenary"
 	tutorial = "A mercenary from the Grenzelhoft Empire's Mercenary Guild. Their only care is coin, and the procurement of coin."
 	allowed_races = RACES_PLAYER_GRENZ
 	outfit = /datum/outfit/job/mercenary/grenzelhoft

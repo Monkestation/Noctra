@@ -119,3 +119,16 @@
 	target_type  = /obj/item/neuFarm/seed
 	result_type = /obj/item/neuFarm/seed/mixed_seed
 	required_essences = list(/datum/thaumaturgical_essence/life = 5)
+
+//quicksilver is mercury
+//so we're literally transmuting silver into quicksilver
+//hence the cost of magic, earth, and motion essence
+//magic because... magic
+//earth because we are turning one metal into another, heavier metal
+//motion because QUICKsilver, get it?
+/datum/essence_infusion_recipe/cinnabar
+	name = "Cinnabar Transmutation"
+	target_type  = /obj/item/alch/silverdust
+	result_type = /obj/item/ore/cinnabar
+	required_essences = list(/datum/thaumaturgical_essence/magic = 20, /datum/thaumaturgical_essence/earth = 10, /datum/thaumaturgical_essence/motion = 10)
+
