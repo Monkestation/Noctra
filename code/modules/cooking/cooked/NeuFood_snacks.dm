@@ -178,7 +178,7 @@
 	biting = TRUE
 	modified = TRUE
 	eat_effect = /datum/status_effect/buff/foodbuff
-	tastes = list("warm steak" = 1, "herbs" = 1)
+	tastes = list("frybird" = 1, "herbs" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = COOKED_MEAT_NUTRITION+2)
 	slices_num = 0
 	foodbuff_skillcheck = TRUE
