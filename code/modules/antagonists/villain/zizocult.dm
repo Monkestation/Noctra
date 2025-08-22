@@ -226,7 +226,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 	desc = "Strange runics."
 	icon_state = "center"
 	icon = 'icons/obj/sigils.dmi'
-	clean_type = CLEAN_TYPE_HARD_DECAL
+	clean_type = CLEAN_TYPE_LIGHT_DECAL //the sigils are made out of blood, they should be cleanable with a rag
 	var/sigil_type
 
 /obj/effect/decal/cleanable/sigil/examine(mob/user)
@@ -578,6 +578,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 					if(HL == SSticker.rulermob)
 						return
 					if(istype(HL.wear_neck, /obj/item/clothing/neck/psycross))
+						to_chat(user.mind, "<span class='danger'>\"They are wearing my bane...\"</span>")
 						return
 					if(HAS_TRAIT(HL, TRAIT_NOSTAMINA))
 						return
@@ -709,6 +710,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 	clean_speed = 1
 	clean_effectiveness = 100
 	clean_strength = CLEAN_ALL
+	color = LIGHT_COLOR_BLOOD_MAGIC
 
 /proc/criminalstool(mob/user, turf/C)
 	new /obj/item/soap/cult(C)
