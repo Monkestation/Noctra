@@ -1,5 +1,5 @@
 /mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
-	if (notransform)
+	if (HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 	//Handle items on mob
 
@@ -21,7 +21,7 @@
 			dropItemToGround(W)
 
 	//Make mob invisible and spawn animation
-	notransform = TRUE
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, "monkeyize")
 	Paralyze(22, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
@@ -122,7 +122,7 @@
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
 /mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
-	if (notransform)
+	if (HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 	//Handle items on mob
 
@@ -149,7 +149,7 @@
 
 
 	//Make mob invisible and spawn animation
-	notransform = TRUE
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, "humanize")
 	Paralyze(22, ignore_canstun = TRUE)
 
 	icon = null
@@ -258,9 +258,9 @@
 		to_chat(usr, "<span class='danger'>Sorry but this mob type is currently unavailable.</span>")
 		return
 
-	if(notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
-	notransform = TRUE
+	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, "monkeyize")
 	Paralyze(1, ignore_canstun = TRUE)
 
 	for(var/obj/item/W in src)

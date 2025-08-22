@@ -750,7 +750,8 @@
 		var/datum/wound/caused_wound = limb_grabbed.bodypart_attacked_by(BCLASS_BITE, damage, user, sublimb_grabbed, crit_message = TRUE)
 		if(user.mind)
 			//TODO: Werewolf Signal
-			if(user.mind.has_antag_datum(/datum/antagonist/werewolf))
+			var/datum/antagonist/werewolf/werewolf_antag = user.mind.has_antag_datum(/datum/antagonist/werewolf)
+			if(werewolf_antag && werewolf_antag.transformed)
 				var/mob/living/carbon/human/human = user
 				if(istype(caused_wound))
 					caused_wound?.werewolf_infect_attempt()

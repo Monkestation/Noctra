@@ -115,7 +115,7 @@ GLOBAL_LIST_EMPTY(last_words)
 
 //	for(var/datum/death_tracker/D in target.death_trackers)
 
-	if(!gibbed && rot_type)
+	if(!gibbed && !QDELETED(src) && rot_type)
 		LoadComponent(rot_type)
 
 	set_typing_indicator(FALSE)

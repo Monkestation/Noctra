@@ -9,40 +9,42 @@
 			grab_fatigue -= 0.5
 		grab_fatigue = max(0, grab_fatigue)
 
-	if(notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	if(damageoverlaytemp)
 		damageoverlaytemp = 0
 		update_damage_hud()
 
-	//Reagent processing needs to come before breathing, to prevent edge cases.
-	handle_organs()
+	if(HAS_TRAIT(src, TRAIT_STASIS))
+		. = ..()
+	else
+		//Reagent processing needs to come before breathing, to prevent edge cases.
+		handle_organs()
 
-	. = ..()
+		. = ..()
 
-	if (QDELETED(src))
-		return
+		if (QDELETED(src))
+			return
 
-	handle_lingering_pain()
-	handle_wounds()
-	handle_embedded_objects()
-	handle_blood()
-	handle_roguebreath()
-	update_stress()
-	handle_nausea()
-	if((blood_volume > BLOOD_VOLUME_SURVIVE) || HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE))
-		if(!heart_attacking)
-			if(oxyloss)
-				adjustOxyLoss(-1.6)
-		else
-			if(getOxyLoss() < 20)
-				heart_attacking = FALSE
+		handle_lingering_pain()
+		handle_wounds()
+		handle_embedded_objects()
+		handle_blood()
+		handle_roguebreath()
+		update_stress()
+		handle_nausea()
+		if((blood_volume > BLOOD_VOLUME_SURVIVE) || HAS_TRAIT(src, TRAIT_BLOODLOSS_IMMUNE))
+			if(!heart_attacking)
+				if(oxyloss)
+					adjustOxyLoss(-1.6)
+			else
+				if(getOxyLoss() < 20)
+					heart_attacking = FALSE
 
-	handle_sleep()
+		handle_sleep()
 
-	handle_brain_damage()
-
+		handle_brain_damage()
 
 	check_cremation()
 
@@ -52,7 +54,7 @@
 /mob/living/carbon/DeadLife()
 	set invisibility = 0
 
-	if(notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	. = ..()
@@ -930,7 +932,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 					if(!wound.sleep_healing)
 						continue
 					wound.heal_wound(wound.sleep_healing * sleepy_mod)
-			adjustToxLoss( - ( sleepy_mod * 0.5) )
+			adjustToxLoss( - ( sleepy_mod * 0.15) )
 			updatehealth()
 			if(eyesclosed && !HAS_TRAIT(src, TRAIT_NOSLEEP))
 				Sleeping(300)

@@ -145,3 +145,7 @@
 #define adjust_silence_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/silenced, up_to)
 #define set_silence(duration) set_timed_status_effect(duration, /datum/status_effect/silenced)
 #define set_silence_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/silenced, TRUE)
+
+// Grouped effect sources, see also code/__DEFINES/traits.dm
+
+#define STASIS_SHAPECHANGE_EFFECT "stasis_shapechange"

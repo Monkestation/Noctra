@@ -44,6 +44,17 @@ GLOBAL_VAR_INIT(mobids, 1)
 	..()
 	return QDEL_HINT_HARDDEL
 
+/// Assigns a (c)key to this mob.
+/mob/proc/PossessByPlayer(ckey)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(isnull(ckey))
+		return
+
+	if(!istext(ckey))
+		CRASH("Tried to assign a mob a non-text ckey, wtf?!")
+
+	src.ckey = ckey(ckey)
+
 /**
  * Intialize a mob
  *
@@ -740,7 +751,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 		return FALSE
 	if(anchored)
 		return FALSE
-	if(notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
 		return FALSE

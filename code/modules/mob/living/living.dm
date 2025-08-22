@@ -22,6 +22,7 @@
 	init_faith()
 	if(has_reflection)
 		create_reflection()
+	recalculate_stats()
 
 /mob/living/Destroy()
 	if(FACTION_MATTHIOS in faction)
@@ -666,8 +667,8 @@
 		return TRUE
 	if(!(flags & IGNORE_GRAB) && pulledby && (pulledby != src) && pulledby.grab_state >= GRAB_AGGRESSIVE)
 		return TRUE
-	// if(!(flags & IGNORE_STASIS) && HAS_TRAIT(src, TRAIT_STASIS))
-	// 	return TRUE
+	if(!(flags & IGNORE_STASIS) && HAS_TRAIT(src, TRAIT_STASIS))
+		return TRUE
 	return FALSE
 
 /mob/living/canUseStorage()
@@ -1752,16 +1753,121 @@
 	stop_pulling()
 	. = ..()
 
+// Used in polymorph code to shapeshift mobs into other creatures
+/**
+ * Polymorphs our mob into another mob.
+ * If successful, our current mob is qdeleted!
+ *
+ * what_to_randomize - what are we randomizing the mob into? See the defines for valid options.
+ * change_flags - only used for humanoid randomization (currently), what pool of changeflags should we draw from?
+ *
+ * Returns a mob (what our mob turned into) or null (if we failed).
+ */
+/mob/living/proc/wabbajack(what_to_randomize, change_flags = WABBAJACK)
+	if(stat == DEAD || (status_flags & GODMODE) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+		return
+
+	if(SEND_SIGNAL(src, COMSIG_LIVING_PRE_WABBAJACKED, what_to_randomize) & STOP_WABBAJACK)
+		return
+
+	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_NO_TRANSFORM), MAGIC_TRAIT)
+	icon = null
+	cut_overlays()
+	invisibility = INVISIBILITY_ABSTRACT
+
+	var/list/item_contents = list()
+
+	for(var/obj/item/item in src)
+		if(!dropItemToGround(item))
+			qdel(item)
+			continue
+		item_contents += item
+
+	var/mob/living/new_mob
+
+	var/static/list/possible_results = list(
+		WABBAJACK_HUMAN,
+		WABBAJACK_ANIMAL,
+	)
+
+	// If we weren't passed one, pick a default one
+	what_to_randomize ||= pick(possible_results)
+
+	switch(what_to_randomize)
+
+		if(WABBAJACK_ANIMAL)
+			var/picked_animal = pick(
+				/mob/living/simple_animal/hostile/retaliate/bat,
+				/mob/living/simple_animal/hostile/retaliate/chicken,
+				/mob/living/simple_animal/hostile/retaliate/cow,
+				/mob/living/simple_animal/hostile/retaliate/goat,
+				/mob/living/simple_animal/hostile/retaliate/spider,
+				/mob/living/simple_animal/pet/cat,
+				/mob/living/simple_animal/pet/cat/cabbit,
+			)
+			new_mob = new picked_animal(loc)
+
+		if(WABBAJACK_HUMAN)
+			var/mob/living/carbon/human/new_human = new(loc)
+
+			// 50% chance that we'll also randomice race
+			if(prob(50))
+				var/list/chooseable_races = list()
+				for(var/datum/species/species_type as anything in subtypesof(/datum/species))
+					if(initial(species_type.changesource_flags) & change_flags)
+						chooseable_races += species_type
+
+				if(length(chooseable_races))
+					new_human.set_species(pick(chooseable_races))
+
+			// Randomize everything but the species, which was already handled above.
+			new_human.randomize_human_appearance(~RANDOMIZE_SPECIES)
+			new_human.update_body()
+			new_human.dna.update_dna_identity()
+			new_mob = new_human
+
+		else
+			stack_trace("wabbajack() was called without an invalid randomization choice. ([what_to_randomize])")
+
+	if(!new_mob)
+		return
+
+	to_chat(src, span_hypnophrase(span_big("Your form morphs into that of a [what_to_randomize]!")))
+
+	// And of course, make sure they get policy for being transformed
+	var/poly_msg = get_policy(POLICY_POLYMORPH)
+	if(poly_msg)
+		to_chat(src, poly_msg)
+
+	// Some forms can still wear some items
+	for(var/obj/item/item as anything in item_contents)
+		new_mob.equip_to_appropriate_slot(item)
+
+	// // I don't actually know why we do this
+	// new_mob.set_combat_mode(TRUE)
+
+	// on_wabbajack is where we handle setting up the name,
+	// transfering the mind and observerse, and other miscellaneous
+	// actions that should be done before we delete the original mob.
+	on_wabbajacked(new_mob)
+
+	qdel(src)
+	return new_mob
+
 // Called when we are hit by a bolt of polymorph and changed
 // Generally the mob we are currently in is about to be deleted
-/mob/living/proc/wabbajack_act(mob/living/new_mob)
+/mob/living/proc/on_wabbajacked(mob/living/new_mob)
+	log_message("became [new_mob.name] ([new_mob.type])", LOG_ATTACK, color = "orange")
+	SEND_SIGNAL(src, COMSIG_LIVING_ON_WABBAJACKED, new_mob)
 	new_mob.name = real_name
 	new_mob.real_name = real_name
-
+	// Transfer mind to the new mob (also handles actions and observers and stuff)
 	if(mind)
 		mind.transfer_to(new_mob)
-	else
-		new_mob.key = key
+
+	// Well, no mmind, guess we should try to move a key over
+	else if(key)
+		new_mob.PossessByPlayer(key)
 
 /mob/living/proc/fakefireextinguish()
 	return

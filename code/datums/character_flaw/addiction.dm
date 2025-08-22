@@ -8,8 +8,7 @@
 		if(!A.sated)
 			to_chat(src, span_blue(A.sated_text))
 		A.sated = TRUE
-		A.time = initial(A.time) //reset roundstart sate offset to standard
-		A.next_sate = world.time + A.time
+		A.next_sate = world.time + A.time + rand(-1 MINUTES, 1 MINUTES)
 		// remove_stress(/datum/stressevent/vice)
 		if(A.debuff)
 			remove_status_effect(A.debuff)
@@ -26,8 +25,7 @@
 
 /datum/charflaw/addiction/New()
 	..()
-	time = rand(6 MINUTES, 30 MINUTES)
-	next_sate = world.time + time
+	next_sate = world.time + rand(10 MINUTES, 20 MINUTES)
 
 /datum/charflaw/addiction/flaw_on_life(mob/user)
 	if(!ishuman(user))

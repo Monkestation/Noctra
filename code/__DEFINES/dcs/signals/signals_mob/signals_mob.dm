@@ -23,3 +23,9 @@
 ///from base of mob/swap_hand(): (obj/item/currently_held_item)
 #define COMSIG_MOB_SWAPPING_HANDS "mob_swapping_hands"
 	#define COMPONENT_BLOCK_SWAP (1<<0)
+
+/// from /mob/proc/change_mob_type() : ()
+#define COMSIG_PRE_MOB_CHANGED_TYPE "mob_changed_type"
+	#define COMPONENT_BLOCK_MOB_CHANGE (1<<0)
+/// from /mob/proc/change_mob_type_unchecked() : ()
+#define COMSIG_MOB_CHANGED_TYPE "mob_changed_type"

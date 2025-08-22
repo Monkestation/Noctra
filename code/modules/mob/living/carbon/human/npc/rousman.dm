@@ -149,7 +149,7 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 
 /datum/species/rousman/regenerate_icons(mob/living/carbon/human/H)
 	H.icon_state = ""
-	if(H.notransform)
+	if(HAS_TRAIT(H, TRAIT_NO_TRANSFORM))
 		return 1
 	H.update_inv_hands()
 	H.update_inv_handcuffed()
@@ -284,6 +284,7 @@ GLOBAL_LIST_EMPTY(rousman_ambush_objects)
 	H.base_constitution = rand(4, 8)
 	H.base_endurance = rand(7, 10)
 	H.base_speed = rand(10, 15)
+	H.recalculate_stats(FALSE)
 
 	var/loadout = rand(1,4)
 	switch(loadout)

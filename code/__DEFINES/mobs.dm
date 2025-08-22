@@ -326,6 +326,12 @@
 //Wabbacjack staff projectiles
 #define WABBAJACK     (1<<0)
 
+// Randomization keys for calling wabbajack with.
+// Note the contents of these keys are important, as they're displayed to the player
+// Ex: (You turn into a "monkey", You turn into a "xenomorph")
+#define WABBAJACK_HUMAN "humanoid"
+#define WABBAJACK_ANIMAL "animal"
+
 #define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
 
 #define DOING_INTERACTION(user, interaction_key) (LAZYACCESS(user.do_afters, interaction_key))

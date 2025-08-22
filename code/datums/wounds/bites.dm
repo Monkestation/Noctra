@@ -12,7 +12,7 @@
 	can_cauterize = FALSE
 	passive_healing = 0.5
 
-	werewolf_infection_probability = 12
+	werewolf_infection_probability = 15
 
 /datum/wound/bite/can_apply_to_bodypart(obj/item/bodypart/affected)
 	. = ..()
@@ -24,7 +24,7 @@
 	whp = 15
 	woundpain = 3
 
-	werewolf_infection_probability = 8
+	werewolf_infection_probability = 10
 
 /datum/wound/bite/large
 	name = "gnarly bite"
@@ -42,4 +42,4 @@
 	can_cauterize = TRUE
 	passive_healing = 0
 
-	werewolf_infection_probability = 16
+	werewolf_infection_probability = 20

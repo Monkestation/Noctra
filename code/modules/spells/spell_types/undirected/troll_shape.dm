@@ -12,17 +12,15 @@
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
 	associated_skill = /datum/skill/magic/holy
 	required_items = list(/obj/item/clothing/neck/psycross/silver/dendor)
-	attunements = list(
-		/datum/attunement/earth = 0.7,
-		/datum/attunement/polymorph = 0.5,
-	)
 
 	invocation = "DENDOR LEND ME YOUR POWER!!"
 	invocation_type = INVOCATION_SHOUT
 
 	charge_required = FALSE
-	cooldown_time = 6 MINUTES
-	spell_cost = 100
+	cooldown_time = 3.5 MINUTES
+	spell_cost = 40
+
+	sound = 'sound/vo/mobs/troll/aggro2.ogg'
 
 	// Im sorry
 	var/stage = TROLL_SHAPE_STAGE_1

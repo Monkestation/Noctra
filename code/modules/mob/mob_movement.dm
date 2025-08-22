@@ -78,7 +78,7 @@ w/**
 		return FALSE
 	if(!n || !direct)
 		return FALSE
-	if(mob.notransform)
+	if(HAS_TRAIT(mob, TRAIT_NO_TRANSFORM))
 		return FALSE	//This is sota the goto stop mobs from moving var
 	if(mob.control_object)
 		return Move_object(direct)

@@ -72,6 +72,7 @@
 /mob/proc/adjust_stamina(added as num)
 	return TRUE
 
+/// Positive added values deplete stamina. Negative added values restore stamina and deplete energy unless internal_regen is FALSE.
 /mob/living/adjust_stamina(added as num, emote_override, force_emote = TRUE, internal_regen = TRUE) //call update_stamina here and set last_fatigued, return false when not enough fatigue left
 	if(HAS_TRAIT(src, TRAIT_NOSTAMINA))
 		return TRUE

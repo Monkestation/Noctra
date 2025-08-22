@@ -6,7 +6,7 @@
 /mob/living/carbon/spirit/Life()
 	set invisibility = 0
 
-	if (notransform)
+	if (HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 /mob/living/carbon/spirit/handle_environment()

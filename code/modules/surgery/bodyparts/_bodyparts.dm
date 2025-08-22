@@ -156,7 +156,7 @@
 							"<span class='notice'>I consume [src]!</span>")
 			playsound(get_turf(user), pick(dismemsound), 100, FALSE, -1)
 			new /obj/effect/gibspawner/generic(get_turf(src), user)
-			user.fully_heal()
+			user.reagents.add_reagent(/datum/reagent/medicine/healthpot, 30)
 			qdel(src)
 		return
 	return ..()

@@ -81,6 +81,7 @@
 	H.base_constitution = 8
 	H.base_endurance = 8
 	H.base_intelligence = 1
+	H.recalculate_stats(FALSE)
 
 /datum/outfit/job/greater_skeleton/pre_equip(mob/living/carbon/human/H) //equipped onto Summon Greater Undead player skeletons only after the mind is added
 	..()
@@ -99,6 +100,7 @@
 	H.base_constitution = 9
 	H.base_endurance = 15
 	H.base_intelligence = 1
+	H.recalculate_stats(FALSE)
 
 	//light labor skills for skeleton manual labor and some warrior-adventurer skills, equipment is still bad probably
 	H.adjust_skillrank(/datum/skill/craft/carpentry, 1, TRUE)
@@ -152,6 +154,7 @@
 	H.base_speed = 8
 	H.base_constitution = 8
 	H.base_endurance = 8
+	H.recalculate_stats(FALSE)
 	var/loadout = rand(1,7)
 	head = /obj/item/clothing/head/roguehood/colored/random
 	pants = /obj/item/clothing/pants/tights/colored/vagrant
@@ -238,6 +241,7 @@
 	H.base_speed = 7
 	H.base_constitution = 10
 	H.base_endurance = 10
+	H.recalculate_stats(FALSE)
 	var/loadout = rand(1,6)
 	switch(loadout)
 		if(1) //Skeleton Warrior

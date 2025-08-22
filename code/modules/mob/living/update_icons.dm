@@ -1,5 +1,5 @@
 /mob/living/regenerate_icons()
-	if(notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return 1
 	update_inv_hands()
 	update_inv_handcuffed()

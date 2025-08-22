@@ -1,4 +1,5 @@
 /obj/item/recipe_book
+
 	icon = 'icons/roguetown/items/books.dmi'
 
 	w_class = WEIGHT_CLASS_SMALL
@@ -6,7 +7,6 @@
 	grid_height = 64
 	var/list/types = list()
 	var/open
-	base_icon_state
 	var/can_spawn = TRUE
 	var/list/categories = list("All") // Default categories
 	var/current_category = "All"      // Default selected category
