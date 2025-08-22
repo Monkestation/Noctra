@@ -219,18 +219,16 @@
 		/obj/item/weapon/knife = list("starts to prepare the log", "start to prepare the log", 'sound/combat/hits/bladed/genstab (1).ogg'),
 	)
 	requirements = list(
-		/obj/item/grown/log/tree = 1,
+		/obj/item/grown/log/tree/small = 1,
 	)
 	reagent_requirements = list(
 		/datum/reagent/water = 33
 	)
 	attacked_atom = /obj/machinery/tanningrack
 
-	subtypes_allowed = TRUE
 	craft_time = 1.5 SECONDS
 	crafting_message = "starts making some parchment"
 	craftdiff = 0
-	blacklisted_paths = list(/obj/item/natural/hide/cured)
 
 /datum/repeatable_crafting_recipe/tiefsugar
 	name = "tiefling sugar"
