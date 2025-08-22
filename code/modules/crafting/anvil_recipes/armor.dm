@@ -583,7 +583,7 @@
 	created_item = /obj/item/clothing/head/helmet/sallet
 
 /datum/anvil_recipe/armor/steel/helmetsall
-	name = "Kulah Khud""
+	name = "Kulah Khud"
 	recipe_name = "a Zalad Sallet"
 	created_item = /obj/item/clothing/head/helmet/sallet/zalad
 
