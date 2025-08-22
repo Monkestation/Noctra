@@ -179,7 +179,6 @@
 					return
 				record_round_statistic(STATS_FINES_INCOME, newtax)
 				SStreasury.give_money_account(-newtax, A)
-				SStreasury.give_money_treasury(newtax) // Gives the money from the fine to the treasury
 				break
 	if(href_list["payroll"])
 		var/list/L = list(GLOB.noble_positions) + list(GLOB.garrison_positions) + list(GLOB.church_positions) + list(GLOB.serf_positions) + list(GLOB.company_positions) + list(GLOB.peasant_positions) + list(GLOB.youngfolk_positions) + list(GLOB.apprentices_positions)
@@ -372,7 +371,7 @@
 			contents += "<center>Log<BR>"
 			contents += "--------------</center><BR><BR>"
 			for(var/i = SStreasury.log_entries.len to 1 step -1)
-				contents += "<span class='info'>[SStreasury.log_entries[i]]</span><BR>"
+				contents += "<span class='info'>	[SStreasury.log_entries[i]]</span><BR>"
 
 	contents += {"
 		</head>
