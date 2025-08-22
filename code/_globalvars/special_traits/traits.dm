@@ -718,3 +718,17 @@
 	character.mind.special_items["Tabard"] = cloak
 	character.mind.special_items["Psycross"] = psycross
 	character.mind.special_items["Helmet"] = helmet
+
+/datum/special_trait/meow
+	name = "Meow"
+	greet_text = span_boldwarning("What?")
+	req_text = "???"
+	weight = 1
+
+/datum/special_trait/meow/on_apply(mob/living/carbon/human/character, silent)
+	var/mob/living/simple_animal/pet/cat/catte = new(get_turf(character))
+	catte.real_name = character.real_name
+	catte.name = character.real_name
+	catte.desc = "This cat seems a little.. strange..."
+	catte.ckey = character.ckey
+	qdel(character)
