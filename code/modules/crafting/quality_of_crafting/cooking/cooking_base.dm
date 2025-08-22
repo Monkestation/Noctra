@@ -102,11 +102,12 @@
 		new_item.sellprice = sellprice
 		new_item.randomize_price()
 
-		// Apply freshness to the new food item
-		new_item.warming = min(5 MINUTES, average_freshness)
+		if(istype(new_item, /obj/item/reagent_containers/food/snacks))
+			// Apply freshness to the new food item
+			new_item.warming = min(5 MINUTES, average_freshness)
 
-		// Calculate final quality based on ingredients, skill, and recipe
-		apply_food_quality(new_item, cooking_skill, highest_quality, average_freshness)
+			// Calculate final quality based on ingredients, skill, and recipe
+			apply_food_quality(new_item, cooking_skill, highest_quality, average_freshness)
 
 		if(length(pass_types_in_end))
 			var/list/parts = list()
