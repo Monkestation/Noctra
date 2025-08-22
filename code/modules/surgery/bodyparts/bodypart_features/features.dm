@@ -40,7 +40,8 @@
 		qdel(hair_extensions)
 
 	var/dynamic = FALSE
-	if(extensions[standing.icon_state+dynamic_hair_suffix])
+	var/datum/sprite_accessory/accessory = SPRITE_ACCESSORY(accessory_type)
+	if(extensions[accessory.icon_state+dynamic_hair_suffix])
 		dynamic = dynamic_hair_suffix
 
 	add_gradient_overlay(standing, natural_gradient, natural_color, dynamic)

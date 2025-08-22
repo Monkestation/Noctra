@@ -86,6 +86,7 @@
 			H.add_splatter_floor()
 			H.adjustBruteLoss(20)
 			to_chat(user, span_notice("I finish pulling the heart from [H]!"))
+	. = ..()
 
 #undef GOREFEAST_UNWORTHY
 #undef GOREFEAST_WORTHY

@@ -189,6 +189,48 @@
 	output_amount = 2
 	craft_time = 5 SECONDS
 
+/datum/repeatable_crafting_recipe/engineering/sprinkler
+	name = "sprinkler"
+	requirements = list(
+		/obj/item/ingot/bronze = 1,
+	)
+	tool_usage = list(
+		/obj/item/weapon/hammer = list(span_notice("starts to hammer"), span_notice("start to hammer"), 'sound/items/bsmith2.ogg'),
+	)
+	attacked_atom = /obj/item/ingot/bronze
+	starting_atom = /obj/item/weapon/hammer
+	output = /obj/item/rotation_contraption/sprinkler
+	output_amount = 2
+	craft_time = 5 SECONDS
+
+/datum/repeatable_crafting_recipe/engineering/pressurizer
+	name = "pressurizer"
+	requirements = list(
+		/obj/item/ingot/bronze = 1,
+	)
+	tool_usage = list(
+		/obj/item/weapon/hammer = list(span_notice("starts to hammer"), span_notice("start to hammer"), 'sound/items/bsmith2.ogg'),
+	)
+	attacked_atom = /obj/item/ingot/bronze
+	starting_atom = /obj/item/weapon/hammer
+	output = /obj/item/rotation_contraption/pressurizer
+	output_amount = 2
+	craft_time = 5 SECONDS
+
+/datum/repeatable_crafting_recipe/engineering/drain
+	name = "drain"
+	requirements = list(
+		/obj/item/ingot/bronze = 1,
+	)
+	tool_usage = list(
+		/obj/item/weapon/hammer = list(span_notice("starts to hammer"), span_notice("start to hammer"), 'sound/items/bsmith2.ogg'),
+	)
+	attacked_atom = /obj/item/ingot/bronze
+	starting_atom = /obj/item/weapon/hammer
+	output = /obj/item/rotation_contraption/drain
+	output_amount = 2
+	craft_time = 5 SECONDS
+
 /datum/repeatable_crafting_recipe/engineering/steam_recharger
 	name = "steam recharger"
 	requirements = list(

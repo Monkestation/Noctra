@@ -791,3 +791,11 @@
 /datum/repeatable_crafting_recipe/sewing/carpet/red
 	name = "red carpet"
 	output = /obj/item/natural/carpet_fibers/red
+
+/datum/repeatable_crafting_recipe/sewing/beehood
+	name = "beehood"
+	output = /obj/item/clothing/head/beekeeper
+	requirements = list(/obj/item/natural/cloth = 4,
+				/obj/item/natural/fibers = 2)
+	craftdiff = 2
+	category = "Hat"

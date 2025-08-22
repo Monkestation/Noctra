@@ -509,6 +509,7 @@
 		/obj/item/neuFarm/seed/wheat/ancient = list(4, 15, 1),
 		/obj/item/neuFarm/seed/tea = list(4, 19, 3),
 		/obj/item/neuFarm/seed/coffee = list(4, 22, 5),
+		/obj/item/queen_bee = list(11, 50, 2),
 	)
 	say_phrases = list(
 		ITEM_REJECTED_PHRASE = list(

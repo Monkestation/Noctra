@@ -13,6 +13,7 @@ SUBSYSTEM_DEF(mobs)
 
 	var/static/list/matthios_mobs = list()
 	var/list/matthios = list()
+	var/datum/mob_affix_system/affix_system
 
 /datum/controller/subsystem/mobs/stat_entry()
 	..("P:[GLOB.mob_living_list.len]")
@@ -42,6 +43,8 @@ SUBSYSTEM_DEF(mobs)
 
 /datum/controller/subsystem/mobs/fire(resumed = 0)
 	var/seconds = wait * 0.1
+	if(!affix_system)
+		affix_system = new()
 	if (!resumed)
 		src.currentrun = GLOB.mob_living_list.Copy()
 		src.currentrun -= matthios_mobs
@@ -77,3 +80,8 @@ SUBSYSTEM_DEF(mobs)
 			L.Life(seconds, times_fired)
 		if (TICK_CHECK_LOW)
 			return
+
+/datum/controller/subsystem/mobs/proc/enhance_mob(mob/living/mob, delve_level = 1)
+	if(!affix_system)
+		return
+	affix_system.enhance_mob(mob, delve_level - 1)

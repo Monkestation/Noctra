@@ -15,6 +15,7 @@
 	phosphorus_production = 0
 	potassium_production = 32
 	seed_identity = "tangerine seeds"
+	see_through = TRUE
 
 /datum/plant_def/tangerine/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	base_genetics.quality_trait = TRAIT_GRADE_GOOD
@@ -37,6 +38,7 @@
 	phosphorus_production = 0
 	potassium_production = 32
 	seed_identity = "lime seeds"
+	see_through = TRUE
 
 /datum/plant_def/lime/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	base_genetics.quality_trait = TRAIT_GRADE_GOOD
@@ -59,6 +61,7 @@
 	phosphorus_production = 40
 	potassium_production = 0
 	seed_identity = "lemon seeds"
+	see_through = TRUE
 
 /datum/plant_def/lemon/set_genetic_tendencies(datum/plant_genetics/base_genetics)
 	base_genetics.quality_trait = TRAIT_GRADE_EXCELLENT

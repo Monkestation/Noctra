@@ -106,6 +106,8 @@
 
 	if(SEND_SIGNAL(src, COMSIG_MOB_CLICKON, A, params) & COMSIG_MOB_CANCEL_CLICKON)
 		return
+	if(SEND_SIGNAL(A, COMSIG_ATOM_CLICKEDON, src, params) & COMSIG_MOB_CANCEL_CLICKON)
+		return
 
 	if(next_move > world.time)
 		return
@@ -119,7 +121,8 @@
 					changeNext_move(mmb_intent.clickcd)
 					return
 
-	if(LAZYACCESS(modifiers, LEFT_CLICK))
+	var/obj/item/W = get_active_held_item()
+	if(LAZYACCESS(modifiers, LEFT_CLICK) && !(W == A || LAZYACCESS(modifiers, SHIFT_CLICKED) || LAZYACCESS(modifiers, CTRL_CLICKED) || LAZYACCESS(modifiers, ALT_CLICKED)))
 		if(atkswinging != "left")
 			return
 		if(active_hand_index == 1)
@@ -184,8 +187,6 @@
 	if(in_throw_mode)
 		throw_item(A)
 		return
-
-	var/obj/item/W = get_active_held_item()
 
 	if(W == A)
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))

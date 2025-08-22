@@ -70,9 +70,11 @@
 	if(!H.has_language(/datum/language/celestial)) // For discussing church matters with the other Clergy
 		H.grant_language(/datum/language/celestial)
 		to_chat(H, "<span class='info'>I can speak Celestial with ,c before my speech.</span>")
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(H, H.patron) // This creates the cleric holder used for devotion spells
-	H.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
-	C.grant_spells_priest(H)
+	var/holder = H.patron?.devotion_holder
+	if(holder)
+		var/datum/devotion/devotion = new holder()
+		devotion.make_priest()
+		devotion.grant_to(H)
 
 	H.update_icons()
 

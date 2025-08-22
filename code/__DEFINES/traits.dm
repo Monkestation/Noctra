@@ -291,6 +291,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ADVENTURER_TRAIT "adventurer"
 #define TRAIT_LONGSTRIDER "longstrider"
 #define TRAIT_GUIDANCE "guidance"
+#define DEVOTION_TRAIT "devotion_trait"
 
 #define TRAIT_WEBWALK 					"Webwalker"
 #define TRAIT_NOSTINK 					"Dead Nose"

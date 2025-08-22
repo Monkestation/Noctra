@@ -25,6 +25,7 @@
 
 	health = 240
 	maxHealth = 240
+	food_max = 0
 	food_type = list()
 
 	base_intents = list(/datum/intent/simple/bite)
@@ -43,7 +44,7 @@
 	defprob = 35
 	defdrain = 5
 	retreat_health = 0.4
-	food = 0
+
 	dodgetime = 30
 	aggressive = 1
 	body_eater = FALSE

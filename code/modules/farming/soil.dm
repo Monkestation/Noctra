@@ -33,6 +33,7 @@
 	density = FALSE
 	climbable = FALSE
 	max_integrity = 0
+	UUID_saving = TRUE
 	/// Amount of water in the soil. It makes the plant and weeds not loose health
 	var/water = 0
 	/// Amount of weeds in the soil. The more of them the more water and nutrition they eat.
@@ -70,6 +71,11 @@
 	var/quality_points = 0
 	///accellerated_growth
 	var/accellerated_growth = 0
+
+	///the overlays we are adding to mobs
+	var/list/vanished
+
+	var/list/marked_turfs
 
 	COOLDOWN_DECLARE(soil_update)
 
@@ -1020,6 +1026,7 @@
 
 /obj/structure/soil/proc/decay_soil()
 	plant = null
+	remove_signals()
 	plant_genetics = null
 	qdel(src)
 
@@ -1032,6 +1039,7 @@
 	if(produce_ready)
 		ruin_produce()
 	plant = null
+	remove_signals()
 	plant_genetics = null
 	update_appearance(UPDATE_OVERLAYS)
 
@@ -1109,6 +1117,8 @@
 	if(plant)
 		return
 	plant = new_plant
+	if(initial(new_plant.see_through))
+		add_signals()
 	plant_health = MAX_PLANT_HEALTH
 	growth_time = 0
 	produce_time = 0
@@ -1120,6 +1130,67 @@
 	crop_quality = QUALITY_REGULAR
 	quality_points = 0
 	update_appearance(UPDATE_OVERLAYS)
+
+/obj/structure/soil/proc/add_signals()
+	var/turf/above = get_step(src, NORTH)
+	RegisterSignal(above, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+	RegisterSignal(above, COMSIG_TURF_EXITED, PROC_REF(on_exited))
+	LAZYADD(marked_turfs, above)
+	RegisterSignal(get_step(above, WEST), COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+	RegisterSignal(get_step(above, WEST), COMSIG_TURF_EXITED, PROC_REF(on_exited))
+	LAZYADD(marked_turfs, get_step(above, WEST))
+	RegisterSignal(get_step(above, EAST), COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+	RegisterSignal(get_step(above, EAST), COMSIG_TURF_EXITED, PROC_REF(on_exited))
+	LAZYADD(marked_turfs, get_step(above, EAST))
+
+/obj/structure/soil/proc/remove_signals()
+	var/turf/above = get_step(src, NORTH)
+	UnregisterSignal(above, COMSIG_ATOM_ENTERED)
+	UnregisterSignal(above, COMSIG_TURF_EXITED)
+	UnregisterSignal(get_step(above, WEST), COMSIG_ATOM_ENTERED)
+	UnregisterSignal(get_step(above, WEST), COMSIG_TURF_EXITED)
+	UnregisterSignal(get_step(above, EAST), COMSIG_ATOM_ENTERED)
+	UnregisterSignal(get_step(above, EAST), COMSIG_TURF_EXITED)
+	LAZYCLEARLIST(marked_turfs)
+
+/obj/structure/soil/proc/on_entered(datum/source, mob/crossed)
+	if(!isliving(crossed))
+		return
+	if(!crossed.client)
+		return
+	if(LAZYACCESS(vanished, crossed))
+		return
+
+	var/image/overlay = image(src)
+	overlay.appearance = appearance
+	overlay.loc = src
+	overlay.override = TRUE
+	overlay.plane = SEETHROUGH_PLANE
+	overlay.appearance_flags = KEEP_APART
+
+	var/mutable_appearance/MA = mutable_appearance(icon, icon_state)
+	MA.appearance_flags = KEEP_APART
+	MA.plane = initial(plane)
+	overlay.overlays += MA
+	animate(overlay, alpha = 110, time = 0.3 SECONDS)
+
+	crossed.client.images += overlay
+	LAZYADDASSOC(vanished, crossed, overlay)
+
+
+/obj/structure/soil/proc/on_exited(turf/source, mob/crossed, direction)
+	if(!isliving(crossed))
+		return
+	if(get_step(source, crossed.dir) in marked_turfs)
+		return
+	if(!crossed.client)
+		return
+	var/image/overlay = LAZYACCESS(vanished, crossed)
+	if(!overlay)
+		return
+	crossed.client.images -= overlay
+	LAZYREMOVE(vanished, crossed)
+
 
 /obj/structure/soil/debug_soil
 	var/obj/item/neuFarm/seed/seed_to_grow

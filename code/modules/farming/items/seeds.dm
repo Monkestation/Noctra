@@ -70,6 +70,10 @@
 		try_plant_seed(user, soil)
 		return
 	else if(istype(T, /turf/open/floor/dirt))
+		var/obj/structure/irrigation_channel/located = locate(/obj/structure/irrigation_channel) in T
+		if(located)
+			to_chat(user, span_notice("[located] is in the way!"))
+			return
 		if(!(user.get_skill_level(/datum/skill/labor/farming) >= SKILL_LEVEL_JOURNEYMAN))
 			to_chat(user, span_notice("I don't know enough to make a mound without tools."))
 			return

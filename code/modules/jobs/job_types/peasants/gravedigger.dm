@@ -60,6 +60,8 @@
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC) // Operating with corpses every day.
 	ADD_TRAIT(H, TRAIT_GRAVEROBBER, TRAIT_GENERIC) // In case they need to move tombs or anything.
 
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(H, H.patron)
-	H.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
-	C.grant_spells(H)
+	var/holder = H.patron?.devotion_holder
+	if(holder)
+		var/datum/devotion/devotion = new holder()
+		devotion.make_acolyte()
+		devotion.grant_to(H)

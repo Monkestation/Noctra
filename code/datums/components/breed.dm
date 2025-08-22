@@ -76,7 +76,7 @@
 	addtimer(CALLBACK(src, PROC_REF(toggle_status), source), breed_timer)
 	if(isanimal(source))
 		var/mob/living/simple_animal/simple_animal = source
-		simple_animal.food = max(simple_animal.food - (simple_animal.food_max * 0.2), 0)
+		SEND_SIGNAL(simple_animal, COMSIG_MOB_DRAIN_HUNGER, 0.2)
 
 	SEND_SIGNAL(target, COMSIG_PARENT_IMPREGNATE, source)
 	return COMPONENT_HOSTILE_NO_PREATTACK
@@ -96,7 +96,7 @@
 	addtimer(CALLBACK(src, PROC_REF(birth_baby), source, target), breed_timer)
 	if(isanimal(source))
 		var/mob/living/simple_animal/simple_animal = source
-		simple_animal.food = max(simple_animal.food - (simple_animal.food_max * 0.4), 0)
+		SEND_SIGNAL(simple_animal, COMSIG_MOB_DRAIN_HUNGER, 0.4)
 
 /// Called by component on female source
 /datum/component/breed/proc/birth_baby(mob/living/source, mob/living/target)
@@ -112,6 +112,7 @@
 
 	var/picked_baby_path = pickweight(baby_path)
 	var/mob/living/baby = new picked_baby_path(delivery_destination)
+	SEND_SIGNAL(source, COMSIG_FRIENDSHIP_PASS_FRIENDSHIP, baby)
 	post_birth?.Invoke(baby, target)
 
 /datum/component/breed/proc/toggle_status(mob/living/source)

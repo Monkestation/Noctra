@@ -30,13 +30,13 @@
 				else
 					blood_handle |= BLOOD_PREFERENCE_LIVING
 				user.clan.handle_bloodsuck(user, blood_handle)
-
-				dead = TRUE
 				playsound(get_turf(user), 'sound/vo/mobs/rat/rat_death.ogg', 100, FALSE, -1)
+				if(dead)
+					qdel(src)
+					return
 				icon_state = "srat1"
 				rotprocess = SHELFLIFE_SHORT
-				var/mob/living/carbon/V = user
-				V.add_stress(/datum/stressevent/drankrat)
+				dead = TRUE
 			return
 	return ..()
 

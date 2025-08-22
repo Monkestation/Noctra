@@ -1031,9 +1031,11 @@
 	M.mind.set_assigned_role(/datum/job/priest)
 	M.job = "Priest"
 	M.set_patron(/datum/patron/divine/astrata)
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(M, M.patron)
-	C.grant_spells_priest(M)
-	M.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
+	var/holder = M.patron?.devotion_holder
+	if(holder)
+		var/datum/devotion/devotion = new holder()
+		devotion.make_priest()
+		devotion.grant_to(M)
 	M.verbs |= /mob/living/carbon/human/proc/coronate_lord
 	M.verbs |= /mob/living/carbon/human/proc/churchexcommunicate
 	M.verbs |= /mob/living/carbon/human/proc/churchcurse

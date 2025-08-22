@@ -34,7 +34,7 @@
 	del_on_deaggro = 99 SECONDS
 	retreat_health = 0
 	food_max = 250
-	food = 0
+
 	dodgetime = 20
 	aggressive = TRUE
 //	stat_attack = UNCONSCIOUS

@@ -1,0 +1,2 @@
+GLOBAL_LIST_EMPTY(excommunicated_players)
+GLOBAL_LIST_EMPTY(heretical_players)

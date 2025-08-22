@@ -10,9 +10,11 @@
 
 /datum/action/cooldown/spell/undirected/list_target/convert_role/templar/on_conversion(mob/living/carbon/human/cast_on)
 	. = ..()
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(cast_on, cast_on.patron)
-	C.grant_spells_templar(cast_on)
-	cast_on.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
+	var/holder = cast_on.patron?.devotion_holder
+	if(holder)
+		var/datum/devotion/devotion = new holder()
+		devotion.make_templar()
+		devotion.grant_to(cast_on)
 
 
 /datum/action/cooldown/spell/undirected/list_target/convert_role/templar/cast(mob/living/carbon/human/cast_on)
@@ -63,9 +65,11 @@
 
 /datum/action/cooldown/spell/undirected/list_target/convert_role/acolyte/on_conversion(mob/living/carbon/human/cast_on)
 	. = ..()
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(cast_on, cast_on.patron)
-	C.grant_spells(cast_on)
-	cast_on.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
+	var/holder = cast_on.patron?.devotion_holder
+	if(holder)
+		var/datum/devotion/devotion = new holder()
+		devotion.make_acolyte()
+		devotion.grant_to(cast_on)
 
 /datum/action/cooldown/spell/undirected/list_target/convert_role/churchling
 	name = "Recruit Churchling"
@@ -89,9 +93,11 @@
 
 /datum/action/cooldown/spell/undirected/list_target/convert_role/churchling/on_conversion(mob/living/carbon/human/cast_on)
 	. = ..()
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(cast_on, cast_on.patron)
-	C.grant_spells_churchling(cast_on)
-	cast_on.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
+	var/holder = cast_on.patron?.devotion_holder
+	if(holder)
+		var/datum/devotion/devotion = new holder()
+		devotion.make_churching()
+		devotion.grant_to(cast_on)
 
 /datum/action/cooldown/spell/undirected/list_target/convert_role/churchling/can_convert(mob/living/carbon/human/cast_on)
 	if(QDELETED(cast_on))

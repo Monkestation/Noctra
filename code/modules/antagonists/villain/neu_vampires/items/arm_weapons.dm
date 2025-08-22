@@ -23,3 +23,4 @@
 	if(isliving(target))
 		var/mob/living/L = target
 		L.apply_damage(30, BURN)
+	. = ..()

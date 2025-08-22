@@ -674,6 +674,7 @@
  * * click_parameters - is the params string from byond [/atom/proc/Click] code, see that documentation.
  */
 /obj/item/proc/afterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
+	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
 	SEND_SIGNAL(user, COMSIG_MOB_ITEM_AFTERATTACK, target, user, proximity_flag, click_parameters)
 	if(force && !user.used_intent.tranged && !user.used_intent.tshield)

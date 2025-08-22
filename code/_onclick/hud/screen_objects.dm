@@ -135,6 +135,11 @@
 	if(!HAS_TRAIT(usr, TRAIT_BLUEPRINT_VISION))
 		var/mob/vision = usr
 		vision.enter_blueprint()
+	else
+		var/mob/vision = usr
+		REMOVE_TRAIT(usr, TRAIT_BLUEPRINT_VISION, TRAIT_GENERIC)
+		vision.blueprints.quit()
+		vision.blueprints = null
 
 /atom/movable/screen/craft/Destroy()
 	QDEL_NULL(book)
@@ -1314,6 +1319,61 @@
 		var/mob/living/carbon/human/H = usr
 		H.check_for_injuries(H)
 		to_chat(H, "I am [H.get_encumbrance() * 100]% encumbered.")
+
+/atom/movable/screen/party_member_health
+	name = "party_health"
+	icon = 'icons/mob/rogueheat.dmi'
+	icon_state = "dam0"
+	screen_loc = "WEST:28,CENTER-1:15"
+
+	var/member_key
+	var/mob/member
+	var/datum/party/party
+
+/atom/movable/screen/party_member_health/Destroy()
+	if(member)
+		UnregisterSignal(member, COMSIG_MOB_HEALTHHUD_UPDATE)
+	member = null
+	party = null
+	return ..()
+
+/atom/movable/screen/party_member_health/proc/set_party_member(mob/mob, datum/party/incoming_party)
+	member = mob
+	party = incoming_party
+	RegisterSignal(member, COMSIG_MOB_HEALTHHUD_UPDATE, PROC_REF(update_info))
+
+/atom/movable/screen/party_member_health/proc/update_info(incoming_state)
+	icon_state = incoming_state
+
+
+/atom/movable/screen/party_member_name
+	name = "party_member_name"
+	icon = 'icons/mob/screen_gen.dmi'
+	icon_state = "blank"
+	screen_loc = "EAST-1,CENTER-1:15"
+	maptext_width = 128
+	maptext_height = 48
+	maptext_x = -64
+	maptext_y = 0
+	var/member_key
+	var/mob/member
+	var/datum/party/party
+
+/atom/movable/screen/party_member_name/proc/set_party_member(mob/mob, datum/party/incoming_party, rank = "Recruit")
+	member = mob
+	party = incoming_party
+	member_key = mob.ckey
+	var/display_name = mob.real_name || mob.name
+
+	maptext = {"<div style="text-align: left; font-family: 'Small Fonts'; font-size: 7px; color: #FFFFFF; text-shadow: 1px 1px 0px #000000;">
+		<div style="color: #FFFFFF;">[display_name]</div>
+		<div style="color: #FFD700; margin-top: 1px;">[rank]</div>
+	</div>"}
+
+/atom/movable/screen/party_member_name/Destroy()
+	member = null
+	party = null
+	return ..()
 
 /atom/movable/screen/mood
 	name = "mood"

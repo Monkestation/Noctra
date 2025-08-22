@@ -39,6 +39,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	var/commendedsomeone
 	var/atom/movable/movingmob
 	var/whitelisted = 2
+	var/list/job_priority_boosts = list()
 
 /client/Topic(href, href_list, hsrc)
 	if(!usr || usr != mob)	//stops us calling Topic for somebody else's client. Also helps prevent usr=null
@@ -635,6 +636,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	view_size.setZoomMode()
 	fit_viewport()
 	Master.UpdateTickRate()
+	SSjob.load_player_boosts(ckey)
 
 //////////////
 //DISCONNECT//
@@ -695,6 +697,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	SSambience.remove_ambience_client(src)
 	seen_messages = null
 	Master.UpdateTickRate()
+	SSjob.save_player_boosts(ckey)
 	..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
 	return QDEL_HINT_HARDDEL_NOW
 

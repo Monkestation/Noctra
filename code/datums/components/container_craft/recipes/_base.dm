@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 			if(!(listed_reagent.type in fake_reagents))
 				if(subtype_reagents_allowed)
 					var/reagent_found = FALSE
-					for(var/datum/reagent/reagent_requirement in fake_reagents)
+					for(var/datum/reagent/reagent_requirement as anything in fake_reagents)
 						if(ispath(listed_reagent.type, reagent_requirement))
 							reagent_found = TRUE
 							break

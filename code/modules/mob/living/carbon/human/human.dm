@@ -409,6 +409,7 @@
 					hud_used.bloods.icon_state = "dam[used]"
 				else
 					hud_used.bloods.icon_state = "damelse"
+			SEND_SIGNAL(src, COMSIG_MOB_HEALTHHUD_UPDATE, hud_used.bloods.icon_state)
 
 		if(hud_used.stamina)
 			if(stat != DEAD)
