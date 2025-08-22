@@ -21,7 +21,7 @@
 
 /datum/stock/import/wheat
 	name = "Crate of Wheat"
-	desc = "Wheat."
+	desc = "Grains of wheat."
 	item_type = /obj/structure/closet/crate/chest/steward/wheat
 	export_price = 125
 	importexport_amt = 1
