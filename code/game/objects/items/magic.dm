@@ -77,6 +77,9 @@
 	to_chat(user, span_warning("I peer into [src], but can't find [input]."))
 	return
 
+//23.08.2025
+//crystallball and nocdevice are depreciated?
+
 /////////////////////////////////////////Crystal ball ghsot vision///////////////////
 
 /obj/item/crystalball/attack_self(mob/user, params)
