@@ -277,28 +277,18 @@
 			contents += "</center>"
 		if(TAB_BANK)
 			contents += "<a href='byond://?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a>"
-			contents += " <a href='byond://?src=\ref[src];compact=1'>\[Compact: [compact? "ENABLED" : "DISABLED"]\]</a><BR>"
 			contents += "<center>Bank<BR>"
 			contents += "--------------<BR>"
 			contents += "Treasury: [SStreasury.treasury_value]m</center><BR>"
 			contents += "<div style='margin-left:20px;'>"
 			contents += "<a href='byond://?src=\ref[src];payroll=1'>\[Pay by Class\]</a><BR><BR>"
-			if(compact)
-				for(var/mob/living/carbon/human/A in SStreasury.bank_accounts)
-					if(ishuman(A))
-						var/mob/living/carbon/human/tmp = A
-						contents += "[tmp.real_name] ([tmp.get_role_title()]) - [SStreasury.bank_accounts[A]]m"
-					else
-						contents += "[A.real_name] - [SStreasury.bank_accounts[A]]m "
-					contents += " / <a href='byond://?src=\ref[src];givemoney=\ref[A]'>\[PAY\]</a> <a href='byond://?src=\ref[src];fineaccount=\ref[A]'>\[FINE\]</a><BR><BR>"
-			else
-				for(var/mob/living/A in SStreasury.bank_accounts)
-					if(ishuman(A))
-						var/mob/living/carbon/human/tmp = A
-						contents += "[tmp.real_name] ([tmp.get_role_title()]) - [SStreasury.bank_accounts[A]]m<BR>"
-					else
-						contents += "[A.real_name] - [SStreasury.bank_accounts[A]]m<BR>"
-					contents += "<a href='byond://?src=\ref[src];givemoney=\ref[A]'>\[Give Money\]</a> <a href='byond://?src=\ref[src];fineaccount=\ref[A]'>\[Fine Account\]</a><BR><BR>"
+			for(var/mob/living/carbon/human/A in SStreasury.bank_accounts)
+				if(ishuman(A))
+					var/mob/living/carbon/human/tmp = A
+					contents += "[tmp.real_name] ([tmp.get_role_title()]) - [SStreasury.bank_accounts[A]]m<BR>"
+				else
+					contents += "[A.real_name] - [SStreasury.bank_accounts[A]]m<BR>"
+				contents += "<a href='byond://?src=\ref[src];givemoney=\ref[A]'>\[Give Money\]</a> <a href='byond://?src=\ref[src];fineaccount=\ref[A]'>\[Fine Account\]</a><BR><BR>"
 			contents += "</div>"
 		if(TAB_STOCK)
 			contents += "<a href='byond://?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a>"
@@ -375,7 +365,7 @@
 		if(TAB_LOG)
 			contents += "<a href='byond://?src=\ref[src];switchtab=[TAB_MAIN]'>\[Return\]</a><BR>"
 			contents += "<center>Log<BR>"
-			contents += "--------------</center><BR><BR>"
+			contents += "--------------<BR></center>"
 			contents += "<div style='margin-left:20px;'>"
 			for(var/i = SStreasury.log_entries.len to 1 step -1)
 				contents += "<span class='info'>[SStreasury.log_entries[i]]</span><BR>"
