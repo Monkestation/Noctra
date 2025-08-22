@@ -640,21 +640,21 @@
 	created_item = (/obj/item/clothing/head/helmet/visored/hounskull)
 	craftdiff = 4
 
-/datum/anvil_recipe/armor/steel/hounskull
+/datum/anvil_recipe/armor/steel/warden_helm
 	name = "Warden Helmet (+Bar)"
 	recipe_name = "a Warden's Helmet"
 	additional_items = list(/obj/item/ingot/steel)
 	created_item = (/obj/item/clothing/head/helmet/visored/warden)
 	craftdiff = 6
 
-/datum/anvil_recipe/armor/steel/hounskull
+/datum/anvil_recipe/armor/steel/royal_knight_helm
 	name = "Royal Knight Helmet (+Bar x2)"
 	recipe_name = "a royal knight's Helmet"
 	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
 	created_item = (/obj/item/clothing/head/helmet/visored/royalknight)
 	craftdiff = 6
 
-/datum/anvil_recipe/armor/steel/hounskull
+/datum/anvil_recipe/armor/steel/captain_helm
 	name = "Captain's Helmet (+Bar x2)"
 	recipe_name = "a captain's Helmet"
 	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)

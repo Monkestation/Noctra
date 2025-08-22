@@ -496,7 +496,17 @@
 				/obj/item/natural/fibers = 2)
 	craftdiff = 3
 
-/datum/repeatable_crafting_recipe/leather/helmet
+
+
+/datum/repeatable_crafting_recipe/leather/ominous_hood
+	name = "ominous hood"
+	requirements = list(
+		/obj/item/natural/hide/cured = 2,
+	)
+	output = /obj/item/clothing/head/helmet/leather/hood_ominous
+	craftdiff = 3
+
+/datum/repeatable_crafting_recipe/leather/adept_cowl
 	name = "adept cowl"
 	requirements = list(
 		/obj/item/natural/hide/cured = 1,
@@ -504,7 +514,7 @@
 	output = /obj/item/clothing/head/adeptcowl
 	craftdiff = 3
 
-/datum/repeatable_crafting_recipe/leather/helmet
+/datum/repeatable_crafting_recipe/leather/inquisitor_hat
 	name = "inquisitorial hat"
 	requirements = list(
 		/obj/item/natural/hide/cured = 2,

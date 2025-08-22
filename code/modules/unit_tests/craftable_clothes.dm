@@ -24,6 +24,7 @@ abstract types are automatically excluded.
 		/obj/item/clothing/head/cyberdeck,
 		/obj/item/clothing/cloak/half/shadowcloak/cult, // cultist item
 		/obj/item/clothing/head/helmet/skullcap/cult, // cultist item
+		/obj/item/clothing/head/helmet/leather/saiga, // idk what kind of recipe to make this
 
 
 	)
@@ -50,7 +51,10 @@ abstract types are automatically excluded.
 		"blk", // antag items
 		"vampire", // vampire craftable items
 		"maniac", // fluff maniac items
-		"rust"
+		"rust",
+		"rousman",
+		"orc",
+		"goblin",
 	)
 
 /datum/unit_test/craftable_clothes/Run()
