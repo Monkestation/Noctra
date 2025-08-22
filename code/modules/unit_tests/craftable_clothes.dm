@@ -47,7 +47,7 @@ abstract types are automatically excluded.
 	var/list/excluded_paths_by_text = list(
 		"faceless", // antag items
 		"blk", // antag items
-		"vampire" // vampire craftable items
+		"vampire", // vampire craftable items
 		"maniac" // fluff maniac items
 	)
 
