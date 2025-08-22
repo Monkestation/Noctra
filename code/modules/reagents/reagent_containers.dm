@@ -138,24 +138,30 @@
 		to_chat(user, span_warning("I need a clean parchment."))
 		return
 	if(!user.is_literate())
-		to_chat(user, span_warning("I cannot write."))
+		to_chat(user, span_warning("I do not know how to write."))
 		return
 	var/other_hand = user.get_inactive_held_item()
 	if(!other_hand || !istype(other_hand, /obj/item/natural/feather))
 		to_chat(user, span_warning("I need a feather to write on the parchment."))
 		return
-	var/label = browser_input_text(user, "Label \the [src].", max_length = 32)
-	if(!label || QDELETED(src))
+	var/label_name = browser_input_text(user, "Write a name.", max_length = 32)
+	if(QDELETED(src) || QDELETED(I))
 		return
-	label_container(user, label)
+	var/label_desc = browser_input_text(user, "Write an optional description?")
+	if(QDELETED(src) || QDELETED(I))
+		return
+	if(!label_name && !label_desc)
+		to_chat(user, span_warning("I decide not to label \the [src]."))
+		return
+	label_container(user, label_name, label_desc)
 	qdel(I)
 
 /obj/item/reagent_containers/MiddleClick(mob/user, params)
 	. = ..()
 	remove_label(user)
 
-/obj/item/reagent_containers/proc/label_container(mob/user, label)
-	if(!label || !can_label_container)
+/obj/item/reagent_containers/proc/label_container(mob/user, label_name, label_desc)
+	if((!label_name && !label_desc) || !can_label_container)
 		return
 	if(labelled)
 		if(user)
@@ -164,7 +170,9 @@
 	if(user)
 		playsound(get_turf(src), 'sound/foley/dropsound/paper_drop.ogg', 70)
 		user.visible_message(span_notice("[user] applies a label to \the [src]."), span_notice("I label \the [src]."), vision_distance = 3)
-	name = label
+	name = label_name
+	if(label_desc)
+		desc += " [label_desc]"
 	labelled = TRUE
 	update_appearance(UPDATE_OVERLAYS)
 
@@ -181,6 +189,8 @@
 		return
 	user.visible_message(span_warning("[user] tears the label off of \the [src]!"), span_notice("I remove the label from \the [src]."), vision_distance = 3)
 	name = initial(name)
+	if(desc != initial(desc))
+		desc = initial(desc)
 	labelled = FALSE
 	update_appearance(UPDATE_OVERLAYS)
 

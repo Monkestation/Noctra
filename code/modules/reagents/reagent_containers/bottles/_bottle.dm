@@ -22,10 +22,12 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	can_label_container = TRUE
 
 	var/closed = TRUE
-	/// Do not change desc when open or closed
+	/// Do not change desc when opened or closed
 	var/fancy = FALSE
-	/// Name to slap on a label
+	/// Name to slap on a label, replaces current name
 	var/auto_label_name
+	/// Auto label description, appended to current desc
+	var/auto_label_desc
 
 /obj/item/reagent_containers/glass/bottle/Initialize()
 	icon_state = "clear_bottle[rand(1,4)]"
@@ -34,7 +36,17 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 /obj/item/reagent_containers/glass/bottle/apply_initial_label()
 	if(!auto_label_name)
 		return
-	label_container(label = "bottle of [auto_label_name]")
+	label_container(label_name = "bottle of [auto_label_name]", label_desc = auto_label_desc)
+
+/obj/item/reagent_containers/glass/bottle/label_container(mob/user, label_name, label_desc)
+	. = ..()
+	if(label_desc)
+		fancy = TRUE
+
+/obj/item/reagent_containers/glass/bottle/remove_label(mob/user, force)
+	. = ..()
+	if(desc != initial(desc))
+		fancy = initial(fancy)
 
 /obj/item/reagent_containers/glass/bottle/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/paper/scroll))
@@ -288,3 +300,20 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	volume = 99
 	dropshrink = 0.7
 	can_label_container = FALSE
+
+/obj/item/reagent_containers/glass/bottle/black
+	name = "wine pot"
+	desc = "A wine pot made of glazed clay."
+	icon_state = "blackbottle"
+	fill_icon_thresholds = null
+
+/obj/item/reagent_containers/glass/bottle/black/Initialize()
+	. = ..()
+	icon_state = "blackbottle"
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/reagent_containers/glass/bottle/black/apply_initial_label()
+	. = ..()
+	if(!auto_label_name)
+		return
+	label_container(label_name = "pot of [auto_label_name]", label_desc = auto_label_desc)
