@@ -49,7 +49,7 @@
 	return ..()
 
 //Mostly garbage related to the ending "cutscene"
-/obj/item/clothing/head/cyberdeck
+/obj/item/clothing/head/cyberdeck/maniac
 	name = "cyberdeck headset"
 	desc = "Sweet dreams..."
 	icon = 'icons/roguetown/maniac/clothing.dmi'
@@ -57,14 +57,14 @@
 	icon_state = "cyberdeck"
 	armor = list("blunt" = 25, "slash" = 25, "stab" = 25, "piercing" = 0, "fire" = 0, "acid" = 0)
 
-/obj/item/clothing/shirt/formal
+/obj/item/clothing/shirt/formal/maniac
 	name = "formal shirt"
 	desc = "TNC is the fairest company I know, atleast I think?."
 	icon = 'icons/roguetown/maniac/clothing.dmi'
 	mob_overlay_icon = 'icons/roguetown/maniac/clothing_mob.dmi'
 	icon_state = "shirt"
 
-/obj/item/clothing/pants/tights/formal
+/obj/item/clothing/pants/tights/formal/maniac
 	name = "formal pants"
 	desc = "TNC is the fairest company I know, atleast I think?."
 	gender = PLURAL
@@ -74,9 +74,9 @@
 
 /datum/outfit/treyliam
 	name = "Trey Liam"
-	head = /obj/item/clothing/head/cyberdeck
-	shirt = /obj/item/clothing/shirt/formal
-	pants = /obj/item/clothing/pants/tights/formal
+	head = /obj/item/clothing/head/cyberdeck/maniac
+	shirt = /obj/item/clothing/shirt/formal/maniac
+	pants = /obj/item/clothing/pants/tights/formal/maniac
 
 /obj/effect/landmark/treyliam
 	name = "trey"

@@ -160,6 +160,7 @@
 	name = "leather gloves"
 	output_amount = 2
 	output = /obj/item/clothing/gloves/leather
+	craftdiff = 2
 
 /datum/repeatable_crafting_recipe/leather/gloves/feld_gloves
 	name = "feldsher gloves"
@@ -184,6 +185,22 @@
 		/obj/item/natural/fibers = 1
 	)
 	output = /obj/item/clothing/gloves/leather/apothecary
+
+/datum/repeatable_crafting_recipe/leather/gloves/otavan_gloves
+	name = "otavan gloves"
+	requirements = list(
+		/obj/item/natural/hide/cured = 2,
+		/obj/item/natural/fibers = 1
+	)
+	output = /obj/item/clothing/gloves/leather/otavan
+
+/datum/repeatable_crafting_recipe/leather/gloves/inquisitor_gloves
+	name = "inquisitor gloves"
+	requirements = list(
+		/obj/item/natural/hide/cured = 2,
+		/obj/item/natural/fibers = 1
+	)
+	output = /obj/item/clothing/gloves/leather/otavan/inqgloves
 
 /datum/repeatable_crafting_recipe/leather/gloves/apothecary_pants
 	name = "apothecary trou"

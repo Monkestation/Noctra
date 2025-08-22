@@ -497,7 +497,28 @@
 	output = /obj/item/clothing/shirt/robe/wizard
 	requirements = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 1)
+	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/sewing/adept_robes
+	name = "adept robes"
+	output = /obj/item/clothing/shirt/robe/newmage/adept
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 2
+
+/datum/repeatable_crafting_recipe/sewing/adept_robes
+	name = "sorcerer robes"
+	output = /obj/item/clothing/shirt/robe/newmage/sorcerer
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 1)
 	craftdiff = 3
+
+/datum/repeatable_crafting_recipe/sewing/adept_robes
+	name = "warlock robes"
+	output = /obj/item/clothing/shirt/robe/newmage/warlock
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 4
 
 /datum/repeatable_crafting_recipe/sewing/normal_robes
 	name = "robes"

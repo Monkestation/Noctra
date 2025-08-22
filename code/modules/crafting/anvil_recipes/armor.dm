@@ -414,6 +414,12 @@
 	created_item = (/obj/item/clothing/head/helmet/heavy/bucket)
 	craftdiff = 2
 
+/datum/anvil_recipe/armor/steel/sinistar
+	name = "Sinistar Helmet (+Steel Bar)"
+	recipe_name = "a graggarite helmet"
+	created_item = /obj/item/clothing/head/helmet/heavy/sinistar
+	additional_items = list(/obj/item/ingot/steel)
+
 /datum/anvil_recipe/armor/iron/shadow_plate_gauntlets
 	name = "Shadow Plate Gauntlets"
 	recipe_name = "a pair of Shadow Plate Gauntlets"
@@ -555,6 +561,11 @@
 	name = "Sallet"
 	recipe_name = "a Sallet"
 	created_item = /obj/item/clothing/head/helmet/sallet
+
+/datum/anvil_recipe/armor/steel/helmetsall
+	name = "Kulah Khud""
+	recipe_name = "a Zalad Sallet"
+	created_item = /obj/item/clothing/head/helmet/sallet/zalad
 
 /datum/anvil_recipe/armor/steel/bascinet
 	name = "Bascinet"

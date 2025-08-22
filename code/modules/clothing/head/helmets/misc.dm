@@ -316,7 +316,7 @@
 	emote_environment = 3
 	item_weight = 5.6 * STEEL_MULTIPLIER
 
-/obj/item/clothing/head/helmet/visored/knight/black
+/obj/item/clothing/head/helmet/visored/knight/blk
 	color = CLOTHING_SOOT_BLACK
 
 /obj/item/clothing/head/helmet/visored/knight/iron

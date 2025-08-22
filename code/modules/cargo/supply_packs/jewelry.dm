@@ -33,3 +33,7 @@
 	cost = 200
 	contains = /obj/item/clothing/neck/mercator
 
+/datum/supply_pack/jewelry/consort_crown
+	name = "Jewel of Nyle"
+	cost = 300
+	contains = /obj/item/clothing/head/crown/nyle/consortcrown
