@@ -2320,7 +2320,7 @@
 "ceZ" = (
 /obj/structure/closet/crate/crafted_closet/inn,
 /obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
 /obj/item/clothing/pants/grenzelpants,
 /obj/item/clothing/gloves/angle/grenzel,
 /turf/open/floor/ruinedwood/spiralfade,
@@ -2603,7 +2603,7 @@
 /obj/item/clothing/head/helmet/skullcap/grenzelhoft,
 /obj/item/clothing/shirt/grenzelhoft,
 /obj/item/clothing/pants/grenzelpants,
-/obj/item/clothing/shoes/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
 /turf/open/floor/ruinedwood/chevron,
 /area/rogue/indoors/town)
 "cxa" = (
@@ -6386,7 +6386,7 @@
 "gjP" = (
 /obj/structure/closet/crate/crafted_closet/inn/south,
 /obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
 /obj/item/clothing/pants/grenzelpants,
 /obj/item/clothing/gloves/angle/grenzel,
 /obj/item/clothing/head/helmet/skullcap/grenzelhoft,
@@ -8266,7 +8266,7 @@
 "hIy" = (
 /obj/structure/closet/crate/crafted_closet/inn,
 /obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
 /obj/item/clothing/pants/grenzelpants,
 /obj/item/clothing/head/helmet/skullcap/grenzelhoft,
 /obj/item/clothing/gloves/angle/grenzel,
@@ -8690,7 +8690,7 @@
 /obj/structure/closet/crate/crafted_closet/inn,
 /obj/item/clothing/head/helmet/skullcap/grenzelhoft,
 /obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
 /obj/item/clothing/gloves/angle/grenzel,
 /turf/open/floor/tile/diamond/blue,
 /area/rogue/under/town/basement)
@@ -8846,7 +8846,7 @@
 /obj/item/clothing/head/helmet/skullcap/grenzelhoft,
 /obj/item/clothing/pants/grenzelpants,
 /obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
 /obj/item/clothing/gloves/angle/grenzel,
 /turf/open/floor/ruinedwood,
 /area/rogue/indoors/town/clocktower)
@@ -9427,7 +9427,7 @@
 /obj/item/clothing/head/helmet/skullcap/grenzelhoft,
 /obj/item/clothing/shirt/grenzelhoft,
 /obj/item/clothing/pants/grenzelpants,
-/obj/item/clothing/shoes/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
 /obj/item/clothing/gloves/angle/grenzel,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town)
@@ -9862,7 +9862,7 @@
 /obj/item/clothing/cloak/forrestercloak/snow,
 /obj/item/clothing/gloves/leather/black,
 /obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
 /obj/item/clothing/pants/grenzelpants,
 /obj/item/clothing/head/helmet/skullcap/grenzelhoft,
 /obj/item/clothing/gloves/angle/grenzel,
@@ -10102,7 +10102,7 @@
 /obj/structure/closet/crate/crafted_closet/inn,
 /obj/item/key/butcher,
 /obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
 /obj/item/clothing/pants/grenzelpants,
 /obj/item/clothing/gloves/angle/grenzel,
 /turf/open/floor/ruinedwood/spiral,
@@ -11837,7 +11837,7 @@
 /obj/item/clothing/head/helmet/skullcap/grenzelhoft,
 /obj/item/clothing/pants/grenzelpants,
 /obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/indoors/town/shop)
 "lgM" = (
@@ -20231,8 +20231,8 @@
 /obj/structure/closet/crate/crafted_closet/inn,
 /obj/item/clothing/shirt/grenzelhoft,
 /obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
 /obj/item/clothing/pants/grenzelpants,
 /obj/item/clothing/pants/grenzelpants,
 /obj/item/clothing/gloves/angle/grenzel,
@@ -23355,7 +23355,7 @@
 /obj/item/clothing/shoes/boots/rare/grenzelplate,
 /obj/item/clothing/shirt/grenzelhoft,
 /obj/item/clothing/pants/grenzelpants,
-/obj/item/clothing/shoes/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
 /obj/item/clothing/gloves/rare/grenzelplate,
 /obj/item/clothing/head/helmet/skullcap/grenzelhoft,
 /obj/item/clothing/gloves/angle/grenzel,
