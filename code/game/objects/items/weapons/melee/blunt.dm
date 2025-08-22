@@ -129,6 +129,10 @@
 	force_wielded = DAMAGE_MACE - 1
 	wdefense = MEDIOCRE_PARRY
 
+/obj/item/weapon/mace/courtphysician/Initialize()
+	. = ..()
+	AddComponent(/datum/component/walking_stick)
+
 /obj/item/weapon/mace/courtphysician/getonmobprop(tag)
 	. = ..()
 	if(tag)
