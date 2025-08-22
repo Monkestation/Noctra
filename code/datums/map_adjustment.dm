@@ -19,6 +19,8 @@
 	var/list/species_adjust
 	/// Jobs that have gender adjustments /datum/job = list(MALE, FEMALE)
 	var/list/sexes_adjust
+	/// Jobs that have age adjustments /datum/job = list(AGE_CHILD, AGE_ADULT, AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
+	var/list/ages_adjust
 
 /// called on map config is loaded.
 /// You need to change things manually here.
@@ -39,6 +41,9 @@
 	for(var/job as anything in sexes_adjust)
 		var/datum/job/J = SSjob.GetJobType(job)
 		J?.allowed_sexes = sexes_adjust[job]
+	for(var/job as anything in ages_adjust)
+		var/datum/job/J = SSjob.GetJobType(job)
+		J?.allowed_ages = ages_adjust[job]
 
 /**
  * job_type`</datum/job/J>`: Type of the job that's being adjusted \

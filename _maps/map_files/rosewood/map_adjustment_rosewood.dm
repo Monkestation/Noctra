@@ -19,3 +19,7 @@
 	)
 
 #undef POINTY_EARS
+
+	ages_adjust = list(
+		/datum/job/forestguard = list(AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
+	)
