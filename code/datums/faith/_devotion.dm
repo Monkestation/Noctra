@@ -2,7 +2,6 @@
 /datum/devotion
 	var/mob/living/carbon/human/holder_mob = null
 
-	var/level = CLERIC_T0
 	var/devotion = 0
 	var/max_devotion = 1000
 	var/progression = 0
@@ -15,13 +14,12 @@
 	/// How much devotion is gained per prayer cycle
 	var/prayer_effectiveness = 2
 
-	/// Map of cleric level to miracle
+	/// Map of cleric level to miracle(s) supports list or not list
 	var/list/miracles = list()
-
-	/// Traits added by this
-	var/list/traits = list()
 	/// List of extra miracles to add unconditionally
 	var/list/miracles_extra = list()
+	/// Traits added by this
+	var/list/traits = list()
 
 /datum/devotion/New()
 	. = ..()
@@ -96,12 +94,18 @@
 	for(var/tier in tiers)
 		var/requirement = tiers[tier]
 		if(progression >= requirement)
-			grant_miracle(miracles[tier])
+			var/miracle = miracles[tier]
+			if(!islist(miracle))
+				miracle = list(miracle)
+			if(!length(miracle))
+				continue
+			for(var/miracle in miracle)
+				grant_miracle(miracle)
 
 /datum/devotion/proc/make_priest()
 	devotion = 300
 	progression = CLERIC_REQ_3
-	passive_devotion_gain = 1 //1 devotion per second
+	passive_devotion_gain = 1
 	miracles_extra += list(
 		/datum/action/cooldown/spell/undirected/touch/orison,
 		/datum/action/cooldown/spell/cure_rot,
