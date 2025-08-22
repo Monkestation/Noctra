@@ -428,6 +428,13 @@
 	created_item = /obj/item/clothing/armor/brigandine
 	craftdiff = 3
 
+/datum/anvil_recipe/armor/steel/brigadine
+	name = "Captain's brigandine (+Bar x2, +Cloth)"
+	recipe_name = "a premium Brigandine"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/natural/cloth)
+	created_item = /obj/item/clothing/armor/brigandine/captain
+	craftdiff = 6
+
 /datum/anvil_recipe/armor/steel/helmetbuc
 	name = "Great Helm"
 	recipe_name = "a Bucket Helmet"
@@ -744,6 +751,13 @@
 	created_item = /obj/item/clothing/shoes/boots/armor
 	craftdiff = 4
 
+/datum/anvil_recipe/armor/steel/plateleg
+	name = "Captain Plate Chausses (+Bar)"
+	recipe_name = "a pair of Premium Plate Chausses"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/pants/platelegs/captain
+	craftdiff = 6
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 // --------- SILVER -----------
 /datum/anvil_recipe/armor/silver
@@ -828,12 +842,18 @@
 	craftdiff = 5
 
 /datum/anvil_recipe/armor/blacksteel/zizo_helm
+	name = "Darksteel Frog Helm (+Bar)"
+	additional_items = list(/obj/item/ingot/blacksteel)
+	created_item = /obj/item/clothing/head/helmet/heavy/zizo
+	craftdiff = 5
+
+/datum/anvil_recipe/armor/blacksteel/matthios_helm
 	name = "Gilded Visage (+Bar)"
 	additional_items = list(/obj/item/ingot/blacksteel)
 	created_item = /obj/item/clothing/head/helmet/heavy/matthios
 	craftdiff = 5
 
-/datum/anvil_recipe/armor/blacksteel/zizo_helm
+/datum/anvil_recipe/armor/blacksteel/graggar_helm
 	name = "Vicious helmet (+Bar)"
 	additional_items = list(/obj/item/ingot/blacksteel)
 	created_item = /obj/item/clothing/head/helmet/graggar

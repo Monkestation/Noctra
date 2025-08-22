@@ -14,6 +14,7 @@
 	armor = list("blunt" = 100, "slash" = 100, "stab" = 100,  "piercing" = 100, "fire" = 0, "acid" = 0)
 	clothing_flags = CANT_SLEEP_IN
 	sellprice = 30
+	abstract_type = /obj/item/clothing/shoes/boots/rare
 
 /obj/item/clothing/shoes/boots/rare/elfplate
 	name = "dark elvish plated boots"

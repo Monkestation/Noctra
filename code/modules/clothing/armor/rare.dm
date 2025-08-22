@@ -16,6 +16,7 @@
 	body_parts_covered = COVERAGE_ALL_BUT_LEGS
 	prevent_crits = ALL_EXCEPT_BLUNT
 	max_integrity = INTEGRITY_STRONGEST
+	abstract_type = /obj/item/clothing/armor/rare
 
 /obj/item/clothing/armor/rare/Initialize()
 	. = ..()

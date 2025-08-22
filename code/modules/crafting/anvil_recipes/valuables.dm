@@ -190,3 +190,9 @@
 	recipe_name = "a Golden Mercator Ring"
 	created_item = /obj/item/clothing/ring/gold/guild_mercator
 	craftdiff = 6
+
+/datum/anvil_recipe/valuables/gold/sparrow_crown
+	name = "Champion's circlet"
+	recipe_name = "worthy of a champion"
+	created_item = /obj/item/clothing/head/crown/sparrowcrown
+	craftdiff = 6

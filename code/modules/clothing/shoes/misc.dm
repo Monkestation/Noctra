@@ -96,6 +96,9 @@
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
 
+/obj/item/clothing/shoes/rare
+	abstract_type = /obj/item/clothing/shoes/rare
+
 /obj/item/clothing/shoes/rare/hoplite
 	name = "ancient sandals"
 	desc = "Worn sandals lined with bronze, ready to march ever onwards."

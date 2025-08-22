@@ -21,7 +21,7 @@ abstract types are automatically excluded.
 		/obj/item/clothing/head/priesthat, // unattainable
 		/obj/item/clothing/head/mob_holder, // change this shit to not clothing, wtf.
 		/obj/item/clothing/ring/gold/burden, // uncraftable
-		/obj/item/clothing/head/cyberdeck,
+		/obj/item/clothing/head/maniac,
 		/obj/item/clothing/cloak/half/shadowcloak/cult, // cultist item
 		/obj/item/clothing/head/helmet/skullcap/cult, // cultist item
 		/obj/item/clothing/head/helmet/leather/saiga, // idk what kind of recipe to make this
@@ -38,6 +38,7 @@ abstract types are automatically excluded.
 		/obj/item/clothing/head/hooded, // abstract items connected to a cloak, shouldn't be craftable
 		/obj/item/clothing/accessory, // ???
 		/obj/item/clothing/head/crown/serpcrown, // should only be one
+		/obj/item/clothing/face/cigarette, // TODO
 	)
 
 	/// excludes paths that are subtypes of these types and only subtypes

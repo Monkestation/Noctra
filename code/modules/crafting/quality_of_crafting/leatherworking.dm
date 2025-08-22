@@ -305,22 +305,25 @@
 		/obj/item/natural/fur = 1,
 	)
 	output = /obj/item/clothing/cloak/raincloak/furcloak
+	craftdiff = 2
 
-/datum/repeatable_crafting_recipe/leather/cloakfur
+/datum/repeatable_crafting_recipe/leather/battlenun_cloak
 	name = "battlenun cloak"
 	requirements = list(
 		/obj/item/natural/hide/cured = 2,
 		/obj/item/natural/silk = 1,
 	)
 	output = /obj/item/clothing/cloak/battlenun
+	craftdiff = 3
 
-/datum/repeatable_crafting_recipe/leather/cloakfur
-	name = "battlenun cloak"
+/datum/repeatable_crafting_recipe/leather/graggar_cloak
+	name = "vicious cloak"
 	requirements = list(
 		/obj/item/natural/hide/cured = 2,
 		/obj/item/natural/silk = 1,
 	)
 	output = /obj/item/clothing/cloak/graggar
+	craftdiff = 4
 
 
 /datum/repeatable_crafting_recipe/leather/cloakfur_black
@@ -330,6 +333,7 @@
 		/obj/item/natural/fur = 2,
 	)
 	output = /obj/item/clothing/cloak/black_cloak
+	craftdiff = 4
 
 /datum/repeatable_crafting_recipe/leather/belt
 	name = "leather belt"
@@ -338,6 +342,7 @@
 		/obj/item/natural/fibers = 1,
 	)
 	output = /obj/item/storage/belt/leather
+	craftdiff = 2
 
 /datum/repeatable_crafting_recipe/leather/vest
 	name = "leather vest"
@@ -533,6 +538,20 @@
 	)
 	craftdiff = 4
 
+/datum/repeatable_crafting_recipe/leather/forrestercloak
+	name = "forrester cloak"
+	output = /obj/item/clothing/cloak/forrestercloak
+	requirements = list(/obj/item/natural/silk = 1,
+				/obj/item/natural/hide/cured = 2)
+	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/leather/forrestercloak_snow
+	name = "forrester cloak (snow)"
+	output = /obj/item/clothing/cloak/forrestercloak/snow
+	requirements = list(/obj/item/natural/silk = 1,
+				/obj/item/natural/hide/cured = 2)
+	craftdiff = 4
+
 /datum/repeatable_crafting_recipe/leather/wardencloak
 	name = "warden cloak"
 	output = /obj/item/clothing/cloak/wardencloak
@@ -540,7 +559,7 @@
 				/obj/item/natural/hide/cured = 2)
 	craftdiff = 5
 
-/datum/repeatable_crafting_recipe/leather/wardencloak
+/datum/repeatable_crafting_recipe/leather/red_cloak
 	name = "red cloak"
 	output = /obj/item/clothing/cloak/heartfelt
 	requirements = list(/obj/item/natural/silk = 2,
@@ -551,6 +570,13 @@
 	name = "captain cloak"
 	output = /obj/item/clothing/cloak/captain
 	requirements = list(/obj/item/natural/silk = 3,
+				/obj/item/natural/hide/cured = 2)
+	craftdiff = 6
+
+/datum/repeatable_crafting_recipe/leather/matroncloak
+	name = "matron cloak"
+	output = /obj/item/clothing/cloak/matron
+	requirements = list(/obj/item/natural/silk = 1,
 				/obj/item/natural/hide/cured = 2)
 	craftdiff = 6
 
@@ -789,6 +815,13 @@
 	requirements = list(/obj/item/natural/hide/cured = 2,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/leather/standalone/coat
+	name = "forrester leather armor"
+	output = /obj/item/clothing/armor/leather/advanced/forrester
+	requirements = list(/obj/item/natural/hide/cured = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 5
 
 /datum/repeatable_crafting_recipe/leather/standalone/helmet
 	name = "hardened leather helmet"

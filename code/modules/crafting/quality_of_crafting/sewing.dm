@@ -429,7 +429,7 @@
 	craftdiff = 2
 	category = "Cloak"
 
-/datum/repeatable_crafting_recipe/sewing/stabard
+/datum/repeatable_crafting_recipe/sewing/jupon_cloak
 	name = "jupon"
 	output = /obj/item/clothing/cloak/stabard/jupon
 	requirements = list(/obj/item/natural/cloth = 3,
@@ -516,6 +516,14 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 4
 
+/datum/repeatable_crafting_recipe/sewing/magusrobes
+	name = "magus robes"
+	output = /obj/item/clothing/shirt/robe/wizard
+	requirements = list(/obj/item/natural/cloth = 3,
+				/obj/item/natural/hide/cured = 4,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 6
+
 /datum/repeatable_crafting_recipe/sewing/adept_robes
 	name = "adept robes"
 	output = /obj/item/clothing/shirt/robe/newmage/adept
@@ -523,14 +531,14 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 2
 
-/datum/repeatable_crafting_recipe/sewing/adept_robes
+/datum/repeatable_crafting_recipe/sewing/sorcerer_robes
 	name = "sorcerer robes"
 	output = /obj/item/clothing/shirt/robe/newmage/sorcerer
 	requirements = list(/obj/item/natural/cloth = 3,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
 
-/datum/repeatable_crafting_recipe/sewing/adept_robes
+/datum/repeatable_crafting_recipe/sewing/warlock_robes
 	name = "warlock robes"
 	output = /obj/item/clothing/shirt/robe/newmage/warlock
 	requirements = list(/obj/item/natural/cloth = 3,
@@ -612,6 +620,14 @@
 /datum/repeatable_crafting_recipe/sewing/puritan_cape
 	name = "puritan cape"
 	output = /obj/item/clothing/cloak/cape/archivist
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 3
+	category = "Cloak"
+
+/datum/repeatable_crafting_recipe/sewing/puritan_cape
+	name = "inquisitor's cloak"
+	output = /obj/item/clothing/cloak/cape/inquisitor
 	requirements = list(/obj/item/natural/cloth = 2,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 3
@@ -900,6 +916,15 @@
 
 /* .............. recipes requiring skill 4 ..............*/
 
+/datum/repeatable_crafting_recipe/sewing/camisole
+	name = "Camisole"
+	output = /obj/item/clothing/shirt/dress/gen/sexy
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/silk = 1,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 4
+	category = "Dress"
+
 /datum/repeatable_crafting_recipe/sewing/fancyhat
 	name = "fancy hat"
 	output = /obj/item/clothing/head/fancyhat
@@ -960,6 +985,26 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 4
 	category = "Cloak"
+
+/*.............. recipes requiring skill 5 ..............*/
+
+/datum/repeatable_crafting_recipe/sewing/grenzel_shirt
+	name = "Grenzelhoftian hip shirt"
+	output = /obj/item/clothing/shirt/grenzelhoft
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/silk = 2
+				/obj/item/natural/fibers = 1)
+	craftdiff = 5
+	category = "Shirt"
+
+/datum/repeatable_crafting_recipe/sewing/grenzel_pants
+	name = "Grenzelhoftian paumpers"
+	output = /obj/item/clothing/pants/grenzelpants
+	requirements = list(/obj/item/natural/cloth = 2,
+				/obj/item/natural/silk = 1
+				/obj/item/natural/fibers = 1)
+	craftdiff = 5
+	category = "Pants"
 
 /*.............. recipes requiring skill 6 ..............*/
 
