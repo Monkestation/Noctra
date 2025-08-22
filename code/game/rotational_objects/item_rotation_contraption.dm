@@ -63,22 +63,30 @@
 	desc = initial(parent_type.desc)
 	placed_type = parent_type
 
+/obj/item/rotation_contraption/attack_obj(obj/O, mob/living/user)
+	attack_turf(get_turf(O), user)
+
 /obj/item/rotation_contraption/attack_turf(turf/T, mob/living/user)
 	. = ..()
 	if(!istype(T))
 		return
-	// if(is_blocked_turf(T))
-	// 	return
 	for(var/obj/structure/structure in T.contents)
 		if(structure.rotation_structure && !ispath(placed_type, /obj/structure/water_pipe))
 			return
 
 		if(structure.accepts_water_input && !ispath(placed_type, /obj/structure/rotation_piece))
-			return
+			if(place_behavior != PLACE_ON_PIPE)
+				return
+			if((place_behavior == PLACE_ON_PIPE) && !istype(structure, /obj/structure/water_pipe))
+				return
 
 		if(istype(structure, placed_type))
 			return
 
+	if(place_behavior == PLACE_ON_PIPE)
+		var/obj/structure/water_pipe/pipe = locate(/obj/structure/water_pipe) in T.contents
+		if(!pipe)
+			return
 	visible_message("[user] starts placing down [src].", "You start to place [src].")
 	if(!do_after(user, 1.2 SECONDS - user.get_skill_level(/datum/skill/craft/engineering), T))
 		return
@@ -194,3 +202,21 @@
 	grid_width = 64
 
 	place_behavior = PLACE_TOWARDS_USER
+
+/obj/item/rotation_contraption/sprinkler
+	placed_type = /obj/structure/sprinkler
+	grid_height = 64
+
+	place_behavior = PLACE_ON_PIPE
+
+/obj/item/rotation_contraption/pressurizer
+	placed_type = /obj/structure/pressurizer
+	grid_height = 64
+
+	place_behavior = PLACE_ON_PIPE
+
+/obj/item/rotation_contraption/drain
+	placed_type = /obj/structure/fluid_drain
+	grid_height = 32
+
+	place_behavior = PLACE_ON_PIPE

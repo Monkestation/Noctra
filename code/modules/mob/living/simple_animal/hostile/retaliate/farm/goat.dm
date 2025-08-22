@@ -58,6 +58,7 @@
 	remains_type = /obj/effect/decal/remains/cow
 
 	ai_controller = /datum/ai_controller/gote
+	happy_funtime_mob = TRUE
 
 	var/can_breed = TRUE
 
@@ -227,6 +228,7 @@
 	remains_type = /obj/effect/decal/remains/cow
 
 	ai_controller = /datum/ai_controller/gote
+	happy_funtime_mob = TRUE
 
 /mob/living/simple_animal/hostile/retaliate/goatmale/Initialize()
 	. = ..()
@@ -287,11 +289,11 @@
 
 /mob/living/simple_animal/hostile/retaliate/proc/eat_plant(obj/target)
 	if(istype(target, /obj/structure/vine))
+		SEND_SIGNAL(src, COMSIG_MOB_FEED, target, 30)
 		target:eat(src)
-		food = max(food + 30, 100)
 	if(istype(target, /obj/structure/kneestingers))
+		SEND_SIGNAL(src, COMSIG_MOB_FEED, target, 30)
 		qdel(target)
-		food = max(food + 30, 100)
 
 
 /mob/living/simple_animal/hostile/retaliate/goatmale/simple_limb_hit(zone)

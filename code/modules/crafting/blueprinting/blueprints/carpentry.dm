@@ -448,3 +448,14 @@
 	)
 	craftdiff = 1
 	requires_ceiling = TRUE
+
+/datum/blueprint_recipe/carpentry/apiary
+	name = "Apiary"
+	desc = "A home for bees."
+	result_type = /obj/structure/apiary
+	required_materials = list(
+		/obj/item/grown/log/tree/small = 2,
+		/obj/item/natural/wood/plank = 2,
+		/obj/item/natural/fibers = 2
+	)
+	craftdiff = 1

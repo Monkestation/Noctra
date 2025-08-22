@@ -181,6 +181,10 @@
 	manipulate_possible_steam_creaks()
 
 /obj/structure/water_pipe/proc/manipulate_possible_steam_creaks()
+	if(!ispath(carrying_reagent, /datum/reagent/steam))
+		for(var/obj/particle_emitter/stored in particle_emitters)
+			RemoveEmitter(stored)
+		return
 	var/obj/particle_emitter/emitter
 	if(prob(25))
 		emitter = locate(/obj/particle_emitter) in particle_emitters

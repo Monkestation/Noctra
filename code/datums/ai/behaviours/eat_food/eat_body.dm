@@ -54,7 +54,7 @@
 			target.gib()
 			if(istype(basic_mob, /mob/living/simple_animal/hostile/retaliate))
 				var/mob/living/simple_animal/hostile/retaliate/mob = basic_mob
-				mob.food = mob.food_max // yummy
+				SEND_SIGNAL(mob, COMSIG_MOB_FILL_HUNGER)
 			finish_action(controller, TRUE)
 	finish_action(controller, FALSE)
 

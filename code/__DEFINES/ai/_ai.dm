@@ -258,6 +258,7 @@ F
 #define BB_GNOME_COMPOST_SOURCE "gnome_compost_source"
 #define BB_GNOME_SEED_SOURCE "gnome_seed_source"
 #define BB_GNOME_SEARCH_RANGE "gnome_search_range"
+#define BB_ACTION_STATE_MANAGER "action_state_manager"
 
 #define BB_GNOME_ALCHEMY_MODE "alch_mode"
 #define BB_GNOME_TARGET_CAULDRON "target_cauldron"
@@ -286,3 +287,7 @@ F
 // Used to hold state without making bigass lists
 /// For /datum/ai_behavior/find_potential_targets, what if any field are we using currently
 #define BB_FIND_TARGETS_FIELD(type) "bb_find_targets_field_[type]"
+
+#define ACTION_STATE_CONTINUE 1
+#define ACTION_STATE_COMPLETE 2
+#define ACTION_STATE_FAILED 3

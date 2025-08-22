@@ -4,6 +4,7 @@
 #define SAVE_TURFS (1 << 3) //! Save turfs?
 #define SAVE_AREAS (1 << 4) //! Save areas?
 #define SAVE_OBJECT_PROPERTIES (1 << 5) //! Save custom properties of objects (obj.on_object_saved() output)
+#define SAVE_UUID_STASIS (1 << 6) //! Save objects with UUID_saving to stasis files
 
 //Ignore turf if it contains
 #define SAVE_SHUTTLEAREA_DONTCARE 0

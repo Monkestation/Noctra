@@ -19,6 +19,9 @@
 		/obj/effect/mob_spawn/human/elf/trader
 	)
 	trader_type_weights = list(
+		/datum/trader_data/sake_merchant = 4,
+		/datum/trader_data/eastern_weapons = 4,
+		/datum/trader_data/artifact_weapons = 1,
 		/datum/trader_data/luxury_merchant = 25,
 		/datum/trader_data/instrument_merchant = 20,
 		/datum/trader_data/food_merchant = 20,

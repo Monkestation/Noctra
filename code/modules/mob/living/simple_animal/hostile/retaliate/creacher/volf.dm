@@ -52,7 +52,7 @@
 	defdrain = 5
 	del_on_deaggro = 999 SECONDS
 	retreat_health = 0.4
-	food = 0
+
 	dodgetime = 17
 	aggressive = 1
 //	stat_attack = UNCONSCIOUS

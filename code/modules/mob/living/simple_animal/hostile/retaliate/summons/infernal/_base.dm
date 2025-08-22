@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/retaliate/infernal
-
+	food_max = 0
 
 /mob/living/simple_animal/hostile/retaliate/infernal/Initialize()
 	. = ..()

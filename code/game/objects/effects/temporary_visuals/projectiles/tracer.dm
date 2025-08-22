@@ -24,29 +24,6 @@
 	name = "beam"
 	icon = 'icons/obj/projectiles_tracer.dmi'
 
-/obj/effect/projectile/tracer/laser
-	name = "laser"
-	icon_state = "beam"
-
-/obj/effect/projectile/tracer/laser/blue
-	icon_state = "beam_blue"
-
-/obj/effect/projectile/tracer/disabler
-	name = "disabler"
-	icon_state = "beam_omni"
-
-/obj/effect/projectile/tracer/xray
-	name = "\improper X-ray laser"
-	icon_state = "xray"
-
-/obj/effect/projectile/tracer/pulse
-	name = "pulse laser"
-	icon_state = "u_laser"
-
-/obj/effect/projectile/tracer/plasma_cutter
-	name = "plasma blast"
-	icon_state = "plasmacutter"
-
 /obj/effect/projectile/tracer/stun
 	name = "stun beam"
 	icon_state = "stun"
@@ -58,21 +35,3 @@
 /obj/effect/projectile/tracer/bloodsteal
 	name = "blood steal"
 	icon_state = "hcult"
-
-/obj/effect/projectile/tracer/heavy_laser
-	name = "heavy laser"
-	icon_state = "beam_heavy"
-
-//BEAM RIFLE
-/obj/effect/projectile/tracer/tracer/beam_rifle
-	icon_state = "tracer_beam"
-
-/obj/effect/projectile/tracer/tracer/aiming
-	icon_state = "pixelbeam_greyscale"
-	plane = ABOVE_LIGHTING_PLANE
-
-/obj/effect/projectile/tracer/pointline
-	icon_state = "point"
-
-/obj/effect/projectile/tracer/wormhole
-	icon_state = "wormhole_g"

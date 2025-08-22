@@ -18,7 +18,7 @@
 
 /// Generates a real, honest to god new z level. Will create the actual space, and also generate a datum that holds info about the new plot of land
 /// Accepts the name, traits list and datum type.
-/datum/controller/subsystem/mapping/proc/add_new_zlevel(name, traits = list(), z_type = /datum/space_level)
+/datum/controller/subsystem/mapping/proc/add_new_zlevel(name, traits = list(), z_type = /datum/space_level, delve = 0)
 	UNTIL(!adding_new_zlevel)
 	adding_new_zlevel = TRUE
 	var/new_z = z_list.len + 1
@@ -27,6 +27,7 @@
 		CHECK_TICK
 	// TODO: sleep here if the Z level needs to be cleared
 	var/datum/space_level/S = new z_type(new_z, name, traits)
+	S.delve = delve
 	z_list += S
 	generate_linkages_for_z_level(new_z)
 	calculate_z_level_gravity(new_z)

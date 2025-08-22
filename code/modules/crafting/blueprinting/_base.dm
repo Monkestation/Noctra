@@ -192,7 +192,6 @@ GLOBAL_LIST_EMPTY(blueprint_recipes)
 
 
 	html += "<strong>Construction Time:</strong> [build_time * 0.1] seconds<br>"
-	html += "<strong>Action:</strong> [verbage] ([verbage_tp])<br>"
 
 	if(supports_directions)
 		html += "<strong>Supports Rotation:</strong> Yes<br>"

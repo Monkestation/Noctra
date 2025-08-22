@@ -129,14 +129,14 @@
 	var/turf/open/pipe_turf = get_step(src, dir)
 	last_provided = pumping_from.water_reagent
 	if(!locate(/obj/structure/water_pipe) in pipe_turf)
-		spray_water()
+		spray_water(pipe_turf)
 		return
 
 	stop_spray()
 	var/obj/structure/water_pipe/pipe  = locate(/obj/structure/water_pipe) in pipe_turf
 
 
-	var/new_pressure = rotations_per_minute
+	var/new_pressure = rotations_per_minute + bonus_pressure
 	// if(last_provided_pressure != new_pressure)
 	pipe.make_provider(pumping_from.water_reagent, new_pressure, src)
 	last_provided_pressure = new_pressure
@@ -144,7 +144,7 @@
 /obj/structure/water_pump/use_water_pressure(pressure)
 	pumping_from.adjust_originate_watervolume(pressure)
 
-/obj/structure/water_pump/proc/spray_water()
+/obj/structure/water_pump/proc/spray_water(turf/pipe_turf)
 	if(!water_spray)
 		water_spray = mutable_appearance(icon, "water_spray")
 		water_spray.pixel_y = -32
@@ -152,6 +152,19 @@
 	cut_overlay(water_spray)
 	water_spray.color = initial(pumping_from.water_reagent.color)
 	add_overlay(water_spray)
+	if(isopenspace(pipe_turf))
+		while(isopenspace(pipe_turf))
+			pipe_turf = get_step_multiz(pipe_turf, DOWN)
+
+	var/datum/reagent/faux_reagent = new pumping_from.water_reagent
+	faux_reagent.on_aeration(rotations_per_minute, get_turf(src))
+
+	if(istype(pipe_turf, /turf/open/water))
+		var/turf/open/water/water = pipe_turf
+		if(water.mapped)
+			return
+		use_water_pressure(rotations_per_minute)
+		water.water_volume = min(water.water_volume + rotations_per_minute, water.water_maximum)
 
 /obj/structure/water_pump/proc/stop_spray()
 	cut_overlay(water_spray)

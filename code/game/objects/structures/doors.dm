@@ -74,6 +74,12 @@
 	. = ..()
 	UnregisterSignal(loc, COMSIG_ATOM_ATTACK_HAND, PROC_REF(redirect_attack))
 
+/obj/structure/door/get_explosion_resistance()
+	if(!door_opened)
+		return max_integrity
+	else
+		return 0
+
 /obj/structure/door/proc/redirect_attack(turf/source, mob/user)
 	attack_hand(user)
 
@@ -343,6 +349,7 @@
 
 	if(close_delay > 0)
 		addtimer(CALLBACK(src, PROC_REF(Close), silent), close_delay)
+	air_update_turf(TRUE)
 
 /obj/structure/door/proc/force_open()
 	switching_states = TRUE
@@ -353,6 +360,7 @@
 	layer = OPEN_DOOR_LAYER
 	update_appearance(UPDATE_ICON_STATE)
 	switching_states = FALSE
+	air_update_turf(TRUE)
 
 /obj/structure/door/proc/Close(silent = FALSE)
 	if(switching_states || !door_opened)
@@ -371,6 +379,7 @@
 	layer = CLOSED_DOOR_LAYER
 	update_appearance(UPDATE_ICON_STATE)
 	switching_states = FALSE
+	air_update_turf(TRUE)
 
 /obj/structure/door/proc/force_closed()
 	switching_states = TRUE
@@ -381,6 +390,7 @@
 	layer = CLOSED_DOOR_LAYER
 	update_appearance(UPDATE_ICON_STATE)
 	switching_states = FALSE
+	air_update_turf(TRUE)
 
 /obj/structure/door/proc/viewport_toggle(mob/user)
 	if(switching_states || door_opened)

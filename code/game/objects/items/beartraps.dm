@@ -155,12 +155,6 @@
 		if(isliving(AM))
 			var/mob/living/L = AM
 			var/snap = TRUE
-			if(istype(L.buckled, /obj/vehicle))
-				var/obj/vehicle/ridden_vehicle = L.buckled
-				if(!ridden_vehicle.are_legs_exposed) //close the trap without injuring/trapping the rider if their legs are inside the vehicle at all times.
-					close_trap(L)
-					ridden_vehicle.visible_message("<span class='danger'>[ridden_vehicle] triggers \the [src].</span>")
-					return ..()
 			if(L.throwing)
 				return ..()
 

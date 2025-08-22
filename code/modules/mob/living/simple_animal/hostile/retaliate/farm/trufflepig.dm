@@ -174,6 +174,7 @@
 			/datum/pet_command/truffle_sniff,
 		)
 
+	happy_funtime_mob = TRUE
 	var/hangry_meter = 0
 	var/random_gender = TRUE
 	var/can_breed = TRUE

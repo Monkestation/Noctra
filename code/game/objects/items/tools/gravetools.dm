@@ -104,6 +104,10 @@
 /obj/item/weapon/shovel/attack_turf(turf/T, mob/living/user)
 	user.changeNext_move(user.used_intent.clickcd)
 	if(user.used_intent.type == /datum/intent/irrigate)
+		var/obj/structure/soil/located = locate(/obj/structure/soil) in T
+		if(located)
+			to_chat(user, span_notice("[located] is in the way!"))
+			return FALSE
 		if(istype(T, /turf/open/floor/dirt))
 			var/turf/open/floor/dirt/D = T
 			user.visible_message("[user] starts digging an irrigation channel.", "You start digging an irrigation channel.")

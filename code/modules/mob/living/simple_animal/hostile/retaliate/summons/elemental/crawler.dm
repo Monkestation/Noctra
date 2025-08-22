@@ -34,7 +34,7 @@
 	defdrain = 10
 	del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
-	food = 0
+
 	attack_sound = list('sound/combat/hits/onstone/wallhit.ogg')
 	attack_verb_continuous = "pounds"
 	attack_verb_simple = "pounds"

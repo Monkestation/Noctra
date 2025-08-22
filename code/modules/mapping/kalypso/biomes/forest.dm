@@ -190,6 +190,7 @@
 
 	available_understory += /obj/structure/flora/grass/tundra
 	available_understory += /obj/structure/flora/grass/bush
+	available_understory += /obj/structure/flora/grass
 
 	return pick(available_understory)
 
