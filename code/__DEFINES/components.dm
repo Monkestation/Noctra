@@ -93,6 +93,7 @@
 #define COMSIG_MOB_CREATED_CALLOUT "mob_created_callout"
 
 #define COMSIG_MOB_CLICKON "mob_clickon"						//from base of mob/clickon(): (atom/A, params)
+#define COMSIG_ATOM_CLICKEDON "atom_clickedon"
 #define COMSIG_MOB_MIDDLECLICKON "mob_middleclickon"			//from base of mob/MiddleClickOn(): (atom/A)
 #define COMSIG_MOB_ALTCLICKON "mob_altclickon"				//from base of mob/AltClickOn(): (atom/A)
 	#define COMSIG_MOB_CANCEL_CLICKON 1
@@ -308,6 +309,7 @@
 #define COMSIG_MOUSE_ENTERED "comsig_mouse_entered"
 /// signal sent when a mouse is hovering over us, sent by atom/proc/on_mouse_entered
 #define COMSIG_ATOM_MOUSE_ENTERED "mouse_entered"
+#define COMSIG_USER_MOUSE_ENTERED "user_mouse_entered"
 
 #define COMSIG_HABITABLE_HOME "comsig_habitable_home"
 
@@ -323,3 +325,5 @@
 #define COMSIG_MOB_GRENADE_ARMED "grenade_mob_armed"
 ///called in /obj/item/gun/process_fire (user, target, params, zone_override)
 #define COMSIG_GRENADE_ARMED "grenade_armed"
+
+#define COMSIG_MOB_HEALTHHUD_UPDATE "update_healthhud"

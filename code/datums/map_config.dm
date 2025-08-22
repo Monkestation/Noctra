@@ -30,6 +30,7 @@
 
 	var/custom_area_sound = null
 	var/list/other_z
+	var/delve = 0
 
 /proc/load_map_config(filename = "data/next_map.json", default_to_van, delete_after, error_if_missing = TRUE)
 	var/datum/map_config/config = new
@@ -145,6 +146,8 @@
 			stack_trace("tried to add two of the same z-level")
 			continue
 		LAZYOR(final_z, map_path)
+
+	delve = json["delve"]
 
 #ifdef UNIT_TESTS
 	// Check for unit tests to skip, no reason to check these if we're not running tests

@@ -103,17 +103,18 @@
 	if(!is_visible(organ, bodypart, owner))
 		return
 	var/icon_state_to_use = get_icon_state(organ, bodypart, owner)
+	var/icon_to_use = get_icon(organ, bodypart, owner)
 	if(!icon_state_to_use)
 		return null
-	var/list/appearance_list = get_overlay(icon_state_to_use, color_string, dummy_block = istype(owner, /mob/living/carbon/human/dummy))
+	var/list/appearance_list = get_overlay(icon_state_to_use, color_string, dummy_block = istype(owner, /mob/living/carbon/human/dummy), icon_file = icon_to_use)
 	adjust_appearance_list(appearance_list, organ, bodypart, owner)
 	return appearance_list
 
-/datum/sprite_accessory/proc/get_overlay(overlay_icon_state, color_string, dummy_block = FALSE)
+/datum/sprite_accessory/proc/get_overlay(overlay_icon_state, color_string, dummy_block = FALSE, icon_file)
 	color_string = sanitize_color_string(color_string)
 	var/key = "[type]-[overlay_icon_state]-[color_string]-[glows]"
 	if(!accessory_icon_cache[key])
-		var/list/icon_states = generate_icon_states(overlay_icon_state, color_string)
+		var/list/icon_states = generate_icon_states(overlay_icon_state, color_string, icon_file)
 		var/icon/icon_bundle = icon('icons/testing/greyscale_error.dmi')
 		for(var/icon_state in icon_states)
 			icon_bundle.Insert(icon_states[icon_state], icon_state)
@@ -165,18 +166,18 @@
 			color_list -= color_list[color_list.len]
 	return color_list_to_string(color_list)
 
-/datum/sprite_accessory/proc/generate_icon_states(overlay_icon_state, color_string)
+/datum/sprite_accessory/proc/generate_icon_states(overlay_icon_state, color_string, icon_file)
 	var/list/state_list = list()
 	var/list/color_list = color_string_to_list(color_string)
 	if(relevant_layers)
 		for(var/iterated_layer in relevant_layers)
 			var/layer_suffix = get_layer_suffix(iterated_layer)
-			state_list["[overlay_icon_state]_[layer_suffix]"] = generate_icon_state(overlay_icon_state, color_list, iterated_layer, layer_suffix)
+			state_list["[overlay_icon_state]_[layer_suffix]"] = generate_icon_state(overlay_icon_state, color_list, iterated_layer, layer_suffix, icon_file)
 	else
-		state_list[overlay_icon_state] = generate_icon_state(overlay_icon_state, color_list, layer)
+		state_list[overlay_icon_state] = generate_icon_state(overlay_icon_state, color_list, layer, icon_file = icon_file)
 	return state_list
 
-/datum/sprite_accessory/proc/generate_icon_state(overlay_icon_state, color_list, passed_layer, suffix)
+/datum/sprite_accessory/proc/generate_icon_state(overlay_icon_state, color_list, passed_layer, suffix, icon_file)
 	var/one_color = (color_keys == 1)
 	if(suffix)
 		overlay_icon_state += "_[suffix]"
@@ -184,7 +185,7 @@
 	for(var/color_index in 1 to color_keys)
 		var/color_to_use = color_list[color_index]
 		var/lookup_state = one_color ? overlay_icon_state  : "[overlay_icon_state]_[color_index]"
-		var/icon/color_key_icon = icon(icon, lookup_state)
+		var/icon/color_key_icon = icon(icon_file, lookup_state)
 		color_key_icon.Blend(color_to_use, ICON_MULTIPLY)
 		if(!result_icon)
 			result_icon = color_key_icon
@@ -193,7 +194,7 @@
 
 	// Blend the extra state on top if we want that.
 	if(extra_state)
-		var/icon/extra_icon = icon(icon, "[overlay_icon_state]_extra")
+		var/icon/extra_icon = icon(icon_file, "[overlay_icon_state]_extra")
 		result_icon.Blend(extra_icon, ICON_OVERLAY)
 
 	// Apparently new icons can do weird stuff unless you try and "read" something from it like this before using it.
@@ -216,6 +217,9 @@
 
 /datum/sprite_accessory/proc/get_icon_state(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
 	return icon_state
+
+/datum/sprite_accessory/proc/get_icon(obj/item/organ/organ, obj/item/bodypart/bodypart, mob/living/carbon/owner)
+	return icon
 
 /datum/sprite_accessory/proc/get_default_colors(key_source_list)
 	var/list/color_list = list()

@@ -291,3 +291,9 @@
 					H.update_inv_head()
 		user.update_fov_angles()
 		user.regenerate_clothes()
+
+/obj/item/clothing/head/takuhatsugasa // egyptian
+	name = "takuhatsugasa"
+	desc = ""
+	icon_state = "takuhatsugasa"
+	item_flags = ABSTRACT

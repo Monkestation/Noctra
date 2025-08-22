@@ -11,6 +11,7 @@
 	list_reagents = list(/datum/reagent/consumable/honey = 5, /datum/reagent/consumable/nutriment = SNACK_DECENT)
 	grind_results = list()
 	tastes = list("sweetness" = 1)
+	var/honey_color
 
 /obj/item/reagent_containers/food/snacks/spiderhoney/Initialize()
 	. = ..()

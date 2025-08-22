@@ -38,6 +38,8 @@ abstract types are automatically excluded.
 		/obj/item/clothing/accessory, // ???
 		/obj/item/clothing/head/crown/serpcrown, // should only be one
 		/obj/item/clothing/face/cigarette, // TODO
+		/obj/item/clothing/head/takuhatsugasa,
+		/obj/item/clothing/shirt/robe/kimono, //these are mob holders only
 	)
 
 	/// excludes paths that are subtypes of these types and only subtypes

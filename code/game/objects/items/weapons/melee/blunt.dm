@@ -619,3 +619,9 @@
 	wbalance = DODGE_CHANCE_NORMAL
 	sellprice = 60
 	wdefense = GOOD_PARRY
+
+/obj/item/weapon/mace/goden/steel/ravox
+	name = "duel settler"
+	desc = "The tenets of ravoxian duels are enscribed upon the head of this maul."
+	icon_state = "ravoxhammer"
+	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)

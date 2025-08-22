@@ -57,9 +57,10 @@
 	defprob = 35
 	defdrain = 5
 	retreat_health = 0.2
-	food = 0
+
 	dodgetime = 17
 	aggressive = 1
+	food_max = 0
 
 	ai_controller = /datum/ai_controller/void_obelisk
 

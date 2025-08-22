@@ -25,6 +25,9 @@
 	var/list/initial_wanteds = list(
 		/obj/item/ore/gold = list(30, INFINITY, ""),
 	)
+	///list of outfits we select if we don't want faction defaults
+	var/list/outfit_override = list()
+
 	///The speech data of the trader
 	var/list/say_phrases = list(
 		ITEM_REJECTED_PHRASE = list(

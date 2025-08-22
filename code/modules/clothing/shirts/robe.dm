@@ -372,3 +372,13 @@
 	color = null
 	icon_state = "facelesscloth" //Credit goes to Cre
 	item_state = "facelesscloth"
+
+/obj/item/clothing/shirt/robe/kimono
+	name = "kimono"
+	desc = "Worn by merchants of Zhongese."
+	color = null
+	icon_state = "kimono"
+	item_state = "kimono"
+	sleeved = null
+	sleevetype = null
+	item_flags = ABSTRACT

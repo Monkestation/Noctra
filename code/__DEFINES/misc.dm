@@ -351,6 +351,12 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 //for obj explosion block calculation
 #define EXPLOSION_BLOCK_PROC -1
 
+#define EXPLOSION_FALLOFF_SHAPE_LINEAR   0
+#define EXPLOSION_FALLOFF_SHAPE_EXPONENTIAL  1
+#define EXPLOSION_FALLOFF_SHAPE_EXPONENTIAL_HALF 2
+#define EXPLOSION_MAX_POWER 5000
+
+
 //for determining which type of heartbeat sound is playing
 #define BEAT_FAST 1
 #define BEAT_SLOW 2

@@ -38,7 +38,7 @@
 	defdrain = 10
 	del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
-	food = 0
+
 	attack_sound = list('sound/combat/hits/onstone/wallhit.ogg')
 	pixel_x = -32
 	dodgetime = 0

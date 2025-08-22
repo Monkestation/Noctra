@@ -51,8 +51,6 @@
 	. = ..()
 	if(!user.Adjacent(src))
 		return
-	if(!rotation_structure && !istype(src, /obj/structure/water_pipe))
-		return
 	var/obj/item/contraption/linker/linker = user.get_active_held_item()
 	if(!istype(linker))
 		return

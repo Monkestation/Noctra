@@ -215,17 +215,40 @@ SUBSYSTEM_DEF(job)
 	// Loop through all levels from high to low
 	var/list/shuffledoccupations = shuffle(joinable_occupations)
 	for(var/level in level_order)
+		// Create a weighted list of players based on their boosts
+		var/list/weighted_players = list()
 
-		// Loop through all unassigned players
 		for(var/mob/dead/new_player/player in unassigned)
 			if(PopcapReached())
 				RejectPlayer(player)
+				continue
 
+			// Calculate player's boost weight
+			var/player_weight = 1 // Base weight
+			var/list/player_boosts = get_player_boosts(player)
+
+			for(var/datum/job_priority_boost/boost in player_boosts)
+				if(boost.is_valid())
+					player_weight += boost.boost_amount
+
+			// Add player multiple times based on weight
+			weighted_players[player] = player_weight
+
+		// Shuffle the weighted player list
+		weighted_players = shuffle(weighted_players)
+
+		// Loop through weighted players (players with boosts appear more often)
+		for(var/i = 1 to length(weighted_players))
+			var/mob/dead/new_player/player = pickweight(weighted_players)
+			weighted_players -= player
+			if(!player)
+				continue
 			// Loop through all jobs
-			for(var/datum/job/job in shuffledoccupations) // SHUFFLE ME BABY
+			for(var/datum/job/job in shuffledoccupations)
 				if(!job)
 					continue
 
+				// Standard job checks...
 				if(is_role_banned(player.ckey, job.title))
 					JobDebug("DO isbanned failed, Player: [player], Job:[job.title]")
 					continue
@@ -245,6 +268,8 @@ SUBSYSTEM_DEF(job)
 				if(player.mind && (job.title in player.mind.restricted_roles))
 					JobDebug("DO incompatible with antagonist role, Player: [player], Job:[job.title]")
 					continue
+
+				var/list/player_boosts = get_player_boosts(player)
 
 				if(length(job.allowed_races) && !(player.client.prefs.pref_species.id in job.allowed_races))
 					if(!player.client?.has_triumph_buy(TRIUMPH_BUY_RACE_ALL))
@@ -293,24 +318,143 @@ SUBSYSTEM_DEF(job)
 				if(player.client.prefs.job_preferences[job.title] == level)
 					// If the job isn't filled
 					if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
+						// Use boost if applicable
+						for(var/datum/job_priority_boost/boost in player_boosts)
+							if(boost.can_boost_job(job))
+								boost.use_boost()
+								JobDebug("DO boost used, Player: [player], Job: [job.title], Boost: [boost.name]")
+
 						AssignRole(player, job)
 						unassigned -= player
+						JobDebug("DO job assigned with boost consideration, Player: [player], Job: [job.title]")
 						break
-
 
 	JobDebug("DO, Handling unassigned.")
 	// Hand out random jobs to the people who didn't get any in the last check
-	// Also makes sure that they got their preference correct
 	for(var/mob/dead/new_player/player in unassigned)
 		HandleUnassigned(player)
 
 	JobDebug("DO, Handling unrejectable unassigned")
 	//Mop up people who can't leave.
-	for(var/mob/dead/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
+	for(var/mob/dead/new_player/player in unassigned)
 		RejectPlayer(player)
 
 	return validate_required_jobs(required_jobs)
 
+/datum/controller/subsystem/job/proc/get_player_boosts(mob/dead/new_player/player)
+	var/list/boosts = list()
+	if(player.client && islist(player.client.job_priority_boosts))
+		boosts = player.client.job_priority_boosts
+	return boosts
+
+/datum/controller/subsystem/job/proc/save_player_boosts(ckey)
+	var/datum/save_manager/SM = get_save_manager(ckey)
+	if(!SM)
+		return FALSE
+
+	var/client/C = GLOB.directory[ckey]
+	if(!C || !islist(C.job_priority_boosts))
+		return FALSE
+
+	var/list/boost_data = list()
+	for(var/datum/job_priority_boost/boost in C.job_priority_boosts)
+		if(!boost.is_valid())
+			continue
+
+		var/list/boost_save = list(
+			"type" = boost.type,
+			"name" = boost.name,
+			"desc" = boost.desc,
+			"boost_amount" = boost.boost_amount,
+			"applicable_jobs" = boost.applicable_jobs?.Copy(),
+			"expiry_time" = boost.expiry_time,
+			"uses_remaining" = boost.uses_remaining,
+			"boost_type" = boost.boost_type
+		)
+		boost_data += list(boost_save)
+
+	SM.set_data("job_boosts", "active_boosts", boost_data)
+	return TRUE
+
+/datum/controller/subsystem/job/proc/load_player_boosts(ckey)
+	var/datum/save_manager/SM = get_save_manager(ckey)
+	if(!SM)
+		return FALSE
+
+	var/client/C = GLOB.directory[ckey]
+	if(!C)
+		return FALSE
+
+	var/list/boost_data = SM.get_data("job_boosts", "active_boosts", list())
+	if(!islist(boost_data) || !length(boost_data))
+		return FALSE
+
+	C.job_priority_boosts = list()
+
+	for(var/list/boost_info in boost_data)
+		if(!islist(boost_info))
+			continue
+
+		var/boost_type = boost_info["type"]
+		if(!boost_type)
+			continue
+
+		var/datum/job_priority_boost/boost = new boost_type()
+		if(!boost)
+			continue
+
+		// Restore saved properties
+		if(boost_info["name"])
+			boost.name = boost_info["name"]
+		if(boost_info["desc"])
+			boost.desc = boost_info["desc"]
+		if(boost_info["boost_amount"])
+			boost.boost_amount = boost_info["boost_amount"]
+		if(boost_info["applicable_jobs"])
+			boost.applicable_jobs = boost_info["applicable_jobs"]
+		if(boost_info["expiry_time"])
+			boost.expiry_time = boost_info["expiry_time"]
+		if(boost_info["uses_remaining"])
+			boost.uses_remaining = boost_info["uses_remaining"]
+		if(boost_info["boost_type"])
+			boost.boost_type = boost_info["boost_type"]
+
+		// Only add valid boosts
+		if(boost.is_valid())
+			C.job_priority_boosts += boost
+		else
+			qdel(boost)
+
+	return TRUE
+
+/datum/controller/subsystem/job/proc/give_job_boost(client/target_client, datum/job_priority_boost/boost)
+	if(!target_client || !boost)
+		return FALSE
+
+	if(!islist(target_client.job_priority_boosts))
+		target_client.job_priority_boosts = list()
+
+	target_client.job_priority_boosts += boost
+	to_chat(target_client, "<span class='notice'>You have received a job priority boost: [boost.name] - [boost.desc]</span>")
+
+	save_player_boosts(target_client.ckey)
+
+	return TRUE
+
+/datum/controller/subsystem/job/proc/remove_expired_boosts(client/target_client)
+	if(!target_client || !islist(target_client.job_priority_boosts))
+		return
+
+	var/removed_any = FALSE
+	for(var/datum/job_priority_boost/boost in target_client.job_priority_boosts)
+		if(!boost.is_valid())
+			target_client.job_priority_boosts -= boost
+			qdel(boost)
+			removed_any = TRUE
+
+	// Update save file if we removed any boosts
+	if(removed_any)
+		save_player_boosts(target_client.ckey)
 
 /datum/controller/subsystem/job/proc/do_required_jobs()
 	var/amt_picked = 0

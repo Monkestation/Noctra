@@ -894,4 +894,9 @@
 		/datum/book_entry/plant_families,
 		/datum/book_entry/plant_genetics,
 		/datum/plant_def,
+		/datum/repeatable_crafting_recipe/bee_treatment,
+		/datum/repeatable_crafting_recipe/bee_treatment/antiviral,
+		/datum/repeatable_crafting_recipe/bee_treatment/miticide,
+		/datum/repeatable_crafting_recipe/bee_treatment/insecticide,
+		/datum/blueprint_recipe/carpentry/apiary,
 	)

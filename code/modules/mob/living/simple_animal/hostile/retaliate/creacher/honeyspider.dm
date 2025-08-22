@@ -108,8 +108,9 @@
 	if(!stat)
 		user.visible_message("<span class='info'>[user] hand-feeds [O] to [src].</span>", "<span class='notice'>I hand-feed [O] to [src].</span>")
 		playsound(loc,'sound/misc/eat.ogg', rand(30,60), TRUE)
+		SEND_SIGNAL(src, COMSIG_MOB_FEED, O, 30)
+		SEND_SIGNAL(src, COMSIG_FRIENDSHIP_CHANGE, user, 10)
 		qdel(O)
-		food = min(food + 30, 100)
 		if(tame && owner == user)
 			return TRUE
 		var/realchance = tame_chance

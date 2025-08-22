@@ -13,6 +13,7 @@
 	)
 	trader_type_weights = list(
 		/datum/trader_data/weapon_merchant = 15,
+		/datum/trader_data/artifact_weapons = 1,
 		/datum/trader_data/tool_merchant = 25,
 		/datum/trader_data/material_merchant = 20,
 		/datum/trader_data/food_merchant = 12,

@@ -723,7 +723,7 @@
 
 /turf/open/water/river/dirt
 	icon_state = MAP_SWITCH("dirty", "rivermovealt-dir")
-	water_reagent = /datum/reagent/water/gross/sewer
+	water_reagent = /datum/reagent/water/gross
 
 /turf/open/water/river/blood
 	icon_state = MAP_SWITCH("rocky", "rivermovealt2-dir")

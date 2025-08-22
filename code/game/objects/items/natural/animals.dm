@@ -208,12 +208,6 @@
 		return
 	..()
 
-/mob/living/simple_animal
-	var/can_saddle = FALSE
-	var/obj/item/ssaddle
-	// A flat percentage bonus to our ability to detect sneaking people only. Use in lieu of giving mobs huge STAPER bonuses if you want them to be observant.
-	var/simple_detect_bonus = 0
-
 /mob/living/simple_animal/onbite(mob/living/carbon/human/user)
 	var/damage = 10*(user.STASTR/20)
 	if(HAS_TRAIT(user, TRAIT_STRONGBITE))
