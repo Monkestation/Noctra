@@ -757,6 +757,34 @@
 	created_item = /obj/item/clothing/shoes/boots/armor
 	craftdiff = 4
 
+/datum/anvil_recipe/armor/steel/steam
+	craftdiff = 5
+	abstract_type = /datum/anvil_recipe/armor/steel/steam
+
+/datum/anvil_recipe/armor/steel/steam/helm
+	name = "Steamknight helm (+Bar, +Bronze cog)"
+	recipe_name = "a steam powered helmet"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/gear/metal/bronze)
+	created_item = /obj/item/clothing/head/helmet/heavy/steam
+
+/datum/anvil_recipe/armor/steel/steam/gauntlets
+	name = "Steamknight gauntlets (+Bronze cog)"
+	recipe_name = "a pair of steam powered gauntlets"
+	additional_items = list(/obj/item/gear/metal/bronze)
+	created_item = /obj/item/clothing/gloves/plate/steam
+
+/datum/anvil_recipe/armor/steel/steam/body
+	name = "Steamknight plate (+Bar x2, +Bronze cog x3)"
+	recipe_name = "a pair of steam powered gauntlets"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/gear/metal/bronze, /obj/item/gear/metal/bronze, /obj/item/gear/metal/bronze)
+	created_item = /obj/item/clothing/armor/steam
+
+/datum/anvil_recipe/armor/steel/steam/boots
+	name = "Steamknight plate boots (+Bronze cog)"
+	recipe_name = "a pair of steam powered gauntlets"
+	additional_items = list(/obj/item/gear/metal/bronze)
+	created_item = /obj/item/clothing/shoes/boots/armor/steam
+
 /datum/anvil_recipe/armor/steel/rare
 	craftdiff = 5
 	abstract_type = /datum/anvil_recipe/armor/steel/rare
