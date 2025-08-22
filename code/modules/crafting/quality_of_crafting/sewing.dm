@@ -927,6 +927,24 @@
 	craftdiff = 4
 	category = "Hat"
 
+/datum/repeatable_crafting_recipe/sewing/battlenun_helm
+	name = "iron coif battlenun helm"
+	output = /obj/item/clothing/head/helmet/battlenun
+	requirements = list(/obj/item/natural/cloth = 1,
+				/obj/item/natural/fibers = 1,
+				/obj/item/clothing/neck/chaincoif/iron)
+	craftdiff = 4
+	category = "Hat"
+
+/datum/repeatable_crafting_recipe/sewing/battlenun_helm
+	name = "steel coif battlenun helm"
+	output = /obj/item/clothing/head/helmet/battlenun
+	requirements = list(/obj/item/natural/cloth = 1,
+				/obj/item/natural/fibers = 1,
+				/obj/item/clothing/neck/chaincoif/steel)
+	craftdiff = 4
+	category = "Hat"
+
 /datum/repeatable_crafting_recipe/sewing/chaperonhat
 	name = "chaperon hat"
 	output = /obj/item/clothing/head/chaperon/colored/greyscale

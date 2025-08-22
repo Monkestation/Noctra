@@ -8,7 +8,6 @@ abstract types are automatically excluded.
 	var/list/excluded_paths = list(
 		/obj/item/clothing/neck/blkknight, // mapped in only
 		/obj/item/clothing/accessory/medal/gold/ordom, // memorial item, RIP OrdoM.
-		/* special uncraftables designed for specific roles next */
 		/obj/item/clothing/neck/portalamulet, // vampire antag item
 		/obj/item/clothing/head/peaceflower, // spawns naturally
 		/obj/item/clothing/head/corruptflower, // spawns naturally
@@ -16,14 +15,16 @@ abstract types are automatically excluded.
 		/obj/item/clothing/face/facemask/steel/harlequin, // antag only
 		/obj/item/clothing/shirt/robe/necromancer, // antag
 		/obj/item/clothing/shirt/robe/priest, // unattainable
-		/obj/item/clothing/cloak/matron, // matron only?
 		/obj/item/clothing/head/padded/deathface, // ???
 		/obj/item/clothing/head/roguehood/priest, // unattainable
 		/obj/item/clothing/head/priestmask, // unattainable
 		/obj/item/clothing/head/priesthat, // unattainable
 		/obj/item/clothing/head/mob_holder, // change this shit to not clothing, wtf.
 		/obj/item/clothing/ring/gold/burden, // uncraftable
+		/obj/item/clothing/head/cyberdeck,
 		/obj/item/clothing/cloak/half/shadowcloak/cult, // cultist item
+		/obj/item/clothing/head/helmet/skullcap/cult, // cultist item
+
 
 	)
 	// these don't use misc_flags = CRAFTING_TEST_EXCLUDE because we want to explicitly know which paths we are excluding.
@@ -48,7 +49,8 @@ abstract types are automatically excluded.
 		"faceless", // antag items
 		"blk", // antag items
 		"vampire", // vampire craftable items
-		"maniac" // fluff maniac items
+		"maniac", // fluff maniac items
+		"rust"
 	)
 
 /datum/unit_test/craftable_clothes/Run()

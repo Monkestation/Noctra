@@ -306,6 +306,23 @@
 	)
 	output = /obj/item/clothing/cloak/raincloak/furcloak
 
+/datum/repeatable_crafting_recipe/leather/cloakfur
+	name = "battlenun cloak"
+	requirements = list(
+		/obj/item/natural/hide/cured = 2,
+		/obj/item/natural/silk = 1,
+	)
+	output = /obj/item/clothing/cloak/battlenun
+
+/datum/repeatable_crafting_recipe/leather/cloakfur
+	name = "battlenun cloak"
+	requirements = list(
+		/obj/item/natural/hide/cured = 2,
+		/obj/item/natural/silk = 1,
+	)
+	output = /obj/item/clothing/cloak/graggar
+
+
 /datum/repeatable_crafting_recipe/leather/cloakfur_black
 	name = "fur lined black cloak"
 	requirements = list(
@@ -479,6 +496,23 @@
 				/obj/item/natural/fibers = 2)
 	craftdiff = 3
 
+/datum/repeatable_crafting_recipe/leather/helmet
+	name = "adept cowl"
+	requirements = list(
+		/obj/item/natural/hide/cured = 1,
+	)
+	output = /obj/item/clothing/head/adeptcowl
+	craftdiff = 3
+
+/datum/repeatable_crafting_recipe/leather/helmet
+	name = "inquisitorial hat"
+	requirements = list(
+		/obj/item/natural/hide/cured = 2,
+		/obj/item/natural/feather = 1,
+	)
+	output = /obj/item/clothing/head/leather/inqhat
+	craftdiff = 4
+
 /datum/repeatable_crafting_recipe/leather/nobleboots
 	name = "noble boots"
 	output = /obj/item/clothing/shoes/nobleboot
@@ -488,6 +522,27 @@
 		/obj/item/natural/cloth = 2,
 	)
 	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/leather/wardencloak
+	name = "warden cloak"
+	output = /obj/item/clothing/cloak/wardencloak
+	requirements = list(/obj/item/natural/silk = 2,
+				/obj/item/natural/hide/cured = 2)
+	craftdiff = 5
+
+/datum/repeatable_crafting_recipe/leather/wardencloak
+	name = "red cloak"
+	output = /obj/item/clothing/cloak/heartfelt
+	requirements = list(/obj/item/natural/silk = 2,
+				/obj/item/natural/hide/cured = 2)
+	craftdiff = 5
+
+/datum/repeatable_crafting_recipe/leather/captaincloak
+	name = "captain cloak"
+	output = /obj/item/clothing/cloak/captain
+	requirements = list(/obj/item/natural/silk = 3,
+				/obj/item/natural/hide/cured = 2)
+	craftdiff = 6
 
 /datum/repeatable_crafting_recipe/leather/lordcloak
 	name = "lordly cloak"
@@ -654,6 +709,13 @@
 	requirements = list(/obj/item/natural/hide/cured = 3,
 				/obj/item/natural/fibers = 1)
 	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/leather/standalone/inqboots
+	name = "inquisitorial shoes"
+	output = /obj/item/clothing/shoes/otavan/inqboots
+	requirements = list(/obj/item/natural/hide/cured = 3,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 5
 
 /datum/repeatable_crafting_recipe/leather/standalone/leather_duelcoat
 	name = "leather duelist coat"

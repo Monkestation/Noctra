@@ -17,7 +17,7 @@
 	armor_class = AC_HEAVY
 	prevent_crits = ALL_CRITICAL_HITS
 	max_integrity = INTEGRITY_STRONG
-
+	abstract_type =  /obj/item/clothing/head/rare
 
 //............... Bladesinger Helmet ............... //
 /obj/item/clothing/head/rare/elfplate // Unique Bladesinger kit

@@ -243,6 +243,15 @@
 	created_item = /obj/item/clothing/head/helmet/heavy/crusader/t
 	craftdiff = 2
 
+/datum/anvil_recipe/armor/steel/
+	name = "Skullmet helm (+Bar)"
+	recipe_name = "a heavy steel totod crusader helmet"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/helmet/medium/decorated/skullmet
+	craftdiff = 3
+
+/obj/item/clothing/head/helmet/medium/decorated/skullmet
+
 /datum/anvil_recipe/armor/iron/cage_helmet
 	name = "feldsher's cage"
 	recipe_name = "a cage helmet"
@@ -366,6 +375,12 @@
 	name = "Skullcap"
 	recipe_name = "a skullcap"
 	created_item = /obj/item/clothing/head/helmet/skullcap
+
+/datum/anvil_recipe/armor/iron/grenzelhoft_skullcap
+	name = "Grenzelhoft Plume helmet"
+	additional_items = list(/obj/item/natural/feather)
+	recipe_name = "a grenzelhoft plume helmet"
+	created_item = /obj/item/clothing/head/helmet/skullcap/grenzelhoft
 
 /datum/anvil_recipe/armor/iron/splint
 	name = "Splint Armor (+Hide)"
@@ -582,6 +597,12 @@
 	recipe_name = "a Sallet"
 	created_item = /obj/item/clothing/head/helmet/sallet
 
+/datum/anvil_recipe/armor/steel/elven_sallet
+	name = "Elven Sallet (+Gold bar)"
+	additional_items = list(/obj/item/ingot/gold)
+	recipe_name = "a Sallet"
+	created_item = /obj/item/clothing/head/helmet/sallet/elven
+
 /datum/anvil_recipe/armor/steel/helmetsall
 	name = "Kulah Khud"
 	recipe_name = "a Zalad Sallet"
@@ -618,6 +639,27 @@
 	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
 	created_item = (/obj/item/clothing/head/helmet/visored/hounskull)
 	craftdiff = 4
+
+/datum/anvil_recipe/armor/steel/hounskull
+	name = "Warden Helmet (+Bar)"
+	recipe_name = "a Warden's Helmet"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = (/obj/item/clothing/head/helmet/visored/warden)
+	craftdiff = 6
+
+/datum/anvil_recipe/armor/steel/hounskull
+	name = "Royal Knight Helmet (+Bar x2)"
+	recipe_name = "a royal knight's Helmet"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
+	created_item = (/obj/item/clothing/head/helmet/visored/royalknight)
+	craftdiff = 6
+
+/datum/anvil_recipe/armor/steel/hounskull
+	name = "Captain's Helmet (+Bar x2)"
+	recipe_name = "a captain's Helmet"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
+	created_item = (/obj/item/clothing/head/helmet/visored/captain)
+	craftdiff = 6
 
 // STEEL DECORATED HELMS
 /datum/anvil_recipe/armor/steel/decoratedbascinet
@@ -778,3 +820,22 @@
 	name = "Blacksteel Plate Boots"
 	created_item = /obj/item/clothing/shoes/boots/armor/blkknight
 	craftdiff = 5
+
+/datum/anvil_recipe/armor/blacksteel/zizo_helm
+	name = "Darksteel Barbute (+Bar)"
+	additional_items = list(/obj/item/ingot/blacksteel)
+	created_item = /obj/item/clothing/head/helmet/visored/zizo
+	craftdiff = 5
+
+/datum/anvil_recipe/armor/blacksteel/zizo_helm
+	name = "Gilded Visage (+Bar)"
+	additional_items = list(/obj/item/ingot/blacksteel)
+	created_item = /obj/item/clothing/head/helmet/heavy/matthios
+	craftdiff = 5
+
+/datum/anvil_recipe/armor/blacksteel/zizo_helm
+	name = "Vicious helmet (+Bar)"
+	additional_items = list(/obj/item/ingot/blacksteel)
+	created_item = /obj/item/clothing/head/helmet/graggar
+	craftdiff = 5
+

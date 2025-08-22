@@ -49,7 +49,7 @@
 	return ..()
 
 //Mostly garbage related to the ending "cutscene"
-/obj/item/clothing/head/cyberdeck/maniac
+/obj/item/clothing/head/cyberdeck
 	name = "cyberdeck headset"
 	desc = "Sweet dreams..."
 	icon = 'icons/roguetown/maniac/clothing.dmi'
@@ -74,7 +74,7 @@
 
 /datum/outfit/treyliam
 	name = "Trey Liam"
-	head = /obj/item/clothing/head/cyberdeck/maniac
+	head = /obj/item/clothing/head/cyberdeck
 	shirt = /obj/item/clothing/shirt/formal/maniac
 	pants = /obj/item/clothing/pants/tights/formal/maniac
 

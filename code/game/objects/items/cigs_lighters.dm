@@ -341,6 +341,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	chem_volume = 60
 	list_reagents = null
 	muteinmouth = FALSE
+	abstract_type = /obj/item/clothing/face/cigarette/rollie
 
 /obj/item/clothing/face/cigarette/rollie/Initialize()
 	. = ..()
