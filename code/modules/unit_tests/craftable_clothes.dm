@@ -25,6 +25,7 @@ abstract types are automatically excluded.
 		/obj/item/clothing/cloak/half/shadowcloak/cult, // cultist item
 		/obj/item/clothing/head/helmet/skullcap/cult, // cultist item
 		/obj/item/clothing/head/helmet/leather/saiga, // idk what kind of recipe to make this
+		/obj/item/clothing/neck/mana_star, // todo?
 
 
 	)
