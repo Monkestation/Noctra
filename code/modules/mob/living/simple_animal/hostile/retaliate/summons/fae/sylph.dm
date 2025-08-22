@@ -71,6 +71,7 @@
 	new /obj/item/natural/fairydust(deathspot)
 	new /obj/item/natural/melded/t2(deathspot)
 	new /obj/item/natural/iridescentscale(deathspot)
+	new /obj/item/natural/iridescentscale(deathspot)
 	new /obj/item/natural/heartwoodcore(deathspot)
 	new /obj/item/natural/fairydust(deathspot)
 	new /obj/item/natural/fairydust(deathspot)
