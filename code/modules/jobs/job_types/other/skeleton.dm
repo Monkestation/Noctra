@@ -7,7 +7,6 @@
 /datum/job/skeleton
 	title = "Skeleton"
 	tutorial = null
-	flag = SKELETON
 	department_flag = UNDEAD
 	job_flags = (JOB_EQUIP_RANK)
 	faction = FACTION_TOWN //this seems wrong?

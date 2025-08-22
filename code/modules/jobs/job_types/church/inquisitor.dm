@@ -4,7 +4,6 @@
 	you are an emmissary of political and theological import. \
 	You have been sent by your leader, the Orthodox Bishop, \
 	to assist the local Priest in combatting the increasing number of heretics and monsters infiltrating Vanderlin."
-	flag = PURITAN
 	department_flag = CHURCHMEN
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_PURITAN
@@ -18,6 +17,7 @@
 
 	outfit = /datum/outfit/job/inquisitor
 	is_foreigner = TRUE
+	is_recognized = TRUE
 	cmode_music = 'sound/music/cmode/church/CombatInquisitor.ogg'
 
 /datum/job/inquisitor/after_spawn(mob/living/spawned, client/player_client)

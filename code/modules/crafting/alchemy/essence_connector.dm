@@ -10,6 +10,7 @@
 
 /obj/item/essence_connector/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(!proximity_flag)
+		. = ..()
 		return
 
 	var/obj/machinery/essence/machine = target

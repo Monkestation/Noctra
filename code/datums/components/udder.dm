@@ -117,7 +117,7 @@
 /obj/item/udder/process(seconds_per_tick)
 	if(isanimal(udder_mob))
 		var/mob/living/simple_animal/simple_animal = udder_mob
-		if(simple_animal.food <= 0)
+		if(SEND_SIGNAL(simple_animal, COMSIG_MOB_RETURN_HUNGER) <= 0)
 			return
 	if(udder_mob.stat != DEAD)
 		generate() //callback is on generate() itself as sometimes generate does not add new reagents, or is not called via process

@@ -6,7 +6,7 @@
 	density = TRUE
 	anchored = TRUE
 	var/list/current_items = list()
-	var/max_items = 5
+	var/max_items = 6
 	var/datum/essence_storage/storage
 	processing_priority = 2
 
@@ -17,9 +17,9 @@
 	storage.max_essence_types = 15
 
 	if(GLOB.thaumic_research.has_research(/datum/thaumic_research_node/splitter_output_four))
-		max_items = 9
+		max_items = 8
 	else if(GLOB.thaumic_research.has_research(/datum/thaumic_research_node/splitter_output_five))
-		max_items = 10
+		max_items = 12
 
 /obj/machinery/essence/splitter/Destroy()
 	if(storage)

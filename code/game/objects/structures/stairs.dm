@@ -61,9 +61,9 @@
 
 /obj/structure/stairs/d/OnCrafted(dirin, mob/user)
 	SHOULD_CALL_PARENT(FALSE)
-	dir = turn(dirin, 180)
+	dir = dirin
 	var/turf/partner = get_step_multiz(get_turf(src), DOWN)
-	partner = get_step(partner, dirin)
+	partner = get_step(partner, turn(dir, 180))
 	if(isopenturf(partner))
 		var/obj/structure/stairs/stairs = locate() in partner
 		if(!stairs)

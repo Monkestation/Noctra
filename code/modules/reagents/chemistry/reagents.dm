@@ -116,6 +116,10 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 /datum/reagent/proc/on_mob_metabolize(mob/living/L)
 	return
 
+/// Called when this liquid is aerated (sprinklers vents and pumps for now)
+/datum/reagent/proc/on_aeration(volume, turf/turf)
+	return
+
 // Called when this reagent stops being metabolized by a liver
 /datum/reagent/proc/on_mob_end_metabolize(mob/living/L)
 	return

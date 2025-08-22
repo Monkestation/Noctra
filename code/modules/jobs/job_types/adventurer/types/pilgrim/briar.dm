@@ -29,7 +29,7 @@
 
 	if(H.mind)
 		if(H.patron != /datum/patron/divine/dendor)
-			H.set_patron(/datum/patron/divine/dendor)
+			H.set_patron(/datum/patron/divine/dendor, TRUE) //Yeah, no sorry, you're an antag, you can't do dendor things.
 
 		H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/knives, 1, TRUE)
@@ -61,9 +61,11 @@
 		H.mind.teach_crafting_recipe(/datum/repeatable_crafting_recipe/dendor/sacrifice_stinging)
 		H.mind.teach_crafting_recipe(/datum/repeatable_crafting_recipe/dendor/sacrifice_devouring)
 
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(H, H.patron)
-	H.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
-	C.grant_spells(H)
+	var/holder = H.patron?.devotion_holder
+	if(holder)
+		var/datum/devotion/devotion = new holder()
+		devotion.make_acolyte()
+		devotion.grant_to(H)
 
 /datum/outfit/job/adventurer/briar
 	var/tutorial = "<br><br><font color='#44720e'><span class='bold'>You know well how to make a shrine to Dendor, wood, thorns, and the head of a favored animal.<br><br>Choose a path stinging, devouring or growing, and make your sacrifices...<br><br>Remember - Dendor will only grant special powers from Blessing the first time you do recieve it, and only those mastering all his Miracles can unlock their full potential.  </span></font><br><br>"

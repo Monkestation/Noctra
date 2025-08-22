@@ -35,4 +35,5 @@
 
 /obj/item/reagent_containers/food/snacks/egg/proc/hatch(mob/living/simple_animal/hostile/retaliate/chicken/parent)
 	record_round_statistic(STATS_ANIMALS_BRED)
-	new /mob/living/simple_animal/hostile/retaliate/chicken/chick(get_turf(parent))
+	var/mob/living/simple_animal/hostile/retaliate/chicken/chick/new_chick = new /mob/living/simple_animal/hostile/retaliate/chicken/chick(get_turf(parent))
+	SEND_SIGNAL(parent, COMSIG_FRIENDSHIP_PASS_FRIENDSHIP, new_chick)

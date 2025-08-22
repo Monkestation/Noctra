@@ -19,6 +19,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 	innate_traits = list(
 		TRAIT_STEELHEARTED,
 		TRAIT_VILLAIN,
+		TRAIT_CABAL,
 	)
 
 /datum/antagonist/zizocultist/zizo_knight
@@ -35,6 +36,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 		TRAIT_NOMOOD,
 		TRAIT_VILLAIN,
 		TRAIT_CRITICAL_RESISTANCE,
+		TRAIT_CABAL,
 	)
 
 #define iszizolackey(A) (A.mind?.has_antag_datum(/datum/antagonist/zizocultist))

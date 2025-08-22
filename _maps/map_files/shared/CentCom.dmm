@@ -6580,7 +6580,7 @@
 /area/rogue/outdoors/bog/inhumen_camp)
 "Rj" = (
 /obj/structure/mannequin/male,
-/obj/item/clothing/head/padded/operavisage,
+/obj/item/clothing/face/operavisage,
 /turf/open/floor/wood,
 /area/rogue/indoors)
 "Rl" = (

@@ -64,45 +64,10 @@
 
 	var/obj/effect/fog_parter/fog_parter_effect = /obj/effect/fog_parter // set to null to remove fog parter
 
-/obj/machinery/light/broken
-	status = LIGHT_BROKEN
-	icon_state = "tube-broken"
-
-// the smaller bulb light fixture
-
-/obj/machinery/light/small
-	icon_state = "bulb"
-	base_state = "bulb"
-	fitting = "bulb"
-	brightness = 4
-	desc = ""
-
-/obj/machinery/light/small/broken
-	status = LIGHT_BROKEN
-	icon_state = "bulb-broken"
-
 /obj/machinery/light/Move()
 	if(status != LIGHT_BROKEN)
 		break_light_tube(1)
 	return ..()
-
-/obj/machinery/light/built
-	icon_state = "tube-empty"
-	start_with_cell = FALSE
-
-/obj/machinery/light/built/Initialize()
-	. = ..()
-	status = LIGHT_EMPTY
-	update(0)
-
-/obj/machinery/light/small/built
-	icon_state = "bulb-empty"
-	start_with_cell = FALSE
-
-/obj/machinery/light/small/built/Initialize()
-	. = ..()
-	status = LIGHT_EMPTY
-	update(0)
 
 // create a new lighting fixture
 /obj/machinery/light/Initialize(mapload)
@@ -304,15 +269,6 @@
 	explosion(T, 0, 0, 2, 2)
 	sleep(1)
 	qdel(src)
-
-/obj/machinery/light/floor
-	name = "floor light"
-	icon = 'icons/obj/lighting.dmi'
-	base_state = "floor"		// base description and icon_state
-	icon_state = "floor"
-	brightness = 4
-	layer = 2.5
-	fitting = "bulb"
 
 // FOG RELATED PROC OVERRIDES
 

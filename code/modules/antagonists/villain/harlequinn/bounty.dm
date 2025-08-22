@@ -1084,7 +1084,6 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 	var/datum/marked_target/selected_target
 
 	if(requires_marker)
-		// Find bounty marker in user's inventory
 		var/obj/item/bounty_marker/marker = locate() in user.get_contents()
 		if(!marker)
 			to_chat(user, span_warning("You need a bounty marker to create this type of contract!"))
@@ -1127,7 +1126,6 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 		if(get_mammons_in_atom(H) < payment + extra)
 			to_chat(user, span_warning("Insufficient funds!"))
 			return
-		// Deduct payment and hold in escrow
 		remove_mammons_from_atom(H, payment + extra)
 
 	// Create the contract
@@ -1152,13 +1150,10 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 	to_chat(user, span_notice("Contract posted successfully! Payment held in escrow."))
 	if(selected_target)
 		to_chat(user, span_notice("Target: [selected_target.target_name] has been assigned to this contract."))
-
-	// Refresh the interface
 	ui_interact(user)
 
-
+/// This proc should be called when significant actions happen (death, theft, etc.) basically this is the check completion proc
 /obj/structure/bounty_board/proc/check_target_action(mob/actor, mob/target, action_type)
-	// This proc should be called when significant actions happen (death, theft, etc.)
 	for(var/datum/bounty_contract/contract in active_contracts)
 		if(!contract.assigned_to_harlequinn || contract.completed || contract.failed)
 			continue
@@ -1815,18 +1810,9 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 		marked_targets = list()
 		return
 
-	var/choice = input(user, "Select a marked target:", "Bounty Marker") as null|anything in target_names
-	if(!choice)
-		return
-
-	var/datum/marked_target/selected = target_names[choice]
-	to_chat(user, span_notice("Selected target: [selected.get_display_name()]"))
-	to_chat(user, span_notice("Status: [selected.is_valid() ? "Valid" : "Invalid"]"))
-	to_chat(user, span_notice("Marked: [selected.mark_time ? time2text(selected.mark_time, "hh:mm:ss") : "Unknown"]"))
-
 /obj/item/bounty_marker/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!proximity_flag && get_dist(user, target) > 7) // Allow reasonable range
+	if(!proximity_flag && get_dist(user, target) > 7)
 		return
 
 	if(!isliving(target))
@@ -1838,7 +1824,6 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 		to_chat(user, span_warning("You cannot mark yourself as a target."))
 		return
 
-	// Check if target is already marked
 	for(var/datum/marked_target/existing in marked_targets)
 		if(existing.target_ref && existing.target_ref.resolve() == living_target)
 			to_chat(user, span_warning("[living_target.real_name] is already marked."))
@@ -1860,13 +1845,8 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 
 	marked_targets += new_target
 
-	to_chat(user, span_notice("Target marked: [living_target.real_name]"))
-
-	// Silent marking - no message to target
-	// Optional: Add a subtle effect or log for admins
 	log_game("[user.real_name] marked [living_target.real_name] as a bounty target using a bounty marker.")
 
-// Data structure for marked targets
 /datum/marked_target
 	var/datum/weakref/target_ref
 	var/target_name
@@ -2031,7 +2011,6 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 
 	return total_removed
 
-// Helper comparison function for sorting coins by value
 /proc/cmp_coin_value_desc(obj/item/coin/a, obj/item/coin/b)
 	return b.sellprice - a.sellprice
 

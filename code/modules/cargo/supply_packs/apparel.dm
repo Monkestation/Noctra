@@ -3,6 +3,8 @@
 	crate_name = "merchant guild's crate"
 	crate_type = /obj/structure/closet/crate/chest/merchant
 
+// HEAD
+
 /datum/supply_pack/apparel/hood
 	name = "Shoulder Hood"
 	cost = 10
@@ -38,11 +40,6 @@
 	cost = 5
 	contains = /obj/item/clothing/head/hatblu
 
-/datum/supply_pack/apparel/engineering_goggles
-	name = "Engineering goggles"
-	cost = 50
-	contains = /obj/item/clothing/face/goggles
-
 /datum/supply_pack/apparel/chaperon
 	name = "Chaperon"
 	cost = 7
@@ -63,20 +60,31 @@
 	cost = 25
 	contains = /obj/item/clothing/head/hennin
 
+// MASK
+
 /datum/supply_pack/apparel/spectacles
 	name = "Spectacles"
 	cost = 25
 	contains = /obj/item/clothing/face/spectacles
+
+/datum/supply_pack/apparel/engineering_goggles
+	name = "Engineering goggles"
+	cost = 50
+	contains = /obj/item/clothing/face/goggles
 
 /datum/supply_pack/apparel/shepherd
 	name = "Black Halfmask"
 	cost = 10
 	contains = /obj/item/clothing/face/shepherd
 
+// NECK
+
 /datum/supply_pack/apparel/coif
 	name = "Leather Coif"
 	cost = 13
 	contains = /obj/item/clothing/neck/coif
+
+// CLOAK
 
 /datum/supply_pack/apparel/tabard
 	name = "Tabard"
@@ -103,25 +111,59 @@
 	cost = 12
 	contains = /obj/item/clothing/cloak/half/colored/random
 
+// ARMOR/COATS/JACKETS
+
 /datum/supply_pack/apparel/armordress
 	name = "Padded Dress"
-	cost = 30
+	cost = 40 // no more inf money glitch
 	contains = /obj/item/clothing/armor/gambeson/heavy/dress
 
 /datum/supply_pack/apparel/leather_vest_random
 	name = "Leather Vest"
-	cost = 15
+	cost = 20
 	contains = /obj/item/clothing/armor/leather/vest/colored/random
 
 /datum/supply_pack/apparel/workervest
-	name = "Worker Vest"
+	name = "Stripped Tunic"
 	cost = 10
 	contains = /obj/item/clothing/armor/gambeson/light/striped
+
+/datum/supply_pack/apparel/gambeson
+	name = "Gambeson"
+	cost = 30
+	contains = /obj/item/clothing/armor/gambeson
+
+/datum/supply_pack/apparel/arming
+	name = "Arming Jacket"
+	cost = 30
+	contains = /obj/item/clothing/armor/gambeson/arming
 
 /datum/supply_pack/apparel/silkcoat
 	name = "Silk Coat"
 	cost = 60
 	contains = /obj/item/clothing/armor/leather/jacket/silk_coat
+
+// SHIRT
+
+/datum/supply_pack/apparel/dress_gen_random
+	name = "Cloth Dress"
+	cost = 7
+	contains = /obj/item/clothing/shirt/dress/gen/colored/random
+
+/datum/supply_pack/apparel/silkdress_random
+	name = "Silk Dress"
+	cost = 30
+	contains = /obj/item/clothing/shirt/dress/silkdress
+
+/datum/supply_pack/apparel/robe
+	name = "Robe"
+	cost = 5
+	contains = /obj/item/clothing/shirt/robe/colored/mage
+
+/datum/supply_pack/apparel/tunic_random
+	name = "Tunic"
+	cost = 6
+	contains = /obj/item/clothing/shirt/tunic/colored/random
 
 /datum/supply_pack/apparel/undershirt_random
 	name = "Undershirt"
@@ -143,25 +185,7 @@
 	cost = 3
 	contains = /obj/item/clothing/shirt/shortshirt/colored/random
 
-/datum/supply_pack/apparel/tunic_random
-	name = "Tunic"
-	cost = 6
-	contains = /obj/item/clothing/shirt/tunic/colored/random
-
-/datum/supply_pack/apparel/dress_gen_random
-	name = "Cloth Dress"
-	cost = 7
-	contains = /obj/item/clothing/shirt/dress/gen/colored/random
-
-/datum/supply_pack/apparel/silkdress_random
-	name = "Silk Dress"
-	cost = 30
-	contains = /obj/item/clothing/shirt/dress/silkdress
-
-/datum/supply_pack/apparel/robe
-	name = "Robe"
-	cost = 5
-	contains = /obj/item/clothing/shirt/robe/colored/mage
+// PANTS
 
 /datum/supply_pack/apparel/tights_random
 	name = "Cloth Tights"
@@ -180,8 +204,10 @@
 
 /datum/supply_pack/apparel/leather_trousers
 	name = "Leather Trousers"
-	cost = 10
+	cost = 20
 	contains = /obj/item/clothing/pants/trou/leather
+
+// SHOES
 
 /datum/supply_pack/apparel/simpleshoes
 	name = "Simple Shoes"
@@ -215,58 +241,34 @@
 
 /datum/supply_pack/apparel/leather_boots
 	name = "Leather Boots"
-	cost = 13
+	cost = 20
 	contains = /obj/item/clothing/shoes/boots/leather
+
+// GLOVES
 
 /datum/supply_pack/apparel/leather_gloves
 	name = "Leather Gloves"
 	cost = 10
 	contains = /obj/item/clothing/gloves/leather
 
-/datum/supply_pack/apparel/black_leather_gloves
-	name = "Black Leather Gloves"
-	cost = 12
-	contains = /obj/item/clothing/gloves/leather/black
-
 /datum/supply_pack/apparel/fingerless_gloves
 	name = "Fingerless Gloves"
 	cost = 4
 	contains = /obj/item/clothing/gloves/fingerless
 
+// BELTS
+
 /datum/supply_pack/apparel/leather_belt
 	name = "Leather Belt"
-	cost = 5
+	cost = 20
 	contains = /obj/item/storage/belt/leather
 
 /datum/supply_pack/apparel/black_leather_belt
 	name = "Black Leather Belt"
-	cost = 6
+	cost = 20
 	contains = /obj/item/storage/belt/leather/black
 
-/datum/supply_pack/apparel/pouch
-	name = "Pouch"
-	cost = 4
-	contains = /obj/item/storage/belt/pouch
-
-/datum/supply_pack/apparel/satchel
-	name = "Satchel"
-	cost = 10
-	contains = /obj/item/storage/backpack/satchel
-
-/datum/supply_pack/apparel/sheath
-	name = "Sheath"
-	cost = 12
-	contains = /obj/item/weapon/scabbard/knife
-
-/datum/supply_pack/apparel/scabbard
-	name = "Scabbard"
-	cost = 15
-	contains = /obj/item/weapon/scabbard/sword
-
-/datum/supply_pack/apparel/backpack
-	name = "Backpack"
-	cost = 20
-	contains = /obj/item/storage/backpack/backpack
+// DYES
 
 /datum/supply_pack/apparel/luxurydyes
 	name = "Luxury Dyes"
@@ -278,7 +280,7 @@
 	cost = 130
 	contains = /obj/item/dye_pack/royal
 
-/datum/supply_pack/apparel/luxurydyes
+/datum/supply_pack/apparel/luxurymage
 	name = "Magician's Dyes"
 	cost = 70
 	contains = /obj/item/dye_pack/mage

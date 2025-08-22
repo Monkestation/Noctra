@@ -1,0 +1,19 @@
+/obj/item/clothing/head/beekeeper
+	name = "beekeeper's hood"
+	desc = ""
+	flags_inv = HIDEEARS|HIDEHAIR
+	icon_state = "beekeeper"
+	item_state = "beekeeper"
+	icon = 'icons/roguetown/clothing/head.dmi'
+	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head.dmi'
+	alternate_worn_layer  = 8.9 //On top of helmet
+	body_parts_covered = HEAD|HAIR|EARS|NECK
+	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
+	sleevetype = null
+	sleeved = null
+	dynamic_hair_suffix = ""
+	edelay_type = 1
+	adjustable = CANT_CADJUST
+	toggle_icon_state = FALSE
+	max_integrity = 100
+	sewrepair = TRUE

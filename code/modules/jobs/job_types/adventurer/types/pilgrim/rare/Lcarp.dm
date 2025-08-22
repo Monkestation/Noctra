@@ -13,6 +13,7 @@
 	pickprob = 15
 	apprentice_name = "Carpenter Apprentice"
 	cmode_music = 'sound/music/cmode/towner/CombatTowner2.ogg'
+	is_recognized = TRUE
 
 /datum/outfit/job/adventurer/mastercarpenter/pre_equip(mob/living/carbon/human/H)
 	..()

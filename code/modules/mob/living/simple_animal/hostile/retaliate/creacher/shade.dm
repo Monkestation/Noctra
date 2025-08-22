@@ -70,7 +70,7 @@
 	dodgetime = 0
 	blood_volume = 0
 	del_on_deaggro = 999 SECONDS
-	food = 0
+
 	attack_sound = list('sound/magic/magic_nulled.ogg')
 	aggressive = 1
 	retreat_health = null

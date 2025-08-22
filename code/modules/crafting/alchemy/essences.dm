@@ -8,6 +8,7 @@
 	var/essence_amount = 0
 	var/max_essence = 10
 	var/extract_amount = 10 // Amount to try to extract when used
+	var/extract_index = 1
 
 /obj/item/essence_vial/Initialize()
 	. = ..()
@@ -17,9 +18,14 @@
 	if(extract_amount == 10)
 		extract_amount = 1
 	else
-		extract_amount = 10
+		extract_amount++
 
 	to_chat(user, span_info("You adjust the vial to extract [extract_amount] unit[extract_amount > 1 ? "s" : ""] of essence."))
+
+/obj/item/essence_vial/attack_self_secondary(mob/user, params)
+	if(extract_amount != 10)
+		extract_amount = 10
+		to_chat(user, span_info("You adjust the vial to extract [extract_amount] unit[extract_amount > 1 ? "s" : ""] of essence."))
 
 /obj/item/essence_vial/proc/check_vial_menu_validity(mob/user)
 	return user && (src in user.contents)

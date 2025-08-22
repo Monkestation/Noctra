@@ -75,6 +75,9 @@
 			user.flash_fullscreen("whiteflash")
 			shake_camera(user, 1, 1)
 			playsound(src,pick('sound/items/bsmith1.ogg','sound/items/bsmith2.ogg','sound/items/bsmith3.ogg','sound/items/bsmith4.ogg'), 100, FALSE)
+		if(has_world_trait(/datum/world_trait/delver))
+			if(!has_recipe_unlocked(user.key, hingot.currecipe.type))
+				return
 		var/used_str = user.STASTR
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
@@ -129,7 +132,7 @@
 		return
 	..()
 
-/obj/machinery/anvil/proc/choose_recipe(user)
+/obj/machinery/anvil/proc/choose_recipe(mob/user)
 	if(!hingot || !hott)
 		return
 
@@ -137,6 +140,11 @@
 	for(var/datum/anvil_recipe/R in GLOB.anvil_recipes)
 		if(is_abstract(R.type)) //these recipes are initialized
 			continue
+
+		if(has_world_trait(/datum/world_trait/delver))
+			if(!has_recipe_unlocked(user.key, R.type))
+				continue
+
 		if(istype(hingot, R.req_bar))
 			if(!valid_types.Find(R.i_type))
 				valid_types += R.i_type

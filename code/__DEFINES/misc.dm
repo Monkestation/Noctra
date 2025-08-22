@@ -351,6 +351,12 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 //for obj explosion block calculation
 #define EXPLOSION_BLOCK_PROC -1
 
+#define EXPLOSION_FALLOFF_SHAPE_LINEAR   0
+#define EXPLOSION_FALLOFF_SHAPE_EXPONENTIAL  1
+#define EXPLOSION_FALLOFF_SHAPE_EXPONENTIAL_HALF 2
+#define EXPLOSION_MAX_POWER 5000
+
+
 //for determining which type of heartbeat sound is playing
 #define BEAT_FAST 1
 #define BEAT_SLOW 2
@@ -505,5 +511,7 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define IGNORE_SLOWDOWNS (1<<4)
 #define IGNORE_USER_DIR_CHANGE (1<<5)
 #define IGNORE_USER_DOING (1<<6)
+
+#define MESSAGE_ADMINS_ROLES list(/datum/job/lord, /datum/job/priest)
 
 GLOBAL_LIST_EMPTY(frenzy_list)

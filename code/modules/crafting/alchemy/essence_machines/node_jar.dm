@@ -52,6 +52,7 @@
 
 /obj/item/essence_node_jar/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	if(!proximity_flag)
+		. = ..()
 		return
 
 	if(!contained_node)

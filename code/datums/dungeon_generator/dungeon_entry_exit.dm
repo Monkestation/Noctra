@@ -138,6 +138,8 @@ GLOBAL_LIST_INIT(dungeon_exits, list())
 	var/list/entry_requirements = list()
 	var/requires_all = FALSE
 
+	var/delve_level
+
 /obj/structure/dungeon_exit/Initialize()
 	. = ..()
 	GLOB.dungeon_exits |= src

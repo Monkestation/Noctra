@@ -40,7 +40,7 @@
 	aggressive = 1
 	deathmessage = "collapses to the floor with a final roar, the impact rocking the ground."
 	footstep_type = FOOTSTEP_MOB_HEAVY
-
+	food_max = 0
 
 
 	ai_controller = /datum/ai_controller/voiddragon

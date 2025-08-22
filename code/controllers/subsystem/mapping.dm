@@ -168,7 +168,7 @@ SUBSYSTEM_DEF(mapping)
 	multiz_levels = SSmapping.multiz_levels
 
 #define INIT_ANNOUNCE(X) to_chat(world, span_boldannounce("[X]")); log_world(X)
-/datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE)
+/datum/controller/subsystem/mapping/proc/LoadGroup(list/errorList, name, path, files, list/traits, list/default_traits, silent = FALSE, delve = 0)
 	. = list()
 	var/start_time = REALTIMEOFDAY
 
@@ -202,7 +202,7 @@ SUBSYSTEM_DEF(mapping)
 	var/start_z = world.maxz + 1
 	var/i = 0
 	for (var/level in traits)
-		add_new_zlevel("[name][i ? " [i + 1]" : ""]", level)
+		add_new_zlevel("[name][i ? " [i + 1]" : ""]", level, delve = delve)
 		++i
 
 	// load the maps
@@ -216,26 +216,26 @@ SUBSYSTEM_DEF(mapping)
 	return parsed_maps
 
 /datum/controller/subsystem/mapping/proc/loadWorld()
-	//if any of these fail, something has gone horribly, HORRIBLY, wrong
 	var/list/FailedZs = list()
-
-	// ensure we have space_level datums for compiled-in maps
 	InitializeDefaultZLevels()
-
-	// load the station
 	station_start = world.maxz + 1
+
 	#ifdef TESTING
 	INIT_ANNOUNCE("Loading [config.map_name]...")
 	#endif
-
-	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_TOWN)
-
+	LoadGroup(FailedZs, "Station", config.map_path, config.map_file, config.traits, ZTRAITS_TOWN, delve = config.delve)
 	var/list/otherZ = list()
-
 	for(var/map_json in config.other_z)
 		otherZ += load_map_config(map_json)
+
 	#ifndef NO_DUNGEON
+	// Load base dungeon level
 	otherZ += load_map_config("_maps/map_files/shared/dungeon.json")
+
+	// Load additional delve levels if multi-level dungeons are enabled
+	if(SSdungeon_generator.multilevel_dungeons)
+		for(var/level = 2; level <= SSdungeon_generator.max_delve_levels; level++)
+			otherZ += load_map_config("_maps/map_files/shared/dungeon_delve[level].json")
 	#endif
 
 	//For all maps
@@ -246,7 +246,7 @@ SUBSYSTEM_DEF(mapping)
 
 	if(length(otherZ))
 		for(var/datum/map_config/OtherZ in otherZ)
-			LoadGroup(FailedZs, OtherZ.map_name, OtherZ.map_path, OtherZ.map_file, OtherZ.traits, ZTRAITS_STATION)
+			LoadGroup(FailedZs, OtherZ.map_name, OtherZ.map_path, OtherZ.map_file, OtherZ.traits, ZTRAITS_STATION, delve = OtherZ.delve)
 
 	if(SSdbcore.Connect())
 		var/datum/DBQuery/query_round_map_name = SSdbcore.NewQuery({"

@@ -4,7 +4,6 @@
 	They scolded you with a studded belt and prayed like sinners \
 	every waking hour of the day they weren’t toiling in the fields. \
 	You escaped them by becoming a churchling-- and a guaranteed education isn't so bad."
-	flag = CHURCHLING
 	department_flag = YOUNGFOLK
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_CHURCHLING
@@ -80,6 +79,8 @@
 		H.grant_language(/datum/language/celestial)
 		to_chat(H, "<span class='info'>I can speak Celestial with ,c before my speech.</span>")
 
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(H, H.patron)
-	C.grant_spells_churchling(H)
-	H.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
+	var/holder = H.patron?.devotion_holder
+	if(holder)
+		var/datum/devotion/devotion = new holder()
+		devotion.make_churching()
+		devotion.grant_to(H)

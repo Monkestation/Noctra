@@ -1,3 +1,42 @@
+/*
+// Basic usage with delve level and item rarity
+var/datum/loot_table/my_table = new /datum/loot_table/basic_dungeon()
+my_table.spawn_loot(user, delve_level = 3, item_rarity = 1.5)
+
+// Just delve level (item rarity defaults to 1.0)
+my_table.spawn_loot(user, delve_level = 5)
+
+// Just item rarity (delve level defaults to 1)
+my_table.spawn_loot(user, item_rarity = 2.0)
+
+// Both parameters
+my_table.spawn_loot(user, delve_level = 4, item_rarity = 0.5)
+
+HOW THE SCALING WORKS:
+
+1. DELVE LEVEL SCALING:
+   - Quantity: Higher delves spawn more items (base_min/max * delve_quantity_scaling^(delve_level-1))
+   - Quality: Rare items (low base weight) get exponentially better odds at higher delves
+   - Items with weight 1 become much more common at delve 5 vs delve 1
+   - Items with weight 50 see minimal change between delve levels
+
+2. ITEM RARITY MULTIPLIER:
+   - Multiplicative with all other scaling
+   - item_rarity = 2.0 doubles all drop chances
+   - item_rarity = 0.5 halves all drop chances
+   - Works independently of delve scaling
+
+3. COMBINED EFFECT:
+   - A rare item (weight 1) at delve 5 with 2.0 item rarity will be MUCH more common
+   - A common item (weight 100) sees less dramatic changes
+   - The system naturally creates better loot at higher delves while respecting player modifiers
+
+CONFIGURATION:
+- delve_quantity_scaling: How much more loot spawns per delve level (1.5 = 50% more per level)
+- delve_rarity_scaling: How much rare items benefit from higher delves (1.3 = 30% bonus per level)
+- min_delve_level/max_delve_level: Valid delve range for this table
+*/
+
 /datum/loot_table
 	var/name = "generic table"
 	///okay this is quite the different thing, essentially this works with 2 things, either a an assoc list of stat or skill
@@ -21,15 +60,32 @@
 	///how much each point of luck affects the max and minimum
 	var/scaling_factor = 0.4
 
-/datum/loot_table/proc/spawn_loot(mob/living/looter = null)
-	var/list/weighted_list = return_list(looter)
+	///delve level scaling for loot quantity (multiplier per delve level)
+	var/delve_quantity_scaling = 1.1
+	///delve level scaling for rare loot weights (multiplier per delve level)
+	var/delve_rarity_scaling = 1.3
+	///minimum delve level for this loot table (1-5)
+	var/min_delve_level = 1
+	///maximum delve level for this loot table (1-5)
+	var/max_delve_level = 5
+
+/datum/loot_table/proc/spawn_loot(mob/living/looter = null, delve_level = 1, item_rarity = 1.0)
+	var/list/weighted_list = return_list(looter, delve_level, item_rarity)
 	var/mob_stat_level = 0
 
 	if(istype(looter))
 		mob_stat_level = looter.get_stat_level(STATKEY_LCK)
 
+	// Apply delve level scaling to spawn counts
+	var/delve_multiplier = delve_level >= min_delve_level ? (delve_quantity_scaling ** (delve_level - 1)) : 1
+
 	var/adjusted_min = base_min + round(mob_stat_level * scaling_factor, 1)
 	var/adjusted_max = base_max + round(mob_stat_level * scaling_factor, 1)
+
+	// Scale by delve level - higher delves = more loot
+	adjusted_min = round(adjusted_min * delve_multiplier, 1)
+	adjusted_max = round(adjusted_max * delve_multiplier, 1)
+
 	adjusted_min = min(adjusted_min, adjusted_max)
 	var/spawn_count = rand(adjusted_min, adjusted_max)
 
@@ -42,23 +98,60 @@
 			if(istype(looter))
 				looter.put_in_active_hand(new_spawn)
 
-/datum/loot_table/proc/return_list(mob/looter = null)
+/datum/loot_table/proc/return_list(mob/looter = null, delve_level = 1, item_rarity = 1.0)
 	var/list/weighted_list = list()
 
 	if(!istype(looter))
 		for(var/thing in loot_table)
 			if(islist(thing))
-				weighted_list |= thing
+				var/list/temp_list = apply_delve_and_rarity_scaling(thing, delve_level, item_rarity)
+				weighted_list |= temp_list
 		return weighted_list
 
 	for(var/thing in loot_table)
 		if(islist(thing))
-			weighted_list |= thing
+			var/list/temp_list = apply_delve_and_rarity_scaling(thing, delve_level, item_rarity)
+			weighted_list |= temp_list
 		if(thing in MOBSTATS)
-			weighted_list |= return_stat_weight(thing, looter)
+			var/list/stat_list = return_stat_weight(thing, looter)
+			var/list/scaled_stat_list = apply_delve_and_rarity_scaling(stat_list, delve_level, item_rarity)
+			weighted_list |= scaled_stat_list
 		if(ispath(thing, /datum/skill))
-			weighted_list |= return_skill_weight(thing, looter)
+			var/list/skill_list = return_skill_weight(thing, looter)
+			var/list/scaled_skill_list = apply_delve_and_rarity_scaling(skill_list, delve_level, item_rarity)
+			weighted_list |= scaled_skill_list
 	return weighted_list
+
+/datum/loot_table/proc/apply_delve_and_rarity_scaling(list/input_list, delve_level = 1, item_rarity = 1.0)
+	var/list/scaled_list = list()
+
+	// Clamp delve level to valid range
+	delve_level = max(min_delve_level, min(delve_level, max_delve_level))
+
+	// Calculate delve scaling factor for rare items
+	var/delve_rare_multiplier = delve_level >= min_delve_level ? (delve_rarity_scaling ** (delve_level - 1)) : 1
+
+	for(var/item in input_list)
+		if(isnum(item)) // Skip numeric delimiters
+			continue
+
+		var/base_weight = input_list[item]
+		var/final_weight = base_weight
+
+		// Apply delve level scaling (higher delves favor rarer items)
+		// Items with lower base weights (rarer) get more benefit from higher delves
+		if(base_weight > 0)
+			// Rare items (low weight) benefit more from delve scaling
+			var/rarity_factor = max(0.1, 1.0 / base_weight) // Lower weight = higher rarity factor
+			var/delve_bonus = (delve_rare_multiplier - 1) * min(rarity_factor, 10) // Cap the bonus
+			final_weight = base_weight * (1 + delve_bonus)
+
+		// Apply item rarity multiplier (multiplicative)
+		final_weight = final_weight * item_rarity
+
+		scaled_list[item] = max(0.01, final_weight) // Ensure minimum weight
+
+	return scaled_list
 
 /datum/loot_table/proc/return_stat_weight(stat_key, mob/living/looter)
 	var/list/weighted_list = list()
@@ -114,20 +207,23 @@
 
 	return weighted_list
 
-/datum/loot_table/proc/debug_loot_table(mob/living/user)
+/datum/loot_table/proc/debug_loot_table(mob/living/user, delve_level = 1, item_rarity = 1.0)
 	if(!istype(user))
 		return
 
 	var/luck_stat = user.get_stat_level(STATKEY_LCK)
 
-	// Calculate spawn quantities
+	// Calculate spawn quantities with delve scaling
+	var/delve_multiplier = delve_level >= min_delve_level ? (delve_quantity_scaling ** (delve_level - 1)) : 1
 	var/adjusted_min = base_min + round(luck_stat * scaling_factor, 1)
 	var/adjusted_max = base_max + round(luck_stat * scaling_factor, 1)
+	adjusted_min = round(adjusted_min * delve_multiplier, 1)
+	adjusted_max = round(adjusted_max * delve_multiplier, 1)
 	adjusted_min = min(adjusted_min, adjusted_max)
 	var/avg_spawn = (adjusted_min + adjusted_max) / 2
 
-	// Get weighted list for this user
-	var/list/weighted_list = return_list(user)
+	// Get weighted list for this user with delve and rarity scaling
+	var/list/weighted_list = return_list(user, delve_level, item_rarity)
 	var/total_weight = 0
 	for(var/item in weighted_list)
 		total_weight += weighted_list[item]
@@ -141,6 +237,7 @@
 			body { font-family: Arial, sans-serif; margin: 10px; background: #1a1a1a; color: #ffffff; }
 			.header { background: #333; padding: 10px; border-radius: 5px; margin-bottom: 10px; }
 			.stats { background: #2a2a2a; padding: 8px; border-radius: 3px; margin: 5px 0; }
+			.delve-controls { background: #2a4a2a; padding: 8px; border-radius: 3px; margin: 5px 0; }
 			.loot-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
 			.loot-table th { background: #444; padding: 8px; text-align: left; border: 1px solid #555; }
 			.loot-table td { padding: 6px 8px; border: 1px solid #555; background: #2a2a2a; }
@@ -181,6 +278,13 @@
 				height: 100%; background: linear-gradient(90deg, #4CAF50, #45a049);
 				transition: width 0.3s ease;
 			}
+			.delve-btn {
+				background: #673AB7; color: white; padding: 5px 10px;
+				border: none; border-radius: 3px; cursor: pointer; margin: 2px;
+				font-size: 12px;
+			}
+			.delve-btn:hover { background: #5E35B1; }
+			.delve-btn.active { background: #FF9800; }
 		</style>
 		<script>
 			function simulateLoot(times) {
@@ -188,8 +292,9 @@
 				btn.disabled = true;
 				btn.innerHTML = 'Simulating...';
 
-				// Send the simulation request - no need for table_ref anymore
-				window.location = 'byond://?src=[ref(user)];action=simulate;times=' + times + ';user=[ref(user)]';
+				var delve = document.getElementById('delve-input').value;
+				var rarity = document.getElementById('rarity-input').value;
+				window.location = 'byond://?src=[ref(user)];action=simulate;times=' + times + ';user=[ref(user)];delve=' + delve + ';rarity=' + rarity;
 
 				setTimeout(function() {
 					btn.disabled = false;
@@ -199,7 +304,14 @@
 
 			function updateStats() {
 				var luck = document.getElementById('luck-input').value;
-				window.location = 'byond://?src=[ref(user)];action=update_stats;luck=' + luck + ';user=[ref(user)]';
+				var delve = document.getElementById('delve-input').value;
+				var rarity = document.getElementById('rarity-input').value;
+				window.location = 'byond://?src=[ref(user)];action=update_stats;luck=' + luck + ';user=[ref(user)];delve=' + delve + ';rarity=' + rarity;
+			}
+
+			function setDelveLevel(level) {
+				document.getElementById('delve-input').value = level;
+				updateStats();
 			}
 		</script>
 	</head>
@@ -218,7 +330,21 @@
 			Total Weight: [total_weight]
 		</div>
 
-		<h3>Loot Probabilities</h3>
+		<div class='delve-controls'>
+			<strong>Delve Level:</strong>
+			<input type='number' id='delve-input' value='[delve_level]' min='1' max='5' class='stat-input'>
+			<button class='delve-btn' onclick='setDelveLevel(1)'>D1</button>
+			<button class='delve-btn' onclick='setDelveLevel(2)'>D2</button>
+			<button class='delve-btn' onclick='setDelveLevel(3)'>D3</button>
+			<button class='delve-btn' onclick='setDelveLevel(4)'>D4</button>
+			<button class='delve-btn' onclick='setDelveLevel(5)'>D5</button><br>
+			<strong>Item Rarity Multiplier:</strong>
+			<input type='number' id='rarity-input' value='[item_rarity]' min='0.1' max='10' step='0.1' class='stat-input'>
+			<button class='update-btn' onclick='updateStats()'>Update</button><br>
+			<small>Delve Quantity Scaling: [delve_quantity_scaling]x | Delve Rarity Scaling: [delve_rarity_scaling]x</small>
+		</div>
+
+		<h3>Loot Probabilities (Delve [delve_level], Rarity [item_rarity]x)</h3>
 		<table class='loot-table'>
 			<tr>
 				<th>Item</th>
@@ -273,22 +399,25 @@
 	</html>
 	"}
 
-	var/size_string = "size=800x600"
+	var/size_string = "size=800x700"
 	if(user?.client.window_scaling)
-		size_string = "size=[800 * user?.client?.window_scaling]x[600 * user?.client?.window_scaling]"
+		size_string = "size=[800 * user?.client?.window_scaling]x[700 * user?.client?.window_scaling]"
 
 	user << browse(html, "window=loot_debug;[size_string]")
 
-/datum/loot_table/proc/simulate_loot_generation(mob/living/user, times = 100)
+/datum/loot_table/proc/simulate_loot_generation(mob/living/user, times = 100, delve_level = 1, item_rarity = 1.0)
 	var/list/results = list()
 	var/total_items = 0
-	var/list/weighted_list = return_list(user)
+	var/list/weighted_list = return_list(user, delve_level, item_rarity)
 
 	// Run simulation
 	for(var/i = 1 to times)
 		var/luck_stat = user.get_stat_level(STATKEY_LCK)
+		var/delve_multiplier = delve_level >= min_delve_level ? (delve_quantity_scaling ** (delve_level - 1)) : 1
 		var/adjusted_min = base_min + round(luck_stat * scaling_factor, 1)
 		var/adjusted_max = base_max + round(luck_stat * scaling_factor, 1)
+		adjusted_min = round(adjusted_min * delve_multiplier, 1)
+		adjusted_max = round(adjusted_max * delve_multiplier, 1)
 		adjusted_min = min(adjusted_min, adjusted_max)
 		var/spawn_count = rand(adjusted_min, adjusted_max)
 		total_items += spawn_count
@@ -321,7 +450,7 @@
 	<body>
 		<div class='header'>
 			<button class='close-btn' onclick='window.close()'>Close</button>
-			<h3>Simulation Results ([times] runs)</h3>
+			<h3>Simulation Results ([times] runs, Delve [delve_level], Rarity [item_rarity]x)</h3>
 			<p>Total items generated: [total_items] (avg: [round(total_items/times, 0.1)] per run)</p>
 		</div>
 
@@ -377,7 +506,6 @@
 	user << browse(html, "window=simulation_results;size=600x500")
 	to_chat(user, "<span class='notice'>Simulation complete! Check the results window.</span>")
 
-// Global proc to select a loot table to debug
 /client/proc/debug_loot_tables()
 	set name = "Debug Loot Tables"
 	set category = "Debug"
@@ -425,15 +553,19 @@
 		if(href_list["action"] == "simulate")
 			var/times = text2num(href_list["times"])
 			var/mob/living/user = locate(href_list["user"])
+			var/delve_level = text2num(href_list["delve"]) || 1
+			var/item_rarity = text2num(href_list["rarity"]) || 1.0
 
 			if(!times || !istype(user))
 				return
 
-			debug_loot_table.simulate_loot_generation(user, times)
+			debug_loot_table.simulate_loot_generation(user, times, delve_level, item_rarity)
 
 		else if(href_list["action"] == "update_stats")
 			var/mob/living/user = locate(href_list["user"])
 			var/new_luck = text2num(href_list["luck"])
+			var/delve_level = text2num(href_list["delve"]) || 1
+			var/item_rarity = text2num(href_list["rarity"]) || 1.0
 
 			if(!istype(user) || !isnum(new_luck))
 				return
@@ -444,8 +576,8 @@
 			if(new_luck != current_luck)
 				user.set_stat_modifier("loot_debug", STATKEY_LCK, new_luck - current_luck)
 
-			// Refresh the debug window
-			debug_loot_table.debug_loot_table(user)
+			// Refresh the debug window with new parameters
+			debug_loot_table.debug_loot_table(user, delve_level, item_rarity)
 
 		else if(href_list["action"] == "change_luck")
 			var/mob/living/user = locate(href_list["user"])

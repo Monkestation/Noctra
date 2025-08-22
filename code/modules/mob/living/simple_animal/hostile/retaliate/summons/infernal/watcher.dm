@@ -39,7 +39,7 @@
 	defdrain = 10
 	del_on_deaggro = 44 SECONDS
 	retreat_health = 0.3
-	food = 0
+
 	attack_sound = list('sound/misc/lava_death.ogg')
 	dodgetime = 30
 	aggressive = 1
@@ -70,4 +70,10 @@
 	new /obj/item/natural/infernalash(deathspot)
 	new /obj/item/natural/melded/t1(deathspot)
 	spill_embedded_objects()
+	return ..()
+
+/mob/living/simple_animal/hostile/retaliate/infernal/watcher/AttackingTarget(mob/living/passed_target)
+	visible_message(span_danger("[src] emits a burst of flames from it's core!"))
+	for(var/t in RANGE_TURFS(1, src))
+		new /obj/effect/hotspot(t)
 	return ..()

@@ -54,6 +54,8 @@
 	/// Uses colours defined by the monarch roundstart see [lordcolor.dm]
 	var/uses_lord_coloring = FALSE
 
+	var/list/datum/automata_cell/autocells
+
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")
 	if(var_name in banned_edits)
@@ -437,6 +439,12 @@
 	progress.end_progress()
 
 	return TRUE
+
+/turf/proc/get_cell(type)
+	for(var/datum/automata_cell/C in autocells)
+		if(istype(C, type))
+			return C
+	return null
 
 //////////////////////////////
 //Distance procs

@@ -700,7 +700,6 @@
 	else
 		if(alert(src, "You sure you want to sleep for a while?", "Sleep", "Yes", "No") == "Yes")
 			SetSleeping(400) //Short nap
-	// update_mobility()
 
 /mob/proc/get_contents()
 	return
@@ -938,7 +937,6 @@
 	slurring = 0
 	jitteriness = 0
 	slowdown = 0
-	// update_mobility()
 	stop_sound_channel(CHANNEL_HEARTBEAT)
 
 //proc called by revive(), to check if we can actually ressuscitate the mob (we don't want to revive him and have him instantly die again)
@@ -1335,9 +1333,9 @@
 
 	// Height advantage (standing vs lying)
 	if(body_position != LYING_DOWN && target.body_position == LYING_DOWN)
-		modifier += 0.2
+		modifier += 0.35
 	else if(body_position == LYING_DOWN && target.body_position != LYING_DOWN)
-		modifier -= 0.2
+		modifier -= 0.35
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/human = src
@@ -1754,7 +1752,7 @@
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
-	if (HAS_TRAIT(src, TRAIT_NOFIRE))
+	if(!ishuman(src) && HAS_TRAIT(src, TRAIT_NOFIRE))
 		return
 	if((fire_stacks > 0 || divine_fire_stacks > 0) && !on_fire)
 		on_fire = TRUE
