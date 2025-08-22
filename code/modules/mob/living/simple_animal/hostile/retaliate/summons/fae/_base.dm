@@ -1,3 +1,6 @@
+/mob/living/simple_animal/hostile/retaliate/fae
+	food_max = 0
+
 /mob/living/simple_animal/hostile/retaliate/fae/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_KNEESTINGER_IMMUNITY, TRAIT_GENERIC)

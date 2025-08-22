@@ -175,8 +175,8 @@
 		if(!isopenturf(open_turf) || QDELING(open_turf) || QDELETED(open_turf.pollution))
 			continue
 		var/datum/pollution/cached_pollution = open_turf.pollution
-		for(var/datum/pollutant/type in cached_pollution.pollutants)
-			if(type.pollutant_flags & POLLUTION_DO_NOT_SPREAD)
+		for(var/datum/pollutant/type as anything in cached_pollution.pollutants)
+			if(initial(type.pollutant_flags) & POLLUTION_DO_NOT_SPREAD)
 				continue
 			if(!total_share_pollutants[type])
 				total_share_pollutants[type] = 0

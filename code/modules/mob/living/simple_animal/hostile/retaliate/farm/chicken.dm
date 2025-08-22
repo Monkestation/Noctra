@@ -46,6 +46,7 @@
 	melee_damage_upper = 5
 
 	pooptype = /obj/item/natural/poo/horse
+	happy_funtime_mob = TRUE
 
 	var/eggsFertile = TRUE
 	var/body_color
@@ -132,7 +133,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/chicken/Life()
 	..()
-	if(food > 0)
+	if(SEND_SIGNAL(src, COMSIG_MOB_RETURN_HUNGER) > 0)
 		production = min(production + 1, 100)
 
 /mob/living/simple_animal/hostile/retaliate/chicken/proc/hatch_eggs()

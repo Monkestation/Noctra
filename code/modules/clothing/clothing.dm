@@ -73,10 +73,7 @@
 	. = ..()
 	if(ispath(pocket_storage_component_path))
 		LoadComponent(pocket_storage_component_path)
-	if(prevent_crits)
-		if(prevent_crits.len)
-			has_inspect_verb = TRUE
-	if(armor_class)
+	if(length(prevent_crits) || armor_class)
 		has_inspect_verb = TRUE
 
 	if(uses_lord_coloring)
@@ -103,11 +100,11 @@
 /obj/item/clothing/get_inspect_entries(list/inspect_list)
 	. = ..()
 
-	if(prevent_crits)
-		if(length(prevent_crits))
-			. += "\n<b>DEFENSE:</b>"
-			for(var/X in prevent_crits)
-				. += "\n<b>[X] damage</b>"
+	if(length(prevent_crits))
+		. += "\n<b>DEFENSE:</b>"
+		for(var/X in prevent_crits)
+			. += "\n<b>[X] damage</b>"
+
 	if(body_parts_covered)
 		. += "\n<b>COVERAGE:</b>"
 		for(var/zone in body_parts_covered2organ_names(body_parts_covered))

@@ -73,7 +73,7 @@
 		if(string)
 			string += ","
 		string += "Cap Reached"
-	if(earliest_start >= world.time-SSticker.round_start_time)
+	if(earliest_start > max(world.time - SSticker.round_start_time, 0))
 		if(string)
 			string += ","
 		string +="Too Soon"
@@ -109,7 +109,7 @@
 	if(occurrences >= max_occurrences)
 		return FALSE
 
-	if(earliest_start >= world.time-SSticker.round_start_time)
+	if(earliest_start > max(world.time - SSticker.round_start_time, 0))
 		return FALSE
 
 	if(wizardevent != SSevents.wizardmode)

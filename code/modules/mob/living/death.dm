@@ -88,7 +88,6 @@ GLOBAL_LIST_EMPTY(last_words)
 	update_mob_action_buttons()
 	update_damage_hud()
 	update_health_hud()
-	// update_mobility()
 	stop_pulling()
 
 	to_chat(src, span_green("A bleak afterlife awaits... but the Gods may let you walk again in another shape! Spirit, you must descend in a Journey to the Underworld and wait there for judgment..."))

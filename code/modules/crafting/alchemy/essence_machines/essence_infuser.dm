@@ -63,7 +63,7 @@
 	if(!working || !current_recipe)
 		return
 
-	progress += 1 * GLOB.thaumic_research.get_speed_multiplier("transmutation_speed")
+	progress += 1.5 * GLOB.thaumic_research.get_speed_multiplier("transmutation_speed")
 	if(progress >= completion_time)
 		complete_infusion()
 		return

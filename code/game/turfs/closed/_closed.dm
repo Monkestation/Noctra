@@ -41,6 +41,9 @@
 			wallpress(L)
 			return
 
+/turf/closed/get_explosion_resistance()
+	return 1000000
+
 /turf/closed/proc/feel_turf(mob/living/user)
 	to_chat(user, span_notice("I start feeling around [src]"))
 	if(!do_after(user, 1.5 SECONDS, src))

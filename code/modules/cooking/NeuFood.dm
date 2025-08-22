@@ -204,15 +204,18 @@
 
 /obj/item/reagent_containers/glass/bowl/iron
 	icon_state = "bowl_iron"
+	fill_icon_state = "bowl"
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 
 /obj/item/reagent_containers/glass/bowl/pewter
 	icon_state = "bowl_iron"
+	fill_icon_state = "bowl"
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 
 /obj/item/reagent_containers/glass/bowl/clay
 	desc = "Made from fired clay."
 	icon_state = "bowl_clay"
+	fill_icon_state = "bowl"
 	drop_sound = 'sound/foley/dropsound/brick_drop.ogg'
 
 /obj/item/reagent_containers/glass/bowl/clay/set_material_information()

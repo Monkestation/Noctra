@@ -172,7 +172,7 @@ GLOBAL_LIST_EMPTY(tennite_schisms)
 			selected_priest.advjob = "Vice Priest"
 			male = TRUE
 		selected_priest.migrant_type = null
-		var/datum/devotion/cleric_holder/C = selected_priest.cleric
+		var/datum/devotion/C = selected_priest.cleric
 		if(C)
 			C.passive_devotion_gain = 1
 			C.passive_progression_gain = 1

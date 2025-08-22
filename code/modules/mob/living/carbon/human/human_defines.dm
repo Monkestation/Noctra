@@ -103,7 +103,7 @@
 	var/buried = FALSE // Whether the body is buried or not.
 	var/funeral = FALSE // Whether the body has received rites or not.
 
-	var/datum/devotion/cleric_holder/cleric = null // Used for cleric_holder for priests
+	var/datum/devotion/cleric = null // Used for cleric_holder for priests
 
 	var/headshot_link = null
 	var/flavortext = null
@@ -140,6 +140,8 @@
 	var/list/mob/minions = list()
 
 	var/mob/stored_mob = null // werewolf bullshit
+
+	var/datum/family_member/family_member_datum
 
 	fovangle = FOV_DEFAULT // our fov
 

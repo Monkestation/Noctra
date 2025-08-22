@@ -10,9 +10,30 @@
 
 /datum/action/cooldown/spell/undirected/list_target/convert_role/templar/on_conversion(mob/living/carbon/human/cast_on)
 	. = ..()
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(cast_on, cast_on.patron)
-	C.grant_spells_templar(cast_on)
-	cast_on.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
+	var/holder = cast_on.patron?.devotion_holder
+	if(holder)
+		var/datum/devotion/devotion = new holder()
+		devotion.make_templar()
+		devotion.grant_to(cast_on)
+
+
+/datum/action/cooldown/spell/undirected/list_target/convert_role/templar/cast(mob/living/carbon/human/cast_on)
+	// Patron-specific checks happen here, AFTER priest picks the target
+	var/mob/living/living_owner = owner
+
+	if(cast_on.patron && (cast_on.patron.type in ALL_PROFANE_PATRONS))
+		to_chat(owner, span_danger("The Ten glare upon you in fury. CHILD, [cast_on.real_name] serves the Inhumen, do not disgrace Our name."))
+		living_owner.adjust_divine_fire_stacks(50) // Half of the damage that you get if you say a profane word, hurts alot.
+		living_owner.IgniteMob()
+		return // Stop the recruitment entirely
+
+	if(cast_on.patron && (cast_on.patron.type == /datum/patron/psydon))
+		to_chat(owner, span_info("The Ten glare upon you in sadness. CHILD, [cast_on.real_name] serves Psydon, he is dead, nobody can answer these prayers."))
+		return // Stop recruitment
+
+	return ..()
+
+
 
 /datum/action/cooldown/spell/undirected/list_target/convert_role/acolyte
 	name = "Recruit Acolyte"
@@ -24,11 +45,31 @@
 	accept_message = "FOR THE TEN!"
 	refuse_message = "I refuse."
 
+
+/datum/action/cooldown/spell/undirected/list_target/convert_role/acolyte/cast(mob/living/carbon/human/cast_on)
+	// Patron-specific checks happen here, AFTER priest picks the target
+	var/mob/living/living_owner = owner
+
+	if(cast_on.patron && (cast_on.patron.type in ALL_PROFANE_PATRONS))
+		to_chat(owner, span_danger("The Ten glare upon you in fury. CHILD, [cast_on.real_name] serves the Inhumen, do not disgrace Our name."))
+		living_owner.adjust_divine_fire_stacks(50) // Half of the damage that you get if you say a profane word, hurts alot.
+		living_owner.IgniteMob()
+		return // Stop the recruitment entirely
+
+	if(cast_on.patron && (cast_on.patron.type == /datum/patron/psydon))
+		to_chat(owner, span_info("The Ten glare upon you in sadness. CHILD, [cast_on.real_name] serves Psydon, he is dead, nobody can answer these prayers."))
+		return // Stop recruitment
+
+	return ..()
+
+
 /datum/action/cooldown/spell/undirected/list_target/convert_role/acolyte/on_conversion(mob/living/carbon/human/cast_on)
 	. = ..()
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(cast_on, cast_on.patron)
-	C.grant_spells(cast_on)
-	cast_on.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
+	var/holder = cast_on.patron?.devotion_holder
+	if(holder)
+		var/datum/devotion/devotion = new holder()
+		devotion.make_acolyte()
+		devotion.grant_to(cast_on)
 
 /datum/action/cooldown/spell/undirected/list_target/convert_role/churchling
 	name = "Recruit Churchling"
@@ -40,11 +81,23 @@
 	accept_message = "FOR THE TEN!"
 	refuse_message = "I refuse."
 
+
+/datum/action/cooldown/spell/undirected/list_target/convert_role/churchling/cast(mob/living/carbon/human/cast_on)
+	// Patron-specific checks happen here, AFTER priest picks the target
+	if(cast_on.patron && (cast_on.patron.type == /datum/patron/psydon))
+		to_chat(owner, span_info("The Ten glare upon you in sadness. CHILD, [cast_on.real_name] serves Psydon, he is dead, nobody can answer these prayers."))
+		return // Stop recruitment
+
+	return ..()
+
+
 /datum/action/cooldown/spell/undirected/list_target/convert_role/churchling/on_conversion(mob/living/carbon/human/cast_on)
 	. = ..()
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(cast_on, cast_on.patron)
-	C.grant_spells_churchling(cast_on)
-	cast_on.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
+	var/holder = cast_on.patron?.devotion_holder
+	if(holder)
+		var/datum/devotion/devotion = new holder()
+		devotion.make_churching()
+		devotion.grant_to(cast_on)
 
 /datum/action/cooldown/spell/undirected/list_target/convert_role/churchling/can_convert(mob/living/carbon/human/cast_on)
 	if(QDELETED(cast_on))

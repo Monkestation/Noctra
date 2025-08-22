@@ -134,7 +134,6 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	///What kind of footstep this mob should have. Null if it shouldn't have any.
 	var/footstep_type
 
-	var/food = 0	//increase to make poop
 	var/food_max = 50
 	var/pooptype = /obj/item/natural/poo/horse
 	var/pooprog = 0
@@ -150,6 +149,22 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	var/botched_butcher_results
 	var/perfect_butcher_results
 
+	var/happy_funtime_mob = FALSE
+
+	var/can_saddle = FALSE
+	var/obj/item/ssaddle
+	// A flat percentage bonus to our ability to detect sneaking people only. Use in lieu of giving mobs huge STAPER bonuses if you want them to be observant.
+	var/simple_detect_bonus = 0
+
+	var/static/list/mob_friends = list(
+		"enemy" = -50,
+		"dislike" = -10,
+		"neutral" = 0,
+		"like" = 25,
+		"friend" = 50,
+		"best_friend" = 100
+	)
+
 /mob/living/simple_animal/Initialize()
 	. = ..()
 	if(gender == PLURAL)
@@ -163,6 +178,11 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_type))
 	if(footstep_type)
 		AddElement(/datum/element/footstep, footstep_type, 1, -6)
+	if(food_max)
+		AddComponent(/datum/component/generic_mob_hunger, food_max, 0.25)
+	if(happy_funtime_mob)
+		AddComponent(/datum/component/friendship_container, mob_friends, "friend")
+
 
 /mob/living/simple_animal/Destroy()
 	if(nest)
@@ -187,8 +207,9 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	if(!stat)
 		user.visible_message("<span class='info'>[user] hand-feeds [O] to [src].</span>", "<span class='notice'>I hand-feed [O] to [src].</span>")
 		playsound(loc,'sound/misc/eat.ogg', rand(30,60), TRUE)
+		SEND_SIGNAL(src, COMSIG_MOB_FEED, O, 30)
+		SEND_SIGNAL(src, COMSIG_FRIENDSHIP_CHANGE, user, 10)
 		qdel(O)
-		food = min(food + 30, 100)
 		if(tame && owner == user)
 			return TRUE
 		var/realchance = tame_chance
@@ -661,7 +682,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	var/do_footstep = FALSE
 
 /mob/living/simple_animal/hostile/RangedAttack(atom/A, params) //Player firing
-	if(ranged && ranged_cooldown <= world.time)
+	if(!ai_controller && ranged && ranged_cooldown <= world.time)
 		target = A
 		OpenFire(A)
 	..()
@@ -752,8 +773,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 /mob/living/simple_animal/Life()
 	. = ..()
 	if(.)
-		food = max(food - 0.5, 0)
-		if(food > 0)
+		if(SEND_SIGNAL(src, COMSIG_MOB_RETURN_HUNGER) > 0)
 			pooprog += 0.5
 			if(pooprog >= 100)
 				pooprog = 0

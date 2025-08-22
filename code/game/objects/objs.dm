@@ -79,6 +79,9 @@
 	/// Uses colours defined by the monarch roundstart see [lordcolor.dm]
 	var/uses_lord_coloring = FALSE
 
+	///this is a whole number converted into a multiplier
+	var/rarity_mod = 0
+
 	vis_flags = VIS_INHERIT_PLANE
 
 /obj/vv_edit_var(vname, vval)

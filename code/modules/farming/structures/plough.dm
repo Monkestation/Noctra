@@ -32,6 +32,10 @@
 		if(soil)
 			soil.user_till_soil(user)
 		else
+			var/obj/structure/irrigation_channel/located = locate(/obj/structure/irrigation_channel) in location
+			if(located)
+				to_chat(user, span_notice("[located] is in the way!"))
+				return
 			new /obj/structure/soil(location)
 			if(user.buckled)
 				apply_farming_fatigue(user, 5)

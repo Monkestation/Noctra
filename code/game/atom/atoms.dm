@@ -274,6 +274,9 @@
 /atom/proc/handle_ricochet(obj/projectile/P)
 	return
 
+/atom/proc/get_explosion_resistance()
+	return 0
+
 ///Can the mover object pass this atom, while heading for the target turf
 /atom/proc/CanPass(atom/movable/mover, turf/target)
 	SHOULD_CALL_PARENT(TRUE)

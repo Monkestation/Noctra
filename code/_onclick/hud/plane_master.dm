@@ -39,6 +39,11 @@
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 
+/atom/movable/screen/plane_master/seethrough
+	name = "Seethrough"
+	plane = SEETHROUGH_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
 /atom/movable/screen/plane_master/game_world
 	name = "game world plane master"
 	plane = GAME_PLANE

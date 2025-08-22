@@ -137,7 +137,7 @@
 	if(istype(T))
 		if(iscarbon(L))
 			var/mob/living/carbon/stinky = L
-			for(clean_moodlets in stinky.positive_stressors)
+			for(clean_moodlets in stinky.get_positive_stressors())
 				return
 		T.pollute_turf(/datum/pollutant/rot, 0.25)
 

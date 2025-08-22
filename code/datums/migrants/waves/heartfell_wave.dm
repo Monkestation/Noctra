@@ -5,6 +5,7 @@
 	allowed_sexes = list(MALE)
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 	grant_lit_torch = TRUE
+	is_recognized = TRUE
 
 /datum/outfit/job/heartfelt/lord/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -56,6 +57,7 @@
 	allowed_sexes = list(FEMALE)
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 	grant_lit_torch = TRUE
+	is_recognized = TRUE
 
 /datum/outfit/job/heartfelt/lady/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -106,6 +108,7 @@
 	outfit = /datum/outfit/job/heartfelt/hand
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 	grant_lit_torch = TRUE
+	is_recognized = TRUE
 
 /datum/outfit/job/heartfelt/hand/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -148,6 +151,7 @@
 	outfit = /datum/outfit/job/heartfelt/knight
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 	grant_lit_torch = TRUE
+	is_recognized = TRUE
 
 /datum/outfit/job/heartfelt/knight/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -226,6 +230,7 @@
 	outfit = /datum/outfit/job/heartfelt/magos
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 	grant_lit_torch = TRUE
+	is_recognized = TRUE
 
 /datum/outfit/job/heartfelt/magos
 	allowed_patrons = list(/datum/patron/divine/noc)
@@ -290,6 +295,7 @@
 	outfit = /datum/outfit/job/heartfelt/prior
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 	grant_lit_torch = TRUE
+	is_recognized = TRUE
 
 /datum/outfit/job/heartfelt/prior
 	allowed_patrons = list(/datum/patron/divine/astrata)
@@ -326,9 +332,11 @@
 		H.change_stat(STATKEY_CON, -1)
 		H.change_stat(STATKEY_END, 1)
 		H.change_stat(STATKEY_SPD, -1)
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(H, H.patron)
-	C.grant_spells_priest(H)
-	H.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
+	var/holder = H.patron?.devotion_holder
+	if(holder)
+		var/datum/devotion/devotion = new holder()
+		devotion.make_priest()
+		devotion.grant_to(H)
 	H.cmode_music = 'sound/music/cmode/church/CombatInquisitor.ogg'
 
 /datum/migrant_role/heartfelt/artificer
@@ -337,6 +345,7 @@
 	outfit = /datum/outfit/job/heartfelt/artificer
 	allowed_races = RACES_PLAYER_NONDISCRIMINATED
 	grant_lit_torch = TRUE
+	is_recognized = TRUE
 
 /datum/outfit/job/heartfelt/artificer/pre_equip(mob/living/carbon/human/H)
 	..()

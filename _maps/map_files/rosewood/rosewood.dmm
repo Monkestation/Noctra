@@ -396,8 +396,8 @@
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/indoors/town/manor)
 "ama" = (
-/obj/structure/chair/bench/throne,
 /obj/machinery/light/fueled/wallfire/candle,
+/obj/structure/chair/bench/couch,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/manor)
 "amf" = (
@@ -3182,6 +3182,10 @@
 "bLX" = (
 /turf/open/floor/grass/cold,
 /area/rogue/outdoors/rtfield/safe)
+"bMs" = (
+/obj/structure/table/wood/fancy/royalblue,
+/turf/open/floor/cobble,
+/area/rogue/outdoors/town)
 "bMt" = (
 /obj/structure/stairs/stone/church,
 /turf/open/floor/cobblerock,
@@ -3429,6 +3433,10 @@
 "bRS" = (
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/church,
+/area/rogue/outdoors/town)
+"bRV" = (
+/obj/effect/landmark/stall,
+/turf/open/floor/cobblerock,
 /area/rogue/outdoors/town)
 "bSh" = (
 /obj/structure/closet/crate/crafted_closet/crafted,
@@ -4249,6 +4257,16 @@
 /obj/structure/bars/bent,
 /turf/open/floor/snow,
 /area/rogue/outdoors/town)
+"cnk" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/structure/fluff/customsign{
+	pixel_x = -1;
+	pixel_y = -13;
+	desc = "A Merchant will visit this location";
+	name = "Traveling Merchant's Stall"
+	},
+/turf/open/floor/cobble,
+/area/rogue/outdoors/town)
 "cnq" = (
 /obj/structure/door,
 /obj/effect/mapping_helpers/access/keyset/church/grave,
@@ -4780,7 +4798,7 @@
 /turf/open/floor/cobble,
 /area/rogue/outdoors/town)
 "cDf" = (
-/obj/structure/chair/wood/alt/chair_noble/red,
+/obj/structure/chair/bench/couch,
 /turf/open/floor/tile,
 /area/rogue/indoors/town/manor)
 "cDh" = (
@@ -7632,6 +7650,7 @@
 "egk" = (
 /obj/structure/closet/crate/drawer,
 /obj/item/key/garrison,
+/obj/item/key/atarms,
 /turf/open/floor/herringbone,
 /area/rogue/indoors/villagegarrison)
 "egE" = (
@@ -12264,7 +12283,7 @@
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/indoors/town/manor)
 "gMG" = (
-/obj/structure/chair/wood/alt/chair_noble/purple,
+/obj/structure/chair/bench/couch/left/lord_primary,
 /turf/open/floor/tile,
 /area/rogue/indoors/town/manor)
 "gMV" = (
@@ -12450,7 +12469,7 @@
 /turf/open/floor/dirt,
 /area/rogue/outdoors/rtfield/safe)
 "gSu" = (
-/obj/structure/chair/wood/alt/chair_noble/purple{
+/obj/structure/chair/bench/couch{
 	dir = 4
 	},
 /turf/open/floor/tile/masonic{
@@ -12627,7 +12646,7 @@
 /turf/open/floor/ruinedwood/chevron,
 /area/rogue/indoors/town)
 "gXl" = (
-/obj/structure/chair/wood/alt/chair_noble,
+/obj/structure/chair/bench/couch/right/lord_primary,
 /turf/open/floor/tile,
 /area/rogue/indoors/town/manor)
 "gXO" = (
@@ -18087,10 +18106,10 @@
 /turf/open/floor/hexstone,
 /area/rogue/indoors/town/orphanage)
 "kcK" = (
-/obj/structure/chair/bench/coucha/r,
 /obj/structure/fluff/walldeco/bigpainting/lake{
 	pixel_x = -32
 	},
+/obj/structure/chair/bench/couch/right/lord_primary,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/manor)
 "kdc" = (
@@ -23943,7 +23962,7 @@
 /turf/open/floor/wood,
 /area/rogue/outdoors/town/roofs)
 "nsn" = (
-/obj/structure/chair/wood/alt/chair_noble/purple{
+/obj/structure/chair/bench/couch{
 	dir = 4
 	},
 /turf/open/floor/tile/masonic,
@@ -25788,6 +25807,10 @@
 /obj/structure/chair/stool/crafted,
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/indoors/town)
+"oog" = (
+/obj/structure/apiary/starter,
+/turf/open/floor/dirt/road,
+/area/rogue/outdoors/town)
 "oom" = (
 /obj/structure/fluff/railing/wood{
 	dir = 1
@@ -28909,7 +28932,7 @@
 /turf/open/floor/churchrough,
 /area/rogue/indoors/town/manor)
 "pTN" = (
-/obj/structure/chair/wood/alt/chair_noble/purple{
+/obj/structure/chair/bench/couch{
 	dir = 8
 	},
 /turf/open/floor/tile/masonic{
@@ -30845,6 +30868,7 @@
 /obj/structure/bridge_stakes{
 	dir = 1
 	},
+/obj/effect/landmark/observer_start,
 /turf/open/floor/dirt,
 /area/rogue/outdoors/town)
 "rbY" = (
@@ -33995,7 +34019,7 @@
 /turf/open/floor/ruinedwood,
 /area/rogue/indoors/town/smithy)
 "sJQ" = (
-/obj/structure/chair/wood/alt/chair_noble/purple{
+/obj/structure/chair/bench/couch{
 	dir = 8
 	},
 /turf/open/floor/tile/masonic{
@@ -42561,6 +42585,7 @@
 "xqB" = (
 /obj/structure/bed/mediocre,
 /obj/item/bedsheet/pelt,
+/obj/effect/landmark/start/gatemaster,
 /turf/open/floor/herringbone,
 /area/rogue/indoors/villagegarrison)
 "xqR" = (
@@ -42731,7 +42756,7 @@
 /turf/open/floor/hexstone,
 /area/rogue/indoors/town/garrison)
 "xwo" = (
-/obj/structure/chair/bench/coucha,
+/obj/structure/chair/bench/couch/left/lord_primary,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/manor)
 "xwr" = (
@@ -101999,7 +102024,7 @@ gYK
 mkQ
 bXe
 omp
-pmI
+cnk
 pmI
 pmI
 omp
@@ -102200,8 +102225,8 @@ rbN
 gYK
 sEz
 kmD
-omp
-pmI
+bRV
+bMs
 coP
 omp
 omp
@@ -102403,7 +102428,7 @@ ttM
 oYt
 aus
 omp
-pmI
+bMs
 omp
 omp
 omp
@@ -132521,7 +132546,7 @@ gYK
 gYK
 huA
 huA
-huA
+oog
 gYK
 gYK
 qMy
@@ -132925,7 +132950,7 @@ gYK
 huA
 huA
 huA
-huA
+oog
 huA
 gYK
 gYK

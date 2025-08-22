@@ -291,6 +291,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define ADVENTURER_TRAIT "adventurer"
 #define TRAIT_LONGSTRIDER "longstrider"
 #define TRAIT_GUIDANCE "guidance"
+#define DEVOTION_TRAIT "devotion_trait"
 
 #define TRAIT_WEBWALK 					"Webwalker"
 #define TRAIT_NOSTINK 					"Dead Nose"
@@ -357,6 +358,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// applied to orphans
 #define TRAIT_ORPHAN 					"Orphan"
 #define TRAIT_RECRUITED					"Recruit" //Trait used to give foreigners their new title
+#define TRAIT_RECOGNIZED				"Recognized" // Given to famous migrants, pilgrims and adventurers, enable their title.
 
 // Divine patron trait bonuses:
 #define TRAIT_SOUL_EXAMINE				"Blessing of Necra"  //can check bodies to see if they have departed
@@ -511,5 +513,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WIELDED "wielded"
 /// The items needs two hands to be carried
 #define TRAIT_NEEDS_TWO_HANDS "needstwohands"
+/// This item can't be pickpocketed
+#define TRAIT_HARD_TO_STEAL "hard_to_steal"
 /// Trait given by echolocation component.
 #define ECHOLOCATION_TRAIT "echolocation"

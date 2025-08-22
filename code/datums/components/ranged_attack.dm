@@ -16,6 +16,8 @@
 	var/cooldown_time
 	/// Tracks time between shots
 	COOLDOWN_DECLARE(fire_cooldown)
+	/// Visible message when firing
+	var/ranged_message
 
 /datum/component/ranged_attacks/Initialize(
 	casing_type,
@@ -24,6 +26,7 @@
 	burst_shots,
 	burst_intervals = 0.2 SECONDS,
 	cooldown_time = 3 SECONDS,
+	ranged_message,
 )
 	. = ..()
 	if(!istype(parent, /mob/living/simple_animal))
@@ -33,6 +36,7 @@
 	src.projectile_sound = projectile_sound
 	src.projectile_type = projectile_type
 	src.cooldown_time = cooldown_time
+	src.ranged_message = ranged_message
 
 	if (casing_type && projectile_type)
 		CRASH("Set both casing type and projectile type in [parent]'s ranged attacks component! uhoh! stinky!")
@@ -56,6 +60,7 @@
 	if(!COOLDOWN_FINISHED(src, fire_cooldown))
 		return
 	COOLDOWN_START(src, fire_cooldown, cooldown_time)
+	firer.visible_message(span_danger("<b>[firer]</b> [ranged_message] at [target]!</span>"))
 	INVOKE_ASYNC(src, PROC_REF(async_fire_ranged_attack), firer, target, modifiers)
 	if(isnull(burst_shots))
 		return

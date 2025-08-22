@@ -5,7 +5,7 @@
 	clotting_threshold = null
 	sewn_clotting_threshold = null
 	whp = 30
-	woundpain = 10
+	woundpain = 6
 	sew_threshold = 50
 	mob_overlay = "cut"
 	can_sew = FALSE
@@ -36,7 +36,7 @@
 	sewn_clotting_rate = 0.01
 	clotting_threshold = 0.5
 	sewn_clotting_threshold = 0.25
-	woundpain = 15
+	woundpain = 12
 	sewn_woundpain = 5
 	can_sew = TRUE
 	can_cauterize = TRUE

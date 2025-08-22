@@ -97,3 +97,45 @@
 	)
 	attacked_atom = /obj/item/weapon/thresher
 	starting_atom = /obj/item/ingot/iron
+
+
+/datum/repeatable_crafting_recipe/bee_treatment
+	name = "General Bee Treatment"
+	output = /obj/item/bee_treatment
+	requirements = list(
+		/obj/item/grown/log/tree/small = 1,
+		/obj/item/alch/mentha = 1
+	)
+	attacked_atom = /obj/item/grown/log/tree/small
+	starting_atom = /obj/item/alch/mentha
+	category = "Bees"
+
+/datum/repeatable_crafting_recipe/bee_treatment/antiviral
+	name = "Antiviral Bee Treatment"
+	output = /obj/item/bee_treatment/antiviral
+	requirements = list(
+		/obj/item/grown/log/tree/small = 1,
+		/obj/item/alch/rosa = 1
+	)
+	attacked_atom = /obj/item/grown/log/tree/small
+	starting_atom = /obj/item/alch/rosa
+
+/datum/repeatable_crafting_recipe/bee_treatment/miticide
+	name = "Miticide Bee Treatment"
+	output = /obj/item/bee_treatment/miticide
+	requirements = list(
+		/obj/item/grown/log/tree/small = 1,
+		/obj/item/alch/salvia = 1
+	)
+	attacked_atom = /obj/item/grown/log/tree/small
+	starting_atom = /obj/item/alch/salvia
+
+/datum/repeatable_crafting_recipe/bee_treatment/insecticide
+	name = "Insecticide Bee Treatment"
+	output = /obj/item/bee_treatment/miticide
+	requirements = list(
+		/obj/item/grown/log/tree/small = 1,
+		/obj/item/alch/paris = 1
+	)
+	attacked_atom = /obj/item/grown/log/tree/small
+	starting_atom = /obj/item/alch/paris

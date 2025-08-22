@@ -562,5 +562,125 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#660061"
 	glows = TRUE
 
+
+/datum/status_effect/buff/murkwine
+	id = "murkwine"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/drunkmurk
+	effectedstats = list("intelligence" = 5)
+	duration = 2 MINUTES
+
+/datum/status_effect/buff/nocshine
+	id = "nocshine"
+	alert_type = /atom/movable/screen/alert/status_effect/buff/drunknoc
+	effectedstats = list("strength" = 1, "endurance" = 1)
+	duration = 2 MINUTES
+
+/atom/movable/screen/alert/status_effect/buff/drunkmurk
+	name = "Murk-Knowledge"
+	desc = ""
+	icon_state = "drunk"
+
+/atom/movable/screen/alert/status_effect/buff/drunknoc
+	name = "Noc-Shine Strength"
+	desc = ""
+	icon_state = "drunk"
+
+/datum/reagent/consumable/ethanol/murkwine // not Toilet wine
+	name = "Mürkwine"
+	boozepwr = 50  // bubba's best
+	taste_description = "hints of questionable choices--a bouqet of murkwater and pure ethanol"
+	color = "#4b1e00"
+
+/datum/reagent/consumable/ethanol/murkwine/on_mob_life(mob/living/carbon/M)
+	M.apply_status_effect(/datum/status_effect/buff/murkwine)
+	M.adjust_stamina(0.1)
+	..()
+	. = 1
+
+/datum/reagent/consumable/ethanol/murkwine/on_mob_end_metabolize(mob/living/M)
+	M.remove_status_effect(/datum/status_effect/buff/murkwine)
+
+/datum/reagent/consumable/ethanol/nocshine // wait, no, NOCSHINE
+	name = "Noc's Shine"
+	boozepwr = 70  // YEEEEEHAAAWWWWWW
+	taste_description = "what might be my throat melting and nose hair burning"
+	color = "#d8fbfd63"
+	quality = DRINK_NICE
+
+
+/datum/reagent/consumable/ethanol/nocshine/on_mob_life(mob/living/carbon/M)
+	M.apply_status_effect(/datum/status_effect/buff/nocshine)
+	if(HAS_TRAIT(M, TRAIT_CRACKHEAD))
+		M.adjustToxLoss(0.1, 0)
+	else
+		M.adjustToxLoss(0.75, 0)
+	..()
+	. = 1
+
+/datum/reagent/consumable/ethanol/nocshine/on_mob_end_metabolize(mob/living/M)
+	M.remove_status_effect(/datum/status_effect/buff/nocshine)
+
+/datum/reagent/consumable/ethanol/luxwine // oh no.
+	name = "Luxintenebre" // lux left w/ sugar in a darkened place for quite some time... U could say... Light in Darkness.....
+	description = "A fermented form of vitae, highly alcoholic, and with a particularly grim taste. Often sought out by the daring, foolhardy, and heretical..."
+	boozepwr = 80 // THE END OF THE FUCKING WORLD.
+	taste_description = "a green numbness, then a burning vigor in the heart" // heartburn (healing)
+	color = "#86cca3"
+	quality = DRINK_VERYGOOD // good stuff!
+
+/datum/reagent/consumable/ethanol/luxwine/on_mob_life(mob/living/carbon/M) // stolen healthpot code. i am shameless.
+	if(volume > 0.99) // i have no clue if this works.
+		M.adjustBruteLoss(-1*REM, 0)
+		M.adjustFireLoss(-1*REM, 0)
+	..()
+
+/datum/reagent/consumable/ethanol/whipwine // dont ask
+	name = "Magickal Whip Wine"
+	description = "A recipe recently floated into the Peaks. Magickal Whip Wine is said to increase one's potence and stamina sevenfold."
+	boozepwr = 10 // it's a whip. it's an actual whip.
+	taste_description = "leather, bitter herbs, and regret" // what did you expect
+	color = "#3a1d18"
+
+/datum/reagent/consumable/ethanol/komuchisake // if you put this outside the lich dungeon i'll kill you
+	name = "Divine Snake Wine"
+	description = "The True Form of the Whipwine. The Magickal Snake Wine was an exclusively produced medicinal wine from over three centures ago in the Kazengun Shogunate..."
+	boozepwr = 60 // ancient lichebrau...
+	taste_description = "bitterness, pain, iron, and ancient mistakes" // what did you expect [2]
+	color = "#553837"
+
+/datum/reagent/consumable/ethanol/huangjiu
+	name = "Huangjiu"
+	boozepwr = 30
+	taste_description = "a mix of sweet and sour"
+	color = "#d8b84c"
+
+/datum/reagent/consumable/ethanol/baijiu
+	name = "Baijiu"
+	boozepwr = 60
+	taste_description = "fiery and pungent alcohol with a hint of sweetness"
+	color = "#f8fdfc"
+	quality = DRINK_GOOD
+
+/datum/reagent/consumable/ethanol/yaojiu
+	name = "Yaojiu"
+	boozepwr = 50
+	taste_description = "bittersweet alcohol with deep herbal notes"
+	color = "#8C4B1F"
+	quality = DRINK_VERYGOOD
+
+/datum/reagent/consumable/ethanol/shejiu
+	name = "Shejiu"
+	boozepwr = 50
+	taste_description = "musky and strong alcohol with a hint of gameiness"
+	color = "#C49A6C"
+	quality = DRINK_VERYGOOD
+
+/datum/reagent/consumable/ethanol/kgunshochu
+	name = "Shochu"
+	boozepwr = 60
+	taste_description = "dry, clean finish"
+	color = "#F8FDFC"
+	quality = DRINK_VERYGOOD
+
 #undef ALCOHOL_THRESHOLD_MODIFIER
 #undef ALCOHOL_EXPONENT

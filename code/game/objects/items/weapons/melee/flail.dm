@@ -165,6 +165,88 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
+/datum/intent/flail/strike/smashrange
+	name = "ranged smash"
+	chargetime = 10
+	chargedrain = 2
+	no_early_release = TRUE
+	recovery = 30
+	damfactor = 1.5
+	penfactor = -100
+	reach = 2
+	chargedloop = /datum/looping_sound/flailswing
+	keep_looping = TRUE
+	icon_state = "insmash"
+	blade_class = BCLASS_SMASH
+	attack_verb = list("smashes")
+	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
+	item_damage_type = "blunt"
+
+/datum/intent/flail/strikerange
+	name = "ranged strike"
+	blade_class = BCLASS_BLUNT
+	attack_verb = list("strikes", "hits")
+	hitsound = list('sound/combat/hits/blunt/flailhit.ogg')
+	chargetime = 0
+	recovery = 15
+	penfactor = -100
+	reach = 2
+	icon_state = "instrike"
+	item_damage_type = "blunt"
+
+/obj/item/weapon/flail/peasantwarflail
+	force = 10
+	force_wielded = 35
+	possible_item_intents = list(/datum/intent/flail/strike)
+	gripped_intents = list(/datum/intent/flail/strikerange, /datum/intent/flail/strike/smashrange)
+	name = "militia thresher"
+	desc = "Just like how a sling's bullet can fell a giant, so too does this great flail follow the principle of converting 'momentum' into 'plate-rupturing force'."
+	icon_state = "peasantwarflail"
+	icon = 'icons/roguetown/weapons/64.dmi'
+	pixel_y = -16
+	pixel_x = -16
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	bigboy = TRUE
+	gripsprite = TRUE
+	wlength = WLENGTH_GREAT
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = null
+	minstr = 9
+	wbalance = VERY_HARD_TO_DODGE
+	smeltresult = /obj/item/ingot/iron
+	associated_skill = /datum/skill/combat/polearms
+	anvilrepair = /datum/skill/craft/carpentry
+	dropshrink = 0.9
+	blade_dulling = DULLING_BASH
+	wdefense = 4
+	resistance_flags = FLAMMABLE
+
+/obj/item/weapon/flail/peasantwarflail/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -7,"sy" = 2,"nx" = 7,"ny" = 3,"wx" = -2,"wy" = 1,"ex" = 1,"ey" = 1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 30,"eturn" = -30,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 
 
+/datum/intent/flail/strike/matthiosflail
+	reach = 2
 
+/datum/intent/flail/strike/smash/matthiosflail
+	reach = 2
+
+/obj/item/weapon/flail/peasantwarflail/matthios
+	name = "Gilded Flail"
+	desc = "Weight of wealth in a deadly striking end."
+	icon_state = "matthiosflail"
+	sellprice = 250
+	smeltresult = /obj/item/ingot/steel
+	possible_item_intents = list(/datum/intent/flail/strike/matthiosflail)
+	gripped_intents = list(/datum/intent/flail/strike/matthiosflail, /datum/intent/flail/strike/smash/matthiosflail)
+	associated_skill = /datum/skill/combat/whipsflails
+	slot_flags = ITEM_SLOT_BACK
+	blade_dulling = DULLING_BASHCHOP
+	anvilrepair = /datum/skill/craft/weaponsmithing

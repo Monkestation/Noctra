@@ -4,7 +4,6 @@
 	You are a humble acolyte at the temple in Vanderlin, \
 	not yet a trained guardian or an ordained priest. \
 	But who else would keep the fires lit and the floors clean?"
-	flag = MONK
 	department_flag = CHURCHMEN
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_MONK
@@ -50,7 +49,7 @@
 			armor = /obj/item/clothing/shirt/robe/necra
 			H.cmode_music = 'sound/music/cmode/church/CombatGravekeeper.ogg'
 		if(/datum/patron/divine/eora)
-			head = /obj/item/clothing/head/padded/operavisage
+			mask = /obj/item/clothing/face/operavisage
 			neck = /obj/item/clothing/neck/psycross/silver/eora
 			shoes = /obj/item/clothing/shoes/sandals
 			armor = /obj/item/clothing/shirt/robe/eora
@@ -169,6 +168,8 @@
 		H.grant_language(/datum/language/celestial)
 		to_chat(H, "<span class='info'>I can speak Celestial with ,c before my speech.</span>")
 
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(H, H.patron)
-	H.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
-	C.grant_spells(H)
+	var/holder = H.patron.devotion_holder
+	if(holder)
+		var/datum/devotion/devotion = new holder()
+		devotion.make_acolyte()
+		devotion.grant_to(H)

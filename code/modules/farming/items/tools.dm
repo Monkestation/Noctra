@@ -294,6 +294,10 @@
 
 /obj/item/weapon/hoe/attack_turf(turf/T, mob/living/user)
 	if(user.used_intent.type == /datum/intent/till)
+		var/obj/structure/irrigation_channel/located = locate(/obj/structure/irrigation_channel) in T
+		if(located)
+			to_chat(user, span_notice("[located] is in the way!"))
+			return
 		user.changeNext_move(CLICK_CD_MELEE)
 		if(istype(T, /turf/open/floor/grass))
 			playsound(T,'sound/items/dig_shovel.ogg', 100, TRUE)

@@ -5,7 +5,6 @@
 	Now, the days of adventure are long past. You sit as the town's beloved elder; while the crown may rule from afar, the people\
 	look to you to settle disputes, mend rifts, and keep the true peace in town. Not every conflict must end in bloodshed,\
 	but when it must, you will do what is necessary, as you always have."
-	flag = TOWN_ELDER
 	department_flag = GARRISON
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_CHIEF
@@ -354,12 +353,11 @@
 			H.grant_language(/datum/language/celestial)
 			to_chat(H, "<span class='info'>I can speak Celestial with ,c before my speech.</span>")
 
-
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(H, H.patron)
-	H.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
-	C.grant_spells(H)
-
-
+	var/holder = H.patron?.devotion_holder
+	if(holder)
+		var/datum/devotion/devotion = new holder()
+		devotion.make_acolyte()
+		devotion.grant_to(H)
 
 /datum/advclass/town_elder/lorekeeper
 	name = "Lorekeeper"
@@ -438,7 +436,7 @@
 	backpack_contents = list(/obj/item/storage/belt/pouch/coins/poor = 1, /obj/item/needle = 1 )
 
 	if(H.patron != /datum/patron/divine/noc)
-		H.set_patron(/datum/patron/divine/noc)
+		H.set_patron(/datum/patron/divine/noc, TRUE)
 
 	H.apply_status_effect(/datum/status_effect/buff/nocblessed)
 	// 3 INT and 2 PER buff, stats will be lowered because of that

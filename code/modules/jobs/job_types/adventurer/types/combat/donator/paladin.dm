@@ -100,10 +100,11 @@
 	if(H.dna?.species)
 		if(H.dna.species.id == SPEC_ID_HUMEN)
 			H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(H, H.patron)
-	//Paladins, while devout warriors spent WAY too much time studying the blade. No more acolyte+
-	C.grant_spells_templar(H)
-	H.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
+	var/holder = H.patron?.devotion_holder
+	if(holder)
+		var/datum/devotion/devotion = new holder()
+		devotion.make_templar()
+		devotion.grant_to(H)
 
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)

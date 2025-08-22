@@ -53,6 +53,8 @@
 	else // No good smith start with skill levels lower than 3
 		proab = 100
 	proab -= craftdiff // Crafting difficulty substracts from your chance to advance
+	if(has_world_trait(/datum/world_trait/delver))
+		proab = 100
 	// Roll the dice to see if the hit actually causes to accumulate progress
 	if(prob(proab))
 		moveup += round((skill_level * 6) * (breakthrough == 1 ? 1.5 : 1))

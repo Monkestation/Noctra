@@ -44,7 +44,7 @@
 	defdrain = 8
 	del_on_deaggro = 999 SECONDS
 	retreat_health = 0
-	food = 0
+
 
 	dodgetime = 20
 	aggressive = 1

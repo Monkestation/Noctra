@@ -5,7 +5,6 @@
 	The divine is all that matters in an immoral world. \
 	The Sun Queen and her pantheon rule over all, and you will preach their wisdom to Vanderlin. \
 	It is up to you to shephard the flock into a Ten-fearing future."
-	flag = PRIEST
 	department_flag = CHURCHMEN
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_PRIEST
@@ -71,9 +70,11 @@
 	if(!H.has_language(/datum/language/celestial)) // For discussing church matters with the other Clergy
 		H.grant_language(/datum/language/celestial)
 		to_chat(H, "<span class='info'>I can speak Celestial with ,c before my speech.</span>")
-	var/datum/devotion/cleric_holder/C = new /datum/devotion/cleric_holder(H, H.patron) // This creates the cleric holder used for devotion spells
-	H.verbs += list(/mob/living/carbon/human/proc/devotionreport, /mob/living/carbon/human/proc/clericpray)
-	C.grant_spells_priest(H)
+	var/holder = H.patron?.devotion_holder
+	if(holder)
+		var/datum/devotion/devotion = new holder()
+		devotion.make_priest()
+		devotion.grant_to(H)
 
 	H.update_icons()
 
@@ -81,7 +82,6 @@
 	title = "Ex-Priest"
 	f_title = "Ex-Priestess"
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_EQUIP_RANK)
-	flag = PRIEST
 	department_flag = CHURCHMEN
 	faction = FACTION_TOWN
 	total_positions = 0
@@ -91,7 +91,6 @@
 	title = "Vice Priest"
 	f_title = "Vice Priestess"
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_EQUIP_RANK)
-	flag = PRIEST
 	department_flag = CHURCHMEN
 	faction = FACTION_TOWN
 	total_positions = 0

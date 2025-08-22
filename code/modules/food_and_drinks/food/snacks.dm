@@ -275,7 +275,7 @@ All foods are distributed among various categories. Use common sense.
 							eater.taste(reagents)
 							return
 						else
-							if (eater.has_stress(/datum/stressevent/noble_impoverished_food))
+							if (eater.has_stress_type(/datum/stressevent/noble_impoverished_food))
 								eater.add_stress(/datum/stressevent/noble_desperate)
 							apply_effect = FALSE
 					if (FARE_POOR to FARE_NEUTRAL)
@@ -629,7 +629,7 @@ All foods are distributed among various categories. Use common sense.
 			if(bitecount == 0 || prob(50))
 				M.emote("me", 1, "nibbles away at \the [src]")
 			bitecount++
-			L.food = min(L.food + 30, L.food_max)
+			SEND_SIGNAL(L, COMSIG_MOB_FEED, src, 30)
 			playsound(L.loc, 'sound/misc/eat.ogg', 25, TRUE)
 			L.taste(reagents) // why should carbons get all the fun?
 			if(bitecount >= 5)
