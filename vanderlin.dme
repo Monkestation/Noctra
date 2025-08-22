@@ -2886,6 +2886,7 @@
 #include "code\modules\reagents\reagent_containers\powder.dm"
 #include "code\modules\reagents\reagent_containers\bottles\_bottle.dm"
 #include "code\modules\reagents\reagent_containers\bottles\alchemy.dm"
+#include "code\modules\reagents\reagent_containers\bottles\beverages.dm"
 #include "code\modules\reagents\reagent_containers\bucket\pot.dm"
 #include "code\modules\screen_alerts\blurb.dm"
 #include "code\modules\screen_alerts\screen_text.dm"

@@ -20,7 +20,7 @@
 	sewrepair = TRUE
 	grid_width = 32
 	grid_height = 64
-	can_label_bottle = FALSE
+	can_label_container = FALSE
 	fancy = TRUE
 
 /obj/item/reagent_containers/glass/bottle/waterskin/Initialize()
