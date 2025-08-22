@@ -139,7 +139,8 @@
 	output_reagents = list(/datum/reagent/medicine/diseasecure = 18)
 	required_essences = list(
 		/datum/thaumaturgical_essence/order = 3,
-		/datum/thaumaturgical_essence/life = 2
+		/datum/thaumaturgical_essence/life = 2,
+		/datum/thaumaturgical_essence/earth = 1
 	)
 
 /datum/alch_cauldron_recipe/antidote

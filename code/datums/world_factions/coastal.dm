@@ -46,18 +46,19 @@
 		/datum/supply_pack/apparel/undershirt_sailor_red,
 		/datum/supply_pack/apparel/gladiator_sandals,
 		/datum/supply_pack/apparel/hood,
+		/datum/supply_pack/apparel/gambeson,
+		/datum/supply_pack/apparel/arming,
 		/datum/supply_pack/apparel/boots,
 		/datum/supply_pack/apparel/shortboots,
 		/datum/supply_pack/apparel/fingerless_gloves,
 		// Seafood and coastal cuisine
 		/datum/supply_pack/food/carp,
-		/datum/supply_pack/food/beer,
-		/datum/supply_pack/food/elfbeer,
-		/datum/supply_pack/food/elfcab,
+		/datum/supply_pack/food/drinks/beer,
+		/datum/supply_pack/food/drinks/elfbeer,
+		/datum/supply_pack/food/drinks/elfcab,
 		// Tools for maritime trade
 		/datum/supply_pack/tools/bottle,
 		/datum/supply_pack/tools/bottle_kit,
-		/datum/supply_pack/tools/alch_bottle,
 		/datum/supply_pack/tools/alch_bottles,
 		/datum/supply_pack/tools/fryingpan,
 		/datum/supply_pack/tools/pot,
@@ -82,10 +83,11 @@
 		/datum/supply_pack/apparel/silkdress_random,
 		/datum/supply_pack/apparel/tabard,
 		/datum/supply_pack/apparel/halfcloak_random,
+		/datum/supply_pack/apparel/luxurymage,
 		// Exotic foods
 		/datum/supply_pack/food/angler,
-		/datum/supply_pack/food/winezaladin,
-		/datum/supply_pack/food/winegrenzel,
+		/datum/supply_pack/food/drinks/winezaladin,
+		/datum/supply_pack/food/drinks/winegrenzel,
 		// Musical instruments - coastal culture
 		/datum/supply_pack/instruments/flute,
 		/datum/supply_pack/instruments/harp,
@@ -104,11 +106,13 @@
 		/datum/supply_pack/livestock/goat,
 		/datum/supply_pack/livestock/pig,
 		// Medical supplies
-		/datum/supply_pack/tools/surgerybag,
-		/datum/supply_pack/tools/prarml,
-		/datum/supply_pack/tools/prarmr,
-		/datum/supply_pack/tools/prlegl,
-		/datum/supply_pack/tools/prlegr
+		/datum/supply_pack/tools/medical/surgerybag,
+		/datum/supply_pack/tools/medical/prarml,
+		/datum/supply_pack/tools/medical/prarmr,
+		/datum/supply_pack/tools/medical/prlegl,
+		/datum/supply_pack/tools/medical/prlegr,
+		/datum/supply_pack/tools/medical/health,
+		/datum/supply_pack/tools/medical/mana
 	)
 	rare_pool = list(
 		// Luxury apparel
@@ -118,16 +122,16 @@
 		/datum/supply_pack/apparel/chaperon,
 		// Exotic seafood
 		/datum/supply_pack/food/clownfish,
-		/datum/supply_pack/food/winevalorred,
-		/datum/supply_pack/food/winevalorwhite,
+		/datum/supply_pack/food/drinks/winevalorred,
+		/datum/supply_pack/food/drinks/winevalorwhite,
 		// Weapons - refined coastal arms
-		/datum/supply_pack/weapons/bow2,
-		/datum/supply_pack/weapons/rbow,
-		/datum/supply_pack/weapons/boltquiver,
-		/datum/supply_pack/weapons/arrows,
-		/datum/supply_pack/weapons/bolts,
-		/datum/supply_pack/weapons/bomb,
-		/datum/supply_pack/weapons/tossbladeiron,
+		/datum/supply_pack/weapons/ranged/longbow,
+		/datum/supply_pack/weapons/ranged/shortbow,
+		/datum/supply_pack/weapons/ammo/boltquiver,
+		/datum/supply_pack/weapons/ammo/arrows,
+		/datum/supply_pack/weapons/ammo/bolts,
+		/datum/supply_pack/weapons/ranged/bomb,
+		/datum/supply_pack/weapons/ranged/tossbladeiron,
 		// Jewelry
 		/datum/supply_pack/jewelry/silverring,
 		// Luxury goods
@@ -137,15 +141,15 @@
 		/datum/supply_pack/seeds/poppy
 	)
 	exotic_pool = list(
-		/datum/supply_pack/food/elfred,
-		/datum/supply_pack/food/elfblue,
+		/datum/supply_pack/food/drinks/elfred,
+		/datum/supply_pack/food/drinks/elfblue,
 		/datum/supply_pack/food/chocolate,
 		/datum/supply_pack/jewelry/goldring,
 		/datum/supply_pack/jewelry/gemcirclet,
 		/datum/supply_pack/luxury/glassware_set,
 		/datum/supply_pack/apparel/royaldyes,
 		/datum/supply_pack/narcotics/moondust,
-		/datum/supply_pack/weapons/tossbladesteel
+		/datum/supply_pack/weapons/ranged/tossbladesteel
 	)
 
 /datum/world_faction/coastal_merchants/initialize_faction_stock()

@@ -13,6 +13,7 @@
 	pickprob = 15
 	apprentice_name = "Carpenter Apprentice"
 	cmode_music = 'sound/music/cmode/towner/CombatTowner2.ogg'
+	is_recognized = TRUE
 
 /datum/outfit/job/adventurer/mastercarpenter/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -45,7 +46,7 @@
 	beltl = /obj/item/weapon/hammer/steel
 	backl = /obj/item/storage/backpack/backpack
 	backr = /obj/item/weapon/polearm/halberd/bardiche/woodcutter // A specialist in cutting trees would carry an impressive axe
-	backpack_contents = list(/obj/item/flint = 1, /obj/item/weapon/knife/hunting = 1, /obj/item/key/artificer = 1)
+	backpack_contents = list(/obj/item/flint = 1, /obj/item/weapon/knife/hunting = 1)
 	H.change_stat(STATKEY_STR, 2)
 	H.change_stat(STATKEY_END, 2)
 	H.change_stat(STATKEY_INT, 1)

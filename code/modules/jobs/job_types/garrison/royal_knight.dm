@@ -4,7 +4,6 @@
 	Sworn to protect the royal family, you stand as their shield, upholding their rule with steel and sacrifice. \
 	Yet service is not without its trials, and your loyalty will be tested in ways both seen and unseen. \
 	In the end, duty is a path you must walk carefully."
-	flag = GUARDSMAN
 	department_flag = GARRISON
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_ROYALKNIGHT
@@ -43,7 +42,7 @@
 	belt = /obj/item/storage/belt/leather
 	beltr = /obj/item/weapon/sword/arming
 	backl = /obj/item/storage/backpack/satchel
-	scabbards = list(/obj/item/weapon/scabbard/sword)
+	scabbards = list(/obj/item/weapon/scabbard/sword/noble)
 	backpack_contents = list(/obj/item/storage/keyring/manorguard = 1)
 
 	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
@@ -103,25 +102,17 @@
 	if(!choice)
 		return
 	var/grant_shield = TRUE
-	var/modifier = reduced_skill
 	switch(choice)
 		if("Flail")
-			H.adjust_skillrank(/datum/skill/combat/whipsflails, 2 - modifier, TRUE)
+			H.clamped_adjust_skillrank(/datum/skill/combat/whipsflails, 1, 4, TRUE)
 		if("Halberd")
-			H.adjust_skillrank(/datum/skill/combat/polearms, 2 - modifier, TRUE)
+			H.clamped_adjust_skillrank(/datum/skill/combat/polearms, 1, 4, TRUE)
 			grant_shield = FALSE
 		if("Longsword")
-			if(!reduced_skill)
-				H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 			grant_shield = FALSE
-		if("Sabre")
-			if(!reduced_skill)
-				H.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 		if("Unarmed")
-			if(!reduced_skill)
-				H.adjust_skillrank(/datum/skill/combat/wrestling, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-			H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+			H.clamped_adjust_skillrank(/datum/skill/combat/knives, 2, 4, TRUE)
 			grant_shield = FALSE
 	if(grant_shield)
 		H.adjust_skillrank(/datum/skill/combat/shields, 1, TRUE)
@@ -148,7 +139,6 @@
 	category_tags = list(CTAG_ROYALKNIGHT)
 
 /datum/outfit/job/royalknight/steam
-	reduced_skill = TRUE
 
 /datum/outfit/job/royalknight/steam/pre_equip(mob/living/carbon/human/H)
 	. = ..()

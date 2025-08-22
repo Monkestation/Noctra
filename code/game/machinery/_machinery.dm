@@ -71,9 +71,6 @@
 		if(subset && !(A in subset))
 			continue
 		A.forceMove(T)
-		// if(isliving(A))
-		// 	var/mob/living/L = A
-			// L.update_mobility()
 	occupant = null
 
 /obj/machinery/proc/can_be_occupant(atom/movable/am)

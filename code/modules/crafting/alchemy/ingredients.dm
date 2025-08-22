@@ -203,6 +203,7 @@
 
 /obj/item/alch/feaudust
 	name = "feau dust"
+	desc = "Combining gold and iron results in this powder with unique alchemical properties."
 	icon_state = "feaudust"
 
 	major_pot = /datum/alch_cauldron_recipe/spd_potion
@@ -220,7 +221,7 @@
 
 /obj/item/alch/transisdust
 	name = "transis dust"
-	desc = "A long mix of herb that product a special powder."
+	desc = "A complex mix of herbs that produce a powder which can modify the body."
 	icon_state = "transisdust"
 
 	major_pot = /datum/alch_cauldron_recipe/gender_potion
@@ -388,3 +389,16 @@
 	major_pot = /datum/alch_cauldron_recipe/lck_potion
 	med_pot = /datum/alch_cauldron_recipe/spd_potion
 	minor_pot = /datum/alch_cauldron_recipe/health_potion
+
+/obj/item/alch/thaumicdust
+	name = "thaumic iron dust"
+	icon_state = "thaumicirondust"
+	icon = 'icons/roguetown/misc/thaumicdust.dmi'
+	desc = "An odd, sticky clump of various alchemical ingredients. Smelt this down to create an ingot of thaumic iron."
+	smeltresult = /obj/item/ingot/thaumic
+	melting_material = /datum/material/thaumic_iron
+	/* are these still even used for anything I wonder
+	major_pot = /datum/alch_cauldron_recipe/end_potion
+	med_pot = /datum/alch_cauldron_recipe/con_potion
+	minor_pot = /datum/alch_cauldron_recipe/str_potion
+	*/

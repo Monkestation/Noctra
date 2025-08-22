@@ -99,6 +99,8 @@
 	if(client.holder)
 		client.hearallasghost()
 	resend_all_uis()
+	if(client)
+		client.preload_music()
 
 /mob/proc/send_pref_messages()
 	if(client?.prefs)

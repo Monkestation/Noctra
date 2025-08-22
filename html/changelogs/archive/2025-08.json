@@ -298,5 +298,355 @@
                 "bugfix": "stamina regen is no longer affected by the energy bar if you have the boundless energy trait."
             }
         ]
+    },
+    "2025-08-13": {
+        "Wabberspace": [
+            {
+                "rscadd": "Added Beastish to hollow-kin/demihumens."
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "balance": " Malum Masterwork stat gives more influence"
+            }
+        ],
+        "Wabberpace": [
+            {
+                "bugfix": "Fixed swampweed zigs from constantly overdosing by changing the reagent dosage from 60 > 30."
+            }
+        ],
+        "grungussuss": [
+            {
+                "bugfix": "lich can now return to his mansion"
+            },
+            {
+                "qol": "slapcrafting and dye-ing now have a better UI"
+            },
+            {
+                "bugfix": "fixed sacks being uncraftable"
+            }
+        ],
+        "Wrench-1": [
+            {
+                "image": "modified the Adept's Cowl icon and onmob sprites."
+            }
+        ]
+    },
+    "2025-08-14": {
+        "Arkatos": [
+            {
+                "rscadd": "Added new a new triumph buy - Fart Ability."
+            },
+            {
+                "rscadd": "Added new a new triumph buy - Leprosy."
+            }
+        ],
+        "ApolloVector": [
+            {
+                "balance": "buffed anthraxi knife skill to skilled"
+            },
+            {
+                "balance": "buffed redsands sword skill to expert"
+            },
+            {
+                "balance": "buffed black oak guardian's main weapon skill to expert"
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "rscadd": "A new preference option for newlywed and Parent, called \\\"Preferred Gender\\\"."
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "Changelog entries are sorted descending."
+            }
+        ],
+        "Sulaboy": [
+            {
+                "balance": "fiber bundles can hold 12 fibers now."
+            }
+        ]
+    },
+    "2025-08-15": {
+        "wgtjunior743": [
+            {
+                "balance": "Pilgrims can have apprentices."
+            },
+            {
+                "bugfix": "Foreigners who got their Job changed by \\\"Change Position\\\" now got their title."
+            }
+        ],
+        "DrSirKnight": [
+            {
+                "qol": "Lore Primer can now be checked at any time, not just in lobby."
+            }
+        ]
+    },
+    "2025-08-16": {
+        "Wouju": [
+            {
+                "rscadd": "Added new clothes for the courtphysician"
+            },
+            {
+                "image": "courtphysician clothes are in their own seperate dmi file I despise merge conflicts"
+            }
+        ],
+        "SarmentiCampbell": [
+            {
+                "balance": "Nerf Lich by lowering their dagger skill from 5 to 2, in exchange buff their polearm skill from 2 to 4 and grant them 17 spellpoints, equivalent to CM."
+            },
+            {
+                "balance": "Nerf greater skeletons by removing their infinite stamina, swift intent and lowering their wrestling skill gain by 1."
+            }
+        ],
+        "grungussuss": [
+            {
+                "bugfix": "robes are no longer shit colored"
+            },
+            {
+                "sound": "lock unlock door sounds are back"
+            }
+        ],
+        "Arkatos": [
+            {
+                "rscadd": "Added a new communal triumph buy - Longer Week."
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "bugfix": "better cooking qol"
+            }
+        ]
+    },
+    "2025-08-17": {
+        "grungussuss": [
+            {
+                "qol": "pointing at items in your inventory displays them above you"
+            },
+            {
+                "admin": "orphans are once again a 0 pq role"
+            },
+            {
+                "bugfix": "fixed lag when changing areas caused by loading music files"
+            },
+            {
+                "bugfix": "fixed vicious mockery being an untargeted spell"
+            },
+            {
+                "bugfix": "fixed admin liquid spawn cancel button not working"
+            },
+            {
+                "bugfix": "fixed infinite bronze and steel gear smelt oversight"
+            },
+            {
+                "bugfix": "fixed freshly smithed items being damaged"
+            }
+        ],
+        "Arkatos": [
+            {
+                "rscadd": "Xylix as a storyteller now respects round start events requirements. (But then true silliness begins)"
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "rscdel": "Remove Artificer Keys from pilgrims."
+            }
+        ],
+        "SarmentiCampbell": [
+            {
+                "balance": "Replace Vampire lord's thralls's infinite stamina with infinite energy, Vampire lord will retain their infinite stamina."
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "balance": "royal knights no longer get master skill"
+            },
+            {
+                "balance": "swift intent does less damage"
+            },
+            {
+                "balance": "greatswords and halberds do less damage"
+            }
+        ]
+    },
+    "2025-08-18": {
+        "CheffieGithub": [
+            {
+                "bugfix": "Potentially fix lesser miracle damage nukes."
+            },
+            {
+                "balance": "Stone arrows no longer bypass heart crit requirements."
+            },
+            {
+                "balance": "Arrows and similar projectiles now are crit blocked by stab protection."
+            }
+        ]
+    },
+    "2025-08-19": {
+        "grungussuss": [
+            {
+                "qol": "the item offer effect is now bigger"
+            },
+            {
+                "bugfix": "fixed clamped adjust skillrank not working correctly"
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "bugfix": "infernal watcher fixed"
+            },
+            {
+                "bugfix": "flight runtimes"
+            },
+            {
+                "balance": "changes math calculation so pain matter again"
+            }
+        ],
+        "Arkatos": [
+            {
+                "bugfix": "Fixed a rare issue where a roundstart event failed to trigger due to wrong timing."
+            }
+        ]
+    },
+    "2025-08-20": {
+        "F-e-r-n": [
+            {
+                "balance": "Decompose now requires your opponent to be dead before turning them into a deadite."
+            }
+        ],
+        "grungussuss": [
+            {
+                "qol": "admin announcements are easier to notice"
+            },
+            {
+                "rscadd": "added new scabbards"
+            },
+            {
+                "balance": "scabbards cannot be pickpocketed"
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "balance": "Change Dark/Itinerant Knight squires plate armor to light armor."
+            },
+            {
+                "rscadd": "Add titles for the Dark and Itinerant Knights"
+            },
+            {
+                "rscdel": "Remove Medium Armor Training from the Dark/Itinerant Knights"
+            }
+        ],
+        "SarmentiCampbell": [
+            {
+                "bugfix": "fixed special antag's patron getting removed while using Subclasses, (Barbarian, Mage, etc)"
+            },
+            {
+                "balance": "Remove the ability for bandits to be maniac."
+            }
+        ],
+        "Sulaboy": [
+            {
+                "bugfix": "necra robe sleeves"
+            }
+        ]
+    },
+    "2025-08-21": {
+        "grungussuss": [
+            {
+                "qol": "{FIX-CHAT} verb renamed to Fix-Chat"
+            }
+        ],
+        "Wouju": [
+            {
+                "code_imp": "removed job flags"
+            }
+        ]
+    },
+    "2025-08-22": {
+        "wgtjunior743": [
+            {
+                "rscadd": "A new migrant wave called \\\" Magic School Expedition\\\""
+            },
+            {
+                "rscadd": "A new trait called \\\"Recognized\\\""
+            },
+            {
+                "balance": "Some Foreigners now got the trait \\\"Recognized\\\" and their title are shown."
+            },
+            {
+                "bugfix": "Vampire subordinate creation UI now works on small resolutions"
+            },
+            {
+                "balance": "Buff Churn Undead"
+            }
+        ],
+        "SarmentiCampbell": [
+            {
+                "rscadd": "Add a new special trait - Devout Knight"
+            },
+            {
+                "rscadd": "Major/minor antag now have a chance to spawn a minor antag"
+            },
+            {
+                "balance": "bandits are now actually considered soft antags"
+            }
+        ],
+        "Diegoflores31": [
+            {
+                "rscadd": "Adds new shipments for the goldface"
+            },
+            {
+                "rscadd": "Adds new categories for the goldface"
+            },
+            {
+                "refactor": "Goldface UI changed size and format . its now 2 rows instead of one and will automatically acomodate new categories."
+            }
+        ],
+        "Wouju": [
+            {
+                "rscadd": "You can craft faeu dust, raw essentia, pure essentia, transis dust and thaumic iron dust"
+            },
+            {
+                "rscadd": "the essence splitter now accepts manabloom powder, standard quartz mana crystals, small quartz mana crystals and thaumic iron (dust)"
+            },
+            {
+                "rscadd": "cinnabar can be made in an infuser"
+            },
+            {
+                "rscadd": "gender change potion to pot making aka herbal remedies"
+            },
+            {
+                "rscadd": "the composter accepts sinew and viscera as compost"
+            },
+            {
+                "bugfix": "essence vials update their sprite when pouring essence into a cauldron"
+            },
+            {
+                "bugfix": "gnome test tube now properly displays how much essence it needs"
+            },
+            {
+                "balance": "essence infuser is faster now, splitter has greater capacity"
+            },
+            {
+                "balance": "disease cure now requires 1 part earth essence"
+            },
+            {
+                "refactor": "made it so herbal salves now require 21 units and not 20, herbal remedies need 27 instead of 25, rounds up better when divided by 3."
+            }
+        ],
+        "grungussuss": [
+            {
+                "qol": "throne will now glow when it is in a mode"
+            },
+            {
+                "admin": "scrying no longer messages admins"
+            }
+        ],
+        "HijackSpaghetti": [
+            {
+                "rscadd": "New chalk rune and ritual for leyline attunement a.k.a. mana baptism."
+            }
+        ]
     }
 }

@@ -6,7 +6,6 @@
 	gold is the great hypocritical lubricant in life, founding empires, driving brothers to kill one another. \
 	\n\n\
 	You care not. Another day, another mammon."
-	flag = GRAVETENDER
 	department_flag = OUTSIDERS
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_MERCENARY
@@ -23,6 +22,7 @@
 	give_bank_account = 3
 	advclass_cat_rolls = list(CTAG_MERCENARY = 20)
 	is_foreigner = TRUE
+	is_recognized = TRUE
 
 /datum/outfit/job/mercenary // Reminder message
 	var/tutorial = "<br><br><font color='#855b14'><span class='bold'>The Gaffer, who feeds and houses you may have work for you todae, go see him at the office outside your lodgings.</span></font><br><br>"

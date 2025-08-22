@@ -44,9 +44,9 @@
 	switch(weapon_choice)
 		if("Spear")
 			backr = /obj/item/weapon/polearm/spear
-			H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
+			H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
 		if("Regal Elven Club")
 			beltr = /obj/item/weapon/mace/elvenclub/steel
-			H.adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE)
+			H.adjust_skillrank(/datum/skill/combat/axesmaces, 4, TRUE)
 
 

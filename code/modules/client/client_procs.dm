@@ -1267,7 +1267,7 @@ GLOBAL_LIST_EMPTY(respawncounts)
 			whitelisted = 0
 		return whitelisted
 
-/client/proc/has_triumph_buy(triumph_id)
+/client/proc/has_triumph_buy(triumph_id, unactivated_check = FALSE)
 	if(!triumph_id)
 		return FALSE
 
@@ -1277,7 +1277,11 @@ GLOBAL_LIST_EMPTY(respawncounts)
 
 	for(var/datum/triumph_buy/T in my_triumphs)
 		if(T.triumph_buy_id == triumph_id)
-			return TRUE
+			if(unactivated_check)
+				if(!T.activated)
+					return TRUE
+			else
+				return TRUE
 	return FALSE
 
 /client/proc/activate_triumph_buy(triumph_id)
@@ -1305,6 +1309,11 @@ GLOBAL_LIST_EMPTY(respawncounts)
 	set category = "OOC"
 
 	show_round_stats(pick_assoc(GLOB.featured_stats))
+
+/client/proc/preload_music()
+	if(SSsounds.initialized == TRUE)
+		for(var/sound_path as anything in SSsounds.all_music_sounds)
+			src << load_resource(sound_path, -1)
 
 #undef LIMITER_SIZE
 #undef CURRENT_SECOND

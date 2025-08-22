@@ -22,7 +22,7 @@
 		H.adjust_skillrank(/datum/skill/misc/sneaking, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
-		H.adjust_skillrank(/datum/skill/combat/knives, 2, TRUE)
+		H.adjust_skillrank(/datum/skill/combat/knives, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/riding, 3, TRUE)
 

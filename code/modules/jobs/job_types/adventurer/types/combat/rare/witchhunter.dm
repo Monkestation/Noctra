@@ -9,6 +9,7 @@
 	category_tags = list(CTAG_ADVENTURER)
 	min_pq = 2
 	cmode_music = 'sound/music/cmode/church/CombatInquisitor.ogg'
+	is_recognized = TRUE
 
 /datum/outfit/job/adventurer/puritan/pre_equip(mob/living/carbon/human/H)
 	..()

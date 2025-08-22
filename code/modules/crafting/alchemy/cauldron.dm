@@ -95,7 +95,7 @@
 	to_chat(user, span_info("You pour the [vial.contained_essence.name] into the cauldron."))
 	vial.contained_essence = null
 	vial.essence_amount = 0
-	vial.update_overlays()
+	vial.update_appearance(UPDATE_OVERLAYS)
 
 	brewing = 0 // Reset brewing when new ingredients added
 	lastuser = WEAKREF(user)

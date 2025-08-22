@@ -216,7 +216,7 @@
 	skillcraft = /datum/skill/misc/sewing
 
 /datum/repeatable_crafting_recipe/survival/sack_clothing
-	name = "sack"
+	name = "head sack"
 	requirements = list(
 		/obj/item/natural/cloth = 2,
 		/obj/item/natural/fibers = 1,

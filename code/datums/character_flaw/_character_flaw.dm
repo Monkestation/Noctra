@@ -585,7 +585,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 			var/affected_parts = min(rand(1, 3), joint_parts.len)
 			for(var/i = 1 to affected_parts)
 				var/obj/item/bodypart/BP = pick_n_take(joint_parts)
-				BP.chronic_pain = rand(30, 60)
+				BP.chronic_pain = rand(10, 20)
 				BP.chronic_pain_type = CHRONIC_ARTHRITIS
 
 		to_chat(user, span_warning("Your joints feel stiff and painful - a reminder of your chronic arthritis."))
@@ -605,7 +605,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 		if(arthritic_parts.len)
 			var/obj/item/bodypart/affected = pick(arthritic_parts)
-			affected.lingering_pain += rand(15, 25)
+			affected.lingering_pain += rand(7.5, 12.5)
 			var/pain_msg = pick("Your [affected.name] throbs with arthritic pain!",
 							   "A sharp ache shoots through your [affected.name]!",
 							   "Your [affected.name] feels stiff and painful!")
@@ -635,7 +635,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 		if(major_parts.len)
 			var/obj/item/bodypart/wounded = pick(major_parts)
-			wounded.chronic_pain = rand(40, 70)
+			wounded.chronic_pain = rand(10, 17.5)
 			wounded.chronic_pain_type = pick(CHRONIC_OLD_FRACTURE, CHRONIC_SCAR_TISSUE, CHRONIC_NERVE_DAMAGE)
 			wounded.brute_dam += rand(3, 8) // Some permanent damage
 
@@ -654,7 +654,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		if(prob(3))
 			for(var/obj/item/bodypart/BP in H.bodyparts)
 				if(BP.chronic_pain > 30)
-					BP.lingering_pain += rand(20, 30)
+					BP.lingering_pain += rand(5, 6)
 					to_chat(H, span_warning("Your old war wound flares up from the stress!"))
 					break
 
@@ -662,7 +662,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(prob(1.5))
 		for(var/obj/item/bodypart/BP in H.bodyparts)
 			if(BP.chronic_pain > 0)
-				BP.lingering_pain += rand(10, 20)
+				BP.lingering_pain += rand(5, 10)
 				var/pain_type = pick("sharp", "throbbing", "burning", "aching")
 				to_chat(H, span_warning("A [pain_type] pain shoots through your old wound."))
 				break
@@ -677,7 +677,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		// Apply chronic pain to head
 		for(var/obj/item/bodypart/BP in H.bodyparts)
 			if(BP.body_zone == BODY_ZONE_HEAD)
-				BP.chronic_pain = rand(35, 55)
+				BP.chronic_pain = rand(17.5, 27.5)
 				BP.chronic_pain_type = CHRONIC_NERVE_DAMAGE
 				break
 
@@ -726,7 +726,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		// Apply chronic pain to chest/torso area
 		for(var/obj/item/bodypart/BP in H.bodyparts)
 			if(BP.body_zone == BODY_ZONE_CHEST)
-				BP.chronic_pain = rand(40, 65)
+				BP.chronic_pain = rand(20, 32.5)
 				BP.chronic_pain_type = pick(CHRONIC_OLD_FRACTURE, CHRONIC_SCAR_TISSUE)
 				break
 
@@ -742,7 +742,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(H.m_intent == MOVE_INTENT_RUN && prob(5))
 		for(var/obj/item/bodypart/BP in H.bodyparts)
 			if(BP.body_zone == BODY_ZONE_CHEST)
-				BP.lingering_pain += rand(15, 25)
+				BP.lingering_pain += rand(3, 5)
 				to_chat(H, span_warning("Running aggravates your chronic back pain!"))
 				break
 

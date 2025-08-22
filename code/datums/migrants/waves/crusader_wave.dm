@@ -4,6 +4,7 @@
 	antag_datum = /datum/antagonist/purishep
 	outfit = /datum/outfit/job/specialinquisitor
 	allowed_races = list(SPEC_ID_HUMEN)
+	is_recognized = TRUE
 
 /datum/outfit/job/specialinquisitor/pre_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()
@@ -63,6 +64,7 @@
 	greet_text = "Crusader of the true faith, you came from Grenzelhoft under the command of the Inquisitor. Obey them as they lead you to smite the heathens."
 	outfit = /datum/outfit/job/adventurer/crusader
 	allowed_races = RACES_PLAYER_GRENZ
+	is_recognized = TRUE
 
 /datum/migrant_wave/crusade
 	name = "The Holy Crusade"

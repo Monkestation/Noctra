@@ -67,25 +67,31 @@
 
 /mob/living/carbon/human/proc/checkcritarmor(def_zone, d_type)
 	if(!d_type)
-		return 0
+		return FALSE
 	if(isbodypart(def_zone))
 		var/obj/item/bodypart/CBP = def_zone
 		def_zone = CBP.body_zone
-	var/list/body_parts = list(head, wear_mask, wear_wrists, wear_shirt, wear_neck, cloak, wear_armor, wear_pants, backr, backl, gloves, shoes, belt, wear_ring)
-	for(var/bp in body_parts)
-		if(!bp)
+	var/list/clothing_slots = list(head, wear_mask, wear_wrists, wear_shirt, wear_neck, cloak, wear_armor, wear_pants, backr, backl, gloves, shoes, belt, wear_ring)
+	for(var/clothing in clothing_slots)
+		if(!clothing)
 			continue
-		if(bp && istype(bp , /obj/item/clothing))
-			var/obj/item/clothing/C = bp
-			if(zone2covered(def_zone, C.body_parts_covered))
-				if(C.obj_integrity > 1)
-					if(d_type in C.prevent_crits)
-						return TRUE
+		if(!istype(clothing, /obj/item/clothing))
+			continue
+		var/obj/item/clothing/article = clothing
+		if(!zone2covered(def_zone, article.body_parts_covered))
+			continue
+		if(article.obj_broken)
+			continue
+		// Snowflake
+		if(d_type == BCLASS_PIERCE)
+			d_type = BCLASS_STAB
+
+		if(d_type in article.prevent_crits)
+			return TRUE
 
 /mob/living/carbon/human/on_hit(obj/projectile/P)
 	if(dna && dna.species)
 		dna.species.on_hit(P, src)
-
 
 /mob/living/carbon/human/bullet_act(obj/projectile/P, def_zone = BODY_ZONE_CHEST)
 	if(dna && dna.species)

@@ -4,7 +4,6 @@
 	Your master, the Inquisitor, saved you from the gallows \
 	and has given you true purpose in service to Psydon. \
 	You will not let him down."
-	flag = MONK
 	department_flag = CHURCHMEN
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_SHEPHERD
@@ -191,7 +190,7 @@
 			return
 		var/datum/antagonist/new_antag = new /datum/antagonist/purishep()
 		H.mind.add_antag_datum(new_antag)
-		H.set_patron(/datum/patron/psydon)
+		H.set_patron(/datum/patron/psydon, TRUE)
 		H.verbs |= /mob/living/carbon/human/proc/torture_victim
 		H.verbs |= /mob/living/carbon/human/proc/faith_test
 		if(!H.has_language(/datum/language/oldpsydonic))

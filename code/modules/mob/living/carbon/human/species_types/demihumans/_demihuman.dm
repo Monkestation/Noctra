@@ -174,10 +174,15 @@
 	RegisterSignal(C, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	C.grant_language(/datum/language/common)
 
+/datum/species/demihuman/after_creation(mob/living/carbon/C)
+	. = ..()
+	C.grant_language(/datum/language/beast)
+	to_chat(C, "<span class='info'>I can speak Beastish with ,b before my speech.</span>")
+
 /datum/species/demihuman/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_SAY)
-	C.remove_language(/datum/language/common)
+	C.remove_language(/datum/language/beast)
 
 /datum/species/demihuman/get_skin_list()
 	return sortList(list(

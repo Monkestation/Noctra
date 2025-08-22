@@ -84,9 +84,9 @@
 
 		if(race_name) // race name
 			appendage_to_name += " [race_name]"
+ // job name, don't show job of foreigners.
 
-
-		if(used_title && (!HAS_TRAIT(src, TRAIT_FOREIGNER) || HAS_TRAIT(src, TRAIT_RECRUITED)) && !HAS_TRAIT(src, TRAIT_FACELESS)) // job name, don't show job of foreigners.
+		if(used_title && !HAS_TRAIT(src, TRAIT_FACELESS) && (!HAS_TRAIT(src, TRAIT_FOREIGNER) || HAS_TRAIT(src, TRAIT_RECRUITED) || HAS_TRAIT(src, TRAIT_RECOGNIZED)))
 			appendage_to_name += ", [used_title]"
 
 		if(appendage_to_name) // if we got any of those paramaters add it to their name
@@ -168,7 +168,7 @@
 			var/datum/component/vampire_disguise/disguise_comp = GetComponent(/datum/component/vampire_disguise)
 			if(!disguise_comp.disguised)
 				. += span_userdanger("A MONSTER!")
-          
+
 		if(!is_bandit && (real_name in GLOB.outlawed_players))
 			. += span_userdanger("OUTLAW!")
 
@@ -186,11 +186,11 @@
 			if(HAS_TRAIT(src, TRAIT_CABAL) && HAS_TRAIT(user, TRAIT_CABAL))
 				. += span_purple("A fellow seeker of Her ascension.")
 
+		if(HAS_TRAIT(src, TRAIT_LEPROSY))
+			. += span_necrosis("A LEPER...")
+
 	if(HAS_TRAIT(src, TRAIT_MANIAC_AWOKEN))
 		. += span_userdanger("MANIAC!")
-
-	if(HAS_TRAIT(src, TRAIT_LEPROSY))
-		. += span_necrosis("A LEPER...")
 
 	if(HAS_TRAIT(src, TRAIT_FACELESS))
 		. += span_userdanger("FACELESS?! AN ASSASSIN!")
