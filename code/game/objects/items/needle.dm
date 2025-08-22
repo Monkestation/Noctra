@@ -69,6 +69,9 @@
 	return ..()
 
 /obj/item/needle/pre_attack(atom/A, mob/living/user, params)
+	if(isitem(A) && !can_repair)
+		to_chat(user, span_warning("[src] cannot be used to repair [A]!"))
+		return TRUE
 	if(isitem(A) && can_repair)
 		var/obj/item/I = A
 		if(!(I.obj_flags & CAN_BE_HIT) && !istype(A, /obj/item/storage)) // to preserve old attack_obj behavior
@@ -185,6 +188,6 @@
 
 /obj/item/needle/blessed
 	name = "blessed needle"
-	desc = "<span class='hierophant'>A needle blessed by the ordained prestrans of the Church. A coveted item.</span>"
+	desc = "<span class='hierophant'>A needle blessed by the ordained Pestrans of the Church. A coveted item, for its thread will never end.</span>"
 	infinite = TRUE
-	can_repair = FALSE
+	can_repair = TRUE
