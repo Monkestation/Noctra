@@ -275,7 +275,7 @@ All foods are distributed among various categories. Use common sense.
 							eater.taste(reagents)
 							return
 						else
-							if (eater.has_stress(/datum/stressevent/noble_impoverished_food))
+							if (eater.has_stress_type(/datum/stressevent/noble_impoverished_food))
 								eater.add_stress(/datum/stressevent/noble_desperate)
 							apply_effect = FALSE
 					if (FARE_POOR to FARE_NEUTRAL)

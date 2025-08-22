@@ -1529,46 +1529,18 @@
 		if(LAZYACCESS(modifiers, LEFT_CLICK))
 			if(M.charflaw)
 				to_chat(M, "*----*")
-				to_chat(M, "<span class='info'>[M.charflaw.desc]</span>")
+				to_chat(M, span_info("[M.charflaw.desc]"))
 			to_chat(M, "*--------*")
-			var/list/already_printed = list()
-			var/list/pos_stressors = M.positive_stressors
-			for(var/datum/stressevent/S in pos_stressors)
-				if(S in already_printed)
-					continue
-				var/cnt = 1
-				for(var/datum/stressevent/CS in pos_stressors)
-					if(CS == S)
-						continue
-					if(CS.type == S.type)
-						cnt++
-						already_printed += CS
-				var/ddesc = S.desc
-				if(islist(S.desc))
-					ddesc = pick(S.desc)
-				if(cnt > 1)
-					to_chat(M, "• [ddesc] (x[cnt])")
+			if(!length(M.stressors))
+				to_chat(M, span_info("I'm not feeling much of anything right now."))
+			for(var/stress_type in M.stressors)
+				var/datum/stressevent/stress_event = M.stressors[stress_type]
+				var/count = stress_event.stacks
+				var/ddesc = islist(stress_event.desc) ? pick(stress_event.desc) : stress_event.desc
+				if(count > 1)
+					to_chat(M, "• [ddesc] (x[count])")
 				else
 					to_chat(M, "• [ddesc]")
-			var/list/neg_stressors = M.negative_stressors
-			for(var/datum/stressevent/S in neg_stressors)
-				if(S in already_printed)
-					continue
-				var/cnt = 1
-				for(var/datum/stressevent/CS in neg_stressors)
-					if(CS == S)
-						continue
-					if(CS.type == S.type)
-						cnt++
-						already_printed += CS
-				var/ddesc = S.desc
-				if(islist(S.desc))
-					ddesc = pick(S.desc)
-				if(cnt > 1)
-					to_chat(M, "[ddesc] (x[cnt])")
-				else
-					to_chat(M, "[ddesc]")
-			already_printed = list()
 			to_chat(M, "*--------*")
 		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			if(M.get_triumphs() <= 0)

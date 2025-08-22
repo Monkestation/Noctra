@@ -95,8 +95,8 @@
 				if(I.minstr)
 					var/effective = I.minstr
 					if(HAS_TRAIT(I, TRAIT_WIELDED))
-						if(!is_child(src))
-							effective = max(I.minstr / 2, 1)
+						if(age != AGE_CHILD)
+							effective *= 0.75
 					if(effective > STASTR)
 						if(prob(effective))
 							dropItemToGround(I, silent = FALSE)
