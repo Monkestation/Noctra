@@ -757,6 +757,41 @@
 	created_item = /obj/item/clothing/shoes/boots/armor
 	craftdiff = 4
 
+/datum/anvil_recipe/armor/steel/rare
+	craftdiff = 5
+	abstract_type = /datum/anvil_recipe/armor/steel/rare
+
+/datum/anvil_recipe/armor/steel/rare/dwarf_plate_helm
+	name = "Dwarven Plate Helm (+Bar)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/head/rare/dwarfplate
+
+/datum/anvil_recipe/armor/steel/rare/dwarf_plate_torso
+	name = "Dwarven Plate (+Bar x2)"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/armor/rare/dwarfplate
+
+/datum/anvil_recipe/armor/steel/rare/dwarf_plate_torso
+	name = "Dwarven Plate Boots"
+	created_item = /obj/item/clothing/shoes/boots/rare/dwarfplate
+
+/datum/anvil_recipe/armor/steel/rare/dwarf_plate_gauntlets
+	name = "Dwarven Plate Gauntlets"
+	created_item = /obj/item/clothing/gloves/rare/dwarfplate
+
+/datum/anvil_recipe/armor/steel/rare/grenzel_plate_gauntlets
+	name = "Grenzel Plate Gauntlets"
+	created_item = /obj/item/clothing/gloves/rare/grenzelplate
+
+/datum/anvil_recipe/armor/steel/rare/grenzel_plate
+	name = "Grenzel Plate (+Bar x3)"
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel)
+	created_item = /obj/item/clothing/armor/rare/grenzelplate
+
+/datum/anvil_recipe/armor/steel/rare/grenzel_plate_boots
+	name = "Grenzel Plate Boots"
+	created_item = /obj/item/clothing/shoes/boots/rare/grenzelplate
+
 /datum/anvil_recipe/armor/steel/captain_plate_pants
 	name = "Captain Plate Chausses (+Bar)"
 	recipe_name = "a pair of Premium Plate Chausses"
@@ -784,6 +819,7 @@
 	recipe_name = "a pair of Silver Plate Chausses"
 	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
 	created_item = /obj/item/clothing/pants/platelegs/silver
+
 
 /datum/anvil_recipe/armor/silver/platefull
 	name = "Silver Plate Armor (+Silver Bar, +Steel Bar x3)"
@@ -813,6 +849,11 @@
 ///////////////////////////////////////////////
 
 // --------- BLACKSTEEL -----------
+/datum/anvil_recipe/armor/blacksteel/grenzel_cuirass
+	name = "Grenzelhoft Cuirass (+Steel Bar)"
+	additional_items = list(/obj/item/ingot/steel)
+	created_item = /obj/item/clothing/armor/cuirass/grenzelhoft
+
 /datum/anvil_recipe/armor/blacksteel/platechest
 	name = "Blacksteel Plate Armor (+Bar x3)"
 	additional_items = list(/obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel)
@@ -828,7 +869,13 @@
 /datum/anvil_recipe/armor/blacksteel/elven_plate_chest
 	name = "Elven Plate Armor (+Bar x3)"
 	additional_items = list(/obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel)
-	created_item = /obj/item/clothing/
+	created_item = /obj/item/clothing/armor/rare/elfplate
+	craftdiff = 5
+
+/datum/anvil_recipe/armor/blacksteel/dark_elven_plate_chest
+	name = "Dark Elven Plate Armor (+Bar x3)"
+	additional_items = list(/obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel, /obj/item/ingot/blacksteel)
+	created_item = /obj/item/clothing/armor/rare/elfplate/welfplate
 	craftdiff = 5
 
 /datum/anvil_recipe/armor/blacksteel/platelegs

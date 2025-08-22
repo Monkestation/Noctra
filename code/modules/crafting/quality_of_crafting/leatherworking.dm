@@ -788,6 +788,22 @@
 				/obj/item/natural/fibers = 1)
 	craftdiff = 4
 
+/datum/repeatable_crafting_recipe/leather/standalone/grenzelhoft_leather_boots
+	name = "grenzelhoftian leather boots"
+	output = /obj/item/clothing/shoes/rare/grenzelhoft
+	requirements = list(/obj/item/natural/hide/cured = 2,
+				/obj/item/natural/fibers = 1)
+	craftdiff = 4
+
+/datum/repeatable_crafting_recipe/leather/grenzelhoft_heavy_leather_gloves
+	name = "grenzelhoftian heavy leather gloves"
+	requirements = list(
+		/obj/item/natural/hide/cured = 2,
+		/obj/item/natural/fur = 1,
+	)
+	output = /obj/item/clothing/gloves/angle/grenzel
+	craftdiff = 4
+
 /datum/repeatable_crafting_recipe/leather/standalone/apothecary_overcoat
 	name = "apothecary overcoat"
 	output = /obj/item/clothing/armor/gambeson/apothecary
