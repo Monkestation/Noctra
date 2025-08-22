@@ -371,7 +371,7 @@
 			contents += "<center>Log<BR>"
 			contents += "--------------</center><BR><BR>"
 			for(var/i = SStreasury.log_entries.len to 1 step -1)
-				contents += "<span class='info'>	[SStreasury.log_entries[i]]</span><BR>"
+				contents += "<span class='info'>[SStreasury.log_entries[i]]</span><BR>"
 
 	contents += {"
 		</head>
