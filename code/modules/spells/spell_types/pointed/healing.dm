@@ -134,28 +134,6 @@
 				if (HAS_TRAIT(cast_on, TRAIT_PACIFISM))
 					conditional_buff = TRUE
 					situational_bonus = 25
-			if(/datum/patron/inhumen/zizo)
-				cast_on.visible_message(span_info("Vital energies are sapped towards [cast_on]!"), span_notice("The life around me pales as I am restored!"))
-				// set up a ritual pile of bones (or just cast near a stack of bones whatever) around us for massive bonuses, cap at 50 for 75 healing total (wowie)
-				situational_bonus = 0
-				for (var/obj/item/alch/bone/O in oview(5, owner))
-					situational_bonus = min(situational_bonus + 5, 50)
-				if (situational_bonus > 0)
-					conditional_buff = TRUE
-			if(/datum/patron/inhumen/graggar)
-				cast_on.visible_message(span_info("Foul fumes billow outward as [cast_on] is restored!"), span_notice("A noxious scent burns my nostrils, but I feel better!"))
-				// if you've got lingering toxin damage, you get healed more, but your bonus healing doesn't affect toxin
-				var/toxloss = cast_on.getToxLoss()
-				if (toxloss >= 10)
-					conditional_buff = TRUE
-					situational_bonus = 25
-					cast_on.adjustToxLoss(situational_bonus) // remember we do a global toxloss adjust down below so this is okay
-			if(/datum/patron/inhumen/matthios)
-				cast_on.visible_message(span_info("A wreath of... strange light passes over [cast_on]?"), span_notice("I'm bathed in a... strange holy light?"))
-				// COMRADES! WE MUST BAND TOGETHER!
-				if (HAS_TRAIT(cast_on, TRAIT_BANDITCAMP))
-					conditional_buff = TRUE
-					situational_bonus = 25
 			if(/datum/patron/godless)
 				cast_on.visible_message(span_info("No Gods answer these prayers."), span_notice("No Gods answer these prayers."))
 				return

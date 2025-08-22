@@ -12,6 +12,27 @@
 	///these are the jobs we need to get the role
 	var/list/needed_job
 	var/minor_roleset = FALSE
+	var/list/minor_events = list(
+		/datum/round_event_control/antagonist/solo/aspirant,
+		/datum/round_event_control/antagonist/solo/maniac
+	)
+	var/minor_prob = 80
+
+/datum/round_event_control/antagonist/runEvent(random = FALSE, admin_forced = TRUE)
+	. = ..()
+	try_trigger_minor_event()
+
+/datum/round_event_control/antagonist/proc/try_trigger_minor_event()
+	if(!minor_events) //Just in case the list is empty
+		return
+
+	if(prob(minor_prob))
+		var/picked = pick(minor_events)
+		if(picked)
+			var/datum/round_event_control/antagonist/eventpicked = locate(picked) in SSgamemode.control
+			if(eventpicked)
+				eventpicked.minor_prob = 0
+				SSgamemode.TriggerEvent(eventpicked, forced = FALSE)
 
 /datum/round_event_control/antagonist/proc/check_required()
 	if(!length(exclusive_roles))

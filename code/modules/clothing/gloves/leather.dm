@@ -16,6 +16,7 @@
 
 /obj/item/clothing/gloves/leather/black
 	color = CLOTHING_SOOT_BLACK
+	misc_flags = CRAFTING_TEST_EXCLUDE
 
 /obj/item/clothing/gloves/leather/advanced
 	name = "hardened leather gloves"

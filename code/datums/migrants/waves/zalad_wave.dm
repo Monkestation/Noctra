@@ -5,6 +5,7 @@
 	allowed_races = RACES_PLAYER_ZYBANTINE
 	outfit = /datum/outfit/job/zalad_migration/emir
 	grant_lit_torch = TRUE
+	is_recognized = TRUE
 
 /datum/outfit/job/zalad_migration/emir/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -63,6 +64,7 @@
 	allowed_races = RACES_PLAYER_ZYBANTINE
 	outfit = /datum/outfit/job/zalad_migration/amirah
 	grant_lit_torch = TRUE
+	is_recognized = TRUE
 
 /datum/outfit/job/zalad_migration/amirah/pre_equip(mob/living/carbon/human/H)
 	..()
@@ -116,6 +118,7 @@
 	allowed_races = RACES_PLAYER_ZYBANTINE
 	outfit = /datum/outfit/job/zalad_migration/furusiyya
 	grant_lit_torch = TRUE
+	is_recognized = TRUE
 
 /datum/outfit/job/zalad_migration/furusiyya/pre_equip(mob/living/carbon/human/H)
 	..()

@@ -558,6 +558,8 @@ SUBSYSTEM_DEF(gamemode)
 				continue
 			if(length(required_roles) && !(candidate.mind.assigned_role.title in required_roles))
 				continue
+			if(candidate.mind.special_role)
+				continue
 
 		if(be_special)
 			if(!(candidate.client.prefs) || !(be_special in candidate.client.prefs.be_special))

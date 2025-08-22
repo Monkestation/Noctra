@@ -3,7 +3,6 @@
 	tutorial = "You've lived in this shithole for effectively all your life. \
 	You are not an explorer, nor exactly a warrior in many cases. \
 	You're just some average poor bastard who thinks they'll be something someday."
-	flag = ADVENTURER
 	department_flag = PEASANTS
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	faction = FACTION_TOWN

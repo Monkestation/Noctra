@@ -524,3 +524,33 @@
 	appro_skill = /datum/skill/craft/weaponsmithing
 	additional_items = list(/obj/item/ingot/silver, /obj/item/ingot/gold)
 	created_item = /obj/item/weapon/sword/long/decorated
+
+/datum/anvil_recipe/weapons/silver/noble_sword_scabbard
+	name = "Decorated Silver Sword Scabbard (+Scabbard)"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	additional_items = list(/obj/item/weapon/scabbard/sword)
+	created_item = /obj/item/weapon/scabbard/sword/noble
+
+/datum/anvil_recipe/weapons/silver/noble_knife_sheath
+	name = "Decorated Silver Knife Sheath (+Sheath)"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	additional_items = list(/obj/item/weapon/scabbard/knife)
+	created_item = /obj/item/weapon/scabbard/knife/noble
+
+/datum/anvil_recipe/weapons/gold
+	abstract_type = /datum/anvil_recipe/weapons/gold
+	req_bar = /obj/item/ingot/gold
+	craftdiff = 5
+
+/datum/anvil_recipe/weapons/gold/noble_sword_scabbard
+	name = "Decorated Golden Sword Scabbard (+Scabbard)"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	additional_items = list(/obj/item/weapon/scabbard/sword)
+	created_item = /obj/item/weapon/scabbard/sword/royal
+
+/datum/anvil_recipe/weapons/gold/noble_knife_sheath
+	name = "Decorated Golden Knife Sheath (+Sheath)"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	additional_items = list(/obj/item/weapon/scabbard/knife)
+	created_item = /obj/item/weapon/scabbard/knife/royal
+

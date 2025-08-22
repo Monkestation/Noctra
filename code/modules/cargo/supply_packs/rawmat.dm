@@ -5,7 +5,7 @@
 
 /datum/supply_pack/rawmats/glass
 	name = "Glass Panes (6)"
-	cost = 30
+	cost = 60
 	contains = list(
 		/obj/item/natural/glass,
 		/obj/item/natural/glass,
@@ -17,7 +17,7 @@
 
 /datum/supply_pack/rawmats/copper
 	name = "Copper Ore (4)"
-	cost = 45
+	cost = 60
 	contains = list(
 		/obj/item/ore/copper,
 		/obj/item/ore/copper,
@@ -27,7 +27,7 @@
 
 /datum/supply_pack/rawmats/tin
 	name = "Tin Ore (4)"
-	cost = 45
+	cost = 60
 	contains = list(/obj/item/ore/tin,
 		/obj/item/ore/tin,
 		/obj/item/ore/tin,
@@ -36,7 +36,7 @@
 
 /datum/supply_pack/rawmats/iron
 	name = "Iron Ore (4)"
-	cost = 65
+	cost = 80
 	contains = list(
 		/obj/item/ore/iron,
 		/obj/item/ore/iron,
@@ -46,7 +46,7 @@
 
 /datum/supply_pack/rawmats/coal
 	name = "Coal (6)"
-	cost = 40
+	cost = 60
 	contains = list(
 		/obj/item/ore/coal,
 		/obj/item/ore/coal,
@@ -57,7 +57,7 @@
 
 /datum/supply_pack/rawmats/cloth
 	name = "Fiber Strands (5)"
-	cost = 8
+	cost = 10
 	contains = list(
 		/obj/item/natural/fibers,
 		/obj/item/natural/fibers,
@@ -68,7 +68,7 @@
 
 /datum/supply_pack/rawmats/cloth
 	name = "Cloth (5)"
-	cost = 15
+	cost = 20
 	contains = list(
 		/obj/item/natural/cloth,
 		/obj/item/natural/cloth,
@@ -79,7 +79,7 @@
 
 /datum/supply_pack/rawmats/feather
 	name = "Feathers (5)"
-	cost = 15
+	cost = 50
 	contains = list(
 		/obj/item/natural/feather,
 		/obj/item/natural/feather,
@@ -90,7 +90,7 @@
 
 /datum/supply_pack/rawmats/silk
 	name = "Silk (5)"
-	cost = 28
+	cost = 80
 	contains = list(
 		/obj/item/natural/silk,
 		/obj/item/natural/silk,
@@ -123,13 +123,14 @@
 	)
 /datum/supply_pack/rawmats/riddle_of_steel
 	name = "Riddle of Steel"
+	group = "Special Materials"
 	cost = 600
 	contains = list(
 		/obj/item/riddleofsteel
 	)
 
 /datum/supply_pack/rawmats/lumber
-	name = "Lumber"
+	name = "Planks"
 	cost = 30
 	contains = list(/obj/item/natural/wood/plank,
 	/obj/item/natural/wood/plank,
