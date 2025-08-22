@@ -168,12 +168,6 @@
 		var/mob/mob = loc
 		mob.dropItemToGround(src)
 
-/obj/item/explosive/afterattack(atom/target, mob/user)
-	. = ..()
-	if(active)
-		user.throw_item(target)
-		return
-
 /obj/item/explosive/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..()
 	if(impact_explode)
