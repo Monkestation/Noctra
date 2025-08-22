@@ -11,6 +11,7 @@
 	maximum_possible_slots = 1
 	pickprob = 30
 	min_pq = 0
+	is_recognized = TRUE
 
 /datum/outfit/job/adventurer/crusader
 	allowed_patrons = list(/datum/patron/divine/astrata, /datum/patron/divine/necra, /datum/patron/psydon)

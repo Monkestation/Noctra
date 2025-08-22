@@ -4,6 +4,7 @@
 	you live in this shitpit. Regrettably, the universe sought to make your life a divine comedy. Instead of begging for \
 	coin, the nobility sought it grand to give you a royal title - Ratcatcher. Please, for the love of Necra, just LET IT END!"
 	outfit = /datum/outfit/job/ratcatcher
+	is_recognized = TRUE
 
 /datum/outfit/job/ratcatcher/pre_equip(mob/living/carbon/human/H)
 	..()

@@ -46,6 +46,7 @@
 	base_antags = 1
 	earliest_start = 1 HOURS
 	maximum_antags = 2
+	minor_prob = 0
 	typepath = /datum/round_event/antagonist/solo/maniac/midround
 
 /datum/round_event/antagonist/solo/maniac/midround

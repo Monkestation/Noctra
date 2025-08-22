@@ -93,14 +93,24 @@ GLOBAL_LIST_EMPTY(heretical_players)
 	if(!H || !H.mind || !patron)
 		return
 
-	var/list/spells = list(
-		/datum/action/cooldown/spell/undirected/touch/orison/lesser,
-		/datum/action/cooldown/spell/healing,
-		/datum/action/cooldown/spell/diagnose/holy,
-	)
+	if(!(H.patron.type in ALL_PROFANE_PATRONS))
+		var/list/spells = list(
+			/datum/action/cooldown/spell/undirected/touch/orison/lesser,
+			/datum/action/cooldown/spell/healing,
+			/datum/action/cooldown/spell/diagnose/holy,
+		)
 
-	for(var/datum/action/cooldown/spell/spell as anything in spells)
-		H.add_spell(spell, source = src)
+		for(var/datum/action/cooldown/spell/spell as anything in spells)
+			H.add_spell(spell, source = src)
+	else
+		var/list/spells = list(
+			/datum/action/cooldown/spell/undirected/touch/orison/lesser,
+			/datum/action/cooldown/spell/inhumen_healing,
+			/datum/action/cooldown/spell/diagnose/holy,
+		)
+
+		for(var/datum/action/cooldown/spell/spell as anything in spells)
+			H.add_spell(spell, source = src)
 
 	level = CLERIC_T0
 	max_devotion = CLERIC_REQ_1 //Max devotion limit - Churchlings only get diagnose and lesser miracle.
@@ -148,20 +158,29 @@ GLOBAL_LIST_EMPTY(heretical_players)
 		return
 
 	var/datum/patron/A = H.patron
-	var/list/spells = list(
-		/datum/action/cooldown/spell/aoe/abrogation,
-		A.t0, A.t1,
-	)
-	if(istype(A, /datum/patron/divine/necra))
-		spells += /datum/action/cooldown/spell/avert
+	if(!(H.patron.type in ALL_PROFANE_PATRONS))
+		var/list/spells = list(
+			/datum/action/cooldown/spell/aoe/abrogation,
+			A.t0, A.t1,
+		)
+		if(istype(A, /datum/patron/divine/necra))
+			spells += /datum/action/cooldown/spell/avert
 
-	for(var/datum/action/cooldown/spell/spell as anything in spells)
-		H.add_spell(spell, source = src)
+		for(var/datum/action/cooldown/spell/spell as anything in spells)
+			H.add_spell(spell, source = src)
+	else
+		var/list/spells = list(
+			A.t0,A.t1,/datum/action/cooldown/spell/inhumen_healing,
+		)
+		for(var/datum/action/cooldown/spell/spell as anything in spells)
+			H.add_spell(spell, source = src)
 
 	level = CLERIC_T1
 	max_devotion = 250
 	max_progression = 250
 	update_devotion(50, 50)
+
+
 
 //Templar Spell Spawner
 /datum/devotion/cleric_holder/proc/grant_spells_templar(mob/living/carbon/human/H)
@@ -169,21 +188,27 @@ GLOBAL_LIST_EMPTY(heretical_players)
 		return
 
 	var/datum/patron/A = H.patron
-	if(istype(A, /datum/patron/divine/necra))
-		var/list/spells = list(
-			/datum/action/cooldown/spell/aoe/churn_undead,
-			/datum/action/cooldown/spell/healing,
-		)
-		for(var/datum/action/cooldown/spell/spell as anything in spells)
-			H.add_spell(spell, source = src)
+
+	if(!(H.patron.type in ALL_PROFANE_PATRONS))
+		if(istype(A, /datum/patron/divine/necra))
+			var/list/spells = list(
+				/datum/action/cooldown/spell/aoe/churn_undead,
+				/datum/action/cooldown/spell/healing,
+			)
+			for(var/datum/action/cooldown/spell/spell as anything in spells)
+				H.add_spell(spell, source = src)
+		else
+			var/list/spells = list(
+				/datum/action/cooldown/spell/aoe/abrogation,
+				A.t0,
+			)
+			for(var/datum/action/cooldown/spell/spell as anything in spells)
+				H.add_spell(spell, source = src)
 	else
 		var/list/spells = list(
-			/datum/action/cooldown/spell/aoe/abrogation,
-			A.t0,
+			A.t0,/datum/action/cooldown/spell/inhumen_healing,
 		)
 		for(var/datum/action/cooldown/spell/spell as anything in spells)
-			if(!spell)
-				continue
 			H.add_spell(spell, source = src)
 
 	level = CLERIC_T0

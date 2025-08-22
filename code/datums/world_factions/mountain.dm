@@ -31,16 +31,16 @@
 	)
 	common_pool = list(
 		// Armor - Heavy focus on practical protective gear
-		/datum/supply_pack/armor/skullcap,
-		/datum/supply_pack/armor/minerhelmet,
-		/datum/supply_pack/armor/poth,
-		/datum/supply_pack/armor/nasalh,
-		/datum/supply_pack/armor/chaincoif_iron,
-		/datum/supply_pack/armor/bracers,
-		/datum/supply_pack/armor/chain_gloves_iron,
-		/datum/supply_pack/armor/chainlegs_iron,
-		/datum/supply_pack/armor/chainkilt_iron,
-		/datum/supply_pack/armor/light_armor_boots,
+		/datum/supply_pack/armor/light/skullcap,
+		/datum/supply_pack/armor/light/minerhelmet,
+		/datum/supply_pack/armor/light/poth,
+		/datum/supply_pack/armor/steel/nasalh,
+		/datum/supply_pack/armor/light/chaincoif_iron,
+		/datum/supply_pack/armor/light/bracers,
+		/datum/supply_pack/armor/light/chain_gloves_iron,
+		/datum/supply_pack/armor/light/chainlegs_iron,
+		/datum/supply_pack/armor/light/chainkilt_iron,
+		/datum/supply_pack/armor/light/light_armor_boots,
 		// Apparel
 		/datum/supply_pack/apparel/hatfur,
 		/datum/supply_pack/apparel/leather_boots,
@@ -49,10 +49,9 @@
 		/datum/supply_pack/apparel/knitcap,
 		/datum/supply_pack/apparel/coif,
 		/datum/supply_pack/apparel/apron_brown,
-		/datum/supply_pack/apparel/black_leather_gloves,
-		/datum/supply_pack/armor/leather_bracers,
-		/datum/supply_pack/apparel/scabbard,
-		/datum/supply_pack/apparel/sheath,
+		/datum/supply_pack/armor/light/leather_bracers,
+		/datum/supply_pack/storage/scabbard,
+		/datum/supply_pack/storage/sheath,
 		// Tools - Core dwarven crafting tools
 		/datum/supply_pack/tools/shovel,
 		/datum/supply_pack/tools/rope,
@@ -65,7 +64,7 @@
 		/datum/supply_pack/tools/bucket,
 		// Food - Hearty dwarven fare
 		/datum/supply_pack/food/meat,
-		/datum/supply_pack/food/blackgoat,
+		/datum/supply_pack/food/drinks/blackgoat,
 		/datum/supply_pack/food/potato,
 		/datum/supply_pack/food/wheat,
 		/datum/supply_pack/food/egg,
@@ -79,28 +78,29 @@
 	)
 	uncommon_pool = list(
 		// Better armor
-		/datum/supply_pack/armor/gambeson,
-		/datum/supply_pack/armor/chainmail_iron,
-		/datum/supply_pack/armor/chaincoif_steel,
-		/datum/supply_pack/armor/chainlegs_steel,
-		/datum/supply_pack/armor/chainkilt_steel,
-		/datum/supply_pack/armor/angle_gloves,
-		/datum/supply_pack/armor/steel_boots,
+		/datum/supply_pack/armor/light/cuirass_iron,
+		/datum/supply_pack/armor/light/chainmail_iron,
+		/datum/supply_pack/armor/steel/chaincoif_steel,
+		/datum/supply_pack/armor/steel/chainlegs_steel,
+		/datum/supply_pack/armor/steel/chainkilt_steel,
+		/datum/supply_pack/armor/light/ihalf_plate,
+		/datum/supply_pack/armor/light/heavy_gloves,
+		/datum/supply_pack/armor/steel/steel_boots,
 		// Apparel
 		/datum/supply_pack/apparel/leather_vest_random,
 		/datum/supply_pack/apparel/trousers,
 		// Weapons - Dwarven combat gear
-		/datum/supply_pack/weapons/axe,
-		/datum/supply_pack/weapons/mace,
-		/datum/supply_pack/weapons/smace,
-		/datum/supply_pack/weapons/shortsword,
-		/datum/supply_pack/weapons/sword_iron,
-		/datum/supply_pack/weapons/shield,
-		/datum/supply_pack/weapons/towershield,
+		/datum/supply_pack/weapons/steel/baxe,
+		/datum/supply_pack/weapons/iron/mace,
+		/datum/supply_pack/weapons/steel/smace,
+		/datum/supply_pack/weapons/iron/shortsword,
+		/datum/supply_pack/weapons/iron/sword_iron,
+		/datum/supply_pack/weapons/shield/iron,
+		/datum/supply_pack/weapons/shield/towershield,
 		// Food & Drink
-		/datum/supply_pack/food/butterhair,
-		/datum/supply_pack/food/stonebeard,
-		/datum/supply_pack/food/grenzelbeer,
+		/datum/supply_pack/food/drinks/butterhair,
+		/datum/supply_pack/food/drinks/stonebeard,
+		/datum/supply_pack/food/drinks/grenzelbeer,
 		/datum/supply_pack/food/salami,
 		// Instruments
 		/datum/supply_pack/instruments/mbox,
@@ -110,33 +110,44 @@
 	)
 	rare_pool = list(
 		// High-end armor
-		/datum/supply_pack/armor/cuirass_iron,
-		/datum/supply_pack/armor/brigandine,
-		/datum/supply_pack/armor/cuirass,
-		/datum/supply_pack/armor/plate_gloves,
-		/datum/supply_pack/armor/sallet,
-		/datum/supply_pack/armor/hounskull,
+		/datum/supply_pack/armor/steel/brigandine,
+		/datum/supply_pack/armor/steel/cuirass,
+		/datum/supply_pack/armor/steel/chainmail,
+		/datum/supply_pack/armor/steel/plate_gloves,
+		/datum/supply_pack/armor/steel/sallet,
+		/datum/supply_pack/armor/steel/bracers,
+		/datum/supply_pack/armor/steel/hounskull,
+		/datum/supply_pack/armor/light/ifull_plate,
 		// Apparel
 		/datum/supply_pack/apparel/ridingboots,
 		// Weapons
-		/datum/supply_pack/weapons/greatsword,
-		/datum/supply_pack/weapons/halberd,
-		/datum/supply_pack/weapons/sword,
-		/datum/supply_pack/weapons/greatmace,
-		/datum/supply_pack/weapons/flail,
+		/datum/supply_pack/weapons/iron/greatsword,
+		/datum/supply_pack/weapons/steel/halberd,
+		/datum/supply_pack/weapons/steel/sword,
+		/datum/supply_pack/weapons/iron/greatmace,
+		/datum/supply_pack/weapons/iron/flail,
+		/datum/supply_pack/weapons/iron/axe,
+		/datum/supply_pack/weapons/iron/bardiche,
+		/datum/supply_pack/weapons/steel/greatsword,
+		/datum/supply_pack/weapons/steel/greatmace,
+		/datum/supply_pack/weapons/steel/saxe,
 		// Food & Luxury
-		/datum/supply_pack/food/voddena,
+		/datum/supply_pack/food/drinks/voddena,
 		/datum/supply_pack/jewelry/circlet,
 		/datum/supply_pack/luxury/silver_plaque_belt
 	)
 	exotic_pool = list(
-		/datum/supply_pack/armor/coatofplates,
-		/datum/supply_pack/armor/buckethelm,
-		/datum/supply_pack/armor/visorsallet,
+		/datum/supply_pack/armor/steel/coatofplates,
+		/datum/supply_pack/armor/steel/buckethelm,
+		/datum/supply_pack/armor/steel/chainmail_hauberk,
+		/datum/supply_pack/armor/steel/visorsallet,
+		/datum/supply_pack/armor/steel/half_plate,
 		/datum/supply_pack/jewelry/goldring,
 		/datum/supply_pack/rawmats/riddle_of_steel,
 		/datum/supply_pack/luxury/talkstone,
-		/datum/supply_pack/luxury/gold_plaque_belt
+		/datum/supply_pack/luxury/gold_plaque_belt,
+		/datum/supply_pack/weapons/ranged/puffer,
+		/datum/supply_pack/weapons/ammo/bullets
 	)
 
 /datum/world_faction/mountain_clans/initialize_faction_stock()

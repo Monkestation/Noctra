@@ -202,13 +202,15 @@
 	. += span_notice("Capacity: [storage.get_total_stored()]/[storage.max_total_capacity] units")
 	. += span_notice("Available space: [storage.get_available_space()] units")
 
+	var/essence_amount = 200 * GLOB.thaumic_research.get_cost_reduction("life_tube")
+
 	if(gnome_progress)
 		. += span_boldnotice("A gnome homunculus is currently developing inside the tube.")
 
-	if(storage.has_essence(/datum/thaumaturgical_essence/life, 100))
+	if(storage.has_essence(/datum/thaumaturgical_essence/life, essence_amount))
 		. += span_info("The tube contains enough life essence to begin the breeding process.")
 	else if(storage.has_essence(/datum/thaumaturgical_essence/life))
-		. += span_warning("The tube needs at least 100 units of life essence to breed a homunculus.")
+		. += span_warning("The tube needs at least [essence_amount] units of life essence to breed a homunculus.")
 
 	if(storage.stored_essences.len > 0)
 		. += span_notice("Stored essences:")
