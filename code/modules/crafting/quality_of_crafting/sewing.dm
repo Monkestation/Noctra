@@ -623,7 +623,7 @@
 	craftdiff = 3
 	category = "Cloak"
 
-/datum/repeatable_crafting_recipe/sewing/puritan_cape
+/datum/repeatable_crafting_recipe/sewing/inquisitor_cloak
 	name = "inquisitor's cloak"
 	output = /obj/item/clothing/cloak/cape/inquisitor
 	requirements = list(/obj/item/natural/cloth = 2,
