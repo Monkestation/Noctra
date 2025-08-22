@@ -9,7 +9,7 @@
 /*	.............   Frysteak   ................ */
 /obj/item/reagent_containers/food/snacks/cooked/frysteak
 	name = "frysteak"
-	desc = "A slab of beastflesh, fried to a perfect medium-rare"
+	desc = "A slab of beastflesh, fried to a perfect medium-rare."
 	icon_state = "frysteak"
 	base_icon_state = "frysteak"
 	biting = TRUE
@@ -91,6 +91,19 @@
 			user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.5))
 	return ..()
 
+/obj/item/reagent_containers/food/snacks/cooked/spicesteak
+	name = "spicesteak"
+	desc = "A slab of beastflesh, fried to a perfect medium-rare. It has been seasoned with herbs."
+	icon_state = "frysteak"
+	base_icon_state = "frysteak"
+	biting = TRUE
+	eat_effect = null
+	tastes = list("warm steak" = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = COOKED_MEAT_NUTRITION)
+	slices_num = 0
+	rotprocess = SHELFLIFE_DECENT
+	plateable = TRUE
+	faretype = FARE_NEUTRAL
 
 /*	.............   Fried egg   ................ */
 /obj/item/reagent_containers/food/snacks/cooked/egg
