@@ -39,7 +39,7 @@ GLOBAL_LIST_EMPTY(lord_titles)
 	..()
 	SSticker.rulermob = spawned
 	var/mob/living/carbon/human/H = spawned
-	addtimer(CALLBACK(H, TYPE_PROC_REF(/mob, lord_color_choice)), 5 SECONDS)
+	addtimer(CALLBACK(H, TYPE_PROC_REF(/mob/living/carbon/human, lord_color_choice)), 7 SECONDS)
 	if(spawned.gender == MALE)
 		SSfamilytree.AddRoyal(H, FAMILY_FATHER)
 		ruler_title = "[SSmapping.config.monarch_title]"
