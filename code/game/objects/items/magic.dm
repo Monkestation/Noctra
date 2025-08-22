@@ -31,18 +31,19 @@
 /obj/item/scrying/attack_self(mob/user, params)
 	. = ..()
 	if(world.time < last_scry + cooldown)
-		to_chat(user, "<span class='warning'>I look into [src] but only see inky smoke. Maybe I should wait.</span>")
+		to_chat(user, span_warning("I look into [src] but only see inky smoke. Maybe I should wait."))
 		return
 	var/input = stripped_input(user, "Who are you looking for?", "Scrying Orb")
 	if(!input)
 		return
 	if(!user.key)
 		return
-	if(world.time < last_scry + cooldown)
-		to_chat(user, "<span class='warning'>I look into [src] but only see inky smoke. Maybe I should wait.</span>")
-		return
 	if(!user.mind || !user.mind.do_i_know(name=input))
-		to_chat(user, "<span class='warning'>I don't know anyone by that name.</span>")
+		to_chat(user, span_warning("I don't know anyone by that name."))
+		return
+	//check is applied twice to prevent someone from bypassing the cooldown
+	if(world.time < last_scry + cooldown)
+		to_chat(user, span_warning("I look into [src] but only see inky smoke. Maybe I should wait."))
 		return
 	for(var/mob/living/carbon/human/HL in GLOB.human_list)
 		if(HL.real_name == input)
@@ -59,20 +60,21 @@
 				return
 			S.ManualFollow(HL)
 			last_scry = world.time
-			user.visible_message("<span class='danger'>[user] stares into [src], [p_their()] eyes rolling back into [p_their()] head.</span>")
+			user.visible_message(span_danger("[user] stares into [src], [p_their()] eyes rolling back into [p_their()] head."))
 			addtimer(CALLBACK(S, TYPE_PROC_REF(/mob/dead/observer, reenter_corpse)), 8 SECONDS)
 			if(!HL.stat)
 				if(HL.STAPER >= 15)
 					if(HL.mind)
 						if(HL.mind.do_i_know(name=user.real_name))
-							to_chat(HL, "<span class='warning'>I can clearly see the face of [user.real_name] staring at me!.</span>")
+							to_chat(HL, span_warning("I can clearly see the face of [user.real_name] staring at me!"))
+							to_chat(user, span_warning("[HL.real_name] stares back at me!"))
 							return
-					to_chat(HL, "<span class='warning'>I can clearly see the face of an unknown [user.gender == FEMALE ? "woman" : "man"] staring at me!</span>")
+					to_chat(HL, span_warning("I can clearly see the face of an unknown [user.gender == FEMALE ? "woman" : "man"] staring at me!"))
 					return
 				if(HL.STAPER >= 11)
-					to_chat(HL, "<span class='warning'>I feel a pair of unknown eyes on me.</span>")
+					to_chat(HL, span_warning("I feel a pair of unknown eyes on me."))
 			return
-	to_chat(user, "<span class='warning'>I peer into the ball, but can't find [input].</span>")
+	to_chat(user, span_warning("I peer into [src], but can't find [input]."))
 	return
 
 /////////////////////////////////////////Crystal ball ghsot vision///////////////////
