@@ -260,14 +260,9 @@
 			return
 		if(locked())
 			if(istype(user.get_active_held_item(), /obj/item/key) || istype(user.get_active_held_item(), /obj/item/storage/keyring))
-				var/obj/item/key_item = user.get_active_held_item()
-				last_bumper = user
-				src.attackby(key_item, user)
-				if(!locked())
-					src.Open(TRUE)
-					addtimer(CALLBACK(src, PROC_REF(Close), TRUE, TRUE), 25)
-					return
-				last_bumper = null
+				user.visible_message(span_warning("[user] fumbles with their keys..."), \
+					span_notice("I fumble with my keys..."))
+				addtimer(CALLBACK(src, PROC_REF(autobump), user), 5)
 			rattle()
 			return
 		if(TryToSwitchState(AM))
@@ -278,6 +273,16 @@
 					addtimer(CALLBACK(src, PROC_REF(Close), TRUE), delay)
 				else
 					addtimer(CALLBACK(src, PROC_REF(Close), FALSE), delay)
+
+/obj/structure/door/proc/autobump(mob/user)
+	var/obj/item/key_item = user.get_active_held_item()
+	last_bumper = user
+	src.attackby(key_item, user)
+	if(!locked())
+		src.Open(TRUE)
+		addtimer(CALLBACK(src, PROC_REF(Close), TRUE, TRUE), 25)
+		return
+	last_bumper = null
 
 /obj/structure/door/CanAStarPass(ID, to_dir, datum/requester)
 	. = ..()
