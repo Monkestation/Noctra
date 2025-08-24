@@ -50,11 +50,9 @@
 		winset(src, null, "input.focus=true ; input.text=[url_encode(_key)]")
 		return
 
-	//offset by 1 because the buffer address is 0 indexed because the math was simpler
-	keys_held[current_key_address + 1] = _key
-	//the time a key was pressed isn't actually used anywhere (as of 2019-9-10) but this allows easier access usage/checking
-	keys_held[_key] = world.time
-	current_key_address = ((current_key_address + 1) % HELD_KEY_BUFFER_LENGTH)
+	if(length(keys_held) > MAX_HELD_KEYS)
+		keys_held.Cut(1,2)
+	keys_held[_key] = TRUE
 	var/movement = movement_keys[_key]
 	if(!(next_move_dir_sub & movement) && !keys_held["Ctrl"])
 		next_move_dir_add |= movement
@@ -97,11 +95,7 @@
 		var/datum/buildmode/B = click_intercept
 		B.toggle_pixel_positioning_mode(FALSE)
 
-	//Can't just do a remove because it would alter the length of the rolling buffer, instead search for the key then null it out if it exists
-	for(var/i in 1 to HELD_KEY_BUFFER_LENGTH)
-		if(keys_held[i] == _key)
-			keys_held[i] = null
-			break
+	keys_held -= _key
 	var/movement = movement_keys[_key]
 	if(!(next_move_dir_add & movement))
 		next_move_dir_sub |= movement
