@@ -16,29 +16,27 @@ SUBSYSTEM_DEF(librarian)
 	books[input] = file2book(input)
 	return books[input]
 
-
 /datum/controller/subsystem/librarian/proc/get_books(search_title, search_author, search_category)
 	var/list/return_books = list()
+
 	if(!search_title && !search_author && !search_category)
 		return list()
-	if(books.Find(search_title))
-		return_books |= list(books[search_title])
 
-	if(search_author)
-		for(var/book in books)
-			var/list/book_info = books[book]
-			if(book_info["author"] == search_author)
-				return_books|= list(books[book])
+	for(var/filename in books)
+		var/list/book_info = books[filename]
+		if(!book_info || !book_info["book_title"])
+			continue
 
-	if(search_category)
-		if(search_category == "Any")
-			for(var/book in books)
-				return_books |= list(books[book])
-		else
-			for(var/book in books)
-				var/list/book_info = books[book]
-				if(book_info["category"] == search_category)
-					return_books |= list(books[book])
+		var/matches = TRUE
+		if(search_title && !findtext(lowertext(book_info["book_title"]), lowertext(search_title)))
+			matches = FALSE
+		if(search_author && !findtext(lowertext(book_info["author"]), lowertext(search_author)))
+			matches = FALSE
+		if(search_category && search_category != "Any" && book_info["category"] != search_category)
+			matches = FALSE
+
+		if(matches)
+			return_books += list(book_info)
 
 	return return_books
 

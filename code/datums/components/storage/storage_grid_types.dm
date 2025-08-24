@@ -180,18 +180,9 @@
 
 /datum/component/storage/concrete/grid/headhook/New(datum/P, ...)
 	. = ..()
-	set_holdable(
-		typecacheof(list(/obj/item/natural/head/volf,
-		/obj/item/natural/head/saiga,
-		/obj/item/natural/head/rous,
-		/obj/item/natural/head/spider,
-		/obj/item/natural/head/bug,
-		/obj/item/bodypart/head/goblin,
-		/obj/item/bodypart/head/rousman,
-		/obj/item/bodypart/head,
-		/obj/item/bodypart/head/orc,
-		/obj/item/bodypart/head/zizombie)
-	))
+	set_holdable(list(/obj/item/natural/head,
+		/obj/item/bodypart/head)
+	)
 
 /datum/component/storage/concrete/grid/headhook/bronze
 	max_w_class = WEIGHT_CLASS_NORMAL
@@ -204,21 +195,6 @@
 	allow_quick_empty = TRUE
 	allow_dump_out = TRUE
 	insert_preposition = "in"
-
-/datum/component/storage/concrete/grid/headhook/bronze/New(datum/P, ...)
-	. = ..()
-	set_holdable(
-		typecacheof(list(/obj/item/natural/head/volf,
-		/obj/item/natural/head/saiga,
-		/obj/item/natural/head/rous,
-		/obj/item/natural/head/spider,
-		/obj/item/natural/head/bug,
-		/obj/item/bodypart/head/goblin,
-		/obj/item/bodypart/head/rousman,
-		/obj/item/bodypart/head,
-		/obj/item/bodypart/head/orc,
-		/obj/item/bodypart/head/zizombie)
-	))
 
 /datum/component/storage/concrete/grid/crucible
 	screen_max_rows = 5

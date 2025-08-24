@@ -64,14 +64,6 @@
 	var/next_lmove = null
 	var/used_hand = 1
 
-	/**
-	 * Magic var that stops you moving and interacting with anything
-	 *
-	 * Set when you're being turned into something else and also used in a bunch of places
-	 * it probably shouldn't really be
-	 */
-	var/notransform = null	//Carbon
-
 	/// Is the mob blind
 	var/eye_blind = 0		//Carbon
 	/// Does the mob have blurry sight
@@ -122,7 +114,7 @@
 	var/list/possible_a_intents = list()//Living
 	var/list/possible_offhand_intents = list()//Living
 	var/list/possible_rmb_intents = list()
-	var/list/base_intents = list() //bare hand intents
+	var/list/base_intents = list(INTENT_HARM) //bare hand intents
 	var/l_index = 1
 	var/r_index = 1
 	var/r_ua_index = 1

@@ -187,15 +187,24 @@
 	search_manuscripts(user, search_title, search_author, search_category)
 
 /obj/machinery/printingpress/proc/search_manuscripts(mob/user, search_title, search_author, search_category)
-	var/list/books = list()
+	var/list/matching_books = SSlibrarian.get_books(search_title, search_author, search_category)
+	var/list/available_books = SSlibrarian.pull_player_book_titles()
 
-	books |= SSlibrarian.get_books(search_title, search_author, search_category)
+	var/list/book_data_to_filename = list()
+	for(var/filename in available_books)
+		var/list/book_data = SSlibrarian.file2playerbook(filename)
+		if(book_data && book_data["book_title"])
+			book_data_to_filename[json_encode(book_data)] = filename
+
 	var/dat = "<h3>Manuscript Search Results:</h3><br>"
-	dat += "<table><tr><th>Author</th><th>Title</th><th>Category</th><th>Print</th></tr>"
-	var/list/decoded_books = SSlibrarian.pull_player_book_titles()
-	for(var/list/book in books)
-		dat += "<tr><td>[book["author"]]</td><td>[book["book_title"]]</td><td>[book["category"]]</td><td><a href='byond://?src=[REF(src)];print=1;id=[decoded_books[book]]'>Print</a></td></tr>"
-	if (!length(books))
+	dat += "<table><tr><th>Title</th><th>Author</th><th>Category</th><th>Print</th></tr>"
+
+	for(var/list/book in matching_books)
+		var/filename = book_data_to_filename[json_encode(book)]
+		if(filename)
+			dat += "<tr><td>[book["book_title"]]</td><td>[book["author"]]</td><td>[book["category"]]</td><td><a href='byond://?src=[REF(src)];print=1;filename=[url_encode(filename)]'>Print</a></td></tr>"
+
+	if(!length(matching_books))
 		dat += "<tr><td colspan='4'>No results found.</td></tr>"
 
 	dat += "</table>"
@@ -203,13 +212,12 @@
 	popup.set_content(dat)
 	popup.open()
 
-
 /obj/machinery/printingpress/Topic(href, href_list)
 	if(printing)
-		return // Ignore interactions while printing
+		return
 	if("print" in href_list)
-		var/id = url_encode(href_list["id"])
-		start_printing(usr, "archive", id)
+		var/filename = href_list["filename"]
+		start_printing(usr, "archive", filename)
 
 #undef PRINTER_COOLDOWN
 #undef PRINTING_TIME

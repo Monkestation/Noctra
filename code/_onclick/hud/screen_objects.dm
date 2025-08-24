@@ -127,6 +127,10 @@
 	if(modifiers["middle"])
 		if(QDELETED(book))
 			book = new(null)
+		var/mob/M = usr
+		for(var/datum/recipe as anything in M.mind?.learned_recipes)
+			book.types |= recipe.type
+		book.generate_categories()
 		usr << browse(book.generate_html(usr),"window=recipe;size=800x810")
 		return
 	if(world.time < lastclick + 3 SECONDS)

@@ -5,7 +5,7 @@
 	icon_state = "troll"
 	icon_living = "troll"
 	icon_dead = "troll_dead"
-	pixel_x = -16
+	SET_BASE_PIXEL(-16, 0)
 
 	faction = list(FACTION_ORCS)
 	footstep_type = FOOTSTEP_MOB_HEAVY
@@ -22,14 +22,14 @@
 	aggro_vision_range = 6
 
 	botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/strange = 1, \
-						/obj/item/alch/horn = 1)
+						/obj/item/natural/hide = 1)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/strange = 1,
 						/obj/item/natural/hide = 2, \
-						/obj/item/alch/horn = 2)
+						/obj/item/alch/horn = 1)
 	perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/strange= 2, \
 						/obj/item/natural/hide = 3, \
-						/obj/item/alch/horn = 2, \
-						/obj/item/natural/head/troll = 1)
+						/obj/item/alch/horn = 2)
+	head_butcher = /obj/item/natural/head/troll
 
 	health = TROLL_HEALTH
 	maxHealth = TROLL_HEALTH
@@ -195,17 +195,17 @@
 	ai_controller = /datum/ai_controller/troll/cave
 
 	botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/strange = 1, \
-						/obj/item/alch/horn = 1, \
+						/obj/item/natural/hide = 1, \
 						/obj/item/natural/rock/mana_crystal = 1)
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/strange = 1, \
 						/obj/item/natural/hide = 2, \
-						/obj/item/alch/horn = 2, \
+						/obj/item/alch/horn = 1, \
 						/obj/item/natural/rock/mana_crystal = 2)
 	perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/strange= 2, \
 						/obj/item/natural/hide = 3, \
 						/obj/item/alch/horn = 2, \
-						/obj/item/natural/head/troll/cave = 1, \
 						/obj/item/natural/rock/mana_crystal = 3)
+	head_butcher = /obj/item/natural/head/troll/cave
 
 	dendor_taming_chance = DENDOR_TAME_PROB_LOW
 	defprob = 15
@@ -229,8 +229,8 @@
 	icon = 'icons/mob/creacher/trolls/troll_axe.dmi'
 	perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/strange = 2, \
 					/obj/item/natural/hide = 3, \
-					/obj/item/alch/horn = 2, \
-					/obj/item/natural/head/troll/axe = 1)
+					/obj/item/alch/horn = 2)
+	head_butcher = /obj/item/natural/head/troll/axe
 	dendor_taming_chance = DENDOR_TAME_PROB_LOW
 	base_intents = list(/datum/intent/simple/troll_axe)
 	attack_sound = list('sound/combat/wooshes/blunt/wooshhuge (1).ogg','sound/combat/wooshes/blunt/wooshhuge (2).ogg','sound/combat/wooshes/blunt/wooshhuge (3).ogg')

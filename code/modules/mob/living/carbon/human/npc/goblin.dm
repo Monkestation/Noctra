@@ -141,7 +141,7 @@
 
 /datum/species/goblin/regenerate_icons(mob/living/carbon/human/H)
 	H.icon_state = ""
-	if(H.notransform)
+	if(HAS_TRAIT(H, TRAIT_NO_TRANSFORM))
 		return 1
 	H.update_inv_hands()
 	H.update_inv_handcuffed()
@@ -309,6 +309,8 @@
 	H.base_constitution = rand(4, 8)
 	H.base_endurance = rand(8, 12)
 	H.base_speed = rand(8, 14)
+	H.recalculate_stats(FALSE)
+
 	if(is_species(H, /datum/species/goblin/hell))
 		H.STASTR += 6
 		H.STACON += 6

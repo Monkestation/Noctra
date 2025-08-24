@@ -2,6 +2,7 @@
 	var/rent_cost = 1
 	///this is the id we check inside of a players save data for them
 	var/house_id = ""
+	var/link_id
 	var/datum/map_template/default_template
 	var/owner_ckey
 
@@ -56,6 +57,8 @@ SUBSYSTEM_DEF(housing)
 			owned_properties |= spot
 		if(length(unlocated_properties))
 			for(var/obj/effect/landmark/house_spot/property as anything in unlocated_properties)
+				if(property.link_id)
+					continue
 				var/datum/map_template/template = new property.default_template
 				template.load(get_turf(property))
 				var/list/turfs = template.get_affected_turfs(get_turf(property))
@@ -281,3 +284,144 @@ SUBSYSTEM_DEF(housing)
 
 	// Fallback to coordinate checking
 	return (T.x >= property_bounds_minx && T.x <= property_bounds_maxx && T.y >= property_bounds_miny && T.y <= property_bounds_maxy && T.z >= property_bounds_z && T.z <= property_bounds_zmax)
+
+/obj/structure/sign/property_claim
+	name = "Property Claim"
+	desc = "Click to claim this property. If you have a saved design, it will be loaded."
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "questnoti"
+
+	var/claimed = FALSE
+	var/obj/effect/landmark/house_spot/linked_property
+	var/claiming_ckey = null
+	var/link_id
+
+/obj/structure/sign/property_claim/Initialize()
+	. = ..()
+	for(var/obj/effect/landmark/house_spot/spot as anything in SShousing.properties)
+		if(!spot.link_id)
+			continue
+		if(spot.link_id != link_id)
+			continue
+		linked_property = spot
+
+/obj/structure/sign/property_claim/attack_hand(mob/user)
+	. = ..()
+	if(!user.client)
+		return
+
+	if(!linked_property)
+		to_chat(user, "<span class='warning'>No property found linked to this sign!</span>")
+		return
+
+	if(claimed && claiming_ckey == user.ckey)
+		save_claimed_property(user)
+		return
+
+	if(claimed && claiming_ckey != user.ckey)
+		to_chat(user, "<span class='warning'>This property is already claimed by someone else this round!</span>")
+		return
+
+	if(check_for_other_mobs(user))
+		to_chat(user, "<span class='warning'>You cannot claim this property while other people are present in the area!</span>")
+		return
+
+	var/confirm = alert(user, "Claim this property?", "Property Claim", "Yes", "No")
+	if(confirm != "Yes")
+		return
+
+	if(check_for_other_mobs(user))
+		to_chat(user, "<span class='warning'>Someone entered the area! Claiming cancelled.</span>")
+		return
+
+	claim_property(user)
+
+/obj/structure/sign/property_claim/proc/check_for_other_mobs(mob/claiming_user)
+	if(!linked_property)
+		return FALSE
+
+	var/turf/start_turf = get_turf(linked_property)
+	if(!start_turf)
+		return FALSE
+
+	var/minx = start_turf.x
+	var/miny = start_turf.y
+	var/minz = start_turf.z
+	var/maxx = minx + linked_property.template_x - 1
+	var/maxy = miny + linked_property.template_y - 1
+	var/maxz = minz + linked_property.template_z - 1
+
+	for(var/turf/T in block(locate(minx, miny, minz), locate(maxx, maxy, maxz)))
+		for(var/mob/M in T.contents)
+			if(M == claiming_user)
+				continue
+			if(M.client)
+				return TRUE
+	return FALSE
+
+/obj/structure/sign/property_claim/proc/claim_property(mob/user)
+	claimed = TRUE
+	claiming_ckey = user.ckey
+	linked_property.owner_ckey = user.ckey
+
+
+	var/property_file = "data/properties/[user.ckey]_[linked_property.house_id].dmm"
+	if(fexists(property_file))
+		clear_property_area()
+		var/success = SShousing.load_property_from_data(user.ckey, get_turf(linked_property), TRUE)
+
+		if(success)
+			to_chat(user, "<span class='notice'>Loaded your saved design!</span>")
+		else
+			to_chat(user, "<span class='notice'>No saved design found - area claimed as-is.</span>")
+
+	name = "Claimed Property"
+	desc = "This property has been claimed by you. Click to save your current design."
+
+	var/datum/property_controller/new_controller = new(linked_property)
+	SShousing.property_controllers |= new_controller
+
+/obj/structure/sign/property_claim/proc/save_claimed_property(mob/user)
+	if(!linked_property || claiming_ckey != user.ckey)
+		to_chat(user, "<span class='warning'>You cannot save this property!</span>")
+		return
+
+	var/confirm = alert(user, "Save the current state of your claimed property?", "Save Property", "Yes", "No")
+	if(confirm != "Yes")
+		return
+
+	var/success = SShousing.save_property_to_data(user.ckey, linked_property)
+
+	if(success)
+		to_chat(user, "<span class='notice'>Property saved successfully!</span>")
+	else
+		to_chat(user, "<span class='warning'>Failed to save property!</span>")
+
+/obj/structure/sign/property_claim/proc/clear_property_area()
+	if(!linked_property)
+		return
+
+	var/turf/start_turf = get_turf(linked_property)
+	if(!start_turf)
+		return
+
+	// Calculate property bounds
+	var/minx = start_turf.x
+	var/miny = start_turf.y
+	var/minz = start_turf.z
+	var/maxx = minx + linked_property.template_x - 1
+	var/maxy = miny + linked_property.template_y - 1
+	var/maxz = minz + linked_property.template_z - 1
+
+	// Clear all objects and reset turfs in the property area
+	for(var/turf/T in block(locate(minx, miny, minz), locate(maxx, maxy, maxz)))
+		// Delete all objects on the turf
+		for(var/obj/structure/O in T.contents)
+			if(O == src) // Don't delete the sign itself
+				continue
+			if(O == linked_property)
+				continue
+			qdel(O)
+
+		// Reset turf to basic floor or whatever default turf type
+		T.ScrapeAway()

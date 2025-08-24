@@ -44,6 +44,17 @@ GLOBAL_VAR_INIT(mobids, 1)
 	..()
 	return QDEL_HINT_HARDDEL
 
+/// Assigns a (c)key to this mob.
+/mob/proc/PossessByPlayer(ckey)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(isnull(ckey))
+		return
+
+	if(!istext(ckey))
+		CRASH("Tried to assign a mob a non-text ckey, wtf?!")
+
+	src.ckey = ckey(ckey)
+
 /**
  * Intialize a mob
  *
@@ -740,7 +751,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 		return FALSE
 	if(anchored)
 		return FALSE
-	if(notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_RESTRAINED))
 		return FALSE
@@ -914,13 +925,13 @@ GLOBAL_VAR_INIT(mobids, 1)
 ///Call back post buckle to a mob to offset your visual height
 /mob/post_buckle_mob(mob/living/M)
 	var/height = M.get_mob_buckling_height(src)
-	M.pixel_y = initial(M.pixel_y) + height
+	M.pixel_y = M.base_pixel_y + height
 	if(M.layer < layer)
 		M.layer = layer + 0.1
 ///Call back post unbuckle from a mob, (reset your visual height here)
 /mob/post_unbuckle_mob(mob/living/M)
 	M.layer = initial(M.layer)
-	M.pixel_y = initial(M.pixel_y)
+	M.pixel_y = M.base_pixel_y
 
 ///returns the height in pixel the mob should have when buckled to another mob.
 /mob/proc/get_mob_buckling_height(mob/seat)
@@ -1245,13 +1256,6 @@ GLOBAL_VAR_INIT(mobids, 1)
 	hydration = max(0, change)
 	if(hydration > HYDRATION_LEVEL_FULL)
 		hydration = HYDRATION_LEVEL_FULL
-
-///Set the movement type of the mob and update it's movespeed
-/mob/setMovetype(newval)
-	. = ..()
-	if(isnull(.))
-		return
-	update_movespeed(FALSE)
 
 /mob/proc/update_equipment_speed_mods()
 	var/speedies = equipped_speed_mods()

@@ -69,9 +69,6 @@
 
 	if(!MOBTIMER_EXISTS(src, MT_DEATHDIED))
 		MOBTIMER_SET(src, MT_DEATHDIED)
-		var/tris2take = 0
-		if(istype(A, /area/rogue/indoors/town/cell))
-			tris2take += -2
 		if(H in SStreasury.bank_accounts)
 			for(var/obj/structure/fake_machine/camera/C in view(7, src))
 				var/area_name = A.name
@@ -85,16 +82,8 @@
 			if(istype(buckled, /obj/structure/fluff/psycross) || istype(buckled, /obj/machinery/light/fueled/campfire/pyre))
 				if((real_name in GLOB.excommunicated_players) || (real_name in GLOB.heretical_players))
 					yeae = FALSE
-					tris2take += -2
 				if(real_name in GLOB.outlawed_players)
 					yeae = FALSE
-		if(istype(src, /mob/living/carbon/human/species/skeleton/death_arena))
-			tris2take = 0
-		if(tris2take)
-			adjust_triumphs(tris2take)
-		else
-			if(!istype(src, /mob/living/carbon/human/species/skeleton/death_arena) && get_triumphs() > 0)
-				adjust_triumphs(-1)
 
 		if(mind && yeae)
 			// Omens are handled here
@@ -122,11 +111,12 @@
 								else
 									D.add_stress(/datum/stressevent/viewdeath)
 
+	dna.species.spec_death(gibbed, src) // parent call deletes dna
+
 	. = ..()
 
 	dizziness = 0
 	jitteriness = 0
-	dna.species.spec_death(gibbed, src)
 
 	if(SSticker.HasRoundStarted())
 		SSblackbox.ReportDeath(src)

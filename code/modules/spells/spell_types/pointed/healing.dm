@@ -56,7 +56,6 @@
 				span_notice("I am despised by the Ten, rejected, and they remind me just how unlovable I am with a wave of pain!"),
 			)
 			cast_on.emote("scream")
-			cast_on.adjustFireLoss(base_healing)
 			return
 
 	var/conditional_buff = FALSE

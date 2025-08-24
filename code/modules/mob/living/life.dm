@@ -1,9 +1,5 @@
 /mob/living/proc/Life(seconds, times_fired)
 	set waitfor = FALSE
-	set invisibility = 0
-
-	if((movement_type & FLYING) && !(movement_type & FLOATING))	//TODO: Better floating
-		float(on = TRUE)
 
 	if (client)
 		var/turf/T = get_turf(src)
@@ -24,30 +20,29 @@
 		log_game("Z-TRACKING: [src] of type [src.type] has a Z-registration despite not having a client.")
 		update_z(null)
 
-	if (notransform)
-		return
-	if(!loc)
+	if(isnull(loc) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
-	//Breathing, if applicable
-	handle_temperature()
-	handle_breathing(times_fired)
-	if(HAS_TRAIT(src, TRAIT_SIMPLE_WOUNDS))
-		handle_wounds()
-		handle_embedded_objects()
-		handle_blood()
-		//passively heal even wounds with no passive healing
-		for(var/datum/wound/wound as anything in get_wounds())
-			wound.heal_wound(1)
+	if(!HAS_TRAIT(src, TRAIT_STASIS))
+		//Breathing, if applicable
+		handle_temperature()
+		handle_breathing(times_fired)
+		if(HAS_TRAIT(src, TRAIT_SIMPLE_WOUNDS))
+			handle_wounds()
+			handle_embedded_objects()
+			handle_blood()
+			//passively heal even wounds with no passive healing
+			for(var/datum/wound/wound as anything in get_wounds())
+				wound.heal_wound(1)
 
-	if (QDELETED(src)) // diseases can qdel the mob via transformations
-		return
+		if (QDELETED(src)) // diseases can qdel the mob via transformations
+			return
 
-	//Random events (vomiting etc)
-	handle_random_events()
+		//Random events (vomiting etc)
+		handle_random_events()
 
-	handle_traits() // eye, ear, brain damages
-	handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
+		handle_traits() // eye, ear, brain damages
+		handle_status_effects() //all special effects, stun, knockdown, jitteryness, hallucination, sleeping, etc
 
 	update_sneak_invis()
 	handle_fire()
@@ -65,7 +60,7 @@
 
 /mob/living/proc/DeadLife()
 	set invisibility = 0
-	if (notransform)
+	if (HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 	if(!loc)
 		return

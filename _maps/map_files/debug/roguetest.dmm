@@ -2124,6 +2124,16 @@
 /obj/structure/hotspring/border/nine,
 /turf/open/floor/cobblerock,
 /area/rogue/outdoors/mountains/decap)
+"wx" = (
+/obj/effect/landmark/house_spot{
+	template_z = 2;
+	template_x = 6;
+	template_y = 6;
+	link_id = "test";
+	house_id = "test"
+	},
+/turf/open/floor/grass/yel,
+/area/rogue/outdoors)
 "wD" = (
 /obj/structure/bridge_stakes{
 	dir = 8
@@ -3102,6 +3112,12 @@
 	},
 /turf/open/floor/dirt/road,
 /area/rogue/outdoors)
+"SN" = (
+/obj/structure/sign/property_claim{
+	link_id = "test"
+	},
+/turf/closed/wall/mineral/stone,
+/area/rogue/indoors/town/manor)
 "SS" = (
 /obj/structure/stairs/stone{
 	dir = 8
@@ -16716,7 +16732,7 @@ jN
 jN
 hA
 jN
-QN
+wx
 aF
 pD
 zF
@@ -16973,7 +16989,7 @@ iC
 sE
 jq
 ZT
-jN
+SN
 ai
 Wr
 pD

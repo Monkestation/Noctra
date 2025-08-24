@@ -48,8 +48,6 @@
 /datum/antagonist/assassin/on_removal()
 	if(!silent && owner.current)
 		to_chat(owner.current,"<span class='danger'>The red fog in my mind is fading. I am no longer an [name]!</span>")
-		REMOVE_TRAIT(owner.current, TRAIT_ASSASSIN, "[type]")
-		REMOVE_TRAIT(owner.current, TRAIT_VILLAIN, "[type]")
 	return ..()
 
 /datum/antagonist/assassin/on_life(mob/user)

@@ -5,14 +5,14 @@
 	icon_state = "atm"
 	density = FALSE
 	blade_dulling = DULLING_BASH
-	pixel_y = 32
+	SET_BASE_PIXEL(0, 32)
 
 /obj/structure/fake_machine/atm/attack_hand(mob/user)
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
 
-	if(HAS_TRAIT(user, TRAIT_MATTHIOS_CURSE))
+	if(HAS_TRAIT(user, TRAIT_MATTHIOS_CURSE) && prob(33))
 		to_chat(H, "<span class='warning'>The idea repulses me!</span>")
 		H.cursed_freak_out()
 		return
@@ -77,7 +77,7 @@
 	if(ishuman(user))
 		if(istype(P, /obj/item/coin))
 			var/mob/living/carbon/human/H = user
-			if(HAS_TRAIT(user, TRAIT_MATTHIOS_CURSE))
+			if(HAS_TRAIT(user, TRAIT_MATTHIOS_CURSE) && prob(33))
 				to_chat(H, "<span class='warning'>The idea repulses me!</span>")
 				H.cursed_freak_out()
 				return

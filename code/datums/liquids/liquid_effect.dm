@@ -163,6 +163,8 @@
 	var/evaporation_multiplier = liquid_group.evaporation_multiplier
 	var/datum/reagent/R //Faster declaration
 	for(var/reagent_type in liquid_group.reagents.reagent_list)
+		if(QDELETED(liquid_group))
+			continue
 		R = reagent_type
 		//We evaporate. bye bye
 		if(initial(R.evaporates) || always_evaporates)

@@ -14,10 +14,17 @@
 	)
 	//rogue_enabled = TRUE
 	var/special_role = ROLE_WEREWOLF
+	/// Whether we are in WW form or human form
 	var/transformed
+	/// Tracks when in the middle of either transforming into or out of WW form
 	var/transforming
-	var/untransforming
 	var/wolfname = "Werevolf"
+	COOLDOWN_DECLARE(message_cooldown)
+
+	innate_traits = list(
+		TRAIT_STRONGBITE,
+		TRAIT_BESTIALSENSE
+	)
 
 /datum/antagonist/werewolf/lesser
 	name = "Lesser Werevolf"
@@ -39,14 +46,14 @@
 				return span_boldwarning("An Ancient Vampire. I must be careful!")
 		if(istype(examined_datum, /datum/antagonist/vampire))
 			if(transformed)
-				return span_boldwarning("A lesser Vampire.")
+				return span_boldwarning("A vampire.")
 
 /datum/antagonist/werewolf/on_gain()
 	owner.special_role = name
 	if(increase_votepwr)
 		forge_werewolf_objectives()
 
-	wolfname = "[pick(GLOB.wolf_prefixes)] [pick(GLOB.wolf_suffixes)]"
+	wolfname = "[pick(strings("werewolf_names.json", "wolf_prefixes"))] [pick(strings("werewolf_names.json", "wolf_suffixes"))]"
 	return ..()
 
 /datum/antagonist/werewolf/on_removal()
@@ -144,6 +151,7 @@
 	desc = ""
 	icon_state = null
 	body_parts_covered = FULL_BODY
+	resistance_flags = FIRE_PROOF
 	armor = ARMOR_SCALE
 	prevent_crits = list(BCLASS_CUT, BCLASS_CHOP, BCLASS_STAB, BCLASS_BLUNT, BCLASS_TWIST)
 	blocksound = SOFTHIT
@@ -181,6 +189,7 @@
 	armor_penetration = 15
 	associated_skill = /datum/skill/combat/unarmed
 	wlength = WLENGTH_NORMAL
+	wbalance = EASY_TO_DODGE
 	w_class = WEIGHT_CLASS_BULKY
 	can_parry = TRUE
 	sharpness = IS_SHARP

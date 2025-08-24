@@ -229,7 +229,7 @@
 		if(istype(user, /mob/living/carbon/human/species/werewolf))
 			visible_message(span_danger("The werewolf bites into [src] and thrashes!"))
 		else
-			visible_message(span_danger("[user] bites [src]! What is wrong with them?"))
+			visible_message(span_danger("[user] bites [src]!"))
 		if(HAS_TRAIT(user, TRAIT_POISONBITE))
 			if(src.reagents)
 				var/poison = user.STACON/2

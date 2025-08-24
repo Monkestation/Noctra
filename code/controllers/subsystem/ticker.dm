@@ -1,4 +1,5 @@
 #define ROUND_START_MUSIC_LIST "strings/round_start_sounds.txt"
+#define SS_TICKER_TRAIT "SS_Ticker"
 
 /proc/low_memory_force_start()
 	for(var/i in GLOB.new_player_list)
@@ -170,8 +171,6 @@ SUBSYSTEM_DEF(ticker)
 	else if(CONFIG_GET(flag/shift_time_realtime))
 		gametime_offset = world.timeofday
 	return ..()
-
-#undef ROUND_START_MUSIC_LIST
 
 /datum/controller/subsystem/ticker/fire()
 	if(reboot_anyway)
@@ -443,7 +442,7 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/living = player.transfer_character()
 		if(living)
 			qdel(player)
-			living.notransform = TRUE
+			ADD_TRAIT(living, TRAIT_NO_TRANSFORM, SS_TICKER_TRAIT)
 			livings += living
 			GLOB.character_ckey_list[living.real_name] = living.ckey
 		if(ishuman(living))
@@ -454,7 +453,7 @@ SUBSYSTEM_DEF(ticker)
 
 /datum/controller/subsystem/ticker/proc/release_characters(list/livings)
 	for(var/mob/living/L as anything in livings)
-		L.notransform = FALSE
+		REMOVE_TRAIT(L, TRAIT_NO_TRANSFORM, SS_TICKER_TRAIT)
 
 
 /datum/controller/subsystem/ticker/proc/send_tip_of_the_round()
@@ -652,3 +651,6 @@ SUBSYSTEM_DEF(ticker)
 	update_everything_flag_in_db()
 
 	text2file(login_music, "data/last_round_lobby_music.txt")
+
+#undef ROUND_START_MUSIC_LIST
+#undef SS_TICKER_TRAIT

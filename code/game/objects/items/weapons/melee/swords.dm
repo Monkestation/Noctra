@@ -172,8 +172,7 @@
 	bigboy = TRUE
 	wlength = WLENGTH_LONG
 	gripsprite = TRUE
-	pixel_y = -16
-	pixel_x = -16
+	SET_BASE_PIXEL(-16, -16)
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_HIP
@@ -252,8 +251,7 @@
 	swingsound = BLADEWOOSH_SMALL
 	minstr = 6
 	wbalance = VERY_HARD_TO_DODGE
-	pixel_y = -16
-	pixel_x = -16
+	SET_BASE_PIXEL(-16, -16)
 	dropshrink = 0.8
 
 /obj/item/weapon/sword/rapier/getonmobprop(tag)
@@ -380,8 +378,7 @@
 	item_state = "khopesh"
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	pixel_y = -16
-	pixel_x = -16
+	SET_BASE_PIXEL(-16, -16)
 	dropshrink = 0.75
 	bigboy = TRUE // WHY DOES THIS FUCKING VARIABLE CONTROL WHETHER THE BLOOD OVERLAY WORKS ON 64x64 WEAPONS
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_HIP
@@ -416,8 +413,7 @@
 	bigboy = TRUE
 	wlength = WLENGTH_LONG
 	gripsprite = TRUE
-	pixel_y = -16
-	pixel_x = -16
+	SET_BASE_PIXEL(-16, -16)
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_HIP
@@ -947,8 +943,7 @@
 	max_integrity = 230//this is fair to be fair
 	wlength = WLENGTH_LONG
 	gripsprite = TRUE
-	pixel_y = -16
-	pixel_x = -16
+	SET_BASE_PIXEL(-16, -16)
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	associated_skill = /datum/skill/combat/swords

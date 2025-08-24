@@ -18,6 +18,7 @@ GLOBAL_LIST_INIT(curse_names, list())
 
 #define INHUMEN_CURSES list(\
 	/datum/curse/zizo,\
+	/datum/curse/zizo/minor,\
 	/datum/curse/graggar,\
 	/datum/curse/matthios,\
 	/datum/curse/baotha\
@@ -63,8 +64,6 @@ GLOBAL_LIST_INIT(curse_names, list())
 
 GLOBAL_LIST_EMPTY(confessors)
 
-GLOBAL_LIST_INIT(wolf_prefixes, list("Red", "Moon", "Bloody", "Hairy", "Eager", "Sharp"))
-GLOBAL_LIST_INIT(wolf_suffixes, list("Fang", "Claw", "Stalker", "Prowler", "Roar", "Ripper"))
 //preference stuff
 #define FAMILY_NONE "None"
 #define FAMILY_PARTIAL "Siblings"
@@ -163,7 +162,13 @@ GLOBAL_LIST_EMPTY(job_respawn_delays)
 #define TRIUMPH_BUY_ANY_CLASS "pick_any"
 #define TRIUMPH_BUY_ADOPTION "adoption"
 #define TRIUMPH_BUY_FART "fart"
+#define TRIUMPH_BUY_SECRET_OFFICIANT "secret_officiant"
+
+// Character category and its buys
+#define TRIUMPH_CAT_CHALLENGES "CHALLENGES"
+
 #define TRIUMPH_BUY_LEPROSY "leprosy"
+#define TRIUMPH_BUY_CURSE "curse"
 
 // Storyteller category and its buys
 #define TRIUMPH_CAT_STORYTELLER "STORYTELLER"

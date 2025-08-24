@@ -50,11 +50,11 @@
 
 /obj/item/weapon/pickup(mob/user)
 	. = ..()
-	if(HAS_TRAIT(user, TRAIT_RAVOX_CURSE))
+	if(HAS_TRAIT(user, TRAIT_RAVOX_CURSE) && prob(33))
 		var/mob/living/carbon/human/H = user
 		to_chat(H, span_warning("The idea repulses me!"))
 		H.cursed_freak_out()
-		H.Paralyze(20)
+		H.Paralyze(4 SECONDS)
 		return
 
 /obj/item/weapon/get_examine_string(mob/user, thats = FALSE)

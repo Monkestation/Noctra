@@ -45,7 +45,7 @@
 					user.put_in_hands(B)
 					user.visible_message(span_notice("[user] finds [B] in [src]."))
 					harvested = TRUE
-					timerid = addtimer(CALLBACK(src, PROC_REF(loot_replenish)), 5 MINUTES, flags = TIMER_STOPPABLE)
+					timerid = addtimer(CALLBACK(src, PROC_REF(loot_replenish)), 8 MINUTES, flags = TIMER_STOPPABLE)
 					add_filter("picked", 1, alpha_mask_filter(icon = icon('icons/effects/picked_overlay.dmi', "picked_overlay_[rand(1,3)]"), flags = MASK_INVERSE))
 					GLOB.harvested_herbs |= src
 					return

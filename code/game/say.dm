@@ -43,14 +43,26 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		hearing_movable.Hear(rendered, src, message_language, message, , spans, message_mods, original_message)
 
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), face_name = FALSE)
-	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
-	//Basic span
-	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "say"]'>"
-	//Start name span.
+	// Check if this message should be part of a sex collective
+	var/collective_span = ""
+	if(ishuman(speaker))
+		var/mob/living/carbon/human/human_speaker = speaker
+		// Find any collective this person is involved in
+		for(var/datum/collective_message/collective in GLOB.sex_collectives)
+			if(human_speaker in collective.involved_mobs)
+				collective_span = " [collective.collective_span_class]"
+				break
+
+	// Basic span with collective class if applicable
+	var/spanpart1 = "<span class='[radio_freq ? get_radio_span(radio_freq) : "say"][collective_span]'>"
+
+	// Start name span
 	var/spanpart2 = "<span class='name'>"
-	//Radio freq/name display
-	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
-	//Speaker name
+
+	// Radio freq/name display
+	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq)]~~\]~~ " : ""
+
+	// Speaker name
 	var/namepart = "[speaker.GetVoice()]"
 	if(speaker.get_alt_name())
 		namepart = "[speaker.get_alt_name()]"
@@ -58,21 +70,21 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(ishuman(speaker))
 		var/mob/living/carbon/human/H = speaker
 		if(face_name)
-			namepart = "[H.get_face_name()]" //So "fake" speaking like in hallucinations does not give the speaker away if disguised
+			namepart = "[H.get_face_name()]"
 		if(H.voice_color)
 			colorpart = "<span style='color:#[H.voice_color];text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'>"
 	if(speaker.voicecolor_override)
 		colorpart = "<span style='color:#[speaker.voicecolor_override];text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'>"
-	//End name span.
+
+	// End name span
 	var/endspanpart = "</span></span>"
 
-	//Message
+	// Message
 	var/messagepart = "[lang_treat(speaker, message_language, raw_message, spans, message_mods)]"
 	messagepart = " <span class='message'>[messagepart]</span></span>"
 
-	//Arrow
+	// Arrow logic (distance-based)
 	var/arrowpart = ""
-
 	if(istype(src,/mob/living))
 		var/turf/speakturf = get_turf(speaker)
 		var/turf/sourceturf = get_turf(src)
@@ -103,7 +115,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 				namepart = "Unknown [(L.gender == FEMALE) ? "Woman" : "Man"]"
 			else
 				namepart = "Unknown"
-			spanpart1 = "<span class='smallyell'>"
+			spanpart1 = "<span class='smallyell[collective_span]'>"
 
 	var/languageicon = ""
 	var/datum/language/D = GLOB.language_datum_instances[message_language]

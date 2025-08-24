@@ -183,6 +183,8 @@ GLOBAL_LIST_EMPTY(blueprint_recipes)
 		html += "<strong>Required Tool:</strong><br>"
 		html += "[icon2html(tool, user)] [initial(tool.name)]<br><br>"
 		qdel(tool)
+	else
+		html += "<strong>Required Tool: hand</strong><br>"
 
 	if(skillcraft)
 		html += "<strong>Required Skill:</strong> [initial(skillcraft.name)]<br>"

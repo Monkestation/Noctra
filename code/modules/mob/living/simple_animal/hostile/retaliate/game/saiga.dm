@@ -6,7 +6,7 @@
 	icon_living = "saiga"
 	icon_dead = "saiga_dead"
 	icon_gib = "saiga_gib"
-	pixel_x = -8
+	SET_BASE_PIXEL(-8, 0)
 
 	animal_species = /mob/living/simple_animal/hostile/retaliate/saigabuck
 	faction = list("saiga")
@@ -27,8 +27,8 @@
 						/obj/item/reagent_containers/food/snacks/fat = 1,
 						/obj/item/natural/hide = 4,
 						/obj/item/alch/sinew = 2,
-						/obj/item/alch/bone = 1,
-						/obj/item/natural/head/saiga = 1)
+						/obj/item/alch/bone = 1)
+	head_butcher = /obj/item/natural/head/saiga
 
 	health = FEMALE_SAIGA_HEALTH
 	maxHealth = FEMALE_SAIGA_HEALTH
@@ -177,7 +177,7 @@
 	icon_living = "buck"
 	icon_dead = "buck_dead"
 	icon_gib = "buck_gib"
-	pixel_x = -8
+	SET_BASE_PIXEL(-8, 0)
 
 	faction = list("saiga")
 	footstep_type = FOOTSTEP_MOB_SHOE
@@ -198,6 +198,7 @@
 						/obj/item/natural/hide = 5,
 						/obj/item/alch/sinew = 2,
 						/obj/item/alch/bone = 1)
+	head_butcher = /obj/item/natural/head/saiga
 
 	health = MALE_SAIGA_HEALTH
 	maxHealth = MALE_SAIGA_HEALTH
@@ -361,7 +362,7 @@
 	base_strength = 5
 	base_speed = 5
 	defprob = 50
-	pixel_x = -16
+	SET_BASE_PIXEL(-16, 0)
 	adult_growth = /mob/living/simple_animal/hostile/retaliate/saiga
 	tame = TRUE
 	can_buckle = FALSE

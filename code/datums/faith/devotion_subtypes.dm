@@ -2,19 +2,19 @@
 /datum/devotion/divine/make_templar()
 	. = ..()
 	miracles_extra += list(
-		/datum/action/cooldown/spell/aoe/abrogation
+		/datum/action/cooldown/spell/aoe/abrogation,
 	)
 
-/datum/devotion/divine/make_acolyte()
+/datum/devotion/divine/make_cleric()
 	. = ..()
 	miracles_extra += list(
-		/datum/action/cooldown/spell/aoe/abrogation
+		/datum/action/cooldown/spell/aoe/abrogation,
 	)
 
 /datum/devotion/divine/make_churching()
 	. = ..()
 	miracles_extra += list(
-		/datum/action/cooldown/spell/healing
+		/datum/action/cooldown/spell/healing,
 	)
 
 /datum/devotion/divine/astrata
@@ -47,14 +47,6 @@
 		CLERIC_T1 = /datum/action/cooldown/spell/projectile/swordfish,
 		CLERIC_T2 = /datum/action/cooldown/spell/undirected/conjure_item/summon_trident,
 		CLERIC_T3 = /datum/action/cooldown/spell/ocean_embrace,
-	)
-
-/datum/devotion/divine/abyssor
-	miracles = list(
-		CLERIC_T0 = /datum/action/cooldown/spell/healing,
-		CLERIC_T1 = /datum/action/cooldown/spell/sacred_flame,
-		CLERIC_T2 = /datum/action/cooldown/spell/healing/greater,
-		CLERIC_T3 = /datum/action/cooldown/spell/revive,
 	)
 
 /datum/devotion/divine/necra
@@ -134,7 +126,7 @@
 /datum/devotion/inhumen/make_churching()
 	. = ..()
 	miracles_extra += list(
-		/datum/action/cooldown/spell/healing/profane
+		/datum/action/cooldown/spell/healing/profane,
 	)
 
 /datum/devotion/inhumen/zizo

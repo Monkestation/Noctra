@@ -21,6 +21,8 @@
 	var/last_ejaculation_time = 0
 	///inactivity bumps
 	var/inactivity = 0
+	/// Reference to the collective this session belongs to
+	var/datum/collective_message/collective = null
 
 	var/static/sex_id = 0
 	var/our_sex_id = 0 //this is so we can have more then 1 sex id open at once
@@ -30,12 +32,35 @@
 	target = session_target
 	sex_id++
 	our_sex_id = sex_id
+	assign_to_collective()
 
 	addtimer(CALLBACK(src, PROC_REF(check_sex)), 60 SECONDS, flags = TIMER_LOOP)
 
 /datum/sex_session/Destroy(force, ...)
-	. = ..()
+	// Remove from collective
+	if(collective)
+		collective.sessions -= src
+		// If this was the last session in the collective, remove the collective
+		if(!collective.sessions.len)
+			collective.unregister_collective_tab()
+			LAZYREMOVE(GLOB.sex_collectives, collective)
+			qdel(collective)
+
 	GLOB.sex_sessions -= src
+	. = ..()
+
+
+/datum/sex_session/proc/assign_to_collective()
+	// Check if we can merge with an existing collective
+	for(var/datum/collective_message/existing_collective in GLOB.sex_collectives)
+		if(existing_collective.can_merge_session(src))
+			existing_collective.merge_session(src)
+			return
+
+	// No existing collective found, create a new one
+	var/datum/collective_message/new_collective = new /datum/collective_message(src)
+	LAZYADD(GLOB.sex_collectives, new_collective)
+	collective = new_collective
 
 /datum/sex_session/proc/check_sex()
 	if(current_action)

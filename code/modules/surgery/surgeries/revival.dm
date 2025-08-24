@@ -29,6 +29,9 @@
 	if(target.mob_biotypes & MOB_UNDEAD)
 		to_chat(user, span_notice("You cannot infuse life into the undead! The rot must be cured first."))
 		return FALSE
+	if(HAS_TRAIT(target, TRAIT_NECRA_CURSE))
+		to_chat(user, span_warning("Necra holds tight to this one."))
+		return FALSE
 
 /datum/surgery_step/infuse_lux/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/intent/intent)
 	display_results(user, target,

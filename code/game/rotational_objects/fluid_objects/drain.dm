@@ -168,6 +168,7 @@
 	if(highest_reagent)
 		var/amount_to_remove = min(pressure, highest_reagent.volume)
 		collected_fluids.remove_reagent(highest_reagent.type, amount_to_remove)
+	provide_fluids_to_pipe()
 
 /obj/structure/fluid_drain/proc/show_drain_effect(turf/T)
 	if(!drain_effect)

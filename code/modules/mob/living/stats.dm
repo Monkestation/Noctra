@@ -46,7 +46,7 @@
 /mob/living/proc/set_patron(datum/patron/new_patron, check_antag = FALSE)
 	if(!new_patron)
 		return FALSE
-	if(check_antag && mind.special_role)
+	if(check_antag && mind?.special_role)
 		return FALSE
 	if(ispath(new_patron))
 		new_patron = GLOB.patronlist[new_patron]

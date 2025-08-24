@@ -59,7 +59,7 @@
 	if(user.pulling != L)
 		return FALSE
 
-	playsound(src.loc, 'sound/foley/butcher.ogg', 25, TRUE)
+	playsound(get_turf(src), 'sound/foley/butcher.ogg', 25, TRUE)
 	L.visible_message(span_danger("[user] hangs [L] on [src]!"), span_danger("[user] hangs you on [src]]!"))
 	L.forceMove(drop_location())
 	L.emote("scream")
@@ -71,7 +71,7 @@
 	m90.Turn(90)
 	m90.Translate(12,12)
 	animate(L, transform = m90, time = 3)
-	L.pixel_y = L.get_standard_pixel_x_offset(180)
+	L.pixel_y = L.get_standard_pixel_x_offset()
 	draining_blood = FALSE
 	return TRUE
 
@@ -137,7 +137,7 @@
 	m270.Translate(-12,-12)
 	m270.Turn(-90)
 	animate(M, transform = m270, time = 3)
-	M.pixel_y = M.get_standard_pixel_y_offset(180)
+	M.pixel_y = M.get_standard_pixel_y_offset()
 	M.adjustBruteLoss(30)
 	src.visible_message(span_danger("[M] falls free of [src]!"))
 	unbuckle_mob(M,force=1)

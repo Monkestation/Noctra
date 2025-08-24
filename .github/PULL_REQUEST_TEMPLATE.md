@@ -12,6 +12,7 @@
 
 <!-- If your PR modifies aspects of the game that can be concretely observed by players or admins you should add a changelog. If your change does NOT meet this description, remove this section. Please note that maintainers freely reserve the right to remove and add tags should they deem it appropriate. You can attempt to finagle the system all you want, but it's best to shoot for clear communication right off the bat. -->
 
+<!-- !! Do not add whitespace in-between the entries, do not change the tags and do not leave the tags without any entries. -->
 :cl:
 add: Added new mechanics or gameplay changes
 add: Added more things

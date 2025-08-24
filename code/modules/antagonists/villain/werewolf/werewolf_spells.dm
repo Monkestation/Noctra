@@ -19,7 +19,7 @@
 
 	message = browser_input_text(owner, "Howl at the hidden moon...", "MOONCURSED", multiline = TRUE)
 	if(QDELETED(src) || QDELETED(owner) || !can_cast_spell())
-		return
+		return . | SPELL_CANCEL_CAST
 
 	if(!message)
 		reset_spell_cooldown()

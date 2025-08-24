@@ -14,6 +14,11 @@
 	alert_type = /atom/movable/screen/alert/status_effect/oiled
 	var/slip_chance = 8 // chance to slip when moving
 
+/atom/movable/screen/alert/status_effect/oiled
+	name = "Oiled"
+	desc = "I'm covered in oil, making me slippery and harder to grab!"
+	icon_state = "debuff"
+
 /datum/status_effect/buff/oiled/on_apply()
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
@@ -23,8 +28,9 @@
 	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
 /datum/status_effect/buff/oiled/proc/on_move(mob/living/mover, atom/oldloc, direction, forced)
-	if(forced)
+	if(forced || mover.movement_type & (FLYING|FLOATING) || mover.throwing)
 		return
+
 	var/slipping_prob = slip_chance
 	if(iscarbon(mover))
 		var/mob/living/carbon/carbon = mover
@@ -40,47 +46,35 @@
 		else
 			mover.liquid_slip(total_time = 1 SECONDS, stun_duration = 1 SECONDS, height = 12, flip_count = 0)
 
-/atom/movable/screen/alert/status_effect/oiled
-	name = "Oiled"
-	desc = "I'm covered in oil, making me slippery and harder to grab!"
-	icon_state = "oiled"
-
-/atom/proc/liquid_slip(dir=null, total_time = 0.5 SECONDS, height = 16, stun_duration = 1 SECONDS, flip_count = 1)
-	animate(src) // cleanse animations as funny as a ton of stacked flips would be it would be an eye sore
-	var/matrix/M = transform
+/atom/proc/liquid_slip(total_time = 0.5 SECONDS, stun_duration = 0.5 SECONDS, height = 16, flip_count = 1)
 	var/turn = 90
-	if(isnull(dir))
-		if(dir == EAST)
-			turn = 90
-		else if(dir == WEST)
-			turn = -90
-		else
-			if(prob(50))
-				turn = -90
-
-
-	var/flip_anim_step_time = total_time / (1 + 4 * flip_count)
-	animate(src, transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time, flags = ANIMATION_PARALLEL)
-	for(var/i in 1 to flip_count)
-		animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
-		animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
-		animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
-		animate(transform = matrix(M, turn, MATRIX_ROTATE | MATRIX_MODIFY), time = flip_anim_step_time)
-	var/matrix/M2 = transform
-	animate(transform = matrix(M, 1.2, 0.7, MATRIX_SCALE | MATRIX_MODIFY), time = total_time * 0.125)
-	animate(transform = M2, time = total_time * 0.125)
-
-	animate(src, pixel_y=height, time= total_time * 0.5, flags=ANIMATION_PARALLEL)
-	animate(pixel_y=-4, time= total_time * 0.5)
+	if(dir == EAST)
+		turn = 90
+	else if(dir == WEST)
+		turn = -90
+	else if(prob(50))
+		turn = -90
 
 	if(isliving(src))
 		var/mob/living/living = src
-		living.Knockdown(stun_duration)
-		living.set_resting(FALSE, silent = TRUE)
-		animate(src, pixel_x = 0, pixel_y = 0, transform = src.transform.Turn(-turn), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
-	else
-		spawn(stun_duration + total_time)
-			animate(src, pixel_x = 0, pixel_y = 0, transform = src.transform.Turn(-turn), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+		living.Immobilize(total_time)
+		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living, Knockdown), total_time), stun_duration)
+
+	var/matrix/transform_before = transform
+	var/flip_anim_step_time = total_time / (1 + 4 * flip_count)
+
+	animate(src, transform = transform.Turn(turn), time = flip_anim_step_time, flags = ANIMATION_PARALLEL)
+
+	if(flip_count)
+		do_spin_animation(flip_anim_step_time, flip_count, 4)
+
+	animate(transform = matrix().Scale(1.2, 0.7), time = total_time * 0.3)
+	animate(transform = matrix(), time = total_time * 0.3)
+
+	animate(src, pixel_z = height, time = total_time * 0.5, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
+	animate(pixel_z = -height, time = total_time * 0.5, flags = ANIMATION_RELATIVE)
+
+	animate(src, transform = transform_before, time = 0, flags = ANIMATION_PARALLEL)
 
 ///////////OFFHAND///////////////
 /obj/item/grabbing
@@ -750,7 +744,8 @@
 		var/datum/wound/caused_wound = limb_grabbed.bodypart_attacked_by(BCLASS_BITE, damage, user, sublimb_grabbed, crit_message = TRUE)
 		if(user.mind)
 			//TODO: Werewolf Signal
-			if(user.mind.has_antag_datum(/datum/antagonist/werewolf))
+			var/datum/antagonist/werewolf/werewolf_antag = user.mind.has_antag_datum(/datum/antagonist/werewolf)
+			if(werewolf_antag && werewolf_antag.transformed)
 				var/mob/living/carbon/human/human = user
 				if(istype(caused_wound))
 					caused_wound?.werewolf_infect_attempt()

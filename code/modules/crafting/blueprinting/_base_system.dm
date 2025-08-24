@@ -368,12 +368,13 @@
 			// Build tooltip content from data attributes
 			var name = card.getAttribute('data-recipe-name');
 			var desc = card.getAttribute('data-recipe-desc');
+			var initiateItem = card.getAttribute('data-initiate-item');
 			var materialsJson = card.getAttribute('data-materials');
 			var featuresJson = card.getAttribute('data-features');
 
 			var content = "<div class='tooltip-name'>" + name + "</div>";
 			content += "<div class='tooltip-desc'>" + desc + "</div>";
-
+			content += "<div class='tooltip-materials'>Build with: " + initiateItem + "<br>";
 			if (materialsJson && materialsJson !== '[]') {
 				try {
 					var materials = JSON.parse(materialsJson);
@@ -563,16 +564,16 @@
 
 		for(var/recipe_id in categories[category])
 			var/datum/blueprint_recipe/recipe = GLOB.blueprint_recipes[recipe_id]
-			var/list/tooltip_data = list()
-			tooltip_data["name"] = recipe.name
-			tooltip_data["desc"] = recipe.desc
+
+			var/initiate_item = "hand"
+			if(recipe.construct_tool)
+				initiate_item = "[recipe.construct_tool.name]"
 
 			var/list/materials = list()
 			for(var/mat_type in recipe.required_materials)
 				var/amount = recipe.required_materials[mat_type]
 				var/atom/temp = mat_type
 				materials += "[amount]x [initial(temp.name)]"
-			tooltip_data["materials"] = materials
 
 			var/list/features = list()
 			if(recipe.supports_directions)
@@ -580,8 +581,7 @@
 			if(!recipe.edge_density)
 				features += "No Edge Density"
 
-			tooltip_data["features"] = features
-			dat += "<div class='recipe-card' data-recipe-id='[recipe_id]' data-recipe-name='[html_encode(recipe.name)]' data-recipe-desc='[html_encode(recipe.desc)]' data-materials='[html_encode(json_encode(materials))]' data-features='[html_encode(json_encode(features))]' onclick='selectRecipe(\"[recipe_id]\")'>"
+			dat += "<div class='recipe-card' data-recipe-id='[recipe_id]' data-recipe-name='[html_encode(recipe.name)]' data-recipe-desc='[html_encode(recipe.desc)]' data-initiate-item='[html_encode(initiate_item)]' data-materials='[html_encode(json_encode(materials))]' data-features='[html_encode(json_encode(features))]' onclick='selectRecipe(\"[recipe_id]\")'>"
 			var/atom/result = recipe.result_type
 			dat += "<div class='recipe-card-icon'><img src='\ref[initial(result.icon)]?state=[initial(result.icon_state)]&dir=[initial(result.dir)]'/></div>"
 			dat += "<div class='recipe-card-name'>[recipe.name]</div>"

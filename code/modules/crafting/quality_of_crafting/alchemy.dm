@@ -109,7 +109,7 @@
 	requirements = list(
 		/obj/item/reagent_containers/powder/manabloom = 2,
 		/obj/item/mana_battery/mana_crystal/small = 1,
-		/datum/natural_precursor/silverdust = 1,
+		/obj/item/alch/silverdust = 1,
 	)
 	tool_usage = list(
 		/obj/item/pestle = list("starts to grind the ingredients together", "start to grind the ingredients together")

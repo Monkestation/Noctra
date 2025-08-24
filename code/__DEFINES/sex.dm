@@ -1,6 +1,8 @@
 GLOBAL_LIST_INIT(sex_actions, build_sex_actions())
 
 GLOBAL_LIST_EMPTY(sex_sessions)
+GLOBAL_LIST_EMPTY(sex_collectives)
+GLOBAL_VAR_INIT(collective_counter, 1)
 GLOBAL_LIST_EMPTY(locked_sex_objects)
 
 #define SEX_ACTION(sex_action_type) GLOB.sex_actions[sex_action_type]

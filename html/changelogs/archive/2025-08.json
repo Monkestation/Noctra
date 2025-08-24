@@ -658,6 +658,15 @@
                 "admin": "admins are notified when a monarch or priest disconnects"
             },
             {
+                "rscadd": "amount lost from dying on a psycross decreased from 2 to 0"
+            },
+            {
+                "rscadd": "amount lost from dying in a cell decreased from 2 to 0"
+            },
+            {
+                "rscadd": "amount lost from dying reduced from 1 to 0"
+            },
+            {
                 "bugfix": "copy outfit works again"
             },
             {
@@ -694,6 +703,9 @@
         ],
         "CheffieGithub": [
             {
+                "bugfix": "Fix cleric and templar miracle progression."
+            },
+            {
                 "balance": "You cannot excommunicate followers of the inhumen."
             }
         ],
@@ -712,14 +724,38 @@
         ]
     },
     "2025-08-24": {
-        "flleeppyy": [
+        "CheffieGithub": [
             {
-                "admin": "Requested hard-coded ban."
+                "bugfix": "fix abyssorites and acolytes miracles"
             }
         ],
-        "grungussuss": [
+        "Diegoflores31": [
             {
-                "rscdel": "Younglings have been removed, if you EVER see younglings please ahelp."
+                "bugfix": "fixes goldface"
+            }
+        ],
+        "Wouju": [
+            {
+                "bugfix": "raw essentia crafting"
+            }
+        ],
+        "Arkatos": [
+            {
+                "rscadd": "Added a new triumph buy - Secret Officiant."
+            },
+            {
+                "rscadd": "Added a new triumph buy - Random Curse."
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "rscadd": "briar troll shrine that can be made with two troll heads"
+            },
+            {
+                "code_imp": "transformation status effect, refactors transformation code"
+            },
+            {
+                "balance": "werewolves have slightly higher bleed mod. werewolves damage clothing upon transformation."
             }
         ]
     }

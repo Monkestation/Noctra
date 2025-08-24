@@ -161,7 +161,7 @@
 		taxes = round(SStreasury.tax_value * base_price)
 		final_price = round(base_price + taxes)
 		if(upgrade_flags & UPGRADE_NOTAX)
-			final_price -= base_price
+			final_price = base_price
 		if(budget >= final_price)
 			budget -= final_price
 			record_round_statistic(STATS_GOLDFACE_VALUE_SPENT, final_price)

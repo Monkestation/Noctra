@@ -19,6 +19,11 @@
 	if(should_sink)
 		obj_flags &= ~IGNORE_SINK
 
+/obj/structure/stairs/abyss
+	name = "abyss stairs"
+	icon = 'icons/delver/abyss_objects.dmi'
+	icon_state = "abyss_stairs"
+
 /obj/structure/stairs/stone
 	name = "stone stairs"
 	icon = 'icons/obj/stairs.dmi'

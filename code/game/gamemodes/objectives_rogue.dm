@@ -63,7 +63,7 @@
 
 /datum/objective/werewolf/infiltrate/one
 	name = "infiltrate1"
-	explanation_text = "Infect a member of the Church my spawn."
+	explanation_text = "Infect a member of the Church as my spawn."
 	triumph_count = 5
 
 /datum/objective/werewolf/infiltrate/one/check_completion()

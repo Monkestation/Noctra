@@ -50,13 +50,13 @@
 			STATS_LITERACY_TAUGHT = list("name" = "Literacy taught:", "points" = 15, "capacity" = 70),
 		),
 		"Set 3" = list(
-			STATS_ILLITERATES = list("name" = "Number of illiterates:", "points" = -2, "capacity" = -40),
+			STATS_ILLITERATES = list("name" = "Number of illiterates:", "points" = -2, "capacity" = -45),
 		),
 		"Set 4" = list(
-			STATS_SKILLS_DREAMED = list("name" = "Skills dreamed:", "points" = 0.32, "capacity" = 100),
+			STATS_SKILLS_DREAMED = list("name" = "Skills dreamed:", "points" = 0.3, "capacity" = 90),
 		),
 		"Set 5" = list(
-			STATS_MANA_SPENT = list("name" = "Mana spent:", "points" = 0.016, "capacity" = 90),
+			STATS_MANA_SPENT = list("name" = "Mana spent:", "points" = 0.015, "capacity" = 90),
 		)
 	)
 
@@ -90,7 +90,7 @@
 			STATS_PARRIES = list("name" = "Parries made:", "points" = 0.052, "capacity" = 100),
 		),
 		"Set 3" = list(
-			STATS_WARCRIES = list("name" = "Warcries made:", "points" = 0.375, "capacity" = 50),
+			STATS_WARCRIES = list("name" = "Warcries made:", "points" = 0.35, "capacity" = 50),
 		),
 		"Set 4" = list(
 			STATS_YIELDS = list("name" = "Yields made:", "points" = -4.25, "capacity" = -40),
@@ -118,18 +118,18 @@
 			STATS_FISH_CAUGHT = list("name" = "Fish caught:", "points" = 1.75, "capacity" = 85),
 		),
 		"Set 2" = list(
-			STATS_WATER_CONSUMED = list("name" = "Water consumed:", "points" = 0.013, "capacity" = 90),
+			STATS_WATER_CONSUMED = list("name" = "Water consumed:", "points" = 0.014, "capacity" = 90),
 		),
 		"Set 3" = list(
-			STATS_ABYSSOR_REMEMBERED = list("name" = "Abyssor remembered:", "points" = 1, "capacity" = 50),
-			STATS_ALIVE_TRITONS = list("name" = "Number of tritons:", "points" = 7.5, "capacity" = 70),
+			STATS_ABYSSOR_REMEMBERED = list("name" = "Abyssor remembered:", "points" = 1.1, "capacity" = 50),
+			STATS_ALIVE_TRITONS = list("name" = "Number of tritons:", "points" = 8, "capacity" = 70),
 		),
 		"Set 4" = list(
 			STATS_LEECHES_EMBEDDED = list("name" = "Leeches embedded:", "points" = 0.75, "capacity" = 70),
 		),
 		"Set 5" = list(
-			STATS_PEOPLE_DROWNED = list("name" = "People drowned:", "points" = 10, "capacity" = 75),
-			STATS_BATHS_TAKEN = list("name" = "Baths taken:", "points" = 4, "capacity" = 60),
+			STATS_PEOPLE_DROWNED = list("name" = "People drowned:", "points" = 12, "capacity" = 75),
+			STATS_BATHS_TAKEN = list("name" = "Baths taken:", "points" = 4.5, "capacity" = 60),
 		)
 	)
 
@@ -231,7 +231,7 @@
 			STATS_POTIONS_BREWED = list("name" = "Potions brewed:", "points" = 5.25, "capacity" = 80),
 		),
 		"Set 2" = list(
-			STATS_WOUNDS_SEWED = list("name" = "Wounds sewed up:", "points" = 0.49, "capacity" = 100),
+			STATS_WOUNDS_SEWED = list("name" = "Wounds sewed up:", "points" = 0.48, "capacity" = 100),
 		),
 		"Set 3" = list(
 			STATS_LUX_HARVESTED = list("name" = "Lux extracted:", "points" = 8, "capacity" = 70),
@@ -268,20 +268,20 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_MASTERWORKS_FORGED = list("name" = "Masterworks forged:", "points" = 7.5, "capacity" = 85),
+			STATS_MASTERWORKS_FORGED = list("name" = "Masterworks forged:", "points" = 7, "capacity" = 85),
 		),
 		"Set 2" = list(
 			STATS_ROCKS_MINED = list("name" = "Rocks mined:", "points" = 0.26, "capacity" = 100),
 		),
 		"Set 3" = list(
-			STATS_CRAFT_SKILLS = list("name" = "Craft skills learned:", "points" = 0.57, "capacity" = 90),
+			STATS_CRAFT_SKILLS = list("name" = "Craft skills learned:", "points" = 0.55, "capacity" = 90),
 		),
 		"Set 4" = list(
 			STATS_BEARDS_SHAVED = list("name" = "Beards shaved:", "points" = -4, "capacity" = -40),
 			STATS_ALIVE_DWARVES = list("name" = "Number of dwarfs:", "points" = 4, "capacity" = 45),
 		),
 		"Set 5" = list(
-			STATS_BLACKSTEEL_SMELTED = list("name" = "Blacksteel smelted:", "points" = 5, "capacity" = 65),
+			STATS_BLACKSTEEL_SMELTED = list("name" = "Blacksteel smelted:", "points" = 4.75, "capacity" = 65),
 		)
 	)
 
@@ -352,19 +352,19 @@
 	influence_sets = list(
 		"Set 1" = list(
 			STATS_TREES_CUT = list("name" = "Trees felled:", "points" = -0.35, "capacity" = -45),
-			STATS_WEREVOLVES = list("name" = "Number of werevolves:", "points" = 15, "capacity" = 65),
+			STATS_WEREVOLVES = list("name" = "Number of werevolves:", "points" = 12.5, "capacity" = 65),
 		),
 		"Set 2" = list(
-			STATS_PLANTS_HARVESTED = list("name" = "Plants harvested:", "points" = 0.81, "capacity" = 100),
+			STATS_PLANTS_HARVESTED = list("name" = "Plants harvested:", "points" = 0.75, "capacity" = 100),
 		),
 		"Set 3" = list(
-			STATS_FOREST_DEATHS = list("name" = "Forest deaths:", "points" = 6.5, "capacity" = 90),
+			STATS_FOREST_DEATHS = list("name" = "Forest deaths:", "points" = 6, "capacity" = 90),
 		),
 		"Set 4" = list(
-			STATS_DENDOR_SACRIFICES = list("name" = "Sacrifices to Dendor:", "points" = 15, "capacity" = 75),
+			STATS_DENDOR_SACRIFICES = list("name" = "Sacrifices to Dendor:", "points" = 12.5, "capacity" = 75),
 		),
 		"Set 5" = list(
-			STATS_ANIMALS_TAMED = list("name" = "Animals tamed:", "points" = 6.25, "capacity" = 65),
+			STATS_ANIMALS_TAMED = list("name" = "Animals tamed:", "points" = 6, "capacity" = 65),
 		)
 	)
 
@@ -443,10 +443,10 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_DRUGS_SNORTED = list("name" = "Drugs snorted:", "points" = 4.1, "capacity" = 85),
+			STATS_DRUGS_SNORTED = list("name" = "Drugs snorted:", "points" = 4, "capacity" = 85),
 		),
 		"Set 2" = list(
-			STATS_ALCOHOL_CONSUMED = list("name" = "Alcohol consumed:", "points" = 0.0425, "capacity" = 90),
+			STATS_ALCOHOL_CONSUMED = list("name" = "Alcohol consumed:", "points" = 0.042, "capacity" = 90),
 		),
 		"Set 3" = list(
 			STATS_ALCOHOLICS = list("name" = "Number of alcoholics:", "points" = 3.25, "capacity" = 60),
@@ -488,20 +488,20 @@
 
 	influence_sets = list(
 		"Set 1" = list(
-			STATS_ASSASSINATIONS = list("name" = "Successful assasinations:", "points" = 17.5, "capacity" = 80),
+			STATS_ASSASSINATIONS = list("name" = "Successful assasinations:", "points" = 20, "capacity" = 80),
 		),
 		"Set 2" = list(
-			STATS_BLOOD_SPILT = list("name" = "Blood spilt:", "points" = 0.0283, "capacity" = 90),
+			STATS_BLOOD_SPILT = list("name" = "Blood spilt:", "points" = 0.029, "capacity" = 90),
 		),
 		"Set 3" = list(
-			STATS_ORGANS_EATEN = list("name" = "Organs eaten:", "points" = 4.25, "capacity" = 70),
+			STATS_ORGANS_EATEN = list("name" = "Organs eaten:", "points" = 5, "capacity" = 70),
 		),
 		"Set 4" = list(
-			STATS_LIMBS_BITTEN = list("name" = "Limbs bitten:", "points" = 1, "capacity" = 70),
-			STATS_ALIVE_HALF_ORCS = list("name" = "Number of half-orcs:", "points" = 6.75, "capacity" = 70),
+			STATS_LIMBS_BITTEN = list("name" = "Limbs bitten:", "points" = 1.5, "capacity" = 70),
+			STATS_ALIVE_HALF_ORCS = list("name" = "Number of half-orcs:", "points" = 8, "capacity" = 70),
 		),
 		"Set 5" = list(
-			STATS_PEOPLE_GIBBED = list("name" = "People gibbed:", "points" = 3.25, "capacity" = 55),
+			STATS_PEOPLE_GIBBED = list("name" = "People gibbed:", "points" = 3.5, "capacity" = 55),
 		)
 	)
 
@@ -547,8 +547,8 @@
 			STATS_DODGES = list("name" = "Dodges made:", "points" = 0.084, "capacity" = 100),
 		),
 		"Set 5" = list(
-			STATS_LOCKS_PICKED = list("name" = "Locks picked:", "points" = 3.5, "capacity" = 80),
-			STATS_GRAVES_ROBBED = list("name" = "Graves robbed:", "points" = 5, "capacity" = 60),
+			STATS_LOCKS_PICKED = list("name" = "Locks picked:", "points" = 3.75, "capacity" = 80),
+			STATS_GRAVES_ROBBED = list("name" = "Graves robbed:", "points" = 5.25, "capacity" = 60),
 		)
 	)
 

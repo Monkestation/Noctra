@@ -1,9 +1,9 @@
 /obj/structure/mana_pylon
 	name = "mana pylon"
 	desc = ""
-
 	icon_state = "pylon"
 	icon = 'icons/roguetown/misc/mana_pylon.dmi'
+	SET_BASE_PIXEL(0, -32)
 	has_initial_mana_pool = TRUE
 	plane = GAME_PLANE_UPPER
 	layer = ABOVE_MOB_LAYER
@@ -26,9 +26,8 @@
 		var/datum/attunement/attunement = mana_pool.network_attunement
 		. += span_blue("It is attuned to [initial(attunement.name)]")
 
-/obj/structure/mana_pylon/Initialize()
+/obj/structure/mana_pylon/Initialize(mapload, ...)
 	. = ..()
-
 	update_appearance(UPDATE_OVERLAYS)
 	set_light(1.4, 1.4, 0.75, l_color = COLOR_CYAN)
 

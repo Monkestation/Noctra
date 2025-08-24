@@ -190,9 +190,9 @@
 	desc = "A tiny display of arcyne power used to illuminate."
 	icon = 'icons/roguetown/items/lighting.dmi'
 	icon_state = "wisp"
-	pixel_x = 20
 	light_outer_range =  4
 	light_color = "#3FBAFD"
+	SET_BASE_PIXEL(20, 0)
 
 #undef PRESTI_CLEAN
 #undef PRESTI_GATHER

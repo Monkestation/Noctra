@@ -62,6 +62,7 @@ SUBSYSTEM_DEF(triumphs)
 	// And then the list will have a number in a string that leads to a list of datums
 	var/list/list/list/central_state_data = list( // this is updated to be a list of lists in subsystem Initialize
 		TRIUMPH_CAT_CHARACTER = 0,
+		TRIUMPH_CAT_CHALLENGES = 0,
 		TRIUMPH_CAT_STORYTELLER = 0,
 		TRIUMPH_CAT_MISC = 0,
 		TRIUMPH_CAT_COMMUNAL = 0,

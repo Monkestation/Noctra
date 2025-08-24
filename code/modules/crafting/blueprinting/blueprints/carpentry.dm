@@ -419,7 +419,7 @@
 	required_materials = list(/obj/item/grown/log/tree/small = 1)
 	craftdiff = 0
 
-/datum/blueprint_recipe/carpentry/structure/plough
+/datum/blueprint_recipe/carpentry/plough
 	name = "plough"
 	desc = "A plough."
 	result_type = /obj/structure/plough

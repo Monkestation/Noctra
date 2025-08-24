@@ -41,8 +41,11 @@
 		/turf/closed/wall/mineral/decostone/cand/reddish,
 		/obj/structure/stairs/stone/reddish,
 		/turf/closed/wall/mineral/roofwall,
+		/turf/closed/wall/mineral/abyssal,
+		/turf/closed/wall/mineral/desert_soapstone,
+		/turf/closed/wall/mineral/desert_sandstone,
 
-	) + typesof(/turf/closed/indestructible) + typesof(/turf/closed/wall/mineral/decostone/fluffstone) + typesof(/turf/open/floor/plasteel/maniac) + typesof(/turf/closed/mineral) + typesof(/turf/open/floor/underworld) + typesof(/turf/open/floor/snow) + typesof(/turf/open/floor/woodturned/nosmooth) + typesof(/turf/open/floor/wood/nosmooth) + typesof(/turf/open/water) + typesof(/turf/open/lava) + typesof(/turf/open/floor/carpet)
+	) + typesof(/turf/open/floor/sandstone_tile) + typesof(/turf/open/floor/abyss_sand) + typesof(/turf/open/floor/sand) + typesof(/turf/open/floor/abyss_tile) + typesof(/turf/closed/indestructible) + typesof(/turf/closed/wall/mineral/decostone/fluffstone) + typesof(/turf/open/floor/plasteel/maniac) + typesof(/turf/closed/mineral) + typesof(/turf/open/floor/underworld) + typesof(/turf/open/floor/snow) + typesof(/turf/open/floor/woodturned/nosmooth) + typesof(/turf/open/floor/wood/nosmooth) + typesof(/turf/open/water) + typesof(/turf/open/lava) + typesof(/turf/open/floor/carpet)
 	used_turfs |= blacklisted_turfs
 
 	// Find unused turfs

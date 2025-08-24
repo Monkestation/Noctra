@@ -156,7 +156,7 @@
 							"<span class='notice'>I consume [src]!</span>")
 			playsound(get_turf(user), pick(dismemsound), 100, FALSE, -1)
 			new /obj/effect/gibspawner/generic(get_turf(src), user)
-			user.fully_heal()
+			user.reagents.add_reagent(/datum/reagent/medicine/healthpot, 30)
 			qdel(src)
 		return
 	return ..()
@@ -227,8 +227,8 @@
 	. = ..()
 	if(status != BODYPART_ROBOTIC)
 		playsound(get_turf(src), 'sound/blank.ogg', 50, TRUE, -1)
-	pixel_x = rand(-3, 3)
-	pixel_y = rand(-3, 3)
+	pixel_x = base_pixel_x + rand(-3, 3)
+	pixel_y = base_pixel_y + rand(-3, 3)
 	if(!skeletonized)
 		new /obj/effect/decal/cleanable/blood/splatter(get_turf(src))
 

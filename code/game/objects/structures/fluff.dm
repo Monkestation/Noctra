@@ -307,7 +307,7 @@
 	desc = ""
 	icon_state = "pipe2"
 	dir = WEST
-	pixel_x = 19
+	SET_BASE_PIXEL(19, 0)
 
 //===========================
 
@@ -427,7 +427,7 @@
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
 	var/broke = FALSE
-	pixel_y = 32
+	SET_BASE_PIXEL(0, 32)
 	metalizer_result = /obj/item/gear/metal/bronze
 
 /obj/structure/fluff/wallclock/Destroy()
@@ -472,11 +472,11 @@
 	..()
 
 /obj/structure/fluff/wallclock/l
-	pixel_y = 0
-	pixel_x = -32
+	SET_BASE_PIXEL(-32, 0)
+
 /obj/structure/fluff/wallclock/r
-	pixel_y = 0
-	pixel_x = 32
+	SET_BASE_PIXEL(32, 0)
+
 //vampire
 /obj/structure/fluff/wallclock/vampire
 	name = "ancient clock"
@@ -489,14 +489,13 @@
 	blade_dulling = DULLING_BASHCHOP
 	max_integrity = 100
 	integrity_failure = 0.5
-	pixel_y = 32
+	SET_BASE_PIXEL(0, 32)
 
 /obj/structure/fluff/wallclock/vampire/l
-	pixel_y = 0
-	pixel_x = -32
+	SET_BASE_PIXEL(-32, 0)
+
 /obj/structure/fluff/wallclock/vampire/r
-	pixel_y = 0
-	pixel_x = 32
+	SET_BASE_PIXEL(32, 0)
 
 /obj/structure/fluff/signage
 	name = "sign"
@@ -658,16 +657,13 @@
 /obj/structure/fluff/statue/astrata
 	name = "statue of Astrata"
 	desc = "Astrata, the Sun Queen, reigns over light, order, and conquest. She is worshipped and feared in equal measure."
+	icon = 'icons/roguetown/misc/tallandwide.dmi'
+	icon_state = "astrata"
 	max_integrity = 100 // You wanted descructible statues, you'll get them.
 	deconstructible = FALSE
 	density = TRUE
 	blade_dulling = DULLING_BASH
-	icon_state = "astrata"
-	icon = 'icons/roguetown/misc/tallandwide.dmi'
-
-/obj/structure/fluff/statue/astrata/OnCrafted(dirin, mob/user)
-	. = ..()
-	pixel_x = -16
+	SET_BASE_PIXEL(-16, 0)
 
 /obj/structure/fluff/statue/astrata/bling
 	icon_state = "astrata_bling"
@@ -695,7 +691,7 @@
 /obj/structure/fluff/statue/psy
 	icon_state = "psy"
 	icon = 'icons/roguetown/misc/96x96.dmi'
-	pixel_x = -32
+	SET_BASE_PIXEL(-32, 0)
 
 /obj/structure/fluff/statue/small
 	icon = 'icons/roguetown/misc/structure.dmi'
@@ -708,8 +704,7 @@
 /obj/structure/fluff/statue/femalestatue
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "1"
-	pixel_x = -32
-	pixel_y = -16
+	SET_BASE_PIXEL(-32, -16)
 
 /obj/structure/fluff/statue/femalestatue/clean
 	icon_state = "12"
@@ -729,8 +724,7 @@
 /obj/structure/fluff/statue/musician
 	icon = 'icons/roguetown/misc/ay.dmi'
 	icon_state = "3"
-	pixel_x = -32
-
+	SET_BASE_PIXEL(-32, 0)
 
 /obj/structure/fluff/statue/zizo
 	name = "statue of Zizo"
@@ -1081,19 +1075,24 @@
 	dir = SOUTH
 
 /obj/structure/fluff/psycross/crafted/shrine/dendor_volf
-	name = "shrine to Dendor"
-	desc = "The life force of a Volf has consecrated this holy place.<br/> Present several blood bait here to craft a worthy sacrifice."
+	name = "devouring shrine to Dendor"
+	desc = "The life force of a Volf has consecrated this holy place.<br/> Present two blood baits here to craft a worthy sacrifice."
 	icon_state = "shrine_dendor_volf"
 
 /obj/structure/fluff/psycross/crafted/shrine/dendor_saiga
-	name = "shrine to Dendor"
+	name = "stinging shrine to Dendor"
 	desc = "The life force of a Saiga has consecrated this holy place.<br/> Present jacksberries, westleach leaves, and eels for crafting a worthy sacrifice."
 	icon_state = "shrine_dendor_saiga"
 
 /obj/structure/fluff/psycross/crafted/shrine/dendor_gote
-	name = "shrine to Dendor"
+	name = "growing shrine to Dendor"
 	desc = "The life force of a Gote has consecrated this holy place.<br/> Present poppies, swampweed leaves, and silk grubs for crafting a worthy sacrifice."
 	icon_state = "shrine_dendor_gote"
+
+/obj/structure/fluff/psycross/crafted/shrine/dendor_troll
+	name = "lording shrine to Dendor"
+	desc = "The life force of a Troll has consecrated this holy place.<br/> Present two troll horns for crafting a worthy sacrifice."
+	icon_state = "shrine_dendor_troll"
 
 /obj/structure/fluff/psycross/attackby(obj/item/W, mob/living/carbon/human/user, params)
 	if(!user.mind)

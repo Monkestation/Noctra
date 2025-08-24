@@ -1,10 +1,10 @@
 /mob/living/carbon/human/species/werewolf
 	race = /datum/species/werewolf
 	footstep_type = FOOTSTEP_MOB_HEAVY
-	var/datum/language_holder/stored_language
-	var/list/stored_skills
-	var/list/stored_experience
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	base_strength = 15
+	base_constitution = 15
+	base_endurance = 15
 
 /mob/living/carbon/human/species/werewolf/male
 	gender = MALE
@@ -20,7 +20,7 @@
 	id = "werewolf"
 
 	species_traits = list(NO_UNDERWEAR, NOEYESPRITES)
-	inherent_traits = list(TRAIT_NOSTAMINA, TRAIT_RESISTHEAT, TRAIT_RESISTCOLD, TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTLOWPRESSURE, TRAIT_RADIMMUNE, TRAIT_NODISMEMBER)
+	inherent_traits = list(TRAIT_NOSTAMINA, TRAIT_RESISTCOLD, TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTLOWPRESSURE, TRAIT_RADIMMUNE, TRAIT_NODISMEMBER)
 	inherent_biotypes = MOB_HUMANOID
 
 	no_equip = list(ITEM_SLOT_SHIRT, ITEM_SLOT_HEAD, ITEM_SLOT_MASK, ITEM_SLOT_ARMOR, ITEM_SLOT_GLOVES, ITEM_SLOT_SHOES, ITEM_SLOT_PANTS, ITEM_SLOT_CLOAK, ITEM_SLOT_BELT, ITEM_SLOT_BACK_R, ITEM_SLOT_BACK_L)
@@ -50,7 +50,7 @@
 	)
 
 	changesource_flags = WABBAJACK
-	bleed_mod = 0.2
+	bleed_mod = 0.3
 	pain_mod = 0.2
 
 /datum/species/werewolf/send_voice(mob/living/carbon/human/H)

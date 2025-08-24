@@ -5,7 +5,7 @@
 	var/devotion = 0
 	var/max_devotion = 1000
 	var/progression = 0
-	var/max_progression = 1000
+	var/max_progression = CLERIC_REQ_3
 
 	/// How much devotion is gained per process call
 	var/passive_devotion_gain = 0
@@ -112,7 +112,7 @@
 	devotion = 50
 	max_devotion = CLERIC_REQ_3
 	progression = CLERIC_REQ_1
-	max_progression = CLERIC_REQ_3 - 1
+	max_progression = CLERIC_REQ_3
 
 /datum/devotion/proc/make_acolyte()
 	progression = CLERIC_REQ_1
@@ -121,11 +121,11 @@
 	devotion = 50
 	max_devotion = CLERIC_REQ_3
 	progression = CLERIC_REQ_1
-	max_progression = CLERIC_REQ_3 - 1
+	max_progression = CLERIC_REQ_3
 
 /datum/devotion/proc/make_churching()
 	max_devotion = CLERIC_REQ_1
-	max_progression = CLERIC_REQ_1 - 1
+	max_progression = 0
 	miracles_extra = list(
 		/datum/action/cooldown/spell/undirected/touch/orison/lesser,
 		/datum/action/cooldown/spell/diagnose/holy,

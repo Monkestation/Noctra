@@ -1,3 +1,43 @@
+/obj/structure/flora/shells
+	name = "shells"
+	desc = ""
+	icon = 'icons/delver/abyss_objects.dmi'
+	icon_state = "shell-1"
+
+/obj/structure/flora/shells/Initialize()
+	if(icon_state == "shell-1")
+		icon_state = "shell-[rand(1, 5)]"
+	. = ..()
+
+/obj/structure/flora/ocean_plants
+	name = "abyssor plants"
+	desc = ""
+	icon = 'icons/delver/abyss_objects.dmi'
+	icon_state = "clutter-1"
+
+/obj/structure/flora/ocean_plants/Initialize()
+	icon_state = "clutter-[rand(1, 8)]"
+	. = ..()
+
+/obj/structure/flora/starfish
+	name = "starfish"
+	desc = ""
+	icon = 'icons/delver/abyss_objects.dmi'
+	icon_state = "starfish-1"
+
+/obj/structure/flora/ocean_plants/Initialize()
+	icon_state = "starfish-[rand(1, 3)]"
+	. = ..()
+
+/obj/structure/flora/driftwood
+	name = "driftwood"
+	desc = ""
+	icon = 'icons/delver/abyss_objects.dmi'
+	icon_state = "driftwood-1"
+
+/obj/structure/flora/driftwood/Initialize()
+	icon_state = "driftwood-[rand(1, 4)]"
+	. = ..()
 
 // ausbush
 /obj/structure/flora/ausbushes
@@ -139,12 +179,40 @@
 	icon_state = "rocks"
 	icon = 'icons/obj/flora/largejungleflora.dmi'
 	density = FALSE
-	pixel_x = -16
-	pixel_y = -16
+	SET_BASE_PIXEL(-16, -16)
 
 /obj/structure/flora/rock/pile/largejungle/Initialize()
 	. = ..()
 	icon_state = "[initial(icon_state)][rand(1,3)]"
+
+/obj/structure/flora/rock/water
+	name = "boulder"
+	icon_state = "boulder"
+	icon = 'icons/delver/abyss_objects.dmi'
+
+/obj/structure/flora/rock/water/Initialize()
+	. = ..()
+	icon_state = "[initial(icon_state)]-[rand(1,3)]"
+
+/obj/structure/flora/rock/coral
+	name = "coral"
+	icon_state = "coral"
+	icon = 'icons/delver/abyss_objects.dmi'
+
+/obj/structure/flora/rock/coral/Initialize()
+	. = ..()
+	icon_state = "[initial(icon_state)]-[rand(1,32)]"
+
+/obj/structure/flora/pillar
+	name = "coral"
+	icon_state = "coral"
+	icon = 'icons/delver/abyss_objects.dmi'
+	resistance_flags = FIRE_PROOF
+	density = TRUE
+
+/obj/structure/flora/pillar/Initialize()
+	. = ..()
+	icon_state = "[initial(icon_state)]-[rand(1,5)]"
 
 //Jungle rocks
 
@@ -157,3 +225,65 @@
 /obj/structure/flora/rock/jungle/Initialize()
 	. = ..()
 	icon_state = "[initial(icon_state)][rand(1,5)]"
+
+/obj/structure/abyss_window
+	name = "abyssal window"
+	icon_state = "abyss_window"
+	icon = 'icons/delver/abyss_objects.dmi'
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/abyss_window, 32)
+
+
+/obj/structure/desert_elevator
+	icon_state = "desert elevator"
+	desc = ""
+	icon = 'icons/delver/abyss_objects.dmi'
+	density = FALSE
+
+/obj/structure/boards
+	name = "boards"
+	icon_state = "boards"
+	icon = 'icons/delver/desert_objects.dmi'
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/boards, 32)
+
+/obj/structure/desert_window
+	name = "desert window"
+	icon_state = "window_brass"
+	icon = 'icons/delver/desert_objects.dmi'
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/desert_window, 32)
+
+/obj/structure/desert_window/open
+	name = "open desert window"
+	icon_state = "window_open"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/desert_window/open, 32)
+
+/obj/structure/flora/astrata
+	name = "astrata"
+	icon_state = "astrata1"
+	icon = 'icons/delver/desert_objects.dmi'
+	resistance_flags = FIRE_PROOF
+	density = TRUE
+
+/obj/structure/flora/astrata/Initialize()
+	. = ..()
+	icon_state = "astrata[rand(1,3)]"
+
+/obj/structure/flora/sandbrick
+	name = "sandstone brick"
+	icon_state = "sandstone_brick"
+	icon = 'icons/delver/desert_objects.dmi'
+	resistance_flags = FIRE_PROOF
+
+/obj/structure/flora/kelp
+	name = "kelp"
+	icon_state = "kelp-1"
+	icon = 'icons/delver/abyss_objects.dmi'
+	resistance_flags = FIRE_PROOF
+	density = TRUE
+
+/obj/structure/flora/astrata/Initialize()
+	. = ..()
+	icon_state = "kelp-[rand(1,4)]"

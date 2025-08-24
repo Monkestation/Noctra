@@ -903,6 +903,16 @@
 	icon_state = "tile"
 	color = "#94df5b"
 
+/turf/open/floor/abyss_tile
+	icon = 'icons/delver/abyss_objects.dmi'
+	icon_state = "abysstile-1"
+
+/turf/open/floor/abyss_tile/two
+	icon_state = "abysstile-2"
+
+/turf/open/floor/abyss_tile/three
+	icon_state = "abysstile-3"
+
 /turf/open/floor/sandstone
 	icon_state = "sandstone"
 	footstep = FOOTSTEP_STONE
@@ -946,3 +956,102 @@
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+
+
+/turf/open/floor/abyss_sand
+	name = "abyssal sand"
+	desc = "Warm sand that, sadly, have been mixed with dirt."
+	icon_state = "sand_abyss"
+	icon = 'icons/delver/abyss_objects.dmi'
+	layer = MID_TURF_LAYER
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SOFT_BAREFOOT
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	landsound = 'sound/foley/jumpland/grassland.ogg'
+	slowdown = 0
+
+/turf/open/floor/abyss_sand/path
+	icon_state = "path_abyss"
+
+/turf/open/floor/sand
+	name = "sand"
+	desc = "Warm sand that, sadly, have been mixed with dirt."
+	icon_state = "sand-1"
+	icon = 'icons/delver/desert_objects.dmi'
+	layer = MID_TURF_LAYER
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SOFT_BAREFOOT
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	landsound = 'sound/foley/jumpland/grassland.ogg'
+	slowdown = 0
+	var/blood_sand = FALSE
+
+/turf/open/floor/sand/Initialize()
+	. = ..()
+	var/random_num = rand(1, 12)
+	icon_state = "sand-[random_num]"
+
+/turf/open/floor/sand/proc/make_bloodied()
+	if(blood_sand)
+		return
+	blood_sand = TRUE
+	icon_state = "bloody"
+
+	for(var/direction in list(NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST))
+		var/turf/open/floor/sand/adjacent_turf = get_step(src, direction)
+		if(istype(adjacent_turf))
+			var/dir_name = dir_to_name(direction)
+			adjacent_turf.set_bloody_direction(dir_name)
+
+/turf/open/floor/sand/proc/set_bloody_direction(direction_name)
+	if(blood_sand)
+		return
+	blood_sand = TRUE
+	icon_state = "bloody-[direction_name]"
+
+/turf/open/floor/sand/proc/dir_to_name(direction)
+	switch(direction)
+		if(NORTH)
+			return "n"
+		if(SOUTH)
+			return "s"
+		if(EAST)
+			return "e"
+		if(WEST)
+			return "w"
+		if(NORTHEAST)
+			return "ne"
+		if(NORTHWEST)
+			return "nw"
+		if(SOUTHEAST)
+			return "se"
+		if(SOUTHWEST)
+			return "sw"
+	return "n" // fallback
+
+
+/turf/open/floor/sand/bloodied
+	 icon_state = "bloody"
+
+/turf/open/floor/sand/bloodied/Initialize(mapload)
+	. = ..()
+	make_bloodied()
+
+/turf/open/floor/sandstone_tile
+	icon = 'icons/delver/desert_objects.dmi'
+	icon_state = "sandstonefloor-1"
+
+/turf/open/floor/sandstone_tile/two
+	icon_state = "sandstonefloor-2"
+
+/turf/open/floor/sandstone_tile/three
+	icon_state = "sandstonefloor-3"
+
+/turf/open/floor/sandstone_tile/four
+	icon_state = "sandstonefloor-4"
+
+/turf/open/floor/sandstone_tile/five
+	icon_state = "sandstonefloor-5"
+
+/turf/open/floor/sandstone_tile/six
+	icon_state = "sandstonefloor-6"

@@ -11,7 +11,6 @@
 
 /datum/outfit/job/adventurer/briar/pre_equip(mob/living/carbon/human/H)
 	..()
-	ADD_TRAIT(H, TRAIT_KNEESTINGER_IMMUNITY, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_SEEDKNOW, TRAIT_GENERIC)
 
 	belt = /obj/item/storage/belt/leather/rope
@@ -40,7 +39,7 @@
 		H.adjust_skillrank(/datum/skill/labor/taming, 4, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/tanning, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/misc/riding, 1, TRUE)
-		H.adjust_skillrank(/datum/skill/labor/butchering, 5, TRUE)
+		H.adjust_skillrank(/datum/skill/labor/butchering, 2, TRUE)
 		H.adjust_skillrank(/datum/skill/labor/farming, 3, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
@@ -57,10 +56,13 @@
 		H.mind.teach_crafting_recipe(/datum/blueprint_recipe/dendor/shrine)
 		H.mind.teach_crafting_recipe(/datum/blueprint_recipe/dendor/shrine/saiga)
 		H.mind.teach_crafting_recipe(/datum/blueprint_recipe/dendor/shrine/volf)
+		H.mind.teach_crafting_recipe(/datum/blueprint_recipe/dendor/shrine/troll)
 		H.mind.teach_crafting_recipe(/datum/repeatable_crafting_recipe/dendor/sacrifice_growing)
 		H.mind.teach_crafting_recipe(/datum/repeatable_crafting_recipe/dendor/sacrifice_stinging)
 		H.mind.teach_crafting_recipe(/datum/repeatable_crafting_recipe/dendor/sacrifice_devouring)
+		H.mind.teach_crafting_recipe(/datum/repeatable_crafting_recipe/dendor/sacrifice_lording)
 
+	ADD_TRAIT(H, TRAIT_HEAD_BUTCHER, TRAIT_GENERIC)
 	var/holder = H.patron?.devotion_holder
 	if(holder)
 		var/datum/devotion/devotion = new holder()
@@ -74,140 +76,126 @@
 	..()
 	to_chat(H, tutorial)
 
-
-/*	.................   Green Blessings of Dendor   ................... */
-/obj/item/blessing_of_dendor_growing
-	name = "blessing of Dendor"
+/obj/item/dendor_blessing
+	name = "growing blessing of Dendor"
 	icon = 'icons/roguetown/misc/magick.dmi'
 	icon_state = "dendor_grow"
 	plane = -1
 	layer = 4.2
 	alpha = 155
-	anchored = TRUE
+	var/associated_shrine = /obj/structure/fluff/psycross/crafted/shrine/dendor_gote
 
-/obj/item/blessing_of_dendor_growing/attack_hand(mob/living/carbon/human/user)
-	if(user.patron.type == /datum/patron/divine/dendor)
-		icon_state = "dendor_grow_end"
+/obj/item/dendor_blessing/attack_obj(obj/O, mob/living/user)
+	if(istype(O, associated_shrine))
+		. = TRUE
+		if(ishuman(user) && user.patron.type == /datum/patron/divine/dendor)
+			if(!check_blessing_requirements(user))
+				return
+			icon_state = "[icon_state]_end"
 
-		if(!do_after(user, 3 SECONDS, target = user))
-			icon_state = "dendor_grow"
-			return
+			if(!do_after(user, 3 SECONDS, target = src, display_over_user = TRUE))
+				icon_state = initial(icon_state)
+				return
 
-		if(HAS_TRAIT(user, TRAIT_BLESSED))
-			to_chat(user, span_info("Dendor will not grant more powers, but he still approves of the sacrifice, judging by the signs..."))
-			user.apply_status_effect(/datum/status_effect/buff/blessed)
 			record_round_statistic(STATS_DENDOR_SACRIFICES)
+			if(HAS_TRAIT(user, TRAIT_BLESSED))
+				to_chat(user, span_info("Dendor will not grant more powers, but he still approves of the sacrifice, judging by the signs..."))
+				user.apply_status_effect(/datum/status_effect/buff/blessed)
+				qdel(src)
+				return
+
+			ADD_TRAIT(user, TRAIT_BLESSED, TRAIT_GENERIC)
+			INVOKE_ASYNC(src, PROC_REF(give_blessing), user)
 			qdel(src)
-			return
+		else
+			to_chat(user, span_warning("Dendor finds me unworthy of his blessings..."))
+		return
+	return ..()
 
-		playsound(get_turf(user), 'sound/vo/smokedrag.ogg', 100, TRUE)
-		playsound(get_turf(user), 'sound/misc/wind.ogg', 100, TRUE, -1)
-		to_chat(user, span_notice("Plants grow rampant with your every step...things that constrain no longer does."))
-		user.emote("smile")
-		ADD_TRAIT(user, TRAIT_BLESSED, TRAIT_GENERIC)
-		ADD_TRAIT(user, TRAIT_WEBWALK, TRAIT_GENERIC)
-		user.add_spell(/datum/action/cooldown/spell/undirected/touch/entangler)
-		if(user.get_spell(/datum/action/cooldown/spell/beast_tame))
-			user.apply_status_effect(/datum/status_effect/buff/calm)
-	else
-		to_chat(user, span_warning("Dendor finds me unworthy..."))
+/obj/item/dendor_blessing/proc/check_blessing_requirements(mob/living/user)
+	return TRUE
 
-	record_round_statistic(STATS_DENDOR_SACRIFICES)
-	qdel(src)
+/obj/item/dendor_blessing/proc/give_blessing(mob/living/carbon/human/user)
+	playsound(get_turf(user), 'sound/vo/smokedrag.ogg', 100, TRUE)
+	playsound(get_turf(user), 'sound/misc/wind.ogg', 100, TRUE, -1)
+	to_chat(user, span_good("Plants grow rampant with your every step... things that constrain no longer impede you."))
+	user.emote("smile")
+	ADD_TRAIT(user, TRAIT_WEBWALK, TRAIT_GENERIC)
+	user.add_spell(/datum/action/cooldown/spell/undirected/touch/entangler, source = user.cleric)
+	user.apply_status_effect(/datum/status_effect/buff/calm)
 
 /*	.................   Yellow Blessings of Dendor   ................... */
-/obj/item/blessing_of_dendor_stinging
-	name = "blessing of Dendor"
-	icon = 'icons/roguetown/misc/magick.dmi'
+/obj/item/dendor_blessing/stinging
+	name = "stinging blessing of Dendor"
 	icon_state = "dendor_sting"
-	plane = -1
-	layer = 4.2
-	alpha = 155
-	anchored = TRUE
+	associated_shrine = /obj/structure/fluff/psycross/crafted/shrine/dendor_saiga
 
-/obj/item/blessing_of_dendor_stinging/attack_hand(mob/living/carbon/human/user)
-	if(user.patron.type == /datum/patron/divine/dendor)
-		icon_state = "dendor_sting_end"
-
-		if(!do_after(user, 3 SECONDS, target = user))
-			icon_state = "dendor_sting"
-			return
-
-		if(HAS_TRAIT(user, TRAIT_BLESSED))
-			to_chat(user, span_info("Dendor will not grant more powers, but he still approves of the sacrifice, judging by the signs..."))
-			user.apply_status_effect(/datum/status_effect/buff/blessed)
-			record_round_statistic(STATS_DENDOR_SACRIFICES)
-			qdel(src)
-			return
-
-		playsound(get_turf(user), 'sound/vo/smokedrag.ogg', 100, TRUE)
-		playsound(get_turf(user), 'sound/misc/wind.ogg', 100, TRUE, -1)
-		to_chat(user, span_notice("You feel as if light follows your every step...your foraging will be easier from now on, surely."))
-		user.emote("smile")
-		ADD_TRAIT(user, TRAIT_BLESSED, TRAIT_GENERIC)
-		ADD_TRAIT(user, TRAIT_MIRACULOUS_FORAGING, TRAIT_GENERIC)
-
-		user.add_spell(/datum/action/cooldown/spell/conjure/kneestingers)
-		user.apply_status_effect(/datum/status_effect/buff/calm)
-	else
-		to_chat(user, span_warning("Dendor finds me unworthy..."))
-
-	record_round_statistic(STATS_DENDOR_SACRIFICES)
-	qdel(src)
+/obj/item/dendor_blessing/stinging/give_blessing(mob/living/carbon/human/user)
+	playsound(get_turf(user), 'sound/vo/smokedrag.ogg', 100, TRUE)
+	playsound(get_turf(user), 'sound/misc/wind.ogg', 100, TRUE, -1)
+	to_chat(user, span_good("You feel as if light follows your every step... your foraging will be easier from now on, surely."))
+	user.emote("smile")
+	ADD_TRAIT(user, TRAIT_FORAGER, TRAIT_GENERIC)
+	ADD_TRAIT(user, TRAIT_MIRACULOUS_FORAGING, TRAIT_GENERIC)
+	user.add_spell(/datum/action/cooldown/spell/conjure/kneestingers, source = user.cleric)
+	user.apply_status_effect(/datum/status_effect/buff/calm)
 
 /*	.................  Red Blessings of Dendor   ................... */
-/obj/item/blessing_of_dendor_devouring
-	name = "blessing of Dendor"
-	icon = 'icons/roguetown/misc/magick.dmi'
+/obj/item/dendor_blessing/devouring
+	name = "devouring blessing of Dendor"
 	icon_state = "dendor_consume"
-	plane = -1
-	layer = 4.2
-	alpha = 155
-	anchored = TRUE
+	associated_shrine = /obj/structure/fluff/psycross/crafted/shrine/dendor_volf
 
-/obj/item/blessing_of_dendor_devouring/attack_hand(mob/living/carbon/human/user)
-	if(user.patron.type == /datum/patron/divine/dendor)
-		icon_state = "dendor_consume_end"
+/obj/item/dendor_blessing/devouring/check_blessing_requirements(mob/living/user)
+	if(!user.get_spell(/datum/action/cooldown/spell/undirected/bless_crops))
+		to_chat(user, span_warning("My faith to Dendor isn't sufficient enough..."))
+		return FALSE
+	return ..()
 
-		if(!do_after(user, 3 SECONDS, target = user))
-			icon_state = "dendor_consume"
-			return
+/obj/item/dendor_blessing/devouring/give_blessing(mob/living/user)
+	playsound(get_turf(user), 'sound/vo/smokedrag.ogg', 100, TRUE)
+	to_chat(user, span_danger("A volf howls far away...and your teeth begin to sear with pain!"))
+	playsound(get_turf(user), 'sound/vo/mobs/wwolf/idle (1).ogg', 50, TRUE)
+	user.Immobilize(2 SECONDS)
+	sleep(2 SECONDS)
 
-		if(HAS_TRAIT(user, TRAIT_BLESSED))
-			to_chat(user, span_info("Dendor will not grant more powers, but he still approves of the sacrifice, judging by the signs..."))
-			user.apply_status_effect(/datum/status_effect/buff/blessed)
-			record_round_statistic(STATS_DENDOR_SACRIFICES)
-			qdel(src)
-			return
+	user.emote("pain")
+	sleep(0.5 SECONDS)
 
-		playsound(get_turf(user), 'sound/vo/smokedrag.ogg', 100, TRUE)
-		to_chat(user, span_notice("A volf howls far away...and your teeth begin to sear with pain. Your sacrifice was accepted!"))
-		playsound(get_turf(user), 'sound/vo/mobs/wwolf/idle (1).ogg', 50, TRUE)
-		user.Immobilize(2 SECONDS)
-		sleep(2 SECONDS)
+	playsound(get_turf(user), 'sound/combat/fracture/fracturewet (1).ogg', 70, TRUE, -1)
+	user.Immobilize(30)
+	sleep(3.5 SECONDS)
 
-		user.emote("pain")
-		sleep(0.5 SECONDS)
+	to_chat(user, span_warning("My incisors transform to predatory fangs!"))
+	playsound(get_turf(user), 'sound/combat/fracture/fracturewet (1).ogg', 70, TRUE, -1)
+	user.emote("rage", forced = TRUE)
+	ADD_TRAIT(user, TRAIT_STRONGBITE, TRAIT_GENERIC)
+	ADD_TRAIT(user, TRAIT_BESTIALSENSE, TRAIT_GENERIC)
+	user.update_sight()
 
-		playsound(get_turf(user), 'sound/combat/fracture/fracturewet (1).ogg', 70, TRUE, -1)
-		user.Immobilize(30)
-		sleep(3.5 SECONDS)
+	user.remove_spell(/datum/action/cooldown/spell/undirected/bless_crops)
+	user.apply_status_effect(/datum/status_effect/buff/barbrage/briarrage)
+	to_chat(user, span_warning("Things that grow no longer interests me, the desire to hunt fills my heart!"))
 
-		to_chat(user, span_warning("My incisors transform to predatory fangs!"))
-		playsound(get_turf(user), 'sound/combat/fracture/fracturewet (1).ogg', 70, TRUE, -1)
-		user.emote("rage", forced = TRUE)
-		ADD_TRAIT(user, TRAIT_STRONGBITE, TRAIT_GENERIC)
-		ADD_TRAIT(user, TRAIT_BLESSED, TRAIT_GENERIC)
+/*	.................  Purple Blessings of Dendor   ................... */
+/obj/item/dendor_blessing/lording
+	name = "lording blessing of Dendor"
+	icon_state = "dendor_lord"
+	associated_shrine = /obj/structure/fluff/psycross/crafted/shrine/dendor_troll
 
-		user.remove_spell(/datum/action/cooldown/spell/undirected/bless_crops)
-		user.apply_status_effect(/datum/status_effect/buff/barbrage/briarrage)
-		to_chat(user, span_warning("Things that grow no longer interests me, the desire to hunt fills my heart!"))
+/obj/item/dendor_blessing/lording/check_blessing_requirements(mob/living/user)
+	if(!user.get_spell(/datum/action/cooldown/spell/healing))
+		to_chat(user, span_warning("My faith to Dendor isn't sufficient enough..."))
+		return FALSE
+	return ..()
 
-		user.remove_spell(/datum/action/cooldown/spell/healing)
-		user.add_spell(/datum/action/cooldown/spell/undirected/troll_shape)
-		to_chat(user, span_warning("I no longer care for mending wounds, let my rage be heard!"))
-	else
-		to_chat(user, span_warning("Dendor finds me unworthy..."))
-
-	record_round_statistic(STATS_DENDOR_SACRIFICES)
-	qdel(src)
+/obj/item/dendor_blessing/lording/give_blessing(mob/living/carbon/human/user)
+	playsound(get_turf(user), 'sound/vo/smokedrag.ogg', 100, TRUE)
+	playsound(get_turf(user), pick('sound/vo/mobs/troll/idle1.ogg','sound/vo/mobs/troll/idle2.ogg'), 50, TRUE)
+	to_chat(user, span_good("The rumblings of a troll echoes through the trees. Your offering was acknowledged by the ancient dwellers of the forest."))
+	user.emote("rage", forced = TRUE)
+	user.physiology.pain_mod *= 0.6 // to offset the lack of healing and the damage conversion from troll form
+	user.remove_spell(/datum/action/cooldown/spell/healing)
+	user.add_spell(/datum/action/cooldown/spell/undirected/troll_shape, source = user.cleric)
+	user.add_spell(/datum/action/cooldown/spell/undirected/shapeshift/troll_form)
+	to_chat(user, span_warning("I no longer care for mending wounds, let the lords of the forest be known!"))

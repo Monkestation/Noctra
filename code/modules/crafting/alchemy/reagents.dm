@@ -30,6 +30,11 @@
 		M.adjustOxyLoss(-1.25, 0)
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5*REM)
 		M.adjustCloneLoss(-1.75*REM, 0)
+	if(istype(M, /mob/living/carbon/human/species/werewolf))
+		var/mob/living/carbon/human/human = M
+		var/obj/item/clothing/werewolf_armor = human.skin_armor
+		if(werewolf_armor)
+			werewolf_armor.obj_integrity = min(werewolf_armor.obj_integrity + werewolf_armor.max_integrity * 0.01, werewolf_armor.max_integrity)
 	..()
 
 /datum/reagent/medicine/stronghealth

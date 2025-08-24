@@ -20,6 +20,7 @@ window.onerror = function(msg, url, line, col, error) {
 };
 
 //Globals
+var collectiveTabs = {};
 var highlightSystem = {
     filters: [], // Array of {term: string, color: string, animation: string, enabled: boolean, id: string, soundEnabled: boolean}
     animations: {
@@ -1434,6 +1435,33 @@ function output(message, flag) {
 }
 
 
+// Add CSS for collective tab styling (inject into head or add to CSS file)
+function addCollectiveTabCSS() {
+    var css = `
+        .collective-tab {
+            background-color: #ff6b9d !important;
+            border-color: #e91e63 !important;
+        }
+
+        .collective-tab:hover {
+            background-color: #ff8fab !important;
+        }
+
+        .collective-tab.active {
+            background-color: #e91e63 !important;
+            color: white !important;
+        }
+
+        .collective-indicator {
+            color: #fff;
+            text-shadow: 0 0 2px #e91e63;
+            margin-left: 3px;
+        }
+    `;
+
+    $('<style>').prop('type', 'text/css').html(css).appendTo('head');
+}
+
 
 // Highlighting function (fixed)
 function highlightTerms(element) {
@@ -1792,7 +1820,6 @@ class WebSocketManager {
             return wsManager.websocket ? wsManager.websocket.readyState : WebSocket.CLOSED;
         };
 
-// Fixed filter function that looks at nested elements for chat classes
 function applyFilterToMessage(messageElement) {
     if (!messageElement) return;
 
@@ -1805,7 +1832,7 @@ function applyFilterToMessage(messageElement) {
         // Get classes from the message element itself
         var classes = messageElement.className ? messageElement.className.split(' ') : [];
 
-        // Also check for classes in nested elements (where the actual chat classes like 'say', 'ooc', etc. are)
+        // Also check for classes in nested elements (where the actual chat classes are)
         var nestedElements = messageElement.querySelectorAll('*');
         var allClasses = [...classes];
 
@@ -1822,6 +1849,19 @@ function applyFilterToMessage(messageElement) {
         // Check if message has the required class for built-in filters
         if (allClasses.includes(opts.currentFilter)) {
             shouldShow = true;
+        }
+
+        // Check collective tabs
+        if (!shouldShow && collectiveTabs) {
+            for (var collectiveId in collectiveTabs) {
+                if (collectiveId.toLowerCase() === opts.currentFilter.toLowerCase()) {
+                    // Check if message has the collective span class
+                    if (allClasses.includes(collectiveId)) {
+                        shouldShow = true;
+                        break;
+                    }
+                }
+            }
         }
 
         // Check custom tabs
@@ -1852,6 +1892,63 @@ function applyFilterToMessage(messageElement) {
     }
 }
 
+
+function addCollectiveTab(collective_id, display_name) {
+    if (collectiveTabs[collective_id]) {
+        updateCollectiveTab(collective_id, display_name);
+        return;
+    }
+
+    collectiveTabs[collective_id] = { id: collective_id, name: display_name };
+
+    // Create the tab element
+    var tabElement = $(`<div class="filter-tab collective-tab" data-filter="${collective_id.toLowerCase()}">${display_name} <span class="collective-indicator">♥</span></div>`);
+
+    // Insert before the add button (or at the end of filter tabs)
+    if ($('#addTabBtn').length) {
+        $('#addTabBtn').before(tabElement);
+    } else {
+        $('.filter-tabs').append(tabElement);
+    }
+
+    // Add click handler for the new tab
+    tabElement.on('click', function(e) {
+        e.preventDefault();
+        switchFilter(collective_id.toLowerCase());
+    });
+}
+
+function updateCollectiveTab(collective_id, display_name) {
+    if (!collectiveTabs[collective_id]) {
+        addCollectiveTab(collective_id, display_name);
+        return;
+    }
+
+    collectiveTabs[collective_id] = { id: collective_id, name: display_name };
+
+    // Update the tab display name
+    var tabElement = $(`.filter-tab[data-filter="${collective_id.toLowerCase()}"]`);
+    if (tabElement.length) {
+        tabElement.html(`${display_name} <span class="collective-indicator">♥</span>`);
+    }
+}
+
+function removeCollectiveTab(collective_id) {
+    if (!collectiveTabs[collective_id]) {
+        return;
+    }
+
+    delete collectiveTabs[collective_id];
+
+    // Remove the tab element
+    var tabElement = $(`.filter-tab[data-filter="${collective_id.toLowerCase()}"]`);
+    tabElement.remove();
+
+    // If this was the active filter, switch to 'all'
+    if (opts.currentFilter === collective_id.toLowerCase()) {
+        switchFilter('all');
+    }
+}
 
 function switchFilter(filterName) {
     console.log('Switching to filter:', filterName);

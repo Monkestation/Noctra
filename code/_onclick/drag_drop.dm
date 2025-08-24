@@ -27,8 +27,8 @@
 		if(!(I.item_flags & ABSTRACT))
 			if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 				return
-			I.pixel_x = round(CLAMP(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)/modifier, 1)
-			I.pixel_y = round(CLAMP(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)/modifier, 1)
+			I.pixel_x = I.base_pixel_x + round(CLAMP(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(world.icon_size/2), world.icon_size/2)/modifier, 1)
+			I.pixel_y = I.base_pixel_y + round(CLAMP(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)/modifier, 1)
 			return
 	return
 
