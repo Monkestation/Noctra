@@ -6,15 +6,15 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	holder.discord_manipulation() 
+	holder.discord_manipulation()
 
 
 /datum/admins/proc/discord_manipulation()
 	if(!usr.client.holder)
 		return
 
-	if(!SSdiscord.enabled)
-		to_chat(usr, "<span class='warning'>TGS is not enabled</span>")
+	if(!SSdbcore.IsConnected())
+		to_chat(usr, "<span class='warning'>DB is not connected yet.</span>")
 		return
 
 	var/lookup_choice = alert(usr, "Do you wish to lookup account by ID or ckey?", "Lookup Type", "ID", "Ckey", "Cancel")
@@ -33,4 +33,4 @@
 			var/returned_id = SSdiscord.lookup_id(lookup_ckey)
 			if(returned_id)
 				to_chat(usr, "<span class='notice'>Ckey <b>[lookup_ckey]</b> is assigned to Discord ID <b>[returned_id]</b></span>")
-				to_chat(usr, "<span class='notice'>Discord mention format: <b>&lt;@[returned_id]&gt;</b></span>") // &lt; and &gt; print < > in HTML without using them as tags	
+				to_chat(usr, "<span class='notice'>Discord mention format: <b>[html_encode("<@[returned_id]>")]</b></span>")

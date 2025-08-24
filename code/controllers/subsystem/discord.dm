@@ -1,127 +1,229 @@
-/* 
-NOTES:
-There is a DB table to track ckeys and associated discord IDs.
-This system REQUIRES TGS, and will auto-disable if TGS is not present.
-The SS uses fire() instead of just pure shutdown, so people can be notified if it comes back after a crash, where the SS wasnt properly shutdown
-It only writes to the disk every 5 minutes, and it wont write to disk if the file is the same as it was the last time it was written. This is to save on disk writes
-The system is kept per-server (EG: Terry will not notify people who pressed notify on Sybil), but the accounts are between servers so you dont have to relink on each server.
-
-##################
-# HOW THIS WORKS #
-##################
-
-ROUNDSTART:
-1] The file is loaded and the discord IDs are extracted
-2] A ping is sent to the discord with the IDs of people who wished to be notified
-3] The file is emptied
-
-MIDROUND: 
-1] Someone usees the notify verb, it adds their discord ID to the list.
-2] On fire, it will write that to the disk, as long as conditions above are correct
-
-END ROUND:
-1] The file is force-saved, incase it hasnt fired at end round
-
-This is an absolute clusterfuck, but its my clusterfuck -aa07
-*/
-
+/**
+ * # Discord Subsystem
+ *
+ * This subsystem handles some integrations with discord
+ *
+ *
+ * NOTES:
+ * * There is a DB table to track ckeys and associated discord IDs. (discord_link)
+ * * It only writes to the disk every 5 minutes, and it won't write to disk if the file is the same as it was the last time it was written. This is to save on disk writes
+ *
+ *
+ * ## HOW VERIFICATION WORKS
+ *
+ * 1) The user runs the /verifydiscord command in the Discord server after copying the verification code the verification verb gives them.
+ *
+ * This is an absolute clusterfuck, but its my clusterfuck -aa07
+ * ^^ this is now less of a cluster fuck since I have moved round notifications to Plexora. The comment above was adjusted to reflect the changes. -Flleeppyy
+ */
 SUBSYSTEM_DEF(discord)
 	name = "Discord"
-	wait = 3000
-	init_order = INIT_ORDER_DISCORD
+	flags = SS_NO_FIRE | SS_NO_INIT
 
-	var/list/notify_members = list() // People to save to notify file
-	var/list/notify_members_cache = list() // Copy of previous list, so the SS doesnt have to fire if no new members have been added
-	var/list/people_to_notify = list() // People to notify on roundstart
-	var/list/account_link_cache = list() // List that holds accounts to link, used in conjunction with TGS
-	var/notify_file = file("data/notify.json")
-	var/enabled = 0 // Is TGS enabled (If not we wont fire because otherwise this is useless)
+	/// People who have tried to verify this round already
+	var/list/reverify_cache = list()
 
-/datum/controller/subsystem/discord/Initialize(start_timeofday)
-	// Check for if we are using TGS, otherwise return and disabless firing
-	if(world.TgsAvailable())
-		enabled = 1 // Allows other procs to use this (Account linking, etc)
-	else
-		can_fire = 0 // We dont want excess firing
-		return ..() // Cancel 
-
-	try
-		people_to_notify = json_decode(file2text(notify_file))
-	catch
-		pass() // The list can just stay as its defualt (blank). Pass() exists because it needs a catch
-	var/notifymsg = ""
-	for(var/id in people_to_notify)
-		// I would use jointext here, but I dont think you can two-side glue with it, and I would have to strip characters otherwise
-		notifymsg += "<@[id]> " // 22 charaters per notify, 90 notifies per message, so I am not making a failsafe because 90 people arent going to notify at once
-	if(notifymsg)
-		send2chat(new /datum/tgs_message_content("[notifymsg]"), CONFIG_GET(string/chat_announce_new_game)) // Sends the message to the discord, using same config option as the roundstart notification
-	fdel(notify_file) // Deletes the file
-	return ..()
-	
-/datum/controller/subsystem/discord/fire()
-	if(!enabled)
-		return // Dont do shit if its disabled
-	if(notify_members == notify_members_cache)
-		return // Dont re-write the file 
-	// If we are all clear
-	write_notify_file()
-	
-/datum/controller/subsystem/discord/Shutdown()
-	write_notify_file() // Guaranteed force-write on server close
-	
-/datum/controller/subsystem/discord/proc/write_notify_file()
-	if(!enabled) // Dont do shit if its disabled
-		return
-	fdel(notify_file) // Deletes the file first to make sure it writes properly
-	WRITE_FILE(notify_file, json_encode(notify_members)) // Writes the file
-	notify_members_cache = notify_members // Updates the cache list
-
-// Returns ID from ckey
+/**
+ * Given a ckey, look up the discord user id attached to the user, if any
+ *
+ * This gets the most recent entry from the discord link table that is associated with the given ckey
+ *
+ * Arguments:
+ * * lookup_ckey A string representing the ckey to search on
+ */
 /datum/controller/subsystem/discord/proc/lookup_id(lookup_ckey)
-	var/datum/DBQuery/query_get_discord_id = SSdbcore.NewQuery(
-		"SELECT discord_id FROM [format_table_name("player")] WHERE ckey = :ckey",
-		list("ckey" = lookup_ckey)
-	)
-	if(!query_get_discord_id.Execute())
-		qdel(query_get_discord_id)
-		return
-	if(query_get_discord_id.NextRow())
-		. = query_get_discord_id.item[1]
-	qdel(query_get_discord_id)
+	var/datum/discord_link_record/link = find_discord_link_by_ckey(lookup_ckey, only_valid = TRUE)
+	if(link)
+		return link.discord_id
 
-// Returns ckey from ID
+/**
+ * Given a discord id as a string, look up the ckey attached to that account, if any
+ *
+ * This gets the most recent entry from the discord_link table that is associated with this discord id snowflake
+ *
+ * Arguments:
+ * * lookup_id The discord id as a string
+ */
 /datum/controller/subsystem/discord/proc/lookup_ckey(lookup_id)
-	var/datum/DBQuery/query_get_discord_ckey = SSdbcore.NewQuery(
-		"SELECT ckey FROM [format_table_name("player")] WHERE discord_id = :discord_id",
-		list("discord_id" = lookup_id)
-	)
-	if(!query_get_discord_ckey.Execute())
-		qdel(query_get_discord_ckey)
-		return
-	if(query_get_discord_ckey.NextRow())
-		. = query_get_discord_ckey.item[1]
-	qdel(query_get_discord_ckey)
+	var/datum/discord_link_record/link = find_discord_link_by_discord_id(lookup_id, only_valid = TRUE)
+	if(link)
+		return link.ckey
 
-// Finalises link
-/datum/controller/subsystem/discord/proc/link_account(ckey)
-	var/datum/DBQuery/link_account = SSdbcore.NewQuery(
-		"UPDATE [format_table_name("player")] SET discord_id = :discord_id WHERE ckey = :ckey",
-		list("discord_id" = account_link_cache[ckey], "ckey" = ckey)
+/datum/controller/subsystem/discord/proc/get_or_generate_one_time_token_for_ckey(ckey)
+	// Is there an existing valid one time token
+	var/datum/discord_link_record/link = find_discord_link_by_ckey(ckey)
+	if(link)
+		return link.one_time_token
+
+	// Otherwise we make one
+	return generate_one_time_token(ckey)
+
+/**
+ * Generate a token for discord verification
+ *
+ * This uses the common word list to generate a six word random token, this token can then be fed to a discord bot that has access
+ * to the same database, and it can use it to link a ckey to a discord id, with minimal user effort
+ *
+ * It returns the token to the calling proc, after inserting an entry into the discord_link table of the following form
+ *
+ * ```
+ * (unique_id, ckey, null, the current time, the one time token generated)
+ * the null value will be filled out with the discord id by the integrated discord bot when a user verifies
+ * ```
+ *
+ * Notes:
+ * * The token is guaranteed to unique during it's validity period
+ * * The validity period is currently set at 4 hours
+ * * a token may not be unique outside it's validity window (to reduce conflicts)
+ *
+ * Arguments:
+ * * ckey_for a string representing the ckey this token is for
+ *
+ * Returns a string representing the one time token
+ */
+/datum/controller/subsystem/discord/proc/generate_one_time_token(ckey_for)
+
+	var/not_unique = TRUE
+	var/one_time_token = ""
+	// While there's a collision in the token, generate a new one (should rarely happen)
+	while(not_unique)
+		//Column is varchar 100, so we trim just in case someone does us the dirty later
+		one_time_token = trim(uppertext("PLX-VERIFY-[trim(ckey_for, 5)]-[random_string(4, GLOB.hex_characters)]-[random_string(4, GLOB.hex_characters)]"), 100)
+
+		not_unique = find_discord_link_by_token(one_time_token)
+
+	// Insert into the table, null in the discord id, id and timestamp and valid fields so the db fills them out where needed
+	var/datum/DBQuery/query_insert_link_record = SSdbcore.NewQuery(
+		"INSERT INTO [format_table_name("discord_links")] (ckey, one_time_token) VALUES(:ckey, :token)",
+		list("ckey" = ckey_for, "token" = one_time_token)
 	)
-	link_account.Execute()
-	qdel(link_account)
-	account_link_cache -= ckey
+
+	if(!query_insert_link_record.Execute())
+		qdel(query_insert_link_record)
+		return ""
+
+	//Cleanup
+	qdel(query_insert_link_record)
+	return one_time_token
+
+/**
+ * Find discord link entry by the passed in user token
+ *
+ * This will look into the discord link table and return the *first* entry that matches the given one time token
+ *
+ * Remember, multiple entries can exist, as they are only guaranteed to be unique for their validity period
+ *
+ * Arguments:
+ * * one_time_token the string of words representing the one time token
+ *
+ * Returns a [/datum/discord_link_record]
+ */
+/datum/controller/subsystem/discord/proc/find_discord_link_by_token(one_time_token)
+	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE one_time_token = :one_time_token GROUP BY ckey, discord_id, one_time_token LIMIT 1"
+	var/datum/DBQuery/query_get_discord_link_record = SSdbcore.NewQuery(
+		query,
+		list("one_time_token" = one_time_token)
+	)
+	if(!query_get_discord_link_record.Execute())
+		qdel(query_get_discord_link_record)
+		return
+	if(query_get_discord_link_record.NextRow())
+		var/result = query_get_discord_link_record.item
+		. = new /datum/discord_link_record(result[2], result[1], result[4], result[3])
+
+	//Make sure we clean up the query
+	qdel(query_get_discord_link_record)
+
+/**
+ * Find discord link entry by the passed in user ckey
+ *
+ * This will look into the discord link table and return the *first* entry that matches the given ckey
+ *
+ * Remember, multiple entries can exist
+ *
+ * Arguments:
+ * * ckey the users ckey as a string
+ *
+ * Returns a [/datum/discord_link_record]
+ */
+/datum/controller/subsystem/discord/proc/find_discord_link_by_ckey(ckey, only_valid = FALSE)
+	var/validsql = ""
+	if(only_valid)
+		validsql = "AND valid = 1"
+
+	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE ckey = :ckey [validsql] GROUP BY ckey, discord_id, one_time_token LIMIT 1"
+	var/datum/DBQuery/query_get_discord_link_record = SSdbcore.NewQuery(
+		query,
+		list("ckey" = ckey)
+	)
+	if(!query_get_discord_link_record.Execute())
+		qdel(query_get_discord_link_record)
+		return
+
+	if(query_get_discord_link_record.NextRow())
+		var/result = query_get_discord_link_record.item
+		. = new /datum/discord_link_record(result[2], result[1], result[4], result[3])
+
+	//Make sure we clean up the query
+	qdel(query_get_discord_link_record)
 
 // Unlink account (Admin verb used)
 /datum/controller/subsystem/discord/proc/unlink_account(ckey)
 	var/datum/DBQuery/unlink_account = SSdbcore.NewQuery(
-		"UPDATE [format_table_name("player")] SET discord_id = NULL WHERE ckey = :ckey",
+		"UPDATE [format_table_name("player")] SET discord_id = NULL, valid = 0 WHERE ckey = :ckey",
 		list("ckey" = ckey)
 	)
 	unlink_account.Execute()
 	qdel(unlink_account)
 
-// Clean up a discord account mention
-/datum/controller/subsystem/discord/proc/id_clean(input)
-	var/regex/num_only = regex("\[^0-9\]", "g")
-	return num_only.Replace(input, "")
+/**
+ * Find discord link entry by the passed in user ckey
+ *
+ * This will look into the discord link table and return the *first* entry that matches the given ckey
+ *
+ * Remember, multiple entries can exist
+ *
+ * Arguments:
+ * * discord_id The users discord id (string)
+ *
+ * Returns a [/datum/discord_link_record]
+ */
+/datum/controller/subsystem/discord/proc/find_discord_link_by_discord_id(discord_id, only_valid = FALSE)
+	var/validsql = ""
+	if(only_valid)
+		validsql = "AND valid = 1"
+
+	var/query = "SELECT CAST(discord_id AS CHAR(25)), ckey, MAX(timestamp), one_time_token FROM [format_table_name("discord_links")] WHERE discord_id = :discord_id [validsql] GROUP BY ckey, discord_id, one_time_token LIMIT 1"
+	var/datum/DBQuery/query_get_discord_link_record = SSdbcore.NewQuery(
+		query,
+		list("discord_id" = discord_id)
+	)
+	if(!query_get_discord_link_record.Execute())
+		qdel(query_get_discord_link_record)
+		return
+
+	if(query_get_discord_link_record.NextRow())
+		var/result = query_get_discord_link_record.item
+		. = new /datum/discord_link_record(result[2], result[1], result[4], result[3])
+
+	//Make sure we clean up the query
+	qdel(query_get_discord_link_record)
+
+
+/**
+ * Extract a discord id from a mention string
+ *
+ * This will regex out the mention <@num> block to extract the discord id
+ *
+ * Arguments:
+ * * discord_id The users discord mention string (string)
+ *
+ * Returns a text string with the discord id or null
+ */
+/datum/controller/subsystem/discord/proc/get_discord_id_from_mention(mention)
+	var/static/regex/discord_mention_extraction_regex = regex(@"<@([0-9]+)>")
+	discord_mention_extraction_regex.Find(mention)
+	if (length(discord_mention_extraction_regex.group) == 1)
+		return discord_mention_extraction_regex.group[1]
+	return null
+
