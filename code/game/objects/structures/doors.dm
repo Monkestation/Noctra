@@ -54,6 +54,8 @@
 	var/has_bolt = FALSE
 	/// Handle viewport toggle on right click
 	var/has_viewport = FALSE
+	/// Track the last mob that bumped the door for auto-re-locking
+	var/mob/last_bumper = null
 
 /obj/structure/door/Initialize()
 	. = ..()
@@ -229,6 +231,8 @@
 
 /obj/structure/door/Bumped(atom/movable/AM)
 	. = ..()
+	if(door_opened)
+		return
 	if(obj_broken || switching_states)
 		return
 	if(world.time < last_bump + 20)
@@ -255,6 +259,15 @@
 				user.visible_message(span_warning("The deadite smashes through [src]!"))
 			return
 		if(locked())
+			if(istype(user.get_active_held_item(), /obj/item/key) || istype(user.get_active_held_item(), /obj/item/storage/keyring))
+				var/obj/item/key_item = user.get_active_held_item()
+				last_bumper = user
+				src.attackby(key_item, user)
+				if(!locked())
+					src.Open(TRUE)
+					addtimer(CALLBACK(src, PROC_REF(Close), TRUE, TRUE), 25)
+					return
+				last_bumper = null
 			rattle()
 			return
 		if(TryToSwitchState(AM))
@@ -362,8 +375,11 @@
 	switching_states = FALSE
 	air_update_turf(TRUE)
 
-/obj/structure/door/proc/Close(silent = FALSE)
+/obj/structure/door/proc/Close(silent = FALSE, autobump = FALSE)
 	if(switching_states || !door_opened)
+		return
+	if(autobump && !src.Adjacent(last_bumper))
+		last_bumper = null
 		return
 	for(var/mob/living/L in get_turf(src))
 		return
@@ -380,6 +396,12 @@
 	update_appearance(UPDATE_ICON_STATE)
 	switching_states = FALSE
 	air_update_turf(TRUE)
+
+	if(autobump && last_bumper && src.Adjacent(last_bumper))
+		var/datum/lock/key/keylock = lock
+		if(istype(last_bumper.get_active_held_item(), /obj/item/key) || istype(last_bumper.get_active_held_item(), /obj/item/storage/keyring))
+			keylock.attack_wrap(src, last_bumper.get_active_held_item(), last_bumper, list(RIGHT_CLICK = "1"))
+		last_bumper = null
 
 /obj/structure/door/proc/force_closed()
 	switching_states = TRUE
