@@ -658,6 +658,8 @@
                 "admin": "admins are notified when a monarch or priest disconnects"
             },
             {
+<<<<<<< HEAD
+=======
                 "rscadd": "amount lost from dying on a psycross decreased from 2 to 0"
             },
             {
@@ -667,6 +669,7 @@
                 "rscadd": "amount lost from dying reduced from 1 to 0"
             },
             {
+>>>>>>> vanderlin/main
                 "bugfix": "copy outfit works again"
             },
             {
@@ -703,9 +706,12 @@
         ],
         "CheffieGithub": [
             {
+<<<<<<< HEAD
+=======
                 "bugfix": "Fix cleric and templar miracle progression."
             },
             {
+>>>>>>> vanderlin/main
                 "balance": "You cannot excommunicate followers of the inhumen."
             }
         ],
@@ -724,6 +730,16 @@
         ]
     },
     "2025-08-24": {
+<<<<<<< HEAD
+        "flleeppyy": [
+            {
+                "admin": "Requested hard-coded ban."
+            }
+        ],
+        "grungussuss": [
+            {
+                "rscdel": "Younglings have been removed, if you EVER see younglings please ahelp."
+=======
         "CheffieGithub": [
             {
                 "bugfix": "fix abyssorites and acolytes miracles"
@@ -756,6 +772,7 @@
             },
             {
                 "balance": "werewolves have slightly higher bleed mod. werewolves damage clothing upon transformation."
+>>>>>>> vanderlin/main
             }
         ]
     }

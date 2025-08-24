@@ -56,6 +56,18 @@ jobs:
             echo "merge_status=conflicts" >> $GITHUB_OUTPUT
             echo "Merge conflicts detected - will create PR for manual resolution"
             
+            # List conflicted files and save to output
+            echo "=== CONFLICTED FILES ==="
+            conflicted_files=$(git diff --name-only --diff-filter=U)
+            echo "$conflicted_files"
+            echo "conflicted_files<<EOF" >> $GITHUB_OUTPUT
+            echo "$conflicted_files" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+            
+            # Show conflict summary
+            echo "=== CONFLICT SUMMARY ==="
+            git status --porcelain | grep "^UU\|^AA\|^DD" || echo "No standard conflict markers found"
+            
             # Add all files (including conflicted ones) to staging
             git add -A
             
@@ -71,15 +83,36 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Create PR using GitHub CLI instead of peter-evans action
+          # Prepare PR body based on merge status
+          if [ "${{ steps.merge_step.outputs.merge_status }}" = "conflicts" ]; then
+            pr_body="This PR merges the latest changes from Vanderlin into Noctra.
+
+           **MERGE CONFLICTS DETECTED** - Manual resolution required.
+
+          ## Conflicted Files:
+          \`\`\`
+          ${{ steps.merge_step.outputs.conflicted_files }}
+          \`\`\`
+
+          Please review and resolve the conflicts in the files listed above.
+
+          Auto-generated sync from GitHub Actions run #${{ github.run_number }}
+          Triggered at: $(date)"
+            pr_title="MERGE CONFLICTS: Sync updates from Vanderlin - ${{ github.run_id }}"
+          else
+            pr_body="This PR merges the latest changes from Vanderlin into Noctra.
+
+           **Merge completed successfully** - Ready to review and merge.
+
+          Auto-generated sync from GitHub Actions run #${{ github.run_number }}
+          Triggered at: $(date)"
+            pr_title="Sync updates from Vanderlin - ${{ github.run_id }}"
+          fi
+
+          # Create PR using GitHub CLI
           gh pr create \
             --base main \
             --head sync-from-vander \
-            --title "${{ steps.merge_step.outputs.merge_status == 'conflicts' && 'MERGE CONFLICTS: ' || '' }}Sync updates from Vanderlin - ${{ github.run_id }}" \
-            --body "This PR merges the latest changes from Vanderlin into Noctra.
-
-          ${{ steps.merge_step.outputs.merge_status == 'conflicts' && 'MERGE CONFLICTS detected - manual resolution required.' || 'Ready to review and merge.' }}
-
-          Auto-generated sync from GitHub Actions run #${{ github.run_number }}
-          Triggered at: $(date)" \
+            --title "$pr_title" \
+            --body "$pr_body" \
             || echo "PR may already exist"
