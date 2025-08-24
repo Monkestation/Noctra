@@ -27,6 +27,7 @@
 	. = ..()
 	var/mob/living/carbon/human/H = user.mob
 	H.smart_equipbelt()
+	H.changeNext_move(CLICK_CD_MELEE)
 	return TRUE
 
 /datum/keybinding/human/bag_equip_backl
@@ -39,6 +40,7 @@
 	. = ..()
 	var/mob/living/carbon/human/H = user.mob
 	H.smart_equipbag(ITEM_SLOT_BACK_R) // These fucking shits are reversed in the UI, so keep it like this for symmetry
+	H.changeNext_move(CLICK_CD_MELEE)
 	return TRUE
 
 /datum/keybinding/human/bag_equip_backr
@@ -51,6 +53,7 @@
 	. = ..()
 	var/mob/living/carbon/human/H = user.mob
 	H.smart_equipbag(ITEM_SLOT_BACK_L) // These fucking shits are reversed in the UI, so keep it like this for symmetry
+	H.changeNext_move(CLICK_CD_MELEE)
 	return TRUE
 
 /datum/keybinding/human/fixeye
