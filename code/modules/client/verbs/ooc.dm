@@ -65,7 +65,6 @@ GLOBAL_LIST_INIT(oocpronouns_required, list(
 
 	msg = emoji_parse(msg)
 
-
 	if(!holder)
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return

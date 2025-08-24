@@ -710,5 +710,17 @@
                 "rscadd": "seed merchants can now rarely bring queen bees with them"
             }
         ]
+    },
+    "2025-08-24": {
+        "flleeppyy": [
+            {
+                "admin": "Requested hard-coded ban."
+            }
+        ],
+        "grungussuss": [
+            {
+                "rscdel": "Younglings have been removed, if you EVER see younglings please ahelp."
+            }
+        ]
     }
 }

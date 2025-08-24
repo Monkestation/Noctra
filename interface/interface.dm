@@ -243,6 +243,25 @@
 		for(var/atom/movable/screen/scannies/S in screen)
 			S.alpha = 70
 
+/client/verb/anonymize()
+	set category = "Options"
+	set name = "Anonymize"
+
+	if(prefs.anonymize == TRUE)
+		if(alert(src, "Disable Anonymize? (Not Recommended)", "NOCTRA", "YES", "NO") == "YES")
+			prefs.anonymize = FALSE
+			prefs.save_preferences()
+			to_chat(src, "No longer anonymous.")
+			GLOB.anonymize -= ckey
+	else
+		if(alert(src, "Enable Anonymize? This will hide your BYOND name from anyone except \
+		Dungeon Masters while playing here, useful for dealing with negative OOC bias or \
+		maintaining privacy from other BYOND users.", "NOCTRA", "YES", "NO") == "YES")
+			prefs.anonymize = TRUE
+			prefs.save_preferences()
+			to_chat(src, "Anonymous... OK")
+			GLOB.anonymize |= ckey
+
 /client/verb/ui_scaling()
 	set name = "UI Scaling"
 	set category = "Options"

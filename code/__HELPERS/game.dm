@@ -366,6 +366,8 @@
 
 	return pick(possible_loc)
 
+/// ckeys to anonymize
+GLOBAL_LIST_EMPTY(anonymize)
 /// Assoc list of ckeys to fake names.
 /// Is not cleaned, but that shouldn't be an issue.
 GLOBAL_LIST_EMPTY(fake_ckeys)
@@ -375,7 +377,73 @@ GLOBAL_LIST_EMPTY(fake_ckeys)
 	if(!key || !istext(key))
 		return "some invalid"
 	var/ckey = ckey(key)
+	if(ckey in GLOB.anonymize)
+		return GLOB.fake_ckeys[ckey] || ckey
 	return ckey
+
+/proc/add_key_to_anonymized_keys(ckey)
+	if(isnull(GLOB.fake_ckeys[ckey]))
+		GLOB.fake_ckeys[ckey] += generate_anonymous_key()
+
+/proc/generate_anonymous_key()
+	var/static/list/adjectives = list(
+		"Wandering",
+		"Lurking",
+		"Ghastly",
+		"Sneaking",
+		"Solid",
+		"Solidus",
+		"Liquid",
+		"Venomous",
+		"Black",
+		"Crimson",
+		"Magenta",
+		"Latex",
+		"Wooden",
+		"Steel",
+		"Golden",
+		"Silver",
+		"Blacksteel",
+		"Darksteel",
+		"Slippery",
+		"Romantic",
+		"Bloody",
+		"Colorful",
+		"Dark",
+		"Explosive",
+		"Flaccid",
+		"Fat",
+		"Lewd",
+	)
+
+	var/static/list/nouns = list(
+		"Mamba",
+		"Snake",
+		"Eagle",
+		"Alpha",
+		"Omega",
+		"Chaos",
+		"Liquid",
+		"Air",
+		"Earth",
+		"Member",
+		"Fire",
+		"Pants",
+		"Plant",
+		"Plasma",
+		"Observer",
+		"Cat",
+		"Dog",
+		"War",
+		"Chemical",
+		"Pod",
+		"Seer",
+		"Lurker",
+		"Station",
+		"Bodyguard",
+	)
+
+	return "[pick(adjectives)] [pick(nouns)]"
 
 /// Returns if the given client is an admin, REGARDLESS of if they're deadminned or not.
 /proc/is_admin(client/client)
