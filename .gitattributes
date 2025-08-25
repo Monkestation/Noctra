@@ -4,3 +4,4 @@
 *.dmm text eol=lf merge=dmm
 *.dmi binary merge=dmi
 html/changelogs/* merge=ours
+html/changelogs/* merge=ours
