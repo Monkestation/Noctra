@@ -58,10 +58,7 @@
 	icon =  'icons/obj/bottle.dmi'
 	icon_state = "brew_bottle"
 	volume = 50
-	can_label_bottle = FALSE
-
-	// var/glass_name
-	// var/glass_desc
+	can_label_container = FALSE
 
 /obj/item/reagent_containers/glass/bottle/brewing_bottle/examine(mob/user)
 	. = ..()
@@ -75,14 +72,3 @@
 			return
 		sellprice = initial(sellprice)
 	. = ..()
-
-// /obj/item/reagent_containers/glass/bottle/brewing_bottle/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-// 	. = ..()
-// 	if(target.type in (typesof(/obj/item/reagent_containers/glass) - typesof(/obj/item/reagent_containers/glass/bottle)))
-// 		if(glass_name)
-// 			target.name = glass_name
-// 		if(glass_desc)
-// 			target.desc = glass_desc
-// 	if(reagents.total_volume <= 0)
-// 		glass_desc = null
-// 		glass_name = null

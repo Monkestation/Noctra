@@ -35,8 +35,8 @@
 	water_conversion = 0.6
 	created_reagent = /datum/reagent/consumable/tea/taraxamint
 	requirements = list(
-		/obj/item/alch/taraxacum = 1,
-		/obj/item/alch/mentha = 1
+		/obj/item/alch/herb/taraxacum = 1,
+		/obj/item/alch/herb/mentha = 1
 	)
 
 /datum/container_craft/cooking/tea/utricasalvia
@@ -44,7 +44,7 @@
 	crafting_time = 50 SECONDS
 	water_conversion = 0.6
 	created_reagent = /datum/reagent/consumable/tea/utricasalvia
-	requirements = list(/obj/item/alch/urtica = 1, /obj/item/alch/salvia = 1)
+	requirements = list(/obj/item/alch/herb/urtica = 1, /obj/item/alch/herb/salvia = 1)
 
 /datum/container_craft/cooking/tea/badidea
 	name = "westleach tar tea"

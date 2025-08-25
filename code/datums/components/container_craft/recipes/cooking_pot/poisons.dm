@@ -4,8 +4,8 @@
 	created_reagent = /datum/reagent/poison/herbal/atropa_concentrate
 	water_conversion = 1
 	requirements = list(
-		/obj/item/alch/atropa = 3,
-		/obj/item/alch/matricaria = 1
+		/obj/item/alch/herb/atropa = 3,
+		/obj/item/alch/herb/matricaria = 1
 	)
 	output_amount = 20 // Small amount of concentrated poison
 	crafting_time = 15 SECONDS
@@ -19,7 +19,7 @@
 	water_conversion = 1
 	requirements = list(
 		/obj/item/alch/swampdust = 2,
-		/obj/item/alch/paris = 1
+		/obj/item/alch/herb/paris = 1
 	)
 	output_amount = 30
 	crafting_time = 8 SECONDS

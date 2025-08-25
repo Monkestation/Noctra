@@ -758,5 +758,79 @@
                 "balance": "werewolves have slightly higher bleed mod. werewolves damage clothing upon transformation."
             }
         ]
+    },
+    "2025-08-25": {
+        "flleeppyy": [
+            {
+                "rscadd": "Proper Discord verification via 'OOC > Verify Discord Account' verb."
+            }
+        ],
+        "Arkatos": [
+            {
+                "bugfix": "Fixed an issue where printing press was not printing correct books"
+            }
+        ],
+        "Wouju": [
+            {
+                "rscadd": "Master of Nerves logs and text display has been improved"
+            },
+            {
+                "rscadd": "Clerics, both Ten and Inhumen, had their loadouts overhauled"
+            },
+            {
+                "rscadd": "Made the Forgefiend a hammer, you can craft and smith with it now"
+            },
+            {
+                "rscadd": "Wooden mallet can now be used to smith with"
+            },
+            {
+                "code_imp": "hammers use defines for their force and integrity, set some maces integrity to use their defines"
+            }
+        ],
+        "grungussuss": [
+            {
+                "bugfix": "fixed seeing no name in the disconnected important role admin message"
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "rscadd": "You can label bottles with parchment and a feather again. Middle-click to remove the label."
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "balance": "Potence now gets a minor STR buff for weapon attacks"
+            },
+            {
+                "qol": "Death Knight and Steal the sun commands now tells the user the amount of vitae needed for these actions if they lack enough."
+            },
+            {
+                "bugfix": "Ritual of Ascension now works."
+            },
+            {
+                "bugfix": "Vampire Lord can ascend at their last Ritual of Ascension"
+            },
+            {
+                "bugfix": "Vampire Lord can acess their Tome Souls after their first ascension"
+            },
+            {
+                "code_imp": "Ritual of Ascension was renamed together with their stages and descriptions."
+            },
+            {
+                "rscadd": "Add a Like, Dislike and Ask Again Feature to Mentor"
+            },
+            {
+                "rscadd": "Voices got an unique name in the meditates that is consistent like the Meditates"
+            },
+            {
+                "rscadd": "Medidates names can't be repeated anymore"
+            },
+            {
+                "rscadd": "Mentor Statistics at the Admin Tab"
+            },
+            {
+                "rscadd": "Mentors can gain 1 Triumph from every 7 likes (it has a limit of 5 Triumphs per round)"
+            }
+        ]
     }
 }

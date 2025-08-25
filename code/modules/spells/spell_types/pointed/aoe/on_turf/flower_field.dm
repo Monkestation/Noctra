@@ -28,11 +28,11 @@
 		return
 
 	var/static/list/flower_type_map = list(
-		/obj/item/alch/rosa = /obj/structure/flora/field/rosa,
-		/obj/item/alch/salvia = /obj/structure/flora/field/salvia,
-		/obj/item/alch/calendula = /obj/structure/flora/field/calendula,
-		/obj/item/alch/matricaria = /obj/structure/flora/field/matricaria,
-		/obj/item/alch/euphorbia = /obj/structure/flora/field/euphorbia,
+		/obj/item/alch/herb/rosa = /obj/structure/flora/field/rosa,
+		/obj/item/alch/herb/salvia = /obj/structure/flora/field/salvia,
+		/obj/item/alch/herb/calendula = /obj/structure/flora/field/calendula,
+		/obj/item/alch/herb/matricaria = /obj/structure/flora/field/matricaria,
+		/obj/item/alch/herb/euphorbia = /obj/structure/flora/field/euphorbia,
 		/obj/item/reagent_containers/food/snacks/produce/manabloom = /obj/structure/flora/field/manabloom,
 		/obj/item/reagent_containers/food/snacks/produce/poppy = /obj/structure/flora/field/poppy,
 	)

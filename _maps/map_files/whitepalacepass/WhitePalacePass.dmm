@@ -2595,11 +2595,11 @@
 	pixel_x = 3;
 	pixel_y = 5
 	},
-/obj/item/alch/rosa{
+/obj/item/alch/herb/rosa{
 	pixel_x = -6;
 	pixel_y = -6
 	},
-/obj/item/alch/rosa{
+/obj/item/alch/herb/rosa{
 	pixel_x = 4;
 	pixel_y = -5
 	},
@@ -3206,7 +3206,7 @@
 /turf/open/floor/snow,
 /area/rogue/outdoors/rtfield/safe)
 "ddk" = (
-/obj/item/alch/rosa,
+/obj/item/alch/herb/rosa,
 /turf/open/water/bath,
 /area/rogue/indoors/town/church)
 "ddy" = (
@@ -13718,7 +13718,7 @@
 	pixel_x = -7;
 	pixel_y = 5
 	},
-/obj/item/alch/rosa{
+/obj/item/alch/herb/rosa{
 	pixel_x = 6;
 	pixel_y = 0
 	},
@@ -14060,7 +14060,7 @@
 	pixel_x = 6;
 	pixel_y = 11
 	},
-/obj/item/alch/rosa{
+/obj/item/alch/herb/rosa{
 	pixel_x = 11;
 	pixel_y = -3
 	},
@@ -22221,11 +22221,11 @@
 /area/rogue/indoors/town/tavern)
 "uNX" = (
 /obj/structure/table/wood/fancy/purple,
-/obj/item/alch/rosa{
+/obj/item/alch/herb/rosa{
 	pixel_x = 4;
 	pixel_y = -8
 	},
-/obj/item/alch/rosa{
+/obj/item/alch/herb/rosa{
 	pixel_x = -3;
 	pixel_y = 10
 	},
@@ -25646,7 +25646,7 @@
 /area/rogue/under/cave)
 "xRZ" = (
 /obj/structure/table/wood/crafted,
-/obj/item/alch/rosa,
+/obj/item/alch/herb/rosa,
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town/tavern)
 "xSj" = (

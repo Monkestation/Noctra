@@ -150,11 +150,11 @@
 	name = "Transis Dust"
 	output = /obj/item/alch/transisdust
 	requirements = list(
-		/obj/item/alch/matricaria = 1,
-		/obj/item/alch/taraxacum = 1,
-		/obj/item/alch/salvia = 1,
-		/obj/item/alch/hypericum = 1,
-		/obj/item/alch/benedictus = 1,
+		/obj/item/alch/herb/matricaria = 1,
+		/obj/item/alch/herb/taraxacum = 1,
+		/obj/item/alch/herb/salvia = 1,
+		/obj/item/alch/herb/hypericum = 1,
+		/obj/item/alch/herb/benedictus = 1,
 		/obj/item/reagent_containers/powder/manabloom = 1,
 	)
 	tool_usage = list(

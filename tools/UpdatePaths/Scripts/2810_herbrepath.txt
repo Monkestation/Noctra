@@ -1,0 +1,16 @@
+/obj/item/alch/atropa : /obj/item/alch/herb/atropa{@OLD}
+/obj/item/alch/matricaria : /obj/item/alch/herb/matricaria{@OLD}
+/obj/item/alch/symphitum : /obj/item/alch/herb/symphitum{@OLD}
+/obj/item/alch/taraxacum : /obj/item/alch/herb/taraxacum{@OLD}
+/obj/item/alch/euphrasia : /obj/item/alch/herb/euphrasia{@OLD}
+/obj/item/alch/paris : /obj/item/alch/herb/paris{@OLD}
+/obj/item/alch/calendula : /obj/item/alch/herb/calendula{@OLD}
+/obj/item/alch/mentha : /obj/item/alch/herb/mentha{@OLD}
+/obj/item/alch/urtica : /obj/item/alch/herb/urtica{@OLD}
+/obj/item/alch/salvia : /obj/item/alch/herb/salvia{@OLD}
+/obj/item/alch/rosa : /obj/item/alch/herb/rosa{@OLD}
+/obj/item/alch/euphorbia : /obj/item/alch/herb/euphorbia{@OLD}
+/obj/item/alch/hypericum : /obj/item/alch/herb/hypericum{@OLD}
+/obj/item/alch/benedictus : /obj/item/alch/herb/benedictus{@OLD}
+/obj/item/alch/valeriana : /obj/item/alch/herb/valeriana{@OLD}
+/obj/item/alch/artemisia : /obj/item/alch/herb/artemisia{@OLD}

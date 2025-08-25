@@ -238,8 +238,8 @@
 
 // Specific project types
 /datum/vampire_project/power_growth
-	display_name = "Ascension Ritual"
-	description = "Channel collective vitae to transcend mortal limitations."
+	display_name = "Rite of Stirring"
+	description = "The ancient blood stirs once more. Forgotten whispers echo through the marrow of the land."
 	total_cost = VAMPCOST_ONE
 	completion_sound = 'sound/misc/batsound.ogg'
 
@@ -252,10 +252,80 @@
 	for(var/mob/living/user in range(1, bloodpool))
 		var/datum/antagonist/vampire/lord/lord = user.mind?.has_antag_datum(/datum/antagonist/vampire/lord)
 		if(lord && !lord.ascended)
+			var/mob/living/carbon/human/lord_body = user
 			to_chat(user, span_greentext("My power grows through collective sacrifice."))
-			// Add actual level up logic here
+			for(var/S in MOBSTATS)
+				lord_body.change_stat(S, 2)
+			lord_body.maxbloodpool += 1000
+			bloodpool.available_project_types -= /datum/vampire_project/power_growth
+			bloodpool.available_project_types += /datum/vampire_project/power_growth_2
 			break
 
+/datum/vampire_project/power_growth_2
+	display_name = "Rite of Reclamation"
+	description = "Strength long sealed returns. The soil, the stone, and the shadows bend again to their rightful master."
+	total_cost = VAMPCOST_TWO
+	completion_sound = 'sound/misc/batsound.ogg'
+
+/datum/vampire_project/power_growth_2/on_complete()
+	// Find nearby vampire lords who can level up
+	for(var/mob/living/user in range(1, bloodpool))
+		var/datum/antagonist/vampire/lord/lord = user.mind?.has_antag_datum(/datum/antagonist/vampire/lord)
+		if(lord && !lord.ascended)
+			var/mob/living/carbon/human/lord_body = user
+			to_chat(user, span_greentext("My power grows through collective sacrifice."))
+			for(var/S in MOBSTATS)
+				lord_body.change_stat(S, 2)
+			lord_body.maxbloodpool += 1000
+			bloodpool.available_project_types -= /datum/vampire_project/power_growth_2
+			bloodpool.available_project_types += /datum/vampire_project/power_growth_3
+			break
+
+/datum/vampire_project/power_growth_3
+	display_name = "Rite of Dominion"
+	description = "The veil of time shreds. The Elder's will pours forth, binding trespassers within the grasp of the Land."
+	total_cost = VAMPCOST_THREE
+	completion_sound = 'sound/misc/batsound.ogg'
+
+/datum/vampire_project/power_growth_3/on_complete()
+	// Find nearby vampire lords who can level up
+	for(var/mob/living/user in range(1, bloodpool))
+		var/datum/antagonist/vampire/lord/lord = user.mind?.has_antag_datum(/datum/antagonist/vampire/lord)
+		if(lord && !lord.ascended)
+			var/mob/living/carbon/human/lord_body = user
+			to_chat(user, span_greentext("My power grows through collective sacrifice."))
+			for(var/S in MOBSTATS)
+				lord_body.change_stat(S, 2)
+			lord_body.maxbloodpool += 1000
+			bloodpool.available_project_types -= /datum/vampire_project/power_growth_3
+			bloodpool.available_project_types += /datum/vampire_project/power_growth_4
+			break
+
+/datum/vampire_project/power_growth_4
+	display_name = "Rite of Sovereignty"
+	description = "The Lord is whole. Ancient power saturates every stone and vein, for the Land and its master are one."
+	total_cost = VAMPCOST_FOUR
+	completion_sound = 'sound/misc/batsound.ogg'
+
+/datum/vampire_project/power_growth_4/on_complete()
+	// Find nearby vampire lords who can level up
+	for(var/mob/living/user in range(1, bloodpool))
+		var/datum/antagonist/vampire/lord/lord = user.mind?.has_antag_datum(/datum/antagonist/vampire/lord)
+		if(lord && !lord.ascended)
+			var/mob/living/carbon/human/lord_body = user
+			for(var/S in MOBSTATS)
+				lord_body.change_stat(S, 2)
+			lord_body.maxbloodpool += 1000
+			to_chat(user, span_danger("I AM ANCIENT, I AM THE LAND. EVEN THE SUN BOWS TO ME."))
+			lord.ascended = TRUE
+			var/list/all_subordinates = user.clan_position.get_all_subordinates()
+			for(var/mob/living/carbon/human/subordinate_body  in all_subordinates)
+				subordinate_body.maxbloodpool += 1000
+				for(var/S in MOBSTATS)
+					subordinate_body.change_stat(S, 2)
+
+			bloodpool.available_project_types -= /datum/vampire_project/power_growth_4
+			break
 /datum/vampire_project/amulet_crafting
 	display_name = "World Anchor"
 	description = "Forge a mystical amulet to bind souls across realms."

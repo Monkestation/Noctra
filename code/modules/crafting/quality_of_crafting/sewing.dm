@@ -381,7 +381,7 @@
 /datum/repeatable_crafting_recipe/sewing/flowercrown/rosa
 	name = "rosa crown"
 	requirements = list(/obj/item/rope = 1,\
-					/obj/item/alch/rosa = 2)
+					/obj/item/alch/herb/rosa = 2)
 	output = /obj/item/clothing/head/flowercrown/rosa
 
 /datum/repeatable_crafting_recipe/sewing/flowercrown/rosa/create_blacklisted_paths()
@@ -390,7 +390,7 @@
 /datum/repeatable_crafting_recipe/sewing/flowercrown/salvia
 	name = "salvia crown"
 	requirements = list(/obj/item/rope = 1,\
-					/obj/item/alch/salvia = 2)
+					/obj/item/alch/herb/salvia = 2)
 	output = /obj/item/clothing/head/flowercrown/salvia
 
 /datum/repeatable_crafting_recipe/sewing/flowercrown/salvia/create_blacklisted_paths()
