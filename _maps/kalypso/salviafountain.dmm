@@ -47,7 +47,7 @@
 /turf/open/floor/dirt/road,
 /area/template_noop)
 "r" = (
-/obj/item/alch/salvia,
+/obj/item/alch/herb/salvia,
 /turf/open/floor/dirt/road,
 /area/template_noop)
 "s" = (
@@ -132,7 +132,7 @@
 	pixel_y = -18
 	},
 /obj/structure/flora/hotspring_rocks/small/three,
-/obj/item/alch/salvia,
+/obj/item/alch/herb/salvia,
 /turf/open/floor/grass/eora,
 /area/template_noop)
 "T" = (

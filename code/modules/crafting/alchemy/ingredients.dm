@@ -230,7 +230,7 @@
 
 //BEGIN THE HERBS
 
-/obj/item/alch/atropa
+/obj/item/alch/herb/atropa
 	name = "atropa"
 	icon_state = "atropa"
 
@@ -238,7 +238,7 @@
 	med_pot = /datum/alch_cauldron_recipe/berrypoison
 	minor_pot = /datum/alch_cauldron_recipe/stam_poison
 
-/obj/item/alch/matricaria
+/obj/item/alch/herb/matricaria
 	name = "matricaria"
 	icon_state = "matricaria"
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
@@ -250,7 +250,7 @@
 	med_pot = /datum/alch_cauldron_recipe/per_potion
 	minor_pot = /datum/alch_cauldron_recipe/doompoison
 
-/obj/item/alch/symphitum
+/obj/item/alch/herb/symphitum
 	name = "symphitum"
 	icon_state = "symphitum"
 
@@ -258,7 +258,7 @@
 	med_pot = /datum/alch_cauldron_recipe/stam_poison
 	minor_pot = /datum/alch_cauldron_recipe/antidote
 
-/obj/item/alch/taraxacum
+/obj/item/alch/herb/taraxacum
 	name = "taraxacum"
 	icon_state = "taraxacum"
 
@@ -266,7 +266,7 @@
 	med_pot = /datum/alch_cauldron_recipe/health_potion
 	minor_pot = /datum/alch_cauldron_recipe/antidote
 
-/obj/item/alch/euphrasia
+/obj/item/alch/herb/euphrasia
 	name = "euphrasia"
 	icon_state = "euphrasia"
 
@@ -274,7 +274,7 @@
 	med_pot = /datum/alch_cauldron_recipe/stam_poison
 	minor_pot = /datum/alch_cauldron_recipe/int_potion
 
-/obj/item/alch/paris
+/obj/item/alch/herb/paris
 	name = "paris"
 	icon_state = "paris"
 
@@ -282,7 +282,7 @@
 	med_pot = /datum/alch_cauldron_recipe/berrypoison
 	minor_pot = /datum/alch_cauldron_recipe/stam_poison
 
-/obj/item/alch/calendula
+/obj/item/alch/herb/calendula
 	name = "calendula"
 	icon_state = "calendula"
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
@@ -294,7 +294,7 @@
 	med_pot = /datum/alch_cauldron_recipe/end_potion
 	minor_pot = /datum/alch_cauldron_recipe/health_potion
 
-/obj/item/alch/mentha
+/obj/item/alch/herb/mentha
 	name = "mentha"
 	icon_state = "mentha"
 
@@ -302,7 +302,7 @@
 	med_pot = /datum/alch_cauldron_recipe/int_potion
 	minor_pot = /datum/alch_cauldron_recipe/stamina_potion
 
-/obj/item/alch/urtica
+/obj/item/alch/herb/urtica
 	name = "urtica"
 	icon_state = "urtica"
 
@@ -310,7 +310,7 @@
 	med_pot = /datum/alch_cauldron_recipe/spd_potion
 	minor_pot = /datum/alch_cauldron_recipe/stamina_potion
 
-/obj/item/alch/salvia
+/obj/item/alch/herb/salvia
 	name = "salvia"
 	icon_state = "salvia"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
@@ -323,7 +323,7 @@
 	med_pot = /datum/alch_cauldron_recipe/str_potion
 	minor_pot = /datum/alch_cauldron_recipe/end_potion
 
-/obj/item/alch/rosa
+/obj/item/alch/herb/rosa
 	name = "rosa"
 	icon_state = "rosa"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/head_items.dmi'
@@ -337,7 +337,7 @@
 	med_pot = /datum/alch_cauldron_recipe/end_potion
 	minor_pot = /datum/alch_cauldron_recipe/antidote
 
-/obj/item/alch/rosa/equipped(mob/living/carbon/human/user, slot)
+/obj/item/alch/herb/rosa/equipped(mob/living/carbon/human/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_MOUTH)
 		icon_state = "rosa_mouth"
@@ -346,7 +346,7 @@
 		icon_state = "rosa"
 		user.update_appearance()
 
-/obj/item/alch/euphorbia
+/obj/item/alch/herb/euphorbia
 	name = "euphorbia"
 	icon_state = "euphorbia"
 	slot_flags = ITEM_SLOT_HEAD|ITEM_SLOT_MASK
@@ -358,7 +358,7 @@
 	med_pot = /datum/alch_cauldron_recipe/doompoison
 	minor_pot = /datum/alch_cauldron_recipe/stam_poison
 
-/obj/item/alch/hypericum
+/obj/item/alch/herb/hypericum
 	name = "hypericum"
 	icon_state = "hypericum"
 
@@ -366,7 +366,7 @@
 	med_pot = /datum/alch_cauldron_recipe/mana_potion
 	minor_pot = /datum/alch_cauldron_recipe/antidote
 
-/obj/item/alch/benedictus
+/obj/item/alch/herb/benedictus
 	name = "benedictus"
 	icon_state = "benedictus"
 
@@ -374,7 +374,7 @@
 	med_pot = /datum/alch_cauldron_recipe/stamina_potion
 	minor_pot = /datum/alch_cauldron_recipe/int_potion
 
-/obj/item/alch/valeriana
+/obj/item/alch/herb/valeriana
 	name = "valeriana"
 	icon_state = "valeriana"
 
@@ -382,7 +382,7 @@
 	med_pot = /datum/alch_cauldron_recipe/spd_potion
 	minor_pot = /datum/alch_cauldron_recipe/stam_poison
 
-/obj/item/alch/artemisia
+/obj/item/alch/herb/artemisia
 	name = "artemisia"
 	icon_state = "artemisia"
 

@@ -6,7 +6,7 @@
 	skill_xp_gained = 5
 	action_time = 2.5 SECONDS
 	requirements = list(
-		list(/obj/item/alch/rosa, /obj/item/alch/salvia, /obj/item/alch/matricaria, /obj/item/alch/calendula) = 2,
+		list(/obj/item/alch/herb/rosa, /obj/item/alch/herb/salvia, /obj/item/alch/herb/matricaria, /obj/item/alch/herb/calendula) = 2,
 	)
 	/// Count of flowers added
 	var/flower_count = 0

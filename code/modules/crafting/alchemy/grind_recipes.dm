@@ -132,66 +132,66 @@
 
 //Herb -> Herbseed
 /datum/alch_grind_recipe/atropa_seed
-	valid_input = /obj/item/alch/atropa
+	valid_input = /obj/item/alch/herb/atropa
 	valid_outputs = list(/obj/item/neuFarm/seed/atropa = 1)
 
 /datum/alch_grind_recipe/matricaria_seed
-	valid_input = /obj/item/alch/matricaria
+	valid_input = /obj/item/alch/herb/matricaria
 	valid_outputs = list(/obj/item/neuFarm/seed/matricaria = 1)
 
 /datum/alch_grind_recipe/symphitum_seed
-	valid_input = /obj/item/alch/symphitum
+	valid_input = /obj/item/alch/herb/symphitum
 	valid_outputs = list(/obj/item/neuFarm/seed/symphitum = 1)
 
 /datum/alch_grind_recipe/taraxacum_seed
-	valid_input = /obj/item/alch/taraxacum
+	valid_input = /obj/item/alch/herb/taraxacum
 	valid_outputs = list(/obj/item/neuFarm/seed/taraxacum = 1)
 
 /datum/alch_grind_recipe/euphrasia_seed
-	valid_input = /obj/item/alch/euphrasia
+	valid_input = /obj/item/alch/herb/euphrasia
 	valid_outputs = list(/obj/item/neuFarm/seed/euphrasia = 1)
 
 /datum/alch_grind_recipe/paris_seed
-	valid_input = /obj/item/alch/paris
+	valid_input = /obj/item/alch/herb/paris
 	valid_outputs = list(/obj/item/neuFarm/seed/paris = 1)
 
 /datum/alch_grind_recipe/calendula_seed
-	valid_input = /obj/item/alch/calendula
+	valid_input = /obj/item/alch/herb/calendula
 	valid_outputs = list(/obj/item/neuFarm/seed/calendula = 1)
 
 /datum/alch_grind_recipe/mentha_seed
-	valid_input = /obj/item/alch/mentha
+	valid_input = /obj/item/alch/herb/mentha
 	valid_outputs = list(/obj/item/neuFarm/seed/mentha = 1)
 
 /datum/alch_grind_recipe/urtica_seed
-	valid_input = /obj/item/alch/urtica
+	valid_input = /obj/item/alch/herb/urtica
 	valid_outputs = list(/obj/item/neuFarm/seed/urtica = 1)
 
 /datum/alch_grind_recipe/salvia_seed
-	valid_input = /obj/item/alch/salvia
+	valid_input = /obj/item/alch/herb/salvia
 	valid_outputs = list(/obj/item/neuFarm/seed/salvia = 1)
 
 /datum/alch_grind_recipe/hypericum_seed
-	valid_input = /obj/item/alch/hypericum
+	valid_input = /obj/item/alch/herb/hypericum
 	valid_outputs = list(/obj/item/neuFarm/seed/hypericum = 1)
 
 /datum/alch_grind_recipe/benedictus_seed
-	valid_input = /obj/item/alch/benedictus
+	valid_input = /obj/item/alch/herb/benedictus
 	valid_outputs = list(/obj/item/neuFarm/seed/benedictus = 1)
 
 /datum/alch_grind_recipe/valeriana_seed
-	valid_input = /obj/item/alch/valeriana
+	valid_input = /obj/item/alch/herb/valeriana
 	valid_outputs = list(/obj/item/neuFarm/seed/valeriana = 1)
 
 /datum/alch_grind_recipe/artemisia_seed
-	valid_input = /obj/item/alch/artemisia
+	valid_input = /obj/item/alch/herb/artemisia
 	valid_outputs = list(/obj/item/neuFarm/seed/artemisia = 1)
 
 /datum/alch_grind_recipe/rosa_seed
-	valid_input = /obj/item/alch/rosa
+	valid_input = /obj/item/alch/herb/rosa
 	valid_outputs = list(/obj/item/neuFarm/seed/rosa = 1)
 
 /datum/alch_grind_recipe/euphorbia_seed
-	valid_input = /obj/item/alch/euphorbia
+	valid_input = /obj/item/alch/herb/euphorbia
 	valid_outputs = list(/obj/item/neuFarm/seed/euphorbia = 1)
 

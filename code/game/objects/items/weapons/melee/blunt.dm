@@ -275,7 +275,7 @@
 	name = "club"
 	desc = "A weapon older than recorded time itself."
 	icon_state = "club1"
-	max_integrity = 120
+	max_integrity = INTEGRITY_WORST
 	resistance_flags = FLAMMABLE // Weapon made mostly of wood
 	possible_item_intents = list(/datum/intent/mace/strike/wood)
 	gripped_intents = list(/datum/intent/mace/strike/wood, /datum/intent/mace/smash/wood)
@@ -304,7 +304,7 @@
 	melting_material = null
 	wlength = WLENGTH_SHORT
 	w_class = WEIGHT_CLASS_NORMAL
-	max_integrity = 180
+	max_integrity = INTEGRITY_STANDARD
 	minstr = 2
 	wbalance = HARD_TO_DODGE
 	sellprice = 15
@@ -338,7 +338,7 @@
 	associated_skill = /datum/skill/combat/swords
 	wdefense = ULTMATE_PARRY
 	metalizer_result = /obj/item/weapon/sword/iron
-	max_integrity = 240
+	max_integrity = INTEGRITY_STANDARD
 
 /obj/item/weapon/mace/woodclub/train_sword/getonmobprop(tag)
 	. = ..()
@@ -375,7 +375,7 @@
 	resistance_flags = FLAMMABLE // Weapon made mostly of wood
 	minstr = 10
 	parrysound = "parrywood"
-	max_integrity = 300
+	max_integrity = INTEGRITY_STRONG
 	wbalance = EASY_TO_DODGE
 	sellprice = 35
 	wdefense = GOOD_PARRY
@@ -396,10 +396,10 @@
 	desc = "A staff made of seaglass and sturdy but unusual metal, holding no power after its misled owner's death. More useful as a bashing tool than a magic focus."
 	icon = 'icons/roguetown/mob/monster/pufferboss.dmi'
 	icon_state = "pufferprod"
-	force = 15
-	force_wielded = 35
+	force = DAMAGE_MACE - 5
+	force_wielded = DAMAGE_HEAVYCLUB_WIELD + 5
 	minstr = 11
-	max_integrity = 900
+	max_integrity = INTEGRITY_STRONGEST * 1.2
 
 //................ Grand mace ............... //
 /obj/item/weapon/mace/goden/steel

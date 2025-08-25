@@ -27,7 +27,7 @@
 	requirements = list(
 		/obj/item/fertilizer/ash = 1,
 		/obj/item/reagent_containers/food/snacks/fat = 1,
-		/obj/item/alch/mentha = 1,
+		/obj/item/alch/herb/mentha = 1,
 	)
 	output = /obj/item/soap/bath
 

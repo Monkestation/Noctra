@@ -146,3 +146,7 @@
 
 	///Which ambient sound this client is currently being provided
 	var/current_ambient_sound
+	/// Cooldowns for Real like - For Mentor
+	var/list/real_like_cooldowns  = list()
+	/// Total Real likes recieved in a round - For Mentor
+	var/real_likes_received  = 0
