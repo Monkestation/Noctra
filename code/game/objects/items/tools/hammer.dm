@@ -156,14 +156,9 @@
 	dropshrink = 0.9
 	experimental_onhip = FALSE
 	experimental_onback = FALSE
-<<<<<<< HEAD
-	force = 4
-	smeltresult = null
-=======
 	force = DAMAGE_HAMMER - 5
 	smeltresult = /obj/item/fertilizer/ash
 	max_integrity = INTEGRITY_WORST
->>>>>>> vanderlin/main
 	time_multiplier = 1.2
 
 /obj/item/weapon/hammer/wood/getonmobprop(tag)
