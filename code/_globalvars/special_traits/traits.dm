@@ -57,7 +57,7 @@
 
 /datum/special_trait/thickskin/on_apply(mob/living/carbon/human/character, silent)
 	ADD_TRAIT(character, TRAIT_CRITICAL_RESISTANCE, "[type]")
-	character.change_stat("constitution", 2)
+	character.change_stat(STATKEY_CON, 2)
 
 /datum/special_trait/curseofcain
 	name = "Flawed Immortality"
@@ -123,11 +123,12 @@
 
 /datum/special_trait/eagle_eyed
 	name = "Eagle Eyed"
-	greet_text = span_notice("With my sharp aim I could always hit distant targets, I've also hidden a crossbow and some bolts.")
+	greet_text = span_notice("With my sharp aim I could always hit distant targets, \
+	I've also hidden a crossbow and some bolts.")
 	weight = 50
 
 /datum/special_trait/eagle_eyed/on_apply(mob/living/carbon/human/character, silent)
-	character.change_stat("perception", 2)
+	character.change_stat(STATKEY_PER, 2)
 	character.adjust_skillrank(/datum/skill/combat/crossbows, 5, TRUE)
 	character.adjust_skillrank(/datum/skill/combat/bows, 4, TRUE)
 	character.mind.special_items["Crossbow"] = /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow
@@ -150,8 +151,8 @@
 	weight = 100
 
 /datum/special_trait/corn_fed/on_apply(mob/living/carbon/human/character, silent)
-	character.change_stat("constitution", 2)
-	character.change_stat("intelligence", -2)
+	character.change_stat(STATKEY_CON, 2)
+	character.change_stat(STATKEY_INT, -2)
 
 /datum/special_trait/bookworm
 	name = "Bookworm"
@@ -224,7 +225,8 @@
 
 /datum/special_trait/languagesavant
 	name = "Polyglot"
-	greet_text = span_notice("I have always picked up on languages easily, even those that are forbidden to mortals... except that accursed beastial chatter. What even is that nonsense?")
+	greet_text = span_notice("I have always picked up on languages easily, \
+	even those that are forbidden to mortals... except that accursed beastial chatter. What even is that nonsense?")
 	weight = 50
 
 /datum/special_trait/languagesavant/on_apply(mob/living/carbon/human/character, silent)
@@ -238,16 +240,17 @@
 	character.grant_language(/datum/language/zalad)
 	character.grant_language(/datum/language/thievescant)
 
-/datum/special_trait/civilizedbarbarian
+/datum/special_trait/tavernbrawler
 	name = "Tavern Brawler"
-	greet_text = span_notice("My fists feel heavier!")
-	weight = 100
+	greet_text = span_notice("I love a good pub fight!")
+	weight = 50
 
-/*
-// kill all rt coders, honestly.
-/datum/special_trait/civilizedbarbarian/on_apply(mob/living/carbon/human/character, silent)
-	ADD_TRAIT(character, TRAIT_CIVILIZEDBARBARIAN, TRAIT_GENERIC) //Need to make trait improve hitting people with chairs, mugs, goblets. YOU FUCKER WHY WOULD YOU LEAVE CODE DEBT
-*/
+/datum/special_trait/tavernbrawler/on_apply(mob/living/carbon/human/character)
+	character.clamped_adjust_skillrank(/datum/skill/combat/wrestling, 3, 4, TRUE)
+	character.clamped_adjust_skillrank(/datum/skill/combat/unarmed, 3, 4, TRUE)
+	character.change_stat(STATKEY_STR, 1)
+	character.change_stat(STATKEY_END, 1)
+	character.change_stat(STATKEY_CON, 1)
 
 /datum/special_trait/mastercraftsmen
 	name = "Master Craftsman"
@@ -289,13 +292,14 @@
 
 /datum/special_trait/swift
 	name = "Speedster"
-	greet_text = span_notice("I feel like the fastest person alive and I can probably dodge anything, as long as I'm not weighed down by medium or heavy armor")
+	greet_text = span_notice("I feel like the fastest person alive and I can probably dodge anything, \
+	as long as I'm not weighed down by medium or heavy armor")
 	weight = 50
 
 /datum/special_trait/swift/on_apply(mob/living/carbon/human/character, silent)
 	ADD_TRAIT(character, TRAIT_DODGEEXPERT, "[type]")
 	character.adjust_skillrank(/datum/skill/misc/athletics, 6, TRUE)
-	character.change_stat("speed", 3)
+	character.change_stat(STATKEY_SPD, 3)
 
 /datum/special_trait/gourmand
 	name = "Gourmand"
@@ -318,15 +322,16 @@
 //neutral
 /datum/special_trait/backproblems
 	name = "Giant"
-	greet_text = span_notice("I've always been called a giant. I am valued for my stature, but, this world made for smaller folk has forced me to move cautiously.")
+	greet_text = span_notice("I've always been called a giant. I am valued for my stature, but, \
+	this world made for smaller folk has forced me to move cautiously.")
 	req_text = "Not a kobold or dwarf"
 	restricted_races = list(SPEC_ID_DWARF, SPEC_ID_KOBOLD)
 	weight = 50
 
 /datum/special_trait/backproblems/on_apply(mob/living/carbon/human/character)
-	character.change_stat("strength", 2)
-	character.change_stat("constitution", 1)
-	character.change_stat("speed", -2)
+	character.change_stat(STATKEY_STR, 2)
+	character.change_stat(STATKEY_CON, 1)
+	character.change_stat(STATKEY_SPD, -2)
 	character.transform = character.transform.Scale(1.25, 1.25)
 	character.transform = character.transform.Translate(0, (0.25 * 16))
 	character.update_transform()
@@ -338,8 +343,8 @@
 	weight = 100
 
 /datum/special_trait/nimrod/on_apply(mob/living/carbon/human/character, silent)
-	character.change_stat("speed", -2)
-	character.change_stat("intelligence", -4)
+	character.change_stat(STATKEY_SPD, -2)
+	character.change_stat(STATKEY_INT, -4)
 
 /datum/special_trait/nopouch
 	name = "No Pouch"
@@ -366,46 +371,6 @@
 /datum/special_trait/hussite/on_apply(mob/living/carbon/human/character, silent)
 	GLOB.excommunicated_players += character.real_name
 
-// lol we don't have bounty machines
-/*
-/datum/special_trait/bounty
-	name = "Hunted Man"
-	greet_text = span_boldwarning("Someone put a bounty on my head!")
-	weight = 20
-
-/datum/special_trait/bounty/on_apply(mob/living/carbon/human/character, silent)
-	var/reason = ""
-	var/employer = "unknown employer"
-	var/employer_gender
-	if(prob(65))
-		employer_gender = MALE
-	else
-		employer_gender = FEMALE
-	if(employer_gender == MALE)
-		employer = pick(list("Baron", "Lord", "Nobleman", "Prince"))
-	else
-		employer = pick(list("Duchess", "Lady", "Noblelady", "Princess"))
-	employer = "[employer] Angstrem"
-	var/amount = rand(40,100)
-	switch(rand(1,7))
-		if(1)
-			reason = "murder"
-		if(2)
-			reason = "kinslaying"
-		if(3)
-			reason = "besmirching a noble's name"
-		if(4)
-			reason = "treason"
-		if(5)
-			reason = "arson"
-		if(6)
-			reason = "heresy"
-		if(7)
-			reason = "robbing a noble"
-	add_bounty(character.real_name, amount, FALSE, reason, employer)
-	if(!silent)
-		to_chat(character, span_notice("Whether I done it or not, I have been accused of [reason], and the [employer] put a bounty on my head!"))
-*/
 /datum/special_trait/outlaw
 	name = "Known Outlaw"
 	greet_text = span_boldwarning("Whether for crimes I did or was accused of, I have been declared an outlaw!")
@@ -449,9 +414,9 @@
 	weight = 50
 
 /datum/special_trait/atrophy/on_apply(mob/living/carbon/human/character)
-	character.change_stat("strength", -2)
-	character.change_stat("constitution", -2)
-	character.change_stat("endurance", -1)
+	character.change_stat(STATKEY_STR, -2)
+	character.change_stat(STATKEY_CON, -2)
+	character.change_stat(STATKEY_END, -1)
 
 /datum/special_trait/lazy
 	name = "Lazy"
@@ -459,11 +424,11 @@
 	weight = 50
 
 /datum/special_trait/lazy/on_apply(mob/living/carbon/human/character)
-	character.change_stat("strength", -1)
-	character.change_stat("constitution", -1)
-	character.change_stat("endurance", -1)
-	character.change_stat("speed", -1)
-	character.change_stat("perception", -1)
+	character.change_stat(STATKEY_STR, -1)
+	character.change_stat(STATKEY_CON, -1)
+	character.change_stat(STATKEY_END, -1)
+	character.change_stat(STATKEY_SPD, -1)
+	character.change_stat(STATKEY_PER, -1)
 
 /datum/special_trait/bad_week
 	name = "Bad Week"
@@ -519,7 +484,10 @@
 
 /datum/special_trait/vengantbum
 	name = "Vengant Bum"
-	greet_text = span_notice("I was once a nobleman, high on life until my father was murdered right in front of me. Thankfully, my mentor took me to safety and taught me all I needed to survive in these disgusting lands. They think I am a lowlife, but that's just an advantage.")
+	greet_text = span_notice("I was once a nobleman, \
+	high on life until my father was murdered right in front of me. \
+	Thankfully, my mentor took me to safety and taught me all I needed to survive in these disgusting lands. \
+	They think I am a lowlife, but that's just an advantage.")
 	req_text = "Be a beggar"
 	allowed_jobs = list(/datum/job/vagrant)
 	weight = 7
@@ -551,7 +519,8 @@
 
 /datum/special_trait/illicit_merchant
 	name = "Illicit Merchant"
-	greet_text = span_notice("I'm sick of working as an underling, I will start my own trade emporium. I've got my hands on a hidden merchant key and a curious magical device")
+	greet_text = span_notice("I'm sick of working as an underling, \
+	I will start my own trade emporium. I've got my hands on a hidden merchant key and a curious magical device")
 	req_text = "Be a Shophand"
 	allowed_jobs = list(/datum/job/shophand)
 	weight = 50
@@ -562,17 +531,19 @@
 
 /datum/special_trait/thinker
 	name = "The Thinker"
-	greet_text = span_notice("Physique, Endurance, Constitution. The trinity of what builds a great leader and an even greater kingdom... or whatever those nimrods were yapping about! <b>I cast FIREBALL!!!</b>")
+	greet_text = span_notice("Physique, Endurance, Constitution. \
+	The trinity of what builds a great leader and an even greater kingdom... \
+	or whatever those nimrods were yapping about! <b>I cast FIREBALL!!!</b>")
 	req_text = "Monarch, worship Noc or Zizo"
 	allowed_patrons = list(/datum/patron/divine/noc, /datum/patron/inhumen/zizo)
 	allowed_jobs = list(/datum/job/lord)
 	weight = 25 //Should be fine.
 
 /datum/special_trait/thinker/on_apply(mob/living/carbon/human/character, silent)
-	character.change_stat("strength", -3)
-	character.change_stat("intelligence", 6)
-	character.change_stat("constitution", -1)
-	character.change_stat("endurance", -1)
+	character.change_stat(STATKEY_STR, -3)
+	character.change_stat(STATKEY_INT, 6)
+	character.change_stat(STATKEY_CON, -1)
+	character.change_stat(STATKEY_END, -1)
 	character.adjust_skillrank(/datum/skill/magic/arcane, 5, TRUE)
 	character.set_skillrank(/datum/skill/combat/swords, 2, TRUE) //Average only.
 	character.adjust_spell_points(14) //Less points than Court Mage, why do Court mage get 17 points? what even?

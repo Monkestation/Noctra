@@ -93,3 +93,13 @@
 #define COMSIG_LIVING_SHAPESHIFTED "living_shapeshifted"
 /// From /datum/status_effect/shapechange_mob/after_unchange(): (mob/living/caster)
 #define COMSIG_LIVING_UNSHAPESHIFTED "living_unshapeshifted"
+<<<<<<< HEAD
+=======
+
+/// Kind of jank, refactor at a later day when I can think of a better solution.
+/// Just be sure to call update_limbless_locomotion() after applying / removal
+#define TRAIT_NO_LEG_AID "no_leg_aid"
+
+/// Updating a mob's movespeed when lacking limbs. (list/modifiers)
+#define COMSIG_LIVING_LIMBLESS_MOVESPEED_UPDATE "living_get_movespeed_modifiers"
+>>>>>>> vanderlin/main

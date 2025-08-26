@@ -176,6 +176,9 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /obj/proc/burn()
 	if(resistance_flags & ON_FIRE)
 		SSfire_burning.processing -= src
+	for(var/mob/living/carbon/human/H in view(2, src))
+		if(H.has_flaw(/datum/charflaw/addiction/pyromaniac))
+			H.sate_addiction()
 	deconstruct(FALSE)
 
 ///Called when the obj is no longer on fire.

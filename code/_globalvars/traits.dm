@@ -98,7 +98,6 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"Xenophobia" = TRAIT_XENOPHOBIC,
 		"Tolerant" = TRAIT_TOLERANT,
 		"Nude Sleeper" = TRAIT_NUDE_SLEEPER,
-		"Civilized Barbarian" = TRAIT_CIVILIZEDBARBARIAN,
 		"Intimidating" = TRAIT_NOSEGRAB,
 		"Nutcracker" = TRAIT_NUTCRACKER,
 		"Strong Bite" = TRAIT_STRONGBITE,

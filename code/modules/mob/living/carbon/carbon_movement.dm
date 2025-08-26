@@ -26,19 +26,19 @@
 		if(m_intent == MOVE_INTENT_RUN) //sprint fatigue add
 			adjust_stamina(2)
 
-/mob/living/carbon/set_usable_legs(new_value)
-	. = ..()
-	if(isnull(.))
-		return
-	if(. == 0)
-		if(usable_legs != 0) //From having no usable legs to having some.
-			REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
-		if(usable_legs >= 2) // 2 legs to stand on your own
-			REMOVE_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
-	else if(usable_legs < 2 && !(movement_type & (FLYING | FLOATING))) //From having usable legs to having less than 2 legs
+/mob/living/carbon/update_limbless_locomotion()
+	var/leg_supports = COUNT_TRAIT_SOURCES(src, TRAIT_NO_LEG_AID)
+	// 2 legs to stand on your own, flying/floating, or having at least 1 leg with supports (so you can't float with two walking sticks)
+	if(usable_legs >= 2 || (movement_type & (FLYING|FLOATING)) || (usable_legs >= 1 && leg_supports >= 1))
+		REMOVE_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+	else
 		ADD_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
-		if(!usable_hands)
-			ADD_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+
+	//From having no usable limbs to having something.
+	if(usable_legs > 0 || (movement_type & (FLYING|FLOATING)) || leg_supports > 0 || usable_hands != 0)
+		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+	else
+		ADD_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 
 /mob/living/carbon/set_usable_hands(new_value)
 	. = ..()
@@ -46,24 +46,26 @@
 		return
 	if(. == 0)
 		REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, LACKING_MANIPULATION_APPENDAGES_TRAIT)
-		if(usable_hands != 0) //From having no usable hands to having some.
-			REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 	else if(usable_hands == 0 && default_num_hands > 0) //From having usable hands to no longer having them.
 		ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, LACKING_MANIPULATION_APPENDAGES_TRAIT)
-		if(!usable_legs && !(movement_type & (FLYING | FLOATING)))
-			ADD_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 
 /// Called when movement_type trait is added to the mob.
 /mob/living/carbon/on_movement_type_flag_enabled(datum/source, flag, old_movement_type)
 	. = ..()
 	if(movement_type & (FLYING | FLOATING) && !(old_movement_type & (FLYING | FLOATING)))
+<<<<<<< HEAD
 		remove_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS, TRUE)
 		REMOVE_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
 		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
+=======
+		update_limbless_locomotion()
+		update_limbless_movespeed_mod()
+>>>>>>> vanderlin/main
 
 /mob/living/carbon/on_movement_type_flag_disabled(datum/source, flag, old_movement_type)
 	. = ..()
 	if(old_movement_type & (FLYING | FLOATING) && !(movement_type & (FLYING | FLOATING)))
+<<<<<<< HEAD
 		var/limbless_slowdown = 0
 		if(usable_legs < default_num_legs)
 			limbless_slowdown += (default_num_legs - usable_legs) * 3
@@ -77,3 +79,7 @@
 			add_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS, update=TRUE, priority=100, override=TRUE, multiplicative_slowdown=limbless_slowdown, movetypes=GROUND)
 		else
 			remove_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS, update=TRUE)
+=======
+		update_limbless_locomotion()
+		update_limbless_movespeed_mod()
+>>>>>>> vanderlin/main
