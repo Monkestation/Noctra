@@ -53,33 +53,11 @@
 /mob/living/carbon/on_movement_type_flag_enabled(datum/source, flag, old_movement_type)
 	. = ..()
 	if(movement_type & (FLYING | FLOATING) && !(old_movement_type & (FLYING | FLOATING)))
-<<<<<<< HEAD
-		remove_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS, TRUE)
-		REMOVE_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
-		REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
-=======
 		update_limbless_locomotion()
 		update_limbless_movespeed_mod()
->>>>>>> vanderlin/main
 
 /mob/living/carbon/on_movement_type_flag_disabled(datum/source, flag, old_movement_type)
 	. = ..()
 	if(old_movement_type & (FLYING | FLOATING) && !(movement_type & (FLYING | FLOATING)))
-<<<<<<< HEAD
-		var/limbless_slowdown = 0
-		if(usable_legs < default_num_legs)
-			limbless_slowdown += (default_num_legs - usable_legs) * 3
-			if(!usable_legs)
-				ADD_TRAIT(src, TRAIT_FLOORED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
-				if(usable_hands < default_num_hands)
-					limbless_slowdown += (default_num_hands - usable_hands) * 3
-					if(!usable_hands)
-						ADD_TRAIT(src, TRAIT_IMMOBILIZED, LACKING_LOCOMOTION_APPENDAGES_TRAIT)
-		if(limbless_slowdown)
-			add_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS, update=TRUE, priority=100, override=TRUE, multiplicative_slowdown=limbless_slowdown, movetypes=GROUND)
-		else
-			remove_movespeed_modifier(MOVESPEED_ID_LIVING_LIMBLESS, update=TRUE)
-=======
 		update_limbless_locomotion()
 		update_limbless_movespeed_mod()
->>>>>>> vanderlin/main

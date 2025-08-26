@@ -485,12 +485,9 @@
 
 /obj/structure/rack/shelf/biggest
 	icon_state = "shelf_biggest"
-<<<<<<< HEAD
-=======
 	//this one is big enough it takes up the space of an entire tile, it should be dense
 	climbable = TRUE
 	density = TRUE
->>>>>>> vanderlin/main
 	SET_BASE_PIXEL(0, 0)
 
 // Shelves have been made nondense. The only functional difference this has now is a lower pixel_y

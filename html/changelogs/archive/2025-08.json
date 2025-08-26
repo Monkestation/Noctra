@@ -836,8 +836,6 @@
     "2025-08-26": {
         "Wouju": [
             {
-<<<<<<< HEAD
-=======
                 "bugfix": "Tavern Brawler special works properly now"
             },
             {
@@ -847,14 +845,11 @@
                 "rscadd": "biggest shelves aka racks are now climbable and are dense"
             },
             {
->>>>>>> vanderlin/main
                 "balance": "Cleaning people with normal soap applies the clean mood effect, which will remove the stink of horcs. Cleaning yourself with herbal soap applies a greater effect, and being cleaned by someone with herbal soap will apply the clean buff"
             },
             {
                 "balance": "Soaps now lose a bit of use when dilluted in a bucket of water, it is still way better than using it to clean floors directly"
             }
-<<<<<<< HEAD
-=======
         ],
         "Wabberspace": [
             {
@@ -900,7 +895,6 @@
             {
                 "balance": "closed turfs can burn"
             }
->>>>>>> vanderlin/main
         ]
     }
 }
