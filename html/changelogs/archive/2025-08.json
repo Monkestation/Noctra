@@ -832,5 +832,75 @@
                 "rscadd": "Mentors can gain 1 Triumph from every 7 likes (it has a limit of 5 Triumphs per round)"
             }
         ]
+    },
+    "2025-08-26": {
+        "Wouju": [
+            {
+<<<<<<< HEAD
+=======
+                "bugfix": "Tavern Brawler special works properly now"
+            },
+            {
+                "code_imp": "Special traits now use stat defines properly"
+            },
+            {
+                "rscadd": "biggest shelves aka racks are now climbable and are dense"
+            },
+            {
+>>>>>>> vanderlin/main
+                "balance": "Cleaning people with normal soap applies the clean mood effect, which will remove the stink of horcs. Cleaning yourself with herbal soap applies a greater effect, and being cleaned by someone with herbal soap will apply the clean buff"
+            },
+            {
+                "balance": "Soaps now lose a bit of use when dilluted in a bucket of water, it is still way better than using it to clean floors directly"
+            }
+<<<<<<< HEAD
+=======
+        ],
+        "Wabberspace": [
+            {
+                "rscadd": "A new forest garrison role, Ruffian, a youngling role primarily built around being an aide to the Forest Garrison, with a mixture of Orphan and Ranger skills."
+            },
+            {
+                "rscadd": "A unique orphan halt used only by Ruffians."
+            },
+            {
+                "balance": "Renames Forest Infantry to Forest Ravager, and replaces their Axe skills with Whips & Flails, and gives them a heater shield and military flail, as well as rearranging their stats to be far slower, and far more durable/enduring, and gives them the critical resistance perk."
+            },
+            {
+                "rscadd": "A new belt type used by the Forest Garrison that includes their key and a needle."
+            },
+            {
+                "balance": "Allows forrester armour to be sew-repaired."
+            },
+            {
+                "balance": "Gives Forest Reaver a +1 speed statline, bringing them to parity with adults."
+            },
+            {
+                "bugfix": "Allows Aasimar to be Wardens."
+            },
+            {
+                "balance": "Replaces the Forest Guard's steel coifs with iron bevors."
+            },
+            {
+                "balance": "Prevents the Forest Guard from taking on apprentices."
+            },
+            {
+                "balance": "Raises Forest Guard slots to 4 to coincide with Ruffian influxes."
+            }
+        ],
+        "Somniworld": [
+            {
+                "rscadd": "The town elder role is now accessible to Medicators, Tritons, and Harpies, these species do not have access to the Mayor subclass, however, as it is reserved for nobles."
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "balance": "fire servant requires objects to burn to ash"
+            },
+            {
+                "balance": "closed turfs can burn"
+            }
+>>>>>>> vanderlin/main
+        ]
     }
 }

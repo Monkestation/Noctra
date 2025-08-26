@@ -15,7 +15,7 @@
 	bypass_lastclass = TRUE
 	spells = list(/datum/action/cooldown/spell/undirected/list_target/convert_role/militia)
 	allowed_ages = list(AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
-	allowed_races = RACES_PLAYER_NONDISCRIMINATED
+	allowed_races = RACES_PLAYER_NONHERETICAL
 
 	advclass_cat_rolls = list(CTAG_TOWN_ELDER = 20)
 	give_bank_account = 50
@@ -78,13 +78,13 @@
 
 /datum/advclass/town_elder/mayor
 	name = "Mayor"
-
+	allowed_races = RACES_PLAYER_NONDISCRIMINATED // Due to the inherent nobility coming from being a mayor, non-humen species are barred.
 	tutorial = "Before politics, you were a bard, your voice stirred hearts, your tales traveled farther than your feet ever could. You carved your name in history not with steel, but with stories that moved kings and commoners alike. In time, your charisma became counsel, your songs gave way to speeches. Decades later, your skill in diplomacy and trade earned you nobility, and with it, the title of Mayor. Now, you lead not from a stage, but from the heart of the people you once sang for."
 	outfit = /datum/outfit/job/town_elder/mayor
 
 	category_tags = list(CTAG_TOWN_ELDER)
 
-// Mayor start with slightly changes, they were turned noble and got more money, also highly skilled in merchant skills.
+// Mayor start with slight changes, they were turned noble and got more money, also highly skilled in merchant skills.
 
 
 
@@ -132,7 +132,6 @@
 		H.change_stat(STATKEY_STR, -1)
 		H.change_stat(STATKEY_PER, 1)
 		H.change_stat(STATKEY_INT, 1)
-
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_SEEPRICES, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_BARDIC_TRAINING, TRAIT_GENERIC)

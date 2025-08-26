@@ -16,7 +16,6 @@
 	icon = offered_thing.icon
 	icon_state = offered_thing.icon_state
 	appearance = offered_thing.appearance
-	filters += filter(type="rays")
 	transform = matrix() * 0
 	offered_thing_weak_ref = WEAKREF(offered_thing)
 	offerer_weak_ref = WEAKREF(offerer)

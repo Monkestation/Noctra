@@ -145,8 +145,8 @@
 	smoothing_list = SMOOTH_GROUP_FLOOR_DIRT_ROAD
 	neighborlay = "grassedge"
 	max_integrity = 1200
-	spread_chance = 2.5
-	burn_power = 15
+	spread_chance = 2
+	burn_power = 10
 
 /turf/open/floor/grass/Initialize()
 	. = ..()

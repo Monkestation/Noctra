@@ -140,8 +140,7 @@
 		just_spawned = FALSE
 		return
 
-	var/turf/open/location = loc
-	if(!istype(location))
+	if(!isturf(loc))
 		qdel(src)
 		return
 

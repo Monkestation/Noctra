@@ -484,6 +484,21 @@
 	damage_deflection = 20
 	hardness = 10
 
+<<<<<<< HEAD
+=======
+/turf/closed/wall/mineral/desert_sandstone/window
+	name = "sandstone window"
+	opacity = FALSE
+	var/state = "window_open"
+
+/turf/closed/wall/mineral/desert_sandstone/window/Initialize(mapload, ...)
+	. = ..()
+	add_overlay(mutable_appearance('icons/delver/desert_objects.dmi', state, layer = ABOVE_NORMAL_TURF_LAYER))
+
+/turf/closed/wall/mineral/desert_sandstone/window/brass
+	state = "window_brass"
+
+>>>>>>> vanderlin/main
 /turf/closed/wall/mineral/desert_soapstone
 	name = "soapstone wall"
 	icon = 'icons/delver/desert_slopstone.dmi'

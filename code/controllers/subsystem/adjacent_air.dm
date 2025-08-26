@@ -48,7 +48,7 @@ SUBSYSTEM_DEF(adjacent_air)
 	///the chance this turf has to spread, basically 1% by default
 	var/spread_chance = 1
 	///means fires last at base 15 seconds
-	var/burn_power = 0
+	var/burn_power = 15
 	var/obj/effect/abstract/liquid_turf/liquids
 	var/liquid_height = 0
 	var/turf_height = 0

@@ -37,3 +37,6 @@
 		/datum/job/artificer = 2,
 		/datum/job/adept = 4
 	)
+	ages_adjust = list(
+		/datum/job/forestguard = list(AGE_MIDDLEAGED, AGE_OLD, AGE_IMMORTAL)
+	)
