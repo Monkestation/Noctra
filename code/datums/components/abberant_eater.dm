@@ -1,12 +1,13 @@
 /datum/component/abberant_eater
 	var/list/extra_foods = list()
+	var/excluding_subtypes = FALSE
 
-
-/datum/component/abberant_eater/Initialize(list/food_list)
+/datum/component/abberant_eater/Initialize(list/food_list, exclude_subtypes = FALSE)
 	if(!length(food_list))
 		return COMPONENT_INCOMPATIBLE
 
-	extra_foods = food_list
+	excluding_subtypes = exclude_subtypes
+	extra_foods = excluding_subtypes ? typecacheof(food_list, only_root_path = TRUE) : food_list
 
 	RegisterSignal(parent, COMSIG_MOB_ITEM_ATTACK, PROC_REF(try_eat))
 
@@ -16,7 +17,8 @@
 	if(user != M)
 		return FALSE
 
-	if(!is_type_in_list(source, extra_foods))
+	var/can_we_eat = excluding_subtypes ? is_type_in_typecache(source, extra_foods) : is_type_in_list(source, extra_foods)
+	if(!can_we_eat)
 		return FALSE
 
 	var/eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")

@@ -159,7 +159,7 @@
 
 /datum/species/harpy/on_species_gain(mob/living/carbon/foreign, datum/species/old_species)
 	..()
-	foreign.AddComponent(/datum/component/abberant_eater, list(/obj/item/neuFarm/seed))
+	foreign.AddComponent(/datum/component/abberant_eater, list(/obj/item/natural/worms/grub_silk, /obj/item/natural/worms) + typesof(/obj/item/neuFarm/seed), TRUE)
 	foreign.grant_language(/datum/language/common)
 
 /datum/species/harpy/get_skin_list()

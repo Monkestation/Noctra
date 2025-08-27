@@ -11,9 +11,12 @@
 	var/earliest_start = 12 MINUTES	//The earliest world.time that an event can start (round-duration in deciseconds) default: 20 mins
 	var/min_players = 0				//The minimum amount of alive, non-AFK human players on server required to start the event.
 
-	var/occurrences = 0				//How many times this event has occured
-	var/max_occurrences = 20		//The maximum number of times this event can occur (naturally), it can still be forced.
-									//By setting this to 0 you can effectively disable an event.
+	/// How many times this event has occured
+	var/occurrences = 0
+	/// The maximum number of times this event can occur (naturally), it can still be forced. By setting this to 0 you can effectively disable an event.
+	var/max_occurrences = 20
+	/// Loaded occurrences from the last round events
+	var/last_round_occurrences = 0
 
 	var/holidayID = ""				//string which should be in the SSeventss.holidays list if you wish this event to be holiday-specific
 									//anything with a (non-null) holidayID which does not match holiday, cannot run.

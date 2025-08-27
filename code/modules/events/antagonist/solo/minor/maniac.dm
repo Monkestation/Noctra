@@ -28,7 +28,15 @@
 	earliest_start = 0 SECONDS
 
 	weight = 9
-
+	secondary_events = list(
+		/datum/round_event_control/antagonist/solo/lich,
+		/datum/round_event_control/antagonist/solo/rebel,
+		/datum/round_event_control/antagonist/solo/vampires_and_werewolves,
+		/datum/round_event_control/antagonist/solo/vampires,
+		/datum/round_event_control/antagonist/solo/werewolf,
+		/datum/round_event_control/antagonist/solo/zizo_cult
+	)
+	secondary_prob = 60
 	typepath = /datum/round_event/antagonist/solo/maniac
 
 /datum/round_event_control/antagonist/solo/maniac/canSpawnEvent(players_amt, gamemode, fake_check)
@@ -44,7 +52,7 @@
 	base_antags = 1
 	earliest_start = 30 MINUTES
 	maximum_antags = 2
-	minor_prob = 0
+	secondary_prob = 0
 	typepath = /datum/round_event/antagonist/solo/maniac/midround
 
 /datum/round_event/antagonist/solo/maniac/midround

@@ -25,17 +25,25 @@
 	if(changed)
 		ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, UPDATE_TRANSFORM_TRAIT)
 		addtimer(TRAIT_CALLBACK_REMOVE(src, TRAIT_NO_FLOATING_ANIM, UPDATE_TRANSFORM_TRAIT), 0.3 SECONDS, TIMER_UNIQUE|TIMER_OVERRIDE)
+<<<<<<< HEAD
 //		animate(src, transform = ntransform, time = (lying_prev == 0 || !lying) ? 2 : 0, pixel_y = final_pixel_y, dir = final_dir, easing = (EASE_IN|EASE_OUT))
 		transform = ntransform
+=======
+>>>>>>> vanderlin/main
 		pixel_x = get_standard_pixel_x_offset()
 		pixel_y = final_pixel_y
+		animate(src, transform = ntransform, time = (lying_prev == 0 || !resting) ? 2 : 0, pixel_y = final_pixel_y, dir = final_dir, easing = (EASE_IN|EASE_OUT))
 		client?.pixel_x = pixel_x
 		client?.pixel_y = pixel_y
 		dir = final_dir
 		update_vision_cone()
 	else
+<<<<<<< HEAD
 		pixel_x = get_standard_pixel_x_offset()
 		pixel_y = get_standard_pixel_y_offset()
+=======
+		animate(src, time = 0.2 SECONDS, pixel_x = get_standard_pixel_x_offset(), pixel_y = get_standard_pixel_y_offset())
+>>>>>>> vanderlin/main
 		client?.pixel_x = pixel_x
 		client?.pixel_y = pixel_y
 

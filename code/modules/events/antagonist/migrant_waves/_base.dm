@@ -1,7 +1,7 @@
 /datum/round_event_control/antagonist/migrant_wave
 	typepath = /datum/round_event/migrant_wave
 	max_occurrences = 5
-	minor_prob = 0
+	secondary_prob = 0
 	var/datum/migrant_wave/wave_type
 
 /datum/round_event/migrant_wave

@@ -48,6 +48,7 @@ SUBSYSTEM_DEF(treasury)
 /datum/controller/subsystem/treasury/Initialize()
 	//Randomizes the roundstart amount of money and the queens tax.
 	treasury_value = rand(800,1200)
+	force_set_round_statistic(STATS_STARTING_TREASURY, treasury_value)
 	queens_tax = pick(0.09, 0.15, 0.21, 0.30)
 
 	//For the merchants import and export.

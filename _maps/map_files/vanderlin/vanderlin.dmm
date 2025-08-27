@@ -19361,7 +19361,7 @@
 /turf/open/floor/church,
 /area/rogue/indoors/town/church/inquisition)
 "lMD" = (
-/mob/living/simple_animal/hostile/retaliate/trufflepig,
+/mob/living/simple_animal/hostile/retaliate/trufflepig/male,
 /turf/open/floor/dirt/road,
 /area/rogue/outdoors/rtfield/safe)
 "lMH" = (
@@ -38845,7 +38845,7 @@
 /turf/open/floor/blocks/stonered/tiny,
 /area/rogue/indoors/town/clinic_large/apothecary)
 "xUE" = (
-/mob/living/simple_animal/hostile/retaliate/trufflepig,
+/mob/living/simple_animal/hostile/retaliate/trufflepig/female,
 /turf/open/floor/dirt,
 /area/rogue/outdoors/rtfield/safe)
 "xUO" = (

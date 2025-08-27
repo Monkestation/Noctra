@@ -317,6 +317,60 @@
 			for(var/list/god_data in sorted_gods)
 				data += create_god_ranking_entry(god_data["name"], god_data["points"], god_data["color"])
 
+			// Gods' Events Section
+			data += "<div style='text-align: center; color: #e0e0f0; font-size: 1.2em; margin-top: 20px; margin-bottom: 20px;'>GODS' EVENTS</div>"
+			data += "<div style='border-top: 1.5px solid #9a9aaa; margin: 0 auto 20px auto; width: 90%;'></div>"
+
+			var/list/event_categories = list(
+				EVENT_TRACK_MUNDANE,
+				EVENT_TRACK_PERSONAL,
+				EVENT_TRACK_MODERATE,
+				EVENT_TRACK_INTERVENTION,
+				EVENT_TRACK_CHARACTER_INJECTION,
+				EVENT_TRACK_OMENS,
+				EVENT_TRACK_RAIDS,
+			)
+
+			var/list/events_by_category = list()
+			var/has_events = FALSE
+
+			for(var/datum/round_event_control/event_control in SSgamemode.control)
+				var/occurrences_this_round = event_control.occurrences - event_control.last_round_occurrences
+				if(occurrences_this_round <= 0)
+					continue
+
+				if(!events_by_category[event_control.track])
+					events_by_category[event_control.track] = list()
+
+				events_by_category[event_control.track] += list(list(
+					"name" = event_control.name,
+					"count" = occurrences_this_round
+				))
+				has_events = TRUE
+
+			if(!has_events)
+				data += "<div style='text-align: center; color: #999; font-style: italic; padding: 30px 0;'>The Gods did not meddle with mortals, yet</div>"
+			else
+				data += "<div style='display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px;'>"
+
+				for(var/category in event_categories)
+					var/list/category_events = events_by_category[category]
+
+					data += "<div style='background: #2a2a3a; border: 1px solid #4a4a5a; padding: 15px; border-radius: 4px;'>"
+					data += "<div style='color: #e0e0f0; font-weight: bold; margin-bottom: 10px; border-bottom: 1px solid #6a6a7a; padding-bottom: 5px; text-align: center;'>[category]</div>"
+
+					if(length(category_events))
+						for(var/list/event_data in category_events)
+							data += "<div style='margin-bottom: 5px; padding-left: 8px; border-left: 2px solid #6a6a7a;'>"
+							data += "<span style='color: #b0b0b0;'>[event_data["name"]]:</span> <span style='color: #e0e0f0;'>[event_data["count"]]</span>"
+							data += "</div>"
+					else
+						data += "<div style='color: #999; font-style: italic; text-align: center; padding: 10px 0;'>No events occurred</div>"
+
+					data += "</div>"
+
+				data += "</div>"
+
 		if("Messages")
 			data += "<div style='display: table; width: 100%; table-layout: fixed;'>"
 			data += "<div style='display: table-row;'>"
@@ -397,43 +451,64 @@
 			data += "</div></div></div>"
 			data += "<div style='height: 20px;'></div>"
 
+			// Treasury Section
+			data += "<div style='text-align: center; color: #e6b327; font-size: 1.2em; margin: 15px 0; text-transform: uppercase;'>Realm's Treasury: [SStreasury.treasury_value]</div>"
+			data += "<div style='border-top: 1.5px solid #e6b327; margin: 0 auto 20px auto; width: 75%;'></div>"
+
+			data += "<div style='width: 100%; margin: 0 auto; position: relative;'>"
+			data += "<div style='display: flex; justify-content: space-between; gap: 0;'>"
+
+			// Left column (Revenue)
+			data += "<div style='width: 44%; display: flex; justify-content: flex-end;'>"
+			data += "<div style='text-align: left; padding-right: 20px;'>"
+			data += "<div style='margin-bottom: 4px;'><font color='#f0c759'>Starting Treasury: </font>[GLOB.vanderlin_round_stats[STATS_STARTING_TREASURY]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#caa64a'>Total Vault Revenue: </font>[GLOB.vanderlin_round_stats[STATS_VAULT_TOTAL_REVENUE]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#e67e22'>Noble Estates Revenue: </font>[GLOB.vanderlin_round_stats[STATS_NOBLE_INCOME_TOTAL]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#f5c02e'>Royal Taxes Collected: </font>[GLOB.vanderlin_round_stats[STATS_TAXES_COLLECTED]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#8fa36a'>Mammons Deposited: </font>[GLOB.vanderlin_round_stats[STATS_MAMMONS_DEPOSITED]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#90b34f'>Stockpile Exports: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_EXPORTS_VALUE]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#a2b337'>Bought from Stockpile: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_REVENUE]]</div>"
+			data += "<div style='border-top: 1px solid #555; margin: 8px 0;'></div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#23ba30'>Total Revenue: </font>[GLOB.vanderlin_round_stats[STATS_STARTING_TREASURY] + GLOB.vanderlin_round_stats[STATS_VAULT_TOTAL_REVENUE] + GLOB.vanderlin_round_stats[STATS_NOBLE_INCOME_TOTAL] + GLOB.vanderlin_round_stats[STATS_TAXES_COLLECTED] + GLOB.vanderlin_round_stats[STATS_MAMMONS_DEPOSITED] + GLOB.vanderlin_round_stats[STATS_STOCKPILE_EXPORTS_VALUE] + GLOB.vanderlin_round_stats[STATS_STOCKPILE_REVENUE]]</div>"
+			data += "</div></div>"
+
+			// Right column (Expenses)
+			data += "<div style='width: 44%; display: flex; justify-content: flex-start;'>"
+			data += "<div style='text-align: left; padding-left: 20px;'>"
+			data += "<div style='margin-bottom: 4px;'><font color='#c95555'>Mammons Withdrawn: </font>[GLOB.vanderlin_round_stats[STATS_MAMMONS_WITHDRAWN]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#db853d'>Stockpile Imports: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_IMPORTS_VALUE]]</div>"
+			data += "<div style='border-top: 1px solid #555; margin: 8px 0;'></div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#c44731'>Total Expenses: </font>[GLOB.vanderlin_round_stats[STATS_MAMMONS_WITHDRAWN] + GLOB.vanderlin_round_stats[STATS_STOCKPILE_IMPORTS_VALUE]]</div>"
+			data += "</div></div>"
+
+			data += "</div></div>"
+
 			// Economy Section
-			data += "<div style='text-align: center; color: #e6b327; font-size: 1.2em; margin: 15px 0; text-transform: uppercase;'>ECONOMY</div>"
+			data += "<div style='text-align: center; color: #e6b327; font-size: 1.2em; margin: 15px 0; text-transform: uppercase; margin-top: 35px;'>ECONOMY</div>"
 			data += "<div style='border-top: 1.5px solid #e6b327; margin: 0 auto 20px auto; width: 75%;'></div>"
 
 			data += "<div style='width: 100%; margin: 0 auto; position: relative;'>"
 			data += "<div style='display: flex; justify-content: space-between; gap: 0;'>"
 
 			// Left column
-			data += "<div style='width: 35%; display: flex; justify-content: flex-end;'>"
+			data += "<div style='width: 44%; display: flex; justify-content: flex-end;'>"
 			data += "<div style='text-align: left; padding-right: 20px;'>"
-			data += "<div style='margin-bottom: 4px;'><font color='#f7d474'>Realm's Treasury: </font>[SStreasury.treasury_value]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#e6b327'>Regular Vault Income: </font>[GLOB.vanderlin_round_stats[STATS_REGULAR_VAULT_INCOME]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#caa64a'>Total Vault Revenue: </font>[GLOB.vanderlin_round_stats[STATS_VAULT_TOTAL_REVENUE]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#e67e22'>Noble Estates Revenue: </font>[GLOB.vanderlin_round_stats[STATS_NOBLE_INCOME_TOTAL]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#f5c02e'>Royal Taxes Collected: </font>[GLOB.vanderlin_round_stats[STATS_TAXES_COLLECTED]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#c57e62'>Sold to Stockpile: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_EXPANSES]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#b6a17f'>Salary Payments: </font>[GLOB.vanderlin_round_stats[STATS_WAGES_PAID]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#aac484'>Treasury Transfers: </font>[GLOB.vanderlin_round_stats[STATS_DIRECT_TREASURY_TRANSFERS]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#c78445'>Royal Fines Collected: </font>[GLOB.vanderlin_round_stats[STATS_FINES_INCOME]]</div>"
 			data += "<div><font color='#e74c3c'>Royal Taxes Evaded: </font>[GLOB.vanderlin_round_stats[STATS_TAXES_EVADED]]</div>"
 			data += "</div></div>"
 
-			// Middle column
-			data += "<div style='width: 31%; display: flex; justify-content: center;'>"
-			data += "<div style='text-align: left; padding-left: 5px;'>"
-			data += "<div style='margin-bottom: 4px;'><font color='#b6a17f'>Salary Payments: </font>[GLOB.vanderlin_round_stats[STATS_WAGES_PAID]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#aac484'>Treasury Transfers: </font>[GLOB.vanderlin_round_stats[STATS_DIRECT_TREASURY_TRANSFERS]]</div>"
+			// Right column
+			data += "<div style='width: 44%; display: flex; justify-content: flex-start;'>"
+			data += "<div style='text-align: left; padding-left: 20px;'>"
+			data += "<div style='margin-bottom: 4px;'><font color='#ebbf49'>Mammons Circulating: </font>[GLOB.vanderlin_round_stats[STATS_MAMMONS_HELD]]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#db9a59'>Trade Value Exported: </font>[GLOB.vanderlin_round_stats[STATS_TRADE_VALUE_EXPORTED]]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#dfbf57'>Trade Value Imported: </font>[GLOB.vanderlin_round_stats[STATS_TRADE_VALUE_IMPORTED]]</div>"
 			data += "<div style='margin-bottom: 4px;'><font color='#c0b283'>GOLDFACE Imports: </font>[GLOB.vanderlin_round_stats[STATS_GOLDFACE_VALUE_SPENT]]</div>"
-			data += "<div><font color='#b5a642'>PURITY Imports: </font>[GLOB.vanderlin_round_stats[STATS_PURITY_VALUE_SPENT]]</div>"
-			data += "</div></div>"
-
-			// Right column
-			data += "<div style='width: 33%; display: flex; justify-content: flex-start;'>"
-			data += "<div style='text-align: left; padding-left: 20px;'>"
-			data += "<div style='margin-bottom: 4px;'><font color='#c78445'>Royal Fines Collected: </font>[GLOB.vanderlin_round_stats[STATS_FINES_INCOME]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#90b34f'>Stockpile Exports: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_EXPORTS_VALUE]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#dbd24e'>Stockpile Imports: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_IMPORTS_VALUE]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#3ab567'>Bought from Stockpile: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_REVENUE]]</div>"
-			data += "<div style='margin-bottom: 4px;'><font color='#c57e62'>Sold to Stockpile: </font>[GLOB.vanderlin_round_stats[STATS_STOCKPILE_EXPANSES]]</div>"
+			data += "<div style='margin-bottom: 4px;'><font color='#b5a642'>PURITY Imports: </font>[GLOB.vanderlin_round_stats[STATS_PURITY_VALUE_SPENT]]</div>"
 			data += "<div><font color='#7495d3'>Peddler Revenue: </font>[GLOB.vanderlin_round_stats[STATS_PEDDLER_REVENUE]]</div>"
 			data += "</div></div>"
 
