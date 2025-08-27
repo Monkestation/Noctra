@@ -558,7 +558,15 @@
 	to_chat(src, "<span class='info'>I grab [target].</span>")
 
 /mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
-	return //rtd fix not updating because no dirchange
+	if(istype(M))
+		if(grab_state == GRAB_PASSIVE)
+			M.set_mob_offsets("pull", _x = (src.x - M.x) * 8, _y = (src.y - M.y) * 8)
+		else if(grab_state == GRAB_AGGRESSIVE)
+			M.set_mob_offsets("pull", _x = (src.x - M.x) * 16, _y = (src.y - M.y) * 16)
+	return
+
+/mob/living/proc/reset_pull_offsets()
+	reset_offsets("pull")
 
 /mob/living/proc/set_mob_offsets(index, _x = 0, _y = 0)
 	if(index)
@@ -2583,6 +2591,9 @@
 	for(var/hand in hud_used?.hand_slots)
 		var/atom/movable/screen/inventory/hand/H = hud_used.hand_slots[hand]
 		H?.update_appearance()
+
+	if(isnull(new_pulledby))
+		reset_pull_offsets()
 
 /// Proc for giving a mob a new 'friend', generally used for AI control and targeting. Returns false if already friends.
 /mob/living/proc/befriend(mob/living/new_friend)

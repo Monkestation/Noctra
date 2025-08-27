@@ -58,6 +58,7 @@
 		if(!SStreasury.withdraw_money_account(coin_amt*mod, H))
 			playsound(src, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 			return
+		record_round_statistic(STATS_MAMMONS_WITHDRAWN, coin_amt * mod)
 		budget2change(coin_amt*mod, user, selection)
 	else
 		to_chat(user, "<span class='warning'>The machine bites my finger.</span>")
@@ -89,6 +90,7 @@
 			if(H in SStreasury.bank_accounts)
 				var/list/deposit_results = SStreasury.generate_money_account(P.get_real_price(), H)
 				if(islist(deposit_results))
+					record_round_statistic(STATS_MAMMONS_DEPOSITED, deposit_results[1] - deposit_results[2])
 					if(deposit_results[2] != 0)
 						say("Your deposit was taxed [deposit_results[2]] mammon.")
 						record_featured_stat(FEATURED_STATS_TAX_PAYERS, H, deposit_results[2])

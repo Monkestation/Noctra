@@ -369,18 +369,12 @@
 	created_item = /obj/item/clothing/armor/leather/splint
 	craftdiff = 1
 
+///////////////////////////////////////////////
 // --------- STEEL -----------
 /datum/anvil_recipe/armor/steel
 	req_bar = /obj/item/ingot/steel
 	abstract_type = /datum/anvil_recipe/armor/steel
 	craftdiff = 2
-
-/datum/anvil_recipe/armor/steel/bevor
-	name = "Bevor"
-	recipe_name = "a Bevor"
-	req_bar = /obj/item/ingot/steel
-	craftdiff = 2 // this is the good stuff
-	abstract_type = /datum/anvil_recipe/armor/steel
 ///////////////////////////////////////////////
 
 // STEEL ARMOR
@@ -393,7 +387,7 @@
 /datum/anvil_recipe/armor/steel/platemask
 	name = "Steel Mask"
 	recipe_name = "a Face Mask"
-	created_item = (/obj/item/clothing/face/facemask/steel)
+	created_item = /obj/item/clothing/face/facemask/steel
 
 /datum/anvil_recipe/armor/steel/cuirass
 	name = "Steel Cuirass"
@@ -412,7 +406,6 @@
 	recipe_name = "a Bucket Helmet"
 	req_bar = /obj/item/ingot/steel
 	created_item = (/obj/item/clothing/head/helmet/heavy/bucket)
-	craftdiff = 2
 
 /datum/anvil_recipe/armor/iron/shadow_plate_gauntlets
 	name = "Shadow Plate Gauntlets"

@@ -84,6 +84,7 @@
 	name = "Toggle Flying"
 	desc = "Take to the skies or return to the ground."
 	button_icon_state = "flight"
+	var/active_background_icon_state = "spell1"
 
 	var/flying = FALSE
 	var/obj/effect/flyer_shadow/shadow
@@ -124,6 +125,13 @@
 		return FALSE
 
 	return TRUE
+/datum/action/item_action/organ_action/use/flight/apply_button_background(atom/movable/screen/movable/action_button/current_button)
+	if(active_background_icon_state)
+		background_icon_state = is_action_active(current_button) ? active_background_icon_state : initial(src.background_icon_state)
+	return ..()
+
+/datum/action/item_action/organ_action/use/flight/is_action_active(atom/movable/screen/movable/action_button/current_button)
+	return flying
 
 // Start flying normally
 /datum/action/item_action/organ_action/use/flight/proc/start_flying()
@@ -145,6 +153,7 @@
 		owner.pixel_z = prev_pixel_z
 		owner.alpha = prev_alpha
 		owner.forceMove(turf)
+	build_all_button_icons(update_flags = UPDATE_BUTTON_BACKGROUND)
 
 /datum/action/item_action/organ_action/use/flight/proc/init_signals()
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMGE, PROC_REF(check_damage))
@@ -172,6 +181,7 @@
 		animate(owner, transform = original, time = 1.2 SECONDS, easing = EASE_IN, flags = ANIMATION_PARALLEL)
 
 	remove_signals()
+	build_all_button_icons(update_flags = UPDATE_BUTTON_BACKGROUND)
 
 /datum/action/item_action/organ_action/use/flight/proc/remove_signals()
 	owner.movement_type &= ~FLYING
@@ -197,6 +207,7 @@
 	SIGNAL_HANDLER
 
 	remove_signals()
+	build_all_button_icons(update_flags = UPDATE_BUTTON_BACKGROUND)
 
 /datum/action/item_action/organ_action/use/flight/proc/check_damage(datum/source, damage, damagetype, def_zone)
 	SIGNAL_HANDLER

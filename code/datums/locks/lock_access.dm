@@ -49,15 +49,37 @@
 	animate(pixel_x = oldx, time = 0.5)
 
 /// Called when locked
-/obj/proc/on_lock(mob/user, silent = FALSE)
+/obj/proc/on_lock(mob/user, obj/item, silent = FALSE)
+	user.lock_unlock_animation(src, item)
 	if(!silent && lock_sound)
 		playsound(get_turf(src), lock_sound, 50)
 		user.visible_message(span_notice("[user] locks \the [src]."), span_notice("I lock \the [src]."), span_notice("I hear a click."))
 		return
 	to_chat(user, span_notice("I lock \the [src]."))
 
+/mob/proc/lock_unlock_animation(obj/door, obj/item)
+	animate(src, time = 0.3 SECONDS, pixel_w = ((door.x - src.x) * 5), pixel_z = ((door.y - src.y) * 5), easing = SINE_EASING, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+	animate(time = 0.3 SECONDS, pixel_w = ((door.x - src.x) * -5), pixel_z = ((door.y - src.y) * -5), easing = SINE_EASING, flags = ANIMATION_RELATIVE)
+	var/obj/effect/key = new(get_turf(src))
+	key.appearance = item.appearance
+
+	var/direction = get_dir(src, door)
+
+	var/angle = dir2angle(direction)
+
+	var/new_transform = key.transform.Turn(180 + angle)
+	new_transform = matrix(new_transform) * 0.6
+	key.transform = new_transform
+	key.alpha = 0
+
+	animate(key, time = 0.5 SECONDS, alpha = 170, pixel_w = ((door.x - src.x) * 14), pixel_z = ((door.y - src.y) * 14), easing = SINE_EASING, flags = ANIMATION_RELATIVE)
+	animate(time = 0.4 SECONDS, alpha = 0, easing = SINE_EASING)
+
+	qdel(key)
+
 /// Called when unlocked
-/obj/proc/on_unlock(mob/user, silent = FALSE)
+/obj/proc/on_unlock(mob/user, obj/item, silent = FALSE)
+	user.lock_unlock_animation(src, item)
 	if(!silent && unlock_sound)
 		playsound(get_turf(src), unlock_sound, 50)
 		user.visible_message(span_notice("[user] unlocks \the [src]."), span_notice("I unlock \the [src]."), span_notice("I hear a click."))

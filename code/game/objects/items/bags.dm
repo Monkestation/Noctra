@@ -45,23 +45,17 @@
 		return TRUE
 
 /obj/item/storage/sack/attack_hand_secondary(mob/user, params)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(user.get_active_held_item())
-		to_chat(user, span_warning("My hands are full, I cannot reach into [src]!"))
-		return
+		return ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	var/list/things = STR.contents()
 	if(!length(things))
-		to_chat(user, span_warning("The sack is empty!"))
-		return
+		return ..()
 	var/obj/item/I = pick(things)
 	STR.remove_from_storage(I, get_turf(user))
 	user.put_in_hands(I)
 	user.changeNext_move(CLICK_CD_MELEE)
-	return
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/storage/sack/update_icon_state()
 	. = ..()

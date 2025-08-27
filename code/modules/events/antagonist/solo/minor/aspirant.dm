@@ -24,9 +24,15 @@
 	maximum_antags = 1
 
 	earliest_start = 0 SECONDS
-	minor_events = list(
-		/datum/round_event_control/antagonist/solo/maniac
+	secondary_events = list(
+		/datum/round_event_control/antagonist/solo/lich,
+		/datum/round_event_control/antagonist/solo/rebel,
+		/datum/round_event_control/antagonist/solo/vampires_and_werewolves,
+		/datum/round_event_control/antagonist/solo/vampires,
+		/datum/round_event_control/antagonist/solo/werewolf,
+		/datum/round_event_control/antagonist/solo/zizo_cult
 	)
+	secondary_prob = 60
 	weight = 8
 
 	typepath = /datum/round_event/antagonist/solo/aspirant

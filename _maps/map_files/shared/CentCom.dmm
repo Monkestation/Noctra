@@ -5965,6 +5965,28 @@
 /obj/item/natural/stone,
 /turf/open/floor/grass,
 /area/rogue/outdoors/woods_safe)
+"ME" = (
+/obj/structure/closet/crate/crafted_closet/inn,
+/obj/item/clothing/armor/leather/jacket/hand,
+/obj/item/clothing/armor/leather/jacket/leathercoat/black,
+/obj/item/clothing/shirt/grenzelhoft,
+/obj/item/clothing/shirt/tunic/noblecoat,
+/obj/item/clothing/shirt/undershirt/fancy,
+/obj/item/clothing/head/fancyhat,
+/obj/item/clothing/pants/grenzelpants,
+/obj/item/clothing/shoes/boots,
+/obj/item/clothing/shoes/nobleboot,
+/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
+/obj/item/clothing/cloak/cape,
+/obj/item/clothing/cloak/raincloak/furcloak,
+/obj/item/clothing/shirt/tunic/colored/black,
+/obj/item/clothing/gloves/angle/grenzel,
+/obj/item/clothing/gloves/angle,
+/obj/item/clothing/shirt/dress/silkdress/colored/black,
+/obj/item/clothing/armor/gambeson/heavy/winterdress,
+/obj/item/clothing/armor/gambeson/heavy/dress,
+/turf/open/floor/carpet,
+/area/rogue/indoors/vampire_manor)
 "MF" = (
 /obj/structure/giantfur{
 	pixel_y = -16
@@ -6572,6 +6594,14 @@
 /obj/item/weapon/knife/hunting,
 /turf/open/floor/cobble,
 /area/rogue/indoors)
+"Rh" = (
+/obj/structure/table/wood{
+	dir = 4;
+	icon_state = "largetable"
+	},
+/obj/item/clothing/face/skullmask,
+/turf/open/floor/carpet,
+/area/rogue/indoors/vampire_manor)
 "Ri" = (
 /obj/effect/decal/cobblerockedge{
 	dir = 5
@@ -15449,7 +15479,7 @@ bO
 bZ
 ci
 cr
-ci
+Rh
 cr
 cz
 bO
@@ -16620,7 +16650,7 @@ Iw
 yE
 bS
 xI
-bO
+ME
 yE
 yE
 bV

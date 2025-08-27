@@ -136,7 +136,7 @@
 			if(amt)
 				if(!SStreasury.give_money_account(amt, H, "+[amt] from [R.name] bounty") && message == TRUE)
 					say("No account found. Submit your fingers to a Meister for inspection.")
-			record_round_statistic(STATS_STOCKPILE_EXPANSES, amt)
+				record_round_statistic(STATS_STOCKPILE_EXPANSES, amt)
 			return amt
 
 /obj/structure/fake_machine/stockpile/attackby(obj/item/P, mob/user, params)

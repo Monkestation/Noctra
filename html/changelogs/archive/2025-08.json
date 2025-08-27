@@ -896,5 +896,55 @@
                 "balance": "closed turfs can burn"
             }
         ]
+<<<<<<< HEAD
+=======
+    },
+    "2025-08-27": {
+        "islaughterfunny": [
+            {
+                "balance": "Made the Blessed Needle capable of repairing clothes."
+            }
+        ],
+        "Arkatos": [
+            {
+                "rscadd": "Expanded Economy section in the Chronicle."
+            },
+            {
+                "rscadd": "Added Gods Events in the Chronicle."
+            }
+        ],
+        "grungussuss": [
+            {
+                "qol": "added animations for lying down, standing up and being grabbed"
+            },
+            {
+                "qol": "lock unlock now has a nice animation"
+            }
+        ],
+        "SarmentiCampbell": [
+            {
+                "balance": "lowered chance for secondary antag to spawn, Maniac and Aspirant will now roll for a major antag with a increased chance."
+            },
+            {
+                "balance": "added minimum player requirement for secondary antags to spawn."
+            }
+        ],
+        "Siro": [
+            {
+                "rscadd": "Harpies can eat worms and silk worms"
+            },
+            {
+                "qol": "Flying ability button now shows when it is active."
+            },
+            {
+                "code_imp": "Added the ability to restrict types to abberant_eater"
+            }
+        ],
+        "PotatoTomahto": [
+            {
+                "rscadd": "sacks pull a random item out when right clicked"
+            }
+        ]
+>>>>>>> vanderlin/main
     }
 }
