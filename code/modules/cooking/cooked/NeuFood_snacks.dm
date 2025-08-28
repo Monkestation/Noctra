@@ -9,7 +9,7 @@
 /*	.............   Frysteak   ................ */
 /obj/item/reagent_containers/food/snacks/cooked/frysteak
 	name = "frysteak"
-	desc = "A slab of beastflesh, fried to a perfect medium-rare"
+	desc = "A slab of beastflesh, fried to a perfect medium-rare."
 	icon_state = "frysteak"
 	base_icon_state = "frysteak"
 	biting = TRUE
@@ -91,6 +91,28 @@
 			user.mind.add_sleep_experience(/datum/skill/craft/cooking, (user.STAINT*0.5))
 	return ..()
 
+/obj/item/reagent_containers/food/snacks/cooked/herbsteak
+	name = "herbsteak"
+	desc = "A slab of beastflesh, fried to a perfect medium-rare. It has been seasoned with herbs."
+	icon_state = "frysteak"
+	base_icon_state = "frysteak"
+	biting = TRUE
+	eat_effect = /datum/status_effect/buff/foodbuff
+	tastes = list("warm steak" = 1, "herbs" = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = COOKED_MEAT_NUTRITION+2)
+	slices_num = 0
+	rotprocess = SHELFLIFE_DECENT
+	plateable = TRUE
+	foodbuff_skillcheck = TRUE
+	faretype = FARE_NEUTRAL
+
+/obj/item/reagent_containers/food/snacks/cooked/herbsteak/update_overlays()
+	. = ..()
+	. += mutable_appearance('icons/roguetown/items/food.dmi', "frysteak_spice")
+
+/obj/item/reagent_containers/food/snacks/cooked/herbsteak/Initialize()
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
 
 /*	.............   Fried egg   ................ */
 /obj/item/reagent_containers/food/snacks/cooked/egg
@@ -132,6 +154,7 @@
 	desc = "Poultry scorched to a perfect delicious crisp."
 	icon_state = "frybird"
 	base_icon_state = "frybird"
+	tastes = list("frybird" = 1)
 	biting = TRUE
 
 /obj/item/reagent_containers/food/snacks/cooked/frybird_tatos
@@ -146,6 +169,29 @@
 	foodbuff_skillcheck = TRUE
 	rotprocess = SHELFLIFE_DECENT
 	bitesize = 5
+
+/obj/item/reagent_containers/food/snacks/cooked/herbbird
+	name = "herbird"//yes it's meant to be herb-ird, because herbbird is a bit weird
+	desc = "Poultry scorched to a perfect delicious crisp. It has been seasoned with herbs."
+	icon_state = "frybird"
+	base_icon_state = "frybird"
+	biting = TRUE
+	modified = TRUE
+	eat_effect = /datum/status_effect/buff/foodbuff
+	tastes = list("frybird" = 1, "herbs" = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = COOKED_MEAT_NUTRITION+2)
+	slices_num = 0
+	foodbuff_skillcheck = TRUE
+	rotprocess = SHELFLIFE_DECENT
+	faretype = FARE_NEUTRAL
+
+/obj/item/reagent_containers/food/snacks/cooked/herbbird/update_overlays()
+	. = ..()
+	. += mutable_appearance('icons/roguetown/items/food.dmi', "roast_spice")
+
+/obj/item/reagent_containers/food/snacks/cooked/herbbird/Initialize()
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
 
 /*	.............   Han   ................ */
 /obj/item/reagent_containers/food/snacks/cooked/ham

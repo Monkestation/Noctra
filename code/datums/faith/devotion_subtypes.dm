@@ -9,12 +9,15 @@
 	. = ..()
 	miracles_extra += list(
 		/datum/action/cooldown/spell/aoe/abrogation,
+<<<<<<< HEAD
 	)
 
 /datum/devotion/divine/make_churching()
 	. = ..()
 	miracles_extra += list(
 		/datum/action/cooldown/spell/healing,
+=======
+>>>>>>> vanderlin/main
 	)
 
 /datum/devotion/divine/astrata

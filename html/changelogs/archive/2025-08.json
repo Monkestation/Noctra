@@ -943,5 +943,43 @@
                 "rscadd": "sacks pull a random item out when right clicked"
             }
         ]
+<<<<<<< HEAD
+=======
+    },
+    "2025-08-28": {
+        "CheffieGithub": [
+            {
+                "bugfix": "Fixed chill touch and spell cooldown visuals."
+            },
+            {
+                "config": "Enabled AFK kick config flag with 25 minute timeout and 20 minute warning. Admins are immune."
+            },
+            {
+                "bugfix": "Fixed random flaw badness, works like you selected the flaw (eye loss, etc)."
+            },
+            {
+                "bugfix": "Fixed random flaw (50%) acting like random flaw (3 TRI)."
+            },
+            {
+                "bugfix": "Inhumen Monk and Churchlings get their T1 spell."
+            }
+        ],
+        "Just-Sim": [
+            {
+                "code_imp": "Removed a hard-coded key buffer."
+            }
+        ],
+        "Wouju": [
+            {
+                "rscadd": "Added new food items, herbsteak and herbird"
+            },
+            {
+                "rscadd": "A new powder was added, used in crafting the herbsteak and herbird"
+            },
+            {
+                "code_imp": "tweaked cooking repeatable crafting code. Now it checks if the item is a food snack item before attempting to apply freshness and food quality"
+            }
+        ]
+>>>>>>> vanderlin/main
     }
 }

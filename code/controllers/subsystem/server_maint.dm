@@ -9,6 +9,7 @@ SUBSYSTEM_DEF(server_maint)
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 	var/list/currentrun
 	var/cleanup_ticker = 0
+	var/list/afk_clients
 
 /datum/controller/subsystem/server_maint/PreInit()
 	world.hub_password = "" //quickly! before the hubbies see us.
@@ -51,26 +52,37 @@ SUBSYSTEM_DEF(server_maint)
 				cleanup_ticker++
 
 	var/list/currentrun = src.currentrun
+
 	var/round_started = SSticker.HasRoundStarted()
-
 	var/kick_inactive = CONFIG_GET(flag/kick_inactive)
-	var/afk_period
-	if(kick_inactive)
-		afk_period = CONFIG_GET(number/afk_period)
+	var/afk_period = CONFIG_GET(number/inactivity_period)
+	var/kick_period = CONFIG_GET(number/afk_period) // :)
+
 	for(var/client/C as anything in currentrun)
-		//handle kicking inactive players
-		if(round_started && kick_inactive && !C.holder && C.is_afk(afk_period))
-			var/cmob = C.mob
-			if (!isnewplayer(cmob) || !SSticker.queued_players.Find(cmob))
-				log_access("AFK: [key_name(C)]")
-				to_chat(C, "<span class='danger'>I have been inactive for more than [DisplayTimeText(afk_period)] and have been disconnected.</span><br><span class='danger'>I may reconnect via the button in the file menu or by <b><u><a href='byond://winset?command=.reconnect'>clicking here to reconnect</a></u></b>.</span>")
-				QDEL_IN(C, 1) //to ensure they get our message before getting disconnected
-				continue
+		// handle kicking inactive players
+		if(round_started && kick_inactive && kick_period && !C.holder)
+			var/mob/cmob = C.mob
+			if(!isnewplayer(cmob) || !(locate(cmob) in SSticker.queued_players))
+				if(C.is_afk(kick_period))
+					log_access("IDLE DISCONNECT: [key_name(C)]")
+					to_chat(C, span_warning("You have been inactive for more than [DisplayTimeText(kick_period)] and have been disconnected.\n\
+					You may reconnect via the button in the file menu or by \
+					<b><u><a href='byond://winset?command=.reconnect'>clicking here to reconnect</a></u></b>."))
+					QDEL_IN(C, 1) //to ensure they get our message before getting disconnected
+					continue
+				if(afk_period)
+					if(C.is_afk(afk_period))
+						if(!(locate(C) in afk_clients))
+							LAZYOR(afk_clients, C)
+							log_access("AFK: [key_name(C)]")
+							to_chat(C, span_userdanger("You have been inactive for more than [DisplayTimeText(afk_period)] and will be kicked in [DisplayTimeText(kick_period - afk_period)]."))
+					else
+						LAZYREMOVE(afk_clients, C)
 
-		if (!(!C || world.time - C.connection_time < PING_BUFFER_TIME || C.inactivity >= (wait-1)))
-			winset(C, null, "command=.update_ping+[world.time+world.tick_lag*TICK_USAGE_REAL/100]")
+		if(!(!C || world.time - C.connection_time < PING_BUFFER_TIME || C.inactivity >= (wait-1)))
+			winset(C, null, "command=.update_ping+[num2text(world.time+world.tick_lag*TICK_USAGE_REAL/100, 32)]")
 
-		if (MC_TICK_CHECK) //one day, when ss13 has 1000 people per server, you guys are gonna be glad I added this tick check
+		if(MC_TICK_CHECK) //one day, when ss13 has 1000 people per server, you guys are gonna be glad I added this tick check
 			return
 
 /datum/controller/subsystem/server_maint/Shutdown()

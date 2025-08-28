@@ -136,8 +136,8 @@
 		if(real_time > 0)
 			RegisterSignal(owner, COMSIG_MOB_SPELL_ACTIVATED, PROC_REF(cancel_retrigger))
 			retrigger_timer = addtimer(CALLBACK(src, PROC_REF(retrigger)), real_time, TIMER_STOPPABLE)
-			return
-		retrigger()
+		else
+			retrigger()
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	START_PROCESSING(SSfastprocess, src)
 

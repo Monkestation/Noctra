@@ -33,10 +33,8 @@
 /client/proc/set_macros(skip_chats = FALSE, skip_macro_mode = FALSE)
 	set waitfor = FALSE
 
-	//Reset and populate the rolling buffer
+	//Reset
 	keys_held.Cut()
-	for(var/i in 1 to HELD_KEY_BUFFER_LENGTH)
-		keys_held += null
 
 	erase_all_macros()
 
