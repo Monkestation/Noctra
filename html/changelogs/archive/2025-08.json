@@ -943,8 +943,6 @@
                 "rscadd": "sacks pull a random item out when right clicked"
             }
         ]
-<<<<<<< HEAD
-=======
     },
     "2025-08-28": {
         "CheffieGithub": [
@@ -980,6 +978,5 @@
                 "code_imp": "tweaked cooking repeatable crafting code. Now it checks if the item is a food snack item before attempting to apply freshness and food quality"
             }
         ]
->>>>>>> vanderlin/main
     }
 }
