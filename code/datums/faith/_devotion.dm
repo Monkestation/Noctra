@@ -125,7 +125,12 @@
 
 /datum/devotion/proc/make_churching()
 	max_devotion = CLERIC_REQ_1
+<<<<<<< HEAD
 	max_progression = 0
+=======
+	progression = CLERIC_REQ_1
+	max_progression = CLERIC_REQ_1
+>>>>>>> vanderlin/main
 	miracles_extra = list(
 		/datum/action/cooldown/spell/undirected/touch/orison/lesser,
 		/datum/action/cooldown/spell/diagnose/holy,

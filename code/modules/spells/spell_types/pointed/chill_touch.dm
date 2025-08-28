@@ -29,9 +29,9 @@
 /datum/action/cooldown/spell/chill_touch/cast(mob/living/carbon/cast_on)
 	. = ..()
 	var/obj/item/bodypart/bodypart = cast_on.get_bodypart(owner.zone_selected)
-	if(bodypart)
+	if(!bodypart)
 		return
-	var/obj/item/chilltouch/hand = new
+	var/obj/item/chilltouch/hand = new(get_turf(cast_on))
 	hand.attach_target(cast_on, bodypart)
 	cast_on.visible_message(
 		span_warning("A skeletal hand grips [cast_on]'s [bodypart]!"),
@@ -65,10 +65,6 @@
 	item_flags = DROPDEL
 	destroy_sound = 'sound/magic/vlightning.ogg'
 
-/obj/item/chilltouch/Initialize()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
 /obj/item/chilltouch/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	host = null
@@ -79,12 +75,13 @@
 	if(!istype(target))
 		qdel(src)
 		return
-	if(istype(bodypart))
+	if(!istype(limb))
 		qdel(src)
 		return
 	host = target
 	bodypart = limb
 	bodypart.add_embedded_object(src, silent = TRUE, crit_message = FALSE)
+	START_PROCESSING(SSobj, src)
 
 // This is awful
 /obj/item/chilltouch/process()
@@ -92,30 +89,29 @@
 	var/mult = pick(1,2)
 	var/mob/living/target = host
 	if(!is_embedded)
-		host = null
+		qdel(src)
 		return PROCESS_KILL
 	if(curprocs >= procsmax)
-		host = null
-		return PROCESS_KILL
-	if(!host)
 		qdel(src)
-		return FALSE
+		return PROCESS_KILL
+	if(!target)
+		qdel(src)
+		return PROCESS_KILL
 	curprocs++
 	if(hand_proc == 1)
 		switch(bodypart.name)
 			if(BODY_ZONE_HEAD) //choke
-				to_chat(host, "<span class='warning'>[host] is choked by a skeletal hand!</span>")
-				playsound(get_turf(host), pick('sound/combat/shove.ogg'), 100, FALSE, -1)
-				host.emote("choke")
-
+				to_chat(target, "<span class='warning'>[target] is choked by a skeletal hand!</span>")
+				playsound(get_turf(target), pick('sound/combat/shove.ogg'), 100, FALSE, -1)
+				target.emote("choke")
 				target.adjustOxyLoss(oxy_drain*mult*2)
 			if(BODY_ZONE_CHEST)
-				to_chat(host, "<span class='danger'>[host] is pummeled by a skeletal hand!</span>")
-				playsound(get_turf(host), pick('sound/combat/hits/punch/punch_hard (1).ogg','sound/combat/hits/punch/punch_hard (2).ogg','sound/combat/hits/punch/punch_hard (3).ogg'), 100, FALSE, -1)
+				to_chat(target, "<span class='danger'>[target] is pummeled by a skeletal hand!</span>")
+				playsound(get_turf(target), pick('sound/combat/hits/punch/punch_hard (1).ogg','sound/combat/hits/punch/punch_hard (2).ogg','sound/combat/hits/punch/punch_hard (3).ogg'), 100, FALSE, -1)
 				target.adjustBruteLoss(oxy_drain*mult*3)
 			else
-				to_chat(host, "<span class='danger'>[host]'s [bodypart] is twisted by a skeletal hand!</span>")
-				playsound(get_turf(host), pick('sound/combat/hits/punch/punch (1).ogg','sound/combat/hits/punch/punch (2).ogg','sound/combat/hits/punch/punch (3).ogg'), 100, FALSE, -1)
+				to_chat(target, "<span class='danger'>[target]'s [bodypart] is twisted by a skeletal hand!</span>")
+				playsound(get_turf(target), pick('sound/combat/hits/punch/punch (1).ogg','sound/combat/hits/punch/punch (2).ogg','sound/combat/hits/punch/punch (3).ogg'), 100, FALSE, -1)
 				target.apply_damage(oxy_drain*mult*3, BRUTE, bodypart)
 				if(bodypart.can_be_disabled)
 					bodypart.update_disabled()

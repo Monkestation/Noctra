@@ -89,12 +89,13 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /// Replaces humans's flaw with a random one excluding no flaw
 /mob/living/carbon/human/proc/get_random_flaw()
-	var/list/flaws = subtypesof(/datum/charflaw)
-	for(var/datum/charflaw/flaw as anything in flaws)
+	var/list/flaws = list()
+	for(var/datum/charflaw/flaw as anything in subtypesof(/datum/charflaw))
 		if(is_abstract(flaw))
-			flaws -= flaw
-		if(initial(flaw.random_exempt) == TRUE)
-			flaws -= flaw
+			continue
+		if(initial(flaw.random_exempt))
+			continue
+		flaws += flaw
 
 	set_flaw(pick(flaws))
 
@@ -106,6 +107,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 		QDEL_NULL(charflaw)
 
 	charflaw = new flaw(src)
+	charflaw.after_spawn(src)
 
 /datum/charflaw/randflaw
 	name = "Random Flaw"
@@ -132,7 +134,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	desc = "I'm a normal person, how rare! (Consumes 3 triumphs or randomizes)"
 	random_exempt = TRUE
 
-/datum/charflaw/randflaw/after_spawn(mob/user)
+/datum/charflaw/noflaw/after_spawn(mob/user)
 	. = ..()
 	if(!ishuman(user))
 		return

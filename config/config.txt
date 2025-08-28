@@ -149,10 +149,10 @@ LOG_JOB_DEBUG
 PICTURE_LOGGING_CAMERA
 
 ## period of time in seconds for players to be considered inactive
-# INACTIVITY_PERIOD 300
+# INACTIVITY_PERIOD 1200
 
 ## period of time in seconds for players to be considered afk and kickable
-# AFK_PERIOD 600
+# AFK_PERIOD 1500
 
 ## disconnect players who are considered afk
 # KICK_INACTIVE

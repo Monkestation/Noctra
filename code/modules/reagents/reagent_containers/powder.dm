@@ -271,6 +271,19 @@
 	sellprice = 10
 	color = COLOR_CYAN
 
+//generic herbs and spices used in cooking
+//not as strong as pepper is, meant to be used by peasants and poor people to add some extra flavour
+//feel free to make this be used in anything cooking related
+/obj/item/reagent_containers/powder/herbs
+	name = "herbs and spices"
+	desc = "A bunch of herbs and spices mixed together."
+	icon = 'icons/roguetown/items/produce.dmi'
+	icon_state = "flour"
+	volume = 1
+	list_reagents = list(/datum/reagent/ash = 1)//you shouldn't be eating this anyways
+	sellprice = 10
+	color = COLOR_PALE_GREEN_GRAY
+
 /obj/item/reagent_containers/powder/blastpowder
 	name = "blastpowder"
 	desc = "Explosive powder known to be produced by the dwarves. It's used in many explosives."

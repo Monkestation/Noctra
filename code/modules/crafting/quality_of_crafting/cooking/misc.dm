@@ -203,3 +203,18 @@
 	craft_time = 2 SECONDS
 	crafting_sound = 'sound/foley/dropsound/food_drop.ogg'
 	extra_chance = 100
+
+/datum/repeatable_crafting_recipe/cooking/herbs
+	name = "herbs and spices"
+	tool_usage = list(
+		/obj/item/pestle = list("starts to grind and mix herbs in the mortar", "start to grind and mix herbs in the mortar", 'sound/foley/mortarpestle.ogg'),
+	)
+	requirements = list(
+		/obj/item/alch/herb = 4,
+	)
+	subtypes_allowed = TRUE
+	output = /obj/item/reagent_containers/powder/herbs
+	output_amount = 3
+	starting_atom = /obj/item/pestle
+	attacked_atom = /obj/item/reagent_containers/glass/mortar
+

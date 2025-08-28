@@ -22,6 +22,17 @@
 /datum/repeatable_crafting_recipe/cooking/frybird/potato/create_blacklisted_paths()
 	return
 
+/datum/repeatable_crafting_recipe/cooking/frybird/herbs
+	name = "Herbbird"
+
+	requirements = list(
+		/obj/item/reagent_containers/food/snacks/cooked/frybird = 1,
+		/obj/item/reagent_containers/powder/herbs = 1,
+	)
+	starting_atom = /obj/item/reagent_containers/powder/herbs
+	output = /obj/item/reagent_containers/food/snacks/cooked/herbbird
+	crafting_message = "rub some herbs into frybird"
+
 /datum/repeatable_crafting_recipe/cooking/frysteak
 	abstract_type = /datum/repeatable_crafting_recipe/cooking/frysteak
 	attacked_atom = /obj/item/reagent_containers/food/snacks/cooked/frysteak
@@ -56,6 +67,17 @@
 	starting_atom = /obj/item/reagent_containers/food/snacks/onion_fried
 	output = /obj/item/reagent_containers/food/snacks/cooked/frysteak_onion
 	crafting_message = "combine some frysteak and onion"
+
+/datum/repeatable_crafting_recipe/cooking/frysteak/herbs
+	name = "Herbsteak"
+
+	requirements = list(
+		/obj/item/reagent_containers/food/snacks/cooked/frysteak = 1,
+		/obj/item/reagent_containers/powder/herbs = 1,
+	)
+	starting_atom = /obj/item/reagent_containers/powder/herbs
+	output = /obj/item/reagent_containers/food/snacks/cooked/herbsteak
+	crafting_message = "rub some herbs into frysteak"
 
 /datum/repeatable_crafting_recipe/cooking/wiener
 	abstract_type = /datum/repeatable_crafting_recipe/cooking/wiener
