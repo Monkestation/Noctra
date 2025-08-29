@@ -177,11 +177,11 @@ GLOBAL_LIST_EMPTY(ritualslist)
 		if(count)
 			if(owner)
 				owner.adjust_triumphs(count)
-		to_chat(world, "<span class='greentext'>The [special_role_text] has TRIUMPHED!</span>")
+		to_chat(world, span_greentext(">The [special_role_text] has TRIUMPHED!"))
 		if(owner?.current)
 			owner.current.playsound_local(get_turf(owner.current), 'sound/misc/triumph.ogg', 100, FALSE, pressure_affected = FALSE)
 	else
-		to_chat(world, "<span class='redtext'>The [special_role_text] has FAILED!</span>")
+		to_chat(world, span_redtext("The [special_role_text] has FAILED!"))
 		if(owner?.current)
 			owner.current.playsound_local(get_turf(owner.current), 'sound/misc/fail.ogg', 100, FALSE, pressure_affected = FALSE)
 
@@ -206,7 +206,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 		return
 
 	var/mob/living/carbon/human/H = src
-	var/speak = input("What do you speak of?", "VANDERLIN") as text|null
+	var/speak = input("What do you speak of?", "ZIZO") as text|null
 	if(!speak)
 		return
 	whisper("O schlet'a ty'schkotot ty'skvoro...")
@@ -223,10 +223,10 @@ GLOBAL_LIST_EMPTY(ritualslist)
 
 /obj/effect/decal/cleanable/sigil
 	name = "sigils"
-	desc = "Strange runics."
+	desc = "Strange runics. They hurt your eyes."
 	icon_state = "center"
 	icon = 'icons/obj/sigils.dmi'
-	clean_type = CLEAN_TYPE_HARD_DECAL
+	clean_type = CLEAN_TYPE_LIGHT_DECAL //the sigils are made out of blood, they should be cleanable with a rag, they are also very easily spammed
 	var/sigil_type
 
 /obj/effect/decal/cleanable/sigil/examine(mob/user)
@@ -288,7 +288,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 				continue
 			rituals |= path.name
 
-	var/ritualnameinput = input(user, "Rituals", "VANDERLIN") as null|anything in rituals
+	var/ritualnameinput = input(user, "Rituals", "ZIZO") as null|anything in rituals
 	var/datum/ritual/pickritual
 
 	pickritual = GLOB.ritualslist[ritualnameinput]
@@ -355,14 +355,14 @@ GLOBAL_LIST_EMPTY(ritualslist)
 	if(cardinal_success != TRUE)
 		if(badritualpunishment)
 			return
-		to_chat(user.mind, "<span class='danger'>\"That's not how you do it, fool.\"</span>")
+		to_chat(user.mind, span_danger("\"That's not how you do it, fool.\""))
 		user.electrocute_act(10, src)
 		return
 
 	if(center_success != TRUE)
 		if(badritualpunishment)
 			return
-		to_chat(user.mind, "<span class='danger'>\"That's not how you do it, fool.\"</span>")
+		to_chat(user.mind, span_danger("\"That's not how you do it, fool.\""))
 		user.electrocute_act(10, src)
 		return
 
@@ -399,10 +399,10 @@ GLOBAL_LIST_EMPTY(ritualslist)
 	var/turf/T = get_turf(M.loc)
 	for(var/obj/A in T)
 		if(istype(A, /obj/effect/decal/cleanable/sigil))
-			to_chat(M, "<span class='warning'>There is already a sigil here.</span>")
+			to_chat(M, span_warning("There is already a sigil here."))
 			return
 		if(A.density && !(A.flags_1 & ON_BORDER_1))
-			to_chat(M, "<span class='warning'>There is already something here!</span>")
+			to_chat(M, span_warning("There is already something here."))
 			return
 	if(do_after(M, 5 SECONDS))
 		M.bloody_hands--
@@ -436,10 +436,10 @@ GLOBAL_LIST_EMPTY(ritualslist)
 	var/list/runes = list("Servantry", "Transmutation", "Fleshcrafting")
 
 	if(!bloody_hands)
-		to_chat(src, "<span class='danger'>My hands aren't bloody enough.</span>")
+		to_chat(src, span_danger("My hands aren't bloody enough."))
 		return
 
-	var/input = input("Sigil Type", "VANDERLIN") as null|anything in runes
+	var/input = input("Sigil Type", "ZIZO") as null|anything in runes
 	if(!input)
 		return
 
@@ -460,8 +460,8 @@ GLOBAL_LIST_EMPTY(ritualslist)
 	if(choice)
 		var/alert = alert(src, "Are you sure?", "VANDERLIN", "Yes", "Cancel")
 		if(alert == "Yes")
-			visible_message("<span class='danger'>[src] reaches out, ripping up [choice]'s soul!</span>")
-			to_chat(choice, "<span class='userdanger'>I HAVE FAILED MY LEADER! I HAVE FAILED ZIZO! NOTHING ELSE BUT DEATH REMAINS FOR ME NOW!</span>")
+			visible_message(span_danger("[src] reaches out, ripping up [choice]'s soul!</span>"))
+			to_chat(choice, span_danger("I HAVE FAILED MY LEADER! I HAVE FAILED ZIZO! NOTHING ELSE BUT DEATH REMAINS FOR ME NOW!"))
 			sleep(20)
 			choice.gib() // Cooler than dusting.
 			SSmapping.retainer.cultists -= choice.mind
@@ -504,23 +504,24 @@ GLOBAL_LIST_EMPTY(ritualslist)
 			if(H.anchored) // a way to bind the person to the rune if they choose to resist converting
 				return
 			if(istype(H.wear_neck, /obj/item/clothing/neck/psycross))
-				to_chat(user.mind, "<span class='danger'>\"They are wearing my bane...\"</span>")
+				to_chat(user.mind, span_danger("\"They are wearing my bane...\""))
 				return
 			if(length(SSmapping.retainer.cultists) >= 8)
+				to_chat(user.mind, span_danger("\"The veil is too strong to support more than seven lackeys.\""))
 				to_chat(user.mind, "<span class='danger'>\"The veil is too strong to support more than seven lackeys.\"</span>")
 				return
 			var/datum/antagonist/zizocultist/PR = user.mind.has_antag_datum(/datum/antagonist/zizocultist)
-			var/alert = alert(H, "YOU WILL BE SHOWN THE TRUTH. DO YOU RESIST? (Resisting: 1 TRI)", "VANDERLIN", "Yield", "Resist")
+			var/alert = alert(H, "YOU WILL BE SHOWN THE TRUTH. DO YOU RESIST? (Resisting: 1 TRI)", "???", "Yield", "Resist")
 			H.anchored = TRUE
 			if(alert == "Yield")
-				to_chat(H.mind, "<span class='notice'>I see the truth now! It all makes so much sense! They aren't HERETICS! They want the BEST FOR US!</span>")
+				to_chat(H.mind, span_notice("I see the truth now! It all makes so much sense! They aren't HERETICS! They want the BEST FOR US!"))
 				PR.add_cultist(H.mind)
 				H.praise()
 				H.anchored = FALSE
 			else
 				H.adjust_triumphs(-1)
-				H.visible_message("<span class='danger'>\The [H] thrashes around, unyielding!</span>")
-				to_chat(H.mind, "<span class='danger'>\"Yield.\"</span>")
+				H.visible_message(span_danger("\The [H] thrashes around, unyielding!"))
+				to_chat(H.mind, span_danger("\"Yield.\""))
 				if(H.electrocute_act(10))
 					H.emote("painscream")
 				sleep(20)
@@ -567,24 +568,26 @@ GLOBAL_LIST_EMPTY(ritualslist)
 /proc/thecall(mob/user, turf/C)
 	for(var/obj/item/paper/P in C.contents)
 		if(!user.mind || !user.mind.do_i_know(name=P.info))
-			to_chat(user.mind, "<span class='warning'>I don't know anyone by that name.</span>")
+			to_chat(user.mind, span_warning("I don't know anyone by that name."))
 			return
 		for(var/mob/living/carbon/human/HL in GLOB.human_list)
 			if(HL.real_name == P.info)
 				if(HL.has_status_effect(/datum/status_effect/debuff/sleepytime))
 					if(HL.mind.assigned_role.title in GLOB.church_positions)
-						to_chat(HL.mind, "<span class='warning'>I sense an unholy presence loom near my soul.</span>")
+						to_chat(HL.mind, span_warning("I sense an unholy presence loom near my soul."))
+						to_chat(user.mind, span_danger("\"They are protected...\""))
 						return
 					if(HL == SSticker.rulermob)
 						return
 					if(istype(HL.wear_neck, /obj/item/clothing/neck/psycross))
+						to_chat(user.mind, span_danger("\"They are wearing my bane...\""))
 						return
 					if(HAS_TRAIT(HL, TRAIT_NOSTAMINA))
 						return
-					to_chat(HL.mind, "<span class='warning'>I'm so sleepy...</span>")
+					to_chat(HL.mind, span_warning("I'm so sleepy..."))
 					HL.SetSleeping(30)
 					spawn(10 SECONDS)
-						to_chat(HL.mind, "<span class='warning'>This isn't my bed... Where am I?!</span>")
+						to_chat(HL.mind, span_warning("This isn't my bed... Where am I?!"))
 						HL.playsound_local(HL.loc, pick('sound/misc/jumphumans (1).ogg','sound/misc/jumphumans (2).ogg','sound/misc/jumphumans (3).ogg'), 100)
 						HL.forceMove(C)
 					qdel(P)
@@ -634,7 +637,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 		var/mob/living/carbon/human/H = M
 		if(user.patron.type == /datum/patron/inhumen/zizo)
 			H.blood_volume = BLOOD_VOLUME_MAXIMUM
-			to_chat(H, "<span class='notice'>My elixir of life is stagnant once again.</span>")
+			to_chat(H, span_notice("My elixir of life is stagnant once again."))
 			qdel(src)
 		else
 			if(!do_after(user, 2 SECONDS, H))
@@ -647,7 +650,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 
 /proc/heartache(mob/user, turf/C)
 	new /obj/item/corruptedheart(C)
-	to_chat(user.mind, "<span class='notice'>A corrupted heart. When used on a non-enlightened mortal their heart shall ache and they will be immobilized and too stunned to speak. Perfect for getting new soon-to-be enlightened. Now, just don't use it at the combat ready.</span>")
+	to_chat(user.mind, span_notice("A corrupted heart. When used on a non-enlightened mortal their heart shall ache and they will be immobilized and too stunned to speak. Perfect for getting new soon-to-be enlightened. Now, just don't use it at the combat ready."))
 
 /datum/ritual/darksunmark
 	name = "Dark Sun's Mark"
@@ -660,7 +663,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 	var/found_assassin = FALSE
 	for(var/obj/item/paper/P in C.contents)
 		if(!user.mind || !user.mind.do_i_know(name=P.info))
-			to_chat(user, "<span class='warning'>I don't know anyone by that name.</span>")
+			to_chat(user, span_warning("I don't know anyone by that name."))
 			return
 		for(var/mob/living/carbon/human/HL in GLOB.human_list)
 			if(HL.real_name == P.info)
@@ -674,14 +677,14 @@ GLOBAL_LIST_EMPTY(ritualslist)
 				if(found_assassin == TRUE)
 					ADD_TRAIT(HL, TRAIT_ZIZOID_HUNTED, TRAIT_GENERIC) // Gives the victim a trait to track that they are wanted dead.
 					log_hunted("[key_name(HL)] playing as [HL] had the hunted flaw by Zizoid curse.")
-					to_chat(HL, "<span class='danger'>My hair stands on end. Has someone just said my name? I should watch my back.</span>")
-					to_chat(user, "<span class='warning'>Your target has been marked, your profane call answered by the Dark Sun. [HL.real_name] will surely perish!</span>")
+					to_chat(HL, span_danger("My hair stands on end. Has someone just said my name? I should watch my back."))
+					to_chat(user, span_warning("Your target has been marked, your profane call answered by the Dark Sun. [HL.real_name] will surely perish!"))
 					for(var/obj/item/weapon/knife/dagger/D in C.contents) // Get rid of the dagger used as a sacrifice.
 						qdel(D)
 					qdel(P) // Get rid of the paper with the name on it too.
 					HL.playsound_local(HL.loc, 'sound/magic/marked.ogg', 100)
 				else
-					to_chat(user, "<span class='warning'>There has been no answer to your call to the Dark Sun. It seems his servants are far from here...</span>")
+					to_chat(user, span_warning("There has been no answer to your call to the Dark Sun. It seems his servants are far from here..."))
 				return
 
 // TRANSMUTATION
@@ -695,6 +698,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 
 /proc/allseeingeye(mob/user, turf/C)
 	new /obj/item/scrying/eye(C)
+	to_chat(user.mind, span_notice("The All-seeying Eye. To see beyond sight."))
 
 /datum/ritual/criminalstool
 	name = "Criminal's Tool"
@@ -709,10 +713,12 @@ GLOBAL_LIST_EMPTY(ritualslist)
 	clean_speed = 1
 	clean_effectiveness = 100
 	clean_strength = CLEAN_ALL
+	color = LIGHT_COLOR_BLOOD_MAGIC
+	uses = 200
 
 /proc/criminalstool(mob/user, turf/C)
 	new /obj/item/soap/cult(C)
-	to_chat(user.mind, "<span class='notice'>The Criminal's Tool. Could be useful for hiding tracks or getting rid of sigils.</span>")
+	to_chat(user.mind, span_notice("The Criminal's Tool. Could be useful for hiding tracks or getting rid of sigils."))
 
 /datum/ritual/propaganda
 	name = "Propaganda"
@@ -725,7 +731,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 
 /proc/propaganda(mob/user, turf/C)
 	new /obj/item/natural/worms/leech/propaganda(C)
-	to_chat(user.mind, "<span class='notice'>A leech to make their minds wrangled. They'll be in bad spirits.</span>")
+	to_chat(user.mind, span_notice("A leech to make their minds wrangled. They'll be in bad spirits."))
 
 /datum/ritual/falseidol
 	name = "False Idol"
@@ -772,7 +778,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 	for(var/obj/item/paper/P in C.contents)
 		var/info = ""
 		info = sanitize(P.info)
-		var/input = stripped_input(user, "To whom do we send this message?", "VANDERLIN")
+		var/input = stripped_input(user, "To whom do we send this message?", "ZIZO")
 		if(!input)
 			return
 		for(var/mob/living/carbon/human/HL in GLOB.human_list)
@@ -827,7 +833,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 /proc/bunnylegs(mob/user, turf/C)
 	for(var/mob/living/carbon/human/H in C.contents)
 		ADD_TRAIT(H, TRAIT_ZJUMP, TRAIT_GENERIC)
-		to_chat(H.mind, "<span class='notice'>I feel like my legs have become stronger.</span>")
+		to_chat(H.mind, span_notice("I feel like my legs have become stronger."))
 		break
 
 /datum/ritual/fleshmend
@@ -842,7 +848,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 	for(var/mob/living/carbon/human/H in C.contents)
 		H.playsound_local(C, 'sound/misc/vampirespell.ogg', 100, FALSE, pressure_affected = FALSE)
 		H.fully_heal()
-		to_chat(H.mind, "<span class='notice'>ZIZO EMPOWERS ME!</span>")
+		to_chat(H.mind, span_notice("ZIZO EMPOWERS ME!"))
 		break
 
 /datum/ritual/darkeyes
@@ -859,7 +865,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 /proc/darkeyes(mob/user, turf/C)
 	for(var/mob/living/carbon/human/H in C.contents)
 		H.grant_undead_eyes()
-		to_chat(H.mind, "<span class='notice'>I no longer fear the dark.</span>")
+		to_chat(H.mind, span_notice("I no longer fear the dark."))
 		break
 
 /datum/ritual/nopain
@@ -876,7 +882,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 /proc/nopain(mob/user, turf/C)
 	for(var/mob/living/carbon/human/H in C.contents)
 		ADD_TRAIT(user, TRAIT_NOPAIN, TRAIT_GENERIC)
-		to_chat(H.mind, "<span class='notice'>I no longer feel pain, but it has come at a terrible cost.</span>")
+		to_chat(H.mind, span_notice("I no longer feel pain, but it has come at a terrible cost."))
 		H.change_stat(STATKEY_STR, -2)
 		H.change_stat(STATKEY_CON, -3)
 		break
@@ -898,9 +904,9 @@ GLOBAL_LIST_EMPTY(ritualslist)
 /proc/fleshform(mob/user, turf/C)
 	for(var/mob/living/carbon/human/H in C.contents)
 		if(iszizocultist(H))
-			to_chat(H.mind, "<span class='danger'>\"I'm not letting my strongest follower become a mindless brute.\"</span>")
+			to_chat(H.mind, span_danger("\"I'm not letting my strongest follower become a mindless brute.\""))
 			return
-		to_chat(user.mind, "<span class='danger'>SOON I WILL BECOME A HIGHER FORM!!!</span>")
+		to_chat(user.mind, span_danger("SOON I WILL BECOME A HIGHER FORM!!!"))
 		sleep(5 SECONDS)
 		var/mob/living/trl = new /mob/living/simple_animal/hostile/retaliate/blood(H)
 		trl.forceMove(H)
@@ -918,7 +924,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 	for(var/mob/living/carbon/human/H in C.contents)
 		if(H.stat == DEAD)
 			H.take_overall_damage(500)
-			C.visible_message("<span class='danger'>[H.real_name] is lifted up into the air and multiple scratches, incisions and deep cuts start etching themselves into their skin as all of their internal organs spill on the floor below!</span>")
+			C.visible_message(span_danger("[H.real_name] is lifted up into the air and multiple scratches, incisions and deep cuts start etching themselves into their skin as all of their internal organs spill on the floor below!"))
 
 			var/atom/drop_location = H.drop_location()
 			for(var/obj/item/organ/organ as anything in H.internal_organs)
@@ -971,7 +977,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 			VIRGIN.gib()
 		SSmapping.retainer.cult_ascended = TRUE
 		addomen(OMEN_ASCEND)
-		to_chat(user.mind, "<span class='userdanger'>I HAVE DONE IT! I HAVE REACHED A HIGHER FORM! ZIZO SMILES UPON ME WITH MALICE IN HER EYES TOWARD THE ONES WHO LACK KNOWLEDGE AND UNDERSTANDING!</span>")
+		to_chat(user.mind, span_userdanger("I HAVE DONE IT! I HAVE REACHED A HIGHER FORM! ZIZO SMILES UPON ME WITH MALICE IN HER EYES TOWARD THE ONES WHO LACK KNOWLEDGE AND UNDERSTANDING!"))
 		var/mob/living/trl = new /mob/living/simple_animal/hostile/retaliate/blood/ascended(C)
 		trl.ckey = H.ckey
 		H.gib()

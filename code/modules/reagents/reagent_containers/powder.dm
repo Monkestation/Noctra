@@ -52,8 +52,8 @@
 			if(!CH)
 				to_chat(user, span_warning("[C.p_theyre(TRUE)] missing their head."))
 				return FALSE
-			user.visible_message(span_danger("[user] attempts to force [C] to inhale [src]."), \
-								span_danger("[user] attempts to force me to inhale [src]!"))
+			C.visible_message(span_danger("[user] attempts to force [C] to inhale [src]."), \
+							span_danger("[user] attempts to force me to inhale [src]!"))
 			if(C.cmode)
 				if(!CH.grabbedby)
 					to_chat(user, span_info("[C.p_they(TRUE)] steals [C.p_their()] face from it."))
