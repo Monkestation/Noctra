@@ -396,6 +396,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["customizer_entries"] >> customizer_entries
 	validate_customizer_entries()
 
+	load_erp_preferences(S)
+
 	return TRUE
 
 /datum/preferences/proc/save_character()
@@ -458,6 +460,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	// Descriptor entries
 	WRITE_FILE(S["descriptor_entries"] , descriptor_entries)
 	WRITE_FILE(S["custom_descriptors"] , custom_descriptors)
+
+	save_erp_preferences(S)
 
 	return TRUE
 

@@ -978,5 +978,54 @@
                 "code_imp": "tweaked cooking repeatable crafting code. Now it checks if the item is a food snack item before attempting to apply freshness and food quality"
             }
         ]
+<<<<<<< HEAD
+=======
+    },
+    "2025-08-29": {
+        "Wouju": [
+            {
+                "rscadd": "ZIZO sigils are now cleanable with a damp rag"
+            },
+            {
+                "rscadd": "ZIZO soap is now bright crimson bloody red. It also has more uses than base soap."
+            },
+            {
+                "refactor": "Made various ZIZO and scrying orb chat messages use span_XYZs properly. Yell at me if they dont work"
+            },
+            {
+                "balance": "various minor skill changes"
+            },
+            {
+                "rscadd": "Lead balls are now crafted with tin at the artificier table"
+            },
+            {
+                "rscadd": "Lead balls can be crafted with tin by blacksmiths"
+            },
+            {
+                "bugfix": "Fixed essence harvester menu. You also need to use the jar to now remove nodes from it."
+            }
+        ],
+        "HijackSpaghetti": [
+            {
+                "balance": "halves cost of mana related utility tree in spellbook, give Mana Well slight mana regeneration, taken from Meditation, shifted 25 max mana to Expanded Reserves."
+            },
+            {
+                "bugfix": "fixed missing magical brick and flower field descriptions in spellbook"
+            }
+        ],
+        "Just-Sim": [
+            {
+                "rscadd": "Emote Markdown"
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "balance": "Psydon Paladin now has expert swordsman, lost their ability to speak celestial but can speak old psydonic."
+            },
+            {
+                "bugfix": "Progressives psydonites can roll Paladin and Church can't recruit progressive psydonites anymore."
+            }
+        ]
+>>>>>>> vanderlin/main
     }
 }

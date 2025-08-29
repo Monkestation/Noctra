@@ -79,17 +79,6 @@
 		return session
 	return null
 
-/proc/check_sex_lock(mob/locked, organ_slot, obj/item/item)
-	if(!organ_slot && !item)
-		return FALSE
-	for(var/datum/sex_session_lock/lock as anything in GLOB.locked_sex_objects)
-		if(lock.locked_host != locked)
-			continue
-		if(lock.locked_item != item && lock.locked_organ_slot != organ_slot)
-			continue
-		return TRUE
-	return FALSE
-
 /mob/living/proc/has_hands()
 	return TRUE
 
@@ -129,3 +118,107 @@
 	if(has_mouth())
 		data += "<div>...have a mouth, which is [mouth_is_free() ? "uncovered" : "covered"].</div>"
 	return data
+
+/mob/living/proc/get_active_precise_hand()
+	var/active_hand = BODY_ZONE_PRECISE_L_HAND
+	if(active_hand_index != 1)
+		active_hand = BODY_ZONE_PRECISE_R_HAND
+	return active_hand
+
+/mob/proc/check_handholding()
+	return
+
+/mob/living/carbon/human/check_handholding()
+	if(pulledby && pulledby != src)
+		var/obj/item/bodypart/LH
+		var/obj/item/bodypart/RH
+		LH = get_bodypart(BODY_ZONE_PRECISE_L_HAND)
+		RH = get_bodypart(BODY_ZONE_PRECISE_R_HAND)
+		if(LH || RH)
+			for(var/obj/item/grabbing/G in src.grabbedby)
+				if(G.limb_grabbed == LH || G.limb_grabbed == RH)
+					return TRUE
+
+/proc/return_sessions_with_user(mob/living/carbon/human/user)
+	var/list/sessions = list()
+	for(var/datum/sex_session/session in GLOB.sex_sessions)
+		if(user != session.target && user != session.user)
+			continue
+		sessions |= session
+	return sessions
+
+/proc/return_highest_priority_action(list/sessions = list(), mob/living/carbon/human/user)
+	var/datum/sex_session/highest_session
+	for(var/datum/sex_session/session in sessions)
+		if(!highest_session)
+			highest_session = session
+			continue
+		if(user == session.target)
+			if(session.current_action.target_priority > highest_session.current_action.target_priority)
+				highest_session = session
+				continue
+		if(user == session.user)
+			if(session.current_action.user_priority > highest_session.current_action.user_priority)
+				highest_session = session
+				continue
+	return highest_session
+
+/mob/proc/get_erp_pref(pref_type)
+	if(!client?.prefs)
+		return FALSE
+
+	if(!ispath(pref_type, /datum/erp_preference))
+		return FALSE
+
+	var/datum/erp_preference/pref = new pref_type()
+	return pref.get_value(client.prefs)
+
+/mob/proc/set_erp_pref(pref_type, value)
+	if(!client?.prefs)
+		return FALSE
+
+	if(!ispath(pref_type, /datum/erp_preference))
+		return FALSE
+
+	var/datum/erp_preference/pref = new pref_type()
+	pref.set_value(client.prefs, value)
+	client.prefs.save_preferences()
+	return TRUE
+
+/mob/proc/has_erp_pref(pref_type)
+	return get_erp_pref(pref_type) == TRUE
+
+/mob/proc/get_all_erp_prefs()
+	if(!client?.prefs)
+		return list()
+
+	var/list/prefs_by_category = list()
+
+	for(var/pref_type in subtypesof(/datum/erp_preference))
+		var/datum/erp_preference/pref = new pref_type()
+		var/category = pref.category
+		var/value = pref.get_value(client.prefs)
+
+		if(!prefs_by_category[category])
+			prefs_by_category[category] = list()
+
+		prefs_by_category[category][pref_type] = list(
+			"name" = pref.name,
+			"description" = pref.description,
+			"value" = value,
+			"pref_object" = pref
+		)
+
+	return prefs_by_category
+
+/proc/any_has_erp_pref(list/mobs, pref_type)
+	for(var/mob/M in mobs)
+		if(M.has_erp_pref(pref_type))
+			return TRUE
+	return FALSE
+
+/proc/all_have_erp_pref(list/mobs, pref_type)
+	for(var/mob/M in mobs)
+		if(!M.has_erp_pref(pref_type))
+			return FALSE
+	return TRUE

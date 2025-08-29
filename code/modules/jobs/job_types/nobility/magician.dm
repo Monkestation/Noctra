@@ -52,6 +52,7 @@
 	backl = /obj/item/weapon/polearm/woodstaff
 	shoes = /obj/item/clothing/shoes/shortboots
 	neck = /obj/item/clothing/neck/mana_star
+	belt = /obj/item/storage/belt/leather/plaquegold
 	backpack_contents = list(/obj/item/scrying = 1, /obj/item/chalk = 1,/obj/item/reagent_containers/glass/bottle/killersice = 1, /obj/item/book/granter/spellbook/master = 1, /obj/item/weapon/knife/dagger/silver/arcyne = 1, /obj/item/storage/keyring/mage = 1,)
 
 	H.adjust_skillrank(/datum/skill/misc/reading, 6, TRUE)
@@ -59,6 +60,7 @@
 	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)//old party member, he was an adventurer who saved the city, also buff wizard
 	H.adjust_skillrank(/datum/skill/combat/polearms, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/alchemy, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/labor/mathematics, 4, TRUE)
@@ -66,14 +68,12 @@
 		armor = /obj/item/clothing/shirt/robe/colored/courtmage
 		H.change_stat(STATKEY_SPD, -1)
 		H.change_stat(STATKEY_INT, 1)
-		if(H.dna.species.id == SPEC_ID_HUMEN)
-			belt = /obj/item/storage/belt/leather/plaquegold
-			cloak = null
-			if(H.gender == FEMALE)
-				armor = /obj/item/clothing/shirt/robe/colored/courtmage
-			if(H.gender == MALE)
-				armor = /obj/item/clothing/shirt/robe/wizard
-				H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
+	if(H.gender == FEMALE)
+		head = /obj/item/clothing/head/wizhat/witch
+	if(H.gender == MALE)
+		if(H.dna.species.id != SPEC_ID_DWARF)
+			armor = /obj/item/clothing/shirt/robe/wizard
+		H.dna.species.soundpack_m = new /datum/voicepack/male/wizard()
 	ADD_TRAIT(H, TRAIT_SEEPRICES, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_OLDPARTY, TRAIT_GENERIC)

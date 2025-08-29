@@ -14,6 +14,16 @@
 /obj/item/organ/genitals/penis/Initialize()
 	. = ..()
 
+/obj/item/organ/genitals/penis/Insert(mob/living/carbon/M, special, drop_if_replaced)
+	. = ..()
+	if(penis_type in list(PENIS_TYPE_KNOTTED, PENIS_TYPE_TAPERED_DOUBLE_KNOTTED, PENIS_TYPE_BARBED_KNOTTED))
+		M.AddComponent(/datum/component/knotting)
+
+/obj/item/organ/genitals/penis/penis/Remove(mob/living/carbon/M, special, drop_if_replaced)
+	. = ..()
+	if(penis_type in list(PENIS_TYPE_KNOTTED, PENIS_TYPE_TAPERED_DOUBLE_KNOTTED, PENIS_TYPE_BARBED_KNOTTED))
+		qdel(M.GetComponent(/datum/component/knotting))
+
 /obj/item/organ/genitals/penis/proc/update_erect_state()
 	var/oldstate = erect_state
 	var/new_state = ERECT_STATE_NONE

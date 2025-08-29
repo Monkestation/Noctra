@@ -48,9 +48,9 @@
 	/// Whether this action can continue indefinitely
 	var/continous = TRUE
 	/// How long each iteration takes
-	var/do_time = 30
+	var/do_time = 3.3 SECONDS
 	/// Stamina cost per iteration
-	var/stamina_cost = 5
+	var/stamina_cost = 0.5
 	/// Whether to check if user is incapacitated
 	var/check_incapacitated = TRUE
 	/// Whether participants must be on same tile
@@ -73,6 +73,16 @@
 	var/list/datum/storage_tracking_entry/tracked_storage = list()
 	///this is a list of locks we created to prevent penis portal powers
 	var/list/datum/sex_session_lock/sex_locks = list()
+	///this is the priority of our action for the target so when ejaculate messages are looked at its highest priority
+	var/target_priority = 10
+	///this is the priority of our action for the user
+	var/user_priority = 10
+	/// Whether this action supports knotting on climax
+	var/knot_on_finish = FALSE
+	/// Whether this action can trigger knots
+	var/can_knot = FALSE
+	///basically for actions being done by the user where the target is the inserter set this to true
+	var/flipped = FALSE
 
 /datum/sex_action/Destroy()
 	// Clean up any tracked storage entries
@@ -90,11 +100,22 @@
 	return TRUE
 
 /datum/sex_action/proc/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
-	// Check hole storage requirements if this action needs it
+	SHOULD_CALL_PARENT(TRUE)
 	if(requires_hole_storage)
 		if(!check_hole_storage_available(target, user))
 			return FALSE
 	return TRUE
+
+/datum/sex_action/proc/try_knot_on_climax(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(!knot_on_finish)
+		return FALSE
+	if(!can_knot)
+		return FALSE
+
+	var/datum/sex_session/session = get_sex_session(user, target)
+	if(!session)
+		return FALSE
+	return SEND_SIGNAL(user, COMSIG_SEX_TRY_KNOT, target, session.force)
 
 /datum/sex_action/proc/check_location_accessible(mob/living/carbon/human/user, mob/living/carbon/human/target, location = BODY_ZONE_CHEST, grabs = FALSE, skipundies = TRUE)
 	var/obj/item/bodypart/bodypart = target.get_bodypart(location)
@@ -231,8 +252,12 @@
 /datum/sex_action/proc/on_start(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	SHOULD_CALL_PARENT(TRUE)
 	if(requires_hole_storage)
-		if(!try_store_in_hole(user, target))
-			return FALSE
+		if(flipped)
+			if(!try_store_in_hole(target, user))
+				return FALSE
+		else
+			if(!try_store_in_hole(user, target))
+				return FALSE
 	lock_sex_object(user, target)
 	return TRUE
 
@@ -242,12 +267,19 @@
 /datum/sex_action/proc/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	SHOULD_CALL_PARENT(TRUE)
 	if(requires_hole_storage)
-		remove_from_hole(user, target)
+		if(flipped)
+			remove_from_hole(target, user)
+		else
+			remove_from_hole(user, target)
 	unlock_sex_object(user, target)
 	return
 
 /datum/sex_action/proc/is_finished(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	var/datum/sex_session/sex_session = get_sex_session(user, target)
+	if(sex_session.finished_check())
+		return TRUE
 	return FALSE
+
 
 /datum/sex_action/proc/lock_sex_object(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	return FALSE
@@ -256,3 +288,19 @@
 	for(var/datum/sex_session_lock/lock as anything in sex_locks)
 		qdel(lock)
 	sex_locks.Cut()
+
+/datum/sex_action/proc/handle_climax_message(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	return
+
+/datum/sex_action/proc/check_sex_lock(mob/locked, organ_slot, obj/item/item)
+	if(!organ_slot && !item)
+		return FALSE
+	for(var/datum/sex_session_lock/lock as anything in GLOB.locked_sex_objects)
+		if(lock in sex_locks)
+			continue
+		if(lock.locked_host != locked)
+			continue
+		if(lock.locked_item != item && lock.locked_organ_slot != organ_slot)
+			continue
+		return TRUE
+	return FALSE

@@ -38,35 +38,36 @@
 
 /datum/spell_node/mana_well
 	name = "Mana Well"
-	desc = "Dig deeper into your magical reserves."
+	desc = "Dig deeper into your magical reserves and recovery."
 	node_x = -290
 	node_y = 290
-	cost = 6
+	cost = 3
 	is_passive = TRUE
 
 /datum/spell_node/mana_well/on_node_buy(mob/user)
 	var/current_max = user.mana_pool?.maximum_mana_capacity || 100
-	user.mana_pool?.set_max_mana(current_max + 50, TRUE, TRUE)
-	user.mana_overload_threshold += 50
-	to_chat(user, span_notice("Your magical well deepens considerably."))
+	user.mana_pool?.set_max_mana(current_max + 25, TRUE, TRUE)
+	user.mana_overload_threshold += 25
+	user.mana_pool?.set_natural_recharge(user.mana_pool.ethereal_recharge_rate + 0.1)
+	to_chat(user, span_notice("Your magical well deepens and your mind achieves clarity."))
 
 /datum/spell_node/meditation
 	name = "Meditation"
 	desc = "Improve your natural mana recovery."
-	cost = 6
+	cost = 4
 	node_x = -290
 	node_y = 390
 	prerequisites = list(/datum/spell_node/mana_well)
 	is_passive = TRUE
 
 /datum/spell_node/meditation/on_node_buy(mob/user)
-	user.mana_pool?.set_natural_recharge(user.mana_pool.ethereal_recharge_rate + 0.25)
-	to_chat(user, span_notice("Your mind achieves greater focus and clarity."))
+	user.mana_pool?.set_natural_recharge(user.mana_pool.ethereal_recharge_rate + 0.15)
+	to_chat(user, span_notice("Your mind achieves even greater focus and clarity."))
 
 /datum/spell_node/expanded_reserves
 	name = "Expanded Reserves"
 	desc = "Increase your magical capacity."
-	cost = 8
+	cost = 4
 	node_x = -390
 	node_y = 290
 	prerequisites = list(/datum/spell_node/mana_well)
@@ -74,14 +75,14 @@
 
 /datum/spell_node/expanded_reserves/on_node_buy(mob/user)
 	var/current_max = user.mana_pool?.maximum_mana_capacity || 100
-	user.mana_pool?.set_max_mana(current_max + 100, TRUE, TRUE)
-	user.mana_overload_threshold += 100
-	to_chat(user, span_notice("Your magical reserves expand."))
+	user.mana_pool?.set_max_mana(current_max + 125, TRUE, TRUE)
+	user.mana_overload_threshold += 125
+	to_chat(user, span_notice("Your magical reserves expand deeper."))
 
 /datum/spell_node/eternal_wellspring
 	name = "Eternal Wellspring"
 	desc = "Achieve perfect harmony with magical forces."
-	cost = 12
+	cost = 6
 	node_x = -440
 	node_y = 440
 	prerequisites = list(/datum/spell_node/expanded_reserves, /datum/spell_node/meditation)
@@ -410,9 +411,10 @@
 	prerequisites = list(/datum/spell_node/earth_affinity)
 	spell_type = /datum/action/cooldown/spell/status/guidance
 
+
 /datum/spell_node/magic_stone
-	name = "Magician's Brick"
-	desc = "Conjure a magical brick in your hand"
+	name = "Magical Brick"
+	desc = "Conjure a brick of magician in your hand."
 	node_x = LEFT_X_TIER_2
 	node_y = LEFT_Y_LEFT - 50
 	prerequisites = list(/datum/spell_node/earth_affinity)
@@ -420,7 +422,7 @@
 
 /datum/spell_node/flower_field
 	name = "Flower Field"
-	desc = "Summons a field of flowers"
+	desc = "Summons a field of flowers."
 	node_x = LEFT_X_TIER_3
 	node_y = LEFT_Y_LEFT - 50
 	prerequisites = list(/datum/spell_node/magic_stone)

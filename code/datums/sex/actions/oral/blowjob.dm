@@ -7,8 +7,12 @@
 	stored_item_name = "receiving member"
 	require_grab = FALSE
 	check_same_tile = FALSE
+	target_priority = 100
 
 /datum/sex_action/blowjob/can_perform(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(user == target)
 		return FALSE
 	if(check_sex_lock(target, ORGAN_SLOT_PENIS))
@@ -32,12 +36,9 @@
 	user.make_sucking_noise()
 	do_thrust_animate(user, target)
 
-	var/datum/sex_session/sex_session = get_sex_session(target, user)
+	var/datum/sex_session/sex_session = get_sex_session(user, target)
 
 	sex_session.perform_sex_action(target, 2, 0, TRUE)
-	if(sex_session.check_climax())
-		target.visible_message(span_love("[target] cums into [user]'s mouth!"))
-		sex_session.handle_climax("into")
 
 /datum/sex_action/blowjob/on_finish(mob/living/carbon/human/user, mob/living/carbon/human/target)
 	. = ..()
@@ -47,3 +48,6 @@
 	sex_locks |= new /datum/sex_session_lock(target, ORGAN_SLOT_PENIS)
 	sex_locks |= new /datum/sex_session_lock(user, BODY_ZONE_PRECISE_MOUTH)
 
+/datum/sex_action/blowjob/handle_climax_message(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	target.visible_message(span_love("[target] cums into [user]'s mouth!"))
+	return "into"

@@ -220,6 +220,8 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/ui_scale
 	///this is our character slot
 	var/tmp/current_slot = 1
+	/// List storing ERP preference values
+	var/list/erp_preferences
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -423,6 +425,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	dat += "<br><b>Accent:</b> <a href='?_src_=prefs;preference=selected_accent;task=input'>[selected_accent]</a>"
 	dat += "<br>"
 	dat += "<br><b>Features:</b> <a href='?_src_=prefs;preference=customizers;task=menu'>Change</a>"
+	dat += "<br><b>ERP:</b> <a href='?_src_=prefs;preference=erp;task=menu'>Change</a>"
 	if(length(pref_species.descriptor_choices))
 		dat += "<br><b>Descriptors:</b> <a href='?_src_=prefs;preference=descriptors;task=menu'>Change</a>"
 		dat += "<br>"
@@ -921,6 +924,11 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	else if(href_list["preference"] == "customizers")
 		ShowCustomizers(user)
 		return
+
+	else if(href_list["preference"] == "erp")
+		show_erp_preferences(user)
+		return
+
 	else if(href_list["preference"] == "triumph_buy_menu")
 		SStriumphs.startup_triumphs_menu(user.client)
 
@@ -1001,6 +1009,11 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		return TRUE
 
 	switch(href_list["task"])
+		if("erp_pref")
+			handle_erp_pref_topic(user, href_list)
+			ShowChoices(user)
+			show_erp_preferences(user)
+			return
 		if("change_customizer")
 			handle_customizer_topic(user, href_list)
 			ShowChoices(user)
@@ -1640,6 +1653,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			character.accent = selected_accent
 
 	/* :V */
+	apply_character_kinks(character)
 
 	if(icon_updates)
 		character.update_body()

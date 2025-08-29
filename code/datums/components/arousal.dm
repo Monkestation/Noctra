@@ -11,6 +11,10 @@
 	var/last_pain = 0
 	///our multiplier
 	var/arousal_multiplier = 1
+	/// Our charge gauge
+	var/charge = SEX_MAX_CHARGE
+	/// Last ejaculation time
+	var/last_ejaculation_time = 0
 
 /datum/component/arousal/Initialize(...)
 	. = ..()
@@ -37,6 +41,7 @@
 	UnregisterSignal(parent, COMSIG_SEX_RECEIVE_ACTION)
 
 /datum/component/arousal/process()
+	handle_charge(1)
 	if(!can_lose_arousal())
 		return
 	adjust_arousal(parent, -1)
@@ -51,6 +56,7 @@
 		last_arousal_increase_time = world.time
 	arousal = clamp(amount, 0, MAX_AROUSAL)
 	update_arousal_effects()
+	try_ejaculate()
 	return arousal
 
 /datum/component/arousal/proc/adjust_arousal(datum/source, amount)
@@ -71,7 +77,8 @@
 	arousal_data += list(
 		"arousal" = arousal,
 		"frozen" = arousal_frozen,
-		"last_increase" = last_arousal_increase_time
+		"last_increase" = last_arousal_increase_time,
+		"arousal_multiplier" = arousal_multiplier
 	)
 
 /datum/component/arousal/proc/receive_sex_action(datum/source, arousal_amt, pain_amt, giving, applied_force, applied_speed)
@@ -98,30 +105,105 @@
 	update_blueballs()
 	update_erect_state()
 
+/datum/component/arousal/proc/try_ejaculate()
+	if(arousal < PASSIVE_EJAC_THRESHOLD)
+		return
+	if(is_spent())
+		return
+	ejaculate()
+
+/datum/component/arousal/proc/ejaculate()
+	var/mob/living/mob = parent
+	var/list/parent_sessions = return_sessions_with_user(parent)
+	var/datum/sex_session/highest_priority = return_highest_priority_action(parent_sessions, parent)
+	playsound(parent, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
+	if(!highest_priority)
+		mob.visible_message(span_love("[mob] makes a mess!"))
+		var/turf/turf = get_turf(parent)
+		turf.add_liquid(/datum/reagent/consumable/milk, 5)
+		after_ejaculation(FALSE, parent)
+	else
+		var/return_type = highest_priority.current_action.handle_climax_message(highest_priority.user, highest_priority.target)
+		handle_climax(return_type, highest_priority.user, highest_priority.target)
+		if(highest_priority.current_action.knot_on_finish)
+			highest_priority.current_action.try_knot_on_climax(mob, highest_priority.target)
+
+
+/datum/component/arousal/proc/handle_climax(climax_type, mob/living/carbon/human/user, mob/living/carbon/human/target)
+	switch(climax_type)
+		if("onto")
+			log_combat(user, target, "Came onto the target")
+			playsound(target, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
+			var/turf/turf = get_turf(target)
+			turf.add_liquid(/datum/reagent/consumable/milk, 5)
+		if("into")
+			log_combat(user, target, "Came inside the target")
+			playsound(target, 'sound/misc/mat/endin.ogg', 50, TRUE, ignore_walls = FALSE)
+		if("self")
+			log_combat(user, user, "Ejaculated")
+			user.visible_message(span_love("[user] makes a mess!"))
+			playsound(user, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
+			var/turf/turf = get_turf(target)
+			turf.add_liquid(/datum/reagent/consumable/milk, 5)
+
+	after_ejaculation(climax_type == "into" || climax_type == "oral", user, target)
+
+/datum/component/arousal/proc/after_ejaculation(intimate = FALSE, mob/living/carbon/human/user, mob/living/carbon/human/target)
+	SEND_SIGNAL(user, COMSIG_SEX_SET_AROUSAL, 20)
+	charge = max(0, charge - CHARGE_FOR_CLIMAX)
+
+	user.add_stress(/datum/stressevent/cumok)
+	user.emote("sexmoanhvy", forced = TRUE)
+	user.playsound_local(user, 'sound/misc/mat/end.ogg', 100)
+	last_ejaculation_time = world.time
+
+	if(intimate)
+		after_intimate_climax(user, target)
+
+/datum/component/arousal/proc/after_intimate_climax(mob/living/carbon/human/user, mob/living/carbon/human/target)
+	if(user == target)
+		return
+	/*
+	if(HAS_TRAIT(target, TRAIT_GOODLOVER))
+		if(!user.mob_timers["cumtri"])
+			user.mob_timers["cumtri"] = world.time
+			user.adjust_triumphs(1)
+			to_chat(user, span_love("Our loving is a true TRIUMPH!"))
+	if(HAS_TRAIT(user, TRAIT_GOODLOVER))
+		if(!target.mob_timers["cumtri"])
+			target.mob_timers["cumtri"] = world.time
+			target.adjust_triumphs(1)
+			to_chat(target, span_love("Our loving is a true TRIUMPH!"))
+	*/
+
+/datum/component/arousal/proc/set_charge(amount)
+	var/empty = (charge < CHARGE_FOR_CLIMAX)
+	charge = clamp(amount, 0, SEX_MAX_CHARGE)
+	var/after_empty = (charge < CHARGE_FOR_CLIMAX)
+	if(empty && !after_empty)
+		to_chat(parent, span_notice("I feel like I'm not so spent anymore"))
+	if(!empty && after_empty)
+		to_chat(parent, span_notice("I'm spent!"))
+
+/datum/component/arousal/proc/adjust_charge(amount)
+	set_charge(charge + amount)
+
+/datum/component/arousal/proc/handle_charge(dt)
+	adjust_charge(dt * CHARGE_RECHARGE_RATE)
+	if(is_spent())
+		if(arousal > 60)
+			to_chat(parent, span_warning("I'm too spent!"))
+			adjust_arousal(-20)
+		adjust_arousal(-dt * SPENT_AROUSAL_RATE)
+
+/datum/component/arousal/proc/is_spent()
+	if(charge < CHARGE_FOR_CLIMAX)
+		return TRUE
+	return FALSE
+
 /datum/component/arousal/proc/update_pink_screen()
 	var/mob/user = parent
-	var/severity = 0
-	switch(arousal)
-		if(1 to 10)
-			severity = 1
-		if(10 to 20)
-			severity = 2
-		if(20 to 30)
-			severity = 3
-		if(30 to 40)
-			severity = 4
-		if(40 to 50)
-			severity = 5
-		if(50 to 60)
-			severity = 6
-		if(60 to 70)
-			severity = 7
-		if(70 to 80)
-			severity = 8
-		if(80 to 90)
-			severity = 9
-		if(90 to INFINITY)
-			severity = 10
+	var/severity = min(10, CEILING(arousal * 0.1, 1))
 	if(severity > 0)
 		user.overlay_fullscreen("horny", /atom/movable/screen/fullscreen/love, severity)
 	else

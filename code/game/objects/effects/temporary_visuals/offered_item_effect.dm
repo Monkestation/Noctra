@@ -10,16 +10,26 @@
 	plane = GAME_PLANE
 	mouse_opacity = MOUSE_OPACITY_ICON
 	var/fading_out = FALSE
+	var/stealthy = FALSE
 
-/obj/effect/temp_visual/offered_item_effect/Initialize(mapload, obj/offered_thing, mob/living/offerer, mob/living/offered_to)
+/obj/effect/temp_visual/offered_item_effect/Initialize(mapload, obj/offered_thing, mob/living/offerer, mob/living/offered_to, _stealthy)
 	. = ..()
 	icon = offered_thing.icon
 	icon_state = offered_thing.icon_state
 	appearance = offered_thing.appearance
 	transform = matrix() * 0
+	alpha = 200
 	offered_thing_weak_ref = WEAKREF(offered_thing)
 	offerer_weak_ref = WEAKREF(offerer)
 	offered_to_weak_ref = WEAKREF(offered_to)
+	stealthy = _stealthy
+
+	if(stealthy)
+		var/image/I = image(icon, src, icon_state)
+		I.override = TRUE
+		icon = null
+		add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/People, "offer", I, list(offerer, offered_to))
+
 	RegisterSignal(offerer, COMSIG_MOVABLE_MOVED, PROC_REF(someone_moved))
 	RegisterSignal(offered_to, COMSIG_MOVABLE_MOVED, PROC_REF(someone_moved))
 	RegisterSignal(offerer, COMSIG_LIVING_STOPPED_OFFERING_ITEM, PROC_REF(stopped_offering))
@@ -37,7 +47,7 @@
 /obj/effect/temp_visual/offered_item_effect/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 	if(I == offered_thing_weak_ref.resolve())
-		user.cancel_offering_item()
+		user.cancel_offering_item(stealthy)
 		return
 
 	var/mob/living/offerer = offerer_weak_ref.resolve()
@@ -90,7 +100,7 @@
 		return
 
 	if(!offerer.Adjacent(offered_to))
-		offerer.cancel_offering_item()
+		offerer.cancel_offering_item(stealthy)
 		timed_out()
 		return
 
@@ -123,7 +133,7 @@
 		return
 
 	if(user == offerer)
-		offerer.cancel_offering_item()
+		offerer.cancel_offering_item(stealthy)
 		return
 
 	if(user.used_intent.type == INTENT_HARM)
@@ -134,7 +144,7 @@
 	if(fading_out)
 		return
 
-	user.try_accept_offered_item(offerer, offered_thing)
+	user.try_accept_offered_item(offerer, offered_thing, stealthy)
 
 #undef HANDOVER_TIME
 #undef STOP_OFFER_TIME

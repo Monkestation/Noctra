@@ -23,6 +23,17 @@ GLOBAL_LIST_EMPTY(locked_sex_objects)
 #define COMSIG_SEX_CLIMAX "sex_climax"                                  // (type, target) - Handle climax event
 #define COMSIG_SEX_RECEIVE_ACTION "sex_receive_action"                  // (arousal_amt, pain_amt, giving, force, speed) - Receive action effects
 
+// Knotting Component Signals
+/// Attempts to knot a target. Args: (target, force_level)
+#define COMSIG_SEX_TRY_KNOT "sex_try_knot"
+/// Removes an existing knot. Args: (forceful_removal, notify, keep_top_status, keep_btm_status)
+#define COMSIG_SEX_REMOVE_KNOT "sex_remove_knot"
+
+// General Sex Signals
+/// Checks if user can use their penis. Return: TRUE/FALSE
+#define COMSIG_SEX_CAN_USE_PENIS "sex_can_use_penis"
+/// Checks if user is considered limp. Return: TRUE/FALSE
+#define COMSIG_SEX_CONSIDERED_LIMP "sex_considered_limp"
 
 #define SEX_SPEED_LOW 1
 #define SEX_SPEED_MID 2
@@ -131,6 +142,7 @@ GLOBAL_LIST_EMPTY(locked_sex_objects)
 #define ORGAN_SLOT_TESTICLES "testicles"
 #define ORGAN_SLOT_BREASTS "breasts"
 #define ORGAN_SLOT_VAGINA "vagina"
+#define ORGAN_SLOT_ANUS "anus"///this is a fake organ used for sex_lock
 
 #define BREAST_SIZE_FLAT 0
 #define BREAST_SIZE_VERY_SMALL 1

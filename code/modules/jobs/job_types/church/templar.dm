@@ -69,6 +69,7 @@
 			cloak = /obj/item/clothing/cloak/stabard/templar/noc
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
 			H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
+			H.adjust_skillrank(/datum/skill/labor/mathematics, 2, TRUE)
 			ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
 		if(/datum/patron/divine/dendor)
 			wrists = /obj/item/clothing/neck/psycross/silver/dendor
@@ -82,6 +83,7 @@
 			cloak = /obj/item/clothing/cloak/stabard/templar/necra
 			H.cmode_music = 'sound/music/cmode/church/CombatGravekeeper.ogg'
 			H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE)
+			ADD_TRAIT(H, TRAIT_NOSTINK, TRAIT_GENERIC)//accustomed to death
 		if(/datum/patron/divine/pestra)
 			wrists = /obj/item/clothing/neck/psycross/silver/pestra
 			head = /obj/item/clothing/head/helmet/heavy/necked/pestrahelm
@@ -115,12 +117,13 @@
 			wrists = /obj/item/clothing/neck/psycross/silver/abyssor
 			cloak = /obj/item/clothing/cloak/stabard/templar/abyssor
 			H.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
-			H.adjust_skillrank(/datum/skill/labor/fishing, 1, TRUE)
+			H.adjust_skillrank(/datum/skill/labor/fishing, 2, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
 		if(/datum/patron/divine/xylix)
 			wrists = /obj/item/clothing/neck/psycross/silver/xylix
 			head = /obj/item/clothing/head/helmet/heavy/necked/xylix
 			cloak = /obj/item/clothing/cloak/stabard/templar/xylix
+			H.cmode_music = 'sound/music/cmode/adventurer/CombatMonk.ogg'
 			H.adjust_skillrank(/datum/skill/combat/whipsflails, 4, TRUE)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_STEELHEARTED, TRAIT_GENERIC)
