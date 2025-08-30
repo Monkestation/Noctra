@@ -324,6 +324,6 @@
 	var/list/dat = list()
 	dat += GLOB.roleplay_readme
 	if(dat)
-		var/datum/browser/popup = new(usr, "Primer", "VANDERLIN", 650, 900)
+		var/datum/browser/popup = new(usr, "Primer", "VANDERLIN/NOCTRA", 650, 900)
 		popup.set_content(dat.Join())
 		popup.open()
