@@ -60,6 +60,7 @@
 	var/screen_start_y = 2
 	//End
 
+	/// prevents storage interactions while it is equipped. Think backpacks.
 	var/not_while_equipped = FALSE
 
 /datum/component/storage/Initialize(datum/component/storage/concrete/master)

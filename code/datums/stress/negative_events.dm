@@ -121,6 +121,10 @@
 	stressadd = 1
 //	desc = "<span class='red'>I fell. I'm a fool.</span>"
 
+/datum/stressevent/fullshoe
+	stressadd = 1
+	desc = span_red("There is something in my shoe.")
+
 /datum/stressevent/uncookedfood
 	timer = 2 MINUTES
 	stressadd = 2

@@ -978,6 +978,8 @@
                 "code_imp": "tweaked cooking repeatable crafting code. Now it checks if the item is a food snack item before attempting to apply freshness and food quality"
             }
         ]
+<<<<<<< HEAD
+=======
     },
     "2025-08-29": {
         "Wouju": [
@@ -1024,5 +1026,48 @@
                 "bugfix": "Progressives psydonites can roll Paladin and Church can't recruit progressive psydonites anymore."
             }
         ]
+    },
+    "2025-08-30": {
+        "F-e-r-n": [
+            {
+                "balance": "Makes fullplate and encumbered people get up slower"
+            },
+            {
+                "balance": "Removes strength check from encumbrance and makes carryweight scale on either STR or CON depending on whats higher."
+            },
+            {
+                "balance": "50% encumbrance now disables sprinting from 70%"
+            }
+        ],
+        "Siro": [
+            {
+                "rscadd": "Noble boot variants can store small knives, coins, or key. Only one storage space."
+            },
+            {
+                "rscadd": "Storing anything but a knife in your boots will add a stress."
+            },
+            {
+                "rscadd": "Maximum 40% chance to cut yourself storing a knife in your boots at less than 10 luck."
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "rscadd": "Golden Psycross unique description"
+            },
+            {
+                "bugfix": "Good Swim Trait name is not ugly anymore"
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "fixed an issue with doubled flaw effects."
+            }
+        ],
+        "Just-Sim": [
+            {
+                "rscadd": "Door bumping with keys unlocks doors."
+            }
+        ]
+>>>>>>> vanderlin/main
     }
 }

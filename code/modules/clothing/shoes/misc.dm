@@ -11,6 +11,10 @@
 	salvage_result = /obj/item/natural/hide/cured
 	salvage_amount = 1
 
+/obj/item/clothing/shoes/nobleboot/apply_components()
+	. = ..()
+	AddComponent(/datum/component/storage/concrete/boots)
+
 /obj/item/clothing/shoes/nobleboot/thighboots
 	name = "thigh boots"
 	icon_state = "thighboot"

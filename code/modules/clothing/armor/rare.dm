@@ -47,6 +47,7 @@
 	icon_state = "dwarfchest"
 	allowed_race = list(SPEC_ID_DWARF)
 	item_weight = 12 * STEEL_MULTIPLIER
+	stand_speed_reduction = 1.2
 
 /obj/item/clothing/armor/rare/grenzelplate
 	name = "grenzelhoftian plate regalia"
@@ -55,6 +56,7 @@
 	allowed_race = list(SPEC_ID_HUMEN, SPEC_ID_AASIMAR)
 	allowed_sex = list(MALE)
 	item_weight = 12 * STEEL_MULTIPLIER
+	stand_speed_reduction = 1.2
 
 /obj/item/clothing/armor/rare/zybanplate
 	name = "kataphractoe scaleskin"
@@ -77,6 +79,7 @@
 	allowed_race = list(SPEC_ID_AASIMAR)
 	smeltresult = /obj/item/ingot/bronze
 	sellprice = VALUE_SNOWFLAKE_STEEL+BONUS_VALUE_MODEST // It has great value to historical collectors
+	stand_speed_reduction = 1.2
 
 	body_parts_covered = COVERAGE_ALL_BUT_ARMS
 	item_weight = 7 * STEEL_MULTIPLIER

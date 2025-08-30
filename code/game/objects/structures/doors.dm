@@ -54,6 +54,8 @@
 	var/has_bolt = FALSE
 	/// Handle viewport toggle on right click
 	var/has_viewport = FALSE
+	/// Track the last mob that bumped the door for auto-re-locking
+	var/datum/weakref/last_bumper = null
 
 /obj/structure/door/Initialize()
 	. = ..()
@@ -67,6 +69,7 @@
 
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
+		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
@@ -255,6 +258,15 @@
 				user.visible_message(span_warning("The deadite smashes through [src]!"))
 			return
 		if(locked())
+			var/obj/item/held = user.get_active_held_item()
+			if(held?.has_access())
+				user.visible_message(
+					span_warning("[user] fumbles with \the [held]..."),
+					span_notice("I fumble with my \the [held]...")
+				)
+				if(do_after(user, 0.5 SECONDS, src))
+					bump_unlock(user, held)
+					return
 			rattle()
 			return
 		if(TryToSwitchState(AM))
@@ -265,6 +277,14 @@
 					addtimer(CALLBACK(src, PROC_REF(Close), TRUE), delay)
 				else
 					addtimer(CALLBACK(src, PROC_REF(Close), FALSE), delay)
+
+/obj/structure/door/proc/bump_unlock(mob/user, obj/item/key)
+	if(!key)
+		return
+	last_bumper = WEAKREF(user)
+	attackby(key, user)
+	if(!locked())
+		Open()
 
 /obj/structure/door/CanAStarPass(ID, to_dir, datum/requester)
 	. = ..()
@@ -560,6 +580,36 @@
 	INVOKE_ASYNC(src, PROC_REF(unlock))
 	INVOKE_ASYNC(src, PROC_REF(force_open))
 
+<<<<<<< HEAD
+=======
+/// Signal proc for [COMSIG_ATOM_EXIT]. Close the door when someone crosses it after bump.
+/obj/structure/door/proc/on_exit(datum/source, atom/movable/exited)
+	SIGNAL_HANDLER
+
+	if(!isliving(exited))
+		return
+	var/mob/living/L = exited
+	if(last_bumper?.resolve() != L) // If the last bumper is not player or if there just is no last bumper
+		return
+
+	addtimer(CALLBACK(src, PROC_REF(close_adjacent), L), 1.5 SECONDS) // Adjacency check for closing, leave open if bumper left
+	last_bumper = null
+
+/obj/structure/door/proc/close_adjacent(mob/living/bumper)
+	if(!Adjacent(bumper))
+		return
+	Close()
+	addtimer(CALLBACK(src, PROC_REF(lock_adjacent), bumper), animate_time + 0.1 SECONDS) // Adjacency check for locking, closed but unlocked if the player didn't wait for the animation
+
+/obj/structure/door/proc/lock_adjacent(mob/living/bumper)
+	if(!Adjacent(bumper))
+		return
+	var/obj/item/held = bumper.get_active_held_item()
+	if(!held?.has_access())
+		return
+	attackby_secondary(held, bumper, "right=1")
+
+>>>>>>> vanderlin/main
 /obj/structure/door/abyss
 	name = "abyssal door"
 	icon_state = "abyssdoor"
