@@ -978,8 +978,6 @@
                 "code_imp": "tweaked cooking repeatable crafting code. Now it checks if the item is a food snack item before attempting to apply freshness and food quality"
             }
         ]
-<<<<<<< HEAD
-=======
     },
     "2025-08-29": {
         "Wouju": [
@@ -1068,6 +1066,5 @@
                 "rscadd": "Door bumping with keys unlocks doors."
             }
         ]
->>>>>>> vanderlin/main
     }
 }

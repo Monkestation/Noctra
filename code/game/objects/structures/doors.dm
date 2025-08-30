@@ -580,8 +580,6 @@
 	INVOKE_ASYNC(src, PROC_REF(unlock))
 	INVOKE_ASYNC(src, PROC_REF(force_open))
 
-<<<<<<< HEAD
-=======
 /// Signal proc for [COMSIG_ATOM_EXIT]. Close the door when someone crosses it after bump.
 /obj/structure/door/proc/on_exit(datum/source, atom/movable/exited)
 	SIGNAL_HANDLER
@@ -609,7 +607,6 @@
 		return
 	attackby_secondary(held, bumper, "right=1")
 
->>>>>>> vanderlin/main
 /obj/structure/door/abyss
 	name = "abyssal door"
 	icon_state = "abyssdoor"

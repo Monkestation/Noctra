@@ -818,11 +818,8 @@
 		if(body_position == LYING_DOWN)
 			set_resting(TRUE, silent = TRUE)
 		return
-<<<<<<< HEAD
-=======
 
 	set_lying_angle(0)
->>>>>>> vanderlin/main
 	set_body_position(STANDING_UP)
 	set_lying_angle(0)
 
