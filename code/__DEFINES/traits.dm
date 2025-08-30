@@ -205,7 +205,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ECHOLOCATION_EXTRA_RANGE "echolocation_extra_range"
 
 /// Can swim ignoring water flow and slowdown
-#define TRAIT_GOOD_SWIM "good_swim"
+#define TRAIT_GOOD_SWIM "Good Swim"
 ///trait determines if this mob can breed given by /datum/component/breeding
 #define TRAIT_MOB_BREEDER "mob_breeder"
 #define TRAIT_IMPERCEPTIBLE "imperceptible" // can't be perceived in any way, likely due to invisibility

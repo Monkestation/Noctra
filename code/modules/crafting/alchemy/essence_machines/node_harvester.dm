@@ -90,44 +90,7 @@
 		if(essence_transferred)
 			continue
 
-/obj/machinery/essence/harvester/proc/install_node(obj/structure/essence_node/node, mob/user)
-	if(installed_node)
-		to_chat(user, span_warning("There's already a node installed."))
-		return FALSE
 
-	if(!user.temporarilyRemoveItemFromInventory(node))
-		return FALSE
-
-	installed_node = node
-	node.forceMove(src)
-	STOP_PROCESSING(SSobj, node)
-
-	var/datum/thaumaturgical_essence/temp = new node.essence_type.type
-	to_chat(user, span_info("You install the [node.name] into the harvester. It will now automatically extract [temp.name]."))
-	qdel(temp)
-
-	update_appearance(UPDATE_OVERLAYS)
-	return TRUE
-
-
-/obj/machinery/essence/harvester/proc/remove_node(mob/user)
-	if(!installed_node)
-		to_chat(user, span_warning("No node is installed."))
-		return
-
-	var/obj/structure/essence_node/structure_node = new(get_turf(src))
-	structure_node.essence_type = installed_node.essence_type
-	structure_node.tier = installed_node.tier
-	structure_node.max_essence = installed_node.max_essence
-	structure_node.current_essence = installed_node.current_essence
-	structure_node.recharge_rate = installed_node.recharge_rate
-	structure_node.update_appearance(UPDATE_ICON)
-
-	to_chat(user, span_info("You carefully remove the essence node from the harvester and deploy it nearby."))
-
-	qdel(installed_node)
-	installed_node = null
-	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/essence/harvester/proc/create_harvest_effect()
 	new /obj/effect/temp_visual/harvest_glow(get_turf(src))
@@ -139,80 +102,82 @@
 			if(installed_node)
 				to_chat(user, span_warning("There's already a node installed."))
 				return
+			if(do_after(user, 3 SECONDS))
+				var/obj/item/essence_node_portable/portable = jar.contained_node
+				jar.contained_node = null
+				jar.update_appearance(UPDATE_OVERLAYS)
 
-			var/obj/item/essence_node_portable/portable = jar.contained_node
-			jar.contained_node = null
-			jar.update_appearance(UPDATE_OVERLAYS)
+				installed_node = portable
+				portable.forceMove(src)
+				STOP_PROCESSING(SSobj, portable)
 
-			installed_node = portable
-			portable.forceMove(src)
-			STOP_PROCESSING(SSobj, portable)
+				var/datum/thaumaturgical_essence/temp = new portable.essence_type.type
+				to_chat(user, span_info("You install [portable] from the jar into the harvester. It will now automatically extract [temp.name]."))
+				qdel(temp)
 
-			var/datum/thaumaturgical_essence/temp = new portable.essence_type.type
-			to_chat(user, span_info("You install the essence node from the jar into the harvester. It will now automatically extract [temp.name]."))
-			qdel(temp)
-
-			update_appearance(UPDATE_OVERLAYS)
+				update_appearance(UPDATE_OVERLAYS)
 		else
-			to_chat(user, span_warning("The jar is empty."))
+			if(installed_node && do_after(user, 3 SECONDS))
+				var/obj/item/essence_node_portable/portable = installed_node
+				installed_node = null
+				jar.contained_node = portable
+				jar.update_appearance(UPDATE_OVERLAYS)
+				portable.forceMove(jar)
+				STOP_PROCESSING(SSobj, portable)
+
+				to_chat(user, span_info("You extract [portable] from the harvester into the jar."))
+
+				update_appearance(UPDATE_OVERLAYS)
+			else
+				to_chat(user, span_warning("The harvester is empty."))
+				return
 		return
 	return ..()
 
-/obj/machinery/essence/harvester/attack_hand(mob/user)
-	. = ..()
-	var/list/options = list()
-
-	if(installed_node)
-		options["Remove Node"] = "remove"
-		options["View Node Status"] = "status"
-	else
-		options["Install Node"] = "install_info"
-
-	options["View Storage"] = "storage"
-	options["Cancel"] = "cancel"
-
-	var/choice = input(user, "Harvester Control", "Essence Harvester") in options
-	if(!choice || choice == "cancel")
-		return
+/obj/machinery/essence/harvester/attack_hand(mob/user, params)
+	var/choice = input(user, "Harvester Control", "Essence Harvester") in list("Help", "View Node Status", "Cancel")
 
 	switch(choice)
-		if("remove")
-			remove_node(user)
-		if("install_info")
-			to_chat(user, span_info("Use an essence node or node jar on the harvester to install it."))
-		if("status")
+		if("Help")
+			to_chat(user, span_info("Use a node jar on the harvester to install the node stored in the jar. \n You can remove nodes from the harvester using an empty jar."))
+		if("View Node Status")
 			if(installed_node)
 				var/datum/thaumaturgical_essence/temp = new installed_node.essence_type.type
-				to_chat(user, span_info("Installed Node: [installed_node.name] (Tier [installed_node.tier])"))
+				to_chat(user, span_info("Installed Node Tier: Tier [installed_node.tier]"))
 				to_chat(user, span_info("Essence Type: [temp.name]"))
 				to_chat(user, span_info("Node Essence: [installed_node.current_essence]/[installed_node.max_essence]"))
-				to_chat(user, span_info("Recharge Rate: [round(installed_node.recharge_rate * efficiency_bonus)] essence/min (boosted)"))
+				to_chat(user, span_info("Base Recharge Rate: [round(installed_node.recharge_rate)] essence/min"))
+				to_chat(user, span_info("Actual Recharge Rate: [round(installed_node.recharge_rate * efficiency_bonus)] essence/min"))
 				to_chat(user, span_info("Harvest Rate: [harvest_rate] essence/cycle"))
 				qdel(temp)
-		if("storage")
-			to_chat(user, span_info("Storage: [storage.get_total_stored()]/[storage.max_total_capacity] units"))
-			if(storage.stored_essences.len > 0)
-				for(var/essence_type in storage.stored_essences)
-					var/datum/thaumaturgical_essence/essence = new essence_type
-					to_chat(user, span_info("- [essence.name]: [storage.stored_essences[essence_type]] units"))
-					qdel(essence)
+			else
+				to_chat(user, span_info("No node has been installed yet."))
 
 /obj/machinery/essence/harvester/examine(mob/user)
 	. = ..()
 	. += span_notice("Harvest Rate: [harvest_rate] essence per cycle")
 	. += span_notice("Node Efficiency Bonus: +[round((efficiency_bonus - 1) * 100)]% recharge rate")
 	. += span_notice("Storage: [storage.get_total_stored()]/[storage.max_total_capacity] units")
+	if(storage.stored_essences.len > 0)
+		for(var/essence_type in storage.stored_essences)
+			var/datum/thaumaturgical_essence/essence = new essence_type
+			if(HAS_TRAIT(user, TRAIT_LEGENDARY_ALCHEMIST))
+				. += span_notice("- [essence.name]: [storage.stored_essences[essence_type]] units")
+			else
+				. += span_notice("- essence smelling of [essence.smells_like]: [storage.stored_essences[essence_type]] units")
+			qdel(essence)
+
 
 	if(installed_node)
 		var/datum/thaumaturgical_essence/temp = new installed_node.essence_type.type
 		if(HAS_TRAIT(user, TRAIT_LEGENDARY_ALCHEMIST))
-			. += span_notice("Installed: [installed_node.name] ([temp.name], Tier [installed_node.tier])")
+			. += span_notice("Installed Node: [temp.name], Tier [installed_node.tier]")
 		else
-			. += span_notice("Installed: [installed_node.name] (essence smelling of [temp.smells_like], Tier [installed_node.tier])")
+			. += span_notice("Installed Node: essence smelling of [temp.smells_like], Tier [installed_node.tier]")
 		. += span_notice("Node Essence: [installed_node.current_essence]/[installed_node.max_essence]")
 		qdel(temp)
 	else
-		. += span_notice("No node installed. Use an essence node or containment jar to install one.")
+		. += span_notice("ERROR: No node found. Use a containment jar to install one.")
 
 // Visual effect for harvesting
 /obj/effect/temp_visual/harvest_glow

@@ -795,14 +795,34 @@
 
 /mob/living/proc/get_up(instant = FALSE)
 	set waitfor = FALSE
-	if(!instant && !do_after(src, 2 SECONDS, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_USER_DIR_CHANGE), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
+	var/timer = 2
+
+	if(iscarbon(src))
+		var/mob/living/carbon/getter_upper = src
+		var/obj/item/clothing/armor/got_armor = getter_upper.get_item_by_slot(ITEM_SLOT_ARMOR) //grabs the item in your armorslot
+
+		var/stand_speed_mult = 1
+		if(got_armor) //sanity checks so mult doesnt runtime
+			stand_speed_mult = (1 + getter_upper.get_encumbrance()) * got_armor.stand_speed_reduction
+
+		var/proto_timer = 2 * stand_speed_mult
+		if(proto_timer >= timer) //sanity check so you can't stand up faster if you somehow get negative encumbrance
+			timer = proto_timer
+
+	if(!instant && !do_after(src, timer SECONDS, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|IGNORE_USER_DIR_CHANGE), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
 		if(body_position == LYING_DOWN) // stay lying down
 			set_resting(TRUE, silent = TRUE)
 		return
+
 	if(!rest_checks_callback())
 		if(body_position == LYING_DOWN)
 			set_resting(TRUE, silent = TRUE)
 		return
+<<<<<<< HEAD
+=======
+
+	set_lying_angle(0)
+>>>>>>> vanderlin/main
 	set_body_position(STANDING_UP)
 	set_lying_angle(0)
 
@@ -2624,7 +2644,7 @@
 	return TRUE
 
 /mob/living/proc/get_carry_capacity()
-	return max(45, STAEND * 12)
+	return max(45, max(STAEND, STACON) * 12)
 
 ///this is returned as decimal value between 0 and 1
 /mob/living/proc/get_encumbrance()
@@ -2821,23 +2841,36 @@
 		return FALSE
 
 	offered_item_ref = WEAKREF(offered_item)
-	visible_message(
-		span_notice("[src] offers [offered_item] to [offered_to] with an outstreched hand."),
-		span_notice("I offer [offered_item] to [offered_to] with an outstreched hand."), ignored_mobs = list(src), vision_distance = COMBAT_MESSAGE_RANGE
-	)
-	to_chat(offered_to, span_notice("[offered_to] offers [offered_item] to me..."))
 
-	new /obj/effect/temp_visual/offered_item_effect(get_turf(src), offered_item, src, offered_to)
+	var/stealthy = (m_intent == MOVE_INTENT_SNEAK)
 
-/mob/living/proc/cancel_offering_item()
+	if(stealthy)
+		to_chat(src, span_notice("I secretly offer [offered_item] to [offered_to]."))
+		to_chat(offered_to, span_notice("[offered_to] secretly offers [offered_item] to me..."))
+	else
+		visible_message(
+			span_notice("[src] offers [offered_item] to [offered_to] with an outstretched hand."), \
+			span_notice("I offer [offered_item] to [offered_to] with an outstretched hand."), \
+			vision_distance = COMBAT_MESSAGE_RANGE, \
+			ignored_mobs = list(offered_to)
+		)
+		to_chat(offered_to, span_notice("[offered_to] offers [offered_item] to me..."))
+
+	new /obj/effect/temp_visual/offered_item_effect(get_turf(src), offered_item, src, offered_to, stealthy)
+
+/mob/living/proc/cancel_offering_item(stealthy)
 	var/obj/offered_item = offered_item_ref?.resolve()
 	if(isnull(offered_item))
 		stop_offering_item()
 		return
-	visible_message(
-		span_notice("[src] puts their hand back down."),
-		span_notice("I stop offering [offered_item ? offered_item : "the item"]."),
-	)
+	if(stealthy)
+		to_chat(src, "I stop offering [offered_item ? offered_item : "the item"].")
+	else
+		visible_message(
+			span_notice("[src] puts their hand back down."), \
+			span_notice("I stop offering [offered_item ? offered_item : "the item"]."), \
+			vision_distance = COMBAT_MESSAGE_RANGE, \
+		)
 	stop_offering_item()
 
 /mob/living/proc/stop_offering_item()
@@ -2846,22 +2879,28 @@
 	offered_item_ref = null
 	update_a_intents()
 
-/mob/living/proc/try_accept_offered_item(mob/living/offerer, obj/offered_item)
+/mob/living/proc/try_accept_offered_item(mob/living/offerer, obj/offered_item, stealthy)
 	if(get_active_held_item())
 		to_chat(src, span_warning("I need a free hand to take it!"))
 		return FALSE
 
-	accept_offered_item(offerer, offered_item)
+	accept_offered_item(offerer, offered_item, stealthy)
 	return TRUE
 
-/mob/living/proc/accept_offered_item(mob/living/offerer, obj/offered_item)
+/mob/living/proc/accept_offered_item(mob/living/offerer, obj/offered_item, stealthy)
 	transferItemToLoc(offered_item, src)
 	put_in_active_hand(offered_item)
-	to_chat(offerer, span_notice("[src] takes [offered_item] from my outstreched hand."))
-	visible_message(
-		span_warning("[src] takes [offered_item] from [offerer]'s outstreched hand!"),
-		span_notice("I take [offered_item] from [offerer]'s outstreched hand."),
-	)
+	if(stealthy)
+		to_chat(offerer, span_notice("[src] takes the secretly offered [offered_item]."))
+		to_chat(src, span_notice("I take the secretly offered [offered_item] from [offerer]."))
+	else
+		to_chat(offerer, span_notice("[src] takes [offered_item] from my outstretched hand."))
+		visible_message(
+			span_warning("[src] takes [offered_item] from [offerer]'s outstretched hand!"), \
+			span_notice("I take [offered_item] from [offerer]'s outstretched hand."), \
+			vision_distance = COMBAT_MESSAGE_RANGE, \
+			ignored_mobs = list(offerer)
+		)
 	SEND_SIGNAL(offered_item, COMSIG_OBJ_HANDED_OVER, src, offerer)
 	offerer.stop_offering_item()
 

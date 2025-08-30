@@ -978,5 +978,96 @@
                 "code_imp": "tweaked cooking repeatable crafting code. Now it checks if the item is a food snack item before attempting to apply freshness and food quality"
             }
         ]
+<<<<<<< HEAD
+=======
+    },
+    "2025-08-29": {
+        "Wouju": [
+            {
+                "rscadd": "ZIZO sigils are now cleanable with a damp rag"
+            },
+            {
+                "rscadd": "ZIZO soap is now bright crimson bloody red. It also has more uses than base soap."
+            },
+            {
+                "refactor": "Made various ZIZO and scrying orb chat messages use span_XYZs properly. Yell at me if they dont work"
+            },
+            {
+                "balance": "various minor skill changes"
+            },
+            {
+                "rscadd": "Lead balls are now crafted with tin at the artificier table"
+            },
+            {
+                "rscadd": "Lead balls can be crafted with tin by blacksmiths"
+            },
+            {
+                "bugfix": "Fixed essence harvester menu. You also need to use the jar to now remove nodes from it."
+            }
+        ],
+        "HijackSpaghetti": [
+            {
+                "balance": "halves cost of mana related utility tree in spellbook, give Mana Well slight mana regeneration, taken from Meditation, shifted 25 max mana to Expanded Reserves."
+            },
+            {
+                "bugfix": "fixed missing magical brick and flower field descriptions in spellbook"
+            }
+        ],
+        "Just-Sim": [
+            {
+                "rscadd": "Emote Markdown"
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "balance": "Psydon Paladin now has expert swordsman, lost their ability to speak celestial but can speak old psydonic."
+            },
+            {
+                "bugfix": "Progressives psydonites can roll Paladin and Church can't recruit progressive psydonites anymore."
+            }
+        ]
+    },
+    "2025-08-30": {
+        "F-e-r-n": [
+            {
+                "balance": "Makes fullplate and encumbered people get up slower"
+            },
+            {
+                "balance": "Removes strength check from encumbrance and makes carryweight scale on either STR or CON depending on whats higher."
+            },
+            {
+                "balance": "50% encumbrance now disables sprinting from 70%"
+            }
+        ],
+        "Siro": [
+            {
+                "rscadd": "Noble boot variants can store small knives, coins, or key. Only one storage space."
+            },
+            {
+                "rscadd": "Storing anything but a knife in your boots will add a stress."
+            },
+            {
+                "rscadd": "Maximum 40% chance to cut yourself storing a knife in your boots at less than 10 luck."
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "rscadd": "Golden Psycross unique description"
+            },
+            {
+                "bugfix": "Good Swim Trait name is not ugly anymore"
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "fixed an issue with doubled flaw effects."
+            }
+        ],
+        "Just-Sim": [
+            {
+                "rscadd": "Door bumping with keys unlocks doors."
+            }
+        ]
+>>>>>>> vanderlin/main
     }
 }

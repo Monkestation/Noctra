@@ -4,6 +4,23 @@
 	abstract_type = /datum/anvil_recipe/weapons
 	category = "Weapons"
 
+
+////////////////////////////////////
+// --------- TIN -----------
+//honestly the only tin "weapon" that comes to mind would be lead bullets
+/datum/anvil_recipe/weapons/tin
+	abstract_type = /datum/anvil_recipe/weapons/tin
+	req_bar = /obj/item/ingot/tin
+	craftdiff = 0
+////////////////////////////////////
+
+/datum/anvil_recipe/weapons/tin/lead_bullet
+	name = "4x Lead Bullets"
+	recipe_name = "a handful of lead bullets."
+	created_item = /obj/item/ammo_casing/caseless/bullet
+	craftdiff = 1
+	createditem_extra = 3
+
 //////////////////////////////////////////////////////////////////////////////////////////////
 // --------- COPPER -----------
 /datum/anvil_recipe/weapons/copper

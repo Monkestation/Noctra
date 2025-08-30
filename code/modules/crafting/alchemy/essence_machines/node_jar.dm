@@ -56,11 +56,14 @@
 		return
 
 	if(!contained_node)
-		to_chat(user, span_warning("The jar is empty."))
 		return
 
 	var/turf/deploy_turf = get_turf(target)
 	if(!deploy_turf)
+		return
+
+	//to prevent the node getting put back insidethe harvester
+	if(locate(/obj/machinery/essence/harvester) in deploy_turf)
 		return
 
 	if(deploy_turf.density)

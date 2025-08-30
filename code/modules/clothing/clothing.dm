@@ -63,6 +63,8 @@
 	var/list/allowed_ages = ALL_AGES_LIST_CHILD
 	var/list/allowed_race = ALL_RACES_LIST
 	var/armor_class = ARMOR_CLASS_NONE
+	///Multiplies your standing speed by this value.
+	var/stand_speed_reduction = 1
 
 	var/obj/item/clothing/head/hooded/hood
 	var/hoodtype

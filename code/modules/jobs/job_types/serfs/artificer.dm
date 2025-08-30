@@ -26,7 +26,7 @@
 	H.adjust_skillrank(/datum/skill/combat/axesmaces, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, rand(1,3), TRUE)
 	H.adjust_skillrank(/datum/skill/combat/unarmed, rand(1,3), TRUE)
-	H.adjust_skillrank(/datum/skill/labor/lumberjacking, pick(1,1,2), TRUE)
+	H.adjust_skillrank(/datum/skill/labor/lumberjacking, rand(1,3), TRUE)
 	H.adjust_skillrank(/datum/skill/craft/masonry, 3, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/crafting, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/engineering, 4, TRUE)
@@ -37,6 +37,7 @@
 	H.adjust_skillrank(/datum/skill/labor/mining, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/craft/smelting, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 2, TRUE)
+	H.adjust_skillrank(/datum/skill/labor/mathematics, 2, TRUE)
 
 	head = /obj/item/clothing/head/articap
 	armor = /obj/item/clothing/armor/leather/jacket/artijacket

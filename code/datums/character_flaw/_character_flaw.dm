@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 	set_flaw(pick(flaws))
 
-/mob/living/carbon/human/proc/set_flaw(datum/charflaw/flaw)
+/mob/living/carbon/human/proc/set_flaw(datum/charflaw/flaw, after_spawn = TRUE)
 	if(!flaw)
 		return
 
@@ -108,6 +108,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 	charflaw = new flaw(src)
 	charflaw.after_spawn(src)
+
+	if(after_spawn)
+		charflaw.after_spawn(src)
 
 /datum/charflaw/randflaw
 	name = "Random Flaw"
@@ -151,9 +154,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 
 /datum/charflaw/badsight/after_spawn(mob/user)
 	. = ..()
-	var/mob/living/carbon/human/H = user
-	if(H.mind)
-		H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
+	user.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 
 /datum/charflaw/badsight/flaw_on_life(mob/user)
 	if(!ishuman(user))
@@ -277,7 +278,7 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	desc = "I lost my right eye long ago. But it made me great at noticing things."
 
 /datum/charflaw/noeyer/after_spawn(mob/user)
-	..()
+	. = ..()
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
@@ -296,11 +297,10 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	desc = "I lost my left eye long ago. But it made me great at noticing things."
 
 /datum/charflaw/noeyel/after_spawn(mob/user)
-	..()
+	. = ..()
 	if(!ishuman(user))
 		return
 	var/mob/living/carbon/human/H = user
-
 	if(H.wear_mask)
 		var/type = H.wear_mask.type
 		QDEL_NULL(H.wear_mask)
@@ -319,15 +319,15 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	. = ..()
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		switch(rand(1,2))
-			if(1)
-				H.set_flaw(/datum/charflaw/noeyel)
-			else
-				H.set_flaw(/datum/charflaw/noeyer)
+		if(prob(50))
+			H.set_flaw(/datum/charflaw/noeyel)
+		else
+			H.set_flaw(/datum/charflaw/noeyer)
 
 /datum/charflaw/tongueless
 	name = "Tongueless"
-	desc = "I was too annoying. (Being mute is not an excuse to forego roleplay. Use of custom emotes is recommended.)"
+	desc = "I said one word too many to a noble, they cut out my tongue.\n\
+	(Being mute is not an excuse to forego roleplay. Use of custom emotes is recommended.)"
 
 /datum/charflaw/tongueless/on_mob_creation(mob/user)
 	. = ..()

@@ -54,12 +54,14 @@
 	H.adjust_skillrank(/datum/skill/misc/climbing, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/swimming, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
+	//old people get 2 extra perception from their age, hence the if/else
 	if(H.age == AGE_OLD)
 		H.adjust_skillrank(/datum/skill/combat/bows, 1, TRUE)
+		H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
 		H.adjust_skillrank(/datum/skill/craft/traps, 1, TRUE)
 		H.change_stat(STATKEY_PER, 1)
 		H.change_stat(STATKEY_END, -1)
 	else
-		H.change_stat(STATKEY_INT, 1)
 		H.change_stat(STATKEY_PER, 3)
 	ADD_TRAIT(H, TRAIT_FORAGER, TRAIT_GENERIC)
+

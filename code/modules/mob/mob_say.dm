@@ -52,6 +52,7 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = parsemarkdown_basic(message, limited = TRUE, barebones = TRUE)
 	usr.emote("me",1,message,TRUE, custom_me = TRUE)
 
 ///Speak as a dead person (ghost etc)
@@ -111,7 +112,9 @@
 
 /mob/proc/check_whisper(message, forced)
 	if(copytext(message, 1, 2) == "+")
-		whisper(copytext(message, 2),sanitize = FALSE)//already sani'd
+		var/text = copytext(message, 2)
+		var/boldcheck = findtext_char(text, "+")	//Check for a *second* + in the text, implying the message is meant to have something formatted as bold (+text+)
+		whisper(copytext_char(message, boldcheck ? 1 : 2),sanitize = FALSE)//already sani'd
 		return 1
 /* commenting out subtler
 /mob/proc/check_subtler(message, forced)

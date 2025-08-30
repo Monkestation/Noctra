@@ -122,7 +122,7 @@
 
 /obj/item/clothing/neck/psycross/g
 	name = "golden psycross"
-	desc = "Let His name be naught but forgot'n."
+	desc = "Let His name be naught but forgot'n. Let devotion to Him endure, in heart and in deed, beyond the veil of sight."
 	icon_state = "psycross_gold"
 	//dropshrink = 0.75
 	resistance_flags = FIRE_PROOF
