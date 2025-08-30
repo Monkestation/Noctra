@@ -184,3 +184,9 @@ GLOBAL_LIST_EMPTY(locked_sex_objects)
 			continue
 		.[path] = new path()
 	return .
+
+
+#define SUBTLE_TAG (1 << 0)
+#define SUBTLE_ALL (1 << 1)
+#define SUBTLE_NOGHOST (1 << 2)
+#define SUBTLE_SHORT (1 << 3)

@@ -198,6 +198,98 @@ GLOBAL_VAR_INIT(mobids, 1)
 	if(self_message)
 		show_message(self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE)
 
+/mob/living/carbon/human/visible_message(message, self_message, blind_message, vision_distance, list/ignored_mobs, runechat_message, log_seen, log_seen_msg)
+	var/turf/T = get_turf(src)
+	if(!T)
+		return
+	if(!islist(ignored_mobs))
+		ignored_mobs = list(ignored_mobs)
+
+	// ERP Subtle Mode Detection
+	var/is_subtle_message = FALSE
+	var/subtle_noghost = FALSE
+
+	if(ishuman(src))
+		var/mob/living/carbon/human/human_speaker = src
+		var/subtle_prefs = human_speaker.get_erp_pref(/datum/erp_preference/bitflag/subtle)
+
+		// Check if message starts with @ (Subtle Tag preference)
+		if(subtle_prefs & SUBTLE_TAG)
+			// Look for @ after the character name formatting
+			var/at_pos = findtext(message, "</b> @")
+			if(at_pos)
+				is_subtle_message = TRUE
+				// Remove the @ symbol from the message
+				var/closing_tag_end = at_pos + 4 // Length of "</b> "
+				message = copytext(message, 1, closing_tag_end) + copytext(message, closing_tag_end + 2)
+				// Handle self_message if it exists
+				if(self_message)
+					var/self_at_pos = findtext(self_message, "</b> @")
+					if(self_at_pos)
+						var/self_closing_tag_end = self_at_pos + 4
+						self_message = copytext(self_message, 1, self_closing_tag_end) + copytext(self_message, self_closing_tag_end + 2)
+
+		// Check if we're in a collective with subtle mode
+		var/collective_subtle = FALSE
+		var/in_sex_session = FALSE
+		for(var/datum/collective_message/collective in GLOB.sex_collectives)
+			if(human_speaker in collective.involved_mobs)
+				in_sex_session = TRUE
+				if(collective.subtle_mode)
+					collective_subtle = TRUE
+					break
+
+		if(subtle_prefs & SUBTLE_ALL)
+			if(in_sex_session || collective_subtle)
+				is_subtle_message = TRUE
+
+		if(collective_subtle)
+			is_subtle_message = TRUE
+
+		if(is_subtle_message)
+			if(subtle_prefs & SUBTLE_NOGHOST)
+				subtle_noghost = TRUE
+
+			if(subtle_prefs & SUBTLE_SHORT)
+				vision_distance = 2 // Override to short range
+
+	var/list/hearers = get_hearers_in_view(vision_distance, src) //caches the hearers and then removes ignored mobs.
+	hearers -= ignored_mobs
+	if(self_message)
+		hearers -= src
+
+	// Handle ghosts for subtle messages
+	if(is_subtle_message && subtle_noghost)
+		for(var/mob/M in hearers)
+			if(isobserver(M))
+				hearers -= M
+
+	for(var/mob/M in hearers)
+		if(!M.client)
+			continue
+		//This entire if/else chain could be in two lines but isn't for readibilties sake.
+		var/msg = message
+		if(M.see_invisible < invisibility) //if src is invisible to M
+			msg = blind_message
+		if(!msg)
+			continue
+
+		// Add subtle styling to the message
+		if(is_subtle_message)
+			msg = "<span class='subtle'>[msg]</span>"
+
+		if(M != src && !M.eye_blind)
+			M.log_message("saw [key_name(src)] emote: [message]", LOG_EMOTE, log_globally = FALSE)
+		M.show_message(msg, MSG_VISUAL, blind_message, MSG_AUDIBLE)
+
+		if(runechat_message && M.can_hear())
+			var/list/runechat_spans = list("emote")
+			if(is_subtle_message)
+				runechat_spans += "subtle"
+			M.create_chat_message(src, raw_message = runechat_message, spans = runechat_spans)
+	if(self_message)
+		show_message(self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE)
+
 /**
  * Show a message to all mobs in earshot of this atom
  *
@@ -233,6 +325,86 @@ GLOBAL_VAR_INIT(mobids, 1)
  */
 /mob/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, runechat_message = null)
 	. = ..()
+	if(self_message)
+		show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
+
+/mob/living/carbon/human/audible_message(message, deaf_message, hearing_distance = DEFAULT_MESSAGE_RANGE, self_message, runechat_message = null)
+	var/is_subtle_message = FALSE
+	var/subtle_noghost = FALSE
+
+	if(ishuman(src))
+		var/mob/living/carbon/human/human_speaker = src
+		var/subtle_prefs = human_speaker.get_erp_pref(/datum/erp_preference/bitflag/subtle)
+
+		if(subtle_prefs & SUBTLE_TAG)
+			// Look for @ after the character name formatting
+			var/at_pos = findtext(message, "</b> @")
+			if(at_pos)
+				is_subtle_message = TRUE
+				// Remove the @ symbol from the message
+				var/closing_tag_end = at_pos + 4 // Length of "</b> "
+				message = copytext(message, 1, closing_tag_end) + copytext(message, closing_tag_end + 2)
+				// Handle self_message if it exists
+				if(self_message)
+					var/self_at_pos = findtext(self_message, "</b> @")
+					if(self_at_pos)
+						var/self_closing_tag_end = self_at_pos + 4
+						self_message = copytext(self_message, 1, self_closing_tag_end) + copytext(self_message, self_closing_tag_end + 2)
+
+		// Check if we're in a collective with subtle mode
+		var/collective_subtle = FALSE
+		var/in_sex_session = FALSE
+		for(var/datum/collective_message/collective in GLOB.sex_collectives)
+			if(human_speaker in collective.involved_mobs)
+				in_sex_session = TRUE
+				if(collective.subtle_mode)
+					collective_subtle = TRUE
+					break
+
+		// Check All Session Messages preference
+		if(subtle_prefs & SUBTLE_ALL)
+			if(in_sex_session || collective_subtle)
+				is_subtle_message = TRUE
+
+		// Apply collective subtle mode
+		if(collective_subtle)
+			is_subtle_message = TRUE
+
+		// Apply subtle preferences if this is a subtle message
+		if(is_subtle_message)
+			// No Ghost preference
+			if(subtle_prefs & SUBTLE_NOGHOST)
+				subtle_noghost = TRUE
+
+			// Short Range Subtle preference
+			if(subtle_prefs & SUBTLE_SHORT)
+				hearing_distance = 2 // Override to short range
+
+	var/list/hearers = get_hearers_in_view(hearing_distance, src)
+	if(self_message)
+		hearers -= src
+
+	if(is_subtle_message && subtle_noghost)
+		for(var/mob/M in hearers)
+			if(isobserver(M))
+				hearers -= M
+
+	for(var/mob/M in hearers)
+		var/msg = message
+
+		if(is_subtle_message)
+			msg = "<span class='subtle'>[msg]</span>"
+
+		if(M != src && M.client)
+			if(M.can_hear())
+				M.log_message("heard [key_name(src)] emote: [message]", LOG_EMOTE, log_globally = FALSE)
+		M.show_message(msg, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
+
+		if(runechat_message && M.can_see_runechat(src) && M.can_hear())
+			var/list/runechat_spans = list("emote")
+			if(is_subtle_message)
+				runechat_spans += "subtle"
+			M.create_chat_message(src, raw_message = runechat_message, spans = runechat_spans)
 	if(self_message)
 		show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
 

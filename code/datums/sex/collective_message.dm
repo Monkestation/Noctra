@@ -10,7 +10,7 @@
 	/// All sessions that belong to this collective
 	var/list/sessions = list()
 	///is our collective set to subtle mode
-	var/subtle_mode = FALSE
+	var/subtle_mode = TRUE
 
 
 /datum/collective_message/New(initial_session)
