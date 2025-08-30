@@ -82,14 +82,12 @@ SUBSYSTEM_DEF(discord)
  * Returns a string representing the one time token
  */
 /datum/controller/subsystem/discord/proc/generate_one_time_token(ckey_for)
-
 	var/not_unique = TRUE
 	var/one_time_token = ""
 	// While there's a collision in the token, generate a new one (should rarely happen)
 	while(not_unique)
 		//Column is varchar 100, so we trim just in case someone does us the dirty later
 		one_time_token = trim(uppertext("PLX-VERIFY-[trim(ckey_for, 5)]-[random_string(4, GLOB.hex_characters)]-[random_string(4, GLOB.hex_characters)]"), 100)
-
 		not_unique = find_discord_link_by_token(one_time_token)
 
 	// Insert into the table, null in the discord id, id and timestamp and valid fields so the db fills them out where needed
