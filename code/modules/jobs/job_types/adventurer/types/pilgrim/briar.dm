@@ -104,10 +104,7 @@
 			to_chat(user, span_info("Dendor will not grant more powers, but he still approves of the sacrifice, judging by the signs..."))
 			user.apply_status_effect(/datum/status_effect/buff/blessed)
 			qdel(src)
-		else
-			to_chat(user, span_warning("Dendor finds me unworthy of his blessings..."))
-		return
-	return ..()
+			return
 
 		ADD_TRAIT(user, TRAIT_BLESSED, TRAIT_GENERIC)
 		INVOKE_ASYNC(src, PROC_REF(give_blessing), user)
