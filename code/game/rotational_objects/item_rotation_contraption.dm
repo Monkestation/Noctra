@@ -63,13 +63,9 @@
 	desc = initial(parent_type.desc)
 	placed_type = parent_type
 
-/obj/item/rotation_contraption/attack_obj(obj/O, mob/living/user)
-	attack_turf(get_turf(O), user)
-
-/obj/item/rotation_contraption/attack_turf(turf/T, mob/living/user)
-	. = ..()
-	if(!istype(T))
-		return
+/obj/item/rotation_contraption/attack_atom(atom/attacked_atom, mob/living/user)
+	var/turf/T = get_turf(attacked_atom)
+	. = TRUE
 	for(var/obj/structure/structure in T.contents)
 		if(structure.rotation_structure && !ispath(placed_type, /obj/structure/water_pipe))
 			return

@@ -197,10 +197,10 @@
 		new material_drop(loc, material_drop_amount)
 	qdel(src)
 
-/obj/structure/closet/obj_break(damage_flag, silent)
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+/obj/structure/closet/atom_break(damage_flag)
+	if(!obj_broken && !(flags_1 & NODECONSTRUCT_1))
 		bust_open()
-	..()
+	. = ..()
 
 /obj/structure/closet/attackby(obj/item/I, mob/user, params)
 	if(user in src)
@@ -315,7 +315,7 @@
 /obj/structure/closet/proc/bust_open()
 	welded = FALSE //applies to all lockers
 	unlock()
-	broken = TRUE //applies to secure lockers only
+	obj_broken = TRUE //applies to secure lockers only
 	open()
 
 /obj/structure/closet/get_remote_view_fullscreens(mob/user)

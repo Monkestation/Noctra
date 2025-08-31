@@ -4,10 +4,13 @@
 	icon_state = "leather"
 	item_state = "leather"
 	equip_sound = 'sound/blank.ogg'
+	var/empty_when_dropped = TRUE
 
 /obj/item/storage/belt/leather/dropped(mob/living/carbon/human/user)
 	..()
 	if(QDELETED(src))
+		return
+	if(!empty_when_dropped)
 		return
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	if(STR)
@@ -16,6 +19,7 @@
 			STR.remove_from_storage(I, get_turf(src))
 
 /obj/item/storage/belt/leather/assassin // Assassin's super edgy and cool belt can carry normal items (for poison vial, lockpick).
+	empty_when_dropped = FALSE
 	component_type = /datum/component/storage/concrete/grid/belt/assassin
 
 	populate_contents = list(
@@ -342,12 +346,17 @@
 	var/max_storage = 8
 	sewrepair = TRUE
 	component_type = /datum/component/storage/concrete/grid/belt/knife_belt
+	empty_when_dropped = FALSE
 
+/obj/item/storage/belt/leather/knifebelt/attack_atom(atom/attacked_atom, mob/living/user)
+	if(!isturf(attacked_atom))
+		return ..()
 
-/obj/item/storage/belt/leather/knifebelt/attack_turf(turf/T, mob/living/user)
+	. = TRUE
 	if(length(contents) >= max_storage)
 		to_chat(user, span_warning("Your [src.name] is full!"))
 		return
+	var/turf/T = attacked_atom
 	to_chat(user, span_notice("You begin to gather the ammunition..."))
 	for(var/obj/item/weapon/knife/throwingknife/knife in T.contents)
 		if(do_after(user, 5 DECISECONDS))
@@ -369,9 +378,6 @@
 	. = ..()
 
 /obj/item/storage/belt/leather/knifebelt/attack_hand_secondary(mob/user, params)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
 	if(length(contents))
 		var/list/knives = list()
 		SEND_SIGNAL(src, COMSIG_TRY_STORAGE_TAKE_TYPE, /obj/item/weapon/knife/throwingknife, drop_location(), amount = 1, check_adjacent = TRUE, user = user, inserted = knives)
@@ -379,6 +385,7 @@
 			if(!user.put_in_active_hand(knife))
 				break
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	. = ..()
 
 /obj/item/storage/belt/leather/knifebelt/examine(mob/user)
 	. = ..()

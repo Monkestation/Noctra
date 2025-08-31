@@ -3,8 +3,8 @@
 \---------*/
 
 /obj/item/weapon/shovel
-	force = 5
-	force_wielded = 12
+	force = DAMAGE_STAFF - 5
+	force_wielded = DAMAGE_STAFF_WIELD - 3
 	possible_item_intents = list(/datum/intent/mace/strike/shovel)
 	gripped_intents = list(/datum/intent/shovelscoop, /datum/intent/irrigate, /datum/intent/mace/strike/shovel, /datum/intent/axe/chop)
 	name = "shovel"
@@ -14,8 +14,9 @@
 	mob_overlay_icon = 'icons/roguetown/onmob/onmob.dmi'
 	experimental_onhip = FALSE
 	experimental_onback = FALSE
+	max_integrity = INTEGRITY_STANDARD
 	sharpness = IS_BLUNT
-	wdefense = MEDIOCHRE_PARRY
+	wdefense = MEDIOCRE_PARRY
 	wlength = WLENGTH_LONG
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BACK
@@ -101,13 +102,17 @@
 		heldclod = null
 		update_appearance(UPDATE_ICON_STATE)
 
-/obj/item/weapon/shovel/attack_turf(turf/T, mob/living/user)
+/obj/item/weapon/shovel/attack_atom(atom/attacked_atom, mob/living/user)
+	if(!isturf(attacked_atom))
+		return ..()
+	var/turf/T = attacked_atom
 	user.changeNext_move(user.used_intent.clickcd)
 	if(user.used_intent.type == /datum/intent/irrigate)
+		. = TRUE
 		var/obj/structure/soil/located = locate(/obj/structure/soil) in T
 		if(located)
 			to_chat(user, span_notice("[located] is in the way!"))
-			return FALSE
+			return
 		if(istype(T, /turf/open/floor/dirt))
 			var/turf/open/floor/dirt/D = T
 			user.visible_message("[user] starts digging an irrigation channel.", "You start digging an irrigation channel.")
@@ -117,6 +122,7 @@
 			return TRUE
 
 	else if(user.used_intent.type == /datum/intent/shovelscoop)
+		. = TRUE
 		if(istype(T, /turf/open/floor/dirt))
 			var/obj/structure/closet/dirthole/holie = locate() in T
 			if(heldclod)
@@ -157,7 +163,7 @@
 			to_chat(user, "<span class='warning'>There is grass in the way.</span>")
 			return
 		return
-	. = ..()
+	return ..()
 
 /obj/item/weapon/shovel/getonmobprop(tag)
 	. = ..()
@@ -214,8 +220,8 @@
 // --------- SPADE -----------
 
 /obj/item/weapon/shovel/small
-	force = 2
-	force_wielded = 5
+	force = DAMAGE_STAFF - 8
+	force_wielded = DAMAGE_STAFF_WIELD - 10
 	possible_item_intents = list(/datum/intent/shovelscoop, /datum/intent/irrigate, /datum/intent/mace/strike/shovel)
 	name = "spade"
 	icon_state = "spade"

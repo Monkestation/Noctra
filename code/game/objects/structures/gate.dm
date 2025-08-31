@@ -173,7 +173,7 @@ GLOBAL_LIST_EMPTY(biggates)
 	icon_state = "winch"
 	density = TRUE
 	anchored = TRUE
-	max_integrity = 0
+	resistance_flags = INDESTRUCTIBLE
 	var/gid
 	var/obj/structure/gate/attached_gate
 

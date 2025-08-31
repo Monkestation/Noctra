@@ -6,7 +6,7 @@
 	icon_state = "portal"
 	density = TRUE
 	anchored = TRUE
-	max_integrity = 0
+	resistance_flags = INDESTRUCTIBLE
 	bound_width = 96
 	appearance_flags = NONE
 	opacity = TRUE

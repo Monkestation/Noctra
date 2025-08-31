@@ -363,31 +363,6 @@
 		return FALSE
 	return master.remove_from_storage(removed, new_location)
 
-//This proc is called when you want to place an item into the storage item
-/datum/component/storage/attackby(datum/source, obj/item/attacking_item, mob/user, params, storage_click = FALSE)
-	if(isitem(parent))
-		if(istype(attacking_item, /obj/item/weapon/hammer))
-			var/obj/item/storage/this_item = parent
-			//Vrell - since hammering is instant, i gotta find another option than the double click thing that needle has for a bypass.
-			//Thankfully, IIRC, no hammerable containers can hold a hammer, so not an issue ATM. For that same reason, this here is largely semi future-proofing.
-			if(this_item.anvilrepair != null && this_item.max_integrity && !this_item.obj_broken && (this_item.obj_integrity < this_item.max_integrity) && isturf(this_item.loc))
-				return FALSE
-		if(istype(attacking_item, /obj/item/needle))
-			var/obj/item/needle/sewer = attacking_item
-			var/obj/item/storage/this_item = parent
-			if(sewer.can_repair && this_item.sewrepair && this_item.max_integrity && !this_item.obj_broken && this_item.obj_integrity < this_item.max_integrity && this_item.ontable())
-				return FALSE
-		if(user.used_intent.type == /datum/intent/snip) //This makes it so we can salvage
-			return FALSE
-
-	. = TRUE //no afterattack
-	if(!can_be_inserted(attacking_item, FALSE, user, params = params, storage_click = storage_click))
-		var/atom/real_location = real_location()
-		if(LAZYLEN(real_location.contents) >= max_items) //don't use items on the backpack if they don't fit
-			return TRUE
-		return FALSE
-	return handle_item_insertion(attacking_item, FALSE, user, params = params, storage_click = storage_click)
-
 /datum/component/storage/proc/on_equipped(obj/item/source, mob/user, slot)
 	SIGNAL_HANDLER
 

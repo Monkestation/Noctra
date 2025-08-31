@@ -545,6 +545,9 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("strings/rt/Lore_Primer.txt"))
 	src << browse(null, "window=preferences") //closes job selection
 	src << browse(null, "window=mob_occupation")
 	src << browse(null, "window=latechoices") //closes late job selection
+	src << browse(null, "window=culinary_customization")
+	src << browse(null, "window=food_selection")
+	src << browse(null, "window=drink_selection")
 
 	SStriumphs.remove_triumph_buy_menu(client)
 

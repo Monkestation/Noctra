@@ -100,7 +100,6 @@
 	plateable = TRUE
 	plating_alt_icon = TRUE
 	plated_iconstate = "carp_plated"
-	faretype = FARE_IMPOVERISHED
 
 /obj/item/reagent_containers/food/snacks/fryfish/clownfish
 	name = "cooked clownfish"

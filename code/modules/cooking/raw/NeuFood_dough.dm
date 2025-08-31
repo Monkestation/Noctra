@@ -286,14 +286,14 @@
 /obj/item/reagent_containers/food/snacks/stale_bread
 	name = "stale bread"
 	desc = "Old. Is that mold? Not fit for slicing, just eating in sullen silence."
-	icon_state = "loaf6"
+	icon_state = "loaf"
 	color = "#92908a"
 	dropshrink = 0.8
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT)
 	drop_sound = 'sound/foley/dropsound/gen_drop.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("stale bread" = 1)
-	faretype = FARE_NEUTRAL
+	faretype = FARE_POOR
 
 /obj/item/reagent_containers/food/snacks/stale_bread/raisin
 	icon_state = "raisinbread6"

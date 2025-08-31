@@ -20,7 +20,7 @@
 		var/obj/item/reagent_containers/food/snacks/smallrat/rat = target
 		if(!rat.dead && cat_pawn.CanReach(rat))
 			cat_pawn.visible_message("<span class='notice'>\The [cat_pawn] kills the rat!</span>")
-			rat.obj_destruction()
+			rat.atom_destruction()
 			finish_action(controller, TRUE, target_key)
 			return
 

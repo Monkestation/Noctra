@@ -14,8 +14,8 @@
 
 /turf/closed/wall/mineral/examine()
 	. += ..()
-	if(max_integrity)
-		var/healthpercent = (turf_integrity/max_integrity) * 100
+	if(uses_integrity)
+		var/healthpercent = (atom_integrity / max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)
 				. += "It looks slightly damaged."

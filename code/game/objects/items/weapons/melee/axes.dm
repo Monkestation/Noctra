@@ -151,7 +151,7 @@
 	parrysound = "sword"
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
 
-	wdefense = MEDIOCHRE_PARRY
+	wdefense = MEDIOCRE_PARRY
 	minstr = 6
 
 	sellprice = 20
@@ -192,7 +192,7 @@
 	gripped_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop)
 	parrysound = "sword"
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
-	wdefense = MEDIOCHRE_PARRY
+	wdefense = MEDIOCRE_PARRY
 	minstr = 6
 	sellprice = 60
 
@@ -235,7 +235,7 @@
 	resistance_flags = FIRE_PROOF
 	parrysound = list('sound/combat/parry/wood/parrywood (1).ogg', 'sound/combat/parry/wood/parrywood (2).ogg', 'sound/combat/parry/wood/parrywood (3).ogg')
 	swingsound = BLADEWOOSH_MED
-	wdefense = MEDIOCHRE_PARRY
+	wdefense = MEDIOCRE_PARRY
 	minstr = 6
 	sellprice = 50
 	pickmult = 1.2 // It's a pick...
@@ -307,13 +307,14 @@
 	name = "bone axe"
 	desc = "A rough axe made of bones"
 	icon_state = "boneaxe"
-	force = 18
-	force_wielded = 22
+	force = DAMAGE_AXE - 2
+	force_wielded =	DAMAGE_AXE_WIELD - 3
 	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop)
 	gripped_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop)
+	smeltresult = /obj/item/fertilizer/ash
 	max_blade_int = 100
 	minstr = 8
-	wdefense = 1
+	wdefense = MEDIOCRE_PARRY
 	wlength = WLENGTH_SHORT
 	pickup_sound = 'sound/foley/equip/rummaging-03.ogg'
 

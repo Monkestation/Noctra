@@ -6,7 +6,6 @@
 	density = TRUE
 	blade_dulling = DULLING_BASH
 	integrity_failure = 0.1
-	max_integrity = 0
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
 	rattle_sound = 'sound/misc/machineno.ogg'
@@ -38,12 +37,16 @@
 	. = ..()
 	update_appearance(UPDATE_ICON)
 
-/obj/structure/fake_machine/vendor/obj_break(damage_flag, silent)
+/obj/structure/fake_machine/vendor/atom_break(damage_flag)
 	. = ..()
 	for(var/obj/item/I as anything in held_items)
 		I.forceMove(loc)
 		held_items -= I
 	budget2change(budget)
+	update_appearance(UPDATE_ICON)
+
+/obj/structure/fake_machine/vendor/atom_fix()
+	. = ..()
 	update_appearance(UPDATE_ICON)
 
 /obj/structure/fake_machine/vendor/Destroy()
@@ -299,7 +302,6 @@
 	name = "LANDLORD"
 	desc = "Give this thing money, and you will immediately buy a neat property in the capital."
 	icon_state = "streetvendor1"
-	max_integrity = 0
 	var/list/cachey = list()
 
 /obj/structure/fake_machine/vendor/centcom/attack_hand(mob/living/user)

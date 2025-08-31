@@ -1,4 +1,4 @@
-/obj/item/roguemachine/merchant
+/obj/item/fake_machine/merchant
 	name = "SKY HANDLER"
 	desc = "A machine that attracts the attention of trading balloons."
 	icon = 'icons/roguetown/misc/machines.dmi'
@@ -6,7 +6,6 @@
 	density = TRUE
 	blade_dulling = DULLING_BASH
 	var/next_airlift
-	max_integrity = 0
 	anchored = TRUE
 	w_class = WEIGHT_CLASS_GIGANTIC
 
@@ -19,7 +18,7 @@
 	layer = BELOW_OBJ_LAYER
 	anchored = TRUE
 
-/obj/item/roguemachine/merchant/attack_hand(mob/living/user)
+/obj/item/fake_machine/merchant/attack_hand(mob/living/user)
 	if(!anchored)
 		return ..()
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -37,7 +36,7 @@
 	popup.set_content(contents)
 	popup.open()
 
-/obj/item/roguemachine/merchant/Initialize()
+/obj/item/fake_machine/merchant/Initialize()
 	. = ..()
 	if(anchored)
 		START_PROCESSING(SSroguemachine, src)
@@ -48,12 +47,12 @@
 			continue
 		new /obj/structure/fake_machine/balloon_pad(T)
 
-/obj/item/roguemachine/merchant/Destroy()
+/obj/item/fake_machine/merchant/Destroy()
 	STOP_PROCESSING(SSroguemachine, src)
 	set_light(0)
 	return ..()
 
-/obj/item/roguemachine/merchant/process()
+/obj/item/fake_machine/merchant/process()
 	if(world.time > next_airlift)
 		next_airlift = world.time + rand(2 MINUTES, 3 MINUTES)
 #ifdef TESTSERVER
@@ -102,7 +101,6 @@
 	icon_state = "goldvendor"
 	density = TRUE
 	blade_dulling = DULLING_BASH
-	max_integrity = 0
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
 	rattle_sound = 'sound/misc/machineno.ogg'
@@ -124,10 +122,14 @@
 	. = ..()
 	set_light(1, 1, 1, l_color =  "#1b7bf1")
 
-/obj/structure/fake_machine/merchantvend/obj_break(damage_flag, silent)
+/obj/structure/fake_machine/merchantvend/atom_break(damage_flag)
 	. = ..()
 	budget2change(budget)
 	set_light(0)
+
+/obj/structure/fake_machine/merchantvend/atom_fix()
+	. = ..()
+	set_light(1, 1, 1, l_color =  "#1b7bf1")
 
 /obj/structure/fake_machine/merchantvend/Destroy()
 	. = ..()

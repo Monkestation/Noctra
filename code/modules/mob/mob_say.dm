@@ -55,6 +55,28 @@
 	message = parsemarkdown_basic(message, limited = TRUE, barebones = TRUE)
 	usr.emote("me",1,message,TRUE, custom_me = TRUE)
 
+///The big me emote verb
+/mob/verb/me_big_verb()
+	set name = "Me(Big)"
+	set category = "IC"
+	set hidden = TRUE
+
+	if(client)
+		if(get_playerquality(client.ckey) <= -20)
+			to_chat(usr, "<span class='warning'>I can't use custom emotes. (LOW PQ)</span>")
+			return
+	var/message = input(usr, "", "me") as message|null
+	// If they don't type anything just drop the message.
+	set_typing_indicator(FALSE)
+	if(!length(message))
+		return
+	if(GLOB.say_disabled)	//This is here to try to identify lag problems
+		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
+		return
+	message = trim(copytext_char(html_encode(message), 1, MAX_MESSAGE_BIGME))
+	message = parsemarkdown_basic(message, limited = TRUE, barebones = TRUE)
+	usr.emote("me", 1, message, TRUE, custom_me = TRUE)
+
 ///Speak as a dead person (ghost etc)
 /mob/proc/say_dead(message)
 	return

@@ -37,11 +37,13 @@
 	var/axe_cut = 0
 	istrainable = TRUE // You can train weapon skills on a dummy with these.
 
-/obj/item/weapon/Initialize()
+/obj/item/weapon/Initialize(mapload)
 	. = ..()
 	if(!destroy_message)
 		var/yea = pick("[src] is broken!", "[src] is useless!", "[src] is destroyed!")
 		destroy_message = "<span class='warning'>[yea]</span>"
+
+	update_integrity(max_integrity + rand(-(max_integrity * 0.2), 0))
 
 /obj/item/weapon/attack_hand(mob/user)
 	if(istype(user, /mob/living/carbon/human/species/werewolf)) //slop fix

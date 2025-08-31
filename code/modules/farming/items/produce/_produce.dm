@@ -6,6 +6,7 @@
 	sellprice = 0
 	force = 0
 	throwforce = 0
+	faretype = FARE_POOR
 	var/list/pipe_reagents = list()
 	var/seed
 	var/bitesize_mod = 0
@@ -228,7 +229,7 @@
 	icon_state = "berriesc0"
 	seed = /obj/item/neuFarm/seed/berry
 	tastes = list("berry" = 1)
-	faretype = FARE_NEUTRAL
+	faretype = FARE_POOR
 	bitesize = 5
 	list_reagents = list(/datum/reagent/consumable/nutriment = 0.5)
 	dropshrink = 0.75

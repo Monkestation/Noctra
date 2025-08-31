@@ -21,7 +21,7 @@ PROCESSING_SUBSYSTEM_DEF(roguemachine)
 		if(world.time > last_death_report + 3 SECONDS)
 			last_death_report = world.time
 			if(SSroguemachine.hermailermaster)
-				var/obj/item/roguemachine/mastermail/X = SSroguemachine.hermailermaster
+				var/obj/item/fake_machine/mastermail/X = SSroguemachine.hermailermaster
 				for(var/I in death_queue)
 					var/obj/item/paper/P = new(X.loc)
 					P.mailer = "death witness"

@@ -205,7 +205,3 @@
 		if("24")
 			for(var/obj/particle_emitter/stored in particle_emitters)
 				RemoveEmitter(stored)
-
-// /obj/structure/water_pipe/process()
-// 	if(!input)
-// 		return

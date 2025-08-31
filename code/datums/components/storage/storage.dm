@@ -619,29 +619,15 @@
 	update_icon()
 	return FALSE
 
-//This proc is called when you want to place an item into the storage item.
-/datum/component/storage/proc/attackby(datum/source, obj/item/I, mob/M, params)
-	if(isitem(parent))
-		if(istype(I, /obj/item/weapon/hammer))
-			var/obj/item/storage/this_item = parent
-			//Vrell - since hammering is instant, i gotta find another option than the double click thing that needle has for a bypass.
-			//Thankfully, IIRC, no hammerable containers can hold a hammer, so not an issue ATM. For that same reason, this here is largely semi future-proofing.
-			if(this_item.anvilrepair != null && this_item.max_integrity && !this_item.obj_broken && (this_item.obj_integrity < this_item.max_integrity) && isturf(this_item.loc))
-				return FALSE
-		if(istype(I, /obj/item/needle))
-			var/obj/item/needle/sewer = I
-			var/obj/item/storage/this_item = parent
-			if(sewer.can_repair && this_item.sewrepair && this_item.max_integrity && !this_item.obj_broken && this_item.obj_integrity < this_item.max_integrity && this_item.ontable())
-				return FALSE
-		if(M.used_intent.type == /datum/intent/snip) //This makes it so we can salvage
-			return FALSE
-
-	if(!can_be_inserted(I, FALSE, M))
+//This proc is called when you want to place an item into the storage item
+/datum/component/storage/proc/attackby(datum/source, obj/item/attacking_item, mob/user, params, storage_click = FALSE)
+	. = TRUE //no afterattack
+	if(!can_be_inserted(attacking_item, FALSE, user, params = params, storage_click = storage_click))
 		var/atom/real_location = real_location()
-		if(real_location.contents.len >= max_items) //don't use items on the backpack if they don't fit
-			return FALSE
+		if(LAZYLEN(real_location.contents) >= max_items) //don't use items on the backpack if they don't fit
+			return TRUE
 		return FALSE
-	return handle_item_insertion(I, FALSE, M)
+	return handle_item_insertion(attacking_item, FALSE, user, params = params, storage_click = storage_click)
 
 /datum/component/storage/proc/return_inv(recursive)
 	var/list/ret = list()

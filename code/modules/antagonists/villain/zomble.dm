@@ -99,7 +99,7 @@
 	var/datum/language_holder/mob_language = zombie.get_language_holder()
 	prev_language = mob_language.copy()
 	zombie.remove_all_languages()
-	zombie.grant_language(/datum/language/hellspeak)
+	zombie.grant_language(/datum/language/undead)
 
 	zombie.ai_controller = new /datum/ai_controller/zombie(zombie)
 	zombie.AddComponent(/datum/component/ai_aggro_system)

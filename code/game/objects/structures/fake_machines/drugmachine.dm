@@ -1,4 +1,4 @@
-/obj/item/roguemachine/drugtrade
+/obj/item/fake_machine/drugtrade
 	name = "NARCOS"
 	desc = "A machine that exports drugs throughout a network of pneumatic pipes."
 	icon = 'icons/roguetown/misc/machines.dmi'
@@ -7,7 +7,6 @@
 	blade_dulling = DULLING_BASH
 	var/next_canister
 	var/accepted_items
-	max_integrity = 0
 	anchored = TRUE
 	w_class = WEIGHT_CLASS_GIGANTIC
 
@@ -20,7 +19,7 @@
 	layer = BELOW_OBJ_LAYER
 	anchored = TRUE
 
-/obj/item/roguemachine/drugtrade/attack_hand(mob/living/user)
+/obj/item/fake_machine/drugtrade/attack_hand(mob/living/user)
 	if(!anchored)
 		return ..()
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -38,7 +37,7 @@
 	popup.set_content(contents)
 	popup.open()
 
-/obj/item/roguemachine/drugtrade/Initialize()
+/obj/item/fake_machine/drugtrade/Initialize()
 	. = ..()
 	if(anchored)
 		START_PROCESSING(SSroguemachine, src)
@@ -49,12 +48,12 @@
 			continue
 		new /obj/structure/fake_machine/drug_chute(T)
 
-/obj/item/roguemachine/drugtrade/Destroy()
+/obj/item/fake_machine/drugtrade/Destroy()
 	STOP_PROCESSING(SSroguemachine, src)
 	set_light(0)
 	return ..()
 
-/obj/item/roguemachine/drugtrade/process()
+/obj/item/fake_machine/drugtrade/process()
 	if(!anchored)
 		return TRUE
 	if(world.time > next_canister)
@@ -105,7 +104,6 @@
 	icon_state = "goldvendor"
 	density = TRUE
 	blade_dulling = DULLING_BASH
-	max_integrity = 0
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
 	lock = /datum/lock/key/purity
@@ -118,10 +116,14 @@
 	. = ..()
 	set_light(1, 1, 1, l_color =  "#8f06b5")
 
-/obj/structure/fake_machine/drugmachine/obj_break(damage_flag, silent)
+/obj/structure/fake_machine/drugmachine/atom_break(damage_flag)
 	. = ..()
 	budget2change(budget)
 	set_light(0)
+
+/obj/structure/fake_machine/drugmachine/atom_fix()
+	. = ..()
+	set_light(1, 1, 1, l_color =  "#8f06b5")
 
 /obj/structure/fake_machine/drugmachine/Destroy()
 	. = ..()

@@ -7,6 +7,8 @@
 	attacked_sound = "parrywood"
 	sharpness = IS_BLUNT
 	blade_dulling = DULLING_BASHCHOP
+	wdefense = BAD_PARRY
+	max_integrity = INTEGRITY_WORST
 	possible_item_intents = list(SHIELD_BASH)
 
 /obj/item/weapon/scabbard/Initialize()
@@ -38,18 +40,17 @@
 	desc = "A slingable sheath made of leather, meant to host surprises of smaller sizes."
 	icon_state = "sheath"
 
-	force = 3
-	throwforce = 3
-	max_integrity = 50
+	force = DAMAGE_KNIFE - 7
+	throwforce = DAMAGE_KNIFE - 7
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_BACK|ITEM_SLOT_WRISTS|ITEM_SLOT_NECK
 
-	wdefense = MEDIOCHRE_PARRY
+	wdefense = MEDIOCRE_PARRY
 	wlength = WLENGTH_SHORT
 	wbalance = HARD_TO_DODGE
 	associated_skill = /datum/skill/combat/knives
 	sewrepair = TRUE
-	sellprice = 2
+	sellprice = 10
 
 	grid_width = 32
 	grid_height = 64
@@ -74,11 +75,13 @@
 /obj/item/weapon/scabbard/knife/noble
 	name = "silver decorated knife sheath"
 	desc = "A slingable sheath made of leather, enamored with elaborate silver decorations, often seen on the hips of nobles"
+	sellprice = 50
 	icon_state = "nsheath"
 
 /obj/item/weapon/scabbard/knife/royal
 	name = "gold decorated knife sheath"
 	desc = "A slingable sheath made of leather, enamored with exquisite golden decorations, often seen on the hips of royalty"
+	sellprice = 100
 	icon_state = "rsheath"
 
 /obj/item/weapon/scabbard/sword
@@ -86,10 +89,9 @@
 	desc = "A scabbard designed to hold a sword. The natural conclusion for those wishing to carry longblades."
 	icon_state = "scabbard"
 
-	force = 7
-	force_wielded = 8
-	max_integrity = 75
-	sellprice = 3
+	force = DAMAGE_SWORD - 15
+	force_wielded = DAMAGE_SWORD - 15
+	sellprice = 10
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_BACK
 
 	wdefense = GREAT_PARRY
@@ -117,9 +119,11 @@
 /obj/item/weapon/scabbard/sword/noble
 	name = "silver decorated scabbard"
 	desc = "A scabbard designed to hold a sword. This one is decorated on a silver platter."
+	sellprice = 50
 	icon_state = "nscabbard"
 
 /obj/item/weapon/scabbard/sword/royal
 	name = "gold decorated scabbard"
 	desc = "A scabbard designed to hold a sword. This one is lined with golden fittings, fit for a royal."
+	sellprice = 100
 	icon_state = "rscabbard"

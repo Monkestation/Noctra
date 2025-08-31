@@ -6,7 +6,7 @@
 	density = FALSE
 	anchored = TRUE
 	layer = BELOW_MOB_LAYER
-	max_integrity = 0
+	resistance_flags = INDESTRUCTIBLE
 	var/aportalloc = "a"
 
 /obj/structure/fluff/testportal/Initialize()
@@ -36,7 +36,7 @@
 	density = FALSE
 	anchored = TRUE
 	layer = ABOVE_OPEN_TURF_LAYER
-	max_integrity = 0
+	resistance_flags = INDESTRUCTIBLE
 	var/aportalid = "REPLACETHIS"
 	var/aportalgoesto = "REPLACETHIS"
 	var/aallmig

@@ -39,7 +39,11 @@
 		var/mob/living/carbon/human/human_owner = owner
 		var/obj/item/clothing/checked_armor = human_owner.checkcritarmor(zone_precise, bclass)
 		if(checked_armor)
+<<<<<<< HEAD
 			var/int_percent = round(((checked_armor.obj_integrity / checked_armor.max_integrity) * 100), 1)
+=======
+			var/int_percent = round(((checked_armor.get_integrity() / checked_armor.max_integrity) * 100), 1)
+>>>>>>> vanderlin/main
 			if(int_percent > 30 && !HAS_TRAIT(human_owner, TRAIT_CRITICAL_WEAKNESS) && !HAS_TRAIT(human_owner, TRAIT_EASYDISMEMBER))
 				to_chat(human_owner, span_green("My [checked_armor.name] just saved me from losing my [src.name]!"))
 				checked_armor.take_damage(checked_armor.max_integrity / 2, damage_flag = bclass)

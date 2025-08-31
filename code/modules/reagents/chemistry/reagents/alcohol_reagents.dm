@@ -159,31 +159,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "glass of wine"
 	color = "#8a0b0b"
 
-/datum/reagent/consumable/ethanol/light
-	name = "Light Beer"
-	description = "An alcoholic beverage brewed since ancient times on Old Earth. This variety has reduced calorie and alcohol content."
-	boozepwr = 5 //Space Europeans hate it
-	taste_description = "dish water"
-	glass_name = "glass of light beer"
-	glass_desc = ""
-
-/datum/reagent/consumable/ethanol/green
-	name = "Green Beer"
-	description = "An alcoholic beverage brewed since ancient times on Old Earth. This variety is dyed a festive green."
-	color = "#A8E61D"
-	taste_description = "green piss water"
-	glass_icon_state = "greenbeerglass"
-	glass_name = "glass of green beer"
-	glass_desc = ""
-
-/datum/reagent/consumable/ethanol/green/on_mob_life(mob/living/carbon/M)
-	if(M.color != color)
-		M.add_atom_colour(color, TEMPORARY_COLOUR_PRIORITY)
-	return ..()
-
-/datum/reagent/consumable/ethanol/green/on_mob_end_metabolize(mob/living/M)
-	M.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, color)
-
 /datum/reagent/consumable/ethanol/ale
 	name = "Ale"
 	description = "A dark alcoholic beverage made with malted barley and yeast."

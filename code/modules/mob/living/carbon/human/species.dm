@@ -347,7 +347,8 @@ GLOBAL_LIST_EMPTY(patreon_races)
 				/datum/language/orcish = "Orcish",
 				/datum/language/celestial = "Celestial",
 				/datum/language/zalad = "Zalad",
-				/datum/language/deepspeak = "Deepspeak"
+				/datum/language/deepspeak = "Deepspeak",
+				/datum/language/undead = "Zizo Chant"
 			)
 
 			if (language in language_map)
@@ -1380,7 +1381,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 		target.lastattackerckey = user.ckey
 		user.dna.species.spec_unarmedattacked(user, target)
 
-		user.do_attack_animation(target, visual_effect_icon = user.used_intent.animname, atom_bounce = TRUE)
+		user.do_attack_animation(target, visual_effect_icon = user.used_intent.animname, used_item = FALSE, atom_bounce = TRUE)
 		target.next_attack_msg.Cut()
 
 		var/nodmg = FALSE
@@ -1455,7 +1456,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	if(user.loc == target.loc)
 		return FALSE
 	else
-		user.do_attack_animation(target, ATTACK_EFFECT_DISARM, atom_bounce = TRUE)
+		user.do_attack_animation(target, ATTACK_EFFECT_DISARM, used_item = FALSE, atom_bounce = TRUE)
 		playsound(target, 'sound/combat/shove.ogg', 100, TRUE, -1)
 
 		if(target.wear_pants)

@@ -69,7 +69,7 @@
 
 /obj/item/natural/bundle/carpet_roll/afterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!isturf(target))
+	if(!isturf(target) || !proximity_flag)
 		return
 	if(amount < 1)
 		to_chat(user, "<span class='warning'>The carpet roll is empty!</span>")
@@ -109,7 +109,7 @@
 
 /obj/item/natural/carpet_fibers/afterattack(atom/target, mob/living/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!isturf(target))
+	if(!isturf(target) || !proximity_flag)
 		return
 	var/turf/T = get_turf(target)
 	if(!T)

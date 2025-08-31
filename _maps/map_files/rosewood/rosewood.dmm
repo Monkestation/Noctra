@@ -3886,7 +3886,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/town)
 "cbZ" = (
-/obj/item/roguemachine/mastermail,
+/obj/item/fake_machine/mastermail,
 /obj/structure/table/wood/reinf_long{
 	dir = 4
 	},
@@ -39382,7 +39382,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/indoors/town/orphanage)
 "vAy" = (
-/obj/item/roguemachine/drugtrade,
+/obj/item/fake_machine/drugtrade,
 /turf/open/floor/ruinedwood/spiralfade,
 /area/rogue/indoors/town/bath)
 "vAz" = (

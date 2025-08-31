@@ -174,22 +174,24 @@
 			user.changeNext_move(CLICK_CD_FAST)
 			return TRUE
 	if(I.obj_flags_ignore)
-		return I.attack_obj(src, user)
-	return ..() || ((obj_flags & CAN_BE_HIT) && I.attack_obj(src, user))
+		return I.attack_atom(src, user)
+	return ..() || ((obj_flags & CAN_BE_HIT) && I.attack_atom(src, user))
 
 /turf/attackby(obj/item/I, mob/living/user, params)
 	if(liquids && I.heat)
 		hotspot_expose(I.heat)
-	return ..() || (max_integrity && I.attack_turf(src, user))
+	return ..() || (uses_integrity && I.attack_atom(src, user))
 
 /mob/living/attackby(obj/item/I, mob/living/user, params)
 	if(..())
 		return TRUE
-	var/adf = user.used_intent.clickcd
-	if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
-		adf = round(adf * 1.4)
-	if(istype(user.rmb_intent, /datum/rmb_intent/swift))
-		adf = round(adf * 0.6)
+	var/adf = user.used_intent?.clickcd
+	if(I.force && user.used_intent && !user.used_intent.tranged && !user.used_intent.tshield && !user.used_intent.noaa)
+		if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
+			adf = round(adf * 1.4)
+		if(istype(user.rmb_intent, /datum/rmb_intent/swift))
+			adf = round(adf * 0.6)
+	user.changeNext_move(adf)
 
 	for(var/obj/item/clothing/worn_thing in get_equipped_items(include_pockets = TRUE))//checks clothing worn by src.
 	// Things that are supposed to be worn, being held = cannot block
@@ -201,7 +203,6 @@
 			continue
 		worn_thing.hit_response(src, user) //checks if clothing has hit response. Refer to Items.dm
 
-	user.changeNext_move(adf)
 	return I.attack(src, user, params)
 
 
@@ -324,11 +325,11 @@
 				log_combat(user, M, "attacked", src.name, "(INTENT: [uppertext(user.used_intent.name)]) (DAMTYPE: [uppertext(damtype)])")
 				add_fingerprint(user)
 		if(M.d_intent == INTENT_DODGE)
-			if(!user.used_intent.swingdelay)
-				if(get_dist(get_turf(user), get_turf(M)) <= user.used_intent.reach)
-					user.do_attack_animation(turf_before, visual_effect_icon = user.used_intent.animname, used_item = src, used_intent = user.used_intent)
-				else
-					user.do_attack_animation(get_ranged_target_turf(user, get_dir(user, M), 1), visual_effect_icon = user.used_intent.animname, used_item = src, used_intent = user.used_intent)
+			// if(!user.used_intent.swingdelay)
+			if(get_dist(get_turf(user), get_turf(M)) <= user.used_intent.reach)
+				user.do_attack_animation(turf_before, visual_effect_icon = user.used_intent.animname, used_item = src, used_intent = user.used_intent)
+			else
+				user.do_attack_animation(get_ranged_target_turf(user, get_dir(user, M), 1), visual_effect_icon = user.used_intent.animname, used_item = src, used_intent = user.used_intent)
 		return
 	if(!user.used_intent.noaa)
 		if(get_dist(get_turf(user), get_turf(M)) <= user.used_intent.reach)
@@ -383,25 +384,44 @@
 
 	return SECONDARY_ATTACK_CALL_NORMAL
 
-/// The equivalent of the standard version of [/obj/item/proc/attack] but for object targets.
-/obj/item/proc/attack_obj(obj/O, mob/living/user)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, O, user) & COMPONENT_NO_ATTACK_OBJ)
-		return
-	if(item_flags & NOBLUDGEON)
-		return
-	if(O.attacked_by(src, user))
-		user.do_attack_animation(O, used_intent = user.used_intent, used_item = src,)
+/// The equivalent of the standard version of [/obj/item/proc/attack] but for non-mob targets. Return TRUE to end the attack chain.
+/obj/item/proc/attack_atom(atom/attacked_atom, mob/living/user)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, attacked_atom, user) & COMPONENT_NO_ATTACK_OBJ)
 		return TRUE
+	if(item_flags & NOBLUDGEON)
+		return TRUE
+	user.changeNext_move(CLICK_CD_MELEE)
+	if(attacked_atom.attacked_by(src, user) && !isopenturf(attacked_atom)) // this check is due to attack animations in /obj/item/proc/afterattack()
+		user.do_attack_animation(attacked_atom, used_item = src, used_intent = user.used_intent)
 
-/obj/item/proc/attack_turf(turf/T, mob/living/user)
-	if(T.max_integrity)
-		if(T.attacked_by(src, user))
-			user.do_attack_animation(T, used_intent = user.used_intent, used_item = src,)
-			return TRUE
+/// Called from [/obj/item/proc/attack_obj] and [/obj/item/proc/attack] if the attack succeeds.
+/atom/proc/attacked_by(obj/item/attacking_item, mob/living/user)
+	if(!uses_integrity)
+		CRASH("attacked_by() was called on [type], which doesn't use integrity!")
 
-/// Called from [/obj/item/proc/attack_obj] and [/obj/item/proc/attack] if the attack succeeds
-/atom/movable/proc/attacked_by()
-	return FALSE
+	if(user.used_intent.no_attack)
+		return
+
+	var/newforce = get_complex_damage(attacking_item, user, blade_dulling)
+	if(!newforce)
+		return
+
+	var/damage_verb = "hits"
+
+	damage_verb = pick(user.used_intent.attack_verb)
+	if(newforce > 1)
+		attacking_item.take_damage(1, BRUTE, "blunt")
+		if(!user.adjust_stamina(5))
+			damage_verb = "ineffectively hits"
+			newforce = 1
+
+	user.visible_message(span_danger("[user] [damage_verb] [src] with [attacking_item]!"))
+	take_damage(newforce, attacking_item.damtype, attacking_item.damage_type, TRUE)
+	log_combat(user, src, "attacked", attacking_item)
+	return TRUE
+
+/area/attacked_by(obj/item/attacking_item, mob/living/user)
+	CRASH("areas are NOT supposed to have attacked_by() called on them!")
 
 /*
 * I didnt code this but this is what ive deciphered.
@@ -410,7 +430,7 @@
 * This proc is also not overridable due to having no root.
 * -IP
 */
-/proc/get_complex_damage(obj/item/I, mob/living/user, blade_dulling, turf/closed/mineral/T)
+/proc/get_complex_damage(obj/item/I, mob/living/user, blade_dulling)
 	var/dullfactor = 1
 	if(!I?.force)
 		return 0
@@ -569,57 +589,6 @@
 	newforce = max(newforce, 1)
 	return newforce
 
-/obj/attacked_by(obj/item/I, mob/living/user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	var/newforce = get_complex_damage(I, user, blade_dulling)
-	if(!newforce)
-		return 0
-	if(newforce < damage_deflection)
-		return 0
-	if(user.used_intent.no_attack)
-		return 0
-	log_combat(user, src, "attacked", I)
-	var/verbu = "hits"
-	verbu = pick(user.used_intent.attack_verb)
-	if(newforce > 1)
-		if(user.adjust_stamina(5))
-			user.visible_message("<span class='danger'>[user] [verbu] [src] with [I]!</span>")
-		else
-			user.visible_message("<span class='warning'>[user] [verbu] [src] with [I]!</span>")
-			newforce = 1
-	else
-		user.visible_message("<span class='warning'>[user] [verbu] [src] with [I]!</span>")
-	take_damage(newforce, I.damtype, I.damage_type, 1)
-	if(newforce > 1)
-		I.take_damage(1, BRUTE, "blunt")
-	return TRUE
-
-/turf/proc/attacked_by(obj/item/I, mob/living/user)
-	var/newforce = get_complex_damage(I, user, blade_dulling)
-	if(!newforce)
-		return 0
-	if(newforce < damage_deflection)
-		return 0
-	if(user.used_intent.no_attack)
-		return 0
-	user.changeNext_move(CLICK_CD_MELEE)
-	log_combat(user, src, "attacked", I)
-	var/verbu = "hits"
-	verbu = pick(user.used_intent.attack_verb)
-	if(newforce > 1)
-		if(user.adjust_stamina(5))
-			user.visible_message("<span class='danger'>[user] [verbu] [src] with [I]!</span>")
-		else
-			user.visible_message("<span class='warning'>[user] [verbu] [src] with [I]!</span>")
-			newforce = 1
-	else
-		user.visible_message("<span class='warning'>[user] [verbu] [src] with [I]!</span>")
-
-	take_damage(newforce, I.damtype, I.damage_type, 1)
-	if(newforce > 1)
-		I.take_damage(1, BRUTE, "blunt")
-	return TRUE
-
 /mob/living/proc/simple_limb_hit(zone)
 	if(!zone)
 		return ""
@@ -698,16 +667,6 @@
 			playsound(get_turf(src), pick(swingsound), 100, FALSE, -1)
 			user.aftermiss()
 		if(!proximity_flag && ismob(target) && !user.used_intent?.noaa) //this block invokes miss cost clicking on seomone who isn't adjacent to you
-			var/adf = user.used_intent.clickcd
-			if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
-				adf = round(adf * 1.4)
-			if(istype(user.rmb_intent, /datum/rmb_intent/swift))
-				adf = round(adf * 0.6)
-			user.changeNext_move(adf)
-			if(get_dist(get_turf(user), get_turf(target)) <= user.used_intent.reach)
-				user.do_attack_animation(target, visual_effect_icon = user.used_intent.animname, used_item = src, used_intent = user.used_intent)
-			else
-				user.do_attack_animation(get_ranged_target_turf(user, get_dir(user, target), 1), visual_effect_icon = user.used_intent.animname, used_item = src, used_intent = user.used_intent)
 			playsound(get_turf(src), pick(swingsound), 100, FALSE, -1)
 			user.aftermiss()
 

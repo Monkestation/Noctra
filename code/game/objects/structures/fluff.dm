@@ -201,10 +201,15 @@
 	plane = GAME_PLANE
 	layer = WALL_OBJ_LAYER+0.05
 
-/obj/structure/bars/obj_break(damage_flag, silent)
+/obj/structure/bars/atom_break(damage_flag)
+	. = ..()
 	icon_state = "[initial(icon_state)]b"
 	density = FALSE
-	..()
+
+/obj/structure/bars/atom_fix()
+	. = ..()
+	density = initial(density)
+	icon_state = initial(icon_state)
 
 /obj/structure/bars/cemetery
 	icon_state = "cemetery"
@@ -267,9 +272,9 @@
 	dir = pick(GLOB.cardinals)
 	return ..()
 
-/obj/structure/bars/grille/obj_break(damage_flag, silent)
+/obj/structure/bars/grille/atom_break(damage_flag)
+	. = ..()
 	obj_flags = CAN_BE_HIT
-	..()
 
 /obj/structure/bars/grille/redstone_triggered(mob/user)
 	if(obj_broken)
@@ -327,7 +332,6 @@
 	break_sound = "glassbreak"
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
-	var/broke = FALSE
 	var/datum/looping_sound/clockloop/soundloop
 	drag_slowdown = 3
 	metalizer_result = /obj/item/gear/metal/bronze
@@ -344,14 +348,18 @@
 		QDEL_NULL(soundloop)
 	return ..()
 
-/obj/structure/fluff/clock/obj_break(damage_flag, silent)
-	if(!broke)
-		broke = TRUE
-		icon_state = "b[initial(icon_state)]"
-		if(soundloop)
-			soundloop.stop()
-		attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
-	..()
+/obj/structure/fluff/clock/atom_break(damage_flag)
+	. = ..()
+	icon_state = "b[initial(icon_state)]"
+	if(soundloop)
+		soundloop.stop()
+	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
+
+/obj/structure/fluff/clock/atom_fix()
+	. = ..()
+	icon_state = initial(icon_state)
+	soundloop.start()
+	attacked_sound = initial(attacked_sound)
 
 /obj/structure/fluff/clock/attack_hand_secondary(mob/user, params)
 	. = ..()
@@ -371,7 +379,7 @@
 
 /obj/structure/fluff/clock/examine(mob/user)
 	. = ..()
-	if(!broke)
+	if(!obj_broken)
 		var/day = "... actually, WHAT dae is it?"
 		switch(GLOB.dayspassed)
 			if(1)
@@ -426,7 +434,10 @@
 	break_sound = "glassbreak"
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
+<<<<<<< HEAD
 	var/broke = FALSE
+=======
+>>>>>>> vanderlin/main
 	SET_BASE_PIXEL(0, 32)
 	metalizer_result = /obj/item/gear/metal/bronze
 
@@ -437,7 +448,7 @@
 
 /obj/structure/fluff/wallclock/examine(mob/user)
 	. = ..()
-	if(!broke)
+	if(!obj_broken)
 		var/day = "... actually, WHAT dae is it?"
 		switch(GLOB.dayspassed)
 			if(1)
@@ -462,14 +473,18 @@
 	soundloop.start()
 	. = ..()
 
-/obj/structure/fluff/wallclock/obj_break(damage_flag, silent)
-	if(!broke)
-		broke = TRUE
-		icon_state = "b[initial(icon_state)]"
-		if(soundloop)
-			soundloop.stop()
-		attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
-	..()
+/obj/structure/fluff/wallclock/atom_break(damage_flag)
+	. = ..()
+	icon_state = "b[initial(icon_state)]"
+	if(soundloop)
+		soundloop.stop()
+	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
+
+/obj/structure/fluff/wallclock/atom_fix()
+	. = ..()
+	icon_state = initial(icon_state)
+	soundloop.start()
+	attacked_sound = initial(attacked_sound)
 
 /obj/structure/fluff/wallclock/l
 	SET_BASE_PIXEL(-32, 0)

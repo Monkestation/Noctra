@@ -79,7 +79,7 @@
 	max_integrity = 70
 	buildstacktype = null
 	buildstackamount = 0
-	item_chair = null
+	item_chair = /obj/item/chair/wood
 	anchored = FALSE
 
 /obj/structure/chair/wood/narsie_act()

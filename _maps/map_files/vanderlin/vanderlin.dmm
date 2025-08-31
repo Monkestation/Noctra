@@ -20882,7 +20882,7 @@
 /obj/structure/chair/wood/alt/chair_noble{
 	dir = 8
 	},
-/obj/item/roguemachine/mastermail,
+/obj/item/fake_machine/mastermail,
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/indoors/town/steward)
 "mLm" = (
@@ -21901,7 +21901,7 @@
 /turf/open/floor/dirt,
 /area/rogue/indoors/town/cell)
 "nqN" = (
-/obj/item/roguemachine/drugtrade,
+/obj/item/fake_machine/drugtrade,
 /turf/open/floor/ruinedwood/chevron,
 /area/rogue/indoors/town)
 "nqQ" = (

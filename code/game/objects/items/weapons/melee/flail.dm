@@ -20,7 +20,7 @@
 	swingsound = BLUNTWOOSH_MED
 	can_parry = FALSE // You can't parry with this, it'd be awkward to tangle chains, use a shield
 	wdefense = TERRIBLE_PARRY
-	max_integrity = 300
+	max_integrity = INTEGRITY_STRONG
 	throwforce = 5
 	minstr = 6
 	sellprice = 20
@@ -93,9 +93,9 @@
 	name = "wooden flail"
 	desc = "During peacetime these flails are used to thresh wheat. During wartime - to chase off marauders."
 	icon_state = "peasantflail"
-	smeltresult = /obj/item/ore/coal //is mostly wood
+	smeltresult = /obj/item/fertilizer/ash
 	melting_material = null
-	max_integrity = 200
+	max_integrity = INTEGRITY_STANDARD
 	minstr = 5
 	sellprice = 10
 
@@ -109,7 +109,7 @@
 	melting_material = /datum/material/steel
 	melt_amount = 75
 	minstr = 4
-	max_integrity = 500
+	max_integrity = INTEGRITY_STRONGEST
 	sellprice = 35
 
 /obj/item/weapon/flail/sflail/necraflail
@@ -126,7 +126,7 @@
 	melting_material = /datum/material/silver
 	melt_amount = 75
 	minstr = 4
-	max_integrity = 500
+	max_integrity = INTEGRITY_STRONGEST
 	sellprice = 50
 	last_used = 0
 
@@ -150,7 +150,7 @@
 	wbalance = 0
 	wlength = WLENGTH_LONG
 	slot_flags = ITEM_SLOT_BACK
-	max_integrity = 500
+	max_integrity = INTEGRITY_STANDARD + 50
 	sellprice = 20
 	minstr = 8
 

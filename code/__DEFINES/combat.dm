@@ -229,7 +229,7 @@
 #define DULLING_BASH 2
 #define DULLING_BASHCHOP 3
 #define DULLING_PICK 4 //rockwalls
-#define DULLING_FLOOR 5 //floors, only attacked by overhead smash and chop intents like from 2hammers
+// #define DULLING_FLOOR 5 //floors, only attacked by overhead smash and chop intents like from 2hammers
 //see get_complex_damage()
 
 //NOTE: INTENT_HOTKEY_* defines are not actual intents!

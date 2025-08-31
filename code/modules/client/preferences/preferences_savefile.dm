@@ -261,6 +261,15 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		charflaw = GLOB.character_flaws[charflaw]
 		charflaw = new charflaw()
 
+/datum/preferences/proc/_load_culinary_preferences(S)
+	var/list/loaded_culinary_preferences
+	S["culinary_preferences"] >> loaded_culinary_preferences
+	if(loaded_culinary_preferences)
+		culinary_preferences = loaded_culinary_preferences
+		validate_culinary_preferences()
+	else
+		reset_culinary_preferences()
+
 /datum/preferences/proc/_load_appearence(S)
 	S["real_name"] >> real_name
 	S["gender"] >> gender
@@ -310,6 +319,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	_load_species(S)
 
 	_load_flaw(S)
+
+	_load_culinary_preferences(S)
 
 	//Character
 	_load_appearence(S)
@@ -430,6 +441,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["voice_type"]		, voice_type)
 	WRITE_FILE(S["species"]			, pref_species.name)
 	WRITE_FILE(S["charflaw"]			, charflaw.type)
+	WRITE_FILE(S["culinary_preferences"], culinary_preferences)
 	WRITE_FILE(S["family"]			, 	family)
 	WRITE_FILE(S["gender_choice"]			, 	gender_choice)
 	WRITE_FILE(S["setspouse"]			, 	setspouse)

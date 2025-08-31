@@ -342,7 +342,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 				B.generate_appearance()
 				B.apply()
 
-/obj/item/Initialize(mapload, freshly_made = FALSE)
+/obj/item/Initialize(mapload)
 	if (attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
 
@@ -410,9 +410,6 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	if(max_blade_int && !blade_int) //set blade integrity to randomized 60% to 100% if not already set
 		blade_int = max_blade_int + rand(-(max_blade_int * 0.4), 0)
-
-		if(!freshly_made)
-			obj_integrity = max_integrity + rand(-(max_integrity * 0.2), 0)
 
 	if(!pixel_x && !pixel_y && !bigboy)
 		pixel_x = rand(-5,5)
@@ -546,7 +543,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 	var/simpleton_price = FALSE
 
 /obj/item/get_inspect_button()
-	if(has_inspect_verb || (obj_integrity < max_integrity))
+	if(has_inspect_verb || (atom_integrity < max_integrity))
 		return " <span class='info'><a href='byond://?src=[REF(src)];inspect=1'>{?}</a></span>"
 	return ..()
 
@@ -589,9 +586,9 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 		inspect_list += "[meme]%"
 
 //**** General durability
-	if(max_integrity)
+	if(uses_integrity)
 		inspect_list += "\n<b>DURABILITY:</b> "
-		var/meme = round(((obj_integrity / max_integrity) * 100), 1)
+		var/meme = round(((atom_integrity / max_integrity) * 100), 1)
 		inspect_list += "[meme]%"
 
 	return inspect_list

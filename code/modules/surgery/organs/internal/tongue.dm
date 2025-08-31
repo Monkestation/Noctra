@@ -20,7 +20,8 @@
 		/datum/language/beast,
 		/datum/language/thievescant,
 		/datum/language/orcish,
-		/datum/language/deepspeak
+		/datum/language/deepspeak,
+		/datum/language/undead
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)

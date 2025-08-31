@@ -3,8 +3,6 @@
 	desc = ""
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	resistance_flags = NONE
-	max_integrity = 0
 	equip_sound = 'sound/blank.ogg'
 	bloody_icon_state = "bodyblood"
 	alternate_worn_layer = UNDER_CLOAK_LAYER

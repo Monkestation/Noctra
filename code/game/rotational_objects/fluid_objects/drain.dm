@@ -191,9 +191,9 @@
 	var/status = active ? "Active" : "Inactive"
 
 	return {"<span style='font-size:8pt;font-family:"Pterra";color:#0080ff;text-shadow:0 0 1px #fff, 0 0 2px #fff, 0 0 30px #00ff00, 0 0 40px #00ff00, 0 0 50px #00ff00, 0 0 60px #00ff00, 0 0 70px #00ff00;' class='center maptext '>
-			Status: [status]<br>
-			Storage: [collected_fluids.total_volume]/[max_storage]<br>
-			Primary: [primary_fluid] ([primary_volume])<br>
+			Status: [status]
+			Storage: [collected_fluids.total_volume]/[max_storage]
+			Primary: [primary_fluid] ([primary_volume])
 			Pressure: [providing_pressure]</span>"}
 
 /obj/structure/fluid_drain/examine(mob/user)

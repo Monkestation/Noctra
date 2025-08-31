@@ -133,6 +133,9 @@
 	blocks_emissive = NONE
 	var/datum/charflaw/charflaw
 
+	/// Assoc list of culinary preferences of the mob
+	var/list/culinary_preferences = list()
+
 	/// List of curses on this mob
 	var/list/curses = list()
 

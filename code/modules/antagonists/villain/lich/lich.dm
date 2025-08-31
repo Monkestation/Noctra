@@ -142,7 +142,7 @@
 	H.change_stat(STATKEY_END, -1)
 	H.change_stat(STATKEY_SPD, -1)
 	H.adjust_spell_points(17) //Same as CM - Until they receive their spellbook.
-
+	H.grant_language(/datum/language/undead)
 
 	H.dna.species.soundpack_m = new /datum/voicepack/lich()
 	H.ambushable = FALSE

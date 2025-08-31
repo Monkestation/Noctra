@@ -179,6 +179,6 @@
 	blocksound = SOFTHIT
 	blade_dulling = DULLING_BASHCHOP
 	sewrepair = TRUE
-	max_integrity = 0
+	resistance_flags = INDESTRUCTIBLE
 
 

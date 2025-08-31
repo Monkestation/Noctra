@@ -402,14 +402,14 @@
 	var/damaged_walls = 0
 	for(var/obj/structure/tent_wall/wall in tent_walls)
 		total_walls++
-		if(wall.obj_integrity < wall.max_integrity)
+		if(wall.get_integrity() < wall.max_integrity)
 			damaged_walls++
 
 	var/total_doors = 0
 	var/damaged_doors = 0
 	for(var/obj/structure/roguetent/door in tent_doors)
 		total_doors++
-		if(door.obj_integrity < door.max_integrity)
+		if(door.get_integrity() < door.max_integrity)
 			damaged_doors++
 
 	if(damaged_walls > 0)
@@ -440,7 +440,6 @@
 
 /obj/structure/tent_wall/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armor_penetration)
 	. = ..()
-	if(obj_integrity < 100)
-		obj_integrity = 100
+	if(atom_integrity < 100)
 		damaged = TRUE
 		opacity = FALSE

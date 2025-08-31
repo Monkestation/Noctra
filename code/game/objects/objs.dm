@@ -8,22 +8,13 @@
 
 	var/fire_burn_start //make us not burn that long
 	var/obj_flags = CAN_BE_HIT
-	/// This Var ensures the object ignores all object flags, which is extremely important for contraptions (which are supposed ot interact with all objects even if it does not produce a result)
+	/// This Var ensures the object ignores all object flags when attacking another object, which is extremely important for contraptions (which are supposed ot interact with all objects even if it does not produce a result)
 	var/obj_flags_ignore = FALSE
 
 	var/damtype = BRUTE
 	var/force = 0
 
-	var/datum/armor/armor
-	var/obj_integrity	//defaults to max_integrity
-	var/max_integrity = 500
-	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the obj breaks. 0.5 being 50%
-	///Damage under this value will be completely ignored
-	var/damage_deflection = 0
 	var/obj_broken = FALSE
-	var/obj_destroyed = FALSE
-
-	var/resistance_flags = NONE // INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ON_FIRE | UNACIDABLE | ACID_PROOF
 
 	var/acid_level = 0 //how much acid is on that obj
 
@@ -35,12 +26,10 @@
 
 	var/drag_slowdown // Amont of multiplicative slowdown applied if pulled. >1 makes you slower, <1 makes you faster.
 
-	var/blade_dulling = DULLING_BASHCHOP
+	blade_dulling = DULLING_BASHCHOP
 
 	var/debris = null
 	var/static_debris = null
-	var/break_sound = null
-	var/break_message = null
 	var/destroy_sound = 'sound/foley/breaksound.ogg'
 	var/destroy_message = null
 
@@ -52,8 +41,6 @@
 	var/list/temperature_affected_turfs
 
 	var/component_block = FALSE
-
-	var/attacked_sound = 'sound/blank.ogg'
 
 	// See /code/datums/locks
 
@@ -83,6 +70,7 @@
 	var/rarity_mod = 0
 
 	vis_flags = VIS_INHERIT_PLANE
+	uses_integrity = TRUE
 
 /obj/vv_edit_var(vname, vval)
 	switch(vname)
@@ -107,8 +95,6 @@
 		stack_trace("Invalid type [armor.type] found in .armor during /obj Initialize()")
 	if(main_material)
 		set_material_information()
-	if(obj_integrity == null)
-		obj_integrity = max_integrity
 	if(lockid)
 		//log_mapping("[src] ([type]) at [AREACOORD(src)] has a depreciated lockid varedit.")
 		if(!lockids)

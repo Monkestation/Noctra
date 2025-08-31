@@ -13,7 +13,7 @@
 	/// What the duration was when we applied the status effect
 	var/initial_duration
 	/// How many deciseconds between ticks, approximately. Leave at 10 for every second.
-	var/tick_interval = 10
+	var/tick_interval = 1 SECONDS
 	/// The mob affected by the status effect.
 	var/mob/living/owner
 	/// How many of the effect can be on one mob, and what happens when you try to add another
@@ -64,6 +64,8 @@
 	return ..()
 
 /datum/status_effect/process()
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	if(!owner)
 		qdel(src)
 		return

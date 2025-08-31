@@ -103,7 +103,7 @@
 /obj/item/bin/proc/try_wash(atom/to_wash, mob/user)
 	if(istype(to_wash, /obj/item/natural/cloth))
 		var/obj/item/item = to_wash
-		item.attack_obj(src, user)
+		item.attack_atom(src, user)
 		return
 	if(!reagents || !reagents.maximum_volume || kover)
 		return
@@ -193,6 +193,7 @@
 				var/obj/item/IT = new crafteditem(used_turf, TRUE)
 				R.handle_creation(IT)
 				IT.OnCrafted(user.dir, user)
+				I.update_integrity(I.max_integrity, update_atom = FALSE)
 				record_featured_stat(FEATURED_STATS_SMITHS, user)
 				record_featured_object_stat(FEATURED_STATS_FORGED_ITEMS, IT.name)
 

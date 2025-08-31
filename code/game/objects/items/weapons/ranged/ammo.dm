@@ -503,7 +503,6 @@
 	icon_state = "musketball"
 	dropshrink = 0.5
 	possible_item_intents = list(/datum/intent/use)
-	max_integrity = 0
 	force = 3
 
 //................ Cannon Ball ............... //

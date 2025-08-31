@@ -285,7 +285,7 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 	if(!spend_buyer_offhand_money(customer, total_cost))
 		trader.say(trader_data.return_trader_phrase(NO_CASH_PHRASE))
 		return
-	inactive_item.obj_integrity = inactive_item.max_integrity
+	inactive_item.repair_damage(inactive_item.max_integrity)
 
 /**
  * Checks if the customer is ok to use the radial

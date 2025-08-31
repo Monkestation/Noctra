@@ -144,7 +144,7 @@
 	qdel(GetComponent(/datum/component/wet_floor))
 
 /turf/open/attacked_by(obj/item/I, mob/living/user)
-	if(!(flags_1 & CAN_BE_ATTACKED_1))
+	if(!(flags_1 & CAN_BE_ATTACKED_1) || !user.cmode)
 		return FALSE
 	. = ..()
 

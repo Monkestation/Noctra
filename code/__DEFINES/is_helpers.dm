@@ -146,6 +146,7 @@ GLOBAL_LIST_INIT(pointed_types, typecacheof(list(
 
 #define isgun(A) (istype(A, /obj/item/gun))
 
+#define is_reagent_container(O) (istype(O, /obj/item/reagent_containers))
 
 #define iseffect(O) (istype(O, /obj/effect))
 

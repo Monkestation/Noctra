@@ -82,6 +82,8 @@
 	prevent_crits = ALL_CRITICAL_HITS_VAMP
 	max_integrity = INTEGRITY_STRONG
 	item_weight = 6 * IRON_MULTIPLIER
+	body_parts_covered = HEAD_NECK
+	block2add = FOV_BEHIND
 
 //............... Frog Helmet ............... //
 /obj/item/clothing/head/helmet/heavy/frog

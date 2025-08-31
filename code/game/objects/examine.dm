@@ -7,9 +7,9 @@
 /obj/item/examine(mob/user) //This might be spammy. Remove?
 	. = ..()
 	var/price_text = get_displayed_price(user)
-	if(max_integrity)
-		if(obj_integrity < max_integrity)
-			var/meme = round(((obj_integrity / max_integrity) * 100), 1)
+	if(uses_integrity)
+		if(atom_integrity < max_integrity)
+			var/meme = round(((atom_integrity / max_integrity) * 100), 1)
 			switch(meme)
 				if(0 to 1)
 					. += "<span class='warning'>It's broken.</span>"

@@ -3,7 +3,7 @@
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "gravemarker1"
 	density = FALSE
-	max_integrity = 0
+	resistance_flags = INDESTRUCTIBLE
 	static_debris = list(/obj/item/grown/log/tree/stick = 1)
 	anchored = TRUE
 	layer = 2.91

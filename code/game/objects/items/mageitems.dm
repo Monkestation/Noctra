@@ -255,7 +255,12 @@
 		deltimer(timing_id)
 		timing_id = null
 
-/obj/item/mimictrinket/attack_obj(obj/target, mob/living/user)
+/obj/item/mimictrinket/attack_atom(atom/attacked_atom, mob/living/user)
+	if(!isobj(attacked_atom))
+		return ..()
+
+	var/obj/target = attacked_atom
+	. = TRUE
 	if(ready)
 		to_chat(user,span_notice("[src] takes the form of [target]!"))
 		oldicon = icon

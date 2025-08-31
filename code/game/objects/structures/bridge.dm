@@ -25,8 +25,8 @@
 	update_appearance(UPDATE_ICON)
 
 /obj/structure/bridge/update_icon_state()
-	if(broken)
-		icon_state = "planks_broken"
+	if(obj_broken)
+		icon_state = "planks_obj_broken"
 	else
 		icon_state = base_icon
 	return ..()
@@ -55,7 +55,7 @@
 
 /obj/structure/bridge/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = TRUE, attack_dir)
 	// Avoid taking damage when integrity is already at 0
-	if(broken)
+	if(obj_broken)
 		return
 	. = ..()
 
@@ -81,8 +81,8 @@
 
 /// Repairing a damaged bridge section back to full health
 /obj/structure/bridge/proc/repair_bridge()
-	if(broken)
-		broken = FALSE  // Not broken anymore
+	if(obj_broken)
+		obj_broken = FALSE  // Not obj_broken anymore
 		obj_flags = initial(obj_flags)  // so we set back initial flags
 		update_appearance(UPDATE_ICON_STATE)
 

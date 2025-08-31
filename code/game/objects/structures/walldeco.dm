@@ -5,7 +5,7 @@
 	icon = 'icons/roguetown/misc/decoration.dmi'
 	anchored = TRUE
 	density = FALSE
-	max_integrity = 0
+	resistance_flags = INDESTRUCTIBLE
 	layer = ABOVE_MOB_LAYER+0.1
 
 /obj/structure/fluff/walldeco/proc/get_attached_wall()

@@ -27,7 +27,6 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 	density = FALSE
 	blade_dulling = DULLING_BASH
 	integrity_failure = 0.5
-	max_integrity = 0
 	anchored = TRUE
 	var/mode = MODE_NONE
 	var/datum/weakref/throne_weakref

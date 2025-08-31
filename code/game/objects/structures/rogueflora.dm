@@ -47,12 +47,10 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/flora/tree/attacked_by(obj/item/I, mob/living/user)
-	var/was_destroyed = obj_destroyed
 	. = ..()
-	if(.)
-		if(!was_destroyed && obj_destroyed)
-			record_featured_stat(FEATURED_STATS_TREE_FELLERS, user)
-			record_round_statistic(STATS_TREES_CUT)
+	if(atom_integrity <= 0)
+		record_featured_stat(FEATURED_STATS_TREE_FELLERS, user)
+		record_round_statistic(STATS_TREES_CUT)
 
 /obj/structure/flora/tree/fire_act(added, maxstacks)
 	if(added > 5)
@@ -64,10 +62,10 @@
 		var/turf/T = loc
 		T.ChangeTurf(/turf/open/floor/dirt)
 
-/obj/structure/flora/tree/obj_destruction(damage_flag)
+/obj/structure/flora/tree/atom_destruction(damage_flag)
 	if(stump_type)
 		new stump_type(loc)
-	. = ..()
+	return ..()
 
 /obj/structure/flora/tree/evil
 	base_icon_state = "wv"
@@ -249,7 +247,7 @@
 								"<span class='notice'>I unearth \the [src].</span>")
 			if(isunburnt)
 				new stump_loot(loc) // Rewarded with an extra small log if done the right way.return
-			obj_destruction("brute")
+			atom_destruction("brute")
 		return
 	return ..()
 
@@ -637,10 +635,10 @@
 	if(added > 5)
 		return ..()
 
-/obj/structure/flora/shroom_tree/obj_destruction(damage_flag)
+/obj/structure/flora/shroom_tree/atom_destruction(damage_flag)
 	var/obj/structure/S = new /obj/structure/table/wood/treestump/shroomstump(loc)
 	S.icon_state = "stump_[icon_state]"
-	. = ..()
+	return ..()
 
 /obj/structure/table/wood/treestump/shroomstump
 	name = "shroom stump"

@@ -14,7 +14,7 @@
 	dir = pick(GLOB.cardinals)
 	. = ..()
 
-/turf/open/floor/ruinedwood/turf_destruction(damage_flag)
+/turf/open/floor/ruinedwood/atom_destruction(damage_flag)
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -64,7 +64,7 @@
 	. = ..()
 	dir = dirin
 
-/turf/open/floor/twig/turf_destruction(damage_flag)
+/turf/open/floor/twig/atom_destruction(damage_flag)
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -83,7 +83,7 @@
 //these are here so we can put wood floors next to each other but not have them smooth
 /turf/open/floor/wood/nosmooth
 
-/turf/open/floor/wood/turf_destruction(damage_flag)
+/turf/open/floor/wood/atom_destruction(damage_flag)
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -103,7 +103,7 @@
 	damage_deflection = 8
 	max_integrity = 600
 
-/turf/open/floor/woodturned/turf_destruction(damage_flag)
+/turf/open/floor/woodturned/atom_destruction(damage_flag)
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -123,7 +123,7 @@
 	damage_deflection = 8
 	max_integrity = 800
 
-/turf/open/floor/rooftop/turf_destruction(damage_flag)
+/turf/open/floor/rooftop/atom_destruction(damage_flag)
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -152,7 +152,7 @@
 	. = ..()
 	dir = pick(GLOB.cardinals)
 
-/turf/open/floor/grass/turf_destruction(damage_flag)
+/turf/open/floor/grass/atom_destruction(damage_flag)
 	. = ..()
 	ChangeTurf(/turf/open/floor/dirt, flags = CHANGETURF_INHERIT_AIR)
 
@@ -343,7 +343,7 @@
 /turf/open/floor/dirt/road/attack_hand_secondary(mob/user, params)
 	return
 
-/turf/open/floor/dirt/turf_destruction(damage_flag)
+/turf/open/floor/dirt/atom_destruction(damage_flag)
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -438,7 +438,7 @@
 	. = ..()
 	dir = pick(GLOB.cardinals)
 
-/turf/open/floor/blocks/turf_destruction(damage_flag)
+/turf/open/floor/blocks/atom_destruction(damage_flag)
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -482,7 +482,7 @@
 	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
 	attacked_sound = list('sound/combat/hits/onstone/wallhit.ogg', 'sound/combat/hits/onstone/wallhit2.ogg', 'sound/combat/hits/onstone/wallhit3.ogg')
 
-/turf/open/floor/greenstone/turf_destruction(damage_flag)
+/turf/open/floor/greenstone/atom_destruction(damage_flag)
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -523,7 +523,7 @@
 	. = ..()
 	dir = pick(GLOB.cardinals)
 
-/turf/open/floor/hexstone/turf_destruction(damage_flag)
+/turf/open/floor/hexstone/atom_destruction(damage_flag)
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -547,7 +547,7 @@
 	. = ..()
 	dir = pick(GLOB.cardinals)
 
-/turf/open/floor/churchmarble/turf_destruction(damage_flag)
+/turf/open/floor/churchmarble/atom_destruction(damage_flag)
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -563,7 +563,7 @@
 	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
 	attacked_sound = list('sound/combat/hits/onstone/wallhit.ogg', 'sound/combat/hits/onstone/wallhit2.ogg', 'sound/combat/hits/onstone/wallhit3.ogg')
 
-/turf/open/floor/church/turf_destruction(damage_flag)
+/turf/open/floor/church/atom_destruction(damage_flag)
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -586,7 +586,7 @@
 	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
 	attacked_sound = list('sound/combat/hits/onstone/wallhit.ogg', 'sound/combat/hits/onstone/wallhit2.ogg', 'sound/combat/hits/onstone/wallhit3.ogg')
 
-/turf/open/floor/churchbrick/turf_destruction(damage_flag)
+/turf/open/floor/churchbrick/atom_destruction(damage_flag)
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -606,7 +606,7 @@
 	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
 	attacked_sound = list('sound/combat/hits/onstone/wallhit.ogg', 'sound/combat/hits/onstone/wallhit2.ogg', 'sound/combat/hits/onstone/wallhit3.ogg')
 
-/turf/open/floor/churchrough/turf_destruction(damage_flag)
+/turf/open/floor/churchrough/atom_destruction(damage_flag)
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -635,7 +635,7 @@
 	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
 	attacked_sound = list('sound/combat/hits/onstone/wallhit.ogg', 'sound/combat/hits/onstone/wallhit2.ogg', 'sound/combat/hits/onstone/wallhit3.ogg')
 
-/turf/open/floor/herringbone/turf_destruction(damage_flag)
+/turf/open/floor/herringbone/atom_destruction(damage_flag)
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -653,7 +653,7 @@
 	neighborlay = "cobbleedge"
 	max_integrity = 1200
 
-/turf/open/floor/cobble/turf_destruction(damage_flag)
+/turf/open/floor/cobble/atom_destruction(damage_flag)
 	. = ..()
 	ChangeTurf(/turf/open/floor/dirt, flags = CHANGETURF_INHERIT_AIR)
 	new /obj/item/natural/stone(src)
@@ -699,7 +699,7 @@
 	neighborlay = "cobblerock"
 	max_integrity = 1200
 
-/turf/open/floor/cobblerock/turf_destruction(damage_flag)
+/turf/open/floor/cobblerock/atom_destruction(damage_flag)
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -749,7 +749,7 @@
 	damage_deflection = 10
 	max_integrity = 800
 
-/turf/open/floor/tile/turf_destruction(damage_flag)
+/turf/open/floor/tile/atom_destruction(damage_flag)
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -807,7 +807,7 @@
 	break_sound = 'sound/combat/hits/onstone/stonedeath.ogg'
 	attacked_sound = list('sound/combat/hits/onstone/wallhit.ogg', 'sound/combat/hits/onstone/wallhit2.ogg', 'sound/combat/hits/onstone/wallhit3.ogg')
 
-/turf/open/floor/concrete/turf_destruction(damage_flag)
+/turf/open/floor/concrete/atom_destruction(damage_flag)
 	. = ..()
 	src.ChangeTurf(/turf/open/floor/dirt, flags = CHANGETURF_INHERIT_AIR)
 	new /obj/item/natural/stone(src)
@@ -832,7 +832,7 @@
 /turf/open/floor/metal/alt
 	icon_state = "plating2"
 
-/turf/open/floor/metal/turf_destruction(damage_flag)
+/turf/open/floor/metal/atom_destruction(damage_flag)
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
@@ -892,7 +892,7 @@
 	damage_deflection = 8
 	max_integrity = 1000
 
-/turf/open/floor/plank/turf_destruction(damage_flag)
+/turf/open/floor/plank/atom_destruction(damage_flag)
 	. = ..()
 	ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 
