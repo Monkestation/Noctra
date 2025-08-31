@@ -213,11 +213,6 @@
 	icon_state = "chair1"
 	origin_type = /obj/structure/chair/wood/alt/fancy
 
-<<<<<<< HEAD
-/obj/structure/chair/wood/alt
-
-=======
->>>>>>> vanderlin/main
 /obj/structure/chair/wood/alt/post_buckle_mob(mob/living/M)
 	..()
 	density = TRUE

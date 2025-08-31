@@ -1066,8 +1066,6 @@
                 "rscadd": "Door bumping with keys unlocks doors."
             }
         ]
-<<<<<<< HEAD
-=======
     },
     "2025-08-31": {
         "PotatoTomahto": [
@@ -1110,6 +1108,5 @@
                 "rscadd": "Added culinary preferences, which allows you to pick your favourite/hated foods and drinks. Consuming your favourites gives you a mood boost that is proportional to their quality. Consuming hated ones lowers your mood slightly for a while."
             }
         ]
->>>>>>> vanderlin/main
     }
 }

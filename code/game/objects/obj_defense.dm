@@ -8,41 +8,6 @@
 		animate(src, pixel_x = oldx+1, time = 0.5)
 		animate(pixel_x = oldx-1, time = 0.5)
 		animate(pixel_x = oldx, time = 0.5)
-<<<<<<< HEAD
-	if(!obj_broken && integrity_failure && obj_integrity <= integrity_failure * max_integrity)
-		obj_break(damage_flag)
-	if(!obj_destroyed && obj_integrity <= 0)
-		obj_destruction(damage_flag)
-
-
-///returns the damage value of the attack after processing the obj's various armor protections
-/obj/proc/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armor_penetration = 0)
-	if((damage_flag in MELEE_TYPES) && damage_amount < damage_deflection)
-		return 0
-	if(damage_type != BRUTE && damage_type != BURN)
-		return 0
-	var/armor_protection = 0
-	if(damage_flag)
-		armor_protection = armor?.getRating(damage_flag)
-	if(armor_protection)		//Only apply weak-against-armor/hollowpoint effects if there actually IS armor.
-		armor_protection = CLAMP(armor_protection - armor_penetration, min(armor_protection, 0), 100)
-	return round(damage_amount * (100 - armor_protection)*0.01, DAMAGE_PRECISION)
-
-///the sound played when the obj is damaged.
-/obj/proc/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	switch(damage_type)
-		if(BRUTE)
-			if(damage_amount)
-				if(islist(attacked_sound))
-					playsound(src.loc, pick(attacked_sound), 100, FALSE, -1)
-				else
-					playsound(src.loc, attacked_sound, 100, FALSE, -1)
-			else
-				playsound(src.loc, "nodmg", 100, FALSE, -1)
-		if(BURN)
-			playsound(src.loc, "burn", 100, FALSE, -1)
-=======
->>>>>>> vanderlin/main
 
 /obj/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum, damage_type = "blunt")
 	..()

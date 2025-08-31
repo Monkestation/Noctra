@@ -10,25 +10,6 @@
 	icon = 'icons/roguetown/misc/decoration.dmi'
 	var/deployed_structure = /obj/structure/fluff/walldeco/painting
 
-<<<<<<< HEAD
-/obj/item/painting/attack_turf(turf/T, mob/living/user)
-	if(isclosedturf(T))
-		if(get_dir(T,user) in GLOB.cardinals)
-			to_chat(user, "<span class='warning'>I place [src] on the wall.</span>")
-			var/obj/structure/S = new deployed_structure(user.loc)
-			switch(get_dir(T,user))
-				if(NORTH)
-					S.pixel_y = S.base_pixel_y - 32
-				if(SOUTH)
-					S.pixel_y = S.base_pixel_y + 32
-				if(WEST)
-					S.pixel_x = S.base_pixel_x + 32
-				if(EAST)
-					S.pixel_x = S.base_pixel_x - 32
-			qdel(src)
-			return
-	..()
-=======
 /obj/item/painting/attack_atom(atom/attacked_atom, mob/living/user)
 	if(!isclosedturf(attacked_atom))
 		return ..()
@@ -52,7 +33,6 @@
 		if(EAST)
 			S.pixel_x = S.base_pixel_x - 32
 	qdel(src)
->>>>>>> vanderlin/main
 
 /obj/structure/fluff/walldeco/painting
 	name = "painting"

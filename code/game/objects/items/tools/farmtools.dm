@@ -30,10 +30,7 @@
 	icon_state = "cfork"
 	item_state = "cfork"
 	SET_BASE_PIXEL(-16, -16)
-<<<<<<< HEAD
-=======
 	force_wielded = DAMAGE_SPEAR
->>>>>>> vanderlin/main
 	experimental_inhand = TRUE
 	experimental_onback = TRUE
 	experimental_onhip = TRUE

@@ -571,13 +571,8 @@
 	armor = list("blunt" = 15, "slash" = 30, "stab" = 30,  "piercing" = 0, "fire" = 50, "acid" = 50)
 	open_sound = 'sound/foley/doors/stoneopen.ogg'
 	close_sound = 'sound/foley/doors/stoneclose.ogg'
-<<<<<<< HEAD
-	repair_cost_first = /obj/item/natural/stone
-	repair_cost_second = /obj/item/natural/stone
-=======
 	repair_thresholds = list(/obj/item/natural/stone = 1)
 	broken_repair = /obj/item/natural/stone
->>>>>>> vanderlin/main
 	repair_skill = /datum/skill/craft/masonry
 	smeltresult = null
 	metalizer_result = null

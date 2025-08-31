@@ -218,15 +218,12 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/randomize_shutup = FALSE
 	/// Custom UI scale
 	var/ui_scale
-<<<<<<< HEAD
 	///this is our character slot
 	var/tmp/current_slot = 1
 	/// List storing ERP preference values
 	var/list/erp_preferences
-=======
 	/// Assoc list of culinary preferences, where the key is the type of the culinary preference, and value is food/drink typepath
 	var/list/culinary_preferences = list()
->>>>>>> vanderlin/main
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -1647,12 +1644,9 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		character.regenerate_limb(BODY_ZONE_R_ARM)
 		character.regenerate_limb(BODY_ZONE_L_ARM)
 		character.set_flaw(charflaw.type, FALSE)
-<<<<<<< HEAD
-=======
 
 	if(culinary_preferences)
 		apply_culinary_preferences(character)
->>>>>>> vanderlin/main
 
 	if(parent)
 		var/datum/role_bans/bans = get_role_bans_for_ckey(parent.ckey)

@@ -18,10 +18,6 @@ GLOBAL_LIST_INIT(dungeon_exits, list())
 	density = TRUE
 	anchored = TRUE
 	SET_BASE_PIXEL(-48, 0)
-<<<<<<< HEAD
-	max_integrity = 0
-=======
->>>>>>> vanderlin/main
 	bound_width = 128
 	appearance_flags = NONE
 	opacity = TRUE

@@ -6,10 +6,6 @@
 	icon_state = "scomm1"
 	density = FALSE
 	blade_dulling = DULLING_BASH
-<<<<<<< HEAD
-	max_integrity = 0
-=======
->>>>>>> vanderlin/main
 	SET_BASE_PIXEL(0, 32)
 	anchored = TRUE
 	var/next_decree = 0

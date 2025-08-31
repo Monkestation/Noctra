@@ -49,12 +49,8 @@
 			addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_COVEN_BANE, VAMPIRE_TRAIT), 30 SECONDS)
 			target.clan.disable_covens(target)
 		else
-<<<<<<< HEAD
-			target.Paralyze(15)
-=======
 			target.Immobilize(15)
 			target.Stun(7.5)
->>>>>>> vanderlin/main
 		target.adjustFireLoss(25)
 		target.adjust_divine_fire_stacks(3)
 		target.IgniteMob()

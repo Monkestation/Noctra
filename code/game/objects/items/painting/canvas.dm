@@ -109,11 +109,7 @@
 	if(!do_after(user, 3 SECONDS, attacked_atom))
 		return
 	user.dropItemToGround(src)
-<<<<<<< HEAD
-	forceMove(T)
-=======
 	forceMove(attacked_atom)
->>>>>>> vanderlin/main
 	pixel_x = base_pixel_x
 	pixel_y = base_pixel_y
 	anchored = TRUE

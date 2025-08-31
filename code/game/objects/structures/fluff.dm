@@ -434,10 +434,6 @@
 	break_sound = "glassbreak"
 	destroy_sound = 'sound/combat/hits/onwood/destroyfurniture.ogg'
 	attacked_sound = 'sound/combat/hits/onglass/glasshit.ogg'
-<<<<<<< HEAD
-	var/broke = FALSE
-=======
->>>>>>> vanderlin/main
 	SET_BASE_PIXEL(0, 32)
 	metalizer_result = /obj/item/gear/metal/bronze
 

@@ -177,10 +177,7 @@
 	H.base_intelligence = 1
 	H.base_constitution = 3
 	H.recalculate_stats(FALSE)
-<<<<<<< HEAD
-=======
 	H.grant_language(/datum/language/undead)
->>>>>>> vanderlin/main
 
 	H.verbs |= /mob/living/carbon/human/proc/praise
 	H.verbs |= /mob/living/carbon/human/proc/communicate

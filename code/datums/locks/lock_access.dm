@@ -60,11 +60,8 @@
 /mob/proc/lock_unlock_animation(obj/door, obj/item)
 	animate(src, time = 0.3 SECONDS, pixel_w = ((door.x - src.x) * 5), pixel_z = ((door.y - src.y) * 5), easing = SINE_EASING, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 	animate(time = 0.3 SECONDS, pixel_w = ((door.x - src.x) * -5), pixel_z = ((door.y - src.y) * -5), easing = SINE_EASING, flags = ANIMATION_RELATIVE)
-<<<<<<< HEAD
-=======
 	if(!item)
 		return
->>>>>>> vanderlin/main
 	var/obj/effect/key = new(get_turf(src))
 	key.appearance = item.appearance
 

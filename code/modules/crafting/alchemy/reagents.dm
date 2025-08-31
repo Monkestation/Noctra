@@ -34,11 +34,7 @@
 		var/mob/living/carbon/human/human = M
 		var/obj/item/clothing/werewolf_armor = human.skin_armor
 		if(werewolf_armor)
-<<<<<<< HEAD
-			werewolf_armor.obj_integrity = min(werewolf_armor.obj_integrity + werewolf_armor.max_integrity * 0.01, werewolf_armor.max_integrity)
-=======
 			werewolf_armor.repair_damage(werewolf_armor.max_integrity * 0.01)
->>>>>>> vanderlin/main
 	..()
 
 /datum/reagent/medicine/stronghealth

@@ -91,11 +91,7 @@
 		if(d_type in article.prevent_crits)
 			if(!best_armor)
 				best_armor = article
-<<<<<<< HEAD
-			else if (round(((best_armor.obj_integrity / best_armor.max_integrity) * 100), 1) < round(((article.obj_integrity / article.max_integrity) * 100), 1)) //We want the armor with highest % integrity
-=======
 			else if (round(((best_armor.get_integrity() / best_armor.max_integrity) * 100), 1) < round(((article.get_integrity() / article.max_integrity) * 100), 1)) //We want the armor with highest % integrity
->>>>>>> vanderlin/main
 				best_armor = article
 	return best_armor
 

@@ -301,10 +301,6 @@ GLOBAL_LIST_EMPTY(letters_sent)
 	icon = 'icons/roguetown/misc/machines.dmi'
 	icon_state = "mailspecial"
 	SET_BASE_PIXEL(0, 32)
-<<<<<<< HEAD
-	max_integrity = 0
-=======
->>>>>>> vanderlin/main
 	density = FALSE
 	blade_dulling = DULLING_BASH
 	anchored = TRUE
