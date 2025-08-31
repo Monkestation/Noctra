@@ -64,6 +64,8 @@
 		mob.update_music_volume(CHANNEL_MUSIC, prefs.musicvol)
 		mob.update_music_volume(CHANNEL_LOBBYMUSIC, prefs.musicvol)
 		mob.update_music_volume(CHANNEL_ADMIN, prefs.musicvol)
+		mob.update_music_volume(CHANNEL_BUZZ, prefs.musicvol)
+		mob.update_music_volume(CHANNEL_AMBIENCE, prefs.musicvol)
 
 
 /client/verb/show_rolls()

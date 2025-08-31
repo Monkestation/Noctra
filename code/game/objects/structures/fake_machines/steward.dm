@@ -12,7 +12,6 @@
 	icon_state = "steward_machine"
 	density = TRUE
 	blade_dulling = DULLING_BASH
-	max_integrity = 0
 	anchored = TRUE
 	layer = BELOW_OBJ_LAYER
 

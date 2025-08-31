@@ -10,6 +10,7 @@
 	icon = 'icons/roguetown/misc/decoration.dmi'
 	var/deployed_structure = /obj/structure/fluff/walldeco/painting
 
+<<<<<<< HEAD
 /obj/item/painting/attack_turf(turf/T, mob/living/user)
 	if(isclosedturf(T))
 		if(get_dir(T,user) in GLOB.cardinals)
@@ -27,6 +28,31 @@
 			qdel(src)
 			return
 	..()
+=======
+/obj/item/painting/attack_atom(atom/attacked_atom, mob/living/user)
+	if(!isclosedturf(attacked_atom))
+		return ..()
+
+	var/direction = get_dir(attacked_atom,user)
+	if(!(direction in GLOB.cardinals))
+		return ..()
+
+	. = TRUE
+	to_chat(user, span_warning("I place [src] on the wall."))
+	if(!do_after(user, 3 SECONDS, attacked_atom))
+		return
+	var/obj/structure/S = new deployed_structure(user.loc)
+	switch(direction)
+		if(NORTH)
+			S.pixel_y = S.base_pixel_y - 32
+		if(SOUTH)
+			S.pixel_y = S.base_pixel_y + 32
+		if(WEST)
+			S.pixel_x = S.base_pixel_x + 32
+		if(EAST)
+			S.pixel_x = S.base_pixel_x - 32
+	qdel(src)
+>>>>>>> vanderlin/main
 
 /obj/structure/fluff/walldeco/painting
 	name = "painting"
@@ -35,17 +61,20 @@
 	icon_state = "painting_deployed"
 	anchored = TRUE
 	density = FALSE
-	max_integrity = 0
+	resistance_flags = INDESTRUCTIBLE
 	layer = ABOVE_MOB_LAYER
 	var/stolen_painting = /obj/item/painting
 
 /obj/structure/fluff/walldeco/painting/attack_hand(mob/user)
-	if(do_after(user, 3 SECONDS, user))
+	. = ..()
+	if(.)
+		return
+
+	if(do_after(user, 3 SECONDS, src))
 		var/obj/item/I = new stolen_painting(user.loc)
 		user.put_in_hands(I)
 		qdel(src)
 		return
-	..()
 
 /* Paintings */
 /obj/item/painting/queen

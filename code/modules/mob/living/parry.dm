@@ -266,7 +266,7 @@
 			src.visible_message("<span class='boldwarning'><b>[src]</b> blocks [user] with [W]!</span>")
 
 			// Check shield integrity
-			var/shieldur = round(((W.obj_integrity / W.max_integrity) * 100), 1)
+			var/shieldur = round(((W.get_integrity() / W.max_integrity) * 100), 1)
 			if(shieldur <= 30)
 				src.visible_message("<span class='boldwarning'><b>\The [W] is about to break!</b></span>")
 		else

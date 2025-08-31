@@ -26,7 +26,7 @@
 	if(QDELETED(my_turf) || COOLDOWN_FINISHED(src, expiry_time))
 		qdel(src)
 		return
-	my_turf.pollute_turf(pollutant_type, pollutant_amount * seconds_per_tick)
+	my_turf.pollute_turf(pollutant_type, pollutant_amount * (seconds_per_tick / 10))
 
 /datum/component/temporary_pollution_emission/proc/wash_off()
 	SIGNAL_HANDLER

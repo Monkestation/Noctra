@@ -5950,7 +5950,7 @@
 /turf/open/floor/cobblerock/alt,
 /area/rogue/outdoors/rtfield/safe)
 "fLy" = (
-/obj/item/roguemachine/drugtrade,
+/obj/item/fake_machine/drugtrade,
 /turf/open/floor/metal/alt,
 /area/rogue/indoors/town/bath)
 "fLL" = (
@@ -6367,7 +6367,7 @@
 "ggi" = (
 /obj/structure/closet/crate/drawer,
 /obj/item/book/secret/ledger,
-/obj/item/roguemachine/mastermail{
+/obj/item/fake_machine/mastermail{
 	pixel_x = 32;
 	pixel_y = 0
 	},

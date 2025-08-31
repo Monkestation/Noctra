@@ -112,8 +112,8 @@
 	//playsound(get_turf(target), 'sound/magic/staff_healing.ogg', 50, TRUE)
 
 	// Restore some durability or repair minor damage
-	if(target.obj_integrity < target.max_integrity)
-		target.obj_integrity = min(target.max_integrity, target.obj_integrity + 10)
+	if(target.get_integrity() < target.max_integrity)
+		target.repair_damage(10)
 		target.update_appearance()
 
 /datum/action/cooldown/spell/essence/chill

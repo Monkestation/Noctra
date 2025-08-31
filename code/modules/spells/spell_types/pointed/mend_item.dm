@@ -24,7 +24,7 @@
 
 /datum/action/cooldown/spell/mend_item/cast(obj/item/cast_on)
 	. = ..()
-	var/integrity = cast_on.obj_integrity
+	var/integrity = cast_on.get_integrity()
 	var/max_integrity = cast_on.max_integrity
 	if(integrity >= max_integrity)
 		to_chat(owner, span_info("\The [cast_on] appears to be in pefect condition."))
@@ -32,7 +32,5 @@
 
 	cast_on.visible_message(span_info("[cast_on] glows in a faint green light."))
 
-	cast_on.obj_integrity = min(max_integrity, integrity + (max_integrity * repair_percent))
-
-	if(cast_on.obj_broken == TRUE)
-		cast_on.obj_broken = FALSE
+	cast_on.repair_damage(max_integrity * repair_percent)
+	cast_on.atom_fix()

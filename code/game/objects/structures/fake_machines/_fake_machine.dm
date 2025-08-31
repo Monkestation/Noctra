@@ -4,7 +4,7 @@
 	destroy_sound = 'sound/foley/breaksound.ogg'
 	break_sound = 'sound/foley/machinebreak.ogg'
 	anchored = TRUE
-	max_integrity = 0
+	resistance_flags = INDESTRUCTIBLE
 
 /obj/structure/fake_machine/proc/budget2change(budget, mob/user, specify)
 	var/turf/T

@@ -64,10 +64,13 @@
 	else
 		pixel_x = base_pixel_x + rand(-2, 2)
 		pixel_y = base_pixel_y + rand(0,2)
+<<<<<<< HEAD
 
 /obj/structure/kneestingers/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN && damage_amount)
 		playsound(src.loc, 'sound/blank.ogg', 100, TRUE)
+=======
+>>>>>>> vanderlin/main
 
 /obj/structure/kneestingers/temperature_expose(exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)

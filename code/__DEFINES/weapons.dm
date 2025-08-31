@@ -55,7 +55,7 @@
 //wdefense defines
 #define TERRIBLE_PARRY -1
 #define BAD_PARRY 0
-#define MEDIOCHRE_PARRY 1
+#define MEDIOCRE_PARRY 1
 #define AVERAGE_PARRY 2
 #define GOOD_PARRY 3
 #define GREAT_PARRY 4

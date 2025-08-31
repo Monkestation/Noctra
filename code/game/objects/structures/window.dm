@@ -20,17 +20,18 @@
 	destroy_sound = 'sound/combat/hits/onwood/destroywalldoor.ogg'
 
 	var/lockdir = 0
-	var/brokenstate = 0
 
-	var/repairable = TRUE
-	var/repair_state = 0
-	var/obj/item/repair_cost_first = /obj/item/natural/glass
-	var/obj/item/repair_cost_second = /obj/item/grown/log/tree/small
-	var/repair_skill = /datum/skill/craft/masonry // i copypasted this code from the repairable doors and now it's got defines in the base
+	// See repairable component in repairable.dm for what these variables do
+	var/list/repair_thresholds = list(/obj/item/natural/glass = 1)
+	var/obj/item/broken_repair = /obj/item/grown/log/tree/small
+	var/repair_skill = /datum/skill/craft/masonry
 
 /obj/structure/window/Initialize()
 	. = ..()
 	update_appearance(UPDATE_ICON_STATE)
+
+	if(repair_thresholds || broken_repair)
+		AddComponent(/datum/component/repairable, repair_thresholds, broken_repair,  'sound/misc/wood_saw.ogg', repair_skill)
 
 /obj/structure/window/get_explosion_resistance()
 	if(!climbable)
@@ -43,53 +44,7 @@
 
 /obj/structure/window/update_icon_state()
 	. = ..()
-	icon_state = "[initial(icon_state)][brokenstate ? "br" : ""]"
-
-/obj/structure/window/proc/repairwindow(obj/item/I, mob/user)
-	if(brokenstate)
-		switch(repair_state)
-			if(0)
-				if(istype(I, repair_cost_first))
-					user.visible_message(span_notice("[user] starts repairing [src]."), \
-					span_notice("I start repairing [src]."))
-					playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
-					if(do_after(user, (30 SECONDS / user.get_skill_level(repair_skill)), src)) // 1 skill = 30 secs, 2 skill = 15 secs etc.
-						qdel(I)
-						playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
-						repair_state = 1
-						var/obj/cast_repair_cost_second = repair_cost_second
-						to_chat(user, span_notice("An additional [initial(cast_repair_cost_second.name)] is needed to finish the job."))
-			if(1)
-				if(istype(I, repair_cost_second))
-					user.visible_message(span_notice("[user] starts repairing [src]."), \
-					span_notice("I start repairing [src]."))
-					playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
-					if(do_after(user, (30 SECONDS / user.get_skill_level(repair_skill)), src)) // 1 skill = 30 secs, 2 skill = 15 secs etc.
-						qdel(I)
-						playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
-						icon_state = "[initial(icon_state)]"
-						density = TRUE
-						opacity = TRUE
-						brokenstate = FALSE
-						obj_broken = FALSE
-						obj_integrity = max_integrity
-						repair_state = 0
-						user.visible_message(span_notice("[user] repaired [src]."), \
-						span_notice("I repaired [src]."))
-	else
-		if(obj_integrity < max_integrity && istype(I, repair_cost_first))
-			to_chat(user, span_warning("[obj_integrity]"))
-			user.visible_message(span_notice("[user] starts repairing [src]."), \
-			span_notice("I start repairing [src]."))
-			playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
-			if(do_after(user, (30 SECONDS / user.get_skill_level(repair_skill)), src)) // 1 skill = 30 secs, 2 skill = 15 secs etc.
-				qdel(I)
-				playsound(user, 'sound/misc/wood_saw.ogg', 100, TRUE)
-				obj_integrity = obj_integrity + (max_integrity/2)
-				if(obj_integrity > max_integrity)
-					obj_integrity = max_integrity
-				user.visible_message(span_notice("[user] repaired [src]."), \
-				span_notice("I repaired [src]."))
+	icon_state = "[initial(icon_state)][obj_broken ? "br" : ""]"
 
 /obj/structure/window/attack_ghost(mob/dead/observer/user)	// lets ghosts click on windows to transport across
 	density = FALSE
@@ -105,8 +60,8 @@
 	icon_state = "stained-silver"
 	max_integrity = 100
 	integrity_failure = 0.75
-	repair_cost_first = /obj/item/natural/glass
-	repair_cost_second = /obj/item/natural/stone
+	repair_thresholds = list(/obj/item/natural/glass = 1)
+	broken_repair = /obj/item/natural/stone
 
 /obj/structure/window/stained/silver
 	desc = "A stained-glass window filigreed in silver."
@@ -158,7 +113,7 @@
 	if(GLOB.tod == "night")
 		icon += "w-"
 	icon += initial(icon_state)
-	if(brokenstate)
+	if(obj_broken)
 		icon_state = "[icon]br"
 		return
 	if(climbable)
@@ -171,7 +126,7 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 	if(get_dir(src, user) == lockdir)
-		if(brokenstate)
+		if(obj_broken)
 			to_chat(user, "<span class='warning'>It's broken, that would be foolish.</span>")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		if(climbable)
@@ -231,8 +186,7 @@
 	if(climbable && (mover.throwing || mover.movement_type & (FLYING|FLOATING)))
 		if(ishuman(mover))
 			var/mob/living/carbon/human/dude = mover
-			var/is_jumping = dude.has_status_effect(/datum/status_effect/is_jumping)
-			if(prob(100 - clamp((dude.get_skill_level(/datum/skill/misc/athletics) + dude.get_skill_level(/datum/skill/misc/climbing)) * 10 - (!is_jumping * 30), 10, 100)))
+			if(prob(100 - clamp((dude.get_skill_level(/datum/skill/misc/athletics) + dude.get_skill_level(/datum/skill/misc/climbing)) * 10 - (!dude.IsOffBalanced() * 30), 10, 100)))
 				var/obj/item/bodypart/head/head = dude.get_bodypart(BODY_ZONE_HEAD)
 				if(head)
 					head.receive_damage(20)
@@ -262,23 +216,28 @@
 	. = ..()
 	if(.)
 		return
-	if(brokenstate)
+	if(obj_broken)
 		return
 	if( user.used_intent.type == /datum/intent/unarmed/claw )
 		to_chat(user, "<span class='warning'>[user] smashes the window!!</span>")
-		obj_break()
+		atom_break()
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
 	src.visible_message("<span class='info'>[user] knocks on [src].</span>")
 	add_fingerprint(user)
 	playsound(src, 'sound/misc/glassknock.ogg', 100)
 
-
-/obj/structure/window/obj_break(damage_flag, silent)
-	if(!brokenstate)
+/obj/structure/window/atom_break(damage_flag, silent)
+	if(!obj_broken)
 		attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 		new /obj/item/natural/glass/shard (get_turf(src))
 		climbable = TRUE
-		brokenstate = TRUE
-	update_appearance(UPDATE_ICON_STATE)
 	..()
+	update_appearance(UPDATE_ICON_STATE)
+	air_update_turf(TRUE)
+
+/obj/structure/window/atom_fix()
+	. = ..()
+	climbable = initial(climbable)
+	update_appearance(UPDATE_ICON_STATE)
+	air_update_turf(TRUE)

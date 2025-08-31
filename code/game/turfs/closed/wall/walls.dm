@@ -346,7 +346,7 @@
 /obj/structure/thronething
 	name = "stone wall"
 	icon = 'icons/turf/walls.dmi'
-	max_integrity = 0
+	resistance_flags = INDESTRUCTIBLE
 	opacity = 0
 	icon_state = "decostone-l"
 

@@ -1055,6 +1055,17 @@
 GLOBAL_VAR_INIT(pixel_diff, 12)
 GLOBAL_VAR_INIT(pixel_diff_time, 1)
 
+/**
+ * Does an attack animation on the target that either uses the used_item icon or an effect from 'icons/effects/effects.dmi'
+ *
+ * @param {atom} attacked_atom - The thing getting attacked
+ * @param visual_effect_icon - The effect drawn on top of attacked_atom
+ * @param used_item - The item used to draw the swing animation
+ * @param {bool} no_effect - if TRUE, prevents any attack animation on the target
+ * @param item_animation_override - String to determine animation_type of swing animation. Overrides used_intent
+ * @param {datum} used_intent - Intent used to determine animation_type of swing animation
+ * @param {bool} atom_bounce - Whether the src bounces when doing an attack animation
+ */
 /atom/movable/proc/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect, item_animation_override = null, datum/intent/used_intent, atom_bounce)
 	if(!no_effect && (visual_effect_icon || used_item))
 		var/animation_type = item_animation_override || used_intent?.get_attack_animation_type()

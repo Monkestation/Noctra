@@ -128,7 +128,7 @@
 
 	for(var/datum/trader_data/trader_data in next_boat_traders)
 		var/picked_outfit = pick(trader_outfits)
-		if(trader_data.outfit_override)
+		if(length(trader_data.outfit_override))
 			picked_outfit = pick(trader_data.outfit_override)
 		var/mob/living/simple_animal/hostile/retaliate/trader/faction_trader/new_trader = new(spawn_location, TRUE, picked_outfit, WEAKREF(src))
 		new_trader.set_custom_trade(trader_data)

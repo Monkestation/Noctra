@@ -24,7 +24,7 @@
 				to_chat(M, "<span class='warning'>I don't want to hurt [src]!</span>")
 				return
 			M.do_attack_animation(src, M.used_intent.animname, atom_bounce = TRUE)
-			playsound(loc, attacked_sound, 25, TRUE, -1)
+			playsound(loc, punched_sound, 25, TRUE, -1)
 			var/damage = M.get_punch_dmg()
 			next_attack_msg.Cut()
 			attack_threshold_check(damage)
@@ -113,7 +113,7 @@
 			to_chat(M, "<span class='warning'>I don't want to hurt [src]!</span>")
 			return
 		M.do_attack_animation(src, M.used_intent.animname, atom_bounce = TRUE)
-		playsound(loc, attacked_sound, 25, TRUE, -1)
+		playsound(loc, punched_sound, 25, TRUE, -1)
 		var/damage = M.get_punch_dmg()
 		next_attack_msg.Cut()
 		attack_threshold_check(damage)

@@ -149,23 +149,15 @@
 
 // CLEANING
 
-/obj/item/natural/cloth/attack_obj(obj/O, mob/living/user)
+/obj/item/natural/cloth/attack_atom(obj/O, mob/living/user)
 	switch(user.used_intent.type)
 		if(INTENT_SOAK)
 			soak_cloth(O, user)
+			return TRUE
 		if(INTENT_WRING)
 			wring_cloth(O, user)
-		else
-			return ..()
-
-/obj/item/natural/cloth/attack_turf(turf/T, mob/living/user)
-	switch(user.used_intent.type)
-		if(INTENT_SOAK)
-			soak_cloth(T, user)
-		if(INTENT_WRING)
-			wring_cloth(T, user)
-		else
-			return ..()
+			return TRUE
+	return ..()
 
 /obj/item/natural/cloth/attack_self(mob/user, params)
 	wring_cloth(user.loc, user)

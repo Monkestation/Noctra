@@ -26,7 +26,6 @@
 	burn_reduction = 0
 	max_damage = 0
 	w_class = WEIGHT_CLASS_TINY
-	max_integrity = 0
 	sellprice = 0
 	fingers = FALSE
 
@@ -41,7 +40,6 @@
 	burn_reduction = 0
 	max_damage = 0
 	w_class = WEIGHT_CLASS_TINY
-	max_integrity = 0
 	sellprice = 0
 	fingers = FALSE
 
@@ -56,7 +54,6 @@
 	burn_reduction = 0
 	max_damage = 0
 	w_class = WEIGHT_CLASS_TINY
-	max_integrity = 0
 	sellprice = 0
 
 /obj/item/bodypart/r_leg/prosthetic
@@ -70,7 +67,6 @@
 	burn_reduction = 0
 	max_damage = 0
 	w_class = WEIGHT_CLASS_TINY
-	max_integrity = 0
 	sellprice = 0
 
 // --------- WOOD PROSTHETICS -----------

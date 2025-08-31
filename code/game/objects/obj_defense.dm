@@ -1,22 +1,14 @@
-///the essential proc to call when an obj must receive damage of any kind.
-/obj/proc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armor_penetration = 0)
-	if(QDELETED(src))
-		stack_trace("[src] taking damage after deletion")
+/obj/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armor_penetration)
+	. = ..()
+	if(!.)
 		return
-	if(sound_effect)
-		play_attack_sound(damage_amount, damage_type, damage_flag)
-	if((resistance_flags & INDESTRUCTIBLE) || !max_integrity)
-		return
-	damage_amount = run_obj_armor(damage_amount, damage_type, damage_flag, attack_dir, armor_penetration)
-	if(damage_amount < DAMAGE_PRECISION)
-		return
-	. = damage_amount
-	obj_integrity = max(obj_integrity - damage_amount, 0)
+
 	if(animate_dmg)
 		var/oldx = pixel_x
 		animate(src, pixel_x = oldx+1, time = 0.5)
 		animate(pixel_x = oldx-1, time = 0.5)
 		animate(pixel_x = oldx, time = 0.5)
+<<<<<<< HEAD
 	if(!obj_broken && integrity_failure && obj_integrity <= integrity_failure * max_integrity)
 		obj_break(damage_flag)
 	if(!obj_destroyed && obj_integrity <= 0)
@@ -49,6 +41,8 @@
 				playsound(src.loc, "nodmg", 100, FALSE, -1)
 		if(BURN)
 			playsound(src.loc, "burn", 100, FALSE, -1)
+=======
+>>>>>>> vanderlin/main
 
 /obj/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum, damage_type = "blunt")
 	..()
@@ -88,11 +82,6 @@
 	visible_message("<span class='danger'>[src] is hit by \a [P]!</span>", null, null, COMBAT_MESSAGE_RANGE)
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
 		take_damage(P.damage, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armor_penetration)
-
-/obj/proc/attack_generic(mob/user, damage_amount = 0, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, armor_penetration = 0) //used by attack_alien, attack_animal, and attack_slime
-	user.do_attack_animation(src, used_intent = user.used_intent)
-	user.changeNext_move(CLICK_CD_MELEE)
-	return take_damage(damage_amount, damage_type, damage_flag, sound_effect, get_dir(src, user), armor_penetration)
 
 /obj/attack_animal(mob/living/simple_animal/M)
 	if(!M.melee_damage_upper && !M.obj_damage)
@@ -216,18 +205,17 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 				new I (get_turf(src))
 	qdel(src)
 
-///called after the obj takes damage and integrity is below integrity_failure level
-/obj/proc/obj_break(damage_flag, silent = FALSE)
+/obj/atom_break(damage_flag, silent)
+	. = ..()
 	obj_broken = TRUE
-	if(!silent)
-		if(break_sound)
-			playsound(src, break_sound, 100, TRUE)
-		if(break_message)
-			visible_message(break_message)
+
+/obj/atom_fix()
+	. = ..()
+	obj_broken = FALSE
 
 ///what happens when the obj's integrity reaches zero.
-/obj/proc/obj_destruction(damage_flag)
-	obj_destroyed = TRUE
+/obj/atom_destruction(damage_flag)
+	. = ..()
 	if(damage_flag == "acid")
 		acid_melt()
 	else if(damage_flag == "fire")
@@ -238,24 +226,6 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		if(destroy_message)
 			visible_message(destroy_message)
 		deconstruct(FALSE)
-	return TRUE
-
-///changes max_integrity while retaining current health percentage, returns TRUE if the obj got broken.
-/obj/proc/modify_max_integrity(new_max, can_break = TRUE, damage_type = BRUTE)
-	var/current_integrity = obj_integrity
-	var/current_max = max_integrity
-
-	if(current_integrity != 0 && current_max != 0)
-		var/percentage = current_integrity / current_max
-		current_integrity = max(1, round(percentage * new_max))	//don't destroy it as a result
-		obj_integrity = current_integrity
-
-	max_integrity = new_max
-
-	if(can_break && integrity_failure && current_integrity <= integrity_failure * max_integrity)
-		obj_break(damage_type)
-		return TRUE
-	return FALSE
 
 ///returns how much the object blocks an explosion. Used by subtypes.
 /obj/proc/GetExplosionBlock()

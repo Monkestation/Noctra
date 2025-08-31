@@ -74,18 +74,16 @@
 		to_chat(user, span_warning("I don't have the dexterity to do this!"))
 		return
 	lastminer = user
-	var/olddam = turf_integrity
-	..()
-	if(turf_integrity && turf_integrity > 10)
-		if(turf_integrity < olddam)
+	var/olddam = atom_integrity
+	. = ..()
+	if(uses_integrity && atom_integrity > 10)
+		if(atom_integrity < olddam)
 			if(prob(50))
 				if(user.Adjacent(src))
 					var/obj/item/natural/stone/S = new(src)
 					S.forceMove(get_turf(user))
 
-/turf/closed/mineral/turf_destruction(damage_flag)
-	if(!(istype(src, /turf/closed)))
-		return
+/turf/closed/mineral/atom_destruction(damage_flag)
 	if(damage_flag == "blunt")
 		var/obj/item/explo_mineral = mineralType
 		var/explo_mineral_amount = mineralAmt
@@ -474,7 +472,7 @@
 	icon_state = MAP_SWITCH("mineral", "bedrock_ice")
 
 /turf/closed/mineral/bedrock/attackby(obj/item/I, mob/user, params)
-	to_chat(user, span_warning("This is far to sturdy to be destroyed!"))
+	to_chat(user, span_warning("This is far too sturdy to be destroyed!"))
 	return FALSE
 
 /turf/closed/mineral/bedrock/TerraformTurf(path, new_baseturf, flags, defer_change = FALSE, ignore_air = FALSE)

@@ -72,6 +72,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 		H.clamped_adjust_skillrank(/datum/skill/combat/knives, 2, 3, TRUE)
 		H.clamped_adjust_skillrank(/datum/skill/combat/swords, 2, 3, TRUE)
 		H.change_stat(STATKEY_INT, -2)
+		H.grant_language(/datum/language/undead)
 		return
 
 	add_objective(/datum/objective/zizo)
@@ -89,6 +90,7 @@ GLOBAL_LIST_EMPTY(ritualslist)
 	H.change_stat(STATKEY_CON, 3)
 	H.change_stat(STATKEY_SPD, 4)
 	H.change_stat(STATKEY_INT, 5)
+	H.grant_language(/datum/language/undead)
 
 /datum/antagonist/zizocultist/greet()
 	to_chat(owner, span_danger("I'm a lackey to the LEADER. A new future begins."))

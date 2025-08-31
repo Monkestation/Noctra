@@ -64,11 +64,15 @@
 			. += span_notice("I can tell these are [examine_name].")
 			. += plant_def_instance.get_examine_details()
 
-/obj/item/neuFarm/seed/attack_turf(turf/T, mob/living/user)
+/obj/item/neuFarm/seed/attack_atom(atom/attacked_atom, mob/living/user)
+	if(!isturf(attacked_atom))
+		return ..()
+
+	var/turf/T = attacked_atom
 	var/obj/structure/soil/soil = get_soil_on_turf(T)
 	if(soil)
 		try_plant_seed(user, soil)
-		return
+		return TRUE
 	else if(istype(T, /turf/open/floor/dirt))
 		var/obj/structure/irrigation_channel/located = locate(/obj/structure/irrigation_channel) in T
 		if(located)
@@ -83,8 +87,8 @@
 			soil = get_soil_on_turf(T)
 			if(!soil)
 				soil = new /obj/structure/soil(T)
-		return
-	. = ..()
+		return TRUE
+	return ..()
 
 /obj/item/neuFarm/seed/proc/try_plant_seed(mob/living/user, obj/structure/soil/soil)
 	if(soil.plant)

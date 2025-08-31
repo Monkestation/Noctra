@@ -136,14 +136,13 @@
 
 
 
-/obj/item/reagent_containers/food/snacks/smallrat/obj_destruction(damage_flag)
-	//..()
+/obj/item/reagent_containers/food/snacks/smallrat/atom_destruction(damage_flag)
 	if(!dead)
 		new /obj/item/reagent_containers/food/snacks/smallrat/dead(src)
 		playsound(src, 'sound/vo/mobs/rat/rat_death.ogg', 100, FALSE, -1)
 		qdel(src)
 		return 1
-	. = ..()
+	return ..()
 
 /obj/item/reagent_containers/food/snacks/smallrat/attackby(obj/item/I, mob/user, params)
 	if(!dead)

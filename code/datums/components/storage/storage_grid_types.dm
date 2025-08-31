@@ -83,8 +83,8 @@
 	. = ..()
 	if(!.)
 		return
-	if(istype(parent, /obj/item/roguemachine/mastermail))
-		var/obj/item/roguemachine/mastermail/mail_machine = parent
+	if(istype(parent, /obj/item/fake_machine/mastermail))
+		var/obj/item/fake_machine/mastermail/mail_machine = parent
 		if(mail_machine.new_mail)
 			mail_machine.new_mail = FALSE
 			mail_machine.update_appearance(UPDATE_ICON_STATE)

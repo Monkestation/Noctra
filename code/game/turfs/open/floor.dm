@@ -56,9 +56,6 @@
 	else
 		icon_regular_floor = icon_state
 
-/turf/open/floor/turf_destruction(damage_flag)
-	return
-
 /turf/open/floor/ex_act(severity, target, epicenter, devastation_range, heavy_impact_range, light_impact_range, flame_range)
 	var/shielded = is_shielded()
 	..()

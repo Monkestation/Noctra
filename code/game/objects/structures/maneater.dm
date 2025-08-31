@@ -27,11 +27,15 @@
 	unbuckle_all_mobs()
 	. = ..()
 
-/obj/structure/flora/grass/maneater/real/obj_break(damage_flag, silent)
-	..()
+/obj/structure/flora/grass/maneater/real/atom_break(damage_flag)
+	. = ..()
 	QDEL_NULL(proximity_monitor)
 	unbuckle_all_mobs()
 	update_appearance(UPDATE_ICON_STATE | UPDATE_NAME)
+
+/obj/structure/flora/grass/maneater/real/atom_fix()
+	. = ..()
+	proximity_monitor = new(src, 1)
 
 /obj/structure/flora/grass/maneater/real/process()
 	if(!has_buckled_mobs())

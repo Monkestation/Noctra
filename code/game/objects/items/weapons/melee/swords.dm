@@ -369,7 +369,7 @@
 /obj/item/weapon/sword/khopesh
 	name = "ancient khopesh"
 	desc = "A bronze weapon of war from the era of Apotheosis. This blade is older than a few elven generations, but has been very well-maintained and still keeps a good edge."
-	force = 22 // Unique weapon from rare job, slightly more force than most one-handers
+	force = DAMAGE_SWORD + 2 // Unique weapon from rare job, slightly more force than most one-handers
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop, /datum/intent/sword/strike)
 	force_wielded = 0
 	gripped_intents = null
@@ -386,8 +386,8 @@
 	max_blade_int = 300
 	max_integrity = 300
 	minstr = 10 // Even though it's technically one-handed, you gotta have some muscle to wield this thing
-	wdefense = 3 // Lower than average sword defense (meant to pair with a shield)
-	wbalance = -1 // Likely weighted towards the blade, for deep cuts and chops
+	wdefense = GOOD_PARRY // Lower than average sword defense (meant to pair with a shield)
+	wbalance = EASY_TO_DODGE // Likely weighted towards the blade, for deep cuts and chops
 	sellprice = 200 // A noble collector would love to get his/her hands on one of these blades
 
 
@@ -453,8 +453,8 @@
 
 // Repurposing this unused sword for the Paladin job as a heavy counter against vampires.
 /obj/item/weapon/sword/long/judgement// this sprite is a one handed sword, not a longsword.
-	force = 15
-	force_wielded = 30
+	force = DAMAGE_SWORD - 5
+	force_wielded = DAMAGE_GREATSWORD_WIELD
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/strike)
 	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust/long, /datum/intent/sword/strike, /datum/intent/sword/chop/long)
 	icon_state = "judgement"
@@ -489,8 +489,8 @@
 	color = CLOTHING_SOOT_BLACK
 
 /obj/item/weapon/sword/long/vlord // this sprite is a one handed sword, not a longsword.
-	force = 18
-	force_wielded = 30
+	force = DAMAGE_SWORD - 2
+	force_wielded = DAMAGE_GREATSWORD_WIELD
 	icon_state = "vlord"
 	name = "Jaded Fang"
 	desc = "An ancestral long blade with an ominous glow, serrated with barbs along it's edges. Stained with a strange green tint."
@@ -535,18 +535,18 @@
 
 
 /obj/item/weapon/sword/long/forgotten
-	force = 16 // Damage is .9 of a steel sword
-	force_wielded = 25
+	force = DAMAGE_SWORD * 0.9 // Damage is .9 of a steel sword
+	force_wielded = DAMAGE_LONGSWORD_WIELD
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/strike)
 	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust/long, /datum/intent/sword/strike, /datum/intent/sword/chop/long)
 	icon_state = "forgotten"
 	name = "forgotten blade"
 	desc = "A large silver-alloy sword made in a revisionist style, honoring Psydon. Best known as the prefered weapon of Inquisitorial Lodges."
-	max_blade_int = 240 // Integrity and blade retention is .8 of a steel sword
+	max_blade_int = INTEGRITY_STRONG * 0.8 // Integrity and blade retention is .8 of a steel sword
 	max_integrity = 400
 	smeltresult = /obj/item/ingot/silver
 	wbalance = -1
-	wdefense = 4
+	wdefense = GREAT_PARRY
 	sellprice = 90
 	last_used = 0
 
@@ -559,12 +559,11 @@
 	name = "duel settler"
 	desc = "The tenets of ravoxian duels are enscribed upon the blade of this sword."
 	icon_state = "ravoxflamberge"
-	force = DAMAGE_SWORD+2
-	force_wielded = DAMAGE_SWORD_WIELD+2
+	force = DAMAGE_SWORD + 2
+	force_wielded = DAMAGE_LONGSWORD_WIELD
 
 //................ Psydonian Longsword ............... //
 /obj/item/weapon/sword/long/psydon
-	force_wielded = DAMAGE_LONGSWORD_WIELD
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/strike)
 	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust/long, /datum/intent/sword/strike, /datum/intent/sword/chop/long)
 	icon_state = "psysword"
@@ -579,8 +578,8 @@
 	enchant(/datum/enchantment/silver)
 
 /obj/item/weapon/sword/long/decorated
-	force = 15
-	force_wielded = 30
+	force = DAMAGE_SWORD - 5
+	force_wielded = DAMAGE_LONGSWORD_WIELD + 2
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/strike)
 	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust/long, /datum/intent/sword/strike, /datum/intent/sword/chop/long)
 	icon_state = "declong"
@@ -668,7 +667,7 @@
 	icon_state = "steelzwei"
 	smeltresult = /obj/item/ingot/iron
 	max_blade_int = 150 // Iron tier
-	max_integrity = 300
+	max_integrity = INTEGRITY_STRONG
 	sellprice = 60
 
 /obj/item/weapon/sword/long/greatsword/zwei/getonmobprop(tag)
@@ -740,7 +739,7 @@
 	minstr = 10
 	smeltresult = /obj/item/ingot/iron
 	max_blade_int = 150 // Iron tier
-	max_integrity = 300
+	max_integrity = INTEGRITY_STRONG
 	sellprice = 90
 
 /obj/item/weapon/sword/long/greatsword/ironclaymore/getonmobprop(tag)
@@ -765,7 +764,7 @@
 	desc = "A steel variant of the standard Claymore, the mainstay weapon of the wandering Mercanary Gallowglass' of Kaledon."
 	icon_state = "steelclaymore"
 	minstr = 10
-	max_blade_int = 300
+	max_blade_int = INTEGRITY_STRONG
 	max_integrity = 450
 	sellprice = 110
 
@@ -792,7 +791,7 @@
 	desc = "A huge sword constructed out of Steel and Gold, wielded by the Kaledonian Templars of the Ravoxian Order"
 	icon_state = "gsclaymore"
 	minstr = 10
-	max_blade_int = 350
+	max_blade_int = INTEGRITY_STRONG + 50
 	max_integrity = 500
 	sellprice = 160
 
@@ -819,7 +818,7 @@
 	desc = "A huge sword constructed out of a slab of Iron, famously wielded by the first settlers of Dachiagh Benne."
 	icon_state = "gutsclaymore"
 	minstr = 15
-	max_blade_int = 350
+	max_blade_int = INTEGRITY_STRONG + 50
 	max_integrity = 500
 	sellprice = 240
 
@@ -864,7 +863,7 @@
 	name = "solar judge"
 	desc = "This wicked executioner's blade calls for order."
 	icon_state = "astratasword"
-	max_integrity = 200
+	max_integrity = INTEGRITY_STRONG
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/strike)
 	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust, /datum/intent/sword/strike, /datum/intent/sword/chop)
 
@@ -886,8 +885,8 @@
 // Copper Messer
 
 /obj/item/weapon/sword/coppermesser
-	force = 15 // Messers are heavy weapons, crude and STR based.
-	force_wielded = 20
+	force = DAMAGE_SWORD - 5 // Messers are heavy weapons, crude and STR based.
+	force_wielded = DAMAGE_SWORD_WIELD - 5
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/strike)
 	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/strike, /datum/intent/sword/chop)
 	icon_state = "cmesser"
@@ -900,7 +899,7 @@
 	pickup_sound = 'sound/foley/equip/swordlarge2.ogg'
 	wlength = WLENGTH_LONG
 	max_blade_int = 150
-	max_integrity = 200
+	max_integrity = INTEGRITY_POOR + 50
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	throwforce = 15
@@ -926,8 +925,8 @@
 				return list("shrink" = 0.5,"sx" = -4,"sy" = -6,"nx" = 5,"ny" = -6,"wx" = 0,"wy" = -6,"ex" = -1,"ey" = -6,"nturn" = 100,"sturn" = 156,"wturn" = 90,"eturn" = 180,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/weapon/sword/long/rider/copper
-	force = 10
-	force_wielded = 20 // Shitty Design, Shitty materials, SHITTY WEAPON
+	force = DAMAGE_SWORD - 10
+	force_wielded = DAMAGE_SWORD_WIELD - 5
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/strike)
 	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/strike)
 	icon_state = "copperfalx"
@@ -940,7 +939,7 @@
 	pickup_sound = 'sound/foley/equip/swordlarge2.ogg'
 	bigboy = TRUE
 	max_blade_int = 150 // Shitty Weapon
-	max_integrity = 230//this is fair to be fair
+	max_integrity = INTEGRITY_POOR + 80
 	wlength = WLENGTH_LONG
 	gripsprite = TRUE
 	SET_BASE_PIXEL(-16, -16)
@@ -962,8 +961,8 @@
 	desc = "A sword possessed of a quite long and tapered blade that is intended to be thrust between the \
 	gaps in an opponent's armor. The hilt is wrapped tight in black leather."
 	icon_state = "estoc"
-	force = 12
-	force_wielded = 25
+	force = DAMAGE_SWORD - 8
+	force_wielded = DAMAGE_SWORD_WIELD
 	icon = 'icons/roguetown/weapons/64.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
@@ -984,6 +983,7 @@
 	minstr = 8
 	smeltresult = /obj/item/ingot/iron
 	associated_skill = /datum/skill/combat/swords
+	max_integrity = INTEGRITY_STRONG
 	max_blade_int = 300
 	wdefense = GREAT_PARRY
 	wbalance = DODGE_CHANCE_NORMAL
@@ -1042,7 +1042,7 @@
 					)
 
 /obj/item/weapon/sword/gladius
-	force = 22
+	force = DAMAGE_SWORD + 2
 	name = "gladius"
 	desc = "A bronze short sword with a slightly wider end, and no guard. Compliments a shield."
 	icon_state = "gladius"
@@ -1050,19 +1050,19 @@
 	gripped_intents = null
 	smeltresult = /obj/item/ingot/bronze
 	max_blade_int = 100
-	max_integrity = 200
+	max_integrity = INTEGRITY_STANDARD
 	dropshrink = 0.80
-	wdefense = 2
+	wdefense = AVERAGE_PARRY
 
 //................ Gaffer's vanity sword ............... //
 
 /obj/item/weapon/sword/long/replica
 	name = "guild master's longsword"
 	desc = ""
-	force = 2
-	force_wielded = 5
+	force = DAMAGE_SWORD - 18
+	force_wielded = DAMAGE_SWORD_WIELD - 20
 	throwforce = 2
-	max_integrity = 240
+	max_integrity = INTEGRITY_STANDARD + 40
 	sellprice = 1
 	smeltresult = /obj/item/ingot/tin //the truth comes out
 

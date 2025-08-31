@@ -112,7 +112,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	var/deathmessage = ""
 
 	///Played when someone punches the creature.
-	var/attacked_sound = "punch"
+	var/punched_sound = "punch"
 
 	///If the creature has, and can use, hands.
 	var/dextrous = FALSE

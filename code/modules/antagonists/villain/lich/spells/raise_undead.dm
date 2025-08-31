@@ -96,7 +96,7 @@
 	cmode_music = 'sound/music/cmode/antag/combat_cult.ogg'
 
 	set_patron(master.patron)
-	copy_known_languages_from(master, FALSE)
+	copy_known_languages_from(master, TRUE)
 	mob_biotypes = MOB_UNDEAD
 	faction = list(FACTION_UNDEAD)
 	ambushable = FALSE

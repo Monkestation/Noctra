@@ -90,12 +90,10 @@
 				L.adjust_experience(/datum/skill/misc/climbing, exp_to_gain, FALSE)
 
 /obj/structure/flora/newtree/attacked_by(obj/item/I, mob/living/user)
-	var/was_destroyed = obj_destroyed
 	. = ..()
-	if(.)
-		if(!was_destroyed && obj_destroyed)
-			record_featured_stat(FEATURED_STATS_TREE_FELLERS, user)
-			record_round_statistic(STATS_TREES_CUT)
+	if(atom_integrity <= 0)
+		record_featured_stat(FEATURED_STATS_TREE_FELLERS, user)
+		record_round_statistic(STATS_TREES_CUT)
 
 /obj/structure/flora/newtree/fire_act(added, maxstacks)
 	. = ..()

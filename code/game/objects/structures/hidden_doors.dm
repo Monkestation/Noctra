@@ -21,9 +21,8 @@ GLOBAL_LIST_EMPTY(thieves_guild_doors)
 	can_knock = FALSE
 	redstone_structure = TRUE
 
-	repairable = FALSE
-	repair_cost_first = null
-	repair_cost_second = null
+	repair_thresholds = null
+	broken_repair = null
 	repair_skill = null
 	metalizer_result = null
 

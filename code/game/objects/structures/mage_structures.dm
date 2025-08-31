@@ -17,9 +17,8 @@ GLOBAL_LIST_EMPTY(mana_fountains)
 	can_add_lock = FALSE
 	max_integrity = 2000
 
-	repairable = FALSE
-	repair_cost_first = null
-	repair_cost_second = null
+	repair_thresholds = null
+	broken_repair = null
 	repair_skill = null
 	metalizer_result = null
 

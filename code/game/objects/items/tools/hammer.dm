@@ -31,20 +31,24 @@
 /obj/structure
 	var/hammer_repair
 
-/obj/item/weapon/hammer/attack_obj(obj/O, mob/living/user)
-	if(!isliving(user) || !user.mind)
-		return
+/obj/item/weapon/hammer/attack_atom(atom/attacked_atom, mob/living/user)
+	if(!isobj(attacked_atom))
+		return ..()
+	if(!isliving(user) || !user.mind || user.cmode)
+		return ..()
+	var/obj/O = attacked_atom
 	var/datum/mind/blacksmith_mind = user.mind
 	var/repair_percent = 0.025 // 2.5% Repairing per hammer smack
 	/// Repairing is MUCH better with an anvil!
 	if(locate(/obj/machinery/anvil) in O.loc)
 		repair_percent *= 2 // Double the repair amount if we're using an anvil
 
-	if(isbodypart(O) && !user.cmode)
+	if(isbodypart(O))
+		. = TRUE
 		var/obj/item/bodypart/attacked_prosthetic = O
 		if(!attacked_prosthetic.anvilrepair || !isturf(attacked_prosthetic.loc))
 			return
-		if(attacked_prosthetic.obj_integrity >= attacked_prosthetic.max_integrity && attacked_prosthetic.brute_dam == 0 && attacked_prosthetic.burn_dam == 0 && attacked_prosthetic.wounds == null && attacked_prosthetic.bodypart_disabled == BODYPART_NOT_DISABLED) //A mouthful
+		if(attacked_prosthetic.get_integrity() >= attacked_prosthetic.max_integrity && attacked_prosthetic.brute_dam == 0 && attacked_prosthetic.burn_dam == 0 && attacked_prosthetic.wounds == null && attacked_prosthetic.bodypart_disabled == BODYPART_NOT_DISABLED) //A mouthful
 			to_chat(user, span_warning("There is nothing to further repair on [attacked_prosthetic]."))
 			return
 
@@ -58,9 +62,8 @@
 
 		playsound(src,'sound/items/bsmith3.ogg', 100, FALSE)
 		if(repair_percent)
-			repair_percent *= attacked_prosthetic.max_integrity
 			var/amt2raise = floor(user.STAINT * 0.25)
-			attacked_prosthetic.obj_integrity = min(attacked_prosthetic.obj_integrity + repair_percent, attacked_prosthetic.max_integrity)
+			attacked_prosthetic.repair_damage(attacked_prosthetic.max_integrity * repair_percent)
 			attacked_prosthetic.brute_dam = max(attacked_prosthetic.brute_dam - 10, 0)
 			attacked_prosthetic.burn_dam = max(attacked_prosthetic.burn_dam - 10, 0)
 			if(repair_percent == 0.01) // If an inexperienced repair attempt has been successful
@@ -73,12 +76,12 @@
 		else
 			user.visible_message(span_warning("[user] fumbles trying to repair [attacked_prosthetic]!"))
 			attacked_prosthetic.take_damage(attacked_prosthetic.max_integrity * 0.1, BRUTE, "blunt")
-		attacked_prosthetic.update_appearance()
 		return
 
-	if(isitem(O) && !user.cmode)
+	if(isitem(O))
+		. = TRUE
 		var/obj/item/attacked_item = O
-		if(!attacked_item.anvilrepair || !attacked_item.max_integrity || attacked_item.obj_broken || (attacked_item.obj_integrity >= attacked_item.max_integrity) || !isturf(attacked_item.loc))
+		if(!attacked_item.anvilrepair || !attacked_item.max_integrity || attacked_item.obj_broken || (attacked_item.get_integrity() >= attacked_item.max_integrity) || !isturf(attacked_item.loc))
 			to_chat(user, span_warning("[attacked_item] cannot be repaired any further."))
 			return
 
@@ -92,9 +95,8 @@
 
 		playsound(src,'sound/items/bsmithfail.ogg', 40, FALSE)
 		if(repair_percent)
-			repair_percent *= attacked_item.max_integrity
 			var/amt2raise = floor(user.STAINT * 0.25)
-			attacked_item.obj_integrity = min(attacked_item.obj_integrity + repair_percent, attacked_item.max_integrity)
+			attacked_item.repair_damage( attacked_item.max_integrity * repair_percent)
 			if(repair_percent == 0.01) // If an inexperienced repair attempt has been successful
 				to_chat(user, span_warning("You fumble your way into slightly repairing [attacked_item]."))
 			else
@@ -103,10 +105,10 @@
 		else
 			user.visible_message("<span class='warning'>[user] damages [attacked_item]!</span>")
 			attacked_item.take_damage(attacked_item.max_integrity * 0.1, BRUTE, "blunt")
-		attacked_item.update_appearance()
 		return
 
-	if(isstructure(O) && !user.cmode)
+	if(isstructure(O))
+		. = TRUE
 		var/obj/structure/attacked_structure = O
 		if(!attacked_structure.hammer_repair || !attacked_structure.max_integrity || attacked_structure.obj_broken)
 			to_chat(user, span_warning("[attacked_structure] cannot be repaired any further."))
@@ -115,15 +117,14 @@
 			to_chat(user, span_warning("I don't know how to repair this.."))
 			return
 		var/amt2raise = floor(user.STAINT * 0.25)
-		repair_percent *= user.get_skill_level(attacked_structure.hammer_repair) * attacked_structure.max_integrity
-		attacked_structure.obj_integrity = min(attacked_structure.obj_integrity + repair_percent, attacked_structure.max_integrity)
+		repair_percent *= user.get_skill_level(attacked_structure.hammer_repair)
+		attacked_structure.repair_damage(attacked_structure.max_integrity * repair_percent)
 		blacksmith_mind.add_sleep_experience(attacked_structure.hammer_repair, amt2raise)
 		playsound(src,'sound/items/bsmithfail.ogg', 100, FALSE)
 		user.visible_message(span_info("[user] repairs [attacked_structure]!"))
-		attacked_structure.update_appearance()
 		return
 
-	. = ..()
+	return ..()
 
 /obj/item/weapon/hammer/getonmobprop(tag)
 	. = ..()

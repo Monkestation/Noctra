@@ -202,7 +202,6 @@
 		if(I.max_blade_int)
 			I.max_blade_int += added_blade_int
 			I.blade_int = I.max_blade_int
-		I.max_integrity += added_int
-		I.obj_integrity = I.max_integrity
+		I.modify_max_integrity(I.max_integrity + added_int)
 		I.wdefense += added_def
 		I.name = "blessed [I.name]"

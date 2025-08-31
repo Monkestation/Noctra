@@ -178,6 +178,7 @@
 	return
 
 /obj/item/reagent_containers/food/snacks/organ/heart
+	name = "heart"
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT, /datum/reagent/organpoison = 2)
 	grind_results = list(/datum/reagent/organpoison = 6)
 
@@ -200,6 +201,7 @@
 			return TRUE
 
 /obj/item/reagent_containers/food/snacks/organ/lungs
+	name = "lungs"
 	list_reagents = list(/datum/reagent/consumable/nutriment = SNACK_DECENT, /datum/reagent/organpoison = 2)
 	grind_results = list(/datum/reagent/organpoison = 6)
 

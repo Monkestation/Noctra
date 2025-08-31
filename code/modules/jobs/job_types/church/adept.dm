@@ -55,7 +55,7 @@
 	beltl = /obj/item/weapon/mace/spiked
 	backr = /obj/item/weapon/shield/wood/adept
 	gloves = /obj/item/clothing/gloves/leather
-	backpack_contents = list(/obj/item/storage/keyring/inquisitor = 1, /obj/item/weapon/knife/dagger/psydon = 1)
+	backpack_contents = list(/obj/item/storage/keyring/inquisitor = 1, /obj/item/weapon/knife/dagger/silver/psydon = 1)
 
 	//Stats for class
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
@@ -102,7 +102,7 @@
 	beltl = /obj/item/weapon/mace/cudgel
 	pants = /obj/item/clothing/pants/trou/leather
 	cloak = /obj/item/clothing/cloak/raincloak/colored/brown
-	backpack_contents = list(/obj/item/lockpick = 1, /obj/item/storage/keyring/inquisitor = 1, /obj/item/weapon/knife/dagger/psydon = 1)
+	backpack_contents = list(/obj/item/lockpick = 1, /obj/item/storage/keyring/inquisitor = 1, /obj/item/weapon/knife/dagger/silver/psydon = 1)
 
 	//Stats for class
 	H.adjust_skillrank(/datum/skill/combat/axesmaces, 3, TRUE)
@@ -152,7 +152,7 @@
 	beltl =  /obj/item/weapon/sword/short
 	l_hand = /obj/item/weapon/whip // Great length, they don't need to be next to a person to help in apprehending them.
 	pants = /obj/item/clothing/pants/trou/leather
-	backpack_contents = list(/obj/item/storage/keyring/inquisitor = 1, /obj/item/weapon/knife/dagger/psydon = 1)
+	backpack_contents = list(/obj/item/storage/keyring/inquisitor = 1, /obj/item/weapon/knife/dagger/silver/psydon = 1)
 
 	//Stats for class
 	H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)

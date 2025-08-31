@@ -9,7 +9,7 @@
 	fueluse = 0
 	bulb_colour = "#e4ff6c"
 	bulb_power = 1
-	max_integrity = 0
+	resistance_flags = INDESTRUCTIBLE
 	pass_flags_self = LETPASSTHROW
 	smeltresult = /obj/item/ingot/bronze
 

@@ -144,11 +144,11 @@
 
 // -------------- SALTFISH -----------------
 /obj/item/reagent_containers/food/snacks/saltfish
-	eat_effect = null
-	icon = 'icons/roguetown/misc/fish.dmi'
 	name = "saltfish"
-	icon_state = ""
 	desc = "Dried fish."
+	icon = 'icons/roguetown/misc/fish.dmi'
+	icon_state = "clownfishdried"
+	eat_effect = null
 	bitesize = 4
 	slice_path = null
 	tastes = list("salted meat" = 1)
@@ -301,6 +301,7 @@
 \------------*/		// The base for making butter and cheese
 
 /datum/reagent/consumable/milk/gote
+	name = "gote milk"
 	taste_description = "gote milk"
 
 /datum/reagent/consumable/milk/salted_gote
@@ -557,7 +558,6 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/cheese_wedge
 	become_rot_type = /obj/item/reagent_containers/food/snacks/cheddar/aged
 	slice_sound = TRUE
-	faretype = FARE_POOR
 	grid_height = 32
 	grid_width = 96
 
@@ -588,7 +588,6 @@
 					/obj/item/reagent_containers/food/snacks/fish/eel = 5,
 					/obj/item/reagent_containers/food/snacks/fish/angler = 1,
 					/obj/item/reagent_containers/food/snacks/fish/shrimp = 3)
-	faretype = FARE_FINE
 
 /obj/item/reagent_containers/food/snacks/cheese_wedge/aged
 	name = "wedge of aged cheese"
@@ -652,7 +651,7 @@
 
 /obj/item/reagent_containers/food/snacks/jellyslice_base
 	name = "plain gelatine slice"
-	icon_state = "basegelatineslice"
+	icon_state = "basegelatinslice"
 	dropshrink = 0.8
 	slices_num = 0
 	bitesize = 2

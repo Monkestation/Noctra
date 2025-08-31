@@ -79,7 +79,7 @@
 	dir = 1
 	},
 /obj/item/paper/scroll,
-/obj/item/roguemachine/mastermail{
+/obj/item/fake_machine/mastermail{
 	pixel_y = 0;
 	pixel_x = -32
 	},
@@ -8553,7 +8553,7 @@
 /turf/open/floor/woodturned,
 /area/rogue/indoors/town/shop)
 "ivi" = (
-/obj/item/roguemachine/drugtrade,
+/obj/item/fake_machine/drugtrade,
 /turf/open/floor/ruinedwood/chevron,
 /area/rogue/indoors/town/bath)
 "ivL" = (

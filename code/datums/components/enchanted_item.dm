@@ -60,8 +60,7 @@
 		if(SEARING_BLADE_ENCHANT)
 			I.add_filter(SEARING_FILTER, 2, outline_filter(1, "#64af18"))
 		if(DURABILITY_ENCHANT)
-			I.max_integrity += DURABILITY_INCREASE
-			I.obj_integrity += DURABILITY_INCREASE
+			I.modify_max_integrity(I.max_integrity + DURABILITY_INCREASE)
 			I.add_filter(DURABILITY_FILTER, 2, outline_filter(1, "#808080"))
 
 	decay_timer = addtimer(CALLBACK(src, PROC_REF(try_decay)), duration, TIMER_STOPPABLE|TIMER_UNIQUE|TIMER_OVERRIDE)
@@ -105,8 +104,7 @@
 		if(SEARING_BLADE_ENCHANT)
 			I.remove_filter(SEARING_FILTER)
 		if(DURABILITY_ENCHANT)
-			I.max_integrity -= DURABILITY_INCREASE
-			I.obj_integrity -= DURABILITY_INCREASE
+			I.modify_max_integrity(I.max_integrity - DURABILITY_INCREASE, can_break = FALSE)
 			I.remove_filter(DURABILITY_FILTER)
 
 	I.visible_message(span_warning("\The enchantment on [I] falls!"))

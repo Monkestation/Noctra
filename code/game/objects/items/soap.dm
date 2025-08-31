@@ -148,10 +148,15 @@
 		return TRUE
 	return FALSE
 
-/obj/item/soap/attack_obj(obj/O, mob/living/user)
+/obj/item/soap/attack_atom(atom/attacked_atom, mob/living/user)
+	if(!isobj(attacked_atom))
+		return ..()
+
+	var/obj/O = attacked_atom
 	var/datum/reagents/r = O.reagents
 	if(!r || !O.is_open_container())
-		return
+		return ..()
+	. = TRUE
 	if(r.total_volume >= r.maximum_volume)
 		to_chat(user, span_warning("There's no room to add [src]."))
 		return

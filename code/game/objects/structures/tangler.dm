@@ -28,12 +28,16 @@
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/structure/flora/grass/tangler/real/obj_break(damage_flag, silent)
-	..()
+/obj/structure/flora/grass/tangler/real/atom_break(damage_flag)
+	. = ..()
 	QDEL_NULL(proximity_monitor)
 	unbuckle_all_mobs()
 	STOP_PROCESSING(SSobj, src)
 	update_appearance(UPDATE_ICON_STATE | UPDATE_NAME)
+
+/obj/structure/flora/grass/tangler/real/atom_fix()
+	. = ..()
+	proximity_monitor = new(src, 1)
 
 /obj/structure/flora/grass/tangler/real/process()
 	if(!has_buckled_mobs())

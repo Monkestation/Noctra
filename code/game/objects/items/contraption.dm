@@ -155,12 +155,13 @@
 /obj/item/contraption/proc/play_clock_sound()
 	playsound(src, 'sound/misc/clockloop.ogg', 25, TRUE)
 
-/obj/item/contraption/attack_obj(obj/O, mob/living/user)
+/obj/item/contraption/pre_attack(atom/A, mob/living/user, params)
 	if(!current_charge)
 		flick(off_icon, src)
 		to_chat(user, span_info("The contraption beeps! It requires \a [initial(accepted_power_source.name)]!"))
 		playsound(src, 'sound/magic/magic_nulled.ogg', 100, TRUE)
-		return
+		return TRUE
+	. = ..()
 
 /obj/item/contraption/wood_metalizer
 	name = "wood metalizer"
@@ -179,8 +180,12 @@
 	/// The smelting result, used by the smelter or by the portable smelter
 	var/smeltresult
 
-/obj/item/contraption/wood_metalizer/attack_obj(obj/O, mob/living/user)
-	..()
+/obj/item/contraption/wood_metalizer/attack_atom(atom/attacked_atom, mob/living/user)
+	if(!isobj(attacked_atom))
+		return ..()
+
+	var/obj/O = attacked_atom
+	. = TRUE
 	if(!current_charge)
 		return
 	if(!O.metalizer_result)
@@ -267,8 +272,12 @@
 	playsound(turf, pick('sound/combat/hits/onmetal/sheet (1).ogg', 'sound/combat/hits/onmetal/sheet (2).ogg'), 100, TRUE)
 	qdel(src)
 
-/obj/item/contraption/smelter/attack_obj(obj/O, mob/living/user)
-	..()
+/obj/item/contraption/smelter/attack_atom(atom/attacked_atom, mob/living/user)
+	if(!isobj(attacked_atom))
+		return ..()
+
+	var/obj/O = attacked_atom
+	. = TRUE
 	if(!current_charge)
 		return
 	if(!O.smeltresult)

@@ -82,8 +82,7 @@
 		target.name = "[name_prefix] [target.name]"
 
 	// Apply basic modifiers
-	target.max_integrity *= modifier
-	target.obj_integrity *= modifier
+	target.modify_max_integrity(target.max_integrity * modifier, can_break = FALSE)
 	if(target.sellprice)
 		target.sellprice *= modifier
 
@@ -143,8 +142,8 @@
 	// Clothing/Armor
 	else if(istype(target, /obj/item/clothing))
 		var/obj/item/clothing/C = target
-		if(C.damage_deflection)
-			C.damage_deflection *= modifier
+		// if(C.damage_deflection)
+		// 	C.damage_deflection *= modifier
 		if(C.integrity_failure)
 			C.integrity_failure /= modifier
 		// if(C.armor)

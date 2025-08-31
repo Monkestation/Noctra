@@ -95,7 +95,7 @@
 
 /obj/item/clothing/face/goblin_mask/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	..()
-	if(obj_integrity < 90)
+	if(atom_integrity < 90)
 		Die()
 
 /obj/item/clothing/face/goblin_mask/proc/Die()
@@ -106,9 +106,6 @@
 	stat = DEAD
 
 	visible_message("<span class='danger'>[src] curls up into a ball!</span>")
-
-/obj/item/clothing/face/goblin_mask/attackby(obj/item/O, mob/user, params)
-	return O.attack_obj(src, user)
 
 /obj/item/clothing/face/goblin_mask/attack_hand(mob/user)
 	if(iscarbon(user))
@@ -176,10 +173,6 @@
 	..()
 	if(user.transferItemToLoc(src, get_turf(M)))
 		Leap(M)
-
-/obj/item/clothing/face/goblin_mask/Die()
-	qdel(src)
-
 
 /obj/item/clothing/face/goblin_mask/proc/Attach(mob/living/M)
 	if(!valid_to_attach(M))

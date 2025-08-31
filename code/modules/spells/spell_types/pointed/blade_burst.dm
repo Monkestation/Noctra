@@ -31,7 +31,7 @@
 		L.apply_damage(scaled_damage, BRUTE, def_zone)
 		var/obj/item/bodypart/BP = L.get_bodypart(def_zone)
 		if(BP)
-			var/probby = (BP.max_damage / BP.get_damage()) * 20 * attuned_strength
+			var/probby = (BP.get_damage() / BP.max_damage) * 20 * attuned_strength
 			if(prob(probby))
 				BP.add_wound(/datum/wound/fracture)
 		L.adjustBruteLoss(scaled_damage)

@@ -25,14 +25,14 @@
 	if((user.cmode))
 		return FALSE
 	if(liquids.fire_state) //Use an extinguisher first
-		to_chat(user, "<span class='warning'>You can't scoop up anything while it's on fire!</span>")
+		to_chat(user, span_danger("You can't scoop up anything while it's on fire!"))
 		return TRUE
 	if(liquids.liquid_group.expected_turf_height == 1)
-		to_chat(user, "<span class='warning'>The puddle is too shallow to scoop anything up!</span>")
+		to_chat(user, span_danger("The puddle is too shallow to scoop anything up!"))
 		return TRUE
 	var/free_space = my_beaker.reagents.maximum_volume - my_beaker.reagents.total_volume
 	if(free_space <= 0)
-		to_chat(user, "<span class='warning'>You can't fit any more liquids inside [my_beaker]!</span>")
+		to_chat(user, span_danger("You can't fit any more liquids inside [my_beaker]!"))
 		return TRUE
 	var/desired_transfer = my_beaker.amount_per_transfer_from_this
 	if(desired_transfer > free_space)
@@ -40,7 +40,7 @@
 	if(desired_transfer > liquids.liquid_group.reagents_per_turf)
 		desired_transfer = liquids.liquid_group.reagents_per_turf
 	liquids.liquid_group.trans_to_seperate_group(my_beaker.reagents, desired_transfer, liquids)
-	to_chat(user, "<span class='notice'>You scoop up around [round(desired_transfer) / 3] oz of liquids with [my_beaker].</span>")
+	to_chat(user, span_notice("You scoop up around [round(desired_transfer) / 3] oz of liquids with [my_beaker]."))
 	user.changeNext_move(CLICK_CD_MELEE)
 	return TRUE
 
@@ -93,12 +93,12 @@
 	if(!spillable)
 		return
 	if(!reagents?.total_volume)
-		to_chat(user, "<span class='warning'>[src] is empty!</span>")
+		to_chat(user, span_danger("[src] is empty!"))
 		return
 	if(user.used_intent.type == INTENT_SPLASH)
 		var/R
-		M.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [M]!</span>", \
-						"<span class='danger'>[user] splashes the contents of [src] onto you!</span>")
+		M.visible_message(span_danger("[user] splashes the contents of [src] onto [M]!"), \
+						span_danger("[user] splashes the contents of [src] onto you!"))
 		if(reagents)
 			for(var/datum/reagent/A as anything in reagents.reagent_list)
 				R += "[A] ([num2text(A.volume)]),"
@@ -117,8 +117,8 @@
 		if(!canconsume(M, user))
 			return
 		if(M != user)
-			M.visible_message("<span class='danger'>[user] attempts to feed [M] something.</span>", \
-						"<span class='danger'>[user] attempts to feed you something.</span>")
+			M.visible_message(span_danger("[user] attempts to feed [M] something."), \
+						span_danger("[user] attempts to feed you something."))
 			if(!do_after(user, 3 SECONDS, M))
 				return
 			if(!reagents?.total_volume)
@@ -138,80 +138,79 @@
 		addtimer(CALLBACK(reagents, TYPE_PROC_REF(/datum/reagents, trans_to), M, min(amount_per_transfer_from_this,5), TRUE, TRUE, FALSE, user, FALSE, INGEST), 5)
 		playsound(M.loc, pick(drinksounds), 100, TRUE)
 
-/obj/item/reagent_containers/glass/attack_obj(obj/target, mob/living/user)
+/obj/item/reagent_containers/glass/attack_atom(atom/attacked_atom, mob/living/user)
 	if(user.used_intent.type == INTENT_GENERIC)
 		return ..()
 
 	if(!spillable)
 		return ..()
 
-	if(target.is_refillable() && (user.used_intent.type == INTENT_POUR)) //Something like a glass. Player probably wants to transfer TO it.
+	var/stealthy = (user.m_intent == MOVE_INTENT_SNEAK)
+	if(attacked_atom.is_refillable() && (user.used_intent.type == INTENT_POUR)) //Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
-			to_chat(user, "<span class='warning'>[src] is empty!</span>")
+			to_chat(user, span_danger("[src] is empty!"))
 			return
 
-		if(target.reagents.holder_full())
-			to_chat(user, "<span class='warning'>[target] is full.</span>")
+		if(attacked_atom.reagents.holder_full())
+			to_chat(user, span_danger("[attacked_atom] is full."))
 			return
-		user.visible_message("<span class='notice'>[user] pours [src] into [target].</span>", \
-						"<span class='notice'>I pour [src] into [target].</span>")
-		if(user.m_intent != MOVE_INTENT_SNEAK)
-			if(poursounds)
-				playsound(user.loc,pick(poursounds), 100, TRUE)
+		if(stealthy)
+			to_chat(user, span_notice("I pour [src] into [attacked_atom]."))
+		else
+			user.visible_message(span_notice("[user] pours [src] into [attacked_atom]."), \
+							span_notice("I pour [src] into [attacked_atom]."))
+		if(!stealthy && poursounds)
+			playsound(user, pick(poursounds), 100, TRUE)
 		for(var/i in 1 to 22)
-			if(do_after(user, 8 DECISECONDS, target))
+			if(do_after(user, 8 DECISECONDS, attacked_atom, hidden = stealthy))
 				if(!reagents.total_volume)
 					break
-				if(target.reagents.holder_full())
+				if(attacked_atom.reagents.holder_full())
 					break
-				if(!reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user))
-					reagents.reaction(target, TOUCH, amount_per_transfer_from_this)
+				if(!reagents.trans_to(attacked_atom, amount_per_transfer_from_this, transfered_by = user))
+					reagents.reaction(attacked_atom, TOUCH, amount_per_transfer_from_this)
 			else
 				break
 		return
 
-	if(target.is_drainable() && (user.used_intent.type == /datum/intent/fill)) //A dispenser. Transfer FROM it TO us.
-		if(!target.reagents.total_volume)
-			to_chat(user, "<span class='warning'>[target] is empty!</span>")
+	if(attacked_atom.is_drainable() && (user.used_intent.type == INTENT_FILL)) //A dispenser. Transfer FROM it TO us.
+		if(!attacked_atom.reagents.total_volume)
+			to_chat(user, span_danger("[attacked_atom] is empty!"))
 			return
 
 		if(reagents.holder_full())
-			to_chat(user, "<span class='warning'>[src] is full.</span>")
+			to_chat(user, span_danger("[src] is full."))
 			return
-		if(user.m_intent != MOVE_INTENT_SNEAK)
-			if(fillsounds)
-				playsound(user.loc,pick(fillsounds), 100, TRUE)
-		user.visible_message("<span class='notice'>[user] fills [src] with [target].</span>", \
-							"<span class='notice'>I fill [src] with [target].</span>")
+		if(stealthy)
+			to_chat(user, span_notice("I fill [src] with [attacked_atom]."))
+		else
+			user.visible_message(span_notice("[user] fills [src] with [attacked_atom]."), \
+						span_notice("I fill [src] with [attacked_atom]."))
+		if(!stealthy && fillsounds)
+			playsound(user, pick(fillsounds), 100, TRUE)
 		for(var/i in 1 to 22)
-			if(do_after(user, 8 DECISECONDS, target))
+			if(do_after(user, 8 DECISECONDS, attacked_atom, hidden = stealthy))
 				if(reagents.holder_full())
 					break
-				if(!target.reagents.total_volume)
+				if(!attacked_atom.reagents.total_volume)
 					break
-				target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
+				attacked_atom.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
 			else
 				break
 		return
 
 	if(reagents.total_volume && user.used_intent.type == INTENT_SPLASH)
-		user.visible_message(span_danger("[user] splashes the contents of [src] onto [target]"), \
-							span_notice("I splash the contents of [src] onto [target]"))
-		reagents.reaction(target, TOUCH)
-		playsound(target.loc, pick('sound/foley/water_land1.ogg','sound/foley/water_land2.ogg', 'sound/foley/water_land3.ogg'), 100, FALSE)
-		chem_splash(target.loc, 2, list(reagents))
-
-/obj/item/reagent_containers/glass/attack_turf(turf/T, mob/living/user)
-	if(spillable && reagents.total_volume && user.used_intent.type == INTENT_SPLASH)
-		//catch for walls
-		var/turf/newT = T
-		while(istype(T, /turf/closed) && newT != user.loc)
+		var/turf/newT = get_turf(attacked_atom)
+		while(istype(newT, /turf/closed) && newT != user.loc) //catch for walls
 			newT = get_step(newT, get_dir(newT, user.loc))
-		reagents.reaction(T, TOUCH)
+		reagents.reaction(newT, TOUCH)
 		chem_splash(newT, 2, list(reagents))
 		playsound(newT, pick('sound/foley/water_land1.ogg','sound/foley/water_land2.ogg', 'sound/foley/water_land3.ogg'), 100, FALSE)
-		user.visible_message(span_notice("[user] splashes the contents of [src] onto \the [T]!"), \
-								span_notice("I splash the contents of [src] onto \the [T]."))
+		if(stealthy)
+			to_chat(user, span_notice("I splash the contents of [src] onto \the [newT]."))
+		else
+			user.visible_message(span_notice("[user] splashes the contents of [src] onto \the [newT]!"), \
+									span_notice("I splash the contents of [src] onto \the [newT]."))
 
 /obj/item/reagent_containers/glass/afterattack(obj/target, mob/user, proximity)
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target, user)
@@ -228,15 +227,15 @@
 	var/hotness = I.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
-		to_chat(user, "<span class='notice'>I heat [name] with [I]!</span>")
+		to_chat(user, span_notice("I heat [name] with [I]!"))
 
 	if(istype(I, /obj/item/reagent_containers/food/snacks/egg)) //breaking eggs
 		var/obj/item/reagent_containers/food/snacks/egg/E = I
 		if(reagents)
 			if(reagents.total_volume >= reagents.maximum_volume)
-				to_chat(user, "<span class='notice'>[src] is full.</span>")
+				to_chat(user, span_notice("[src] is full."))
 			else
-				to_chat(user, "<span class='notice'>I break [E] in [src].</span>")
+				to_chat(user, span_notice("I break [E] in [src]."))
 				E.reagents.trans_to(src, E.reagents.total_volume, transfered_by = user)
 				qdel(E)
 			return
@@ -269,9 +268,9 @@
 	..()
 	if(istype(I, /obj/item/reagent_containers/powder/salt))
 		if(!reagents.has_reagent(/datum/reagent/consumable/milk, 15) && !reagents.has_reagent(/datum/reagent/consumable/milk/gote, 15))
-			to_chat(user, "<span class='warning'>Not enough milk.</span>")
+			to_chat(user, span_danger("Not enough milk."))
 			return
-		to_chat(user, "<span class='warning'>Adding salt to the milk.</span>")
+		to_chat(user, span_danger("Adding salt to the milk."))
 		playsound(src, pick('sound/foley/waterwash (1).ogg','sound/foley/waterwash (2).ogg'), 100, FALSE)
 		if(do_after(user,2 SECONDS, src))
 			if(reagents.has_reagent(/datum/reagent/consumable/milk, 15))

@@ -243,7 +243,8 @@
 	var/atom/new_atom
 	for(var/i in 1 to current.createditem_extra + 1)
 		new_atom = new current.created_item(get_turf(bin))
-		SEND_SIGNAL(bin, COMSIG_TRY_STORAGE_INSERT, new_atom, null, TRUE, FALSE)
+		new_atom.update_integrity(new_atom.max_integrity, update_atom = FALSE)
+		SEND_SIGNAL(bin, COMSIG_TRY_STORAGE_INSERT, new_atom, null, TRUE, TRUE)
 
 	visible_message(span_notice("[new_atom] falls into the hopper of [src]."))
 	anvil_recipes_to_craft -= current

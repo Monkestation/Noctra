@@ -6,7 +6,10 @@
 	icon_state = "scomm1"
 	density = FALSE
 	blade_dulling = DULLING_BASH
+<<<<<<< HEAD
 	max_integrity = 0
+=======
+>>>>>>> vanderlin/main
 	SET_BASE_PIXEL(0, 32)
 	anchored = TRUE
 	var/next_decree = 0
@@ -91,11 +94,16 @@
 	. = ..()
 	icon_state = "scomm[listening]"
 
-/obj/structure/fake_machine/scomm/obj_break(damage_flag, silent)
+/obj/structure/fake_machine/scomm/atom_break(damage_flag)
 	. = ..()
 	set_light(0)
 	speaking = FALSE
 	listening = FALSE
+
+/obj/structure/fake_machine/scomm/atom_fix()
+	. = ..()
+	speaking = TRUE
+	listening = TRUE
 
 /obj/structure/fake_machine/scomm/Destroy()
 	SSroguemachine.scomm_machines -= src

@@ -1,0 +1,1 @@
+/obj/item/weapon/knife/dagger/psydon : /obj/item/weapon/knife/dagger/silver/psydon{@OLD}

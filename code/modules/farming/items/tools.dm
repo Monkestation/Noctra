@@ -18,22 +18,23 @@
 	sharpness = IS_BLUNT
 	wlength = WLENGTH_LONG
 	w_class = WEIGHT_CLASS_BULKY
+	max_integrity = INTEGRITY_POOR
 	minstr = 6
 	gripsprite = TRUE
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'
-	smeltresult = null
+	smeltresult = /obj/item/fertilizer/ash
 	associated_skill = /datum/skill/combat/whipsflails
 	possible_item_intents = list(MACE_STRIKE)
 	gripped_intents = list(/datum/intent/flailthresh, MACE_STRIKE)
 
-	force = 10
-	force_wielded = 14
-	wdefense = 2
+	force = DAMAGE_WEAK_FLAIL - 7
+	force_wielded = DAMAGE_WEAK_FLAIL - 3
+	wdefense = AVERAGE_PARRY
 	wlength = 66
 
 /obj/item/weapon/thresher/military
-	force = 12
-	force_wielded = 25
+	force = DAMAGE_WEAK_FLAIL - 5
+	force_wielded = DAMAGE_NORMAL_FLAIL + 2
 	possible_item_intents = list(MACE_STRIKE)
 	gripped_intents = list(/datum/intent/flail/strike/long, /datum/intent/flail/strike/smash/long, /datum/intent/flailthresh,)
 	name = "military flail"
@@ -167,7 +168,7 @@
 \---------*/
 
 /obj/item/weapon/sickle
-	force = 10
+	force = DAMAGE_KNIFE
 	possible_item_intents = list(DAGGER_CUT)
 	name = "sickle"
 	desc = "Rusted blade, worn handle, symbol of toil."
@@ -177,6 +178,7 @@
 	experimental_onhip = FALSE
 	experimental_onback = FALSE
 	sharpness = IS_SHARP
+	max_integrity = INTEGRITY_POOR
 	wlength = 10
 	slot_flags = ITEM_SLOT_HIP
 	thrown_bclass = BCLASS_CUT
@@ -230,12 +232,12 @@
 	gripped_intents = list(TILL_INTENT,/datum/intent/pick,POLEARM_BASH)
 	associated_skill = /datum/skill/combat/polearms
 
-	force = 5
-	force_wielded = 7
-	wdefense = MEDIOCHRE_PARRY
+	force = DAMAGE_STAFF - 5
+	force_wielded = DAMAGE_STAFF_WIELD - 8
+	wdefense = MEDIOCRE_PARRY
 	wlength = 66
 	var/time_multiplier = 1
-	max_integrity = 150
+	max_integrity = INTEGRITY_POOR
 
 /obj/item/weapon/hoe/Initialize()
 	. = ..()
@@ -292,8 +294,13 @@
 			if("onbelt")
 				return list("shrink" = 0.6,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/weapon/hoe/attack_turf(turf/T, mob/living/user)
+/obj/item/weapon/hoe/attack_atom(atom/attacked_atom, mob/living/user)
+	if(!isturf(attacked_atom))
+		return ..()
+
+	var/turf/T = attacked_atom
 	if(user.used_intent.type == /datum/intent/till)
+		. = TRUE
 		var/obj/structure/irrigation_channel/located = locate(/obj/structure/irrigation_channel) in T
 		if(located)
 			to_chat(user, span_notice("[located] is in the way!"))
@@ -317,7 +324,7 @@
 					apply_farming_fatigue(user, 8)
 					new /obj/structure/soil(T)
 			return
-	. = ..()
+	return ..()
 
 /datum/intent/till
 	name = "hoe"
@@ -331,8 +338,8 @@
 	name = "stone hoe"
 	desc = "A makeshift hoe made out of stone."
 	icon_state = "stonehoe"
-	force = 3
-	force_wielded = 5
+	force = DAMAGE_STAFF - 7
+	force_wielded = DAMAGE_STAFF_WIELD - 10
 	smeltresult = null
 	anvilrepair = null
 	max_integrity = 100
@@ -365,11 +372,12 @@
 	smeltresult = /obj/item/ingot/iron
 	associated_skill = /datum/skill/combat/polearms
 	thrown_bclass = BCLASS_STAB
-	throwforce = 15
+	throwforce = DAMAGE_SPEAR
+	max_integrity = INTEGRITY_POOR
 
-	force = 10
-	force_wielded = 22
-	wdefense = MEDIOCHRE_PARRY
+	force = DAMAGE_STAFF
+	force_wielded = DAMAGE_SPEAR_WIELD - 3
+	wdefense = MEDIOCRE_PARRY
 	wlength = WLENGTH_LONG
 
 /obj/item/weapon/pitchfork/Initialize()

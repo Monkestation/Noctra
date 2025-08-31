@@ -9,7 +9,7 @@
 	density = FALSE
 	anchored = TRUE
 	can_buckle = FALSE
-	max_integrity = 0
+	resistance_flags = INDESTRUCTIBLE
 	buckle_lying = 90
 	layer = 2.8
 	lock = null
@@ -157,11 +157,11 @@
 		attacking_shovel.update_appearance(UPDATE_ICON_STATE)
 		return
 	else
-		playsound(loc,'sound/items/dig_shovel.ogg', 100, TRUE)
 		if(stage == 3)
 			var/turf/under_turf = get_step_multiz(src, DOWN)
 			var/turf/our_turf = get_turf(src)
 			if(under_turf && our_turf && isopenturf(under_turf))
+				playsound(loc,'sound/items/dig_shovel.ogg', 100, TRUE)
 				user.visible_message("[user] starts digging out the bottom of [src]", "I start digging out the bottom of [src].")
 				if(!do_after(user, 10 SECONDS * attacking_shovel.time_multiplier, src))
 					return TRUE
@@ -173,6 +173,7 @@
 				return
 			to_chat(user, "<span class='warning'>I think that's deep enough.</span>")
 			return
+		playsound(loc,'sound/items/dig_shovel.ogg', 100, TRUE)
 		var/used_str = 10
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user

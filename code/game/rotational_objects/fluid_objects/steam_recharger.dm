@@ -53,7 +53,7 @@
 /obj/structure/steam_recharger/proc/remove_placed(mob/user)
 	placed_atom?.forceMove(get_turf(src))
 	if(user && placed_atom)
-		user.put_in_hand(placed_atom)
+		user.put_in_hands(placed_atom)
 	placed_atom = null
 	update_appearance(UPDATE_OVERLAYS)
 
@@ -86,9 +86,9 @@
 	remove_placed(user)
 
 /obj/structure/steam_recharger/attackby(obj/item/I, mob/living/user)
-	. = ..()
 	if(placed_atom)
-		return
+		return ..()
+	. = TRUE
 	user.visible_message(span_danger("[user] starts to place [I] onto [src]!"), span_notice("You start to place [I] onto [src]!"))
 	if(!do_after(user, 1.6 SECONDS, src))
 		return

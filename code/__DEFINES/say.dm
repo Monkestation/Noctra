@@ -72,7 +72,7 @@
 #define SPAN_ORC "orc"
 #define SPAN_BEAST "beast"
 #define SPAN_DEEPSPEAK "deepspeak"
-
+#define SPAN_UNDEAD "undead"
 //bitflag #defines for return value of the radio() proc.
 #define ITALICS 1
 #define REDUCE_RANGE 2
@@ -92,7 +92,8 @@
 #define LINGHIVE_LINK 3
 
 //Don't set this very much higher then 1024 unless you like inviting people in to dos your server with message spam
-#define MAX_MESSAGE_LEN			1024
+#define MAX_MESSAGE_BIGME		4096
+#define MAX_MESSAGE_LEN			2048
 #define MAX_NAME_LEN			42
 #define MAX_BROADCAST_LEN		512
 #define MAX_CHARTER_LEN			80

@@ -7,14 +7,6 @@ PROCESSING_SUBSYSTEM_DEF(enchantment)
 	var/list/enchantments_to_list = list()
 	var/list/weighted_enchantments = list()
 
-/datum/controller/subsystem/processing/enchantment/Initialize(start_timeofday)
-	for(var/datum/enchantment/enchantment as anything in subtypesof(/datum/enchantment))
-		enchantments_to_list |= enchantment
-		enchantments_to_list[enchantment] = new enchantment
-		weighted_enchantments |= enchantment
-		weighted_enchantments[enchantment] = initial(enchantment.random_enchantment_weight)
-	return ..()
-
 /datum/controller/subsystem/processing/enchantment/proc/has_enchantment(atom/item, datum/enchantment/path)
 	if(!item || !path)
 		return FALSE
@@ -40,6 +32,12 @@ PROCESSING_SUBSYSTEM_DEF(enchantment)
 	return FALSE
 
 /datum/controller/subsystem/processing/enchantment/proc/enchant_item(atom/item, datum/enchantment/enchantment)
+	// so we don't need to initialize the subsystem
+	if(!length(enchantments_to_list) && !length(weighted_enchantments))
+		for(var/datum/enchantment/enchantment_path as anything in subtypesof(/datum/enchantment))
+			enchantments_to_list[enchantment_path] = new enchantment_path
+			weighted_enchantments[enchantment_path] = initial(enchantment_path.random_enchantment_weight)
+
 	if(!item || !enchantment)
 		return FALSE
 	if(!(enchantment in enchantments_to_list))

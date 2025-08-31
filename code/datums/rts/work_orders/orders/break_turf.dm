@@ -22,7 +22,7 @@
 
 /datum/work_order/break_turf/finish_work()
 	if(isclosedturf(breaking_turf))
-		breaking_turf.turf_destruction("blunt")
+		breaking_turf.atom_destruction("blunt")
 	else
 		for(var/obj/structure/structure as anything in breaking_turf.contents)
 			if(is_type_in_list(structure, GLOB.breakable_types))
