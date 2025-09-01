@@ -36,7 +36,7 @@
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(SSmapping.level_has_any_trait(H.z, list(ZTRAIT_IGNORE_WEATHER_TRAIT)))
 			continue
-		if(H.stat == CONSCIOUS && !is_blind(H))
+		if(H.stat == CONSCIOUS && !H.is_blind())
 			potential_victims += H
 
 	if(!length(potential_victims))

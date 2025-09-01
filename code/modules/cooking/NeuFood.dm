@@ -117,68 +117,37 @@
 	name = "wooden spoon"
 	desc = "Traditional utensil for shoveling soup into your mouth, or to churn butter with."
 	icon_state = "spoon"
+	smeltresult = /obj/item/fertilizer/ash
 
 /obj/item/kitchen/spoon/iron
 	name = "iron spoon"
 	icon_state = "spoon_iron"
+	melting_material = /datum/material/iron
+	melt_amount = 20
 
 /obj/item/kitchen/spoon/pewter
 	name = "pewter spoon"
 	icon_state = "spoon_iron"
+	melting_material = /datum/material/tin
+	melt_amount = 20
 
 /obj/item/kitchen/fork
 	name = "wooden fork"
 	desc = "Traditional utensil for stabbing your food in order to shove it into your mouth."
 	icon_state = "fork"
+	smeltresult = /obj/item/fertilizer/ash
 
 /obj/item/kitchen/fork/iron
 	name = "iron fork"
 	icon_state = "fork_iron"
+	melting_material = /datum/material/iron
+	melt_amount = 20
 
 /obj/item/kitchen/fork/pewter
 	name = "pewter fork"
 	icon_state = "fork_iron"
-
-/// DEPRECIATED. USE /obj/item/plate instead.
-/obj/item/kitchen/platter
-	name = "platter"
-	desc = "Made from wood."
-	icon_state = "platter"
-	dropshrink = 0.9
-	grid_height = 32
-	grid_width = 64
-	resistance_flags = NONE
-	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'
-	experimental_inhand = FALSE
-	w_class = WEIGHT_CLASS_NORMAL
-	base_item = /obj/item/kitchen/platter
-
-/// DEPRECIATED. USE /obj/item/plate/clay instead.
-/obj/item/kitchen/platter/clay
-	desc = "Made from fired clay."
-	icon_state = "platter_clay"
-	drop_sound = 'sound/foley/dropsound/brick_drop.ogg'
-	resistance_flags = FIRE_PROOF
-	base_item = /obj/item/kitchen/platter/clay
-
-/obj/item/kitchen/platter/clay/set_material_information()
-	. = ..()
-	name = "[lowertext(initial(main_material.name))] clay platter"
-
-
-/obj/item/kitchen/platter/clay/throw_impact(atom/hit_atom, datum/thrownthing/thrownthing)
-	new /obj/effect/decal/cleanable/shreds/clay(get_turf(src))
-	playsound(get_turf(src), 'sound/foley/break_clay.ogg', 90, TRUE)
-	..()
-	qdel(src)
-
-/// DEPRECIATED. USE /obj/item/plate/copper instead.
-/obj/item/kitchen/platter/copper
-	desc = "Made from thin metal."
-	icon_state = "platter_copper"
-	resistance_flags = FIRE_PROOF
-	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
-	base_item = /obj/item/kitchen/platter/copper
+	melting_material = /datum/material/tin
+	melt_amount = 20
 
 /obj/item/reagent_containers/glass/bowl
 	name = "bowl"
@@ -201,16 +170,21 @@
 	drinksounds = list('sound/items/drink_cup (1).ogg','sound/items/drink_cup (2).ogg','sound/items/drink_cup (3).ogg','sound/items/drink_cup (4).ogg','sound/items/drink_cup (5).ogg')
 	fillsounds = list('sound/items/fillcup.ogg')
 	metalizer_result = /obj/item/reagent_containers/glass/bowl/iron
+	smeltresult = /obj/item/fertilizer/ash
 
 /obj/item/reagent_containers/glass/bowl/iron
 	icon_state = "bowl_iron"
 	fill_icon_state = "bowl"
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
+	melting_material = /datum/material/iron
+	melt_amount = 20
 
 /obj/item/reagent_containers/glass/bowl/pewter
 	icon_state = "bowl_iron"
 	fill_icon_state = "bowl"
 	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
+	melting_material = /datum/material/tin
+	melt_amount = 20
 
 /obj/item/reagent_containers/glass/bowl/clay
 	desc = "Made from fired clay."
@@ -513,34 +487,6 @@
 	new /obj/effect/decal/cleanable/food/flour(get_turf(src))
 	..()
 	qdel(src)
-
-/*------------------\
-| Meals on platters |
-\------------------*/
-
-/*	..................   Food platter   ................... */
-/obj/item/kitchen/platter/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/reagent_containers/food/snacks))
-		var/obj/item/reagent_containers/food/snacks/S = I
-		if (S.plateable == TRUE)
-			playsound(get_turf(user), 'sound/foley/dropsound/food_drop.ogg', 40, TRUE, -1)
-			if(do_after(user, 1 SECONDS, src))
-				S.plated()
-				S.trash = base_item
-				S.plateable = FALSE
-				S.rotprocess =  SHELFLIFE_LONG
-				S.w_class = WEIGHT_CLASS_NORMAL
-				S.dropshrink = 0.9
-				S.bonus_reagents = list(/datum/reagent/consumable/nutriment = 2)
-				var/mutable_appearance/platter = mutable_appearance(icon, icon_state)
-				S.underlays += platter
-				qdel(src)
-		else
-			to_chat(user, span_warning("[S] cannot be plated."))
-	else
-		return ..()
-
-
 
 /* * * * * * * * * * * **
  *						*

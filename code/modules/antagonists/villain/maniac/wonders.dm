@@ -123,4 +123,4 @@
 			gazed_at = TRUE
 			to_chat(V, span_userdanger("It is WONDERFUL!"))
 			var/N = dream_master.owner?.name
-			V.log_message("was marked by Maniac [N ? "[N]'s " : ""]Wonder #[wonder_id]: \"[strip_html_simple(inscryption)].\"", LOG_ATTACK)
+			V.log_message("was marked by Maniac [N ? "[N]'s " : ""]Wonder #[wonder_id]: \"[STRIP_HTML_SIMPLE(inscryption, MAX_MESSAGE_LEN)].\"", LOG_ATTACK)

@@ -15,6 +15,7 @@
 	shirt = /obj/item/clothing/shirt/shadowshirt
 	armor = /obj/item/clothing/armor/plate/full/zizo
 	shoes = /obj/item/clothing/shoes/boots/armor/zizo
+	neck = /obj/item/clothing/neck/chaincoif
 	beltl = /obj/item/flashlight/flare/torch/lantern
 	belt = /obj/item/storage/belt/leather/steel
 	backr = /obj/item/storage/backpack/satchel
@@ -40,6 +41,7 @@
 		H.change_stat(STATKEY_CON, 2)
 		H.change_stat(STATKEY_END, 2)
 		H.change_stat(STATKEY_SPD, -1)
+		H.grant_language(/datum/language/undead)
 		var/prev_real_name = H.real_name
 		var/prev_name = H.name
 		var/honorary = "Zizo Knight"
@@ -91,6 +93,7 @@
 		H.change_stat(STATKEY_CON, 2)
 		H.change_stat(STATKEY_INT, -1)
 		H.change_stat(STATKEY_SPD, 2)
+		H.grant_language(/datum/language/undead)
 	if(H.gender == MALE && H.dna?.species)
 		H.dna.species.soundpack_m = new /datum/voicepack/male/squire()
 	ADD_TRAIT(H, TRAIT_DODGEEXPERT, TRAIT_GENERIC)

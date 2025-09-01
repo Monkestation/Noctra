@@ -111,19 +111,18 @@
 	character.add_overlay(MA)
 
 /atom/movable/screen/controller_ui/controller_ui/proc/update_task_text()
-	var/task_text = {"<center><span style='font-size:8pt;font-family:"Pterra"'>Idle</span></center>"}
+	var/task_text = "Idle"
 	if(worker_mind.attack_mode?.current_target)
-		task_text = {"<center><span style='font-size:8pt;font-family:"Pterra"'>Attacking [worker_mind.attack_mode.current_target]</span></center>"}
+		task_text = "Attacking [worker_mind.attack_mode.current_target]"
 	else if(worker_mind.current_task)
-		task_text = {"<center><span style='font-size:8pt;font-family:"Pterra"'>[worker_mind.current_task.name]</span></center>"}
-	task.maptext = task_text
+		task_text = "[worker_mind.current_task.name]"
+	task.maptext = MAPTEXT_CENTER(task_text)
 
 /atom/movable/screen/controller_ui/controller_ui/proc/update_name_text()
-	name_box.maptext = {"<center><span style='font-family: "Blackmoor LET", "Pterra";font-size: 200%;text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;'>[worker_mind.worker_name]</span></center>"}
+	name_box.maptext = MAPTEXT_BLACKMOOR("<span style='font-size: 12pt'>[worker_mind.worker_name]</span>")
 
 /atom/movable/screen/controller_ui/controller_ui/proc/update_stat_text()
-	stat.maptext = {"<span style='font-size:8pt;font-family:"Pterra"'>Stamina: [worker_mind.current_stamina] \nWorkspeed: [worker_mind.work_speed]</span>"}
-
+	stat.maptext = MAPTEXT_CENTER("Stamina: [worker_mind.current_stamina]\nWorkspeed: [worker_mind.work_speed]")
 
 /atom/movable/screen/controller_ui/character_pane
 	icon_state = "character_preview"

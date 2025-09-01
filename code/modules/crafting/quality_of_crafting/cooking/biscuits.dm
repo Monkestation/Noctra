@@ -97,21 +97,7 @@
 	)
 	attacked_atom = /obj/item/reagent_containers/food/snacks/bun
 	starting_atom = /obj/item/reagent_containers/food/snacks/cooked/sausage
-	output = /obj/item/reagent_containers/food/snacks/grenzelbun
-	craft_time = 6 SECONDS
-	crafting_sound = 'sound/foley/dropsound/gen_drop.ogg'
-	extra_chance = 100
-
-/datum/repeatable_crafting_recipe/cooking/grenzelbun_alt
-	hides_from_books = TRUE
-	name = "Grenzel Bun"
-
-	requirements = list(
-		/obj/item/reagent_containers/food/snacks/cooked/sausage = 1,
-		/obj/item/reagent_containers/food/snacks/bun = 1,
-	)
-	starting_atom = /obj/item/reagent_containers/food/snacks/bun
-	attacked_atom  = /obj/item/reagent_containers/food/snacks/cooked/sausage
+	allow_inverse_start = TRUE
 	output = /obj/item/reagent_containers/food/snacks/grenzelbun
 	craft_time = 6 SECONDS
 	crafting_sound = 'sound/foley/dropsound/gen_drop.ogg'

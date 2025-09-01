@@ -389,7 +389,7 @@
 /turf/open/floor/tile/masonic/spiral,
 /area/rogue/under/tomb/indoors)
 "eS" = (
-/obj/item/kitchen/platter,
+/obj/item/plate,
 /turf/open/floor/tile/kitchen,
 /area/rogue/under/tomb/indoors)
 "eT" = (
@@ -1116,7 +1116,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb)
 "mj" = (
-/obj/item/kitchen/platter,
+/obj/item/plate,
 /turf/open/floor/hexstone,
 /area/rogue/under/tomb/indoors)
 "mk" = (
@@ -1828,7 +1828,7 @@
 /area/rogue/under/tomb/indoors)
 "vg" = (
 /obj/structure/table/wood/plain_alt,
-/obj/item/kitchen/platter,
+/obj/item/plate,
 /obj/item/reagent_containers/glass/cup/wooden,
 /turf/open/floor/tile/kitchen,
 /area/rogue/under/tomb/indoors)
@@ -3300,7 +3300,7 @@
 /turf/open/transparent/openspace,
 /area/rogue/under/tomb/indoors)
 "Kb" = (
-/obj/item/kitchen/platter,
+/obj/item/plate,
 /mob/living/carbon/human/species/goblin/npc/ambush/cave,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/hexstone,
@@ -3438,7 +3438,7 @@
 /area/rogue/under/tomb)
 "LD" = (
 /obj/structure/table/wood/plain_alt,
-/obj/item/kitchen/platter,
+/obj/item/plate,
 /turf/open/floor/tile/kitchen,
 /area/rogue/under/tomb/indoors)
 "LE" = (
@@ -3521,7 +3521,7 @@
 /turf/closed/wall/mineral/decostone,
 /area/rogue/under/tomb/indoors)
 "MJ" = (
-/obj/item/kitchen/platter,
+/obj/item/plate,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/tile/kitchen,
 /area/rogue/under/tomb/indoors)
@@ -4568,7 +4568,7 @@
 /area/rogue/under/tomb/indoors)
 "Xr" = (
 /obj/structure/table/wood/plain_alt,
-/obj/item/kitchen/platter,
+/obj/item/plate,
 /turf/open/floor/hexstone,
 /area/rogue/under/tomb/indoors)
 "Xv" = (

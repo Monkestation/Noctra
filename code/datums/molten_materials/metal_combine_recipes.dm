@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(molten_recipes, list())
 	user << browse(generate_html(user),"window=recipe;size=500x810")
 
 /datum/molten_recipe/bronze
-	name = "Tin Bronze"
+	name = "Bronze"
 	materials_required = list(
 		/datum/material/copper = 9,
 		/datum/material/tin = 1,

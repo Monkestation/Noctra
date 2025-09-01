@@ -84,7 +84,7 @@ but should see their own spawn message even if the player already dropped as USC
 			continue
 		if(i in html_tags)
 			continue
-		T.maptext = "<span style=\"[style]\">[copytext(message,1,i)]</span>"
+		T.maptext = MAPTEXT("<span style=\"[style]\">[copytext(message, 1, i)]</span>")
 		if(speed)
 			sleep(speed)
 

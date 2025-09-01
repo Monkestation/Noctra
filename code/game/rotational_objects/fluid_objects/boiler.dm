@@ -42,10 +42,16 @@
 /obj/structure/boiler/return_rotation_chat(atom/movable/screen/movable/mouseover/mouseover)
 	mouseover.maptext_height = 128
 
+<<<<<<< HEAD
 	return {"<span style='font-size:8pt;font-family:"Pterra";color:#808000;text-shadow:0 0 1px #fff, 0 0 2px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>
 			Input Pressure:[input ? input.water_pressure : "0"]
 			Output Pressure: ACTL:[min(pressure_target, stored_steam)] TGT:[pressure_target]
 			Stored Steam:[stored_steam ? round((stored_steam / maximum_steam) * 100, 1 ): "0"]%"}
+=======
+	return	"Input Pressure:[input ? input.water_pressure : "0"]\n\
+			Output Pressure: ACTL:[min(pressure_target, stored_steam)] TGT:[pressure_target]\n\
+			Stored Steam:[stored_steam ? round((stored_steam / maximum_steam) * 100, 1 ): "0"]%"
+>>>>>>> vanderlin/main
 
 // Assume boiler is facing south (dir = SOUTH). Input is coming in from the right (direction = WEST) and output is to the left (direction = EAST)
 /obj/structure/boiler/valid_water_connection(direction, obj/structure/water_pipe/pipe)

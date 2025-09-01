@@ -15,6 +15,8 @@
 	thrown_bclass = BCLASS_CHOP
 	tool_behaviour = TOOL_IMPROVISED_SAW
 	sharpness = IS_BLUNT
+	smeltresult = /obj/item/fertilizer/ash
+	melting_material = null
 
 /obj/item/weapon/surgery/hemostat/improv
 	name = "improvised clamp"
@@ -27,6 +29,8 @@
 	pickup_sound = 'sound/foley/equip/swordsmall2.ogg'
 	tool_behaviour = TOOL_IMPROVISED_HEMOSTAT
 	sharpness = IS_BLUNT
+	smeltresult = /obj/item/fertilizer/ash
+	melting_material = null
 
 /obj/item/weapon/surgery/retractor/improv
 	name = "improvised retractor"
@@ -43,3 +47,5 @@
 	thrown_bclass = BCLASS_BLUNT
 	tool_behaviour = TOOL_IMPROVISED_RETRACTOR
 	sharpness = IS_BLUNT
+	smeltresult = /obj/item/fertilizer/ash
+	melting_material = null

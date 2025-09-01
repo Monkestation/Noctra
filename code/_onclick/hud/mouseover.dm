@@ -36,7 +36,7 @@
 			p.client.mouseovertext.movethis(PM)
 		p.client.mouseovertext.maptext_height = 32
 		p.client.mouseovertext.maptext_width = 96
-		p.client.mouseovertext.maptext = {"<span style='font-size:8pt;font-family:"Pterra";color:[hover_color];text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>[name]"}
+		p.client.mouseovertext.maptext = MAPTEXT_CENTER("<span style='color:[hover_color]'>[name]</span>")
 		p.client.screen |= p.client.mouseovertext
 	return TRUE
 
@@ -64,12 +64,11 @@
 		if((((rotation_structure && rotation_network) || istype(src, /obj/structure/water_pipe)) || accepts_water_input) && HAS_TRAIT(p, TRAIT_ENGINEERING_GOGGLES))
 			var/rotation_chat = return_rotation_chat(p.client.mouseovertext)
 			p.client.mouseovertext.maptext_width = 96
-			p.client.mouseovertext.maptext = {"[rotation_chat]
-			<span style='font-size:8pt;font-family:"Pterra";color:[hover_color];text-shadow:0 0 1px #fff, 0 0 2px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>[name]"}
+			p.client.mouseovertext.maptext = MAPTEXT_CENTER("<span style='color:#e6b120'>[rotation_chat]</span>")
 		else
 			p.client.mouseovertext.maptext_height = 32
 			p.client.mouseovertext.maptext_width = 96
-			p.client.mouseovertext.maptext = {"<span style='font-size:8pt;font-family:"Pterra";color:[hover_color];text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>[name]"}
+			p.client.mouseovertext.maptext = MAPTEXT_CENTER("<span style='color:[hover_color]'>[name]</span>")
 		p.client.screen |= p.client.mouseovertext
 	return TRUE
 
@@ -121,7 +120,7 @@
 		if(offset_x < 1 || offset_x > 15 || offset_y < 1 || offset_x > 15)
 			return FALSE
 		var/list/PM = list("screen-loc" = "[offset_x]:0,[offset_y]:0")
-		p.client.mouseovertext.maptext = {"<span style='font-size:8pt;font-family:"Pterra";color:#607d65;text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>[name]"}
+		p.client.mouseovertext.maptext = MAPTEXT_CENTER("<span style='color:[hover_color]'>[name]</span>")
 		p.client.mouseovertext.movethis(PM)
 		p.client.screen |= p.client.mouseovertext
 	return TRUE
@@ -139,7 +138,7 @@
 		var/offset_x = 8 - (p.x - x)
 		var/offset_y = 8 - (p.y - y)
 		var/list/PM = list("screen-loc" = "[offset_x]:0,[offset_y]:0")
-		p.client.mouseovertext.maptext = {"<span style='font-size:8pt;font-family:"Pterra";color:#6b3f3f;text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>[name]"}
+		p.client.mouseovertext.maptext = MAPTEXT_CENTER("<span style='color:[hover_color]'>[name]</span>")
 		p.client.mouseovertext.movethis(PM)
 		p.client.screen |= p.client.mouseovertext
 	return TRUE
@@ -169,7 +168,7 @@
 			if(H.voice_color)
 				if(H.name != "Unknown")
 					mousecolor = "#[H.voice_color]"
-		p.client.mouseovertext.maptext = {"<span style='font-size:8pt;font-family:"Pterra";color:[mousecolor];text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>[name]"}
+		p.client.mouseovertext.maptext = MAPTEXT_CENTER("<span style='color:[mousecolor]'>[name]</span>")
 		p.client.mouseovertext.movethis(PM)
 		p.client.screen |= p.client.mouseovertext
 	return TRUE

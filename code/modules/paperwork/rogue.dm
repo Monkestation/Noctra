@@ -66,7 +66,7 @@
 	else
 		user.hud_used.reads.icon_state = "scroll"
 		user.hud_used.reads.show()
-		user.hud_used.reads.maptext = info
+		user.hud_used.reads.maptext = MAPTEXT(info)
 		user.hud_used.reads.maptext_width = 230
 		user.hud_used.reads.maptext_height = 200
 		user.hud_used.reads.maptext_y = 150

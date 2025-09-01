@@ -96,7 +96,7 @@
 	for(var/letter = 2 to length(text_to_play) + letters_per_update step letters_per_update)
 		if(letter in lines_to_skip)
 			continue
-		maptext = "[style_open][copytext_char(text_to_play, 1, letter)][style_close]"
+		maptext = MAPTEXT("[style_open][copytext_char(text_to_play, 1, letter)][style_close]")
 		sleep(play_delay)
 	addtimer(CALLBACK(src, PROC_REF(after_play), player), fade_out_delay)
 

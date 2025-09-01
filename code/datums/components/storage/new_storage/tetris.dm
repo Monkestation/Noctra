@@ -145,7 +145,7 @@
 				screen_y = text2num(copytext(screen_y, 1, findtext(screen_y, ":")))
 				stored_item.screen_loc = "[screen_x]:[screen_pixel_x],[screen_y]:[screen_pixel_y]"
 				stored_item.plane = ABOVE_HUD_PLANE
-				stored_item.maptext = "<font color='white'>[(numbered_display.number > 1)? "[numbered_display.number]" : ""]</font>"
+				stored_item.maptext = MAPTEXT("<font color='white'>[(numbered_display.number > 1)? "[numbered_display.number]" : ""]</font>")
 		else
 			var/atom/real_location = real_location()
 			for(var/obj/item/stored_item in real_location)
@@ -188,7 +188,7 @@
 			var/datum/numbered_display/numbered_display = numerical_display_contents[index]
 			numbered_display.sample_object.mouse_opacity = MOUSE_OPACITY_OPAQUE
 			numbered_display.sample_object.screen_loc = "[cx]:[screen_pixel_x],[cy]:[screen_pixel_y]"
-			numbered_display.sample_object.maptext = "<font color='white'>[(numbered_display.number > 1)? "[numbered_display.number]" : ""]</font>"
+			numbered_display.sample_object.maptext = MAPTEXT("<font color='white'>[(numbered_display.number > 1)? "[numbered_display.number]" : ""]</font>")
 			numbered_display.sample_object.plane = ABOVE_HUD_PLANE
 			cy--
 			if(screen_start_y - cy >= rows)

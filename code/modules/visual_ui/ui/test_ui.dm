@@ -62,7 +62,7 @@
 		button.offset_x = offset_x
 		button.offset_y = offset_y + (32 * (i-1))
 		button.update_ui_screen_loc()
-		button.maptext = {"<center><span style='font-family: "Blackmoor LET", "Pterra";font-size: 150%;text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;'>BUTTON: [26-i]</span></center>"}
+		button.maptext = MAPTEXT_CENTER("<span style='font-family: \"Blackmoor LET\", \"Pterra\";font-size: 150%;text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;'>BUTTON: [26-i]</span>")
 		button.maptext_width = 128
 		button.maptext_x = 16
 		parent.elements += button

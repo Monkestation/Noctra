@@ -40,7 +40,11 @@
 	if(desired_transfer > liquids.liquid_group.reagents_per_turf)
 		desired_transfer = liquids.liquid_group.reagents_per_turf
 	liquids.liquid_group.trans_to_seperate_group(my_beaker.reagents, desired_transfer, liquids)
+<<<<<<< HEAD
 	to_chat(user, span_notice("You scoop up around [round(desired_transfer) / 3] oz of liquids with [my_beaker]."))
+=======
+	to_chat(user, span_notice("You scoop up around [round(desired_transfer)] [UNIT_FORM_STRING(round(desired_transfer))] of liquids with [my_beaker]."))
+>>>>>>> vanderlin/main
 	user.changeNext_move(CLICK_CD_MELEE)
 	return TRUE
 

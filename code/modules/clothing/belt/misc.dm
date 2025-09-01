@@ -313,6 +313,8 @@
 	. = ..()
 	new /obj/item/weapon/surgery/scalpel(loc)
 	new /obj/item/weapon/surgery/saw(loc)
+	//two hemostats because one is needed to clamp bleeders, the other is needed to actually remove stuff with it
+	new /obj/item/weapon/surgery/hemostat(loc)
 	new /obj/item/weapon/surgery/hemostat(loc)
 	new /obj/item/weapon/surgery/retractor(loc)
 	new /obj/item/weapon/surgery/bonesetter(loc)
@@ -337,7 +339,6 @@
 	)
 
 /obj/item/storage/belt/leather/knifebelt
-
 	name = "tossblade belt"
 	desc = "A many-slotted belt meant for tossblades. Little room left over."
 	icon_state = "knife"

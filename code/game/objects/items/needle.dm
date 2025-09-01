@@ -10,6 +10,8 @@
 	slot_flags = ITEM_SLOT_MOUTH
 	max_integrity = 20
 	anvilrepair = /datum/skill/craft/blacksmithing
+	melting_material = /datum/material/iron
+	melt_amount = 20
 	tool_behaviour = TOOL_SUTURE
 
 	grid_width = 32
@@ -185,6 +187,7 @@
 	stringamt = 5
 	maxstring = 5
 	anvilrepair = null
+	melting_material = null
 
 /obj/item/needle/blessed
 	name = "blessed needle"

@@ -507,25 +507,19 @@
 				if(user.can_see_reagents()) //Show each individual reagent
 					. += "It contains:"
 					for(var/datum/reagent/R in reagents.reagent_list)
-						if(R.volume / 3 < 1)
-							. += "less than 1 oz of <font color=[R.color]>[R.name]</font>"
-						else
-							. += "[round(R.volume / 3)] oz of <font color=[R.color]>[R.name]</font>"
+						. += "[(R.volume)] [(UNIT_FORM_STRING(R.volume))] of <font color=[R.color]>[R.name]</font>"
 				else //Otherwise, just show the total volume
 					var/total_volume = 0
 					var/reagent_color
 					for(var/datum/reagent/R in reagents.reagent_list)
 						total_volume += R.volume
 					reagent_color = mix_color_from_reagents(reagents.reagent_list)
-					if(total_volume / 3 < 1)
-						. += "It contains less than 1 oz of <font color=[reagent_color]>something.</font>"
-					else
-						. += "It contains [round(total_volume / 3)] oz of <font color=[reagent_color]>something.</font>"
+					. += "It contains [(total_volume)] [(UNIT_FORM_STRING(total_volume))] of <font color=[reagent_color]>something.</font>"
 			else
 				. += "It's empty."
 		else if(reagents.flags & AMOUNT_VISIBLE)
 			if(reagents.total_volume)
-				. += "<span class='notice'>It has [round(reagents.total_volume / 3, 0.1)] oz left.</span>"
+				. += "<span class='notice'>It has [round(reagents.total_volume, 0.1)] [(UNIT_FORM_STRING(round(reagents.total_volume, 0.1)))] left.</span>"
 			else
 				. += "<span class='danger'>It's empty.</span>"
 		//SNIFFING

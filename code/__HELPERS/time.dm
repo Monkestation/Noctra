@@ -84,10 +84,8 @@ GLOBAL_VAR_INIT(dayspassed, FALSE)
 		mind.areas_entered += text_to_show
 		var/atom/movable/screen/area_text/T = new()
 		client.screen += T
-		T.maptext = {"<span style='vertical-align:top; text-align:center;
-					color: #7c5b10; font-size: 150%;
-					text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;
-					font-family: "Nosfer", "Pterra";'>[text_to_show]</span>"}
+		T.maptext = MAPTEXT_CENTER({"<span style='vertical-align:top;color: #7c5b10; font-size: 150%;
+					text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;'>[text_to_show]</span>"})
 		T.maptext_width = 205
 		T.maptext_height = 209
 		T.maptext_x = 12

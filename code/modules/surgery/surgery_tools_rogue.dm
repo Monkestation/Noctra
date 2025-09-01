@@ -18,6 +18,8 @@
 	associated_skill = /datum/skill/combat/knives
 	anvilrepair = /datum/skill/craft/blacksmithing
 	smeltresult = /obj/item/ingot/iron
+	melting_material = /datum/material/iron
+	melt_amount = 25 //it takes 2 iron bars to make 8 surgical tools, 240/8 = 30, -5 because I reckon some is lost during the process
 	embedding = list(
 		"embed_chance" = 20,
 		"embedded_pain_multiplier" = 1,

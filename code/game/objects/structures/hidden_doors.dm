@@ -98,7 +98,7 @@ GLOBAL_LIST_EMPTY(thieves_guild_doors)
 	if(!ishuman(speaker))
 		return FALSE
 
-	var/message2recognize = sanitize_hear_message(original_message)
+	var/message2recognize = SANITIZE_HEAR_MESSAGE(original_message)
 
 	if(is_type_in_list(H.mind?.assigned_role, vip)) //are they a VIP?
 		var/list/mods = list(WHISPER_MODE = MODE_WHISPER)
@@ -304,7 +304,7 @@ GLOBAL_LIST_EMPTY(thieves_guild_doors)
 		return FALSE
 	var/mob/living/carbon/human/H = speaker
 
-	var/message2recognize = sanitize_hear_message(raw_message)
+	var/message2recognize = SANITIZE_HEAR_MESSAGE(raw_message)
 	if(is_type_in_list(H.mind?.assigned_role, vip) && findtext(message2recognize, "set phrase"))
 		for(var/obj/structure/door/secret/D in GLOB.keep_doors)
 			D.set_phrase(open_phrase)
@@ -346,7 +346,7 @@ GLOBAL_LIST_EMPTY(thieves_guild_doors)
 		return FALSE
 	var/mob/living/carbon/human/H = speaker
 
-	var/message2recognize = sanitize_hear_message(raw_message)
+	var/message2recognize = SANITIZE_HEAR_MESSAGE(raw_message)
 	if((is_type_in_list(H.mind?.assigned_role, vip)) && findtext(message2recognize, "set phrase"))
 		for(var/obj/structure/door/secret/D in GLOB.keep_doors)
 			D.set_phrase(open_phrase)

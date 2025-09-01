@@ -446,7 +446,7 @@
 			trapped = TRUE
 
 	if(istype(P, /obj/item/natural/thorn) || istype(P, /obj/item/natural/feather))
-		if(is_blind(user))
+		if(user.is_blind())
 			to_chat(user, span_warning("I want to write on [src], but I cannot."))
 			return
 

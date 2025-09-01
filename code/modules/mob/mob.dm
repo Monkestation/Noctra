@@ -408,7 +408,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 		// shift-click catcher may issue examinate() calls for out-of-sight turfs
 		return
 
-	if(is_blind(src))
+	if(is_blind())
 		to_chat(src, "<span class='warning'>Something is there but I can't see it!</span>")
 		return
 
@@ -1124,7 +1124,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 /mob/proc/can_read(obj/O, silent = FALSE)
 	if(isobserver(src))
 		return TRUE
-	if(is_blind(src) || eye_blurry)
+	if(is_blind() || eye_blurry)
 		if(!silent)
 			to_chat(src, span_warning("I'm too blind to read."))
 		return

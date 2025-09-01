@@ -146,6 +146,8 @@
 	breakouttime = 30 SECONDS
 	slipouttime = 1 MINUTES
 	possible_item_intents = list(/datum/intent/tie, /datum/intent/whip)
+	melting_material = /datum/material/iron
+	melt_amount = 40
 	firefuel = null
 	drop_sound = 'sound/foley/dropsound/chain_drop.ogg'
 

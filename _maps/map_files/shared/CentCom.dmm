@@ -7716,12 +7716,12 @@
 /obj/item/reagent_containers/glass/cup/wooden{
 	pixel_y = 2
 	},
-/obj/item/kitchen/platter,
-/obj/item/kitchen/platter,
-/obj/item/kitchen/platter,
-/obj/item/kitchen/platter,
-/obj/item/kitchen/platter,
-/obj/item/kitchen/platter,
+/obj/item/plate,
+/obj/item/plate,
+/obj/item/plate,
+/obj/item/plate,
+/obj/item/plate,
+/obj/item/plate,
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/indoors/bandit_lair)
 "Ys" = (

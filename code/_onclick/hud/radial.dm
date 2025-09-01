@@ -26,7 +26,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 		else
 			p.client.mouseovertext.movethis(PM)
 		p.client.mouseovertext.maptext_width = 196
-		p.client.mouseovertext.maptext = {"<span style='font-size:8pt;font-family:"Pterra";color:[hover_color];text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>[name]"}
+		p.client.mouseovertext.maptext = MAPTEXT_CENTER("<span style='color:[hover_color]'>[name]</span>")
 		p.client.screen |= p.client.mouseovertext
 	return TRUE
 
