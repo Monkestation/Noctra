@@ -5,7 +5,6 @@
                 "sound": "Ambience music can now be muted with ChangeMusicPower"
             }
         ],
-<<<<<<< HEAD
         "flleeppyy": [
             {
                 "rscadd": "Logo for Noctra"
@@ -15,11 +14,6 @@
             },
             {
                 "rscdel": "Removed \\\"NSFW descriptions are prohibited.\\\" from flavortext notice"
-=======
-        "snowyseshi": [
-            {
-                "rscadd": "chain coif and language to dark itenerant knight.\\n<!-- Both :cl:'s are required for the changelog to work! You can put your name to the right of the first :cl: if you want to overwrite your GitHub username as author ingame. -->\\n<!-- You can use multiple of the same prefix (they're only used for the icon ingame) and delete the unneeded ones. Despite some of the tags, changelogs should generally represent how a player might be affected by the changes rather than a summary of the PR's contents. -->\\n## Pre-Merge Checklist\\n<!-- Don't bother filling these in while creating your Pull Request, just click the checkboxes after the Pull Request is opened and you are redirected to the page. -->\\n- [ ] You tested this on a local server.\\n- [ ] This code did not runtime during testing.\\n- [ ] You documented all of your changes.\\n<!-- Neither the compiler nor workflow checks are perfect at detecting runtimes and errors. It is important to test your code/feature/fix locally. -->"
->>>>>>> vanderlin/main
             }
         ],
         "CheffieGithub": [
@@ -31,40 +25,12 @@
             },
             {
                 "bugfix": "Fixed void corruption not having an alert icon."
-<<<<<<< HEAD
-=======
-            },
-            {
-                "bugfix": "Fixed weed and spice causing error signs"
-            },
-            {
-                "code_imp": "Added balloon alerts, use them instead of one off chat messages for more visible feedback."
-            }
-        ],
-        "Wouju": [
-            {
-                "qol": "replaced ounces with ligulae, no more dividing by 3 for reagent containers"
-            },
-            {
-                "rscadd": "Iron melting point reduced, it can now be smelted inside furnaces"
-            },
-            {
-                "rscadd": "More items are meltable now, spoons and forks for example"
->>>>>>> vanderlin/main
             }
         ],
         "wgtjunior743": [
             {
                 "rscdel": "Void Corruption from the Red Dragon"
             }
-<<<<<<< HEAD
-=======
-        ],
-        "lmenvs": [
-            {
-                "bugfix": "fixed a bug where praying swear words to Psydon caused divine punishment"
-            }
->>>>>>> vanderlin/main
         ]
     }
 }

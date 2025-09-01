@@ -1,10 +1,7 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	level = 1
-<<<<<<< HEAD
-=======
 	hover_color = "#607d65"
->>>>>>> vanderlin/main
 	uses_integrity = TRUE
 
 	var/intact = 1

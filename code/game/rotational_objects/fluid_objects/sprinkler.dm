@@ -127,19 +127,11 @@
 	mouseover.maptext_height = 128
 	var/status = active ? "Active" : "Inactive"
 	var/reagent_name = current_reagent ? initial(current_reagent.name) : "None"
-<<<<<<< HEAD
-	return {"<span style='font-size:8pt;font-family:"Pterra";color:#0080ff;text-shadow:0 0 1px #fff, 0 0 2px #fff, 0 0 30px #00ff00, 0 0 40px #00ff00, 0 0 50px #00ff00, 0 0 60px #00ff00, 0 0 70px #00ff00;' class='center maptext '>
-			Status: [status]
-			Pressure: [water_pressure]
-			Fluid: [reagent_name]
-			Range: [spray_range] tiles</span>"}
-=======
 
 	return "Status: [status]\n\
 			Pressure: [water_pressure]\n\
 			Fluid: [reagent_name]\n\
 			Range: [spray_range] tiles"
->>>>>>> vanderlin/main
 
 /obj/structure/sprinkler/examine(mob/user)
 	. = ..()

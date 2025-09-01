@@ -18,14 +18,6 @@
 	name = "Oiled"
 	desc = "I'm covered in oil, making me slippery and harder to grab!"
 	icon_state = "debuff"
-<<<<<<< HEAD
-
-/atom/movable/screen/alert/status_effect/oiled
-	name = "Oiled"
-	desc = "I'm covered in oil, making me slippery and harder to grab!"
-	icon_state = "debuff"
-=======
->>>>>>> vanderlin/main
 
 /datum/status_effect/buff/oiled/on_apply()
 	. = ..()

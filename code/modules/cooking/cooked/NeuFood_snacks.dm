@@ -97,11 +97,6 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = COOKED_MEAT_NUTRITION+2)
 	slices_num = 0
 	rotprocess = SHELFLIFE_DECENT
-<<<<<<< HEAD
-	plateable = TRUE
-	foodbuff_skillcheck = TRUE
-=======
->>>>>>> vanderlin/main
 	faretype = FARE_NEUTRAL
 
 /obj/item/reagent_containers/food/snacks/cooked/herbsteak/update_overlays()
@@ -175,10 +170,6 @@
 	tastes = list("frybird" = 1, "herbs" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = COOKED_MEAT_NUTRITION+2)
 	slices_num = 0
-<<<<<<< HEAD
-	foodbuff_skillcheck = TRUE
-=======
->>>>>>> vanderlin/main
 	rotprocess = SHELFLIFE_DECENT
 	faretype = FARE_NEUTRAL
 

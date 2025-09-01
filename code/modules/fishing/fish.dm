@@ -97,13 +97,7 @@
 /obj/item/reagent_containers/food/snacks/fryfish/carp
 	name = "cooked carp"
 	icon_state = "carpcooked"
-<<<<<<< HEAD
-	plateable = TRUE
-	plating_alt_icon = TRUE
-	plated_iconstate = "carp_plated"
-=======
 	faretype = FARE_IMPOVERISHED
->>>>>>> vanderlin/main
 
 /obj/item/reagent_containers/food/snacks/fryfish/clownfish
 	name = "cooked clownfish"
