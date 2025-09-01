@@ -64,15 +64,8 @@
 	. = ..()
 	icon = I
 	parent = P
-	var/voicecolor = "dc0174"
-	if(GLOB.credits_icons[credited])
-		if(GLOB.credits_icons[credited]["vc"])
-			voicecolor=GLOB.credits_icons[credited]["vc"]
-//	icon_state = credited
-	maptext = {"<span style='vertical-align:top; text-align:center;
-				color: #[voicecolor]; font-size: 100%;
-				text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;
-				font-family: "Pterra";'>[credited]</span>"}
+	var/voicecolor = LAZYACCESSASSOC(GLOB.credits_icons, credited, "vc") || "dc0174"
+	maptext = MAPTEXT_CENTER("<span style='vertical-align:top; color: #[voicecolor]'>[credited]</span>")
 	creditee = credited
 	maptext_x = -32
 	maptext_y = 8

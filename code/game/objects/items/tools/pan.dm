@@ -14,6 +14,9 @@
 	can_parry = TRUE
 	drop_sound = 'sound/foley/dropsound/shovel_drop.ogg'
 	wdefense = ULTMATE_PARRY
+	associated_skill = /datum/skill/combat/axesmaces
+	anvilrepair = /datum/skill/craft/blacksmithing
+	smeltresult = /obj/item/ingot/iron
 	ingsize = 3
 
 /obj/item/cooking/pan/Initialize()

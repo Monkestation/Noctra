@@ -68,7 +68,7 @@ GLOBAL_LIST_EMPTY(prayers)
 /datum/patron/proc/hear_prayer(mob/living/follower, message)
 	if(!follower || !message)
 		return FALSE
-	var/prayer = sanitize_hear_message(message)
+	var/prayer = SANITIZE_HEAR_MESSAGE(message)
 
 	if(length(profane_words))
 		for(var/profanity in profane_words)

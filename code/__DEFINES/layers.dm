@@ -174,6 +174,9 @@
 // Floating chat messages
 #define RUNECHAT_PLANE 250
 
+/// Plane for balloon text (text that fades up)
+#define BALLOON_CHAT_PLANE 251
+
 ///--------------- FULLSCREEN IMAGES ------------
 #define FULLSCREEN_PLANE 500
 #define FULLSCREEN_RENDER_TARGET "FULLSCREEN_RENDER_TARGET"

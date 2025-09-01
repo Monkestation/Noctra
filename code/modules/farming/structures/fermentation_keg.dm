@@ -260,8 +260,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 
 		//How many are brewed
 		if(selected_recipe.brewed_amount)
-			// 3 units of reagents = 1 oz
-			message += "Produces [FLOOR((selected_recipe.brewed_amount * selected_recipe.per_brew_amount)/ 3 , 1)] oz for each cycle.\n"
+			message += "Produces [FLOOR((selected_recipe.brewed_amount * selected_recipe.per_brew_amount) , 1)] [UNIT_FORM_STRING(FLOOR((selected_recipe.brewed_amount * selected_recipe.per_brew_amount) , 1))] for each cycle.\n"
 
 		if(selected_recipe.brewed_item && selected_recipe.brewed_item_count)
 			message += "Produces [selected_recipe.brewed_item_count] [name_to_use] for each cycle.\n"
@@ -630,12 +629,10 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 /obj/structure/fermentation_keg/distiller/return_rotation_chat(atom/movable/screen/movable/mouseover/mouseover)
 	mouseover.maptext_height = 96
 	if(!input)
-		return {"<span style='font-size:8pt;font-family:"Pterra";color:#808000;text-shadow:0 0 1px #fff, 0 0 2px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>
-			NO INPUT"}
+		return "NO INPUT"
 
-	return {"<span style='font-size:8pt;font-family:"Pterra";color:#808000;text-shadow:0 0 1px #fff, 0 0 2px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>
-			Pressure: [input.water_pressure]
-			Fluid: [input.carrying_reagent ? initial(input.carrying_reagent.name) : "Nothing"]</span>"}
+	return "Pressure: [input.water_pressure]\n\
+			Fluid: [input.carrying_reagent ? initial(input.carrying_reagent.name) : "Nothing"]"
 
 /obj/structure/fermentation_keg/random/water
 	name = "water barrel"

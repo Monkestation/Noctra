@@ -92,14 +92,9 @@ All foods are distributed among various categories. Use common sense.
 	var/list/sizemod = null
 	var/list/raritymod = null
 
-	var/plateable = FALSE //if it can be plated or not
-	var/foodbuff_skillcheck // is the cook good enough to add buff?
 	var/modified = FALSE // for tracking if food has been changed
 	var/quality = 1  // used to track foodbuffs and such. Somewhat basic, could be combined with the foodbuff system directly perhaps
 
-	var/plating_alt_icon // for food items not sprited in a way that fits the plating underlay, you can instead have a alt sprite specifically for its plated version.
-	var/plated_iconstate // used in afterattack to switch the above on or off
-	base_icon_state // used for procs manipulating icons when sliced and the like
 	var/biting // if TRUE changes the icon state to the bitecount, for stuff like handpies. Will break unless you also set a base_icon_state
 	var/rot_away_timer
 
@@ -492,76 +487,6 @@ All foods are distributed among various categories. Use common sense.
 		else if(slice(W, user))
 			return TRUE
 
-	if(user.mind)
-		if(foodbuff_skillcheck)		// cooks with less than 3 skill don´t add bonus buff
-			if(user.get_skill_level(/datum/skill/craft/cooking) <= 1) // cooks with 0 skill make shitty meals when trying to be fancy
-				tastes = list("blandness" = 1)
-				quality = 0
-				switch(rand(1,6))
-					if(1)
-						name = "unappealing [name]"
-						desc = "It is made without love or care."
-					if(2)
-						name = "sloppy [name]"
-						desc = "It barely looks like food."
-					if(3)
-						name = "failed [name]"
-						desc = "It is a disgrace to cooking."
-					if(4)
-						name = "woeful [name]"
-						desc = "Cooking that might cause a divorce."
-					if(5)
-						name = "soggy [name]"
-						desc = "If there be gods of cooking they must be dead."
-					if(6)
-						name = "bland [name]"
-						desc = "Is this food?"
-			if(user.get_skill_level(/datum/skill/craft/cooking) >= 2)
-				eat_effect = /datum/status_effect/buff/foodbuff
-				quality = 2
-			if(user.get_skill_level(/datum/skill/craft/cooking) == 4)
-				quality = 3
-				switch(rand(1,7))
-					if(1)
-						name = "fine [name]"
-						desc = "[desc] It looks tasty."
-					if(2)
-						name = "tasty [name]"
-						desc = "[desc] It smells good."
-					if(3)
-						name = "well-made [name]"
-						desc = "[desc] This is fine cooking."
-					if(4)
-						name = "appealing [name]"
-						desc = "[desc] It seem to call out to you."
-					if(5)
-						name = "appetising [name]"
-						desc = "[desc] Your mouth waters at the sight."
-					if(6)
-						name = "savory [name]"
-						desc = "[desc] It will make a fine meal."
-					if(7)
-						name = "flavorful [name]"
-						desc = "[desc] It looks like good eating."
-			if(user.get_skill_level(/datum/skill/craft/cooking) >= 5)
-				quality = 4
-				switch(rand(1,5))
-					if(1)
-						name = "masterful [name]"
-						desc = "[desc] It looks perfect."
-					if(2)
-						name = "exquisite [name]"
-						desc = "[desc] It smells like heaven."
-					if(3)
-						name = "perfected [name]"
-						desc = "[desc] It is a triumph of cooking."
-					if(4)
-						name = "gourmet [name]"
-						desc = "[desc] It is fit for royalty."
-					if(5)
-						name = "delicious [name]"
-						desc = "[desc] It is a masterwork."
-
 /obj/item/reagent_containers/food/snacks/proc/slice(obj/item/W, mob/user)
 	if((slices_num <= 0 || !slices_num) || !slice_path) //is the food sliceable?
 		return FALSE
@@ -749,14 +674,10 @@ All foods are distributed among various categories. Use common sense.
 	inhand_x_dimension = 32
 	inhand_y_dimension = 32
 	drop_sound = 'sound/foley/dropsound/wooden_drop.ogg'
-	if(plating_alt_icon)
-		icon_state = plated_iconstate
 
 // Proc for important vars when reaching meal level
 /obj/item/reagent_containers/food/snacks/proc/meal_properties()
-	plateable = TRUE
 	modified = TRUE
-	foodbuff_skillcheck = TRUE
 	rotprocess = SHELFLIFE_DECENT
 	bitesize = 5
 

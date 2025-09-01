@@ -74,8 +74,8 @@
 	imagery.sweet_spot = rand(1,179)
 	imagery.clicker = src
 	imagery.difficulty = difficulty
-	imagery.maptext += "<br><div align='center'><font color='#f0dd5f'> [shown_d] LOCK<br></div>"
-	imagery.maptext += "<br><div align='center'><font color='#f0dd5f'>       \[R Click) Exit\]</font></div><br>"
+	imagery.maptext += MAPTEXT("<br><div align='center'><font color='#f0dd5f'> [shown_d] LOCK<br></div>")
+	imagery.maptext += MAPTEXT("<br><div align='center'><font color='#f0dd5f'>       \[R Click) Exit\]</font></div><br>")
 	imagery.maptext_width = 100
 	imagery.maptext_x = 253
 	imagery.maptext_y = 150

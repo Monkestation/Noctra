@@ -32,9 +32,9 @@
 
 	if(fufilled_metal)
 		var/reagent_color = initial(filling_metal.color)
-		. += "[src] has [round(fufilled_metal / 3, 1)] oz of <font color=[reagent_color]> Molten [initial(filling_metal.name)]</font> out of [round(required_metal / 3, 1)] oz.</font>"
+		. += "[src] has [fufilled_metal] [UNIT_FORM_STRING(fufilled_metal)] of <font color=[reagent_color]> Molten [initial(filling_metal.name)]</font> out of [round(required_metal / 3, 1)] oz.</font>"
 	else
-		. += "[src] requires [required_metal / 3] oz of Molten Metal to form.</font>"
+		. += "[src] requires [required_metal] [UNIT_FORM_STRING(fufilled_metal)] of Molten Metal to form.</font>"
 
 /obj/item/mould/attackby(obj/item/I, mob/living/user, params)
 	. = ..()

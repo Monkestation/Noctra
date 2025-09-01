@@ -582,7 +582,7 @@
 /area/rogue/indoors/cave)
 "dI" = (
 /obj/structure/table/wood/plain,
-/obj/item/kitchen/platter{
+/obj/item/plate{
 	pixel_x = 6;
 	pixel_y = 6
 	},
@@ -694,11 +694,11 @@
 /area/rogue/indoors/lich)
 "ek" = (
 /obj/structure/table/wood/plain,
-/obj/item/kitchen/platter/copper{
+/obj/item/plate/copper{
 	pixel_x = 7;
 	pixel_y = -1
 	},
-/obj/item/kitchen/platter/copper{
+/obj/item/plate/copper{
 	pixel_x = -5;
 	pixel_y = 8
 	},
@@ -5289,7 +5289,7 @@
 /area/rogue/indoors/cave)
 "Er" = (
 /obj/structure/table/wood/plain,
-/obj/item/kitchen/platter{
+/obj/item/plate{
 	pixel_x = 5;
 	pixel_y = 9
 	},
@@ -7526,7 +7526,7 @@
 /area/rogue/indoors/lich)
 "Sd" = (
 /obj/structure/table/wood/plain,
-/obj/item/kitchen/platter/copper{
+/obj/item/plate/copper{
 	pixel_x = -4;
 	pixel_y = 5
 	},
@@ -8508,7 +8508,7 @@
 	dir = 1
 	},
 /obj/structure/bars/bent,
-/obj/item/kitchen/platter,
+/obj/item/plate,
 /turf/open/floor/tile/kitchen,
 /area/rogue/indoors/mountains)
 "Yd" = (

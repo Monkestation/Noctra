@@ -961,7 +961,7 @@ world
 			letter = lowertext(letter)
 
 	var/image/text_image = new(loc = A)
-	text_image.maptext = "<font size = 4>[letter]</font>"
+	text_image.maptext = MAPTEXT("<font size = 4>[letter]</font>")
 	text_image.pixel_x = 7
 	text_image.pixel_y = 5
 	qdel(atom_icon)
@@ -1206,7 +1206,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	var/icon/icon2collapse = thing
 	if(!isicon(icon2collapse))
 		if(isfile(thing)) //special snowflake
-			var/name = sanitize_filename("[generate_asset_name(thing)].png")
+			var/name = SANITIZE_FILENAME("[generate_asset_name(thing)].png")
 			if(!SSassets.cache[name])
 				SSassets.transport.register_asset(name, thing)
 			for(var/thing2 in targets)

@@ -54,7 +54,7 @@
 	var/atom/movable/screen/movable/M = new()
 	M.name = "Movable UI Object"
 	M.icon_state = "block"
-	M.maptext = "Movable"
+	M.maptext = MAPTEXT("Movable")
 	M.maptext_width = 64
 
 	var/screen_l = input(usr,"Where on the screen? (Formatted as 'X,Y' e.g: '1,1' for bottom left)","Spawn Movable UI Object") as text|null
@@ -73,7 +73,7 @@
 	var/atom/movable/screen/movable/snap/S = new()
 	S.name = "Snap UI Object"
 	S.icon_state = "block"
-	S.maptext = "Snap"
+	S.maptext = MAPTEXT("Snap")
 	S.maptext_width = 64
 
 	var/screen_l = input(usr,"Where on the screen? (Formatted as 'X,Y' e.g: '1,1' for bottom left)","Spawn Snap UI Object") as text|null

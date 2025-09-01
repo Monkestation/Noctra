@@ -134,7 +134,7 @@
 		"body" = local_template,
 	)
 	var/datum/http_request/issue_report = new
-	rustg_file_write(local_template, "[GLOB.log_directory]/issue_reports/[ckey]-[world.time]-[sanitize_filename(issue_title)].txt")
+	rustg_file_write(local_template, "[GLOB.log_directory]/issue_reports/[ckey]-[world.time]-[SANITIZE_FILENAME(issue_title)].txt")
 	message_admins("BUGREPORT: Bug report filed by [ADMIN_LOOKUPFLW(src)], Title: [strip_html(issue_title)]")
 	issue_report.prepare(
 		RUSTG_HTTP_METHOD_POST,

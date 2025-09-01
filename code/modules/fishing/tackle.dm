@@ -74,6 +74,8 @@
 	name = "iron fishing hook"
 	desc = "An iron fishing hook. Reliable."
 	icon_state = "ironhook"
+	melting_material = /datum/material/iron
+	melt_amount = 15
 	linehealth = 2
 
 /obj/item/fishing/hook/deluxe

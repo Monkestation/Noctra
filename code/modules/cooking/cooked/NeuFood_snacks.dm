@@ -18,7 +18,6 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = COOKED_MEAT_NUTRITION)
 	slices_num = 0
 	rotprocess = SHELFLIFE_DECENT
-	plateable = TRUE
 	faretype = FARE_NEUTRAL
 
 /obj/item/reagent_containers/food/snacks/cooked/frysteak_tatos
@@ -33,10 +32,8 @@
 	eat_effect = null
 	tastes = list("roasted meat" = 2, "potato" = 1)
 	slices_num = 0
-	plateable = TRUE
 	faretype = FARE_NEUTRAL
 	modified = TRUE
-	foodbuff_skillcheck = TRUE
 	rotprocess = SHELFLIFE_DECENT
 	bitesize = 5
 
@@ -52,9 +49,7 @@
 	eat_effect = null
 	tastes = list("roasted meat" = 1, "caramelized onions" = 1)
 	slices_num = 0
-	plateable = TRUE
 	modified = TRUE
-	foodbuff_skillcheck = TRUE
 	rotprocess = SHELFLIFE_DECENT
 	bitesize = 5
 
@@ -102,8 +97,11 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = COOKED_MEAT_NUTRITION+2)
 	slices_num = 0
 	rotprocess = SHELFLIFE_DECENT
+<<<<<<< HEAD
 	plateable = TRUE
 	foodbuff_skillcheck = TRUE
+=======
+>>>>>>> vanderlin/main
 	faretype = FARE_NEUTRAL
 
 /obj/item/reagent_containers/food/snacks/cooked/herbsteak/update_overlays()
@@ -142,9 +140,7 @@
 	base_icon_state = "omelette"
 	faretype = FARE_FINE
 	portable = FALSE
-	plateable = TRUE
 	modified = TRUE
-	foodbuff_skillcheck = TRUE
 	rotprocess = SHELFLIFE_DECENT
 	bitesize = 5
 
@@ -163,10 +159,8 @@
 	icon_state = "frybirdtato"
 	base_icon_state = "frybirdtato"
 	tastes = list("frybird" = 1, "warm tato" = 1)
-	plateable = TRUE
 	modified = TRUE
 	biting = TRUE
-	foodbuff_skillcheck = TRUE
 	rotprocess = SHELFLIFE_DECENT
 	bitesize = 5
 
@@ -181,7 +175,10 @@
 	tastes = list("frybird" = 1, "herbs" = 1)
 	list_reagents = list(/datum/reagent/consumable/nutriment = COOKED_MEAT_NUTRITION+2)
 	slices_num = 0
+<<<<<<< HEAD
 	foodbuff_skillcheck = TRUE
+=======
+>>>>>>> vanderlin/main
 	rotprocess = SHELFLIFE_DECENT
 	faretype = FARE_NEUTRAL
 
@@ -216,9 +213,7 @@
 	filling_color = "#8a0000"
 	become_rot_type = /obj/item/reagent_containers/food/snacks/rotten/bacon
 	faretype = FARE_FINE
-	plateable = TRUE
 	modified = TRUE
-	foodbuff_skillcheck = TRUE
 	rotprocess = SHELFLIFE_DECENT
 	bitesize = 5
 
@@ -234,7 +229,6 @@
 	icon_state = "fried_strange"
 	base_icon_state = "fried_strange"
 	list_reagents = list(/datum/reagent/consumable/nutriment = RAWMEAT_NUTRITION) // raw meat nutrition but without getting sick
-	plateable = TRUE
 	biting = TRUE
 	faretype = FARE_POOR
 
@@ -266,8 +260,6 @@
 	modified = TRUE
 	rotprocess = SHELFLIFE_DECENT
 	bitesize = 5
-	plateable = TRUE
-	foodbuff_skillcheck = TRUE
 
 /obj/item/reagent_containers/food/snacks/cooked/sausage_potato
 	name = "wiener on tato"
@@ -281,8 +273,6 @@
 	modified = TRUE
 	rotprocess = SHELFLIFE_DECENT
 	bitesize = 5
-	plateable = TRUE
-	foodbuff_skillcheck = TRUE
 
 /obj/item/reagent_containers/food/snacks/cooked/sausage_onion
 	name = "wiener and onions"
@@ -296,8 +286,6 @@
 	modified = TRUE
 	rotprocess = SHELFLIFE_DECENT
 	bitesize = 5
-	plateable = TRUE
-	foodbuff_skillcheck = TRUE
 
 /obj/item/reagent_containers/food/snacks/cooked/sausage_sticked
 	name = "sausage on a stick"
@@ -423,8 +411,6 @@
 	biting = TRUE
 	list_reagents = list(/datum/reagent/consumable/nutriment = COOKED_MEAT_NUTRITION+COOKED_MEAT_NUTRITION+1)
 	rotprocess = SHELFLIFE_LONG
-	plateable = TRUE
-	foodbuff_skillcheck = TRUE
 	faretype = FARE_FINE
 	portable = FALSE
 

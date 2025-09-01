@@ -114,7 +114,6 @@
 	if(M.client)
 		ADD_TRAIT(M, TRAIT_DRUQK, "based")
 		M.refresh_looping_ambience()
-	M.update_body_parts_head_only()
 
 /datum/reagent/druqks/on_mob_end_metabolize(mob/living/M)
 	M.clear_fullscreen("druqk")
@@ -123,7 +122,6 @@
 	if(M.client)
 		REMOVE_TRAIT(M, TRAIT_DRUQK, "based")
 		M.refresh_looping_ambience()
-	M.update_body_parts_head_only()
 
 /datum/reagent/druqks/overdose_process(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.25*REM)

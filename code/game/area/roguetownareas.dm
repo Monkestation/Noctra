@@ -910,7 +910,7 @@
 		return
 
 	var/static/list/profane_words = list("zizo","cock","dick","fuck","shit","pussy","cuck","cunt","asshole")
-	var/prayer = sanitize_hear_message(message)
+	var/prayer = SANITIZE_HEAR_MESSAGE(message)
 
 	for(var/profanity in profane_words)
 		if(findtext(prayer, profanity))

@@ -253,6 +253,8 @@
 	should_self_destruct = TRUE
 	max_uses = 60
 	metalizer_result = null
+	melting_material = /datum/material/iron
+	melt_amount = 15
 
 /obj/item/flashlight/flare/torch/metal/prelit/Initialize()
 	. = ..()

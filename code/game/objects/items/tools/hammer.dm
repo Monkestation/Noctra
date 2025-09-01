@@ -148,6 +148,7 @@
 	experimental_onhip = FALSE
 	experimental_onback = FALSE
 	time_multiplier = 0.8
+	smeltresult = /obj/item/ingot/steel
 
 // --------- MALLET -----------
 /obj/item/weapon/hammer/wood

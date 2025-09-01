@@ -486,7 +486,7 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 		for(var/reagent_type in reagent_requirements)
 			var/reagent_amount = reagent_requirements[reagent_type]
 			var/datum/reagent/R = new reagent_type
-			html += "[CEILING(reagent_amount / 3, 1)] oz of [initial(R.name)]<br>"
+			html += "[CEILING(reagent_amount, 1)] [UNIT_FORM_STRING(reagent_amount)] of [initial(R.name)]<br>"
 			qdel(R)
 		html += "</div>"
 
@@ -518,7 +518,7 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 		if(length(optional_reagent_requirements))
 			for(var/datum/reagent/reagent as anything in optional_reagent_requirements)
 				var/count = optional_reagent_requirements[reagent]
-				html += "[count / 3] oz of [reagent.name]"
+				html += "[count] [UNIT_FORM_STRING(count)] of [reagent.name]"
 		html += "</div>"
 
 	html += {"

@@ -97,30 +97,25 @@
 /obj/item/reagent_containers/food/snacks/fryfish/carp
 	name = "cooked carp"
 	icon_state = "carpcooked"
+<<<<<<< HEAD
 	plateable = TRUE
 	plating_alt_icon = TRUE
 	plated_iconstate = "carp_plated"
+=======
+	faretype = FARE_IMPOVERISHED
+>>>>>>> vanderlin/main
 
 /obj/item/reagent_containers/food/snacks/fryfish/clownfish
 	name = "cooked clownfish"
 	icon_state = "clownfishcooked"
-	plateable = TRUE
-	plating_alt_icon = TRUE
-	plated_iconstate = "clown_plated"
 
 /obj/item/reagent_containers/food/snacks/fryfish/angler
 	name = "cooked anglerfish"
 	icon_state = "anglercooked"
-	plateable = TRUE
-	plating_alt_icon = TRUE
-	plated_iconstate = "angler_plated"
 
 /obj/item/reagent_containers/food/snacks/fryfish/eel
 	name = "cooked eel"
 	icon_state = "eelcooked"
-	plateable = TRUE
-	plating_alt_icon = TRUE
-	plated_iconstate = "eel_plated"
 	faretype = FARE_NEUTRAL
 
 /obj/item/reagent_containers/food/snacks/fryfish/swordfish

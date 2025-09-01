@@ -25,6 +25,6 @@
 #ifndef TESTING
 	qdel(src)
 #endif
-	maptext = name
+	maptext = MAPTEXT(name)
 	maptext_width = 500
 	maptext_x = 32

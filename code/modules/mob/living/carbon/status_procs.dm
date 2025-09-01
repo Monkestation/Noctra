@@ -10,23 +10,15 @@
 	druggy = max(druggy+amount, 0)
 	if(druggy)
 		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
-//		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "high", /datum/mood_event/high)
 	else
 		clear_fullscreen("high")
-//		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "high")
-//	update_body_parts_head_only()
-//	update_body_parts_eyes_only() FIX FOR PERMASPICEEYES, CAUSED VAMPEYES TO NEVER STOP BEING WHITE
 
 /mob/living/carbon/set_drugginess(amount)
 	druggy = max(amount, 0)
 	if(druggy)
 		overlay_fullscreen("high", /atom/movable/screen/fullscreen/high)
-//		throw_alert("high", /atom/movable/screen/alert/high)
 	else
 		clear_fullscreen("high")
-//		clear_alert("high")
-//	update_body_parts_head_only()
-//	update_body_parts_eyes_only() FIX FOR PERMASPICEEYES, CAUSED VAMPEYES TO NEVER STOP BEING WHITE
 
 /mob/living/carbon/adjust_disgust(amount)
 	disgust = CLAMP(disgust+amount, 0, DISGUST_LEVEL_MAXEDOUT)

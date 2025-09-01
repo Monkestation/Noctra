@@ -1363,8 +1363,8 @@
 
 /obj/item/book/playerbook/proc/get_player_input(mob/living/in_round_player_mob, text)
 	player_book_author_ckey = in_round_player_mob.ckey
-	player_book_title = dd_limittext(capitalize(sanitize_hear_message(input(in_round_player_mob, "What title do you want to give the book? (max 42 characters)", "Title", "Unknown"))), MAX_NAME_LEN)
-	player_book_author = "[dd_limittext(sanitize_hear_message(input(in_round_player_mob, "Do you want to preface your author name with an author title? (max 42 characters)", "Author Title", "")), MAX_NAME_LEN)] [in_round_player_mob.real_name]"
+	player_book_title = dd_limittext(capitalize(SANITIZE_HEAR_MESSAGE(input(in_round_player_mob, "What title do you want to give the book? (max 42 characters)", "Title", "Unknown"))), MAX_NAME_LEN)
+	player_book_author = "[dd_limittext(SANITIZE_HEAR_MESSAGE(input(in_round_player_mob, "Do you want to preface your author name with an author title? (max 42 characters)", "Author Title", "")), MAX_NAME_LEN)] [in_round_player_mob.real_name]"
 	player_book_icon = book_icons[input(in_round_player_mob, "Choose a book style", "Book Style") as anything in book_icons]
 	player_book_text = text
 	message_admins("[player_book_author_ckey]([in_round_player_mob.real_name]) has generated the player book: [player_book_title]")
@@ -1545,8 +1545,8 @@
 			to_chat(user, "<span class='notice'>The manuscript has already been authored and titled.</span>")
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 		// Prompt user to populate manuscript fields
-		var/newtitle = dd_limittext(sanitize_hear_message(input(user, "Enter the title of the manuscript:") as text|null), MAX_CHARTER_LEN)
-		var/newauthor = dd_limittext(sanitize_hear_message(input(user, "Enter the author's name:") as text|null), MAX_CHARTER_LEN)
+		var/newtitle = dd_limittext(SANITIZE_HEAR_MESSAGE(input(user, "Enter the title of the manuscript:") as text|null), MAX_CHARTER_LEN)
+		var/newauthor = dd_limittext(SANITIZE_HEAR_MESSAGE(input(user, "Enter the author's name:") as text|null), MAX_CHARTER_LEN)
 		var/newcategory = input(user, "Select the category of the manuscript:") in list("Apocrypha & Grimoires", "Myths & Tales", "Legends & Accounts", "Thesis", "Eoratica")
 		var/newicon = book_icons[input(user, "Choose a book style", "Book Style") as anything in book_icons]
 

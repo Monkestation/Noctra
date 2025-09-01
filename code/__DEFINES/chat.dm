@@ -6,9 +6,3 @@
 #define CHAT_MESSAGE_APPROX_LHEIGHT	11 // Approximate height in pixels of an 'average' line, used for height decay
 #define CHAT_MESSAGE_WIDTH			96 // pixels
 #define CHAT_MESSAGE_MAX_LENGTH		110 // characters
-
-#define WXH_TO_HEIGHT(measurement, return_var) \
-	do { \
-		var/_measurement = measurement; \
-		return_var = text2num(copytext(_measurement, findtextEx(_measurement, "x") + 1)); \
-	} while(FALSE);

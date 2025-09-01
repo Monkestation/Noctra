@@ -5540,26 +5540,26 @@
 /area/rogue/under/town/basement)
 "cWx" = (
 /obj/structure/rack/shelf/biggest,
-/obj/item/kitchen/platter{
+/obj/item/plate{
 	pixel_x = -6
 	},
-/obj/item/kitchen/platter{
+/obj/item/plate{
 	pixel_x = -6;
 	pixel_y = -2
 	},
-/obj/item/kitchen/platter{
+/obj/item/plate{
 	pixel_x = -7;
 	pixel_y = -4
 	},
-/obj/item/kitchen/platter{
+/obj/item/plate{
 	pixel_x = -7;
 	pixel_y = -6
 	},
-/obj/item/kitchen/platter{
+/obj/item/plate{
 	pixel_x = -7;
 	pixel_y = -8
 	},
-/obj/item/kitchen/platter{
+/obj/item/plate{
 	pixel_x = -7;
 	pixel_y = -11
 	},
@@ -23044,9 +23044,9 @@
 /area/rogue/indoors/town/manor)
 "mQW" = (
 /obj/structure/closet/crate/chest/wicker,
-/obj/item/kitchen/platter/copper,
-/obj/item/kitchen/platter/copper,
-/obj/item/kitchen/platter/copper,
+/obj/item/plate/copper,
+/obj/item/plate/copper,
+/obj/item/plate/copper,
 /obj/item/kitchen/fork/iron,
 /obj/item/kitchen/fork/iron,
 /obj/item/kitchen/fork/iron,
@@ -23109,9 +23109,9 @@
 /obj/item/kitchen/spoon/iron,
 /obj/item/kitchen/spoon/iron,
 /obj/item/kitchen/spoon/iron,
-/obj/item/kitchen/platter/copper,
-/obj/item/kitchen/platter/copper,
-/obj/item/kitchen/platter/copper,
+/obj/item/plate/copper,
+/obj/item/plate/copper,
+/obj/item/plate/copper,
 /obj/item/reagent_containers/glass/bowl/iron,
 /obj/item/reagent_containers/glass/bowl/iron,
 /obj/item/reagent_containers/glass/bowl/iron,
@@ -43944,11 +43944,11 @@
 /area/rogue/indoors/town)
 "yfE" = (
 /obj/structure/rack/shelf/biggest,
-/obj/item/kitchen/platter{
+/obj/item/plate{
 	pixel_y = -4
 	},
-/obj/item/kitchen/platter,
-/obj/item/kitchen/platter{
+/obj/item/plate,
+/obj/item/plate{
 	pixel_y = 4
 	},
 /turf/open/floor/hexstone,

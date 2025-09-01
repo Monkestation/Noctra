@@ -1,5 +1,6 @@
 /turf/open
 	plane = FLOOR_PLANE
+	hover_color = "#6b3f3f"
 	var/slowdown = 0 //negative for faster, positive for slower
 	var/postdig_icon_change = FALSE
 	var/postdig_icon

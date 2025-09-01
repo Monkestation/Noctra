@@ -13,6 +13,7 @@
 		"THE SUCCESSORS HALT HIS RETURN!",
 		"PSYDON LIVES!",
 	)
+	profane_words = list()
 
 /datum/patron/psydon/can_pray(mob/living/carbon/human/follower)
 	//We just kind of assume the follower is a human here

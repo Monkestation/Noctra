@@ -9,3 +9,16 @@ GLOBAL_DATUM_INIT(is_color, /regex, regex("^#\[0-9a-fA-F]{6}$"))
 
 //finds text strings recognized as links on discord. Mainly used to stop embedding.
 GLOBAL_DATUM_INIT(has_discord_embeddable_links, /regex, regex("(https?://\[^\\s|<\]{2,})"))
+
+//All < and > characters
+GLOBAL_DATUM_INIT(angular_brackets, /regex, regex(@"[<>]", "g"))
+
+//All characters between < a > inclusive of the bracket
+GLOBAL_DATUM_INIT(html_tags, /regex, regex(@"<.*?>", "g"))
+
+//All characters forbidden by filenames: ", \, \n, \t, /, ?, %, *, :, |, <, >
+GLOBAL_DATUM_INIT(filename_forbidden_chars, /regex, regex(@{""|[\\\n\t/?%*:|<>]"}, "g"))
+// had to use the OR operator for quotes instead of putting them in the character class because it breaks the syntax highlighting otherwise.
+
+//Characters stripped for hearing
+GLOBAL_DATUM_INIT(hearing_stripped_chars, /regex, regex(@{""|[\\\n\t/?%*:|<>].,"}, "g"))

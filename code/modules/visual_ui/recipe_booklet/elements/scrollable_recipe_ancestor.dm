@@ -110,7 +110,7 @@
 					var/mob/current = parent.get_user()
 					current.client.screen |= button
 
-				button.maptext = {"<span style='font-size:8pt;font-family:"Pixelify Sans";color:[hover_color]' class='center maptext '>[initial(sub_path.name)]</span>"}
+				button.maptext = MAPTEXT_PIXELIFY("<span class='center' style='color:[hover_color]'>[initial(sub_path.name)]</span>")
 				button.recipe = sub_path
 				register_element(button)
 				length++
@@ -125,7 +125,7 @@
 				var/mob/current = parent.get_user()
 				current.client.screen |= button
 
-			button.maptext = {"<span style='font-size:8pt;font-family:"Pixelify Sans";color:[hover_color]' class='center maptext '>[initial(recipe.name)]</span>"}
+			button.maptext = MAPTEXT_PIXELIFY("<span class='center' style='color:[hover_color]'>[initial(recipe.name)]</span>")
 			button.recipe = recipe
 			register_element(button)
 			length++
@@ -174,7 +174,7 @@
 	var/obj/abstract/visual_ui_element/scrollable/selected_recipe/grouping = locate(/obj/abstract/visual_ui_element/scrollable/selected_recipe) in ancestor.elements
 	var/obj/abstract/visual_ui_element/current_recipe/header = locate(/obj/abstract/visual_ui_element/current_recipe) in ancestor.elements
 
-	header.maptext = {"<span style='font-size:8pt;font-family:"Pixelify Sans";color:[hover_color]' class='center maptext '>[selected_button.name]</span>"}
+	header.maptext = MAPTEXT_PIXELIFY("<span class='center' style='color:[hover_color]'>[selected_button.name]</span>")
 	grouping.recipe_selection = selected_button.recipe
 	grouping.build_recipe()
 

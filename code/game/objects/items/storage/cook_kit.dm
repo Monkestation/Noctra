@@ -19,7 +19,7 @@
 	icon = 'icons/roguetown/items/gadgets.dmi'
 	component_type = /datum/component/storage/concrete/grid/messkit
 	populate_contents = list(
-		/obj/item/kitchen/platter,
+		/obj/item/plate,
 		/obj/item/reagent_containers/glass/bowl,
 		/obj/item/cooking/pan,
 		/obj/item/mobilestove,
