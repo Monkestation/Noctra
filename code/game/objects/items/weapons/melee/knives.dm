@@ -288,8 +288,6 @@
 	icon_state = "idagger"
 	melting_material = /datum/material/iron
 	melt_amount = 75
-<<<<<<< HEAD
-=======
 	sellprice = 12
 
 /obj/item/weapon/knife/jile/iron
@@ -300,7 +298,6 @@
 	icon = 'icons/roguetown/weapons/lakkari.dmi'
 	icon_state = "jile_iron"
 	melting_material = null
->>>>>>> vanderlin/main
 	sellprice = 12
 
 /obj/item/weapon/knife/njora/iron
@@ -321,8 +318,6 @@
 	icon_state = "sdagger"
 	melting_material = /datum/material/steel
 	melt_amount = 75
-<<<<<<< HEAD
-=======
 	wdefense = AVERAGE_PARRY
 	wbalance = VERY_HARD_TO_DODGE
 
@@ -333,7 +328,6 @@
 	icon = 'icons/roguetown/weapons/lakkari.dmi'
 	icon_state = "jile_steel"
 	melting_material = null
->>>>>>> vanderlin/main
 	wdefense = AVERAGE_PARRY
 	wbalance = VERY_HARD_TO_DODGE
 	sellprice = 20
