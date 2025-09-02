@@ -23,6 +23,9 @@
 	warnie = "mobwarning"
 	item_damage_type = "slash"
 
+/datum/intent/sword/chop/long/shotel
+	reach = 2 //shotels are long lol
+
 /datum/intent/sword/chop/long/guts
 	reach = 2 // BIG SWORD
 	swingdelay = 3
@@ -114,6 +117,9 @@
 	hitsound = list('sound/combat/hits/bladed/genslash (1).ogg', 'sound/combat/hits/bladed/genslash (2).ogg', 'sound/combat/hits/bladed/genslash (3).ogg')
 	misscost = 4
 	item_damage_type = "slash"
+
+/datum/intent/sword/cut/long
+	reach = 2
 
 /datum/intent/sword/cut/zwei
 	name = "cut"

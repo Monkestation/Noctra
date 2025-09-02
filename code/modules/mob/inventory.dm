@@ -26,9 +26,8 @@
 
 
 /mob/proc/get_item_for_held_index(i)
-	if(i > 0 && i <= held_items.len)
+	if(i > 0 && i <= length(held_items))
 		return held_items[i]
-	return FALSE
 
 
 //Odd = left. Even = right

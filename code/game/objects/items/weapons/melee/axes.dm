@@ -167,6 +167,38 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
 
+/obj/item/weapon/axe/nsapo/iron
+	force = DAMAGE_AXE
+	force_wielded = DAMAGE_AXE_WIELD
+	possible_item_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop)
+	gripped_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop)
+	name = "iron kasuyu"
+	desc = "An iron axe hailing from the nation of Lakkari. Great for felling trees and foes alike."
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	icon_state = "nsapo_iron"
+	max_blade_int = 200
+	max_integrity = INTEGRITY_STANDARD
+	melting_material = /datum/material/iron
+	melt_amount = 75
+	parrysound = "sword"
+	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
+
+	wdefense = MEDIOCRE_PARRY
+	minstr = 6
+
+	sellprice = 20
+
+/obj/item/weapon/axe/nsapo/getonmobprop(tag)
+
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -12,"sy" = -10,"nx" = 12,"ny" = -10,"wx" = -8,"wy" = -7,"ex" = 3,"ey" = -9,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -90,"eturn" = 90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = -12,"sy" = 3,"nx" = 12,"ny" = 2,"wx" = -8,"wy" = 2,"ex" = 4,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
+
 /obj/item/weapon/axe/iron/troll
 	name = "splitter axe"
 	desc = "A crudely made axe, more reminiscent to one used for splitting logs if it was made with tree trunk and a shiny sharpened rock; which does make you think, what use does a troll have for wood?"
@@ -263,6 +295,38 @@
 	axe_cut = 15 // Better than iron
 
 /obj/item/weapon/axe/steel/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -12,"sy" = -10,"nx" = 12,"ny" = -10,"wx" = -8,"wy" = -7,"ex" = 3,"ey" = -9,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -90,"eturn" = 90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = -12,"sy" = 3,"nx" = 12,"ny" = 2,"wx" = -8,"wy" = 2,"ex" = 4,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
+
+/obj/item/weapon/axe/nsapo
+	force = DAMAGE_AXE
+	force_wielded = DAMAGE_AXE_WIELD
+	possible_item_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop)
+	gripped_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop)
+	name = "steel kasuyu"
+	desc = "An steel axe hailing from the nation of Lakkari. Great for felling trees and foes alike."
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	icon_state = "nsapo_steel"
+	max_blade_int = 300
+	max_integrity = INTEGRITY_STANDARD
+	melting_material = /datum/material/iron
+	melt_amount = 75
+	parrysound = "sword"
+	drop_sound = 'sound/foley/dropsound/armor_drop.ogg'
+
+	wdefense = GOOD_PARRY
+	minstr = 8
+	sellprice = 45
+	axe_cut = 15
+
+/obj/item/weapon/axe/nsapo/getonmobprop(tag)
 	. = ..()
 	if(tag)
 		switch(tag)
