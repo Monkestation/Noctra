@@ -355,6 +355,18 @@ SUBSYSTEM_DEF(plexora)
 	if(mark_active)
 		active_requests += request
 
+/datum/world_topic/plx_announce
+	keyword = "PLX_announce"
+	require_comms_key = TRUE
+
+/datum/world_topic/plx_announce/Run(list/input)
+	var/message = input["message"]
+	var/from = input["from"]
+
+	var/admin_name = span_adminannounce_big("[from] Announces:")
+	var/message_to_announce = ("[span_adminannounce(message)]")
+	to_chat(world, announcement_block("[admin_name] \n \n [message_to_announce]"))
+
 /datum/world_topic/plx_restartcontroller
 	keyword = "PLX_restartcontroller"
 	require_comms_key = TRUE

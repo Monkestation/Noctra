@@ -43,6 +43,47 @@
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -6,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
 	return ..()
 
+/obj/item/weapon/mace/rungu/iron
+	force = DAMAGE_MACE
+	force_wielded = DAMAGE_MACE_WIELD
+	possible_item_intents = list(/datum/intent/mace/strike)
+	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
+	name = "iron rungu"
+	desc = "An iron Lakkarian mace favored by the Shackle-Breakers of Sebbet. It is the bane of Zalad slavers."
+	icon_state = "rungu_iron"
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	equip_sound = "rustle"
+	sharpness = IS_BLUNT
+	wlength = WLENGTH_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_HIP
+	associated_skill = /datum/skill/combat/axesmaces
+	melting_material = /datum/material/iron
+	melt_amount = 75
+	parrysound = list('sound/combat/parry/parrygen.ogg')
+	swingsound = BLUNTWOOSH_MED
+	max_integrity = INTEGRITY_STRONG
+	minstr = 7
+	wdefense = AVERAGE_PARRY
+	wbalance = EASY_TO_DODGE
+	sellprice = 20
+	blade_dulling = DULLING_BASHCHOP
+	grid_height = 64
+	grid_width = 32
+
+/obj/item/weapon/mace/rungu/iron/getonmobprop(tag)
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.5,"sx" = -12,"sy" = -10,"nx" = 12,"ny" = -10,"wx" = -8,"wy" = -7,"ex" = 3,"ey" = -9,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -90,"eturn" = 90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.5,"sx" = -12,"sy" = 3,"nx" = 12,"ny" = 2,"wx" = -8,"wy" = 2,"ex" = 4,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -6,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
+	return ..()
+
 /*--------------\
 | Strike intent |	moderate AP
 \--------------*/
@@ -208,6 +249,18 @@
 	name = "steel mace"
 	desc = "A well-crafted mace with a steel head. Easier to control and hits just as hard."
 	icon_state = "smace"
+	blade_dulling = DULLING_BASH
+	melting_material = /datum/material/steel
+	melt_amount = 150
+	wbalance = DODGE_CHANCE_NORMAL
+	sellprice = 60
+	wdefense = GOOD_PARRY
+
+/obj/item/weapon/mace/steel/rungu
+	name = "steel rungu"
+	desc = "A steel Lakkarian mace favored by the Shackle-Breakers of Sebbet. It is the bane of Zalad slavers."
+	icon_state = "rungu_steel"
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
 	blade_dulling = DULLING_BASH
 	melting_material = /datum/material/steel
 	melt_amount = 150
@@ -627,3 +680,21 @@
 	desc = "The tenets of ravoxian duels are enscribed upon the head of this maul."
 	icon_state = "ravoxhammer"
 	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash)
+
+//................ Silver ............... //
+
+/obj/item/weapon/mace/silver/rungu
+	name = "silver rungu"
+	desc = "A silver mace favored by Lakkarian clerics. The weapon of choice for the monster-slayers of Napatahuum."
+	icon_state = "rungu_silver"
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	blade_dulling = DULLING_BASH
+	melting_material = /datum/material/silver
+	melt_amount = 150
+	wbalance = DODGE_CHANCE_NORMAL
+	sellprice = 45
+	wdefense = GOOD_PARRY
+
+/obj/item/weapon/mace/silver/rungu/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)

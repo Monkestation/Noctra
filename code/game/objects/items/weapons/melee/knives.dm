@@ -288,7 +288,31 @@
 	icon_state = "idagger"
 	melting_material = /datum/material/iron
 	melt_amount = 75
+<<<<<<< HEAD
+=======
 	sellprice = 12
+
+/obj/item/weapon/knife/jile/iron
+
+	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust)
+	name = "iron jile"
+	desc = "A curved iron dagger of Lakkarian origin. Nobles of Napatahuum were often buried with these daggers, but this practice has become less common ever since Zizo's ascension."
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	icon_state = "jile_iron"
+	melting_material = null
+>>>>>>> vanderlin/main
+	sellprice = 12
+
+/obj/item/weapon/knife/njora/iron
+
+	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/chop, /datum/intent/dagger/thrust)
+	name = "iron seme"
+	desc = "A broad iron dagger of ancient Lakkarian design. Popular amongst the indigenous elven tribes of western Lakkari."
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	icon_state = "njora_iron"
+	melting_material = null
+	sellprice = 12
+	dropshrink = 1.0
 
 //................ Steel Dagger ............... //
 /obj/item/weapon/knife/dagger/steel
@@ -297,8 +321,34 @@
 	icon_state = "sdagger"
 	melting_material = /datum/material/steel
 	melt_amount = 75
+<<<<<<< HEAD
+=======
 	wdefense = AVERAGE_PARRY
 	wbalance = VERY_HARD_TO_DODGE
+
+/obj/item/weapon/knife/jile/steel
+	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust)
+	name = "steel jile"
+	desc = "A curved steel dagger of Lakkarian origin. Nobles of Napatahuum were often buried with these daggers, but this practice has become less common ever since Zizo's ascension."
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	icon_state = "jile_steel"
+	melting_material = null
+>>>>>>> vanderlin/main
+	wdefense = AVERAGE_PARRY
+	wbalance = VERY_HARD_TO_DODGE
+	sellprice = 20
+
+/obj/item/weapon/knife/njora/steel
+	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/chop, /datum/intent/dagger/thrust)
+	name = "steel seme"
+	desc = "A broad steel dagger of ancient Lakkarian design. Popular amongst the indigenous elven tribes of western Lakkari."
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	icon_state = "njora_steel"
+	melting_material = null
+	wdefense = AVERAGE_PARRY
+	wbalance = HARD_TO_DODGE
+	sellprice = 20
+	dropshrink = 1.0
 
 /obj/item/weapon/knife/dagger/steel/special
 	icon_state = "sdaggeralt"

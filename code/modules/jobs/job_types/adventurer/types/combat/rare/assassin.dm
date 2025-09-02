@@ -74,6 +74,7 @@
 			else
 				pants = /obj/item/clothing/pants/tights/colored/vagrant
 				shirt = /obj/item/clothing/shirt/undershirt/colored/vagrant
+			REMOVE_TRAIT(H, TRAIT_FOREIGNER, TRAIT_GENERIC)
 		if("Fisher")
 			H.adjust_skillrank(/datum/skill/labor/fishing, 1, TRUE) //Have to know to play the part.
 			if(H.gender == MALE)
@@ -243,6 +244,7 @@
 			H.adjust_skillrank(/datum/skill/combat/bows, 2, TRUE) //Once more, the assassin trades their crossbow abilities to match their disguise.
 			H.adjust_skillrank(/datum/skill/combat/crossbows, -2, TRUE)
 		if("Servant") // You think you're safe? No keys to the keep though. Hopefully less people pick Noble with this in mind.
+			H.job = "Servant"
 			H.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/crafting, 1, TRUE)
 			H.adjust_skillrank(/datum/skill/craft/cooking, 3, TRUE) // Trustworthy poisoner.
@@ -256,6 +258,7 @@
 			else
 				cloak = /obj/item/clothing/cloak/apron
 			backpack_contents = list(/obj/item/recipe_book/cooking = 1)
+			REMOVE_TRAIT(H, TRAIT_FOREIGNER, TRAIT_GENERIC)
 		if("Faceless One") //Sacrifice the disguise and marked for valid for even more drip.
 			head = /obj/item/clothing/head/faceless
 			armor = /obj/item/clothing/shirt/robe/faceless

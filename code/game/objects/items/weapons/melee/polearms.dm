@@ -225,6 +225,28 @@
 	throwforce = DAMAGE_SPEAR_WIELD
 	icon_state = "gsspear"
 
+/obj/item/weapon/polearm/spear/assegai
+	name = "iron assegai"
+	desc = "a long spear originating from the southern regions of Lakkari. Lakkarian women in the city of Sebbet are taught to use assegai so they can defend themselves against Zalad bandits."
+	possible_item_intents = list(SPEAR_THRUST, POLEARM_BASH) //bash is for nonlethal takedowns, only targets limbs
+	gripped_intents = list(POLEARM_THRUST, SPEAR_CUT, POLEARM_BASH)
+	force_wielded = DAMAGE_SPEAR_WIELD
+	throwforce = DAMAGE_SPEAR_WIELD
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "assegai_iron"
+	gripsprite = FALSE
+
+/obj/item/weapon/polearm/spear/steel/assegai
+	name = "steel assegai"
+	desc = "a long spear originating from the southern regions of Lakkari. Lakkarian women in the city of Sebbet are taught to use assegai so they can defend themselves against Zalad bandits."
+	possible_item_intents = list(SPEAR_THRUST, POLEARM_BASH) //bash is for nonlethal takedowns, only targets limbs
+	gripped_intents = list(POLEARM_THRUST, SPEAR_CUT, POLEARM_BASH)
+	force_wielded = DAMAGE_SPEAR_WIELD+2
+	throwforce = DAMAGE_SPEAR_WIELD
+	icon = 'icons/roguetown/weapons/64.dmi'
+	icon_state = "assegai_steel"
+	gripsprite = FALSE
+
 //................ Psydonian Spear ............... //
 /obj/item/weapon/polearm/spear/psydon
 	force = DAMAGE_SPEAR
