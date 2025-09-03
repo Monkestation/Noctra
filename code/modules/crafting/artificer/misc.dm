@@ -200,6 +200,14 @@
 	hammers_per_item = 4
 	craftdiff = 5
 
+/datum/artificer_recipe/contraptions/boiler
+	name = "Steamknight Boiler (+1 Bar, +3 Cogs)"
+	required_item = /obj/item/ingot/bronze
+	created_item = /obj/item/clothing/cloak/boiler
+	additional_items = list(/obj/item/gear/metal/bronze = 3, /obj/item/ingot/bronze = 1)
+	hammers_per_item = 4
+	craftdiff = 5
+
 // --------- Ammo -----------
 
 /datum/artificer_recipe/ammo

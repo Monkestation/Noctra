@@ -126,3 +126,14 @@
 
 /obj/item/organ/ears/anthro
 	name = "wild-kin ears"
+
+/obj/item/organ/ears/rakshari
+	name = "rakshari ears"
+
+/obj/item/organ/ears/rakshari/Insert(mob/living/carbon/M, special, drop_if_replaced)
+	. = ..()
+	ADD_TRAIT(M, TRAIT_KEENEARS, "[type]")
+
+/obj/item/organ/ears/rakshari/Remove(mob/living/carbon/human/H,  special = 0)
+	. = ..()
+	REMOVE_TRAIT(H, TRAIT_KEENEARS, "[type]")

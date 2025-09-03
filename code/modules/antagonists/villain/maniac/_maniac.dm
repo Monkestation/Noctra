@@ -217,7 +217,7 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 		trey_liam.set_hair_style(/datum/sprite_accessory/hair/head/thickcurly, FALSE)
 		trey_liam.set_facial_hair_style(/datum/sprite_accessory/hair/facial/know, FALSE)
 		trey_liam.age = AGE_OLD
-		trey_liam.equipOutfit(/datum/outfit/treyliam)
+		trey_liam.equipOutfit(/datum/outfit/job/treyliam)
 		trey_liam.regenerate_icons()
 		trey_liam.update_body_parts()
 		for(var/obj/structure/chair/chair in spawnturf)

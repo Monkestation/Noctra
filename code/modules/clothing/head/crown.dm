@@ -21,7 +21,6 @@
 	icon_state = "consortcrown"
 	sellprice = VALUE_GOLD_ITEM
 
-
 /obj/item/clothing/head/crown/serpcrown
 	name = "crown of Vanderlin"
 	desc = "Heavy is the weight of the crown, and even heavier the responsibility it infers to its wearer."

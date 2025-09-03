@@ -77,7 +77,18 @@
 		OFFSET_ARMOR = list(0,0),\
 		OFFSET_UNDIES = list(0,0),\
 	)
-
+	organs = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/brain,
+		ORGAN_SLOT_HEART = /obj/item/organ/heart,
+		ORGAN_SLOT_LUNGS = /obj/item/organ/lungs,
+		ORGAN_SLOT_EYES = /obj/item/organ/eyes,
+		ORGAN_SLOT_EARS = /obj/item/organ/ears/rakshari,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/tongue,
+		ORGAN_SLOT_LIVER = /obj/item/organ/liver,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach,
+		ORGAN_SLOT_APPENDIX = /obj/item/organ/appendix,
+		ORGAN_SLOT_GUTS = /obj/item/organ/guts,
+	)
 	customizers = list(
 		/datum/customizer/organ/eyes/humanoid,
 		/datum/customizer/bodypart_feature/accessory,
@@ -87,12 +98,15 @@
 		/datum/customizer/organ/genitals/breasts/human,
 		/datum/customizer/organ/genitals/testicles/human,
 	)
+	COOLDOWN_DECLARE(cat_meow_cooldown)
 
 /datum/species/rakshari/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
 	RegisterSignal(C, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 	C.grant_language(/datum/language/common)
 	C.grant_language(/datum/language/zalad)
+	C.verbs += 	/mob/living/carbon/human/species/rakshari/verb/emote_meow
+	C.verbs += 	/mob/living/carbon/human/species/rakshari/verb/emote_purr
 	to_chat(C, "<span class='info'>I can speak Zalad with ,z before my speech.</span>")
 
 /datum/species/rakshari/check_roundstart_eligible()
@@ -102,6 +116,18 @@
 	..()
 	C.grant_language(/datum/language/common)
 	C.grant_language(/datum/language/zalad)
+
+/datum/species/rakshari/spec_life(mob/living/carbon/human/H)
+	. = ..()
+	if(prob(1))
+		if(!COOLDOWN_FINISHED(src, cat_meow_cooldown))
+			return
+		var/emote = "meow"
+		if(prob(15))
+			emote = "purr"
+		H.emote(emote, forced = TRUE)
+
+		COOLDOWN_START(src, cat_meow_cooldown, 5 MINUTES)
 
 /datum/species/rakshari/on_species_loss(mob/living/carbon/C)
 	. = ..()

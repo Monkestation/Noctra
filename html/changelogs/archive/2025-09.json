@@ -65,5 +65,32 @@
                 "bugfix": "Assassins beggar and servants are not foreigners anymore."
             }
         ]
+<<<<<<< HEAD
     }
 }
+=======
+    },
+    "2025-09-03": {
+        "SarmentiCampbell": [
+            {
+                "rscadd": "Added a new type of ear to rakshari, allowing them to hear whisper from farther."
+            }
+        ],
+        "Wouju": [
+            {
+                "rscadd": "Repairing clothes with a needle now consumes thread at a % chance, based on your skill. Blessed needle cannot repair clothes"
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "rscadd": "Saw Dust and Stone Chippings can be cleaned like Vomit"
+            }
+        ],
+        "grungussuss": [
+            {
+                "rscadd": "Added more missing crafting recipes"
+            }
+        ]
+    }
+}
+>>>>>>> vanderlin/main

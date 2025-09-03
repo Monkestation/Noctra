@@ -22,7 +22,6 @@
 	max_integrity = INTEGRITY_STRONG
 	item_weight = 7
 
-
 //................ Armored Surcoat ............... //	- splint mail looking armor thats colored
 /obj/item/clothing/armor/medium/surcoat
 	name = "armored surcoat"
