@@ -1,16 +1,3 @@
-#define VERIFIED_BYOND (1 << 0)
-#define VERIFIED_DISCORD (1 << 1)
-#define VERIFIED_ID (1 << 2)
-#define VERIFIED_DEBUG (1 << 3) //! if someone has this shit fucked
-
-DEFINE_BITFIELD(veyra_flags, list(
-	"VERIFIED_BYOND" = VERIFIED_BYOND,
-	"VERIFIED_DISCORD" = VERIFIED_DISCORD,
-	"VERIFIED_ID" = VERIFIED_ID,
-	"VERIFIED_DEBUG" = VERIFIED_DEBUG
-))
-
-
 /datum/config_entry/string/verification_api_url
 	name = "Veyra URL"
 	config_entry_value = "http://localhost:3000"
