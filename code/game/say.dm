@@ -110,13 +110,22 @@ GLOBAL_LIST_INIT(freqtospan, list(
 				arrowpart += " ⇈"
 			if(speakturf.z < sourceturf.z)
 				arrowpart += " ⇊"
+<<<<<<< HEAD
+			if(istype(speaker, /mob/living))
+				var/mob/living/L = speaker
+				namepart = "Unknown [(L.gender == FEMALE) ? "Woman" : "Man"]"
+			else
+				namepart = "Unknown"
+			spanpart1 = "<span class='smallyell[collective_span]'>"
+=======
 			if(!HAS_TRAIT(src, TRAIT_KEENEARS))
 				if(istype(speaker, /mob/living))
 					var/mob/living/L = speaker
 					namepart = "Unknown [(L.gender == FEMALE) ? "Woman" : "Man"]"
 				else
 					namepart = "Unknown"
-			spanpart1 = "<span class='smallyell[collective_span]'>"
+			spanpart1 = "<span class='smallyell'>"
+>>>>>>> vanderlin/main
 
 	var/languageicon = ""
 	var/datum/language/D = GLOB.language_datum_instances[message_language]

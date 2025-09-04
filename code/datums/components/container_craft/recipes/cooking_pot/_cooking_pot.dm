@@ -3,7 +3,7 @@
 	category = "Soups"
 	crafting_time = 5 SECONDS
 	reagent_requirements = list(
-		/datum/reagent/water = 33
+		/datum/reagent/water = 25
 	)
 	craft_verb = "cooking for "
 	required_container = /obj/item/reagent_containers/glass/bucket/pot

@@ -1,11 +1,11 @@
 /obj/item/reagent_containers/glass/alchemical
 	name = "alchemical vial"
-	desc = "A cute bottle, conviniently holding 3 swigs of a fluid."
+	desc = "A cute bottle, designed to hold 3 swigs of a fluid."
 	icon = 'icons/roguetown/items/glass_reagent_container.dmi'
 	icon_state = "vial_bottle"
-	amount_per_transfer_from_this = 9
-	possible_transfer_amounts = list(9)
-	volume = 27
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(10)
+	volume = 30
 	fill_icon_thresholds = list(0, 33, 66, 100)
 	dropshrink = 0.8
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_MOUTH
@@ -14,6 +14,8 @@
 	var/closed = TRUE //Put a cork in it!
 	reagent_flags = TRANSPARENT
 	w_class = WEIGHT_CLASS_SMALL
+	grid_width = 32
+	grid_height = 32
 	drinksounds = list('sound/items/drink_bottle (1).ogg','sound/items/drink_bottle (2).ogg')
 	fillsounds = list('sound/items/fillcup.ogg')
 	poursounds = list('sound/items/fillbottle.ogg')

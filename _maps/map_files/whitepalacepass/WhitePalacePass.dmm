@@ -2577,6 +2577,29 @@
 /obj/structure/hotspring/border,
 /turf/open/floor/cobblerock/alt,
 /area/rogue/outdoors/rtfield)
+<<<<<<< HEAD
+"cuk" = (
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/reagent_containers/glass/carafe/gold/redwine{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/glass/cup/golden{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/alch/herb/rosa{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/alch/herb/rosa{
+	pixel_x = 4;
+	pixel_y = -5
+	},
+/turf/open/floor/ruinedwood/chevron,
+/area/rogue/indoors/town/manor)
+=======
+>>>>>>> vanderlin/main
 "cuQ" = (
 /obj/structure/flora/tree/burnt,
 /obj/effect/falling_leaves,
@@ -3177,6 +3200,13 @@
 /obj/structure/flora/grass/bush/tundra,
 /turf/open/floor/snow,
 /area/rogue/outdoors/rtfield/safe)
+<<<<<<< HEAD
+"ddk" = (
+/obj/item/alch/herb/rosa,
+/turf/open/water/bath,
+/area/rogue/indoors/town/church)
+=======
+>>>>>>> vanderlin/main
 "ddy" = (
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town)
@@ -5967,6 +5997,13 @@
 /obj/structure/hotspring/border/two,
 /turf/open/floor/cobblerock/alt,
 /area/rogue/outdoors/rtfield/safe)
+<<<<<<< HEAD
+"fLy" = (
+/obj/item/fake_machine/drugtrade,
+/turf/open/floor/metal/alt,
+/area/rogue/indoors/town/bath)
+=======
+>>>>>>> vanderlin/main
 "fLL" = (
 /obj/structure/bed/hay,
 /obj/structure/bed/hay{
@@ -6378,6 +6415,18 @@
 /obj/structure/stairs/stone,
 /turf/open/floor/tile/diamond,
 /area/rogue/indoors/town/clocktower)
+<<<<<<< HEAD
+"ggi" = (
+/obj/structure/closet/crate/drawer,
+/obj/item/book/secret/ledger,
+/obj/item/fake_machine/mastermail{
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/turf/open/floor/ruinedwood/spiral,
+/area/rogue/indoors/town/steward)
+=======
+>>>>>>> vanderlin/main
 "ghw" = (
 /obj/structure/hotspring/border/twelve,
 /obj/structure/flora/hotspring_rocks/small/four,
@@ -13684,6 +13733,29 @@
 	},
 /turf/open/floor/tile/kitchen,
 /area/rogue/indoors/town)
+<<<<<<< HEAD
+"mXL" = (
+/obj/machinery/light/fueled/wallfire/big_fireplace{
+	pixel_x = -2;
+	pixel_y = 32
+	},
+/obj/effect/decal/carpet/kover_black{
+	pixel_x = 14;
+	pixel_y = -2
+	},
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/reagent_containers/glass/cup/golden{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/alch/herb/rosa{
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/turf/open/floor/ruinedwood/chevron,
+/area/rogue/indoors/town/manor)
+=======
+>>>>>>> vanderlin/main
 "mYU" = (
 /obj/structure/stairs/stone{
 	dir = 1
@@ -14012,6 +14084,44 @@
 "nji" = (
 /turf/closed/wall/mineral/decorstone/moss/red,
 /area/rogue/under/cavelava)
+<<<<<<< HEAD
+"nju" = (
+/obj/structure/table/wood/plain,
+/obj/machinery/light/fueled/wallfire/candle/lamp,
+/obj/item/alch/earthdust,
+/obj/item/alch/earthdust{
+	pixel_x = 6;
+	pixel_y = 11
+	},
+/obj/item/alch/herb/rosa{
+	pixel_x = 11;
+	pixel_y = -3
+	},
+/obj/item/alch/tobaccodust,
+/obj/item/alch/tobaccodust{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/obj/item/alch/silverdust{
+	pixel_x = -12;
+	pixel_y = 4
+	},
+/obj/item/alch/feaudust{
+	pixel_x = 11;
+	pixel_y = 14
+	},
+/obj/item/alch/viscera{
+	pixel_x = -1;
+	pixel_y = 18
+	},
+/obj/item/alch/viscera{
+	pixel_x = -9;
+	pixel_y = -2
+	},
+/turf/open/floor/metal/alt,
+/area/rogue/indoors/town/bath)
+=======
+>>>>>>> vanderlin/main
 "njz" = (
 /obj/structure/bed/wool,
 /obj/effect/landmark/start/farmer,
@@ -22252,6 +22362,33 @@
 /obj/effect/landmark/start/cook,
 /turf/open/floor/tile,
 /area/rogue/indoors/town/tavern)
+<<<<<<< HEAD
+"uNX" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/item/alch/herb/rosa{
+	pixel_x = 4;
+	pixel_y = -8
+	},
+/obj/item/alch/herb/rosa{
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/glass/carafe/redwine{
+	pixel_x = -12;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/glass/cup/glassware/wineglass{
+	pixel_x = -4;
+	pixel_y = 0
+	},
+/obj/item/reagent_containers/glass/cup/glassware/wineglass{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/turf/open/floor/ruinedwood/chevron,
+/area/rogue/indoors/town)
+=======
+>>>>>>> vanderlin/main
 "uOg" = (
 /obj/structure/chair/wood,
 /obj/machinery/light/fueled/wallfire/candle/blue,
@@ -25649,6 +25786,14 @@
 	},
 /turf/open/floor/churchrough/purple,
 /area/rogue/under/cave)
+<<<<<<< HEAD
+"xRZ" = (
+/obj/structure/table/wood/crafted,
+/obj/item/alch/herb/rosa,
+/turf/open/floor/carpet/red,
+/area/rogue/indoors/town/tavern)
+=======
+>>>>>>> vanderlin/main
 "xSj" = (
 /obj/structure/stairs/stone,
 /turf/open/floor/herringbone,

@@ -160,7 +160,10 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 		"Violator of the Coven" = TRAIT_VIOLATOR,
 		"Endless Slumber" = TRAIT_TORPOR,
 		"Boundless Energy" = TRAIT_NOENERGY,
+<<<<<<< HEAD
+=======
 		"Keen Ears"	= TRAIT_KEENEARS,
+>>>>>>> vanderlin/main
 		"Head Butcher" = TRAIT_HEAD_BUTCHER,
 	),
 	/obj/item/bodypart = list(

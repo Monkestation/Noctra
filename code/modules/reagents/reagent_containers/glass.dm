@@ -255,7 +255,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	amount_per_transfer_from_this = 9
 	possible_transfer_amounts = list(9)
-	volume = 99
+	volume = 100
 	flags_inv = HIDEHAIR
 	obj_flags = CAN_BE_HIT
 	resistance_flags = NONE

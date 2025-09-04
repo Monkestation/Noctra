@@ -77,7 +77,6 @@
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "spice"
 	item_state = "spice"
-	volume = 15
 	list_reagents = list(/datum/reagent/druqks = 15)
 	sellprice = 16
 
@@ -136,7 +135,6 @@
 	desc = "A potent drug that causes a state of euphoria, but can also arrest breathing."
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "ozium"
-	volume = 15
 	list_reagents = list(/datum/reagent/ozium = 15)
 	sellprice = 8
 
@@ -147,10 +145,6 @@
 	color = "#60A584" // rgb: 96, 165, 132
 	overdose_threshold = 16
 	metabolization_rate = 0.2
-
-/datum/reagent/ozium/on_mob_metabolize(mob/living/L)
-	. = ..()
-	L.flash_fullscreen("can_you_see")
 
 /datum/reagent/ozium/on_mob_life(mob/living/carbon/M)
 	if(M.has_flaw(/datum/charflaw/addiction/junkie))
@@ -173,7 +167,6 @@
 	desc = "Derived from the skins of certain pallid goblins. Makes folk quick to act and anger."
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "moondust"
-	volume = 15
 	list_reagents = list(/datum/reagent/moondust = 15)
 	sellprice = 16
 
@@ -186,7 +179,6 @@
 	metabolization_rate = 0.2
 
 /datum/reagent/moondust/on_mob_metabolize(mob/living/M)
-	M.flash_fullscreen("can_you_see")
 	animate(M.client, pixel_y = 1, time = 1, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -1, time = 1, flags = ANIMATION_RELATIVE)
 
@@ -217,8 +209,7 @@
 	desc = "This moondust glitters even in the dark. It seems to have certain pure properties."
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "moondust_purest"
-	volume = 18
-	list_reagents = list(/datum/reagent/moondust_purest = 18)
+	list_reagents = list(/datum/reagent/moondust_purest = 15)
 	sellprice = 20
 
 /datum/reagent/moondust_purest
@@ -231,7 +222,6 @@
 
 /datum/reagent/moondust_purest/on_mob_metabolize(mob/living/M)
 	M.playsound_local(M, 'sound/ravein/small/hello_my_friend.ogg', 100, FALSE)
-	M.flash_fullscreen("can_you_see")
 	M.overlay_fullscreen("purest_kaif", /atom/movable/screen/fullscreen/purest)
 	animate(M.client, pixel_y = 1, time = 1, loop = -1, flags = ANIMATION_RELATIVE)
 	animate(pixel_y = -1, time = 1, flags = ANIMATION_RELATIVE)
@@ -264,7 +254,6 @@
 	desc = "Crushed manabloom useful as a combat measure against mages."
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "salt"
-	volume = 5
 	list_reagents = list(/datum/reagent/toxin/manabloom_juice = 5)
 	sellprice = 10
 	color = COLOR_CYAN
@@ -287,7 +276,6 @@
 	desc = "Explosive powder known to be produced by the dwarves. It's used in many explosives."
 	icon = 'icons/roguetown/items/produce.dmi'
 	icon_state = "blastpowder"
-	volume = 15
 	list_reagents = list(/datum/reagent/blastpowder = 15)
 	sellprice = 15
 	var/primed = FALSE

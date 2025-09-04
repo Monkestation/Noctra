@@ -4,9 +4,9 @@
 	icon = 'icons/roguetown/items/cooking.dmi'
 	icon_state = "glass_carafe"
 	w_class = WEIGHT_CLASS_SMALL
-	amount_per_transfer_from_this = 12 // Half a cup
-	possible_transfer_amounts = list(12)
-	volume = 96 // Four full cups
+	amount_per_transfer_from_this = 10
+	possible_transfer_amounts = list(10)
+	volume = 100 // Four full cups
 	fill_icon_thresholds = list(0, 25, 50, 75, 100)
 	dropshrink = 0.7
 	obj_flags = CAN_BE_HIT

@@ -435,6 +435,8 @@
 	recipe_name = "a Bucket Helmet"
 	req_bar = /obj/item/ingot/steel
 	created_item = (/obj/item/clothing/head/helmet/heavy/bucket)
+<<<<<<< HEAD
+=======
 /*
 /datum/anvil_recipe/armor/steel/sinistar
 	name = "Sinistar Helmet (+Steel Bar)"
@@ -442,6 +444,7 @@
 	created_item = /obj/item/clothing/head/helmet/heavy/sinistar
 	additional_items = list(/obj/item/ingot/steel)
 */
+>>>>>>> vanderlin/main
 
 /datum/anvil_recipe/armor/iron/shadow_plate_gauntlets
 	name = "Shadow Plate Gauntlets"
