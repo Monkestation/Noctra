@@ -72,11 +72,8 @@
 
 /obj/item/needle/pre_attack(atom/A, mob/living/user, params)
 	if(isitem(A) && !can_repair)
-<<<<<<< HEAD
-=======
 		if(istype(A, /obj/item/storage))
 			return ..()
->>>>>>> vanderlin/main
 		to_chat(user, span_warning("[src] cannot be used to repair [A]!"))
 		return TRUE
 	if(isitem(A) && can_repair)
@@ -107,11 +104,8 @@
 		if((armor_value == 0 && skill_level > 0) || (armor_value > 0 && skill_level > 1)) //If not armor but skill level at least 1 or Armor and skill level at least 2
 			user.visible_message(span_info("[user] repairs [I]!"))
 			I.repair_damage(skill_multiplied)
-<<<<<<< HEAD
-=======
 			if(prob(10 * (7 - skill_level)))
 				use(1)
->>>>>>> vanderlin/main
 		else
 			if(prob(20 - user.STALUC)) //Unlucky here!
 				I.take_damage(150, BRUTE, "slash")
@@ -201,10 +195,6 @@
 
 /obj/item/needle/blessed
 	name = "blessed needle"
-<<<<<<< HEAD
-	desc = "<span class='hierophant'>A needle blessed by the ordained Pestrans of the Church. A coveted item, for its thread will never end.</span>"
-=======
 	desc = span_hierophant("A needle blessed by the ordained Pestrans of the Church. A coveted item, for its thread will never end. \n This thread however can only be used to sew wounds.")
->>>>>>> vanderlin/main
 	infinite = TRUE
 	can_repair = TRUE

@@ -65,10 +65,6 @@
                 "bugfix": "Assassins beggar and servants are not foreigners anymore."
             }
         ]
-<<<<<<< HEAD
-    }
-}
-=======
     },
     "2025-09-03": {
         "SarmentiCampbell": [
@@ -93,4 +89,3 @@
         ]
     }
 }
->>>>>>> vanderlin/main

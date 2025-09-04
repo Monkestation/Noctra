@@ -19368,13 +19368,6 @@
 	},
 /turf/open/floor/church,
 /area/rogue/indoors/town/church/inquisition)
-<<<<<<< HEAD
-"lMD" = (
-/mob/living/simple_animal/hostile/retaliate/trufflepig/male,
-/turf/open/floor/dirt/road,
-/area/rogue/outdoors/rtfield/safe)
-=======
->>>>>>> vanderlin/main
 "lMH" = (
 /obj/structure/fluff/railing/wood{
 	dir = 4
@@ -20889,16 +20882,6 @@
 	},
 /turf/open/floor/church,
 /area/rogue/indoors/town/church)
-<<<<<<< HEAD
-"mLd" = (
-/obj/structure/chair/wood/alt/chair_noble{
-	dir = 8
-	},
-/obj/item/fake_machine/mastermail,
-/turf/open/floor/ruinedwood/spiral,
-/area/rogue/indoors/town/steward)
-=======
->>>>>>> vanderlin/main
 "mLm" = (
 /turf/closed/mineral,
 /area/rogue/outdoors/river)
@@ -21914,13 +21897,6 @@
 /obj/item/needle/thorn,
 /turf/open/floor/dirt,
 /area/rogue/indoors/town/cell)
-<<<<<<< HEAD
-"nqN" = (
-/obj/item/fake_machine/drugtrade,
-/turf/open/floor/ruinedwood/chevron,
-/area/rogue/indoors/town)
-=======
->>>>>>> vanderlin/main
 "nqQ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/closed/wall/mineral/stone,
@@ -38872,13 +38848,6 @@
 /obj/machinery/essence/enchantment_altar,
 /turf/open/floor/blocks/stonered/tiny,
 /area/rogue/indoors/town/clinic_large/apothecary)
-<<<<<<< HEAD
-"xUE" = (
-/mob/living/simple_animal/hostile/retaliate/trufflepig/female,
-/turf/open/floor/dirt,
-/area/rogue/outdoors/rtfield/safe)
-=======
->>>>>>> vanderlin/main
 "xUO" = (
 /obj/effect/decal/cobblerockedge/alt{
 	dir = 6
