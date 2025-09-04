@@ -222,3 +222,6 @@
 		if(!M.has_erp_pref(pref_type))
 			return FALSE
 	return TRUE
+
+/mob/living/proc/do_onomatopoeia()
+	balloon_alert_to_viewers(src, "Plap!", alpha = rand(100, 200), x_offset = rand(-15, 15), y_offset = rand(0, 25))
