@@ -144,6 +144,7 @@
 		/datum/supply_pack/seeds/sugarcane,
 		/datum/supply_pack/luxury/merctoken,
 		/datum/supply_pack/narcotics/zigboxempt,
+		/datum/supply_pack/jewelry/consort_crown,
 		/datum/supply_pack/jewelry/psycross,
 		/datum/supply_pack/jewelry/bglasses,
 		/datum/supply_pack/jewelry/gmask,

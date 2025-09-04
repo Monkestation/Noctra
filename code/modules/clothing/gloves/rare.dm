@@ -18,6 +18,7 @@
 	armor = ARMOR_PLATE_GOOD
 	max_integrity = INTEGRITY_STRONGEST
 	prevent_crits = ALL_CRITICAL_HITS
+	abstract_type = /obj/item/clothing/gloves/rare
 
 /obj/item/clothing/gloves/rare/elfplate
 	name = "dark elf plate gauntlets"

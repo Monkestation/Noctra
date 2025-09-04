@@ -1,0 +1,3 @@
+/obj/item/clothing/shoes/grenzelhoft : /obj/item/clothing/shoes/rare/grenzelhoft{@OLD}
+/obj/item/clothing/armor/captain : /obj/item/clothing/armor/brigandine/captain{@OLD}
+/obj/item/clothing/shirt/formal : /obj/item/clothing/shirt/maniac{@OLD}

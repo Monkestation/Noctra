@@ -71,7 +71,7 @@
 	item_weight = 9 * GOLD_MULITPLIER
 
 // Vampire Lord is no longer as OP, but the armor should protect against dreaded stabs or it makes the vitae spent on it pointless.
-/obj/item/clothing/head/helmet/heavy/savoyard
+/obj/item/clothing/head/helmet/heavy/vampire
 	name = "savoyard"
 	desc = "A terrifying yet crude iron helmet shaped like a humen skull. Commands the inspiring terror of inhumen tyrants from yils past."
 	icon_state = "savoyard"
@@ -254,7 +254,7 @@
 	icon_state = "sinistarhelm"
 	dropshrink = 0.9
 	flags_inv = HIDEEARS|HIDEFACE|HIDEHAIR
-	smeltresult = /obj/item/ingot/iron
+	smeltresult = /obj/item/ingot/steel
 	item_weight = 7 * IRON_MULTIPLIER
 
 /obj/item/clothing/head/helmet/heavy/decorated	// template

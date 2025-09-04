@@ -63,7 +63,8 @@
 			/obj/item/clothing/head/crown/circlet/vision = 3,
 			/obj/item/clothing/head/crown/circlet/sleepless = 3,
 			/obj/item/clothing/head/crown/circlet/stink = 5,
-			/obj/item/clothing/neck/talkstone = 10
+			/obj/item/clothing/neck/talkstone = 10,
+			/obj/item/clothing/ring/dragon_ring = 1,
 		)
 	)
 

@@ -248,7 +248,7 @@
 	head = /obj/item/clothing/head/helmet/skullcap/grenzelhoft
 	armor = /obj/item/clothing/armor/cuirass/iron
 	pants = /obj/item/clothing/pants/grenzelpants
-	shoes = /obj/item/clothing/shoes/grenzelhoft
+	shoes = /obj/item/clothing/shoes/rare/grenzelhoft
 	gloves = /obj/item/clothing/gloves/angle/grenzel
 	beltl = /obj/item/weapon/sword/short
 	beltr = /obj/item/storage/keyring/veteran

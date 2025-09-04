@@ -2,9 +2,9 @@
 	name = "Potato Stew"
 	created_reagent = /datum/reagent/consumable/soup/veggie/potato
 	requirements = list(/obj/item/reagent_containers/food/snacks/veg/potato_sliced = 1)
-	max_optionals = 2
+	max_optionals = 3
 	optional_wildcard_requirements = list(
-		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
+		/obj/item/reagent_containers/food/snacks/produce/vegetable = 3
 	)
 	finished_smell = /datum/pollutant/food/potato_stew
 	crafting_time = 40 SECONDS
@@ -13,9 +13,9 @@
 	name = "Onion Stew"
 	created_reagent = /datum/reagent/consumable/soup/veggie/onion
 	requirements = list(/obj/item/reagent_containers/food/snacks/veg/onion_sliced = 1)
-	max_optionals = 2
+	max_optionals = 3
 	optional_wildcard_requirements = list(
-		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
+		/obj/item/reagent_containers/food/snacks/produce/vegetable = 3
 	)
 	finished_smell = /datum/pollutant/food/onion_stew
 	crafting_time = 30 SECONDS
@@ -24,9 +24,9 @@
 	name = "Cabbage Stew"
 	created_reagent = /datum/reagent/consumable/soup/veggie/cabbage
 	requirements = list(/obj/item/reagent_containers/food/snacks/veg/cabbage_sliced = 1)
-	max_optionals = 2
+	max_optionals = 3
 	optional_wildcard_requirements = list(
-		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
+		/obj/item/reagent_containers/food/snacks/produce/vegetable = 3
 	)
 	finished_smell = /datum/pollutant/food/cabbage_stew
 	crafting_time = 35 SECONDS
@@ -35,9 +35,9 @@
 	name = "Turnip Stew"
 	created_reagent = /datum/reagent/consumable/soup/veggie/turnip
 	requirements = list(/obj/item/reagent_containers/food/snacks/veg/turnip_sliced = 1)
-	max_optionals = 2
+	max_optionals = 3
 	optional_wildcard_requirements = list(
-		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
+		/obj/item/reagent_containers/food/snacks/produce/vegetable = 3
 	)
 	finished_smell = /datum/pollutant/food/turnip_stew
 	crafting_time = 35 SECONDS
@@ -46,9 +46,9 @@
 	name = "Fish Stew"
 	created_reagent = /datum/reagent/consumable/soup/stew/fish
 	requirements = list(/obj/item/reagent_containers/food/snacks/meat/mince/fish = 1)
-	max_optionals = 2
+	max_optionals = 3
 	optional_wildcard_requirements = list(
-		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
+		/obj/item/reagent_containers/food/snacks/produce/vegetable = 3
 	)
 	finished_smell = /datum/pollutant/food/fish_stew
 	crafting_time = 40 SECONDS
@@ -57,9 +57,9 @@
 	name = "Chicken Stew"
 	created_reagent = /datum/reagent/consumable/soup/stew/chicken
 	requirements = list(/obj/item/reagent_containers/food/snacks/meat/mince/poultry = 1)
-	max_optionals = 2
+	max_optionals = 3
 	optional_wildcard_requirements = list(
-		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
+		/obj/item/reagent_containers/food/snacks/produce/vegetable = 3
 	)
 	finished_smell = /datum/pollutant/food/chicken_stew
 	crafting_time = 45 SECONDS
@@ -71,9 +71,9 @@
 	name = "Questionable Stew"
 	created_reagent = /datum/reagent/consumable/soup/stew/gross
 	requirements = list(/obj/item/reagent_containers/food/snacks/meat/strange = 1)
-	max_optionals = 2
+	max_optionals = 3
 	optional_wildcard_requirements = list(
-		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
+		/obj/item/reagent_containers/food/snacks/produce/vegetable = 3
 	)
 	finished_smell = /datum/pollutant/food/potato_stew
 	crafting_time = 45 SECONDS
@@ -82,9 +82,9 @@
 	name = "Meat Stew"
 	created_reagent = /datum/reagent/consumable/soup/stew/meat
 	wildcard_requirements = list(/obj/item/reagent_containers/food/snacks/meat = 1)
-	max_optionals = 2
+	max_optionals = 3
 	optional_wildcard_requirements = list(
-		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
+		/obj/item/reagent_containers/food/snacks/produce/vegetable = 3
 	)
 	finished_smell = /datum/pollutant/food/meat_stew
 	crafting_time = 45 SECONDS
@@ -93,9 +93,9 @@
 	name = "Truffle Stew"
 	created_reagent = /datum/reagent/consumable/soup/stew/truffle
 	requirements = list(/obj/item/reagent_containers/food/snacks/truffles = 1)
-	max_optionals = 2
+	max_optionals = 3
 	optional_wildcard_requirements = list(
-		/obj/item/reagent_containers/food/snacks/produce/vegetable = 2
+		/obj/item/reagent_containers/food/snacks/produce/vegetable = 3
 	)
 	finished_smell = /datum/pollutant/food/truffle_stew
 	crafting_time = 40 SECONDS

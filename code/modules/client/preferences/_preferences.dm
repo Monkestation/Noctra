@@ -218,10 +218,13 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/randomize_shutup = FALSE
 	/// Custom UI scale
 	var/ui_scale
+<<<<<<< HEAD
 	///this is our character slot
 	var/tmp/current_slot = 1
 	/// List storing ERP preference values
 	var/list/erp_preferences
+=======
+>>>>>>> vanderlin/main
 	/// Assoc list of culinary preferences, where the key is the type of the culinary preference, and value is food/drink typepath
 	var/list/culinary_preferences = list()
 
@@ -1766,7 +1769,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 			"}
 
 /datum/proc/is_valid_headshot_link(mob/user, value, silent = FALSE)
-	var/static/list/allowed_hosts = list("i.gyazo.com", "a.l3n.co", "b.l3n.co", "c.l3n.co", "images2.imgbox.com", "thumbs2.imgbox.com")
+	var/static/list/allowed_hosts = list("i.gyazo.com", "a.l3n.co", "b.l3n.co", "c.l3n.co", "images2.imgbox.com", "thumbs2.imgbox.com", "files.catbox.moe")
 	var/static/list/valid_extensions = list("jpg", "png", "jpeg", "gif")
 
 	if(!length(value))

@@ -4,7 +4,7 @@
 	crafting_time = 8 SECONDS
 	water_conversion = 1
 	reagent_requirements = list(
-		/datum/reagent/water = 27
+		/datum/reagent/water = 20
 	)
 	craft_verb = "brewing "
 	required_chem_temp = 350 // Lower temp for gentle herbal brewing
@@ -54,7 +54,7 @@
 	crafting_time = 15 SECONDS
 	water_conversion = 1
 	reagent_requirements = list(
-		/datum/reagent/consumable/ethanol = 21
+		/datum/reagent/consumable/ethanol = 20
 	)
 	subtype_reagents_allowed = TRUE
 	craft_verb = "preparing "
