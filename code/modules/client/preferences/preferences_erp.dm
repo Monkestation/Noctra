@@ -104,7 +104,9 @@
 	var/list/dat = list()
 	var/list/categories = list()
 
-	for(var/pref_type in subtypesof(/datum/erp_preference))
+	for(var/datum/erp_preference/pref_type as anything in subtypesof(/datum/erp_preference))
+		if(is_abstract(pref_type))
+			continue
 		var/datum/erp_preference/pref = new pref_type()
 		if(pref.abstract_type == pref_type)
 			continue
@@ -263,7 +265,9 @@
 
 	// Clean up any invalid preference types that might have been loaded
 	var/list/valid_types = list()
-	for(var/pref_type in subtypesof(/datum/erp_preference))
+	for(var/datum/erp_preference/pref_type as anything in subtypesof(/datum/erp_preference))
+		if(is_abstract(pref_type))
+			continue
 		var/datum/erp_preference/pref = new pref_type()
 		if(pref.abstract_type != pref_type)
 			valid_types += pref_type

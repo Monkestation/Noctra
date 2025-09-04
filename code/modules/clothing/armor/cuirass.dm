@@ -27,6 +27,9 @@
 
 	armor = ARMOR_PLATE_GOOD
 
+/obj/item/clothing/armor/cuirass/rare
+	abstract_type = /obj/item/clothing/armor/cuirass/rare
+
 //................ Black Oak Cuirass ............... //
 /obj/item/clothing/armor/cuirass/rare/elven
 	name = "elven guardian cuirass"

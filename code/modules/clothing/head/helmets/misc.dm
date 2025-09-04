@@ -144,7 +144,24 @@
 //............... Battle Nun ........................... (unique kit for the role, iron coif mechanically.)
 /obj/item/clothing/head/helmet/battlenun
 	name = "veil over coif"
-	desc = "A gleaming coif of metal half-hidden by a black veil."
+	desc = "A gleaming coif of iron metal half-hidden by a black veil."
+	icon_state = "battlenun"
+	dynamic_hair_suffix = ""	// this hides all hair
+	flags_inv = HIDEEARS|HIDEHAIR
+	equip_sound = 'sound/foley/equip/cloak_equip.ogg'
+	pickup_sound = 'sound/foley/equip/cloak_take_off.ogg'
+	break_sound = 'sound/foley/cloth_rip.ogg'
+	blocksound = CHAINHIT
+	resistance_flags = FIRE_PROOF
+
+	armor = ARMOR_MAILLE_IRON
+	body_parts_covered = NECK|HAIR|EARS|HEAD
+	prevent_crits = ALL_EXCEPT_BLUNT
+	item_weight = 9 * IRON_MULTIPLIER
+
+/obj/item/clothing/head/helmet/battlenun/steel
+	name = "veil over coif"
+	desc = "A gleaming coif of steel metal half-hidden by a black veil."
 	icon_state = "battlenun"
 	dynamic_hair_suffix = ""	// this hides all hair
 	flags_inv = HIDEEARS|HIDEHAIR
@@ -157,7 +174,7 @@
 	armor = ARMOR_MAILLE
 	body_parts_covered = NECK|HAIR|EARS|HEAD
 	prevent_crits = ALL_EXCEPT_BLUNT
-	item_weight = 9 * IRON_MULTIPLIER
+	item_weight = 9 * STEEL_MULTIPLIER
 
 
 //................ Sallet ............... //
@@ -187,7 +204,7 @@
 	item_weight = 9 * IRON_MULTIPLIER
 
 //................ Elf Sallet ............... //
-/obj/item/clothing/head/helmet/sallet/rare/elven	// blackoak merc helmet
+/obj/item/clothing/head/helmet/sallet/elven	// blackoak merc helmet
 	desc = "A steel helmet with a thin gold plating designed for Elven woodland guardians."
 	icon_state = "bascinet_novisor"
 	color = COLOR_ASSEMBLY_GOLD
@@ -316,7 +333,7 @@
 	emote_environment = 3
 	item_weight = 5.6 * STEEL_MULTIPLIER
 
-/obj/item/clothing/head/helmet/visored/knight/black
+/obj/item/clothing/head/helmet/visored/knight/blk
 	color = CLOTHING_SOOT_BLACK
 
 /obj/item/clothing/head/helmet/visored/knight/iron

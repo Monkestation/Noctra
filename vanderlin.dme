@@ -1305,6 +1305,8 @@
 #include "code\datums\sex\organs\testicles.dm"
 #include "code\datums\sex\organs\vagina.dm"
 #include "code\datums\sex\preferences\_base.dm"
+#include "code\datums\sex\preferences\bitflag\_base.dm"
+#include "code\datums\sex\preferences\bitflag\subtle.dm"
 #include "code\datums\sex\preferences\boolean\_base.dm"
 #include "code\datums\sex\preferences\boolean\allow_erp.dm"
 #include "code\datums\sex\preferences\boolean\subtle_session_messages.dm"

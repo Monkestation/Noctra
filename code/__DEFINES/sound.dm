@@ -80,6 +80,8 @@
 #define SFX_JINGLE_BELLS	"jingle_bells"
 #define SFX_INQUIS_BOOT_STEP	"inquis_boot_step"
 #define SFX_POWER_ARMOR_STEP	"power_armor_step"
+#define SFX_CAT_MEOW "cat_meow"
+#define SFX_CAT_PURR "cat_purr"
 
 #define INTERACTION_SOUND_RANGE_MODIFIER 0
 #define EQUIP_SOUND_VOLUME 100

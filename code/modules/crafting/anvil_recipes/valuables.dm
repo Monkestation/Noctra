@@ -113,6 +113,12 @@
 	created_item = /obj/item/clothing/ring/silver/rontz
 	craftdiff = 4
 
+/datum/anvil_recipe/valuables/silver/maker_ring
+	name = "Maker's guild ring"
+	recipe_name = "a silver maker's guild ring"
+	created_item = /obj/item/clothing/ring/silver/makers_guild
+	craftdiff = 6
+
 // --------- GOLD -----------
 
 /datum/anvil_recipe/valuables/gold
@@ -178,3 +184,15 @@
 	additional_items = list(/obj/item/gem/red)
 	created_item = /obj/item/clothing/ring/gold/rontz
 	craftdiff = 5
+
+/datum/anvil_recipe/valuables/gold/mercator_ring
+	name = "Golden Mercator Ring"
+	recipe_name = "a Golden Mercator Ring"
+	created_item = /obj/item/clothing/ring/gold/guild_mercator
+	craftdiff = 6
+
+/datum/anvil_recipe/valuables/gold/sparrow_crown
+	name = "Champion's circlet"
+	recipe_name = "worthy of a champion"
+	created_item = /obj/item/clothing/head/crown/sparrowcrown
+	craftdiff = 6

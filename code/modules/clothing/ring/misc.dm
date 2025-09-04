@@ -88,6 +88,7 @@
 	var/cdtime
 	var/activetime
 	var/activate_sound
+	abstract_type = /obj/item/clothing/ring/active
 
 /obj/item/clothing/ring/active/attack_hand_secondary(mob/user, params)
 	. = ..()

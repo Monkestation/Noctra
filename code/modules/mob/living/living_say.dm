@@ -259,12 +259,55 @@
 	if(!speaker_ceiling || istransparentturf(speaker_ceiling))
 		speaker_has_ceiling = FALSE
 
+	// ERP Subtle Mode Detection
+	var/is_subtle_message = FALSE
+	var/subtle_noghost = FALSE
+
+	if(ishuman(src))
+		var/mob/living/carbon/human/human_speaker = src
+		var/subtle_prefs = human_speaker.get_erp_pref(/datum/erp_preference/bitflag/subtle)
+
+		// Check if message starts with @ (Subtle Tag preference)
+		if(subtle_prefs & SUBTLE_TAG)
+			if(copytext(message, 1, 2) == "@")
+				is_subtle_message = TRUE
+				message = copytext(message, 2) // Remove the @ symbol
+
+		// Check if we're in a collective with subtle mode
+		var/collective_subtle = FALSE
+		var/in_sex_session = FALSE
+		for(var/datum/collective_message/collective in GLOB.sex_collectives)
+			if(human_speaker in collective.involved_mobs)
+				in_sex_session = TRUE
+				if(collective.subtle_mode) // Assuming this exists on collective
+					collective_subtle = TRUE
+					break
+
+		// Check All Session Messages preference
+		if(subtle_prefs & SUBTLE_ALL)
+			if(in_sex_session || collective_subtle)
+				is_subtle_message = TRUE
+
+		// Apply collective subtle mode
+		if(collective_subtle)
+			is_subtle_message = TRUE
+
+		// Apply subtle preferences if this is a subtle message
+		if(is_subtle_message)
+			// No Ghost preference
+			if(subtle_prefs & SUBTLE_NOGHOST)
+				subtle_noghost = TRUE
+
+			// Short Range Subtle preference
+			if(subtle_prefs & SUBTLE_SHORT)
+				message_range = 2 // Override to short range
+
 	var/eavesdrop_range = 0
 	if(message_mods[WHISPER_MODE]) // If we're whispering
 		eavesdrop_range = EAVESDROP_EXTRA_RANGE
 
 	var/z_message_type = Z_MODE_NONE
-	if(!eavesdrop_range)
+	if(!eavesdrop_range && !is_subtle_message) // Subtle messages don't get z-level broadcasting
 		z_message_type = Z_MODE_ONE_CEILING
 		if(say_test(message) == "2") // ! shout
 			message_range += 5
@@ -277,16 +320,19 @@
 	if(z_message_type == Z_MODE_NONE)
 		listening = get_hearers_in_view(message_range + eavesdrop_range, source)
 	else
-		// !! yelling is handled in the loop below
-		// This may be too expensive with how many messages get sent in a round
 		listening = get_hearers_in_view_z_range(message_range, source)
 
 	var/list/the_dead = list()
 
 	if(client) //client is so that ghosts don't have to listen to mice
 		for(var/mob/player_mob as anything in GLOB.player_list)
-			if(QDELETED(player_mob)) // Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.
-				continue // Remove if underlying cause (likely byond issue) is fixed. See TG PR #49004.
+			if(QDELETED(player_mob))
+				continue
+
+			// Skip dead players for subtle messages with No Ghost preference
+			if(player_mob.stat == DEAD && is_subtle_message && subtle_noghost)
+				continue
+
 			// If yelling !! check all alive players if they are in range and in the same Z level group
 			if(player_mob.stat != DEAD)
 				if(z_message_type != Z_MODE_ALL)
@@ -297,7 +343,7 @@
 					continue
 				listening |= player_mob
 				continue
-			// Else if dead check prefs
+			// Else if dead check prefs (unless subtle with noghost)
 			if(!is_in_zweb(player_mob.z, source.z) || get_dist(player_mob, src) > message_range) //they're out of range of normal hearing
 				if(player_mob.client.prefs)
 					if(eavesdrop_range && !(player_mob.client.prefs.chat_toggles & CHAT_GHOSTWHISPER)) //they're whispering and we have hearing whispers at any range off
@@ -313,7 +359,13 @@
 		eavesdropping = stars(message)
 		eavesrendered = compose_message(src, message_language, eavesdropping, null, spans, message_mods)
 
-	var/rendered = compose_message(src, message_language, message, null, spans, message_mods)
+	var/list/final_spans = spans
+	if(is_subtle_message)
+		if(!final_spans)
+			final_spans = list()
+		final_spans |= "subtle"
+
+	var/rendered = compose_message(src, message_language, message, null, final_spans, message_mods)
 
 	for(var/atom/movable/hearing_movable as anything in listening)
 		if(!hearing_movable)
@@ -323,6 +375,12 @@
 		var/ignore_z = FALSE
 		if(isobserver(hearing_movable) || (locate(hearing_movable) in important_recursive_contents?[RECURSIVE_CONTENTS_HEARING_SENSITIVE]))
 			ignore_z = TRUE
+			if(is_subtle_message && subtle_noghost && isobserver(hearing_movable))
+				continue
+
+		var/keenears_range_bonus = 0
+		if(HAS_TRAIT(hearing_movable, TRAIT_KEENEARS))
+			keenears_range_bonus = 5
 
 		if(!ignore_z && z_message_type == Z_MODE_ONE_CEILING && hearing_movable.z != z)
 			var/listener_has_ceiling = TRUE
@@ -337,21 +395,23 @@
 			if(listener_has_ceiling && speaker_has_ceiling)	//Both have a ceiling, on different z-levels -- no hearing at all
 				continue
 
-		if(eavesdrop_range && get_dist(source, hearing_movable) > message_range && !(the_dead[hearing_movable]))
+		if(eavesdrop_range && get_dist(source, hearing_movable) > message_range + keenears_range_bonus && !(the_dead[hearing_movable]))
 			hearing_movable.Hear(eavesrendered, src, message_language, eavesdropping, null, spans, message_mods, original_message)
 		else
-			hearing_movable.Hear(rendered, src, message_language, message, null, spans, message_mods, original_message)
+			hearing_movable.Hear(rendered, src, message_language, message, null, final_spans, message_mods, original_message)
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
 
-	//speech bubble
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in listening)
-		if(M.client && !M.client.prefs.chat_on_map)
+		if(M.client)
 			speech_bubble_recipients |= M.client
 
 	if(length(speech_bubble_recipients))
-		var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
+		var/bubble_icon_to_use = bubble_type
+		if(is_subtle_message)
+			bubble_icon_to_use = "slime" // Use a different bubble icon for subtle messages
+		var/image/I = image('icons/mob/talk.dmi', src, "[bubble_icon_to_use][say_test(message)]", FLY_LAYER)
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay), I, speech_bubble_recipients, 30)
 
@@ -361,6 +421,43 @@
 #undef Z_MODE_ALL
 
 /mob/living/proc/send_speech_sign(message, message_range = 6, obj/source = src, bubble_type = bubble_icon, list/spans, datum/language/message_language, list/message_mods = list(), original_message)
+	// ERP Subtle Mode Detection
+	var/is_subtle_message = FALSE
+	var/subtle_noghost = FALSE
+
+	if(ishuman(src))
+		var/mob/living/carbon/human/human_speaker = src
+		var/subtle_prefs = human_speaker.get_erp_pref(/datum/erp_preference/bitflag/subtle)
+
+		// Check if message starts with @ (Subtle Tag preference)
+		if(subtle_prefs & SUBTLE_TAG)
+			if(copytext(message, 1, 2) == "@")
+				is_subtle_message = TRUE
+				message = copytext(message, 2) // Remove the @ symbol
+
+		// Check if we're in a collective with subtle mode
+		var/collective_subtle = FALSE
+		var/in_sex_session = FALSE
+		for(var/datum/collective_message/collective in GLOB.sex_collectives)
+			if(human_speaker in collective.involved_mobs)
+				in_sex_session = TRUE
+				if(collective.subtle_mode) // Assuming this exists on collective
+					collective_subtle = TRUE
+					break
+		if(subtle_prefs & SUBTLE_ALL)
+			if(in_sex_session || collective_subtle)
+				is_subtle_message = TRUE
+
+		if(collective_subtle)
+			is_subtle_message = TRUE
+
+		if(is_subtle_message)
+			if(subtle_prefs & SUBTLE_NOGHOST)
+				subtle_noghost = TRUE
+
+			if(subtle_prefs & SUBTLE_SHORT)
+				message_range = 2
+
 	var/eavesdrop_range = 0
 	if(message_mods[WHISPER_MODE]) // If we're whispering
 		eavesdrop_range = EAVESDROP_EXTRA_RANGE
@@ -371,6 +468,11 @@
 		for(var/mob/player_mob as anything in GLOB.player_list)
 			if(QDELETED(player_mob)) // Some times nulls and deleteds stay in this list. This is a workaround to prevent ic chat breaking for everyone when they do.
 				continue // Remove if underlying cause (likely byond issue) is fixed. See TG PR #49004.
+
+			// Skip dead players for subtle messages with No Ghost preference
+			if(player_mob.stat == DEAD && is_subtle_message && subtle_noghost)
+				continue
+
 			// If yelling !! check all alive players if they are in range and in the same Z level group
 			if(player_mob.stat != DEAD)
 				continue
@@ -382,16 +484,25 @@
 						continue
 			listening |= player_mob
 
-	var/rendered = compose_message(src, message_language, message, null, spans, message_mods)
+	// Add subtle styling to spans if this is a subtle message
+	var/list/final_spans = spans
+	if(is_subtle_message)
+		if(!final_spans)
+			final_spans = list()
+		final_spans |= "subtle" // Add subtle CSS class for styling
 
+	var/rendered = compose_message(src, message_language, message, null, final_spans, message_mods)
 	var/list/understanders = list() //those who aren't understanders will be shown an emote instead
+
 	for(var/atom/movable/hearing_movable as anything in listening)
-		if(!(hearing_movable.has_language(message_language) || hearing_movable.check_language_hear(message_language)))
+		// Skip ghosts for subtle messages with noghost preference (additional check for sign language)
+		if(is_subtle_message && subtle_noghost && isobserver(hearing_movable))
 			continue
 
+		if(!(hearing_movable.has_language(message_language) || hearing_movable.check_language_hear(message_language)))
+			continue
 		understanders += hearing_movable
-
-		hearing_movable.Hear(rendered, src, message_language, message, null, spans, message_mods, original_message)
+		hearing_movable.Hear(rendered, src, message_language, message, null, final_spans, message_mods, original_message)
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_LIVING_SAY_SPECIAL, src, message)
 
@@ -400,17 +511,25 @@
 	var/sign_verb = safepick(speaker_language.signlang_verb)
 	if(!sign_verb)
 		sign_verb = "signs"
-	var/chatmsg = "<b>[src]</b> " + sign_verb + "."
-	visible_message(chatmsg, runechat_message = sign_verb, ignored_mobs = understanders)
 
-	//speech bubble
+	var/chatmsg = "<b>[src]</b> " + sign_verb + "."
+
+	if(is_subtle_message)
+		chatmsg = "<span class='subtle'><b>[src]</b> " + sign_verb + " subtly.</span>"
+		visible_message(chatmsg, runechat_message = sign_verb + " subtly", ignored_mobs = understanders)
+	else
+		visible_message(chatmsg, runechat_message = sign_verb, ignored_mobs = understanders)
+
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in understanders)
-		if(M.client && !M.client.prefs.chat_on_map)
+		if(M.client)
 			speech_bubble_recipients |= M.client
 
 	if(length(speech_bubble_recipients))
-		var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
+		var/bubble_icon_to_use = bubble_type
+		if(is_subtle_message)
+			bubble_icon_to_use = "slime"
+		var/image/I = image('icons/mob/talk.dmi', src, "[bubble_icon_to_use][say_test(message)]", FLY_LAYER)
 		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 		INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(flick_overlay), I, speech_bubble_recipients, 30)
 

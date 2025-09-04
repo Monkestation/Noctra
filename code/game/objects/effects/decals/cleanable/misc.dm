@@ -219,18 +219,11 @@
 /obj/effect/decal/cleanable/debris/stone
 	name = "stone chippings"
 	icon_state = "pebbly"
+	beauty = -50
+	clean_type = CLEAN_TYPE_LIGHT_DECAL
 
-/obj/effect/decal/cleanable/debris/wood	// sawdust gets cleared by weather
+/obj/effect/decal/cleanable/debris/wood
 	name = "sawdust"
 	icon_state = "woody"
-
-/obj/effect/decal/cleanable/debris/wood/Initialize()
-	. = ..()
-	GLOB.weather_act_upon_list += src
-
-/obj/effect/decal/cleanable/debris/wood/Destroy()
-	. = ..()
-	GLOB.weather_act_upon_list -= src
-
-/obj/effect/decal/cleanable/debris/wood/weather_act_on(weather_trait, severity)
-	qdel(src)
+	beauty = -50
+	clean_type = CLEAN_TYPE_LIGHT_DECAL

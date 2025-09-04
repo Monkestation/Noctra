@@ -155,7 +155,7 @@
 /obj/item/clothing/pants/grenzelpants{
 	pixel_x = 10
 	},
-/obj/item/clothing/shoes/grenzelhoft{
+/obj/item/clothing/shoes/rare/grenzelhoft{
 	pixel_x = -12;
 	pixel_y = -13
 	},
