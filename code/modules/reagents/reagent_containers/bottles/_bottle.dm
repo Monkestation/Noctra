@@ -5,13 +5,8 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	desc = "A bottle with a cork."
 	icon = 'icons/roguetown/items/glass_reagent_container.dmi'
 	icon_state = "clear_bottle1"
-<<<<<<< HEAD
-	amount_per_transfer_from_this = 6
-	possible_transfer_amounts = list(6)
-=======
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = list(5,10)
->>>>>>> vanderlin/main
 	volume = 70
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 100)
 	dropshrink = 0.8
