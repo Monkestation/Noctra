@@ -83,9 +83,10 @@
 	html += {"
 		</div>
 		<div>
-			<h2>Requires 30 ligulae of Water</h2>
+			<h2>Requires 30 [UNIT_FORM_STRING(30)] of Water</h2>
 			<h2>Creates</h2>
 	"}
+	//regarding the above, the amount of water needed can be found in the cauldron.dm file
 
 	// Add output reagents
 	if(length(output_reagents))

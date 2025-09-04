@@ -5,8 +5,8 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	desc = "A bottle with a cork."
 	icon = 'icons/roguetown/items/glass_reagent_container.dmi'
 	icon_state = "clear_bottle1"
-	amount_per_transfer_from_this = 6
-	possible_transfer_amounts = list(6)
+	amount_per_transfer_from_this = 5
+	possible_transfer_amounts = list(5,10)
 	volume = 70
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 100)
 	dropshrink = 0.8
@@ -193,8 +193,8 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	desc = "A vial with a cork."
 	icon = 'icons/roguetown/items/glass_reagent_container.dmi'
 	icon_state = "clear_vial1"
-	amount_per_transfer_from_this = 6
-	possible_transfer_amounts = list(6)
+	amount_per_transfer_from_this = 5
+	possible_transfer_amounts = list(5)
 	volume = 30
 	fill_icon_thresholds = list(0, 10, 25, 50, 75, 100)
 	dropshrink = 0.8
@@ -204,6 +204,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	closed = TRUE
 	reagent_flags = TRANSPARENT
 	w_class = WEIGHT_CLASS_SMALL
+	grid_width = 32
 	grid_height = 32
 	drinksounds = list('sound/items/drink_bottle (1).ogg','sound/items/drink_bottle (2).ogg')
 	fillsounds = list('sound/items/fillcup.ogg')
@@ -260,7 +261,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 
 	icon = 'icons/obj/handmade/teapot.dmi'
 	icon_state = "world"
-	volume = 99
+	volume = 100
 	amount_per_transfer_from_this = 6
 	possible_transfer_amounts = list(6)
 	dropshrink = 1
@@ -299,7 +300,7 @@ GLOBAL_LIST_INIT(wisdoms, world.file2list("strings/rt/wisdoms.txt"))
 	name = "fancy teapot"
 	desc = "A fancy tea pot made out of ceramic. Used to hold tea."
 	icon_state = "teapot_fancy"
-	volume = 99
+	volume = 100
 	dropshrink = 0.7
 	can_label_container = FALSE
 

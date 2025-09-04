@@ -152,7 +152,8 @@
 		/datum/supply_pack/luxury/glassware_set,
 		/datum/supply_pack/apparel/royaldyes,
 		/datum/supply_pack/narcotics/moondust,
-		/datum/supply_pack/weapons/ranged/tossbladesteel
+		/datum/supply_pack/weapons/ranged/tossbladesteel,
+		/datum/supply_pack/luxury/spectacles_inquisitor
 	)
 
 /datum/world_faction/coastal_merchants/initialize_faction_stock()

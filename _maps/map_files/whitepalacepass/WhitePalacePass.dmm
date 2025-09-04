@@ -2341,14 +2341,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/cobblerock,
 /area/rogue/under/tomb/indoors/church)
-"ceZ" = (
-/obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
-/obj/item/clothing/pants/grenzelpants,
-/obj/item/clothing/gloves/angle/grenzel,
-/turf/open/floor/ruinedwood/spiralfade,
-/area/rogue/indoors/soilsons)
 "cfi" = (
 /obj/structure/bed/inn,
 /obj/item/bedsheet/fabric,
@@ -2585,26 +2577,6 @@
 /obj/structure/hotspring/border,
 /turf/open/floor/cobblerock/alt,
 /area/rogue/outdoors/rtfield)
-"cuk" = (
-/obj/structure/table/wood/fancy/royalblack,
-/obj/item/reagent_containers/glass/carafe/gold/redwine{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/glass/cup/golden{
-	pixel_x = 3;
-	pixel_y = 5
-	},
-/obj/item/alch/herb/rosa{
-	pixel_x = -6;
-	pixel_y = -6
-	},
-/obj/item/alch/herb/rosa{
-	pixel_x = 4;
-	pixel_y = -5
-	},
-/turf/open/floor/ruinedwood/chevron,
-/area/rogue/indoors/town/manor)
 "cuQ" = (
 /obj/structure/flora/tree/burnt,
 /obj/effect/falling_leaves,
@@ -2623,15 +2595,6 @@
 	},
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/indoors/town/garrison)
-"cwK" = (
-/obj/structure/closet/crate/crafted_closet/inn/south,
-/obj/item/clothing/gloves/angle/grenzel,
-/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
-/obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/pants/grenzelpants,
-/obj/item/clothing/shoes/grenzelhoft,
-/turf/open/floor/ruinedwood/chevron,
-/area/rogue/indoors/town)
 "cxa" = (
 /obj/structure/window/openclose{
 	dir = 8
@@ -2718,6 +2681,15 @@
 	},
 /turf/open/floor/ruinedwood/chevron,
 /area/rogue/indoors/town)
+"cCa" = (
+/obj/structure/closet/crate/crafted_closet/inn,
+/obj/item/clothing/gloves/angle/grenzel,
+/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
+/obj/item/clothing/pants/grenzelpants,
+/obj/item/clothing/shirt/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
+/turf/open/floor/ruinedwood/darker,
+/area/rogue/indoors/town/shop)
 "cCx" = (
 /turf/closed/wall/mineral/wooddark/horizontal,
 /area/rogue/outdoors/rtfield)
@@ -3205,10 +3177,6 @@
 /obj/structure/flora/grass/bush/tundra,
 /turf/open/floor/snow,
 /area/rogue/outdoors/rtfield/safe)
-"ddk" = (
-/obj/item/alch/herb/rosa,
-/turf/open/water/bath,
-/area/rogue/indoors/town/church)
 "ddy" = (
 /turf/open/floor/carpet/red,
 /area/rogue/indoors/town)
@@ -3295,6 +3263,15 @@
 /obj/structure/fake_machine/scomm/l,
 /turf/open/floor/dirt/road,
 /area/rogue/outdoors/rtfield/safe)
+"djN" = (
+/obj/structure/closet/crate/crafted_closet/inn/south,
+/obj/item/clothing/gloves/angle/grenzel,
+/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
+/obj/item/clothing/shirt/grenzelhoft,
+/obj/item/clothing/pants/grenzelpants,
+/obj/item/clothing/shoes/rare/grenzelhoft,
+/turf/open/floor/ruinedwood/chevron,
+/area/rogue/indoors/town)
 "dkv" = (
 /obj/structure/ladder,
 /turf/open/floor/metal/barograte,
@@ -3396,6 +3373,26 @@
 /obj/structure/hotspring,
 /turf/open/floor/naturalstone,
 /area/rogue/outdoors/rtfield/safe)
+"dpp" = (
+/obj/machinery/light/fueled/wallfire/big_fireplace{
+	pixel_x = -2;
+	pixel_y = 32
+	},
+/obj/effect/decal/carpet/kover_black{
+	pixel_x = 14;
+	pixel_y = -2
+	},
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/reagent_containers/glass/cup/golden{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/alch/herb/rosa{
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/turf/open/floor/ruinedwood/chevron,
+/area/rogue/indoors/town/manor)
 "dpx" = (
 /obj/machinery/light/fueled/torchholder/r,
 /turf/open/floor/tile/kitchen,
@@ -4278,6 +4275,15 @@
 	},
 /turf/open/floor/snow,
 /area/rogue/outdoors/rtfield/safe)
+"eaR" = (
+/obj/structure/closet/crate/drawer,
+/obj/item/book/secret/ledger,
+/obj/item/fake_machine/mastermail{
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/turf/open/floor/ruinedwood/spiral,
+/area/rogue/indoors/town/steward)
 "ecb" = (
 /obj/structure/table/wood/plain_alt,
 /obj/item/contraption/linker,
@@ -4324,6 +4330,14 @@
 	},
 /turf/open/floor/ruinedwood/spiralfade,
 /area/rogue/indoors/town/steward)
+"efC" = (
+/obj/structure/closet/crate/crafted_closet/inn,
+/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
+/obj/item/clothing/shirt/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
+/obj/item/clothing/gloves/angle/grenzel,
+/turf/open/floor/tile/diamond/blue,
+/area/rogue/under/town/basement)
 "efS" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/lord/right{
@@ -4679,6 +4693,10 @@
 /obj/effect/falling_sakura,
 /turf/open/floor/cobblerock/alt,
 /area/rogue/outdoors/rtfield)
+"euV" = (
+/obj/item/fake_machine/drugtrade,
+/turf/open/floor/metal/alt,
+/area/rogue/indoors/town/bath)
 "euY" = (
 /obj/structure/bars/bent,
 /obj/structure/table/wood/reinforced,
@@ -5949,10 +5967,6 @@
 /obj/structure/hotspring/border/two,
 /turf/open/floor/cobblerock/alt,
 /area/rogue/outdoors/rtfield/safe)
-"fLy" = (
-/obj/item/fake_machine/drugtrade,
-/turf/open/floor/metal/alt,
-/area/rogue/indoors/town/bath)
 "fLL" = (
 /obj/structure/bed/hay,
 /obj/structure/bed/hay{
@@ -6364,15 +6378,6 @@
 /obj/structure/stairs/stone,
 /turf/open/floor/tile/diamond,
 /area/rogue/indoors/town/clocktower)
-"ggi" = (
-/obj/structure/closet/crate/drawer,
-/obj/item/book/secret/ledger,
-/obj/item/fake_machine/mastermail{
-	pixel_x = 32;
-	pixel_y = 0
-	},
-/turf/open/floor/ruinedwood/spiral,
-/area/rogue/indoors/town/steward)
 "ghw" = (
 /obj/structure/hotspring/border/twelve,
 /obj/structure/flora/hotspring_rocks/small/four,
@@ -6419,15 +6424,6 @@
 /obj/structure/handcart,
 /turf/open/floor/cobble,
 /area/rogue/indoors/town/church)
-"gjP" = (
-/obj/structure/closet/crate/crafted_closet/inn/south,
-/obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
-/obj/item/clothing/pants/grenzelpants,
-/obj/item/clothing/gloves/angle/grenzel,
-/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
-/turf/open/floor/ruinedwood,
-/area/rogue/indoors/villagegarrison)
 "gjV" = (
 /obj/structure/lever/hidden/keep{
 	redstone_id = "K11"
@@ -6557,6 +6553,15 @@
 /obj/structure/ladder,
 /turf/open/floor/ruinedwood,
 /area/rogue/under/town/basement)
+"grb" = (
+/obj/structure/closet/crate/crafted_closet/inn/south,
+/obj/item/clothing/shirt/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
+/obj/item/clothing/pants/grenzelpants,
+/obj/item/clothing/gloves/angle/grenzel,
+/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
+/turf/open/floor/ruinedwood,
+/area/rogue/indoors/villagegarrison)
 "grk" = (
 /obj/structure/bookcase,
 /obj/item/recipe_book/arcyne,
@@ -8311,15 +8316,6 @@
 	},
 /turf/open/floor/cobblerock,
 /area/rogue/indoors/town/church)
-"hIy" = (
-/obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
-/obj/item/clothing/pants/grenzelpants,
-/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
-/obj/item/clothing/gloves/angle/grenzel,
-/turf/open/floor/ruinedwood/spiral,
-/area/rogue/under/town/basement)
 "hIB" = (
 /obj/structure/fluff/walldeco/med4,
 /turf/closed/wall/mineral/wooddark/vertical,
@@ -8738,14 +8734,6 @@
 /obj/machinery/light/fueled/wallfire/candle/l,
 /turf/open/floor/ruinedwood,
 /area/rogue/indoors/town/shop)
-"iir" = (
-/obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
-/obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
-/obj/item/clothing/gloves/angle/grenzel,
-/turf/open/floor/tile/diamond/blue,
-/area/rogue/under/town/basement)
 "iiA" = (
 /obj/structure/chair/wood/alt/chair3,
 /turf/open/floor/herringbone,
@@ -8893,15 +8881,6 @@
 	climbdiff = 1
 	},
 /area/rogue/outdoors/town/roofs)
-"ioI" = (
-/obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
-/obj/item/clothing/pants/grenzelpants,
-/obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
-/obj/item/clothing/gloves/angle/grenzel,
-/turf/open/floor/ruinedwood,
-/area/rogue/indoors/town/clocktower)
 "ioJ" = (
 /mob/living/carbon/human/species/skeleton/npc/peasant,
 /obj/structure/closet/dirthole/closed,
@@ -9475,16 +9454,6 @@
 	},
 /turf/open/floor/ruinedwood/darker,
 /area/rogue/indoors/villagegarrison)
-"iWj" = (
-/obj/structure/closet/crate/crafted_closet/inn/south,
-/obj/machinery/light/fueled/wallfire/candle/r,
-/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
-/obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/pants/grenzelpants,
-/obj/item/clothing/shoes/grenzelhoft,
-/obj/item/clothing/gloves/angle/grenzel,
-/turf/open/floor/carpet/royalblack,
-/area/rogue/indoors/town)
 "iWu" = (
 /obj/structure/door/window{
 	name = "Inn's Kitchen"
@@ -9910,27 +9879,6 @@
 	},
 /turf/open/water/swamp,
 /area/rogue/under/cavewet)
-"jtq" = (
-/obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/cloak/cape/inquisitor,
-/obj/item/clothing/cloak/forrestercloak/snow,
-/obj/item/clothing/gloves/leather/black,
-/obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
-/obj/item/clothing/pants/grenzelpants,
-/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
-/obj/item/clothing/gloves/angle/grenzel,
-/obj/item/clothing/face/facemask/steel,
-/obj/item/clothing/shirt/undershirt/fancy,
-/obj/item/clothing/head/fancyhat,
-/obj/item/clothing/face/shepherd/clothmask,
-/obj/item/clothing/shoes/nobleboot,
-/obj/item/clothing/shoes/nobleboot/thighboots,
-/obj/item/clothing/shirt/tunic/noblecoat,
-/obj/item/clothing/armor/leather/vest/winterjacket,
-/obj/item/storage/backpack/satchel/black,
-/turf/open/floor/cobble,
-/area/rogue/indoors/town/church/inquisition)
 "jtr" = (
 /obj/structure/table/wood/crafted,
 /obj/item/reagent_containers/glass/bucket/wooden,
@@ -10150,15 +10098,6 @@
 /obj/structure/window/openclose{
 	dir = 4
 	},
-/turf/open/floor/ruinedwood/spiral,
-/area/rogue/indoors/soilsons)
-"jEO" = (
-/obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/key/butcher,
-/obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
-/obj/item/clothing/pants/grenzelpants,
-/obj/item/clothing/gloves/angle/grenzel,
 /turf/open/floor/ruinedwood/spiral,
 /area/rogue/indoors/soilsons)
 "jEU" = (
@@ -10452,6 +10391,15 @@
 /obj/machinery/light/fueled/wallfire/candle,
 /turf/open/floor/tile,
 /area/rogue/indoors/town)
+"jUT" = (
+/obj/structure/closet/crate/crafted_closet/inn,
+/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
+/obj/item/clothing/pants/grenzelpants,
+/obj/item/clothing/shirt/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
+/obj/item/clothing/gloves/angle/grenzel,
+/turf/open/floor/ruinedwood,
+/area/rogue/indoors/town/clocktower)
 "jVB" = (
 /obj/structure/hotspring/border/ten,
 /obj/effect/falling_sakura,
@@ -10693,6 +10641,27 @@
 /obj/effect/mapping_helpers/access/keyset/town/butcher,
 /turf/open/floor/ruinedwood/spiralfade,
 /area/rogue/indoors/soilsons)
+"khE" = (
+/obj/structure/closet/crate/crafted_closet/inn,
+/obj/item/clothing/cloak/cape/inquisitor,
+/obj/item/clothing/cloak/forrestercloak/snow,
+/obj/item/clothing/gloves/leather/black,
+/obj/item/clothing/shirt/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
+/obj/item/clothing/pants/grenzelpants,
+/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
+/obj/item/clothing/gloves/angle/grenzel,
+/obj/item/clothing/face/facemask/steel,
+/obj/item/clothing/shirt/undershirt/fancy,
+/obj/item/clothing/head/fancyhat,
+/obj/item/clothing/face/shepherd/clothmask,
+/obj/item/clothing/shoes/nobleboot,
+/obj/item/clothing/shoes/nobleboot/thighboots,
+/obj/item/clothing/shirt/tunic/noblecoat,
+/obj/item/clothing/armor/leather/vest/winterjacket,
+/obj/item/storage/backpack/satchel/black,
+/turf/open/floor/cobble,
+/area/rogue/indoors/town/church/inquisition)
 "khO" = (
 /obj/structure/table/wood/crafted,
 /turf/open/floor/dirt/road,
@@ -11493,6 +11462,26 @@
 	},
 /turf/open/floor/ruinedwood/chevron,
 /area/rogue/indoors/town/garrison)
+"kQJ" = (
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/reagent_containers/glass/carafe/gold/redwine{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/glass/cup/golden{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/alch/herb/rosa{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/alch/herb/rosa{
+	pixel_x = 4;
+	pixel_y = -5
+	},
+/turf/open/floor/ruinedwood/chevron,
+/area/rogue/indoors/town/manor)
 "kQK" = (
 /obj/structure/table/wood/reinforced,
 /obj/structure/bars/bent,
@@ -11886,15 +11875,6 @@
 	},
 /turf/open/floor/blocks,
 /area/rogue/indoors/town/garrison)
-"lgk" = (
-/obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/gloves/angle/grenzel,
-/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
-/obj/item/clothing/pants/grenzelpants,
-/obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
-/turf/open/floor/ruinedwood/darker,
-/area/rogue/indoors/town/shop)
 "lgM" = (
 /obj/structure/stairs{
 	dir = 8
@@ -13704,26 +13684,6 @@
 	},
 /turf/open/floor/tile/kitchen,
 /area/rogue/indoors/town)
-"mXL" = (
-/obj/machinery/light/fueled/wallfire/big_fireplace{
-	pixel_x = -2;
-	pixel_y = 32
-	},
-/obj/effect/decal/carpet/kover_black{
-	pixel_x = 14;
-	pixel_y = -2
-	},
-/obj/structure/table/wood/fancy/royalblack,
-/obj/item/reagent_containers/glass/cup/golden{
-	pixel_x = -7;
-	pixel_y = 5
-	},
-/obj/item/alch/herb/rosa{
-	pixel_x = 6;
-	pixel_y = 0
-	},
-/turf/open/floor/ruinedwood/chevron,
-/area/rogue/indoors/town/manor)
 "mYU" = (
 /obj/structure/stairs/stone{
 	dir = 1
@@ -14052,41 +14012,6 @@
 "nji" = (
 /turf/closed/wall/mineral/decorstone/moss/red,
 /area/rogue/under/cavelava)
-"nju" = (
-/obj/structure/table/wood/plain,
-/obj/machinery/light/fueled/wallfire/candle/lamp,
-/obj/item/alch/earthdust,
-/obj/item/alch/earthdust{
-	pixel_x = 6;
-	pixel_y = 11
-	},
-/obj/item/alch/herb/rosa{
-	pixel_x = 11;
-	pixel_y = -3
-	},
-/obj/item/alch/tobaccodust,
-/obj/item/alch/tobaccodust{
-	pixel_x = -3;
-	pixel_y = 8
-	},
-/obj/item/alch/silverdust{
-	pixel_x = -12;
-	pixel_y = 4
-	},
-/obj/item/alch/feaudust{
-	pixel_x = 11;
-	pixel_y = 14
-	},
-/obj/item/alch/viscera{
-	pixel_x = -1;
-	pixel_y = 18
-	},
-/obj/item/alch/viscera{
-	pixel_x = -9;
-	pixel_y = -2
-	},
-/turf/open/floor/metal/alt,
-/area/rogue/indoors/town/bath)
 "njz" = (
 /obj/structure/bed/wool,
 /obj/effect/landmark/start/farmer,
@@ -14656,6 +14581,18 @@
 	},
 /turf/open/floor/blocks,
 /area/rogue/indoors/villagegarrison)
+"nLd" = (
+/obj/structure/closet/crate/crafted_closet/inn,
+/obj/item/clothing/shirt/grenzelhoft,
+/obj/item/clothing/shirt/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
+/obj/item/clothing/pants/grenzelpants,
+/obj/item/clothing/pants/grenzelpants,
+/obj/item/clothing/gloves/angle/grenzel,
+/obj/item/clothing/gloves/angle/grenzel,
+/turf/open/floor/ruinedwood/spiral,
+/area/rogue/indoors/soilsons)
 "nMh" = (
 /obj/structure/closet/crate/chest/old_crate,
 /obj/item/ore/tin,
@@ -15335,6 +15272,14 @@
 	},
 /turf/open/floor/naturalstone,
 /area/rogue/under/cavewet)
+"opY" = (
+/obj/structure/closet/crate/crafted_closet/inn,
+/obj/item/clothing/shirt/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
+/obj/item/clothing/pants/grenzelpants,
+/obj/item/clothing/gloves/angle/grenzel,
+/turf/open/floor/ruinedwood/spiralfade,
+/area/rogue/indoors/soilsons)
 "oqr" = (
 /obj/machinery/tanningrack,
 /turf/open/floor/cobblerock,
@@ -15412,6 +15357,15 @@
 /obj/machinery/light/fueled/wallfire/candle/l,
 /turf/open/floor/tile/masonic/inverted,
 /area/rogue/indoors/town)
+"otw" = (
+/obj/structure/closet/crate/crafted_closet/inn,
+/obj/item/clothing/shirt/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
+/obj/item/clothing/pants/grenzelpants,
+/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
+/obj/item/clothing/gloves/angle/grenzel,
+/turf/open/floor/ruinedwood/spiral,
+/area/rogue/under/town/basement)
 "otH" = (
 /obj/structure/fluff/walldeco/vinez/blue,
 /obj/structure/fluff/walldeco/vinez/blue{
@@ -15461,6 +15415,41 @@
 	},
 /turf/open/floor/blocks,
 /area/rogue/under/town/basement)
+"ovC" = (
+/obj/structure/table/wood/plain,
+/obj/machinery/light/fueled/wallfire/candle/lamp,
+/obj/item/alch/earthdust,
+/obj/item/alch/earthdust{
+	pixel_x = 6;
+	pixel_y = 11
+	},
+/obj/item/alch/herb/rosa{
+	pixel_x = 11;
+	pixel_y = -3
+	},
+/obj/item/alch/tobaccodust,
+/obj/item/alch/tobaccodust{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/obj/item/alch/silverdust{
+	pixel_x = -12;
+	pixel_y = 4
+	},
+/obj/item/alch/feaudust{
+	pixel_x = 11;
+	pixel_y = 14
+	},
+/obj/item/alch/viscera{
+	pixel_x = -1;
+	pixel_y = 18
+	},
+/obj/item/alch/viscera{
+	pixel_x = -9;
+	pixel_y = -2
+	},
+/turf/open/floor/metal/alt,
+/area/rogue/indoors/town/bath)
 "ovO" = (
 /obj/item/mould/ingot,
 /turf/open/floor/cobble,
@@ -16335,6 +16324,10 @@
 	},
 /turf/open/floor/snow/patchy,
 /area/rogue/outdoors/rtfield/safe)
+"pmX" = (
+/obj/item/alch/herb/rosa,
+/turf/open/water/bath,
+/area/rogue/indoors/town/church)
 "pnc" = (
 /obj/structure/window/solid,
 /obj/structure/bars/passage/shutter/open{
@@ -18089,6 +18082,19 @@
 /obj/effect/landmark/tram/queued_path/cargo_stop,
 /turf/open/transparent/openspace,
 /area/rogue/outdoors/river)
+"qRH" = (
+/obj/structure/closet/crate/crafted_closet/inn/south,
+/obj/item/clothing/head/rare/grenzelplate,
+/obj/item/clothing/armor/cuirass/grenzelhoft,
+/obj/item/clothing/shoes/boots/rare/grenzelplate,
+/obj/item/clothing/shirt/grenzelhoft,
+/obj/item/clothing/pants/grenzelpants,
+/obj/item/clothing/shoes/rare/grenzelhoft,
+/obj/item/clothing/gloves/rare/grenzelplate,
+/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
+/obj/item/clothing/gloves/angle/grenzel,
+/turf/open/floor/cobble,
+/area/rogue/indoors/lich)
 "qSg" = (
 /obj/machinery/light/fueledstreet/blue/wall{
 	pixel_y = -6
@@ -20069,6 +20075,11 @@
 /obj/item/broom,
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/indoors/town)
+"sIu" = (
+/obj/structure/table/wood/crafted,
+/obj/item/alch/herb/rosa,
+/turf/open/floor/carpet/red,
+/area/rogue/indoors/town/tavern)
 "sJw" = (
 /obj/machinery/light/fueled/wallfire/candle/l,
 /turf/open/floor/concrete,
@@ -20339,18 +20350,6 @@
 	},
 /turf/closed/wall/mineral/decorstone,
 /area/rogue/indoors/town/manor)
-"tcF" = (
-/obj/structure/closet/crate/crafted_closet/inn,
-/obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
-/obj/item/clothing/pants/grenzelpants,
-/obj/item/clothing/pants/grenzelpants,
-/obj/item/clothing/gloves/angle/grenzel,
-/obj/item/clothing/gloves/angle/grenzel,
-/turf/open/floor/ruinedwood/spiral,
-/area/rogue/indoors/soilsons)
 "tcL" = (
 /obj/structure/window/solid,
 /turf/open/floor/ruinedwood,
@@ -21260,6 +21259,30 @@
 /obj/structure/fluff/walldeco/church/line,
 /turf/open/floor/churchrough/purple,
 /area/rogue/indoors/town/church/chapel)
+"tPl" = (
+/obj/structure/table/wood/fancy/purple,
+/obj/item/alch/herb/rosa{
+	pixel_x = 4;
+	pixel_y = -8
+	},
+/obj/item/alch/herb/rosa{
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/glass/carafe/redwine{
+	pixel_x = -12;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/glass/cup/glassware/wineglass{
+	pixel_x = -4;
+	pixel_y = 0
+	},
+/obj/item/reagent_containers/glass/cup/glassware/wineglass{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/turf/open/floor/ruinedwood/chevron,
+/area/rogue/indoors/town)
 "tPF" = (
 /obj/structure/chair/stool,
 /turf/open/floor/ruinedwood/spiral,
@@ -21610,6 +21633,16 @@
 /obj/effect/mapping_helpers/access/locker,
 /turf/open/floor/dirt/road,
 /area/rogue/outdoors/exposed/church)
+"ujs" = (
+/obj/structure/closet/crate/crafted_closet/inn/south,
+/obj/machinery/light/fueled/wallfire/candle/r,
+/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
+/obj/item/clothing/shirt/grenzelhoft,
+/obj/item/clothing/pants/grenzelpants,
+/obj/item/clothing/shoes/rare/grenzelhoft,
+/obj/item/clothing/gloves/angle/grenzel,
+/turf/open/floor/carpet/royalblack,
+/area/rogue/indoors/town)
 "ujD" = (
 /obj/structure/fluff/walldeco/vinez/blue{
 	dir = 10
@@ -22219,30 +22252,6 @@
 /obj/effect/landmark/start/cook,
 /turf/open/floor/tile,
 /area/rogue/indoors/town/tavern)
-"uNX" = (
-/obj/structure/table/wood/fancy/purple,
-/obj/item/alch/herb/rosa{
-	pixel_x = 4;
-	pixel_y = -8
-	},
-/obj/item/alch/herb/rosa{
-	pixel_x = -3;
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/glass/carafe/redwine{
-	pixel_x = -12;
-	pixel_y = 11
-	},
-/obj/item/reagent_containers/glass/cup/glassware/wineglass{
-	pixel_x = -4;
-	pixel_y = 0
-	},
-/obj/item/reagent_containers/glass/cup/glassware/wineglass{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/turf/open/floor/ruinedwood/chevron,
-/area/rogue/indoors/town)
 "uOg" = (
 /obj/structure/chair/wood,
 /obj/machinery/light/fueled/wallfire/candle/blue,
@@ -23477,19 +23486,6 @@
 /obj/item/natural/feather,
 /turf/open/floor/carpet/royalblack,
 /area/rogue/indoors/town/steward)
-"vSD" = (
-/obj/structure/closet/crate/crafted_closet/inn/south,
-/obj/item/clothing/head/rare/grenzelplate,
-/obj/item/clothing/armor/cuirass/grenzelhoft,
-/obj/item/clothing/shoes/boots/rare/grenzelplate,
-/obj/item/clothing/shirt/grenzelhoft,
-/obj/item/clothing/pants/grenzelpants,
-/obj/item/clothing/shoes/grenzelhoft,
-/obj/item/clothing/gloves/rare/grenzelplate,
-/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
-/obj/item/clothing/gloves/angle/grenzel,
-/turf/open/floor/cobble,
-/area/rogue/indoors/lich)
 "vSR" = (
 /obj/machinery/light/fueled/wallfire/candle/l,
 /turf/open/floor/cobblerock,
@@ -25272,6 +25268,15 @@
 	climbdiff = 1
 	},
 /area/rogue/under/cave)
+"xDR" = (
+/obj/structure/closet/crate/crafted_closet/inn,
+/obj/item/key/butcher,
+/obj/item/clothing/shirt/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
+/obj/item/clothing/pants/grenzelpants,
+/obj/item/clothing/gloves/angle/grenzel,
+/turf/open/floor/ruinedwood/spiral,
+/area/rogue/indoors/soilsons)
 "xDT" = (
 /mob/living/simple_animal/hostile/retaliate/goat,
 /turf/open/floor/grass/cold,
@@ -25644,11 +25649,6 @@
 	},
 /turf/open/floor/churchrough/purple,
 /area/rogue/under/cave)
-"xRZ" = (
-/obj/structure/table/wood/crafted,
-/obj/item/alch/herb/rosa,
-/turf/open/floor/carpet/red,
-/area/rogue/indoors/town/tavern)
 "xSj" = (
 /obj/structure/stairs/stone,
 /turf/open/floor/herringbone,
@@ -49470,7 +49470,7 @@ fOf
 kuG
 lvL
 cLj
-iir
+efC
 aHf
 nJJ
 nJJ
@@ -55203,7 +55203,7 @@ sXM
 sXM
 aWs
 tCJ
-jtq
+khE
 aWs
 jRR
 sXM
@@ -80350,12 +80350,12 @@ nJJ
 ffw
 swT
 fHb
-ddk
+pmX
 lPa
 ssL
 oLm
 pOY
-ddk
+pmX
 iwY
 cfT
 tqI
@@ -80755,10 +80755,10 @@ nJJ
 fKb
 fHb
 nRL
-ddk
+pmX
 pOY
 lPa
-ddk
+pmX
 nRL
 fHb
 mZo
@@ -88254,7 +88254,7 @@ vTy
 kRc
 vrU
 obf
-xRZ
+sIu
 kJy
 tiH
 wGg
@@ -88853,7 +88853,7 @@ vTy
 gCz
 vTy
 gCz
-xRZ
+sIu
 jso
 kxK
 gCz
@@ -89262,7 +89262,7 @@ gCz
 gCz
 gCz
 vrU
-xRZ
+sIu
 xkA
 kJy
 oAZ
@@ -89465,7 +89465,7 @@ gCz
 vTy
 vrU
 wtw
-xRZ
+sIu
 kJy
 vTy
 tiH
@@ -124019,9 +124019,9 @@ hje
 hje
 hje
 pXj
-cwK
+djN
 eWY
-uNX
+tPl
 nvI
 ciP
 pXj
@@ -124249,7 +124249,7 @@ ijI
 ijI
 ijI
 ivK
-gjP
+grb
 qAM
 jYu
 vdN
@@ -125243,7 +125243,7 @@ umL
 yeE
 yeE
 oMM
-fLy
+euV
 xzx
 xzx
 xzx
@@ -125647,7 +125647,7 @@ umL
 ulL
 byd
 umL
-nju
+ovC
 ppe
 ppe
 pLf
@@ -126390,7 +126390,7 @@ cJA
 dRO
 ofo
 mos
-hIy
+otw
 voU
 yhf
 mWw
@@ -128463,7 +128463,7 @@ teU
 aKE
 lRz
 iiq
-lgk
+cCa
 vZA
 vKo
 kUY
@@ -133760,7 +133760,7 @@ had
 had
 had
 lJS
-ceZ
+opY
 uHr
 pNJ
 pNJ
@@ -134980,7 +134980,7 @@ pNJ
 psU
 cTp
 rLd
-jEO
+xDR
 cTp
 pNJ
 cTp
@@ -135586,7 +135586,7 @@ wUJ
 hYw
 scL
 rLd
-jEO
+xDR
 cTp
 rLd
 scL
@@ -135780,7 +135780,7 @@ nJJ
 nJJ
 nJJ
 lJS
-tcF
+nLd
 pNJ
 pNJ
 qZt
@@ -136728,7 +136728,7 @@ fuV
 hqJ
 rKP
 xOx
-ioI
+jUT
 rKP
 vRY
 hJC
@@ -138346,7 +138346,7 @@ gBt
 rKP
 ecb
 xOx
-ioI
+jUT
 uQa
 fuV
 ijI
@@ -154910,7 +154910,7 @@ vNk
 ayW
 vNk
 pXj
-iWj
+ujs
 sxi
 iID
 sxi
@@ -164545,7 +164545,7 @@ jYY
 jYY
 jYY
 ucR
-vSD
+qRH
 qhM
 qhM
 qhM
@@ -204152,7 +204152,7 @@ odL
 odL
 pTZ
 fNh
-mXL
+dpp
 dLL
 dLL
 jID
@@ -204354,7 +204354,7 @@ odL
 odL
 uus
 fNh
-cuk
+kQJ
 dLL
 dLL
 jID
@@ -206801,7 +206801,7 @@ moK
 dxL
 mPd
 tZt
-ggi
+eaR
 moK
 ijI
 ijI

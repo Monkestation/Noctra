@@ -14,6 +14,7 @@
 	armor = list("blunt" = 100, "slash" = 100, "stab" = 100,  "piercing" = 100, "fire" = 0, "acid" = 0)
 	clothing_flags = CANT_SLEEP_IN
 	sellprice = 30
+	abstract_type = /obj/item/clothing/shoes/boots/rare
 
 /obj/item/clothing/shoes/boots/rare/elfplate
 	name = "dark elvish plated boots"
@@ -64,7 +65,7 @@
 	item_weight = 7 * STEEL_MULTIPLIER
 
 /obj/item/clothing/shoes/boots/rare/zybanplate
-	name = "zybantean segmented plate boots"
+	name = "zaladyne segmented plate boots"
 	allowed_race = list(SPEC_ID_HUMEN)
 	allowed_sex = list(MALE)
 	desc = "The segmented plate boots are a recent alteration to the Zaladin Elite, \

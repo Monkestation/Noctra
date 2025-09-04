@@ -2803,46 +2803,6 @@
 /obj/item/weapon/sword/iron,
 /turf/open/floor/hexstone,
 /area/rogue/indoors/vampire_manor)
-"qc" = (
-/obj/item/clothing/shoes/boots,
-/obj/item/clothing/shoes/boots,
-/obj/item/clothing/shoes/boots,
-/obj/item/clothing/shoes/boots/leather,
-/obj/item/clothing/shoes/boots/leather,
-/obj/item/clothing/shoes/boots/leather,
-/obj/item/clothing/shoes/gladiator,
-/obj/item/clothing/shoes/gladiator,
-/obj/item/clothing/shoes/gladiator,
-/obj/item/clothing/shoes/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
-/obj/item/clothing/shoes/grenzelhoft,
-/obj/item/clothing/shoes/nobleboot,
-/obj/item/clothing/shoes/nobleboot,
-/obj/item/clothing/shoes/nobleboot,
-/obj/item/clothing/shoes/ridingboots,
-/obj/item/clothing/shoes/ridingboots,
-/obj/item/clothing/shoes/ridingboots,
-/obj/item/clothing/shoes/sandals,
-/obj/item/clothing/shoes/sandals,
-/obj/item/clothing/shoes/sandals,
-/obj/item/clothing/shoes/shalal,
-/obj/item/clothing/shoes/shalal,
-/obj/item/clothing/shoes/shalal,
-/obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/shoes/shortboots,
-/obj/item/clothing/shoes/simpleshoes,
-/obj/item/clothing/shoes/simpleshoes,
-/obj/item/clothing/shoes/simpleshoes,
-/obj/item/clothing/shoes/simpleshoes/buckle,
-/obj/item/clothing/shoes/simpleshoes/buckle,
-/obj/item/clothing/shoes/simpleshoes/buckle,
-/obj/structure/closet/crate/crafted_closet/dark{
-	name = "Common Shoes"
-	},
-/turf/open/floor/wood,
-/area/rogue/indoors)
 "qf" = (
 /obj/effect/decal/cobbleedge/alt{
 	dir = 4
@@ -3835,6 +3795,14 @@
 /obj/effect/decal/cobbleedge/alt,
 /turf/open/floor/dirt,
 /area/rogue/outdoors/bog/inhumen_camp)
+"wp" = (
+/obj/structure/table/wood{
+	dir = 4;
+	icon_state = "largetable"
+	},
+/obj/item/clothing/face/skullmask,
+/turf/open/floor/carpet,
+/area/rogue/indoors/vampire_manor)
 "ws" = (
 /obj/structure/closet/dirthole/closed,
 /turf/open/floor/dirt,
@@ -4660,6 +4628,28 @@
 "CA" = (
 /obj/item/bin/water/gross,
 /turf/open/floor/blocks,
+/area/rogue/indoors/vampire_manor)
+"CD" = (
+/obj/structure/closet/crate/crafted_closet/inn,
+/obj/item/clothing/armor/leather/jacket/hand,
+/obj/item/clothing/armor/leather/jacket/leathercoat/black,
+/obj/item/clothing/shirt/grenzelhoft,
+/obj/item/clothing/shirt/tunic/noblecoat,
+/obj/item/clothing/shirt/undershirt/fancy,
+/obj/item/clothing/head/fancyhat,
+/obj/item/clothing/pants/grenzelpants,
+/obj/item/clothing/shoes/boots,
+/obj/item/clothing/shoes/nobleboot,
+/obj/item/clothing/head/helmet/skullcap/grenzelhoft,
+/obj/item/clothing/cloak/cape,
+/obj/item/clothing/cloak/raincloak/furcloak,
+/obj/item/clothing/shirt/tunic/colored/black,
+/obj/item/clothing/gloves/angle/grenzel,
+/obj/item/clothing/gloves/angle,
+/obj/item/clothing/shirt/dress/silkdress/colored/black,
+/obj/item/clothing/armor/gambeson/heavy/winterdress,
+/obj/item/clothing/armor/gambeson/heavy/dress,
+/turf/open/floor/carpet,
 /area/rogue/indoors/vampire_manor)
 "CE" = (
 /obj/item/weapon/sword,
@@ -5774,6 +5764,46 @@
 /obj/structure/flora/grass,
 /turf/open/floor/dirt,
 /area/rogue/outdoors/woods_safe)
+"Lm" = (
+/obj/item/clothing/shoes/boots,
+/obj/item/clothing/shoes/boots,
+/obj/item/clothing/shoes/boots,
+/obj/item/clothing/shoes/boots/leather,
+/obj/item/clothing/shoes/boots/leather,
+/obj/item/clothing/shoes/boots/leather,
+/obj/item/clothing/shoes/gladiator,
+/obj/item/clothing/shoes/gladiator,
+/obj/item/clothing/shoes/gladiator,
+/obj/item/clothing/shoes/rare/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
+/obj/item/clothing/shoes/rare/grenzelhoft,
+/obj/item/clothing/shoes/nobleboot,
+/obj/item/clothing/shoes/nobleboot,
+/obj/item/clothing/shoes/nobleboot,
+/obj/item/clothing/shoes/ridingboots,
+/obj/item/clothing/shoes/ridingboots,
+/obj/item/clothing/shoes/ridingboots,
+/obj/item/clothing/shoes/sandals,
+/obj/item/clothing/shoes/sandals,
+/obj/item/clothing/shoes/sandals,
+/obj/item/clothing/shoes/shalal,
+/obj/item/clothing/shoes/shalal,
+/obj/item/clothing/shoes/shalal,
+/obj/item/clothing/shoes/shortboots,
+/obj/item/clothing/shoes/shortboots,
+/obj/item/clothing/shoes/shortboots,
+/obj/item/clothing/shoes/shortboots,
+/obj/item/clothing/shoes/simpleshoes,
+/obj/item/clothing/shoes/simpleshoes,
+/obj/item/clothing/shoes/simpleshoes,
+/obj/item/clothing/shoes/simpleshoes/buckle,
+/obj/item/clothing/shoes/simpleshoes/buckle,
+/obj/item/clothing/shoes/simpleshoes/buckle,
+/obj/structure/closet/crate/crafted_closet/dark{
+	name = "Common Shoes"
+	},
+/turf/open/floor/wood,
+/area/rogue/indoors)
 "Lo" = (
 /obj/item/clothing/head/helmet/leather/inquisitor,
 /obj/structure/mannequin/male,
@@ -15479,7 +15509,7 @@ bO
 bZ
 ci
 cr
-Rh
+wp
 cr
 cz
 bO
@@ -16650,7 +16680,7 @@ Iw
 yE
 bS
 xI
-ME
+CD
 yE
 yE
 bV
@@ -20856,7 +20886,7 @@ ag
 aw
 Wd
 hP
-qc
+Lm
 ba
 ba
 fl

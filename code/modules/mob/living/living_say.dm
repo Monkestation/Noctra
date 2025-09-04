@@ -378,6 +378,10 @@
 			if(is_subtle_message && subtle_noghost && isobserver(hearing_movable))
 				continue
 
+		var/keenears_range_bonus = 0
+		if(HAS_TRAIT(hearing_movable, TRAIT_KEENEARS))
+			keenears_range_bonus = 5
+
 		if(!ignore_z && z_message_type == Z_MODE_ONE_CEILING && hearing_movable.z != z)
 			var/listener_has_ceiling = TRUE
 			var/turf/listener_turf = get_turf(hearing_movable)
@@ -391,7 +395,7 @@
 			if(listener_has_ceiling && speaker_has_ceiling)	//Both have a ceiling, on different z-levels -- no hearing at all
 				continue
 
-		if(eavesdrop_range && get_dist(source, hearing_movable) > message_range && !(the_dead[hearing_movable]))
+		if(eavesdrop_range && get_dist(source, hearing_movable) > message_range + keenears_range_bonus && !(the_dead[hearing_movable]))
 			hearing_movable.Hear(eavesrendered, src, message_language, eavesdropping, null, spans, message_mods, original_message)
 		else
 			hearing_movable.Hear(rendered, src, message_language, message, null, final_spans, message_mods, original_message)

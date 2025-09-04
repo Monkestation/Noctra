@@ -65,5 +65,52 @@
                 "bugfix": "Assassins beggar and servants are not foreigners anymore."
             }
         ]
+    },
+    "2025-09-03": {
+        "SarmentiCampbell": [
+            {
+                "rscadd": "Added a new type of ear to rakshari, allowing them to hear whisper from farther."
+            }
+        ],
+        "Wouju": [
+            {
+                "rscadd": "Repairing clothes with a needle now consumes thread at a % chance, based on your skill. Blessed needle cannot repair clothes"
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "rscadd": "Saw Dust and Stone Chippings can be cleaned like Vomit"
+            }
+        ],
+        "grungussuss": [
+            {
+                "rscadd": "Added more missing crafting recipes"
+            }
+        ]
+    },
+    "2025-09-04": {
+        "wgtjunior743": [
+            {
+                "bugfix": "Only weapon intents can proc the silver effect"
+            }
+        ],
+        "Wouju": [
+            {
+                "rscadd": "Tweaked the volume of a lot of reagent containers, shouldn't be noticeable changes"
+            },
+            {
+                "rscadd": "However, soups and stews now require 25 units of water instead of 33, so you can make 4 \\\"batches\\\" of stew in one full pot"
+            }
+        ],
+        "Just-Sim": [
+            {
+                "bugfix": "Catbox not being recognized as an image host."
+            }
+        ],
+        "SarmentiCampbell": [
+            {
+                "qol": "Removed Moondusts, Ozium and Pure Moondust's ability to flash your screen at the start of the reagent metabolization."
+            }
+        ]
     }
 }

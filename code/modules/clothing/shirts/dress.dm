@@ -140,7 +140,6 @@
 	sleevetype = null
 	sleeved = null
 
-
 /obj/item/clothing/shirt/dress/gown
 	icon = 'icons/roguetown/clothing/shirts_gown.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/shirts_gown.dmi'

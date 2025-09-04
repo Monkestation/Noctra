@@ -150,6 +150,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/total_transferred = 0
 	var/chem_volume = 30
 	var/list/list_reagents = list(/datum/reagent/drug/nicotine = 15)
+	abstract_type = /obj/item/clothing/face/cigarette
 
 /obj/item/clothing/face/cigarette/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer.</span>")
@@ -340,6 +341,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	chem_volume = 60
 	list_reagents = null
 	muteinmouth = FALSE
+	abstract_type = /obj/item/clothing/face/cigarette/rollie
 
 /obj/item/clothing/face/cigarette/rollie/Initialize()
 	. = ..()

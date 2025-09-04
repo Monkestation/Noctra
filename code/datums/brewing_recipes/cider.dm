@@ -1,7 +1,7 @@
 /datum/brewing_recipe/cider
 	name = "Apple Cider"
 	reagent_to_brew = /datum/reagent/consumable/ethanol/cider
-	needed_reagents = list(/datum/reagent/water = 90)
+	needed_reagents = list(/datum/reagent/water = 100)
 	needed_crops = list(/obj/item/reagent_containers/food/snacks/produce/fruit/apple = 3)
 	brewed_amount = 3
 	brew_time = 2.5 MINUTES
