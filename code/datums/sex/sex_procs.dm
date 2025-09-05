@@ -224,4 +224,9 @@
 	return TRUE
 
 /mob/living/proc/do_onomatopoeia()
-	balloon_alert_to_viewers(src, "Plap!", alpha = rand(100, 200), x_offset = rand(-15, 15), y_offset = rand(0, 25))
+	balloon_alert_to_viewers(src, "Plap!", alpha = rand(100, 200), x_offset = rand(-15, 15), y_offset = rand(0, 25), size = 0.8)
+
+/mob/living/proc/show_hearts()
+	for(var/i in 1 to rand(1, 3))
+		new /obj/effect/temp_visual/heart/erp(get_turf(src))
+
