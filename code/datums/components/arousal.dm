@@ -157,6 +157,8 @@
 
 /datum/component/arousal/proc/after_ejaculation(intimate = FALSE, mob/living/carbon/human/user, mob/living/carbon/human/target)
 	SEND_SIGNAL(user, COMSIG_SEX_SET_AROUSAL, 20)
+	SEND_SIGNAL(user, COMSIG_SEX_CLIMAX)
+
 	charge = max(0, charge - CHARGE_FOR_CLIMAX)
 
 	user.add_stress(/datum/stressevent/cumok)
