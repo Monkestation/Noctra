@@ -1,6 +1,6 @@
 /datum/sex_action/sex/other/vagina
 	name = "Ride them"
-	hole_id = "vagina"
+	hole_id = ORGAN_SLOT_VAGINA
 	stamina_cost = 1.0
 	aggro_grab_instead_same_tile = FALSE
 

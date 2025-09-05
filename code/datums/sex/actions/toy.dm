@@ -2,7 +2,7 @@
 /datum/sex_action/insert_toy
 	name = "Insert Toy"
 	requires_hole_storage = TRUE
-	hole_id = "vagina"
+	hole_id = ORGAN_SLOT_VAGINA
 	stored_item_type = /obj/item/toy
 	continous = FALSE
 
