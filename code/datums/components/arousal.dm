@@ -123,10 +123,17 @@
 		turf.add_liquid(/datum/reagent/consumable/milk, 5)
 		after_ejaculation(FALSE, parent)
 	else
-		var/return_type = highest_priority.current_action.handle_climax_message(highest_priority.user, highest_priority.target)
-		handle_climax(return_type, highest_priority.user, highest_priority.target)
-		if(highest_priority.current_action.knot_on_finish)
-			highest_priority.current_action.try_knot_on_climax(mob, highest_priority.target)
+		var/datum/sex_action/action = SEX_ACTION(highest_priority.current_action)
+		var/return_type = action.handle_climax_message(highest_priority.user, highest_priority.target)
+		if(!return_type)
+			mob.visible_message(span_love("[mob] makes a mess!"))
+			var/turf/turf = get_turf(parent)
+			turf.add_liquid(/datum/reagent/consumable/milk, 5)
+			after_ejaculation(FALSE, parent)
+		else
+			handle_climax(return_type, highest_priority.user, highest_priority.target)
+		if(action.knot_on_finish)
+			action.try_knot_on_climax(mob, highest_priority.target)
 
 
 /datum/component/arousal/proc/handle_climax(climax_type, mob/living/carbon/human/user, mob/living/carbon/human/target)
@@ -150,6 +157,8 @@
 
 /datum/component/arousal/proc/after_ejaculation(intimate = FALSE, mob/living/carbon/human/user, mob/living/carbon/human/target)
 	SEND_SIGNAL(user, COMSIG_SEX_SET_AROUSAL, 20)
+	SEND_SIGNAL(user, COMSIG_SEX_CLIMAX)
+
 	charge = max(0, charge - CHARGE_FOR_CLIMAX)
 
 	user.add_stress(/datum/stressevent/cumok)
