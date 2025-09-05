@@ -229,6 +229,9 @@
 	show_erp_preferences(user) // Refresh the UI
 
 /datum/preferences/proc/apply_character_kinks(mob/living/carbon/human/character)
+	if(!length(erp_preferences))
+		validate_erp_preferences()
+
 	var/list/kink_prefs = erp_preferences["kinks"]
 	if(!kink_prefs)
 		return
