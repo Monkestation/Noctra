@@ -350,30 +350,8 @@
 /atom/movable/screen/act_intent/Click(location, control, params)
 	usr.a_intent_change(INTENT_HOTKEY_RIGHT)
 
-/atom/movable/screen/act_intent/segmented/Click(location, control, params)
-	if(usr.client.prefs.toggles & INTENT_STYLE)
-		var/list/modifiers = params2list(params)
-		var/_x = text2num(LAZYACCESS(modifiers, ICON_X))
-		var/_y = text2num(LAZYACCESS(modifiers, ICON_Y))
-
-		if(_x<=16 && _y<=16)
-			usr.a_intent_change(INTENT_HARM)
-
-		else if(_x<=16 && _y>=17)
-			usr.a_intent_change(INTENT_HELP)
-
-		else if(_x>=17 && _y<=16)
-			usr.a_intent_change(INTENT_GRAB)
-
-		else if(_x>=17 && _y>=17)
-			usr.a_intent_change(INTENT_DISARM)
-	else
-		return ..()
-
 /atom/movable/screen/act_intent/proc/switch_intent(index as num)
 	return
-
-
 
 /atom/movable/screen/act_intent/rogintent
 	name = ""
@@ -464,17 +442,16 @@
 
 	user.playsound_local(user, 'sound/misc/click.ogg', 100)
 
-	if(usr.client.prefs.toggles & INTENT_STYLE)
-		var/_x = text2num(LAZYACCESS(modifiers, ICON_X))
-		var/_y = text2num(LAZYACCESS(modifiers, ICON_Y))
-		var/clicked = get_index_at_loc(_x, _y)
-		if(!clicked)
+	var/_x = text2num(LAZYACCESS(modifiers, ICON_X))
+	var/_y = text2num(LAZYACCESS(modifiers, ICON_Y))
+	var/clicked = get_index_at_loc(_x, _y)
+	if(!clicked)
+		return
+	if(LAZYACCESS(modifiers, LEFT_CLICK))
+		if(LAZYACCESS(modifiers, SHIFT_CLICKED))
+			user.examine_intent(clicked, FALSE)
 			return
-		if(LAZYACCESS(modifiers, LEFT_CLICK))
-			if(LAZYACCESS(modifiers, SHIFT_CLICKED))
-				user.examine_intent(clicked, FALSE)
-				return
-		user.rog_intent_change(clicked)
+	user.rog_intent_change(clicked)
 
 /atom/movable/screen/act_intent/rogintent/proc/get_index_at_loc(xl, yl)
 /*	if(xl<=64)

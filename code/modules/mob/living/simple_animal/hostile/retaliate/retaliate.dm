@@ -191,7 +191,7 @@
 		addtimer(CALLBACK(src, PROC_REF(return_action)), 3 SECONDS)
 */
 
-/mob/living/simple_animal/hostile/retaliate/UnarmedAttack(atom/A)
+/mob/living/simple_animal/hostile/retaliate/UnarmedAttack(atom/A, proximity_flag, params, atom/source)
 	. = ..()
 	if(!is_type_in_list(A, food_type))
 		return
@@ -203,5 +203,5 @@
 	playsound(src,'sound/misc/eat.ogg', rand(30,60), TRUE)
 	target = null
 	qdel(A)
-	SEND_SIGNAL(src, COMSIG_MOB_FEED, A, 30)
+	SEND_SIGNAL(src, COMSIG_MOB_FEED, A, 30, source)
 	return TRUE

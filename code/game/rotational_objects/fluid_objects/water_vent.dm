@@ -86,7 +86,13 @@
 		var/obj/structure/water_pipe/picked_provider = pick(input.providers)
 		picked_provider?.taking_from?.use_water_pressure(taking_pressure)
 		if(!istype(pipe_turf, /turf/open/water) && !ispath(reagent, /datum/reagent/water))
-			pipe_turf.add_liquid(reagent, taking_pressure)
+			var/datum/reagent/add_reagent = reagent
+			var/send_pressure = taking_pressure
+			if(ispath(reagent, /datum/reagent/steam))
+				add_reagent = /datum/reagent/water
+				send_pressure *= 0.25
+				send_pressure = round(send_pressure, 1)
+			pipe_turf.add_liquid(add_reagent, send_pressure)
 
 
 

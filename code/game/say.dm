@@ -116,7 +116,11 @@ GLOBAL_LIST_INIT(freqtospan, list(
 					namepart = "Unknown [(L.gender == FEMALE) ? "Woman" : "Man"]"
 				else
 					namepart = "Unknown"
+<<<<<<< HEAD
 			spanpart1 = "<span class='smallyell[collective_span]'>"
+=======
+			spanpart1 = "<span class='smallyell'>"
+>>>>>>> vanderlin/main
 
 	var/languageicon = ""
 	var/datum/language/D = GLOB.language_datum_instances[message_language]

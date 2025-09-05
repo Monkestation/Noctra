@@ -112,5 +112,52 @@
                 "qol": "Removed Moondusts, Ozium and Pure Moondust's ability to flash your screen at the start of the reagent metabolization."
             }
         ]
+<<<<<<< HEAD
     }
 }
+=======
+    },
+    "2025-09-05": {
+        "7erracotta": [
+            {
+                "rscadd": "three new weapons and their smithing recipes"
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "Fixed leyline toggle verb"
+            },
+            {
+                "rscadd": "Added basic prefs functionality to the prefs window, click the button in the top right. Currently supports various sound settings, be voice and maptext toggles for balloon alerts and runechat."
+            }
+        ],
+        "dwasint": [
+            {
+                "rscadd": "You can now use Triumphs to influence migrant waves"
+            }
+        ],
+        "grungussuss": [
+            {
+                "rscadd": "Added the \\\"Silence!!\\\" command to the throne."
+            },
+            {
+                "bugfix": "the throne will no longer say you are not worthy, if you are."
+            },
+            {
+                "bugfix": "key lock/unlocks show the key afterimage like they were supposed to"
+            },
+            {
+                "bugfix": "lying down will no longer forever displace you by 6 pixels down"
+            },
+            {
+                "bugfix": "biting people with an item in hand will no longer play the item_attack_animation"
+            }
+        ],
+        "Telvayne": [
+            {
+                "bugfix": "corrected a missing # that was causing mirrors to set hair color to #000000"
+            }
+        ]
+    }
+}
+>>>>>>> vanderlin/main

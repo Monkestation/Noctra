@@ -22,7 +22,7 @@
 	. = ..()
 	if(can_connect_wires)
 		update_wire_connections()
-	update_overlays()
+	update_appearance()
 
 /obj/structure/redstone/Destroy()
 	. = ..()
@@ -31,7 +31,7 @@
 		component.connected_components -= src
 		component.clear_power_source(src) // Remove us as a power source
 		component.update_wire_connections()
-		component.update_overlays()
+		component.update_appearance()
 
 /obj/structure/redstone/proc/update_wire_connections()
 	if(!can_connect_wires)
@@ -59,6 +59,7 @@
 				if(component.can_connect_to(src, reverse_dir))
 					component.wire_connections["[reverse_dir]"] = 1
 					component.connected_components |= src
+					component.update_appearance()
 
 /obj/structure/redstone/proc/can_connect_to(obj/structure/redstone/other, dir)
 	return TRUE // Override in subclasses for specific connection rules
@@ -69,31 +70,46 @@
 
 	updating_power = TRUE
 
-	// Update power source tracking
 	if(source)
 		if(new_power_level > 0)
-			power_sources[ref(source)] = new_power_level
+			power_sources[ref(source)] = source
 		else
 			power_sources -= ref(source)
 	else
-		// Direct power setting (like from torches or manual activation)
-		power_sources["direct"] = new_power_level
+		if(new_power_level > 0)
+			power_sources["direct"] = new_power_level
+		else
+			power_sources -= "direct"
 
-	// Calculate the maximum power from all sources
 	var/max_power = 0
-	for(var/source_key in power_sources)
-		max_power = max(max_power, power_sources[source_key])
 
-	// Only update if power actually changed
+	// Check direct power
+	if("direct" in power_sources)
+		max_power = max(max_power, power_sources["direct"])
+
+	for(var/source_key in power_sources)
+		if(source_key == "direct")
+			continue
+		var/obj/structure/redstone/source_obj = power_sources[source_key]
+		if(source_obj && !QDELETED(source_obj))
+			var/received_power = calculate_received_power(source_obj)
+			max_power = max(max_power, received_power)
+		else
+			power_sources -= source_key
+
 	if(max_power != power_level)
 		power_level = max_power
 		powered = (power_level > 0)
-		update_overlays()
-
-		// Propagate power to connected components (but not back to sources)
+		update_appearance()
 		propagate_power(user, source)
 
 	updating_power = FALSE
+
+
+/obj/structure/redstone/proc/calculate_received_power(obj/structure/redstone/source_obj)
+	// Default: receive the source's current power level
+	return source_obj.power_level
+
 
 /obj/structure/redstone/proc/propagate_power(mob/user, obj/structure/redstone/source)
 	// Default behavior: send power in all directions
@@ -171,10 +187,22 @@
 	else
 		power_sources -= "direct"
 
-	// Recalculate power level
 	var/max_power = 0
+
+	// Check direct power
+	if("direct" in power_sources)
+		max_power = max(max_power, power_sources["direct"])
+
+	// Check object sources by looking at their CURRENT power level
 	for(var/source_key in power_sources)
-		max_power = max(max_power, power_sources[source_key])
+		if(source_key == "direct")
+			continue
+		var/obj/structure/redstone/source_obj = power_sources[source_key]
+		if(source_obj && !QDELETED(source_obj))
+			var/received_power = calculate_received_power(source_obj)
+			max_power = max(max_power, received_power)
+		else
+			power_sources -= source_key
 
 	if(max_power != power_level)
 		set_power(max_power, null, null)
@@ -182,14 +210,11 @@
 /obj/structure/redstone/redstone_triggered(mob/user) //this is essentially legacy code
 	set_power(15, user, null) // External trigger acts as temporary power source
 
-	// Auto-shutoff after brief moment for button-like behavior
 	spawn(2)
 		clear_power_source(null)
 
 /obj/structure/redstone/update_overlays()
 	. = ..()
-	cut_overlays()
-
 	if(!can_connect_wires)
 		return
 
@@ -201,8 +226,17 @@
 
 	if(wire_pattern)
 		var/mutable_appearance/wire_overlay = mutable_appearance(icon, "wire_[wire_pattern]")
+		wire_overlay.layer = layer - 0.01
 		if(powered)
 			wire_overlay.color = "#FF0000" // Red when powered
 		else
 			wire_overlay.color = "#8B4513" // Brown when unpowered
-		overlays += wire_overlay
+		. += wire_overlay
+	else
+		var/mutable_appearance/wire_overlay = mutable_appearance(icon, "wire")
+		wire_overlay.layer = layer - 0.01
+		if(powered)
+			wire_overlay.color = "#FF0000" // Red when powered
+		else
+			wire_overlay.color = "#8B4513" // Brown when unpowered
+		. += wire_overlay

@@ -145,3 +145,7 @@
 	smeltresult = /obj/item/ingot/silver
 	item_weight = 12 * SILVER_MULTIPLIER
 	sellprice = VALUE_SILVER_ITEM * 3
+
+/obj/item/clothing/armor/plate/full/silver/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
