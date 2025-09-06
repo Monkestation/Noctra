@@ -12,6 +12,8 @@
 	var/list/last_used = list()
 
 /datum/enchantment/frostbite/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+	if(!proximity_flag)
+		return
 	if(world.time < (src.last_used[source] + (20 SECONDS)))
 		return
 

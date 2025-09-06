@@ -78,13 +78,12 @@
 		var/knowledgable = (willroll - bloodroll) >= 3
 
 		if(!powerful)
-			for(var/obj/item/clothing/neck/psycross/silver/I in target.contents) //Subpath fix.
+			if(istype(target.wear_neck, /obj/item/clothing/neck/psycross/silver) || istype(target.wear_wrists, /obj/item/clothing/neck/psycross/silver) ) //Subpath fix.
 				var/extra = "!"
 				if(knowledgable)
 					extra = ", I sense the caster was [owner]!"
 				to_chat(target, "<font color='white'>The silver psycross shines and protect me from unholy magic[extra]</font>")
 				to_chat(owner, span_userdanger("[target] has my BANE! It causes me to fail to ensnare their mind!"))
-				break
 
 		if(bloodroll >= willroll)
 			target.drowsyness = min(target.drowsyness + 50, 150)

@@ -83,6 +83,10 @@
 	icon_state = "silverplaque"
 	sellprice = 30
 
+/obj/item/storage/belt/leather/plaquesilver/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
+
 /obj/item/storage/belt/leather/steel
 	name = "steel belt"
 	desc = "A belt with a steel plate on its front."
@@ -285,6 +289,7 @@
 	item_state = "artibackpack"
 	resistance_flags = FIRE_PROOF
 	sewrepair = FALSE
+	//for those curious, yes the artibackpack preserves organs and food. Check _organ.dm and snacks.dm
 
 /obj/item/storage/backpack/satchel/surgbag
 	name = "surgery bag"

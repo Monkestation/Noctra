@@ -35,6 +35,7 @@
 			pants = /obj/item/clothing/pants/platelegs/zizo
 			shoes = /obj/item/clothing/shoes/boots/armor/zizo
 			H.cmode_music = 'sound/music/cmode/antag/combat_cult.ogg'
+			H.grant_language(/datum/language/undead)
 		if(/datum/patron/inhumen/matthios)
 			head = /obj/item/clothing/head/helmet/heavy/matthios
 			armor = /obj/item/clothing/armor/plate/full/matthios

@@ -64,21 +64,25 @@
 	var/freshness = 0
 	var/recipe_quality_modifier = 1.0
 
-/datum/quality_calculator/cooking/New(base_qual = 0, mat_qual = 0, skill_qual = 0, perf_qual = 0, diff_mod = 0, components = 1, fresh = 0, recipe_mod = 1.0)
+/datum/quality_calculator/cooking/New(base_qual = 0, mat_qual = 0, skill_qual = 0, perf_qual = 0, diff_mod = 0, components = 1, reagent_qual = 0, fresh = 0, recipe_mod = 1.0)
 	freshness = fresh
 	recipe_quality_modifier = recipe_mod
 	..()
+
 
 /datum/quality_calculator/cooking/calculate_final_quality()
 	var/cooking_skill = skill_quality
 	var/ingredient_quality = material_quality
 	var/skill_factor = cooking_skill / 6
 	var/freshness_factor = min(1, freshness / (5 MINUTES))
+
 	var/skill_component = skill_factor * 1.5
-	var/ingredient_component = ingredient_quality * 0.5
+	var/ingredient_component = ingredient_quality * 0.4
+	var/reagent_component = reagent_quality * 0.3
 	var/freshness_component = freshness_factor * 0.5
 	var/modifier_component = recipe_quality_modifier * 0.5
-	var/final_quality = 1 + skill_component + ingredient_component + freshness_component + modifier_component
+
+	var/final_quality = 1 + skill_component + ingredient_component + reagent_component + freshness_component + modifier_component
 
 	// Apply skill cap and absolute maximum
 	var/skill_cap = 1 + cooking_skill

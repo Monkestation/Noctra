@@ -34,6 +34,7 @@
 	find_largest_metal()
 
 /datum/reagent/molten_metal/on_merge(list/incoming_data)
+	. = ..()
 	if(!length(incoming_data))
 		return
 	name = "Molten Metals"

@@ -85,6 +85,10 @@
 	desc = "A custom made silver penance mask, created especially for the Adepts of the Inquisitorial Lodge."
 	max_integrity = 300
 
+/obj/item/clothing/face/facemask/silver/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
+
 /obj/item/clothing/face/facemask/shadowfacemask
 	name = "anthraxi war mask"
 	desc = "A metal mask resembling a spider's face. Such a visage haunts many an older dark elf's nitemares - while the younger generation simply scoffs at such relics."

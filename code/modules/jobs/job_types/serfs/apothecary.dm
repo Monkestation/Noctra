@@ -4,7 +4,7 @@
 	You are tasked with mixing tinctures and supplying the town and Feldsher with medicine for pain... or pleasure. \
 	For a price, of course. \
 	You have been known to kill men who cross you or your work-partner."
-	department_flag = NOBLEMEN
+	department_flag = SERFS
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	display_order = JDO_APOTHECARY
 	faction = FACTION_TOWN
@@ -19,7 +19,7 @@
 	cmode_music = 'sound/music/cmode/nobility/combat_physician.ogg'
 
 /datum/outfit/job/apothecary
-	job_bitflag = BITFLAG_ROYALTY | BITFLAG_CONSTRUCTOR
+	job_bitflag = BITFLAG_CONSTRUCTOR
 
 /datum/outfit/job/apothecary/pre_equip(mob/living/carbon/human/H)
 	..()

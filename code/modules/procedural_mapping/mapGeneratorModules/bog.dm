@@ -29,6 +29,7 @@
 							/obj/structure/flora/grass/swampweed = 30,
 							/obj/item/grown/log/tree/stick = 3,
 							/obj/structure/flora/grass/maneater/real = 2,
+							/obj/structure/essence_node = 0.1,
 							/obj/structure/innocent_bush = 1,
 							)
 	spawnableTurfs = list(/turf/open/water/swamp = 5)

@@ -185,7 +185,7 @@
 /*-----------------------*/
 
 /datum/browser/modal/listpicker
-	var/valueslist = list()
+	var/list/valueslist = list()
 
 /datum/browser/modal/listpicker/New(User,Message,Title,Button1="Ok",Button2,Button3,StealFocus = 1, Timeout = FALSE,list/values,inputtype="checkbox", width, height, slidecolor)
 	if (!User)
@@ -198,11 +198,13 @@
 			if(!i["allowed_edit"])
 				div_slider = "locked"
 			output += {"<li>
+						<div style='width: 100%'>
 						<label class="switch">
 							<input type="[inputtype]" value="1" name="[i["name"]]"[i["checked"] ? " checked" : ""][i["allowed_edit"] ? "" : " onclick='return false' onkeydown='return false'"]>
 								<div class="slider [div_slider ? "[div_slider]" : ""]"></div>
-									<span>[i["name"]]</span>
 						</label>
+						<span>[i["name"]]</span>
+						</div>
 						</li>"}
 	else
 		for (var/i in values)

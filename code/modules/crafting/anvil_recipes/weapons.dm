@@ -183,6 +183,27 @@
 	createditem_extra = 1
 	craftdiff = 0
 
+<<<<<<< HEAD
+=======
+/datum/anvil_recipe/weapons/iron/ada
+	name = "Iron Ada"
+	recipe_name = "a Iron Ada"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	created_item = /obj/item/weapon/sword/scimitar/ada/iron
+
+/datum/anvil_recipe/weapons/iron/lakkarikhopesh
+	name = "Iron Khopesh"
+	recipe_name = "a Iron Khopesh"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	created_item = /obj/item/weapon/sword/scimitar/lakkarikhopesh/iron
+
+/datum/anvil_recipe/weapons/iron/sengese
+	name = "Iron Sengese"
+	recipe_name = "a Iron Sengese"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	created_item = /obj/item/weapon/sword/scimitar/sengese/iron
+
+>>>>>>> vanderlin/main
 /datum/anvil_recipe/weapons/iron/jile
 	name = "2x Iron Jile Daggers"
 	recipe_name = "a Iron Jile"
@@ -362,6 +383,27 @@
 	additional_items = list(/obj/item/grown/log/tree/small)
 	created_item = /obj/item/weapon/polearm/spear/steel/assegai
 
+<<<<<<< HEAD
+=======
+/datum/anvil_recipe/weapons/steel/ada
+	name = "Steel Ada"
+	recipe_name = "a Steel Ada"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	created_item = /obj/item/weapon/sword/scimitar/ada
+
+/datum/anvil_recipe/weapons/steel/lakkarikhopesh
+	name = "Steel Khopesh"
+	recipe_name = "a Steel Khopesh"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	created_item = /obj/item/weapon/sword/scimitar/lakkarikhopesh
+
+/datum/anvil_recipe/weapons/steel/sengese
+	name = "Steel Sengese"
+	recipe_name = "a Steel Sengese"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	created_item = /obj/item/weapon/sword/scimitar/sengese
+
+>>>>>>> vanderlin/main
 /datum/anvil_recipe/weapons/steel/axe_steel
 	name = "Steel Axe (+Stick)"
 	recipe_name = "an Axe"
@@ -692,6 +734,12 @@
 	recipe_name = "a Silver Sword"
 	appro_skill = /datum/skill/craft/weaponsmithing
 	created_item = /obj/item/weapon/sword/silver
+
+/datum/anvil_recipe/weapons/silver/sengese
+	name = "Silver Sengese"
+	recipe_name = "a Silver Sengese"
+	appro_skill = /datum/skill/craft/weaponsmithing
+	created_item = /obj/item/weapon/sword/scimitar/sengese/silver
 
 /datum/anvil_recipe/weapons/silver/rapier_silver
 	name = "Silver Rapier"

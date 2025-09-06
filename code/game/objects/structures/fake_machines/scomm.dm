@@ -15,6 +15,7 @@
 
 /obj/structure/fake_machine/scomm/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_RUNECHAT_HIDDEN, TRAIT_GENERIC)
 	become_hearing_sensitive()
 
 /obj/structure/fake_machine/scomm/Destroy()

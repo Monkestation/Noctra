@@ -149,6 +149,10 @@
 	sellprice = 12
 	smeltresult = /obj/item/ingot/silver
 
+/obj/item/plate/silver/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
+
 /obj/item/plate/gold
 	name = "gold platter"
 	desc = "A fancy gold plate often used by the nobility as a symbol of class."

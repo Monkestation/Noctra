@@ -276,6 +276,42 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	/// angle of the icon, these are used for attack animations
 	var/icon_angle = 50 // most of our icons are angled
+	///the processing quality we have
+	var/recipe_quality = 1
+
+
+/obj/item/proc/set_quality(quality)
+	recipe_quality = clamp(quality, 0, 4)
+	update_appearance(UPDATE_OVERLAYS)
+	if(recipe_quality >= 3) // gold tier and above
+		AddComponent(/datum/component/particle_spewer/sparkle)
+	else
+		var/datum/component/particle_spewer = GetComponent(/datum/component/particle_spewer/sparkle)
+		if(particle_spewer)
+			particle_spewer.RemoveComponent()
+
+/obj/item/update_overlays()
+	. = ..()
+	// Add quality overlay to the food item
+	if(recipe_quality <= 0 || !ismob(loc))
+		return
+	var/list/quality_icons = list(
+		null, // Regular has no overlay
+		// "bronze",
+		"silver",
+		"gold",
+		"diamond",
+	)
+	if(recipe_quality <= length(quality_icons) && quality_icons[recipe_quality])
+		. += mutable_appearance('icons/effects/crop_quality.dmi', quality_icons[recipe_quality])
+
+/obj/item/dropped(mob/user, silent)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/equipped(mob/user, slot, initial)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
 
 /**
  * Handles adding components to the item. Added in Initialize()

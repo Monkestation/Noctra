@@ -113,6 +113,7 @@
 	var/picked_baby_path = pickweight(baby_path)
 	var/mob/living/baby = new picked_baby_path(delivery_destination)
 	SEND_SIGNAL(source, COMSIG_FRIENDSHIP_PASS_FRIENDSHIP, baby)
+	SEND_SIGNAL(source, COMSIG_HAPPINESS_PASS_HAPPINESS, baby)
 	post_birth?.Invoke(baby, target)
 
 /datum/component/breed/proc/toggle_status(mob/living/source)

@@ -183,6 +183,10 @@
 	item_weight = 6 * SILVER_MULTIPLIER
 	flags_inv = HIDEEARS
 
+/obj/item/clothing/head/helmet/heavy/necked/noc/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
+
 //............... Necra Helmet ............... //
 /obj/item/clothing/head/helmet/heavy/necked/necra
 	name = "necra helmet"

@@ -200,6 +200,9 @@
 	if(!currently_charging)
 		return
 
+	if(!owner)
+		return PROCESS_KILL
+
 	if(charge_drain)
 		if(!check_cost(charge_drain))
 			to_chat(owner, span_userdanger("I cannot uphold the channeling!"))

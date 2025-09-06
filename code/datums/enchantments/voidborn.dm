@@ -13,6 +13,8 @@
 	var/list/last_used = list()
 
 /datum/enchantment/void_touched/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+	if(!proximity_flag)
+		return
 	if(world.time < (src.last_used[source] + (1 MINUTES + 40 SECONDS))) //thanks borbop
 		return
 

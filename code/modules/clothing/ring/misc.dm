@@ -4,6 +4,10 @@
 	icon_state = "ring_s"
 	sellprice = 33
 
+/obj/item/clothing/ring/silver/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
+
 /obj/item/clothing/ring/silver/makers_guild
 	name = "makers' ring"
 	desc = "The wearer is a proud member of the Makers' guild."

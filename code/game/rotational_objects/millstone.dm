@@ -115,7 +115,8 @@
 	if(mill_progress >= 100)
 		mill_progress -= 100
 		var/obj/item/reagent_containers/food/snacks/S = millable_contents[1]
-		new S.mill_result(get_turf(loc))
+		var/obj/item/mill_result = new S.mill_result(get_turf(loc))
+		mill_result.set_quality(S.recipe_quality)
 		millable_contents -= S
 		qdel(S)
 

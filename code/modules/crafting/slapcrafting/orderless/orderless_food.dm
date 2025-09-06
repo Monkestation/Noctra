@@ -56,9 +56,4 @@
 		if(istype(food_item, /obj/item/reagent_containers/food/snacks))
 			var/obj/item/reagent_containers/food/snacks/F = food_item
 			total_freshness += max(0, (F.warming + F.rotprocess))
-			highest_quality = max(highest_quality, F.quality)
-
-		// Handle crops/grown items
-		else if(istype(food_item, /obj/item/reagent_containers/food/snacks/produce))
-			var/obj/item/reagent_containers/food/snacks/produce/G = food_item
-			highest_quality = max(highest_quality, G.crop_quality - 1)
+			highest_quality = max(highest_quality, F.quality, F.recipe_quality )

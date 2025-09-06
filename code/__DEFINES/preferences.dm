@@ -24,7 +24,7 @@
 #define SCHIZO_VOICE			(1<<21)
 #define UI_SCALE				(1<<22)
 
-#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|MEMBER_PUBLIC|INTENT_STYLE|MIDROUND_ANTAG|SOUND_INSTRUMENTS|SOUND_SHIP_AMBIENCE|SOUND_PRAYERS|SOUND_ANNOUNCEMENTS|TOGGLE_FULLSCREEN)
+#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|MIDROUND_ANTAG|SOUND_INSTRUMENTS|SOUND_SHIP_AMBIENCE|SOUND_PRAYERS|SOUND_ANNOUNCEMENTS|TOGGLE_FULLSCREEN)
 
 //Chat toggles
 #define CHAT_OOC			(1<<0)
@@ -40,6 +40,11 @@
 #define CHAT_BANKCARD  (1<<10)
 
 #define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_PRAYER|CHAT_RADIO|CHAT_PULLR|CHAT_GHOSTPDA|CHAT_BANKCARD)
+
+// Maptext toggles
+#define DISABLE_RUNECHAT (1<<0)
+#define DISABLE_HOVER_TEXT (1<<1)
+#define DISABLE_BALLOON_ALERTS (1<<3)
 
 #define PARALLAX_INSANE -1 //for show offs
 #define PARALLAX_HIGH    0 //default.
@@ -185,3 +190,20 @@
 
 #define UI_PREFERENCE_LIGHT_MODE "light mode"
 #define UI_PREFERENCE_DARK_MODE "dark mode"
+
+// here because they are specfically for the prefences menu
+
+DEFINE_BITFIELD(toggles_default, list(
+	"Be voice" = SCHIZO_VOICE,
+	"Enable admin sounds" = SOUND_MIDI,
+	"Enable ambience" = SOUND_AMBIENCE,
+	"Enable background music" = SOUND_SHIP_AMBIENCE,
+	//"Enable instruments" = SOUND_INSTRUMENTS,
+	"Enable lobby music" = SOUND_LOBBY,
+))
+
+DEFINE_BITFIELD(toggles_maptext, list(
+	"Disable balloon alerts" = DISABLE_BALLOON_ALERTS,
+	//"Disable hover text" = DISABLE_HOVER_TEXT,
+	"Disable runechat" = DISABLE_RUNECHAT,
+))

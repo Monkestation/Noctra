@@ -167,6 +167,9 @@
 		else
 			butcher = butchery_target.botched_butcher_results
 
+	// Get happiness bonus for yield calculations
+	var/happiness_bonus = butchery_target.get_happiness_yield_bonus(1)
+
 	if(!draining_blood && butchery_target.blood_drained < 60)
 		if(!(user.used_intent.type == /datum/intent/dagger/cut || user.used_intent.type == /datum/intent/sword/cut || user.used_intent.type == /datum/intent/axe/cut))
 			return
@@ -183,21 +186,52 @@
 		to_chat(user, span_notice("I start to skin [butchery_target]."))
 		if(do_after(user, cut_time, src, (IGNORE_HELD_ITEM)))
 			var/first_fail = TRUE
+			var/total_bonus_items = 0
 			for(var/listed_item in butcher)
 				if(ispath(listed_item, /obj/item/natural/hide) || ispath(listed_item, /obj/item/natural/fur))
+					var/base_amount = butcher[listed_item]
+					var/final_amount = base_amount
+
+					// Apply skill-based bonuses
 					if(prob(40 + (user.get_skill_level(/datum/skill/labor/butchering) * 10) - (60 - butchery_target.blood_drained)))
-						butcher[listed_item] += round(butcher[listed_item] * 0.5)
+						final_amount += round(base_amount * 0.5)
 					if(prob(10 + (user.get_skill_level(/datum/skill/labor/butchering) * 5)) - (60 - butchery_target.blood_drained))
-						butcher[listed_item] += round(butcher[listed_item] * 0.5)
+						final_amount += round(base_amount * 0.5)
 					if(prob((60 - butchery_target.blood_drained)))
 						if(first_fail)
 							to_chat(user, span_notice("The flowing blood got in the way and messed up some of the skin."))
 							first_fail = FALSE
-						butcher[listed_item] -= round(butcher[listed_item] * 0.5)
-					for(var/i in 1 to butcher[listed_item])
+						final_amount -= round(base_amount * 0.5)
+
+					// Apply happiness bonus (only if we have items to bonus)
+					var/bonus_amount = 0
+					if(final_amount > 0 && happiness_bonus > 0)
+						var/total_bonus = final_amount * happiness_bonus
+						bonus_amount = round(total_bonus)
+						// Handle fractional bonuses with probability
+						var/fractional_part = total_bonus - bonus_amount
+						if(fractional_part > 0 && prob(fractional_part * 100))
+							bonus_amount++
+						total_bonus_items += bonus_amount
+
+					final_amount += bonus_amount
+
+					var/current_happiness = SEND_SIGNAL(butchery_target, COMSIG_HAPPINESS_RETURN_VALUE)
+					var/recipe_quality = clamp(FLOOR(current_happiness / 30, 1) + 1, 1, 4)
+					for(var/i in 1 to final_amount)
 						var/obj/item/I = new listed_item(get_turf(user))
 						I.add_mob_blood(butchery_target)
+						if(istype(I, /obj/item/reagent_containers/food))
+							var/obj/item/reagent_containers/food/F = I
+							F.set_quality(recipe_quality)
 					butcher -= listed_item
+
+			// Show happiness message for skinning if we got bonus items
+			if(total_bonus_items > 0)
+				var/happiness_message = butchery_target.get_happiness_butcher_message(happiness_bonus)
+				if(happiness_message)
+					to_chat(user, span_notice("[happiness_message] (+[total_bonus_items] bonus hide/fur)"))
+
 			var/boon = user.get_learning_boon(/datum/skill/labor/butchering)
 			var/amt2raise = user.STAINT
 			user.mind.add_sleep_experience(/datum/skill/labor/butchering, amt2raise * boon, FALSE)
@@ -212,18 +246,41 @@
 		to_chat(user, span_notice("I start to butcher [butchery_target]."))
 		if(do_after(user, cut_time, src, (IGNORE_HELD_ITEM)))
 			var/first_fail = TRUE
+			var/total_bonus_items = 0
+
+			// Handle meat and fat with skill bonuses and happiness
 			for(var/listed_item in butcher)
 				if(ispath(listed_item, /obj/item/reagent_containers/food/snacks/meat) || ispath(listed_item, /obj/item/reagent_containers/food/snacks/fat))
+					var/base_amount = butcher[listed_item]
+					var/final_amount = base_amount
+
+					// Apply skill-based bonuses
 					if(prob(40 + (user.get_skill_level(/datum/skill/labor/butchering) * 10) - (60 - butchery_target.blood_drained)))
-						butcher[listed_item] += round(butcher[listed_item] * 0.5)
+						final_amount += round(base_amount * 0.5)
 					if(prob(10 + (user.get_skill_level(/datum/skill/labor/butchering) * 5)) - (60 - butchery_target.blood_drained))
-						butcher[listed_item] += round(butcher[listed_item] * 0.5)
+						final_amount += round(base_amount * 0.5)
 					if(prob((60 - butchery_target.blood_drained)))
 						if(first_fail)
 							to_chat(user, span_notice("The flowing blood got in the way and messed up some of the meat."))
 							first_fail = FALSE
-						butcher[listed_item] -= round(butcher[listed_item] * 0.5)
-					for(var/i in 1 to butcher[listed_item])
+						final_amount -= round(base_amount * 0.5)
+
+					// Apply happiness bonus (only if we have items to bonus)
+					var/bonus_amount = 0
+					if(final_amount > 0 && happiness_bonus > 0)
+						var/total_bonus = final_amount * happiness_bonus
+						bonus_amount = round(total_bonus)
+						// Handle fractional bonuses with probability
+						var/fractional_part = total_bonus - bonus_amount
+						if(fractional_part > 0 && prob(fractional_part * 100))
+							bonus_amount++
+						total_bonus_items += bonus_amount
+
+					final_amount += bonus_amount
+
+					var/current_happiness = SEND_SIGNAL(butchery_target, COMSIG_HAPPINESS_RETURN_VALUE)
+					var/recipe_quality = clamp(FLOOR(current_happiness / 30, 1) + 1, 1, 4)
+					for(var/i in 1 to final_amount)
 						var/obj/item/I = new listed_item(get_turf(user))
 						I.add_mob_blood(butchery_target)
 						var/rotstuff = FALSE
@@ -231,14 +288,48 @@
 						if(CR)
 							if(CR.amount >= 10 MINUTES)
 								rotstuff = TRUE
-						if(rotstuff)
+						if(istype(I, /obj/item/reagent_containers/food/snacks))
+							var/obj/item/reagent_containers/food/snacks/F = I
+							F.set_quality(recipe_quality)
+							if(rotstuff)
+								F.become_rotten()
+						else if(rotstuff && istype(I,/obj/item/reagent_containers/food/snacks))
 							var/obj/item/reagent_containers/food/snacks/F = I
 							F.become_rotten()
 					butcher -= listed_item
+
+			// Handle remaining items (bones, organs, etc.) with happiness bonus
 			for(var/listed_item in butcher)
-				for(var/i in 1 to butcher[listed_item])
+				var/base_amount = butcher[listed_item]
+				var/bonus_amount = 0
+
+				// Apply happiness bonus to remaining items too
+				if(base_amount > 0 && happiness_bonus > 0)
+					var/total_bonus = base_amount * happiness_bonus
+					bonus_amount = round(total_bonus)
+					// Handle fractional bonuses with probability
+					var/fractional_part = total_bonus - bonus_amount
+					if(fractional_part > 0 && prob(fractional_part * 100))
+						bonus_amount++
+					total_bonus_items += bonus_amount
+
+				var/final_amount = base_amount + bonus_amount
+
+				var/current_happiness = SEND_SIGNAL(butchery_target, COMSIG_HAPPINESS_RETURN_VALUE)
+				var/recipe_quality = clamp(FLOOR(current_happiness / 30, 1) + 1, 1, 4)
+				for(var/i in 1 to final_amount)
 					var/obj/item/I = new listed_item(get_turf(user))
 					I.add_mob_blood(butchery_target)
+					if(istype(I, /obj/item/reagent_containers/food))
+						var/obj/item/reagent_containers/food/F = I
+						F.set_quality(recipe_quality)
+
+			// Show happiness message for butchering if we got bonus items
+			if(total_bonus_items > 0)
+				var/happiness_message = butchery_target.get_happiness_butcher_message(happiness_bonus)
+				if(happiness_message)
+					to_chat(user, span_notice("[happiness_message] (+[total_bonus_items] bonus items)"))
+
 			butchery_target.gib()
 			var/boon = user.get_learning_boon(/datum/skill/labor/butchering)
 			var/amt2raise = user.STAINT

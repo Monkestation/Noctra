@@ -791,9 +791,11 @@
 		return
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
-		if(istype(H.wear_neck, /obj/item/clothing/neck/psycross/silver))
-			to_chat(user, span_userdanger("SILVER! HISSS!!!"))
-			return
+		for(var/I in C.contents)
+			if(SSenchantment.has_enchantment(I, /datum/enchantment/silver))
+				to_chat(user, span_userdanger("THEY ARE WEARING MY BANE! HISSS!!!"))
+				user.Paralyze(1)
+				return
 		// Add bite animation to the victim
 		H.add_bite_animation()
 

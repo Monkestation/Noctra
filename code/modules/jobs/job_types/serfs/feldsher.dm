@@ -4,7 +4,7 @@
 	Stitched the sores of blades, sealed honey over the bubous of plague. \
 	A thousand deaths stolen from the Carriagemen, yet these people will still call you a charlatan. \
 	At least the Apothecary understands you."
-	department_flag = NOBLEMEN
+	department_flag = SERFS
 	display_order = JDO_FELDSHER
 	job_flags = (JOB_ANNOUNCE_ARRIVAL | JOB_SHOW_IN_CREDITS | JOB_EQUIP_RANK | JOB_NEW_PLAYER_JOINABLE)
 	faction = FACTION_TOWN
@@ -24,7 +24,7 @@
 	)
 
 /datum/outfit/job/feldsher
-	job_bitflag = BITFLAG_ROYALTY
+	job_bitflag = BITFLAG_CONSTRUCTOR
 
 /datum/outfit/job/feldsher/pre_equip(mob/living/carbon/human/H)
 	..()

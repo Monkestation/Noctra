@@ -258,11 +258,13 @@
 
 /atom/movable/screen/plane_master/leylines/backdrop(mob/mymob)
 	. = ..()
-	if(!isliving(mymob) && mymob.client?.toggled_leylines)
+	alpha = 0
+	var/client/client = mymob.client
+	if(!client)
+		return
+	if(!isliving(mymob) && client.toggled_leylines)
 		alpha = 255
-	else if(!HAS_TRAIT(mymob, TRAIT_SEE_LEYLINES))
-		alpha = 0
-	else
+	else if(HAS_TRAIT(mymob, TRAIT_SEE_LEYLINES))
 		alpha = 255
 
 /atom/movable/screen/plane_master/stategy_plane
