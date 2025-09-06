@@ -16,6 +16,7 @@
 			user.visible_message(span_notice("[user] shucks [src]."), \
 								span_notice("I shuck [src]."))
 			var/obj/item/G = new foodextracted(get_turf(src))
+			G.set_quality(recipe_quality)
 			user.put_in_active_hand(G)
 			new /obj/item/natural/fibers(get_turf(src))
 			qdel(src)
@@ -23,7 +24,8 @@
 
 /obj/item/natural/chaff/proc/thresh()
 	if(foodextracted && canthresh)
-		new foodextracted(loc)
+		var/obj/item/extracted = new foodextracted(loc)
+		extracted.set_quality(recipe_quality)
 		new /obj/item/natural/fibers(loc)
 		qdel(src)
 

@@ -15,6 +15,8 @@
 
 /datum/enchantment/briarcurse/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
 	.=..()
+	if(!proximity_flag)
+		return
 	if(isliving(target))
 		var/mob/living/carbon/targeted = target
 		targeted.adjustBruteLoss(10)

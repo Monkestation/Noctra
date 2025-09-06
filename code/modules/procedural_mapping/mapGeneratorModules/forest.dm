@@ -29,7 +29,7 @@
 		/obj/structure/closet/dirthole/closed/loot = 5,
 		/obj/structure/flora/newtree = 5,
 		/obj/item/natural/stone = 5,
-		/obj/structure/essence_node = 3,
+		/obj/structure/essence_node = 0.1,
 		/obj/item/grown/log/tree/stick = 4,
 		/obj/structure/flora/grass/bush_meagre = 4,
 		/obj/structure/table/wood/treestump = 4,
@@ -71,6 +71,7 @@
 		/obj/item/natural/rock = 2,
 		/obj/structure/flora/grass/pyroclasticflowers = 1,
 		/obj/structure/flora/grass/maneater = 0.3,
+		/obj/structure/essence_node = 0.1,
 		/obj/structure/flora/grass/maneater/real = 0.1,
 		/obj/item/restraints/legcuffs/beartrap/armed/camouflage = 0.1,
 	)

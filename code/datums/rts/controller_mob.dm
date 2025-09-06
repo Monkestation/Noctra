@@ -132,7 +132,7 @@
 			return
 	. = ..()
 
-/mob/camera/strategy_controller/UnarmedAttack(atom/A, proximity_flag, params)
+/mob/camera/strategy_controller/UnarmedAttack(atom/A, proximity_flag, params, atom/source)
 	if(!LAZYACCESS(params2list(params), RIGHT_CLICK))
 		return
 	var/allow_break = FALSE

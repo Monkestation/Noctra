@@ -11,6 +11,8 @@
 	)
 
 /datum/enchantment/vampiric/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+	if(!proximity_flag)
+		return
 	if(isliving(target) && isliving(user))
 		var/mob/living/victim = target
 		var/mob/living/attacker = user

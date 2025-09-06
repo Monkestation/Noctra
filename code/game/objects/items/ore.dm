@@ -31,6 +31,7 @@
 /obj/item/ore/silver/Initialize(mapload)
 	. = ..()
 	icon_state = "oresilv[rand(1,3)]"
+	enchant(/datum/enchantment/silver)
 
 /obj/item/ore/iron
 	name = "raw iron"
@@ -220,6 +221,10 @@
 	sellprice = 60
 	melting_material = /datum/material/silver
 	item_weight = 7.5 * SILVER_MULTIPLIER
+
+/obj/item/ingot/silver/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 /obj/item/ingot/steel
 	name = "steel bar"

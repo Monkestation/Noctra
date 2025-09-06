@@ -18,6 +18,7 @@
 	var/name = "Generic Quality"
 	var/base_quality = 0
 	var/material_quality = 0
+	var/reagent_quality = 0
 	var/skill_quality = 0
 	var/performance_quality = 0
 	var/difficulty_modifier = 0
@@ -35,13 +36,14 @@
 		QUALITY_LEVEL_LEGENDARY = list("name_prefix" = "masterwork", "modifier" = 1.3)
 	)
 
-/datum/quality_calculator/New(base_qual = 0, mat_qual = 0, skill_qual = 0, perf_qual = 0, diff_mod = 0, components = 1)
+/datum/quality_calculator/New(base_qual = 0, mat_qual = 0, skill_qual = 0, perf_qual = 0, diff_mod = 0, components = 1, reagent_qual = 0)
 	base_quality = base_qual
 	material_quality = mat_qual
 	skill_quality = skill_qual
 	performance_quality = perf_qual
 	difficulty_modifier = diff_mod
 	num_components = max(1, components)
+	reagent_quality = reagent_qual
 
 /datum/quality_calculator/proc/calculate_final_quality()
 	// Average out component-based qualities

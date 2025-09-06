@@ -164,6 +164,7 @@
 			segment.color = beam_color
 		else
 			segment.vis_contents += visuals
+		segment.plane = visuals.plane
 		segment.transform = rot_matrix
 
 		//Calculate pixel offsets (If necessary)

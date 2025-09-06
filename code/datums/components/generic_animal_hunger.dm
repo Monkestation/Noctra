@@ -61,7 +61,7 @@
 		return
 	current_hunger = max(current_hunger - (max_hunger * precent), 0)
 
-/datum/component/generic_mob_hunger/proc/on_feed(datum/source, atom/target, feed_amount)
+/datum/component/generic_mob_hunger/proc/on_feed(datum/source, atom/target, feed_amount, atom/came_from)
 	SIGNAL_HANDLER
 	if(current_hunger > max_hunger)
 		SEND_SIGNAL(parent, COMSIG_MOB_REFUSED_EAT)

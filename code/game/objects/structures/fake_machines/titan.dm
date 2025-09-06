@@ -45,6 +45,7 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 		"Set Taxes",
 		"Change Position",
 		"Appoint Regent",
+		"SILENCE!!",
 		"Cancel",
 	)
 
@@ -131,7 +132,7 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 		return FALSE
 	if(!has_crown(checked_mob))
 		return FALSE
-	if(!is_worthy(checked_mob) && has_to_be_worthy)
+	if(has_to_be_worthy && !is_worthy(checked_mob))
 		return FALSE
 	if(!check_cooldown(checked_mob))
 		return FALSE
@@ -208,6 +209,9 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 		return
 	if(findtext(message, "appoint regent") && perform_check(user))
 		appoint_regent(user)
+		return
+	if(findtext(message, "SILENCE!!") && perform_check(user))
+		silence_plebs(user)
 		return
 
 // COMMANDS BELOW
@@ -459,6 +463,18 @@ GLOBAL_LIST_EMPTY(roundstart_court_agents)
 		return
 	priority_announce("[new_regent.real_name] has been appointed regent.", "[user.real_name], The [user.get_role_title()] Decrees", 'sound/misc/alert.ogg', "Captain")
 	SSticker.regent_mob = new_regent
+
+/obj/structure/fake_machine/titan/proc/silence_plebs(mob/living/carbon/human/user)
+	playsound(src, 'sound/magic/invoke_general.ogg', 40, TRUE)
+	for(var/mob/living/pleb in oview(10, user))
+		pleb.face_atom(user)
+		pleb.do_alert_effect()
+		if(prob(40))
+			pleb.emote("gasp")
+		else if(prob(10))
+			pleb.emote("scream")
+		pleb.set_silence(10 SECONDS)
+
 
 /obj/structure/fake_machine/titan/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), original_message)
 	. = ..()

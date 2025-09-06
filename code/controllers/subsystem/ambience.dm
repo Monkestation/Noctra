@@ -117,18 +117,19 @@ SUBSYSTEM_DEF(ambience)
 		cancel_looping_ambience()
 		return
 
+	var/music_enabled = client.prefs?.toggles & SOUND_SHIP_AMBIENCE
 	var/area/my_area = get_area(src)
 	var/vol = client.prefs?.musicvol
 	var/used = buzz_to_use
 
-	if(!used)
+	if(!used && music_enabled)
 		used = my_area?.get_current_buzz(has_light_nearby())
 	if(cmode && cmode_music)
 		used = cmode_music
 		vol *= 1.2
-	else if(HAS_TRAIT(src, TRAIT_SCHIZO_AMBIENCE))
+	else if(music_enabled && HAS_TRAIT(src, TRAIT_SCHIZO_AMBIENCE))
 		used = 'sound/music/dreamer_is_still_asleep.ogg'
-	else if(HAS_TRAIT(src, TRAIT_DRUQK))
+	else if(music_enabled && HAS_TRAIT(src, TRAIT_DRUQK))
 		used = 'sound/music/spice.ogg'
 
 	if(!used || vol <= 0)
