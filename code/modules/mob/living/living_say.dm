@@ -408,11 +408,7 @@
 
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in listening)
-<<<<<<< HEAD
 		if(M.client)
-=======
-		if(M.client && M.client.prefs.toggles_maptext & DISABLE_RUNECHAT)
->>>>>>> vanderlin/main
 			speech_bubble_recipients |= M.client
 
 	if(length(speech_bubble_recipients))
@@ -530,11 +526,7 @@
 
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in understanders)
-<<<<<<< HEAD
 		if(M.client)
-=======
-		if(M.client && M.client.prefs.toggles_maptext & DISABLE_RUNECHAT)
->>>>>>> vanderlin/main
 			speech_bubble_recipients |= M.client
 
 	if(length(speech_bubble_recipients))

@@ -189,10 +189,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		AddComponent(/datum/component/generic_mob_hunger, food_max, 0.25)
 	if(happy_funtime_mob)
 		AddComponent(/datum/component/friendship_container, mob_friends, "friend")
-<<<<<<< HEAD
-=======
 		AddComponent(/datum/component/happiness_container, 30, list(), list(), food_type)
->>>>>>> vanderlin/main
 
 /mob/living/simple_animal/Destroy()
 	if(nest)
@@ -437,30 +434,6 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 			if(botch_count || normal_count || perfect_count || bonus_count)
 				to_chat(user, "<span class='notice'>I stop butchering: [butcher_summary(botch_count, normal_count, perfect_count, bonus_count, botch_chance, perfect_chance, happiness_bonus)].</span>")
 			else
-<<<<<<< HEAD
-				if(user.get_skill_level(/datum/skill/labor/butchering) >= 5)
-					butcher = perfect_butcher_results
-				else
-					butcher = butcher_results
-
-		var/rotstuff = FALSE
-		var/datum/component/rot/simple/CR = GetComponent(/datum/component/rot/simple)
-		if(CR)
-			if(CR.amount >= 10 MINUTES)
-				rotstuff = TRUE
-		var/atom/Tsec = drop_location()
-		if(head_butcher && (HAS_TRAIT(user, TRAIT_HEAD_BUTCHER) || butcher == perfect_butcher_results))
-			butcher[head_butcher] = 1
-		for(var/path in butcher)
-			for(var/i in 1 to butcher[path])
-				var/obj/item/I = new path(Tsec)
-				I.add_mob_blood(src)
-				if(rotstuff && istype(I,/obj/item/reagent_containers/food/snacks))
-					var/obj/item/reagent_containers/food/snacks/F = I
-					F.become_rotten()
-	SEND_SIGNAL(user, COMSIG_MOB_BUTCHERED, src)
-	gib()
-=======
 				to_chat(user, "<span class='notice'>I stop butchering for now.</span>")
 			break
 		// Check for botch first
@@ -562,7 +535,6 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 			return "The happy animal provides generous portions."
 		if(0.4 to INFINITY)
 			return "The blissful animal rewards your care with abundant meat."
->>>>>>> vanderlin/main
 
 /mob/living/simple_animal/spawn_dust(just_ash = FALSE)
 	if(just_ash || !remains_type)

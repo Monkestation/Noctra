@@ -307,8 +307,6 @@
 	sellprice = 20
 	smeltresult = /obj/item/ingot/iron
 
-<<<<<<< HEAD
-=======
 /obj/item/weapon/sword/scimitar/lakkarikhopesh/iron
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/axe/chop)
 	gripped_intents = list(/datum/intent/sword/chop, /datum/intent/sword/thrust)
@@ -397,7 +395,6 @@
 	. = ..()
 	enchant(/datum/enchantment/silver)
 
->>>>>>> vanderlin/main
 /*--------\
 | Rapiers |		Onehanded, slightly weaker cut, more AP thrust, harder to dodge.
 \--------*/

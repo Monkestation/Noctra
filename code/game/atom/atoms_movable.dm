@@ -1179,11 +1179,6 @@
 		if (ATTACK_ANIMATION_BONK)
 			attack.pixel_x = attack.base_pixel_x + 14 * x_sign
 			attack.pixel_y = attack.base_pixel_y + 12 * y_sign
-<<<<<<< HEAD
-			animate(attack, alpha = 175, transform = copy_transform.Scale(0.75), pixel_x = 4 * x_sign, pixel_y = 3 * y_sign, time = 0.2 SECONDS)
-			animate(time = 0.1 SECONDS)
-			animate(alpha = 0, time = 0.1 SECONDS, easing = BACK_EASING|EASE_OUT)
-=======
 			animate(
 				attack,
 				alpha = 175,
@@ -1200,7 +1195,6 @@
 				time = 0.1 SECONDS,
 				easing = BACK_EASING|EASE_OUT
 				)
->>>>>>> vanderlin/main
 
 		if (ATTACK_ANIMATION_THRUST)
 			var/attack_angle = dir2angle(direction) + rand(-7, 7)

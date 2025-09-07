@@ -243,17 +243,6 @@
 	created_item = /obj/item/clothing/head/helmet/heavy/crusader/t
 	craftdiff = 2
 
-<<<<<<< HEAD
-/datum/anvil_recipe/armor/steel/
-	name = "Skullmet helm (+Bar)"
-	recipe_name = "a heavy steel totod crusader helmet"
-	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel)
-	created_item = /obj/item/clothing/head/helmet/medium/decorated/skullmet
-	craftdiff = 3
-
-/obj/item/clothing/head/helmet/medium/decorated/skullmet
-
-=======
 /datum/anvil_recipe/armor/steel/skullmet_helm
 	name = "Skullmet helm (+Bone X2)"
 	recipe_name = "A creacher skull covering a steel helmet."
@@ -261,7 +250,6 @@
 	created_item = /obj/item/clothing/head/helmet/medium/decorated/skullmet
 	craftdiff = 3
 
->>>>>>> vanderlin/main
 /datum/anvil_recipe/armor/iron/cage_helmet
 	name = "feldsher's cage"
 	recipe_name = "a cage helmet"

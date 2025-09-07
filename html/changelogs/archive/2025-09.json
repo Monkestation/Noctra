@@ -112,10 +112,6 @@
                 "qol": "Removed Moondusts, Ozium and Pure Moondust's ability to flash your screen at the start of the reagent metabolization."
             }
         ]
-<<<<<<< HEAD
-    }
-}
-=======
     },
     "2025-09-05": {
         "7erracotta": [
@@ -217,4 +213,3 @@
         ]
     }
 }
->>>>>>> vanderlin/main

@@ -183,8 +183,6 @@
 	createditem_extra = 1
 	craftdiff = 0
 
-<<<<<<< HEAD
-=======
 /datum/anvil_recipe/weapons/iron/ada
 	name = "Iron Ada"
 	recipe_name = "a Iron Ada"
@@ -203,7 +201,6 @@
 	appro_skill = /datum/skill/craft/weaponsmithing
 	created_item = /obj/item/weapon/sword/scimitar/sengese/iron
 
->>>>>>> vanderlin/main
 /datum/anvil_recipe/weapons/iron/jile
 	name = "2x Iron Jile Daggers"
 	recipe_name = "a Iron Jile"
@@ -383,8 +380,6 @@
 	additional_items = list(/obj/item/grown/log/tree/small)
 	created_item = /obj/item/weapon/polearm/spear/steel/assegai
 
-<<<<<<< HEAD
-=======
 /datum/anvil_recipe/weapons/steel/ada
 	name = "Steel Ada"
 	recipe_name = "a Steel Ada"
@@ -403,7 +398,6 @@
 	appro_skill = /datum/skill/craft/weaponsmithing
 	created_item = /obj/item/weapon/sword/scimitar/sengese
 
->>>>>>> vanderlin/main
 /datum/anvil_recipe/weapons/steel/axe_steel
 	name = "Steel Axe (+Stick)"
 	recipe_name = "an Axe"

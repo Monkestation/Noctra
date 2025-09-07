@@ -170,10 +170,7 @@
 #include "code\__DEFINES\vampires.dm"
 #include "code\__DEFINES\vectors.dm"
 #include "code\__DEFINES\vehicles.dm"
-<<<<<<< HEAD
 #include "code\__DEFINES\veyra.dm"
-=======
->>>>>>> vanderlin/main
 #include "code\__DEFINES\visual_helpers.dm"
 #include "code\__DEFINES\visual_ui.dm"
 #include "code\__DEFINES\vv.dm"

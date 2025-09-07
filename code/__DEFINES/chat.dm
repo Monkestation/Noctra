@@ -7,8 +7,6 @@
 #define CHAT_MESSAGE_APPROX_LHEIGHT	11 // Approximate height in pixels of an 'average' line, used for height decay
 #define CHAT_MESSAGE_WIDTH			96 // pixels
 #define CHAT_MESSAGE_MAX_LENGTH		110 // characters
-<<<<<<< HEAD
-=======
 #define CHAT_GLORF_LIST list(\
 							"-ah!!",\
 							"-GLORF!!",\
@@ -28,4 +26,3 @@
 #define CHAT_SPELLING_EXCEPTIONS list(\
 										"'",\
 										)
->>>>>>> vanderlin/main
