@@ -284,6 +284,7 @@
 							/obj/item/alch/sinew = 2, \
 							/obj/item/alch/bone = 1, \
 							/obj/item/natural/fur/cabbit = 1)
+	head_butcher = null
 
 /mob/living/simple_animal/hostile/retaliate/troll/caerbannog/get_sound(input)
 	switch(input)

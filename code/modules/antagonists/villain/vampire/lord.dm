@@ -38,7 +38,7 @@
 
 	var/mob/living/carbon/human/H = owner.current
 	H.equipOutfit(/datum/outfit/job/vamplord)
-	H.set_patron(/datum/patron/godless)
+	H.set_patron(/datum/patron/godless/autotheist)
 
 	return TRUE
 

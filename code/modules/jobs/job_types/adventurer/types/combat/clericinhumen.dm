@@ -48,6 +48,10 @@
 			beltl = /obj/item/weapon/sword/short
 			H.adjust_skillrank(/datum/skill/combat/swords, 3, TRUE)
 			H.adjust_skillrank(/datum/skill/combat/shields, 2, TRUE)
+<<<<<<< HEAD
+=======
+			H.grant_language(/datum/language/undead)
+>>>>>>> vanderlin/main
 		if(/datum/patron/inhumen/matthios)
 			cloak = /obj/item/clothing/cloak/raincloak/colored/mortus
 			H.cmode_music = 'sound/music/cmode/antag/CombatBandit1.ogg'

@@ -236,7 +236,7 @@
 	name = "Retired Mercenary"
 	tutorial = "You were a sell-sword, a warrior of coin. Your pockets were never light, you always had a warm place to stay and food in your belly, but you knew that every battle could be your last. You're the last of your unit, and you can't help but regret it. You specialize in swords and polearms, or axes and polearms."
 	outfit = /datum/outfit/job/vet/merc
-
+	allowed_races = RACES_PLAYER_GRENZ
 	category_tags = list(CTAG_VETERAN)
 
 // Normal veteran start, from the olden days
@@ -255,7 +255,7 @@
 	backr = /obj/item/storage/backpack/satchel/black
 	belt = /obj/item/storage/belt/leather/black
 	cloak = /obj/item/clothing/cloak/half/vet
-	H.cmode_music = 'sound/music/cmode/adventurer/CombatOutlander.ogg'
+	H.cmode_music = 'sound/music/cmode/combat_grenzelhoft.ogg'
 	backpack_contents = list(/obj/item/weapon/knife/dagger/steel/special = 1)
 	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axesmaces, 4, TRUE)
@@ -272,6 +272,7 @@
 	H.adjust_skillrank(/datum/skill/misc/athletics, 2, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/misc/medicine, 3, TRUE)
+	H.grant_language(/datum/language/oldpsydonic)
 	H.change_stat(STATKEY_INT, 1)
 	H.change_stat(STATKEY_END, 3) // two handed weapons require a LOT of stamina.
 	H.change_stat(STATKEY_CON, 1)

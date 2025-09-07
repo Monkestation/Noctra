@@ -413,7 +413,7 @@
 	craftdiff = 2
 	category = "Cloak"
 
-/datum/repeatable_crafting_recipe/sewing/tabard
+/datum/repeatable_crafting_recipe/sewing/tabard/crusader
 	name = "tabard (crusader)"
 	output = /obj/item/clothing/cloak/tabard/crusader
 	requirements = list(/obj/item/natural/cloth = 3,

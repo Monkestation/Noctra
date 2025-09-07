@@ -19,6 +19,8 @@
 	var/inactivity = 0
 	/// Reference to the collective this session belongs to
 	var/datum/collective_message/collective = null
+	///have we just climaxed?
+	var/just_climaxed = FALSE
 
 	var/static/sex_id = 0
 	var/our_sex_id = 0 //this is so we can have more then 1 sex id open at once
@@ -30,9 +32,12 @@
 	our_sex_id = sex_id
 	assign_to_collective()
 
+	RegisterSignal(user, COMSIG_SEX_CLIMAX, PROC_REF(on_climax))
+
 	addtimer(CALLBACK(src, PROC_REF(check_sex)), 60 SECONDS, flags = TIMER_LOOP)
 
 /datum/sex_session/Destroy(force, ...)
+	UnregisterSignal(user, COMSIG_SEX_CLIMAX)
 	// Remove from collective
 	if(collective)
 		collective.sessions -= src
@@ -238,8 +243,15 @@
 /datum/sex_session/proc/finished_check()
 	if(!do_until_finished)
 		return FALSE
-	return TRUE
+	if(just_climaxed)
+		just_climaxed = FALSE
+		return TRUE
+	return FALSE
 
+/datum/sex_session/proc/on_climax(mob/source)
+	if(!do_until_finished)
+		return
+	just_climaxed = TRUE
 
 
 /datum/sex_session/proc/get_force_string()
@@ -785,7 +797,8 @@
 /datum/sex_session/Topic(href, href_list)
 	if(usr != user)
 		return
-	var/list/arousal_data = SEND_SIGNAL(user, COMSIG_SEX_GET_AROUSAL)
+	var/list/arousal_data = list()
+	SEND_SIGNAL(user, COMSIG_SEX_GET_AROUSAL, arousal_data)
 	var/selected_tab = href_list["tab"] || "interactions"
 
 	switch(href_list["task"])
