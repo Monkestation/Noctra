@@ -46,7 +46,7 @@
 
 	sex_session.perform_sex_action(user, 2, 0, TRUE)
 
-	if(sex_session.considered_limp())
+	if(sex_session.considered_limp(user))
 		sex_session.perform_sex_action(target, 1.2, 4, FALSE)
 	else
 		sex_session.perform_sex_action(target, 2.4, 9, FALSE)
