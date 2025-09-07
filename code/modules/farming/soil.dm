@@ -1079,9 +1079,9 @@
 
 	for(var/i in 1 to spawn_amount)
 		var/obj/item/produce = new plant.produce_type(loc)
+		produce.set_quality(crop_quality)
 		if(produce && istype(produce, /obj/item/reagent_containers/food/snacks/produce))
 			var/obj/item/reagent_containers/food/snacks/produce/P = produce
-			P.set_quality(crop_quality)
 			// Pass genetics to the produce for seed extraction
 			P.source_genetics = new_genetics.copy()
 

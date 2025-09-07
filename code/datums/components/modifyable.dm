@@ -103,14 +103,16 @@
 			continue
 		effect.apply_combat_effect(target, user)
 
-/datum/component/modifications/proc/on_apply_combat_effects(obj/item/source, mob/living/target, mob/living/user, damage_dealt)
+/datum/component/modifications/proc/on_apply_combat_effects(obj/item/source, mob/living/target, mob/living/user, proximity_flag)
 	SIGNAL_HANDLER
+	if(!proximity_flag)
+		return
 
 	if(!length(combat_gem_effects))
 		return
 
 	for(var/datum/rune_effect/effect in combat_gem_effects)
-		effect.apply_combat_effect(target, user, damage_dealt)
+		effect.apply_combat_effect(target, user, 0)
 
 /datum/component/modifications/proc/can_socket_gem(obj/item/gem/G)
 	if(!G || !istype(G, /obj/item/gem))

@@ -128,6 +128,8 @@
 	examine_list += "It will last for [timeleft(decay_timer) / 10] more seconds."
 
 /datum/component/enchanted_weapon/proc/item_afterattack(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
+	if(!proximity_flag)
+		return
 	if(enchant_type == SEARING_BLADE_ENCHANT)
 		if(isliving(target))
 			var/mob/living/M = target

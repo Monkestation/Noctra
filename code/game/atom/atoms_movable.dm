@@ -1052,8 +1052,8 @@
 /mob
 	no_bump_effect = FALSE
 
-GLOBAL_VAR_INIT(pixel_diff, 12)
-GLOBAL_VAR_INIT(pixel_diff_time, 1)
+#define ATTACK_ANIMATION_PIXEL_DIFF 12
+#define ATTACK_ANIMATION_TIME 1
 
 /**
  * Does an attack animation on the target that either uses the used_item icon or an effect from 'icons/effects/effects.dmi'
@@ -1080,22 +1080,37 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 
 	var/direction = get_dir(src, attacked_atom)
 	if(direction & NORTH)
-		pixel_y_diff = GLOB.pixel_diff
+		pixel_y_diff = ATTACK_ANIMATION_PIXEL_DIFF
 		turn_dir = prob(50) ? -1 : 1
 	else if(direction & SOUTH)
-		pixel_y_diff = -GLOB.pixel_diff
+		pixel_y_diff = -ATTACK_ANIMATION_PIXEL_DIFF
 		turn_dir = prob(50) ? -1 : 1
 
 	if(direction & EAST)
-		pixel_x_diff = GLOB.pixel_diff
+		pixel_x_diff = 12
 	else if(direction & WEST)
-		pixel_x_diff = -GLOB.pixel_diff
+		pixel_x_diff = -ATTACK_ANIMATION_PIXEL_DIFF
 		turn_dir = -1
 
 	var/matrix/initial_transform = matrix(transform)
 	var/matrix/rotated_transform = transform.Turn(15 * turn_dir)
-	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff, transform=rotated_transform, time = GLOB.pixel_diff_time, easing=LINEAR_EASING, flags = ANIMATION_PARALLEL)
-	animate(pixel_x = pixel_x - pixel_x_diff, pixel_y = pixel_y - pixel_y_diff, transform=initial_transform, time = GLOB.pixel_diff_time * 2, easing=SINE_EASING, flags = ANIMATION_PARALLEL)
+	animate(
+		src,
+		pixel_x = pixel_x + pixel_x_diff,
+		pixel_y = pixel_y + pixel_y_diff,
+		transform = rotated_transform,
+		time = ATTACK_ANIMATION_TIME,
+		easing = LINEAR_EASING,
+		flags = ANIMATION_PARALLEL
+		)
+	animate(
+		pixel_x = pixel_x - pixel_x_diff,
+		pixel_y = pixel_y - pixel_y_diff,
+		transform = initial_transform,
+		time = ATTACK_ANIMATION_TIME  * 2,
+		easing = SINE_EASING,
+		flags = ANIMATION_PARALLEL
+		)
 
 
 /atom/movable/proc/do_item_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, animation_type = ATTACK_ANIMATION_SWIPE)
@@ -1107,11 +1122,22 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 		// The icon should not rotate.
 		attack_image.appearance_flags = APPEARANCE_UI
 		var/atom/movable/flick_visual/attack = attacked_atom.flick_overlay_view(attack_image, 1 SECONDS)
+		var/matrix/copy_transform = new(initial(transform))
 		attack.dir = get_dir(src, attacked_atom)
-		var/matrix/copy_transform = new(transform)
-		animate(attack, alpha = 175, transform = copy_transform.Scale(0.75), time = 0.3 SECONDS)
-		animate(time = 0.1 SECONDS)
-		animate(alpha = 0, time = 0.3 SECONDS, easing = BACK_EASING|EASE_OUT)
+		animate(
+			attack,
+			alpha = 175,
+			transform = copy_transform.Scale(0.75),
+			time = 0.3 SECONDS
+		)
+		animate(
+			time = 0.1 SECONDS
+			)
+		animate(
+			alpha = 0,
+			time = 0.3 SECONDS,
+			easing = BACK_EASING|EASE_OUT
+			)
 
 	if (!used_item)
 		return
@@ -1153,9 +1179,22 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 		if (ATTACK_ANIMATION_BONK)
 			attack.pixel_x = attack.base_pixel_x + 14 * x_sign
 			attack.pixel_y = attack.base_pixel_y + 12 * y_sign
-			animate(attack, alpha = 175, transform = copy_transform.Scale(0.75), pixel_x = 4 * x_sign, pixel_y = 3 * y_sign, time = 0.2 SECONDS)
-			animate(time = 0.1 SECONDS)
-			animate(alpha = 0, time = 0.1 SECONDS, easing = BACK_EASING|EASE_OUT)
+			animate(
+				attack,
+				alpha = 175,
+				transform = copy_transform.Scale(0.75),
+				pixel_x = 4 * x_sign,
+				pixel_y = 3 * y_sign,
+				time = 0.2 SECONDS
+				)
+			animate(
+				time = 0.1 SECONDS
+				)
+			animate(
+				alpha = 0,
+				time = 0.1 SECONDS,
+				easing = BACK_EASING|EASE_OUT
+				)
 
 		if (ATTACK_ANIMATION_THRUST)
 			var/attack_angle = dir2angle(direction) + rand(-7, 7)
@@ -1439,3 +1478,6 @@ GLOBAL_VAR_INIT(pixel_diff_time, 1)
 	var/direction = get_dir(old_loc, new_loc)
 	loc = new_loc
 	Moved(old_loc, direction, TRUE)
+
+#undef ATTACK_ANIMATION_PIXEL_DIFF
+#undef ATTACK_ANIMATION_TIME

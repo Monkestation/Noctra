@@ -78,7 +78,7 @@ SUBSYSTEM_DEF(mobs)
 			L.DeadLife()
 		else
 			L.Life(seconds, times_fired)
-		if (TICK_CHECK_LOW)
+		if (TICK_CHECK)
 			return
 
 /datum/controller/subsystem/mobs/proc/enhance_mob(mob/living/mob, delve_level = 1)

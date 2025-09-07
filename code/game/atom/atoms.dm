@@ -1432,3 +1432,18 @@
 /// If it is not found, returns null.
 /atom/proc/get_filter_index(name)
 	return filter_data?.Find(name)
+
+/atom/proc/do_alert_effect()
+	var/mutable_appearance/alert = mutable_appearance('icons/effects/32x48.dmi', "alert_effect")
+	var/atom/movable/flick_visual/exclamation = flick_overlay_view(alert, 1 SECONDS)
+	exclamation.plane = src.plane
+	exclamation.alpha = 0
+	exclamation.pixel_x = -pixel_x
+	animate(exclamation, pixel_z = 32, alpha = 255, time = 0.5 SECONDS, easing = ELASTIC_EASING)
+
+	// Intentionally less time then the flick so we don't get weird shit
+	addtimer(CALLBACK(src, PROC_REF(forget_alert), exclamation), 0.8 SECONDS, TIMER_CLIENT_TIME)
+
+/atom/proc/forget_alert(atom/movable/flick_visual/alert)
+	animate(alert, time = 0.5 SECONDS, alpha = 0)
+	QDEL_IN(alert, 0.5 SECONDS)

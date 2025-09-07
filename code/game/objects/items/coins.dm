@@ -371,7 +371,7 @@
 // SILVER
 /obj/item/coin/silver
 	name = "ziliqua"
-	desc = "An ancient silver coin still in use due to their remarkable ability to last the ages. It's valued at 5 mammon per coin."
+	desc = "An ancient silver coin still in use due to its remarkable ability to last the ages. Though silver in name, the metal was alloyed and treated long ago, stripping it of any bane against the undead. It's valued at 5 mammon per coin."
 	icon_state = "s1"
 	sellprice = 5
 	base_type = CTYPE_SILV

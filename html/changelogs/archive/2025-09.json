@@ -112,5 +112,104 @@
                 "qol": "Removed Moondusts, Ozium and Pure Moondust's ability to flash your screen at the start of the reagent metabolization."
             }
         ]
+    },
+    "2025-09-05": {
+        "7erracotta": [
+            {
+                "rscadd": "three new weapons and their smithing recipes"
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "Fixed leyline toggle verb"
+            },
+            {
+                "rscadd": "Added basic prefs functionality to the prefs window, click the button in the top right. Currently supports various sound settings, be voice and maptext toggles for balloon alerts and runechat."
+            }
+        ],
+        "dwasint": [
+            {
+                "rscadd": "You can now use Triumphs to influence migrant waves"
+            }
+        ],
+        "grungussuss": [
+            {
+                "rscadd": "Added the \\\"Silence!!\\\" command to the throne."
+            },
+            {
+                "bugfix": "the throne will no longer say you are not worthy, if you are."
+            },
+            {
+                "bugfix": "key lock/unlocks show the key afterimage like they were supposed to"
+            },
+            {
+                "bugfix": "lying down will no longer forever displace you by 6 pixels down"
+            },
+            {
+                "bugfix": "biting people with an item in hand will no longer play the item_attack_animation"
+            }
+        ],
+        "Telvayne": [
+            {
+                "bugfix": "corrected a missing # that was causing mirrors to set hair color to #000000"
+            }
+        ]
+    },
+    "2025-09-06": {
+        "CheffieGithub": [
+            {
+                "bugfix": "Fixed all steel recipes costing 3 bars"
+            },
+            {
+                "bugfix": "Vanderlin keep steam vent removed"
+            }
+        ],
+        "Wouju": [
+            {
+                "rscadd": "water arrows/bolts are now craftable by artificers"
+            },
+            {
+                "qol": "Clarified the recipe names of artificier craftable items"
+            },
+            {
+                "balance": "Crossbows now require TWO fibres instead of ONE. Vanderlin balance in shambles"
+            }
+        ],
+        "snowyseshi": [
+            {
+                "rscadd": "Eorabella clan"
+            },
+            {
+                "rscadd": "Vampiric Manipulation, Vampiric charm. (encode thoughts and eoran charm but rewritten so they can use it)"
+            },
+            {
+                "rscadd": "Give Zizo clerics/paladins Zizo chant language"
+            },
+            {
+                "rscadd": "Retired Mercenary now has their cmode music and old psydonic language"
+            }
+        ],
+        "grungussuss": [
+            {
+                "rscadd": "Your runetext chat messages now print out gradually"
+            }
+        ]
+    },
+    "2025-09-07": {
+        "wgtjunior743": [
+            {
+                "bugfix": "Crusader Tabard overwriting the Tabard craft"
+            }
+        ],
+        "SarmentiCampbell": [
+            {
+                "rscadd": "Added four new type of godless"
+            }
+        ],
+        "grungussuss": [
+            {
+                "admin": "admins have a new god hand smite"
+            }
+        ]
     }
 }

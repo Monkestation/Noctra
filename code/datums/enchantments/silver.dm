@@ -31,6 +31,8 @@
 	return UNAFFECTED
 
 /datum/enchantment/silver/on_hit(obj/item/source, mob/living/carbon/human/target, mob/living/carbon/human/user, proximity_flag, click_parameters)
+	if(!proximity_flag)
+		return
 	if(!ishuman(target))
 		return
 	if(world.time < (src.last_used[source] + (1 MINUTES + 40 SECONDS))) //thanks borbop

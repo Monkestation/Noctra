@@ -114,8 +114,9 @@
 				hairs = H.dna.species.get_hairc_list()
 				new_hair = browser_input_list(user, "Choose your character's hair color:", "", hairs)
 			if(new_hair)
-				H.set_hair_color(hairs[new_hair], FALSE)
-				H.set_facial_hair_color(hairs[new_hair], FALSE)
+				new_hair = "#" + hairs[new_hair]
+				H.set_hair_color(new_hair, FALSE)
+				H.set_facial_hair_color(new_hair, FALSE) // This doesn't work for some reason?  Just change facial hair and its fine.
 				should_update = TRUE
 
 		if("skin")

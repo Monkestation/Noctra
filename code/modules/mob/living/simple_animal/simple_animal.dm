@@ -189,6 +189,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 		AddComponent(/datum/component/generic_mob_hunger, food_max, 0.25)
 	if(happy_funtime_mob)
 		AddComponent(/datum/component/friendship_container, mob_friends, "friend")
+		AddComponent(/datum/component/happiness_container, 30, list(), list(), food_type)
 
 /mob/living/simple_animal/Destroy()
 	if(nest)
@@ -213,7 +214,7 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 	if(!stat)
 		user.visible_message("<span class='info'>[user] hand-feeds [O] to [src].</span>", "<span class='notice'>I hand-feed [O] to [src].</span>")
 		playsound(loc,'sound/misc/eat.ogg', rand(30,60), TRUE)
-		SEND_SIGNAL(src, COMSIG_MOB_FEED, O, 30)
+		SEND_SIGNAL(src, COMSIG_MOB_FEED, O, 30, user)
 		SEND_SIGNAL(src, COMSIG_FRIENDSHIP_CHANGE, user, 10)
 		qdel(O)
 		if(tame && owner == user)
@@ -375,70 +376,165 @@ GLOBAL_VAR_INIT(farm_animals, FALSE)
 /mob/living/simple_animal/MiddleClick(mob/living/user, params)
 	if(stat == DEAD)
 		var/obj/item/held_item = user.get_active_held_item()
-		var/boon = user.get_learning_boon(/datum/skill/labor/butchering)
 		if(held_item)
 			if((butcher_results || guaranteed_butcher_results) && held_item.get_sharpness() && held_item.wlength == WLENGTH_SHORT)
 				if(src.buckled && istype(src.buckled, /obj/structure/meathook))
 					var/obj/structure/meathook/hook = buckled
 					hook.butchery(user, src)
 					return
-				var/used_time = 21 SECONDS
-				if(user.mind)
-					used_time -= (user.get_skill_level(/datum/skill/labor/butchering) * 3 SECONDS)
 				visible_message("[user] begins to butcher [src].")
 				playsound(src, 'sound/foley/gross.ogg', 100, FALSE)
-				var/amt2raise = user.STAINT // this is due to the fact that butchering is not as spammable as training a sword because you cant just spam click
-				if(do_after(user, used_time, src))
-					user.mind.add_sleep_experience(/datum/skill/labor/butchering, amt2raise * boon, FALSE)
+				if(do_after(user, 3 SECONDS, src))
 					butcher(user)
 	..()
 
-/mob/living/simple_animal/proc/butcher(mob/user)
+/mob/living/simple_animal/proc/butcher(mob/living/user)
 	if(ssaddle)
 		ssaddle.forceMove(get_turf(src))
 		ssaddle = null
-	if(butcher_results || guaranteed_butcher_results)
-		var/list/butcher = list()
+	var/list/butcher = list()
+	var/butchery_skill_level = user.get_skill_level(/datum/skill/labor/butchering)
+	var/time_per_cut = max(5, 30 - butchery_skill_level * 5) // 30 seconds for no skill, 5 seconds for master
+	var/botch_chance = 0
+	if(length(botched_butcher_results) && butchery_skill_level < SKILL_LEVEL_JOURNEYMAN)
+		botch_chance = 70 - (20 * butchery_skill_level)
+	var/perfect_chance = 0
+	if(length(perfect_butcher_results))
+		switch(butchery_skill_level)
+			if(SKILL_LEVEL_NONE to SKILL_LEVEL_APPRENTICE)
+				perfect_chance = 0
+			if(SKILL_LEVEL_JOURNEYMAN)
+				perfect_chance = 10
+			if(SKILL_LEVEL_EXPERT)
+				perfect_chance = 50
+			if(SKILL_LEVEL_MASTER to INFINITY)
+				perfect_chance = 100
 
-		if(butcher_results)
-			if(user.get_skill_level(/datum/skill/labor/butchering) <= 1)
-				if(prob(50))
-					butcher = botched_butcher_results // chance to get shit result
-				else
-					butcher = butcher_results
-			if(user.get_skill_level(/datum/skill/labor/butchering) == 3)
-				if(prob(10))
-					butcher = perfect_butcher_results // small chance to get great result
-				else
-					butcher = butcher_results
-			if(user.get_skill_level(/datum/skill/labor/butchering) == 4)
-				if(prob(50))
-					butcher = perfect_butcher_results // decent chance to get great result
-				else
-					butcher = butcher_results
+	// Get happiness bonus - ranges from 0% to 50% extra yield
+	var/happiness_bonus = get_happiness_yield_bonus()
+	var/happiness_message = get_happiness_butcher_message(happiness_bonus)
+
+	// Always add guaranteed items up front
+	if(guaranteed_butcher_results)
+		butcher += guaranteed_butcher_results
+	var/rotstuff = FALSE
+	var/datum/component/rot/simple/CR = GetComponent(/datum/component/rot/simple)
+	if(CR && CR.amount >= 10 MINUTES)
+		rotstuff = TRUE
+	var/atom/Tsec = drop_location()
+	// Track results
+	var/botch_count = 0
+	var/perfect_count = 0
+	var/normal_count = 0
+	var/bonus_count = 0 // Track bonus items from happiness
+
+	for(var/path in butcher_results)
+		var/amount = butcher_results[path]
+		if(!do_after(user, time_per_cut, target = src))
+			if(botch_count || normal_count || perfect_count || bonus_count)
+				to_chat(user, "<span class='notice'>I stop butchering: [butcher_summary(botch_count, normal_count, perfect_count, bonus_count, botch_chance, perfect_chance, happiness_bonus)].</span>")
 			else
-				if(user.get_skill_level(/datum/skill/labor/butchering) >= 5)
-					butcher = perfect_butcher_results
-				else
-					butcher = butcher_results
+				to_chat(user, "<span class='notice'>I stop butchering for now.</span>")
+			break
+		// Check for botch first
+		if(prob(botch_chance))
+			botch_count++
+			if(length(botched_butcher_results) && (path in botched_butcher_results))
+				amount = botched_butcher_results[path]
+			else
+				amount = 0
+		// Otherwise check for perfect
+		else if(length(perfect_butcher_results) && (path in perfect_butcher_results) && prob(perfect_chance))
+			amount = perfect_butcher_results[path]
+			perfect_count++
+		else
+			normal_count++
 
-		var/rotstuff = FALSE
-		var/datum/component/rot/simple/CR = GetComponent(/datum/component/rot/simple)
-		if(CR)
-			if(CR.amount >= 10 MINUTES)
-				rotstuff = TRUE
-		var/atom/Tsec = drop_location()
-		if(head_butcher && (HAS_TRAIT(user, TRAIT_HEAD_BUTCHER) || butcher == perfect_butcher_results))
-			butcher[head_butcher] = 1
-		for(var/path in butcher)
-			for(var/i in 1 to butcher[path])
-				var/obj/item/I = new path(Tsec)
-				I.add_mob_blood(src)
-				if(rotstuff && istype(I,/obj/item/reagent_containers/food/snacks))
-					var/obj/item/reagent_containers/food/snacks/F = I
-					F.become_rotten()
-	SEND_SIGNAL(user, COMSIG_MOB_BUTCHERED, src)
-	gib()
+		// Apply happiness bonus to yield (only if not botched)
+		var/bonus_amount = 0
+		if(amount > 0 && happiness_bonus > 0)
+			// Calculate bonus items based on happiness
+			var/total_bonus = amount * happiness_bonus
+			bonus_amount = round(total_bonus)
+			// Handle fractional bonuses with probability
+			var/fractional_part = total_bonus - bonus_amount
+			if(fractional_part > 0 && prob(fractional_part * 100))
+				bonus_amount++
+			bonus_count += bonus_amount
+
+		butcher_results -= path
+		var/total_amount = amount + bonus_amount
+		for(var/j in 1 to total_amount)
+			var/obj/item/I = new path(Tsec)
+			I.add_mob_blood(src)
+			if(rotstuff && istype(I,/obj/item/reagent_containers/food/snacks))
+				var/obj/item/reagent_containers/food/snacks/F = I
+				F.become_rotten()
+		if(user.mind)
+			user.mind.add_sleep_experience(/datum/skill/labor/butchering, user.STAINT * 0.5)
+		playsound(src, 'sound/foley/gross.ogg', 70, FALSE)
+	if(isemptylist(butcher_results))
+		var/final_message = "I finish butchering: [butcher_summary(botch_count, normal_count, perfect_count, bonus_count, botch_chance, perfect_chance, happiness_bonus)]"
+		if(happiness_message)
+			final_message += " [happiness_message]"
+		to_chat(user, "<span class='notice'>[final_message].</span>")
+		gib()
+
+/mob/living/proc/butcher_summary(botch_count, normal_count, perfect_count, bonus_count, botch_chance, perfect_chance, happiness_bonus)
+	var/list/parts = list()
+	if(botch_count)
+		parts += "[botch_count] botched ([botch_chance]%)"
+	if(normal_count)
+		parts += "[normal_count] normal"
+	if(perfect_count)
+		parts += "[perfect_count] perfect ([perfect_chance]%)"
+	if(bonus_count)
+		parts += "[bonus_count] bonus ([round(happiness_bonus * 100)]%)"
+	var/msg = ""
+	for(var/i = 1, i <= length(parts), i++)
+		msg += parts[i]
+		if(i < length(parts))
+			msg += ", "
+	return msg
+
+/mob/living/simple_animal/proc/get_happiness_yield_bonus(multiplier = 0.5)
+	var/datum/component/happiness_container/happiness_comp = GetComponent(/datum/component/happiness_container)
+	if(!happiness_comp)
+		return 0
+
+	var/current_happiness = SEND_SIGNAL(src, COMSIG_HAPPINESS_RETURN_VALUE)
+	if(!current_happiness || current_happiness <= 0)
+		return 0
+
+	// Generational scaling: each 30 happiness represents one generation of care //! IF YOU CHANGE THE GENERATIONAL HAPPINESS VALUE ADJUST THIS
+	// Gen 1 (0-30): 0-12.5% bonus
+	// Gen 2 (31-60): 12.5-25% bonus
+	// Gen 3 (61-90): 25-37.5% bonus
+	// Gen 4+ (91+): 37.5-50% bonus (capped)
+
+	var/generation = min(ceil(current_happiness / 30.0), 4) // Cap at generation 4
+	var/happiness_in_gen = ((current_happiness - 1) % 30) + 1
+	var/gen_progress = happiness_in_gen / 30.0
+
+	var/base_bonus = (generation - 1) * 0.25
+	var/gen_bonus = gen_progress * 0.25
+	var/total_bonus = (base_bonus + gen_bonus) * multiplier
+
+	return min(total_bonus, 1.0) // Cap at 100% bonus
+
+/mob/living/simple_animal/proc/get_happiness_butcher_message(happiness_bonus)
+	if(happiness_bonus <= 0)
+		return null
+
+	switch(happiness_bonus)
+		if(0 to 0.1)
+			return "The animal seems content."
+		if(0.1 to 0.25)
+			return "The well-cared-for animal yields extra meat."
+		if(0.25 to 0.4)
+			return "The happy animal provides generous portions."
+		if(0.4 to INFINITY)
+			return "The blissful animal rewards your care with abundant meat."
 
 /mob/living/simple_animal/spawn_dust(just_ash = FALSE)
 	if(just_ash || !remains_type)

@@ -210,6 +210,10 @@
 	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/thrust/short, /datum/intent/sword/chop)
 	max_integrity = 200
 
+/obj/item/weapon/sword/sabre/noc/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
+
 //................ Cutlass ............... //
 /obj/item/weapon/sword/sabre/cutlass
 	name = "cutlass"
@@ -302,6 +306,94 @@
 	wbalance = EASY_TO_DODGE
 	sellprice = 20
 	smeltresult = /obj/item/ingot/iron
+
+/obj/item/weapon/sword/scimitar/lakkarikhopesh/iron
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/axe/chop)
+	gripped_intents = list(/datum/intent/sword/chop, /datum/intent/sword/thrust)
+	name = "iron khopesh"
+	desc = "An iron sword of Lakkarian origin. It's popular among traveling Noccian scholars."
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	icon_state = "khopesh_iron"
+	swingsound = BLADEWOOSH_LARGE
+	wbalance = EASY_TO_DODGE
+	sellprice = 20
+	smeltresult = /obj/item/ingot/iron
+
+/obj/item/weapon/sword/scimitar/lakkarikhopesh
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/axe/chop)
+	gripped_intents = list(/datum/intent/sword/chop, /datum/intent/sword/thrust)
+	name = "steel khopesh"
+	desc = "A steel sword of Lakkarian origin. It's popular among traveling Noccian scholars."
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	icon_state = "khopesh_steel"
+	swingsound = BLADEWOOSH_LARGE
+	wbalance = EASY_TO_DODGE
+	sellprice = 45
+
+/obj/item/weapon/sword/scimitar/ada/iron
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop)
+	gripped_intents = list(/datum/intent/sword/chop, /datum/intent/sword/thrust)
+	name = "iron ada"
+	desc = "An iron falchion hailing from the eastern dunes of Lakkari. The usual backup weapon of Lakkarian pegasus knights."
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	icon_state = "ada_iron"
+	swingsound = BLADEWOOSH_LARGE
+	wdefense = AVERAGE_PARRY
+	sellprice = 20
+	smeltresult = /obj/item/ingot/iron
+
+/obj/item/weapon/sword/scimitar/ada
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop)
+	gripped_intents = list(/datum/intent/sword/chop, /datum/intent/sword/thrust)
+	name = "steel ada"
+	desc = "A steel falchion hailing from the eastern dunes of Lakkari. The usual backup weapon of Lakkarian pegasus knights."
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	icon_state = "ada_steel"
+	swingsound = BLADEWOOSH_LARGE
+	wdefense = AVERAGE_PARRY
+	sellprice = 45
+
+/obj/item/weapon/sword/scimitar/sengese/iron
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop)
+	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop, /datum/intent/sword/thrust)
+	name = "iron sengese"
+	desc = "A curved sword of Lakkarian origin. Many inexperienced swordsmen struggle to use it well due to its shape, but its a force to be reckoned with in the hands of a master."
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	icon_state = "sengese_iron"
+	swingsound = BLADEWOOSH_SMALL
+	wdefense = AVERAGE_PARRY
+	minstr = 7
+	sellprice = 20
+	smeltresult = /obj/item/ingot/iron
+
+/obj/item/weapon/sword/scimitar/sengese
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop)
+	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop, /datum/intent/sword/thrust)
+	name = "steel sengese"
+	desc = "A curved sword of Lakkarian origin. Many inexperienced swordsmen struggle to use it well due to its shape, but its a force to be reckoned with in the hands of a master."
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	icon_state = "sengese_steel"
+	swingsound = BLADEWOOSH_SMALL
+	wdefense = AVERAGE_PARRY
+	minstr = 7
+	sellprice = 45
+
+/obj/item/weapon/sword/scimitar/sengese/silver
+	possible_item_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop)
+	gripped_intents = list(/datum/intent/sword/cut, /datum/intent/sword/chop, /datum/intent/sword/thrust)
+	name = "silver sengese"
+	desc = "A curved sword of Lakkarian origin. Many inexperienced swordsmen struggle to use it well due to its shape, but its a force to be reckoned with in the hands of a master."
+	icon = 'icons/roguetown/weapons/lakkari.dmi'
+	icon_state = "sengese_silver"
+	swingsound = BLADEWOOSH_SMALL
+	wdefense = AVERAGE_PARRY
+	minstr = 7
+	sellprice = 30
+	smeltresult = /obj/item/ingot/silver
+
+/obj/item/weapon/sword/scimitar/sengese/silver/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 /*--------\
 | Rapiers |		Onehanded, slightly weaker cut, more AP thrust, harder to dodge.

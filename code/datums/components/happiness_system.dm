@@ -48,8 +48,9 @@
 				source.ai_controller?.remove_thing_from_blackboard_key(BB_FRIENDS_LIST, target)
 
 		else if((friendship_levels[befriend_level] <= weakrefed_friends[ref]) && !(ref in befriended_refs))
-			SEND_SIGNAL(parent, COMSIG_LIVING_BEFRIENDED, ref.resolve())
 			befriended_refs += ref
+			if(!(target in source.ai_controller?.blackboard[BB_FRIENDS_LIST]))
+				SEND_SIGNAL(parent, COMSIG_LIVING_BEFRIENDED, ref.resolve())
 			source.ai_controller?.insert_blackboard_key_lazylist(BB_FRIENDS_LIST, target)
 
 		weakrefed_friends[ref] += amount

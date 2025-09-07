@@ -278,6 +278,9 @@
 /proc/get_rand_frequency()
 	return rand(43100, 45100) //Frequency stuff only works with 45kbps oggs.
 
+/proc/get_rand_frequency_higher_range()
+	return rand(40000, 48100)
+
 /proc/get_sfx(soundin)
 	if(islist(soundin))
 		soundin = pick(soundin)

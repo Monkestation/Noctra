@@ -505,8 +505,8 @@ GLOBAL_LIST_EMPTY(ritualslist)
 				return
 			if(H.anchored) // a way to bind the person to the rune if they choose to resist converting
 				return
-			if(istype(H.wear_neck, /obj/item/clothing/neck/psycross))
-				to_chat(user.mind, span_danger("\"They are wearing my bane...\""))
+			if(istype(H.wear_neck, /obj/item/clothing/neck/psycross/silver) || istype(H.wear_wrists, /obj/item/clothing/neck/psycross/silver) )
+				to_chat(user.mind, span_danger("\"They are wearing silver, it resists the dark magick!\""))
 				return
 			if(length(SSmapping.retainer.cultists) >= 8)
 				to_chat(user.mind, span_danger("\"The veil is too strong to support more than seven lackeys.\""))
@@ -581,8 +581,8 @@ GLOBAL_LIST_EMPTY(ritualslist)
 						return
 					if(HL == SSticker.rulermob)
 						return
-					if(istype(HL.wear_neck, /obj/item/clothing/neck/psycross))
-						to_chat(user.mind, span_danger("\"They are wearing my bane...\""))
+					if(istype(HL.wear_neck, /obj/item/clothing/neck/psycross/silver) || istype(HL.wear_wrists, /obj/item/clothing/neck/psycross/silver))
+						to_chat(user.mind, span_danger("\"They are wearing silver, it resists the dark magick!\""))
 						return
 					if(HAS_TRAIT(HL, TRAIT_NOSTAMINA))
 						return

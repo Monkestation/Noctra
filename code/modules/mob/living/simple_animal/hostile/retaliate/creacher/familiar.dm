@@ -27,6 +27,7 @@
 	botched_butcher_results = null
 	butcher_results = null
 	perfect_butcher_results = null
+	head_butcher = null
 	del_on_death = TRUE
 
 	ai_controller = /datum/ai_controller/summon

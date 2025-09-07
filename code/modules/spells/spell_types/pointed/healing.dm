@@ -186,11 +186,10 @@
 						situational_bonus = 25
 						break
 
-			if(/datum/patron/godless)
-				cast_on.visible_message(span_info("No Gods answer these prayers."), span_notice("No Gods answer these prayers."))
-				return
-
 			else
+				if(istype(living_owner.patron, /datum/patron/godless))
+					cast_on.visible_message(span_info("No Gods answer these prayers."), span_notice("No Gods answer these prayers."))
+					return
 				cast_on.visible_message(span_info("A choral sound comes from above and [cast_on] is healed!"), span_notice("I am bathed in healing choral hymns!"))
 
 	if(conditional_buff)

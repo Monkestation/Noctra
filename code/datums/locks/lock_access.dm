@@ -57,7 +57,7 @@
 		return
 	to_chat(user, span_notice("I lock \the [src]."))
 
-/mob/proc/lock_unlock_animation(obj/door, obj/item)
+/mob/proc/lock_unlock_animation(obj/door, obj/item) // this is only mob level and not living because all the lock/unlock procs expect mob and I don't want to rewrite it right now.
 	animate(src, time = 0.3 SECONDS, pixel_w = ((door.x - src.x) * 5), pixel_z = ((door.y - src.y) * 5), easing = SINE_EASING, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 	animate(time = 0.3 SECONDS, pixel_w = ((door.x - src.x) * -5), pixel_z = ((door.y - src.y) * -5), easing = SINE_EASING, flags = ANIMATION_RELATIVE)
 	if(!item)
@@ -77,7 +77,7 @@
 	animate(key, time = 0.5 SECONDS, alpha = 170, pixel_w = ((door.x - src.x) * 14), pixel_z = ((door.y - src.y) * 14), easing = SINE_EASING, flags = ANIMATION_RELATIVE)
 	animate(time = 0.4 SECONDS, alpha = 0, easing = SINE_EASING)
 
-	qdel(key)
+	QDEL_IN(key, 0.9 SECONDS)
 
 /// Called when unlocked
 /obj/proc/on_unlock(mob/user, obj/item, silent = FALSE)

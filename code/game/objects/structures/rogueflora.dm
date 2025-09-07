@@ -1,5 +1,6 @@
 /obj/structure/flora
 	var/num_random_icons = 0
+	layer = FLORA_LAYER
 
 /obj/structure/flora/Initialize()
 	. = ..()
@@ -20,7 +21,6 @@
 	max_integrity = 200
 	blade_dulling = DULLING_CUT
 	SET_BASE_PIXEL(-16, 0)
-	layer = 4.81
 	plane = GAME_PLANE_UPPER
 	attacked_sound = 'sound/misc/woodhit.ogg'
 	destroy_sound = 'sound/misc/treefall.ogg'
@@ -590,7 +590,6 @@
 	max_integrity = 120
 	blade_dulling = DULLING_CUT
 	SET_BASE_PIXEL(-16, 0)
-	layer = 4.81
 	attacked_sound = 'sound/misc/woodhit.ogg'
 	destroy_sound = 'sound/misc/woodhit.ogg'
 	static_debris = list(/obj/item/grown/log/tree/small = 1)

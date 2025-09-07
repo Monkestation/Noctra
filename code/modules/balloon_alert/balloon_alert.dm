@@ -43,6 +43,10 @@
 	if(isnull(viewer_client))
 		return
 
+	if(viewer.client?.prefs.toggles_maptext & DISABLE_BALLOON_ALERTS)
+		to_chat(viewer, span_emote("[name]: [text]"))
+		return
+
 	var/image/balloon_alert = image(loc = isturf(src) ? src : get_atom_on_turf(src), layer = ABOVE_MOB_LAYER)
 	balloon_alert.plane = BALLOON_CHAT_PLANE
 	balloon_alert.alpha = 0

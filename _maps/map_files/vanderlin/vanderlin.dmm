@@ -38773,12 +38773,6 @@
 "xSf" = (
 /turf/open/floor/ruinedwood/turned/darker,
 /area/rogue/indoors/town/theatre)
-"xSA" = (
-/obj/structure/water_vent{
-	dir = 8
-	},
-/turf/open/floor/blocks/stonered/tiny,
-/area/rogue/under/town/basement)
 "xSI" = (
 /obj/structure/chair/stool{
 	dir = 1
@@ -65114,7 +65108,7 @@ jYU
 nCG
 nVr
 nVr
-xSA
+vzn
 bUM
 tHe
 nCG

@@ -1,6 +1,8 @@
 /datum/advclass/roguemage //mage class - like the adventurer mage, but more evil.
 	name = "Rogue Mage"
-	tutorial = "Those fools at the academy laughed at you and cast you from the ivory tower of higher learning and magickal practice. No matter - you will ascend to great power one day, but first you need wealth - vast amounts of it. Show those fools in the town what REAL magic looks like."
+	tutorial = "Those fools at the academy laughed at you and cast you from the ivory tower of higher learning and magickal practice. \
+	No matter - you will ascend to great power one day, but first you need wealth - vast amounts of it. \
+	Show those fools in the town what REAL magic looks like."
 	outfit = /datum/outfit/job/bandit/roguemage
 	category_tags = list(CTAG_BANDIT)
 	cmode_music = 'sound/music/cmode/antag/CombatRogueMage.ogg'
@@ -10,8 +12,9 @@
 	if(prob(5))
 		H.cmode_music = 'sound/music/cmode/antag/combat_evilwizard.ogg'
 
-	if(!(H.patron == /datum/patron/inhumen/zizo))		//Magic lore-wise is either Noc or Zizo. This class was cast out from the academy, so it's definitely not Noc.
-		H.set_patron(/datum/patron/inhumen/zizo, TRUE)
+	//magic users are either noc worshippers or zizo worshippers
+	//because the rogue mage was kicked away from the academy and is now a bandit, no way in hell do they worship noc any longer, or if they even did in the first place
+	H.set_patron(/datum/patron/inhumen/zizo)
 	H.mana_pool?.set_intrinsic_recharge(MANA_ALL_LEYLINES)
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	pants = /obj/item/clothing/pants/trou/leather

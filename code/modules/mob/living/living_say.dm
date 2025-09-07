@@ -204,7 +204,7 @@
 /mob/proc/can_see_runechat(atom/movable/speaker)
 	if(!client || !client.prefs)
 		return FALSE
-	if(!client.prefs.chat_on_map)
+	if(client.prefs.toggles_maptext & DISABLE_RUNECHAT)
 		return FALSE
 	if(stat >= UNCONSCIOUS)
 		return FALSE
