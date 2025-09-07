@@ -550,3 +550,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HARD_TO_STEAL "hard_to_steal"
 /// Trait given by echolocation component.
 #define ECHOLOCATION_TRAIT "echolocation"
+/// trait that makes you bounce when speaking
+#define TRAIT_SHAKY_SPEECH "Shaky Speech"

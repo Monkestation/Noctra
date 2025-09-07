@@ -36,3 +36,7 @@
 #define COMSIG_MOB_ADJUST_HUNGER "adjust_hunger_mob"
 #define COMSIG_MOB_FILL_HUNGER "fill_hunger"
 #define COMSIG_MOB_DRAIN_HUNGER "drain_hunger"
+#define COMSIG_HAPPINESS_ADJUST "happiness_adjustment"
+#define COMSIG_HAPPINESS_CHECK_RANGE "happiness_check_range"
+#define COMSIG_HAPPINESS_PASS_HAPPINESS "happiness_pass"
+#define COMSIG_HAPPINESS_RETURN_VALUE "happiness_return"

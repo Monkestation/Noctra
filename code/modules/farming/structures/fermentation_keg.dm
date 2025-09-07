@@ -48,6 +48,8 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	var/recipe_completions = 0
 	///Brewing end timer
 	var/brew_timer
+	///our last user
+	var/mob/last_user
 
 /obj/structure/fermentation_keg/Initialize()
 	. = ..()
@@ -65,6 +67,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	if(selected_recipe)
 		QDEL_NULL(selected_recipe)
 	recipe_crop_stocks.Cut()
+	last_user = null
 	return ..()
 
 /obj/structure/fermentation_keg/update_overlays()
@@ -178,9 +181,39 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 		storage_list |= I.contents
 
 	var/dumps = FALSE
-	for(var/obj/item/reagent_containers/food/G in produce_list)
+	for(var/obj/item/reagent_containers/food/snacks/G in produce_list)
 		if(G.type in selected_recipe?.needed_crops)
-			recipe_crop_stocks[G.type]++
+			// Store quality data properly - following cooking system pattern
+			var/current_amount = 0
+			var/current_quality = 0
+			var/current_freshness = 0
+
+			// Check if we already have data for this crop type
+			if(recipe_crop_stocks[G.type])
+				if(islist(recipe_crop_stocks[G.type]))
+					var/list/existing_data = recipe_crop_stocks[G.type]
+					current_amount = existing_data["amount"] || 0
+					current_quality = existing_data["quality"] || 0
+					current_freshness = existing_data["freshness"] || 0
+				else
+					current_amount = recipe_crop_stocks[G.type]
+
+			// Get quality and freshness from the crop (matching cooking system)
+			var/crop_quality = max(G.recipe_quality, G.quality, 1) // Default quality
+			var/crop_freshness = max(0, (G.warming + G.rotprocess)) // Default freshness
+
+			// Calculate weighted average quality and freshness
+			var/new_amount = current_amount + 1
+			var/new_quality = ((current_quality * current_amount) + crop_quality) / new_amount
+			var/new_freshness = ((current_freshness * current_amount) + crop_freshness) / new_amount
+
+			// Store the data as a list
+			recipe_crop_stocks[G.type] = list(
+				"amount" = new_amount,
+				"quality" = new_quality,
+				"freshness" = new_freshness
+			)
+
 			if(G in storage_list)
 				dumps = TRUE
 				SEND_SIGNAL(G.loc, COMSIG_TRY_STORAGE_TAKE, G, get_turf(src), TRUE)
@@ -188,9 +221,34 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 
 	for(var/obj/item/item in produce_list)
 		if(item.type in selected_recipe?.needed_items)
-			var/amount = recipe_crop_stocks[item.type] || 0
-			var/added_item = 1
-			recipe_crop_stocks[item.type] = amount + added_item
+			// Store quality data for items too
+			var/current_amount = 0
+			var/current_quality = 0
+			var/current_freshness = 0
+
+			if(recipe_crop_stocks[item.type])
+				if(islist(recipe_crop_stocks[item.type]))
+					var/list/existing_data = recipe_crop_stocks[item.type]
+					current_amount = existing_data["amount"] || 0
+					current_quality = existing_data["quality"] || 0
+					current_freshness = existing_data["freshness"] || 0
+				else
+					current_amount = recipe_crop_stocks[item.type]
+
+			var/item_quality = item.recipe_quality // Default quality
+			var/item_freshness = 0 // Default freshness
+
+
+			var/new_amount = current_amount + 1
+			var/new_quality = ((current_quality * current_amount) + item_quality) / new_amount
+			var/new_freshness = ((current_freshness * current_amount) + item_freshness) / new_amount
+
+			recipe_crop_stocks[item.type] = list(
+				"amount" = new_amount,
+				"quality" = new_quality,
+				"freshness" = new_freshness
+			)
+
 			if(item in storage_list)
 				dumps = TRUE
 				SEND_SIGNAL(item.loc, COMSIG_TRY_STORAGE_TAKE, item, get_turf(src), TRUE)
@@ -199,7 +257,7 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	if(dumps)
 		user.visible_message("[user] dumps some things into [src].", "You dump some things into [src].")
 
-	// To prevent aging exploits while allowing refilling
+	// Handle reagent containers being added to the keg
 	var/selected_recipe_reagent
 	var/keg_reagent_amount
 	if(selected_recipe)
@@ -371,22 +429,40 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 
 	selected_recipe = null
 
-/obj/structure/fermentation_keg/proc/start_brew()
+/obj/structure/fermentation_keg/proc/start_brew(mob/user)
 	brewing = TRUE
 	ready_to_bottle = FALSE
 	tapped = FALSE
 
+	// Store the user who started brewing for quality calculation
+	if(user)
+		last_user = user
+
 	for(var/obj/item/reagent_containers/food/item as anything in selected_recipe.needed_crops)
 		if(!(item in recipe_crop_stocks))
 			return
-		var/amount = recipe_crop_stocks[item] || 0
-		recipe_crop_stocks[item] = amount - selected_recipe.needed_crops[item]
+		var/needed_amount = selected_recipe.needed_crops[item]
+
+		if(islist(recipe_crop_stocks[item]))
+			var/list/crop_data = recipe_crop_stocks[item]
+			var/current_amount = crop_data["amount"] || 0
+			crop_data["amount"] = current_amount - needed_amount
+		else
+			var/current_amount = recipe_crop_stocks[item] || 0
+			recipe_crop_stocks[item] = current_amount - needed_amount
 
 	for(var/obj/item/item as anything in selected_recipe.needed_items)
 		if(!(item in recipe_crop_stocks))
 			return
-		var/amount = recipe_crop_stocks[item] || 0
-		recipe_crop_stocks[item] = amount - selected_recipe.needed_items[item]
+		var/needed_amount = selected_recipe.needed_items[item]
+
+		if(islist(recipe_crop_stocks[item]))
+			var/list/item_data = recipe_crop_stocks[item]
+			var/current_amount = item_data["amount"] || 0
+			item_data["amount"] = current_amount - needed_amount
+		else
+			var/current_amount = recipe_crop_stocks[item] || 0
+			recipe_crop_stocks[item] = current_amount - needed_amount
 
 	for(var/datum/reagent/required_chem as anything in selected_recipe.needed_reagents)
 		reagents.remove_reagent(required_chem, selected_recipe.needed_reagents[required_chem])
@@ -400,26 +476,28 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 
 /obj/structure/fermentation_keg/proc/end_brew(success = TRUE)
 	deltimer(brew_timer)
-
 	if(!brewing)
 		return
-
 	brewing = FALSE
 	if(success)
 		sellprice += selected_recipe.sell_value
-		reagents.add_reagent(selected_recipe.reagent_to_brew, selected_recipe.brewed_amount * selected_recipe.per_brew_amount)
+
+		// Calculate quality before adding the reagent
+		var/calculated_quality = selected_recipe.calculate_brewing_quality(usr || last_user, src)
+
+		// Add the reagent to the keg
+		var/list/quality_data = list("quality" = calculated_quality)
+		reagents.add_reagent(selected_recipe.reagent_to_brew, selected_recipe.brewed_amount * selected_recipe.per_brew_amount, quality_data)
+
 		recipe_completions++
-
 		if(try_n_brew())
-			start_brew()
+			start_brew(last_user) // Use the stored user
 			return
-
 	soundloop.stop()
 	start_time = 0
 	heated_progress_time = 0
 	if(length(selected_recipe.age_times))
 		age_start_time = world.time
-
 	if(recipe_completions)
 		ready_to_bottle = TRUE
 		if(ready_icon_state)
@@ -442,16 +520,36 @@ GLOBAL_LIST_EMPTY(custom_fermentation_recipes)
 	var/ready = TRUE
 	//Crops
 	for(var/obj/item/reagent_containers/food/needed_crop as anything in selected_recipe.needed_crops)
-		if(recipe_crop_stocks[needed_crop] < selected_recipe.needed_crops[needed_crop])
+		var/needed_amount = selected_recipe.needed_crops[needed_crop]
+		var/available_amount = 0
+
+		if(recipe_crop_stocks[needed_crop])
+			if(islist(recipe_crop_stocks[needed_crop]))
+				var/list/crop_data = recipe_crop_stocks[needed_crop]
+				available_amount = crop_data["amount"] || 0
+			else
+				available_amount = recipe_crop_stocks[needed_crop]
+
+		if(available_amount < needed_amount)
 			if(user)
-				var/difference = selected_recipe.needed_crops[needed_crop] - recipe_crop_stocks[needed_crop]
+				var/difference = needed_amount - available_amount
 				to_chat(user, span_notice("This keg lacks [difference] [initial(needed_crop.name)][difference != 1 ? "s" : ""]!"))
 			ready = FALSE
 
 	for(var/obj/item/needed_item as anything in selected_recipe.needed_items)
-		if(recipe_crop_stocks[needed_item] < selected_recipe.needed_items[needed_item])
+		var/needed_amount = selected_recipe.needed_items[needed_item]
+		var/available_amount = 0
+
+		if(recipe_crop_stocks[needed_item])
+			if(islist(recipe_crop_stocks[needed_item]))
+				var/list/item_data = recipe_crop_stocks[needed_item]
+				available_amount = item_data["amount"] || 0
+			else
+				available_amount = recipe_crop_stocks[needed_item]
+
+		if(available_amount < needed_amount)
 			if(user)
-				var/difference = selected_recipe.needed_items[needed_item] - recipe_crop_stocks[needed_item]
+				var/difference = needed_amount - available_amount
 				to_chat(user, span_notice("This keg lacks [difference] [initial(needed_item.name)][difference != 1 ? "s" : ""]!"))
 			ready = FALSE
 

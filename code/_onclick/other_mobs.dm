@@ -4,7 +4,7 @@
 
 	Otherwise pretty standard.
 */
-/mob/living/carbon/UnarmedAttack(atom/A, proximity, params)
+/mob/living/carbon/UnarmedAttack(atom/A, proximity, params, atom/source)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return FALSE
 
@@ -560,7 +560,7 @@
 /*
 	Animals & All Unspecified
 */
-/mob/living/UnarmedAttack(atom/A, proximity_flag, params)
+/mob/living/UnarmedAttack(atom/A, proximity_flag, params, atom/source)
 	if(!isliving(A))
 		if(used_intent.type == INTENT_GRAB)
 			var/obj/structure/AM = A
@@ -586,7 +586,7 @@
 /*
 	Monkeys
 */
-/mob/living/carbon/monkey/UnarmedAttack(atom/A)
+/mob/living/carbon/monkey/UnarmedAttack(atom/A, proximity_flag, params, atom/source)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		if(a_intent != INTENT_HARM || is_muzzled())
 			return
@@ -621,14 +621,14 @@
 	Brain
 */
 
-/mob/living/brain/UnarmedAttack(atom/A)//Stops runtimes due to attack_animal being the default
+/mob/living/brain/UnarmedAttack(atom/A, proximity_flag, params, atom/source)//Stops runtimes due to attack_animal being the default
 	return
 
 /*
 	Simple animals
 */
 
-/mob/living/simple_animal/UnarmedAttack(atom/A, proximity)
+/mob/living/simple_animal/UnarmedAttack(atom/A, proximity, params, atom/source)
 	if(!dextrous)
 		return ..()
 	if(!ismob(A))
@@ -640,7 +640,7 @@
 	Hostile animals
 */
 
-/mob/living/simple_animal/hostile/UnarmedAttack(atom/A)
+/mob/living/simple_animal/hostile/UnarmedAttack(atom/A, proximity_flag, params, atom/source)
 	target = A
 	if(dextrous && !ismob(A))
 		..()

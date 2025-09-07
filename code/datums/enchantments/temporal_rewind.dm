@@ -12,6 +12,8 @@
 
 /datum/enchantment/rewind/on_hit(obj/item/source, atom/target, mob/user, proximity_flag, click_parameters)
 	.=..()
+	if(!proximity_flag)
+		return
 	if(world.time < src.last_used + 100)
 		return
 	else

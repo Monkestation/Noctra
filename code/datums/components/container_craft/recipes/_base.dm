@@ -342,7 +342,9 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 	// Variables for quality calculation
 	var/total_freshness = 0
 	var/ingredient_count = 0
-	var/highest_quality = 0
+	var/highest_food_quality = 0
+	var/highest_reagent_quality = 0
+	var/total_reagent_volume = 0
 
 	// Calculate average freshness and find highest quality ingredient
 	for(var/obj/item/reagent_containers/food_item in removing_items)
@@ -352,11 +354,15 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 			if(istype(food_item, /obj/item/reagent_containers/food/snacks))
 				var/obj/item/reagent_containers/food/snacks/F = food_item
 				total_freshness += max(0, (F.warming + F.rotprocess))
-				highest_quality = max(highest_quality, F.quality)
-			// Handle crops/grown items
-			else if(istype(food_item, /obj/item/reagent_containers/food/snacks/produce))
-				var/obj/item/reagent_containers/food/snacks/produce/G = food_item
-				highest_quality = max(highest_quality, G.crop_quality - 1)
+				highest_food_quality = max(highest_food_quality, F.quality, F.recipe_quality )
+
+	// Check reagent qualities in the crafter container
+	if(crafter.reagents && crafter.reagents.reagent_list)
+		for(var/datum/reagent/R in crafter.reagents.reagent_list)
+			if(R.volume > 0)
+				total_reagent_volume += R.volume
+				// Weight the reagent quality by its volume
+				highest_reagent_quality = max(highest_reagent_quality, R.recipe_quality)
 
 	// Calculate average freshness
 	var/average_freshness = (ingredient_count > 0) ? (total_freshness / ingredient_count) : 0
@@ -375,31 +381,31 @@ GLOBAL_LIST_INIT(container_craft_to_singleton, init_container_crafts())
 			food_item.warming = min(5 MINUTES, average_freshness)
 
 			// Calculate final quality based on ingredients, skill, and recipe
-			apply_food_quality(food_item, cooking_skill, highest_quality, average_freshness)
+			apply_food_quality(food_item, cooking_skill, highest_food_quality, highest_reagent_quality, average_freshness)
 
 		SEND_SIGNAL(crafter, COMSIG_TRY_STORAGE_INSERT, created_output, null, null, TRUE, TRUE)
 		after_craft(created_output, crafter, initiator, found_optional_requirements, found_optional_wildcards, found_optional_reagents, removing_items)
 		SEND_SIGNAL(crafter, COMSIG_CONTAINER_CRAFT_COMPLETE, created_output)
 
 /**
- * Calculates the quality of crafted food based on cooking skill, ingredient quality, and freshness.
+ * Calculates the quality of crafted food based on cooking skill, ingredient quality, reagent quality, and freshness.
  *
  * @param cooking_skill The cooking skill level of the crafter
- * @param ingredient_quality The highest quality ingredient used
+ * @param ingredient_quality The highest quality food ingredient used
+ * @param reagent_quality The highest quality reagent used
  * @param freshness The average freshness of ingredients
- * @param quality_modifier Optional modifier from the recipe
- * @return The calculated quality value
  */
-/datum/container_craft/proc/apply_food_quality(obj/item/reagent_containers/food/snacks/food_item, cooking_skill, ingredient_quality, freshness, quality_modifier = 1.0)
+/datum/container_craft/proc/apply_food_quality(obj/item/reagent_containers/food/snacks/food_item, cooking_skill, ingredient_quality, reagent_quality, freshness)
     var/datum/quality_calculator/cooking/cook_calc = new(
         base_qual = 0,
-        mat_qual = ingredient_quality,
+        mat_qual = max(ingredient_quality, reagent_quality), // Use the higher of food or reagent quality
         skill_qual = cooking_skill,
         perf_qual = 0,
         diff_mod = 0,
         components = 1,
         fresh = freshness,
-        recipe_mod = quality_modifier
+        recipe_mod = quality_modifier,
+        reagent_qual = reagent_quality // Pass reagent quality separately if needed
     )
     cook_calc.apply_quality_to_item(food_item)
     qdel(cook_calc)

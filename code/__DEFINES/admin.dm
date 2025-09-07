@@ -100,6 +100,7 @@
 #define ADMIN_PUNISHMENT_NECKSNAP "Snap Neck"
 #define ADMIN_PUNISHMENT_HUNTED "Mark for Assassins"
 #define ADMIN_PUNISHMENT_MEATPIE "Pie-ify"
+#define ADMIN_PUNISHMENT_GODHAND "God Hand"
 
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2
