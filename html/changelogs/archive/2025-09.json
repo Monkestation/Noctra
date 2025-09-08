@@ -211,5 +211,30 @@
                 "admin": "admins have a new god hand smite"
             }
         ]
+<<<<<<< HEAD
     }
 }
+=======
+    },
+    "2025-09-08": {
+        "Wouju": [
+            {
+                "rscadd": "Harpoon gun is now craftable"
+            },
+            {
+                "rscadd": "New sprites for iron and steel gears"
+            }
+        ],
+        "Just-Sim": [
+            {
+                "rscadd": "Shift+E, Shift+Q, Shift+B quick-take keybinds"
+            }
+        ],
+        "Magiy-Anne": [
+            {
+                "rscadd": "Allows more races to be Physickers"
+            }
+        ]
+    }
+}
+>>>>>>> vanderlin/main

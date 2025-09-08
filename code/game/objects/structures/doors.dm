@@ -159,7 +159,7 @@
 		to_chat(user, span_warning("I claw at [src]"))
 		take_damage(40, BRUTE, BCLASS_CUT, TRUE)
 		return
-	if(isliving(user) && world.time > last_bump + 20)
+	if(isliving(user) && world.time > last_bump + 1 SECONDS)
 		last_bump = world.time
 		var/mob/living/L = user
 		if(L.m_intent == MOVE_INTENT_SNEAK)
@@ -179,13 +179,17 @@
 	if(switching_states)
 		return FALSE
 	if(door_opened)
-		to_chat(user, span_notice("I cannot lock \the [src] while it is open."))
 		return FALSE
 	return ..()
 
 /obj/structure/door/attackby(obj/item/I, mob/user)
 	if(switching_states)
 		return
+<<<<<<< HEAD
+=======
+	if(I.has_access())
+		return (..() || attack_hand(user))
+>>>>>>> vanderlin/main
 	return ..()
 
 /obj/structure/door/attack_hand_secondary(mob/user, params)
@@ -224,7 +228,7 @@
 	. = ..()
 	if(obj_broken || switching_states)
 		return
-	if(world.time < last_bump + 20)
+	if(world.time < last_bump + 1 SECONDS)
 		return
 	last_bump = world.time
 	if(ismob(AM))

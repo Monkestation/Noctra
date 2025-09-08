@@ -382,6 +382,10 @@
 		if(HAS_TRAIT(hearing_movable, TRAIT_KEENEARS))
 			keenears_range_bonus = 5
 
+		var/keenears_range_bonus = 0
+		if(HAS_TRAIT(hearing_movable, TRAIT_KEENEARS))
+			keenears_range_bonus = 5
+
 		if(!ignore_z && z_message_type == Z_MODE_ONE_CEILING && hearing_movable.z != z)
 			var/listener_has_ceiling = TRUE
 			var/turf/listener_turf = get_turf(hearing_movable)
@@ -404,7 +408,11 @@
 
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in listening)
+<<<<<<< HEAD
 		if(M.client)
+=======
+		if(M.client && M.client.prefs.toggles_maptext & DISABLE_RUNECHAT)
+>>>>>>> vanderlin/main
 			speech_bubble_recipients |= M.client
 
 	if(length(speech_bubble_recipients))
@@ -522,7 +530,11 @@
 
 	var/list/speech_bubble_recipients = list()
 	for(var/mob/M in understanders)
+<<<<<<< HEAD
 		if(M.client)
+=======
+		if(M.client && M.client.prefs.toggles_maptext & DISABLE_RUNECHAT)
+>>>>>>> vanderlin/main
 			speech_bubble_recipients |= M.client
 
 	if(length(speech_bubble_recipients))
