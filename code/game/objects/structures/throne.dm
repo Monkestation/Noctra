@@ -25,6 +25,10 @@
 /obj/structure/throne/statues	// alt version with more statue but covers side tables less.
 	icon = 'icons/roguetown/misc/throne_alt.dmi'
 
+/obj/structure/throne/vthrone
+	name = "The Blood Throne"
+	desc = "A big ominous throne."
+	icon = 'icons/roguetown/misc/vthrone.dmi'
 
 /obj/structure/throne/examine(mob/user)
 	. = ..()
@@ -35,3 +39,4 @@
 
 /obj/structure/throne/proc/remove_filters_glow()
 	filters = null
+

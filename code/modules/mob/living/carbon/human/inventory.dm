@@ -378,6 +378,44 @@
 	for(var/obj/item/I in held_items)
 		qdel(I)
 
+/mob/living/carbon/human/proc/smart_equipbag(slot_id) // take most recent item out of bag or place held item in bag
+	if(incapacitated())
+		return
+	var/obj/item/thing = get_active_held_item()
+	var/obj/item/equipped_back = get_item_by_slot(slot_id)
+	if(!equipped_back) // We also let you equip a backpack like this
+		if(!thing)
+			to_chat(src, span_warning("I have no backpack to take something out of!"))
+			return
+		if(equip_to_slot_if_possible(thing, slot_id))
+			update_inv_hands()
+		return
+	// Since you have to take off /obj/item/storage/backpack/backpack to access the inventory we handle it differently:
+	if(istype(equipped_back, /obj/item/storage/backpack/backpack))
+		if(thing) // Check for held item, if there is one, don't let them insert it in the backpack
+			to_chat(src, span_warning("I need to take my backpack off first"))
+			return
+		equipped_back.attack_hand(src) // If there is no held item, take off the backpack by invoking attack_hand
+		return
+	if(!SEND_SIGNAL(equipped_back, COMSIG_CONTAINS_STORAGE)) // not a storage item
+		if(!thing)
+			equipped_back.attack_hand(src)
+		else
+			to_chat(src, span_warning("I can't fit anything in!"))
+		return
+	if(thing) // put thing in backpack
+		if(!SEND_SIGNAL(equipped_back, COMSIG_TRY_STORAGE_INSERT, thing, src))
+			to_chat(src, span_warning("I can't fit anything in!"))
+		return
+	if(!equipped_back.contents.len) // nothing to take out
+		to_chat(src, span_warning("There's nothing in your backpack to take out!"))
+		return
+	var/obj/item/stored = equipped_back.contents[equipped_back.contents.len]
+	if(!stored || stored.on_found(src))
+		return
+	stored.attack_hand(src) // take out thing from backpack
+	return
+
 /mob/living/carbon/human/proc/smart_equipbelt() // put held thing in belt or take most recent item out of belt
 	if(incapacitated(IGNORE_GRAB))
 		return

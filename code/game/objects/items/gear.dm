@@ -18,10 +18,14 @@
 	melting_material = /datum/material/bronze
 
 /obj/item/gear/metal/iron
+	icon = 'icons/roguetown/items/new_gears.dmi'
+	icon_state = "iron_gear"
 	melting_material = /datum/material/iron
 	melt_amount = 75
 
 /obj/item/gear/metal/steel
+	icon = 'icons/roguetown/items/new_gears.dmi'
+	icon_state = "steel_gear"
 	melting_material = /datum/material/steel
 
 /obj/item/gear/wood

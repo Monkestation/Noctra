@@ -813,10 +813,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 			target.transformation_animation(meatpie_appearance, 5 SECONDS, transform_scanline.appearance)
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pieify), target), 5 SECONDS)
 		if(ADMIN_PUNISHMENT_GODHAND)
-			var/typepath_choice = browser_input_list(src, "Hand of God", "Which hand?", list("Astrata" = /obj/effect/god_hand, "Photorealistic" = /obj/effect/god_hand/photorealistic))
+			var/list/hands = list(
+				"Astrata" = /obj/effect/god_hand,
+				"Photorealistic" = /obj/effect/god_hand/photorealistic,
+			)
+			var/typepath_choice = browser_input_list(src, "Hand of God", "Which hand?", hands)
 			if(!typepath_choice)
 				return
-			target.be_taken_with_hand_of_god(typepath_choice)
+			target.be_taken_with_hand_of_god(hands[typepath_choice])
 
 	punish_log(target, punishment)
 

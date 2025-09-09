@@ -218,10 +218,6 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 	var/randomize_shutup = FALSE
 	/// Custom UI scale
 	var/ui_scale
-	///this is our character slot
-	var/tmp/current_slot = 1
-	/// List storing ERP preference values
-	var/list/erp_preferences
 	/// Assoc list of culinary preferences, where the key is the type of the culinary preference, and value is food/drink typepath
 	var/list/culinary_preferences = list()
 
@@ -1026,7 +1022,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		var/bitfield = toggles_data[1]
 		var/prefs_variable = toggles_data[2]
 		var/new_toggles = input_bitfield(user, toggle_type, bitfield, prefs_variable, nheight = 500)
-		if(new_toggles)
+		if(!isnull(new_toggles))
 			if(toggle_type == "Default Toggles")
 				// Reset all fields we touch to 0 first because we don't use a full set to do toggles = X
 				// And don't want to override them

@@ -19,7 +19,8 @@
 		"Forest Warden",
 		"Royal Knight",
 		"Templar",
-		"Bandit"
+		"Bandit",
+		"Wretch"
 	)
 
 	base_antags = 1

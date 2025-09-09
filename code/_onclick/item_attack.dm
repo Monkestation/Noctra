@@ -386,7 +386,7 @@
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for non-mob targets. Return TRUE to end the attack chain.
 /obj/item/proc/attack_atom(atom/attacked_atom, mob/living/user)
-	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, attacked_atom, user) & COMPONENT_NO_ATTACK_OBJ)
+	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, attacked_atom, user) & COMPONENT_CANCEL_ATTACK_CHAIN)
 		return TRUE
 	if(item_flags & NOBLUDGEON)
 		return TRUE
