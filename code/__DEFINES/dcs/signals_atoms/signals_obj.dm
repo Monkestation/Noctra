@@ -17,7 +17,6 @@
 #define COMSIG_ITEM_ATTACK_SECONDARY "item_attack_secondary"
 /// From base of obj/item/attack_obj(): (/obj, /mob)
 #define COMSIG_ITEM_ATTACK_OBJ "item_attack_obj"
-	#define COMPONENT_NO_ATTACK_OBJ 1
 
 /// From base of [obj/item/afterattack()]: (atom/target, mob/user, params)
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"

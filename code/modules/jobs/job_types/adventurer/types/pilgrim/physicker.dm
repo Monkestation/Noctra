@@ -4,7 +4,7 @@
 				residence as feldshers in, often end up becoming wandering physickers. \
 				Capable doctors nonetheless, they journey from place to place offering \
 				their services."
-	allowed_races = RACES_PLAYER_NONEXOTIC
+	allowed_races = RACES_PLAYER_ALL
 	outfit = /datum/outfit/job/adventurer/physicker
 	category_tags = list(CTAG_PILGRIM, CTAG_TOWNER)
 	maximum_possible_slots = 2

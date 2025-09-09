@@ -231,6 +231,10 @@
 	message.maptext_width = CHAT_MESSAGE_WIDTH
 	message.maptext_height = mheight
 	message.maptext_x = (CHAT_MESSAGE_WIDTH - owner.bound_width) * -0.5
+<<<<<<< HEAD
+=======
+	message.maptext = MAPTEXT(complete_text)
+>>>>>>> vanderlin/main
 
 	// View the message
 	LAZYADDASSOCLIST(owned_by.seen_messages, message_loc, src)

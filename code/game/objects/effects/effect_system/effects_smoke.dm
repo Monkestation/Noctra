@@ -135,6 +135,31 @@
 /datum/effect_system/smoke_spread/bad
 	effect_type = /obj/effect/particle_effect/smoke/bad
 
+
+/////////////////////////////////////////////
+// Poison smoke
+/////////////////////////////////////////////
+
+/obj/effect/particle_effect/smoke/poison
+	color = "#23462d"
+	lifetime = 10
+
+/obj/effect/particle_effect/smoke/poison/smoke_mob(mob/living/carbon/M)
+	if(..())
+		if(!istype(M.wear_mask, /obj/item/clothing/face/phys/plaguebearer))
+			M.adjustToxLoss(5)
+			M.add_nausea(5)
+			M.reagents.add_reagent(/datum/reagent/miasmagas, 1)
+			M.emote("cough")
+			if(prob(5))
+				to_chat(M, span_warning("You feel numbness spreading through your body..."))
+			return 1
+
+
+/datum/effect_system/smoke_spread/poison
+	effect_type = /obj/effect/particle_effect/smoke/poison
+
+
 /////////////////////////////////////////////
 // Sleep smoke
 /////////////////////////////////////////////
