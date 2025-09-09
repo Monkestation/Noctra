@@ -2831,8 +2831,6 @@
 /obj/item/weapon/sword/iron,
 /turf/open/floor/hexstone,
 /area/rogue/indoors/vampire_manor)
-<<<<<<< HEAD
-=======
 "qc" = (
 /obj/item/clothing/shoes/boots,
 /obj/item/clothing/shoes/boots,
@@ -2870,7 +2868,6 @@
 	},
 /turf/open/floor/wood,
 /area/rogue/indoors)
->>>>>>> vanderlin/main
 "qf" = (
 /obj/effect/decal/cobbleedge/alt{
 	dir = 4
@@ -6151,10 +6148,7 @@
 /obj/item/clothing/shirt/dress/silkdress/colored/black,
 /obj/item/clothing/armor/gambeson/heavy/winterdress,
 /obj/item/clothing/armor/gambeson/heavy/dress,
-<<<<<<< HEAD
-=======
 /obj/item/storage/belt/leather,
->>>>>>> vanderlin/main
 /turf/open/floor/carpet,
 /area/rogue/indoors/vampire_manor)
 "MF" = (
@@ -15676,11 +15670,7 @@ bO
 bZ
 ci
 cr
-<<<<<<< HEAD
-wp
-=======
 Rh
->>>>>>> vanderlin/main
 cr
 cz
 bO
@@ -16851,11 +16841,7 @@ Iw
 yE
 bS
 xI
-<<<<<<< HEAD
-CD
-=======
 ME
->>>>>>> vanderlin/main
 yE
 yE
 bV

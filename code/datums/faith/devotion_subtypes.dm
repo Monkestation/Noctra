@@ -121,15 +121,12 @@
 	. = ..()
 	miracles_extra += list(
 		/datum/action/cooldown/spell/healing/profane,
-<<<<<<< HEAD
-=======
 	)
 
 /datum/devotion/inhumen/make_acolyte()
 	. = ..()
 	miracles_extra += list(
 		/datum/action/cooldown/spell/healing/profane,
->>>>>>> vanderlin/main
 	)
 
 /datum/devotion/inhumen/zizo
