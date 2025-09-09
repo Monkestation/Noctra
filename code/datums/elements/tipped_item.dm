@@ -43,7 +43,7 @@
 		return
 
 	INVOKE_ASYNC(src, PROC_REF(start_dipping), dipper, attacked_container, attacker)
-	return COMPONENT_NO_ATTACK | COMPONENT_NO_ATTACK_OBJ
+	return COMPONENT_NO_ATTACK | COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/element/tipped_item/proc/start_dipping(obj/item/dipper, obj/item/reagent_containers/attacked_container, mob/living/attacker, params)
 	if(!do_after(attacker, 2 SECONDS, attacked_container))

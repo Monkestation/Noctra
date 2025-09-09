@@ -361,6 +361,20 @@
 	icon_state = "spiderdagger"
 	melting_material = null
 
+/obj/item/weapon/knife/dagger/steel/dirk/baotha //this is a placeholder weapon until they actually receive a proper baothan weapon
+	name = "laced dagger"
+	desc = "Whispers of bliss seep deeper than the blade."
+	icon_state = "spiderdagger"
+	melting_material = null
+	color = "#f78ccc"
+	max_integrity = 200
+	wdefense = GOOD_PARRY //They use a dagger, but it should be fine for them to also parry with it.
+
+/obj/item/weapon/knife/dagger/steel/dirk/baotha/Initialize(mapload)
+	. = ..()
+	enchant(/datum/enchantment/baothagift)
+
+
 //................ Silver Dagger ............... //
 /obj/item/weapon/knife/dagger/silver
 	name = "silver dagger"
