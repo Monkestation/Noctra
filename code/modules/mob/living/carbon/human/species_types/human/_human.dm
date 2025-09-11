@@ -36,5 +36,3 @@
 	"blonde - moonlight" = "dfc999",
 	"red - autumn" = "a34332"
 	))
-/datum/species/human/get_native_language()
-	return "Imperial"

@@ -266,6 +266,63 @@
             {
                 "bugfix": "IMPORTANT: fixed toggles not being able to be saved if all options are off."
             }
+<<<<<<< HEAD
+=======
+        ],
+        "Bloo4420": [
+            {
+                "rscadd": "gave peddlers the ability say their currently stocked wares out loud"
+            },
+            {
+                "spellcheck": "corrected the two instances of max_merchanise in the file to be max_merchandise"
+            }
+        ]
+    },
+    "2025-09-11": {
+        "Wouju": [
+            {
+                "rscadd": "Added a new peasant dye. Taraxacum Yellow"
+            },
+            {
+                "rscadd": "You can now write textbooks on alchemy, engineering and medicine"
+            },
+            {
+                "rscadd": "textbooks now have an INT requirement, they also give bonus XP based on half your INT"
+            },
+            {
+                "qol": "Some skill descriptions should be more accurate now"
+            }
+        ],
+        "tired-wired": [
+            {
+                "bugfix": "fixes ravox's objective for sacrifice"
+            }
+        ],
+        "wgtjunior743": [
+            {
+                "rscadd": "Half-Elves and Half-Drows can pick their accent between humen and their respective elf half."
+            },
+            {
+                "rscadd": "Half-Elves and Half-Drows that play zalad roles and have their accent set to humen will have zalad as their native tongue."
+            },
+            {
+                "rscadd": "Grenzel and Zaladins foreigners now have their respective accents"
+            },
+            {
+                "code_imp": "Changed how some of the accent code works"
+            },
+            {
+                "rscadd": "Half-Drow can also play adventurer Qatil"
+            },
+            {
+                "rscadd": "Zombie and Skeleton Native Languages are Zizo Chant"
+            }
+        ],
+        "CheffieGithub": [
+            {
+                "bugfix": "Fixed ultimate sacrifice buttons"
+            }
+>>>>>>> vanderlin/main
         ]
     }
 }

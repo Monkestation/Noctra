@@ -59,3 +59,11 @@
 		ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_FOREIGNER, TRAIT_GENERIC)
+	if(H.dna?.species)
+		if(H.dna.species.id == SPEC_ID_HUMEN)
+			H.dna.species.native_language = "Zalad"
+			H.dna.species.accent_language = H.dna.species.get_accent(H.dna.species.native_language)
+		if(H.dna.species.id == SPEC_ID_HALF_ELF)
+			if(H.dna.species.native_language == "Imperial")
+				H.dna.species.native_language = "Zalad"
+				H.dna.species.accent_language = H.dna.species.get_accent(H.dna.species.native_language)

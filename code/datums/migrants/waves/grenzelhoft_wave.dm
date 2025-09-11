@@ -51,6 +51,9 @@
 		ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 		H.cmode_music = 'sound/music/cmode/combat_grenzelhoft.ogg'
+	if(H.dna?.species.id == SPEC_ID_HUMEN)
+		H.dna.species.native_language = "Old Psydonic"
+		H.dna.species.accent_language = H.dna.species.get_accent(H.dna.species.native_language)
 
 /datum/migrant_role/grenzelhoft/countess
 	name = "Grenzelhoft Countess"
@@ -103,6 +106,9 @@
 		ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 		ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
 		H.cmode_music = 'sound/music/cmode/nobility/combat_noble.ogg'
+	if(H.dna?.species.id == SPEC_ID_HUMEN)
+		H.dna.species.native_language = "Old Psydonic"
+		H.dna.species.accent_language = H.dna.species.get_accent(H.dna.species.native_language)
 
 /datum/migrant_role/grenzelhoft/grenzelhoft_knight
 	name = "Grenzelhoft Knight"
@@ -151,6 +157,9 @@
 
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	H.cmode_music = 'sound/music/cmode/combat_grenzelhoft.ogg'
+	if(H.dna?.species.id == SPEC_ID_HUMEN)
+		H.dna.species.native_language = "Old Psydonic"
+		H.dna.species.accent_language = H.dna.species.get_accent(H.dna.species.native_language)
 
 /datum/migrant_role/grenzelhoft/grenzelhoft_men_at_arms
 	name = "Grenzelhoft Men-at-Arms"
@@ -199,6 +208,9 @@
 	H.change_stat(STATKEY_CON, 2)
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	H.cmode_music = 'sound/music/cmode/combat_grenzelhoft.ogg'
+	if(H.dna?.species.id == SPEC_ID_HUMEN)
+		H.dna.species.native_language = "Old Psydonic"
+		H.dna.species.accent_language = H.dna.species.get_accent(H.dna.species.native_language)
 
 /datum/migrant_wave/grenzelhoft_visit
 	name = "The Grenzelhoft visit"

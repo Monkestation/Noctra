@@ -5,6 +5,7 @@
 	name = "Dwarfb"
 	id = SPEC_ID_DWARF
 	changesource_flags = WABBAJACK
+	native_language = "Dwarfish"
 	bodypart_features = list(
 		/datum/bodypart_feature/hair/head,
 		/datum/bodypart_feature/hair/facial,
@@ -46,6 +47,4 @@
 	"red - autumn" = "a34332"
 	))
 
-/datum/species/dwarf/get_native_language()
-	return "Dwarfish"
 

@@ -59,3 +59,11 @@
 	ADD_TRAIT(H, TRAIT_MEDIUMARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_DUALWIELDER, TRAIT_GENERIC)
+	if(H.dna?.species)
+		if(H.dna.species.id == SPEC_ID_HUMEN)
+			H.dna.species.native_language = "Zalad"
+			H.dna.species.accent_language = H.dna.species.get_accent(H.dna.species.native_language)
+		if((H.dna.species.id == SPEC_ID_HALF_ELF) || (H.dna.species.id == SPEC_ID_HALF_DROW))
+			if(H.dna.species.native_language == "Imperial")
+				H.dna.species.native_language = "Zalad"
+				H.dna.species.accent_language = H.dna.species.get_accent(H.dna.species.native_language)

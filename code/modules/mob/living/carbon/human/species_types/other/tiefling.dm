@@ -10,6 +10,7 @@
 /datum/species/tieberian
 	name = "Tiefling"
 	id = SPEC_ID_TIEFLING
+	native_language = "Infernal"
 	desc = "Also known as Infernal-Spawn, Hell-Bloods, Surface-Devils, and perhaps in a more humorous manner, <i>thief</i>-lings. \
 	\n\n\
 	Their treatment ranges from shunning to distrust, depending on the region. \
@@ -215,8 +216,3 @@
 	var/static/list/last_names = world.file2list('strings/rt/names/other/tieflast.txt')
 	return last_names
 
-/datum/species/tieberian/get_accent_list()
-	return strings("accents/spanish_replacement.json", "spanish")
-
-/datum/species/tieberian/get_native_language()
-	return "Infernal"

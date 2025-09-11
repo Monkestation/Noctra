@@ -71,7 +71,7 @@
 
 /datum/skill/misc/sewing
 	name = "Sewing"
-	desc = "Sewing is a skill that represents your character's ability to sew. The higher your skill in Sewing, the faster you can sew and the better your creations will be." //Placeholder description.
+	desc = "Sewing is a skill that represents your character's ability to sew. The higher your skill in Sewing, the more complex items you can create, and the faster you can sew."
 	dreams = list(
 		"...the needle goes through the cloth, in-and-out... then it's hide... then it's a man's flesh... you blink, the dress is done... the queen will love it..."
 	)
