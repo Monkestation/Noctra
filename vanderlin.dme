@@ -1290,6 +1290,7 @@
 #include "code\datums\sex\actions\sex\scissoring.dm"
 #include "code\datums\sex\actions\sex\thighjob.dm"
 #include "code\datums\sex\actions\sex\throat.dm"
+#include "code\datums\sex\actions\sex\vaginal.dm"
 #include "code\datums\sex\actions\sex\other\_base.dm"
 #include "code\datums\sex\actions\sex\other\anal.dm"
 #include "code\datums\sex\actions\sex\other\boobjob.dm"
