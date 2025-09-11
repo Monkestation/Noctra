@@ -6,6 +6,8 @@
 	slot = ORGAN_SLOT_VAGINA
 	var/fertility = TRUE
 
+	grid_width = 32 * 3 // 3 rows
+
 /obj/item/organ/genitals/vagina/Insert(mob/living/carbon/M, special, drop_if_replaced)
 	. = ..()
 	M.add_hole(ORGAN_SLOT_VAGINA, /datum/component/storage/concrete/grid/hole/vagina)

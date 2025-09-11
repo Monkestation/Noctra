@@ -296,13 +296,13 @@
 
 	// Check if item can fit
 	if(!storage_comp.can_be_inserted(item, user))
-		if(user)
+		if(user && !silent)
 			to_chat(user, span_warning("[item] won't fit in [hole_id]."))
 		return FALSE
 
 	// Insert the item
 	storage_comp.handle_item_insertion(item, user)
-	if(user)
+	if(user && !silent)
 		to_chat(user, span_notice("You place [item] into [hole_id]."))
 	return TRUE
 

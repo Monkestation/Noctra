@@ -132,7 +132,7 @@
 
 		if(current_action == null || performed_action_type != current_action)
 			break
-		if(!can_perform_action(current_action))
+		if(!can_perform_action(current_action, TRUE))
 			break
 		if(action.is_finished(user, target))
 			break
@@ -156,13 +156,13 @@
 	desire_stop = FALSE
 	current_action = null
 
-/datum/sex_session/proc/can_perform_action(action_type)
+/datum/sex_session/proc/can_perform_action(action_type, performing = FALSE)
 	if(!action_type)
 		return FALSE
 	var/datum/sex_action/action = SEX_ACTION(action_type)
 	if(!inherent_perform_check(action_type))
 		return FALSE
-	if(!action.can_perform(user, target))
+	if(!action.can_perform(user, target) && !performing)
 		return FALSE
 	return TRUE
 
