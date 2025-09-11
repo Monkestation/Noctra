@@ -63,6 +63,7 @@
 	penis_type = source.penis_type
 	penis_size = source.penis_size
 	grid_height = 32 * penis_size
+	grid_width = 32
 	name = "[source.name]"
 
 /obj/item/penis_fake/proc/set_original_owner(mob/living/carbon/human/owner)
