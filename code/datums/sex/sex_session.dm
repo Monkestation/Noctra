@@ -104,7 +104,7 @@
 	desire_stop = TRUE
 
 /datum/sex_session/proc/considered_limp(mob/limper)
-	if(!limper || QDELETED(limper))
+	if(QDELETED(limper))
 		return TRUE // If no limper or deleted, consider it limp
 	var/list/arousal_data = list()
 	SEND_SIGNAL(limper, COMSIG_SEX_GET_AROUSAL, arousal_data)
