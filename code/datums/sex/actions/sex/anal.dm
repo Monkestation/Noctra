@@ -1,5 +1,5 @@
 /datum/sex_action/sex/anal
-	name = "Sodomize them"
+	name = "Fuck their ass"
 	hole_id = ORGAN_SLOT_ANUS
 	stamina_cost = 1.0
 
