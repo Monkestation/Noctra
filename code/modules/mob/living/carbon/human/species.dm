@@ -280,14 +280,42 @@ GLOBAL_LIST_EMPTY(patreon_races)
 
 	var/punch_damage = 0
 
+	/// Native language for accents
+	var/native_language = "Imperial"
+	/// Accent based of the language
+	var/accent_language
+	/// For races that can have more than one Accent such as the Half-Drow and Half-Elf
+	var/multiple_accents
+
 ///////////
 // PROCS //
 ///////////
 
-/datum/species/proc/get_accent_list()
-	return
-
-/datum/species/proc/get_native_language()
+/datum/species/proc/get_accent(var/language, var/variant = 0)
+	if(language == "Old Psydonic")
+		return strings("accents/grenz_replacement.json", "grenz")
+	if(language == "Zalad")
+		return strings("accents/zalad_replacement.json", "arabic")
+	if(language == "Imperial")
+		return
+	if(language == "Elfish" && variant == 1)
+		return strings("accents/russian_replacement.json", "russian")
+	if(language == "Elfish" && variant == 2)
+		return strings("accents/french_replacement.json", "french")
+	if(language == "Dwarfish")
+		return strings("accents/dwarf_replacement.json", "dwarf")
+	if(language == "Infernal")
+		return strings("accents/spanish_replacement.json", "spanish")
+	if(language == "Celestial")
+		return
+	if(language == "Orcish")
+		return strings("accents/halforc_replacement.json", "halforc")
+	if(language == "Deepspeak")
+		return strings("accents/triton_replacement.json", "triton")
+	if(language == "Pirate")
+		return strings("accents/pirate_replacement.json", "pirate")
+	if(language == "Zizo Chant")
+		return
 	return
 
 /datum/species/proc/handle_speech(datum/source, list/speech_args)
@@ -325,19 +353,45 @@ GLOBAL_LIST_EMPTY(patreon_races)
 			message = replacetextEx(message, " [capitalize(key)]", " [capitalize(value)]")
 			message = replacetextEx(message, " [key]", " [value]")
 
-		var/list/species_accent = get_accent_list()
+
 		var/mob/living/carbon/human/human
+		var/list/species_accent
 		var/special_accent = FALSE
+
 		if(ismob(source))
 			human = source
-			if(human.accent != ACCENT_DEFAULT)
-				species_accent = human.return_accent_list()
-				special_accent = TRUE
+			var/nativelang = human.dna.species.native_language
+			species_accent = human.dna.species.accent_language
 
-
-		if(ismob(source))
-			var/nativelang = get_native_language()
 			var/language_check
+
+
+			var/list/accents_list = list(
+				ACCENT_NONE,
+				ACCENT_DWARF,
+				ACCENT_DELF,
+				ACCENT_ELF,
+				ACCENT_TIEFLING,
+				ACCENT_HORC,
+				ACCENT_TRITON,
+				ACCENT_GRENZ,
+				ACCENT_PIRATE,
+				ACCENT_MIDDLE_SPEAK,
+				ACCENT_ZALAD
+			)
+
+			///This will only trigger for patreon users
+			if(human.accent in accents_list)
+				/// If the human is using a specie with multiple accents
+				if(length(human.dna.species.multiple_accents))
+					var/normalized_accent = (human.accent in GLOB.accent_list) ? GLOB.accent_list[human.accent] : human.accent
+					/// If the accent they picked is different to their species accent, in this case a Half Elf with an Elf Accent would not get special_accent set to TRUE.
+					if(!(normalized_accent == species_accent))
+						species_accent = human.return_accent_list()
+						special_accent = TRUE
+				else
+					species_accent = human.return_accent_list()
+					special_accent = TRUE
 
 			var/list/language_map = list(
 				/datum/language/common = "Imperial",
@@ -348,6 +402,10 @@ GLOBAL_LIST_EMPTY(patreon_races)
 				/datum/language/celestial = "Celestial",
 				/datum/language/zalad = "Zalad",
 				/datum/language/deepspeak = "Deepspeak",
+<<<<<<< HEAD
+=======
+				/datum/language/oldpsydonic = "Old Psydonic",
+>>>>>>> vanderlin/main
 				/datum/language/undead = "Zizo Chant"
 			)
 
@@ -380,6 +438,8 @@ GLOBAL_LIST_EMPTY(patreon_races)
 	..()
 
 /datum/species/proc/after_creation(mob/living/carbon/human/H)
+	if(H.mind)
+		H.dna.species.accent_language = H.dna.species.get_accent(H.dna.species.native_language)
 	return TRUE
 
 /proc/generate_selectable_species()

@@ -4,6 +4,7 @@
 /datum/species/triton
 	name = "Triton"
 	id = SPEC_ID_TRITON
+	native_language = "Deepspeak"
 	changesource_flags = WABBAJACK
 
 	desc = "The Children of Abyssor, also known as Tritons or their colloquial name, \"Deep Folk,\" \
@@ -166,9 +167,6 @@
 	UnregisterSignal(C, COMSIG_MOB_SAY)
 	C.remove_language(/datum/language/deepspeak)
 
-/datum/species/triton/get_accent_list()
-	return strings("accents/triton_replacement.json", "triton")
-
 /datum/species/triton/check_roundstart_eligible()
 	return TRUE
 
@@ -206,5 +204,3 @@
 		"Turtle Egg" = HAIR_COLOR_TURTLE,
 	)
 
-/datum/species/triton/get_native_language()
-	return "Deepspeak"

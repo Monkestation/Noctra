@@ -48,10 +48,10 @@
 	created_amount = 3
 
 /datum/artificer_recipe/general/cog/iron
-	name = "Iron Gear"
+	name = "2x Iron Gear"
 	required_item = /obj/item/ingot/iron
 	created_item = /obj/item/gear/metal/iron
-	created_amount = 1
+	created_amount = 2
 
 /datum/artificer_recipe/general/cog/steel
 	name = "3x Steel Gears"

@@ -336,11 +336,17 @@ And it also helps for the character set panel
 
 /datum/clan/proc/setup_vampire_abilities(mob/living/carbon/human/H)
 	H.verbs |= /mob/living/carbon/human/proc/disguise_button
+	H.verbs |= /mob/living/carbon/human/proc/vampire_telepathy
+
 
 	H.cmode_music = 'sound/music/cmode/antag/CombatThrall.ogg'
 
 	H.adjust_skillrank(/datum/skill/magic/blood, 2, TRUE)
-
+	H.clamped_adjust_skillrank(/datum/skill/misc/athletics, 5, 5, TRUE)
+	H.clamped_adjust_skillrank(/datum/skill/combat/unarmed, 4, 4, TRUE)
+	H.change_stat(STATKEY_STR, pick(1,2))
+	H.change_stat(STATKEY_SPD, 1)
+	H.remove_stat_modifier("innate_age")
 	var/datum/action/cooldown/spell/undirected/transfix/transfix = new(H.mind)
 	transfix.Grant(H)
 
@@ -488,7 +494,7 @@ And it also helps for the character set panel
 
 /atom/movable/screen/alert/status_effect/debuff/blood_disgust
 	name = "Sanguine Curse"
-	desc = "<span class='warning'>This type of blood does not go down well.</span>\n"
+	desc = span_warning("This type of blood does not go down well.")
 	icon_state = "hunger2"
 
 /datum/status_effect/debuff/blood_disgust/on_apply()

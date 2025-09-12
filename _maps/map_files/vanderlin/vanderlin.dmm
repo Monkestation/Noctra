@@ -23656,6 +23656,10 @@
 /obj/item/reagent_containers/glass/cup/wooden,
 /turf/open/floor/wood,
 /area/rogue/indoors/town)
+"oue" = (
+/obj/structure/fake_machine/scomm,
+/turf/open/floor/carpet/green,
+/area/rogue/indoors/town)
 "oum" = (
 /obj/structure/fluff/walldeco/bath/wallpipes/innie{
 	dir = 1;
@@ -102982,7 +102986,7 @@ elp
 elp
 gpj
 rnJ
-feg
+oue
 pBa
 pBa
 pBa

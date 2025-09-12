@@ -14,7 +14,7 @@
 	var/list/things = list()
 	if(target_radius)
 		for(var/mob/living/carbon/human/H in oview(target_radius, center))
-			if(H.stat == DEAD)
+			if(H.stat != DEAD)
 				continue
 			things += H
 
@@ -27,7 +27,11 @@
 		to_chat(owner, span_warning("Necra holds tight to this one."))
 		return
 
+<<<<<<< HEAD
 	var/confirm = browser_alert(owner, "Your life will be sacrificed to revive [cast_on.real_name]. You CANNOT be revived after this. Are you absolutely sure?", "Ultimate Sacrifice", "Sacrifice Myself", "Cancel")
+=======
+	var/confirm = browser_alert(owner, "Your life will be sacrificed to revive [cast_on.real_name]. You CANNOT be revived after this. Are you absolutely sure?", "Ultimate Sacrifice", list("Sacrifice Myself", "Cancel"))
+>>>>>>> vanderlin/main
 	if(QDELETED(src) || QDELETED(owner) || QDELETED(cast_on) || !can_cast_spell())
 		return
 
@@ -41,9 +45,9 @@
 
 	if(!do_after(owner, 10 SECONDS, owner))
 		to_chat(owner, span_warning("The ritual was interrupted!"))
-		return FALSE
+		return
 
-	if(cast_on.stat == DEAD || QDELETED(cast_on))
+	if(cast_on.stat != DEAD || QDELETED(cast_on))
 		return
 
 	owner.say("RAVOX, I GIVE MY LIFE FOR THEIRS!", forced = "ravox_ritual")

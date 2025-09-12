@@ -49,7 +49,7 @@
 	..()
 	H.adjust_skillrank(/datum/skill/magic/blood, 1, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/wrestling, 5, TRUE)
-	H.adjust_skillrank(/datum/skill/combat/unarmed, 4, TRUE)
+	H.clamped_adjust_skillrank(/datum/skill/combat/unarmed, 4, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/swords, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/axesmaces, 4, TRUE)
 	H.adjust_skillrank(/datum/skill/combat/polearms, 4, TRUE)
@@ -64,7 +64,8 @@
 	cloak = /obj/item/clothing/cloak/cape/puritan
 	shoes = /obj/item/clothing/shoes/boots
 	backl = /obj/item/storage/backpack/satchel/black
-
+	if(!(HAS_TRAIT(H, TRAIT_FOREIGNER)))
+		ADD_TRAIT(H, TRAIT_FOREIGNER, TRAIT_GENERIC)
 /*------VERBS-----*/
 
 // NEW VERBS

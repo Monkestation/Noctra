@@ -178,6 +178,12 @@
 	H.base_constitution = 3
 	H.recalculate_stats(FALSE)
 	H.grant_language(/datum/language/undead)
+<<<<<<< HEAD
+=======
+	if(H.dna?.species)
+		H.dna.species.native_language = "Zizo Chant"
+		H.dna.species.accent_language = H.dna.species.get_accent(H.dna.species.native_language)
+>>>>>>> vanderlin/main
 
 	H.verbs |= /mob/living/carbon/human/proc/praise
 	H.verbs |= /mob/living/carbon/human/proc/communicate
