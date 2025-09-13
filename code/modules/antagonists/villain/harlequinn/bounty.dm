@@ -1,8 +1,3 @@
-GLOBAL_LIST_EMPTY(bounty_locations)
-GLOBAL_LIST_EMPTY(bounty_boards)
-
-GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
-
 /obj/structure/bounty_board
 	name = "bounty board"
 	desc = "A weathered wooden board covered in various contracts and notices. Dark stains suggest not all jobs end well."
@@ -14,8 +9,6 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 	var/list/active_contracts = list()
 	var/list/completed_contracts = list()
 	var/total_bounty_pool = 0
-	var/list/delivery_locations = list() // Populated from landmarks
-	var/list/contraband_packs = list() // Available contraband supply packs
 	var/last_harlequin_spawn = 0
 	COOLDOWN_DECLARE(bounty_marker)
 
@@ -32,8 +25,6 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 /obj/structure/bounty_board/Initialize()
 	. = ..()
 	LAZYADD(GLOB.bounty_boards, src)
-	populate_delivery_locations()
-	populate_contraband_packs()
 
 /obj/structure/bounty_board/Destroy()
 	LAZYREMOVE(GLOB.bounty_boards, src)
@@ -41,7 +32,6 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 		qdel(contract)
 	active_contracts = null
 	completed_contracts = null
-	delivery_locations = null
 	return ..()
 
 /obj/structure/bounty_board/proc/check_harlequin_injection()
@@ -49,20 +39,6 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 	if(prob(mammons_since_last * 0.1))
 		SSmigrants.set_current_wave(/datum/migrant_wave/harlequinn, 1 MINUTES)
 		last_harlequin_spawn = total_bounty_pool
-
-/obj/structure/bounty_board/proc/populate_delivery_locations()
-	delivery_locations = list()
-	for(var/obj/effect/landmark/bounty_location/loc in GLOB.bounty_locations)
-		delivery_locations[loc.location_name] = loc
-
-/obj/structure/bounty_board/proc/populate_contraband_packs()
-	contraband_packs = list()
-	// Find all supply packs with contraband = TRUE
-	for(var/pack_type in subtypesof(/datum/supply_pack))
-		var/datum/supply_pack/pack = new pack_type()
-		if(pack.contraband)
-			contraband_packs[pack.name] = pack_type
-		qdel(pack)
 
 /obj/structure/bounty_board/proc/get_reputation(mob/user)
 	if(!user.ckey)
@@ -111,12 +87,16 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 	var/is_bountyhunter = is_bounty_hunter(user)
 	var/location_options = ""
 	var/contraband_options = ""
+	var/contract_types = ""
 
-	for(var/location_name in delivery_locations)
-		location_options += "<option value=\"[location_name]\">[location_name]</option>"
+	for(var/obj/effect/landmark/bounty_location/loc as anything in GLOB.bounty_locations)
+		location_options += "<option value=\"[loc.location_name]\">[loc.location_name]</option>"
 
-	for(var/pack_name in contraband_packs)
+	for(var/pack_name in GLOB.contraband_packs)
 		contraband_options += "<option value=\"[pack_name]\">[pack_name]</option>"
+	
+	for(var/contract_type in GLOB.bounty_contract_types)
+		contract_types += "<option value=\"[contract_type]\">[GLOB.bounty_contract_types[contract_type]]</option>"
 
 	user << browse_rsc('html/book.png')
 	user << browse_rsc('html/tiled_wood.jpg')
@@ -791,6 +771,7 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 			var/should_obscure = !is_contractor && !is_bountyhunter
 			var/obscure_class = should_obscure ? "scratched-out" : ""
 			var/click_handler = (can_accept ? "onclick=\"acceptContract('[contract.contract_id]')\"" : "")
+			var/requires_location = (contract.contract_type in list("kidnapping", "smuggling", "burial"))
 
 			html += {"<div class=\"bounty-note [obscure_class]\" [click_handler]>"}
 			html += {"<div class=\"note-nail\"></div>"}
@@ -813,7 +794,7 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 							</div>
 				"}
 
-			if(contract.delivery_location)
+			if(requires_location && contract.delivery_location)
 				html += {"
 							<div class="contract-instructions">
 								<strong>Location:</strong> [contract.delivery_location]
@@ -827,7 +808,7 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 							</div>
 				"}
 
-			if(contract.waiting_for_area_completion)
+			if(requires_location && contract.waiting_for_area_completion)
 				html += {"
 							<div class="waiting-indicator">
 								Awaiting completion at [contract.delivery_location]...
@@ -897,12 +878,7 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 						<label class="form-label">Bounty Type</label>
 						<select class="form-select" id="contract-type" required>
 							<option value="">Choose your task...</option>
-							<option value="kidnapping">Kidnapping</option>
-							<option value="assassination">Assassination</option>
-							<option value="smuggling">Smuggling</option>
-							<option value="sabotage">Sabotage</option>
-							<option value="impersonation">Impersonation</option>
-							<option value="burial">Burial Job</option>
+							[contract_types]
 						</select>
 					</div>
 					<div class="form-group" id="marker-target-group" style="display:none;">
@@ -1068,19 +1044,20 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 
 /obj/structure/bounty_board/proc/create_contract_from_form(mob/user, list/params)
 	var/contract_type = params["type"]
-	var/target_name = params["target"]
+	var/target_name = sanitize(params["target"])
 	var/payment = text2num(params["payment"])
 	var/time_limit = text2num(params["time_limit"])
-	var/special_instructions = params["instructions"]
+	var/special_instructions = sanitize(params["instructions"])
 	var/delivery_location = params["location"]
-	var/datum/supply_pack/contraband_type = params["contraband"]
-	var/marker_target_id = params["marker_target"] // New parameter
+	var/contraband_type = params["contraband"]
+	var/marker_target_id = params["marker_target"]
 
-	if(!contract_type || !payment || payment <= 0)
+	if(!contract_type || !(contract_type in GLOB.bounty_contract_types) || !payment || payment <= 0)
 		to_chat(user, span_warning("Invalid contract parameters!"))
 		return
 
 	var/requires_marker = (contract_type in list("kidnapping", "assassination", "impersonation", "burial"))
+	var/requires_location = (contract_type in list("kidnapping", "smuggling", "burial"))
 	var/datum/marked_target/selected_target
 
 	if(requires_marker)
@@ -1105,12 +1082,27 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 			return
 
 		target_name = selected_target.target_name
-		selected_target.mark_as_used()
+
+	if(requires_location)
+		if(!delivery_location)
+			to_chat(user, span_warning("This contract requires delivery location!"))
+			return
+
+		var/valid_location = FALSE
+
+		for(var/obj/effect/landmark/bounty_location/loc as anything in GLOB.bounty_locations)
+			if(loc.location_name == delivery_location)
+				valid_location = TRUE
+				break
+		
+		if(!valid_location)
+			to_chat(user, span_warning("Invalid delivery location!"))
+			return
 
 	// Special validation for smuggling contracts
 	if(contract_type == "smuggling")
-		if(!contraband_type || !delivery_location)
-			to_chat(user, span_warning("Smuggling contracts require contraband type and delivery location!"))
+		if(!(contraband_type in GLOB.contraband_packs))
+			to_chat(user, span_warning("Smuggling contracts require contraband type!"))
 			return
 		target_name = "Contraband Delivery: [contraband_type]"
 	else if(!target_name && !requires_marker)
@@ -1122,7 +1114,8 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 		var/mob/living/carbon/human/H = user
 		var/extra = 0
 		if(contract_type == "smuggling")
-			extra = contraband_type.cost
+			var/datum/supply_pack/contraband_pack = GLOB.contraband_packs[contraband_type]
+			extra = contraband_pack.cost
 		if(get_mammons_in_atom(H) < payment + extra)
 			to_chat(user, span_warning("Insufficient funds!"))
 			return
@@ -1149,6 +1142,7 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 
 	to_chat(user, span_notice("Contract posted successfully! Payment held in escrow."))
 	if(selected_target)
+		selected_target.mark_as_used()
 		to_chat(user, span_notice("Target: [selected_target.target_name] has been assigned to this contract."))
 	ui_interact(user)
 
@@ -1366,16 +1360,16 @@ GLOBAL_LIST_INIT(bounty_rep, list())  // ckey -> reputation score
 		return
 
 	// Get the supply pack type
-	var/pack_type = contraband_packs[contract.contraband_type]
+	var/pack_type = GLOB.contraband_packs[contract.contraband_type]
 	if(!pack_type)
 		to_chat(harlequinn, span_warning("Error: Contraband type not found!"))
 		return
 
 	// Choose a random spawn location (excluding the delivery location)
 	var/list/available_locations = list()
-	for(var/location_name in delivery_locations)
-		if(location_name != contract.delivery_location)
-			available_locations += delivery_locations[location_name]
+	for(var/obj/effect/landmark/bounty_location/loc as anything in GLOB.bounty_locations)
+		if(loc.location_name != contract.delivery_location)
+			available_locations += loc
 
 	if(!available_locations.len)
 		to_chat(harlequinn, span_warning("Error: No spawn locations available!"))

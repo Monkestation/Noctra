@@ -1488,6 +1488,9 @@
 /client/Topic(href, href_list)
 	. = ..()
 
+	if(!check_rights(R_DEBUG, FALSE))
+		return
+
 	if(href_list["action"])
 		switch(href_list["action"])
 			if("rebuild_cache")

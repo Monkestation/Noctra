@@ -31,7 +31,7 @@
 				to_chat(user, span_warning("I do not have enough vitae, I need [DEATH_KNIGHT_COST] vitae for a Death Knight."))
 				return
 
-			user.adjust_bloodpool(DEATH_KNIGHT_COST)
+			user.adjust_bloodpool(-DEATH_KNIGHT_COST)
 			user.playsound_local(get_turf(src), 'sound/misc/vcraft.ogg', 100, FALSE, pressure_affected = FALSE)
 			to_chat(user, span_notice("I have summoned a knight from the underworld. I need only wait for them to materialize."))
 			SSmapping.add_world_trait(/datum/world_trait/death_knight, -1)
@@ -50,7 +50,7 @@
 			if(!can_steal_sun(user))
 				return
 
-			user.adjust_bloodpool(SUN_STEAL_COST)
+			user.adjust_bloodpool(-SUN_STEAL_COST)
 
 			GLOB.todoverride = "night"
 			sunstolen = TRUE
@@ -73,7 +73,11 @@
 	if(GLOB.tod == "night")
 		to_chat(user, span_warning("The Moon is watching. I must wait for Her to return."))
 		return
+<<<<<<< HEAD
 	if(!user.adjust_bloodpool(SUN_STEAL_COST))
+=======
+	if(!user.has_bloodpool_cost(SUN_STEAL_COST))
+>>>>>>> vanderlin/main
 		to_chat(user, span_warning("I do not have enough vitae, I need [SUN_STEAL_COST] vitae to steal the Sun."))
 		return
 

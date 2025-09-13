@@ -51,6 +51,7 @@
 
 	ADD_TRAIT(H, TRAIT_HEAVYARMOR, TRAIT_GENERIC)
 
-	if(H.dna?.species)
-		if(H.dna.species.id == SPEC_ID_HUMEN)
-			H.dna.species.soundpack_m = new /datum/voicepack/male/knight()
+	if(H.dna?.species.id == SPEC_ID_HUMEN)
+		H.dna.species.native_language = "Old Psydonic"
+		H.dna.species.accent_language = H.dna.species.get_accent(H.dna.species.native_language)
+		H.dna.species.soundpack_m = new /datum/voicepack/male/knight()

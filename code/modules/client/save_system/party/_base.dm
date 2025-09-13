@@ -103,7 +103,7 @@ GLOBAL_LIST_EMPTY(pending_party_invites) // Format: invitee_ckey = list(party, i
 		to_chat(src, "<span class='warning'>You are already in a party!</span>")
 		return
 
-	var/party_name = input("Enter party name:", "Create Party", "New Party") as text|null
+	var/party_name = browser_input_text(src, "Enter party name", "Create Party", max_length = MAX_CHARTER_LEN)
 	if(!party_name)
 		return
 

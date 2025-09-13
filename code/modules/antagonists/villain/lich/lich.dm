@@ -143,7 +143,13 @@
 	H.change_stat(STATKEY_SPD, -1)
 	H.adjust_spell_points(17) //Same as CM - Until they receive their spellbook.
 	H.grant_language(/datum/language/undead)
+<<<<<<< HEAD
 
+=======
+	if(H.dna?.species)
+		H.dna.species.native_language = "Zizo Chant"
+		H.dna.species.accent_language = H.dna.species.get_accent(H.dna.species.native_language)
+>>>>>>> vanderlin/main
 	H.dna.species.soundpack_m = new /datum/voicepack/lich()
 	H.ambushable = FALSE
 

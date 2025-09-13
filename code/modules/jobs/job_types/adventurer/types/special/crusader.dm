@@ -95,6 +95,11 @@
 		H.grant_language(/datum/language/oldpsydonic)
 		to_chat(H, "<span class='info'>I can speak Old Psydonic with ,m before my speech.</span>")
 
+	if(H.job == "Crusader") // If they come through the crusader_wave, they are from Grenzelhoft.
+		if(H.dna?.species.id == SPEC_ID_HUMEN)
+			H.dna.species.native_language = "Old Psydonic"
+			H.dna.species.accent_language = H.dna.species.get_accent(H.dna.species.native_language)
+
 /datum/outfit/job/adventurer/crusader // Reminder message
 	var/tutorial = "<br><br><font color='#bdc34a'><span class='bold'>You have been sent from the Totod Order on a mission to aid your struggle against the Blood Barons somehow. The details of your mission may vary, perhaps to find allies, funding, or a agent of the enemy...</span></font><br><br>"
 

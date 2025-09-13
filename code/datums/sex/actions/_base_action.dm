@@ -163,7 +163,7 @@
 			item_to_test.name = stored_item_name
 
 	// Check if the specific hole can fit our item
-	var/can_fit = SEND_SIGNAL(target, COMSIG_HOLE_TRY_FIT, item_to_test, hole_id, null, TRUE) // Silent check
+	var/can_fit = SEND_SIGNAL(target, COMSIG_HOLE_TRY_FIT, item_to_test, hole_id, user, TRUE) // Silent check
 
 	// Clean up test item
 	qdel(item_to_test)
@@ -209,7 +209,7 @@
 
 	return TRUE
 
-/datum/sex_action/proc/remove_from_hole(mob/living/carbon/human/user, mob/living/carbon/human/target)
+/datum/sex_action/proc/remove_from_hole(mob/living/carbon/human/user, mob/living/carbon/human/target, silent = FALSE)
 	if(!requires_hole_storage || !hole_id)
 		return TRUE
 
@@ -223,15 +223,17 @@
 				var/obj/item/penis_fake/fake_penis = stored_item
 				var/mob/living/carbon/human/original_owner = find_original_owner_by_ckey(fake_penis.original_owner_ckey)
 
-				if(original_owner)
-					to_chat(original_owner, span_notice("Your penis has been withdrawn from [target]'s [hole_id]."))
-					if(original_owner != user)
-						to_chat(user, span_notice("Withdrew [original_owner.name]'s penis from [target]'s [hole_id]."))
-				else
-					to_chat(user, span_notice("Withdrew penis from [target]'s [hole_id]."))
+				if(!silent)
+					if(original_owner)
+						to_chat(original_owner, span_notice("Your penis has been withdrawn from [target]'s [hole_id]."))
+						if(original_owner != user)
+							to_chat(user, span_notice("Withdrew [original_owner.name]'s penis from [target]'s [hole_id]."))
+					else
+						to_chat(user, span_notice("Withdrew penis from [target]'s [hole_id]."))
 				qdel(stored_item)
 			else
-				to_chat(user, span_notice("Removed [stored_item.name] from [target]'s [hole_id]."))
+				if(!silent)
+					to_chat(user, span_notice("Removed [stored_item.name] from [target]'s [hole_id]."))
 				qdel(stored_item)
 
 			tracked_storage -= entry

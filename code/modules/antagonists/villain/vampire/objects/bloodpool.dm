@@ -35,40 +35,48 @@
 
 /obj/structure/vampire/bloodpool/attack_hand(mob/living/user)
 	var/datum/antagonist/vampire/lord/lord = user.mind.has_antag_datum(/datum/antagonist/vampire/lord)
-	if(!lord)
+	if(!(user.clan_position?.can_assign_positions))
 		return
 
-	var/list/available_options = list()
+
+	var/list/available_options_lord = list()
+	var/list/available_options_contributor = list()
 
 	// Add available project types that aren't already active
 	for(var/project_type in available_project_types)
 		var/datum/vampire_project/temp_project = new project_type()
 		if(temp_project.can_start(user, src) && !(project_type in active_projects))
-			available_options[temp_project.display_name] = project_type
+			available_options_lord[temp_project.display_name] = project_type
 		qdel(temp_project)
 
 	// Add option to contribute to existing projects
 	if(active_projects.len)
-		available_options["Contribute to Project"] = "contribute"
-
+		available_options_lord["Contribute to Project"] = "contribute"
+		available_options_contributor["Contribute to Project"] = "contribute"
 	// Add option to view/cancel projects
 	if(active_projects.len)
-		available_options["Manage Projects"] = "manage"
+		available_options_lord["Manage Projects"] = "manage"
 
-	var/choice = browser_input_list(user, "What to do?", "VANDERLIN", available_options)
+	var/choice = browser_input_list(user, "What to do?", "VANDERLIN", available_options_lord)
 	if(!choice)
 		return
 
-	var/action = available_options[choice]
+	var/action_lord = available_options_lord[choice]
+	var/action_contributor = available_options_contributor[choice]
 
-	switch(action)
-		if("contribute")
-			handle_project_contribution(user)
-		if("manage")
-			handle_project_management(user)
-		else
-			// It's a project type
-			start_new_project(action, user)
+	if(lord)
+		switch(action_lord)
+			if("contribute")
+				handle_project_contribution(user)
+			if("manage")
+				handle_project_management(user)
+			else
+				// It's a project type
+				start_new_project(action_lord, user)
+	else
+		switch(action_contributor)
+			if("contribute")
+				handle_project_contribution(user)
 
 /obj/structure/vampire/bloodpool/proc/start_new_project(project_type, mob/living/user)
 	var/datum/vampire_project/project = new project_type()
@@ -193,7 +201,12 @@
 	return
 
 /datum/vampire_project/proc/handle_contribution(mob/living/user)
+	var/datum/antagonist/vampire/lord/lord = user.mind?.has_antag_datum(/datum/antagonist/vampire/lord)
 	var/max_contribution = min(user.bloodpool, total_cost - paid_amount)
+	if(!lord)
+		if(display_name != "Wicked Plate" || display_name != "World Anchor")
+			max_contribution = min(user.bloodpool, (total_cost - paid_amount) - 100)
+
 	var/contribution = input(user, "How much vitae to contribute? (Max: [max_contribution])", "CONTRIBUTION") as num|null
 
 	if(!contribution || contribution <= 0)
@@ -335,7 +348,7 @@
 
 /datum/vampire_project/amulet_crafting/confirm_start(mob/living/user)
 	if(..())
-		amulet_name = input(user, "Select a name for the amulet.", "VANDERLIN") as text|null
+		amulet_name = browser_input_text(user, "Select a name for the amulet", max_length = MAX_NAME_LEN)
 		return TRUE
 	return FALSE
 

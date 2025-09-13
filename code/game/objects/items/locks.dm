@@ -75,7 +75,7 @@
 /obj/item/customlock/finished/attackby(obj/item/I, mob/user, params)
 	if(!istype(I, /obj/item/weapon/hammer))
 		..()
-	holdname = input(user, "What would you like to name this?", "", "") as text
+	holdname = browser_input_text(user, "What would you like to name this?", "", max_length = MAX_CHARTER_LEN)
 	if(holdname)
 		to_chat(user, span_notice("You label the [name] with [holdname]."))
 

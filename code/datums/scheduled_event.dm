@@ -70,7 +70,7 @@
 
 /datum/scheduled_event/Topic(href, href_list)
 	. = ..()
-	if(QDELETED(src))
+	if(QDELETED(src) || !check_rights(NONE))
 		return
 	var/round_started = SSticker.HasRoundStarted()
 	switch(href_list["action"])

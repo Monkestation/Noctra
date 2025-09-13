@@ -47,6 +47,10 @@
 	var/datum/component/storage/concrete/grid/hole/storage_comp = new_storage.GetComponent(/datum/component/storage)
 	if(!storage_comp)
 		storage_comp = new_storage.AddComponent(storage_type)
+	else
+		// a very crude patchwork fix, for some reason the component is not being added correctly
+		storage_comp.RemoveComponent()
+		storage_comp = new_storage.AddComponent(storage_type)
 
 	hole_array[hole_id] = storage_comp
 	return storage_comp
@@ -292,13 +296,13 @@
 
 	// Check if item can fit
 	if(!storage_comp.can_be_inserted(item, user))
-		if(user)
+		if(user && !silent)
 			to_chat(user, span_warning("[item] won't fit in [hole_id]."))
 		return FALSE
 
 	// Insert the item
 	storage_comp.handle_item_insertion(item, user)
-	if(user)
+	if(user && !silent)
 		to_chat(user, span_notice("You place [item] into [hole_id]."))
 	return TRUE
 

@@ -152,7 +152,7 @@
 
 /// Actually display the radial menu and then do something with the result
 /datum/component/obeys_commands/proc/prompt_name(mob/living/clicker)
-	var/new_name = input(clicker, "Choose a new name for [parent]", parent)
+	var/new_name = browser_input_text(clicker, "Choose a new name for [parent]", "NEW NAME", max_length = MAX_NAME_LEN)
 	if(!new_name)
 		return
 	var/mob/living/living = parent

@@ -57,10 +57,14 @@
 
 		if(CHOICE_GUN)
 			owner.special_items["Puffer"] = /obj/item/gun/ballistic/revolver/grenadelauncher/pistol
+			owner.special_items["Puffer Bullets"] = /obj/item/storage/belt/pouch/bullets
+			owner.special_items["Puffet Gunpowder"] = /obj/item/reagent_containers/glass/bottle/aflask
+			aspirant_mob.set_skillrank(/datum/skill/combat/firearms, 6)
 			to_chat(owner, span_notice("I can retrieve my item from a statue, tree or clock by right clicking it."))
 
 		if(CHOICE_BOMB)
 			owner.special_items["Bomb"] = /obj/item/explosive/bottle
+			aspirant_mob.set_skillrank(/datum/skill/craft/bombs, 6)
 			to_chat(owner, span_notice("I can retrieve my item from a statue, tree or clock by right clicking it."))
 
 

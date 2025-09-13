@@ -29,6 +29,7 @@ GLOBAL_LIST_INIT(peasant_dyes, list(
 	"Old Leather" = CLOTHING_OLD_LEATHER,
 	"Spring Green" = CLOTHING_SPRING_GREEN,
 	"Berry Blue" = CLOTHING_BERRY_BLUE,
+	"Taraxacum Yellow" = CLOTHING_TARAXACUM_YELLOW,
 ))
 GLOBAL_PROTECT(peasant_dyes)
 

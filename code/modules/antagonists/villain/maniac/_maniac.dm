@@ -432,7 +432,7 @@ GLOBAL_VAR_INIT(maniac_highlander, 0) // THERE CAN ONLY BE ONE!
 	if(!infile)
 		return
 
-	var/filename = "[infile]"
+	var/filename = SANITIZE_FILENAME("[infile]")
 	var/file_ext = lowertext(copytext(filename, -4))
 	var/file_size = length(infile)
 

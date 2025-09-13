@@ -834,11 +834,11 @@
 		to_chat(user, "<span class='warning'>You don't have permission to edit this position.</span>")
 		return
 
-	var/position_name = params["position_name"]
-	var/position_desc = params["position_desc"]
+	var/position_name = strip_html(params["position_name"], MAX_NAME_LEN)
+	var/position_desc = strip_html(params["position_desc"])
 	var/rank_level = text2num(params["rank_level"])
 	var/max_subordinates = text2num(params["max_subordinates"])
-	var/position_color = params["position_color"]
+	var/position_color = sanitize_hexcolor(params["position_color"], include_crunch = TRUE)
 	var/can_assign = params["can_assign_positions"] ? TRUE : FALSE
 
 	if(!position_name || !max_subordinates)
@@ -869,12 +869,12 @@
 	if(!can_manage_hierarchy())
 		return
 
-	var/position_name = params["position_name"]
-	var/position_desc = params["position_desc"]
+	var/position_name = strip_html(params["position_name"], MAX_NAME_LEN)
+	var/position_desc = strip_html(params["position_desc"])
 	var/superior_ref = params["superior_position"]
 	var/rank_level = text2num(params["rank_level"])
 	var/max_subordinates = text2num(params["max_subordinates"])
-	var/position_color = params["position_color"]
+	var/position_color = sanitize_hexcolor(params["position_color"], include_crunch = TRUE)
 	var/can_assign = params["can_assign_positions"] ? TRUE : FALSE
 
 	if(!position_name || !superior_ref || !rank_level)

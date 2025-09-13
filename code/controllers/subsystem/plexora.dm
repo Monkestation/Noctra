@@ -61,6 +61,11 @@ SUBSYSTEM_DEF(plexora)
 
 	base_url = CONFIG_GET(string/plexora_url)
 
+	default_headers = list(
+		"Content-Type" = "application/json",
+		"Authorization" = AUTH_HEADER,
+	)
+
 	// Do a ping test to check if Plexora is actually running
 	if (!is_plexora_alive())
 		stack_trace("SSplexora is enabled BUT plexora is not alive or running! SS has not been aborted, subsequent fires will take place.")
@@ -69,10 +74,6 @@ SUBSYSTEM_DEF(plexora)
 
 	RegisterSignal(SSticker, COMSIG_TICKER_ROUND_STARTING, PROC_REF(roundstarted))
 
-	default_headers = list(
-		"Content-Type" = "application/json",
-		"Authorization" = AUTH_HEADER,
-	)
 	return TRUE
 
 /datum/controller/subsystem/plexora/Shutdown()

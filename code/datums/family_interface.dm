@@ -1019,6 +1019,9 @@
 /client/Topic(href, list/href_list)
 	. = ..()
 
+	if(!check_rights(R_DEBUG, FALSE))
+		return
+
 	switch(href_list["action"])
 		if("view_royal")
 			if(SSfamilytree?.ruling_family)

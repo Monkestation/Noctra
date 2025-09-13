@@ -33,3 +33,6 @@
 			to_chat(H, "<span class='info'>I can speak Old Psydonic with ,m before my speech.</span>")
 		H.set_patron(/datum/patron/psydon, TRUE)
 	ADD_TRAIT(H, TRAIT_FOREIGNER, TRAIT_GENERIC)
+	if(H.dna?.species.id == SPEC_ID_HUMEN)
+		H.dna.species.native_language = "Old Psydonic"
+		H.dna.species.accent_language = H.dna.species.get_accent(H.dna.species.native_language)

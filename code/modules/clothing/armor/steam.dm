@@ -1,6 +1,6 @@
 /obj/item/clothing/armor/steam
-	name = "steam armor"
-	desc = "The center piece of the steam armor set."
+	name = "steamknight plate"
+	desc = "The center piece of the steamknight armor. Requires knowledge in engineering to operate."
 
 	icon = 'icons/roguetown/clothing/steamknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/steamknight_onmob.dmi'
@@ -23,6 +23,11 @@
 	max_integrity = INTEGRITY_STRONGEST
 	item_weight = 25 * BRONZE_MULTIPLIER
 	stand_speed_reduction = 0.6
+<<<<<<< HEAD
+=======
+
+	smeltresult = /obj/item/ingot/bronze
+>>>>>>> vanderlin/main
 
 /obj/item/clothing/armor/steam/Initialize()
 	. = ..()
@@ -55,6 +60,14 @@
 		return
 
 	if(!slot || !(slot_flags & slot))
+		power_off(user)
+		remove_status_effect(user)
+		for(var/obj/item/clothing/clothing as anything in equipped_items)
+			clothing:power_off(user)
+		return
+
+	if(user.get_skill_level(/datum/skill/craft/engineering) <= 3)
+		to_chat(user, span_warning("I don't know how to operate [src]!"))
 		power_off(user)
 		remove_status_effect(user)
 		for(var/obj/item/clothing/clothing as anything in equipped_items)

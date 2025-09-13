@@ -104,7 +104,10 @@
 #define INIT_ORDER_TITLE 100
 #define INIT_ORDER_GARBAGE 99
 #define INIT_ORDER_DBCORE 95
+<<<<<<< HEAD
 #define INIT_ORDER_VERIFICATIONS 94
+=======
+>>>>>>> vanderlin/main
 #define INIT_ORDER_PLEXORA  93
 #define INIT_ORDER_BLACKBOX 91
 #define INIT_ORDER_SERVER_MAINT 90

@@ -117,6 +117,11 @@
 	var/list/parent_sessions = return_sessions_with_user(parent)
 	var/datum/sex_session/highest_priority = return_highest_priority_action(parent_sessions, parent)
 	playsound(parent, 'sound/misc/mat/endout.ogg', 50, TRUE, ignore_walls = FALSE)
+	// Special case for when the user has a penis but no testicles
+	if(!mob.getorganslot(ORGAN_SLOT_TESTICLES) && mob.getorganslot(ORGAN_SLOT_PENIS))
+		mob.visible_message(span_love("[mob] climaxes, yet nothing is released!"))
+		after_ejaculation(FALSE, parent)
+		return
 	if(!highest_priority)
 		mob.visible_message(span_love("[mob] makes a mess!"))
 		var/turf/turf = get_turf(parent)
