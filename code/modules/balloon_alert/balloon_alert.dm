@@ -15,14 +15,14 @@
  * * mob/viewer: The mob the text will be shown to. Nullable (But only in the form of it won't runtime).
  * * text: The text to be shown to viewer. Must not be null.
  */
-/atom/proc/balloon_alert(mob/viewer, text)
+/atom/proc/balloon_alert(mob/viewer, text, alpha, x_offset, y_offset, size)
 	SHOULD_NOT_SLEEP(TRUE)
 
-	INVOKE_ASYNC(src, PROC_REF(balloon_alert_perform), viewer, text)
+	INVOKE_ASYNC(src, PROC_REF(balloon_alert_perform), viewer, text, alpha, x_offset, y_offset, size)
 
 /// Create balloon alerts (text that floats up) to everything within range.
 /// Will only display to people who can see.
-/atom/proc/balloon_alert_to_viewers(message, self_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs)
+/atom/proc/balloon_alert_to_viewers(message, self_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, alpha, x_offset, y_offset, size)
 	SHOULD_NOT_SLEEP(TRUE)
 
 	var/list/hearers = get_hearers_in_view(vision_distance, src, RECURSIVE_CONTENTS_CLIENT_MOBS)
@@ -32,13 +32,13 @@
 		if(hearer.is_blind())
 			continue
 
-		balloon_alert(hearer, (hearer == src && self_message) || message)
+		balloon_alert(hearer, (hearer == src && self_message) || message, alpha, x_offset, y_offset, size)
 
 // Do not use.
 // MeasureText blocks. I have no idea for how long.
 // I would've made the maptext_height update on its own, but I don't know
 // if this would look bad on laggy clients.
-/atom/proc/balloon_alert_perform(mob/viewer, text)
+/atom/proc/balloon_alert_perform(mob/viewer, text, alpha = 0, x_offset = 0, y_offset = 0, size = 1)
 	var/client/viewer_client = viewer?.client
 	if(isnull(viewer_client))
 		return
@@ -52,7 +52,8 @@
 	balloon_alert.alpha = 0
 	balloon_alert.appearance_flags = RESET_ALPHA|RESET_COLOR|RESET_TRANSFORM
 	balloon_alert.maptext = MAPTEXT_CENTER("<span style='-dm-text-outline: 1px #0005'>[text]</span>")
-	balloon_alert.maptext_x = (BALLOON_TEXT_WIDTH - world.icon_size) * -0.5 - base_pixel_x
+	balloon_alert.maptext_x = (BALLOON_TEXT_WIDTH - world.icon_size) * -0.5 - base_pixel_x - x_offset
+	balloon_alert.transform = balloon_alert.transform.Scale(size)
 	WXH_TO_HEIGHT(viewer_client?.MeasureText(text, null, BALLOON_TEXT_WIDTH), balloon_alert.maptext_height)
 	balloon_alert.maptext_width = BALLOON_TEXT_WIDTH
 
@@ -60,15 +61,17 @@
 
 	var/length_mult = 1 + max(0, length(strip_html_full(text)) - BALLOON_TEXT_CHAR_LIFETIME_INCREASE_MIN) * BALLOON_TEXT_CHAR_LIFETIME_INCREASE_MULT
 
+	var/anim_y_offset = (y_offset || world.icon_size * 1.2)
+
 	animate(
 		balloon_alert,
-		pixel_y = world.icon_size * 1.2,
+		pixel_y = anim_y_offset,
 		time = BALLOON_TEXT_TOTAL_LIFETIME(length_mult),
 		easing = SINE_EASING | EASE_OUT,
 	)
 
 	animate(
-		alpha = 255,
+		alpha = (alpha || 255),
 		time = BALLOON_TEXT_SPAWN_TIME,
 		easing = CUBIC_EASING | EASE_OUT,
 		flags = ANIMATION_PARALLEL,
