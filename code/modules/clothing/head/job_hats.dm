@@ -111,6 +111,9 @@
 	item_state = "inqhat"
 	sewrepair = TRUE
 
+/obj/item/clothing/head/leather/inqhat/vigilante
+	name = "fancy hat"
+
 /obj/item/clothing/head/physhat
 	name = "court physician's hat"
 	desc = "A head covering for the distinguished physician."

@@ -164,8 +164,6 @@
 
 	// Check if the specific hole can fit our item
 	var/can_fit = SEND_SIGNAL(target, COMSIG_HOLE_TRY_FIT, item_to_test, hole_id, user, TRUE) // Silent check
-	if(can_fit)
-		remove_from_hole(user, target, TRUE)
 
 	// Clean up test item
 	qdel(item_to_test)

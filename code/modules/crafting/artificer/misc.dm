@@ -146,6 +146,14 @@
 	hammers_per_item = 7
 	craftdiff = 4
 
+/datum/artificer_recipe/weapons/harpoon_gun
+	name = "Harpoon Gun (+1 Chain) (+2 Metal Gear) (+2 Bronze)"
+	required_item = /obj/item/ingot/steel
+	created_item = /obj/item/harpoon_gun
+	additional_items = list(/obj/item/rope/chain = 1, /obj/item/gear/metal = 2, /obj/item/ingot/bronze = 2)
+	hammers_per_item = 7
+	craftdiff = 4
+
 // --------- Contraptions -----------
 
 /datum/artificer_recipe/contraptions

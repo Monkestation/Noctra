@@ -153,6 +153,8 @@
 /proc/return_highest_priority_action(list/sessions = list(), mob/living/carbon/human/user)
 	var/datum/sex_session/highest_session
 	for(var/datum/sex_session/session in sessions)
+		if(!session.current_action)
+			continue
 		if(!highest_session)
 			highest_session = session
 			continue

@@ -24,18 +24,6 @@ jobs:
           git fetch vanderlin
           git fetch origin
           
-      - name: Debug - Check current state
-        run: |
-          echo "=== Current branch and remotes ==="
-          git branch -a
-          git remote -v
-          echo "=== Latest commit in origin/main ==="
-          git log -1 --oneline origin/main
-          echo "=== Latest commit in vanderlin/main ==="
-          git log -1 --oneline vanderlin/main
-          echo "=== Checking for differences ==="
-          git diff --stat origin/main vanderlin/main || echo "Diff command failed"
-          
       - name: Create and switch to sync branch
         run: |
           # Delete existing sync branch if it exists
@@ -45,34 +33,76 @@ jobs:
           # Create fresh sync branch from current main
           git checkout -b sync-from-vander origin/main
           
-      - name: Merge Vanderlin changes
+      - name: Intelligent merge with real conflict detection
         id: merge_step
         run: |
-          # Attempt to merge Vanderlin's main branch
+          echo "=== Attempting merge with conflict resolution ==="
+          
+          # First, try the merge
           if git merge vanderlin/main --no-ff --allow-unrelated-histories -m "Sync from Vanderlin: $(date)"; then
             echo "merge_status=success" >> $GITHUB_OUTPUT
-            echo "Merge completed successfully"
+            echo "Merge completed successfully with no conflicts"
           else
-            echo "merge_status=conflicts" >> $GITHUB_OUTPUT
-            echo "Merge conflicts detected - will create PR for manual resolution"
+            echo "Conflicts detected, analyzing..."
             
-            # List conflicted files and save to output
-            echo "=== CONFLICTED FILES ==="
+            # Get list of conflicted files
             conflicted_files=$(git diff --name-only --diff-filter=U)
+            echo "Raw conflicted files:"
             echo "$conflicted_files"
-            echo "conflicted_files<<EOF" >> $GITHUB_OUTPUT
-            echo "$conflicted_files" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
             
-            # Show conflict summary
-            echo "=== CONFLICT SUMMARY ==="
-            git status --porcelain | grep "^UU\|^AA\|^DD" || echo "No standard conflict markers found"
+            # Now check which conflicts are REAL vs just history conflicts
+            real_conflicts=""
+            false_conflicts=""
             
-            # Add all files (including conflicted ones) to staging
-            git add -A
+            for file in $conflicted_files; do
+              echo "Analyzing conflict in: $file"
+              
+              # Get the content from both sides
+              git show HEAD:"$file" > /tmp/ours 2>/dev/null || echo "" > /tmp/ours
+              git show vanderlin/main:"$file" > /tmp/theirs 2>/dev/null || echo "" > /tmp/theirs
+              
+              # Compare the actual file contents
+              if cmp -s /tmp/ours /tmp/theirs; then
+                echo "  -> FALSE CONFLICT: Files are identical, resolving automatically"
+                false_conflicts="$false_conflicts$file\n"
+                # Take their version (they're the same anyway)
+                git checkout --theirs "$file"
+                git add "$file"
+              else
+                echo "  -> REAL CONFLICT: Files have different content"
+                real_conflicts="$real_conflicts$file\n"
+              fi
+            done
             
-            # Create a commit with the conflicts
-            git commit -m "WIP: Sync from Vanderlin with conflicts - needs manual resolution"
+            # If we resolved all conflicts automatically, commit
+            if [ -z "$(git diff --name-only --diff-filter=U)" ]; then
+              git commit -m "Sync from Vanderlin: $(date) - auto-resolved false conflicts"
+              echo "merge_status=auto_resolved" >> $GITHUB_OUTPUT
+              echo "auto_resolved_files<<EOF" >> $GITHUB_OUTPUT
+              echo -e "$false_conflicts" >> $GITHUB_OUTPUT
+              echo "EOF" >> $GITHUB_OUTPUT
+            else
+              echo "merge_status=conflicts" >> $GITHUB_OUTPUT
+              echo "real_conflicted_files<<EOF" >> $GITHUB_OUTPUT
+              echo -e "$real_conflicts" >> $GITHUB_OUTPUT
+              echo "EOF" >> $GITHUB_OUTPUT
+              echo "false_conflicts_resolved<<EOF" >> $GITHUB_OUTPUT
+              echo -e "$false_conflicts" >> $GITHUB_OUTPUT
+              echo "EOF" >> $GITHUB_OUTPUT
+              
+              # Show detailed conflict info for real conflicts
+              echo "=== REAL CONFLICTS REMAINING ==="
+              for file in $(git diff --name-only --diff-filter=U); do
+                echo "File: $file"
+                echo "Conflict markers:"
+                grep -n "^<<<<<<<\|^=======\|^>>>>>>>" "$file" | head -10
+                echo "---"
+              done
+              
+              # Add all files (including still-conflicted ones) to staging
+              git add -A
+              git commit -m "WIP: Sync from Vanderlin with REAL conflicts - needs manual resolution"
+            fi
           fi
           
       - name: Push sync branch
@@ -87,22 +117,45 @@ jobs:
           if [ "${{ steps.merge_step.outputs.merge_status }}" = "conflicts" ]; then
             pr_body="This PR merges the latest changes from Vanderlin into Noctra.
 
-           **MERGE CONFLICTS DETECTED** - Manual resolution required.
+           **REAL MERGE CONFLICTS DETECTED** - Manual resolution required.
 
-          ## Conflicted Files:
+          ## Files with ACTUAL conflicts (different content):
           \`\`\`
-          ${{ steps.merge_step.outputs.conflicted_files }}
-          \`\`\`
+          ${{ steps.merge_step.outputs.real_conflicted_files }}
+          \`\`\`"
+          
+            if [ ! -z "${{ steps.merge_step.outputs.false_conflicts_resolved }}" ]; then
+              pr_body="$pr_body
 
-          Please review and resolve the conflicts in the files listed above.
+          ## Auto-resolved false conflicts (identical files):
+          \`\`\`
+          ${{ steps.merge_step.outputs.false_conflicts_resolved }}
+          \`\`\`"
+            fi
+
+            pr_body="$pr_body
 
           Auto-generated sync from GitHub Actions run #${{ github.run_number }}
           Triggered at: $(date)"
-            pr_title="MERGE CONFLICTS: Sync updates from Vanderlin - ${{ github.run_id }}"
+            pr_title="REAL CONFLICTS: Sync updates from Vanderlin - ${{ github.run_id }}"
+            
+          elif [ "${{ steps.merge_step.outputs.merge_status }}" = "auto_resolved" ]; then
+            pr_body="This PR merges the latest changes from Vanderlin into Noctra.
+
+           **All conflicts were false conflicts and have been auto-resolved.**
+
+          ## Auto-resolved files (were identical despite git conflicts):
+          \`\`\`
+          ${{ steps.merge_step.outputs.auto_resolved_files }}
+          \`\`\`
+
+          Auto-generated sync from GitHub Actions run #${{ github.run_number }}
+          Triggered at: $(date)"
+            pr_title="Auto-resolved: Sync updates from Vanderlin - ${{ github.run_id }}"
           else
             pr_body="This PR merges the latest changes from Vanderlin into Noctra.
 
-           **Merge completed successfully** - Ready to review and merge.
+           **Merge completed successfully** - No conflicts detected.
 
           Auto-generated sync from GitHub Actions run #${{ github.run_number }}
           Triggered at: $(date)"

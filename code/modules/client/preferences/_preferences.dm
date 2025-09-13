@@ -1026,7 +1026,7 @@ GLOBAL_LIST_INIT(name_adjustments, list())
 		var/bitfield = toggles_data[1]
 		var/prefs_variable = toggles_data[2]
 		var/new_toggles = input_bitfield(user, toggle_type, bitfield, prefs_variable, nheight = 500)
-		if(new_toggles)
+		if(!isnull(new_toggles))
 			if(toggle_type == "Default Toggles")
 				// Reset all fields we touch to 0 first because we don't use a full set to do toggles = X
 				// And don't want to override them

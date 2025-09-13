@@ -123,6 +123,12 @@
 		/datum/action/cooldown/spell/healing/profane,
 	)
 
+/datum/devotion/inhumen/make_acolyte()
+	. = ..()
+	miracles_extra += list(
+		/datum/action/cooldown/spell/healing/profane,
+	)
+
 /datum/devotion/inhumen/zizo
 	miracles = list(
 		CLERIC_T0 = /datum/action/cooldown/spell/undirected/touch/orison,

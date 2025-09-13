@@ -11,15 +11,17 @@ abstract types are automatically excluded.
 		/obj/item/clothing/neck/portalamulet, // vampire antag item
 		/obj/item/clothing/head/peaceflower, // spawns naturally
 		/obj/item/clothing/head/corruptflower, // spawns naturally
-		/obj/item/clothing/face/facemask/prisoner, // shouldn't be attainable
 		/obj/item/clothing/face/facemask/steel/harlequin, // antag only
 		/obj/item/clothing/shirt/robe/necromancer, // antag
 		/obj/item/clothing/shirt/robe/priest, // unattainable
 		/obj/item/clothing/head/padded/deathface, // ???
 		/obj/item/clothing/head/roguehood/priest, // unattainable
+		/obj/item/clothing/face/facemask/prisoner,
 		/obj/item/clothing/head/priestmask, // unattainable
 		/obj/item/clothing/head/priesthat, // unattainable
 		/obj/item/clothing/head/mob_holder, // change this shit to not clothing, wtf.
+		/obj/item/clothing/head/leather/inqhat/vigilante, //Renegade Bullshit
+		/obj/item/clothing/face/phys/plaguebearer, //Plague Only
 		/obj/item/clothing/ring/gold/burden, // uncraftable
 		/obj/item/clothing/head/maniac,
 		/obj/item/clothing/cloak/half/shadowcloak/cult, // cultist item
