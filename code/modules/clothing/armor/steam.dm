@@ -23,11 +23,8 @@
 	max_integrity = INTEGRITY_STRONGEST
 	item_weight = 25 * BRONZE_MULTIPLIER
 	stand_speed_reduction = 0.6
-<<<<<<< HEAD
-=======
 
 	smeltresult = /obj/item/ingot/bronze
->>>>>>> vanderlin/main
 
 /obj/item/clothing/armor/steam/Initialize()
 	. = ..()

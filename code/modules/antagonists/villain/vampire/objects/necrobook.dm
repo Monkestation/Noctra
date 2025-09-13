@@ -73,11 +73,7 @@
 	if(GLOB.tod == "night")
 		to_chat(user, span_warning("The Moon is watching. I must wait for Her to return."))
 		return
-<<<<<<< HEAD
-	if(!user.adjust_bloodpool(SUN_STEAL_COST))
-=======
 	if(!user.has_bloodpool_cost(SUN_STEAL_COST))
->>>>>>> vanderlin/main
 		to_chat(user, span_warning("I do not have enough vitae, I need [SUN_STEAL_COST] vitae to steal the Sun."))
 		return
 

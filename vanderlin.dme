@@ -170,10 +170,7 @@
 #include "code\__DEFINES\vampires.dm"
 #include "code\__DEFINES\vectors.dm"
 #include "code\__DEFINES\vehicles.dm"
-<<<<<<< HEAD
 #include "code\__DEFINES\veyra.dm"
-=======
->>>>>>> vanderlin/main
 #include "code\__DEFINES\visual_helpers.dm"
 #include "code\__DEFINES\visual_ui.dm"
 #include "code\__DEFINES\vv.dm"
@@ -3173,10 +3170,7 @@
 #include "code\modules\spells\spell_types\undirected\shapeshift\frog.dm"
 #include "code\modules\spells\spell_types\undirected\shapeshift\gaseous_form.dm"
 #include "code\modules\spells\spell_types\undirected\shapeshift\rat.dm"
-<<<<<<< HEAD
-=======
 #include "code\modules\spells\spell_types\undirected\shapeshift\rat_vampire.dm"
->>>>>>> vanderlin/main
 #include "code\modules\spells\spell_types\undirected\shapeshift\troll_form.dm"
 #include "code\modules\spells\spell_types\undirected\teleport\_teleport.dm"
 #include "code\modules\spells\spell_types\undirected\touch\_touch.dm"

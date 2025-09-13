@@ -402,10 +402,7 @@ GLOBAL_LIST_EMPTY(patreon_races)
 				/datum/language/celestial = "Celestial",
 				/datum/language/zalad = "Zalad",
 				/datum/language/deepspeak = "Deepspeak",
-<<<<<<< HEAD
-=======
 				/datum/language/oldpsydonic = "Old Psydonic",
->>>>>>> vanderlin/main
 				/datum/language/undead = "Zizo Chant"
 			)
 

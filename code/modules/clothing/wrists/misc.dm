@@ -12,12 +12,6 @@
 	icon_state = "nocwrappings"
 	item_state = "nocwrappings"
 
-<<<<<<< HEAD
-/obj/item/clothing/wrists/bracers/rare
-	abstract_type = /obj/item/clothing/wrists/bracers/rare
-
-//Aasimar hoplite bracers
-=======
 /obj/item/clothing/wrists/silverbracelet
 	name = "silver bracelets"
 	slot_flags = ITEM_SLOT_WRISTS
@@ -37,7 +31,6 @@
 /obj/item/clothing/wrists/bracers/rare
 	abstract_type = /obj/item/clothing/wrists/bracers/rare
 
->>>>>>> vanderlin/main
 /obj/item/clothing/wrists/bracers/rare/hoplite
 	name = "ancient bracers"
 	desc = "Stalwart bronze bracers, from an age long past."

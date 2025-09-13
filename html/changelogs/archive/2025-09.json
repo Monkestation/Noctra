@@ -266,14 +266,6 @@
             {
                 "bugfix": "IMPORTANT: fixed toggles not being able to be saved if all options are off."
             }
-<<<<<<< HEAD
-        ]
-    },
-    "2025-09-12": {
-        "Just-Sim": [
-            {
-                "rscadd": "Vaginal sex"
-=======
         ],
         "Bloo4420": [
             {
@@ -398,7 +390,6 @@
         "CheffieGithub": [
             {
                 "bugfix": "Fixed cooking stews in pots"
->>>>>>> vanderlin/main
             }
         ]
     }
