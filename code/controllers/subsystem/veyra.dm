@@ -18,6 +18,9 @@
 	name = "Bulk Size"
 	config_entry_value = 100
 
+/datum/config_entry/flag/require_id_verification
+	name = "Require ID Verification"
+
 // Verification datum to store player verification data
 /datum/verification_data
 	var/discord_id
@@ -260,7 +263,7 @@ SUBSYSTEM_DEF(verifications)
 			)
 
 			verification_cache[data["discord_id"]] = verification
-			ckey_to_discord[data["ckey"]] = data["discord_id"]
+			ckey_to_discord[data["ckey"]] = verification.ckey
 
 			return verification
 	else if(response.status_code == 404)
@@ -338,6 +341,29 @@ SUBSYSTEM_DEF(verifications)
 	else
 		return verification.is_verified()
 
+/datum/controller/subsystem/verifications/proc/can_connect(client/C)
+	if(!CONFIG_GET(flag/require_id_verification))
+		return TRUE  // No verification required
+
+	var/datum/verification_data/verification = get_verification_by_ckey(C.ckey)
+	if(!verification)
+		return FALSE  // No verification data found
+
+	return verification.has_verification(VERIFIED_ID)
+
+/datum/controller/subsystem/verifications/proc/get_connection_denial_reason(client/C)
+	if(!CONFIG_GET(flag/require_id_verification))
+		return ""  // Should not be called if verification isn't required
+
+	var/datum/verification_data/verification = get_verification_by_ckey(C.ckey)
+	if(!verification)
+		return "No verification data found for your account. Please complete the verification process on Discord."
+
+	if(!verification.has_verification(VERIFIED_ID))
+		return "ID verification is required to connect to this server. Please complete ID verification on Discord."
+
+	return ""
+
 /datum/controller/subsystem/verifications/proc/clear_cache(discord_id)
 	var/datum/verification_data/verification = verification_cache[discord_id]
 	if(verification)
@@ -347,3 +373,21 @@ SUBSYSTEM_DEF(verifications)
 /datum/controller/subsystem/verifications/proc/clear_all_cache()
 	verification_cache.Cut()
 	ckey_to_discord.Cut()
+
+/client/New()
+	. = ..()
+
+	if(!SSverifications.can_connect(src))
+		var/reason = SSverifications.get_connection_denial_reason(src)
+		to_chat(src, "<span class='boldannounce'>[reason]</span>")
+		log_admin("Client [ckey] denied connection: [reason]")
+		qdel(src)
+		return
+
+/proc/check_verification_requirements(client/C)
+	if(!SSverifications.can_connect(C))
+		var/reason = SSverifications.get_connection_denial_reason(C)
+		to_chat(C, "<span class='boldannounce'>[reason]</span>")
+		log_admin("Client [C.ckey] denied connection: [reason]")
+		return FALSE
+	return TRUE
