@@ -4,6 +4,29 @@
 |  Light Armor	 |
 |			 	 |
 \---------------*/
+/obj/item/clothing/neck/goldamulet
+	name = "gold amulet"
+	icon_state = "amuletg"
+	slot_flags = ITEM_SLOT_NECK
+	equip_sound = 'sound/foley/equip/cloak_equip.ogg'
+	pickup_sound = 'sound/foley/equip/cloak_take_off.ogg'
+	break_sound = 'sound/foley/cloth_rip.ogg'
+	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
+	sellprice = 60
+
+/obj/item/clothing/neck/silveramulet
+	name = "silver amulet"
+	icon_state = "amulets"
+	slot_flags = ITEM_SLOT_NECK
+	equip_sound = 'sound/foley/equip/cloak_equip.ogg'
+	pickup_sound = 'sound/foley/equip/cloak_take_off.ogg'
+	break_sound = 'sound/foley/cloth_rip.ogg'
+	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
+	sellprice = 35
+
+/obj/item/clothing/neck/silveramulet/Initialize()
+	. = ..()
+	enchant(/datum/enchantment/silver)
 
 /obj/item/clothing/neck/coif
 	name = "leather coif"

@@ -12,9 +12,14 @@
 	if(prob(5))
 		H.cmode_music = 'sound/music/cmode/antag/combat_evilwizard.ogg'
 
+<<<<<<< HEAD
 	//magic users are either noc worshippers or zizo worshippers
 	//because the rogue mage was kicked away from the academy and is now a bandit, no way in hell do they worship noc any longer, or if they even did in the first place
 	H.set_patron(/datum/patron/inhumen/zizo)
+=======
+	H.set_patron(/datum/patron/inhumen/zizo)//its either noc or zizo, and because they got kicked from the academy and are working with matthios worshippers, definetly zizo
+	H.grant_language(/datum/language/undead)
+>>>>>>> vanderlin/main
 	H.mana_pool?.set_intrinsic_recharge(MANA_ALL_LEYLINES)
 	shoes = /obj/item/clothing/shoes/simpleshoes
 	pants = /obj/item/clothing/pants/trou/leather

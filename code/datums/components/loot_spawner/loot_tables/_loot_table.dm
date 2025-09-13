@@ -533,6 +533,10 @@ CONFIGURATION:
 
 /client/Topic(href, href_list)
 	. = ..()
+
+	if(!check_rights(R_DEBUG, FALSE))
+		return
+
 	if(href_list["action"] == "select_loot_table")
 		var/datum/loot_table/selected_type = text2path(href_list["table_type"])
 		if(!selected_type)

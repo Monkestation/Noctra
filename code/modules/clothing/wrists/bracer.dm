@@ -66,4 +66,3 @@
 /obj/item/clothing/wrists/bracers/leather/masterwork/Initialize()
 	. = ..()
 	filters += filter(type="drop_shadow", x=0, y=0, size=0.5, offset=1, color=rgb(218, 165, 32))
-

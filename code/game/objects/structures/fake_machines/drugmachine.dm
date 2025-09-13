@@ -110,7 +110,8 @@
 	var/list/held_items = list()
 	var/budget = 0
 	var/upgrade_flags
-	var/current_cat = "1"
+	var/current_cat
+	var/list/available_categories = list("Narcotics", "Instruments")
 
 /obj/structure/fake_machine/drugmachine/Initialize()
 	. = ..()
@@ -179,7 +180,12 @@
 			budget2change(budget, usr)
 			budget = 0
 	if(href_list["changecat"])
-		current_cat = href_list["changecat"]
+		var/selected_category = href_list["changecat"]
+
+		if (selected_category in available_categories)
+			current_cat = selected_category
+		else
+			current_cat = null
 	if(href_list["secrets"])
 		var/list/options = list()
 		if(upgrade_flags & UPGRADE_NOTAX)
@@ -225,15 +231,14 @@
 
 	contents += "</center><BR>"
 
-	var/list/unlocked_cats = list("Narcotics","Instruments")
-	if(current_cat == "1")
+	if(isnull(current_cat))
 		contents += "<center>"
-		for(var/X in unlocked_cats)
-			contents += "<a href='byond://?src=[REF(src)];changecat=[X]'>[X]</a><BR>"
+		for(var/category in available_categories)
+			contents += "<a href='byond://?src=[REF(src)];changecat=[category]'>[category]</a><BR>"
 		contents += "</center>"
 	else
 		contents += "<center>[current_cat]<BR></center>"
-		contents += "<center><a href='byond://?src=[REF(src)];changecat=1'>\[RETURN\]</a><BR><BR></center>"
+		contents += "<center><a href='byond://?src=[REF(src)];changecat=0'>\[RETURN\]</a><BR><BR></center>"
 		var/list/pax = list()
 		for(var/pack in SSmerchant.supply_packs)
 			var/datum/supply_pack/PA = SSmerchant.supply_packs[pack]

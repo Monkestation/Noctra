@@ -16,15 +16,22 @@
 	var/budget = 0
 	var/wgain = 0
 	/// Max amount of items we can sell
-	var/max_merchanise = 15
+	var/max_merchandise = 15
 	/// Overlay used when theres items inside and we are locked
 	var/filled_overlay = "vendor-gen"
 	/// Light color used when theres items inside and we are locked
 	var/lighting_color = "#cf7214"
+	/// Tracking the hawking
+	var/next_hawk = 0
 
 /obj/structure/fake_machine/vendor/Initialize()
 	. = ..()
 	update_appearance(UPDATE_ICON_STATE)
+	START_PROCESSING(SSroguemachine, src)
+
+/obj/structure/fake_machine/vendor/Destroy(force)
+	STOP_PROCESSING(SSroguemachine, src)
+	return ..()
 
 /obj/structure/fake_machine/vendor/on_lock_add()
 	update_appearance(UPDATE_ICON_STATE)
@@ -104,7 +111,7 @@
 	if(I.w_class > WEIGHT_CLASS_BULKY)
 		to_chat(user, span_info("[I] is too big for \the [src]!"))
 		return
-	if(length(held_items) > max_merchanise)
+	if(length(held_items) > max_merchandise)
 		to_chat(user, span_info("\The [src] is full!"))
 		return
 	held_items[I] = list()
@@ -170,7 +177,7 @@
 			var/prename
 			if(held_items[O]["NAME"])
 				prename = held_items[O]["NAME"]
-			var/newname = input(usr, "SET A NEW NAME FOR THIS PRODUCT", src, prename)
+			var/newname = browser_input_text(usr, "SET A NEW NAME FOR THIS PRODUCT", src, prename, max_length = MAX_NAME_LEN)
 			if(newname)
 				held_items[O]["NAME"] = newname
 	if(href_list["setprice"])
@@ -236,6 +243,16 @@
 	var/datum/browser/popup = new(user, "VENDORTHING", "", 370, 400)
 	popup.set_content(contents)
 	popup.open()
+
+/obj/structure/fake_machine/vendor/process()
+	if(obj_broken)
+		return
+	if(world.time > next_hawk)
+		next_hawk = world.time + rand(1 MINUTES, 2 MINUTES)
+		if(length(held_items))
+			var/item = pick(held_items)
+			var/price = LAZYACCESSASSOC(held_items, item, "PRICE")
+			say("[item] for sale! [price] mammons!")
 
 /obj/structure/fake_machine/vendor/nolock
 	lock = null

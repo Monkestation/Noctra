@@ -55,6 +55,8 @@
 	belt = /obj/item/storage/belt/leather/plaquegold
 	backpack_contents = list(/obj/item/scrying = 1, /obj/item/chalk = 1,/obj/item/reagent_containers/glass/bottle/killersice = 1, /obj/item/book/granter/spellbook/master = 1, /obj/item/weapon/knife/dagger/silver/arcyne = 1, /obj/item/storage/keyring/mage = 1,)
 
+	if(istype(H.patron, /datum/patron/inhumen/zizo))
+		H.grant_language(/datum/language/undead)
 	H.adjust_skillrank(/datum/skill/misc/reading, 6, TRUE)
 	H.adjust_skillrank(/datum/skill/magic/arcane, pick(6,5), TRUE)
 	H.adjust_skillrank(/datum/skill/misc/riding, 2, TRUE)

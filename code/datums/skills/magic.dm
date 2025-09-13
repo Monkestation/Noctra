@@ -20,7 +20,7 @@
 
 /datum/skill/magic/arcane
 	name = "Arcane Magic"
-	desc = "Arcane Magic is a skill that represents your character's ability to perform arcane magic. The higher your skill in Arcane Magic, the more powerful your arcane magic will be and you'll have access to more spells." //Placeholder description.
+	desc = "Arcane Magic is a skill that represents your character's ability to perform arcane magic. The higher your skill in Arcane Magic, the more powerful your arcane magic will be."
 	dreams = list(
 		"...you look up to your captors, smiling through broken teeth. the cackling brings a kick to your ribs... you spit a broken tooth out of your mouth, and mutter under your breath... you hear gurgling as a baptism of blue fire spews from his open mouth..."
 	)

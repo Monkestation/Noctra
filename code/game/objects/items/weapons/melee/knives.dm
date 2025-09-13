@@ -463,6 +463,10 @@
 			if(!ishuman(user)) // carbons don't have all features of a human
 				to_chat(user, span_danger("You can't do that!"))
 				return
+			var/obj/item/bodypart/head/target_head = target.get_bodypart(BODY_ZONE_HEAD)
+			if(QDELETED(target_head))
+				to_chat(user, span_notice("I need their head or else i can't take their face!"))
+				return
 
 			var/datum/beam/transfer_beam = user.Beam(target, icon_state = "drain_life", time = 6 SECONDS)
 
@@ -495,7 +499,7 @@
 
 			human_user.copy_physical_features(target)
 			to_chat(user, span_purple("I take on a new face.."))
-			ADD_TRAIT(target, TRAIT_DISFIGURED, TRAIT_PROFANE)
+			ADD_TRAIT(target, TRAIT_DISFIGURED, TRAIT_GENERIC)
 
 			return
 

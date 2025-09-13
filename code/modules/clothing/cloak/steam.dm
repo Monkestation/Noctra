@@ -1,14 +1,16 @@
 /obj/item/clothing/cloak/boiler
-	name = "steam boiler"
-	desc = "The power center of the steamknight armor"
+	name = "steamknight boiler"
+	desc = "The backpack-sized power center of the steamknight armor. Requires knowledge in engineering to operate."
 
 	icon_state = "boiler"
 	item_state = "boiler"
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/steamknight_onmob.dmi'
 	icon = 'icons/roguetown/clothing/steamknight.dmi'
+	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = ITEM_SLOT_BACK
 
-	smeltresult = null
+	//you can't unsmelt your boiler Sir Steam Knightus
+	smeltresult = /obj/item/ingot/bronze
 
 /obj/item/clothing/cloak/boiler/Initialize()
 	. = ..()
@@ -47,12 +49,20 @@
 			clothing:power_off(user)
 		return
 
+	if(user.get_skill_level(/datum/skill/craft/engineering) <= 2)
+		to_chat(user, span_warning("I don't know how to operate [src]!"))
+		power_off(user)
+		remove_status_effect(user)
+		for(var/obj/item/clothing/clothing as anything in equipped_items)
+			clothing:power_off(user)
+		return
 	power_on(user)
 	apply_status_effect(user)
 	for(var/obj/item/clothing/clothing as anything in equipped_items)
 		clothing:power_on(user)
 
 /obj/item/clothing/cloak/boiler/proc/power_on(mob/living/user)
+	to_chat(user, span_info("I hear cogs turning and the hissing of steam as [src] powers on!"))
 	return
 
 /obj/item/clothing/cloak/boiler/proc/power_off(mob/living/user)

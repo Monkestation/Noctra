@@ -12,10 +12,32 @@
 	icon_state = "nocwrappings"
 	item_state = "nocwrappings"
 
+<<<<<<< HEAD
 /obj/item/clothing/wrists/bracers/rare
 	abstract_type = /obj/item/clothing/wrists/bracers/rare
 
 //Aasimar hoplite bracers
+=======
+/obj/item/clothing/wrists/silverbracelet
+	name = "silver bracelets"
+	slot_flags = ITEM_SLOT_WRISTS
+	icon_state = "bracelets"
+	sellprice = 30
+
+/obj/item/clothing/wrists/silverbracelet/Initialize()
+	. = ..()
+	enchant(/datum/enchantment/silver)
+
+/obj/item/clothing/wrists/goldbracelet
+	name = "gold bracelets"
+	slot_flags = ITEM_SLOT_WRISTS
+	icon_state = "braceletg"
+	sellprice = 65
+
+/obj/item/clothing/wrists/bracers/rare
+	abstract_type = /obj/item/clothing/wrists/bracers/rare
+
+>>>>>>> vanderlin/main
 /obj/item/clothing/wrists/bracers/rare/hoplite
 	name = "ancient bracers"
 	desc = "Stalwart bronze bracers, from an age long past."

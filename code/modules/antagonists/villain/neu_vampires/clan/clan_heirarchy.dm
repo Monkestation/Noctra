@@ -171,9 +171,9 @@
 		to_chat(user, "<span class='warning'>Invalid target!</span>")
 		return
 
-	var/command = input(user, "What is your command?", "Command") as text|null
+	var/command = browser_input_text(user, "What is your command?", "YOUR COMMAND", max_length = MAX_BROADCAST_LEN)
 
-	if(!command || length(command) > 200)
+	if(!command)
 		to_chat(user, "<span class='warning'>Invalid command!</span>")
 		return
 
@@ -309,9 +309,9 @@
 		to_chat(user, "<span class='warning'>You have no subordinates!</span>")
 		return
 
-	var/command = input(user, "What is your mass command?", "Mass Command") as text|null
+	var/command = browser_input_text(user, "What is your mass command?", "YOUR COMMAND", max_length = MAX_BROADCAST_LEN)
 
-	if(!command || length(command) > 300)
+	if(!command)
 		to_chat(user, "<span class='warning'>Invalid command!</span>")
 		return
 

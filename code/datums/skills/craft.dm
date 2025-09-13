@@ -5,35 +5,35 @@
 
 /datum/skill/craft/crafting
 	name = "Crafting"
-	desc = "Crafting is a general skill that represents your character's ability to craft items. The higher your skill in Crafting, the better you can craft items."
+	desc = "Crafting is a general skill that represents your character's ability to craft items. The higher your skill in Crafting, the more complex items you can craft."
 	dreams = list(
 		"...you feel grass under you feet as you peer onto a meadow, you prepare a campfire and a tent and drift off into deeper slumber.."
 	)
 
 /datum/skill/craft/weaponsmithing
 	name = "Weaponsmithing"
-	desc = "Weaponsmithing is a skill that represents your character's ability to craft metal weapons. The higher your skill in Weaponsmithing, the better the stats on weapons you create, up to Masterwork."
+	desc = "Weaponsmithing is a skill that represents your character's ability to craft metal weapons. The higher your skill in Weaponsmithing, the more complex weapons you can create, and the better resulting quality, up to Masterwork."
 	dreams = list(
 		"...you gently grasp the tang of the blade. without water nor oil, you turn over to the basin, slicing your hand, and letting the blood fill the void... you quench the blade."
 	)
 
 /datum/skill/craft/armorsmithing
 	name = "Armorsmithing"
-	desc = "Armorsmithing is a skill that represents your character's ability to craft metal armor. The higher your skill in Armorsmithing, the better the stats on armor, up to Masterwork."
+	desc = "Armorsmithing is a skill that represents your character's ability to craft metal armor. The higher your skill in Armorsmithing, the more complex armor you can create, and the better resulting quality, up to Masterwork."
 	dreams = list(
 		"...you are assailed by a faceless adversary. he pummels you - crack, crack, crack... it hurts, you scream... he tires, you do not..."
 	)
 
 /datum/skill/craft/blacksmithing
 	name = "Blacksmithing"
-	desc = "Blacksmithing is a skill that represents your character's ability to craft metal items. The higher your skill in Blacksmithing, the better the stats on items you create, up to Masterwork."
+	desc = "Blacksmithing is a skill that represents your character's ability to craft metal items. The higher your skill in Blacksmithing, the more complex items you can create, and the better resulting quality, up to Masterwork."
 	dreams = list(
 		"...CLANG! Clang! Clang... you feel the weight of the hammer reverberate up your arm, past your shoulder, through your spine... the hits march to the drums of your heart. you feel attuned to the metal."
 	)
 
 /datum/skill/craft/smelting
 	name = "Smelting"
-	desc = "Smelting is a skill that represents your character's ability to smelt metal into ingots. The higher your skill in Smelting, the better the ingots you create and the more you can make with your materials."
+	desc = "Smelting is a skill that represents your character's ability to smelt metal into ingots. The higher your skill in Smelting, the better the ingots you create, which affect the quality of the resulting item."
 	dreams = list(
 		"...the heat brings warmth to you on this dreary night. your feet ache, and your arms remain sore - but the stress of the day melts away, along with the snow around you - becoming just another distant memory."
 	)
@@ -88,7 +88,7 @@
 
 /datum/skill/craft/engineering
 	name = "Engineering"
-	desc = "Engineering is a skill that represents your character's ability to craft mechanical items. The higher your skill in Engineering, the better the mechanical items you can create and the more you can make with your materials."
+	desc = "Engineering is a skill that represents your character's ability to craft mechanical items. The higher your skill in Engineering, the more complex items you can create without failure.."
 	dreams = list(
 		"...visions plague your mind. you toss and turn this nite. you see mechanical beasts gutting their masters with bare hands, fire raging acrost unknown streets... you grab a brick off the road and peer below into an infinite void... you inhale, and feel the steam burn your lungs..."
 	)

@@ -172,5 +172,5 @@
 	var/static/list/last_names = world.file2list('strings/rt/names/elf/elfsnf.txt')
 	return last_names
 
-/datum/species/elf/dark/get_accent_list()
-	return strings("accents/french_replacement.json", "french")
+/datum/species/elf/dark/after_creation(mob/living/carbon/C)
+	C.dna.species.accent_language = C.dna.species.get_accent(native_language, 2)

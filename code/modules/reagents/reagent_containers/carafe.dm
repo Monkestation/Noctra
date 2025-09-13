@@ -50,6 +50,26 @@
 	dropshrink = 0.8
 	sellprice = 65
 
+/obj/item/reagent_containers/glass/carafe/gold/teapot
+	name = "golden teapot"
+	desc = "A dainty golden teapot. The perfect item for a noble's tea party."
+	icon = 'icons/roguetown/items/precious_objects.dmi'
+	icon_state = "teapot_gold"
+	fill_icon_thresholds = null
+	dropshrink = 1.0
+	smeltresult = /obj/item/ingot/gold
+	sellprice = 65
+
+/obj/item/reagent_containers/glass/carafe/silver/teapot
+	name = "silver teapot"
+	desc = "A dainty silver teapot. The perfect item for a noble's tea party."
+	icon = 'icons/roguetown/items/precious_objects.dmi'
+	icon_state = "teapot_silv"
+	fill_icon_thresholds = null
+	dropshrink = 1.0
+	smeltresult = /obj/item/ingot/silver
+	sellprice = 35
+
 /* Spawning full */
 
 /obj/item/reagent_containers/glass/carafe/water

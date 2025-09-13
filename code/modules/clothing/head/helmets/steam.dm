@@ -1,12 +1,13 @@
 /obj/item/clothing/head/helmet/heavy/steam
 	name = "steamknight helmet"
-	desc = "Part of the the steamknight armor."
+	desc = "Part of the the steamknight armor. Requires knowledge in engineering to operate."
 	icon_state = "steamknight_helm"
 	icon = 'icons/roguetown/clothing/steamknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/steamknight_onmob.dmi'
 	anvilrepair = /datum/skill/craft/engineering
-	block2add = null // no fov block.
+	block2add = null // no fov block, was trying to make it so theres a fov block if its unpowered but it didn't really work out sadly, was too buggy
 	item_weight = 9 * BRONZE_MULTIPLIER
+	smeltresult = /obj/item/ingot/bronze
 
 /obj/item/clothing/head/helmet/heavy/steam/equipped(mob/living/user, slot)
 	update_armor(user, slot)
@@ -35,6 +36,14 @@
 		return
 
 	if(!slot || !(slot_flags & slot))
+		power_off(user)
+		remove_status_effect(user)
+		for(var/obj/item/clothing/clothing as anything in equipped_items)
+			clothing:power_off(user)
+		return
+
+	if(user.get_skill_level(/datum/skill/craft/engineering) <= 3)
+		to_chat(user, span_warning("I don't know how to operate [src]!"))
 		power_off(user)
 		remove_status_effect(user)
 		for(var/obj/item/clothing/clothing as anything in equipped_items)

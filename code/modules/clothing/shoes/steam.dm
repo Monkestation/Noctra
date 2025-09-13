@@ -1,6 +1,6 @@
 /obj/item/clothing/shoes/boots/armor/steam
 	name = "steamknight boots"
-
+	desc = "Part of the the steamknight armor. Requires knowledge in engineering to operate."
 	icon = 'icons/roguetown/clothing/steamknight.dmi'
 	mob_overlay_icon = 'icons/roguetown/clothing/onmob/steamknight_onmob.dmi'
 	icon_state = "steamknight_boots"
@@ -11,6 +11,8 @@
 	anvilrepair = /datum/skill/craft/engineering
 	slowdown = 1.5
 	item_weight = 6 * BRONZE_MULTIPLIER
+
+	smeltresult = /obj/item/ingot/bronze
 
 /obj/item/clothing/shoes/boots/armor/steam/equipped(mob/living/user, slot)
 	update_armor(user)
@@ -44,6 +46,14 @@
 		return
 
 	if(!slot || !(slot_flags & slot))
+		power_off(user)
+		remove_status_effect(user)
+		for(var/obj/item/clothing/clothing as anything in equipped_items)
+			clothing:power_off(user)
+		return
+
+	if(user.get_skill_level(/datum/skill/craft/engineering) <= 3)
+		to_chat(user, span_warning("I don't know how to operate [src]!"))
 		power_off(user)
 		remove_status_effect(user)
 		for(var/obj/item/clothing/clothing as anything in equipped_items)

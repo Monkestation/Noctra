@@ -133,7 +133,7 @@
 		to_chat(user, span_notice("You look like a different person, though the disguise won't fool close inspection."))
 
 /obj/item/harlequinn_disguise_kit/proc/detailed_disguise(mob/user)
-	var/new_name = input(user, "What name should you appear as?", "Disguise Name") as text|null
+	var/new_name = browser_input_text(user, "What name should you appear as?", "DISGUISE", max_length = MAX_NAME_LEN)
 	if(!new_name)
 		return
 

@@ -110,7 +110,7 @@
 	var/list/held_items = list()
 	var/budget = 200
 	var/upgrade_flags
-	var/current_cat = "1"
+	var/current_cat
 	var/base_price = 0
 	var/final_price = 0
 	var/taxes = 0
@@ -189,7 +189,12 @@
 			budget2change(budget, usr)
 			budget = 0
 	if(href_list["changecat"])
-		current_cat = href_list["changecat"]
+		var/selected_category = href_list["changecat"]
+
+		if (selected_category in unlocked_cats)
+			current_cat = selected_category
+		else
+			current_cat = null
 	if(href_list["secrets"])
 		var/list/options = list()
 		if(upgrade_flags & UPGRADE_NOTAX)
@@ -237,7 +242,7 @@
 
 	var/split = ceil(unlocked_cats.len / 2)
 
-	if(current_cat == "1")
+	if(isnull(current_cat))
 		contents += "<table style='width: 100%' line-height: 20px;'>"
 		for(var/i = 1 to split)
 			contents += "<tr>"
@@ -254,7 +259,7 @@
 		contents += "</table>"
 	else
 		contents += "<center>[current_cat]<BR></center>"
-		contents += "<center><a href='?src=[REF(src)];changecat=1'>\[RETURN\]</a><BR><BR></center>"
+		contents += "<center><a href='?src=[REF(src)];changecat=0'>\[RETURN\]</a><BR><BR></center>"
 		var/list/pax = list()
 		for(var/pack in SSmerchant.supply_packs)
 			var/datum/supply_pack/picked_pack = SSmerchant.supply_packs[pack]

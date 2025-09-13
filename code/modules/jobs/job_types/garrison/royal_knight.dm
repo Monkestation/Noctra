@@ -104,14 +104,15 @@
 	var/grant_shield = TRUE
 	switch(choice)
 		if("Flail")
-			H.clamped_adjust_skillrank(/datum/skill/combat/whipsflails, 1, 4, TRUE)
+			H.clamped_adjust_skillrank(/datum/skill/combat/whipsflails, 2, 4, TRUE)
 		if("Halberd")
-			H.clamped_adjust_skillrank(/datum/skill/combat/polearms, 1, 4, TRUE)
+			H.clamped_adjust_skillrank(/datum/skill/combat/polearms, 2, 4, TRUE)
 			grant_shield = FALSE
 		if("Longsword")
 			grant_shield = FALSE
+			H.clamped_adjust_skillrank(/datum/skill/combat/swords, 2, 4, TRUE)
 		if("Unarmed")
-			H.adjust_skillrank(/datum/skill/combat/unarmed, 2, TRUE)
+			H.clamped_adjust_skillrank(/datum/skill/combat/unarmed, 3, 5, TRUE)
 			H.clamped_adjust_skillrank(/datum/skill/combat/knives, 2, 4, TRUE)
 			grant_shield = FALSE
 	if(grant_shield)
@@ -132,7 +133,8 @@
 	tutorial = "The pinnacle of Vanderlin's steam technology. \
 	Start with a set of Steam Armor that requires steam to function. \
 	The suit is powerful when powered but will slow you down when not \
-	and has the cost of reducing your space for arms."
+	learning how to use it has cost you precious time \
+	you could have spent learning to use other weapons."
 
 	outfit = /datum/outfit/job/royalknight/steam
 
@@ -148,15 +150,15 @@
 	gloves = /obj/item/clothing/gloves/plate/steam
 	head = /obj/item/clothing/head/helmet/heavy/steam
 
-	// Steam armour is complex
-	H.change_stat(STATKEY_INT, 2)
-	// Stronger armour than base RK
-	// Stat punishment for not having the armour active
-	H.change_stat(STATKEY_STR, -1)
-	H.change_stat(STATKEY_CON, -1)
-	H.change_stat(STATKEY_END, -1)
-	// Way heavier
-	H.change_stat(STATKEY_SPD, -1)
+	H.adjust_skillrank(/datum/skill/combat/swords, -1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/unarmed, -1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/shields, -1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/wrestling, -1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/polearms, -1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/whipsflails, -1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/axesmaces, -1, TRUE)
+	H.adjust_skillrank(/datum/skill/combat/bows, -1, TRUE)
+	H.adjust_skillrank(/datum/skill/craft/engineering, 3, TRUE)//replaces the int buff
 
 /datum/outfit/job/royalknight/steam/post_equip(mob/living/carbon/human/H, visualsOnly)
 	. = ..()

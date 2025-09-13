@@ -731,6 +731,16 @@
 	else
 		REMOVE_TRAIT(src, TRAIT_FOREIGNER, TRAIT_GENERIC)
 
+	if(HAS_TRAIT(target, TRAIT_RECOGNIZED))
+		ADD_TRAIT(src, TRAIT_RECOGNIZED, TRAIT_GENERIC)
+	else
+		REMOVE_TRAIT(src, TRAIT_RECOGNIZED, TRAIT_GENERIC)
+
+	if(HAS_TRAIT(target, TRAIT_RECRUITED))
+		ADD_TRAIT(src, TRAIT_RECRUITED, TRAIT_GENERIC)
+	else
+		REMOVE_TRAIT(src, TRAIT_RECRUITED, TRAIT_GENERIC)
+
 	if(HAS_TRAIT(target, TRAIT_FACELESS))
 		ADD_TRAIT(src, TRAIT_FACELESS, TRAIT_GENERIC)
 	else
@@ -740,10 +750,43 @@
 
 
 /mob/living/carbon/human/proc/copy_bodyparts(mob/living/carbon/human/target)
-	bodyparts = target.bodyparts
+	var/mob/living/carbon/human/self = src
+	var/list/target_missing = target.get_missing_limbs()
+	var/list/my_missing = self.get_missing_limbs()
+
+	// Store references to bodyparts
+	var/list/original_parts = list()
+	var/list/target_parts = list()
+
+	var/list/full = list(
+		BODY_ZONE_HEAD,
+		BODY_ZONE_CHEST,
+		BODY_ZONE_R_ARM,
+		BODY_ZONE_L_ARM,
+		BODY_ZONE_R_LEG,
+		BODY_ZONE_L_LEG,
+	)
+
+	for(var/zone in full)
+		original_parts[zone] = self.get_bodypart(zone)
+		target_parts[zone] = target.get_bodypart(zone)
+
 	bodyparts = list()
-	for(var/obj/item/bodypart/part in target.bodyparts)
-		bodyparts += part.type
+
+	// Rebuild bodyparts list with typepaths
+	for(var/zone_2 in full)
+		var/obj/item/bodypart/target_part = target_parts[zone_2]
+		var/obj/item/bodypart/my_part = original_parts[zone_2]
+
+		if(zone_2 in my_missing)
+			continue
+		else if(zone_2 in target_missing)
+			if(my_part)
+				bodyparts += my_part.type
+		else
+			if(target_part)
+				bodyparts += target_part.type
+
 	create_bodyparts()
 
 /mob/living/carbon/human/species

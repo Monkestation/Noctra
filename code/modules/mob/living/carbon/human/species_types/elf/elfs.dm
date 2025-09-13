@@ -187,5 +187,5 @@
 	var/static/list/last_names = world.file2list('strings/rt/names/elf/elfwlast.txt')
 	return last_names
 
-/datum/species/elf/snow/get_accent_list()
-	return strings("accents/russian_replacement.json", "russian")
+/datum/species/elf/snow/after_creation(mob/living/carbon/C)
+	C.dna.species.accent_language = C.dna.species.get_accent(C.dna.species.native_language, 1)

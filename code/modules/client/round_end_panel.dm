@@ -397,7 +397,7 @@
 			if(length(GLOB.prayers))
 				for(var/entry in GLOB.prayers)
 					data += "<div style='color: #dbd9d9; margin: 0 0 12px 0px; padding: 8px; background: rgba(230, 179, 39, 0.08); border-left: 3px solid #e6b327; border-radius: 0 3px 3px 0;'>"
-					data += "[entry]"
+					data += "[strip_html(entry)]"
 					data += "</div>"
 			else
 				data += "<div style='color: #aaaaaa; font-style: italic; text-align: center; padding: 20px 0;'>No prayers made</div>"

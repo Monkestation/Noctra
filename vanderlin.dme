@@ -170,7 +170,10 @@
 #include "code\__DEFINES\vampires.dm"
 #include "code\__DEFINES\vectors.dm"
 #include "code\__DEFINES\vehicles.dm"
+<<<<<<< HEAD
 #include "code\__DEFINES\veyra.dm"
+=======
+>>>>>>> vanderlin/main
 #include "code\__DEFINES\visual_helpers.dm"
 #include "code\__DEFINES\visual_ui.dm"
 #include "code\__DEFINES\vv.dm"
@@ -307,6 +310,7 @@
 #include "code\_globalvars\lists\admin.dm"
 #include "code\_globalvars\lists\ai.dm"
 #include "code\_globalvars\lists\ambience.dm"
+#include "code\_globalvars\lists\bounties.dm"
 #include "code\_globalvars\lists\client.dm"
 #include "code\_globalvars\lists\flavor_misc.dm"
 #include "code\_globalvars\lists\icons.dm"
@@ -1327,7 +1331,6 @@
 #include "code\datums\skills\craft.dm"
 #include "code\datums\skills\labor.dm"
 #include "code\datums\skills\magic.dm"
-#include "code\datums\skills\mining.dm"
 #include "code\datums\skills\misc.dm"
 #include "code\datums\status_effects\buffs.dm"
 #include "code\datums\status_effects\debuffs.dm"
@@ -1823,6 +1826,7 @@
 #include "code\modules\admin\sql_message_system.dm"
 #include "code\modules\admin\stickyban.dm"
 #include "code\modules\admin\team_panel.dm"
+#include "code\modules\admin\toggle_specific_triumph_buy.dm"
 #include "code\modules\admin\topic.dm"
 #include "code\modules\admin\whitelist.dm"
 #include "code\modules\admin\callproc\callproc.dm"
@@ -3169,6 +3173,10 @@
 #include "code\modules\spells\spell_types\undirected\shapeshift\frog.dm"
 #include "code\modules\spells\spell_types\undirected\shapeshift\gaseous_form.dm"
 #include "code\modules\spells\spell_types\undirected\shapeshift\rat.dm"
+<<<<<<< HEAD
+=======
+#include "code\modules\spells\spell_types\undirected\shapeshift\rat_vampire.dm"
+>>>>>>> vanderlin/main
 #include "code\modules\spells\spell_types\undirected\shapeshift\troll_form.dm"
 #include "code\modules\spells\spell_types\undirected\teleport\_teleport.dm"
 #include "code\modules\spells\spell_types\undirected\touch\_touch.dm"

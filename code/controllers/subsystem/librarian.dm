@@ -91,6 +91,11 @@ SUBSYSTEM_DEF(librarian)
 		return contents
 	return list()
 
+/datum/controller/subsystem/librarian/proc/player_book_exists(book_title)
+	if(!book_title)
+		return FALSE
+	return fexists("data/player_generated_books/[book_title].json")
+
 /datum/controller/subsystem/librarian/proc/del_player_book(book_title)
 	if(!book_title)
 		return FALSE

@@ -31,14 +31,14 @@
 
 /datum/skill/labor/farming
 	name = "Farming"
-	desc = "Farming is a skill that represents your character's ability to farm. The higher your skill in Farming, the more crops you can grow and the faster they will grow." //Probably not true, but placeholder.
+	desc = "Farming is a skill that represents your character's ability to farm. The higher your skill in Farming, the more you know about a seed, fertilizer, etc. by examining them."
 	dreams = list(
 		"...you plant your thumb into the dirt, before pulling it back - gently placing a seed into the crevice..."
 	)
 
 /datum/skill/labor/taming
 	name = "Taming"
-	desc = "Taming is a skill that represents your character's ability to tame animals. The higher your skill in Taming, the more animals you can tame and the more effective you will be at taming with a higher range."
+	desc = "Taming is a skill that represents your character's ability to tame animals. The higher your skill in Taming, the more dangerous animals you can tame and the more effective you will be at taming them."
 	dreams = list(
 		"...the water is stillborne, quiet... pristine, as if untouched... the line bobs down, and you let it writhe as you stare down at your reflection..."
 	)
@@ -59,7 +59,7 @@
 
 /datum/skill/labor/lumberjacking
 	name = "Lumberjacking"
-	desc = "Lumberjacking is a skill that represents your character's ability to chop down trees. The higher your skill in Lumberjacking, the faster you can chop down trees."
+	desc = "Lumberjacking is a skill that represents your character's ability to chop down trees and split logs. The higher your skill in Lumberjacking, the more efficient you are at splitting logs."
 	dreams = list(
 		"...splinters fly off as a tree falls down on the ground, sending a thundering boom throughout the forest..."
 	)

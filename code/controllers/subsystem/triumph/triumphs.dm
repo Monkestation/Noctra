@@ -120,6 +120,9 @@ SUBSYSTEM_DEF(triumphs)
 
 /// This occurs when you try to buy a triumph condition and sets it up
 /datum/controller/subsystem/triumphs/proc/attempt_to_buy_triumph_condition(client/C, datum/triumph_buy/ref_datum)
+	if(ref_datum.disabled)
+		to_chat(C, span_warning("This Triumph Buy has been disabled by administrators!"))
+		return FALSE
 	if(ref_datum.limited && triumph_buy_stocks[ref_datum.type] <= 0)
 		to_chat(C, span_warning("The item is out of stock!"))
 		return FALSE
@@ -404,3 +407,24 @@ SUBSYSTEM_DEF(triumphs)
 			sorted_list[cache_key] = triumph_leaderboard[cache_key]
 
 	triumph_leaderboard = sorted_list
+
+/// Called when an admin disables a Triumph Buy.
+/// Refunds all current owners of that Triumph Buy and disactive it.
+/datum/controller/subsystem/triumphs/proc/refund_from_admin_toggle(datum/triumph_buy/TB)
+	if(!TB)
+		return
+
+	var/list/to_refund = list()
+	// Collect all buys belonging to this Triumph type
+	for(var/ckey in triumph_buy_owners)
+		var/list/player_buys = triumph_buy_owners[ckey]
+		if(!islist(player_buys))
+			continue
+		for(var/datum/triumph_buy/owned in player_buys)
+			if(owned.type == TB.type)
+				to_refund += owned
+
+	// Process refunds
+	for(var/datum/triumph_buy/owned in to_refund)
+		var/client/C = GLOB.directory[owned.ckey_of_buyer] // check if player is online
+		attempt_to_unbuy_triumph_condition(C, owned, "ADMIN DISABLE", TRUE)

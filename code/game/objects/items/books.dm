@@ -683,7 +683,7 @@
 
 					<!-- Search box -->
 					<input type="text" class="search-box" id="searchInput"
-						placeholder="Search items..." value="[search_query]">
+						placeholder="Search items..." value="[html_encode(search_query)]">
 
 					<!-- Categories -->
 					<div class="categories">
@@ -870,8 +870,8 @@
 				});
 
 				// Initialize search based on any current query
-				if ("[search_query]" !== "") {
-					filterItems("[search_query]".toLowerCase());
+				if ("[html_encode(search_query)]" !== "") {
+					filterItems("[html_encode(search_query)]".toLowerCase());
 				}
 			</script>
 		</body>

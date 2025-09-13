@@ -130,6 +130,9 @@ GLOBAL_LIST_INIT(character_flaws, list(
 	if(after_spawn)
 		charflaw.after_spawn(src)
 
+	if(after_spawn)
+		charflaw.after_spawn(src)
+
 /datum/charflaw/randflaw
 	name = "Random Flaw"
 	desc = "Chooses a random flaw (50% chance for no flaw)"

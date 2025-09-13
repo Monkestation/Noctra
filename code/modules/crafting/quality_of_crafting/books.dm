@@ -295,7 +295,7 @@
 				<div class="sidebar">
 					<!-- Search box (now with live filtering) -->
 					<input type="text" class="search-box" id="searchInput"
-						placeholder="Search recipes..." value="[search_query]">
+						placeholder="Search recipes..." value="[html_encode(search_query)]">
 
 					<!-- Categories -->
 					<div class="categories">
