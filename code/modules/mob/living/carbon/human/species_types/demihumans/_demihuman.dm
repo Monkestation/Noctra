@@ -139,7 +139,6 @@
 		/datum/descriptor_choice/prominent_four_wild,
 	)
 
-	patreon_req = TRUE
 
 /datum/species/demihuman/get_hairc_list()
 	return sortList(list(

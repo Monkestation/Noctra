@@ -41,7 +41,6 @@
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/kobold.dmi'
 
 	enflamed_icon = "widefire"
-	patreon_req = TRUE
 
 	soundpack_m = /datum/voicepack/male/dwarf
 	soundpack_f = /datum/voicepack/female/dwarf
