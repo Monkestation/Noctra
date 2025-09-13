@@ -35,6 +35,7 @@ SUBSYSTEM_DEF(plexora)
 #endif
 
 	// MUST INCREMENT BY ONE FOR EVERY CHANGE MADE TO PLEXORA
+	// actually no it's too late to keep track of versions lmfao -chen
 	var/version_increment_counter = 2
 	var/plexora_is_alive = FALSE
 	var/base_url = ""
@@ -45,8 +46,11 @@ SUBSYSTEM_DEF(plexora)
 	var/restart_type = PLEXORA_SHUTDOWN_NORMAL
 	var/mob/restart_requester
 	var/list/active_requests = list()
+	var/list/allowed_ckeys = list()
 
 /datum/controller/subsystem/plexora/Initialize()
+	loaded_allowed_ckeys()
+
 	if(!CONFIG_GET(flag/plexora_enabled) && !load_old_plexora_config())
 		enabled = FALSE
 		flags |= SS_NO_FIRE
@@ -96,6 +100,19 @@ SUBSYSTEM_DEF(plexora)
 	active_requests = SSplexora.active_requests
 	if(initialized && !enabled)
 		flags |= SS_NO_FIRE
+
+/datum/controller/subsystem/plexora/proc/loaded_allowed_ckeys()
+	LAZYINITLIST(allowed_ckeys)
+	if (!enabled || !fexists("[global.config.directory]/allowed_ckeys.txt"))
+		return
+	allowed_ckeys.Cut()
+	var/list/lines = world.file2list("[global.config.directory]/allowed_ckeys.txt")
+	for(var/line in lines)
+		if(!length(line))
+			continue
+		if(findtextEx(line, "#", 1, 2))
+			continue
+		LAZYADD(allowed_ckeys, ckey(line))
 
 // compat thing so that it'll load plexora.json if it's still used
 /datum/controller/subsystem/plexora/proc/load_old_plexora_config()
@@ -228,6 +245,48 @@ SUBSYSTEM_DEF(plexora)
 		var/list/json_body = json_decode(response.body)
 		return json_body["alive_likely"]
 
+/**
+ * Given a ckey, polls a ckey for verification.
+ * Returns one of the values defined in __DEFINES/plexora.dm
+ */
+/datum/controller/subsystem/plexora/proc/poll_ckey_for_verification(ckey, required_roleid)
+	if (!enabled || (ckey in allowed_ckeys))
+		return list(
+			"polling_response" = !enabled ? PLEXORA_CKEYPOLL_NOTLINKED : PLEXORA_CKEYPOLL_LINKED_ALLOWEDWHITELIST,
+			"discord_id" = "0000000000000000000",
+			"discord_username" = !enabled ? "PLEXORA_NOT_ENABLED" : "ckey_whitelisted",
+			"discord_displayname" = !enabled ? "Plexora Not Enabled" : "Ckey Whitelisted",
+			"has_requiredrole" = TRUE
+		)
+
+	var/list/request_body = list(
+		"ckey" = ckey
+	)
+	if (required_roleid)
+		request_body["required_roleid"] = required_roleid
+
+	var/datum/http_request/request = new(
+		RUSTG_HTTP_METHOD_POST,
+		"[base_url]/lookupckey",
+		json_encode(request_body),
+		default_headers,
+	)
+	request.begin_async()
+	UNTIL_OR_TIMEOUT(request.is_complete(), 5 SECONDS)
+	var/datum/http_response/response = request.into_response()
+	if (response.errored)
+		stack_trace(response.body)
+		plexora_is_alive = FALSE
+		log_access("Plexora is down. Failed to poll ckey [ckey]")
+		return list(
+			"polling_response" = PLEXORA_DOWN
+		)
+	else
+		plexora_is_alive = TRUE
+		var/list/polling_response_body = json_decode(response.body)
+		polling_response_body["polling_response"] = text2num(polling_response_body["polling_response"])
+		return polling_response_body
+
 /datum/controller/subsystem/plexora/proc/relay_admin_say(client/user, message)
 	http_basicasync("relay_admin_say", list(
 		"key" = user.key,
@@ -251,13 +310,11 @@ SUBSYSTEM_DEF(plexora)
 	))
 
 /datum/controller/subsystem/plexora/proc/new_note(list/note)
-	// note["replay_pass"] = CONFIG_GET(string/replay_password)
 	http_basicasync("noteupdates", note)
 
 /datum/controller/subsystem/plexora/proc/new_ban(list/ban)
 	// TODO: It might be easier to just send off a ban ID to Plexora, but oh well.
 	// list values are in sql_ban_system.dm
-	// ban["replay_pass"] = CONFIG_GET(string/replay_password)
 	http_basicasync("banupdates", ban)
 
 // Maybe we should consider that, if theres no admin_ckey when creating a new ticket,
@@ -276,7 +333,6 @@ SUBSYSTEM_DEF(plexora)
 		"urgent" = urgent,
 		"msg_raw" = msg_raw,
 		"opened_at" = rustg_unix_timestamp(),
-		// "replay_pass" = CONFIG_GET(string/replay_password),
 		"icon_b64" = icon2base64(getFlatIcon(ticket.initiator.mob, SOUTH, no_anim = TRUE)),
 		"admin_ckey" = admin_ckey,
 	))
@@ -739,6 +795,32 @@ SUBSYSTEM_DEF(plexora)
 
 	SSblackbox.record_feedback("tally", "admin_say_relay", 1, "Asay external") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/world_topic/plx_discordmemberleave
+	keyword = "PLX_discordmemberleave"
+	require_comms_key = TRUE
+
+/datum/world_topic/plx_discordmemberleave/Run(list/input)
+	var/discordid = input["discordid"]
+	var/ckey = input["ckey"] || SSdiscord.lookup_ckey(discordid)
+
+	if (!ckey)
+		return
+
+	var/client/C = GLOB.directory[ckey]
+
+	if (!C)
+		return
+
+
+	to_chat(C, span_danger("I am no longer present in the Discord server, therefore my soul will vanish from this mortal plane."))
+	if (prob(300) && isliving(C.mob))
+		to_chat(C, span_danger("Suddenly, I implode. My guts fly everywhere. I hope there wasn't anyone nearby otherwise that would have been traumatizing!"))
+		C.mob.gib()
+		message_admins("[key_name_admin(C)]/[ckey] has left the Discord server. They have imploded, and will be kicked from the server.")
+	else
+		message_admins("[key_name_admin(C)]/[ckey] has left the Discord server, so they will be kicked from the server.")
+	QDEL_IN(C,5 SECONDS)
+
 
 #undef OLD_PLEXORA_CONFIG
 #undef AUTH_HEADER
@@ -886,3 +968,26 @@ SUBSYSTEM_DEF(plexora)
 				break
 
 	return text_guess
+
+/client
+	var/datum/discord_details/discord_details
+
+/datum/discord_details
+	var/id
+	var/username
+	var/displayname
+	var/status = PLEXORA_CKEYPOLL_NOTLINKED
+	var/has_requiredrole
+
+/datum/discord_details/New(id, username, displayname, status = PLEXORA_CKEYPOLL_NOTLINKED)
+	src.id = id
+	src.username = username
+	src.displayname = displayname
+	src.status = status
+
+/datum/discord_details/proc/convert_to_list()
+	. = list()
+	.["id"] = id
+	.["username"] = username
+	.["displayname"] = displayname
+	.["status"] = status
